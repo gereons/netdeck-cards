@@ -1,0 +1,28 @@
+//
+//  DeckListViewController.h
+//  NRDB
+//
+//  Created by Gereon Steffens on 08.12.13.
+//  Copyright (c) 2013 Gereon Steffens. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "DetailViewManager.h"
+
+@class Card;
+
+@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIPrintInteractionControllerDelegate>
+
+@property (strong) IBOutlet UITableView* tableView;
+@property (strong) IBOutlet UICollectionView* collectionView;
+
+@property (strong) IBOutlet UIToolbar* toolBar;
+@property (strong) IBOutlet UILabel* footerLabel;
+@property (strong) IBOutlet UILabel* deckNameLabel;
+
+@property NRRole role;
+
+-(void) addCard:(Card*)card;
+-(void) loadDeckFromFile:(NSString*) filename;
+
+@end

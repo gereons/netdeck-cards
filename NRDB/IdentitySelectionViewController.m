@@ -1,0 +1,248 @@
+//
+//  IdentitySelectionViewController.m
+//  NRDB
+//
+//  Created by Gereon Steffens on 26.12.13.
+//  Copyright (c) 2013 Gereon Steffens. All rights reserved.
+//
+
+#import "IdentitySelectionViewController.h"
+#import "IdentityViewCell.h"
+#import "CardImageViewPopover.h"
+
+#import "Faction.h"
+#import "Card.h"
+#import "CardSets.h"
+#import "CGRectUtils.h"
+#import "Notifications.h"
+#import "SettingsKeys.h"
+
+@interface IdentitySelectionViewController ()
+
+@property NRRole role;
+
+@property NSMutableArray* factionNames;
+@property NSMutableArray* identities;
+@property Card* selectedIdentity;
+@property NSIndexPath* selectedIndexPath;
+
+@end
+
+@implementation IdentitySelectionViewController
+
++(void) showForRole:(NRRole)role inViewController:(UIViewController*)vc withIdentity:(Card*)card
+{
+    IdentitySelectionViewController* isvc = [[IdentitySelectionViewController alloc] initWithRole:role andIdentity:card];
+
+    [vc presentViewController:isvc animated:NO completion:nil];
+}
+
+- (id)initWithRole:(NRRole)role andIdentity:(Card*)identity
+{
+    self = [super initWithNibName:@"IdentitySelectionViewController" bundle:nil];
+    if (self)
+    {
+        self.modalPresentationStyle = UIModalPresentationFormSheet;
+        self.role = role;
+        self.selectedIdentity = identity;
+        self.factionNames = [NSMutableArray array];
+        self.identities = [NSMutableArray array];
+        
+        NSMutableArray* factions = [[Faction factionsForRole:role] mutableCopy];
+        
+        [factions removeObject:@(NRFactionNeutral)];
+        [factions removeObject:@(NRFactionNone)];
+        
+        for (int i=0; i<factions.count; ++i)
+        {
+            [self.identities addObject:[NSMutableArray array]];
+            [self.factionNames addObject:@""];
+        }
+        
+        NSSet* disabledSets = [CardSets disabledSetCodes];
+        NRFaction prevFaction = NRFactionNone;
+        int arr = -1;
+        for (Card* card in [Card identitiesForRole:role])
+        {
+            if ([disabledSets containsObject:card.setCode])
+            {
+                continue;
+            }
+            
+            if (card.faction != prevFaction)
+            {
+                ++arr;
+            }
+            
+            [self.identities[arr] addObject:card];
+            prevFaction = card.faction;
+            
+            self.factionNames[arr] = [Faction name:card.faction];
+            
+            if ([identity isEqual:card])
+            {
+                NSArray* a = self.identities[arr];
+                self.selectedIndexPath = [NSIndexPath indexPathForRow:a.count-1 inSection:arr];
+            }
+        }
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    UINib* nib = [UINib nibWithNibName:@"IdentityViewCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"identityCell"];
+    
+    UITapGestureRecognizer* doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+    doubleTap.numberOfTapsRequired = 2;
+    [self.tableView addGestureRecognizer:doubleTap];
+    
+    UIGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self.tableView addGestureRecognizer:longPress];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (self.selectedIndexPath)
+    {
+        [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+    }
+}
+
+-(void) okClicked:(id)sender
+{
+    if (self.selectedIdentity)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SELECT_IDENTITY object:self userInfo:@{ @"code": self.selectedIdentity.code }];
+    }
+    [self cancelClicked:sender];
+}
+
+-(void) cancelClicked:(id)sender
+{
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+-(void) doubleTap:(UITapGestureRecognizer*)sender
+{
+    if (UIGestureRecognizerStateEnded == sender.state)
+    {
+        [self okClicked:nil];
+    }
+}
+
+-(void) longPress:(UIGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
+        CGPoint p = [gesture locationInView:self.tableView];
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        if (indexPath != nil)
+        {
+            NSArray* arr = self.identities[indexPath.section];
+            Card* card = arr[indexPath.row];
+            
+            CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
+            
+            [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
+        }
+    }
+    BOOL hold = [[NSUserDefaults standardUserDefaults] boolForKey:HOLD_FOR_IMAGE];
+    if (gesture.state == UIGestureRecognizerStateEnded && hold)
+    {
+        [CardImageViewPopover dismiss];
+    }
+}
+
+
+#pragma mark table view
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray* arr = self.identities[indexPath.section];
+    Card* c = arr[indexPath.row];
+    
+    return 26 + c.attributedTextHeight;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.identities.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSMutableArray* arr = self.identities[section];
+    return arr.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString* cellIdentifier = @"identityCell";
+    
+    IdentityViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    if (!cell)
+    {
+        cell = [[IdentityViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+        cell.abilityLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.abilityLabel.numberOfLines = 0;
+    }
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    NSMutableArray* arr = self.identities[indexPath.section];
+    Card* c = arr[indexPath.row];
+    
+    if ([c isEqual:self.selectedIdentity])
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.selected = YES;
+        self.selectedIndexPath = indexPath;
+    }
+    
+    cell.titleLabel.text = c.name;
+    cell.titleLabel.textColor = c.factionColor;
+    
+    NSAttributedString* ability = c.attributedText;
+    CGFloat height = c.attributedTextHeight;
+    cell.abilityLabel.frame = CGRectSetSize(cell.abilityLabel.frame, 405, height);
+    cell.abilityLabel.attributedText = ability;
+
+    cell.deckSizeLabel.text = [@(c.minimumDecksize) stringValue];
+    cell.influenceLimitLabel.text = [@(c.influenceLimit) stringValue];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.selectedIndexPath)
+    {
+        UITableViewCell* prevCell = [tableView cellForRowAtIndexPath:self.selectedIndexPath];
+        prevCell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    NSMutableArray* arr = self.identities[indexPath.section];
+    Card* c = arr[indexPath.row];
+    
+    self.selectedIdentity = c;
+    self.selectedIndexPath = indexPath;
+    
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+}
+
+-(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return self.factionNames[section];
+}
+
+@end

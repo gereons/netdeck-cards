@@ -1,0 +1,12 @@
+- app name/icon?
+
+- import: parse text-based decks?
+- card distribution stats
+- win/loss statistics
+
+- set selection: group by cycles (expand/collapse?)
+- share via airdrop
+- filter: show results instead of deck
+
+- images needed: cardPlaceholder, credit/str/mu/trash/ap icons
+- preload all card images? (and don't invalidate cache?)
