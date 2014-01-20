@@ -11,7 +11,6 @@
 @interface IdentityViewCell : UITableViewCell
 
 @property IBOutlet UILabel* titleLabel;
-@property IBOutlet UILabel* abilityLabel;
 @property IBOutlet UILabel* deckSizeLabel;
 @property IBOutlet UILabel* influenceLimitLabel;
 

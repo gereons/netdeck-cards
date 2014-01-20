@@ -21,7 +21,7 @@
 
 @property NRRole role;
 
-@property NSMutableArray* factionNames;
+@property NSArray* factionNames;
 @property NSMutableArray* identities;
 @property Card* selectedIdentity;
 @property NSIndexPath* selectedIndexPath;
@@ -50,39 +50,35 @@
         
         NSMutableArray* factions = [[Faction factionsForRole:role] mutableCopy];
         
-        [factions removeObject:@(NRFactionNeutral)];
-        [factions removeObject:@(NRFactionNone)];
+        [factions removeObject:[Faction name:NRFactionNeutral]];
+        [factions removeObject:[Faction name:NRFactionNone]];
         
+        self.factionNames = [NSArray arrayWithArray:factions];
+        
+        NSSet* disabledSets = [CardSets disabledSetCodes];
+        
+        NSArray* identities = [Card identitiesForRole:role];
         for (int i=0; i<factions.count; ++i)
         {
             [self.identities addObject:[NSMutableArray array]];
-            [self.factionNames addObject:@""];
-        }
-        
-        NSSet* disabledSets = [CardSets disabledSetCodes];
-        NRFaction prevFaction = NRFactionNone;
-        int arr = -1;
-        for (Card* card in [Card identitiesForRole:role])
-        {
-            if ([disabledSets containsObject:card.setCode])
+            
+            for (int j=0; j<identities.count; ++j)
             {
-                continue;
-            }
-            
-            if (card.faction != prevFaction)
-            {
-                ++arr;
-            }
-            
-            [self.identities[arr] addObject:card];
-            prevFaction = card.faction;
-            
-            self.factionNames[arr] = [Faction name:card.faction];
-            
-            if ([identity isEqual:card])
-            {
-                NSArray* a = self.identities[arr];
-                self.selectedIndexPath = [NSIndexPath indexPathForRow:a.count-1 inSection:arr];
+                Card* card = identities[j];
+                if ([disabledSets containsObject:card.setCode])
+                {
+                    continue;
+                }
+                
+                if ([[factions objectAtIndex:i] isEqualToString:card.factionStr])
+                {
+                    [self.identities[i] addObject:card];
+                }
+                
+                if ([identity isEqual:card])
+                {
+                    self.selectedIndexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                }
             }
         }
     }
@@ -165,14 +161,6 @@
 
 #pragma mark table view
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSArray* arr = self.identities[indexPath.section];
-    Card* c = arr[indexPath.row];
-    
-    return 26 + c.attributedTextHeight;
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return self.identities.count;
@@ -193,8 +181,6 @@
     {
         cell = [[IdentityViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-        cell.abilityLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        cell.abilityLabel.numberOfLines = 0;
     }
     cell.accessoryType = UITableViewCellAccessoryNone;
     
@@ -211,11 +197,6 @@
     cell.titleLabel.text = c.name;
     cell.titleLabel.textColor = c.factionColor;
     
-    NSAttributedString* ability = c.attributedText;
-    CGFloat height = c.attributedTextHeight;
-    cell.abilityLabel.frame = CGRectSetSize(cell.abilityLabel.frame, 405, height);
-    cell.abilityLabel.attributedText = ability;
-
     cell.deckSizeLabel.text = [@(c.minimumDecksize) stringValue];
     cell.influenceLimitLabel.text = [@(c.influenceLimit) stringValue];
     
