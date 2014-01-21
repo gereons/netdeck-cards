@@ -64,14 +64,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     UILabel* footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 320, 40)];
     
-    // CFBundleShortVersionString contains the main version
-    NSString* vsn = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 #if defined(DEBUG) || defined(ADHOC)
-    // CFBundleVersion contains the svn revision
-    NSString* rev = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    self.appVersion = [NSString stringWithFormat:@"%@ (r%@)", vsn, rev];
+    // CFBundleVersion contains the git describe output
+    self.appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 #else
-    self.appVersion = vsn;
+    // CFBundleShortVersionString contains the main version
+    self.appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 #endif
     
     footerLabel.text = [NSString stringWithFormat:@"Version %@", self.appVersion];

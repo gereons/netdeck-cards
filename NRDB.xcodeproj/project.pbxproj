@@ -823,7 +823,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n\nif [ \"${CONFIGURATION}\" != \"Release\" ]; then\nSVNVERSION=$(/opt/local/bin/svnversion -nc | cut -f2 -d:)\necho \"add svn version... $SVNVERSION\"\necho -n \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\" | xargs -0 /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $SVNVERSION\"\nfi";
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n\nif [ \"${CONFIGURATION}\" != \"Release\" ]; then\nGITVERSION=$(git describe --dirty=M)\necho \"add git version... $GITVERSION\"\necho -n \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\" | xargs -0 /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $GITVERSION\"\nfi";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

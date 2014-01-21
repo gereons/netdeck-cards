@@ -328,12 +328,12 @@
 
 -(void) deckChanged:(NSNotification*)sender
 {
+    [self refresh];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
     {
         [self saveDeck:nil];
     }
-    
-    [self refresh];
 }
 
 -(void) refresh
@@ -583,6 +583,7 @@
     
     [CardImageViewPopover showForCard:cc.card fromRect:rect inView:self.tableView];
 }
+
 
 -(void) longPress:(UIGestureRecognizer*)gesture
 {
