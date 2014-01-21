@@ -59,11 +59,7 @@ static NSArray* scopes;
     self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
     self.apSlider.maximumValue = 1+[CardData maxAgendaPoints];
     
-    self.searchText = @"";
-    self.sendNotifications = YES;
-    self.selectedType = kANY;
-    
-    self.selectedValues = [NSMutableDictionary dictionary];
+    [self clearFilters];
 }
 
 -(void) setRole:(NRRole)role
@@ -72,6 +68,7 @@ static NSArray* scopes;
     
     self.muLabel.hidden = role == NRRoleCorp;
     self.muSlider.hidden = role == NRRoleCorp;
+    
     self.apLabel.hidden = role == NRRoleRunner;
     self.apSlider.hidden = role == NRRoleRunner;
 }
@@ -80,10 +77,10 @@ static NSArray* scopes;
 {
     self.sendNotifications = NO;
     
-    self.scope = NRSearchAll;
-    self.searchScope.selectedSegmentIndex = 0;
+    self.scope = NRSearchName;
+    self.searchScope.selectedSegmentIndex = self.scope;
     self.searchField.text = @"";
-    [self textFieldShouldClear:self.searchField];
+    self.searchText = @"";
     
     [self costValueChanged:nil];
     self.costSlider.value = 0;
@@ -101,8 +98,9 @@ static NSArray* scopes;
     [self resetButton:SUBTYPE_BUTTON];
     self.selectedType = kANY;
     
-    self.sendNotifications = YES;
     self.selectedValues = [NSMutableDictionary dictionary];
+    
+    self.sendNotifications = YES;
 }
 
 #pragma mark button callbacks
@@ -279,8 +277,16 @@ static NSArray* scopes;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
+    if (self.searchText.length > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:ADD_TOP_CARD object:self];
+    }
+    else
+    {
+        [textField resignFirstResponder];
+    }
     return NO;
+    
 }
 
 #pragma mark notification

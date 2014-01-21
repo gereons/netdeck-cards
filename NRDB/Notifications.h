@@ -10,6 +10,7 @@
 #define NRDB_Notifications_h
 
 #define UPDATE_FILTER   @"updateFilter"     // card filter, userInfo contains @"type" and @"value"
+#define ADD_TOP_CARD    @"addTopCard"       // card filter: return pressed, add top card, no userInfo
 #define SELECT_IDENTITY @"selectIdentity"   // identity selection, userInfo contains @"code"
 #define DECK_CHANGED    @"deckChanged"      // change to current deck, e.g. count stepper, no userInfo
 #define LOAD_DECK       @"loadDeck"         // load a deck from disk, userInfo contains @"filename" and @"role"

@@ -77,6 +77,7 @@
     [nc addObserver:self selector:@selector(updateFilter:) name:UPDATE_FILTER object:nil];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -242,6 +243,19 @@
     
     [self initCards];
     [self.tableView reloadData];
+}
+
+-(void) addTopCard:(id)sender
+{
+    if (self.cards.count > 0)
+    {
+        NSArray* arr = self.cards[0];
+        if (arr.count > 0)
+        {
+            Card* card = arr[0];
+            [self.deckListViewController addCard:card];
+        }
+    }
 }
 
 #pragma mark - Table View

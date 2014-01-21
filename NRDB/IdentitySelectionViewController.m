@@ -67,17 +67,19 @@
                 Card* card = identities[j];
                 if ([disabledSets containsObject:card.setCode])
                 {
+                    NSLog(@"skip %d", j);
                     continue;
                 }
                 
                 if ([[factions objectAtIndex:i] isEqualToString:card.factionStr])
                 {
-                    [self.identities[i] addObject:card];
-                }
+                    NSMutableArray* arr = self.identities[i];
+                    [arr addObject:card];
                 
-                if ([identity isEqual:card])
-                {
-                    self.selectedIndexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                    if ([identity isEqual:card])
+                    {
+                        self.selectedIndexPath = [NSIndexPath indexPathForRow:arr.count-1 inSection:i];
+                    }
                 }
             }
         }
