@@ -87,4 +87,6 @@
 
 @property (strong) NSString* lastModified;
 
+@property int maxCopies;
+
 @end

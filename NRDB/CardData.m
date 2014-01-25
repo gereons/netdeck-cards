@@ -8,6 +8,7 @@
 
 #import <AFNetworking.h>
 
+#import "Card.h"
 #import "CardData.h"
 #import "Faction.h"
 #import "CardType.h"
@@ -266,6 +267,12 @@ NSString* const kANY = @"Any";
     if (c.influence > maxInf) maxInf = c.influence;
     if (c.cost > maxCost) maxCost = c.cost;
     if (c.agendaPoints > maxAgendaPoints) maxAgendaPoints = c.agendaPoints;
+    
+    c.maxCopies = 3;
+    if ([c.code isEqualToString:DIR_HAAS_PET_PROJ])
+    {
+        c.maxCopies = 1;
+    }
     
     return c;
 }

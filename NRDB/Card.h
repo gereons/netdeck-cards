@@ -55,6 +55,8 @@
 @property (nonatomic, readonly) CGFloat attributedTextHeight;
 @property (readonly) NSString* octgnCode;
 
+@property (readonly) int maxCopies;
+
 +(NSArray*) allForRole:(NRRole)role;
 +(NSArray*) identitiesForRole:(NRRole)role;
 

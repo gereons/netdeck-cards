@@ -169,9 +169,10 @@
     else
     {
         CardCounter* cc = [_cards objectAtIndex:index];
-        if (cc.count < 3)
+        int max = cc.card.maxCopies;
+        if (cc.count < max)
         {
-            cc.count = MIN(3, cc.count + copies);
+            cc.count = MIN(max, cc.count + copies);
         }
     }
     [self sort];

@@ -50,6 +50,7 @@ PROPERTY_PROXY(NSString*, imageSrc)
 PROPERTY_PROXY(int, advancementCost)
 PROPERTY_PROXY(int, agendaPoints)
 PROPERTY_PROXY(NSString*, url)
+PROPERTY_PROXY(int, maxCopies)
 
 static NSMutableArray* allRunnerCards;
 static NSMutableArray* allCorpCards;

@@ -556,6 +556,7 @@
             break;
     }
     
+    cell.copiesStepper.maximumValue = cc.card.maxCopies;
     cell.copiesStepper.value = cc.count;
     // cell.copiesLabel.text = [NSString stringWithFormat:@"%d %@", cc.count, cc.count == 1 ? @"Copy" : @"Copies"];
     cell.copiesLabel.text = [NSString stringWithFormat:@"×%d", cc.count];
