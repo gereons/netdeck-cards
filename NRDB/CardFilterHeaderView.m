@@ -23,6 +23,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 @property NRSearchScope scope;
 @property BOOL sendNotifications;
 @property NSString* selectedType;
+@property NSSet* selectedTypes;
 
 @property NSMutableDictionary* selectedValues;
 
@@ -97,6 +98,7 @@ static NSArray* scopes;
     [self resetButton:FACTION_BUTTON];
     [self resetButton:SUBTYPE_BUTTON];
     self.selectedType = kANY;
+    self.selectedTypes = nil;
     
     self.selectedValues = [NSMutableDictionary dictionary];
     
@@ -111,7 +113,7 @@ static NSArray* scopes;
     TableData* data = [[TableData alloc] initWithValues:[CardType typesForRole:self.role]];
     id selected = [self.selectedValues objectForKey:@(TYPE_BUTTON)];
     
-    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Type" singleSelection:YES selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Type" singleSelection:NO selected:selected];
 }
 
 -(void) setClicked:(UIButton*)sender
@@ -124,10 +126,18 @@ static NSArray* scopes;
 -(void) subtypeClicked:(UIButton*)sender
 {
     TF_CHECKPOINT(@"filter subtype");
-    TableData* data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+    TableData* data;
+    if (self.selectedTypes)
+    {
+        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andTypes:self.selectedTypes]];
+    }
+    else
+    {
+         data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+    }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     
-    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Subtype" singleSelection:YES selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Subtype" singleSelection:NO selected:selected];
 }
 
 -(void) factionClicked:(UIButton*)sender
@@ -147,8 +157,17 @@ static NSArray* scopes;
     
     if (button.tag == TYPE_BUTTON)
     {
-        NSAssert(value != nil, @"value must be non-nil");
-        self.selectedType = value;
+        if (value)
+        {
+            self.selectedType = value;
+            self.selectedTypes = nil;
+        }
+        if (values)
+        {
+            self.selectedType = @"";
+            self.selectedTypes = values;
+        }
+        
         [self resetButton:SUBTYPE_BUTTON];
     }
     [self.selectedValues setObject:value ? value : values forKey:@(button.tag)];

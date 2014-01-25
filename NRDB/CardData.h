@@ -22,6 +22,7 @@
 +(NSArray*) allCorpCards;
 
 +(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type;
++(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types;
 +(NSArray*) identitiesForRole:(NRRole)role;
 
 +(NSArray*) allSets;

@@ -80,4 +80,9 @@ static NSMutableArray* corpTypes;
     return [CardData subtypesForRole:role andType:type];
 }
 
++(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types
+{
+    return [CardData subtypesForRole:role andTypes:types];
+}
+
 @end

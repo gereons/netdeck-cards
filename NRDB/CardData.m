@@ -415,6 +415,21 @@ NSString* const kANY = @"Any";
     return sorted;
 }
 
++(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types
+{
+    NSMutableSet* subtypes = [NSMutableSet set];
+    for (NSString* type in types)
+    {
+        NSMutableArray* arr = [NSMutableArray arrayWithArray:[CardData subtypesForRole:role andType:type]];
+        [arr removeObjectAtIndex:0]; // remove "Any" entry
+        [subtypes addObjectsFromArray:arr];
+    }
+    
+    NSMutableArray* result = [[[subtypes allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] mutableCopy];
+    [result insertObject:kANY atIndex:0];
+    return result;
+}
+
 +(NSArray*) allSets
 {
     static NSMutableArray* setsArray;

@@ -67,7 +67,6 @@
                 Card* card = identities[j];
                 if ([disabledSets containsObject:card.setCode])
                 {
-                    NSLog(@"skip %d", j);
                     continue;
                 }
                 

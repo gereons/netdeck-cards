@@ -17,7 +17,9 @@
 
 @property int cost;
 @property NSString* type;
+@property NSSet* types;
 @property NSString* subtype;
+@property NSSet* subtypes;
 @property int strength;
 @property int mu;
 @property NSString* faction;
@@ -52,7 +54,9 @@
 {
     self.cost = -1;
     self.type = @"";
+    self.types = nil;
     self.subtype = @"";
+    self.subtypes = nil;
     self.strength = -1;
     self.mu = -1;
     self.faction = @"";
@@ -68,6 +72,13 @@
 -(void) filterByType:(NSString*) type
 {
     self.type = type;
+    self.types = nil;
+}
+
+-(void) filterByTypes:(NSSet *)types
+{
+    self.type = @"";
+    self.types = types;
 }
 
 -(void) filterByFaction:(NSString*) faction
@@ -130,6 +141,13 @@
 -(void) filterBySubtype:(NSString *)subtype
 {
     self.subtype = subtype;
+    self.subtypes = nil;
+}
+
+-(void) filterBySubtypes:(NSSet *)subtypes
+{
+    self.subtype = @"";
+    self.subtypes = subtypes;
 }
 
 -(void) filterByStrength:(int)strength
@@ -158,6 +176,11 @@
     if (self.type.length > 0 && ![self.type isEqualToString:kANY])
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"typeStr LIKE[cd] %@", self.type];
+        [filteredCards filterUsingPredicate:predicate];
+    }
+    if (self.types.count > 0)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"typeStr IN %@", self.types];
         [filteredCards filterUsingPredicate:predicate];
     }
     if (self.mu != -1)
@@ -194,6 +217,17 @@
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%@ IN subtypes", self.subtype];
         [filteredCards filterUsingPredicate:predicate];
+    }
+    if (self.subtypes.count > 0)
+    {
+        NSMutableArray *predicates = [[NSMutableArray alloc] init];
+        for (NSString* subtype in self.subtypes)
+        {
+            [predicates addObject:[NSPredicate predicateWithFormat:@"%@ IN subtypes", subtype]];
+        }
+        NSPredicate *compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
+        [filteredCards filterUsingPredicate:compoundPredicate];
+
     }
     if (self.agendaPoints != -1)
     {

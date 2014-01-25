@@ -15,5 +15,6 @@
 
 +(NSArray*) typesForRole:(NRRole)role;
 +(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type;
++(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types;
 
 @end

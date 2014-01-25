@@ -20,7 +20,9 @@
 
 -(void) filterByCost:(int) cost;
 -(void) filterByType:(NSString*) type;
+-(void) filterByTypes:(NSSet*) types;
 -(void) filterBySubtype:(NSString*) subtype;
+-(void) filterBySubtypes:(NSSet*) subtypes;
 -(void) filterByMU:(int)mu;
 -(void) filterByFaction:(NSString*) faction;
 -(void) filterByFactions:(NSSet*) factions;

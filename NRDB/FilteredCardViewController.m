@@ -171,10 +171,12 @@
     
     if ([type isEqualToString:@"mu"])
     {
+        NSAssert(num != nil, @"need number");
         [self.cardList filterByMU:[num intValue]];
     }
     else if ([type isEqualToString:@"influence"])
     {
+        NSAssert(num != nil, @"need number");
         [self.cardList filterByInfluence:[num intValue]];
     }
     else if ([type isEqualToString:@"faction"])
@@ -185,24 +187,36 @@
         }
         else
         {
+            NSAssert(values != nil, @"need values");
             [self.cardList filterByFactions:values];
         }
     }
     else if ([type isEqualToString:@"card name"])
     {
+        NSAssert(value != nil, @"need value");
         [self.cardList filterByName:value];
     }
     else if ([type isEqualToString:@"card text"])
     {
+        NSAssert(value != nil, @"need value");
         [self.cardList filterByText:value];
     }
     else if ([type isEqualToString:@"all text"])
     {
+        NSAssert(value != nil, @"need value");
         [self.cardList filterByTextOrName:value];
     }
     else if ([type isEqualToString:@"subtype"])
     {
-        [self.cardList filterBySubtype:value];
+        if (value)
+        {
+            [self.cardList filterBySubtype:value];
+        }
+        else
+        {
+            NSAssert(values != nil, @"need values");
+            [self.cardList filterBySubtypes:values];
+        }
     }
     else if ([type isEqualToString:@"set"])
     {
@@ -212,23 +226,34 @@
         }
         else
         {
+            NSAssert(values != nil, @"need values");
             [self.cardList filterBySets:values];
         }
     }
     else if ([type isEqualToString:@"strength"])
     {
+        NSAssert(num != nil, @"need number");
         [self.cardList filterByStrength:[num intValue]];
     }
     else if ([type isEqualToString:@"card cost"])
     {
+        NSAssert(num != nil, @"need number");
         [self.cardList filterByCost:[num intValue]];
     }
     else if ([type isEqualToString:@"type"])
     {
-        [self.cardList filterByType:value];
+        if (value)
+        {
+            [self.cardList filterByType:value];
+        }
+        else
+        {
+            [self.cardList filterByTypes:values];
+        }
     }
     else if ([type isEqualToString:@"agendaPoints"])
     {
+        NSAssert(num != nil, @"need number");
         [self.cardList filterByAgendaPoints:[num intValue]];
     }
     
