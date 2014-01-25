@@ -148,7 +148,7 @@
     }
     
     int count = cc.count;
-    if ([self.identity.code isEqualToString:THE_PROFESSOR])
+    if (cc.card.type == NRCardTypeProgram && [self.identity.code isEqualToString:THE_PROFESSOR])
     {
         --count;
     }

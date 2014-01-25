@@ -9,4 +9,4 @@
 - filter: show results instead of deck
 
 - images needed: cardPlaceholder, credit/str/mu/trash/ap icons
-- preload all card images? (and don't invalidate cache?)
+- zoom for card img view
