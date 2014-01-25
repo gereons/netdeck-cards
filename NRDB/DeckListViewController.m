@@ -492,22 +492,15 @@
     // cell.descr.frame = CGRectSetSize(cell.descr.frame, 417, card.attributedTextHeight);
     // cell.descr.attributedText = ability;
     
-    cell.influence.textColor = card.factionColor;
-    int influence = [self.deck influenceFor:cc];
     if (cell.cardCounter.card.type == NRCardTypeAgenda)
     {
-        cell.influence.text = [NSString stringWithFormat:@"%d", card.agendaPoints * cc.count];
-    }
-    else if (influence > 0)
-    {
-        cell.influence.text = [NSString stringWithFormat:@"%d", influence];
+        cell.influence = card.agendaPoints * cc.count;
     }
     else
     {
-        cell.influence.text = @"";
+        cell.influence = [self.deck influenceFor:cc];;
     }
-
-    cell.influence.hidden = card.type == NRCardTypeIdentity;
+    
     cell.copiesLabel.hidden = card.type == NRCardTypeIdentity;
     cell.copiesStepper.hidden = card.type == NRCardTypeIdentity;
     

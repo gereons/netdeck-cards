@@ -12,7 +12,7 @@
 
 @interface CardCell : UITableViewCell
 
-@property IBOutlet UILabel* influence;
+@property IBOutlet UILabel* influenceLabel;
 @property IBOutlet UILabel* name;
 @property IBOutlet UILabel* type;
 @property IBOutlet UILabel* cost;
@@ -21,7 +21,14 @@
 @property IBOutlet UILabel* copiesLabel;
 @property IBOutlet UIStepper* copiesStepper;
 
+@property IBOutlet UIView* pip1;
+@property IBOutlet UIView* pip2;
+@property IBOutlet UIView* pip3;
+@property IBOutlet UIView* pip4;
+@property IBOutlet UIView* pip5;
+
 @property (nonatomic) CardCounter* cardCounter;
+@property (nonatomic) int influence;
 
 -(IBAction)copiesChanged:(id)sender;
 

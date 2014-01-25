@@ -20,13 +20,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Self Modifying Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LHx-pP-GP4" userLabel="Card Name">
-                        <rect key="frame" x="50" y="14" width="410" height="21"/>
+                        <rect key="frame" x="61" y="14" width="410" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shaper Program: Daemon - AI - Illicit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kpf-UU-065" userLabel="Card Type">
-                        <rect key="frame" x="50" y="50" width="410" height="21"/>
+                        <rect key="frame" x="61" y="50" width="410" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
@@ -63,15 +63,52 @@
                             <action selector="copiesChanged:" destination="J3f-8X-7gb" eventType="valueChanged" id="cPp-DE-p4q"/>
                         </connections>
                     </stepper>
+                    <view contentMode="scaleToFill" id="KkZ-vK-r1B" userLabel="Pips">
+                        <rect key="frame" x="41" y="7" width="12" height="68"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="D19-2f-jBu" userLabel="Pip 2">
+                                <rect key="frame" x="0.0" y="14" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="wBH-SU-RUC" userLabel="Pip 3">
+                                <rect key="frame" x="0.0" y="28" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="6rU-nK-OqS" userLabel="Pip 4">
+                                <rect key="frame" x="0.0" y="42" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="lbC-yc-jmr" userLabel="Pip 5">
+                                <rect key="frame" x="0.0" y="56" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="NSS-Gt-da0" userLabel="Pip 1">
+                                <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="copiesLabel" destination="WIW-WX-FJK" id="yIf-tW-6BY"/>
                 <outlet property="copiesStepper" destination="3aS-Fa-lwC" id="KGd-fv-IUW"/>
                 <outlet property="cost" destination="AR8-Jc-YmL" id="14L-UM-QZh"/>
-                <outlet property="influence" destination="dFI-vh-aBO" id="awt-9F-Qht"/>
+                <outlet property="influenceLabel" destination="dFI-vh-aBO" id="FBo-zh-Jsy"/>
                 <outlet property="mu" destination="BMF-sc-Oao" id="i6k-yH-hY9"/>
                 <outlet property="name" destination="LHx-pP-GP4" id="Kwb-45-OZ4"/>
+                <outlet property="pip1" destination="NSS-Gt-da0" id="ca1-M7-TVO"/>
+                <outlet property="pip2" destination="D19-2f-jBu" id="G90-1P-94J"/>
+                <outlet property="pip3" destination="wBH-SU-RUC" id="ndJ-ns-Utw"/>
+                <outlet property="pip4" destination="6rU-nK-OqS" id="FS0-QL-sZc"/>
+                <outlet property="pip5" destination="lbC-yc-jmr" id="33Q-40-vtW"/>
                 <outlet property="strength" destination="Yeu-jh-ffh" id="I42-KY-HaY"/>
                 <outlet property="type" destination="Kpf-UU-065" id="aHS-vI-r2t"/>
             </connections>
