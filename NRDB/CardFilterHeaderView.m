@@ -57,8 +57,7 @@ static NSArray* scopes;
     self.muSlider.maximumValue = 1+[CardData maxMU];
     self.strengthSlider.maximumValue = 1+[CardData maxStrength];
     self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
-    self.apSlider.maximumValue = 1+[CardData maxAgendaPoints];
-    self.apSlider.minimumValue = 1;
+    self.apSlider.maximumValue = [CardData maxAgendaPoints]; // NB: no +1 here!
     
     [self clearFilters];
 }
@@ -201,8 +200,12 @@ static NSArray* scopes;
 {
     TF_CHECKPOINT(@"filter ap");
     int value = round(sender.value);
-    // NSLog(@"inf: %f %d", sender.value, value);
-    sender.value = value--;
+    // NSLog(@"ap: %f %d", sender.value, value);
+    if (value == 0)
+    {
+        value = -1;
+    }
+    sender.value = value;
     self.apLabel.text = [NSString stringWithFormat:@"AP: %@", value == -1 ? @"All" : [@(value) stringValue]];
     [self postNotification:@"agendaPoints" value:@(value)];
 }
