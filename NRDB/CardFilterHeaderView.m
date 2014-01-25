@@ -58,6 +58,7 @@ static NSArray* scopes;
     self.strengthSlider.maximumValue = 1+[CardData maxStrength];
     self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
     self.apSlider.maximumValue = 1+[CardData maxAgendaPoints];
+    self.apSlider.minimumValue = 1;
     
     [self clearFilters];
 }
