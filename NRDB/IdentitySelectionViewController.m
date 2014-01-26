@@ -97,9 +97,6 @@
     doubleTap.numberOfTapsRequired = 2;
     [self.tableView addGestureRecognizer:doubleTap];
     
-    UIGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    [self.tableView addGestureRecognizer:longPress];
-    
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
@@ -135,31 +132,6 @@
     }
 }
 
--(void) longPress:(UIGestureRecognizer*)gesture
-{
-    if (gesture.state == UIGestureRecognizerStateBegan)
-    {
-        CGPoint p = [gesture locationInView:self.tableView];
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
-        if (indexPath != nil)
-        {
-            NSArray* arr = self.identities[indexPath.section];
-            Card* card = arr[indexPath.row];
-            
-            CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-            
-            [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
-        }
-    }
-    BOOL hold = [[NSUserDefaults standardUserDefaults] boolForKey:HOLD_FOR_IMAGE];
-    if (gesture.state == UIGestureRecognizerStateEnded && hold)
-    {
-        [CardImageViewPopover dismiss];
-    }
-}
-
-
 #pragma mark table view
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -183,6 +155,8 @@
         cell = [[IdentityViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     }
+    [cell.infoButton addTarget:self action:@selector(showImage:) forControlEvents:UIControlEventTouchUpInside];
+    
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     NSMutableArray* arr = self.identities[indexPath.section];
@@ -200,6 +174,15 @@
     
     cell.deckSizeLabel.text = [@(c.minimumDecksize) stringValue];
     cell.influenceLimitLabel.text = [@(c.influenceLimit) stringValue];
+    
+    if (self.role == NRRoleRunner)
+    {
+        cell.linkLabel.text = [NSString stringWithFormat:@"%d", c.baseLink];
+    }
+    else
+    {
+        cell.linkLabel.text = @"";
+    }
     
     return cell;
 }
@@ -225,6 +208,19 @@
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return self.factionNames[section];
+}
+
+-(void) showImage:(UIButton*)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    NSMutableArray* arr = self.identities[indexPath.section];
+    Card* card = arr[indexPath.row];
+    
+    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
+    rect.origin.x = sender.frame.origin.x;
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
 }
 
 @end
