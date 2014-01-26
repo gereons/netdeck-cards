@@ -42,6 +42,8 @@
 @property BOOL autoSaveDropbox;
 @property CGFloat normalTableHeight;
 
+@property CGFloat scale;
+
 @end
 
 @implementation DeckListViewController
@@ -60,6 +62,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.scale = 1.0;
     
     if (self.filename)
     {
@@ -126,6 +130,9 @@
     
     nib = [UINib nibWithNibName:@"CardImageCell" bundle:nil];
     [self.collectionView registerNib:nib forCellWithReuseIdentifier:@"cardCell"];
+    
+    UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
+    [self.collectionView addGestureRecognizer:pinch];
     
     if (self.deck.identity == nil && self.filename == nil)
     {
@@ -632,7 +639,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(CARD_WIDTH, CARD_HEIGHT);
+    return CGSizeMake(CARD_WIDTH * self.scale, CARD_HEIGHT * self.scale);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -674,7 +681,7 @@
     
     // NSLog(@"selected %@", cc.card.name);
     CardImageCell* cell = (CardImageCell*)[collectionView cellForItemAtIndexPath:indexPath];
-    CGRect rect = CGRectMake(cell.center.x, cell.center.y-100, 1, 1);
+    CGRect rect = CGRectMake(cell.center.x, cell.center.y-86, 1, 1); // 86 is half the height of a CardImagePopup
     [CardImagePopup showForCard:cc fromRect:rect inView:self.collectionView];
 }
 
@@ -713,7 +720,15 @@
         }
         else
         {
-            cell.copiesLabel.text = [NSString stringWithFormat:@"×%d · %d Influence", cc.count, cc.count*cc.card.influence];
+            int influence = [self.deck influenceFor:cc];
+            if (influence > 0)
+            {
+                cell.copiesLabel.text = [NSString stringWithFormat:@"×%d · %d Influence", cc.count, influence];
+            }
+            else
+            {
+                cell.copiesLabel.text = [NSString stringWithFormat:@"×%d", cc.count];
+            }
         }
     }
     
@@ -728,6 +743,24 @@
                                      }];
 
     return cell;
+}
+
+-(void) pinchGesture:(UIPinchGestureRecognizer*)gesture
+{
+    static CGFloat scaleStart;
+    
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
+        scaleStart = self.scale;
+    }
+    else if (gesture.state == UIGestureRecognizerStateChanged)
+    {
+        self.scale = scaleStart * gesture.scale;
+    }
+    self.scale = MAX(self.scale, 0.5);
+    self.scale = MIN(self.scale, 1.0);
+    
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 #pragma mark printing
