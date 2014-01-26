@@ -490,13 +490,17 @@
     
     Card* card = cc.card;
     
-    if (card.unique)
+    if (card.type == NRCardTypeIdentity)
     {
-        cell.name.text = [NSString stringWithFormat:@"%@ •", card.name];
+        cell.name.text = card.name;
+    }
+    else if (card.unique)
+    {
+        cell.name.text = [NSString stringWithFormat:@"%@ • ×%d", card.name, cc.count];
     }
     else
     {
-        cell.name.text = card.name;
+        cell.name.text = [NSString stringWithFormat:@"%@ ×%d", card.name, cc.count];
     }
     
     NSString* factionName = [Faction name:card.faction];
