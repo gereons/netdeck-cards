@@ -40,6 +40,7 @@
 
 @property NSString* filename;
 @property BOOL autoSaveDropbox;
+@property CGFloat normalTableHeight;
 
 @end
 
@@ -107,8 +108,12 @@
         [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"743-printer"] style:UIBarButtonItemStylePlain target:self action:@selector(printDeck:)],
     ];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    
     
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
@@ -127,6 +132,26 @@
         [self selectIdentity:nil];
     }
 }
+
+#pragma mark keyboard show/hide
+
+#define KEYBOARD_HEIGHT_OFFSET  225
+
+-(void) willShowKeyboard:(NSNotification*)sender
+{
+    self.normalTableHeight = self.tableView.frame.size.height;
+    
+    CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords
+    float tableHeight = self.normalTableHeight - kbHeight + 44;
+    self.tableView.frame = CGRectSetHeight(self.tableView.frame, tableHeight);
+}
+
+-(void) willHideKeyboard:(NSNotification*)sender
+{
+   self.tableView.frame = CGRectSetHeight(self.tableView.frame, self.normalTableHeight);
+}
+
 
 -(void) loadDeckFromFile:(NSString *)filename
 {
