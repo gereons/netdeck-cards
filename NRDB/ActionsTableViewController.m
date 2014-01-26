@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];
     
-    UIToolbar* footer = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 684, 320, 40)];
+    UIToolbar* footer = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 664, 320, 40)];
     // footer.text = @"footer";
     [self.view addSubview:footer];
     

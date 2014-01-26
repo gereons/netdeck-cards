@@ -28,10 +28,23 @@
     
     self.webView.scrollView.bounces = NO;
     
-    NSString* resource = NSLocalizedString(@"About", nil);
-    
-    NSURL* url= [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:resource ofType:@"html"] isDirectory:NO];
+    NSURL* url= [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"About" ofType:@"html"] isDirectory:NO];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+#if defined(DEBUG) || defined(ADHOC)
+    // CFBundleVersion contains the git describe output
+    NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+#else
+    // CFBundleShortVersionString contains the main version
+    NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+#endif
+    
+    NSString* title = [NSString stringWithFormat:@"About NRDB v%@", version];
+    self.navigationController.navigationBar.topItem.title = title;
 }
 
 -(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType
