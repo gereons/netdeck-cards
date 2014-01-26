@@ -357,14 +357,13 @@
         [footer appendString:[NSString stringWithFormat:@" · %d Agenda Points", self.deck.agendaPoints]];
     }
     
-    NSString* reason;
-    BOOL valid = [self.deck valid:&reason];
-    if (!valid)
+    NSArray* reasons = [self.deck checkValidity];
+    if (reasons.count > 0)
     {
         [footer appendString:@" · "];
-        [footer appendString:reason];
+        [footer appendString:reasons[0]];
     }
-    self.footerLabel.textColor = valid ? [UIColor darkGrayColor] : [UIColor redColor];
+    self.footerLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
     
     self.footerLabel.text = footer;
 }

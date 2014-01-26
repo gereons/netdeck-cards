@@ -25,7 +25,7 @@
 
 @property NSString* filename;
 
--(BOOL) valid:(NSString**)reason;
+-(NSArray*) checkValidity; // returns array of reasons, deck is ok if count==0
 
 -(void) addCard:(Card*) card copies:(int)copies;
 -(void) removeCard:(Card*) card;

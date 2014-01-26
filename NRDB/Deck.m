@@ -34,12 +34,12 @@
     return self->_cards;
 }
 
--(BOOL) valid:(NSString**)reason
+-(NSArray*) checkValidity
 {
+    NSMutableArray* reasons = [NSMutableArray array];
     if (self.identity == nil)
     {
-        *reason = @"No Identity selected";
-        return NO;
+        [reasons addObject:@"No Identity selected"];
     }
     
     if (self.identity.role == NRRoleCorp)
@@ -48,8 +48,7 @@
         int apRequired = ((self.size / 5) + 1) * 2;
         if (self.agendaPoints != apRequired && self.agendaPoints != apRequired+1)
         {
-            *reason = [NSString stringWithFormat:@"Must have %d or %d Agenda Points", apRequired, apRequired+1];
-            return NO;
+            [reasons addObject:[NSString stringWithFormat:@"Must have %d or %d Agenda Points", apRequired, apRequired+1]];
         }
     
         BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
@@ -60,36 +59,31 @@
             Card* card = cc.card;
             if ([card.code isEqualToString:DIR_HAAS_PET_PROJ] && cc.count > 1)
             {
-                *reason = @"Too many pet projects";
-                return NO;
+                [reasons addObject:@"Too many pet projects"];
             }
             
             if (noJinteki && card.faction == NRFactionJinteki)
             {
-                *reason = @"Cannot include Jinteki";
-                return NO;
+                [reasons addObject:@"Cannot include Jinteki"];
             }
             
             if (card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction)
             {
-                *reason = @"Cannot use out-of-faction agendas";
-                return NO;
+                [reasons addObject:@"Cannot use out-of-faction agendas"];
             }
         }
     }
     
     if (self.size < self.identity.minimumDecksize)
     {
-        *reason = @"Not enough cards";
-        return NO;
+        [reasons addObject:@"Not enough cards"];
     }
     if (self.influence > self.identity.influenceLimit)
     {
-        *reason = @"Too much influence used";
-        return NO;
+        [reasons addObject:@"Too much influence used"];
     }
 
-    return YES;
+    return reasons;
 }
 
 -(int) size
@@ -100,6 +94,21 @@
         sz += cc.count;
     }
     return sz;
+}
+
+-(int) agendaPoints
+{
+    int ap = 0;
+    
+    for (CardCounter* cc in _cards)
+    {
+        if (cc.card.type == NRCardTypeAgenda)
+        {
+            NSAssert(cc.count > 0 && cc.count < 4, @"invalid card count");
+            ap += cc.card.agendaPoints * cc.count;
+        }
+    }
+    return ap;
 }
 
 -(int) influence
@@ -125,29 +134,15 @@
     return inf;
 }
 
--(int) agendaPoints
-{
-    int ap = 0;
-    
-    for (CardCounter* cc in _cards)
-    {
-        if (cc.card.type == NRCardTypeAgenda)
-        {
-            NSAssert(cc.count > 0 && cc.count < 4, @"invalid card count");
-            ap += cc.card.agendaPoints * cc.count;
-        }
-    }
-    return ap;
-}
-
 -(int) influenceFor:(CardCounter *)cc
 {
-    if (self.identity.faction == cc.card.faction)
+    if (self.identity.faction == cc.card.faction || cc.card.influence == -1)
     {
         return 0;
     }
     
     int count = cc.count;
+    NSAssert(count > 0 && count < 4, @"invalid card count");
     if (cc.card.type == NRCardTypeProgram && [self.identity.code isEqualToString:THE_PROFESSOR])
     {
         --count;
