@@ -104,6 +104,11 @@
 
 -(void) willShowKeyboard:(NSNotification*)sender
 {
+    if (!self.filterView.searchField.isFirstResponder)
+    {
+        return;
+    }
+    
     TF_CHECKPOINT(@"filter text entry");
     self.normalTableHeight = self.tableView.frame.size.height;
     
@@ -124,6 +129,11 @@
 
 -(void) willHideKeyboard:(NSNotification*)sender
 {
+    if (!self.filterView.searchField.isFirstResponder)
+    {
+        return;
+    }
+    
     float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
     [UIView animateWithDuration:animDuration

@@ -117,8 +117,7 @@
     [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    
-    
+
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
     
@@ -158,7 +157,6 @@
 {
    self.tableView.frame = CGRectSetHeight(self.tableView.frame, self.normalTableHeight);
 }
-
 
 -(void) loadDeckFromFile:(NSString *)filename
 {
