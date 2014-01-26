@@ -86,12 +86,6 @@
     UINib* nib = [UINib nibWithNibName:@"CardCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"cardCell"];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:HOLD_FOR_IMAGE])
-    {
-        UIGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-        [self.tableView addGestureRecognizer:longPress];
-    }
-    
     UIView* footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
     
@@ -609,25 +603,6 @@
     CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
     
     [CardImageViewPopover showForCard:cc.card fromRect:rect inView:self.tableView];
-}
-
-
--(void) longPress:(UIGestureRecognizer*)gesture
-{
-    if (gesture.state == UIGestureRecognizerStateBegan)
-    {
-        CGPoint p = [gesture locationInView:self.tableView];
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
-        if (indexPath != nil)
-        {
-            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-        }
-    }
-    if (gesture.state == UIGestureRecognizerStateEnded)
-    {
-        [CardImageViewPopover dismiss];
-    }
 }
 
 #pragma mark collectionview

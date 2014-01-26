@@ -24,7 +24,6 @@
 #define USE_DROPBOX     @"useDropbox"
 #define USE_EVERNOTE    @"useEvernote"
 
-#define HOLD_FOR_IMAGE  @"holdForImage"
 #define AUTO_SAVE       @"autoSave"
 #define AUTO_SAVE_DB    @"autoSaveDropbox"
 

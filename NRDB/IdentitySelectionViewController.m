@@ -215,7 +215,7 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    NSMutableArray* arr = self.identities[indexPath.section];
+    NSArray* arr = self.identities[indexPath.section];
     Card* card = arr[indexPath.row];
     
     CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];

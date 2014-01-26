@@ -60,7 +60,6 @@
         NEXT_DOWNLOAD: @"never",
         USE_DROPBOX: @(NO),
         USE_EVERNOTE: @(NO),
-        HOLD_FOR_IMAGE: @(NO),
         AUTO_SAVE: @(YES),
         AUTO_SAVE_DB: @(NO)
     }];

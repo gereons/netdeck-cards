@@ -70,9 +70,6 @@
     self.cardList = [[CardList alloc] initForRole:self.role];
     [self initCards];
     
-    UIGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    [self.tableView addGestureRecognizer:longPress];
-    
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(updateFilter:) name:UPDATE_FILTER object:nil];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
@@ -328,6 +325,12 @@
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        
+        UIButton* button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        button.frame = CGRectMake(280, 5, 30, 30);
+        [cell.contentView addSubview:button];
+        
+        [button addTarget:self action:@selector(showImage:) forControlEvents:UIControlEventTouchUpInside];
     }
 
     cell.textLabel.font = [UIFont systemFontOfSize:17];
@@ -355,28 +358,16 @@
 
 #pragma mark card popup
 
--(void) longPress:(UIGestureRecognizer*)gesture
+-(void) showImage:(UIButton*)sender
 {
-    if (gesture.state == UIGestureRecognizerStateBegan)
-    {
-        CGPoint p = [gesture locationInView:self.tableView];
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
-        if (indexPath != nil)
-        {
-            NSArray* cards = self.cards[indexPath.section];
-            Card *card = cards[indexPath.row];
-            CGRect frame = [self.tableView rectForRowAtIndexPath:indexPath];
-            
-            [CardImageViewPopover showForCard:card fromRect:frame inView:self.tableView];
-        }
-    }
-    BOOL hold = [[NSUserDefaults standardUserDefaults] boolForKey:HOLD_FOR_IMAGE];
-    if (gesture.state == UIGestureRecognizerStateEnded && hold)
-    {
-        [CardImageViewPopover dismiss];
-    }
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    NSArray* cards = self.cards[indexPath.section];
+    Card *card = cards[indexPath.row];
+    
+    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
+    // rect.origin.x = sender.frame.origin.x;
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
 }
-
-
 @end
