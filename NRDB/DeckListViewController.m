@@ -22,7 +22,7 @@
 #import "CardType.h"
 #import "DeckExport.h"
 
-#import "LargeCardCell.h"
+#import "CardCell.h"
 #import "CardImageCell.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
@@ -43,6 +43,7 @@
 @property CGFloat normalTableHeight;
 
 @property CGFloat scale;
+@property BOOL largeCells;
 
 @end
 
@@ -81,10 +82,11 @@
     }
     
     [self initCards];
-    [self refresh];
     
-    UINib* nib = [UINib nibWithNibName:@"LargeCardCell" bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:@"cardCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LargeCardCell" bundle:nil] forCellReuseIdentifier:@"largeCardCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SmallCardCell" bundle:nil] forCellReuseIdentifier:@"smallCardCell"];
+    self.largeCells = YES;
+    [self refresh];
     
     UIView* footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
@@ -92,7 +94,16 @@
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = @"Deck";
     
-    self.toggleViewButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"705-photos"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleView:)];
+    // self.toggleViewButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"705-photos"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleView:)];
+    NSArray* selections = @[
+        [UIImage imageNamed:@"854-list"],
+        [UIImage imageNamed:@"705-photos"],
+        [UIImage imageNamed:@"854-list"]
+    ];
+    UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
+    viewSelector.selectedSegmentIndex = 0;
+    [viewSelector addTarget:self action:@selector(toggleView:) forControlEvents:UIControlEventValueChanged];
+    self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
     
     topItem.leftBarButtonItems = @[
         [[UIBarButtonItem alloc] initWithTitle:@"Identity" style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)],
@@ -121,8 +132,7 @@
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     self.autoSaveDropbox = [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
     
-    nib = [UINib nibWithNibName:@"CardImageCell" bundle:nil];
-    [self.collectionView registerNib:nib forCellWithReuseIdentifier:@"cardCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CardImageCell" bundle:nil] forCellWithReuseIdentifier:@"cardImageCell"];
     
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
@@ -323,14 +333,13 @@
     }
 }
 
--(void) toggleView:(id)sender
+-(void) toggleView:(UISegmentedControl*)sender
 {
     TF_CHECKPOINT(@"toggle deck view");
-    self.tableView.hidden = !self.tableView.hidden;
-    self.collectionView.hidden = !self.collectionView.hidden;
+    self.tableView.hidden = sender.selectedSegmentIndex == 1;
+    self.collectionView.hidden = sender.selectedSegmentIndex != 1;
     
-    NSString* img = self.tableView.hidden ? @"854-list" : @"705-photos";
-    self.toggleViewButton.image = [UIImage imageNamed:img];
+    self.largeCells = sender.selectedSegmentIndex == 0;
     
     [self reloadViews];
 }
@@ -426,7 +435,7 @@
     {
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
         
-        LargeCardCell* cell = (LargeCardCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        CardCell* cell = (CardCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         [UIView animateWithDuration:0.1
                               delay:0.0
                             options:UIViewAnimationOptionAllowUserInteraction
@@ -448,11 +457,7 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 83;
-    
-    NSArray* arr = self.cards[indexPath.section];
-    CardCounter* cc = arr[indexPath.row];
-    return 50 + cc.card.attributedTextHeight;
+    return self.largeCells ? 83 : 40;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -468,13 +473,13 @@
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [self.sections objectAtIndex:section];
+    return self.largeCells ? [self.sections objectAtIndex:section] : nil;
 }
 
-- (LargeCardCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CardCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* cellIdentifier = @"cardCell";
-    LargeCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    NSString* cellIdentifier = self.largeCells ? @"largeCardCell" : @"smallCardCell";
+    CardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     cell.separatorInset = UIEdgeInsetsZero;
     
@@ -571,7 +576,7 @@
 
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* cellIdentifier = @"cardCell";
+    static NSString* cellIdentifier = @"cardImageCell";
     
     CardImageCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     if (cell == nil)

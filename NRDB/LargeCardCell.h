@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CardCell.h"
 
-@class CardCounter, Deck;
-
-@interface LargeCardCell : UITableViewCell
+@interface LargeCardCell : CardCell
 
 @property IBOutlet UILabel* influenceLabel;
 @property IBOutlet UILabel* name;
@@ -27,9 +26,6 @@
 @property IBOutlet UIView* pip4;
 @property IBOutlet UIView* pip5;
 
-@property Deck* deck;
-@property (nonatomic) CardCounter* cardCounter;
-
--(IBAction)copiesChanged:(id)sender;
+// -(IBAction)copiesChanged:(id)sender;
 
 @end

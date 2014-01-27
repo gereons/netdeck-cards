@@ -87,6 +87,9 @@
 		3ACCEE251869B10700CC3537 /* CardFilterHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE241869B10700CC3537 /* CardFilterHeaderView.xib */; };
 		3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */; };
 		3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */; };
+		3AD066791896CD2100FF1666 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD066781896CD2100FF1666 /* CardCell.m */; };
+		3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0667D1896D0F100FF1666 /* SmallCardCell.m */; };
+		3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066811896D5B800FF1666 /* SmallCardCell.xib */; };
 		3ADC17311856401D00FA2DF7 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC17301856401D00FA2DF7 /* CardData.m */; };
 		3ADC17361856632500FA2DF7 /* CardEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC17341856632500FA2DF7 /* CardEditorViewController.m */; };
 		3ADC17371856632500FA2DF7 /* CardEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADC17351856632500FA2DF7 /* CardEditorViewController.xib */; };
@@ -240,6 +243,11 @@
 		3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportDecksViewController.h; sourceTree = "<group>"; };
 		3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportDecksViewController.m; sourceTree = "<group>"; };
 		3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportDecksViewController.xib; sourceTree = "<group>"; };
+		3AD066771896CD2100FF1666 /* CardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCell.h; sourceTree = "<group>"; };
+		3AD066781896CD2100FF1666 /* CardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCell.m; sourceTree = "<group>"; };
+		3AD0667C1896D0F100FF1666 /* SmallCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallCardCell.h; sourceTree = "<group>"; };
+		3AD0667D1896D0F100FF1666 /* SmallCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallCardCell.m; sourceTree = "<group>"; };
+		3AD066811896D5B800FF1666 /* SmallCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallCardCell.xib; sourceTree = "<group>"; };
 		3ADC172F1856401D00FA2DF7 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
 		3ADC17301856401D00FA2DF7 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardData.m; sourceTree = "<group>"; };
 		3ADC17331856632500FA2DF7 /* CardEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardEditorViewController.h; sourceTree = "<group>"; };
@@ -533,9 +541,14 @@
 				3AA440F51854EF720051D4B0 /* DeckListViewController.h */,
 				3AA440F61854EF720051D4B0 /* DeckListViewController.m */,
 				3AA440F71854EF720051D4B0 /* DeckListViewController.xib */,
+				3AD066771896CD2100FF1666 /* CardCell.h */,
+				3AD066781896CD2100FF1666 /* CardCell.m */,
 				3ACCEE211869A25500CC3537 /* LargeCardCell.h */,
 				3ACCEE221869A25500CC3537 /* LargeCardCell.m */,
 				3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */,
+				3AD0667C1896D0F100FF1666 /* SmallCardCell.h */,
+				3AD0667D1896D0F100FF1666 /* SmallCardCell.m */,
+				3AD066811896D5B800FF1666 /* SmallCardCell.xib */,
 				3A7FD6B21881737700F0926F /* CardImageCell.h */,
 				3A7FD6B31881737700F0926F /* CardImageCell.m */,
 				3A7FD6B0188172C100F0926F /* CardImageCell.xib */,
@@ -752,6 +765,7 @@
 			files = (
 				3A38626F1885149300F5630B /* 705-photos@2x.png in Resources */,
 				3A9E7C501884941200A507C3 /* 702-share.png in Resources */,
+				3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */,
 				3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */,
 				3A38627A18851A0D00F5630B /* 854-list.png in Resources */,
 				3A38626E1885149300F5630B /* 705-photos.png in Resources */,
@@ -862,6 +876,7 @@
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,
 				3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */,
+				3AD066791896CD2100FF1666 /* CardCell.m in Sources */,
 				3A5BC3F11849326B00E792F7 /* CardList.m in Sources */,
 				3A4178AA18761BF600DEEFA6 /* IASKSwitch.m in Sources */,
 				3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */,
@@ -877,6 +892,7 @@
 				3A85327D185509B000507B9A /* SettingsViewController.m in Sources */,
 				3A4925041869C70300B22DC5 /* CardFilterHeaderView.m in Sources */,
 				3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */,
+				3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */,
 				3A5BC3F21849326B00E792F7 /* Deck.m in Sources */,
 				3ADE909A18773698006E187F /* SavedDeckCell.m in Sources */,
 				3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */,

@@ -33,17 +33,9 @@
     }
 }
 
--(void) copiesChanged:(UIStepper*)sender
-{
-    int copies = sender.value;
-    self.cardCounter.count = copies;
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
-}
-
 -(void) setCardCounter:(CardCounter *)cc
 {
-    self->_cardCounter = cc;
+    _cardCounter = cc;
     
     Card* card = cc.card;
     
