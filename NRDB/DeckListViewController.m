@@ -62,7 +62,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    UIColor* tint = self.role == NRRoleRunner ? [UIColor redColor] :  [UIColor blueColor];
+    [UIStepper appearance].tintColor = tint;
+    [UIButton appearance].tintColor = tint;
     
     self.scale = 1.0;
     
@@ -141,6 +144,12 @@
     {
         [self selectIdentity:nil];
     }
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [UIButton appearance].tintColor = nil;
+    [UIStepper appearance].tintColor = nil;
 }
 
 #pragma mark keyboard show/hide
