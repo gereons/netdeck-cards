@@ -1,5 +1,5 @@
 //
-//  CardCell.h
+//  LargeCardCell.h
 //  NRDB
 //
 //  Created by Gereon Steffens on 24.12.13.
@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class CardCounter;
+@class CardCounter, Deck;
 
-@interface CardCell : UITableViewCell
+@interface LargeCardCell : UITableViewCell
 
 @property IBOutlet UILabel* influenceLabel;
 @property IBOutlet UILabel* name;
@@ -27,8 +27,8 @@
 @property IBOutlet UIView* pip4;
 @property IBOutlet UIView* pip5;
 
+@property Deck* deck;
 @property (nonatomic) CardCounter* cardCounter;
-@property (nonatomic) int influence;
 
 -(IBAction)copiesChanged:(id)sender;
 

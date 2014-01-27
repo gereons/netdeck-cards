@@ -181,17 +181,16 @@
 -(void) removeCard:(Card *)card copies:(int)copies
 {
     int index = [self findCard:card];
-    if (index != -1)
+    NSAssert(index != -1, @"removing card %@, not in deck", card.name);
+    
+    CardCounter* c = [_cards objectAtIndex:index];
+    if (copies == -1 || copies >= c.count)
     {
-        CardCounter* c = [_cards objectAtIndex:index];
-        if (copies == -1 || copies >= c.count)
-        {
-            [_cards removeObjectAtIndex:index];
-        }
-        else
-        {
-            c.count -= copies;
-        }
+        [_cards removeObjectAtIndex:index];
+    }
+    else
+    {
+        c.count -= copies;
     }
 }
 

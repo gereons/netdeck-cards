@@ -22,7 +22,7 @@
 #import "CardType.h"
 #import "DeckExport.h"
 
-#import "CardCell.h"
+#import "LargeCardCell.h"
 #import "CardImageCell.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
@@ -83,7 +83,7 @@
     [self initCards];
     [self refresh];
     
-    UINib* nib = [UINib nibWithNibName:@"CardCell" bundle:nil];
+    UINib* nib = [UINib nibWithNibName:@"LargeCardCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"cardCell"];
     
     UIView* footer = [[UIView alloc] initWithFrame:CGRectZero];
@@ -426,7 +426,7 @@
     {
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
         
-        CardCell* cell = (CardCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        LargeCardCell* cell = (LargeCardCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         [UIView animateWithDuration:0.1
                               delay:0.0
                             options:UIViewAnimationOptionAllowUserInteraction
@@ -471,115 +471,18 @@
     return [self.sections objectAtIndex:section];
 }
 
-- (CardCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (LargeCardCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* cellIdentifier = @"cardCell";
-    CardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    if (cell == nil)
-    {
-        cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    }
+    LargeCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    
     cell.separatorInset = UIEdgeInsetsZero;
     
     NSArray* arr = self.cards[indexPath.section];
     CardCounter* cc = arr[indexPath.row];
     
+    cell.deck = self.deck;
     cell.cardCounter = cc;
-    cell.tag = indexPath.section;
-    
-    Card* card = cc.card;
-    
-    if (card.type == NRCardTypeIdentity)
-    {
-        cell.name.text = card.name;
-    }
-    else if (card.unique)
-    {
-        cell.name.text = [NSString stringWithFormat:@"%@ • ×%d", card.name, cc.count];
-    }
-    else
-    {
-        cell.name.text = [NSString stringWithFormat:@"%@ ×%d", card.name, cc.count];
-    }
-    
-    NSString* factionName = [Faction name:card.faction];
-    NSString* typeName = [CardType name:card.type];
-    
-    NSString* subtype = card.subtype;
-    if (subtype)
-    {
-        cell.type.text = [NSString stringWithFormat:@"%@ %@: %@", factionName, typeName, card.subtype];
-    }
-    else
-    {
-        cell.type.text = [NSString stringWithFormat:@"%@ %@", factionName, typeName];
-    }
-    
-    // NSAttributedString* ability = card.attributedText
-    // cell.descr.frame = CGRectSetSize(cell.descr.frame, 417, card.attributedTextHeight);
-    // cell.descr.attributedText = ability;
-    
-    if (cell.cardCounter.card.type == NRCardTypeAgenda)
-    {
-        cell.influence = card.agendaPoints * cc.count;
-    }
-    else
-    {
-        cell.influence = [self.deck influenceFor:cc];;
-    }
-    
-    cell.copiesLabel.hidden = card.type == NRCardTypeIdentity;
-    cell.copiesStepper.hidden = card.type == NRCardTypeIdentity;
-    
-    // labels from top: cost/strength/mu
-    switch (card.type)
-    {
-        case NRCardTypeIdentity:
-            cell.cost.text = [@(card.minimumDecksize) stringValue];
-            cell.strength.text = [@(card.influenceLimit) stringValue];
-            if (card.role == NRRoleRunner)
-            {
-                cell.mu.text = [NSString stringWithFormat:@"%d Link", card.baseLink];
-            }
-            else
-            {
-                cell.mu.text = @"";
-            }
-            break;
-
-        case NRCardTypeProgram:
-        case NRCardTypeResource:
-        case NRCardTypeEvent:
-        case NRCardTypeHardware:
-        case NRCardTypeIce:
-            cell.cost.text = card.cost != -1 ? [NSString stringWithFormat:@"%d Cr", card.cost] : @"";
-            cell.strength.text = card.strength != -1 ? [NSString stringWithFormat:@"%d Str", card.strength] : @"";
-            cell.mu.text = card.mu != -1 ? [NSString stringWithFormat:@"%d Str", card.mu] : @"";
-            break;
-
-        case NRCardTypeAgenda:
-            cell.cost.text = [NSString stringWithFormat:@"%d Adv", card.advancementCost];
-            cell.strength.text = [NSString stringWithFormat:@"%d AP", card.agendaPoints];
-            cell.mu.text = @"";
-            break;
-            
-        case NRCardTypeAsset:
-        case NRCardTypeOperation:
-        case NRCardTypeUpgrade:
-            cell.cost.text = card.cost != -1 ? [NSString stringWithFormat:@"%d Cr", card.cost] : @"";
-            cell.strength.text = card.trash != -1 ? [NSString stringWithFormat:@"%d Tr", card.trash] : @"";
-            cell.mu.text = @"";
-            break;
-            
-        case NRCardTypeNone:
-            NSAssert(NO, @"this can't happen");
-            break;
-    }
-    
-    cell.copiesStepper.maximumValue = cc.card.maxCopies;
-    cell.copiesStepper.value = cc.count;
-    // cell.copiesLabel.text = [NSString stringWithFormat:@"%d %@", cc.count, cc.count == 1 ? @"Copy" : @"Copies"];
-    cell.copiesLabel.text = [NSString stringWithFormat:@"×%d", cc.count];
     
     return cell;
 }
@@ -590,7 +493,15 @@
     {
         NSArray* arr = self.cards[indexPath.section];
         CardCounter* cc = arr[indexPath.row];
-        [self.deck removeCard:cc.card];
+        
+        if (cc.card.type == NRCardTypeIdentity)
+        {
+            self.deck.identity = nil;
+        }
+        else
+        {
+            [self.deck removeCard:cc.card];
+        }
         
         [self refresh];
     }

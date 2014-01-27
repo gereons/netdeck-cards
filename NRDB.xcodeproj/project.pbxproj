@@ -82,8 +82,8 @@
 		3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB357D5186CC2010027D5FC /* IdentitySelectionViewController.xib */; };
 		3AB357DA186DC1E50027D5FC /* IdentityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */; };
 		3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */; };
-		3ACCEE2018699FCA00CC3537 /* CardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* CardCell.xib */; };
-		3ACCEE231869A25500CC3537 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACCEE221869A25500CC3537 /* CardCell.m */; };
+		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
+		3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACCEE221869A25500CC3537 /* LargeCardCell.m */; };
 		3ACCEE251869B10700CC3537 /* CardFilterHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE241869B10700CC3537 /* CardFilterHeaderView.xib */; };
 		3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */; };
 		3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */; };
@@ -233,9 +233,9 @@
 		3AB357D8186DC1E50027D5FC /* IdentityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityViewCell.h; sourceTree = "<group>"; };
 		3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityViewCell.m; sourceTree = "<group>"; };
 		3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCell.xib; sourceTree = "<group>"; };
-		3ACCEE1F18699FCA00CC3537 /* CardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardCell.xib; sourceTree = "<group>"; };
-		3ACCEE211869A25500CC3537 /* CardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCell.h; sourceTree = "<group>"; };
-		3ACCEE221869A25500CC3537 /* CardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCell.m; sourceTree = "<group>"; };
+		3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargeCardCell.xib; sourceTree = "<group>"; };
+		3ACCEE211869A25500CC3537 /* LargeCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LargeCardCell.h; sourceTree = "<group>"; };
+		3ACCEE221869A25500CC3537 /* LargeCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LargeCardCell.m; sourceTree = "<group>"; };
 		3ACCEE241869B10700CC3537 /* CardFilterHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterHeaderView.xib; sourceTree = "<group>"; };
 		3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportDecksViewController.h; sourceTree = "<group>"; };
 		3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportDecksViewController.m; sourceTree = "<group>"; };
@@ -533,9 +533,9 @@
 				3AA440F51854EF720051D4B0 /* DeckListViewController.h */,
 				3AA440F61854EF720051D4B0 /* DeckListViewController.m */,
 				3AA440F71854EF720051D4B0 /* DeckListViewController.xib */,
-				3ACCEE211869A25500CC3537 /* CardCell.h */,
-				3ACCEE221869A25500CC3537 /* CardCell.m */,
-				3ACCEE1F18699FCA00CC3537 /* CardCell.xib */,
+				3ACCEE211869A25500CC3537 /* LargeCardCell.h */,
+				3ACCEE221869A25500CC3537 /* LargeCardCell.m */,
+				3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */,
 				3A7FD6B21881737700F0926F /* CardImageCell.h */,
 				3A7FD6B31881737700F0926F /* CardImageCell.m */,
 				3A7FD6B0188172C100F0926F /* CardImageCell.xib */,
@@ -769,7 +769,7 @@
 				3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */,
 				3A85327E185509B000507B9A /* SettingsViewController.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
-				3ACCEE2018699FCA00CC3537 /* CardCell.xib in Resources */,
+				3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */,
 				3A5BC3F4184945A800E792F7 /* TODOs in Resources */,
 				3A386273188514AE00F5630B /* 743-printer@2x.png in Resources */,
 				3A38627B18851A0D00F5630B /* 854-list@2x.png in Resources */,
@@ -867,7 +867,7 @@
 				3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */,
 				3A4178A818761BF600DEEFA6 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				3A4178A718761BF600DEEFA6 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
-				3ACCEE231869A25500CC3537 /* CardCell.m in Sources */,
+				3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,
 				3A41789E18761BF600DEEFA6 /* IASKAppSettingsViewController.m in Sources */,
 				3ADC17311856401D00FA2DF7 /* CardData.m in Sources */,

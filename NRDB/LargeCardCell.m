@@ -1,22 +1,23 @@
 //
-//  CardCell.m
+//  LargeCardCell.m
 //  NRDB
 //
 //  Created by Gereon Steffens on 24.12.13.
 //  Copyright (c) 2013 Gereon Steffens. All rights reserved.
 //
 
-#import "CardCell.h"
+#import "LargeCardCell.h"
 #import "CardCounter.h"
+#import "Deck.h"
 #import "Faction.h"
 #import "CardType.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
 
-@interface CardCell()
+@interface LargeCardCell()
 @property NSArray* pips;
 @end
-@implementation CardCell
+@implementation LargeCardCell
 
 -(void) awakeFromNib
 {
@@ -40,10 +41,107 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
 }
 
--(void) setCardCounter:(CardCounter *)cardCounter
+-(void) setCardCounter:(CardCounter *)cc
 {
-    self->_cardCounter = cardCounter;
-    self.copiesStepper.value = cardCounter.count;
+    self->_cardCounter = cc;
+    
+    Card* card = cc.card;
+    
+    if (card.type == NRCardTypeIdentity)
+    {
+        self.name.text = card.name;
+    }
+    else if (card.unique)
+    {
+        self.name.text = [NSString stringWithFormat:@"%@ • ×%d", card.name, cc.count];
+    }
+    else
+    {
+        self.name.text = [NSString stringWithFormat:@"%@ ×%d", card.name, cc.count];
+    }
+    
+    NSString* factionName = [Faction name:card.faction];
+    NSString* typeName = [CardType name:card.type];
+    
+    NSString* subtype = card.subtype;
+    if (subtype)
+    {
+        self.type.text = [NSString stringWithFormat:@"%@ %@: %@", factionName, typeName, card.subtype];
+    }
+    else
+    {
+        self.type.text = [NSString stringWithFormat:@"%@ %@", factionName, typeName];
+    }
+    
+    int influence = 0;
+    if (self.cardCounter.card.type == NRCardTypeAgenda)
+    {
+        influence = card.agendaPoints * cc.count;
+    }
+    else
+    {
+        if (self.deck)
+        {
+            influence = [self.deck influenceFor:cc];
+        }
+        else
+        {
+            influence = card.influence * cc.count;
+        }
+    }
+    [self setInfluence:influence];
+    
+    self.copiesLabel.hidden = card.type == NRCardTypeIdentity;
+    self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
+    
+    // labels from top: cost/strength/mu
+    switch (card.type)
+    {
+        case NRCardTypeIdentity:
+            self.cost.text = [@(card.minimumDecksize) stringValue];
+            self.strength.text = [@(card.influenceLimit) stringValue];
+            if (card.role == NRRoleRunner)
+            {
+                self.mu.text = [NSString stringWithFormat:@"%d Link", card.baseLink];
+            }
+            else
+            {
+                self.mu.text = @"";
+            }
+            break;
+            
+        case NRCardTypeProgram:
+        case NRCardTypeResource:
+        case NRCardTypeEvent:
+        case NRCardTypeHardware:
+        case NRCardTypeIce:
+            self.cost.text = card.cost != -1 ? [NSString stringWithFormat:@"%d Cr", card.cost] : @"";
+            self.strength.text = card.strength != -1 ? [NSString stringWithFormat:@"%d Str", card.strength] : @"";
+            self.mu.text = card.mu != -1 ? [NSString stringWithFormat:@"%d Str", card.mu] : @"";
+            break;
+            
+        case NRCardTypeAgenda:
+            self.cost.text = [NSString stringWithFormat:@"%d Adv", card.advancementCost];
+            self.strength.text = [NSString stringWithFormat:@"%d AP", card.agendaPoints];
+            self.mu.text = @"";
+            break;
+            
+        case NRCardTypeAsset:
+        case NRCardTypeOperation:
+        case NRCardTypeUpgrade:
+            self.cost.text = card.cost != -1 ? [NSString stringWithFormat:@"%d Cr", card.cost] : @"";
+            self.strength.text = card.trash != -1 ? [NSString stringWithFormat:@"%d Tr", card.trash] : @"";
+            self.mu.text = @"";
+            break;
+            
+        case NRCardTypeNone:
+            NSAssert(NO, @"this can't happen");
+            break;
+    }
+    
+    self.copiesStepper.maximumValue = cc.card.maxCopies;
+    self.copiesStepper.value = cc.count;
+    self.copiesLabel.text = [NSString stringWithFormat:@"×%d", cc.count];
 }
 
 -(void) setInfluence:(int)influence
