@@ -265,6 +265,7 @@ static NSArray* scopes;
             break;
         }
     }
+    [self.selectedValues setObject:value forKey:@(tag)];
     
     [self postNotification:[pfx lowercaseString] value:value];
     [btn setTitle:[NSString stringWithFormat:@"%@: %@", pfx, value] forState:UIControlStateNormal];

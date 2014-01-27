@@ -108,7 +108,7 @@ NSString* const kANY = @"Any";
         return NO;
     }
     
-    NSURL* url = [NSURL URLWithString:@"http://netrunnerdb.com/api/search/d:r%7Cc"];
+    NSURL* url = [NSURL URLWithString:@"http://netrunnerdb.com/api/cards"];
     NSData* data = [NSData dataWithContentsOfURL:url];
     
     if (data == nil)
