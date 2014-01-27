@@ -38,6 +38,11 @@
     {
         self.role = role;
         
+        UIColor* tint = self.role == NRRoleRunner ? [UIColor redColor] :  [UIColor blueColor];
+        [UIStepper appearance].tintColor = tint;
+        [UIButton appearance].tintColor = tint;
+        [UINavigationBar appearance].tintColor = tint;
+        
         self.deckListViewController = [[DeckListViewController alloc] initWithNibName:@"DeckListViewController" bundle:nil];
         self.deckListViewController.role = role;
         
