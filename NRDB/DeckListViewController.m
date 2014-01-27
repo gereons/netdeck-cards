@@ -96,7 +96,7 @@
     
     // self.toggleViewButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"705-photos"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleView:)];
     NSArray* selections = @[
-        [UIImage imageNamed:@"854-list"],
+        [UIImage imageNamed:@"854-list2"],
         [UIImage imageNamed:@"705-photos"],
         [UIImage imageNamed:@"854-list"]
     ];

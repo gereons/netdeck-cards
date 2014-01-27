@@ -90,6 +90,8 @@
 		3AD066791896CD2100FF1666 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD066781896CD2100FF1666 /* CardCell.m */; };
 		3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0667D1896D0F100FF1666 /* SmallCardCell.m */; };
 		3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066811896D5B800FF1666 /* SmallCardCell.xib */; };
+		3AD066851896F80D00FF1666 /* 854-list2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066831896F80D00FF1666 /* 854-list2@2x.png */; };
+		3AD066861896F80D00FF1666 /* 854-list2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066841896F80D00FF1666 /* 854-list2.png */; };
 		3ADC17311856401D00FA2DF7 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC17301856401D00FA2DF7 /* CardData.m */; };
 		3ADC17361856632500FA2DF7 /* CardEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC17341856632500FA2DF7 /* CardEditorViewController.m */; };
 		3ADC17371856632500FA2DF7 /* CardEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADC17351856632500FA2DF7 /* CardEditorViewController.xib */; };
@@ -248,6 +250,8 @@
 		3AD0667C1896D0F100FF1666 /* SmallCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallCardCell.h; sourceTree = "<group>"; };
 		3AD0667D1896D0F100FF1666 /* SmallCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallCardCell.m; sourceTree = "<group>"; };
 		3AD066811896D5B800FF1666 /* SmallCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallCardCell.xib; sourceTree = "<group>"; };
+		3AD066831896F80D00FF1666 /* 854-list2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "854-list2@2x.png"; sourceTree = "<group>"; };
+		3AD066841896F80D00FF1666 /* 854-list2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "854-list2.png"; sourceTree = "<group>"; };
 		3ADC172F1856401D00FA2DF7 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
 		3ADC17301856401D00FA2DF7 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardData.m; sourceTree = "<group>"; };
 		3ADC17331856632500FA2DF7 /* CardEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardEditorViewController.h; sourceTree = "<group>"; };
@@ -589,6 +593,8 @@
 				3A386270188514AE00F5630B /* 743-printer.png */,
 				3A386271188514AE00F5630B /* 743-printer@2x.png */,
 				3A38626C1885149300F5630B /* 705-photos.png */,
+				3AD066831896F80D00FF1666 /* 854-list2@2x.png */,
+				3AD066841896F80D00FF1666 /* 854-list2.png */,
 				3A38626D1885149300F5630B /* 705-photos@2x.png */,
 				3A9E7C4E1884941200A507C3 /* 702-share.png */,
 				3A9E7C4F1884941200A507C3 /* 702-share@2x.png */,
@@ -771,6 +777,7 @@
 				3A38626E1885149300F5630B /* 705-photos.png in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
+				3AD066861896F80D00FF1666 /* 854-list2.png in Resources */,
 				3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
@@ -790,6 +797,7 @@
 				3A386272188514AE00F5630B /* 743-printer.png in Resources */,
 				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
+				3AD066851896F80D00FF1666 /* 854-list2@2x.png in Resources */,
 				3A9E7C511884941200A507C3 /* 702-share@2x.png in Resources */,
 				3ADC17371856632500FA2DF7 /* CardEditorViewController.xib in Resources */,
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
