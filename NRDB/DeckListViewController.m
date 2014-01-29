@@ -93,11 +93,10 @@
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = @"Deck";
     
-    // self.toggleViewButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"705-photos"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleView:)];
     NSArray* selections = @[
-        [UIImage imageNamed:@"854-list2"],
-        [UIImage imageNamed:@"705-photos"],
-        [UIImage imageNamed:@"854-list"]
+        [UIImage imageNamed:@"tableviewicon"],
+        [UIImage imageNamed:@"cardviewicon"],
+        [UIImage imageNamed:@"listviewicon"]
     ];
     UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
     viewSelector.selectedSegmentIndex = 0;

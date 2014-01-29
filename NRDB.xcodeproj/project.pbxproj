@@ -24,12 +24,8 @@
 		3A3622861849320C007F2854 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622651849320C007F2854 /* UIKit.framework */; };
 		3A36228E1849320C007F2854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A36228C1849320C007F2854 /* InfoPlist.strings */; };
 		3A3622901849320C007F2854 /* NRDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36228F1849320C007F2854 /* NRDBTests.m */; };
-		3A38626E1885149300F5630B /* 705-photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A38626C1885149300F5630B /* 705-photos.png */; };
-		3A38626F1885149300F5630B /* 705-photos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A38626D1885149300F5630B /* 705-photos@2x.png */; };
 		3A386272188514AE00F5630B /* 743-printer.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A386270188514AE00F5630B /* 743-printer.png */; };
 		3A386273188514AE00F5630B /* 743-printer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A386271188514AE00F5630B /* 743-printer@2x.png */; };
-		3A38627A18851A0D00F5630B /* 854-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A38627818851A0D00F5630B /* 854-list.png */; };
-		3A38627B18851A0D00F5630B /* 854-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A38627918851A0D00F5630B /* 854-list@2x.png */; };
 		3A41789E18761BF600DEEFA6 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41788018761BF600DEEFA6 /* IASKAppSettingsViewController.m */; };
 		3A41789F18761BF600DEEFA6 /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41788218761BF600DEEFA6 /* IASKAppSettingsWebViewController.m */; };
 		3A4178A018761BF600DEEFA6 /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41788418761BF600DEEFA6 /* IASKSpecifierValuesViewController.m */; };
@@ -51,6 +47,12 @@
 		3A5BC3F21849326B00E792F7 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BC3EC1849326B00E792F7 /* Deck.m */; };
 		3A5BC3F4184945A800E792F7 /* TODOs in Resources */ = {isa = PBXBuildFile; fileRef = 3A5BC3F3184945A800E792F7 /* TODOs */; };
 		3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5FB2EB1888892300DD3CC5 /* ImageCache.m */; };
+		3A6AF0DE1899BB3B00227C25 /* cardviewicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6AF0D81899BB3B00227C25 /* cardviewicon.png */; };
+		3A6AF0DF1899BB3B00227C25 /* cardviewicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6AF0D91899BB3B00227C25 /* cardviewicon@2x.png */; };
+		3A6AF0E01899BB3B00227C25 /* listviewicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6AF0DA1899BB3B00227C25 /* listviewicon.png */; };
+		3A6AF0E11899BB3B00227C25 /* listviewicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6AF0DB1899BB3B00227C25 /* listviewicon@2x.png */; };
+		3A6AF0E21899BB3B00227C25 /* tableviewicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6AF0DC1899BB3B00227C25 /* tableviewicon.png */; };
+		3A6AF0E31899BB3B00227C25 /* tableviewicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6AF0DD1899BB3B00227C25 /* tableviewicon@2x.png */; };
 		3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71C9C7185CC4E200D66A27 /* CardSets.m */; };
 		3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B0188172C100F0926F /* CardImageCell.xib */; };
 		3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B31881737700F0926F /* CardImageCell.m */; };
@@ -90,8 +92,6 @@
 		3AD066791896CD2100FF1666 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD066781896CD2100FF1666 /* CardCell.m */; };
 		3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0667D1896D0F100FF1666 /* SmallCardCell.m */; };
 		3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066811896D5B800FF1666 /* SmallCardCell.xib */; };
-		3AD066851896F80D00FF1666 /* 854-list2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066831896F80D00FF1666 /* 854-list2@2x.png */; };
-		3AD066861896F80D00FF1666 /* 854-list2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066841896F80D00FF1666 /* 854-list2.png */; };
 		3ADC17311856401D00FA2DF7 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC17301856401D00FA2DF7 /* CardData.m */; };
 		3ADC17361856632500FA2DF7 /* CardEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC17341856632500FA2DF7 /* CardEditorViewController.m */; };
 		3ADC17371856632500FA2DF7 /* CardEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADC17351856632500FA2DF7 /* CardEditorViewController.xib */; };
@@ -144,12 +144,8 @@
 		3A36228B1849320C007F2854 /* NRDBTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NRDBTests-Info.plist"; sourceTree = "<group>"; };
 		3A36228D1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A36228F1849320C007F2854 /* NRDBTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NRDBTests.m; sourceTree = "<group>"; };
-		3A38626C1885149300F5630B /* 705-photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "705-photos.png"; sourceTree = "<group>"; };
-		3A38626D1885149300F5630B /* 705-photos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "705-photos@2x.png"; sourceTree = "<group>"; };
-		3A386270188514AE00F5630B /* 743-printer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "743-printer.png"; sourceTree = "<group>"; };
-		3A386271188514AE00F5630B /* 743-printer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "743-printer@2x.png"; sourceTree = "<group>"; };
-		3A38627818851A0D00F5630B /* 854-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "854-list.png"; sourceTree = "<group>"; };
-		3A38627918851A0D00F5630B /* 854-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "854-list@2x.png"; sourceTree = "<group>"; };
+		3A386270188514AE00F5630B /* 743-printer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "743-printer.png"; path = "../743-printer.png"; sourceTree = "<group>"; };
+		3A386271188514AE00F5630B /* 743-printer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "743-printer@2x.png"; path = "../743-printer@2x.png"; sourceTree = "<group>"; };
 		3A41787F18761BF600DEEFA6 /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
 		3A41788018761BF600DEEFA6 /* IASKAppSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsViewController.m; sourceTree = "<group>"; };
 		3A41788118761BF600DEEFA6 /* IASKAppSettingsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsWebViewController.h; sourceTree = "<group>"; };
@@ -194,6 +190,12 @@
 		3A5BC3F3184945A800E792F7 /* TODOs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODOs; sourceTree = "<group>"; };
 		3A5FB2EA1888892300DD3CC5 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
 		3A5FB2EB1888892300DD3CC5 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
+		3A6AF0D81899BB3B00227C25 /* cardviewicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardviewicon.png; sourceTree = "<group>"; };
+		3A6AF0D91899BB3B00227C25 /* cardviewicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardviewicon@2x.png"; sourceTree = "<group>"; };
+		3A6AF0DA1899BB3B00227C25 /* listviewicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listviewicon.png; sourceTree = "<group>"; };
+		3A6AF0DB1899BB3B00227C25 /* listviewicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listviewicon@2x.png"; sourceTree = "<group>"; };
+		3A6AF0DC1899BB3B00227C25 /* tableviewicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableviewicon.png; sourceTree = "<group>"; };
+		3A6AF0DD1899BB3B00227C25 /* tableviewicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableviewicon@2x.png"; sourceTree = "<group>"; };
 		3A71C9C6185CC4E200D66A27 /* CardSets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardSets.h; sourceTree = "<group>"; };
 		3A71C9C7185CC4E200D66A27 /* CardSets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardSets.m; sourceTree = "<group>"; };
 		3A7FD6B0188172C100F0926F /* CardImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageCell.xib; sourceTree = "<group>"; };
@@ -218,8 +220,8 @@
 		3A994274184B8CBB004B6E05 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3A9E7C4A18845FDA00A507C3 /* TableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableData.h; sourceTree = "<group>"; };
 		3A9E7C4B18845FDA00A507C3 /* TableData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableData.m; sourceTree = "<group>"; };
-		3A9E7C4E1884941200A507C3 /* 702-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share.png"; sourceTree = "<group>"; };
-		3A9E7C4F1884941200A507C3 /* 702-share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share@2x.png"; sourceTree = "<group>"; };
+		3A9E7C4E1884941200A507C3 /* 702-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "702-share.png"; path = "../702-share.png"; sourceTree = "<group>"; };
+		3A9E7C4F1884941200A507C3 /* 702-share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "702-share@2x.png"; path = "../702-share@2x.png"; sourceTree = "<group>"; };
 		3AA440E31854DA4C0051D4B0 /* ActionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionsTableViewController.h; sourceTree = "<group>"; };
 		3AA440E41854DA4C0051D4B0 /* ActionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionsTableViewController.m; sourceTree = "<group>"; };
 		3AA440E51854DA4C0051D4B0 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
@@ -250,8 +252,6 @@
 		3AD0667C1896D0F100FF1666 /* SmallCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallCardCell.h; sourceTree = "<group>"; };
 		3AD0667D1896D0F100FF1666 /* SmallCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallCardCell.m; sourceTree = "<group>"; };
 		3AD066811896D5B800FF1666 /* SmallCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallCardCell.xib; sourceTree = "<group>"; };
-		3AD066831896F80D00FF1666 /* 854-list2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "854-list2@2x.png"; sourceTree = "<group>"; };
-		3AD066841896F80D00FF1666 /* 854-list2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "854-list2.png"; sourceTree = "<group>"; };
 		3ADC172F1856401D00FA2DF7 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
 		3ADC17301856401D00FA2DF7 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardData.m; sourceTree = "<group>"; };
 		3ADC17331856632500FA2DF7 /* CardEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardEditorViewController.h; sourceTree = "<group>"; };
@@ -375,8 +375,8 @@
 				3A8532311854F70F00507B9A /* Master Views */,
 				3AA440E21854DA310051D4B0 /* Detail Views */,
 				3A1ECC8E1879A1B1003400A9 /* Deck Export */,
+				3A6AF0D71899BB3B00227C25 /* Icons */,
 				3A36227C1849320C007F2854 /* Images.xcassets */,
-				3A9E7C4D1884940400A507C3 /* Images */,
 				3A3622681849320C007F2854 /* Supporting Files */,
 			);
 			path = NRDB;
@@ -504,6 +504,23 @@
 			name = "Card Image Popover";
 			sourceTree = "<group>";
 		};
+		3A6AF0D71899BB3B00227C25 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				3A6AF0D81899BB3B00227C25 /* cardviewicon.png */,
+				3A6AF0D91899BB3B00227C25 /* cardviewicon@2x.png */,
+				3A6AF0DA1899BB3B00227C25 /* listviewicon.png */,
+				3A6AF0DB1899BB3B00227C25 /* listviewicon@2x.png */,
+				3A6AF0DC1899BB3B00227C25 /* tableviewicon.png */,
+				3A6AF0DD1899BB3B00227C25 /* tableviewicon@2x.png */,
+				3A386270188514AE00F5630B /* 743-printer.png */,
+				3A386271188514AE00F5630B /* 743-printer@2x.png */,
+				3A9E7C4E1884941200A507C3 /* 702-share.png */,
+				3A9E7C4F1884941200A507C3 /* 702-share@2x.png */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
 		3A8532311854F70F00507B9A /* Master Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,23 +600,6 @@
 				3A85328518550B5600507B9A /* About.html */,
 			);
 			name = "About Detail";
-			sourceTree = "<group>";
-		};
-		3A9E7C4D1884940400A507C3 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				3A38627818851A0D00F5630B /* 854-list.png */,
-				3A38627918851A0D00F5630B /* 854-list@2x.png */,
-				3A386270188514AE00F5630B /* 743-printer.png */,
-				3A386271188514AE00F5630B /* 743-printer@2x.png */,
-				3A38626C1885149300F5630B /* 705-photos.png */,
-				3AD066831896F80D00FF1666 /* 854-list2@2x.png */,
-				3AD066841896F80D00FF1666 /* 854-list2.png */,
-				3A38626D1885149300F5630B /* 705-photos@2x.png */,
-				3A9E7C4E1884941200A507C3 /* 702-share.png */,
-				3A9E7C4F1884941200A507C3 /* 702-share@2x.png */,
-			);
-			name = Images;
 			sourceTree = "<group>";
 		};
 		3AA440DF1854DA0D0051D4B0 /* Data / Models */ = {
@@ -769,15 +769,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A38626F1885149300F5630B /* 705-photos@2x.png in Resources */,
+				3A6AF0E21899BB3B00227C25 /* tableviewicon.png in Resources */,
+				3A6AF0DE1899BB3B00227C25 /* cardviewicon.png in Resources */,
 				3A9E7C501884941200A507C3 /* 702-share.png in Resources */,
 				3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */,
 				3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */,
-				3A38627A18851A0D00F5630B /* 854-list.png in Resources */,
-				3A38626E1885149300F5630B /* 705-photos.png in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
+				3A6AF0E11899BB3B00227C25 /* listviewicon@2x.png in Resources */,
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
-				3AD066861896F80D00FF1666 /* 854-list2.png in Resources */,
 				3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
@@ -792,14 +791,15 @@
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
 				3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */,
 				3A5BC3F4184945A800E792F7 /* TODOs in Resources */,
+				3A6AF0DF1899BB3B00227C25 /* cardviewicon@2x.png in Resources */,
 				3A386273188514AE00F5630B /* 743-printer@2x.png in Resources */,
-				3A38627B18851A0D00F5630B /* 854-list@2x.png in Resources */,
 				3A386272188514AE00F5630B /* 743-printer.png in Resources */,
 				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
-				3AD066851896F80D00FF1666 /* 854-list2@2x.png in Resources */,
+				3A6AF0E31899BB3B00227C25 /* tableviewicon@2x.png in Resources */,
 				3A9E7C511884941200A507C3 /* 702-share@2x.png in Resources */,
 				3ADC17371856632500FA2DF7 /* CardEditorViewController.xib in Resources */,
+				3A6AF0E01899BB3B00227C25 /* listviewicon.png in Resources */,
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
 				3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */,
