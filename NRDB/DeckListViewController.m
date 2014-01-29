@@ -520,6 +520,11 @@
     [CardImageViewPopover showForCard:cc.card fromRect:rect inView:self.tableView];
 }
 
+-(NSString*) tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Remove";
+}
+
 #pragma mark collectionview
 
 #define CARD_WIDTH  225
