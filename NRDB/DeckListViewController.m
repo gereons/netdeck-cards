@@ -471,7 +471,22 @@
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.largeCells ? [self.sections objectAtIndex:section] : nil;
+    if (self.largeCells)
+    {
+        NSString* name = [self.sections objectAtIndex:section];
+        NSArray* arr = self.cards[section];
+        int cnt = 0;
+        for (CardCounter* cc in arr)
+        {
+            cnt += cc.count;
+        }
+        
+        return [NSString stringWithFormat:@"%@ (%d)", name, cnt];
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - (CardCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
