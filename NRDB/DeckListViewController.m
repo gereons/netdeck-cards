@@ -37,6 +37,7 @@
 @property UIActionSheet* actionSheet;
 @property UIPrintInteractionController* printController;
 @property UIBarButtonItem* toggleViewButton;
+@property UIBarButtonItem* saveButton;
 
 @property NSString* filename;
 @property BOOL autoSaveDropbox;
@@ -103,12 +104,14 @@
     [viewSelector addTarget:self action:@selector(toggleView:) forControlEvents:UIControlEventValueChanged];
     self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
     
+    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
     topItem.leftBarButtonItems = @[
         [[UIBarButtonItem alloc] initWithTitle:@"Identity" style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)],
         [[UIBarButtonItem alloc] initWithTitle:@"Name" style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)],
-        [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)],
+        self.saveButton,
         self.toggleViewButton
     ];
+    self.saveButton.enabled = NO;
     
     topItem.rightBarButtonItems = @[
         [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)],
@@ -187,6 +190,7 @@
     {
         self.deck.filename = [DeckManager saveDeck:self.deck];
     }
+    self.saveButton.enabled = NO;
     
     if (self.autoSaveDropbox)
     {
@@ -238,8 +242,8 @@
     NSString* code = [sender.userInfo objectForKey:@"code"];
     self.deck.identity = [Card cardByCode:code];
     
-    [self refresh];
     self.deckChanged = YES;
+    [self refresh];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
     {
@@ -363,8 +367,8 @@
 
 -(void) deckChanged:(NSNotification*)sender
 {
-    [self refresh];
     self.deckChanged = YES;
+    [self refresh];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
     {
@@ -376,6 +380,11 @@
 {
     [self initCards];
     [self reloadViews];
+    
+    if (self.deckChanged)
+    {
+        self.saveButton.enabled = YES;
+    }
     
     NSMutableString* footer = [NSMutableString string];
     [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? @"Card" : @"Cards"]];
@@ -414,8 +423,8 @@
 -(void) addCard:(Card *)card
 {
     [self.deck addCard:card copies:1];
-    [self refresh];
     self.deckChanged = YES;
+    [self refresh];
     
     int section, row;
     NSIndexPath* indexPath;
@@ -527,6 +536,7 @@
             [self.deck removeCard:cc.card];
         }
         
+        self.deckChanged = YES;
         [self refresh];
     }
 }
