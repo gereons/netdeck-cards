@@ -12,7 +12,6 @@
 
 @interface SavedDecksViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
-@property (nonatomic, strong) IBOutlet UIBarButtonItem* editButton;
 
 @property (nonatomic, strong) IBOutlet UITableView* tableView;
 

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NRNavigationController : UINavigationController
+@class DeckListViewController;
+
+@interface NRNavigationController : UINavigationController <UINavigationBarDelegate, UIAlertViewDelegate>
+
+@property DeckListViewController* deckListViewController;
 
 @end

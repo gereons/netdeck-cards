@@ -20,6 +20,7 @@
 #import "Notifications.h"
 #import "CardData.h"
 #import "SettingsKeys.h"
+#import "NRNavigationController.h"
 
 typedef NS_ENUM(NSInteger, NRMenuItem)
 {
@@ -201,6 +202,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSString* filename = [userInfo objectForKey:@"filename"];
     
     FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role andFile:filename];
+    NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
+    
+    NRNavigationController* nc = (NRNavigationController*)self.navigationController;
+    nc.deckListViewController = filter.deckListViewController;
     
     [self.navigationController pushViewController:filter animated:YES];
 }
@@ -301,6 +306,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             TF_CHECKPOINT(@"new runner deck");
             FilteredCardViewController *runner = [[FilteredCardViewController alloc] initWithRole:NRRoleRunner];
             [self.navigationController pushViewController:runner animated:YES];
+            
+            NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
+        
+            NRNavigationController* nc = (NRNavigationController*)self.navigationController;
+            nc.deckListViewController = runner.deckListViewController;
             break;
         }
     
@@ -309,6 +319,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             TF_CHECKPOINT(@"new corp deck");
             FilteredCardViewController *runner = [[FilteredCardViewController alloc] initWithRole:NRRoleCorp];
             [self.navigationController pushViewController:runner animated:YES];
+            NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
+            
+            NRNavigationController* nc = (NRNavigationController*)self.navigationController;
+            nc.deckListViewController = runner.deckListViewController;
             break;
         }
             

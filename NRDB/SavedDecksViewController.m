@@ -14,6 +14,7 @@
 
 @interface SavedDecksViewController ()
 
+@property UIBarButtonItem* editButton;
 @property NSMutableArray* decks; // of Deck*
 @property NRRole role;
 

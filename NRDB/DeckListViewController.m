@@ -129,6 +129,7 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     self.autoSaveDropbox = [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
+    self.deckChanged = NO;
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardImageCell" bundle:nil] forCellWithReuseIdentifier:@"cardImageCell"];
     
@@ -173,6 +174,7 @@
         return;
     }
     
+    self.deckChanged = NO;
     if (sender != nil)
     {
         [SVProgressHUD showSuccessWithStatus:@"Saving..."];
@@ -236,11 +238,13 @@
     NSString* code = [sender.userInfo objectForKey:@"code"];
     self.deck.identity = [Card cardByCode:code];
     
+    [self refresh];
+    self.deckChanged = YES;
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
     {
         [self saveDeck:nil];
     }
-    [self refresh];
 }
 
 -(void) exportDeck:(UIBarButtonItem*)sender
@@ -360,6 +364,7 @@
 -(void) deckChanged:(NSNotification*)sender
 {
     [self refresh];
+    self.deckChanged = YES;
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
     {
@@ -410,6 +415,7 @@
 {
     [self.deck addCard:card copies:1];
     [self refresh];
+    self.deckChanged = YES;
     
     int section, row;
     NSIndexPath* indexPath;

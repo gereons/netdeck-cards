@@ -20,9 +20,11 @@
 @property (strong) IBOutlet UILabel* footerLabel;
 @property (strong) IBOutlet UILabel* deckNameLabel;
 
+@property BOOL deckChanged;
 @property NRRole role;
 
 -(void) addCard:(Card*)card;
 -(void) loadDeckFromFile:(NSString*) filename;
+-(void) saveDeck:(id)sender;
 
 @end

@@ -11,6 +11,7 @@
 #import "DeckListViewController.h"
 #import "CardFilterHeaderView.h"
 #import "CardImageViewPopover.h"
+#import "NRNavigationController.h"
 
 #import "Card.h"
 #import "CardList.h"

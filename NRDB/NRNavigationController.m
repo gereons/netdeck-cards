@@ -7,32 +7,60 @@
 //
 
 #import "NRNavigationController.h"
+#import "DeckListViewController.h"
 
 @interface NRNavigationController ()
+
+@property BOOL alertViewClicked;
+@property BOOL regularPop;
 
 @end
 
 @implementation NRNavigationController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self.regularPop)
+    {
+        self.regularPop = NO;
+        return YES;
     }
-    return self;
+    if (self.alertViewClicked)
+    {
+        self.alertViewClicked = NO;
+        return YES;
+    }
+    
+    BOOL unsavedChanges = self.deckListViewController.deckChanged;
+    if (unsavedChanges)
+    {
+        UIAlertView* alert = [[UIAlertView alloc]
+                          initWithTitle:Nil
+                          message:@"There are unsaved changes"
+                          delegate:self
+                          cancelButtonTitle:@"Discard"
+                          otherButtonTitles:@"Save", nil];
+        [alert show];
+        
+    
+        return NO;
+    }
+    else
+    {
+        self.regularPop = YES;
+        [self popViewControllerAnimated:YES];
+        return NO;
+    }
 }
 
-- (void)viewDidLoad
+-(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    if (buttonIndex == 1)
+    {
+        [self.deckListViewController saveDeck:nil];
+    }
+    self.alertViewClicked = YES;
+    [self popViewControllerAnimated:YES];
 }
 
 @end
