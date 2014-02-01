@@ -27,4 +27,6 @@
 #define AUTO_SAVE       @"autoSave"
 #define AUTO_SAVE_DB    @"autoSaveDropbox"
 
+#define CLIP_CHANGE_COUNT   @"clipChangeCount"
+
 #endif

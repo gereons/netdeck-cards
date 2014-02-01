@@ -79,6 +79,29 @@ static NSMutableArray* allCorpIdentities;
     return card;
 }
 
++(NSArray*) allCards
+{
+    NSMutableArray* cards = [NSMutableArray array];
+    [cards addObjectsFromArray:[Card allForRole:NRRoleRunner]];
+    [cards addObjectsFromArray:[Card allForRole:NRRoleCorp]];
+    [cards addObjectsFromArray:[Card identitiesForRole:NRRoleRunner]];
+    [cards addObjectsFromArray:[Card identitiesForRole:NRRoleCorp]];
+    
+    return [cards sortedArrayUsingComparator:^(Card* c1, Card *c2) {
+        NSUInteger l1 = c1.name.length;
+        NSUInteger l2 = c2.name.length;
+        if (l1 > l2)
+        {
+            return NSOrderedAscending;
+        }
+        else if (l1 < l2)
+        {
+            return NSOrderedDescending;
+        }
+        return NSOrderedSame;
+    }];
+}
+
 +(NSArray*) allForRole:(NRRole)role
 {
     NSMutableArray* arr;

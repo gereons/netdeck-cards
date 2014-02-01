@@ -20,6 +20,7 @@
 #import "Notifications.h"
 #import "CardData.h"
 #import "SettingsKeys.h"
+#import "Deck.h"
 #import "NRNavigationController.h"
 
 typedef NS_ENUM(NSInteger, NRMenuItem)
@@ -79,9 +80,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     footerLabel.font = [UIFont systemFontOfSize:14];
     [footer addSubview:footerLabel];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
     
     // check if card data is available
     if (![CardData cardsAvailable])
@@ -210,11 +213,26 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [self.navigationController pushViewController:filter animated:YES];
 }
 
+-(void)importDeckFromClipboard:(NSNotification*) notification
+{
+    NSDictionary* userInfo = notification.userInfo;
+    Deck* deck = [userInfo objectForKey:@"deck"];
+    NRRole role = deck.identity.role;
+    
+    FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role andDeck:deck];
+    NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
+    
+    NRNavigationController* nc = (NRNavigationController*)self.navigationController;
+    nc.deckListViewController = filter.deckListViewController;
+    
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    [self.navigationController pushViewController:filter animated:YES];
+}
+
 -(void)loadCards:(id) sender
 {
     [self.tableView reloadData];
 }
-
 
 #pragma mark Table view data source
 

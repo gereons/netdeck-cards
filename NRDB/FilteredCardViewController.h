@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class DeckListViewController;
+@class DeckListViewController, Deck;
 
 @interface FilteredCardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
@@ -21,5 +21,6 @@
 
 -(id) initWithRole:(NRRole)role;
 -(id) initWithRole:(NRRole)role andFile:(NSString*) filename;
+-(id) initWithRole:(NRRole)role andDeck:(Deck*) deck;
 
 @end

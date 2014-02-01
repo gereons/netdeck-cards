@@ -15,6 +15,12 @@
 #import "CardData.h"
 #import "SettingsKeys.h"
 #import "CardSets.h"
+#import "DeckImport.h"
+#import "Notifications.h"
+
+@interface  AppDelegate()
+@property Deck* deck;
+@end
 
 @implementation AppDelegate
 
@@ -49,6 +55,8 @@
     // setup tmcache: 50mb space
     [TMCache sharedCache].diskCache.byteLimit = 50 * 1024 * 1024;
     
+    [self checkClipboardForDeck];
+    
     return YES;
 }
 
@@ -82,6 +90,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [self checkClipboardForDeck];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -108,6 +117,26 @@
     [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
 	
 	return YES;
+}
+
+-(void) checkClipboardForDeck
+{
+    self.deck = [DeckImport parseClipboard];
+    
+    if (self.deck != nil)
+    {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Detected a deck list in your clipboard. Import this deck?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        [alert show];
+    }
+}
+
+-(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
+        self.deck = nil;
+    }
 }
 
 @end

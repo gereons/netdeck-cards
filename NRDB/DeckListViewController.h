@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DetailViewManager.h"
 
-@class Card;
+@class Card, Deck;
 
 @interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIPrintInteractionControllerDelegate>
 
@@ -22,6 +22,7 @@
 
 @property BOOL deckChanged;
 @property NRRole role;
+@property (strong) Deck* deck;
 
 -(void) addCard:(Card*)card;
 -(void) loadDeckFromFile:(NSString*) filename;

@@ -24,7 +24,7 @@
 @property IASKAppSettingsViewController* iask;
 @property BOOL imageDownloadOK;
 
-@property NSMutableArray* cards;
+@property NSArray* cards;
 @property NSInteger index;
 
 @end
@@ -145,11 +145,7 @@
     
     self.imageDownloadOK = YES;
 
-    self.cards = [NSMutableArray array];
-    [self.cards addObjectsFromArray:[Card allForRole:NRRoleRunner]];
-    [self.cards addObjectsFromArray:[Card allForRole:NRRoleCorp]];
-    [self.cards addObjectsFromArray:[Card identitiesForRole:NRRoleRunner]];
-    [self.cards addObjectsFromArray:[Card identitiesForRole:NRRoleCorp]];
+    self.cards = [Card allCards];
 
     [self downloadImageForCard:@(0)];
 }
@@ -169,7 +165,7 @@
         Card* card = [self.cards objectAtIndex:i];
         [[ImageCache sharedInstance] getImageFor:card success:^(Card* card, UIImage* image) {
             float progress = (i+1) * 100.0 / self.cards.count;
-            NSLog(@"progress %f", progress);
+            // NSLog(@"progress %f", progress);
             [SVProgressHUD showProgress:progress/100.0 status:@"Downloading Card Images" maskType:SVProgressHUDMaskTypeBlack];
             
             // use -performSelector: so the hud can refresh

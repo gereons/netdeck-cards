@@ -21,6 +21,7 @@
 #import "Faction.h"
 #import "CardType.h"
 #import "DeckExport.h"
+#import "DeckImport.h"
 
 #import "CardCell.h"
 #import "CardImageCell.h"
@@ -30,7 +31,6 @@
 
 @interface DeckListViewController ()
 
-@property (strong) Deck* deck;
 @property (strong) NSArray* sections;
 @property (strong) NSArray* cards;
 
@@ -74,9 +74,13 @@
     
     if (self.deck == nil)
     {
-        NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
         self.deck = [Deck new];
         self.deck.role = self.role;
+    }
+    
+    if (self.deck.filename == nil)
+    {
+        NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
         self.deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
         self.deckNameLabel.text = self.deck.name;
     }
@@ -329,12 +333,15 @@
     
         case 4: // bbcode
             pasteboard.string = [DeckExport asBBCodeString:self.deck];
+            [DeckImport updateCount];
             break;
         case 5: // markdown
             pasteboard.string = [DeckExport asMarkdownString:self.deck];
+            [DeckImport updateCount];
             break;
         case 6: // plain text
             pasteboard.string = [DeckExport asPlaintextString:self.deck];
+            [DeckImport updateCount];
             break;
     }
 }

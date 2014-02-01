@@ -56,6 +56,16 @@
     return self;
 }
 
+-(id) initWithRole:(NRRole)role andDeck:(Deck *)deck
+{
+    if ((self = [self initWithRole:role]))
+    {
+        self.deckListViewController.deck = deck;
+        self.deckListViewController.deckChanged = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

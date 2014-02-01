@@ -57,6 +57,7 @@
 
 @property (readonly) int maxCopies;
 
++(NSArray*) allCards;
 +(NSArray*) allForRole:(NRRole)role;
 +(NSArray*) identitiesForRole:(NRRole)role;
 
