@@ -38,8 +38,8 @@
                           initWithTitle:Nil
                           message:@"There are unsaved changes"
                           delegate:self
-                          cancelButtonTitle:@"Discard"
-                          otherButtonTitles:@"Save", nil];
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles:@"Discard", @"Save", nil];
         [alert show];
         
     
@@ -55,7 +55,12 @@
 
 -(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1)
+    if (buttonIndex == alertView.cancelButtonIndex)
+    {
+        return;
+    }
+    
+    if (buttonIndex == 2)
     {
         [self.deckListViewController saveDeck:nil];
     }
