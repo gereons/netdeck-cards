@@ -45,7 +45,7 @@
 
 @property CGFloat scale;
 @property BOOL largeCells;
-
+@property UIAlertView* nameAlert;
 @end
 
 @implementation DeckListViewController
@@ -205,6 +205,8 @@
     }
 }
 
+#pragma mark deck name
+
 -(void) enterName:(id)sender
 {
     if (self.actionSheet)
@@ -215,8 +217,16 @@
     
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Enter Name" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert textFieldAtIndex:0].placeholder = @"Enter Deck Name";
-    [alert textFieldAtIndex:0].text = self.deck.name;
+    
+    UITextField* textField = [alert textFieldAtIndex:0];
+    textField.placeholder = @"Enter Deck Name";
+    textField.text = self.deck.name;
+    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    textField.clearButtonMode = UITextFieldViewModeAlways;
+    textField.returnKeyType = UIReturnKeyDone;
+    textField.delegate = self;
+    
+    self.nameAlert = alert;
     [alert show];
 }
 
@@ -226,8 +236,20 @@
     {
         self.deck.name = [alertView textFieldAtIndex:0].text;
         self.deckNameLabel.text = self.deck.name;
+        self.deckChanged = YES;
+        [self refresh];
     }
+    self.nameAlert = nil;
 }
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.nameAlert dismissWithClickedButtonIndex:1 animated:NO];
+    [textField resignFirstResponder];
+    return NO;
+}
+
+#pragma mark identity selection
 
 -(void) selectIdentity:(id)sender
 {
