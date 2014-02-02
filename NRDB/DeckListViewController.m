@@ -50,6 +50,8 @@
 
 @implementation DeckListViewController
 
+enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -99,12 +101,12 @@
     topItem.title = @"Deck";
     
     NSArray* selections = @[
-        [UIImage imageNamed:@"tableviewicon"],
-        [UIImage imageNamed:@"cardviewicon"],
-        [UIImage imageNamed:@"listviewicon"]
+        [UIImage imageNamed:@"cardviewicon"],   // CARD_VIEW
+        [UIImage imageNamed:@"tableviewicon"],  // TABLE_VIEW
+        [UIImage imageNamed:@"listviewicon"]    // LIST_VIEW
     ];
     UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
-    viewSelector.selectedSegmentIndex = 0;
+    viewSelector.selectedSegmentIndex = TABLE_VIEW;
     [viewSelector addTarget:self action:@selector(toggleView:) forControlEvents:UIControlEventValueChanged];
     self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
     
@@ -371,10 +373,11 @@
 -(void) toggleView:(UISegmentedControl*)sender
 {
     TF_CHECKPOINT(@"toggle deck view");
-    self.tableView.hidden = sender.selectedSegmentIndex == 1;
-    self.collectionView.hidden = sender.selectedSegmentIndex != 1;
     
-    self.largeCells = sender.selectedSegmentIndex == 0;
+    self.tableView.hidden = sender.selectedSegmentIndex == CARD_VIEW;
+    self.collectionView.hidden = sender.selectedSegmentIndex != CARD_VIEW;
+    
+    self.largeCells = sender.selectedSegmentIndex == TABLE_VIEW;
     
     [self reloadViews];
 }
