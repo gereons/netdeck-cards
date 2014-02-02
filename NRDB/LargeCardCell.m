@@ -26,10 +26,6 @@
     for (UIView*pip in self.pips)
     {
         pip.layer.cornerRadius = 6;
-        pip.layer.shadowRadius = 1;
-        pip.layer.shadowOffset = CGSizeMake(1,1);
-        pip.layer.shadowOpacity = .3;
-        pip.layer.shadowColor = [UIColor blackColor].CGColor;
     }
 }
 
