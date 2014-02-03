@@ -68,7 +68,7 @@
         NEXT_DOWNLOAD: @"never",
         USE_DROPBOX: @(NO),
         USE_EVERNOTE: @(NO),
-        AUTO_SAVE: @(YES),
+        AUTO_SAVE: @(NO),
         AUTO_SAVE_DB: @(NO)
     }];
     

@@ -56,6 +56,10 @@
     }
     
     [hiddenKeys addObject:USE_EVERNOTE];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
+    {
+        [hiddenKeys addObject:AUTO_SAVE_DB];
+    }
     
     [self.iask setHiddenKeys:hiddenKeys];
 }
@@ -89,6 +93,7 @@
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_CHANGED object:self];
+        [self refresh];
     }
 }
 
@@ -120,27 +125,44 @@
 
 -(void) downloadData
 {
+    [SettingsViewController downloadData:^() {
+        [self refresh];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self];
+    }];
+}
+
++(void) downloadData:(void (^)())block
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [SVProgressHUD showWithStatus:@"Loading Card Data" maskType:SVProgressHUDMaskTypeBlack];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         BOOL ok = [CardData setupFromNetrunnerDbApi];
-        [SVProgressHUD dismiss];
         
-        if (ok)
-        {
-            [self refresh];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            [SVProgressHUD dismiss];
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self];
-        }
-        else
-        {
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unable to download cards at this time. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert show];
-        }
+            if (ok)
+            {
+                if (block)
+                {
+                    block();
+                }
+            }
+            else
+            {
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unable to download cards at this time. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                [alert show];
+            }
+        });
     });
 }
 
 -(void) downloadAllImages
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [SVProgressHUD showProgress:0 status:@"Downloading Card Images" maskType:SVProgressHUDMaskTypeBlack];
     
     self.imageDownloadOK = YES;
@@ -155,6 +177,7 @@
     if (!self.imageDownloadOK)
     {
         [SVProgressHUD dismiss];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         self.cards = nil;
         return;
     }
@@ -181,6 +204,7 @@
     else
     {
         [SVProgressHUD dismiss];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         self.cards = nil;
     }
 }

@@ -12,4 +12,6 @@
 
 @interface SettingsViewController : UIViewController<IASKSettingsDelegate, SubstitutableDetailViewController>
 
++(void) downloadData:(void (^)())block;
+
 @end

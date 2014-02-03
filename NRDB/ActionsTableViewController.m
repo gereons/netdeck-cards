@@ -164,22 +164,9 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     if (buttonIndex == 1)
     {
-        [SVProgressHUD showWithStatus:@"Loading Cards" maskType:SVProgressHUDMaskTypeBlack];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            BOOL ok = [CardData setupFromNetrunnerDbApi];
-            [SVProgressHUD dismiss];
-            
-            if (ok)
-            {
-                [self.tableView reloadData];
-            }
-            else
-            {
-                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unable to downloads cards at this time. Please try again later." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                [alert show];
-            }
-        });
+        [SettingsViewController downloadData:^(){
+            [self.tableView reloadData];
+        }];
     }
     
     // "later" in update alert?
