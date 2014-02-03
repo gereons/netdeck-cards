@@ -41,7 +41,6 @@
 
 @property NSString* filename;
 @property BOOL autoSaveDropbox;
-@property CGFloat normalTableHeight;
 
 @property CGFloat scale;
 @property BOOL largeCells;
@@ -157,17 +156,19 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 
 -(void) willShowKeyboard:(NSNotification*)sender
 {
-    self.normalTableHeight = self.tableView.frame.size.height;
-    
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords
-    float tableHeight = self.normalTableHeight - kbHeight + 44;
-    self.tableView.frame = CGRectSetHeight(self.tableView.frame, tableHeight);
+
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight-44, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
 }
 
 -(void) willHideKeyboard:(NSNotification*)sender
 {
-   self.tableView.frame = CGRectSetHeight(self.tableView.frame, self.normalTableHeight);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, 0.0, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
 }
 
 -(void) loadDeckFromFile:(NSString *)filename
@@ -457,7 +458,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     [self.deck addCard:card copies:1];
     self.deckChanged = YES;
     [self refresh];
-    
+
     int section, row;
     NSIndexPath* indexPath;
     for (section = 0; indexPath == nil && section < self.cards.count; ++section)
