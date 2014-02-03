@@ -143,7 +143,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
-    
+
     if (self.deck.identity == nil && self.filename == nil)
     {
         [self selectIdentity:nil];
@@ -459,20 +459,28 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     self.deckChanged = YES;
     [self refresh];
 
-    int section, row;
     NSIndexPath* indexPath;
-    for (section = 0; indexPath == nil && section < self.cards.count; ++section)
+    int i=0;
+    for (int section = 0; indexPath == nil && section < self.cards.count; ++section)
     {
         NSArray* arr = self.cards[section];
-        for (row = 0; row < arr.count; ++row)
+        for (int row = 0; row < arr.count; ++row)
         {
             CardCounter* cc = arr[row];
             
             if ([card isEqual:cc.card])
             {
-                indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+                if (self.tableView.hidden)
+                {
+                    indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                }
+                else
+                {
+                    indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+                }
                 break;
             }
+            ++i;
         }
     }
     NSAssert(indexPath != nil, @"added card not found!?");
@@ -480,23 +488,47 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     if (!self.tableView.hidden)
     {
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-        
-        CardCell* cell = (CardCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-        [UIView animateWithDuration:0.1
-                              delay:0.0
-                            options:UIViewAnimationOptionAllowUserInteraction
-                         animations:^void() {
-                             cell.backgroundColor = [UIColor lightGrayColor];
-                         }
-                         completion:^(BOOL finished) {
-                             cell.backgroundColor = [UIColor whiteColor];
-                         }];
+        [self performSelector:@selector(flashTableCell:) withObject:indexPath afterDelay:0.01];
+    }
+    if (!self.collectionView.hidden)
+    {
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+        [self performSelector:@selector(flashImageCell:) withObject:indexPath afterDelay:0.01];
     }
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
     {
         [self saveDeck:nil];
     }
+}
+
+-(void) flashTableCell:(NSIndexPath*)indexPath
+{
+    CardCell* cell = (CardCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.1
+                          delay:0.0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^void() {
+                         cell.backgroundColor = [UIColor lightGrayColor];
+                     }
+                     completion:^(BOOL finished) {
+                         cell.backgroundColor = [UIColor whiteColor];
+                     }];
+
+}
+
+-(void) flashImageCell:(NSIndexPath*)indexPath
+{
+    CardImageCell* cell = (CardImageCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.1
+                          delay:0.0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^void() {
+                         cell.transform = CGAffineTransformMakeScale(1.05, 1.05);
+                     }
+                     completion:^(BOOL finished) {
+                         cell.transform = CGAffineTransformIdentity;
+                     }];
 }
 
 #pragma mark Table View
@@ -650,8 +682,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     {
         cell = [[CardImageCell alloc] init];
     }
-    
-    cell.backgroundColor = [UIColor whiteColor];
     
     NSInteger index = indexPath.row;
     Card* card;
