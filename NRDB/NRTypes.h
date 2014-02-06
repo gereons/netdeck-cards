@@ -72,7 +72,8 @@ typedef NS_ENUM(int, NRCycle)
     NRCycleNone = -1,
     NRCycleCoreDeluxe,
     NRCycleGenesis,
-    NRCycleSpin
+    NRCycleSpin,
+    NRCycleLunar
 };
 
 #endif

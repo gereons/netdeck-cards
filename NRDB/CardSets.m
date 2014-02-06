@@ -46,6 +46,8 @@ static struct cardSetData {
     { "use_fear_and_loathing", "fal", "Fear and Loathing", NRCycleSpin },
     { "use_double_time", "dt", "Double Time", NRCycleSpin },
     
+    // lunar
+    { "use_upstalk", "up", "Upstalk", NRCycleLunar },
     { 0 }
 };
 
@@ -108,12 +110,13 @@ static struct cardSetData {
 
 +(TableData*) allSetsForTableview
 {
-    NSArray* sections = @[ @"", @"Core / Deluxe", @"Genesis Cycle", @"Spin Cycle" ];
+    NSArray* sections = @[ @"", @"Core / Deluxe", @"Genesis Cycle", @"Spin Cycle", @"Lunar Cycle" ];
     NSArray* sets = @[
         @[ kANY ],
         @[ @"Core Set", @"Creation and Control", @"Honor and Profit" ],
         @[ @"What Lies Ahead", @"Trace Amount", @"Cyber Exodus", @"A Study in Static", @"Humanity's Shadow", @"Future Proof",  ],
-        @[ @"Opening Moves", @"Second Thoughts", @"Mala Tempora", @"True Colors", @"Fear and Loathing", @"Double Time", ]
+        @[ @"Opening Moves", @"Second Thoughts", @"Mala Tempora", @"True Colors", @"Fear and Loathing", @"Double Time", ],
+        @[ @"Upstalk" ]
     ];
     
     return [[TableData alloc] initWithSections:sections andValues:sets];

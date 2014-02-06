@@ -172,6 +172,22 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
+        <dict>
+			<key>Title</key>
+			<string>Lunar Cycle</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Upstalk</string>
+			<key>Key</key>
+			<string>use_upstalk</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>SetSelection</string>
