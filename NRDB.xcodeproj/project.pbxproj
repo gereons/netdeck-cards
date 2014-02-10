@@ -94,6 +94,8 @@
 		3AD066791896CD2100FF1666 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD066781896CD2100FF1666 /* CardCell.m */; };
 		3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0667D1896D0F100FF1666 /* SmallCardCell.m */; };
 		3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066811896D5B800FF1666 /* SmallCardCell.xib */; };
+		3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD3249018A93FA300D7AE5D /* DeckAnalysisViewController.m */; };
+		3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */; };
 		3ADC17311856401D00FA2DF7 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC17301856401D00FA2DF7 /* CardData.m */; };
 		3ADC17361856632500FA2DF7 /* CardEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC17341856632500FA2DF7 /* CardEditorViewController.m */; };
 		3ADC17371856632500FA2DF7 /* CardEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADC17351856632500FA2DF7 /* CardEditorViewController.xib */; };
@@ -258,6 +260,9 @@
 		3AD0667C1896D0F100FF1666 /* SmallCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallCardCell.h; sourceTree = "<group>"; };
 		3AD0667D1896D0F100FF1666 /* SmallCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallCardCell.m; sourceTree = "<group>"; };
 		3AD066811896D5B800FF1666 /* SmallCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallCardCell.xib; sourceTree = "<group>"; };
+		3AD3248F18A93FA300D7AE5D /* DeckAnalysisViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckAnalysisViewController.h; sourceTree = "<group>"; };
+		3AD3249018A93FA300D7AE5D /* DeckAnalysisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckAnalysisViewController.m; sourceTree = "<group>"; };
+		3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckAnalysisViewController.xib; sourceTree = "<group>"; };
 		3ADC172F1856401D00FA2DF7 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardData.h; sourceTree = "<group>"; };
 		3ADC17301856401D00FA2DF7 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardData.m; sourceTree = "<group>"; };
 		3ADC17331856632500FA2DF7 /* CardEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardEditorViewController.h; sourceTree = "<group>"; };
@@ -377,6 +382,7 @@
 				3A6AF0E51899C12500227C25 /* NRNavigationController.m */,
 				3A5FB2EA1888892300DD3CC5 /* ImageCache.h */,
 				3A5FB2EB1888892300DD3CC5 /* ImageCache.m */,
+				3AD3248E18A93F8000D7AE5D /* Deck Analysis */,
 				3AA440DF1854DA0D0051D4B0 /* Data / Models */,
 				3A595425186EE7C40074B3B1 /* Card Image Popover */,
 				3A595424186EDCED0074B3B1 /* Identity Selection Form */,
@@ -684,6 +690,16 @@
 			name = "Import Decks";
 			sourceTree = "<group>";
 		};
+		3AD3248E18A93F8000D7AE5D /* Deck Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				3AD3248F18A93FA300D7AE5D /* DeckAnalysisViewController.h */,
+				3AD3249018A93FA300D7AE5D /* DeckAnalysisViewController.m */,
+				3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */,
+			);
+			name = "Deck Analysis";
+			sourceTree = "<group>";
+		};
 		3ADC1732185662F200FA2DF7 /* Card Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,6 +820,7 @@
 				3ACCEE251869B10700CC3537 /* CardFilterHeaderView.xib in Resources */,
 				3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */,
 				3AB1B2341872ECA000F6AE45 /* FilteredCardViewController.xib in Resources */,
+				3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */,
 				3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */,
 				3A85327E185509B000507B9A /* SettingsViewController.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
@@ -901,6 +918,7 @@
 				3A4178A318761BF600DEEFA6 /* IASKSettingsStoreFile.m in Sources */,
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,
+				3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */,
 				3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */,
 				3AD066791896CD2100FF1666 /* CardCell.m in Sources */,
 				3A5BC3F11849326B00E792F7 /* CardList.m in Sources */,

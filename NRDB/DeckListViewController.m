@@ -11,6 +11,7 @@
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"
+#import "DeckAnalysisViewController.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
 
@@ -206,6 +207,11 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
             [DeckExport asOctgn:self.deck autoSave:YES];
         }
     }
+}
+
+-(void) analysisClicked:(id)sender
+{
+    [DeckAnalysisViewController showForDeck:self.deck inViewController:self];
 }
 
 #pragma mark deck name

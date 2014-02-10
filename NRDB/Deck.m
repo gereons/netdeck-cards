@@ -53,22 +53,27 @@
     
         BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
         
+        BOOL petError = NO, jintekiError = NO, agendaError = NO;
+        
         // check dir. haas, custom biotics and out-of-faction agendas
         for (CardCounter* cc in self.cards)
         {
             Card* card = cc.card;
-            if ([card.code isEqualToString:DIR_HAAS_PET_PROJ] && cc.count > 1)
+            if ([card.code isEqualToString:DIR_HAAS_PET_PROJ] && cc.count > 1 && !petError)
             {
+                petError = YES;
                 [reasons addObject:@"Too many pet projects"];
             }
             
-            if (noJinteki && card.faction == NRFactionJinteki)
+            if (noJinteki && card.faction == NRFactionJinteki && !jintekiError)
             {
+                jintekiError = YES;
                 [reasons addObject:@"Cannot include Jinteki"];
             }
             
-            if (card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction)
+            if (card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction && !agendaError)
             {
+                agendaError = YES;
                 [reasons addObject:@"Cannot use out-of-faction agendas"];
             }
         }

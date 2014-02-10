@@ -28,4 +28,6 @@
 -(void) loadDeckFromFile:(NSString*) filename;
 -(void) saveDeck:(id)sender;
 
+-(IBAction)analysisClicked:(id)sender;
+
 @end
