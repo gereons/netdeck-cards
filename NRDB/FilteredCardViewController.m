@@ -108,7 +108,7 @@
 
 #pragma mark keyboard show/hide
 
-#define KEYBOARD_HEIGHT_OFFSET  225
+#define KEYBOARD_HEIGHT_OFFSET  228
 
 -(void) willShowKeyboard:(NSNotification*)sender
 {
