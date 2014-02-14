@@ -106,9 +106,10 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
         [UIImage imageNamed:@"listviewicon"]    // LIST_VIEW
     ];
     UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
-    viewSelector.selectedSegmentIndex = TABLE_VIEW;
+    viewSelector.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_VIEW_STYLE];
     [viewSelector addTarget:self action:@selector(toggleView:) forControlEvents:UIControlEventValueChanged];
     self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
+    [self doToggleView:viewSelector.selectedSegmentIndex];
     
     self.saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
     topItem.leftBarButtonItems = @[
@@ -132,9 +133,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
-    
-    self.tableView.hidden = NO;
-    self.collectionView.hidden = YES;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     self.autoSaveDropbox = [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
@@ -381,10 +379,18 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 {
     TF_CHECKPOINT(@"toggle deck view");
     
-    self.tableView.hidden = sender.selectedSegmentIndex == CARD_VIEW;
-    self.collectionView.hidden = sender.selectedSegmentIndex != CARD_VIEW;
+    int viewMode = sender.selectedSegmentIndex;
+    [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:DECK_VIEW_STYLE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self doToggleView:viewMode];
+}
+
+-(void) doToggleView:(int)viewMode
+{
+    self.tableView.hidden = viewMode == CARD_VIEW;
+    self.collectionView.hidden = viewMode != CARD_VIEW;
     
-    self.largeCells = sender.selectedSegmentIndex == TABLE_VIEW;
+    self.largeCells = viewMode == TABLE_VIEW;
     
     [self reloadViews];
 }
