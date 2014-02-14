@@ -23,6 +23,7 @@
 #import "CardType.h"
 #import "DeckExport.h"
 #import "DeckImport.h"
+#import "CardSets.h"
 
 #import "CardCell.h"
 #import "CardImageCell.h"
@@ -453,6 +454,14 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
         [footer appendString:@" · "];
         [footer appendString:reasons[0]];
     }
+    
+    NSString* set = [CardSets mostRecentSetUsedInDeck:self.deck];
+    if (set)
+    {
+        [footer appendString:@" · "];
+        [footer appendString:set];
+    }
+    
     self.footerLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
     
     self.footerLabel.text = footer;
