@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TableData.h"
 
+@class Deck;
 @interface CardSets : NSObject
 
 +(NSArray*) allSets;
@@ -16,5 +17,7 @@
 
 +(NSDictionary*) settingsDefaults;
 +(NSSet*) disabledSetCodes;
+
++(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;
 
 @end

@@ -12,6 +12,7 @@
 
 #import "DeckExport.h"
 #import "Deck.h"
+#import "CardSets.h"
 
 @implementation DeckExport
 
@@ -44,6 +45,7 @@
     [s appendString:[NSString stringWithFormat:@"%@\n\n", deck.name]];
     [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
     
+    int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
@@ -68,8 +70,18 @@
             {
                 [s appendString:@"\n"];
             }
+            numCards += cc.count;
         }
     }
+    
+    [s appendFormat:@"\n"];
+    [s appendFormat:@"Cards in deck: %d (min %d)\n", numCards, deck.identity.minimumDecksize];
+    [s appendFormat:@"%d/%d influence used\n", deck.influence, deck.identity.influenceLimit];
+    if (deck.identity.role == NRRoleCorp)
+    {
+        [s appendFormat:@"Agenda Points: %d\n", deck.agendaPoints];
+    }
+    [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
     [s appendString:@"\nDeck built with NRDB"];
     return s;
@@ -93,6 +105,7 @@
     [s appendString:[NSString stringWithFormat:@"# %@\n\n", deck.name]];
     [s appendString:[NSString stringWithFormat:@"[%@](%@) _(%@)_\n", deck.identity.name, deck.identity.url, deck.identity.setName]];
     
+    int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
@@ -117,9 +130,19 @@
             {
                 [s appendString:@"\n"];
             }
+            numCards += cc.count;
         }
     }
-
+    
+    [s appendFormat:@"\n"];
+    [s appendFormat:@"Cards in deck: %d (min %d)\n", numCards, deck.identity.minimumDecksize];
+    [s appendFormat:@"%d/%d influence used\n", deck.influence, deck.identity.influenceLimit];
+    if (deck.identity.role == NRRoleCorp)
+    {
+        [s appendFormat:@"Agenda Points: %d\n", deck.agendaPoints];
+    }
+    [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
+    
     [s appendString:@"\nDeck built with [NRDB](url=http://appstore.com/NRDB).\n"];
     return s;
 }
@@ -142,6 +165,7 @@
     [s appendString:[NSString stringWithFormat:@"[b]%@[/b]\n\n", deck.name]];
     [s appendString:[NSString stringWithFormat:@"[url=%@]%@[/url] (%@)\n", deck.identity.url, deck.identity.name, deck.identity.setName]];
     
+    int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
@@ -167,8 +191,18 @@
             {
                 [s appendString:@"\n"];
             }
+            numCards += cc.count;
         }
     }
+    
+    [s appendFormat:@"\n"];
+    [s appendFormat:@"Cards in deck: %d (min %d)\n", numCards, deck.identity.minimumDecksize];
+    [s appendFormat:@"%d/%d influence used\n", deck.influence, deck.identity.influenceLimit];
+    if (deck.identity.role == NRRoleCorp)
+    {
+        [s appendFormat:@"Agenda Points: %d\n", deck.agendaPoints];
+    }
+    [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
     [s appendString:@"\nDeck built with [url=http://appstore.com/NRDB]NRDB[/url].\n"];
     return s;
