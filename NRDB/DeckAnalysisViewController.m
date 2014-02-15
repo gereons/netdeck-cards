@@ -7,6 +7,7 @@
 //
 
 #import "DeckAnalysisViewController.h"
+#import "CostStats.h"
 #import "Deck.h"
 
 @interface DeckAnalysisViewController ()
@@ -51,17 +52,43 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.section)
+    {
+        case 0:
+            return 44;
+        case 1:
+            return 300;
+    }
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return MAX(1, self.errors.count);
+    switch (section)
+    {
+        case 0:
+            return MAX(1, self.errors.count);
+        case 1:
+            return 1;
+    }
+    return 0;
 }
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"Deck Validity";
+    switch (section)
+    {
+        case 0:
+            return @"Deck Validity";
+        case 1:
+            return @"Cost";
+    }
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -74,17 +101,25 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
-    
-    if (self.errors.count > 0)
+    switch (indexPath.section)
     {
-        cell.textLabel.text = [self.errors objectAtIndex:indexPath.row];
-        cell.textLabel.textColor = [UIColor redColor];
-    }
-    else
-    {
-        cell.textLabel.text = @"Deck is valid";
-        cell.textLabel.textColor = [UIColor blackColor];
+        case 0:
+            cell.textLabel.font = [UIFont systemFontOfSize:15];
+            
+            if (self.errors.count > 0)
+            {
+                cell.textLabel.text = [self.errors objectAtIndex:indexPath.row];
+                cell.textLabel.textColor = [UIColor redColor];
+            }
+            else
+            {
+                cell.textLabel.text = @"Deck is valid";
+                cell.textLabel.textColor = [UIColor blackColor];
+            }
+            break;
+        case 1:
+            [cell.contentView addSubview:[[CostStats sharedInstance] hostingViewForDeck:self.deck]];
+            break;
     }
     
     return cell;
