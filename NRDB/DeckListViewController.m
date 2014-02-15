@@ -48,11 +48,14 @@
 @property CGFloat scale;
 @property BOOL largeCells;
 @property UIAlertView* nameAlert;
+@property Deck* copiedDeck;
+
 @end
 
 @implementation DeckListViewController
 
 enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
+enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -100,7 +103,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     self.tableView.tableFooterView = footer;
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.title = @"Deck";
+    // topItem.title = @"Deck";
     
     NSArray* selections = @[
         [UIImage imageNamed:@"cardviewicon"],   // CARD_VIEW
@@ -118,6 +121,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
         [[UIBarButtonItem alloc] initWithTitle:@"Identity" style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)],
         [[UIBarButtonItem alloc] initWithTitle:@"Name" style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)],
         self.saveButton,
+        [[UIBarButtonItem alloc] initWithTitle:@"Copy" style:UIBarButtonItemStylePlain target:self action:@selector(copyDeck:)],
         self.toggleViewButton
     ];
     self.saveButton.enabled = NO;
@@ -219,6 +223,27 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     [DrawSimulatorViewController showForDeck:self.deck inViewController:self];
 }
 
+#pragma mark copy deck
+
+-(void) copyDeck:(id)sender
+{
+    Deck* newDeck = [self.deck copy];
+    self.copiedDeck = newDeck;
+    
+    [DeckManager saveDeck:newDeck];
+    if (self.autoSaveDropbox)
+    {
+        if (newDeck.identity && newDeck.cards.count > 0)
+        {
+            [DeckExport asOctgn:newDeck autoSave:YES];
+        }
+    }
+    
+    NSString* msg = [NSString stringWithFormat:@"Switch to %@?", newDeck.name];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    alert.tag = SWITCH_ALERT;
+    [alert show];
+}
 
 #pragma mark deck name
 
@@ -231,6 +256,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     }
     
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Enter Name" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    alert.tag = NAME_ALERT;
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
     UITextField* textField = [alert textFieldAtIndex:0];
@@ -245,24 +271,40 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     [alert show];
 }
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1)
-    {
-        self.deck.name = [alertView textFieldAtIndex:0].text;
-        self.deckNameLabel.text = self.deck.name;
-        self.deckChanged = YES;
-        [self refresh];
-    }
-    self.nameAlert = nil;
-}
-
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.nameAlert dismissWithClickedButtonIndex:1 animated:NO];
     [textField resignFirstResponder];
     return NO;
 }
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == NAME_ALERT)
+    {
+        if (buttonIndex == 1)
+        {
+            self.deck.name = [alertView textFieldAtIndex:0].text;
+            self.deckNameLabel.text = self.deck.name;
+            self.deckChanged = YES;
+            [self refresh];
+        }
+        self.nameAlert = nil;
+    }
+    else if (alertView.tag == SWITCH_ALERT)
+    {
+        NSAssert(self.copiedDeck != nil, @"no copied deck");
+        self.deck = self.copiedDeck;
+        self.copiedDeck = nil;
+        
+        [self refresh];
+    }
+    else
+    {
+        NSAssert(NO, @"this can't happen");
+    }
+}
+
 
 #pragma mark identity selection
 
@@ -470,6 +512,8 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     {
         self.lastSetLabel.text = [NSString stringWithFormat:@"Cards up to %@", set];
     }
+    
+    self.deckNameLabel.text = self.deck.name;
 }
 
 -(void) initCards
