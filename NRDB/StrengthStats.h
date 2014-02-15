@@ -14,9 +14,9 @@
 
 @interface StrengthStats : NSObject <CPTPlotDataSource>
 
-+(StrengthStats*) sharedInstance;
+-(StrengthStats*) initWithDeck:(Deck*)deck;
 
--(CPTGraphHostingView*) hostingViewForDeck:(Deck*)deck;
+@property (readonly) CPTGraphHostingView* hostingView;
 @property (readonly) CGFloat height;
 
 @end

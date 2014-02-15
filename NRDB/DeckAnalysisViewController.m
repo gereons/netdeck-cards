@@ -12,8 +12,12 @@
 #import "Deck.h"
 
 @interface DeckAnalysisViewController ()
+
 @property Deck* deck;
 @property NSArray* errors;
+@property CostStats* costStats;
+@property StrengthStats* strengthStats;
+
 @end
 
 @implementation DeckAnalysisViewController
@@ -33,6 +37,8 @@
         self.modalPresentationStyle = UIModalPresentationFormSheet;
         
         self.errors = [deck checkValidity];
+        self.costStats = [[CostStats alloc] initWithDeck:deck];
+        self.strengthStats = [[StrengthStats alloc] initWithDeck:deck];
     }
     return self;
 }
@@ -63,8 +69,9 @@
         case 0:
             return 44;
         case 1:
+            return self.costStats.height;
         case 2:
-            return 300;
+            return self.strengthStats.height;
     }
     return 0;
 }
@@ -89,9 +96,11 @@
         case 0:
             return @"Deck Validity";
         case 1:
-            return @"Cost";
+            if (self.costStats.height > 0) return @"Cost Distribution";
+            break;
         case 2:
-            return @"Strength";
+            if (self.strengthStats.height > 0) return @"Strength Distribution";
+            break;
     }
     return nil;
 }
@@ -123,10 +132,10 @@
             }
             break;
         case 1:
-            [cell.contentView addSubview:[[CostStats sharedInstance] hostingViewForDeck:self.deck]];
+            [cell.contentView addSubview:self.costStats.hostingView];
             break;
         case 2:
-            [cell.contentView addSubview:[[StrengthStats sharedInstance] hostingViewForDeck:self.deck]];
+            [cell.contentView addSubview:self.strengthStats.hostingView];
             break;
     }
     

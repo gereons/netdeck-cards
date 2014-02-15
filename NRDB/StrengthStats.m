@@ -16,52 +16,43 @@
 
 @implementation StrengthStats
 
-static StrengthStats* _instance;
-
-+(StrengthStats*) sharedInstance
+-(StrengthStats*) initWithDeck:(Deck *)deck
 {
-    @synchronized(self)
+    if ((self = [super init]))
     {
-        if (_instance == nil)
+        // calculate strength distribution
+        NSMutableDictionary* strengths = [NSMutableDictionary dictionary];
+        for (CardCounter* cc in deck.cards)
         {
-            _instance = [[self alloc] init];
+            int str = cc.card.strength;
+            if (str != -1)
+            {
+                NSNumber* n = [strengths objectForKey:@(str)];
+                int prev = n == nil ? 0 : [n intValue];
+                n = @(prev + cc.count);
+                [strengths setObject:n forKey:@(str)];
+            }
         }
+        
+        NSArray* sections = [[strengths allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) { return [n1 compare:n2]; }];
+        NSMutableArray* values = [NSMutableArray array];
+        for (NSNumber*n in sections)
+        {
+            [values addObject:[strengths objectForKey:n]];
+        }
+        NSAssert(sections.count == values.count, @"");
+        self.tableData = [[TableData alloc] initWithSections:sections andValues:values];
     }
-    return _instance;
+    return self;
 }
 
 -(CGFloat) height
 {
-    return 300;
+    return self.tableData.sections.count == 0 ? 0 : 300;
 }
 
--(CPTGraphHostingView*) hostingViewForDeck:(Deck *)deck
+-(CPTGraphHostingView*) hostingView
 {
-    // calculate strength distribution
-    NSMutableDictionary* strengths = [NSMutableDictionary dictionary];
-    for (CardCounter* cc in deck.cards)
-    {
-        int str = cc.card.strength;
-        if (str != -1)
-        {
-            NSNumber* n = [strengths objectForKey:@(str)];
-            int prev = n == nil ? 0 : [n intValue];
-            n = @(prev + cc.count);
-            [strengths setObject:n forKey:@(str)];
-        }
-    }
-    
-    NSLog(@"%@", strengths);
-    
-    NSArray* sections = [[strengths allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) { return [n1 compare:n2]; }];
-    NSMutableArray* values = [NSMutableArray array];
-    for (NSNumber*n in sections)
-    {
-        [values addObject:[strengths objectForKey:n]];
-    }
-    NSAssert(sections.count == values.count, @"");
-    self.tableData = [[TableData alloc] initWithSections:sections andValues:values];
-    
     // hostView
     CGRect rect = CGRectMake(0, 0, 500, self.height);
     CPTGraphHostingView *hostView = [[CPTGraphHostingView alloc] initWithFrame:rect];

@@ -455,16 +455,14 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
         [footer appendString:reasons[0]];
     }
     
+    self.footerLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
+    self.footerLabel.text = footer;
+    
     NSString* set = [CardSets mostRecentSetUsedInDeck:self.deck];
     if (set)
     {
-        [footer appendString:@" · "];
-        [footer appendString:set];
+        self.lastSetLabel.text = [NSString stringWithFormat:@"Cards up to %@", set];
     }
-    
-    self.footerLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
-    
-    self.footerLabel.text = footer;
 }
 
 -(void) initCards

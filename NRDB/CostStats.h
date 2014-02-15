@@ -13,9 +13,8 @@
 
 @interface CostStats : NSObject <CPTPlotDataSource>
 
-+(CostStats*) sharedInstance;
-
--(CPTGraphHostingView*) hostingViewForDeck:(Deck*)deck;
+-(CostStats*) initWithDeck:(Deck*)deck;
+@property (readonly) CPTGraphHostingView* hostingView;
 @property (readonly) CGFloat height;
 
 @end

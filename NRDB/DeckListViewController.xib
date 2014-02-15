@@ -9,6 +9,7 @@
                 <outlet property="collectionView" destination="Zk2-4C-1CS" id="r3d-KH-wIo"/>
                 <outlet property="deckNameLabel" destination="JY5-GK-UJa" id="exF-Si-N7U"/>
                 <outlet property="footerLabel" destination="Ocu-JS-mPn" id="o9l-Dc-bRh"/>
+                <outlet property="lastSetLabel" destination="Gyb-FN-lQv" id="BSf-TL-qw8"/>
                 <outlet property="tableView" destination="TkI-yZ-OZS" id="gri-lb-5ag"/>
                 <outlet property="toolBar" destination="3wr-bR-riV" id="0Xn-Hg-HpA"/>
                 <outlet property="view" destination="2" id="7Xi-zK-kzL"/>
@@ -27,10 +28,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="703" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JY5-GK-UJa">
-                                <rect key="frame" x="20" y="4" width="663" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JY5-GK-UJa" userLabel="Deck Name">
+                                <rect key="frame" x="20" y="4" width="522" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gyb-FN-lQv" userLabel="Last Set">
+                                <rect key="frame" x="510" y="4" width="173" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

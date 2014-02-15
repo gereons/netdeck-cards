@@ -19,6 +19,7 @@
 @property (strong) IBOutlet UIToolbar* toolBar;
 @property (strong) IBOutlet UILabel* footerLabel;
 @property (strong) IBOutlet UILabel* deckNameLabel;
+@property (strong) IBOutlet UILabel* lastSetLabel;
 
 @property BOOL deckChanged;
 @property NRRole role;

@@ -16,50 +16,43 @@
 
 @implementation CostStats
 
-static CostStats* _instance;
-
-+(CostStats*) sharedInstance
+-(CostStats*) initWithDeck:(Deck *)deck
 {
-    @synchronized(self)
+    if ((self = [super init]))
     {
-        if (_instance == nil)
+        // calculate cost distribution
+        NSMutableDictionary* costs = [NSMutableDictionary dictionary];
+        for (CardCounter* cc in deck.cards)
         {
-            _instance = [[self alloc] init];
+            int cost = cc.card.cost;
+            if (cost != -1)
+            {
+                NSNumber* n = [costs objectForKey:@(cost)];
+                int prev = n == nil ? 0 : [n intValue];
+                n = @(prev + cc.count);
+                [costs setObject:n forKey:@(cost)];
+            }
         }
+        
+        NSArray* sections = [[costs allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) { return [n1 compare:n2]; }];
+        NSMutableArray* values = [NSMutableArray array];
+        for (NSNumber*n in sections)
+        {
+            [values addObject:[costs objectForKey:n]];
+        }
+        NSAssert(sections.count == values.count, @"");
+        self.tableData = [[TableData alloc] initWithSections:sections andValues:values];
     }
-    return _instance;
+    return self;
 }
 
 -(CGFloat) height
 {
-    return 300;
+    return self.tableData.sections.count == 0 ? 0 : 300;
 }
 
--(CPTGraphHostingView*) hostingViewForDeck:(Deck *)deck
+-(CPTGraphHostingView*) hostingView
 {
-    // calculate cost distribution
-    NSMutableDictionary* costs = [NSMutableDictionary dictionary];
-    for (CardCounter* cc in deck.cards)
-    {
-        int cost = cc.card.cost;
-        if (cost != -1)
-        {
-            NSNumber* n = [costs objectForKey:@(cost)];
-            int prev = n == nil ? 0 : [n intValue];
-            n = @(prev + cc.count);
-            [costs setObject:n forKey:@(cost)];
-        }
-    }
-    
-    NSArray* sections = [[costs allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) { return [n1 compare:n2]; }];
-    NSMutableArray* values = [NSMutableArray array];
-    for (NSNumber*n in sections)
-    {
-        [values addObject:[costs objectForKey:n]];
-    }
-    NSAssert(sections.count == values.count, @"");
-    self.tableData = [[TableData alloc] initWithSections:sections andValues:values];
-    
     // hostView
     CGRect rect = CGRectMake(0, 0, 500, self.height);
     CPTGraphHostingView *hostView = [[CPTGraphHostingView alloc] initWithFrame:rect];
