@@ -12,6 +12,7 @@
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"
 #import "DeckAnalysisViewController.h"
+#import "DrawSimulatorViewController.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
 
@@ -213,6 +214,12 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     [DeckAnalysisViewController showForDeck:self.deck inViewController:self];
 }
 
+-(void) drawSimulatorClicked:(id)sender
+{
+    [DrawSimulatorViewController showForDeck:self.deck inViewController:self];
+}
+
+
 #pragma mark deck name
 
 -(void) enterName:(id)sender
@@ -380,13 +387,13 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 {
     TF_CHECKPOINT(@"toggle deck view");
     
-    int viewMode = sender.selectedSegmentIndex;
+    NSInteger viewMode = sender.selectedSegmentIndex;
     [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:DECK_VIEW_STYLE];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self doToggleView:viewMode];
 }
 
--(void) doToggleView:(int)viewMode
+-(void) doToggleView:(NSInteger)viewMode
 {
     self.tableView.hidden = viewMode == CARD_VIEW;
     self.collectionView.hidden = viewMode != CARD_VIEW;

@@ -30,5 +30,6 @@
 -(void) saveDeck:(id)sender;
 
 -(IBAction)analysisClicked:(id)sender;
+-(IBAction)drawSimulatorClicked:(id)sender;
 
 @end
