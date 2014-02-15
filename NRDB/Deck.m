@@ -160,7 +160,7 @@
 {
     NSAssert(copies > 0 && copies < 4, @"invalid card count");
     
-    int index = [self findCard:card];
+    int index = [self indexOfCard:card];
     if (index == -1)
     {
         CardCounter* cc = [CardCounter initWithCard:card andCount:copies];
@@ -185,7 +185,7 @@
 
 -(void) removeCard:(Card *)card copies:(int)copies
 {
-    int index = [self findCard:card];
+    int index = [self indexOfCard:card];
     NSAssert(index != -1, @"removing card %@, not in deck", card.name);
     
     CardCounter* c = [_cards objectAtIndex:index];
@@ -212,7 +212,7 @@
     return newDeck;
 }
 
--(int) findCard:(Card*) card
+-(int) indexOfCard:(Card*) card
 {
     for (int i=0; i<_cards.count; ++i)
     {
@@ -223,6 +223,19 @@
         }
     }
     return -1;
+}
+
+-(CardCounter*) findCard:(Card*) card
+{
+    for (int i=0; i<_cards.count; ++i)
+    {
+        CardCounter* cc = _cards[i];
+        if (cc.card.code == card.code)
+        {
+            return cc;
+        }
+    }
+    return nil;
 }
 
 -(void) sort

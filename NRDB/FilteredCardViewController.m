@@ -13,6 +13,7 @@
 #import "CardImageViewPopover.h"
 #import "NRNavigationController.h"
 
+#import "Deck.h"
 #import "Card.h"
 #import "CardList.h"
 #import "CGRectUtils.h"
@@ -86,6 +87,7 @@
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -104,6 +106,11 @@
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = @"Filter";
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(clearFilters:)];
+}
+
+-(void) deckChanged:(id)sender
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark keyboard show/hide
@@ -335,10 +342,12 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+       
         UIButton* button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        button.frame = CGRectMake(280, 5, 30, 30);
+        button.frame = CGRectMake(0, 0, 30, 30);
+        cell.accessoryView = button;
+        
         [cell.contentView addSubview:button];
         
         [button addTarget:self action:@selector(showImage:) forControlEvents:UIControlEventTouchUpInside];
@@ -349,6 +358,10 @@
     Card *card = cards[indexPath.row];
     
     cell.textLabel.text = card.name;
+    
+    CardCounter* cc = [self.deckListViewController.deck findCard:card];
+    cell.detailTextLabel.text = cc.count > 0 ? [@(cc.count) stringValue] : @"";
+    
     return cell;
 }
 
@@ -365,6 +378,7 @@
     Card *card = cards[indexPath.row];
     
     [self.deckListViewController addCard:card];
+    [self.tableView reloadData];
 }
 
 #pragma mark card popup

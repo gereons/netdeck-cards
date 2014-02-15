@@ -27,6 +27,7 @@
 
 -(NSArray*) checkValidity; // returns array of reasons, deck is ok if count==0
 
+-(CardCounter*) findCard:(Card*)card;
 -(void) addCard:(Card*) card copies:(int)copies;
 -(void) removeCard:(Card*) card;
 -(void) removeCard:(Card*) card copies:(int)copies;

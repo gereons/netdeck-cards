@@ -155,6 +155,17 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     }
 }
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (self.deck.cards.count > 0)
+    {
+        // so that FilteredCardViewController gets a chance to reload
+        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+    }
+}
+
 #pragma mark keyboard show/hide
 
 #define KEYBOARD_HEIGHT_OFFSET  225
@@ -672,7 +683,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         }
         
         self.deckChanged = YES;
-        [self refresh];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
     }
 }
 

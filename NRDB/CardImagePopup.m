@@ -62,10 +62,18 @@ static UIPopoverController* popover;
 
 -(void) copiesChanged:(id)sender
 {
-    self.cc.count = self.copiesStepper.value;
-    self.copiesLabel.text = [NSString stringWithFormat:@"×%d", self.cc.count];
+    int count = self.copiesStepper.value;
+    if (count == 0)
+    {
+        [self deleteCard:sender];
+    }
+    else
+    {
+        self.cc.count = self.copiesStepper.value;
+        self.copiesLabel.text = [NSString stringWithFormat:@"×%d", self.cc.count];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
+    }
 }
 
 -(void) deleteCard:(id)sender
