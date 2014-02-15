@@ -67,6 +67,7 @@
 		3A85328318550ACE00507B9A /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328118550ACE00507B9A /* AboutView.xib */; };
 		3A85328618550B5600507B9A /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328518550B5600507B9A /* About.html */; };
 		3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AB18AF7DA900F83520 /* CostStats.m */; };
+		3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AF18AF95E700F83520 /* StrengthStats.m */; };
 		3A99426D184B8C9E004B6E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426C184B8C9E004B6E05 /* libxml2.dylib */; };
 		3A99426F184B8CA6004B6E05 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426E184B8CA6004B6E05 /* ImageIO.framework */; };
 		3A994271184B8CAB004B6E05 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A994270184B8CAB004B6E05 /* QuartzCore.framework */; };
@@ -224,6 +225,8 @@
 		3A9283DD187429DF00EA0B21 /* Notifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		3A9742AA18AF7DA900F83520 /* CostStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostStats.h; sourceTree = "<group>"; };
 		3A9742AB18AF7DA900F83520 /* CostStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CostStats.m; sourceTree = "<group>"; };
+		3A9742AE18AF95E700F83520 /* StrengthStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrengthStats.h; sourceTree = "<group>"; };
+		3A9742AF18AF95E700F83520 /* StrengthStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StrengthStats.m; sourceTree = "<group>"; };
 		3A99426C184B8C9E004B6E05 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		3A99426E184B8CA6004B6E05 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		3A994270184B8CAB004B6E05 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -635,6 +638,8 @@
 			children = (
 				3A9742AA18AF7DA900F83520 /* CostStats.h */,
 				3A9742AB18AF7DA900F83520 /* CostStats.m */,
+				3A9742AE18AF95E700F83520 /* StrengthStats.h */,
+				3A9742AF18AF95E700F83520 /* StrengthStats.m */,
 			);
 			name = Stats;
 			sourceTree = "<group>";
@@ -908,6 +913,7 @@
 				3A9E7C4C18845FDA00A507C3 /* TableData.m in Sources */,
 				3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */,
 				3A3622781849320C007F2854 /* FilteredCardViewController.m in Sources */,
+				3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */,
 				3A4178AB18761BF600DEEFA6 /* IASKTextField.m in Sources */,
 				3ADC17361856632500FA2DF7 /* CardEditorViewController.m in Sources */,
 				3A4178A918761BF600DEEFA6 /* IASKSlider.m in Sources */,

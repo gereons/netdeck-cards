@@ -8,6 +8,7 @@
 
 #import "DeckAnalysisViewController.h"
 #import "CostStats.h"
+#import "StrengthStats.h"
 #import "Deck.h"
 
 @interface DeckAnalysisViewController ()
@@ -52,7 +53,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,6 +63,7 @@
         case 0:
             return 44;
         case 1:
+        case 2:
             return 300;
     }
     return 0;
@@ -74,6 +76,7 @@
         case 0:
             return MAX(1, self.errors.count);
         case 1:
+        case 2:
             return 1;
     }
     return 0;
@@ -87,6 +90,8 @@
             return @"Deck Validity";
         case 1:
             return @"Cost";
+        case 2:
+            return @"Strength";
     }
     return nil;
 }
@@ -119,6 +124,9 @@
             break;
         case 1:
             [cell.contentView addSubview:[[CostStats sharedInstance] hostingViewForDeck:self.deck]];
+            break;
+        case 2:
+            [cell.contentView addSubview:[[StrengthStats sharedInstance] hostingViewForDeck:self.deck]];
             break;
     }
     

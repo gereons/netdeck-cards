@@ -1,24 +1,24 @@
 //
-//  CostStats.m
-//  NRTM
+//  StrengthStats.m
+//  NRDB
 //
-//  Created by Gereon Steffens on 23.11.13.
-//  Copyright (c) 2013 Gereon Steffens. All rights reserved.
+//  Created by Gereon Steffens on 15.02.14.
+//  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "CostStats.h"
+#import "StrengthStats.h"
 #import "Deck.h"
 #import "TableData.h"
 
-@interface CostStats()
+@interface StrengthStats()
 @property TableData* tableData;
 @end
 
-@implementation CostStats
+@implementation StrengthStats
 
-static CostStats* _instance;
+static StrengthStats* _instance;
 
-+(CostStats*) sharedInstance
++(StrengthStats*) sharedInstance
 {
     @synchronized(self)
     {
@@ -37,25 +37,27 @@ static CostStats* _instance;
 
 -(CPTGraphHostingView*) hostingViewForDeck:(Deck *)deck
 {
-    // calculate cost distribution
-    NSMutableDictionary* costs = [NSMutableDictionary dictionary];
+    // calculate strength distribution
+    NSMutableDictionary* strengths = [NSMutableDictionary dictionary];
     for (CardCounter* cc in deck.cards)
     {
-        int cost = cc.card.cost;
-        if (cost != -1)
+        int str = cc.card.strength;
+        if (str != -1)
         {
-            NSNumber* n = [costs objectForKey:@(cost)];
+            NSNumber* n = [strengths objectForKey:@(str)];
             int prev = n == nil ? 0 : [n intValue];
             n = @(prev + cc.count);
-            [costs setObject:n forKey:@(cost)];
+            [strengths setObject:n forKey:@(str)];
         }
     }
     
-    NSArray* sections = [[costs allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) { return [n1 compare:n2]; }];
+    NSLog(@"%@", strengths);
+    
+    NSArray* sections = [[strengths allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) { return [n1 compare:n2]; }];
     NSMutableArray* values = [NSMutableArray array];
     for (NSNumber*n in sections)
     {
-        [values addObject:[costs objectForKey:n]];
+        [values addObject:[strengths objectForKey:n]];
     }
     NSAssert(sections.count == values.count, @"");
     self.tableData = [[TableData alloc] initWithSections:sections andValues:values];
@@ -96,7 +98,7 @@ static CostStats* _instance;
     pieChart.dataSource = self;
     pieChart.delegate = self;
     pieChart.pieRadius = (hostView.bounds.size.height * 0.7) / 2;
-    pieChart.identifier = @"Cost";
+    pieChart.identifier = @"Strength";
     pieChart.startAngle = M_PI_2;
     pieChart.sliceDirection = CPTPieDirectionClockwise;
     // create gradient
@@ -144,13 +146,13 @@ static CostStats* _instance;
         labelText.color = [CPTColor blackColor];
     }
     
-    NSNumber* cost = [self.tableData.sections objectAtIndex:index];
+    NSNumber* strength = [self.tableData.sections objectAtIndex:index];
     NSNumber* cards = [self.tableData.values objectAtIndex:index];
     
     NSString* str = nil;
     if ([cards intValue] > 0)
     {
-        str = [NSString stringWithFormat:@"%d credits\n%d cards", [cost intValue], [cards intValue]];
+        str = [NSString stringWithFormat:@"Strength %d\n%d cards", [strength intValue], [cards intValue]];
     }
     
     // 5 - Create and return layer with label text
@@ -162,7 +164,7 @@ static CostStats* _instance;
     UIColor* base = [UIColor colorWithRed:0x8a/256.0 green:0x56/256.0 blue:0xe2/256.0 alpha:1];
     CGFloat hue, brightness, saturation, alpha;
     [base getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
-
+    
     hue *= 360.0;
     float step = 360.0 / self.tableData.sections.count;
     for (int i=0; i<index; ++i)
