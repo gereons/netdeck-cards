@@ -8,11 +8,6 @@
 
 #import "CostStats.h"
 #import "Deck.h"
-#import "TableData.h"
-
-@interface CostStats()
-@property TableData* tableData;
-@end
 
 @implementation CostStats
 
@@ -148,25 +143,6 @@
     
     // 5 - Create and return layer with label text
     return [[CPTTextLayer alloc] initWithText:str style:labelText];
-}
-
--(CPTFill *)sliceFillForPieChart:(CPTPieChart *)pieChart recordIndex:(NSUInteger)index
-{
-    UIColor* base = [UIColor colorWithRed:0x8a/256.0 green:0x56/256.0 blue:0xe2/256.0 alpha:1];
-    CGFloat hue, brightness, saturation, alpha;
-    [base getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
-
-    hue *= 360.0;
-    float step = 360.0 / self.tableData.sections.count;
-    for (int i=0; i<index; ++i)
-    {
-        hue += step;
-        if (hue > 360.0) hue -= 360.0;
-    }
-    
-    UIColor* col = [UIColor colorWithHue:hue/360.0 saturation:saturation brightness:brightness alpha:alpha];
-    
-    return [CPTFill fillWithColor:[CPTColor colorWithCGColor:col.CGColor]];
 }
 
 @end

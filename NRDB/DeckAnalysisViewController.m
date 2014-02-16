@@ -9,6 +9,7 @@
 #import "DeckAnalysisViewController.h"
 #import "CostStats.h"
 #import "StrengthStats.h"
+#import "IceTypeStats.h"
 #import "Deck.h"
 
 @interface DeckAnalysisViewController ()
@@ -17,6 +18,7 @@
 @property NSArray* errors;
 @property CostStats* costStats;
 @property StrengthStats* strengthStats;
+@property IceTypeStats* iceTypeStats;
 
 @end
 
@@ -39,6 +41,10 @@
         self.errors = [deck checkValidity];
         self.costStats = [[CostStats alloc] initWithDeck:deck];
         self.strengthStats = [[StrengthStats alloc] initWithDeck:deck];
+        if (self.deck.role == NRRoleCorp)
+        {
+            self.iceTypeStats = [[IceTypeStats alloc] initWithDeck:deck];
+        }
     }
     return self;
 }
@@ -59,7 +65,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return self.iceTypeStats == nil ? 3 : 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -72,6 +78,8 @@
             return self.costStats.height;
         case 2:
             return self.strengthStats.height;
+        case 3:
+            return self.iceTypeStats.height;
     }
     return 0;
 }
@@ -84,6 +92,7 @@
             return MAX(1, self.errors.count);
         case 1:
         case 2:
+        case 3:
             return 1;
     }
     return 0;
@@ -101,13 +110,16 @@
         case 2:
             if (self.strengthStats.height > 0) return @"Strength Distribution";
             break;
+        case 3:
+            if (self.iceTypeStats.height > 0) return @"Ice Type Distribution";
+            break;
     }
     return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* cellIdentifier = @"analysisCell";
+    NSString* cellIdentifier = [NSString stringWithFormat:@"analysisCell%d", indexPath.section];
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell)
@@ -136,6 +148,9 @@
             break;
         case 2:
             [cell.contentView addSubview:self.strengthStats.hostingView];
+            break;
+        case 3:
+            [cell.contentView addSubview:self.iceTypeStats.hostingView];
             break;
     }
     

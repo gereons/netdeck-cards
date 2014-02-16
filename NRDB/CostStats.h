@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CorePlot-CocoaTouch.h"
+#import "Stats.h"
 
 @class Deck;
 
-@interface CostStats : NSObject <CPTPlotDataSource>
+@interface CostStats : Stats <CPTPlotDataSource>
 
 -(CostStats*) initWithDeck:(Deck*)deck;
 @property (readonly) CPTGraphHostingView* hostingView;

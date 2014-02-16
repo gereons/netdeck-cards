@@ -66,6 +66,8 @@
 		3A85328218550ACE00507B9A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85328018550ACE00507B9A /* AboutViewController.m */; };
 		3A85328318550ACE00507B9A /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328118550ACE00507B9A /* AboutView.xib */; };
 		3A85328618550B5600507B9A /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328518550B5600507B9A /* About.html */; };
+		3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C218B1630800AF5285 /* IceTypeStats.m */; };
+		3A9204C618B16B9B00AF5285 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C518B16B9B00AF5285 /* Stats.m */; };
 		3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AB18AF7DA900F83520 /* CostStats.m */; };
 		3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AF18AF95E700F83520 /* StrengthStats.m */; };
 		3A99426D184B8C9E004B6E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426C184B8C9E004B6E05 /* libxml2.dylib */; };
@@ -224,6 +226,10 @@
 		3A85328018550ACE00507B9A /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		3A85328118550ACE00507B9A /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
 		3A85328518550B5600507B9A /* About.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About.html; sourceTree = "<group>"; };
+		3A9204C118B1630800AF5285 /* IceTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IceTypeStats.h; sourceTree = "<group>"; };
+		3A9204C218B1630800AF5285 /* IceTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IceTypeStats.m; sourceTree = "<group>"; };
+		3A9204C418B16B9B00AF5285 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
+		3A9204C518B16B9B00AF5285 /* Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stats.m; sourceTree = "<group>"; };
 		3A9283DD187429DF00EA0B21 /* Notifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		3A9742AA18AF7DA900F83520 /* CostStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostStats.h; sourceTree = "<group>"; };
 		3A9742AB18AF7DA900F83520 /* CostStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CostStats.m; sourceTree = "<group>"; };
@@ -642,10 +648,14 @@
 		3A9742AD18AF7DAE00F83520 /* Stats */ = {
 			isa = PBXGroup;
 			children = (
+				3A9204C418B16B9B00AF5285 /* Stats.h */,
+				3A9204C518B16B9B00AF5285 /* Stats.m */,
 				3A9742AA18AF7DA900F83520 /* CostStats.h */,
 				3A9742AB18AF7DA900F83520 /* CostStats.m */,
 				3A9742AE18AF95E700F83520 /* StrengthStats.h */,
 				3A9742AF18AF95E700F83520 /* StrengthStats.m */,
+				3A9204C118B1630800AF5285 /* IceTypeStats.h */,
+				3A9204C218B1630800AF5285 /* IceTypeStats.m */,
 			);
 			name = Stats;
 			sourceTree = "<group>";
@@ -972,11 +982,13 @@
 				3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */,
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,
 				3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */,
+				3A9204C618B16B9B00AF5285 /* Stats.m in Sources */,
 				3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */,
 				3A85327D185509B000507B9A /* SettingsViewController.m in Sources */,
 				3A4925041869C70300B22DC5 /* CardFilterHeaderView.m in Sources */,
 				3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */,
 				3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */,
+				3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */,
 				3A5BC3F21849326B00E792F7 /* Deck.m in Sources */,
 				3ADE909A18773698006E187F /* SavedDeckCell.m in Sources */,
 				3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */,

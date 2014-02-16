@@ -1,39 +1,46 @@
 //
-//  StrengthStats.m
+//  IceTypeStats.m
 //  NRDB
 //
-//  Created by Gereon Steffens on 15.02.14.
+//  Created by Gereon Steffens on 16.02.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "StrengthStats.h"
+#import "IceTypeStats.h"
 #import "Deck.h"
 
-@implementation StrengthStats
+@implementation IceTypeStats
 
--(StrengthStats*) initWithDeck:(Deck *)deck
+-(IceTypeStats*) initWithDeck:(Deck *)deck
 {
+    NSArray* iceTypes = @[ @"Code Gate", @"Sentry" , @"Barrier" ];
     if ((self = [super init]))
     {
-        // calculate strength distribution
-        NSMutableDictionary* strengths = [NSMutableDictionary dictionary];
+        // calculate ice type distribution
+        NSMutableDictionary* ice = [NSMutableDictionary dictionary];
         for (CardCounter* cc in deck.cards)
         {
-            int str = cc.card.strength;
-            if (str != -1)
+            if (cc.card.type == NRCardTypeIce)
             {
-                NSNumber* n = [strengths objectForKey:@(str)];
-                int prev = n == nil ? 0 : [n intValue];
-                n = @(prev + cc.count);
-                [strengths setObject:n forKey:@(str)];
+                for (NSString* subtype in cc.card.subtypes)
+                {
+                    if ([iceTypes containsObject:subtype])
+                    {
+                        NSNumber* n = [ice objectForKey:subtype];
+                        int prev = n == nil ? 0 : [n intValue];
+                        n = @(prev + cc.count);
+                        [ice setObject:n forKey:subtype];
+                    }
+                }
             }
         }
+        NSLog(@"%@", ice);
         
-        NSArray* sections = [[strengths allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) { return [n1 compare:n2]; }];
+        NSArray* sections = [[ice allKeys] sortedArrayUsingComparator:^(NSString* s1, NSString* s2) { return [s1 compare:s2]; }];
         NSMutableArray* values = [NSMutableArray array];
         for (NSNumber*n in sections)
         {
-            [values addObject:[strengths objectForKey:n]];
+            [values addObject:[ice objectForKey:n]];
         }
         NSAssert(sections.count == values.count, @"");
         self.tableData = [[TableData alloc] initWithSections:sections andValues:values];
@@ -132,13 +139,13 @@
         labelText.color = [CPTColor blackColor];
     }
     
-    NSNumber* strength = [self.tableData.sections objectAtIndex:index];
+    NSString* type = [self.tableData.sections objectAtIndex:index];
     NSNumber* cards = [self.tableData.values objectAtIndex:index];
     
     NSString* str = nil;
     if ([cards intValue] > 0)
     {
-        str = [NSString stringWithFormat:@"Strength %d\n%d cards", [strength intValue], [cards intValue]];
+        str = [NSString stringWithFormat:@"%@\n%d cards", type, [cards intValue]];
     }
     
     // 5 - Create and return layer with label text
@@ -146,3 +153,4 @@
 }
 
 @end
+

@@ -1,8 +1,8 @@
 //
-//  StrengthStats.h
+//  IceTypeStats.h
 //  NRDB
 //
-//  Created by Gereon Steffens on 15.02.14.
+//  Created by Gereon Steffens on 16.02.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
@@ -11,9 +11,9 @@
 
 @class Deck;
 
-@interface StrengthStats : Stats <CPTPlotDataSource>
+@interface IceTypeStats : Stats <CPTPlotDataSource>
 
--(StrengthStats*) initWithDeck:(Deck*)deck;
+-(IceTypeStats*) initWithDeck:(Deck*)deck;
 
 @property (readonly) CPTGraphHostingView* hostingView;
 @property (readonly) CGFloat height;
