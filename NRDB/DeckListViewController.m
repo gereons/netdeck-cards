@@ -750,8 +750,58 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     // NSLog(@"selected %@", cc.card.name);
     CardImageCell* cell = (CardImageCell*)[collectionView cellForItemAtIndexPath:indexPath];
-    CGRect rect = CGRectMake(cell.center.x, cell.center.y-100, 1, 1); // move center up so popup appears centered on image
-    [CardImagePopup showForCard:cc fromRect:rect inView:self.collectionView];
+
+    // convert to on-screen coordinates
+    CGRect rect = [collectionView convertRect:cell.frame toView:collectionView.superview];
+
+    BOOL topVisible = rect.origin.y >= 66;
+    BOOL bottomVisible = rect.origin.y + rect.size.height <= 728;
+    // NSLog(@"%@ %d %d", NSStringFromCGRect(rect), topVisible, bottomVisible);
+    
+    static const int POPUP_HEIGHT = 170; // full height (including the arrow) of the popup
+    static const int LABEL_HEIGHT = 20; // height of the label underneath the image
+    
+    UIPopoverArrowDirection direction = UIPopoverArrowDirectionAny;
+
+    CGRect popupOrigin = CGRectMake(cell.center.x, cell.frame.origin.y, 1, 1);
+    if (topVisible && bottomVisible)
+    {
+        // fully visible, show from top of image
+        direction = UIPopoverArrowDirectionUp;
+    }
+    else if (topVisible)
+    {
+        if (rect.origin.y < 728 - POPUP_HEIGHT)
+        {
+            // top Visible and enough space - show from top of image
+            direction = UIPopoverArrowDirectionUp;
+        }
+        else
+        {
+            // top visible, not enough space - show above image
+            direction = UIPopoverArrowDirectionDown;
+        }
+    }
+    else if (bottomVisible)
+    {
+        popupOrigin.origin.y += cell.frame.size.height - LABEL_HEIGHT;
+        if (rect.origin.y + rect.size.height >= 66 + POPUP_HEIGHT)
+        {
+            // bottom visible and enough space - show from bottom
+            direction = UIPopoverArrowDirectionDown;
+        }
+        else
+        {
+            // bottom visible, not enough space - show below image
+            direction = UIPopoverArrowDirectionUp;
+        }
+    }
+    else
+    {
+        NSAssert(NO, @"selected invisible cell?!");
+    }
+    
+    [CardImagePopup showForCard:cc fromRect:popupOrigin inView:self.collectionView direction:direction];
 }
 
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

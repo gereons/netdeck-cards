@@ -18,7 +18,7 @@
 
 -(IBAction) copiesChanged:(id)sender;
 
-+(void) showForCard:(CardCounter*)card fromRect:(CGRect)rect inView:(UIView*)vc;
++(void) showForCard:(CardCounter*)card fromRect:(CGRect)rect inView:(UIView*)vc direction:(UIPopoverArrowDirection)direction;
 +(void) dismiss;
 
 @end

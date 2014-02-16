@@ -20,15 +20,15 @@
 
 static UIPopoverController* popover;
 
-+(void)showForCard:(CardCounter *)cc fromRect:(CGRect)rect inView:(UIView*)view
++(void)showForCard:(CardCounter *)cc fromRect:(CGRect)rect inView:(UIView*)view direction:(UIPopoverArrowDirection)direction
 {
     CardImagePopup* cardImageView = [[CardImagePopup alloc] initWithCard:cc];
     
     popover = [[UIPopoverController alloc] initWithContentViewController:cardImageView];
     popover.popoverContentSize = cardImageView.view.frame.size;
-    popover.backgroundColor = [UIColor clearColor];
+    popover.backgroundColor = [UIColor whiteColor];
     
-    [popover presentPopoverFromRect:rect inView:view permittedArrowDirections:UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown animated:NO];
+    [popover presentPopoverFromRect:rect inView:view permittedArrowDirections:direction animated:NO];
 }
 
 +(void) dismiss
