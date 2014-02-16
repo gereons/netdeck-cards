@@ -25,10 +25,10 @@ static UIPopoverController* popover;
     CardImagePopup* cardImageView = [[CardImagePopup alloc] initWithCard:cc];
     
     popover = [[UIPopoverController alloc] initWithContentViewController:cardImageView];
-    popover.popoverContentSize = cardImageView.view.frame.size; // CGSizeMake(134, 136);
+    popover.popoverContentSize = cardImageView.view.frame.size;
     popover.backgroundColor = [UIColor clearColor];
     
-    [popover presentPopoverFromRect:rect inView:view permittedArrowDirections:UIPopoverArrowDirectionUp|UIPopoverArrowDirectionUp animated:NO];
+    [popover presentPopoverFromRect:rect inView:view permittedArrowDirections:UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown animated:NO];
 }
 
 +(void) dismiss
@@ -58,29 +58,25 @@ static UIPopoverController* popover;
     
     self.copiesStepper.value = self.cc.count;
     self.copiesLabel.text = [NSString stringWithFormat:@"×%d", self.cc.count];
+    self.nameLabel.text = self.cc.card.name;
 }
 
 -(void) copiesChanged:(id)sender
 {
     int count = self.copiesStepper.value;
-    if (count == 0)
+    BOOL delete = count == 0;
+    
+    self.cc.count = count;
+    if (delete)
     {
-        [self deleteCard:sender];
+        [CardImagePopup dismiss];
     }
     else
     {
-        self.cc.count = self.copiesStepper.value;
         self.copiesLabel.text = [NSString stringWithFormat:@"×%d", self.cc.count];
-    
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
     }
-}
-
--(void) deleteCard:(id)sender
-{
-    self.cc.count = 0;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
-    [CardImagePopup dismiss];
 }
 
 @end

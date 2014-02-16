@@ -162,7 +162,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     if (self.deck.cards.count > 0)
     {
         // so that FilteredCardViewController gets a chance to reload
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_LOADED object:nil];
     }
 }
 
@@ -750,7 +750,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     // NSLog(@"selected %@", cc.card.name);
     CardImageCell* cell = (CardImageCell*)[collectionView cellForItemAtIndexPath:indexPath];
-    CGRect rect = CGRectMake(cell.center.x, cell.center.y-86, 1, 1); // 86 is half the height of a CardImagePopup
+    CGRect rect = CGRectMake(cell.center.x, cell.center.y-100, 1, 1); // move center up so popup appears centered on image
     [CardImagePopup showForCard:cc fromRect:rect inView:self.collectionView];
 }
 

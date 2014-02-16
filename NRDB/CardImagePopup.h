@@ -12,12 +12,11 @@
 
 @interface CardImagePopup : UIViewController
 
+@property IBOutlet UILabel* nameLabel;
 @property IBOutlet UILabel* copiesLabel;
 @property IBOutlet UIStepper* copiesStepper;
-@property IBOutlet UIButton* deleteButton;
 
 -(IBAction) copiesChanged:(id)sender;
--(IBAction) deleteCard:(id)sender;
 
 +(void) showForCard:(CardCounter*)card fromRect:(CGRect)rect inView:(UIView*)vc;
 +(void) dismiss;

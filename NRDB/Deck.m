@@ -48,7 +48,7 @@
         int apRequired = ((self.size / 5) + 1) * 2;
         if (self.agendaPoints != apRequired && self.agendaPoints != apRequired+1)
         {
-            [reasons addObject:[NSString stringWithFormat:@"Must have %d or %d Agenda Points", apRequired, apRequired+1]];
+            [reasons addObject:[NSString stringWithFormat:@"Needs %d or %d Agenda Points", apRequired, apRequired+1]];
         }
     
         BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];

@@ -87,7 +87,7 @@
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(deckLoaded:) name:DECK_LOADED object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -108,7 +108,7 @@
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(clearFilters:)];
 }
 
--(void) deckChanged:(id)sender
+-(void) deckLoaded:(id)sender
 {
     [self.tableView reloadData];
 }
