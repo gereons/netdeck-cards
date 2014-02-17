@@ -13,6 +13,7 @@
 #import "CardTypeStats.h"
 #import "InfluenceStats.h"
 #import "Deck.h"
+#import "CardSets.h"
 
 @interface DeckAnalysisViewController ()
 
@@ -99,7 +100,7 @@
     switch (section)
     {
         case 0:
-            return MAX(1, self.errors.count);
+            return MAX(2, self.errors.count + 1);
         case 1:
         case 2:
         case 3:
@@ -137,7 +138,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* cellIdentifier = [NSString stringWithFormat:@"analysisCell%d", indexPath.section];
+    NSString* cellIdentifier = [NSString stringWithFormat:@"analysisCell%ld", (long)indexPath.section];
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell)
@@ -152,12 +153,28 @@
             
             if (self.errors.count > 0)
             {
-                cell.textLabel.text = [self.errors objectAtIndex:indexPath.row];
-                cell.textLabel.textColor = [UIColor redColor];
+                if (indexPath.row == self.errors.count)
+                {
+                    cell.textLabel.text = [NSString stringWithFormat:@"Cards up to %@", [CardSets mostRecentSetUsedInDeck:self.deck]];
+                    cell.textLabel.textColor = [UIColor blackColor];
+                }
+                else
+                {
+                    cell.textLabel.text = [self.errors objectAtIndex:indexPath.row];
+                    cell.textLabel.textColor = [UIColor redColor];
+                }
             }
             else
             {
-                cell.textLabel.text = @"Deck is valid";
+                if (indexPath.row == 0)
+                {
+                    cell.textLabel.text = @"Deck is valid";
+                }
+                else
+                {
+                    cell.textLabel.text = [NSString stringWithFormat:@"Cards up to %@", [CardSets mostRecentSetUsedInDeck:self.deck]];
+                }
+                
                 cell.textLabel.textColor = [UIColor blackColor];
             }
             break;
