@@ -1,39 +1,37 @@
 //
-//  CostStats.m
-//  NRTM
+//  CardTypeStats.m
+//  NRDB
 //
-//  Created by Gereon Steffens on 23.11.13.
-//  Copyright (c) 2013 Gereon Steffens. All rights reserved.
+//  Created by Gereon Steffens on 17.02.14.
+//  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "CostStats.h"
+#import "CardTypeStats.h"
 #import "Deck.h"
 
-@implementation CostStats
+@implementation CardTypeStats
 
--(CostStats*) initWithDeck:(Deck *)deck
+-(CardTypeStats*) initWithDeck:(Deck *)deck
 {
     if ((self = [super init]))
     {
-        // calculate cost distribution
-        NSMutableDictionary* costs = [NSMutableDictionary dictionary];
+        // calculate ice type distribution
+        NSMutableDictionary* types = [NSMutableDictionary dictionary];
         for (CardCounter* cc in deck.cards)
         {
-            int cost = cc.card.cost;
-            if (cost != -1)
-            {
-                NSNumber* n = [costs objectForKey:@(cost)];
-                int prev = n == nil ? 0 : [n intValue];
-                n = @(prev + cc.count);
-                [costs setObject:n forKey:@(cost)];
-            }
+            NSString* type = cc.card.typeStr;
+            
+            NSNumber* n = [types objectForKey:type];
+            int prev = n == nil ? 0 : [n intValue];
+            n = @(prev + cc.count);
+            [types setObject:n forKey:type];
         }
         
-        NSArray* sections = [[costs allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) { return [n1 compare:n2]; }];
+        NSArray* sections = [[types allKeys] sortedArrayUsingComparator:^(NSString* s1, NSString* s2) { return [s1 compare:s2]; }];
         NSMutableArray* values = [NSMutableArray array];
         for (NSNumber*n in sections)
         {
-            [values addObject:[costs objectForKey:n]];
+            [values addObject:[types objectForKey:n]];
         }
         NSAssert(sections.count == values.count, @"");
         self.tableData = [[TableData alloc] initWithSections:sections andValues:values];
@@ -43,7 +41,7 @@
 
 -(CPTGraphHostingView*) hostingView
 {
-    return [self hostingViewForDelegate:self identifier:@"Cost"];
+    return [self hostingViewForDelegate:self identifier:@"Card Type"];
 }
 
 #pragma mark - CPTPlotDataSource methods
@@ -58,13 +56,14 @@
         labelText.color = [CPTColor blackColor];
     }
     
-    NSNumber* cost = [self.tableData.sections objectAtIndex:index];
+    NSString* type = [self.tableData.sections objectAtIndex:index];
     NSNumber* cards = [self.tableData.values objectAtIndex:index];
     
     NSString* str = nil;
     if ([cards intValue] > 0)
     {
-        str = [NSString stringWithFormat:@"%d credits\n%d cards", [cost intValue], [cards intValue]];
+        int fixme; // add percentages
+        str = [NSString stringWithFormat:@"%@\n%d cards", type, [cards intValue]];
     }
     
     // 5 - Create and return layer with label text
@@ -72,3 +71,5 @@
 }
 
 @end
+
+

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A167BD118B1E9C90023DF8A /* CardTypeStats.m */; };
 		3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EABD185DBA2D00DB7FFC /* Faction.m */; };
 		3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EAC0185DBC4700DB7FFC /* CardType.m */; };
 		3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ECC901879A1CC003400A9 /* DeckExport.m */; };
@@ -129,6 +130,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A167BD018B1E9C90023DF8A /* CardTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardTypeStats.h; sourceTree = "<group>"; };
+		3A167BD118B1E9C90023DF8A /* CardTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardTypeStats.m; sourceTree = "<group>"; };
 		3A16EABC185DBA2D00DB7FFC /* Faction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Faction.h; sourceTree = "<group>"; };
 		3A16EABD185DBA2D00DB7FFC /* Faction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Faction.m; sourceTree = "<group>"; };
 		3A16EABF185DBC4700DB7FFC /* CardType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardType.h; sourceTree = "<group>"; };
@@ -656,6 +659,8 @@
 				3A9742AF18AF95E700F83520 /* StrengthStats.m */,
 				3A9204C118B1630800AF5285 /* IceTypeStats.h */,
 				3A9204C218B1630800AF5285 /* IceTypeStats.m */,
+				3A167BD018B1E9C90023DF8A /* CardTypeStats.h */,
+				3A167BD118B1E9C90023DF8A /* CardTypeStats.m */,
 			);
 			name = Stats;
 			sourceTree = "<group>";
@@ -937,6 +942,7 @@
 			files = (
 				3A3622721849320C007F2854 /* AppDelegate.m in Sources */,
 				3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */,
+				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3A9E7C4C18845FDA00A507C3 /* TableData.m in Sources */,
 				3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */,
 				3A3622781849320C007F2854 /* FilteredCardViewController.m in Sources */,

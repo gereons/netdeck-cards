@@ -1,8 +1,8 @@
 //
-//  IceTypeStats.h
+//  CardTypeStats.h
 //  NRDB
 //
-//  Created by Gereon Steffens on 16.02.14.
+//  Created by Gereon Steffens on 17.02.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
@@ -11,9 +11,9 @@
 
 @class Deck;
 
-@interface IceTypeStats : Stats <CPTPlotDataSource, CPTPlotDelegate>
+@interface CardTypeStats : Stats <CPTPlotDataSource, CPTPlotDelegate>
 
--(IceTypeStats*) initWithDeck:(Deck*)deck;
+-(CardTypeStats*) initWithDeck:(Deck*)deck;
 
 @property (readonly) CPTGraphHostingView* hostingView;
 

@@ -13,5 +13,11 @@
 @interface Stats : NSObject
 
 @property TableData* tableData;
+@property (readonly) CGFloat height;
+
+-(CPTFill *)sliceFillForPieChart:(CPTPieChart *)pieChart recordIndex:(NSUInteger)index;
+-(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot;
+-(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index;
+-(CPTGraphHostingView*) hostingViewForDelegate:(id<CPTPlotDataSource, CPTPlotDelegate>)delegate identifier:(NSString*)identifier;
 
 @end

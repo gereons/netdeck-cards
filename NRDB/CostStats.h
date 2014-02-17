@@ -11,10 +11,10 @@
 
 @class Deck;
 
-@interface CostStats : Stats <CPTPlotDataSource>
+@interface CostStats : Stats <CPTPlotDataSource, CPTPlotDelegate>
 
 -(CostStats*) initWithDeck:(Deck*)deck;
 @property (readonly) CPTGraphHostingView* hostingView;
-@property (readonly) CGFloat height;
+
 
 @end

@@ -11,11 +11,10 @@
 
 @class Deck;
 
-@interface StrengthStats : Stats <CPTPlotDataSource>
+@interface StrengthStats : Stats <CPTPlotDataSource, CPTPlotDelegate>
 
 -(StrengthStats*) initWithDeck:(Deck*)deck;
 
 @property (readonly) CPTGraphHostingView* hostingView;
-@property (readonly) CGFloat height;
 
 @end

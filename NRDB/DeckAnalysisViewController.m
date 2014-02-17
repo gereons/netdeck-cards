@@ -10,6 +10,7 @@
 #import "CostStats.h"
 #import "StrengthStats.h"
 #import "IceTypeStats.h"
+#import "CardTypeStats.h"
 #import "Deck.h"
 
 @interface DeckAnalysisViewController ()
@@ -19,6 +20,7 @@
 @property CostStats* costStats;
 @property StrengthStats* strengthStats;
 @property IceTypeStats* iceTypeStats;
+@property CardTypeStats* cardTypeStats;
 
 @end
 
@@ -41,6 +43,7 @@
         self.errors = [deck checkValidity];
         self.costStats = [[CostStats alloc] initWithDeck:deck];
         self.strengthStats = [[StrengthStats alloc] initWithDeck:deck];
+        self.cardTypeStats = [[CardTypeStats alloc] initWithDeck:deck];
         if (self.deck.role == NRRoleCorp)
         {
             self.iceTypeStats = [[IceTypeStats alloc] initWithDeck:deck];
@@ -65,7 +68,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.iceTypeStats == nil ? 3 : 4;
+    return self.iceTypeStats == nil ? 4 : 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -79,6 +82,8 @@
         case 2:
             return self.strengthStats.height;
         case 3:
+            return self.cardTypeStats.height;
+        case 4:
             return self.iceTypeStats.height;
     }
     return 0;
@@ -93,6 +98,7 @@
         case 1:
         case 2:
         case 3:
+        case 4:
             return 1;
     }
     return 0;
@@ -111,6 +117,9 @@
             if (self.strengthStats.height > 0) return @"Strength Distribution";
             break;
         case 3:
+            if (self.cardTypeStats.height > 0) return @"Card Type Distribution";
+            break;
+        case 4:
             if (self.iceTypeStats.height > 0) return @"Ice Type Distribution";
             break;
     }
@@ -150,6 +159,9 @@
             [cell.contentView addSubview:self.strengthStats.hostingView];
             break;
         case 3:
+            [cell.contentView addSubview:self.cardTypeStats.hostingView];
+            break;
+        case 4:
             [cell.contentView addSubview:self.iceTypeStats.hostingView];
             break;
     }
