@@ -25,6 +25,10 @@
         {
             NSString* type = cc.card.typeStr;
             
+            if (cc.card.type == NRCardTypeProgram && [cc.card.subtypes containsObject:@"Icebreaker"])
+            {
+                type = @"Icebreaker";
+            }
             NSNumber* n = [types objectForKey:type];
             int prev = n == nil ? 0 : [n intValue];
             n = @(prev + cc.count);
