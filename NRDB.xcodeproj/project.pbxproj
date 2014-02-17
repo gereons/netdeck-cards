@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A09184918B2925400DBE590 /* InfluenceStats.m */; };
 		3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A167BD118B1E9C90023DF8A /* CardTypeStats.m */; };
 		3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EABD185DBA2D00DB7FFC /* Faction.m */; };
 		3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EAC0185DBC4700DB7FFC /* CardType.m */; };
@@ -130,6 +131,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A09184818B2925400DBE590 /* InfluenceStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfluenceStats.h; sourceTree = "<group>"; };
+		3A09184918B2925400DBE590 /* InfluenceStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfluenceStats.m; sourceTree = "<group>"; };
 		3A167BD018B1E9C90023DF8A /* CardTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardTypeStats.h; sourceTree = "<group>"; };
 		3A167BD118B1E9C90023DF8A /* CardTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardTypeStats.m; sourceTree = "<group>"; };
 		3A16EABC185DBA2D00DB7FFC /* Faction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Faction.h; sourceTree = "<group>"; };
@@ -653,6 +656,8 @@
 			children = (
 				3A9204C418B16B9B00AF5285 /* Stats.h */,
 				3A9204C518B16B9B00AF5285 /* Stats.m */,
+				3A09184818B2925400DBE590 /* InfluenceStats.h */,
+				3A09184918B2925400DBE590 /* InfluenceStats.m */,
 				3A9742AA18AF7DA900F83520 /* CostStats.h */,
 				3A9742AB18AF7DA900F83520 /* CostStats.m */,
 				3A9742AE18AF95E700F83520 /* StrengthStats.h */,
@@ -975,6 +980,7 @@
 				3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */,
 				3AD066791896CD2100FF1666 /* CardCell.m in Sources */,
 				3A5BC3F11849326B00E792F7 /* CardList.m in Sources */,
+				3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */,
 				3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */,
 				3A4178AA18761BF600DEEFA6 /* IASKSwitch.m in Sources */,
 				3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */,

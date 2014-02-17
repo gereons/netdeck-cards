@@ -16,5 +16,4 @@
 -(CostStats*) initWithDeck:(Deck*)deck;
 @property (readonly) CPTGraphHostingView* hostingView;
 
-
 @end

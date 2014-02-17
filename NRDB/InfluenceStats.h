@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Stats.h"
 
-@interface InfluenceStats : NSObject
+@class Deck;
+
+@interface InfluenceStats : Stats <CPTPlotDataSource, CPTPlotDelegate>
+
+-(InfluenceStats*) initWithDeck:(Deck*)deck;
+@property (readonly) CPTGraphHostingView* hostingView;
 
 @end

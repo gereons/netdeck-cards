@@ -9,14 +9,20 @@
 #import "IceTypeStats.h"
 #import "Deck.h"
 
+@interface IceTypeStats()
+@property int iceCount;
+@end
+
 @implementation IceTypeStats
 
 -(IceTypeStats*) initWithDeck:(Deck *)deck
 {
-    NSArray* iceTypes = @[ @"Code Gate", @"Sentry" , @"Barrier" ];
+    NSArray* iceTypes = @[ @"Code Gate", @"Sentry" , @"Barrier", @"Mythic" ];
     
     if ((self = [super init]))
     {
+        self.iceCount = 0;
+        
         // calculate ice type distribution
         NSMutableDictionary* ice = [NSMutableDictionary dictionary];
         for (CardCounter* cc in deck.cards)
@@ -31,6 +37,8 @@
                         int prev = n == nil ? 0 : [n intValue];
                         n = @(prev + cc.count);
                         [ice setObject:n forKey:subtype];
+                        self.iceCount += cc.count;
+                        break;
                     }
                 }
             }
@@ -71,7 +79,8 @@
     NSString* str = nil;
     if ([cards intValue] > 0)
     {
-        str = [NSString stringWithFormat:@"%@\n%d cards", type, [cards intValue]];
+        float pct = [cards intValue] * 100.0 / self.iceCount;
+        str = [NSString stringWithFormat:@"%@: %d\n%.1f%%", type, [cards intValue], pct];
     }
     
     // 5 - Create and return layer with label text

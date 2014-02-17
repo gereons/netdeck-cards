@@ -9,6 +9,10 @@
 #import "CardTypeStats.h"
 #import "Deck.h"
 
+@interface CardTypeStats()
+@property int deckSize;
+@end
+
 @implementation CardTypeStats
 
 -(CardTypeStats*) initWithDeck:(Deck *)deck
@@ -35,6 +39,7 @@
         }
         NSAssert(sections.count == values.count, @"");
         self.tableData = [[TableData alloc] initWithSections:sections andValues:values];
+        self.deckSize = deck.size;
     }
     return self;
 }
@@ -62,8 +67,9 @@
     NSString* str = nil;
     if ([cards intValue] > 0)
     {
-        int fixme; // add percentages
-        str = [NSString stringWithFormat:@"%@\n%d cards", type, [cards intValue]];
+        float pct = [cards intValue] * 100.0 / _deckSize;
+        
+        str = [NSString stringWithFormat:@"%@: %d\n%.1f%%", type, [cards intValue], pct];
     }
     
     // 5 - Create and return layer with label text

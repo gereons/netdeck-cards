@@ -139,7 +139,7 @@
         
         UIButton* button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         button.frame = CGRectMake(470, 5, 30, 30);
-        [cell.contentView addSubview:button];
+        cell.accessoryView = button;
         
         [button addTarget:self action:@selector(showImage:) forControlEvents:UIControlEventTouchUpInside];
     }
