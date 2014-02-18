@@ -62,9 +62,10 @@
     NSNumber* cards = [self.tableData.values objectAtIndex:index];
     
     NSString* str = nil;
-    if ([cards intValue] > 0)
+    int c = [cards intValue];
+    if (c > 0)
     {
-        str = [NSString stringWithFormat:@"%d credits\n%d cards", [cost intValue], [cards intValue]];
+        str = [NSString stringWithFormat:@"%d credits\n%d %@", [cost intValue], c, CARDS(c)];
     }
     
     // 5 - Create and return layer with label text

@@ -38,8 +38,11 @@
 
 - (id)initWithDeck:(Deck*)deck
 {
+    TF_CHECKPOINT(@"deck analysis");
+    
     self = [super initWithNibName:@"DeckAnalysisViewController" bundle:nil];
-    if (self) {
+    if (self)
+    {
         self.deck = deck;
         self.modalPresentationStyle = UIModalPresentationFormSheet;
         

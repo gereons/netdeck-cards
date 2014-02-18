@@ -67,9 +67,10 @@
     NSNumber* cards = [self.tableData.values objectAtIndex:index];
     
     NSString* str = nil;
-    if ([cards intValue] > 0)
+    int c = [cards intValue];
+    if (c > 0)
     {
-        str = [NSString stringWithFormat:@"Strength %d\n%d cards", [strength intValue], [cards intValue]];
+        str = [NSString stringWithFormat:@"Strength %d\n%d %@", [strength intValue], c, CARDS(c)];
     }
     
     // 5 - Create and return layer with label text

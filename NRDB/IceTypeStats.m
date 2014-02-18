@@ -46,9 +46,9 @@
         
         NSArray* sections = [[ice allKeys] sortedArrayUsingComparator:^(NSString* s1, NSString* s2) { return [s1 compare:s2]; }];
         NSMutableArray* values = [NSMutableArray array];
-        for (NSNumber*n in sections)
+        for (NSString*s in sections)
         {
-            [values addObject:[ice objectForKey:n]];
+            [values addObject:[ice objectForKey:s]];
         }
         NSAssert(sections.count == values.count, @"");
         self.tableData = [[TableData alloc] initWithSections:sections andValues:values];

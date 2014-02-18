@@ -39,7 +39,19 @@
     // Do any additional setup after loading the view from its nib.
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self listFiles];
     
+    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+    DBPath* path = [DBPath root];
+    
+    [filesystem addObserver:self forPathAndChildren:path block:^() {
+        [self listFiles];
+        [self.tableView reloadData];
+    }];
+}
+
+-(void) listFiles
+{
     self.deckNames = @[ [NSMutableArray array], [NSMutableArray array] ];
     self.decks = @[ [NSMutableArray array], [NSMutableArray array] ];
     
@@ -73,6 +85,13 @@
     [super viewDidAppear:animated];
     
     self.navigationController.navigationBar.topItem.title = @"Import Deck";
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+    [filesystem removeObserver:self];
 }
 
 #pragma mark tableView

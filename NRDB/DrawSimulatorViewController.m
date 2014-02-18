@@ -27,6 +27,8 @@
 
 - (id)initWithDeck:(Deck*)deck
 {
+    TF_CHECKPOINT(@"draw simulator");
+    
     self = [super initWithNibName:@"DrawSimulatorViewController" bundle:nil];
     if (self)
     {
@@ -39,12 +41,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initCards];
+    [self initCards:YES];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
--(void) initCards
+-(void) initCards:(BOOL)drawInitialHand
 {
     self.draw = [NSMutableArray array];
     self.cards = [NSMutableArray array];
@@ -67,6 +69,15 @@
     }
     
     self.drawnLabel.text = @"";
+    if (drawInitialHand)
+    {
+        int handSize = 5;
+        if ([self.deck.identity.code isEqualToString:ANDROMEDA])
+        {
+            handSize = 9;
+        }
+        [self drawCards:handSize];
+    }
 }
 
 -(void) done:(id)sender
@@ -76,14 +87,14 @@
 
 -(void) clear:(id)sender
 {
-    [self initCards];
+    [self initCards:NO];
     [self.tableView reloadData];
 }
 
 -(void) draw:(UISegmentedControl*)sender
 {
     NSInteger numCards = sender.selectedSegmentIndex + 1;
-    BOOL scrollDown = YES;
+    
     if (numCards == 6)
     {
         numCards = 9;
@@ -91,9 +102,13 @@
     else if (numCards == 7)
     {
         numCards = self.deck.size;
-        scrollDown = NO;
     }
     
+    [self drawCards:numCards];
+}
+
+-(void) drawCards:(int)numCards
+{
     for (int i=0; i<numCards; ++i)
     {
         if (self.cards.count > 0)
@@ -108,7 +123,9 @@
     self.drawnLabel.text = [NSString stringWithFormat:@"%ld %@ drawn", (unsigned long)drawn, drawn == 1 ? @"Card" : @"Cards" ];
     
     [self.tableView reloadData];
-    if (scrollDown)
+    
+    // scroll down if not all cards were drawn
+    if (numCards != self.deck.size)
     {
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.draw.count-1 inSection:0];
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
