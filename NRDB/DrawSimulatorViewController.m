@@ -107,7 +107,7 @@
     [self drawCards:numCards];
 }
 
--(void) drawCards:(int)numCards
+-(void) drawCards:(NSInteger)numCards
 {
     for (int i=0; i<numCards; ++i)
     {

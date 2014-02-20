@@ -12,7 +12,7 @@
 @interface ImageCache : NSObject
 
 typedef void (^SuccessCompletionBlock)(Card* card, UIImage* image);
-typedef void (^ErrorCompletionBlock)(Card* card, NSInteger statusCode);
+typedef void (^ErrorCompletionBlock)(Card* card, NSInteger statusCode, UIImage* placeholderImage);
 
 +(ImageCache*) sharedInstance;
 

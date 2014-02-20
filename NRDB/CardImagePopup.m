@@ -77,6 +77,7 @@ static UIPopoverController* popover;
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_LOADED object:self];
 }
 
 @end

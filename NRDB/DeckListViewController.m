@@ -849,14 +849,27 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         }
     }
     
+    if (![cell.card isEqual:card])
+    {
+        cell.imageView.image = nil;
+    }
+    cell.card = card;
+    
     [cell.activityIndicator startAnimating];
     [[ImageCache sharedInstance] getImageFor:card
                                      success:^(Card* card, UIImage* img) {
                                          [cell.activityIndicator stopAnimating];
-                                         cell.imageView.image = img;
+                                         if ([cell.card isEqual:card])
+                                         {
+                                             cell.imageView.image = img;
+                                         }
                                      }
-                                     failure:^(Card* card, NSInteger statusCode) {
+                                     failure:^(Card* card, NSInteger statusCode, UIImage* placeholder) {
                                          [cell.activityIndicator stopAnimating];
+                                         if ([cell.card isEqual:card])
+                                         {
+                                             cell.imageView.image = placeholder;
+                                         }
                                      }];
 
     return cell;

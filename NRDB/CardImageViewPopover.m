@@ -72,8 +72,9 @@ static UIPopoverController* popover;
                                          [self.activityIndicator stopAnimating];
                                          self.imageView.image = image;
                                      }
-                                     failure:^(Card* card, NSInteger statusCode){
+                                     failure:^(Card* card, NSInteger statusCode, UIImage* placeholder) {
                                         [self.activityIndicator stopAnimating];
+                                         self.imageView.image = placeholder;
                                      }];
 }
 

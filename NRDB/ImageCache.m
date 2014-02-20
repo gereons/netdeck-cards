@@ -19,6 +19,16 @@
 @implementation ImageCache
 
 static ImageCache* instance;
+static UIImage* runnerPlaceholder;
+static UIImage* corpPlaceholder;
+
+#define PLACEHOLDER(card)   (card.role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder)
+
++(void) initialize
+{
+    runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
+    corpPlaceholder = [UIImage imageNamed:@"CorpPlaceholder"];
+}
 
 +(ImageCache*) sharedInstance
 {
@@ -57,9 +67,7 @@ static ImageCache* instance;
     
     if (![AFNetworkReachabilityManager sharedManager].reachable)
     {
-        NSLog(@"offline...");
-        // TODO
-        successBlock(card, [UIImage imageNamed:@"CardPlaceholder"]);
+        successBlock(card, PLACEHOLDER(card));
         return;
     }
     else
@@ -92,7 +100,11 @@ static ImageCache* instance;
              if (failureBlock)
              {
                  NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
-                 failureBlock(card, response.statusCode);
+                 
+                 failureBlock(card, response.statusCode, PLACEHOLDER(card));
+                 
+#warning fixme - cache placeholders also, but shorter than real images
+                 // [self storeInCache:PLACEHOLDER(card) lastModified:Nil forKey:card.code];
              }
          }];
 }

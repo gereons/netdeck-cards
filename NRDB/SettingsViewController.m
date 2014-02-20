@@ -194,7 +194,7 @@
             // use -performSelector: so the hud can refresh
             [self performSelector:@selector(downloadImageForCard:) withObject:@(i+1) afterDelay:.005];
         }
-        failure:^(Card* card, NSInteger statusCode) {
+        failure:^(Card* card, NSInteger statusCode, UIImage* placeholder) {
             if (statusCode >= 400)
             {
                 self.imageDownloadOK = NO;
