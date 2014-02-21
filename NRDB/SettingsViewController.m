@@ -218,7 +218,7 @@
         [self.alert dismissWithClickedButtonIndex:0 animated:NO];
         if (self.imageDownloadErrors > 0)
         {
-            NSString* msg = [NSString stringWithFormat:@"%d of %d images could not be downloaded.", self.imageDownloadErrors, self.cards.count];
+            NSString* msg = [NSString stringWithFormat:@"%d of %lu images could not be downloaded.", self.imageDownloadErrors, (unsigned long)self.cards.count];
             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
         }
