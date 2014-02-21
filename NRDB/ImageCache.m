@@ -14,7 +14,9 @@
 #define LAST_MOD_CACHE  @"lastModified"
 #define NEXT_CHECK      @"nextCheck"
 
-#define SEC_PER_DAY     (24 * 60 * 60)
+#define SEC_PER_DAY         (24 * 60 * 60)
+#define SUCCESS_INTERVAL    (30*SEC_PER_DAY)
+#define ERROR_INTERVAL      (1*SEC_PER_DAY)
 
 @implementation ImageCache
 
@@ -97,14 +99,16 @@ static UIImage* corpPlaceholder;
              [self storeInCache:responseObject lastModified:lastModified forKey:card.code];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             // download failed
+             
+             // invoke callback
              if (failureBlock)
              {
                  NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
                  
                  failureBlock(card, response.statusCode, PLACEHOLDER(card));
                  
-#warning fixme - cache placeholders also, but shorter than real images
-                 // [self storeInCache:PLACEHOLDER(card) lastModified:Nil forKey:card.code];
+                 [self storeInCache:PLACEHOLDER(card) lastModified:nil forKey:card.code];
              }
          }];
 }
@@ -157,7 +161,7 @@ static UIImage* corpPlaceholder;
         if (operation.response.statusCode == 304)
         {
             // not modified - update check date
-            [self setNextCheck:card.code];
+            [self setNextCheck:card.code withTimeIntervalFromNow:SUCCESS_INTERVAL];
         }
     }];
     
@@ -169,7 +173,7 @@ static UIImage* corpPlaceholder;
     // NSLog(@"store img for %@", key);
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    
+    NSTimeInterval interval = SUCCESS_INTERVAL;
     if (lastModified)
     {
         NSMutableDictionary* dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
@@ -181,13 +185,17 @@ static UIImage* corpPlaceholder;
         [dict setObject:lastModified forKey:key];
         [settings setObject:dict forKey:LAST_MOD_CACHE];
     }
+    else
+    {
+        interval = ERROR_INTERVAL;
+    }
     
-    [self setNextCheck:key];
+    [self setNextCheck:key withTimeIntervalFromNow:interval];
     
     [[TMCache sharedCache] setObject:image forKey:key];
 }
 
--(void) setNextCheck:(NSString*)key
+-(void) setNextCheck:(NSString*)key withTimeIntervalFromNow:(NSTimeInterval)interval
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary* dict = [[settings objectForKey:NEXT_CHECK] mutableCopy];
@@ -197,7 +205,7 @@ static UIImage* corpPlaceholder;
     }
 
     NSTimeInterval nextCheck = [NSDate timeIntervalSinceReferenceDate];
-    nextCheck += 30 * SEC_PER_DAY;
+    nextCheck += interval;
     [dict setObject:[NSDate dateWithTimeIntervalSinceReferenceDate:nextCheck] forKey:key];
     [settings setObject:dict forKey:NEXT_CHECK];
 }

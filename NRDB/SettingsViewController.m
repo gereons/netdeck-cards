@@ -22,7 +22,12 @@
 @interface SettingsViewController ()
 
 @property IASKAppSettingsViewController* iask;
-@property BOOL imageDownloadOK;
+
+@property int imageDownloadErrors;
+@property BOOL imageDownloadStopped;
+
+@property UIAlertView* alert;
+@property UIProgressView* progressView;
 
 @property NSArray* cards;
 @property NSInteger index;
@@ -163,9 +168,15 @@
 -(void) downloadAllImages
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [SVProgressHUD showProgress:0 status:@"Downloading Card Images" maskType:SVProgressHUDMaskTypeBlack];
     
-    self.imageDownloadOK = YES;
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 250, 20)];
+    
+    self.alert = [[UIAlertView alloc] initWithTitle:@"Downloading Images" message:nil delegate:self cancelButtonTitle:@"Stop" otherButtonTitles:nil];
+    [self.alert setValue:self.progressView forKey:@"accessoryView"];
+    [self.alert show];
+    
+    self.imageDownloadStopped = NO;
+    self.imageDownloadErrors = 0;
 
     self.cards = [Card allCards];
 
@@ -174,11 +185,8 @@
 
 -(void) downloadImageForCard:(NSNumber*)index
 {
-    if (!self.imageDownloadOK)
+    if (self.imageDownloadStopped)
     {
-        [SVProgressHUD dismiss];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        self.cards = nil;
         return;
     }
     
@@ -186,29 +194,43 @@
     if (i < self.cards.count)
     {
         Card* card = [self.cards objectAtIndex:i];
+
         [[ImageCache sharedInstance] getImageFor:card success:^(Card* card, UIImage* image) {
             float progress = (i+1) * 100.0 / self.cards.count;
-            // NSLog(@"progress %f", progress);
-            [SVProgressHUD showProgress:progress/100.0 status:@"Downloading Card Images" maskType:SVProgressHUDMaskTypeBlack];
+            // NSLog(@"%@ - progress %.1f", card.name, progress);
+            
+            self.progressView.progress = progress/100.0;
             
             // use -performSelector: so the hud can refresh
-            [self performSelector:@selector(downloadImageForCard:) withObject:@(i+1) afterDelay:.005];
+            [self performSelector:@selector(downloadImageForCard:) withObject:@(i+1) afterDelay:.01];
         }
         failure:^(Card* card, NSInteger statusCode, UIImage* placeholder) {
-            if (statusCode >= 400)
-            {
-                self.imageDownloadOK = NO;
-            }
+            ++self.imageDownloadErrors;
+            
+            // use -performSelector: so the hud can refresh
+            [self performSelector:@selector(downloadImageForCard:) withObject:@(i+1) afterDelay:.01];
         }];
     }
     else
     {
-        [SVProgressHUD dismiss];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        
+        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+        if (self.imageDownloadErrors > 0)
+        {
+            NSString* msg = [NSString stringWithFormat:@"%d of %d images could not be downloaded.", self.imageDownloadErrors, self.cards.count];
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+        
         self.cards = nil;
     }
 }
 
+- (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.imageDownloadStopped = YES;
+}
 
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender
 {
