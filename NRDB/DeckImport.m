@@ -59,7 +59,11 @@
                 }
                 else
                 {
-                    [deck addCard:c copies:[count intValue]];
+                    int cnt = [count intValue];
+                    if (cnt > 0 && cnt < 4)
+                    {
+                        [deck addCard:c copies:cnt];
+                    }
                 }
                 break;
             }

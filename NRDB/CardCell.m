@@ -18,6 +18,7 @@
     self.cardCounter.count = copies;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_LOADED object:self];
 }
 
 @end

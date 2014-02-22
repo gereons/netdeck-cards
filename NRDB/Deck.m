@@ -39,7 +39,7 @@
     NSMutableArray* reasons = [NSMutableArray array];
     if (self.identity == nil)
     {
-        [reasons addObject:@"No Identity selected"];
+        [reasons addObject:@"No Identity"];
     }
     
     if (self.identity.role == NRRoleCorp)
