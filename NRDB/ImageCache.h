@@ -18,5 +18,6 @@ typedef void (^ErrorCompletionBlock)(Card* card, NSInteger statusCode, UIImage* 
 
 -(void) clearCache;
 -(void) getImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock;
+-(void) getImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock forced:(BOOL)forced;
 
 @end

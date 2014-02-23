@@ -147,7 +147,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             [SVProgressHUD dismiss];
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             
             if (ok)
             {
@@ -181,6 +180,8 @@
     self.cards = [Card allCards];
 
     [self downloadImageForCard:@(0)];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(void) downloadImageForCard:(NSNumber*)index
@@ -196,20 +197,27 @@
         Card* card = [self.cards objectAtIndex:i];
 
         [[ImageCache sharedInstance] getImageFor:card success:^(Card* card, UIImage* image) {
-            float progress = (i+1) * 100.0 / self.cards.count;
-            // NSLog(@"%@ - progress %.1f", card.name, progress);
-            
-            self.progressView.progress = progress/100.0;
-            
-            // use -performSelector: so the hud can refresh
-            [self performSelector:@selector(downloadImageForCard:) withObject:@(i+1) afterDelay:.01];
+            [self downloadNextImage:i+1];
         }
         failure:^(Card* card, NSInteger statusCode, UIImage* placeholder) {
             ++self.imageDownloadErrors;
-            
-            // use -performSelector: so the hud can refresh
-            [self performSelector:@selector(downloadImageForCard:) withObject:@(i+1) afterDelay:.01];
-        }];
+            [self downloadNextImage:i+1];
+        }
+        forced:YES];
+    }
+}
+
+- (void) downloadNextImage:(int)i
+{
+    if (i < self.cards.count)
+    {
+        float progress = (i * 100.0) / self.cards.count;
+        // NSLog(@"%@ - progress %.1f", card.name, progress);
+        
+        self.progressView.progress = progress/100.0;
+        
+        // use -performSelector: so the hud can refresh
+        [self performSelector:@selector(downloadImageForCard:) withObject:@(i) afterDelay:.01];
     }
     else
     {
@@ -230,6 +238,7 @@
 - (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     self.imageDownloadStopped = YES;
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender
