@@ -120,7 +120,7 @@
     }
     
     NSUInteger drawn = self.draw.count;
-    self.drawnLabel.text = [NSString stringWithFormat:@"%ld %@ drawn", (unsigned long)drawn, drawn == 1 ? @"Card" : @"Cards" ];
+    self.drawnLabel.text = [NSString stringWithFormat:l10n(@"%ld %@ drawn"), (unsigned long)drawn, drawn == 1 ? l10n(@"Card") : l10n(@"Cards") ];
     
     [self.tableView reloadData];
     

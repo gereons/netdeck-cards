@@ -64,8 +64,8 @@
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:[CardSets settingsDefaults]];
     [dict addEntriesFromDictionary:@{
-        LAST_DOWNLOAD: @"never",
-        NEXT_DOWNLOAD: @"never",
+        LAST_DOWNLOAD: l10n(@"never"),
+        NEXT_DOWNLOAD: l10n(@"never"),
         USE_DROPBOX: @(NO),
         USE_EVERNOTE: @(NO),
         AUTO_SAVE: @(NO),
@@ -109,7 +109,7 @@
 	DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
 	if (account)
     {
-        [SVProgressHUD showSuccessWithStatus:@"Successfully connected to your Dropbox account"];
+        [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
         
         TF_CHECKPOINT(@"dropbox linked");
         DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
@@ -126,7 +126,7 @@
     
     if (self.deck != nil)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Detected a deck list in your clipboard. Import this deck?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:l10n(@"Detected a deck list in your clipboard. Import this deck?") delegate:self cancelButtonTitle:l10n(@"No")otherButtonTitles:l10n(@"Yes"), nil];
         [alert show];
     }
 }

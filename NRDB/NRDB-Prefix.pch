@@ -22,4 +22,6 @@
 #define TF_CHECKPOINT(chk)  [TestFlight passCheckpoint:chk]
 #endif
 
+#define l10n(str)   NSLocalizedString(str, nil)
+
 #import "NRTypes.h"

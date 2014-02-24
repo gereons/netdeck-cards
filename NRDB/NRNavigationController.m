@@ -36,10 +36,10 @@
     {
         UIAlertView* alert = [[UIAlertView alloc]
                           initWithTitle:Nil
-                          message:@"There are unsaved changes"
+                          message:l10n(@"There are unsaved changes")
                           delegate:self
-                          cancelButtonTitle:@"Cancel"
-                          otherButtonTitles:@"Discard", @"Save", nil];
+                          cancelButtonTitle:l10n(@"Cancel")
+                          otherButtonTitles:l10n(@"Discard"), l10n(@"Save"), nil];
         [alert show];
         
     

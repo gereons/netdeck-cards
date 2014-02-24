@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A09184918B2925400DBE590 /* InfluenceStats.m */; };
+		3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E8D18BBC49C00C99FED /* Localizable.strings */; };
+		3A095E9118BBCB2200C99FED /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E9318BBCB2200C99FED /* About.html */; };
 		3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A167BD118B1E9C90023DF8A /* CardTypeStats.m */; };
 		3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EABD185DBA2D00DB7FFC /* Faction.m */; };
 		3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EAC0185DBC4700DB7FFC /* CardType.m */; };
@@ -69,7 +71,6 @@
 		3A85327E185509B000507B9A /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85327C185509B000507B9A /* SettingsViewController.xib */; };
 		3A85328218550ACE00507B9A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85328018550ACE00507B9A /* AboutViewController.m */; };
 		3A85328318550ACE00507B9A /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328118550ACE00507B9A /* AboutView.xib */; };
-		3A85328618550B5600507B9A /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328518550B5600507B9A /* About.html */; };
 		3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C218B1630800AF5285 /* IceTypeStats.m */; };
 		3A9204C618B16B9B00AF5285 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C518B16B9B00AF5285 /* Stats.m */; };
 		3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AB18AF7DA900F83520 /* CostStats.m */; };
@@ -135,6 +136,12 @@
 /* Begin PBXFileReference section */
 		3A09184818B2925400DBE590 /* InfluenceStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfluenceStats.h; sourceTree = "<group>"; };
 		3A09184918B2925400DBE590 /* InfluenceStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfluenceStats.m; sourceTree = "<group>"; };
+		3A095E8C18BBC49C00C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3A095E8E18BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = file; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3A095E8F18BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3A095E9018BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3A095E9218BBCB2200C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/About.html; sourceTree = "<group>"; };
+		3A095E9418BBCB2700C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = file; name = de; path = de.lproj/About.html; sourceTree = "<group>"; };
 		3A167BD018B1E9C90023DF8A /* CardTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardTypeStats.h; sourceTree = "<group>"; };
 		3A167BD118B1E9C90023DF8A /* CardTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardTypeStats.m; sourceTree = "<group>"; };
 		3A16EABC185DBA2D00DB7FFC /* Faction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Faction.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -235,7 +242,6 @@
 		3A85327F18550ACE00507B9A /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AboutViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A85328018550ACE00507B9A /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AboutViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A85328118550ACE00507B9A /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
-		3A85328518550B5600507B9A /* About.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About.html; sourceTree = "<group>"; };
 		3A9204C118B1630800AF5285 /* IceTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IceTypeStats.h; sourceTree = "<group>"; };
 		3A9204C218B1630800AF5285 /* IceTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IceTypeStats.m; sourceTree = "<group>"; };
 		3A9204C418B16B9B00AF5285 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
@@ -431,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */,
+				3A095E8D18BBC49C00C99FED /* Localizable.strings */,
 				3A3622691849320C007F2854 /* NRDB-Info.plist */,
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
 				3A36226D1849320C007F2854 /* main.m */,
@@ -660,7 +667,7 @@
 				3A85327F18550ACE00507B9A /* AboutViewController.h */,
 				3A85328018550ACE00507B9A /* AboutViewController.m */,
 				3A85328118550ACE00507B9A /* AboutView.xib */,
-				3A85328518550B5600507B9A /* About.html */,
+				3A095E9318BBCB2200C99FED /* About.html */,
 			);
 			name = "About Detail";
 			sourceTree = "<group>";
@@ -854,6 +861,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 3A3622551849320C007F2854;
 			productRefGroup = 3A36225F1849320C007F2854 /* Products */;
@@ -876,6 +884,7 @@
 				3A9E7C501884941200A507C3 /* 702-share.png in Resources */,
 				3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */,
 				3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */,
+				3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
 				3A6AF0E11899BB3B00227C25 /* listviewicon@2x.png in Resources */,
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
@@ -883,7 +892,7 @@
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
-				3A85328618550B5600507B9A /* About.html in Resources */,
+				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,
 				3ACCEE251869B10700CC3537 /* CardFilterHeaderView.xib in Resources */,
 				3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */,
@@ -1043,10 +1052,29 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		3A095E8D18BBC49C00C99FED /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A095E8C18BBC49C00C99FED /* en */,
+				3A095E8E18BBC53800C99FED /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		3A095E9318BBCB2200C99FED /* About.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A095E9218BBCB2200C99FED /* en */,
+				3A095E9418BBCB2700C99FED /* de */,
+			);
+			name = About.html;
+			sourceTree = "<group>";
+		};
 		3A36226A1849320C007F2854 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				3A36226B1849320C007F2854 /* en */,
+				3A095E8F18BBC53800C99FED /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1055,6 +1083,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A36228D1849320C007F2854 /* en */,
+				3A095E9018BBC53800C99FED /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

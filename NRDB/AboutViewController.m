@@ -23,7 +23,7 @@
 {
     [super viewDidLoad];
     
-    self.navigationController.navigationBar.topItem.title = NSLocalizedString(@"About", nil);
+    self.navigationController.navigationBar.topItem.title = l10n(@"About");
     self.webView.delegate = self;
     
     self.webView.scrollView.bounces = NO;
@@ -43,7 +43,7 @@
     NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 #endif
     
-    NSString* title = [NSString stringWithFormat:@"About NRDB v%@", version];
+    NSString* title = [NSString stringWithFormat:l10n(@"About NRDB v%@"), version];
     self.navigationController.navigationBar.topItem.title = title;
 }
 

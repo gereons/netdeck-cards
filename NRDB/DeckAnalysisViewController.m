@@ -119,21 +119,21 @@
     switch (section)
     {
         case 0:
-            return @"Deck Validity";
+            return l10n(@"Deck Validity");
         case 1:
-            if (self.costStats.height > 0) return @"Cost Distribution";
+            if (self.costStats.height > 0) return l10n(@"Cost Distribution");
             break;
         case 2:
-            if (self.strengthStats.height > 0) return @"Strength Distribution";
+            if (self.strengthStats.height > 0) return l10n(@"Strength Distribution");
             break;
         case 3:
-            if (self.cardTypeStats.height > 0) return @"Card Type Distribution";
+            if (self.cardTypeStats.height > 0) return l10n(@"Card Type Distribution");
             break;
         case 4:
-            if (self.influenceStats.height > 0) return @"Influence Distribution";
+            if (self.influenceStats.height > 0) return l10n(@"Influence Distribution");
             break;
         case 5:
-            if (self.iceTypeStats.height > 0) return @"Ice Type Distribution";
+            if (self.iceTypeStats.height > 0) return l10n(@"Ice Type Distribution");
             break;
     }
     return nil;
@@ -158,7 +158,7 @@
             {
                 if (indexPath.row == self.errors.count)
                 {
-                    cell.textLabel.text = [NSString stringWithFormat:@"Cards up to %@", [CardSets mostRecentSetUsedInDeck:self.deck]];
+                    cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [CardSets mostRecentSetUsedInDeck:self.deck]];
                     cell.textLabel.textColor = [UIColor blackColor];
                 }
                 else
@@ -175,7 +175,7 @@
                 }
                 else
                 {
-                    cell.textLabel.text = [NSString stringWithFormat:@"Cards up to %@", [CardSets mostRecentSetUsedInDeck:self.deck]];
+                    cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [CardSets mostRecentSetUsedInDeck:self.deck]];
                 }
                 
                 cell.textLabel.textColor = [UIColor blackColor];

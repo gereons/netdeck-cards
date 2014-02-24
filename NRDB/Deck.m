@@ -39,7 +39,7 @@
     NSMutableArray* reasons = [NSMutableArray array];
     if (self.identity == nil)
     {
-        [reasons addObject:@"No Identity"];
+        [reasons addObject:l10n(@"No Identity")];
     }
     
     if (self.identity.role == NRRoleCorp)
@@ -48,7 +48,7 @@
         int apRequired = ((self.size / 5) + 1) * 2;
         if (self.agendaPoints != apRequired && self.agendaPoints != apRequired+1)
         {
-            [reasons addObject:[NSString stringWithFormat:@"Needs %d or %d Agenda Points", apRequired, apRequired+1]];
+            [reasons addObject:[NSString stringWithFormat:l10n(@"Needs %d or %d Agenda Points"), apRequired, apRequired+1]];
         }
     
         BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
@@ -62,30 +62,30 @@
             if ([card.code isEqualToString:DIR_HAAS_PET_PROJ] && cc.count > 1 && !petError)
             {
                 petError = YES;
-                [reasons addObject:@"Too many pet projects"];
+                [reasons addObject:l10n(@"Too many pet projects")];
             }
             
             if (noJinteki && card.faction == NRFactionJinteki && !jintekiError)
             {
                 jintekiError = YES;
-                [reasons addObject:@"Cannot include Jinteki"];
+                [reasons addObject:l10n(@"Cannot include Jinteki")];
             }
             
             if (card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction && !agendaError)
             {
                 agendaError = YES;
-                [reasons addObject:@"Cannot use out-of-faction agendas"];
+                [reasons addObject:l10n(@"Cannot use out-of-faction agendas")];
             }
         }
     }
     
     if (self.size < self.identity.minimumDecksize)
     {
-        [reasons addObject:@"Not enough cards"];
+        [reasons addObject:l10n(@"Not enough cards")];
     }
     if (self.influence > self.identity.influenceLimit)
     {
-        [reasons addObject:@"Too much influence used"];
+        [reasons addObject:l10n(@"Too much influence used")];
     }
 
     return reasons;

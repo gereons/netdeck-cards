@@ -1,0 +1,59 @@
+/* 
+  Localizable.strings
+  NRDB
+
+  Created by Gereon Steffens on 24.02.14.
+  Copyright (c) 2014 Gereon Steffens. All rights reserved.
+*/
+
+"card" = "Karte";
+"Card" = "Karte";
+"cards" = "Karten";
+"Cards" = "Karten";
+"Influence" = "Einfluss";
+"Agenda Points" = "Agendapunkte";
+"Strength" = "Stärke";
+"Cost" = "Kosten";
+
+"Cancel" = "Abbrechen";
+"Done" = "Fertig";
+"Remove" = "Entfernen";
+"Delete" = "Löschen";
+"No" = "Nein";
+"Yes" = "Ja";
+
+// main menu
+"New Runner Deck" = "Neues Runner-Deck";
+"New Corp Deck" = "Neues Corp-Deck";
+"Load Runner Deck" = "Runner-Deck laden";
+"Load Corp Deck" = "Corp-Deck laden";
+"Import Decks" = "Decks importieren";
+"Settings" = "Einstellungen";
+"About" = "Infos";
+
+// about
+"About NRDB v%@" = "Über NRDB v%@";
+
+// deck list
+"Save" = "Speichern";
+"Saving..." = "Speichern...";
+"Copy" = "Kopieren";
+"Identity" = "Identität";
+"Switch to %@?" = "Zu %@ wechseln?";
+"Enter name" = "Namen eingeben";
+"Deck name" = "Deck-Name";
+"Dropbox: Plain Text" = "Dropbox: Reiner Text";
+"Clipboard: Plain Text" = "Clipboard: Reiner Text";
+"Connect to your Dropbox account first." = "Dropbox-Verbindung nicht eingerichtet";
+"Deck needs to have an Identity." = "Das Deck hat keine Identität.";
+"Deck needs cards." = "Das Deck hat keine Karten";
+"Cards up to %@" = "Karten bis zu %@";
+
+// deck invalidity reasons
+"No Identity" = "Keine Identität";
+"Needs %d or %d Agenda Points" = "Nur %d oder %d Agendapunkte";
+"Too many pet projects" = "Zuviele Lieblingsprojekte";
+"Cannot include Jinteki" = "Jinteki nicht erlaubt";
+"Cannot use out-of-faction agendas" = "Fraktionsfremde Agenden";
+"Not enough cards" = "Zuwenig Karten";
+"Too much influence used" = "Zuviel Einfluss";

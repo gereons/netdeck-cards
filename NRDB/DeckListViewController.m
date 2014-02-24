@@ -116,12 +116,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
     [self doToggleView:viewSelector.selectedSegmentIndex];
     
-    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
+    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
     topItem.leftBarButtonItems = @[
-        [[UIBarButtonItem alloc] initWithTitle:@"Identity" style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)],
-        [[UIBarButtonItem alloc] initWithTitle:@"Name" style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)],
+        [[UIBarButtonItem alloc] initWithTitle:l10n(@"Identity") style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)],
+        [[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)],
         self.saveButton,
-        [[UIBarButtonItem alloc] initWithTitle:@"Copy" style:UIBarButtonItemStylePlain target:self action:@selector(copyDeck:)],
+        [[UIBarButtonItem alloc] initWithTitle:l10n(@"Copy") style:UIBarButtonItemStylePlain target:self action:@selector(copyDeck:)],
         self.toggleViewButton
     ];
     self.saveButton.enabled = NO;
@@ -203,7 +203,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     self.deckChanged = NO;
     if (sender != nil)
     {
-        [SVProgressHUD showSuccessWithStatus:@"Saving..."];
+        [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
     }
     if (self.deck.filename)
     {
@@ -250,8 +250,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         }
     }
     
-    NSString* msg = [NSString stringWithFormat:@"Switch to %@?", newDeck.name];
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    NSString* msg = [NSString stringWithFormat:l10n(@"Switch to %@?"), newDeck.name];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:self cancelButtonTitle:l10n(@"No") otherButtonTitles:l10n(@"Yes"), nil];
     alert.tag = SWITCH_ALERT;
     [alert show];
 }
@@ -266,12 +266,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         return;
     }
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Enter Name" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Enter Name") message:nil delegate:self cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:@"OK", nil];
     alert.tag = NAME_ALERT;
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
     UITextField* textField = [alert textFieldAtIndex:0];
-    textField.placeholder = @"Enter Deck Name";
+    textField.placeholder = l10n(@"Deck Name");
     textField.text = self.deck.name;
     textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     textField.clearButtonMode = UITextFieldViewModeAlways;
@@ -363,7 +363,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     [self.actionSheet addButtonWithTitle:@"Dropbox: OCTGN"];
     [self.actionSheet addButtonWithTitle:@"Dropbox: BBCode"];
     [self.actionSheet addButtonWithTitle:@"Dropbox: Markdown"];
-    [self.actionSheet addButtonWithTitle:@"Dropbox: Plain text"];
+    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: Plain text")];
     
     [self.actionSheet addButtonWithTitle:@"Clipboard: BBCode"];
     [self.actionSheet addButtonWithTitle:@"Clipboard: Markdown"];
@@ -390,7 +390,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     if (buttonIndex < 4 && ![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Connect to your Dropbox account first." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:l10n(@"Connect to your Dropbox account first.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
     }
     
@@ -401,12 +401,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         case 0: // octgn
             if (self.deck.identity == nil)
             {
-                [[[UIAlertView alloc] initWithTitle:nil message:@"Deck needs to have an Identity." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have an Identity.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                 return;
             }
             if (self.deck.cards.count == 0)
             {
-                [[[UIAlertView alloc] initWithTitle:nil message:@"Deck needs to have Cards." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have Cards.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                 return;
             }
             [DeckExport asOctgn:self.deck autoSave:NO];
@@ -493,19 +493,19 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     }
     
     NSMutableString* footer = [NSMutableString string];
-    [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? @"Card" : @"Cards"]];
+    [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
     if (self.deck.identity)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d/%d Influence", self.deck.influence, self.deck.identity.influenceLimit]];
+        [footer appendString:[NSString stringWithFormat:@" · %d/%d %@", self.deck.influence, self.deck.identity.influenceLimit, l10n(@"Influence")]];
     }
     else
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d Influence", self.deck.influence]];
+        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.influence, l10n(@"Influence")]];
     }
     
     if (self.role == NRRoleCorp)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d Agenda Points", self.deck.agendaPoints]];
+        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.agendaPoints, l10n(@"Agenda Points")]];
     }
     
     NSArray* reasons = [self.deck checkValidity];
@@ -521,7 +521,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     NSString* set = [CardSets mostRecentSetUsedInDeck:self.deck];
     if (set)
     {
-        self.lastSetLabel.text = [NSString stringWithFormat:@"Cards up to %@", set];
+        self.lastSetLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), set];
     }
     
     self.deckNameLabel.text = self.deck.name;
@@ -698,7 +698,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 -(NSString*) tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return @"Remove";
+    return l10n(@"Remove");
 }
 
 #pragma mark collectionview
@@ -840,7 +840,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
             int influence = [self.deck influenceFor:cc];
             if (influence > 0)
             {
-                cell.copiesLabel.text = [NSString stringWithFormat:@"×%d · %d Influence", cc.count, influence];
+                cell.copiesLabel.text = [NSString stringWithFormat:@"×%d · %d %@", cc.count, influence, l10n(@"Influence")];
             }
             else
             {
@@ -933,7 +933,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         {
             // NSLog(@"Printing could not complete because of error: %@", error);
             NSString* msg = error.localizedDescription;
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Printing Problem", nil) message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Printing Problem") message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
         }
     };

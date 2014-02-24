@@ -89,8 +89,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     // check if card data is available
     if (![CardData cardsAvailable])
     {
-        NSString* msg = @"To use this app, you must first download card data from netrunnerdb.com";
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"No Card Data" message:msg delegate:self cancelButtonTitle:@"Not now" otherButtonTitles:@"Download", nil];
+        NSString* msg = l10n(@"To use this app, you must first download card data from netrunnerdb.com");
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Card Data") message:msg delegate:self cancelButtonTitle:l10n(@"Not now") otherButtonTitles:l10n(@"Download"), nil];
         alert.tag = 0;
         [alert show];
     }
@@ -152,7 +152,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     if ([scheduled compare:now] == NSOrderedAscending)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Update cards" message:@"Card data may be out of date. Download now?" delegate:self cancelButtonTitle:@"Later" otherButtonTitles:@"OK", nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Update cards") message:l10n(@"Card data may be out of date. Download now?") delegate:self cancelButtonTitle:l10n(@"Later") otherButtonTitles:@"OK", nil];
         alert.tag = 1;
         [alert show];
     }
@@ -246,33 +246,33 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     switch (indexPath.row)
     {
         case NRMenuNewRunner:
-            cell.textLabel.text = NSLocalizedString(@"New Runner Deck", nil);
+            cell.textLabel.text = l10n(@"New Runner Deck");
             cell.textLabel.enabled = cardsAvailable;
             break;
         case NRMenuNewCorp:
-            cell.textLabel.text = NSLocalizedString(@"New Corp Deck", nil);
+            cell.textLabel.text = l10n(@"New Corp Deck");
             cell.textLabel.enabled = cardsAvailable;
             break;
         case NRMenuLoadRunner:
-            cell.textLabel.text = NSLocalizedString(@"Load Runner Deck", nil);
+            cell.textLabel.text = l10n(@"Load Runner Deck");
             cell.textLabel.enabled = cardsAvailable;
             break;
         case NRMenuLoadCorp:
-            cell.textLabel.text = NSLocalizedString(@"Load Corp Deck", nil);
+            cell.textLabel.text = l10n(@"Load Corp Deck");
             cell.textLabel.enabled = cardsAvailable;
             break;
         case NRMenuAbout:
-            cell.textLabel.text = NSLocalizedString(@"About", nil);
+            cell.textLabel.text = l10n(@"About");
             break;
         case NRMenuSettings:
-            cell.textLabel.text = NSLocalizedString(@"Settings", nil);
+            cell.textLabel.text = l10n(@"Settings");
             break;
         case NRMenuCardEditor:
-            cell.textLabel.text = NSLocalizedString(@"Card Editor", nil);
+            cell.textLabel.text = l10n(@"Card Editor");
             cell.textLabel.enabled = NO;
             break;
         case NRMenuImportDecks:
-            cell.textLabel.text = NSLocalizedString(@"Import Decks", nil);
+            cell.textLabel.text = l10n(@"Import Decks");
             cell.textLabel.enabled = cardsAvailable && dropboxLinked;
             break;
     }

@@ -20,6 +20,6 @@
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index;
 -(CPTGraphHostingView*) hostingViewForDelegate:(id<CPTPlotDataSource, CPTPlotDelegate>)delegate identifier:(NSString*)identifier;
 
-#define CARDS(x)    ((x)==1?@"card":@"cards")
+#define CARDS(x)    ((x)==1?l10n(@"card"):l10n(@"cards"))
 
 @end
