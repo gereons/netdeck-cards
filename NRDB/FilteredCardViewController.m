@@ -104,8 +104,8 @@
 {
     [super viewDidAppear:animated];
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.title = @"Filter";
-    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(clearFilters:)];
+    topItem.title = l10n(@"Filter");
+    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFilters:)];
 }
 
 -(void) deckLoaded:(id)sender

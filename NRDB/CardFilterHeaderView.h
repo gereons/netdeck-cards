@@ -12,6 +12,7 @@
 
 @property (nonatomic) NRRole role;
 
+@property IBOutlet UILabel* searchLabel;
 @property IBOutlet UITextField* searchField;
 @property IBOutlet UISegmentedControl* searchScope;
 
@@ -34,6 +35,7 @@
 @property IBOutlet UIButton* subtypeButton;
 @property IBOutlet UIButton* factionButton;
 @property IBOutlet UIButton* setButton;
+
 
 -(IBAction)strengthValueChanged:(id)sender;
 -(IBAction)costValueChanged:(id)sender;

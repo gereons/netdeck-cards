@@ -163,6 +163,7 @@
                 <outlet property="muLabel" destination="fYa-8s-rrq" id="dt0-m2-UcZ"/>
                 <outlet property="muSlider" destination="nEz-Iq-sW7" id="hE5-MM-pKn"/>
                 <outlet property="searchField" destination="hmx-ju-dh6" id="oDG-aw-A9v"/>
+                <outlet property="searchLabel" destination="W8F-M7-OTi" id="hSx-br-GPH"/>
                 <outlet property="searchScope" destination="4Tf-h8-PAj" id="hdP-el-Y38"/>
                 <outlet property="setButton" destination="WEc-bg-CZX" id="nCm-w7-IM2"/>
                 <outlet property="strengthLabel" destination="KPR-gO-aAx" id="Zy6-ye-a7B"/>

@@ -22,6 +22,7 @@
 "Cost" = "Kosten";
 
 "Cancel" = "Abbrechen";
+"Edit" = "Bearbeiten";
 "Done" = "Fertig";
 "Remove" = "Entfernen";
 "Delete" = "Löschen";
@@ -93,5 +94,24 @@
 "Influence Distribution" = "Einfluss-Verteilung";
 "ICE Type Distribution" = "ICE-Typ-Verteilung";
 "Strength %d\n%d %@" = "Stärke %d\n%d %@";
+
+// load deck
+"Load Runner Deck" = "Runner-Deck laden";
+"Load Corp Deck" = "Kon-Deck laden";
+"%@ · %d Cards · %d Influence" = "%@ · %d Karten · %d Einfluss";
+"%d Cards · %d Influence" = "%d Karten · %d Einfluss";
+
+// filter
+"Strength: %@" = "Stärke: %@";
+"MU: %@" = "SE: %@";
+"Cost: %@" = "Kosten: %@";
+"AP: %@" = "AP: %@";
+"Influence: %@" = "Einfluss: %@";
+"Type" = "Typ";
+"Subtype" = "Subtyp";
+"Faction" = "Fraktion";
+"Set" = "Set";
+"Search in:" = "Suche in:";
+"Search Cards" = "Karten suchen";
 
 //

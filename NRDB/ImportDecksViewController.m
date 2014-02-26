@@ -84,7 +84,7 @@
 {
     [super viewDidAppear:animated];
     
-    self.navigationController.navigationBar.topItem.title = @"Import Deck";
+    self.navigationController.navigationBar.topItem.title = l10n(@"Import Deck");
 }
 
 -(void) viewDidDisappear:(BOOL)animated
@@ -109,7 +109,7 @@
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return section == NRRoleRunner ? @"Runner" : @"Corp";
+    return section == NRRoleRunner ? l10n(@"Runner") : l10n(@"Corp");
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -127,7 +127,7 @@
 
     cell.textLabel.text = names[indexPath.row];
     Deck* deck = decks[indexPath.row];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%d Cards)", deck.identity.name, deck.size];
+    cell.detailTextLabel.text = [NSString stringWithFormat:l10n(@"%@ (%d Cards)"), deck.identity.name, deck.size];
     
     return cell;
 }
@@ -136,7 +136,7 @@
 {
     TF_CHECKPOINT(@"import deck");
     
-    [SVProgressHUD showSuccessWithStatus:@"Deck imported"];
+    [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
     
     NSArray* decks = self.decks[indexPath.section];
     Deck* deck = decks[indexPath.row];

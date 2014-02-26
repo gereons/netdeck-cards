@@ -363,14 +363,14 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
     
-    [self.actionSheet addButtonWithTitle:@"Dropbox: OCTGN"];
-    [self.actionSheet addButtonWithTitle:@"Dropbox: BBCode"];
-    [self.actionSheet addButtonWithTitle:@"Dropbox: Markdown"];
-    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: Plain text")];
+    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: OCTGN")];
+    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: BBCode")];
+    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: Markdown")];
+    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: Plain Text")];
     
-    [self.actionSheet addButtonWithTitle:@"Clipboard: BBCode"];
-    [self.actionSheet addButtonWithTitle:@"Clipboard: Markdown"];
-    [self.actionSheet addButtonWithTitle:@"Clipboard: Plain text"];
+    [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: BBCode")];
+    [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: Markdown")];
+    [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: Plain Text")];
     
     self.actionSheet.cancelButtonIndex = [self.actionSheet addButtonWithTitle:@""];
 

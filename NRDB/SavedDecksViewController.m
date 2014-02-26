@@ -40,10 +40,12 @@
     
     UINavigationItem* top = self.navigationController.navigationBar.topItem;
     
-    top.title = self.role == NRRoleRunner ? @"Load Runner Deck" : @"Load Corp Deck";
+    top.title = self.role == NRRoleRunner ? l10n(@"Load Runner Deck") : l10n(@"Load Corp Deck");
     
     self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editToggle:)];
-    self.editButton.possibleTitles = [NSSet setWithArray:@[@"Edit", @"Done"]];
+    self.editButton.possibleTitles = [NSSet setWithArray:@[ l10n(@"Edit"), l10n(@"Done") ]];
+    self.editButton.title = l10n(@"Edit");
+    
     top.rightBarButtonItems = @[ self.editButton ];
 }
 
@@ -64,7 +66,7 @@
     BOOL editing = self.tableView.editing;
     
     editing = !editing;
-    [self.editButton setTitle:editing ? NSLocalizedString(@"Done", nil) : NSLocalizedString(@"Edit", nil)];
+    self.editButton.title = editing ? l10n(@"Done") : l10n(@"Edit");
     self.tableView.editing = editing;
 }
 
@@ -123,11 +125,11 @@
     
     if (deck.identity != nil)
     {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d Cards · %d Influence", deck.identity.name, deck.size, deck.influence];
+        cell.detailTextLabel.text = [NSString stringWithFormat:l10n(@"%@ · %d Cards · %d Influence"), deck.identity.name, deck.size, deck.influence];
     }
     else
     {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Cards · %d Influence", deck.size, deck.influence];
+        cell.detailTextLabel.text = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence"), deck.size, deck.influence];
     }
     cell.accessoryType = UITableViewCellAccessoryNone;
     

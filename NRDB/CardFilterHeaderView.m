@@ -60,6 +60,10 @@ static NSArray* scopes;
     self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
     self.apSlider.maximumValue = [CardData maxAgendaPoints]; // NB: no +1 here!
     
+    self.searchLabel.text = l10n(@"Search in:");
+    self.searchField.placeholder = l10n(@"Search Cards");
+    [self.searchScope setTitle:l10n(@"All") forSegmentAtIndex:0];
+    
     [self clearFilters];
 }
 
@@ -113,14 +117,14 @@ static NSArray* scopes;
     TableData* data = [[TableData alloc] initWithValues:[CardType typesForRole:self.role]];
     id selected = [self.selectedValues objectForKey:@(TYPE_BUTTON)];
     
-    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Type" singleSelection:NO selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:l10n(@"Type") singleSelection:NO selected:selected];
 }
 
 -(void) setClicked:(UIButton*)sender
 {
     TF_CHECKPOINT(@"filter set");
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
-    [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allSetsForTableview] type:@"Set" singleSelection:NO selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allSetsForTableview] type:l10n(@"Set") singleSelection:NO selected:selected];
 }
 
 -(void) subtypeClicked:(UIButton*)sender
@@ -137,7 +141,7 @@ static NSArray* scopes;
     }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     
-    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Subtype" singleSelection:NO selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:l10n(@"Subtype") singleSelection:NO selected:selected];
 }
 
 -(void) factionClicked:(UIButton*)sender
@@ -146,7 +150,7 @@ static NSArray* scopes;
     TableData* data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role]];
     id selected = [self.selectedValues objectForKey:@(FACTION_BUTTON)];
     
-    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Faction" singleSelection:NO selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:l10n(@"Faction") singleSelection:NO selected:selected];
 }
 
 -(void) filterCallback:(UIButton *)button value:(NSObject *)object
@@ -181,7 +185,7 @@ static NSArray* scopes;
     int value = round(sender.value);
     // NSLog(@"str: %f %d", sender.value, value);
     sender.value = value--;
-    self.strengthLabel.text = [NSString stringWithFormat:@"Strength: %@", value == -1 ? @"All" : [@(value) stringValue]];
+    self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self postNotification:@"strength" value:@(value)];
 }
 
@@ -191,7 +195,7 @@ static NSArray* scopes;
     int value = round(sender.value);
     // NSLog(@"mu: %f %d", sender.value, value);
     sender.value = value--;
-    self.muLabel.text = [NSString stringWithFormat:@"MU: %@", value == -1 ? @"All" : [@(value) stringValue]];
+    self.muLabel.text = [NSString stringWithFormat:l10n(@"MU: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self postNotification:@"mu" value:@(value)];
 }
 
@@ -201,7 +205,7 @@ static NSArray* scopes;
     int value = round(sender.value);
     // NSLog(@"cost: %f %d", sender.value, value);
     sender.value = value--;
-    self.costLabel.text = [NSString stringWithFormat:@"Cost: %@", value == -1 ? @"All" : [@(value) stringValue]];
+    self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self postNotification:@"card cost" value:@(value)];
 }
 
@@ -211,7 +215,7 @@ static NSArray* scopes;
     int value = round(sender.value);
     // NSLog(@"inf: %f %d", sender.value, value);
     sender.value = value--;
-    self.influenceLabel.text = [NSString stringWithFormat:@"Influence: %@", value == -1 ? @"All" : [@(value) stringValue]];
+    self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self postNotification:@"influence" value:@(value)];
 }
 
@@ -225,7 +229,7 @@ static NSArray* scopes;
         value = -1;
     }
     sender.value = value;
-    self.apLabel.text = [NSString stringWithFormat:@"AP: %@", value == -1 ? @"All" : [@(value) stringValue]];
+    self.apLabel.text = [NSString stringWithFormat:l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self postNotification:@"agendaPoints" value:@(value)];
 }
 
@@ -235,19 +239,18 @@ static NSArray* scopes;
 {
     UIButton* btn;
     NSString* pfx;
-    NSString* value = kANY;
     switch (tag)
     {
         case SET_BUTTON:
         {
             btn = self.setButton;
-            pfx = @"Set";
+            pfx = l10n(@"Set");
             break;
         }
         case TYPE_BUTTON:
         {
             btn = self.typeButton;
-            pfx = @"Type";
+            pfx = l10n(@"Type");
             // reset subtypes to "any"
             [self resetButton:SUBTYPE_BUTTON];
             break;
@@ -255,20 +258,21 @@ static NSArray* scopes;
         case SUBTYPE_BUTTON:
         {
             btn = self.subtypeButton;
-            pfx = @"Subtype";
+            pfx = l10n(@"Subtype");
             break;
         }
         case FACTION_BUTTON:
         {
             btn = self.factionButton;
-            pfx = @"Faction";
+            pfx = l10n(@"Faction");
             break;
         }
     }
-    [self.selectedValues setObject:value forKey:@(tag)];
     
-    [self postNotification:[pfx lowercaseString] value:value];
-    [btn setTitle:[NSString stringWithFormat:@"%@: %@", pfx, value] forState:UIControlStateNormal];
+    [self.selectedValues setObject:kANY forKey:@(tag)];
+    [self postNotification:[pfx lowercaseString] value:kANY];
+    [btn setTitle:[NSString stringWithFormat:@"%@: %@", pfx, l10n(kANY)] forState:UIControlStateNormal];
+    
     NSAssert(btn != nil, @"no button");
 }
 
