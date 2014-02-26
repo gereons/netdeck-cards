@@ -6,6 +6,7 @@
   Copyright (c) 2014 Gereon Steffens. All rights reserved.
 */
 
+// common words
 "never" = "nie";
 "All" = "Alle";
 "Any" = "Alle";
@@ -24,12 +25,13 @@
 "Delete" = "Löschen";
 "No" = "Nein";
 "Yes" = "Ja";
+"Corp" = "Kon";
 
 // main menu
 "New Runner Deck" = "Neues Runner-Deck";
-"New Corp Deck" = "Neues Corp-Deck";
+"New Corp Deck" = "Neues Kon-Deck";
 "Load Runner Deck" = "Runner-Deck laden";
-"Load Corp Deck" = "Corp-Deck laden";
+"Load Corp Deck" = "Kon-Deck laden";
 "Import Decks" = "Decks importieren";
 "Settings" = "Einstellungen";
 "About" = "Infos";
@@ -66,3 +68,15 @@
 "Downloading Images" = "Lade Karten-Bilder";
 "Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche er später nochmal.";
 "%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";
+
+// identity selection
+"Choose Identity" = "Identität auswählen";
+
+// draw simulator
+"Draw Simulator" = "Zug-Simulator";
+"%ld %@ drawn" = "%ld %@ gezogen";
+"Clear" = "Leeren";
+
+// deck view
+"Draw" = "Karten";
+"Analysis" = "Analyse";

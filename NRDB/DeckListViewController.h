@@ -20,6 +20,8 @@
 @property (strong) IBOutlet UILabel* footerLabel;
 @property (strong) IBOutlet UILabel* deckNameLabel;
 @property (strong) IBOutlet UILabel* lastSetLabel;
+@property (strong) IBOutlet UIButton* drawButton;
+@property (strong) IBOutlet UIButton* analysisButton;
 
 @property BOOL deckChanged;
 @property NRRole role;

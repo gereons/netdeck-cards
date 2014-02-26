@@ -131,6 +131,9 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"743-printer"] style:UIBarButtonItemStylePlain target:self action:@selector(printDeck:)],
     ];
     
+    [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
+    [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
+    
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
     [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];

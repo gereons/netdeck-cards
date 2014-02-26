@@ -43,6 +43,12 @@
     [super viewDidLoad];
     [self initCards:YES];
     
+    self.titleLabel.text = l10n(@"Draw Simulator");
+    [self.clearButton setTitle:l10n(@"Clear") forState:UIControlStateNormal];
+    [self.doneButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
+    
+    [self.selector setTitle:l10n(@"All") forSegmentAtIndex:6];
+    
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 

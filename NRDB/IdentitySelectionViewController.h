@@ -17,6 +17,7 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UIButton* okButton;
 @property IBOutlet UIButton* cancelButton;
+@property IBOutlet UILabel* titleLabel;
 
 -(IBAction)okClicked:(id)sender;
 -(IBAction)cancelClicked:(id)sender;

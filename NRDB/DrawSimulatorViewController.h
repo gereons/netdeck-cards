@@ -15,6 +15,10 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UILabel* drawnLabel;
 
+@property IBOutlet UIButton* clearButton;
+@property IBOutlet UIButton* doneButton;
+@property IBOutlet UISegmentedControl* selector;
+
 -(IBAction)done:(id)sender;
 -(IBAction)clear:(id)sender;
 -(IBAction)draw:(id)sender;

@@ -89,6 +89,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.titleLabel.text = l10n(@"Choose Identity");
+    [self.okButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
+    [self.cancelButton setTitle:l10n(@"Cancel") forState:UIControlStateNormal];
+    
     // Do any additional setup after loading the view from its nib.
     UINib* nib = [UINib nibWithNibName:@"IdentityViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"identityCell"];

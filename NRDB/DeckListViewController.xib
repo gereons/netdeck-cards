@@ -6,8 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeckListViewController">
             <connections>
+                <outlet property="analysisButton" destination="ZM9-wm-D2z" id="lY9-6z-E2n"/>
                 <outlet property="collectionView" destination="Zk2-4C-1CS" id="r3d-KH-wIo"/>
                 <outlet property="deckNameLabel" destination="JY5-GK-UJa" id="exF-Si-N7U"/>
+                <outlet property="drawButton" destination="ptD-Cs-H63" id="BYf-G7-KdS"/>
                 <outlet property="footerLabel" destination="Ocu-JS-mPn" id="o9l-Dc-bRh"/>
                 <outlet property="lastSetLabel" destination="Gyb-FN-lQv" id="BSf-TL-qw8"/>
                 <outlet property="tableView" destination="TkI-yZ-OZS" id="gri-lb-5ag"/>
