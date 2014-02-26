@@ -63,6 +63,7 @@
 {
     [super viewDidLoad];
 
+    self.titleLabel.text = l10n(@"Deck Analysis");
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
@@ -133,7 +134,7 @@
             if (self.influenceStats.height > 0) return l10n(@"Influence Distribution");
             break;
         case 5:
-            if (self.iceTypeStats.height > 0) return l10n(@"Ice Type Distribution");
+            if (self.iceTypeStats.height > 0) return l10n(@"ICE Type Distribution");
             break;
     }
     return nil;
@@ -171,7 +172,7 @@
             {
                 if (indexPath.row == 0)
                 {
-                    cell.textLabel.text = @"Deck is valid";
+                    cell.textLabel.text = l10n(@"Deck is valid");
                 }
                 else
                 {

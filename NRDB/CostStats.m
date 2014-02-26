@@ -65,7 +65,8 @@
     int c = [cards intValue];
     if (c > 0)
     {
-        str = [NSString stringWithFormat:@"%d credits\n%d %@", [cost intValue], c, CARDS(c)];
+        int cr = [cost intValue];
+        str = [NSString stringWithFormat:@"%d %@\n%d %@", cr, CREDITS(cr), c, CARDS(c)];
     }
     
     // 5 - Create and return layer with label text

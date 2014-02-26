@@ -12,7 +12,6 @@
 @implementation Faction
 
 static NSDictionary* code2faction;
-static NSMutableDictionary* faction2code;
 static NSMutableDictionary* faction2name;
 
 static NSMutableArray* runnerFactions;
@@ -31,13 +30,6 @@ static NSMutableArray* corpFactions;
         @"neutral": @(NRFactionNeutral)
     };
     
-    faction2code = [NSMutableDictionary dictionary];
-    for (NSString* s in [code2faction allKeys])
-    {
-        NSNumber* n = [code2faction objectForKey:s];
-        [faction2code setObject:s forKey:n];
-    }
-    
     faction2name = [NSMutableDictionary dictionary];
     faction2name[@(NRFactionNone)] = l10n(kANY);
 }
@@ -53,7 +45,6 @@ static NSMutableArray* corpFactions;
             break;
         }
     }
-    NSLog(@"%@", faction2name);
     
     NRFaction rf[] = { NRFactionNone, NRFactionNeutral, NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
     NRFaction cf[] = { NRFactionNone, NRFactionNeutral, NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };

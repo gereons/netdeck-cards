@@ -21,5 +21,6 @@
 -(CPTGraphHostingView*) hostingViewForDelegate:(id<CPTPlotDataSource, CPTPlotDelegate>)delegate identifier:(NSString*)identifier;
 
 #define CARDS(x)    ((x)==1?l10n(@"card"):l10n(@"cards"))
+#define CREDITS(x)  ((x)==1?l10n(@"credit"):l10n(@"credits"))
 
 @end

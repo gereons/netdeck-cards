@@ -14,6 +14,8 @@
 "Card" = "Karte";
 "cards" = "Karten";
 "Cards" = "Karten";
+"credit" = "Credit";
+"credits" = "Credits";
 "Influence" = "Einfluss";
 "Agenda Points" = "Agendapunkte";
 "Strength" = "Stärke";
@@ -60,7 +62,7 @@
 "Too many pet projects" = "Zuviele Lieblingsprojekte";
 "Cannot include Jinteki" = "Jinteki nicht erlaubt";
 "Cannot use out-of-faction agendas" = "Fraktionsfremde Agenden";
-"Not enough cards" = "Zuwenig Karten";
+"Not enough cards" = "Nicht genug Karten";
 "Too much influence used" = "Zuviel Einfluss";
 
 // card downloading
@@ -80,3 +82,16 @@
 // deck view
 "Draw" = "Karten";
 "Analysis" = "Analyse";
+
+// deck analysis
+"Deck Analysis" = "Deck-Analyse";
+"Deck Validity" = "Deck OK?";
+"Deck is valid" = "Deck ist OK";
+"Cost Distribution" = "Kosten-Verteilung";
+"Strength Distribution" = "Stärke-Verteilung";
+"Card Type Distribution" = "Typ-Verteilung";
+"Influence Distribution" = "Einfluss-Verteilung";
+"ICE Type Distribution" = "ICE-Typ-Verteilung";
+"Strength %d\n%d %@" = "Stärke %d\n%d %@";
+
+//
