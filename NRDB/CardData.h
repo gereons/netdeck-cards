@@ -11,7 +11,7 @@
 @interface CardData : NSObject <NSCoding>
 
 +(BOOL) setupFromFile;
-+(BOOL) setupFromNetrunnerDbApi;
++(BOOL) setupFromNetrunnerDbApi:(NSArray*)array;
 +(void) removeFile;
 
 +(void) addCard:(CardData*) card manually:(BOOL)manually;

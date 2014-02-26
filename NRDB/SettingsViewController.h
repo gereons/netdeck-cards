@@ -10,8 +10,6 @@
 #import "DetailViewManager.h"
 #import "IASKAppSettingsViewController.h"
 
-@interface SettingsViewController : UIViewController<IASKSettingsDelegate, SubstitutableDetailViewController, UIAlertViewDelegate>
-
-+(void) downloadData:(void (^)())block;
+@interface SettingsViewController : UIViewController<IASKSettingsDelegate, SubstitutableDetailViewController>
 
 @end

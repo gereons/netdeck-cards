@@ -9,6 +9,7 @@
 #ifndef NRDB_SettingsKeys_h
 #define NRDB_SettingsKeys_h
 
+#define LANGUAGE            @"language"
 #define FILE_SEQ            @"fileSequence"
 #define LAST_START_VERSION  @"lastStartVersion"
 

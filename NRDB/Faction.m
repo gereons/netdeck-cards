@@ -12,7 +12,9 @@
 @implementation Faction
 
 static NSDictionary* code2faction;
-static NSDictionary* faction2name;
+static NSMutableDictionary* faction2code;
+static NSMutableDictionary* faction2name;
+
 static NSMutableArray* runnerFactions;
 static NSMutableArray* corpFactions;
 
@@ -29,21 +31,32 @@ static NSMutableArray* corpFactions;
         @"neutral": @(NRFactionNeutral)
     };
     
-    faction2name = @{
-        @(NRFactionHaasBioroid): @"Haas-Bioroid",
-        @(NRFactionWeyland): @"Weyland Consortium",
-        @(NRFactionJinteki): @"Jinteki",
-        @(NRFactionNBN): @"NBN",
-        @(NRFactionAnarch): @"Anarch",
-        @(NRFactionShaper): @"Shaper",
-        @(NRFactionCriminal): @"Criminal",
-        @(NRFactionNeutral): @"Neutral",
-        @(NRFactionNone): kANY
-    };
+    faction2code = [NSMutableDictionary dictionary];
+    for (NSString* s in [code2faction allKeys])
+    {
+        NSNumber* n = [code2faction objectForKey:s];
+        [faction2code setObject:s forKey:n];
+    }
+    
+    faction2name = [NSMutableDictionary dictionary];
+    faction2name[@(NRFactionNone)] = l10n(kANY);
+}
+
++(void) initializeFactionNames:(NSDictionary*)cards
+{
+    for (CardData* cd in [cards allValues])
+    {
+        faction2name[@(cd.faction)] = cd.factionStr;
+        
+        if (faction2name.count == code2faction.count + 1)
+        {
+            break;
+        }
+    }
+    NSLog(@"%@", faction2name);
     
     NRFaction rf[] = { NRFactionNone, NRFactionNeutral, NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
     NRFaction cf[] = { NRFactionNone, NRFactionNeutral, NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
-    
     runnerFactions = [NSMutableArray array];
     for (int i=0; i<DIM(rf); ++i)
     {
@@ -54,6 +67,7 @@ static NSMutableArray* corpFactions;
     {
         [corpFactions addObject:[Faction name:cf[i]]];
     }
+
 }
 
 +(NSString*) name:(NRFaction)faction

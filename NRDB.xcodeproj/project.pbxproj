@@ -44,6 +44,7 @@
 		3A4178A918761BF600DEEFA6 /* IASKSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41789918761BF600DEEFA6 /* IASKSlider.m */; };
 		3A4178AA18761BF600DEEFA6 /* IASKSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41789B18761BF600DEEFA6 /* IASKSwitch.m */; };
 		3A4178AB18761BF600DEEFA6 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41789D18761BF600DEEFA6 /* IASKTextField.m */; };
+		3A461A7118BBF39500302A4D /* DataDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A461A7018BBF39500302A4D /* DataDownload.m */; };
 		3A4925041869C70300B22DC5 /* CardFilterHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4925031869C70300B22DC5 /* CardFilterHeaderView.m */; };
 		3A5BC3EF1849326B00E792F7 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BC3E61849326B00E792F7 /* Card.m */; };
 		3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BC3E81849326B00E792F7 /* CardCounter.m */; };
@@ -136,12 +137,12 @@
 /* Begin PBXFileReference section */
 		3A09184818B2925400DBE590 /* InfluenceStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfluenceStats.h; sourceTree = "<group>"; };
 		3A09184918B2925400DBE590 /* InfluenceStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfluenceStats.m; sourceTree = "<group>"; };
-		3A095E8C18BBC49C00C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3A095E8E18BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = file; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3A095E8C18BBC49C00C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3A095E8E18BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A095E8F18BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A095E9018BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A095E9218BBCB2200C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/About.html; sourceTree = "<group>"; };
-		3A095E9418BBCB2700C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = file; name = de; path = de.lproj/About.html; sourceTree = "<group>"; };
+		3A095E9218BBCB2200C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/About.html; sourceTree = "<group>"; };
+		3A095E9418BBCB2700C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = de; path = de.lproj/About.html; sourceTree = "<group>"; };
 		3A167BD018B1E9C90023DF8A /* CardTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardTypeStats.h; sourceTree = "<group>"; };
 		3A167BD118B1E9C90023DF8A /* CardTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardTypeStats.m; sourceTree = "<group>"; };
 		3A16EABC185DBA2D00DB7FFC /* Faction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Faction.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -200,6 +201,8 @@
 		3A41789B18761BF600DEEFA6 /* IASKSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSwitch.m; sourceTree = "<group>"; };
 		3A41789C18761BF600DEEFA6 /* IASKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKTextField.h; sourceTree = "<group>"; };
 		3A41789D18761BF600DEEFA6 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
+		3A461A6F18BBF39500302A4D /* DataDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownload.h; sourceTree = "<group>"; };
+		3A461A7018BBF39500302A4D /* DataDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownload.m; sourceTree = "<group>"; };
 		3A4925021869C70300B22DC5 /* CardFilterHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardFilterHeaderView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A4925031869C70300B22DC5 /* CardFilterHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardFilterHeaderView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A595423186ED61C0074B3B1 /* CGRectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGRectUtils.h; sourceTree = "<group>"; };
@@ -653,6 +656,8 @@
 		3A8532771855079100507B9A /* Settings View */ = {
 			isa = PBXGroup;
 			children = (
+				3A461A6F18BBF39500302A4D /* DataDownload.h */,
+				3A461A7018BBF39500302A4D /* DataDownload.m */,
 				3A85327A185509B000507B9A /* SettingsViewController.h */,
 				3A85327B185509B000507B9A /* SettingsViewController.m */,
 				3A85327C185509B000507B9A /* SettingsViewController.xib */,
@@ -970,6 +975,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A461A7118BBF39500302A4D /* DataDownload.m in Sources */,
 				3A3622721849320C007F2854 /* AppDelegate.m in Sources */,
 				3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,

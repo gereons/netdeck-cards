@@ -15,4 +15,6 @@
 
 +(NSArray*) factionsForRole:(NRRole)role;
 
++(void) initializeFactionNames:(NSDictionary*)cards;
+
 @end

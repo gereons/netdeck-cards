@@ -170,7 +170,7 @@ static struct cardField cardFields[] = {
         }
         else if (alertView.tag == LOAD_ALL_TAG)
         {
-            [CardData setupFromNetrunnerDbApi];
+            [CardData setupFromNetrunnerDbApi:nil];
         }
         self.card = nil;
         [self.tableView reloadData];

@@ -94,33 +94,22 @@ NSString* const kANY = @"Any";
     if ([fileMgr fileExistsAtPath:cardsFile])
     {
         [CardData resetData];
-        NSError* error;
-        NSData* data = [NSData dataWithContentsOfFile:cardsFile options:NSDataReadingMappedIfSafe error:&error];
-        return [self setupFromJsonData:data];
+        NSArray* data = [NSArray arrayWithContentsOfFile:cardsFile];
+        if (data)
+        {
+            return [self setupFromJsonData:data];
+        }
     }
     return NO;
 }
 
-+(BOOL) setupFromNetrunnerDbApi
++(BOOL) setupFromNetrunnerDbApi:(NSArray*)array
 {
-    if (![AFNetworkReachabilityManager sharedManager].reachable)
-    {
-        return NO;
-    }
-    
-    NSURL* url = [NSURL URLWithString:@"http://netrunnerdb.com/api/cards"];
-    NSData* data = [NSData dataWithContentsOfURL:url];
-    
-    if (data == nil)
-    {
-        return NO;
-    }
-    
     NSString* cardsFile = [CardData filename];
-    [data writeToFile:cardsFile atomically:YES];
+    [array writeToFile:cardsFile atomically:YES];
     
     NSDateFormatter *fmt = [NSDateFormatter new];
-    [fmt setDateStyle:NSDateFormatterShortStyle]; // z.B. 08.10.2008
+    [fmt setDateStyle:NSDateFormatterShortStyle]; // e.g. 08.10.2008 for locale=de
     [fmt setTimeStyle:NSDateFormatterNoStyle];
     NSDate* now = [NSDate date];
     [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:now] forKey:LAST_DOWNLOAD];
@@ -129,14 +118,11 @@ NSString* const kANY = @"Any";
     [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
     
     [CardData resetData];
-    return [self setupFromJsonData:data];
+    return [self setupFromJsonData:array];
 }
 
-+(BOOL) setupFromJsonData:(NSData*)jsonData
++(BOOL) setupFromJsonData:(NSArray*)json
 {
-    NSError* error;
-    NSArray* json = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:&error];
-    
     if (json)
     {
         for (NSDictionary* obj in json)
@@ -147,6 +133,9 @@ NSString* const kANY = @"Any";
                 [CardData addCard:card manually:NO];
             }
         }
+        
+        [Faction initializeFactionNames:allCards];
+        
         return YES;
     }
     else

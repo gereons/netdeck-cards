@@ -22,6 +22,7 @@
 #import "SettingsKeys.h"
 #import "Deck.h"
 #import "NRNavigationController.h"
+#import "DataDownload.h"
 
 typedef NS_ENUM(NSInteger, NRMenuItem)
 {
@@ -164,9 +165,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     if (buttonIndex == 1)
     {
-        [SettingsViewController downloadData:^(){
-            [self.tableView reloadData];
-        }];
+        [DataDownload downloadCardData];
     }
     
     // "later" in update alert?

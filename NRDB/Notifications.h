@@ -16,7 +16,7 @@
 #define DECK_LOADED     @"deckLoaded"       // deck was loaded into editor, no userInfo
 #define LOAD_DECK       @"loadDeck"         // load a deck from disk, userInfo contains @"filename" and @"role"
 #define IMPORT_DECK     @"importDeck"       // import deck from clipboard, userInfo contains @"deck"
-#define LOAD_CARDS      @"loadCards"        // card download from netrunnerdb.com, no userInfo
+#define LOAD_CARDS      @"loadCards"        // card download from netrunnerdb.com, userInfo contains @"success" (BOOL)
 #define DROPBOX_CHANGED @"dropboxChanged"   // dropbox link status changed, no userInfo
 
 #endif

@@ -63,6 +63,14 @@
 +(void) setUserDefaults
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:[CardSets settingsDefaults]];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    NSString* defaultLang = [[settings objectForKey:@"AppleLanguages"] objectAtIndex:0];
+    
+    BOOL supportedLang = [@[ @"en", @"de" ] containsObject:defaultLang];
+    if (!supportedLang)
+    {
+        defaultLang = @"en";
+    }
     [dict addEntriesFromDictionary:@{
         LAST_DOWNLOAD: l10n(@"never"),
         NEXT_DOWNLOAD: l10n(@"never"),
@@ -70,7 +78,8 @@
         USE_EVERNOTE: @(NO),
         AUTO_SAVE: @(NO),
         AUTO_SAVE_DB: @(NO),
-        DECK_VIEW_STYLE: @(1)
+        DECK_VIEW_STYLE: @(1),
+        LANGUAGE: defaultLang,
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
