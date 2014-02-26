@@ -122,12 +122,13 @@ static struct cardSetData {
 
 +(TableData*) allSetsForTableview
 {
+#pragma warn fixme: use set names from data import
     NSArray* sections = @[ @"", @"Core / Deluxe", @"Genesis Cycle", @"Spin Cycle", @"Lunar Cycle" ];
     NSArray* sets = @[
         @[ kANY ],
         @[ @"Core Set", @"Creation and Control", @"Honor and Profit" ],
-        @[ @"What Lies Ahead", @"Trace Amount", @"Cyber Exodus", @"A Study in Static", @"Humanity's Shadow", @"Future Proof",  ],
-        @[ @"Opening Moves", @"Second Thoughts", @"Mala Tempora", @"True Colors", @"Fear and Loathing", @"Double Time", ],
+        @[ @"What Lies Ahead", @"Trace Amount", @"Cyber Exodus", @"A Study in Static", @"Humanity's Shadow", @"Future Proof" ],
+        @[ @"Opening Moves", @"Second Thoughts", @"Mala Tempora", @"True Colors", @"Fear and Loathing", @"Double Time" ],
         @[ @"Upstalk" ]
     ];
     

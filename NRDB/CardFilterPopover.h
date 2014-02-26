@@ -15,6 +15,6 @@
 
 @property IBOutlet UITableView* tableView;
 
-+(void) showFromButton:(UIButton*)button inView:(CardFilterHeaderView*)view entries:(TableData*)entries type:(NSString*)type singleSelection:(BOOL)singleSelection selected:(id)selected;
++(void) showFromButton:(UIButton*)button inView:(CardFilterHeaderView*)view entries:(TableData*)entries type:(NSString*)type selected:(id)selected;
 
 @end

@@ -63,14 +63,17 @@
 +(void) setUserDefaults
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:[CardSets settingsDefaults]];
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSString* defaultLang = [[settings objectForKey:@"AppleLanguages"] objectAtIndex:0];
     
-    BOOL supportedLang = [@[ @"en", @"de" ] containsObject:defaultLang];
-    if (!supportedLang)
-    {
-        defaultLang = @"en";
-    }
+//    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+//    NSString* defaultLang = [[settings objectForKey:@"AppleLanguages"] objectAtIndex:0];
+//
+//    BOOL supportedLang = [@[ @"en", @"de" ] containsObject:defaultLang];
+//    if (!supportedLang)
+//    {
+//        defaultLang = @"en";
+//    }
+    NSString* defaultLang = @"en";
+    
     [dict addEntriesFromDictionary:@{
         LAST_DOWNLOAD: l10n(@"never"),
         NEXT_DOWNLOAD: l10n(@"never"),

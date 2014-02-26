@@ -117,14 +117,14 @@ static NSArray* scopes;
     TableData* data = [[TableData alloc] initWithValues:[CardType typesForRole:self.role]];
     id selected = [self.selectedValues objectForKey:@(TYPE_BUTTON)];
     
-    [CardFilterPopover showFromButton:sender inView:self entries:data type:l10n(@"Type") singleSelection:NO selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Type" selected:selected];
 }
 
 -(void) setClicked:(UIButton*)sender
 {
     TF_CHECKPOINT(@"filter set");
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
-    [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allSetsForTableview] type:l10n(@"Set") singleSelection:NO selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allSetsForTableview] type:@"Set" selected:selected];
 }
 
 -(void) subtypeClicked:(UIButton*)sender
@@ -141,7 +141,7 @@ static NSArray* scopes;
     }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     
-    [CardFilterPopover showFromButton:sender inView:self entries:data type:l10n(@"Subtype") singleSelection:NO selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Subtype" selected:selected];
 }
 
 -(void) factionClicked:(UIButton*)sender
@@ -150,7 +150,7 @@ static NSArray* scopes;
     TableData* data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role]];
     id selected = [self.selectedValues objectForKey:@(FACTION_BUTTON)];
     
-    [CardFilterPopover showFromButton:sender inView:self entries:data type:l10n(@"Faction") singleSelection:NO selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Faction" selected:selected];
 }
 
 -(void) filterCallback:(UIButton *)button value:(NSObject *)object

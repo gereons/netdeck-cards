@@ -31,7 +31,7 @@ static NSMutableArray* corpFactions;
     };
     
     faction2name = [NSMutableDictionary dictionary];
-    faction2name[@(NRFactionNone)] = l10n(kANY);
+    faction2name[@(NRFactionNone)] = kANY;
 }
 
 +(void) initializeFactionNames:(NSDictionary*)cards

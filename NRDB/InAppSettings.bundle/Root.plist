@@ -29,6 +29,8 @@
 			<string>language</string>
 			<key>DefaultValue</key>
 			<string>en</string>
+			<key>FooterText</key>
+			<string>(not implemented yet)</string>
 			<key>Values</key>
 			<array>
 				<string>en</string>

@@ -19,7 +19,6 @@
 @property UIButton* button;
 @property NSString* type;
 @property CardFilterHeaderView* headerView;
-@property BOOL singleSelection;
 @property NSMutableSet* selectedValues;
 @property NSMutableArray* sectionToggles;
 
@@ -31,7 +30,7 @@
 
 static UIPopoverController* popover;
 
-+(void) showFromButton:(UIButton *)button inView:(CardFilterHeaderView*)view entries:(TableData*)entries type:(NSString *)type singleSelection:(BOOL)singleSelection selected:(id)preselected
++(void) showFromButton:(UIButton *)button inView:(CardFilterHeaderView*)view entries:(TableData*)entries type:(NSString *)type selected:(id)preselected
 {
     CardFilterPopover* filter = [[CardFilterPopover alloc] initWithNibName:@"CardFilterPopover" bundle:nil];
     filter.sections = entries.sections;
@@ -39,7 +38,7 @@ static UIPopoverController* popover;
     filter.button = button;
     filter.type = type;
     filter.headerView = view;
-    filter.singleSelection = singleSelection;
+
     if ([preselected isKindOfClass:[NSSet class]])
     {
         filter.selectedValues = [[NSSet setWithSet:preselected] mutableCopy];
@@ -184,7 +183,15 @@ static UIPopoverController* popover;
     
     NSArray* arr = self.values[indexPath.section];
     NSString* value = arr[indexPath.row];
-    cell.textLabel.text = value;
+    
+    if ([value isEqualToString:kANY])
+    {
+        cell.textLabel.text = l10n(value);
+    }
+    else
+    {
+        cell.textLabel.text = value;
+    }
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:1 alpha:1];
     
@@ -202,12 +209,12 @@ static UIPopoverController* popover;
     NSString* value = arr[indexPath.row];
 
     BOOL firstCell = indexPath.row == 0 && indexPath.section == 0;
-    if (firstCell || self.singleSelection)
+    if (firstCell)
     {
         NSDictionary* userInfo = @{ @"type": [self.type lowercaseString], @"value": value };
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_FILTER object:self userInfo:userInfo];
         
-        NSString* title = [NSString stringWithFormat:@"%@: %@", self.type, value];
+        NSString* title = [NSString stringWithFormat:@"%@: %@", self.type, l10n(value) ];
         [self.button setTitle:title forState:UIControlStateNormal];
         
         [self.headerView filterCallback:self.button value:value];
@@ -269,7 +276,7 @@ static UIPopoverController* popover;
     NSDictionary* userInfo = @{ @"type": [self.type lowercaseString], @"value": self.selectedValues };
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_FILTER object:self userInfo:userInfo];
     
-    NSString* selected = self.selectedValues.count == 0 ? kANY : (self.selectedValues.count == 1 ? [[self.selectedValues allObjects] objectAtIndex:0] : @"⋯");
+    NSString* selected = self.selectedValues.count == 0 ? l10n(kANY) : (self.selectedValues.count == 1 ? [[self.selectedValues allObjects] objectAtIndex:0] : @"⋯");
     NSString* title = [NSString stringWithFormat:@"%@: %@", self.type, selected];
     [self.button setTitle:title forState:UIControlStateNormal];
     
