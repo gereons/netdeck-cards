@@ -47,7 +47,6 @@ static NSMutableArray* corpTypes;
             break;
         }
     }
-    NSLog(@"%@", type2name);
     
     NRCardType rt[] = { NRCardTypeNone, NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram };
     NRCardType ct[] = { NRCardTypeNone, NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };

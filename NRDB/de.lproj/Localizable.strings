@@ -120,6 +120,10 @@
 "Not now" = "Jetzt nicht";
 "Download" = "Laden";
 
+"Update cards" = "Karten-Update";
+"Card data may be out of date. Download now?" = "Karten-Daten können veraltet sein. Jetzt aktualisieren?";
+"Later" = "Später";
+
 // unsaved changes alert
 "Discard" = "Verwerfen";
 "There are unsaved changes" = "Es gibt ungesicherte Änderungen";

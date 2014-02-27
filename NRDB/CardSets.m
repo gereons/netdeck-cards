@@ -95,7 +95,6 @@ static struct cardSetData {
             break;
         }
     }
-    NSLog(@"%@", setNames);
 }
 
 +(NSDictionary*) settingsDefaults

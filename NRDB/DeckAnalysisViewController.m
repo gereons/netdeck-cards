@@ -64,6 +64,8 @@
     [super viewDidLoad];
 
     self.titleLabel.text = l10n(@"Deck Analysis");
+    [self.okButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
+    
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 

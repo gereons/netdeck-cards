@@ -153,7 +153,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     if ([scheduled compare:now] == NSOrderedAscending)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Update cards") message:l10n(@"Card data may be out of date. Download now?") delegate:self cancelButtonTitle:l10n(@"Later") otherButtonTitles:@"OK", nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Update cards")
+                                                        message:l10n(@"Card data may be out of date. Download now?")
+                                                       delegate:self
+                                              cancelButtonTitle:l10n(@"Later")
+                                              otherButtonTitles:@"OK", nil];
         alert.tag = 1;
         [alert show];
     }
