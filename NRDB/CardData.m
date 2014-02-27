@@ -12,14 +12,12 @@
 #import "CardData.h"
 #import "Faction.h"
 #import "CardType.h"
+#import "CardSets.h"
 #import "SettingsKeys.h"
 
 #define JSON_INT(key, attr)          c->_##key = [[json objectForKey:attr] intValue]
 #define JSON_BOOL(key, attr)         c->_##key = [[json objectForKey:attr] boolValue]
 #define JSON_STR(key, attr)          c->_##key = [json objectForKey:attr]
-
-#define CARDSFILE_JSON      @"nrcards.json"
-// #define CARDSFILE_ARCHIVE   @"nrcards.archive"
 
 @implementation CardData
 
@@ -74,7 +72,25 @@ NSString* const kANY = @"Any";
 {
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
-    return [documentsDirectory stringByAppendingPathComponent:CARDSFILE_JSON];
+    
+    NSString* filename;
+    
+    NSFileManager* fileMgr = [NSFileManager new];
+    NSString* oldfile = [documentsDirectory stringByAppendingPathComponent:@"nrcards.json"];
+    if ([fileMgr fileExistsAtPath:oldfile])
+    {
+        NSString* newfile = [documentsDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
+        NSError* error;
+        [fileMgr moveItemAtPath:oldfile toPath:newfile error:&error];
+    }
+    
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    if (language.length)
+    {
+        filename = [NSString stringWithFormat:@"nrcards_%@.json", language];
+    }
+    
+    return [documentsDirectory stringByAppendingPathComponent:filename];
 }
 
 +(void) removeFile
@@ -135,6 +151,8 @@ NSString* const kANY = @"Any";
         }
         
         [Faction initializeFactionNames:allCards];
+        [CardSets initializeSetNames:allCards];
+        [CardType initializeCardTypes:allCards];
         
         return YES;
     }
@@ -426,7 +444,7 @@ NSString* const kANY = @"Any";
     if (setsArray == nil)
     {
         setsArray = [NSMutableArray array];
-        [setsArray addObject:@"Any"];
+        [setsArray addObject:l10n(kANY)];
         NSArray* arr = [[allSets allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
         [setsArray addObjectsFromArray:arr];
     }

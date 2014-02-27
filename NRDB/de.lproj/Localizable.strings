@@ -114,4 +114,14 @@
 "Search in:" = "Suche in:";
 "Search Cards" = "Karten suchen";
 
+// startup alert
+"No Card Data" = "Keine Karten-Daten";
+"To use this app, you must first download card data from netrunnerdb.com" = "Um diese App zu verwenden, musst du zuerst Kartendaten von netrunnerdb.com laden";
+"Not now" = "Jetzt nicht";
+"Download" = "Laden";
+
+// unsaved changes alert
+"Discard" = "Verwerfen";
+"There are unsaved changes" = "Es gibt ungesicherte Änderungen";
+
 //

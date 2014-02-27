@@ -36,9 +36,12 @@ static NSMutableArray* corpFactions;
 
 +(void) initializeFactionNames:(NSDictionary*)cards
 {
+    [faction2name removeAllObjects];
+    faction2name[@(NRFactionNone)] = kANY;
+    
     for (CardData* cd in [cards allValues])
     {
-        faction2name[@(cd.faction)] = cd.factionStr;
+        [faction2name setObject:cd.factionStr forKey:@(cd.faction)];
         
         if (faction2name.count == code2faction.count + 1)
         {

@@ -10,6 +10,7 @@
 #import <TMCache.h>
 #import <AFNetworking.h>
 #import "Card.h"
+#import "SettingsKeys.h"
 
 #define LAST_MOD_CACHE  @"lastModified"
 #define NEXT_CHECK      @"nextCheck"
@@ -66,12 +67,14 @@ static UIImage* corpPlaceholder;
 
 -(void) getImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock forced:(BOOL)forced
 {
-    // NSLog(@"get img for %@", card.code);
-    UIImage* img = [[TMCache sharedCache] objectForKey:card.code];
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
+    // NSLog(@"get img for %@", key);
+    UIImage* img = [[TMCache sharedCache] objectForKey:key];
     if (img)
     {
         // NSLog(@"cached, check for update");
-        [self checkForImageUpdate:card forced:forced];
+        [self checkForImageUpdate:card withKey:key forced:forced];
         
         if (successBlock)
         {
@@ -88,11 +91,11 @@ static UIImage* corpPlaceholder;
     }
     else
     {
-        [self downloadImageFor:card success:successBlock failure:failureBlock];
+        [self downloadImageFor:card withKey:key success:successBlock failure:failureBlock];
     }
 }
 
--(void) downloadImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock
+-(void) downloadImageFor:(Card *)card withKey:(NSString*)key success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock
 {
     NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
     
@@ -112,7 +115,7 @@ static UIImage* corpPlaceholder;
              }
              
              NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
-             [self storeInCache:responseObject lastModified:lastModified forKey:card.code];
+             [self storeInCache:responseObject lastModified:lastModified forKey:key];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // download failed
@@ -124,12 +127,12 @@ static UIImage* corpPlaceholder;
              {
                  failureBlock(card, response.statusCode, PLACEHOLDER(card));
                  
-                 [self storeInCache:PLACEHOLDER(card) lastModified:nil forKey:card.code];
+                 [self storeInCache:PLACEHOLDER(card) lastModified:nil forKey:key];
              }
          }];
 }
 
--(void) checkForImageUpdate:(Card*)card forced:(BOOL)forced
+-(void) checkForImageUpdate:(Card*)card withKey:(NSString*)key forced:(BOOL)forced
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
@@ -139,7 +142,7 @@ static UIImage* corpPlaceholder;
         NSDate* nextCheck;
         if (dict)
         {
-            nextCheck = [dict objectForKey:card.code];
+            nextCheck = [dict objectForKey:key];
         }
         if (nextCheck)
         {
@@ -157,7 +160,7 @@ static UIImage* corpPlaceholder;
     dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
     if (dict)
     {
-        lastModDate = [dict objectForKey:card.code];
+        lastModDate = [dict objectForKey:key];
     }
     
     NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
@@ -176,7 +179,7 @@ static UIImage* corpPlaceholder;
         NLOG(@"GET %@ If-Modified-Since %@: status 200", url, lastModDate);
         NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
         
-        [self storeInCache:responseObject lastModified:lastModified forKey:card.code];
+        [self storeInCache:responseObject lastModified:lastModified forKey:key];
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NLOG(@"GET %@ If-Modified-Since %@: status %d", url, lastModDate, operation.response.statusCode);

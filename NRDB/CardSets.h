@@ -20,4 +20,6 @@
 
 +(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;
 
++(void) initializeSetNames:(NSDictionary*)cards;
+
 @end

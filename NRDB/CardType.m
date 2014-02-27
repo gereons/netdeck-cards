@@ -12,7 +12,7 @@
 @implementation CardType
 
 static NSDictionary* code2type;
-static NSDictionary* type2name;
+static NSMutableDictionary* type2name;
 static NSMutableArray* runnerTypes;
 static NSMutableArray* corpTypes;
 
@@ -31,23 +31,27 @@ static NSMutableArray* corpTypes;
         @"event": @(NRCardTypeEvent),
     };
 
-    type2name = @{
-        @(NRCardTypeIdentity): @"Identity",
-        @(NRCardTypeAsset): @"Asset",
-        @(NRCardTypeAgenda): @"Agenda",
-        @(NRCardTypeIce): @"ICE",
-        @(NRCardTypeUpgrade): @"Upgrade",
-        @(NRCardTypeOperation): @"Operation",
-        @(NRCardTypeProgram): @"Program",
-        @(NRCardTypeHardware): @"Hardware",
-        @(NRCardTypeResource): @"Resource",
-        @(NRCardTypeEvent): @"Event",
-        @(NRCardTypeNone): kANY
-    };
+    type2name = [NSMutableDictionary dictionary];
+}
+    
++(void) initializeCardTypes:(NSDictionary *)cards
+{
+    [type2name removeAllObjects];
+    [type2name setObject:kANY forKey:@(NRCardTypeNone)];
+    for (CardData* c in [cards allValues])
+    {
+        [type2name setObject:c.typeStr forKey:@(c.type)];
+        
+        if (type2name.count == code2type.count + 1)
+        {
+            break;
+        }
+    }
+    NSLog(@"%@", type2name);
     
     NRCardType rt[] = { NRCardTypeNone, NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram };
     NRCardType ct[] = { NRCardTypeNone, NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
-
+    
     runnerTypes = [NSMutableArray array];
     for (int i=0; i<DIM(rt); ++i)
     {

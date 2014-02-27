@@ -30,7 +30,7 @@
 			<key>DefaultValue</key>
 			<string>en</string>
 			<key>FooterText</key>
-			<string>(not implemented yet)</string>
+			<string>LanguageFooterText</string>
 			<key>Values</key>
 			<array>
 				<string>en</string>

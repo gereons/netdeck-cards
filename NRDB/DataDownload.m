@@ -70,9 +70,7 @@ static DataDownload* instance;
     NSDictionary* parameters = nil;
     if (language.length)
     {
-        // cardsUrl = [NSString stringWithFormat:@"%@?_locale=%@", cardsUrl, language];
         parameters = @{ @"_locale" : language };
-        NSLog(@"%@", parameters);
     }
     BOOL __block ok = NO;
     self.downloadStopped = NO;
@@ -91,7 +89,8 @@ static DataDownload* instance;
         failure:^(AFHTTPRequestOperation* operation, NSError* error) {
             NSLog(@"download failed %@", operation);
             [self downloadFinished:NO];
-    }];
+        }
+    ];
 }
 
 -(void) downloadFinished:(BOOL)ok
