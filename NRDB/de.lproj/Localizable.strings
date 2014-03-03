@@ -114,6 +114,18 @@
 "Search in:" = "Suche in:";
 "Search Cards" = "Karten suchen";
 
+// section headers
+"Identity" = "Identität";
+"Program" = "Programm";
+"Resource" = "Ressource";
+"Event" = "Ereignis";
+"Hardware" = "Hardware";
+"Agenda" = "Agenda";
+"Asset" = "Aktivposten";
+"ICE" = "ICE";
+"Upgrade" = "Upgrade";
+"Operation" = "Operation";
+
 // startup alert
 "No Card Data" = "Keine Karten-Daten";
 "To use this app, you must first download card data from netrunnerdb.com" = "Um diese App zu verwenden, musst du zuerst Kartendaten von netrunnerdb.com laden";
@@ -127,5 +139,23 @@
 // unsaved changes alert
 "Discard" = "Verwerfen";
 "There are unsaved changes" = "Es gibt ungesicherte Änderungen";
+
+// dropbox
+"Successfully connected to your Dropbox account" = "Erfolgreich mit deiner Dropbox verbunden";
+
+// import
+"Import Deck" = "Deck importieren";
+"%@ (%d Cards)" = "%@ (%d Karten)";
+"Deck imported" = "Deck importiert";
+"Detected a deck list in your clipboard. Import this deck?" = "Deckliste in der Zwischenablage gefunden. Soll dieses Deck importiert werden?";
+
+// export
+"%@ exported" = "%@ exportiert";
+"Error exporting %@" = "%@: Fehler beim Export";
+"OCTGN Deck" = "OCTGN-Deck";
+"Plain Text Deck" = "Text-Deck";
+"Markdown Deck" = "Markdown-Deck";
+"BBCode Deck" = "BBCode-Deck";
+
 
 //

@@ -44,7 +44,7 @@
     
     SVProgressHUD.appearance.hudBackgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
     
-#if !DEBUG
+#if !DEBUG && !TARGET_IPHONE_SIMULATOR
     [TestFlight takeOff:@"eb5e8194-c06f-46db-a1ce-42943ebaf902"];
 #endif
     
@@ -128,7 +128,7 @@
     
     if (self.deck != nil)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:l10n(@"Detected a deck list in your clipboard. Import this deck?") delegate:self cancelButtonTitle:l10n(@"No")otherButtonTitles:l10n(@"Yes"), nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:l10n(@"Detected a deck list in your clipboard. Import this deck?") delegate:self cancelButtonTitle:l10n(@"No") otherButtonTitles:l10n(@"Yes"), nil];
         [alert show];
     }
 }

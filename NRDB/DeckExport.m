@@ -31,7 +31,7 @@
     NSString* octgnName = [NSString stringWithFormat:@"%@.o8d", deck.name];
     NSString* content = [template renderObject:objects error:&error];
     
-    [DeckExport writeToDropbox:content fileName:octgnName deckType:@"OCTGN Deck" autoSave:autoSave];
+    [DeckExport writeToDropbox:content fileName:octgnName deckType:l10n(@"OCTGN Deck") autoSave:autoSave];
 }
 
 +(NSString*) asPlaintextString:(Deck *)deck
@@ -91,7 +91,7 @@
 {
     NSString* s = [DeckExport asPlaintextString:deck];
     NSString* txtName = [NSString stringWithFormat:@"%@.txt", deck.name];
-    [DeckExport writeToDropbox:s fileName:txtName deckType:@"Plain Text Deck" autoSave:NO];
+    [DeckExport writeToDropbox:s fileName:txtName deckType:l10n(@"Plain Text Deck") autoSave:NO];
 }
 
 +(NSString*) asMarkdownString:(Deck*)deck
@@ -151,7 +151,7 @@
 {
     NSString* s = [DeckExport asMarkdownString:deck];
     NSString* mdName = [NSString stringWithFormat:@"%@.md", deck.name];
-    [DeckExport writeToDropbox:s fileName:mdName deckType:@"Markdown Deck" autoSave:NO];
+    [DeckExport writeToDropbox:s fileName:mdName deckType:l10n(@"Markdown Deck") autoSave:NO];
 }
 
 +(NSString*) asBBCodeString:(Deck*)deck
@@ -212,7 +212,7 @@
 {
     NSString* s = [DeckExport asBBCodeString:deck];
     NSString* bbcName = [NSString stringWithFormat:@"%@.bbc", deck.name];
-    [DeckExport writeToDropbox:s fileName:bbcName deckType:@"BBCode Deck" autoSave:NO];
+    [DeckExport writeToDropbox:s fileName:bbcName deckType:l10n(@"BBCode Deck") autoSave:NO];
 }
 
 +(NSString*) dots:(int)count
@@ -249,11 +249,11 @@
     
     if (writeOk)
     {
-        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ exported", deckType]];
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:l10n(@"%@ exported"), deckType]];
     }
     else
     {
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error exporting %@", deckType]];
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:l10n(@"Error exporting %@"), deckType]];
     }
 }
 
