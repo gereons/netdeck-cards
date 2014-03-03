@@ -129,7 +129,7 @@
     
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords
-    float tableHeight = 768 - kbHeight - 44 - 85;
+    float tableHeight = 768 - kbHeight - 144; // screen height - kbd height - height of visible filter
     
     float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     [UIView animateWithDuration:animDuration
