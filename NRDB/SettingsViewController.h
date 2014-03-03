@@ -10,6 +10,6 @@
 #import "DetailViewManager.h"
 #import "IASKAppSettingsViewController.h"
 
-@interface SettingsViewController : UIViewController<IASKSettingsDelegate, SubstitutableDetailViewController>
+@interface SettingsViewController : UIViewController<IASKSettingsDelegate, SubstitutableDetailViewController, UIAlertViewDelegate>
 
 @end

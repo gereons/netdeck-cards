@@ -59,7 +59,7 @@
 
 // deck invalidity reasons
 "No Identity" = "Keine Identität";
-"Needs %d or %d Agenda Points" = "Nur %d oder %d Agendapunkte";
+"AP must be %d or %d" = "Nur %d oder %d AP erlaubt";
 "Too many pet projects" = "Zuviele Lieblingsprojekte";
 "Cannot include Jinteki" = "Jinteki nicht erlaubt";
 "Cannot use out-of-faction agendas" = "Fraktionsfremde Agenden";
@@ -71,6 +71,7 @@
 "Downloading Images" = "Lade Karten-Bilder";
 "Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche er später nochmal.";
 "%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";
+"Clear Cache? You will need to re-download all data from netrunnerdb.com." = "Cache löschen? Du musst danach alle Daten neu von netrunnerdb.com laden.";
 
 // identity selection
 "Choose Identity" = "Identität auswählen";

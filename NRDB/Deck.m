@@ -42,13 +42,22 @@
         [reasons addObject:l10n(@"No Identity")];
     }
     
+    if (self.size < self.identity.minimumDecksize)
+    {
+        [reasons addObject:l10n(@"Not enough cards")];
+    }
+    if (self.influence > self.identity.influenceLimit)
+    {
+        [reasons addObject:l10n(@"Too much influence used")];
+    }
+
     if (self.identity.role == NRRoleCorp)
     {
         // check agenda points
         int apRequired = ((self.size / 5) + 1) * 2;
         if (self.agendaPoints != apRequired && self.agendaPoints != apRequired+1)
         {
-            [reasons addObject:[NSString stringWithFormat:l10n(@"Needs %d or %d Agenda Points"), apRequired, apRequired+1]];
+            [reasons addObject:[NSString stringWithFormat:l10n(@"AP must be %d or %d"), apRequired, apRequired+1]];
         }
     
         BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
@@ -79,15 +88,6 @@
         }
     }
     
-    if (self.size < self.identity.minimumDecksize)
-    {
-        [reasons addObject:l10n(@"Not enough cards")];
-    }
-    if (self.influence > self.identity.influenceLimit)
-    {
-        [reasons addObject:l10n(@"Too much influence used")];
-    }
-
     return reasons;
 }
 

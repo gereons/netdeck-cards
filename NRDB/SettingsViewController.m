@@ -127,6 +127,19 @@
     {
         TF_CHECKPOINT(@"clear cache");
         
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:Nil
+                                                        message:l10n(@"Clear Cache? You will need to re-download all data from netrunnerdb.com.")
+                                                       delegate:self
+                                              cancelButtonTitle:l10n(@"No")
+                                              otherButtonTitles:l10n(@"Yes"), nil];
+        [alert show];
+    }
+}
+
+-(void) alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
         [[ImageCache sharedInstance] clearCache];
         [CardData removeFile];
         [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:LAST_DOWNLOAD];
