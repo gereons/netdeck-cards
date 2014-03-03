@@ -87,15 +87,20 @@ static NSArray* scopes;
     self.searchField.text = @"";
     self.searchText = @"";
     
-    [self costValueChanged:nil];
     self.costSlider.value = 0;
-    [self muValueChanged:nil];
+    [self costValueChanged:nil];
+    
     self.muSlider.value = 0;
-    [self influenceValueChanged:nil];
+    [self muValueChanged:nil];
+    
     self.influenceSlider.value = 0;
-    [self strengthValueChanged:nil];
+    [self influenceValueChanged:nil];
+    
     self.strengthSlider.value = 0;
+    [self strengthValueChanged:nil];
+    
     self.apSlider.value = 0;
+    [self apValueChanged:nil];
     
     [self resetButton:TYPE_BUTTON];
     [self resetButton:SET_BUTTON];
