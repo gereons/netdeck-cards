@@ -26,7 +26,6 @@ static NSDictionary* roleCodes;
 static NSArray* subtypes;       // array of dictionary type->array
 static NSArray* sortedSubtypes; // array of dictionary type->array
 static NSArray* subtypeCodes;   // array of array
-static NSArray* strengths;      // array of sets
 static NSMutableArray* sortedIdentities;
 
 static NSMutableDictionary* allCards;   // code -> card
@@ -61,8 +60,6 @@ NSString* const kANY = @"Any";
     sortedSubtypes = @[ [NSMutableDictionary dictionary], [NSMutableDictionary dictionary] ];
     sortedIdentities = [@[ [NSMutableArray array], [NSMutableArray array] ] mutableCopy];
     subtypeCodes = @[ [NSMutableArray array], [NSMutableArray array] ];
-    strengths = @[ [NSMutableSet set], [NSMutableSet set] ];
-    
     allSets = [NSMutableSet set];
 
     roleCodes = @{ @"runner": @(NRRoleRunner), @"corp": @(NRRoleCorp) };
@@ -250,7 +247,6 @@ NSString* const kANY = @"Any";
     
     NSString* strength = [json objectForKey:@"strength"];
     c->_strength = strength ? [strength intValue] : -1;
-    [strengths[c.role] addObject:@(c.strength)];
     
     NSString* mu = [json objectForKey:@"memoryunits"];
     c->_mu = mu ? [mu intValue] : -1;

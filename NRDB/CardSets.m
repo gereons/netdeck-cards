@@ -25,6 +25,9 @@ static NSMutableDictionary* setNames;
 static NSMutableSet* setCodes;
 static NSMutableDictionary* releases;
 
+static NSArray* setGroups;
+static NSArray* setsPerGroup;
+
 static struct cardSetData {
     int setNum;
     char* settingsKey;
@@ -81,6 +84,17 @@ static struct cardSetData {
         [cardSets addObject:csd];
         ++c;
     }
+    
+    setGroups = @[ @"", l10n(@"Core / Deluxe"), l10n(@"Genesis Cycle"), l10n(@"Spin Cycle"), l10n(@"Lunar Cycle") ];
+    setsPerGroup = @[
+        @[ @"" ],
+        @[ @"core", @"cac", @"hap" ],
+        @[ @"wla", @"ta", @"ce", @"asis", @"hs", @"fp" ],
+        @[ @"om", @"st", @"mt", @"tc", @"fal", @"dt" ],
+        @[ @"up" ]
+    ];
+    
+    NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
 }
 
 +(void) initializeSetNames:(NSDictionary *)cards
@@ -141,14 +155,40 @@ static struct cardSetData {
 #define NAME(x) [setNames objectForKey:x]
 +(TableData*) allSetsForTableview
 {
-    NSArray* sections = @[ @"", @"Core / Deluxe", @"Genesis Cycle", @"Spin Cycle", @"Lunar Cycle" ];
-    NSArray* sets = @[
-        @[ kANY ],
-        @[ NAME(@"core"), NAME(@"cac"), NAME(@"hap") ],
-        @[ NAME(@"wla"), NAME(@"ta"), NAME(@"ce"), NAME(@"asis"), NAME(@"hs"), NAME(@"fp") ],
-        @[ NAME(@"om"), NAME(@"st"), NAME(@"mt"), NAME(@"tc"), NAME(@"fal"), NAME(@"dt") ],
-        @[ NAME(@"up") ]
-    ];
+    NSSet* disabledSets = [CardSets disabledSetCodes];
+    NSMutableArray* sections = [setGroups mutableCopy];
+    NSMutableArray* sets = [NSMutableArray array];
+    
+    for (NSArray* arr in setsPerGroup)
+    {
+        NSMutableArray* names = [NSMutableArray array];
+        for (NSString* setCode in arr)
+        {
+            if (setCode.length == 0)
+            {
+                [names addObject:kANY];
+            }
+            else if (![disabledSets containsObject:setCode])
+            {
+                [names addObject:[setNames objectForKey:setCode]];
+            }
+        }
+        [sets addObject:names];
+    }
+    
+    for (int i=0; i<sets.count; )
+    {
+        NSArray* arr = [sets objectAtIndex:i];
+        if (arr.count == 0)
+        {
+            [sets removeObjectAtIndex:i];
+            [sections removeObjectAtIndex:i];
+        }
+        else
+        {
+            ++i;
+        }
+    }
     
     return [[TableData alloc] initWithSections:sections andValues:sets];
 }

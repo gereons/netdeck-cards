@@ -158,5 +158,10 @@
 "Markdown Deck" = "Markdown-Deck";
 "BBCode Deck" = "BBCode-Deck";
 
+// cycles
+"Core / Deluxe" = "Grundspiel / Erweiterung";
+"Genesis Cycle" = "Genesis-Zyklus";
+"Spin Cycle" = "Spin-Zyklus";
+"Lunar Cycle" = "Luna-Zyklus";
 
 //
