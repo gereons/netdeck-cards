@@ -9,6 +9,7 @@
 #import "SmallCardCell.h"
 #import "CardCounter.h"
 #import "Deck.h"
+#import "SettingsKeys.h"
 
 @implementation SmallCardCell
 
@@ -33,6 +34,18 @@
     else
     {
         self.name.text = [NSString stringWithFormat:@"%d× %@", cc.count, card.name];
+    }
+    
+    self.name.textColor = [UIColor blackColor];
+    if ([card.setCode isEqualToString:@"core"])
+    {
+        int cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
+        int owned = cores * card.quantity;
+        
+        if (owned < cc.count)
+        {
+            self.name.textColor = [UIColor redColor];
+        }
     }
     
     int influence = 0;

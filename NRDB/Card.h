@@ -39,6 +39,7 @@
 @property (readonly) int advancementCost;
 @property (readonly) int agendaPoints;
 @property (readonly) int trash;
+@property (readonly) int quantity;
 @property (readonly) NSString* setName;
 @property (readonly) NSString* setCode;
 @property (readonly) NSString* artist;

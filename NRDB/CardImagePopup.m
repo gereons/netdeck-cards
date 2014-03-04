@@ -9,6 +9,7 @@
 #import "CardImagePopup.h"
 #import "CardCounter.h"
 #import "Notifications.h"
+#import "SettingsKeys.h"
 
 @interface CardImagePopup ()
 
@@ -74,6 +75,18 @@ static UIPopoverController* popover;
     else
     {
         self.copiesLabel.text = [NSString stringWithFormat:@"×%d", self.cc.count];
+    }
+    
+    self.copiesLabel.textColor = [UIColor blackColor];
+    if ([self.cc.card.setCode isEqualToString:@"core"])
+    {
+        int cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
+        int owned = cores * self.cc.card.quantity;
+        
+        if (owned < self.cc.count)
+        {
+            self.copiesLabel.textColor = [UIColor redColor];
+        }
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];

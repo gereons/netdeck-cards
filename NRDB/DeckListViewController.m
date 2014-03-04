@@ -850,6 +850,18 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
                 cell.copiesLabel.text = [NSString stringWithFormat:@"×%d", cc.count];
             }
         }
+        
+        cell.copiesLabel.textColor = [UIColor blackColor];
+        if ([card.setCode isEqualToString:@"core"])
+        {
+            int cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
+            int owned = cores * card.quantity;
+            
+            if (owned < cc.count)
+            {
+                cell.copiesLabel.textColor = [UIColor redColor];
+            }
+        }
     }
     
     if (![cell.card isEqual:card])

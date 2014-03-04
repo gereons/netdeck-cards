@@ -72,7 +72,8 @@
         AUTO_SAVE: @(NO),
         AUTO_SAVE_DB: @(NO),
         DECK_VIEW_STYLE: @(1),
-        LANGUAGE: @"en"
+        LANGUAGE: @"en",
+        NUM_CORES: @(1)
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];

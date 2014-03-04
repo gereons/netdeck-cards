@@ -13,6 +13,7 @@
 #import "CardType.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
+#import "SettingsKeys.h"
 
 @interface LargeCardCell()
 @property NSArray* pips;
@@ -41,11 +42,23 @@
     }
     else if (card.unique)
     {
-        self.name.text = [NSString stringWithFormat:@"%@ • ×%d", card.name, cc.count];
+        self.name.text = [NSString stringWithFormat:@"%d× %@ •", cc.count, card.name];
     }
     else
     {
-        self.name.text = [NSString stringWithFormat:@"%@ ×%d", card.name, cc.count];
+        self.name.text = [NSString stringWithFormat:@"%d× %@", cc.count, card.name];
+    }
+    
+    self.name.textColor = [UIColor blackColor];
+    if ([card.setCode isEqualToString:@"core"])
+    {
+        int cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
+        int owned = cores * card.quantity;
+        
+        if (owned < cc.count)
+        {
+            self.name.textColor = [UIColor redColor];
+        }
     }
     
     NSString* factionName = [Faction name:card.faction];
