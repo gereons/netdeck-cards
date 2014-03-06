@@ -23,11 +23,11 @@
         NSMutableDictionary* types = [NSMutableDictionary dictionary];
         for (CardCounter* cc in deck.cards)
         {
-            NSString* type = cc.card.typeStr;
+            NSString* type = l10n(cc.card.typeStr);
             
-            if (cc.card.type == NRCardTypeProgram && [cc.card.subtypes containsObject:@"Icebreaker"])
+            if (cc.card.type == NRCardTypeProgram && cc.card.strength != -1)
             {
-                type = @"Icebreaker";
+                type = l10n(@"Icebreaker");
             }
             NSNumber* n = [types objectForKey:type];
             int prev = n == nil ? 0 : [n intValue];

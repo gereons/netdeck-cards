@@ -28,6 +28,8 @@
 - (id)initWithDeck:(Deck*)deck
 {
     TF_CHECKPOINT(@"draw simulator");
+
+#warning add odds calculator
     
     self = [super initWithNibName:@"DrawSimulatorViewController" bundle:nil];
     if (self)

@@ -87,7 +87,7 @@ static DataDownload* instance;
             [self downloadFinished:ok];
         }
         failure:^(AFHTTPRequestOperation* operation, NSError* error) {
-            NSLog(@"download failed %@", operation);
+            // NSLog(@"download failed %@", operation);
             [self downloadFinished:NO];
         }
     ];

@@ -67,11 +67,11 @@
     NSString* subtype = card.subtype;
     if (subtype)
     {
-        self.type.text = [NSString stringWithFormat:@"%@ %@: %@", factionName, typeName, card.subtype];
+        self.type.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];
     }
     else
     {
-        self.type.text = [NSString stringWithFormat:@"%@ %@", factionName, typeName];
+        self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
     
     int influence = 0;
@@ -103,7 +103,7 @@
             self.strength.text = [@(card.influenceLimit) stringValue];
             if (card.role == NRRoleRunner)
             {
-                self.mu.text = [NSString stringWithFormat:@"%d Link", card.baseLink];
+                self.mu.text = [NSString stringWithFormat:l10n(@"%d Link"), card.baseLink];
             }
             else
             {
@@ -116,22 +116,22 @@
         case NRCardTypeEvent:
         case NRCardTypeHardware:
         case NRCardTypeIce:
-            self.cost.text = card.cost != -1 ? [NSString stringWithFormat:@"%d Cr", card.cost] : @"";
-            self.strength.text = card.strength != -1 ? [NSString stringWithFormat:@"%d Str", card.strength] : @"";
-            self.mu.text = card.mu != -1 ? [NSString stringWithFormat:@"%d Str", card.mu] : @"";
+            self.cost.text = card.cost != -1 ? [NSString stringWithFormat:l10n(@"%d Cr"), card.cost] : @"";
+            self.strength.text = card.strength != -1 ? [NSString stringWithFormat:l10n(@"%d Str"), card.strength] : @"";
+            self.mu.text = card.mu != -1 ? [NSString stringWithFormat:l10n(@"%d MU"), card.mu] : @"";
             break;
             
         case NRCardTypeAgenda:
-            self.cost.text = [NSString stringWithFormat:@"%d Adv", card.advancementCost];
-            self.strength.text = [NSString stringWithFormat:@"%d AP", card.agendaPoints];
+            self.cost.text = [NSString stringWithFormat:l10n(@"%d Adv"), card.advancementCost];
+            self.strength.text = [NSString stringWithFormat:l10n(@"%d AP"), card.agendaPoints];
             self.mu.text = @"";
             break;
             
         case NRCardTypeAsset:
         case NRCardTypeOperation:
         case NRCardTypeUpgrade:
-            self.cost.text = card.cost != -1 ? [NSString stringWithFormat:@"%d Cr", card.cost] : @"";
-            self.strength.text = card.trash != -1 ? [NSString stringWithFormat:@"%d Tr", card.trash] : @"";
+            self.cost.text = card.cost != -1 ? [NSString stringWithFormat:l10n(@"%d Cr"), card.cost] : @"";
+            self.strength.text = card.trash != -1 ? [NSString stringWithFormat:l10n(@"%d Tr"), card.trash] : @"";
             self.mu.text = @"";
             break;
             
