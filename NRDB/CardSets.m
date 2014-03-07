@@ -57,6 +57,7 @@ static struct cardSetData {
     
     // lunar
     { 16, "use_upstalk", "up", NRCycleLunar, NO },
+    { 17, "use_spaces_between", "tsb", NRCycleLunar, NO },
     { 0 }
 };
 
@@ -91,7 +92,7 @@ static struct cardSetData {
         @[ @"core", @"cac", @"hap" ],
         @[ @"wla", @"ta", @"ce", @"asis", @"hs", @"fp" ],
         @[ @"om", @"st", @"mt", @"tc", @"fal", @"dt" ],
-        @[ @"up" ]
+        @[ @"up", @"tsb" ]
     ];
     
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
@@ -152,7 +153,6 @@ static struct cardSetData {
     return sets;
 }
 
-#define NAME(x) [setNames objectForKey:x]
 +(TableData*) allSetsForTableview
 {
     NSSet* disabledSets = [CardSets disabledSetCodes];

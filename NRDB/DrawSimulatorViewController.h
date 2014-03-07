@@ -14,6 +14,7 @@
 @property IBOutlet UILabel* titleLabel;
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UILabel* drawnLabel;
+@property IBOutlet UILabel* oddsLabel;
 
 @property IBOutlet UIButton* clearButton;
 @property IBOutlet UIButton* doneButton;
