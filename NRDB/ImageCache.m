@@ -34,12 +34,15 @@ static ImageCache* instance;
 static UIImage* runnerPlaceholder;
 static UIImage* corpPlaceholder;
 
-static UIImage* trashIcon;
-static UIImage* strengthIcon;
+static UIImage* cardIcon;
 static UIImage* creditIcon;
+static UIImage* difficultyIcon;
+static UIImage* influenceIcon;
+static UIImage* linkIcon;
 static UIImage* muIcon;
 static UIImage* apIcon;
-static UIImage* linkIcon;
+static UIImage* trashIcon;
+static UIImage* strengthIcon;
 
 #define PLACEHOLDER(card)   (card.role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder)
 
@@ -54,6 +57,9 @@ static UIImage* linkIcon;
     muIcon = [UIImage imageNamed:@"memicon"];
     apIcon = [UIImage imageNamed:@"pointsicon"];
     linkIcon = [UIImage imageNamed:@"linkicon"];
+    cardIcon = [UIImage imageNamed:@"cardicon"];
+    difficultyIcon = [UIImage imageNamed:@"difficultyicon"];
+    influenceIcon = [UIImage imageNamed:@"influenceicon"];
 }
 
 +(ImageCache*) sharedInstance
@@ -257,6 +263,9 @@ static UIImage* linkIcon;
 +(UIImage*) muIcon { return muIcon; }
 +(UIImage*) apIcon { return apIcon; }
 +(UIImage*) linkIcon { return linkIcon; }
++(UIImage*) cardIcon { return cardIcon; }
++(UIImage*) difficultyIcon { return difficultyIcon; }
++(UIImage*) influenceIcon { return influenceIcon; }
 
 @end
 

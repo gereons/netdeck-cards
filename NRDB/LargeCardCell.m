@@ -101,9 +101,9 @@
     {
         case NRCardTypeIdentity:
             self.label1.text = [@(card.minimumDecksize) stringValue];
+            self.icon1.image = [ImageCache cardIcon];
             self.label2.text = [@(card.influenceLimit) stringValue];
-            self.icon1.image = nil;
-            self.icon2.image = nil;
+            self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)
             {
                 self.label3.text = [NSString stringWithFormat:@"%d", card.baseLink];
@@ -131,7 +131,7 @@
             
         case NRCardTypeAgenda:
             self.label1.text = [NSString stringWithFormat:@"%d", card.advancementCost];
-            self.icon1.image = [ImageCache creditIcon];
+            self.icon1.image = [ImageCache difficultyIcon];
             self.label2.text = [NSString stringWithFormat:@"%d", card.agendaPoints];
             self.icon2.image = [ImageCache apIcon];
             self.label3.text = @"";

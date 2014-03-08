@@ -26,5 +26,8 @@ typedef void (^ErrorCompletionBlock)(Card* card, NSInteger statusCode, UIImage* 
 +(UIImage*) muIcon;
 +(UIImage*) apIcon;
 +(UIImage*) linkIcon;
++(UIImage*) cardIcon;
++(UIImage*) difficultyIcon;
++(UIImage*) influenceIcon;
 
 @end
