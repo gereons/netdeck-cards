@@ -40,7 +40,7 @@
 "About" = "Infos";
 
 // about
-"About NRDB v%@" = "Über NRDB v%@";
+"About Net Deck v%@" = "Über Net Deck v%@";
 
 // deck list
 "Save" = "Speichern";

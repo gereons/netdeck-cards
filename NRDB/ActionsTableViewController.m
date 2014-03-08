@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     self.lastSelection = -1;
     self.tableView.scrollEnabled = NO;
     
-    // self.title = NSLocalizedString(@"NRDB", nil);
+    self.title = l10n(@"Net Deck");
     
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];
