@@ -34,12 +34,26 @@ static ImageCache* instance;
 static UIImage* runnerPlaceholder;
 static UIImage* corpPlaceholder;
 
+static UIImage* trashIcon;
+static UIImage* strengthIcon;
+static UIImage* creditIcon;
+static UIImage* muIcon;
+static UIImage* apIcon;
+static UIImage* linkIcon;
+
 #define PLACEHOLDER(card)   (card.role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder)
 
 +(void) initialize
 {
     runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
     corpPlaceholder = [UIImage imageNamed:@"CorpPlaceholder"];
+    
+    trashIcon = [UIImage imageNamed:@"trashicon"];
+    strengthIcon = [UIImage imageNamed:@"strengthicon"];
+    creditIcon = [UIImage imageNamed:@"crediticon"];
+    muIcon = [UIImage imageNamed:@"memicon"];
+    apIcon = [UIImage imageNamed:@"pointsicon"];
+    linkIcon = [UIImage imageNamed:@"linkicon"];
 }
 
 +(ImageCache*) sharedInstance
@@ -234,6 +248,15 @@ static UIImage* corpPlaceholder;
     [dict setObject:[NSDate dateWithTimeIntervalSinceReferenceDate:nextCheck] forKey:key];
     [settings setObject:dict forKey:NEXT_CHECK];
 }
+
+#pragma mark icon/image access
+
++(UIImage*) trashIcon { return trashIcon; }
++(UIImage*) strengthIcon { return strengthIcon; }
++(UIImage*) creditIcon { return creditIcon; }
++(UIImage*) muIcon { return muIcon; }
++(UIImage*) apIcon { return apIcon; }
++(UIImage*) linkIcon { return linkIcon; }
 
 @end
 

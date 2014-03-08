@@ -57,13 +57,6 @@
 "Deck needs cards." = "Das Deck hat keine Karten";
 "Cards up to %@" = "Karten bis zu %@";
 
-"%d Cr" = "%d Cr";
-"%d Str" = "%d St";
-"%d MU" = "%d SE";
-"%d Adv" = "%d Adv";
-"%d AP" = "%d AP";
-"%d Tr" = "%d Tr";
-
 // deck invalidity reasons
 "No Identity" = "Keine Identität";
 "AP must be %d or %d" = "Nur %d oder %d AP erlaubt";

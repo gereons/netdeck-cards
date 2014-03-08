@@ -20,4 +20,11 @@ typedef void (^ErrorCompletionBlock)(Card* card, NSInteger statusCode, UIImage* 
 -(void) getImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock;
 -(void) getImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock forced:(BOOL)forced;
 
++(UIImage*) trashIcon;
++(UIImage*) strengthIcon;
++(UIImage*) creditIcon;
++(UIImage*) muIcon;
++(UIImage*) apIcon;
++(UIImage*) linkIcon;
+
 @end
