@@ -15,9 +15,8 @@
 
 // calculate the binominal coefficient (n over k)
 
-+(unsigned long long) coefficientWithN:(int)n over:(int)k
++(unsigned long long) coefficientWithN:(NSUInteger)n over:(NSUInteger)k
 {
-    NSAssert(n>=0 && k>=0, @"negative");
     if (k == 0)
     {
         return 1;
@@ -47,7 +46,7 @@
 
 @implementation Hypergeometric
 
-+(double) getProbabilityFor:(int)desiredCards cardsInDeck:(int)cardsInDeck desiredCardsInDeck:(int)desiredCardsInDeck cardsDrawn:(int)cardsDrawn
++(double) getProbabilityFor:(NSUInteger)desiredCards cardsInDeck:(NSUInteger)cardsInDeck desiredCardsInDeck:(NSUInteger)desiredCardsInDeck cardsDrawn:(NSUInteger)cardsDrawn
 {
     double r = 0;
     
@@ -58,7 +57,7 @@
     return r;
 }
 
-+(double) get:(int)desiredCards cardsInDeck:(int)cardsInDeck desiredCardsInDeck:(int)desiredCardsInDeck cardsDrawn:(int)cardsDrawn
++(double) get:(NSUInteger)desiredCards cardsInDeck:(NSUInteger)cardsInDeck desiredCardsInDeck:(NSUInteger)desiredCardsInDeck cardsDrawn:(NSUInteger)cardsDrawn
 {
     if (desiredCards==0 || cardsInDeck==0 || desiredCardsInDeck==0 || cardsDrawn==0)
     {

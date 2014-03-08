@@ -39,8 +39,8 @@
     self.name.textColor = [UIColor blackColor];
     if ([card.setCode isEqualToString:@"core"])
     {
-        int cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
-        int owned = cores * card.quantity;
+        NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
+        NSInteger owned = cores * card.quantity;
         
         if (owned < cc.count)
         {

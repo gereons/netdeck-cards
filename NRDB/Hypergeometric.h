@@ -10,6 +10,6 @@
 
 @interface Hypergeometric : NSObject
 
-+(double) getProbabilityFor:(int)desiredCards cardsInDeck:(int)cardsInDeck desiredCardsInDeck:(int)desiredCardsInDeck cardsDrawn:(int)cardsDrawn;
++(double) getProbabilityFor:(NSUInteger)desiredCards cardsInDeck:(NSUInteger)cardsInDeck desiredCardsInDeck:(NSUInteger)desiredCardsInDeck cardsDrawn:(NSUInteger)cardsDrawn;
 
 @end
