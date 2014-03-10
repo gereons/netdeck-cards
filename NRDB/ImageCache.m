@@ -51,15 +51,15 @@ static UIImage* strengthIcon;
     runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
     corpPlaceholder = [UIImage imageNamed:@"CorpPlaceholder"];
     
-    trashIcon = [UIImage imageNamed:@"trashicon"];
-    strengthIcon = [UIImage imageNamed:@"strengthicon"];
-    creditIcon = [UIImage imageNamed:@"crediticon"];
-    muIcon = [UIImage imageNamed:@"memicon"];
-    apIcon = [UIImage imageNamed:@"pointsicon"];
-    linkIcon = [UIImage imageNamed:@"linkicon"];
-    cardIcon = [UIImage imageNamed:@"cardicon"];
-    difficultyIcon = [UIImage imageNamed:@"difficultyicon"];
-    influenceIcon = [UIImage imageNamed:@"influenceicon"];
+    trashIcon = [UIImage imageNamed:@"trashicon_round"];
+    strengthIcon = [UIImage imageNamed:@"strengthicon_round"];
+    creditIcon = [UIImage imageNamed:@"crediticon_round"];
+    muIcon = [UIImage imageNamed:@"memicon_round"];
+    apIcon = [UIImage imageNamed:@"pointsicon_round"];
+    linkIcon = [UIImage imageNamed:@"linkicon_round"];
+    cardIcon = [UIImage imageNamed:@"cardicon_round"];
+    difficultyIcon = [UIImage imageNamed:@"difficultyicon_round"];
+    influenceIcon = [UIImage imageNamed:@"influenceicon_round"];
 }
 
 +(ImageCache*) sharedInstance

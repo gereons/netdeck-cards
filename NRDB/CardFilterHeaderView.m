@@ -14,6 +14,7 @@
 #import "CardData.h"
 #import "Notifications.h"
 #import "CardFilterPopover.h"
+#import "ImageCache.h"
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
@@ -59,6 +60,12 @@ static NSArray* scopes;
     self.strengthSlider.maximumValue = 1+[CardData maxStrength];
     self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
     self.apSlider.maximumValue = [CardData maxAgendaPoints]; // NB: no +1 here!
+    
+    [self.costSlider setThumbImage:[ImageCache creditIcon] forState:UIControlStateNormal];
+    [self.muSlider setThumbImage:[ImageCache muIcon] forState:UIControlStateNormal];
+    [self.strengthSlider setThumbImage:[ImageCache strengthIcon] forState:UIControlStateNormal];
+    [self.influenceSlider setThumbImage:[ImageCache influenceIcon] forState:UIControlStateNormal];
+    [self.apSlider setThumbImage:[ImageCache apIcon] forState:UIControlStateNormal];
     
     self.searchLabel.text = l10n(@"Search in:");
     self.searchField.placeholder = l10n(@"Search Cards");

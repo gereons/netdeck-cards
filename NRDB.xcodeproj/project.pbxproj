@@ -62,6 +62,24 @@
 		3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AF0E51899C12500227C25 /* NRNavigationController.m */; };
 		3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71C9C7185CC4E200D66A27 /* CardSets.m */; };
 		3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A721DC0189CFA64004EFDFE /* DeckImport.m */; };
+		3A721E7818CE3FD900799097 /* trashicon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6618CE3FD900799097 /* trashicon_round@2x.png */; };
+		3A721E7918CE3FD900799097 /* trashicon_round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6718CE3FD900799097 /* trashicon_round.png */; };
+		3A721E7A18CE3FD900799097 /* strengthicon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6818CE3FD900799097 /* strengthicon_round@2x.png */; };
+		3A721E7B18CE3FD900799097 /* strengthicon_round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6918CE3FD900799097 /* strengthicon_round.png */; };
+		3A721E7C18CE3FD900799097 /* pointsicon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6A18CE3FD900799097 /* pointsicon_round@2x.png */; };
+		3A721E7D18CE3FD900799097 /* pointsicon_round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6B18CE3FD900799097 /* pointsicon_round.png */; };
+		3A721E7E18CE3FD900799097 /* memicon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6C18CE3FD900799097 /* memicon_round@2x.png */; };
+		3A721E7F18CE3FD900799097 /* memicon_round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6D18CE3FD900799097 /* memicon_round.png */; };
+		3A721E8018CE3FD900799097 /* linkicon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6E18CE3FD900799097 /* linkicon_round@2x.png */; };
+		3A721E8118CE3FD900799097 /* linkicon_round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E6F18CE3FD900799097 /* linkicon_round.png */; };
+		3A721E8218CE3FD900799097 /* influenceicon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E7018CE3FD900799097 /* influenceicon_round@2x.png */; };
+		3A721E8318CE3FD900799097 /* influenceicon_round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E7118CE3FD900799097 /* influenceicon_round.png */; };
+		3A721E8418CE3FD900799097 /* difficultyicon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E7218CE3FD900799097 /* difficultyicon_round@2x.png */; };
+		3A721E8518CE3FD900799097 /* difficultyicon_round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E7318CE3FD900799097 /* difficultyicon_round.png */; };
+		3A721E8618CE3FD900799097 /* crediticon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E7418CE3FD900799097 /* crediticon_round@2x.png */; };
+		3A721E8718CE3FD900799097 /* crediticon_round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E7518CE3FD900799097 /* crediticon_round.png */; };
+		3A721E8818CE3FD900799097 /* cardicon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E7618CE3FD900799097 /* cardicon_round@2x.png */; };
+		3A721E8918CE3FD900799097 /* cardicon_round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A721E7718CE3FD900799097 /* cardicon_round.png */; };
 		3A76EEBF18B5DA68004DB586 /* CorpPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */; };
 		3A76EEC018B5DA68004DB586 /* RunnerPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EEBE18B5DA68004DB586 /* RunnerPlaceholder.png */; };
 		3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B0188172C100F0926F /* CardImageCell.xib */; };
@@ -251,6 +269,24 @@
 		3A71C9C7185CC4E200D66A27 /* CardSets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardSets.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A721DBF189CFA64004EFDFE /* DeckImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckImport.h; sourceTree = "<group>"; };
 		3A721DC0189CFA64004EFDFE /* DeckImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckImport.m; sourceTree = "<group>"; };
+		3A721E6618CE3FD900799097 /* trashicon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trashicon_round@2x.png"; sourceTree = "<group>"; };
+		3A721E6718CE3FD900799097 /* trashicon_round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trashicon_round.png; sourceTree = "<group>"; };
+		3A721E6818CE3FD900799097 /* strengthicon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "strengthicon_round@2x.png"; sourceTree = "<group>"; };
+		3A721E6918CE3FD900799097 /* strengthicon_round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = strengthicon_round.png; sourceTree = "<group>"; };
+		3A721E6A18CE3FD900799097 /* pointsicon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pointsicon_round@2x.png"; sourceTree = "<group>"; };
+		3A721E6B18CE3FD900799097 /* pointsicon_round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointsicon_round.png; sourceTree = "<group>"; };
+		3A721E6C18CE3FD900799097 /* memicon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "memicon_round@2x.png"; sourceTree = "<group>"; };
+		3A721E6D18CE3FD900799097 /* memicon_round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = memicon_round.png; sourceTree = "<group>"; };
+		3A721E6E18CE3FD900799097 /* linkicon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "linkicon_round@2x.png"; sourceTree = "<group>"; };
+		3A721E6F18CE3FD900799097 /* linkicon_round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = linkicon_round.png; sourceTree = "<group>"; };
+		3A721E7018CE3FD900799097 /* influenceicon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "influenceicon_round@2x.png"; sourceTree = "<group>"; };
+		3A721E7118CE3FD900799097 /* influenceicon_round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = influenceicon_round.png; sourceTree = "<group>"; };
+		3A721E7218CE3FD900799097 /* difficultyicon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "difficultyicon_round@2x.png"; sourceTree = "<group>"; };
+		3A721E7318CE3FD900799097 /* difficultyicon_round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = difficultyicon_round.png; sourceTree = "<group>"; };
+		3A721E7418CE3FD900799097 /* crediticon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crediticon_round@2x.png"; sourceTree = "<group>"; };
+		3A721E7518CE3FD900799097 /* crediticon_round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crediticon_round.png; sourceTree = "<group>"; };
+		3A721E7618CE3FD900799097 /* cardicon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardicon_round@2x.png"; sourceTree = "<group>"; };
+		3A721E7718CE3FD900799097 /* cardicon_round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardicon_round.png; sourceTree = "<group>"; };
 		3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CorpPlaceholder.png; sourceTree = "<group>"; };
 		3A76EEBE18B5DA68004DB586 /* RunnerPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RunnerPlaceholder.png; sourceTree = "<group>"; };
 		3A7FD6B0188172C100F0926F /* CardImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageCell.xib; sourceTree = "<group>"; };
@@ -601,6 +637,28 @@
 		3A6AF0D71899BB3B00227C25 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				3A721E6518CE3FCB00799097 /* round */,
+				3A721E6418CE3FBF00799097 /* flat */,
+				3A386270188514AE00F5630B /* 743-printer.png */,
+				3A386271188514AE00F5630B /* 743-printer@2x.png */,
+				3A9E7C4E1884941200A507C3 /* 702-share.png */,
+				3A9E7C4F1884941200A507C3 /* 702-share@2x.png */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		3A721DBE189CFA3A004EFDFE /* Deck Import */ = {
+			isa = PBXGroup;
+			children = (
+				3A721DBF189CFA64004EFDFE /* DeckImport.h */,
+				3A721DC0189CFA64004EFDFE /* DeckImport.m */,
+			);
+			name = "Deck Import";
+			sourceTree = "<group>";
+		};
+		3A721E6418CE3FBF00799097 /* flat */ = {
+			isa = PBXGroup;
+			children = (
 				3AEC4A2118CB14E5001EE648 /* cardicon.png */,
 				3AEC4A2218CB14E5001EE648 /* cardicon@2x.png */,
 				3AEC4A2318CB14E5001EE648 /* crediticon.png */,
@@ -625,21 +683,33 @@
 				3A6AF0DB1899BB3B00227C25 /* listviewicon@2x.png */,
 				3A6AF0DC1899BB3B00227C25 /* tableviewicon.png */,
 				3A6AF0DD1899BB3B00227C25 /* tableviewicon@2x.png */,
-				3A386270188514AE00F5630B /* 743-printer.png */,
-				3A386271188514AE00F5630B /* 743-printer@2x.png */,
-				3A9E7C4E1884941200A507C3 /* 702-share.png */,
-				3A9E7C4F1884941200A507C3 /* 702-share@2x.png */,
 			);
-			path = Icons;
+			name = flat;
 			sourceTree = "<group>";
 		};
-		3A721DBE189CFA3A004EFDFE /* Deck Import */ = {
+		3A721E6518CE3FCB00799097 /* round */ = {
 			isa = PBXGroup;
 			children = (
-				3A721DBF189CFA64004EFDFE /* DeckImport.h */,
-				3A721DC0189CFA64004EFDFE /* DeckImport.m */,
+				3A721E6618CE3FD900799097 /* trashicon_round@2x.png */,
+				3A721E6718CE3FD900799097 /* trashicon_round.png */,
+				3A721E6818CE3FD900799097 /* strengthicon_round@2x.png */,
+				3A721E6918CE3FD900799097 /* strengthicon_round.png */,
+				3A721E6A18CE3FD900799097 /* pointsicon_round@2x.png */,
+				3A721E6B18CE3FD900799097 /* pointsicon_round.png */,
+				3A721E6C18CE3FD900799097 /* memicon_round@2x.png */,
+				3A721E6D18CE3FD900799097 /* memicon_round.png */,
+				3A721E6E18CE3FD900799097 /* linkicon_round@2x.png */,
+				3A721E6F18CE3FD900799097 /* linkicon_round.png */,
+				3A721E7018CE3FD900799097 /* influenceicon_round@2x.png */,
+				3A721E7118CE3FD900799097 /* influenceicon_round.png */,
+				3A721E7218CE3FD900799097 /* difficultyicon_round@2x.png */,
+				3A721E7318CE3FD900799097 /* difficultyicon_round.png */,
+				3A721E7418CE3FD900799097 /* crediticon_round@2x.png */,
+				3A721E7518CE3FD900799097 /* crediticon_round.png */,
+				3A721E7618CE3FD900799097 /* cardicon_round@2x.png */,
+				3A721E7718CE3FD900799097 /* cardicon_round.png */,
 			);
-			name = "Deck Import";
+			name = round;
 			sourceTree = "<group>";
 		};
 		3A76EEBC18B5DA68004DB586 /* Images */ = {
@@ -945,34 +1015,47 @@
 			files = (
 				3AEC4A4218CB14E5001EE648 /* strengthicon@2x.png in Resources */,
 				3A6AF0E21899BB3B00227C25 /* tableviewicon.png in Resources */,
+				3A721E8418CE3FD900799097 /* difficultyicon_round@2x.png in Resources */,
 				3A6AF0DE1899BB3B00227C25 /* cardviewicon.png in Resources */,
 				3A9E7C501884941200A507C3 /* 702-share.png in Resources */,
 				3AEC4A4118CB14E5001EE648 /* strengthicon.png in Resources */,
 				3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */,
+				3A721E7B18CE3FD900799097 /* strengthicon_round.png in Resources */,
 				3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */,
 				3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */,
 				3AEC4A4018CB14E5001EE648 /* pointsicon@2x.png in Resources */,
 				3AEC4A3618CB14E5001EE648 /* crediticon@2x.png in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
+				3A721E8818CE3FD900799097 /* cardicon_round@2x.png in Resources */,
+				3A721E8018CE3FD900799097 /* linkicon_round@2x.png in Resources */,
 				3A6AF0E11899BB3B00227C25 /* listviewicon@2x.png in Resources */,
+				3A721E7918CE3FD900799097 /* trashicon_round.png in Resources */,
+				3A721E8318CE3FD900799097 /* influenceicon_round.png in Resources */,
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
 				3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
 				3AEC4A3718CB14E5001EE648 /* difficultyicon.png in Resources */,
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
+				3A721E7D18CE3FD900799097 /* pointsicon_round.png in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
+				3A721E8218CE3FD900799097 /* influenceicon_round@2x.png in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,
 				3ACCEE251869B10700CC3537 /* CardFilterHeaderView.xib in Resources */,
 				3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */,
 				3AEC4A3A18CB14E5001EE648 /* influenceicon@2x.png in Resources */,
+				3A721E8518CE3FD900799097 /* difficultyicon_round.png in Resources */,
 				3AEC4A3318CB14E5001EE648 /* cardicon.png in Resources */,
+				3A721E7F18CE3FD900799097 /* memicon_round.png in Resources */,
 				3AB1B2341872ECA000F6AE45 /* FilteredCardViewController.xib in Resources */,
 				3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */,
 				3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */,
 				3A85327E185509B000507B9A /* SettingsViewController.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
+				3A721E8918CE3FD900799097 /* cardicon_round.png in Resources */,
+				3A721E7E18CE3FD900799097 /* memicon_round@2x.png in Resources */,
 				3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */,
+				3A721E8618CE3FD900799097 /* crediticon_round@2x.png in Resources */,
 				3AEC4A3C18CB14E5001EE648 /* linkicon@2x.png in Resources */,
 				3A5BC3F4184945A800E792F7 /* TODOs in Resources */,
 				3A6AF0DF1899BB3B00227C25 /* cardviewicon@2x.png in Resources */,
@@ -984,6 +1067,7 @@
 				3AEC4A3918CB14E5001EE648 /* influenceicon.png in Resources */,
 				3AEC4A3418CB14E5001EE648 /* cardicon@2x.png in Resources */,
 				3AEC4A3818CB14E5001EE648 /* difficultyicon@2x.png in Resources */,
+				3A721E8118CE3FD900799097 /* linkicon_round.png in Resources */,
 				3AEC4A3D18CB14E5001EE648 /* memicon.png in Resources */,
 				3AEC4A3E18CB14E5001EE648 /* memicon@2x.png in Resources */,
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
@@ -993,14 +1077,18 @@
 				3AEC4A3F18CB14E5001EE648 /* pointsicon.png in Resources */,
 				3AEC4A3518CB14E5001EE648 /* crediticon.png in Resources */,
 				3A9E7C511884941200A507C3 /* 702-share@2x.png in Resources */,
+				3A721E8718CE3FD900799097 /* crediticon_round.png in Resources */,
 				3A76EEBF18B5DA68004DB586 /* CorpPlaceholder.png in Resources */,
 				3ADC17371856632500FA2DF7 /* CardEditorViewController.xib in Resources */,
+				3A721E7A18CE3FD900799097 /* strengthicon_round@2x.png in Resources */,
 				3A6AF0E01899BB3B00227C25 /* listviewicon.png in Resources */,
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
 				3AEC4A3B18CB14E5001EE648 /* linkicon.png in Resources */,
 				3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */,
+				3A721E7C18CE3FD900799097 /* pointsicon_round@2x.png in Resources */,
 				3ADE909C187741AF006E187F /* SavedDecksViewController.xib in Resources */,
+				3A721E7818CE3FD900799097 /* trashicon_round@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
