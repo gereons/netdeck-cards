@@ -42,15 +42,16 @@
         [reasons addObject:l10n(@"No Identity")];
     }
     
-    if (self.size < self.identity.minimumDecksize)
-    {
-        [reasons addObject:l10n(@"Not enough cards")];
-    }
     if (self.influence > self.identity.influenceLimit)
     {
         [reasons addObject:l10n(@"Too much influence used")];
     }
-
+    
+    if (self.size < self.identity.minimumDecksize)
+    {
+        [reasons addObject:l10n(@"Not enough cards")];
+    }
+    
     if (self.identity.role == NRRoleCorp)
     {
         // check agenda points
