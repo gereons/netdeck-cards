@@ -103,6 +103,17 @@ static NSMutableArray* allCorpIdentities;
     }];
 }
 
++(NSArray*) altCards
+{
+    NSMutableArray* altCards = [NSMutableArray array];
+    for (CardData* cd in [CardData altCards])
+    {
+        Card* card = [[Card alloc] initWithData:cd];
+        [altCards addObject:card];
+    }
+    return altCards;
+}
+
 +(NSArray*) allForRole:(NRRole)role
 {
     NSMutableArray* arr;
@@ -227,6 +238,17 @@ static NSMutableArray* allCorpIdentities;
 -(NSString*) octgnCode
 {
     return [NSString stringWithFormat:@"bc0f047c-01b1-427f-a439-d451eda%@", self.code];
+}
+
+-(Card*) altCard
+{
+    CardData* alt = [CardData altFor:self.name];
+    if (alt)
+    {
+        Card* card = [[Card alloc] initWithData:alt];
+        return card;
+    }
+    return nil;
 }
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]

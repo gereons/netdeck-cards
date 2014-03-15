@@ -13,6 +13,7 @@
 @interface CardImageViewPopover ()
 
 @property Card* card;
+@property BOOL showAlt;
 
 @end
 
@@ -53,6 +54,7 @@ static UIPopoverController* popover;
     if (self)
     {
         self.card = card;
+        self.showAlt = NO;
     }
     return self;
 }
@@ -66,24 +68,37 @@ static UIPopoverController* popover;
     imgTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:imgTap];
     
-    [self.activityIndicator startAnimating];
-    [[ImageCache sharedInstance] getImageFor:self.card
-                                     success:^(Card* card, UIImage* image) {
-                                         [self.activityIndicator stopAnimating];
-                                         self.imageView.image = image;
-                                     }
-                                     failure:^(Card* card, NSInteger statusCode, UIImage* placeholder) {
-                                        [self.activityIndicator stopAnimating];
-                                         self.imageView.image = placeholder;
-                                     }];
+    [self loadCardImage:self.card];
 }
 
 -(void) imgTap:(UITapGestureRecognizer*)sender
 {
     if (UIGestureRecognizerStateEnded == sender.state)
     {
-        [CardImageViewPopover dismiss];
+        self.showAlt = !self.showAlt;
+        Card* altCard = self.card.altCard;
+        
+        if (altCard)
+        {
+            Card* card = self.showAlt ? altCard : self.card;
+            [self loadCardImage:card];
+        }
     }
+}
+
+-(void) loadCardImage:(Card*)card
+{
+    [self.activityIndicator startAnimating];
+    [[ImageCache sharedInstance] getImageFor:card
+                                     success:^(Card* card, UIImage* image) {
+                                         [self.activityIndicator stopAnimating];
+                                         self.imageView.image = image;
+                                     }
+                                     failure:^(Card* card, UIImage* placeholder) {
+                                         [self.activityIndicator stopAnimating];
+                                         self.imageView.image = placeholder;
+                                     }];
+
 }
 
 @end

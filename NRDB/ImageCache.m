@@ -19,7 +19,7 @@
 #define SUCCESS_INTERVAL    (30*SEC_PER_DAY)
 #define ERROR_INTERVAL      (1*SEC_PER_DAY)
 
-#define NETWORK_LOG         0
+#define NETWORK_LOG         1
 
 #if NETWORK_LOG
 #define NLOG(fmt, ...)      do { NSLog(fmt, ##__VA_ARGS__); } while(0)
@@ -82,12 +82,12 @@ static UIImage* strengthIcon;
     [[TMCache sharedCache] removeAllObjects];
 }
 
--(void) getImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock
+-(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock
 {
     [self getImageFor:card success:successBlock failure:failureBlock forced:NO];
 }
 
--(void) getImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock forced:(BOOL)forced
+-(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock forced:(BOOL)forced
 {
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
@@ -117,7 +117,7 @@ static UIImage* strengthIcon;
     }
 }
 
--(void) downloadImageFor:(Card *)card withKey:(NSString*)key success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock
+-(void) downloadImageFor:(Card *)card withKey:(NSString*)key success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock
 {
     NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
     
@@ -141,13 +141,15 @@ static UIImage* strengthIcon;
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // download failed
+#if NETWORK_LOG
              NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
              NLOG(@"GET %@: error %d", url, response.statusCode);
+#endif
              
              // invoke callback
              if (failureBlock)
              {
-                 failureBlock(card, response.statusCode, PLACEHOLDER(card));
+                 failureBlock(card, PLACEHOLDER(card));
                  
                  [self storeInCache:PLACEHOLDER(card) lastModified:nil forKey:key];
              }

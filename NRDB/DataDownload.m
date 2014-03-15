@@ -24,7 +24,7 @@
 
 @property UIAlertView* alert;
 @property UIProgressView* progressView;
-@property NSArray* cards;
+@property NSMutableArray* cards;
 @end
 
 @implementation DataDownload
@@ -126,7 +126,8 @@ static DataDownload* instance;
     self.downloadStopped = NO;
     self.downloadErrors = 0;
     
-    self.cards = [Card allCards];
+    self.cards = [[Card allCards] mutableCopy];
+    [self.cards addObjectsFromArray:[Card altCards]];
     
     [self downloadImageForCard:@(0)];
     
@@ -148,7 +149,7 @@ static DataDownload* instance;
         [[ImageCache sharedInstance] getImageFor:card success:^(Card* card, UIImage* image) {
             [self downloadNextImage:i+1];
         }
-        failure:^(Card* card, NSInteger statusCode, UIImage* placeholder) {
+        failure:^(Card* card, UIImage* placeholder) {
             ++self.downloadErrors;
             [self downloadNextImage:i+1];
         }

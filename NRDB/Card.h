@@ -45,6 +45,7 @@
 @property (readonly) NSString* artist;
 @property (readonly) BOOL unique;
 @property (readonly) NSString* imageSrc;
+@property (readonly) Card* altCard;
 @property (readonly) NSString* url;
 
 @property (readonly) NSString* detailText;
@@ -59,6 +60,7 @@
 @property (readonly) int maxCopies;
 
 +(NSArray*) allCards;
++(NSArray*) altCards;
 +(NSArray*) allForRole:(NRRole)role;
 +(NSArray*) identitiesForRole:(NRRole)role;
 

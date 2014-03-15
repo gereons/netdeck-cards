@@ -29,6 +29,8 @@ static NSArray* subtypeCodes;   // array of array
 static NSMutableArray* sortedIdentities;
 
 static NSMutableDictionary* allCards;   // code -> card
+static NSMutableDictionary* altCards;   // name -> card (!)
+static NSMutableDictionary* altCardMap; // code -> code
 static NSMutableArray* allRunnerCards;
 static NSMutableArray* allCorpCards;
 static NSMutableArray* allIdentities;
@@ -51,6 +53,8 @@ NSString* const kANY = @"Any";
 +(void) resetData
 {
     allCards = [NSMutableDictionary dictionary];
+    altCards = [NSMutableDictionary dictionary];
+    altCardMap = [NSMutableDictionary dictionary];
     
     allRunnerCards = [NSMutableArray array];
     allCorpCards = [NSMutableArray array];
@@ -147,6 +151,16 @@ NSString* const kANY = @"Any";
             }
         }
         
+        // build the card-to-altcard mapping
+        for (CardData* cd in [allCards allValues])
+        {
+            CardData* alt = [altCards objectForKey:cd.name];
+            if (alt)
+            {
+                [altCardMap setObject:alt.code forKey:cd.code];
+            }
+        }
+        
         [Faction initializeFactionNames:allCards];
         [CardSets initializeSetNames:allCards];
         [CardType initializeCardTypes:allCards];
@@ -183,11 +197,11 @@ NSString* const kANY = @"Any";
     if (c.type == NRCardTypeNone) NSLog(@"oops %@", json);
     
     JSON_STR(setCode, @"set_code");
-    if ([c.setCode isEqualToString:@"alt"] || [c.setCode isEqualToString:@"special"])
+    if ([c.setCode isEqualToString:@"special"])
     {
         return nil;
     }
-        
+    
     JSON_STR(setName, @"setname");
     [allSets addObject:c.setName];
 
@@ -277,6 +291,14 @@ NSString* const kANY = @"Any";
         c.maxCopies = 1;
     }
     
+    // if this is an alt card, store it separately
+    if ([c.setCode isEqualToString:@"alt"])
+    {
+        [altCards setObject:c forKey:c.name];
+        return nil;
+    }
+
+    
     return c;
 }
 
@@ -362,6 +384,11 @@ NSString* const kANY = @"Any";
     return [allCards objectForKey:code];
 }
 
++(CardData*)altFor:(NSString *)name
+{
+    return [altCards objectForKey:name];
+}
+
 +(NSArray*) allRunnerCards
 {
     return allRunnerCards;
@@ -370,6 +397,11 @@ NSString* const kANY = @"Any";
 +(NSArray*) allCorpCards
 {
     return allCorpCards;
+}
+
++(NSArray*) altCards
+{
+    return [altCards allValues];
 }
 
 +(BOOL) cardsAvailable

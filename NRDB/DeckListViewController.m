@@ -896,7 +896,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
                                              NSLog(@"got img %@ for %@", card.name, cell.card.name);
                                          }
                                      }
-                                     failure:^(Card* card, NSInteger statusCode, UIImage* placeholder) {
+                                     failure:^(Card* card, UIImage* placeholder) {
                                          [cell.activityIndicator stopAnimating];
                                          if ([cell.card isEqual:card])
                                          {
