@@ -9,13 +9,16 @@
 #import "InfluenceStats.h"
 #import "Deck.h"
 #import "Faction.h"
-
+@interface InfluenceStats()
+@property NSMutableDictionary* colors;
+@end
 @implementation InfluenceStats
 
 -(InfluenceStats*) initWithDeck:(Deck *)deck
 {
     if ((self = [super init]))
     {
+        self.colors = [NSMutableDictionary dictionary];
         // calculate influence distribution
         NSMutableDictionary* influence = [NSMutableDictionary dictionary];
         for (CardCounter* cc in deck.cards)
@@ -29,6 +32,8 @@
                 int prev = n == nil ? 0 : [n intValue];
                 n = @(prev + inf);
                 [influence setObject:n forKey:faction];
+                
+                [self.colors setObject:cc.card.factionColor forKey:faction];
             }
         }
         
@@ -46,7 +51,15 @@
 
 -(CPTGraphHostingView*) hostingView
 {
-    return [self hostingViewForDelegate:self identifier:@"Cost"];
+    return [self hostingViewForDelegate:self identifier:@"Influence"];
+}
+
+-(CPTFill *)sliceFillForPieChart:(CPTPieChart *)pieChart recordIndex:(NSUInteger)index
+{
+    NSString* faction = [self.tableData.sections objectAtIndex:index];
+    
+    UIColor* color = [self.colors objectForKey:faction];
+    return [CPTFill fillWithColor:[CPTColor colorWithCGColor:color.CGColor]];
 }
 
 #pragma mark - CPTPlotDataSource methods

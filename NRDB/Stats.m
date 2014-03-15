@@ -10,24 +10,37 @@
 
 @implementation Stats
 
+#define RGB_COLOR(R,G,B) [UIColor colorWithRed:(R/255.0) green:(G/255.0) blue:(B/255.0) alpha:.8]
+
+static NSArray* colors;
+
++(void) initialize
+{
+    colors = @[ RGB_COLOR(231,13,0),
+       RGB_COLOR(240,9,254),
+       RGB_COLOR(60,2,243),
+       RGB_COLOR(0,250,214),
+       RGB_COLOR(8,227,34),
+       RGB_COLOR(192,253,2),
+       RGB_COLOR(243,183,8),
+       RGB_COLOR(254,118,13),
+       RGB_COLOR(235,80,71),
+       RGB_COLOR(204,72,212),
+       RGB_COLOR(114,74,246),
+       RGB_COLOR(75,143,223),
+       RGB_COLOR(76,251,224),
+       RGB_COLOR(77,228,94),
+       RGB_COLOR(212,253,77),
+       RGB_COLOR(246,198,62),
+       RGB_COLOR(212,122,53) ];
+}
+
+
 -(CPTFill *)sliceFillForPieChart:(CPTPieChart *)pieChart recordIndex:(NSUInteger)index
 {
-    // 1626c4
-    UIColor* base = [UIColor colorWithRed:0x16/256.0 green:0x26/256.0 blue:0xc4/256.0 alpha:1];
-    CGFloat hue, brightness, saturation, alpha;
-    [base getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
-    
-    hue *= 360.0;
-    float step = 360.0 / self.tableData.sections.count;
-    for (int i=0; i<index; ++i)
-    {
-        hue += step;
-        if (hue > 360.0) hue -= 360.0;
-    }
-    
-    UIColor* col = [UIColor colorWithHue:hue/360.0 saturation:saturation brightness:brightness alpha:alpha];
-    
-    return [CPTFill fillWithColor:[CPTColor colorWithCGColor:col.CGColor]];
+    index = index % colors.count;
+    UIColor* color = [colors objectAtIndex:index];
+    return [CPTFill fillWithColor:[CPTColor colorWithCGColor:color.CGColor]];
 }
 
 -(CGFloat) height
