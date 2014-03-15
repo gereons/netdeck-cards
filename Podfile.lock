@@ -25,12 +25,12 @@ PODS:
     - DTFoundation/Core (~> 1.6.1)
     - DTFoundation/DTHTMLParser (~> 1.6.1)
     - DTFoundation/UIKit (~> 1.6.1)
-  - DTFoundation/Core (1.6.1)
-  - DTFoundation/DTHTMLParser (1.6.1):
+  - DTFoundation/Core (1.6.2)
+  - DTFoundation/DTHTMLParser (1.6.2):
     - DTFoundation/Core
-  - DTFoundation/UIKit (1.6.1):
+  - DTFoundation/UIKit (1.6.2):
     - DTFoundation/Core
-  - GRMustache (6.9.1):
+  - GRMustache (6.9.2):
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
   - ObjectiveSugar (1.1.0)
@@ -58,8 +58,8 @@ SPEC CHECKSUMS:
   CorePlot: 0c6cfe42f4cc458062dfd765d5b8f59a0d0fdddf
   Dropbox-Sync-API-SDK: 7f72642aa8ebb238397a7dcd45e619e78999e20d
   DTCoreText: 39e316024954ef7e86c7fbfb5f0eee991f7211f1
-  DTFoundation: 23d39b258d481221167cd4bf3df86ff3f22b1f55
-  GRMustache: 69ba0c15859e603e0dacb04e9af09ecefe7ecc9f
+  DTFoundation: 7c69990fa3cb7655cafa95ab59c3fcea014460f0
+  GRMustache: 292d60aaafbdab2844bc7af76d111b848c8807a0
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
   ObjectiveSugar: fed588577bcf9733546aeaa089de444e4bab9a52
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1

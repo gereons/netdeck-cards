@@ -21,6 +21,8 @@
 
 +(Deck*) parseClipboard
 {
+#warning check for netrunnerdb.com deck url also!
+    
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     
     NSInteger lastChange = [[NSUserDefaults standardUserDefaults] integerForKey:CLIP_CHANGE_COUNT];
