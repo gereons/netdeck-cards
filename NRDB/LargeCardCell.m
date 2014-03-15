@@ -25,9 +25,11 @@
 {
     self.pips = @[ self.pip1, self.pip2, self.pip3, self.pip4, self.pip5 ];
     
-    for (UIView*pip in self.pips)
+    static int diameter = 8;
+    for (UIView* pip in self.pips)
     {
-        pip.layer.cornerRadius = 6;
+        pip.frame = CGRectSetSize(pip.frame, diameter, diameter);
+        pip.layer.cornerRadius = diameter/2;
     }
 }
 
