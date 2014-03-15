@@ -23,6 +23,7 @@
 #import "Deck.h"
 #import "NRNavigationController.h"
 #import "DataDownload.h"
+#import "DeckManager.h"
 
 typedef NS_ENUM(NSInteger, NRMenuItem)
 {
@@ -208,6 +209,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSDictionary* userInfo = notification.userInfo;
     Deck* deck = [userInfo objectForKey:@"deck"];
     NRRole role = deck.identity.role;
+    
+    [DeckManager saveDeck:deck];
     
     FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role andDeck:deck];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");

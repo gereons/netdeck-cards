@@ -87,7 +87,10 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     if (self.deck.filename == nil)
     {
         NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
-        self.deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
+        if (self.deck.name == nil)
+        {
+            self.deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
+        }
         self.deckNameLabel.text = self.deck.name;
     }
     
