@@ -13,7 +13,7 @@
 
 extern NSString* const kANY;
 
-typedef NS_ENUM(int, NRCardType)
+typedef NS_ENUM(NSInteger, NRCardType)
 {
     NRCardTypeNone = -1,
     NRCardTypeIdentity,
@@ -32,14 +32,14 @@ typedef NS_ENUM(int, NRCardType)
     NRCardTypeProgram
 };
 
-typedef NS_ENUM(int, NRRole)
+typedef NS_ENUM(NSInteger, NRRole)
 {
     NRRoleNone = -1,
     NRRoleRunner,
     NRRoleCorp
 };
 
-typedef NS_ENUM(int, NRFaction)
+typedef NS_ENUM(NSInteger, NRFaction)
 {
     NRFactionNone = -1,
     NRFactionNeutral,
@@ -53,21 +53,21 @@ typedef NS_ENUM(int, NRFaction)
     NRFactionCriminal
 };
 
-typedef NS_ENUM(int, FieldType)
+typedef NS_ENUM(NSInteger, FieldType)
 {
     StringField,
     IntField,
     BooleanField
 };
 
-typedef NS_ENUM(int, NRSearchScope)
+typedef NS_ENUM(NSInteger, NRSearchScope)
 {
     NRSearchAll,
     NRSearchName,
     NRSearchText
 };
 
-typedef NS_ENUM(int, NRCycle)
+typedef NS_ENUM(NSInteger, NRCycle)
 {
     NRCycleNone = -1,
     NRCycleCoreDeluxe,

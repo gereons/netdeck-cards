@@ -516,7 +516,7 @@ NSString* const kANY = @"Any";
 }
 
 #define DECODE_OBJ(attr) self.attr = [decoder decodeObjectForKey:@#attr]
-#define DECODE_INT(attr) self.attr = [decoder decodeIntegerForKey:@#attr]
+#define DECODE_INT(attr) self.attr = [decoder decodeIntForKey:@#attr]
 
 -(id) initWithCoder:(NSCoder *)decoder
 {
