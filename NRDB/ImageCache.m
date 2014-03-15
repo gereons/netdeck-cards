@@ -46,20 +46,22 @@ static UIImage* strengthIcon;
 
 #define PLACEHOLDER(card)   (card.role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder)
 
+#define ROUND /* "_round" */
+
 +(void) initialize
 {
     runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
     corpPlaceholder = [UIImage imageNamed:@"CorpPlaceholder"];
     
-    trashIcon = [UIImage imageNamed:@"trashicon_round"];
-    strengthIcon = [UIImage imageNamed:@"strengthicon_round"];
-    creditIcon = [UIImage imageNamed:@"crediticon_round"];
-    muIcon = [UIImage imageNamed:@"memicon_round"];
-    apIcon = [UIImage imageNamed:@"pointsicon_round"];
-    linkIcon = [UIImage imageNamed:@"linkicon_round"];
-    cardIcon = [UIImage imageNamed:@"cardicon_round"];
-    difficultyIcon = [UIImage imageNamed:@"difficultyicon_round"];
-    influenceIcon = [UIImage imageNamed:@"influenceicon_round"];
+    trashIcon = [UIImage imageNamed:@"trashicon" ROUND];
+    strengthIcon = [UIImage imageNamed:@"strengthicon" ROUND];
+    creditIcon = [UIImage imageNamed:@"crediticon" ROUND];
+    muIcon = [UIImage imageNamed:@"memicon" ROUND];
+    apIcon = [UIImage imageNamed:@"pointsicon" ROUND];
+    linkIcon = [UIImage imageNamed:@"linkicon" ROUND];
+    cardIcon = [UIImage imageNamed:@"cardicon" ROUND];
+    difficultyIcon = [UIImage imageNamed:@"difficultyicon" ROUND];
+    influenceIcon = [UIImage imageNamed:@"influenceicon" ROUND];
 }
 
 +(ImageCache*) sharedInstance

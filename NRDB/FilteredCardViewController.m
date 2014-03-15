@@ -88,6 +88,8 @@
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
     [nc addObserver:self selector:@selector(deckLoaded:) name:DECK_LOADED object:nil];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -367,13 +369,16 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
     return NO;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section > self.cards.count)
+    {
+        return;
+    }
+    
     NSArray* cards = self.cards[indexPath.section];
     Card *card = cards[indexPath.row];
     
