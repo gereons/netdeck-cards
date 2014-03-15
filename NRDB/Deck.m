@@ -200,7 +200,7 @@
     }
 }
 
--(Deck*) copy
+-(Deck*) duplicate
 {
     Deck* newDeck = [Deck new];
     

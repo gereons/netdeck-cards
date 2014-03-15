@@ -45,9 +45,10 @@
 // deck list
 "Save" = "Speichern";
 "Saving..." = "Speichern...";
-"Copy" = "Kopieren";
+"Duplicate" = "Duplizieren";
+"Yes, switch to copy" = "Ja, zur Kopie wechseln";
+"Yes, but stay here" = "Ja, hier bleiben";
 "Identity" = "Identität";
-"Switch to %@?" = "Zu %@ wechseln?";
 "Enter name" = "Namen eingeben";
 "Deck name" = "Deck-Name";
 "Dropbox: Plain Text" = "Dropbox: Reiner Text";

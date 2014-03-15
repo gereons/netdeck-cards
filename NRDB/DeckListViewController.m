@@ -48,7 +48,6 @@
 @property CGFloat scale;
 @property BOOL largeCells;
 @property UIAlertView* nameAlert;
-@property Deck* copiedDeck;
 
 @end
 
@@ -121,7 +120,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         [[UIBarButtonItem alloc] initWithTitle:l10n(@"Identity") style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)],
         [[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)],
         self.saveButton,
-        [[UIBarButtonItem alloc] initWithTitle:l10n(@"Copy") style:UIBarButtonItemStylePlain target:self action:@selector(copyDeck:)],
+        [[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)],
         self.toggleViewButton
     ];
     self.saveButton.enabled = NO;
@@ -237,24 +236,15 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     [DrawSimulatorViewController showForDeck:self.deck inViewController:self];
 }
 
-#pragma mark copy deck
+#pragma mark duplicate deck
 
--(void) copyDeck:(id)sender
+-(void) duplicateDeck:(id)sender
 {
-    Deck* newDeck = [self.deck copy];
-    self.copiedDeck = newDeck;
-    
-    [DeckManager saveDeck:newDeck];
-    if (self.autoSaveDropbox)
-    {
-        if (newDeck.identity && newDeck.cards.count > 0)
-        {
-            [DeckExport asOctgn:newDeck autoSave:YES];
-        }
-    }
-    
-    NSString* msg = [NSString stringWithFormat:l10n(@"Switch to %@?"), newDeck.name];
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:self cancelButtonTitle:l10n(@"No") otherButtonTitles:l10n(@"Yes"), nil];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Duplicate this deck?")
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:l10n(@"No")
+                                          otherButtonTitles:l10n(@"Yes, switch to copy"), l10n(@"Yes, but stay here"), nil];
     alert.tag = SWITCH_ALERT;
     [alert show];
 }
@@ -294,25 +284,36 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    if (buttonIndex == alertView.cancelButtonIndex)
+    {
+        return;
+    }
+    
     if (alertView.tag == NAME_ALERT)
     {
-        if (buttonIndex == 1)
-        {
-            self.deck.name = [alertView textFieldAtIndex:0].text;
-            self.deckNameLabel.text = self.deck.name;
-            self.deckChanged = YES;
-            [self refresh];
-        }
+        self.deck.name = [alertView textFieldAtIndex:0].text;
+        self.deckNameLabel.text = self.deck.name;
+        self.deckChanged = YES;
+        [self refresh];
+        
         self.nameAlert = nil;
     }
     else if (alertView.tag == SWITCH_ALERT)
     {
+        Deck* newDeck = [self.deck duplicate];
+
+        [DeckManager saveDeck:newDeck];
+        if (self.autoSaveDropbox)
+        {
+            if (newDeck.identity && newDeck.cards.count > 0)
+            {
+                [DeckExport asOctgn:newDeck autoSave:YES];
+            }
+        }
+
         if (buttonIndex == 1)
         {
-            NSAssert(self.copiedDeck != nil, @"no copied deck");
-            self.deck = self.copiedDeck;
-            self.copiedDeck = nil;
-        
+            self.deck = newDeck;
             [self refresh];
         }
     }
@@ -497,6 +498,9 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     {
         self.saveButton.enabled = YES;
     }
+    
+    self.drawButton.enabled = self.deck.cards.count > 0;
+    self.analysisButton.enabled = self.deck.cards.count > 0;
     
     NSMutableString* footer = [NSMutableString string];
     [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];

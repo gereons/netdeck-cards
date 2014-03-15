@@ -34,7 +34,7 @@
 
 -(int) influenceFor:(CardCounter*)cc;
 
--(Deck*) copy;
+-(Deck*) duplicate;
 
 -(TableData*) dataForTableView;
 
