@@ -307,11 +307,14 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     }
     else if (alertView.tag == SWITCH_ALERT)
     {
-        NSAssert(self.copiedDeck != nil, @"no copied deck");
-        self.deck = self.copiedDeck;
-        self.copiedDeck = nil;
+        if (buttonIndex == 1)
+        {
+            NSAssert(self.copiedDeck != nil, @"no copied deck");
+            self.deck = self.copiedDeck;
+            self.copiedDeck = nil;
         
-        [self refresh];
+            [self refresh];
+        }
     }
     else
     {
