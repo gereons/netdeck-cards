@@ -54,7 +54,7 @@
     {
         r += [Hypergeometric get:desiredCards cardsInDeck:cardsInDeck desiredCardsInDeck:desiredCardsInDeck cardsDrawn:cardsDrawn];
     }
-    return r;
+    return MIN(r, 1.0);
 }
 
 +(double) get:(NSUInteger)desiredCards cardsInDeck:(NSUInteger)cardsInDeck desiredCardsInDeck:(NSUInteger)desiredCardsInDeck cardsDrawn:(NSUInteger)cardsDrawn
