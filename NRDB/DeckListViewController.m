@@ -41,6 +41,7 @@
 @property UIPrintInteractionController* printController;
 @property UIBarButtonItem* toggleViewButton;
 @property UIBarButtonItem* saveButton;
+@property UIBarButtonItem* exportButton;
 
 @property NSString* filename;
 @property BOOL autoSaveDropbox;
@@ -128,11 +129,9 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     ];
     self.saveButton.enabled = NO;
     
-    topItem.rightBarButtonItems = @[
-        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)],
-        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"743-printer"] style:UIBarButtonItemStylePlain target:self action:@selector(printDeck:)],
-    ];
-    
+    self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
+    topItem.rightBarButtonItem = self.exportButton;
+
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
     
@@ -379,6 +378,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: Markdown")];
     [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: Plain Text")];
     
+    [self.actionSheet addButtonWithTitle:l10n(@"Print")];
+    
     self.actionSheet.cancelButtonIndex = [self.actionSheet addButtonWithTitle:@""];
 
     [self.actionSheet showFromBarButtonItem:sender animated:NO];
@@ -443,6 +444,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
             pasteboard.string = [DeckExport asPlaintextString:self.deck];
             [DeckImport updateCount];
             break;
+        case 7: // print
+            [self printDeck:self.exportButton];
     }
 }
 
