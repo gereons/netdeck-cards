@@ -30,6 +30,7 @@
 -(void) addCard:(Card*)card;
 -(void) loadDeckFromFile:(NSString*) filename;
 -(void) saveDeck:(id)sender;
+-(void) selectIdentity:(id)sender;
 
 -(IBAction)analysisClicked:(id)sender;
 -(IBAction)drawSimulatorClicked:(id)sender;

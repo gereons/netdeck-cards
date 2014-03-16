@@ -31,6 +31,4 @@
 @property IBOutlet UIView* pip4;
 @property IBOutlet UIView* pip5;
 
-// -(IBAction)copiesChanged:(id)sender;
-
 @end

@@ -9,6 +9,7 @@
 #import "CardCell.h"
 #import "CardCounter.h"
 #import "Notifications.h"
+#import "DeckListViewController.h"
 
 @implementation CardCell
 
@@ -19,6 +20,16 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_LOADED object:self];
+}
+
+-(void) awakeFromNib
+{
+    [self.identityButton setTitle:l10n(@"Identity") forState:UIControlStateNormal];
+}
+
+-(void) selectIdentity:(id)sender
+{
+    [self.delegate selectIdentity:sender];
 }
 
 @end

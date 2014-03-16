@@ -19,6 +19,7 @@
     Card* card = cc.card;
     
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
+    self.identityButton.hidden = card.type != NRCardTypeIdentity;
     
     self.copiesStepper.maximumValue = cc.card.maxCopies;
     self.copiesStepper.value = cc.count;

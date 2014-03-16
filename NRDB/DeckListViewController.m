@@ -670,7 +670,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 {
     NSString* cellIdentifier = self.largeCells ? @"largeCardCell" : @"smallCardCell";
     CardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    
+    cell.delegate = self;
     cell.separatorInset = UIEdgeInsetsZero;
     
     NSArray* arr = self.cards[indexPath.section];

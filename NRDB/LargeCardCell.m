@@ -23,6 +23,8 @@
 
 -(void) awakeFromNib
 {
+    [super awakeFromNib];
+    
     self.pips = @[ self.pip1, self.pip2, self.pip3, self.pip4, self.pip5 ];
     
     static int diameter = 8;
@@ -97,6 +99,7 @@
     
     self.copiesLabel.hidden = card.type == NRCardTypeIdentity;
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
+    self.identityButton.hidden = card.type != NRCardTypeIdentity;
     
     // labels from top: cost/strength/mu
     switch (card.type)
