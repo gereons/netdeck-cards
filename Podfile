@@ -1,4 +1,4 @@
-platform :ios, '7.0'
+platform :ios, '7.1'
 inhibit_all_warnings!
 pod 'DTCoreText'
 pod 'TPKeyboardAvoiding'
