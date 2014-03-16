@@ -346,13 +346,13 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
        
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        UIButton* button = [UIButton buttonWithType:UIButtonTypeContactAdd];
         button.frame = CGRectMake(0, 0, 30, 30);
         cell.accessoryView = button;
         
         [cell.contentView addSubview:button];
         
-        [button addTarget:self action:@selector(showImage:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];
     }
 
     cell.textLabel.font = [UIFont systemFontOfSize:17];
@@ -382,13 +382,11 @@
     NSArray* cards = self.cards[indexPath.section];
     Card *card = cards[indexPath.row];
     
-    [self.deckListViewController addCard:card];
-    [self.tableView reloadData];
+    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
 }
 
-#pragma mark card popup
-
--(void) showImage:(UIButton*)sender
+- (void) addCardToDeck:(UIButton*)sender
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
@@ -396,8 +394,8 @@
     NSArray* cards = self.cards[indexPath.section];
     Card *card = cards[indexPath.row];
     
-    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-    // rect.origin.x = sender.frame.origin.x;
-    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
+    [self.deckListViewController addCard:card];
+    [self.tableView reloadData];
 }
+
 @end

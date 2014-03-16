@@ -151,7 +151,7 @@ static NSArray* scopes;
     }
     else
     {
-         data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
     }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     
