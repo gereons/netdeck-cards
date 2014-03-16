@@ -752,7 +752,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     CardCounter* cc;
     if (self.deck.identity && index == 0)
     {
-        return;
+        cc = [CardCounter initWithCard:self.deck.identity];
     }
     else
     {
@@ -817,7 +817,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         NSAssert(NO, @"selected invisible cell?!");
     }
     
-    [CardImagePopup showForCard:cc fromRect:popupOrigin inView:self.collectionView direction:direction];
+    CardImagePopup* cip = [CardImagePopup showForCard:cc fromRect:popupOrigin inView:self.collectionView direction:direction];
+    cip.cell = cell;
 }
 
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -883,27 +884,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     }
     cell.card = card;
     
-    [cell.activityIndicator startAnimating];
-    [[ImageCache sharedInstance] getImageFor:card
-                                     success:^(Card* card, UIImage* img) {
-                                         [cell.activityIndicator stopAnimating];
-                                         if ([cell.card isEqual:card])
-                                         {
-                                             cell.imageView.image = img;
-                                         }
-                                         else
-                                         {
-                                             NSLog(@"got img %@ for %@", card.name, cell.card.name);
-                                         }
-                                     }
-                                     failure:^(Card* card, UIImage* placeholder) {
-                                         [cell.activityIndicator stopAnimating];
-                                         if ([cell.card isEqual:card])
-                                         {
-                                             cell.imageView.image = placeholder;
-                                         }
-                                     }];
-
+    [cell loadImage:card];
+    
     return cell;
 }
 

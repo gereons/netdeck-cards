@@ -17,4 +17,7 @@
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
 @property IBOutlet UILabel* copiesLabel;
 
+-(void) toggleImage;
+-(void) loadImage:(Card*)card;
+
 @end

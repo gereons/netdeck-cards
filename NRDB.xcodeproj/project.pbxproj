@@ -115,6 +115,8 @@
 		3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB357D5186CC2010027D5FC /* IdentitySelectionViewController.xib */; };
 		3AB357DA186DC1E50027D5FC /* IdentityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */; };
 		3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */; };
+		3ABA9BD118D59C0400DF2216 /* 705-photos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABA9BCF18D59C0400DF2216 /* 705-photos@2x.png */; };
+		3ABA9BD218D59C0400DF2216 /* 705-photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABA9BD018D59C0400DF2216 /* 705-photos.png */; };
 		3ABDE5A418AFC52C00AFEA88 /* DrawSimulatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */; };
 		3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
@@ -338,6 +340,8 @@
 		3AB357D8186DC1E50027D5FC /* IdentityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IdentityViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IdentityViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCell.xib; sourceTree = "<group>"; };
+		3ABA9BCF18D59C0400DF2216 /* 705-photos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "705-photos@2x.png"; sourceTree = "<group>"; };
+		3ABA9BD018D59C0400DF2216 /* 705-photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "705-photos.png"; sourceTree = "<group>"; };
 		3ABDE5A118AFC52C00AFEA88 /* DrawSimulatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSimulatorViewController.h; sourceTree = "<group>"; };
 		3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSimulatorViewController.m; sourceTree = "<group>"; };
 		3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawSimulatorViewController.xib; sourceTree = "<group>"; };
@@ -643,6 +647,8 @@
 				3A386271188514AE00F5630B /* 743-printer@2x.png */,
 				3A9E7C4E1884941200A507C3 /* 702-share.png */,
 				3A9E7C4F1884941200A507C3 /* 702-share@2x.png */,
+				3ABA9BCF18D59C0400DF2216 /* 705-photos@2x.png */,
+				3ABA9BD018D59C0400DF2216 /* 705-photos.png */,
 			);
 			path = Icons;
 			sourceTree = "<group>";
@@ -1024,6 +1030,7 @@
 				3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */,
 				3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */,
 				3AEC4A4018CB14E5001EE648 /* pointsicon@2x.png in Resources */,
+				3ABA9BD218D59C0400DF2216 /* 705-photos.png in Resources */,
 				3AEC4A3618CB14E5001EE648 /* crediticon@2x.png in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
 				3A721E8818CE3FD900799097 /* cardicon_round@2x.png in Resources */,
@@ -1086,6 +1093,7 @@
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
 				3AEC4A3B18CB14E5001EE648 /* linkicon.png in Resources */,
 				3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */,
+				3ABA9BD118D59C0400DF2216 /* 705-photos@2x.png in Resources */,
 				3A721E7C18CE3FD900799097 /* pointsicon_round@2x.png in Resources */,
 				3ADE909C187741AF006E187F /* SavedDecksViewController.xib in Resources */,
 				3A721E7818CE3FD900799097 /* trashicon_round@2x.png in Resources */,

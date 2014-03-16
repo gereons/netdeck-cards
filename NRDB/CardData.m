@@ -286,7 +286,7 @@ NSString* const kANY = @"Any";
     if (c.agendaPoints > maxAgendaPoints) maxAgendaPoints = c.agendaPoints;
     
     c.maxCopies = 3;
-    if ([c.code isEqualToString:DIR_HAAS_PET_PROJ])
+    if ([c.code isEqualToString:DIR_HAAS_PET_PROJ] || c.type == NRCardTypeIdentity)
     {
         c.maxCopies = 1;
     }
