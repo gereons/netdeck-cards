@@ -152,6 +152,9 @@
 "%@ (%d Cards)" = "%@ (%d Karten)";
 "Deck imported" = "Deck importiert";
 "Detected a deck list in your clipboard. Import this deck?" = "Deckliste in der Zwischenablage gefunden. Soll dieses Deck importiert werden?";
+"Detected a deck list URL in your clipboard. Download and import this deck?" = "URL einer Deckliste in der Zwischenablage gefunden. Soll dieses Deck heruntergeladen und importiert werden?";
+"No Decks found" = "Keine Decks gefunden";
+"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Kopiere Decks im OCTGN-Format (.o8d) in den Order Apps/Net Deck in deiner Dropbox, um sie in die App importieren zu können.";
 
 // export
 "%@ exported" = "%@ exportiert";

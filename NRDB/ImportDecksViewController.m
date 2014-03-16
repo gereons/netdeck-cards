@@ -78,6 +78,22 @@
             }
         }
     }
+    
+    NSUInteger c = 0;
+    for (NSArray* arr in self.decks)
+    {
+        c += arr.count;
+    }
+    
+    if (c == 0)
+    {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Decks found")
+                                                        message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App.")
+                                                       delegate:nil
+                                              cancelButtonTitle:l10n(@"OK")
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
