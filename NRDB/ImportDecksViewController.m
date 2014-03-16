@@ -39,7 +39,31 @@
     // Do any additional setup after loading the view from its nib.
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self listFiles];
+    
+    // do the initial listing in the background, as it may block the ui thread
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        __strong __typeof__(weakSelf) strongSelf = weakSelf;
+        NSUInteger count = [strongSelf listFiles];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            __strong __typeof__(weakSelf) strongSelf = weakSelf;
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            if (count == 0)
+            {
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Decks found")
+                                                                message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App.")
+                                                               delegate:nil
+                                                      cancelButtonTitle:l10n(@"OK")
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+
+            [strongSelf.tableView reloadData];
+        });
+    });
     
     DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     DBPath* path = [DBPath root];
@@ -50,7 +74,7 @@
     }];
 }
 
--(void) listFiles
+-(NSUInteger) listFiles
 {
     self.deckNames = @[ [NSMutableArray array], [NSMutableArray array] ];
     self.decks = @[ [NSMutableArray array], [NSMutableArray array] ];
@@ -58,6 +82,8 @@
     DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     DBPath* path = [DBPath root];
     DBError* error;
+    
+    NSUInteger totalDecks = 0;
     for (DBFileInfo* fileInfo in [filesystem listFolder:path error:&error])
     {
         NSString* name = fileInfo.path.name;
@@ -75,25 +101,12 @@
                 NSString* filename = fileInfo.path.name;
                 [names addObject:[filename substringToIndex:textRange.location]];
                 [decks addObject:deck];
+                ++totalDecks;
             }
         }
     }
     
-    NSUInteger c = 0;
-    for (NSArray* arr in self.decks)
-    {
-        c += arr.count;
-    }
-    
-    if (c == 0)
-    {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Decks found")
-                                                        message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App.")
-                                                       delegate:nil
-                                              cancelButtonTitle:l10n(@"OK")
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
+    return totalDecks;
 }
 
 -(void) viewDidAppear:(BOOL)animated
