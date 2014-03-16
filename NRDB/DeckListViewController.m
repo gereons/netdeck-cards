@@ -166,7 +166,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     if (self.deck.cards.count > 0)
     {
         // so that FilteredCardViewController gets a chance to reload
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_LOADED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
     }
 }
 
