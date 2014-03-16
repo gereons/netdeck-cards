@@ -172,6 +172,7 @@ static DataDownload* instance;
     else
     {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
         [self.alert dismissWithClickedButtonIndex:0 animated:NO];
         if (self.downloadErrors > 0)

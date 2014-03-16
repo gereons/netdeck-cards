@@ -294,11 +294,13 @@ NSString* const kANY = @"Any";
     // if this is an alt card, store it separately
     if ([c.setCode isEqualToString:@"alt"])
     {
-        [altCards setObject:c forKey:c.name];
+        if (c.imageSrc.length > 0)
+        {
+            [altCards setObject:c forKey:c.name];
+        }
         return nil;
     }
 
-    
     return c;
 }
 

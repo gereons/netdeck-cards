@@ -19,7 +19,7 @@
 #define SUCCESS_INTERVAL    (30*SEC_PER_DAY)
 #define ERROR_INTERVAL      (1*SEC_PER_DAY)
 
-#define NETWORK_LOG         1
+#define NETWORK_LOG         (DEBUG && 0)
 
 #if NETWORK_LOG
 #define NLOG(fmt, ...)      do { NSLog(fmt, ##__VA_ARGS__); } while(0)
@@ -62,6 +62,16 @@ static UIImage* strengthIcon;
     cardIcon = [UIImage imageNamed:@"cardicon" ROUND];
     difficultyIcon = [UIImage imageNamed:@"difficultyicon" ROUND];
     influenceIcon = [UIImage imageNamed:@"influenceicon" ROUND];
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    if ([settings objectForKey:LAST_MOD_CACHE] == nil)
+    {
+        [settings setObject:@{} forKey:LAST_MOD_CACHE];
+    }
+    if ([settings objectForKey:NEXT_CHECK] == nil)
+    {
+        [settings setObject:@{} forKey:NEXT_CHECK];
+    }
 }
 
 +(ImageCache*) sharedInstance
@@ -76,8 +86,8 @@ static UIImage* strengthIcon;
 -(void) clearCache
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings removeObjectForKey:LAST_MOD_CACHE];
-    [settings removeObjectForKey:NEXT_CHECK];
+    [settings setObject:@{} forKey:LAST_MOD_CACHE];
+    [settings setObject:@{} forKey:NEXT_CHECK];
     
     [[TMCache sharedCache] removeAllObjects];
 }
@@ -163,11 +173,7 @@ static UIImage* strengthIcon;
     NSDictionary* dict = [settings objectForKey:NEXT_CHECK];
     if (!forced)
     {
-        NSDate* nextCheck;
-        if (dict)
-        {
-            nextCheck = [dict objectForKey:key];
-        }
+        NSDate* nextCheck = [dict objectForKey:key];
         if (nextCheck)
         {
             NSDate* now = [NSDate date];
@@ -180,12 +186,8 @@ static UIImage* strengthIcon;
         }
     }
     
-    NSString* lastModDate;
     dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
-    if (dict)
-    {
-        lastModDate = [dict objectForKey:key];
-    }
+    NSString* lastModDate = [dict objectForKey:key];
     
     NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
     NSURL *URL = [NSURL URLWithString:url];
@@ -226,11 +228,6 @@ static UIImage* strengthIcon;
     if (lastModified)
     {
         NSMutableDictionary* dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
-        if (!dict)
-        {
-            dict = [NSMutableDictionary dictionary];
-        }
-        
         [dict setObject:lastModified forKey:key];
         [settings setObject:dict forKey:LAST_MOD_CACHE];
     }
@@ -248,10 +245,6 @@ static UIImage* strengthIcon;
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary* dict = [[settings objectForKey:NEXT_CHECK] mutableCopy];
-    if (!dict)
-    {
-        dict = [NSMutableDictionary dictionary];
-    }
 
     NSTimeInterval nextCheck = [NSDate timeIntervalSinceReferenceDate];
     nextCheck += interval;
