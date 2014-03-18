@@ -142,7 +142,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         [rightButtons addObject:self.saveButton];
     }
     [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)]];
-    [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Identity") style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)]];
+    // [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Identity") style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)]];
     
     topItem.rightBarButtonItems = rightButtons;
 
@@ -560,6 +560,10 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     {
         self.lastSetLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), set];
     }
+    else
+    {
+        self.lastSetLabel.text = @"";
+    }
     
     self.deckNameLabel.text = self.deck.name;
 }
@@ -586,7 +590,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         {
             CardCounter* cc = arr[row];
             
-            if ([card isEqual:cc.card])
+            if (!ISNULL(cc) && [card isEqual:cc.card])
             {
                 if (self.tableView.hidden)
                 {
@@ -676,10 +680,20 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         int cnt = 0;
         for (CardCounter* cc in arr)
         {
-            cnt += cc.count;
+            if (!ISNULL(cc))
+            {
+                cnt += cc.count;
+            }
         }
         
-        return [NSString stringWithFormat:@"%@ (%d)", name, cnt];
+        if (cnt)
+        {
+            return [NSString stringWithFormat:@"%@ (%d)", name, cnt];
+        }
+        else
+        {
+            return name;
+        }
     }
     else
     {
@@ -696,6 +710,10 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     NSArray* arr = self.cards[indexPath.section];
     CardCounter* cc = arr[indexPath.row];
+    if (ISNULL(cc))
+    {
+        cc = nil;
+    }
     
     cell.deck = self.deck;
     cell.cardCounter = cc;
@@ -703,14 +721,22 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray* arr = self.cards[indexPath.section];
+    CardCounter* cc = arr[indexPath.row];
+    
+    return !ISNULL(cc);
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         NSArray* arr = self.cards[indexPath.section];
         CardCounter* cc = arr[indexPath.row];
         
-        if (cc.card.type == NRCardTypeIdentity)
+        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
         {
             self.deck.identity = nil;
         }
@@ -728,9 +754,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 {
     NSArray* arr = self.cards[indexPath.section];
     CardCounter* cc = arr[indexPath.row];
-    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
     
-    [CardImageViewPopover showForCard:cc.card fromRect:rect inView:self.tableView];
+    if (!ISNULL(cc))
+    {
+        CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
+        [CardImageViewPopover showForCard:cc.card fromRect:rect inView:self.tableView];
+    }
 }
 
 -(NSString*) tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -761,27 +790,23 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 -(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSInteger count = self.deck.cards.count;
-    if (self.deck.identity)
-        ++count;
-    return count;
+    return 1 + self.deck.cards.count;
 }
 
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger index = indexPath.row;
     CardCounter* cc;
-    if (self.deck.identity && index == 0)
-    {
-        cc = [CardCounter initWithCard:self.deck.identity];
-    }
-    else
+    if (index == 0)
     {
         if (self.deck.identity)
         {
-            --index;
+            cc = [CardCounter initWithCard:self.deck.identity];
         }
-        
+    }
+    else
+    {
+        --index;
         cc = self.deck.cards[index];
     }
     
@@ -838,8 +863,15 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         NSAssert(NO, @"selected invisible cell?!");
     }
     
-    CardImagePopup* cip = [CardImagePopup showForCard:cc fromRect:popupOrigin inView:self.collectionView direction:direction];
-    cip.cell = cell;
+    if (cc && cc.card.type != NRCardTypeIdentity)
+    {
+        CardImagePopup* cip = [CardImagePopup showForCard:cc fromRect:popupOrigin inView:self.collectionView direction:direction];
+        cip.cell = cell;
+    }
+    else
+    {
+        [self selectIdentity:nil];
+    }
 }
 
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -854,18 +886,17 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     NSInteger index = indexPath.row;
     CardCounter* cc;
-    if (self.deck.identity && index == 0)
+    if (index == 0)
     {
-        cc = [CardCounter initWithCard:self.deck.identity];
+        if (self.deck.identity)
+        {
+            cc = [CardCounter initWithCard:self.deck.identity];
+        }
         cell.copiesLabel.text = @"";
     }
     else
     {
-        if (self.deck.identity)
-        {
-            --index;
-        }
-        
+        --index;
         cc = self.deck.cards[index];
         
         if (cc.card.type == NRCardTypeAgenda)
@@ -904,7 +935,15 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     }
     cell.cc = cc;
     
-    [cell loadImage];
+    if (cc)
+    {
+        [cell loadImage];
+    }
+    else
+    {
+        cell.imageView.image = [ImageCache placeholderFor:self.deck.role];
+        [cell.activityIndicator stopAnimating];
+    }
     
     return cell;
 }

@@ -23,7 +23,7 @@
 
 -(void) awakeFromNib
 {
-    [self.identityButton setTitle:l10n(@"Identity") forState:UIControlStateNormal];
+    [self.identityButton setTitle:l10n(@"Switch Identity") forState:UIControlStateNormal];
 }
 
 -(void) selectIdentity:(id)sender

@@ -43,8 +43,6 @@ static UIImage* apIcon;
 static UIImage* trashIcon;
 static UIImage* strengthIcon;
 
-#define PLACEHOLDER(card)   (card.role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder)
-
 +(void) initialize
 {
     runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
@@ -115,7 +113,7 @@ static UIImage* strengthIcon;
     
     if (![AFNetworkReachabilityManager sharedManager].reachable)
     {
-        successBlock(card, PLACEHOLDER(card));
+        successBlock(card, [ImageCache placeholderFor:card.role]);
         return;
     }
     else
@@ -156,9 +154,10 @@ static UIImage* strengthIcon;
              // invoke callback
              if (failureBlock)
              {
-                 failureBlock(card, PLACEHOLDER(card));
+                 UIImage* img = [ImageCache placeholderFor:card.role];
+                 failureBlock(card, img);
                  
-                 [self storeInCache:PLACEHOLDER(card) lastModified:nil forKey:key];
+                 [self storeInCache:img lastModified:nil forKey:key];
              }
          }];
 }
@@ -260,6 +259,11 @@ static UIImage* strengthIcon;
 +(UIImage*) cardIcon { return cardIcon; }
 +(UIImage*) difficultyIcon { return difficultyIcon; }
 +(UIImage*) influenceIcon { return influenceIcon; }
+
++(UIImage*) placeholderFor:(NRRole)role
+{
+    return role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder;
+}
 
 @end
 

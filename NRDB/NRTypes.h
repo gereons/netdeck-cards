@@ -10,6 +10,7 @@
 #define NRTypes_h
 
 #define DIM(x)  (sizeof(x) / sizeof(x[0]))
+#define ISNULL(x)   [x isKindOfClass:[NSNull class]]
 
 extern NSString* const kANY;
 

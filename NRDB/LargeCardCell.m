@@ -100,6 +100,7 @@
     self.copiesLabel.hidden = card.type == NRCardTypeIdentity;
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
     self.identityButton.hidden = card.type != NRCardTypeIdentity;
+    self.type.hidden = NO;
     
     // labels from top: cost/strength/mu
     switch (card.type)
@@ -117,6 +118,16 @@
             else
             {
                 self.label3.text = @"";
+                self.icon3.image = nil;
+            }
+            if (cc == nil)
+            {
+                self.type.hidden = YES;
+                self.label1.text = @"";
+                self.label2.text = @"";
+                self.label3.text = @"";
+                self.icon1.image = nil;
+                self.icon2.image = nil;
                 self.icon3.image = nil;
             }
             break;

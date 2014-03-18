@@ -29,4 +29,6 @@ typedef void (^CompletionBlock)(Card* card, UIImage* image);
 +(UIImage*) difficultyIcon;
 +(UIImage*) influenceIcon;
 
++(UIImage*) placeholderFor:(NRRole)role;
+
 @end

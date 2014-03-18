@@ -270,6 +270,13 @@
         [sections addObject:identity.card.typeStr];
         [cards addObject:@[ identity ]];
     }
+    else
+    {
+        // if there is no identity, get the typeStr of a known one and return a NSNull instance in its place
+        Card* dummyId = [Card cardByCode:ANDROMEDA];
+        [sections addObject:dummyId.typeStr];
+        [cards addObject:@[ [NSNull null] ]];
+    }
     
     // delete all cards with count==0
     NSMutableArray* removals = [NSMutableArray array];

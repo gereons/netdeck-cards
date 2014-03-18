@@ -57,7 +57,6 @@ static UIPopoverController* popover;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
     self.copiesStepper.value = self.cc.count;
     self.copiesStepper.maximumValue = self.cc.card.maxCopies;
