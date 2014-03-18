@@ -6,7 +6,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardImagePopup">
             <connections>
-                <outlet property="altArtButton" destination="XF9-AX-R6O" id="Zrd-op-Q9T"/>
                 <outlet property="copiesLabel" destination="P9A-9Y-2u3" id="1Mc-iP-twF"/>
                 <outlet property="copiesStepper" destination="JnG-5a-C7l" id="4dl-cT-k3q"/>
                 <outlet property="nameLabel" destination="eKG-Ze-smj" id="JCT-Cn-Vx8"/>
@@ -15,7 +14,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="152" height="170"/>
+            <rect key="frame" x="0.0" y="0.0" width="152" height="140"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" maximumValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="JnG-5a-C7l">
@@ -37,20 +36,9 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XF9-AX-R6O">
-                    <rect key="frame" x="57" y="133" width="39" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="705-photos.png"/>
-                    <connections>
-                        <action selector="showAltArt:" destination="-1" eventType="touchUpInside" id="I5r-T6-mVn"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
-    <resources>
-        <image name="705-photos.png" width="28" height="22"/>
-    </resources>
 </document>

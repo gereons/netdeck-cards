@@ -88,13 +88,6 @@ static UIPopoverController* popover;
         }
     }
     self.nameLabel.font = font;
-    
-    self.altArtButton.hidden = self.cc.card.altCard == nil;
-}
-
--(void) showAltArt:(id)sender
-{
-    [self.cell toggleImage];
 }
 
 -(void) copiesChanged:(id)sender

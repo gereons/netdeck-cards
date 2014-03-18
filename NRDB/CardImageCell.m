@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "CardImageCell.h"
 #import "ImageCache.h"
 #import "CardCounter.h"
@@ -18,17 +19,15 @@
  see http://ronnqvi.st/thinking-like-a-bzier-path/
  */
 
-- (id)initWithFrame:(CGRect)frame
+-(void) setCc:(CardCounter *)cc
 {
-    self = [super initWithFrame:frame];
-    if (self)
-    {
-        // self.showAltArt = NO;
-    }
-    return self;
+    self->_cc = cc;
+    self.toggleButton.hidden = self.cc.card.altCard == nil;
+    self.toggleButton.layer.masksToBounds = YES;
+    self.toggleButton.layer.cornerRadius = 3;
 }
 
--(void) toggleImage
+-(void) toggleImage:(id)sender
 {
     self.cc.showAltArt = !self.cc.showAltArt;
     

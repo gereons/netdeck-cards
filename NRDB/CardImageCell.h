@@ -15,10 +15,12 @@
 @property IBOutlet UIImageView* imageView;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
 @property IBOutlet UILabel* copiesLabel;
+@property IBOutlet UIButton* toggleButton;
 
-@property CardCounter* cc;
+@property (nonatomic) CardCounter* cc;
 
--(void) toggleImage;
+-(IBAction)toggleImage:(id)sender;
+
 -(void) loadImage;
 
 @end
