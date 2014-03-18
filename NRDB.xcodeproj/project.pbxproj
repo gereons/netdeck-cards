@@ -110,6 +110,8 @@
 		3AA440EF1854DA630051D4B0 /* DetailViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440EE1854DA630051D4B0 /* DetailViewManager.m */; };
 		3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440F61854EF720051D4B0 /* DeckListViewController.m */; };
 		3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440F71854EF720051D4B0 /* DeckListViewController.xib */; };
+		3AAF4AEB18D8D50B009041A3 /* 705-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AAF4AE918D8D50B009041A3 /* 705-cards@2x.png */; };
+		3AAF4AEC18D8D50B009041A3 /* 705-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AAF4AEA18D8D50B009041A3 /* 705-cards.png */; };
 		3AB1B2341872ECA000F6AE45 /* FilteredCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB1B2331872ECA000F6AE45 /* FilteredCardViewController.xib */; };
 		3AB357D6186CC2010027D5FC /* IdentitySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB357D4186CC2010027D5FC /* IdentitySelectionViewController.m */; };
 		3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB357D5186CC2010027D5FC /* IdentitySelectionViewController.xib */; };
@@ -333,6 +335,8 @@
 		3AA440F51854EF720051D4B0 /* DeckListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AA440F61854EF720051D4B0 /* DeckListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AA440F71854EF720051D4B0 /* DeckListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckListViewController.xib; sourceTree = "<group>"; };
+		3AAF4AE918D8D50B009041A3 /* 705-cards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "705-cards@2x.png"; sourceTree = "<group>"; };
+		3AAF4AEA18D8D50B009041A3 /* 705-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "705-cards.png"; sourceTree = "<group>"; };
 		3AB1B2331872ECA000F6AE45 /* FilteredCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilteredCardViewController.xib; sourceTree = "<group>"; };
 		3AB357D3186CC2010027D5FC /* IdentitySelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IdentitySelectionViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AB357D4186CC2010027D5FC /* IdentitySelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IdentitySelectionViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -647,8 +651,10 @@
 				3A386271188514AE00F5630B /* 743-printer@2x.png */,
 				3A9E7C4E1884941200A507C3 /* 702-share.png */,
 				3A9E7C4F1884941200A507C3 /* 702-share@2x.png */,
-				3ABA9BCF18D59C0400DF2216 /* 705-photos@2x.png */,
 				3ABA9BD018D59C0400DF2216 /* 705-photos.png */,
+				3ABA9BCF18D59C0400DF2216 /* 705-photos@2x.png */,
+				3AAF4AEA18D8D50B009041A3 /* 705-cards.png */,
+				3AAF4AE918D8D50B009041A3 /* 705-cards@2x.png */,
 			);
 			path = Icons;
 			sourceTree = "<group>";
@@ -1072,6 +1078,7 @@
 				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
 				3A76EEC018B5DA68004DB586 /* RunnerPlaceholder.png in Resources */,
 				3AEC4A3918CB14E5001EE648 /* influenceicon.png in Resources */,
+				3AAF4AEB18D8D50B009041A3 /* 705-cards@2x.png in Resources */,
 				3AEC4A3418CB14E5001EE648 /* cardicon@2x.png in Resources */,
 				3AEC4A3818CB14E5001EE648 /* difficultyicon@2x.png in Resources */,
 				3A721E8118CE3FD900799097 /* linkicon_round.png in Resources */,
@@ -1088,6 +1095,7 @@
 				3A76EEBF18B5DA68004DB586 /* CorpPlaceholder.png in Resources */,
 				3ADC17371856632500FA2DF7 /* CardEditorViewController.xib in Resources */,
 				3A721E7A18CE3FD900799097 /* strengthicon_round@2x.png in Resources */,
+				3AAF4AEC18D8D50B009041A3 /* 705-cards.png in Resources */,
 				3A6AF0E01899BB3B00227C25 /* listviewicon.png in Resources */,
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
