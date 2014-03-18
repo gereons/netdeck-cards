@@ -44,6 +44,7 @@
 @property UIBarButtonItem* exportButton;
 
 @property NSString* filename;
+@property BOOL autoSave;
 @property BOOL autoSaveDropbox;
 
 @property CGFloat scale;
@@ -106,8 +107,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     self.tableView.tableFooterView = footer;
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    // topItem.title = @"Deck";
     
+    // left buttons
     NSArray* selections = @[
         [UIImage imageNamed:@"cardviewicon"],   // CARD_VIEW
         [UIImage imageNamed:@"tableviewicon"],  // TABLE_VIEW
@@ -119,18 +120,31 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
     [self doToggleView:viewSelector.selectedSegmentIndex];
     
-    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
     topItem.leftBarButtonItems = @[
-        [[UIBarButtonItem alloc] initWithTitle:l10n(@"Identity") style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)],
-        [[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)],
-        self.saveButton,
-        [[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)],
-        self.toggleViewButton
+        self.toggleViewButton,
     ];
+    
+    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
     self.saveButton.enabled = NO;
     
+    // right button
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
-    topItem.rightBarButtonItem = self.exportButton;
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    self.autoSave = [settings boolForKey:AUTO_SAVE];
+    self.autoSaveDropbox = self.autoSave && [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
+    
+    NSMutableArray* rightButtons = [NSMutableArray array];
+    [rightButtons addObject:self.exportButton];
+    [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)]];
+    if (!self.autoSave)
+    {
+        [rightButtons addObject:self.saveButton];
+    }
+    [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)]];
+    [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Identity") style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)]];
+    
+    topItem.rightBarButtonItems = rightButtons;
 
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
@@ -144,8 +158,6 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
     
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    self.autoSaveDropbox = [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
     self.deckChanged = NO;
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardImageCell" bundle:nil] forCellWithReuseIdentifier:@"cardImageCell"];
@@ -166,7 +178,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     if (self.deck.cards.count > 0)
     {
         // so that FilteredCardViewController gets a chance to reload
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
+        self.deckChanged = NO;
     }
 }
 
@@ -296,6 +309,10 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         self.deck.name = [alertView textFieldAtIndex:0].text;
         self.deckNameLabel.text = self.deck.name;
         self.deckChanged = YES;
+        if (self.autoSave)
+        {
+            [self saveDeck:nil];
+        }
         [self refresh];
         
         self.nameAlert = nil;
@@ -348,7 +365,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     self.deckChanged = YES;
     [self refresh];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
+    if (self.autoSave)
     {
         [self saveDeck:nil];
     }
@@ -486,10 +503,14 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 -(void) deckChanged:(NSNotification*)sender
 {
-    self.deckChanged = YES;
+    BOOL initialLoad = [[sender.userInfo objectForKey:@"initialLoad"] boolValue];
+    if (!initialLoad)
+    {
+        self.deckChanged = YES;
+    }
     [self refresh];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
+    if (self.autoSave && self.deckChanged)
     {
         [self saveDeck:nil];
     }
@@ -593,7 +614,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         [self performSelector:@selector(flashImageCell:) withObject:indexPath afterDelay:0.01];
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
+    if (self.autoSave)
     {
         [self saveDeck:nil];
     }
