@@ -5,7 +5,10 @@
 //
 
 #import <Availability.h>
+
+#if ADHOC
 #import <TestFlight.h>
+#endif
 
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."
@@ -16,10 +19,10 @@
     #import <Foundation/Foundation.h>
 #endif
 
-#if DEBUG
-#define TF_CHECKPOINT(chk)  /* nop */
-#else
+#if ADHOC
 #define TF_CHECKPOINT(chk)  [TestFlight passCheckpoint:chk]
+#else
+#define TF_CHECKPOINT(chk)  /* nop */
 #endif
 
 #define l10n(str)   NSLocalizedString(str, nil)

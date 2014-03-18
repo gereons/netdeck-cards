@@ -39,7 +39,7 @@
     
     SVProgressHUD.appearance.hudBackgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
     
-#if !DEBUG && !TARGET_IPHONE_SIMULATOR
+#if ADHOC && !TARGET_IPHONE_SIMULATOR
     [TestFlight takeOff:@"eb5e8194-c06f-46db-a1ce-42943ebaf902"];
 #endif
     
@@ -48,8 +48,9 @@
     [self.window makeKeyAndVisible];
     
     // setup tmcache: 50mb space
-    [TMCache sharedCache].diskCache.byteLimit = 50 * 1024 * 1024;
-    
+    TMCache* cache = [TMCache sharedCache];
+    cache.diskCache.byteLimit = 50 * 1024 * 1024;
+        
     [DeckImport checkClipboardForDeck];
     
     return YES;

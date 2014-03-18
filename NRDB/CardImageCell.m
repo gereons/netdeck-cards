@@ -8,29 +8,36 @@
 
 #import "CardImageCell.h"
 #import "ImageCache.h"
-#import "Card.h"
-
-@interface CardImageCell()
-@property BOOL showAltArt;
-@end
+#import "CardCounter.h"
 
 @implementation CardImageCell
+
+/*
+ TODO: draw stack border around card
+ see https://stackoverflow.com/questions/6434925/how-to-draw-uibezierpaths
+ see http://ronnqvi.st/thinking-like-a-bzier-path/
+ */
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.showAltArt = NO;
+        // self.showAltArt = NO;
     }
     return self;
 }
 
 -(void) toggleImage
 {
-    self.showAltArt = !self.showAltArt;
+    self.cc.showAltArt = !self.cc.showAltArt;
     
-    Card* card = self.showAltArt ? self.card.altCard : self.card;
+    [self loadImage];
+}
+
+-(void) loadImage
+{
+    Card* card = self.cc.showAltArt ? self.cc.card.altCard : self.cc.card;
     [self loadImage:card];
 }
 
@@ -40,18 +47,18 @@
     [[ImageCache sharedInstance] getImageFor:card
                                      success:^(Card* card, UIImage* img) {
                                          [self.activityIndicator stopAnimating];
-                                         if ([self.card.name isEqual:card.name])
+                                         if ([self.cc.card.name isEqual:card.name])
                                          {
                                              self.imageView.image = img;
                                          }
                                          else
                                          {
-                                             NSLog(@"got img %@ for %@", card.name, self.card.name);
+                                             NSLog(@"got img %@ for %@", card.name, self.cc.card.name);
                                          }
                                      }
                                      failure:^(Card* card, UIImage* placeholder) {
                                          [self.activityIndicator stopAnimating];
-                                         if ([self.card.name isEqual:card.name])
+                                         if ([self.cc.card.name isEqual:card.name])
                                          {
                                              self.imageView.image = placeholder;
                                          }

@@ -8,16 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@class Card;
+@class Card, CardCounter;
 
 @interface CardImageCell : UICollectionViewCell
 
-@property Card* card;
 @property IBOutlet UIImageView* imageView;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
 @property IBOutlet UILabel* copiesLabel;
 
+@property CardCounter* cc;
+
 -(void) toggleImage;
--(void) loadImage:(Card*)card;
+-(void) loadImage;
 
 @end

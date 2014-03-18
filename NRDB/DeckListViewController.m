@@ -832,10 +832,10 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     }
     
     NSInteger index = indexPath.row;
-    Card* card;
+    CardCounter* cc;
     if (self.deck.identity && index == 0)
     {
-        card = self.deck.identity;
+        cc = [CardCounter initWithCard:self.deck.identity];
         cell.copiesLabel.text = @"";
     }
     else
@@ -845,10 +845,9 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
             --index;
         }
         
-        CardCounter* cc = self.deck.cards[index];
-        card = cc.card;
+        cc = self.deck.cards[index];
         
-        if (card.type == NRCardTypeAgenda)
+        if (cc.card.type == NRCardTypeAgenda)
         {
             cell.copiesLabel.text = [NSString stringWithFormat:@"×%d · %d AP", cc.count, cc.count*cc.card.agendaPoints];
         }
@@ -866,10 +865,10 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         }
         
         cell.copiesLabel.textColor = [UIColor blackColor];
-        if ([card.setCode isEqualToString:@"core"])
+        if ([cc.card.setCode isEqualToString:@"core"])
         {
             NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
-            NSInteger owned = cores * card.quantity;
+            NSInteger owned = cores * cc.card.quantity;
             
             if (owned < cc.count)
             {
@@ -878,13 +877,13 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         }
     }
     
-    if (![cell.card isEqual:card])
+    if (![cell.cc.card isEqual:cc.card])
     {
         cell.imageView.image = nil;
     }
-    cell.card = card;
+    cell.cc = cc;
     
-    [cell loadImage:card];
+    [cell loadImage];
     
     return cell;
 }

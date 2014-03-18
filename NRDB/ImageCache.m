@@ -27,7 +27,6 @@
 #define NLOG(...)           do {} while(0)
 #endif
 
-
 @implementation ImageCache
 
 static ImageCache* instance;
@@ -46,22 +45,20 @@ static UIImage* strengthIcon;
 
 #define PLACEHOLDER(card)   (card.role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder)
 
-#define ROUND /* "_round" */
-
 +(void) initialize
 {
     runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
     corpPlaceholder = [UIImage imageNamed:@"CorpPlaceholder"];
     
-    trashIcon = [UIImage imageNamed:@"trashicon" ROUND];
-    strengthIcon = [UIImage imageNamed:@"strengthicon" ROUND];
-    creditIcon = [UIImage imageNamed:@"crediticon" ROUND];
-    muIcon = [UIImage imageNamed:@"memicon" ROUND];
-    apIcon = [UIImage imageNamed:@"pointsicon" ROUND];
-    linkIcon = [UIImage imageNamed:@"linkicon" ROUND];
-    cardIcon = [UIImage imageNamed:@"cardicon" ROUND];
-    difficultyIcon = [UIImage imageNamed:@"difficultyicon" ROUND];
-    influenceIcon = [UIImage imageNamed:@"influenceicon" ROUND];
+    trashIcon = [UIImage imageNamed:@"trashicon"];
+    strengthIcon = [UIImage imageNamed:@"strengthicon"];
+    creditIcon = [UIImage imageNamed:@"crediticon"];
+    muIcon = [UIImage imageNamed:@"memicon"];
+    apIcon = [UIImage imageNamed:@"pointsicon"];
+    linkIcon = [UIImage imageNamed:@"linkicon"];
+    cardIcon = [UIImage imageNamed:@"cardicon"];
+    difficultyIcon = [UIImage imageNamed:@"difficultyicon"];
+    influenceIcon = [UIImage imageNamed:@"influenceicon"];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     if ([settings objectForKey:LAST_MOD_CACHE] == nil)
@@ -151,10 +148,10 @@ static UIImage* strengthIcon;
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // download failed
-#if NETWORK_LOG
+
              NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
-             NLOG(@"GET %@: error %d", url, response.statusCode);
-#endif
+             NSLog(@"GET %@ for %@: error %d", url, card.name, response.statusCode);
+
              
              // invoke callback
              if (failureBlock)
