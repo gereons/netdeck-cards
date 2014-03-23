@@ -7,6 +7,7 @@
 //
 
 #import <AFNetworking.h>
+#import <EXTScope.h>
 
 #import "DataDownload.h"
 #import "CardData.h"
@@ -78,8 +79,10 @@ static DataDownload* instance;
     self.manager = [AFHTTPRequestOperationManager manager];
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
+    @weakify(self);
     [self.manager GET:cardsUrl parameters:parameters
         success:^(AFHTTPRequestOperation* operation, id responseObject) {
+            @strongify(self);
             if (!self.downloadStopped)
             {
                 ok = [CardData setupFromNetrunnerDbApi:responseObject];
@@ -87,6 +90,7 @@ static DataDownload* instance;
             [self downloadFinished:ok];
         }
         failure:^(AFHTTPRequestOperation* operation, NSError* error) {
+            @strongify(self);
             // NSLog(@"download failed %@", operation);
             [self downloadFinished:NO];
         }
@@ -146,10 +150,14 @@ static DataDownload* instance;
     {
         Card* card = [self.cards objectAtIndex:i];
         
+        @weakify(self);
         [[ImageCache sharedInstance] getImageFor:card success:^(Card* card, UIImage* image) {
+            @strongify(self);
             [self downloadNextImage:i+1];
         }
         failure:^(Card* card, UIImage* placeholder) {
+            @strongify(self);
+
             ++self.downloadErrors;
             [self downloadNextImage:i+1];
         }

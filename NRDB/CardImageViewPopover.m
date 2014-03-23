@@ -9,6 +9,7 @@
 #import "CardImageViewPopover.h"
 #import "Card.h"
 #import "ImageCache.h"
+#import <EXTScope.h>
 
 @interface CardImageViewPopover ()
 
@@ -89,12 +90,15 @@ static UIPopoverController* popover;
 -(void) loadCardImage:(Card*)card
 {
     [self.activityIndicator startAnimating];
+    @weakify(self);
     [[ImageCache sharedInstance] getImageFor:card
                                      success:^(Card* card, UIImage* image) {
+                                         @strongify(self);
                                          [self.activityIndicator stopAnimating];
                                          self.imageView.image = image;
                                      }
                                      failure:^(Card* card, UIImage* placeholder) {
+                                         @strongify(self);
                                          [self.activityIndicator stopAnimating];
                                          self.imageView.image = placeholder;
                                      }];

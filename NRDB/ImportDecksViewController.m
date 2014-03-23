@@ -9,6 +9,7 @@
 #import "ImportDecksViewController.h"
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
+#import <EXTScope.h>
 #import "Deck.h"
 #import "DeckManager.h"
 
@@ -43,13 +44,13 @@
     // do the initial listing in the background, as it may block the ui thread
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak typeof(self) weakSelf = self;
+    @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        __strong __typeof__(weakSelf) strongSelf = weakSelf;
-        NSUInteger count = [strongSelf listFiles];
+        @strongify(self);
+        NSUInteger count = [self listFiles];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            __strong __typeof__(weakSelf) strongSelf = weakSelf;
+            @strongify(self);
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             if (count == 0)
             {
@@ -61,7 +62,7 @@
                 [alert show];
             }
 
-            [strongSelf.tableView reloadData];
+            [self.tableView reloadData];
         });
     });
     

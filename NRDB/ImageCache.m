@@ -9,6 +9,8 @@
 #import "ImageCache.h"
 #import <TMCache.h>
 #import <AFNetworking.h>
+#import <EXTScope.h>
+
 #import "Card.h"
 #import "SettingsKeys.h"
 
@@ -129,9 +131,11 @@ static UIImage* strengthIcon;
     NLOG(@"GET %@", url);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFImageResponseSerializer serializer];
+    @weakify(self);
     [manager GET:url
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             @strongify(self);
              // download successful
              
              NLOG(@"GET %@: status 200", url);
@@ -145,12 +149,12 @@ static UIImage* strengthIcon;
              [self storeInCache:responseObject lastModified:lastModified forKey:key];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             @strongify(self);
              // download failed
 
              NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
-             NSLog(@"GET %@ for %@: error %d", url, card.name, response.statusCode);
-
-             
+             NSLog(@"GET %@ for %@: error %ld", url, card.name, (long)response.statusCode);
+#warning FIXME: only store placeholder if we had no previous image
              // invoke callback
              if (failureBlock)
              {
@@ -196,7 +200,9 @@ static UIImage* strengthIcon;
     NLOG(@"GET %@ If-Modified-Since %@", url, lastModDate);
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFImageResponseSerializer serializer];
+    @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        @strongify(self);
         // got 200 - new image. store in caches
         NLOG(@"GET %@ If-Modified-Since %@: status 200", url, lastModDate);
         NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
@@ -204,6 +210,7 @@ static UIImage* strengthIcon;
         [self storeInCache:responseObject lastModified:lastModified forKey:key];
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        @strongify(self);
         NLOG(@"GET %@ If-Modified-Since %@: status %d", url, lastModDate, operation.response.statusCode);
         if (operation.response.statusCode == 304)
         {

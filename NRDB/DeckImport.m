@@ -12,6 +12,7 @@
 #import "SettingsKeys.h"
 #import "Notifications.h"
 #import <AFNetworking.h>
+#import <EXTScope.h>
 
 @interface DeckImport()
 
@@ -227,8 +228,10 @@ static DeckImport* instance;
     self.manager = [AFHTTPRequestOperationManager manager];
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
+    @weakify(self);
     [self.manager GET:deckUrl parameters:nil
               success:^(AFHTTPRequestOperation* operation, id responseObject) {
+                  @strongify(self);
                   if (!self.downloadStopped)
                   {
                       // NSLog(@"deck successfully downloaded");
@@ -237,6 +240,7 @@ static DeckImport* instance;
                   [self downloadFinished:ok];
               }
               failure:^(AFHTTPRequestOperation* operation, NSError* error) {
+                  @strongify(self);
                   // NSLog(@"download failed %@", operation);
                   [self downloadFinished:NO];
               }
