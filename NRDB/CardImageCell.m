@@ -25,12 +25,13 @@
     self.toggleButton.hidden = self.cc.card.altCard == nil;
     self.toggleButton.layer.masksToBounds = YES;
     self.toggleButton.layer.cornerRadius = 3;
+    [self.toggleButton setImage:[ImageCache altArtIcon:self.cc.showAltArt] forState:UIControlStateNormal];
 }
 
 -(void) toggleImage:(id)sender
 {
     self.cc.showAltArt = !self.cc.showAltArt;
-    
+    [self.toggleButton setImage:[ImageCache altArtIcon:self.cc.showAltArt] forState:UIControlStateNormal];
     [self loadImage];
 }
 

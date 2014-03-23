@@ -44,6 +44,8 @@ static UIImage* muIcon;
 static UIImage* apIcon;
 static UIImage* trashIcon;
 static UIImage* strengthIcon;
+static UIImage* altArtIconOn;
+static UIImage* altArtIconOff;
 
 +(void) initialize
 {
@@ -59,6 +61,9 @@ static UIImage* strengthIcon;
     cardIcon = [UIImage imageNamed:@"cardicon"];
     difficultyIcon = [UIImage imageNamed:@"difficultyicon"];
     influenceIcon = [UIImage imageNamed:@"influenceicon"];
+    
+    altArtIconOn = [UIImage imageNamed:@"altarttoggle_on"];
+    altArtIconOff = [UIImage imageNamed:@"altarttoggle_off"];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     if ([settings objectForKey:LAST_MOD_CACHE] == nil)
@@ -266,7 +271,7 @@ static UIImage* strengthIcon;
 +(UIImage*) cardIcon { return cardIcon; }
 +(UIImage*) difficultyIcon { return difficultyIcon; }
 +(UIImage*) influenceIcon { return influenceIcon; }
-
++(UIImage*) altArtIcon:(BOOL)on { return on ? altArtIconOn : altArtIconOff; }
 +(UIImage*) placeholderFor:(NRRole)role
 {
     return role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder;

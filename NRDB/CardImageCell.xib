@@ -32,7 +32,7 @@
                         <rect key="frame" x="197" y="140" width="28" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <state key="normal" image="705-cards.png">
+                        <state key="normal" image="altarttoggle_off.png">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -52,6 +52,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="705-cards.png" width="22" height="28"/>
+        <image name="altarttoggle_off.png" width="22" height="28"/>
     </resources>
 </document>
