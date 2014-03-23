@@ -148,10 +148,10 @@
         case NRCardTypeAgenda:
             self.label1.text = [NSString stringWithFormat:@"%d", card.advancementCost];
             self.icon1.image = [ImageCache difficultyIcon];
-            self.label2.text = [NSString stringWithFormat:@"%d", card.agendaPoints];
-            self.icon2.image = [ImageCache apIcon];
-            self.label3.text = @"";
-            self.icon3.image = nil;
+            self.label2.text = @"";
+            self.icon2.image = nil;
+            self.label3.text = [NSString stringWithFormat:@"%d", card.agendaPoints];
+            self.icon3.image = [ImageCache apIcon];
             break;
             
         case NRCardTypeAsset:
@@ -159,10 +159,10 @@
         case NRCardTypeUpgrade:
             self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
-            self.label2.text = card.trash != -1 ? [NSString stringWithFormat:@"%d", card.trash] : @"";
-            self.icon2.image = card.trash != -1 ? [ImageCache trashIcon] : nil;
-            self.label3.text = @"";
-            self.icon3.image = nil;
+            self.label2.text = @"";
+            self.icon2.image = nil;
+            self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%d", card.trash] : @"";
+            self.icon3.image = card.trash != -1 ? [ImageCache trashIcon] : nil;
             break;
             
         case NRCardTypeNone:
