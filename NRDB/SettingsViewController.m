@@ -114,6 +114,10 @@
         {
             [DataDownload downloadCardData];
         }
+        else
+        {
+            [self showOfflineAlert];
+        }
     }
     else if ([specifier.key isEqualToString:DOWNLOAD_IMG_NOW])
     {
@@ -122,18 +126,32 @@
         {
             [DataDownload downloadAllImages];
         }
+        else
+        {
+            [self showOfflineAlert];
+        }
     }
     else if ([specifier.key isEqualToString:CLEAR_CACHE])
     {
         TF_CHECKPOINT(@"clear cache");
         
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:Nil
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:l10n(@"Clear Cache? You will need to re-download all data from netrunnerdb.com.")
                                                        delegate:self
                                               cancelButtonTitle:l10n(@"No")
                                               otherButtonTitles:l10n(@"Yes"), nil];
         [alert show];
     }
+}
+
+-(void) showOfflineAlert
+{
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+                                                    message:l10n(@"An Internet connection is required.")
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 -(void) alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex

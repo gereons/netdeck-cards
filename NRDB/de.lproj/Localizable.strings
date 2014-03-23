@@ -1,5 +1,5 @@
 /*
-  Localizable.strings
+  Localizable.strings (de)
   NRDB
 
   Created by Gereon Steffens on 24.02.14.
@@ -73,6 +73,7 @@
 "Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche er später nochmal.";
 "%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";
 "Clear Cache? You will need to re-download all data from netrunnerdb.com." = "Cache löschen? Du musst danach alle Daten neu von netrunnerdb.com laden.";
+"An Internet connection is required." = "Internet-Verbindung wird benötigt.";
 
 // identity selection
 "Choose Identity" = "Identität auswählen";

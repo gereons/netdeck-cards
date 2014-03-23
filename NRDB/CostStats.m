@@ -29,7 +29,9 @@
             }
         }
         
-        NSArray* sections = [[costs allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) { return [n1 compare:n2]; }];
+        NSArray* sections = [[costs allKeys] sortedArrayUsingComparator:^(NSNumber* n1, NSNumber* n2) {
+            return [n1 compare:n2];
+        }];
         NSMutableArray* values = [NSMutableArray array];
         for (NSNumber*n in sections)
         {

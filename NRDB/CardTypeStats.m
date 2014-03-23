@@ -35,7 +35,9 @@
             [types setObject:n forKey:type];
         }
         
-        NSArray* sections = [[types allKeys] sortedArrayUsingComparator:^(NSString* s1, NSString* s2) { return [s1 compare:s2]; }];
+        NSArray* sections = [[types allKeys] sortedArrayUsingComparator:^(NSString* s1, NSString* s2) {
+            return [s1 compare:s2];
+        }];
         NSMutableArray* values = [NSMutableArray array];
         for (NSString*s in sections)
         {
