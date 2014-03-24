@@ -183,10 +183,12 @@
     if (self.role == NRRoleRunner)
     {
         cell.linkLabel.text = [NSString stringWithFormat:@"%d", c.baseLink];
+        cell.linkIcon.hidden = NO;
     }
     else
     {
         cell.linkLabel.text = @"";
+        cell.linkIcon.hidden = YES;
     }
     
     return cell;
