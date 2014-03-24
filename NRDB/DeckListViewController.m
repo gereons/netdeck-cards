@@ -110,9 +110,9 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     // left buttons
     NSArray* selections = @[
-        [UIImage imageNamed:@"cardviewicon"],   // CARD_VIEW
-        [UIImage imageNamed:@"tableviewicon"],  // TABLE_VIEW
-        [UIImage imageNamed:@"listviewicon"]    // LIST_VIEW
+        [UIImage imageNamed:@"deckview_card"],   // CARD_VIEW
+        [UIImage imageNamed:@"deckview_table"],  // TABLE_VIEW
+        [UIImage imageNamed:@"deckview_list"]    // LIST_VIEW
     ];
     UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
     viewSelector.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_VIEW_STYLE];

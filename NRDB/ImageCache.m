@@ -52,15 +52,15 @@ static UIImage* altArtIconOff;
     runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
     corpPlaceholder = [UIImage imageNamed:@"CorpPlaceholder"];
     
-    trashIcon = [UIImage imageNamed:@"trashicon"];
-    strengthIcon = [UIImage imageNamed:@"strengthicon"];
-    creditIcon = [UIImage imageNamed:@"crediticon"];
-    muIcon = [UIImage imageNamed:@"memicon"];
-    apIcon = [UIImage imageNamed:@"pointsicon"];
-    linkIcon = [UIImage imageNamed:@"linkicon"];
-    cardIcon = [UIImage imageNamed:@"cardicon"];
-    difficultyIcon = [UIImage imageNamed:@"difficultyicon"];
-    influenceIcon = [UIImage imageNamed:@"influenceicon"];
+    trashIcon = [UIImage imageNamed:@"cardstats_trash"];
+    strengthIcon = [UIImage imageNamed:@"cardstats_strength"];
+    creditIcon = [UIImage imageNamed:@"cardstats_credit"];
+    muIcon = [UIImage imageNamed:@"cardstats_mem"];
+    apIcon = [UIImage imageNamed:@"cardstats_points"];
+    linkIcon = [UIImage imageNamed:@"cardstats_link"];
+    cardIcon = [UIImage imageNamed:@"cardstats_decksize"];
+    difficultyIcon = [UIImage imageNamed:@"cardstats_difficulty"];
+    influenceIcon = [UIImage imageNamed:@"cardstats_influence"];
     
     altArtIconOn = [UIImage imageNamed:@"altarttoggle_on"];
     altArtIconOff = [UIImage imageNamed:@"altarttoggle_off"];
