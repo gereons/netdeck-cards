@@ -72,6 +72,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
     self.filterView = [[[NSBundle mainBundle] loadNibNamed:@"CardFilterHeaderView" owner:self options:nil] objectAtIndex:0];
     self.filterView.role = self.role;

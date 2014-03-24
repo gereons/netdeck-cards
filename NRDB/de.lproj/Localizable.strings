@@ -165,6 +165,7 @@
 "Plain Text Deck" = "Text-Deck";
 "Markdown Deck" = "Markdown-Deck";
 "BBCode Deck" = "BBCode-Deck";
+"Print" = "Drucken";
 
 // cycles
 "Core / Deluxe" = "Grundspiel / Erweiterung";
