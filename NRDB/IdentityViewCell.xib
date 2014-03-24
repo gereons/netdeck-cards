@@ -38,10 +38,10 @@
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ogr-nY-GIp">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ogr-nY-GIp" userLabel="Image Button">
                         <rect key="frame" x="438" y="8" width="22" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" image="altarttoggle_off.png"/>
+                        <state key="normal" image="altarttoggle_on.png"/>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardstats_decksize.png" id="i40-cm-WYS" userLabel="Card Icon">
                         <rect key="frame" x="410" y="0.0" width="20" height="22"/>
@@ -70,7 +70,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="altarttoggle_off.png" width="22" height="28"/>
+        <image name="altarttoggle_on.png" width="22" height="28"/>
         <image name="cardstats_decksize.png" width="20" height="20"/>
         <image name="cardstats_influence.png" width="20" height="20"/>
         <image name="cardstats_link.png" width="20" height="20"/>
