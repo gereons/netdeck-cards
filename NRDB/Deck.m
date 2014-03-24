@@ -204,7 +204,7 @@
 {
     Deck* newDeck = [Deck new];
     
-    newDeck.name = [NSString stringWithFormat:@"Copy of %@", self.name];
+    newDeck.name = [NSString stringWithFormat:l10n(@"Copy of %@"), self.name];
     newDeck.identity = self.identity;
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
     newDeck->_role = self.role;

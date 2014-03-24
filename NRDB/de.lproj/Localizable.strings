@@ -57,6 +57,7 @@
 "Deck needs to have an Identity." = "Das Deck hat keine Identität.";
 "Deck needs cards." = "Das Deck hat keine Karten";
 "Cards up to %@" = "Karten bis zu %@";
+"Copy of %@" = "Kopie von %@";
 
 // deck invalidity reasons
 "No Identity" = "Keine Identität";

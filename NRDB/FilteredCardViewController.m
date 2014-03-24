@@ -284,6 +284,10 @@
         NSAssert(num != nil, @"need number");
         [self.cardList filterByAgendaPoints:[num intValue]];
     }
+    else
+    {
+        NSAssert(NO, @"unknown filter '%@'", type);
+    }
     
     [self initCards];
     [self.tableView reloadData];

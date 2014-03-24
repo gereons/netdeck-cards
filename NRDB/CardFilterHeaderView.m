@@ -258,13 +258,13 @@ static NSArray* scopes;
         case SET_BUTTON:
         {
             btn = self.setButton;
-            pfx = l10n(@"Set");
+            pfx = @"Set";
             break;
         }
         case TYPE_BUTTON:
         {
             btn = self.typeButton;
-            pfx = l10n(@"Type");
+            pfx = @"Type";
             // reset subtypes to "any"
             [self resetButton:SUBTYPE_BUTTON];
             break;
@@ -272,20 +272,20 @@ static NSArray* scopes;
         case SUBTYPE_BUTTON:
         {
             btn = self.subtypeButton;
-            pfx = l10n(@"Subtype");
+            pfx = @"Subtype";
             break;
         }
         case FACTION_BUTTON:
         {
             btn = self.factionButton;
-            pfx = l10n(@"Faction");
+            pfx = @"Faction";
             break;
         }
     }
     
     [self.selectedValues setObject:kANY forKey:@(tag)];
     [self postNotification:[pfx lowercaseString] value:kANY];
-    [btn setTitle:[NSString stringWithFormat:@"%@: %@", pfx, l10n(kANY)] forState:UIControlStateNormal];
+    [btn setTitle:[NSString stringWithFormat:@"%@: %@", l10n(pfx), l10n(kANY)] forState:UIControlStateNormal];
     
     NSAssert(btn != nil, @"no button");
 }
