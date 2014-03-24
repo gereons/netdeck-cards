@@ -43,7 +43,7 @@
     NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 #endif
     
-    NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck v%@"), version];
+    NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck %@"), version];
     self.navigationController.navigationBar.topItem.title = title;
 }
 

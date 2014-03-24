@@ -99,6 +99,7 @@
 		3A994273184B8CB4004B6E05 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A994272184B8CB4004B6E05 /* CoreText.framework */; };
 		3A994275184B8CBB004B6E05 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A994274184B8CBB004B6E05 /* MobileCoreServices.framework */; };
 		3A9CE56518E0B6C0007A26CD /* IdentityViewCellSubtitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */; };
+		3A9CE56718E0CA2A007A26CD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9CE56618E0CA2A007A26CD /* MessageUI.framework */; };
 		3A9E7C4C18845FDA00A507C3 /* TableData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9E7C4B18845FDA00A507C3 /* TableData.m */; };
 		3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440E41854DA4C0051D4B0 /* ActionsTableViewController.m */; };
 		3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440E51854DA4C0051D4B0 /* MainWindow.xib */; };
@@ -298,6 +299,7 @@
 		3A994272184B8CB4004B6E05 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		3A994274184B8CBB004B6E05 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCellSubtitle.xib; sourceTree = "<group>"; };
+		3A9CE56618E0CA2A007A26CD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		3A9E7C4A18845FDA00A507C3 /* TableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableData.h; sourceTree = "<group>"; };
 		3A9E7C4B18845FDA00A507C3 /* TableData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableData.m; sourceTree = "<group>"; };
 		3AA440E31854DA4C0051D4B0 /* ActionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ActionsTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -371,6 +373,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A9CE56718E0CA2A007A26CD /* MessageUI.framework in Frameworks */,
 				3A994275184B8CBB004B6E05 /* MobileCoreServices.framework in Frameworks */,
 				3A994273184B8CB4004B6E05 /* CoreText.framework in Frameworks */,
 				3A994271184B8CAB004B6E05 /* QuartzCore.framework in Frameworks */,
@@ -430,6 +433,7 @@
 		3A3622601849320C007F2854 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A9CE56618E0CA2A007A26CD /* MessageUI.framework */,
 				3A994274184B8CBB004B6E05 /* MobileCoreServices.framework */,
 				3A994272184B8CB4004B6E05 /* CoreText.framework */,
 				3A994270184B8CAB004B6E05 /* QuartzCore.framework */,

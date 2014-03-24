@@ -7,6 +7,7 @@
 //
 
 #import <SVProgressHUD.h>
+#import <MessageUI/MessageUI.h>
 
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
@@ -396,6 +397,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: Markdown")];
     [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: Plain Text")];
     
+    [self.actionSheet addButtonWithTitle:l10n(@"As Email")];
+    
     [self.actionSheet addButtonWithTitle:l10n(@"Print")];
     
     self.actionSheet.cancelButtonIndex = [self.actionSheet addButtonWithTitle:@""];
@@ -462,8 +465,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
             pasteboard.string = [DeckExport asPlaintextString:self.deck];
             [DeckImport updateCount];
             break;
-        case 7: // print
+        case 7: // email
+            [self sendAsEmail];
+            break;
+        case 8: // print
             [self printDeck:self.exportButton];
+            break;
     }
 }
 
@@ -1014,6 +1021,28 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 -(void)printInteractionControllerDidDismissPrinterOptions:(UIPrintInteractionController *)printInteractionController
 {
     self.printController = nil;
+}
+
+#pragma mark email
+
+-(void) sendAsEmail
+{
+    TF_CHECKPOINT(@"Export Email");
+    
+    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+    
+    mailer.mailComposeDelegate = self;
+    NSString *emailBody = [DeckExport asPlaintextString:self.deck];
+    [mailer setMessageBody:emailBody isHTML:NO];
+    
+    [mailer setSubject:self.deck.name];
+    
+    [self presentViewController:mailer animated:NO completion:nil];
+}
+
+-(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
