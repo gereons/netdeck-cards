@@ -69,6 +69,12 @@ static UIPopoverController* popover;
     imgTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:imgTap];
     
+    if (self.card.altCard == nil)
+    {
+        self.toggleButton.hidden = YES;
+    }
+    
+    [self.toggleButton setImage:[ImageCache altArtIcon:self.showAlt] forState:UIControlStateNormal];
     [self loadCardImage:self.card];
 }
 
@@ -76,14 +82,20 @@ static UIPopoverController* popover;
 {
     if (UIGestureRecognizerStateEnded == sender.state)
     {
-        self.showAlt = !self.showAlt;
-        Card* altCard = self.card.altCard;
-        
-        if (altCard)
-        {
-            Card* card = self.showAlt ? altCard : self.card;
-            [self loadCardImage:card];
-        }
+        [self toggleImage:nil];
+    }
+}
+
+-(void) toggleImage:(id)sender
+{
+    self.showAlt = !self.showAlt;
+    Card* altCard = self.card.altCard;
+    
+    if (altCard)
+    {
+        Card* card = self.showAlt ? altCard : self.card;
+        [self loadCardImage:card];
+        [self.toggleButton setImage:[ImageCache altArtIcon:self.showAlt] forState:UIControlStateNormal];
     }
 }
 

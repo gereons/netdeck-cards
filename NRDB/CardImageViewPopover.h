@@ -17,5 +17,8 @@
 
 @property IBOutlet UIImageView* imageView;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
+@property IBOutlet UIButton* toggleButton;
+
+-(IBAction) toggleImage:(id)sender;
 
 @end
