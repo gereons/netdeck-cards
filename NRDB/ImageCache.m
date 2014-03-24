@@ -159,14 +159,19 @@ static UIImage* altArtIconOff;
 
              NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
              NSLog(@"GET %@ for %@: error %ld", url, card.name, (long)response.statusCode);
-#warning FIXME: only store placeholder if we had no previous image
+
              // invoke callback
              if (failureBlock)
              {
                  UIImage* img = [ImageCache placeholderFor:card.role];
                  failureBlock(card, img);
                  
-                 [self storeInCache:img lastModified:nil forKey:key];
+                 // only store the placeholder if we had no previous image
+                 UIImage* prevImg = [[TMCache sharedCache] objectForKey:key];
+                 if (prevImg == nil)
+                 {
+                     [self storeInCache:img lastModified:nil forKey:key];
+                 }
              }
          }];
 }
