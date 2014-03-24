@@ -35,7 +35,7 @@
     if (unsavedChanges)
     {
         UIAlertView* alert = [[UIAlertView alloc]
-                          initWithTitle:Nil
+                          initWithTitle:nil
                           message:l10n(@"There are unsaved changes")
                           delegate:self
                           cancelButtonTitle:l10n(@"Cancel")

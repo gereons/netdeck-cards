@@ -53,7 +53,7 @@ static struct cardSetData {
     { 11, "use_mala_tempora", "mt", NRCycleSpin, YES },
     { 12, "use_true_colors", "tc", NRCycleSpin, YES },
     { 13, "use_fear_and_loathing", "fal", NRCycleSpin, YES },
-    { 14, "use_double_time", "dt", NRCycleSpin, NO },
+    { 14, "use_double_time", "dt", NRCycleSpin, YES },
     
     // lunar
     { 16, "use_upstalk", "up", NRCycleLunar, NO },
@@ -191,6 +191,70 @@ static struct cardSetData {
     }
     
     return [[TableData alloc] initWithSections:sections andValues:sets];
+}
+
++(NSString*) setsUsedInDeck:(Deck*) deck
+{
+    NSMutableDictionary* sets = [NSMutableDictionary dictionary];
+    NSMutableDictionary* setNums = [NSMutableDictionary dictionary];
+    
+    if (deck.identity)
+    {
+        [sets setObject:@1 forKey:deck.identity.setCode];
+        int rel = [[releases objectForKey:deck.identity.setCode] intValue];
+        [setNums setObject:@(rel) forKey:deck.identity.setCode];
+    }
+    
+    for (CardCounter* cc in deck.cards)
+    {
+        NSNumber*n = [sets objectForKey:cc.card.setCode];
+        BOOL isCore = [cc.card.setCode isEqualToString:@"core"];
+        
+        if (n == nil)
+        {
+            n = @1;
+        }
+        
+        if (isCore && cc.count > cc.card.quantity)
+        {
+            int needed = (int)(0.5 + (float)cc.count / cc.card.quantity);
+            if (needed > [n intValue])
+            {
+                n = @(needed);
+            }
+        }
+        
+        [sets setObject:n forKey:cc.card.setCode];
+        int rel = [[releases objectForKey:cc.card.setCode] intValue];
+        [setNums setObject:@(rel) forKey:cc.card.setCode];
+    }
+    
+    // NSLog(@"%@ %@", sets, setNums);
+    
+    NSArray* sorted = [[setNums allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString* s1, NSString* s2) {
+        NSNumber* n1 = [setNums objectForKey:s1];
+        NSNumber* n2 = [setNums objectForKey:s2];
+        return [n1 compare:n2];
+    }];
+    
+    NSMutableString* result = [NSMutableString string];
+    NSString* sep = @"";
+    for (NSString* s in sorted)
+    {
+        [result appendString:sep];
+        if ([s isEqualToString:@"core"])
+        {
+            NSNumber* needed = [sets objectForKey:s];
+            [result appendFormat:@"%@×%@", needed, [setNames objectForKey:s]];
+        }
+        else
+        {
+            [result appendString:[setNames objectForKey:s]];
+        }
+        sep = @", ";
+    }
+    // NSLog(@"%@", result);
+    return result;
 }
 
 +(NSString*) mostRecentSetUsedInDeck:(Deck *)deck
