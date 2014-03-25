@@ -44,6 +44,8 @@
 		3A4178AB18761BF600DEEFA6 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41789D18761BF600DEEFA6 /* IASKTextField.m */; };
 		3A461A7118BBF39500302A4D /* DataDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A461A7018BBF39500302A4D /* DataDownload.m */; };
 		3A4925041869C70300B22DC5 /* CardFilterHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4925031869C70300B22DC5 /* CardFilterHeaderView.m */; };
+		3A594E2F18E1F56D00832901 /* 702-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2D18E1F56D00832901 /* 702-share.png */; };
+		3A594E3018E1F56D00832901 /* 702-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2E18E1F56D00832901 /* 702-share@2x.png */; };
 		3A5BC3EF1849326B00E792F7 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BC3E61849326B00E792F7 /* Card.m */; };
 		3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BC3E81849326B00E792F7 /* CardCounter.m */; };
 		3A5BC3F11849326B00E792F7 /* CardList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BC3EA1849326B00E792F7 /* CardList.m */; };
@@ -224,6 +226,8 @@
 		3A461A7018BBF39500302A4D /* DataDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownload.m; sourceTree = "<group>"; };
 		3A4925021869C70300B22DC5 /* CardFilterHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardFilterHeaderView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A4925031869C70300B22DC5 /* CardFilterHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardFilterHeaderView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3A594E2D18E1F56D00832901 /* 702-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share.png"; sourceTree = "<group>"; };
+		3A594E2E18E1F56D00832901 /* 702-share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share@2x.png"; sourceTree = "<group>"; };
 		3A595423186ED61C0074B3B1 /* CGRectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGRectUtils.h; sourceTree = "<group>"; };
 		3A5BC3E51849326B00E792F7 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Card.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A5BC3E61849326B00E792F7 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Card.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -608,6 +612,8 @@
 		3A6AF0D71899BB3B00227C25 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				3A594E2D18E1F56D00832901 /* 702-share.png */,
+				3A594E2E18E1F56D00832901 /* 702-share@2x.png */,
 				3A721E6418CE3FBF00799097 /* flat */,
 			);
 			path = Icons;
@@ -973,6 +979,7 @@
 				3A82624718E05EC70038B4AC /* cardstats_points.png in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
 				3AFA3B6C18DF862900F59331 /* altarttoggle_off@2x.png in Resources */,
+				3A594E3018E1F56D00832901 /* 702-share@2x.png in Resources */,
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
 				3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
@@ -983,6 +990,7 @@
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,
 				3ACCEE251869B10700CC3537 /* CardFilterHeaderView.xib in Resources */,
+				3A594E2F18E1F56D00832901 /* 702-share.png in Resources */,
 				3A82625718E05EC70038B4AC /* deckview_table.png in Resources */,
 				3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */,
 				3AB1B2341872ECA000F6AE45 /* FilteredCardViewController.xib in Resources */,
