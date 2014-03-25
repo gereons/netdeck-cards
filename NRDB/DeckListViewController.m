@@ -99,9 +99,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     [self initCards];
     
+    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 40, 0);
+    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0);
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"LargeCardCell" bundle:nil] forCellReuseIdentifier:@"largeCardCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SmallCardCell" bundle:nil] forCellReuseIdentifier:@"smallCardCell"];
-    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 40, 0);
+
     self.largeCells = YES;
     [self refresh];
     
