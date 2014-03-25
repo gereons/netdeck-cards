@@ -136,13 +136,21 @@
         case NRCardTypeResource:
         case NRCardTypeEvent:
         case NRCardTypeHardware:
-        case NRCardTypeIce:
             self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
             self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
             self.icon2.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
             self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%d", card.mu] : @"";
             self.icon3.image = card.mu != -1 ? [ImageCache muIcon] : nil;
+            break;
+            
+        case NRCardTypeIce:
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
+            self.label2.text = @"";
+            self.icon2.image = nil;
+            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.icon3.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
             break;
             
         case NRCardTypeAgenda:
