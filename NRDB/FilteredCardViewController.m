@@ -311,6 +311,7 @@
         {
             Card* card = arr[0];
             [self.deckListViewController addCard:card];
+            [self.tableView reloadData];
         }
     }
 }
