@@ -198,14 +198,7 @@ static struct cardSetData {
     NSMutableDictionary* sets = [NSMutableDictionary dictionary];
     NSMutableDictionary* setNums = [NSMutableDictionary dictionary];
     
-    if (deck.identity)
-    {
-        [sets setObject:@1 forKey:deck.identity.setCode];
-        int rel = [[releases objectForKey:deck.identity.setCode] intValue];
-        [setNums setObject:@(rel) forKey:deck.identity.setCode];
-    }
-    
-    for (CardCounter* cc in deck.cards)
+    for (CardCounter* cc in deck.allCards)
     {
         NSNumber*n = [sets objectForKey:cc.card.setCode];
         BOOL isCore = [cc.card.setCode isEqualToString:@"core"];
@@ -260,14 +253,8 @@ static struct cardSetData {
 +(NSString*) mostRecentSetUsedInDeck:(Deck *)deck
 {
     int maxRelease = 0;
-    
-    if (deck.identity)
-    {
-        int rel = [[releases objectForKey:deck.identity.setCode] intValue];
-        maxRelease = MAX(maxRelease, rel);
-    }
-    
-    for (CardCounter* cc in deck.cards)
+        
+    for (CardCounter* cc in deck.allCards)
     {
         int rel = [[releases objectForKey:cc.card.setCode] intValue];
         maxRelease = MAX(maxRelease, rel);

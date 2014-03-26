@@ -785,12 +785,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(CARD_WIDTH * self.scale, CARD_HEIGHT * self.scale);
+    return CGSizeMake((int)(CARD_WIDTH * self.scale), (int)(CARD_HEIGHT * self.scale));
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(2, 2, 2, 2);
+    return UIEdgeInsetsMake(2, 2, 0, 2);
 }
 
 
@@ -812,7 +812,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     {
         if (self.deck.identity)
         {
-            cc = [CardCounter initWithCard:self.deck.identity];
+            cc = self.deck.identityCc;
         }
     }
     else
@@ -901,7 +901,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     {
         if (self.deck.identity)
         {
-            cc = [CardCounter initWithCard:self.deck.identity];
+            cc = self.deck.identityCc;
         }
         cell.copiesLabel.text = @"";
     }
@@ -974,7 +974,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     self.scale = MAX(self.scale, 0.5);
     self.scale = MIN(self.scale, 1.0);
     
-    [self.collectionView.collectionViewLayout invalidateLayout];
+    [self.collectionView reloadData];
 }
 
 #pragma mark printing

@@ -129,6 +129,11 @@
                 self.icon1.image = nil;
                 self.icon2.image = nil;
                 self.icon3.image = nil;
+                [self.identityButton setTitle:l10n(@"Choose Identity") forState:UIControlStateNormal];
+            }
+            else
+            {
+                [self.identityButton setTitle:l10n(@"Switch Identity") forState:UIControlStateNormal];
             }
             break;
             

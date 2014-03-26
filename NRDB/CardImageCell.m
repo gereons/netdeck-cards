@@ -19,6 +19,62 @@
  see http://ronnqvi.st/thinking-like-a-bzier-path/
  */
 
+-(void) awakeFromNib
+{
+    // remove all constraints IB has generated
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    [self removeConstraints:self.constraints];
+    
+    NSDictionary* views = @{
+                            @"image": self.imageView,
+                            @"activity": self.activityIndicator,
+                            @"toggle": self.toggleButton,
+                            @"label": self.copiesLabel
+                            };
+    
+    NSArray* constraints = @[
+                             @"H:|[image]|",
+                             @"H:|[label]|",
+                             @"H:[toggle(28)]",
+                             @"V:|[image][label(20)]|",
+                             @"V:[toggle(34)]",
+                            ];
+    
+    // see http://stackoverflow.com/questions/12873372/centering-a-view-in-its-superview-using-visual-format-language
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.imageView
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.f constant:0.f]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.imageView
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1.f constant:0.f]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.toggleButton
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.imageView
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1.f constant:0.f]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.toggleButton
+                                                     attribute:NSLayoutAttributeRight
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.imageView
+                                                     attribute:NSLayoutAttributeRight
+                                                    multiplier:1.f constant:0.f]];
+    
+    for (NSString* c in constraints)
+    {
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:c options:0 metrics:nil views:views]];
+    }
+}
+
 -(void) setCc:(CardCounter *)cc
 {
     self->_cc = cc;

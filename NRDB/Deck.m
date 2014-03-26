@@ -29,17 +29,49 @@
     return self;
 }
 
+-(Card*) identity
+{
+    return self.identityCc.card;
+}
+
+-(void) setIdentity:(Card *)identity
+{
+    if (identity)
+    {
+        self.identityCc = [CardCounter initWithCard:identity andCount:1];
+    }
+    else
+    {
+        self.identityCc = nil;
+    }
+}
+
 -(NSArray*) cards
 {
     return self->_cards;
 }
 
+-(NSArray*) allCards
+{
+    NSMutableArray* arr = [NSMutableArray array];
+    if (self.identityCc)
+    {
+        [arr addObject:self.identityCc];
+    }
+    [arr addObjectsFromArray:self.cards];
+    return arr;
+}
+
 -(NSArray*) checkValidity
 {
     NSMutableArray* reasons = [NSMutableArray array];
-    if (self.identity == nil)
+    if (self.identityCc == nil)
     {
         [reasons addObject:l10n(@"No Identity")];
+    }
+    else
+    {
+        NSAssert(self.identityCc.count == 1, @"identity count");
     }
     
     if (self.influence > self.identity.influenceLimit)
@@ -160,6 +192,7 @@
 -(void) addCard:(Card *)card copies:(int)copies
 {
     NSAssert(copies > 0 && copies < 4, @"invalid card count");
+    NSAssert(card.type != NRCardTypeIdentity, @"can't add identity");
     
     int index = [self indexOfCard:card];
     if (index == -1)
@@ -186,6 +219,7 @@
 
 -(void) removeCard:(Card *)card copies:(int)copies
 {
+    NSAssert(card.type != NRCardTypeIdentity, @"can't remove identity");
     int index = [self indexOfCard:card];
     NSAssert(index != -1, @"removing card %@, not in deck", card.name);
     
@@ -205,7 +239,7 @@
     Deck* newDeck = [Deck new];
     
     newDeck.name = [NSString stringWithFormat:l10n(@"Copy of %@"), self.name];
-    newDeck.identity = self.identity;
+    newDeck.identityCc = self.identityCc;
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
     newDeck->_role = self.role;
     newDeck.filename = nil;
@@ -264,11 +298,10 @@
     
     [self sort];
     
-    if (self.identity)
+    if (self.identityCc)
     {
-        CardCounter* identity = [CardCounter initWithCard:self.identity];
-        [sections addObject:identity.card.typeStr];
-        [cards addObject:@[ identity ]];
+        [sections addObject:self.identityCc.card.typeStr];
+        [cards addObject:@[ self.identityCc ]];
     }
     else
     {
@@ -328,7 +361,9 @@
         _name = [decoder decodeObjectForKey:@"name"];
         _role = [decoder decodeIntForKey:@"role"];
         NSString* identityCode = [decoder decodeObjectForKey:@"identity"];
-        _identity = [Card cardByCode:identityCode];
+        Card* identity = [Card cardByCode:identityCode];
+        _identityCc = [CardCounter initWithCard:identity andCount:1];
+        _identityCc.showAltArt = [decoder decodeBoolForKey:@"identityAltArt"];
     }
     return self;
 }
@@ -339,6 +374,7 @@
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeInt:self.role forKey:@"role"];
     [coder encodeObject:self.identity.code forKey:@"identity"];
+    [coder encodeBool:self.identityCc.showAltArt forKey:@"identityAltArt"];
 }
 
 
