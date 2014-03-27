@@ -54,6 +54,12 @@
 		3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5FB2EB1888892300DD3CC5 /* ImageCache.m */; };
 		3A61D69D18CA458100E091DD /* Hypergeometric.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A61D69C18CA458100E091DD /* Hypergeometric.m */; };
 		3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AF0E51899C12500227C25 /* NRNavigationController.m */; };
+		3A6E755918E3FF7400EF8DE1 /* cardstats_identity_link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755318E3FF7400EF8DE1 /* cardstats_identity_link@2x.png */; };
+		3A6E755A18E3FF7400EF8DE1 /* cardstats_identity_link.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755418E3FF7400EF8DE1 /* cardstats_identity_link.png */; };
+		3A6E755B18E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755518E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png */; };
+		3A6E755C18E3FF7400EF8DE1 /* cardstats_identity_influence.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755618E3FF7400EF8DE1 /* cardstats_identity_influence.png */; };
+		3A6E755D18E3FF7400EF8DE1 /* cardstats_identity_decksize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755718E3FF7400EF8DE1 /* cardstats_identity_decksize@2x.png */; };
+		3A6E755E18E3FF7400EF8DE1 /* cardstats_identity_decksize.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755818E3FF7400EF8DE1 /* cardstats_identity_decksize.png */; };
 		3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71C9C7185CC4E200D66A27 /* CardSets.m */; };
 		3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A721DC0189CFA64004EFDFE /* DeckImport.m */; };
 		3A76EEBF18B5DA68004DB586 /* CorpPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */; };
@@ -245,6 +251,12 @@
 		3A61D69C18CA458100E091DD /* Hypergeometric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hypergeometric.m; sourceTree = "<group>"; };
 		3A6AF0E41899C12500227C25 /* NRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRNavigationController.h; sourceTree = "<group>"; };
 		3A6AF0E51899C12500227C25 /* NRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRNavigationController.m; sourceTree = "<group>"; };
+		3A6E755318E3FF7400EF8DE1 /* cardstats_identity_link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_identity_link@2x.png"; sourceTree = "<group>"; };
+		3A6E755418E3FF7400EF8DE1 /* cardstats_identity_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardstats_identity_link.png; sourceTree = "<group>"; };
+		3A6E755518E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_identity_influence@2x.png"; sourceTree = "<group>"; };
+		3A6E755618E3FF7400EF8DE1 /* cardstats_identity_influence.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardstats_identity_influence.png; sourceTree = "<group>"; };
+		3A6E755718E3FF7400EF8DE1 /* cardstats_identity_decksize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_identity_decksize@2x.png"; sourceTree = "<group>"; };
+		3A6E755818E3FF7400EF8DE1 /* cardstats_identity_decksize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardstats_identity_decksize.png; sourceTree = "<group>"; };
 		3A71C9C6185CC4E200D66A27 /* CardSets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardSets.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A71C9C7185CC4E200D66A27 /* CardSets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardSets.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A721DBF189CFA64004EFDFE /* DeckImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckImport.h; sourceTree = "<group>"; };
@@ -631,6 +643,12 @@
 		3A721E6418CE3FBF00799097 /* flat */ = {
 			isa = PBXGroup;
 			children = (
+				3A6E755318E3FF7400EF8DE1 /* cardstats_identity_link@2x.png */,
+				3A6E755418E3FF7400EF8DE1 /* cardstats_identity_link.png */,
+				3A6E755518E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png */,
+				3A6E755618E3FF7400EF8DE1 /* cardstats_identity_influence.png */,
+				3A6E755718E3FF7400EF8DE1 /* cardstats_identity_decksize@2x.png */,
+				3A6E755818E3FF7400EF8DE1 /* cardstats_identity_decksize.png */,
 				3A82622C18E05EC70038B4AC /* cardstats_trash@2x.png */,
 				3A82622D18E05EC70038B4AC /* cardstats_trash.png */,
 				3A82622E18E05EC70038B4AC /* cardstats_points@2x.png */,
@@ -968,6 +986,8 @@
 				3AFA3B6918DF862900F59331 /* altarttoggle_off.png in Resources */,
 				3A82624A18E05EC70038B4AC /* cardstats_mem.png in Resources */,
 				3A82624618E05EC70038B4AC /* cardstats_points@2x.png in Resources */,
+				3A6E755D18E3FF7400EF8DE1 /* cardstats_identity_decksize@2x.png in Resources */,
+				3A6E755A18E3FF7400EF8DE1 /* cardstats_identity_link.png in Resources */,
 				3A82624218E05EC70038B4AC /* cardstats_difficulty.png in Resources */,
 				3A82625818E05EC70038B4AC /* deckview_card@2x.png in Resources */,
 				3A82624318E05EC70038B4AC /* cardstats_strength@2x.png in Resources */,
@@ -988,6 +1008,7 @@
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
+				3A6E755918E3FF7400EF8DE1 /* cardstats_identity_link@2x.png in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,
 				3ACCEE251869B10700CC3537 /* CardFilterHeaderView.xib in Resources */,
 				3A594E2F18E1F56D00832901 /* 702-share.png in Resources */,
@@ -997,6 +1018,7 @@
 				3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */,
 				3A82624B18E05EC70038B4AC /* cardstats_link@2x.png in Resources */,
 				3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */,
+				3A6E755C18E3FF7400EF8DE1 /* cardstats_identity_influence.png in Resources */,
 				3A85327E185509B000507B9A /* SettingsViewController.xib in Resources */,
 				3AFA3B6A18DF862900F59331 /* altarttoggle_on.png in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
@@ -1012,6 +1034,7 @@
 				3A76EEC018B5DA68004DB586 /* RunnerPlaceholder.png in Resources */,
 				3A82624418E05EC70038B4AC /* cardstats_trash@2x.png in Resources */,
 				3A82624518E05EC70038B4AC /* cardstats_trash.png in Resources */,
+				3A6E755E18E3FF7400EF8DE1 /* cardstats_identity_decksize.png in Resources */,
 				3A82625418E05EC70038B4AC /* deckview_list@2x.png in Resources */,
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
 				3A82624918E05EC70038B4AC /* cardstats_mem@2x.png in Resources */,
@@ -1020,6 +1043,7 @@
 				3A82624E18E05EC70038B4AC /* cardstats_influence.png in Resources */,
 				3A76EEBF18B5DA68004DB586 /* CorpPlaceholder.png in Resources */,
 				3ADC17371856632500FA2DF7 /* CardEditorViewController.xib in Resources */,
+				3A6E755B18E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png in Resources */,
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
 				3A82624F18E05EC70038B4AC /* cardstats_difficulty@2x.png in Resources */,
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
