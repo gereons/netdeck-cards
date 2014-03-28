@@ -46,6 +46,7 @@ static UIImage* trashIcon;
 static UIImage* strengthIcon;
 static UIImage* altArtIconOn;
 static UIImage* altArtIconOff;
+static UIImage* hexTile;
 
 +(void) initialize
 {
@@ -64,6 +65,8 @@ static UIImage* altArtIconOff;
     
     altArtIconOn = [UIImage imageNamed:@"altarttoggle_on"];
     altArtIconOff = [UIImage imageNamed:@"altarttoggle_off"];
+    
+    hexTile = [UIImage imageNamed:@"hex_background"];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     if ([settings objectForKey:LAST_MOD_CACHE] == nil)
@@ -276,6 +279,7 @@ static UIImage* altArtIconOff;
 +(UIImage*) cardIcon { return cardIcon; }
 +(UIImage*) difficultyIcon { return difficultyIcon; }
 +(UIImage*) influenceIcon { return influenceIcon; }
++(UIImage*) hexTile { return hexTile; }
 +(UIImage*) altArtIcon:(BOOL)on { return on ? altArtIconOn : altArtIconOff; }
 +(UIImage*) placeholderFor:(NRRole)role
 {

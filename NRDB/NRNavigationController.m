@@ -42,7 +42,6 @@
                           otherButtonTitles:l10n(@"Discard"), l10n(@"Save"), nil];
         [alert show];
         
-    
         return NO;
     }
     else

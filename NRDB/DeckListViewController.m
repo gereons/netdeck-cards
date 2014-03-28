@@ -99,6 +99,9 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     [self initCards];
     
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 40, 0);
     self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0);
     
@@ -209,9 +212,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 -(void) willHideKeyboard:(NSNotification*)sender
 {
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, 0.0, 0.0);
-    self.tableView.contentInset = contentInsets;
-    self.tableView.scrollIndicatorInsets = contentInsets;
+    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 40, 0);
+    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0);
 }
 
 -(void) loadDeckFromFile:(NSString *)filename

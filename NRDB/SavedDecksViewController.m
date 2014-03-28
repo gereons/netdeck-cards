@@ -11,6 +11,7 @@
 #import "DeckManager.h"
 #import "Deck.h"
 #import "Notifications.h"
+#import "ImageCache.h"
 
 @interface SavedDecksViewController ()
 
@@ -37,6 +38,7 @@
     [super viewDidLoad];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     
     UINavigationItem* top = self.navigationController.navigationBar.topItem;
     

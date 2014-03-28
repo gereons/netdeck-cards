@@ -12,6 +12,7 @@
 #import <EXTScope.h>
 #import "Deck.h"
 #import "DeckManager.h"
+#import "ImageCache.h"
 
 @interface ImportDecksViewController ()
 
@@ -40,6 +41,8 @@
     // Do any additional setup after loading the view from its nib.
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     
     // do the initial listing in the background, as it may block the ui thread
     

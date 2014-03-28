@@ -32,5 +32,6 @@ typedef void (^CompletionBlock)(Card* card, UIImage* image);
 +(UIImage*) altArtIcon:(BOOL)on;
 
 +(UIImage*) placeholderFor:(NRRole)role;
++(UIImage*) hexTile;
 
 @end
