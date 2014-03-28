@@ -39,11 +39,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+        
+    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
-    
+    self.tableView.backgroundColor = [UIColor clearColor];
     // do the initial listing in the background, as it may block the ui thread
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;

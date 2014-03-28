@@ -99,8 +99,9 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     [self initCards];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
-    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.collectionView.backgroundColor = [UIColor clearColor];
     
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 40, 0);
     self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0);

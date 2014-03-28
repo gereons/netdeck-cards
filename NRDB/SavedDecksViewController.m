@@ -37,8 +37,9 @@
 {
     [super viewDidLoad];
     
+    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    self.tableView.backgroundColor = [UIColor clearColor];
     
     UINavigationItem* top = self.navigationController.navigationBar.topItem;
     
