@@ -16,7 +16,7 @@
 }
 
 @property Deck* deck;
-@property DeckListViewController* delegate;
+@property (weak) DeckListViewController* delegate;
 
 @property (nonatomic) CardCounter* cardCounter;
 @property IBOutlet UIButton* identityButton;

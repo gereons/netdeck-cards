@@ -47,6 +47,11 @@
     [self refresh];
 }
 
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void) refresh
 {
     NSMutableSet* hiddenKeys = [NSMutableSet set];

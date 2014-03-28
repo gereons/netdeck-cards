@@ -176,6 +176,11 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     }
 }
 
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
