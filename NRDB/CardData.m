@@ -15,9 +15,11 @@
 #import "CardSets.h"
 #import "SettingsKeys.h"
 
-#define JSON_INT(key, attr)          c->_##key = [[json objectForKey:attr] intValue]
+// #define JSON_INT(key, attr)          c->_##key = [[json objectForKey:attr] intValue]
+#define JSON_INT(key, attr)          do { NSString*tmp = [json objectForKey:attr]; c->_##key = tmp ? [tmp intValue] : -1; } while (0)
 #define JSON_BOOL(key, attr)         c->_##key = [[json objectForKey:attr] boolValue]
 #define JSON_STR(key, attr)          c->_##key = [json objectForKey:attr]
+
 
 @implementation CardData
 
@@ -256,23 +258,12 @@ NSString* const kANY = @"Any";
     JSON_INT(minimumDecksize, @"minimumdecksize");
     JSON_INT(baseLink, @"baselink");
     JSON_INT(advancementCost, @"advancementcost");
-    NSString* ap = [json objectForKey:@"agendapoints"];
-    c->_agendaPoints = ap ? [ap intValue] : -1;
-    
-    NSString* strength = [json objectForKey:@"strength"];
-    c->_strength = strength ? [strength intValue] : -1;
-    
-    NSString* mu = [json objectForKey:@"memoryunits"];
-    c->_mu = mu ? [mu intValue] : -1;
-    
-    NSString* cost = [json objectForKey:@"cost"];
-    c->_cost = cost ? [cost intValue] : -1;
-    
-    NSString* influence = [json objectForKey:@"factioncost"];
-    c->_influence = influence ? [influence intValue] : -1;
-    
-    NSString* trash = [json objectForKey:@"trash"];
-    c->_trash = trash ? [trash intValue] : -1;
+    JSON_INT(agendaPoints, @"agendapoints");
+    JSON_INT(mu, @"memoryunits");
+    JSON_INT(strength, @"strength");
+    JSON_INT(cost, @"cost");
+    JSON_INT(influence, @"factioncost");
+    JSON_INT(trash, @"trash");
     
     JSON_STR(url, @"url");
     JSON_STR(imageSrc, @"imagesrc");
