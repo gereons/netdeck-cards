@@ -104,7 +104,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     self.collectionView.backgroundColor = [UIColor clearColor];
     
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 40, 0);
-    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0);
+    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0); // top == 0 because this is the first view in the .xib. wtf?
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LargeCardCell" bundle:nil] forCellReuseIdentifier:@"largeCardCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SmallCardCell" bundle:nil] forCellReuseIdentifier:@"smallCardCell"];
@@ -206,15 +206,23 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords
 
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight-44, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight, 0.0);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
+    
+    self.collectionView.contentInset = contentInsets;
+    self.collectionView.scrollIndicatorInsets = contentInsets;
 }
 
 -(void) willHideKeyboard:(NSNotification*)sender
 {
-    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 40, 0);
-    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64, 0, 40, 0);
+    
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+    
+    self.collectionView.contentInset = contentInsets;
+    self.collectionView.scrollIndicatorInsets = contentInsets;
 }
 
 -(void) loadDeckFromFile:(NSString *)filename
