@@ -30,7 +30,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.6.2):
     - DTFoundation/Core
-  - GRMustache (7.0.0):
+  - GRMustache (7.0.2):
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
   - libextobjc (0.4):
@@ -95,7 +95,7 @@ SPEC CHECKSUMS:
   Dropbox-Sync-API-SDK: 7f72642aa8ebb238397a7dcd45e619e78999e20d
   DTCoreText: 4d56bb74ff05a3b2415fc15fccc4b5689ed3119c
   DTFoundation: 7c69990fa3cb7655cafa95ab59c3fcea014460f0
-  GRMustache: 89f50becf0b5b9e020d640ffbbbd46f31edbc9dc
+  GRMustache: 693bc290fc9c5f3d10a8cb82752ebe48821bc9f0
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
   libextobjc: 2c9fc8226f0f38e562587f65172f93f0c9b4a47a
   ObjectiveSugar: fed588577bcf9733546aeaa089de444e4bab9a52
@@ -104,4 +104,4 @@ SPEC CHECKSUMS:
   TMCache: 4b05e1b124d9f7e8d449640e059cff4cda17ed27
   TPKeyboardAvoiding: 17995aaa6db26ac2a9fa8714a86509c5888f0392
 
-COCOAPODS: 0.29.0
+COCOAPODS: 0.30.0
