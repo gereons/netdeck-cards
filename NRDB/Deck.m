@@ -39,6 +39,7 @@
     if (identity)
     {
         self.identityCc = [CardCounter initWithCard:identity andCount:1];
+        self.role = identity.role;
     }
     else
     {

@@ -126,7 +126,8 @@ static DeckImport* instance;
 -(Deck*) checkForTextDeck:(NSArray*)lines
 {
     NSArray* cards = [Card allCards];
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^([0-9]*)x" options:0 error:nil];
+    NSRegularExpression *regex1 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9])x" options:0 error:nil];
+    NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@" x([0-9])" options:0 error:nil];
     
     Deck* deck = [Deck new];
     for (NSString* line in lines)
@@ -135,26 +136,32 @@ static DeckImport* instance;
         {
             if ([line rangeOfString:c.name options:NSCaseInsensitiveSearch].location != NSNotFound)
             {
-                NSTextCheckingResult *match = [regex firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
-                
-                if (match.numberOfRanges == 2)
+                if (c.type == NRCardTypeIdentity)
                 {
-                    NSString* count = [line substringWithRange:[match rangeAtIndex:1]];
-                    // NSLog(@"found card %@ x %@", count, c.name);
-                    
-                    if (c.type == NRCardTypeIdentity)
+                    deck.identity = c;
+                    // NSLog(@"found identity %@", c.name);
+                }
+                else
+                {
+                    NSTextCheckingResult *match = [regex1 firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
+                    if (!match)
                     {
-                        deck.identity = c;
+                        match = [regex2 firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
                     }
-                    else
+                    
+                    if (match.numberOfRanges == 2)
                     {
+                        NSString* count = [line substringWithRange:[match rangeAtIndex:1]];
+                        // NSLog(@"found card %@ x %@", count, c.name);
+                        
                         int cnt = [count intValue];
                         if (cnt > 0 && cnt < 4)
                         {
                             [deck addCard:c copies:cnt];
                         }
+                        
+                        break;
                     }
-                    break;
                 }
             }
         }

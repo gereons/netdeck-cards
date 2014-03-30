@@ -234,7 +234,6 @@
         if (self.setIdentity)
         {
             self.tmpDeck.identity = card;
-            self.tmpDeck.role = card.role;
         }
         else
         {
