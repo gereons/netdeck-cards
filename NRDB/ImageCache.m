@@ -99,11 +99,6 @@ static UIImage* hexTile;
 
 -(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock
 {
-    [self getImageFor:card success:successBlock failure:failureBlock forced:NO];
-}
-
--(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock forced:(BOOL)forced
-{
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
     // NSLog(@"get img for %@", key);
@@ -111,7 +106,7 @@ static UIImage* hexTile;
     if (img)
     {
         // NSLog(@"cached, check for update");
-        [self checkForImageUpdate:card withKey:key forced:forced];
+        [self checkForImageUpdate:card withKey:key];
         
         if (successBlock)
         {
@@ -124,7 +119,6 @@ static UIImage* hexTile;
     if (![AFNetworkReachabilityManager sharedManager].reachable)
     {
         successBlock(card, [ImageCache placeholderFor:card.role]);
-        return;
     }
     else
     {
@@ -154,15 +148,19 @@ static UIImage* hexTile;
              }
              
              NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
-             [self storeInCache:responseObject lastModified:lastModified forKey:key];
+             if (lastModified.length)
+             {
+                 [self storeInCache:responseObject lastModified:lastModified forKey:key];
+             }
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             @strongify(self);
              // download failed
+             @strongify(self);
 
+#if NETWORK_LOG
              NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
-             NSLog(@"GET %@ for %@: error %ld", url, card.name, (long)response.statusCode);
-
+             NLOG(@"GET %@ for %@: error %ld", url, card.name, (long)response.statusCode);
+#endif
              // invoke callback
              if (failureBlock)
              {
@@ -179,23 +177,19 @@ static UIImage* hexTile;
          }];
 }
 
--(void) checkForImageUpdate:(Card*)card withKey:(NSString*)key forced:(BOOL)forced
+-(void) checkForImageUpdate:(Card*)card withKey:(NSString*)key
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
     NSDictionary* dict = [settings objectForKey:NEXT_CHECK];
-    if (!forced)
+    NSDate* nextCheck = [dict objectForKey:key];
+    if (nextCheck)
     {
-        NSDate* nextCheck = [dict objectForKey:key];
-        if (nextCheck)
+        NSDate* now = [NSDate date];
+        if ([now timeIntervalSinceDate:nextCheck] < 0)
         {
-            NSDate* now = [NSDate date];
-            if ([now timeIntervalSinceDate:nextCheck] < 0)
-            {
-                // NSLog(@"no check needed");
-                // no need to check
-                return;
-            }
+            // no need to check
+            return;
         }
     }
     
@@ -210,25 +204,31 @@ static UIImage* hexTile;
         [request setValue:lastModDate forHTTPHeaderField:@"If-Modified-Since"];
     }
     
-    NLOG(@"GET %@ If-Modified-Since %@", url, lastModDate);
+    NLOG(@"GET %@ If-Modified-Since %@", url, lastModDate ?: @"n/a");
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFImageResponseSerializer serializer];
     @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         @strongify(self);
+        
         // got 200 - new image. store in caches
-        NLOG(@"GET %@ If-Modified-Since %@: status 200", url, lastModDate);
+        NLOG(@"GOT %@ If-Modified-Since %@: status 200", url, lastModDate);
         NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
         
         [self storeInCache:responseObject lastModified:lastModified forKey:key];
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         @strongify(self);
-        NLOG(@"GET %@ If-Modified-Since %@: status %d", url, lastModDate, operation.response.statusCode);
+        
+        NLOG(@"GOT %@ If-Modified-Since %@: status %ld", url, lastModDate, (long)operation.response.statusCode);
         if (operation.response.statusCode == 304)
         {
             // not modified - update check date
             [self setNextCheck:card.code withTimeIntervalFromNow:SUCCESS_INTERVAL];
+        }
+        else
+        {
+            NSLog(@"%@", operation);
         }
     }];
     

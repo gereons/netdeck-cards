@@ -17,7 +17,6 @@ typedef void (^CompletionBlock)(Card* card, UIImage* image);
 
 -(void) clearCache;
 -(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock;
--(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock forced:(BOOL)forced;
 
 +(UIImage*) trashIcon;
 +(UIImage*) strengthIcon;

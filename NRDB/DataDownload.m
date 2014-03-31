@@ -134,8 +134,6 @@ static DataDownload* instance;
     [self.cards addObjectsFromArray:[Card altCards]];
     
     [self downloadImageForCard:@(0)];
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
     
 -(void) downloadImageForCard:(NSNumber*)index
@@ -160,8 +158,7 @@ static DataDownload* instance;
 
             ++self.downloadErrors;
             [self downloadNextImage:i+1];
-        }
-        forced:YES];
+        }];
     }
 }
     
@@ -174,7 +171,7 @@ static DataDownload* instance;
         
         self.progressView.progress = progress/100.0;
         
-        // use -performSelector: so the hud can refresh
+        // use -performSelector: so the UI can refresh
         [self performSelector:@selector(downloadImageForCard:) withObject:@(i) afterDelay:.01];
     }
     else
@@ -182,7 +179,7 @@ static DataDownload* instance;
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [self.alert dismissWithClickedButtonIndex:0 animated:NO];
+        [self.alert dismissWithClickedButtonIndex:99 animated:NO];
         if (self.downloadErrors > 0)
         {
             NSString* msg = [NSString stringWithFormat:l10n(@"%d of %lu images could not be downloaded."), self.downloadErrors, (unsigned long)self.cards.count];
@@ -199,13 +196,13 @@ static DataDownload* instance;
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
-    if (buttonIndex != -1)
+    if (buttonIndex == alertView.cancelButtonIndex)
     {
         self.downloadStopped = YES;
+        [self.manager.operationQueue cancelAllOperations];
     }
     self.alert = nil;
     
-    [self.manager.operationQueue cancelAllOperations];
 }
 
 @end
