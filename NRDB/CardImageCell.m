@@ -73,6 +73,21 @@
     {
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:c options:0 metrics:nil views:views]];
     }
+    
+    // add parallax effect to cells
+    UIInterpolatingMotionEffect *effectX = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
+                                                              type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    UIInterpolatingMotionEffect *effectY = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
+                                                              type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+	
+	float depth = 10;
+	effectX.maximumRelativeValue = @(depth);
+	effectX.minimumRelativeValue = @(-depth);
+	effectY.maximumRelativeValue = @(depth);
+	effectY.minimumRelativeValue = @(-depth);
+	
+	[self addMotionEffect:effectX];
+	[self addMotionEffect:effectY];
 }
 
 -(void) setCc:(CardCounter *)cc
