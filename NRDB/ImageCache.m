@@ -106,7 +106,10 @@ static UIImage* hexTile;
     if (img)
     {
         // NSLog(@"cached, check for update");
-        [self checkForImageUpdate:card withKey:key];
+        if ([AFNetworkReachabilityManager sharedManager].reachable)
+        {
+            [self checkForImageUpdate:card withKey:key];
+        }
         
         if (successBlock)
         {
