@@ -215,7 +215,7 @@ static DeckImport* instance;
 
 -(void) downloadDeck:(NSString*)deckId
 {
-    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Deck") message:nil delegate:self cancelButtonTitle:@"Stop" otherButtonTitles:nil];
+    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Deck") message:nil delegate:self cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
     UIActivityIndicatorView* act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [act startAnimating];
     [self.alert setValue:act forKey:@"accessoryView"];

@@ -54,7 +54,7 @@ static DataDownload* instance;
 
 -(void) downloadCardData
 {
-    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Card Data") message:nil delegate:self cancelButtonTitle:@"Stop" otherButtonTitles:nil];
+    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Card Data") message:nil delegate:self cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
     UIActivityIndicatorView* act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [act startAnimating];
     [self.alert setValue:act forKey:@"accessoryView"];
@@ -123,7 +123,7 @@ static DataDownload* instance;
     
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 250, 20)];
     
-    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Images") message:nil delegate:self cancelButtonTitle:@"Stop" otherButtonTitles:nil];
+    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Images") message:nil delegate:self cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
     [self.alert setValue:self.progressView forKey:@"accessoryView"];
     [self.alert show];
     
@@ -149,6 +149,7 @@ static DataDownload* instance;
         Card* card = [self.cards objectAtIndex:i];
         
         @weakify(self);
+#warning rework image updating, distinct from getImageFor
         [[ImageCache sharedInstance] getImageFor:card success:^(Card* card, UIImage* image) {
             @strongify(self);
             [self downloadNextImage:i+1];
