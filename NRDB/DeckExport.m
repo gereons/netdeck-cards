@@ -58,7 +58,9 @@
             continue;
         }
         
-        [s appendString:[NSString stringWithFormat:@"\n%@ (%lu)\n", sections[i], (unsigned long)cards.count]];
+        int cnt = 0;
+        for (int j=0; j<cards.count; ++j) { CardCounter* cc = cards[j]; cnt += cc.count; }
+        [s appendString:[NSString stringWithFormat:@"\n%@ (%d)\n", sections[i], cnt]];
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
@@ -118,7 +120,9 @@
             continue;
         }
         
-        [s appendString:[NSString stringWithFormat:@"\n## %@ (%lu)\n", sections[i], (unsigned long)cards.count]];
+        int cnt = 0;
+        for (int j=0; j<cards.count; ++j) { CardCounter* cc = cards[j]; cnt += cc.count; }
+        [s appendString:[NSString stringWithFormat:@"\n## %@ (%d)\n", sections[i], cnt]];
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
@@ -178,7 +182,9 @@
             continue;
         }
         
-        [s appendString:[NSString stringWithFormat:@"\n[b]%@[/b] (%lu)\n", sections[i], (unsigned long)cards.count]];
+        int cnt = 0;
+        for (int j=0; j<cards.count; ++j) { CardCounter* cc = cards[j]; cnt += cc.count; }
+        [s appendString:[NSString stringWithFormat:@"\n[b]%@[/b] (%d)\n", sections[i], cnt]];
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
