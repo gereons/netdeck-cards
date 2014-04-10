@@ -12,11 +12,13 @@
 @interface ImageCache : NSObject
 
 typedef void (^CompletionBlock)(Card* card, UIImage* image);
+typedef void (^UpdateCompletionBlock)(BOOL ok);
 
 +(ImageCache*) sharedInstance;
 
 -(void) clearCache;
 -(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock;
+-(void) updateImageFor:(Card*)card completion:(UpdateCompletionBlock)completionBlock;
 
 +(UIImage*) trashIcon;
 +(UIImage*) strengthIcon;

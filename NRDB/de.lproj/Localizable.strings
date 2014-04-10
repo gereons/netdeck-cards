@@ -73,6 +73,7 @@
 // card downloading
 "Downloading Card Data" = "Lade Karten-Daten";
 "Downloading Images" = "Lade Karten-Bilder";
+"Image %d of %d" = "Bild %d von %d";
 "Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche er später nochmal.";
 "%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";
 "Clear Cache? You will need to re-download all data from netrunnerdb.com." = "Cache löschen? Du musst danach alle Daten neu von netrunnerdb.com laden.";

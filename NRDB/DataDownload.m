@@ -121,17 +121,21 @@ static DataDownload* instance;
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
+    self.cards = [[Card allCards] mutableCopy];
+    [self.cards addObjectsFromArray:[Card altCards]];
+    
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 250, 20)];
     
-    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Images") message:nil delegate:self cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
+    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Images")
+                                            message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 0, self.cards.count]
+                                           delegate:self
+                                  cancelButtonTitle:l10n(@"Stop")
+                                  otherButtonTitles:nil];
     [self.alert setValue:self.progressView forKey:@"accessoryView"];
     [self.alert show];
     
     self.downloadStopped = NO;
     self.downloadErrors = 0;
-    
-    self.cards = [[Card allCards] mutableCopy];
-    [self.cards addObjectsFromArray:[Card altCards]];
     
     [self downloadImageForCard:@(0)];
 }
@@ -149,15 +153,13 @@ static DataDownload* instance;
         Card* card = [self.cards objectAtIndex:i];
         
         @weakify(self);
-#warning rework image updating, distinct from getImageFor
-        [[ImageCache sharedInstance] getImageFor:card success:^(Card* card, UIImage* image) {
-            @strongify(self);
-            [self downloadNextImage:i+1];
-        }
-        failure:^(Card* card, UIImage* placeholder) {
-            @strongify(self);
 
-            ++self.downloadErrors;
+        [[ImageCache sharedInstance] updateImageFor:card completion:^(BOOL ok) {
+            @strongify(self);
+            if (!ok)
+            {
+                ++self.downloadErrors;
+            }
             [self downloadNextImage:i+1];
         }];
     }
@@ -171,6 +173,8 @@ static DataDownload* instance;
         // NSLog(@"%@ - progress %.1f", card.name, progress);
         
         self.progressView.progress = progress/100.0;
+        
+        self.alert.message = [NSString stringWithFormat:l10n(@"Image %d of %d"), i, self.cards.count ];
         
         // use -performSelector: so the UI can refresh
         [self performSelector:@selector(downloadImageForCard:) withObject:@(i) afterDelay:.01];

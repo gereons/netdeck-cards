@@ -21,7 +21,7 @@
 #define SUCCESS_INTERVAL    (30*SEC_PER_DAY)
 #define ERROR_INTERVAL      (1*SEC_PER_DAY)
 
-#define NETWORK_LOG         (DEBUG && 0)
+#define NETWORK_LOG         (DEBUG && 1)
 
 #if NETWORK_LOG
 #define NLOG(fmt, ...)      do { NSLog(fmt, ##__VA_ARGS__); } while(0)
@@ -180,6 +180,49 @@ static UIImage* hexTile;
          }];
 }
 
+-(void) updateImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
+{
+    if (![AFNetworkReachabilityManager sharedManager].reachable)
+    {
+        completionBlock(NO);
+        return;
+    }
+    
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    NSDictionary* dict = [settings objectForKey:LAST_MOD_CACHE];
+    NSString* lastModDate = [dict objectForKey:key];
+    
+    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
+    NSURL *URL = [NSURL URLWithString:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
+    if (lastModDate)
+    {
+        [request setValue:lastModDate forHTTPHeaderField:@"If-Modified-Since"];
+    }
+    
+    // NLOG(@"GET %@ If-Modified-Since %@", url, lastModDate ?: @"n/a");
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFImageResponseSerializer serializer];
+    @weakify(self);
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        @strongify(self);
+        NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
+        // NLOG(@"GOT %@ If-Modified-Since %@: status 200", url, lastModDate);
+        [self storeInCache:responseObject lastModified:lastModified forKey:key];
+        completionBlock(YES);
+    }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // @strongify(self);
+        NSInteger status = operation.response.statusCode;
+        if (status != 304) { NLOG(@"GOT %@ If-Modified-Since %@: status %ld", url, lastModDate, (long)status); }
+        completionBlock(status == 304);
+    }];
+    [operation start];
+}
+
 -(void) checkForImageUpdate:(Card*)card withKey:(NSString*)key
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -196,7 +239,7 @@ static UIImage* hexTile;
         }
     }
     
-    dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
+    dict = [settings objectForKey:LAST_MOD_CACHE];
     NSString* lastModDate = [dict objectForKey:key];
     
     NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
