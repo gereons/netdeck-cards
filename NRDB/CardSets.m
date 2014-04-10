@@ -172,7 +172,11 @@ static struct cardSetData {
             }
             else if (![disabledSets containsObject:setCode])
             {
-                [names addObject:[setNames objectForKey:setCode]];
+                NSString* name = [setNames objectForKey:setCode];
+                if (name)
+                {
+                    [names addObject:name];
+                }
             }
         }
         [sets addObject:names];
