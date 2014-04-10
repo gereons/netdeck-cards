@@ -342,19 +342,35 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     {
         Deck* newDeck = [self.deck duplicate];
 
-        [DeckManager saveDeck:newDeck];
-        if (self.autoSaveDropbox)
+        switch (buttonIndex)
         {
-            if (newDeck.identity && newDeck.cards.count > 0)
-            {
-                [DeckExport asOctgn:newDeck autoSave:YES];
-            }
-        }
-
-        if (buttonIndex == 1)
-        {
-            self.deck = newDeck;
-            [self refresh];
+            case 1: // dup and switch
+                self.deck = newDeck;
+                if (self.autoSave)
+                {
+                    self.deck.filename = [DeckManager saveDeck:self.deck];
+                }
+                else
+                {
+                    self.deckChanged = YES;
+                }
+                [self refresh];
+                break;
+                
+            case 2: // dup, stay here
+                [DeckManager saveDeck:newDeck];
+                if (self.autoSaveDropbox)
+                {
+                    if (newDeck.identity && newDeck.cards.count > 0)
+                    {
+                        [DeckExport asOctgn:newDeck autoSave:YES];
+                    }
+                }
+                break;
+                
+            default:
+                NSAssert(NO, @"unknown button");
+                break;
         }
     }
     else
