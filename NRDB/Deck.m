@@ -363,7 +363,10 @@
         _role = [decoder decodeIntForKey:@"role"];
         NSString* identityCode = [decoder decodeObjectForKey:@"identity"];
         Card* identity = [Card cardByCode:identityCode];
-        _identityCc = [CardCounter initWithCard:identity andCount:1];
+        if (identity)
+        {
+            _identityCc = [CardCounter initWithCard:identity andCount:1];
+        }
         _identityCc.showAltArt = [decoder decodeBoolForKey:@"identityAltArt"];
     }
     return self;
