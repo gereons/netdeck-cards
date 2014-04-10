@@ -106,11 +106,6 @@ static struct cardSetData {
     for (Card* c in [cards allValues])
     {
         [setNames setObject:c.setName forKey:c.setCode];
-        
-        if (setNames.count == setCodes.count)
-        {
-            break;
-        }
     }
 }
 
