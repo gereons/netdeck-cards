@@ -55,7 +55,7 @@
 -(NSMutableArray*) sortDecks:(NSMutableArray*)arr
 {
     NSArray* sorted = [arr sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
-        NSComparisonResult res = [d1.name compare:d2.name];
+        NSComparisonResult res = [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
         return res;
     }];
     
