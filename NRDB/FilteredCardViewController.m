@@ -405,6 +405,12 @@
     NSArray* cards = self.cards[indexPath.section];
     Card *card = cards[indexPath.row];
     
+    UITextField* textField = self.filterView.searchField;
+    if (textField.isFirstResponder && textField.text.length > 0)
+    {
+        [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
+    }
+    
     [self.deckListViewController addCard:card];
     [self.tableView reloadData];
 }

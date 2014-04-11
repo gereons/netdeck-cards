@@ -319,6 +319,7 @@ static NSArray* scopes;
 {
     if (self.searchText.length > 0)
     {
+        [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
         [[NSNotificationCenter defaultCenter] postNotificationName:ADD_TOP_CARD object:self];
     }
     else
