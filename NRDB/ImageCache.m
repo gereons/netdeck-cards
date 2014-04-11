@@ -93,6 +93,7 @@ static UIImage* hexTile;
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@{} forKey:LAST_MOD_CACHE];
     [settings setObject:@{} forKey:NEXT_CHECK];
+    [settings synchronize];
     
     [[TMCache sharedCache] removeAllObjects];
 }
@@ -133,7 +134,6 @@ static UIImage* hexTile;
 {
     NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
     
-    NLOG(@"GET %@", url);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFImageResponseSerializer serializer];
     @weakify(self);
@@ -143,7 +143,7 @@ static UIImage* hexTile;
              @strongify(self);
              // download successful
              
-             NLOG(@"GET %@: status 200", url);
+             NLOG(@"dl: GET %@: status 200", url);
              // invoke callback
              if (successBlock)
              {
@@ -162,7 +162,7 @@ static UIImage* hexTile;
 
 #if NETWORK_LOG
              NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
-             NLOG(@"GET %@ for %@: error %ld", url, card.name, (long)response.statusCode);
+             NLOG(@"dl: GET %@ for %@: error %ld", url, card.name, (long)response.statusCode);
 #endif
              // invoke callback
              if (failureBlock)
@@ -203,21 +203,20 @@ static UIImage* hexTile;
         [request setValue:lastModDate forHTTPHeaderField:@"If-Modified-Since"];
     }
     
-    NLOG(@"GET %@ If-Modified-Since %@", url, lastModDate ?: @"n/a");
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFImageResponseSerializer serializer];
     @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         @strongify(self);
         NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
-        NLOG(@"GOT %@ If-Modified-Since %@: status 200", url, lastModDate);
+        NLOG(@"up: GOT %@ If-Modified-Since %@: status 200", url, lastModDate ?: @"n/a");
         [self storeInCache:responseObject lastModified:lastModified forKey:key];
         completionBlock(YES);
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // @strongify(self);
         NSInteger status = operation.response.statusCode;
-        NLOG(@"GOT %@ If-Modified-Since %@: status %ld", url, lastModDate, (long)status);
+        NLOG(@"up: GOT %@ If-Modified-Since %@: status %ld", url, lastModDate ?: @"n/a", (long)status);
         completionBlock(status == 304);
     }];
     [operation start];
