@@ -14,7 +14,6 @@
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "FilteredCardViewController.h"
-#import "CardEditorViewController.h"
 #import "SavedDecksViewController.h"
 #import "ImportDecksViewController.h"
 #import "Notifications.h"
@@ -33,7 +32,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRMenuLoadCorp,
     NRMenuImportDecks,
     NRMenuSettings,
-    NRMenuCardEditor,
     NRMenuAbout,
     
     NRMenuItemCount
@@ -278,10 +276,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         case NRMenuSettings:
             cell.textLabel.text = l10n(@"Settings");
             break;
-        case NRMenuCardEditor:
-            cell.textLabel.text = l10n(@"Card Editor");
-            cell.textLabel.enabled = NO;
-            break;
         case NRMenuImportDecks:
             cell.textLabel.text = l10n(@"Import Decks");
             cell.textLabel.enabled = cardsAvailable && dropboxLinked;
@@ -384,16 +378,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             AboutViewController* about = [[AboutViewController alloc] initWithNibName:@"AboutView" bundle:nil];
             
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:about];
-            detailViewManager.detailViewController = self.snc;
-            break;
-        }
-            
-        case NRMenuCardEditor:
-        {
-            TF_CHECKPOINT(@"card editor");
-            CardEditorViewController* edit = [[CardEditorViewController alloc] initWithNibName:@"CardEditorViewController" bundle:nil];
-            
-            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:edit];
             detailViewManager.detailViewController = self.snc;
             break;
         }
