@@ -82,7 +82,7 @@ static UIPopoverController* popover;
 {
     if (UIGestureRecognizerStateEnded == sender.state)
     {
-        [self toggleImage:nil];
+        [CardImageViewPopover dismiss];
     }
 }
 
