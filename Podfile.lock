@@ -92,15 +92,15 @@ SPEC CHECKSUMS:
   AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
   Appirater: 32fb9089615b5e542c7ad7b5749741a8aed55290
   CorePlot: 7b55ddfce42eb93051c0f9edba927fd246831f6d
-  Dropbox-Sync-API-SDK: 7f72642aa8ebb238397a7dcd45e619e78999e20d
+  Dropbox-Sync-API-SDK: 0d1d50a14307def2f056aba1afa9e6bd4727b409
   DTCoreText: 4d56bb74ff05a3b2415fc15fccc4b5689ed3119c
   DTFoundation: 7c69990fa3cb7655cafa95ab59c3fcea014460f0
-  GRMustache: 693bc290fc9c5f3d10a8cb82752ebe48821bc9f0
+  GRMustache: e17b24646727b52576b2b51fb878efbed820ae5a
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
   libextobjc: 2c9fc8226f0f38e562587f65172f93f0c9b4a47a
   ObjectiveSugar: fed588577bcf9733546aeaa089de444e4bab9a52
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
-  TestFlightSDK: 71e3e78d3a46144dbad975a4bf80a14dae6a818a
+  TestFlightSDK: fe0567a897456b6f65b180541892ef0154986e01
   TMCache: 4b05e1b124d9f7e8d449640e059cff4cda17ed27
   TPKeyboardAvoiding: 17995aaa6db26ac2a9fa8714a86509c5888f0392
 
