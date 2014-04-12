@@ -16,6 +16,7 @@
 #import "SettingsKeys.h"
 #import "CardSets.h"
 #import "DeckImport.h"
+#import "Card.h"
 
 @implementation AppDelegate
 
@@ -47,10 +48,11 @@
     self.window.rootViewController = self.splitViewController;
     [self.window makeKeyAndVisible];
     
-    // setup tmcache: 50mb space
-    TMCache* cache = [TMCache sharedCache];
-    cache.diskCache.byteLimit = 50 * 1024 * 1024;
-        
+    // setup tmcache
+    NSInteger cardCount = [Card allCards].count;
+    NSInteger byteLimit = cardCount == 0 ? 70*1024*1024 : cardCount * 120000;
+    [TMCache sharedCache].diskCache.byteLimit = byteLimit;
+
     [DeckImport checkClipboardForDeck];
     
     return YES;

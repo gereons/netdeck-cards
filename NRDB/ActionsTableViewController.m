@@ -161,7 +161,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
                                                         message:l10n(@"Card data may be out of date. Download now?")
                                                        delegate:self
                                               cancelButtonTitle:l10n(@"Later")
-                                              otherButtonTitles:@"OK", nil];
+                                              otherButtonTitles:l10n(@"OK"), nil];
         alert.tag = 1;
         [alert show];
     }

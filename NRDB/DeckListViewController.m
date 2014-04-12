@@ -295,7 +295,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         return;
     }
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Enter Name") message:nil delegate:self cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:@"OK", nil];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Enter Name") message:nil delegate:self cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
     alert.tag = NAME_ALERT;
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
@@ -468,12 +468,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         case 0: // octgn
             if (self.deck.identity == nil)
             {
-                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have an Identity.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have an Identity.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
                 return;
             }
             if (self.deck.cards.count == 0)
             {
-                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have Cards.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have Cards.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
                 return;
             }
             [DeckExport asOctgn:self.deck autoSave:NO];
@@ -1045,7 +1045,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         {
             // NSLog(@"Printing could not complete because of error: %@", error);
             NSString* msg = error.localizedDescription;
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Printing Problem") message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Printing Problem") message:msg delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil];
             [alert show];
         }
     };

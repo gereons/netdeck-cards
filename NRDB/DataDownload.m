@@ -8,6 +8,7 @@
 
 #import <AFNetworking.h>
 #import <EXTScope.h>
+#import <TMCache.h>
 
 #import "DataDownload.h"
 #import "CardData.h"
@@ -108,7 +109,7 @@ static DataDownload* instance;
                                                         message:l10n(@"Unable to download cards at this time. Please try again later.")
                                                        delegate:nil
                                               cancelButtonTitle:nil
-                                              otherButtonTitles:@"OK", nil];
+                                              otherButtonTitles:l10n(@"OK"), nil];
         [alert show];
     }
     
@@ -119,11 +120,21 @@ static DataDownload* instance;
 
 -(void) downloadAllImages
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
     self.cards = [[Card allCards] mutableCopy];
     [self.cards addObjectsFromArray:[Card altCards]];
     
+    if (self.cards.count == 0)
+    {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Card Data")
+                                                        message:l10n(@"Please download card data first")
+                                                       delegate:nil
+                                              cancelButtonTitle:l10n(@"OK")
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 250, 20)];
     
     self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Images")
@@ -188,10 +199,28 @@ static DataDownload* instance;
         if (self.downloadErrors > 0)
         {
             NSString* msg = [NSString stringWithFormat:l10n(@"%d of %lu images could not be downloaded."), self.downloadErrors, (unsigned long)self.cards.count];
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil];
             [alert show];
         }
         
+        /*
+        NSLog(@"%lu disk bytes", (unsigned long)[[TMCache sharedCache] diskByteCount]);
+        
+        int __block memCount = 0;
+        [[[TMCache sharedCache] memoryCache] enumerateObjectsWithBlock:^(TMMemoryCache*cache, NSString* key, id obj) {
+                                                            ++memCount;
+                                                        }
+                                                       completionBlock:^(TMMemoryCache* cache) {
+                                                           NSLog(@"%d in memory cache", memCount);
+                                                       }];
+        int __block diskCount = 0;
+        [[[TMCache sharedCache] diskCache] enumerateObjectsWithBlock:^(TMDiskCache*cache, NSString* key, id obj, NSURL* url) {
+                                                                ++diskCount;
+                                                        }
+                                                     completionBlock:^(TMDiskCache* cache) {
+                                                         NSLog(@"%d in disk cache", diskCount);
+                                                     }];
+        */
         self.cards = nil;
     }
 }
@@ -207,7 +236,6 @@ static DataDownload* instance;
         [self.manager.operationQueue cancelAllOperations];
     }
     self.alert = nil;
-    
 }
 
 @end

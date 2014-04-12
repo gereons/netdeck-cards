@@ -154,7 +154,7 @@
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
                                                     message:l10n(@"An Internet connection is required.")
                                                    delegate:nil
-                                          cancelButtonTitle:@"OK"
+                                          cancelButtonTitle:l10n(@"OK")
                                           otherButtonTitles:nil];
     [alert show];
 }
