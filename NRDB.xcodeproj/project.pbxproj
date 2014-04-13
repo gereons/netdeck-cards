@@ -134,6 +134,8 @@
 		3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */; };
 		3AB9BD5E18FADC01004EAF10 /* DeckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5C18FADC01004EAF10 /* DeckCell.m */; };
 		3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */; };
+		3AB9BD6218FB0E49004EAF10 /* 702-import@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD6018FB0E49004EAF10 /* 702-import@2x.png */; };
+		3AB9BD6318FB0E49004EAF10 /* 702-import.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD6118FB0E49004EAF10 /* 702-import.png */; };
 		3ABDE5A418AFC52C00AFEA88 /* DrawSimulatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */; };
 		3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
@@ -374,6 +376,8 @@
 		3AB9BD5B18FADC01004EAF10 /* DeckCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckCell.h; sourceTree = "<group>"; };
 		3AB9BD5C18FADC01004EAF10 /* DeckCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckCell.m; sourceTree = "<group>"; };
 		3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckCell.xib; sourceTree = "<group>"; };
+		3AB9BD6018FB0E49004EAF10 /* 702-import@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-import@2x.png"; sourceTree = "<group>"; };
+		3AB9BD6118FB0E49004EAF10 /* 702-import.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-import.png"; sourceTree = "<group>"; };
 		3ABDE5A118AFC52C00AFEA88 /* DrawSimulatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSimulatorViewController.h; sourceTree = "<group>"; };
 		3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSimulatorViewController.m; sourceTree = "<group>"; };
 		3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawSimulatorViewController.xib; sourceTree = "<group>"; };
@@ -675,6 +679,8 @@
 				3A6E756318E401C000EF8DE1 /* iTunes */,
 				3A594E2D18E1F56D00832901 /* 702-share.png */,
 				3A594E2E18E1F56D00832901 /* 702-share@2x.png */,
+				3AB9BD6018FB0E49004EAF10 /* 702-import@2x.png */,
+				3AB9BD6118FB0E49004EAF10 /* 702-import.png */,
 				3A721E6418CE3FBF00799097 /* flat */,
 			);
 			path = Icons;
@@ -1137,11 +1143,13 @@
 				3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */,
 				3AE0D50B18F7B4A0007868A7 /* mem_slider@2x.png in Resources */,
 				3A6E756E18E401D400EF8DE1 /* Icon-76@2x.png in Resources */,
+				3AB9BD6318FB0E49004EAF10 /* 702-import.png in Resources */,
 				3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */,
 				3A82625018E05EC70038B4AC /* cardstats_decksize@2x.png in Resources */,
 				3A82624D18E05EC70038B4AC /* cardstats_influence@2x.png in Resources */,
 				3AE0D50718F7B4A0007868A7 /* influence_slider@2x.png in Resources */,
 				3AFA3B6B18DF862900F59331 /* altarttoggle_on@2x.png in Resources */,
+				3AB9BD6218FB0E49004EAF10 /* 702-import@2x.png in Resources */,
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
 				3A82625518E05EC70038B4AC /* deckview_list.png in Resources */,
 				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
