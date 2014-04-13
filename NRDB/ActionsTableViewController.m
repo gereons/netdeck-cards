@@ -84,6 +84,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
     [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
     [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
     [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
@@ -201,6 +202,21 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSString* filename = [userInfo objectForKey:@"filename"];
     
     FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role andFile:filename];
+    NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
+    
+    NRNavigationController* nc = (NRNavigationController*)self.navigationController;
+    nc.deckListViewController = filter.deckListViewController;
+    
+    [self.navigationController pushViewController:filter animated:YES];
+}
+
+-(void)newDeck:(NSNotification*) notification
+{
+    NSDictionary* userInfo = notification.userInfo;
+    
+    NRRole role = [[userInfo objectForKey:@"role"] intValue];
+    
+    FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;

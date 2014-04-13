@@ -128,13 +128,21 @@ typedef NS_ENUM(NSInteger, FilterType) {
 
 -(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    NSNumber* role;
     switch (buttonIndex)
     {
         case 0: // new runner
+            role = @(NRRoleRunner);
             break;
         case 1: // new corp
+            role = @(NRRoleCorp);
             break;
     }
+    if (role)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
+    }
+    
     self.popup = nil;
     return;
 }

@@ -276,6 +276,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 -(void) duplicateDeck:(id)sender
 {
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
+    
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Duplicate this deck?")
                                                     message:nil
                                                    delegate:self
@@ -421,22 +427,13 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         return;
     }
     
-    self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-    
-    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: OCTGN")];
-    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: BBCode")];
-    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: Markdown")];
-    [self.actionSheet addButtonWithTitle:l10n(@"Dropbox: Plain Text")];
-    
-    [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: BBCode")];
-    [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: Markdown")];
-    [self.actionSheet addButtonWithTitle:l10n(@"Clipboard: Plain Text")];
-    
-    [self.actionSheet addButtonWithTitle:l10n(@"As Email")];
-    
-    [self.actionSheet addButtonWithTitle:l10n(@"Print")];
-    
-    self.actionSheet.cancelButtonIndex = [self.actionSheet addButtonWithTitle:@""];
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                   delegate:self
+                                          cancelButtonTitle:@""
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:l10n(@"Dropbox: OCTGN"), l10n(@"Dropbox: BBCode"), l10n(@"Dropbox: Markdown"), l10n(@"Dropbox: Plain Text"),
+                        l10n(@"Clipboard: BBCode"), l10n(@"Clipboard: Markdown"), l10n(@"Clipboard: Plain Text"),
+                        l10n(@"As Email"), l10n(@"Print"), nil];
 
     [self.actionSheet showFromBarButtonItem:sender animated:NO];
 }
@@ -511,6 +508,10 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 -(void) toggleView:(UISegmentedControl*)sender
 {
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+    }
     TF_CHECKPOINT(@"toggle deck view");
     
     NSInteger viewMode = sender.selectedSegmentIndex;
