@@ -27,6 +27,7 @@
 @property (readonly) int agendaPoints;
 
 @property NSString* filename;
+@property NSDate* lastModified;
 
 -(NSArray*) checkValidity; // returns array of reasons, deck is ok if count==0
 

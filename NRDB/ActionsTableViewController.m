@@ -16,6 +16,7 @@
 #import "FilteredCardViewController.h"
 #import "SavedDecksViewController.h"
 #import "ImportDecksViewController.h"
+#import "DecksViewController.h"
 #import "Notifications.h"
 #import "CardData.h"
 #import "SettingsKeys.h"
@@ -33,6 +34,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRMenuImportDecks,
     NRMenuSettings,
     NRMenuAbout,
+    NRMenuDecks,
     
     NRMenuItemCount
 };
@@ -109,7 +111,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     [super viewDidAppear:animated];
     
-    if (self.lastSelection == NRMenuLoadRunner || self.lastSelection == NRMenuLoadCorp)
+    if (self.lastSelection == NRMenuLoadRunner || self.lastSelection == NRMenuLoadCorp || self.lastSelection == NRMenuDecks)
     {
         NSIndexPath* indexPath = [NSIndexPath indexPathForItem:self.lastSelection inSection:0];
         
@@ -280,6 +282,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             cell.textLabel.text = l10n(@"Import Decks");
             cell.textLabel.enabled = cardsAvailable && dropboxLinked;
             break;
+        case NRMenuDecks:
+            cell.textLabel.text = l10n(@"Decks");
+            cell.textLabel.enabled = cardsAvailable;
+            break;
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -333,6 +339,15 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             
             NRNavigationController* nc = (NRNavigationController*)self.navigationController;
             nc.deckListViewController = runner.deckListViewController;
+            break;
+        }
+            
+        case NRMenuDecks:
+        {
+            TF_CHECKPOINT(@"decks");
+            DecksViewController* decks = [[DecksViewController alloc] init];
+            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:decks];
+            detailViewManager.detailViewController = self.snc;
             break;
         }
             

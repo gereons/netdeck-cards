@@ -368,6 +368,7 @@
             _identityCc = [CardCounter initWithCard:identity andCount:1];
         }
         _identityCc.showAltArt = [decoder decodeBoolForKey:@"identityAltArt"];
+        _lastModified = nil;
     }
     return self;
 }
