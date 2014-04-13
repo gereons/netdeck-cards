@@ -243,11 +243,16 @@
     NSError* error;
     DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     DBPath* path = [[DBPath root] childPath:filename];
+    
+    DBFile* textFile;
     if ([filesystem fileInfoForPath:path error:&error] != nil)
     {
-        [filesystem deletePath:path error:nil];
+        textFile = [filesystem openFile:path error:&error];
     }
-    DBFile* textFile = [filesystem createFile:path error:nil];
+    else
+    {
+        textFile = [filesystem createFile:path error:&error];
+    }
     BOOL writeOk = [textFile writeString:content error:&error];
     [textFile close];
     
