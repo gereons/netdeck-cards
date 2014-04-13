@@ -13,6 +13,7 @@
 #import "ImageCache.h"
 #import "Faction.h"
 #import "Notifications.h"
+#import "ImportDecksViewController.h"
 
 typedef NS_ENUM(NSInteger, SortType) {
     SortDate, SortFaction, SortA_Z
@@ -56,6 +57,10 @@ typedef NS_ENUM(NSInteger, FilterType) {
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Decks"
+                                      style:UIBarButtonItemStylePlain
+                                     target:nil
+                                     action:nil];
     
     UISegmentedControl* sortControl = [[UISegmentedControl alloc] initWithItems:@[ l10n(@"Date"), l10n(@"Faction"), l10n(@"A-Z") ]];
     sortControl.selectedSegmentIndex = SortA_Z;
@@ -72,7 +77,7 @@ typedef NS_ENUM(NSInteger, FilterType) {
     
     topItem.rightBarButtonItems = @[
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDeck:)],
-        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:nil action:nil],
+        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)],
     ];
     
     [self updateDecks];
@@ -124,6 +129,14 @@ typedef NS_ENUM(NSInteger, FilterType) {
     
         [self.popup showFromBarButtonItem:sender animated:NO];
     }
+}
+
+-(void) importDecks:(UIBarButtonItem*)sender
+{
+    ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
+    
+    
+    [self.navigationController pushViewController:import animated:NO];
 }
 
 -(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
