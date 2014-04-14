@@ -51,8 +51,8 @@
 "Yes, switch to copy" = "Ja, zur Kopie wechseln";
 "Yes, but stay here" = "Ja, hier bleiben";
 "Identity" = "Identität";
-"Enter name" = "Namen eingeben";
-"Deck name" = "Deck-Name";
+"Enter Name" = "Namen eingeben";
+"Deck Name" = "Deck-Name";
 "Dropbox: Plain Text" = "Dropbox: Reiner Text";
 "Clipboard: Plain Text" = "Clipboard: Reiner Text";
 "Connect to your Dropbox account first." = "Dropbox-Verbindung nicht eingerichtet";

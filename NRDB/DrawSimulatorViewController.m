@@ -49,6 +49,7 @@
     [self.doneButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
     
     [self.selector setTitle:l10n(@"All") forSegmentAtIndex:6];
+    self.selector.apportionsSegmentWidthsByContent = YES;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }

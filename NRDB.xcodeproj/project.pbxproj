@@ -348,6 +348,10 @@
 		3A994270184B8CAB004B6E05 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3A994272184B8CB4004B6E05 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		3A994274184B8CBB004B6E05 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3A9CDFF018FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = es; path = es.lproj/About.html; sourceTree = "<group>"; };
+		3A9CDFF118FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3A9CDFF218FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3A9CDFF318FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCellSubtitle.xib; sourceTree = "<group>"; };
 		3A9CE56618E0CA2A007A26CD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		3A9E7C4A18845FDA00A507C3 /* TableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableData.h; sourceTree = "<group>"; };
@@ -1060,6 +1064,7 @@
 				en,
 				Base,
 				de,
+				es,
 			);
 			mainGroup = 3A3622551849320C007F2854;
 			productRefGroup = 3A36225F1849320C007F2854 /* Products */;
@@ -1309,6 +1314,7 @@
 			children = (
 				3A095E8C18BBC49C00C99FED /* en */,
 				3A095E8E18BBC53800C99FED /* de */,
+				3A9CDFF118FC5FD3002B7494 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1318,6 +1324,7 @@
 			children = (
 				3A095E9218BBCB2200C99FED /* en */,
 				3A095E9418BBCB2700C99FED /* de */,
+				3A9CDFF018FC5FD3002B7494 /* es */,
 			);
 			name = About.html;
 			sourceTree = "<group>";
@@ -1327,6 +1334,7 @@
 			children = (
 				3A36226B1849320C007F2854 /* en */,
 				3A095E8F18BBC53800C99FED /* de */,
+				3A9CDFF218FC5FD3002B7494 /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1336,6 +1344,7 @@
 			children = (
 				3A36228D1849320C007F2854 /* en */,
 				3A095E9018BBC53800C99FED /* de */,
+				3A9CDFF318FC5FD3002B7494 /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
