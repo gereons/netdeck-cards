@@ -14,6 +14,7 @@
 #import "Faction.h"
 #import "Notifications.h"
 #import "ImportDecksViewController.h"
+#import "SettingsKeys.h"
 
 typedef NS_ENUM(NSInteger, SortType) {
     SortDate, SortFaction, SortA_Z
@@ -80,6 +81,12 @@ typedef NS_ENUM(NSInteger, FilterType) {
         [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)],
     ];
     
+    // [self updateDecks];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     [self updateDecks];
 }
 
@@ -133,9 +140,16 @@ typedef NS_ENUM(NSInteger, FilterType) {
 
 -(void) importDecks:(UIBarButtonItem*)sender
 {
+    BOOL useDropbox = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX];
+    
+    if (!useDropbox)
+    {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Import Decks") message:l10n(@"Connect to your Dropbox account first.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+    
     ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
-    
-    
     [self.navigationController pushViewController:import animated:NO];
 }
 

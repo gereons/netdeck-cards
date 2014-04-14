@@ -53,6 +53,7 @@
     
     // do the initial listing in the background, as it may block the ui thread
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Getting decks from Dropbox")];
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         @strongify(self);
@@ -61,10 +62,11 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            [SVProgressHUD dismiss];
             if (count == 0)
             {
                 UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Decks found")
-                                                                message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App.")
+                                                                message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.")
                                                                delegate:nil
                                                       cancelButtonTitle:l10n(@"OK")
                                                       otherButtonTitles:nil];
@@ -156,6 +158,7 @@
     static NSString* cellIdentifier = @"deckCell";
     
     DeckCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
     NSArray* names = self.deckNames[indexPath.section];
     NSArray* decks = self.decks[indexPath.section];

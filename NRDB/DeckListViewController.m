@@ -103,8 +103,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     self.tableView.backgroundColor = [UIColor clearColor];
     self.collectionView.backgroundColor = [UIColor clearColor];
     
-    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 40, 0);
-    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0); // top == 0 because this is the first view in the .xib. wtf?
+    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0);
+    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0); // top == 0 because this is the first view in the .xib. wtf?
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LargeCardCell" bundle:nil] forCellReuseIdentifier:@"largeCardCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SmallCardCell" bundle:nil] forCellReuseIdentifier:@"smallCardCell"];
@@ -216,7 +216,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 -(void) willHideKeyboard:(NSNotification*)sender
 {
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64, 0, 40, 0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64, 0, 44, 0);
     
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
