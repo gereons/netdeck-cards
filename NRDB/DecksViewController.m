@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, FilterType) {
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Decks"
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Decks")
                                       style:UIBarButtonItemStylePlain
                                      target:nil
                                      action:nil];

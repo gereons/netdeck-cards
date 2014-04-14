@@ -53,7 +53,7 @@
     
     // do the initial listing in the background, as it may block the ui thread
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Getting decks from Dropbox")];
+    [SVProgressHUD showWithStatus:l10n(@"Loading decks from Dropbox")];
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         @strongify(self);
