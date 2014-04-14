@@ -913,7 +913,6 @@
 				3A85328418550AD100507B9A /* About Detail */,
 				3A8532361854F8D300507B9A /* Empty Detail */,
 				3ADC1732185662F200FA2DF7 /* Card Editor */,
-				3ACE038E1882CE9400F22B87 /* Import Decks */,
 				3A8532771855079100507B9A /* Settings View */,
 			);
 			name = "Detail Views";
@@ -925,6 +924,9 @@
 				3AB9BD5618FADB51004EAF10 /* DecksViewController.h */,
 				3AB9BD5718FADB51004EAF10 /* DecksViewController.m */,
 				3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */,
+				3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */,
+				3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */,
+				3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */,
 				3AB9BD5B18FADC01004EAF10 /* DeckCell.h */,
 				3AB9BD5C18FADC01004EAF10 /* DeckCell.m */,
 				3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */,
@@ -942,16 +944,6 @@
 				3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */,
 			);
 			name = "Draw Simulator";
-			sourceTree = "<group>";
-		};
-		3ACE038E1882CE9400F22B87 /* Import Decks */ = {
-			isa = PBXGroup;
-			children = (
-				3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */,
-				3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */,
-				3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */,
-			);
-			name = "Import Decks";
 			sourceTree = "<group>";
 		};
 		3AD3248E18A93F8000D7AE5D /* Deck Analysis */ = {

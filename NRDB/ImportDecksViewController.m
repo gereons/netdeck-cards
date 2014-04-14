@@ -13,6 +13,7 @@
 #import "Deck.h"
 #import "DeckManager.h"
 #import "ImageCache.h"
+#import "DeckCell.h"
 
 @interface ImportDecksViewController ()
 
@@ -21,6 +22,7 @@
 
 @property Deck* tmpDeck;
 @property BOOL setIdentity;
+@property NSDateFormatter* dateFormatter;
 
 @end
 
@@ -29,8 +31,11 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self)
+    {
+        self.dateFormatter = [[NSDateFormatter alloc] init];
+        [self.dateFormatter setDateStyle:NSDateFormatterLongStyle];
+        [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     }
     return self;
 }
@@ -43,8 +48,10 @@
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
-    // do the initial listing in the background, as it may block the ui thread
     
+    [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
+    
+    // do the initial listing in the background, as it may block the ui thread
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -148,18 +155,33 @@
 {
     static NSString* cellIdentifier = @"deckCell";
     
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
-    }
+    DeckCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     NSArray* names = self.deckNames[indexPath.section];
     NSArray* decks = self.decks[indexPath.section];
 
-    cell.textLabel.text = names[indexPath.row];
+    cell.nameLabel.text = names[indexPath.row];
     Deck* deck = decks[indexPath.row];
-    cell.detailTextLabel.text = [NSString stringWithFormat:l10n(@"%@ (%d Cards)"), deck.identity.name, deck.size];
+    
+    cell.nameLabel.text = deck.name;
+    
+    if (deck.identity)
+    {
+        cell.identityLabel.text = deck.identity.name;
+        cell.identityLabel.textColor = [deck.identity factionColor];
+    }
+    else
+    {
+        cell.identityLabel.text = l10n(@"No Identity");
+        cell.identityLabel.textColor = [UIColor darkGrayColor];
+    }
+    
+    NSString* summary = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence"), deck.size, deck.influence];
+    cell.summaryLabel.text = summary;
+    BOOL valid = [deck checkValidity].count == 0;
+    cell.summaryLabel.textColor = valid ? [UIColor blackColor] : [UIColor redColor];
+    
+    cell.dateLabel.text = [self.dateFormatter stringFromDate:deck.lastModified];
     
     return cell;
 }
@@ -183,6 +205,7 @@
     if (file)
     {
         NSData* data = [file readData:nil];
+        NSDate* lastModified = file.info.modifiedTime;
         [file close];
         
         NSXMLParser* parser = [[NSXMLParser alloc] initWithData:data];
@@ -201,6 +224,7 @@
             {
                 self.tmpDeck.name = fileName;
             }
+            self.tmpDeck.lastModified = lastModified;
         }
         else
         {
