@@ -1,0 +1,178 @@
+/*
+  Localizable.strings (fr)
+  NRDB
+
+  Créé par Gereon Steffens le 24.02.14.
+  Copyright (c) 2014 Gereon Steffens. Tout droits réservés.
+*/
+
+// mots communs
+"never" = "jamais";
+"All" = "Tous";
+"Any" = "Tous";
+"card" = "carte";
+"Card" = "Carte";
+"cards" = "cartes";
+"Cards" = "Cartes";
+"credit" = "crédit";
+"credits" = "crédits";
+"Influence" = "Influence";
+"Agenda Points" = "Points de projets";
+"Strength" = "Force";
+"Cost" = "Coût";
+
+"Cancel" = "Annuler";
+"Edit" = "Modifier";
+"Done" = "Terminé";
+"Remove" = "Enlever";
+"Delete" = "Supprimer";
+"No" = "Non";
+"Yes" = "Oui";
+"Corp" = "Corpo";
+
+// menu principal
+"New Runner Deck" = "Nouveau deck Runner";
+"New Corp Deck" = "Nouveau deck Corpo";
+"Load Runner Deck" = "Charger un deck Runner";
+"Load Corp Deck" = "Charger un deck Corpo";
+"Import Decks" = "Importer des decks";
+"Settings" = "Réglages";
+"About" = "Infos";
+
+// infos
+"About Net Deck %@" = "À propos de Net Deck %@";
+
+// liste de deck
+"Save" = "Sauvegarder";
+"Saving..." = "Sauvegarde en cours...";
+"Duplicate" = "Dupliquer";
+"Yes, switch to copy" = "Oui, modifier en tant que copie";
+"Yes, but stay here" = "Oui, mais rester ici";
+"Identity" = "Identité";
+"Enter Name" = "Nommer";
+"Deck Name" = "Nom du deck";
+"Dropbox: Plain Text" = "Dropbox: format texte";
+"Clipboard: Plain Text" = "Presse Papier : format texte";
+"Connect to your Dropbox account first." = "Connectez-vous à votre compte Dropbox";
+"Deck needs to have an Identity." = "Ce deck a besoin d'une identité.";
+"Deck needs cards." = "Ce deck a besoin dd cartes";
+"Cards up to %@" = "Cartes jusqu'à %@";
+"Copy of %@" = "Copie de %@";
+
+// raisons d'invalidité du deck
+"No Identity" = "Aucune identité";
+"AP must be %d or %d" = "Le nombre de points de projet doit être de %d ou de %d";
+"Too many pet projects" = "Trop de projet personnel";
+"Cannot include Jinteki" = "Ne peux pas inclure de cartes de la faction Jinteki";
+"Cannot use out-of-faction agendas" = "Ne peut pas utiliser des projets hors faction";
+"Not enough cards" = "Pas assez de cartes";
+"Too much influence used" = "Trop d'infuence utilisée";
+
+// téléchargement de cartes
+"Downloading Card Data" = "Téléchargement de données en cours";
+"Downloading Images" = "Téléchargement des images en cours";
+"Unable to download cards at this time. Please try again later." = "Le téléchargement a échoué. Merci de réessayer ultérieurement.";
+"%d of %lu images could not be downloaded." = "%d de %lu d'images n'ont pu être téléchargé.";
+"Clear Cache? You will need to re-download all data from netrunnerdb.com." = "Vider le cache ? Il va falloir télécharger les données de netrunnerdb.com à nouveau.";
+"An Internet connection is required." = "Une connection internet est requise.";
+"Image %d of %d" = "Image %d de %d";
+
+// selection de l'identité
+"Choose Identity" = "Choisir l'identité";
+"Switch Identity" = "Modifier l'identité";
+
+// simulateur de pioche
+"Draw Simulator" = "Simulateur de pioche";
+"%ld %@ drawn" = "%ld %@ piochées";
+"Clear" = "Annuler";
+"Odds to draw a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Probabilité de tirer une carte : 1×%.1f%%  2×%.1f%%  3×%.1f%%";
+
+// deck view
+"Draw" = "Cartes";
+"Analysis" = "Analyse";
+
+// analyse du deck 
+"Deck Analysis" = "Analyse du deck";
+"Deck Validity" = "Deck OK ?";
+"Deck is valid" = "Le deck est OK";
+"Cost Distribution" = "Répartition des coûts";
+"Strength Distribution" = "Répartition de la force";
+"Card Type Distribution" = "Répartition du type de carte";
+"Influence Distribution" = "Répartition de l'influence";
+"ICE Type Distribution" = "Répartition du type de glace";
+"Strength %d\n%d %@" = "Force %d\n%d %@";
+
+// charger un deck
+"Load Runner Deck" = "Charger un deck runner";
+"Load Corp Deck" = "Charger un deck corpo";
+"%@ · %d Cards · %d Influence" = "%@ · %d Cartes · %d Influence";
+"%d Cards · %d Influence" = "%d Cartes · %d Influence";
+
+// filtre
+"Strength: %@" = "Force : %@";
+"MU: %@" = "UM : %@";
+"Cost: %@" = "Coût : %@";
+"AP: %@" = "Points de projet : %@";
+"Influence: %@" = "Influence: %@";
+"Type" = "Type";
+"Subtype" = "Sous type";
+"Faction" = "Faction";
+"Set" = "Extension";
+"Search in:" = "Chercher dans:";
+"Search Cards" = "Chercher les cartes";
+
+// section headers
+"Identity" = "Indentité";
+"Program" = "Programme";
+"Resource" = "Ressource";
+"Event" = "Evènement";
+"Hardware" = "Matériel";
+"Agenda" = "Projet";
+"Asset" = "Avoir";
+"ICE" = "Glace";
+"Upgrade" = "Extension";
+"Operation" = "Opération";
+"Icebreaker" = "Brise glace";
+
+// startup alert
+"No Card Data" = "Pas de données de cartes";
+
+"To use this app, you must first download card data from netrunnerdb.com" = "Pour utiliser cette application, il faut d'abord télécharger les données des cartes depuis netrunnerdb.com";
+"Download" = "Téléchargement";
+
+"Update cards" = "Mise à jour des cartes";
+"Card data may be out of date. Download now?" = "Il se peut que les données des cartes soient périmées. Télécharger maintenant ?";
+"Later" = "Pas encore";
+
+// unsaved changes alert
+"Discard" = "Annuler";
+"There are unsaved changes" = "Les modifications n'ont pas été enregistrées";
+
+// dropbox
+"Successfully connected to your Dropbox account" = "Connection à votre compte Dropbox réussie !";
+
+// import
+"Import Deck" = "Importer un deck";
+"%@ (%d Cards)" = "%@ (%d Cartes)";
+"Deck imported" = "Deck importé";
+"Detected a deck list in your clipboard. Import this deck?" = "Une decklist a été detectée dans votre presse papiers, l'importer ?";
+"Detected a deck list URL in your clipboard. Download and import this deck?" = "Une URL d'une decklist a été detectée dans votre presse papiers, l'importer ?";
+"No Decks found" = "Aucun deck trouvé";
+"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Copier les decks au format OCTGN (.o8d) dans le fichier Apps/Net de Dropbox pour pouvoir les iporter dans l'application.";
+
+// export
+"%@ exported" = "%@ exporté";
+"Error exporting %@" = "Erreur lors de l'export de %@";
+"OCTGN Deck" = "Deck OCTGN";
+"Plain Text Deck" = "Deck en text plein";
+"Markdown Deck" = "Deck en Markdown";
+"BBCode Deck" = "Deck en BBCode";
+"Print" = "Imprimer";
+
+// cycles
+"Core / Deluxe" = "Boite de base / Deluxe";
+"Genesis Cycle" = "Cycle de la Genèse";
+"Spin Cycle" = "Cycle des Distorsions";
+"Lunar Cycle" = "Cycle de la Lune";
+
+*/
