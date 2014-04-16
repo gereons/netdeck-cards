@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ImportDecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, NSXMLParserDelegate>
+@interface ImportDecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property IBOutlet UITableView* tableView;
 

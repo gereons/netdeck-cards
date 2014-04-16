@@ -13,22 +13,29 @@
 #import "Notifications.h"
 #import <AFNetworking.h>
 #import <EXTScope.h>
+#import "OctgnImport.h"
 
-typedef NS_ENUM(NSInteger, DeckSource)
+typedef NS_ENUM(NSInteger, DeckBuilderSite)
 {
-    DeckSourceNone,
-    DeckSourceNetrunnerDB,
-    DeckSourceMeteor
+    DeckBuilderSiteNone,
+    DeckBuilderSiteNetrunnerDB,
+    DeckBuilderSiteMeteor
 };
+
+@interface DeckSource : NSObject
+@property NSString* deckId;
+@property DeckBuilderSite site;
+@end
+@implementation DeckSource
+@end
 
 @interface DeckImport()
 
 @property UIAlertView* alert;
 @property AFHTTPRequestOperationManager* manager;
 @property BOOL downloadStopped;
+@property DeckSource* deckSource;
 @property Deck* deck;
-@property DeckSource deckSource;
-@property NSString* deckId;
 
 @end
 
@@ -79,34 +86,37 @@ static DeckImport* instance;
     NSArray* lines = [clip componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
     self.deck = nil;
-    self.deckSource = DeckSourceNone;
-    self.deckId = [self checkForNetrunnerDbDeckURL:lines];
-    if (!self.deckId)
+    
+    self.deckSource = [self checkForNetrunnerDbDeckURL:lines];
+    if (!self.deckSource)
     {
-        self.deckId = [self checkForMeteorDeckURL:lines];
+        self.deckSource = [self checkForMeteorDeckURL:lines];
     }
     
-    if (self.deckId && self.deckSource == DeckSourceNetrunnerDB)
+    if (self.deckSource)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:l10n(@"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?")
-                                                       delegate:self
-                                              cancelButtonTitle:l10n(@"No")
-                                              otherButtonTitles:l10n(@"Yes"), nil];
-        alert.tag = NO;
-        [alert show];
-        return;
-    }
-    else if (self.deckId && self.deckSource == DeckSourceMeteor)
-    {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
-                                                       delegate:self
-                                              cancelButtonTitle:l10n(@"No")
-                                              otherButtonTitles:l10n(@"Yes"), nil];
-        alert.tag = NO;
-        [alert show];
-        return;
+        if (self.deckSource.site == DeckBuilderSiteNetrunnerDB)
+        {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:l10n(@"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?")
+                                                           delegate:self
+                                                  cancelButtonTitle:l10n(@"No")
+                                                  otherButtonTitles:l10n(@"Yes"), nil];
+            alert.tag = NO;
+            [alert show];
+            return;
+        }
+        else if (self.deckSource.site == DeckBuilderSiteMeteor)
+        {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
+                                                           delegate:self
+                                                  cancelButtonTitle:l10n(@"No")
+                                                  otherButtonTitles:l10n(@"Yes"), nil];
+            alert.tag = NO;
+            [alert show];
+            return;
+        }
     }
     else
     {
@@ -125,7 +135,7 @@ static DeckImport* instance;
     }
 }
 
--(NSString*) checkForNetrunnerDbDeckURL:(NSArray*) lines
+-(DeckSource*) checkForNetrunnerDbDeckURL:(NSArray*) lines
 {
     // a netrunnerdb.com decklist url looks like this:
     // http://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
@@ -137,17 +147,17 @@ static DeckImport* instance;
         NSTextCheckingResult* match = [urlRegex firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
         if (match.numberOfRanges == 2)
         {
-            NSString* deckId = [line substringWithRange:[match rangeAtIndex:1]];
-            
-            self.deckSource = DeckSourceNetrunnerDB;
-            return deckId;
+            DeckSource* src = [[DeckSource alloc] init];
+            src.deckId = [line substringWithRange:[match rangeAtIndex:1]];
+            src.site = DeckBuilderSiteNetrunnerDB;
+            return src;
         }
     }
 
     return nil;
 }
 
--(NSString*) checkForMeteorDeckURL:(NSArray*) lines
+-(DeckSource*) checkForMeteorDeckURL:(NSArray*) lines
 {
     // a netrunner.meteor.com decklist url looks like this:
     // http://netrunner.meteor.com/decks/yBMJ3GL6FPozt9nkQ/
@@ -159,16 +169,15 @@ static DeckImport* instance;
         NSTextCheckingResult* match = [urlRegex firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
         if (match.numberOfRanges == 2)
         {
-            NSString* deckId = [line substringWithRange:[match rangeAtIndex:1]];
-            
-            self.deckSource = DeckSourceMeteor;
-            return deckId;
+            DeckSource* src = [[DeckSource alloc] init];
+            src.deckId = [line substringWithRange:[match rangeAtIndex:1]];
+            src.site = DeckBuilderSiteMeteor;
+            return src;
         }
     }
     
     return nil;
 }
-
 
 -(Deck*) checkForTextDeck:(NSArray*)lines
 {
@@ -250,17 +259,17 @@ static DeckImport* instance;
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
     }
-    else if (self.deckId)
+    else if (self.deckSource)
     {
-        [self downloadDeck:self.deckId];
+        [self downloadDeck:self.deckSource];
     }
     self.deck = nil;
-    self.deckId = nil;
+    self.deckSource = nil;
 }
 
 #pragma mark deck data download
 
--(void) downloadDeck:(NSString*)deckId
+-(void) downloadDeck:(DeckSource*) deckSource
 {
     self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Deck")
                                             message:nil
@@ -275,13 +284,13 @@ static DeckImport* instance;
     [self.alert show];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    if (self.deckSource == DeckSourceNetrunnerDB)
+    if (deckSource.site == DeckBuilderSiteNetrunnerDB)
     {
-        [self performSelector:@selector(doDownloadDeckFromNetrunnerDb:) withObject:deckId afterDelay:0.01];
+        [self performSelector:@selector(doDownloadDeckFromNetrunnerDb:) withObject:deckSource.deckId afterDelay:0.01];
     }
     else
     {
-        [self performSelector:@selector(doDownloadDeckFromMeteor:) withObject:deckId afterDelay:0.01];
+        [self performSelector:@selector(doDownloadDeckFromMeteor:) withObject:deckSource.deckId afterDelay:0.01];
     }
 }
 
@@ -301,7 +310,7 @@ static DeckImport* instance;
                   if (!self.downloadStopped)
                   {
                       // NSLog(@"deck successfully downloaded");
-                      ok = [self parseDecklist:responseObject];
+                      ok = [self parseJsonDecklist:responseObject];
                   }
                   [self downloadFinished:ok];
               }
@@ -315,7 +324,50 @@ static DeckImport* instance;
 
 -(void) doDownloadDeckFromMeteor:(NSString*)deckId
 {
-#warning not implemented
+    NSString* deckUrl = [NSString stringWithFormat:@"http://netrunner.meteor.com/deckexport/octgn/%@/", deckId];
+    BOOL __block ok = NO;
+    self.downloadStopped = NO;
+    
+    self.manager = [AFHTTPRequestOperationManager manager];
+    self.manager.responseSerializer = [AFXMLParserResponseSerializer serializer];
+    NSMutableSet* contentTypes = [NSMutableSet setWithSet:self.manager.responseSerializer.acceptableContentTypes];
+    [contentTypes addObject:@"application/force-download"];
+    self.manager.responseSerializer.acceptableContentTypes = contentTypes;
+    
+    @weakify(self);
+    [self.manager GET:deckUrl parameters:nil
+              success:^(AFHTTPRequestOperation* operation, id responseObject) {
+                  @strongify(self);
+                  if (!self.downloadStopped)
+                  {
+                      // NSLog(@"deck successfully downloaded");
+                      
+                      // filename comes in Content-Disposition header, which looks like
+                      // Content-Disposition: attachment; filename=Copy%20of%20Weyland%20Speed.o8d
+                      NSString* disposition = operation.response.allHeaderFields[@"Content-Disposition"];
+                      NSString* filename;
+                      NSRange range = [disposition rangeOfString:@"filename=" options:NSCaseInsensitiveSearch];
+                      if (range.location != NSNotFound)
+                      {
+                          filename = [disposition substringFromIndex:range.location+9];
+                          range = [filename rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
+                          if (range.location !=NSNotFound)
+                          {
+                              filename = [filename substringToIndex:range.location];
+                              filename = [filename stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                          }
+                      }
+                      
+                      ok = [self parseOctgnDeck:responseObject filename:filename];
+                  }
+                  [self downloadFinished:ok];
+              }
+              failure:^(AFHTTPRequestOperation* operation, NSError* error) {
+                  @strongify(self);
+                  NSLog(@"download failed %@", operation);
+                  [self downloadFinished:NO];
+              }
+     ];
 }
 
 -(void) downloadFinished:(BOOL)ok
@@ -324,7 +376,7 @@ static DeckImport* instance;
     [self.alert dismissWithClickedButtonIndex:-1 animated:NO];
 }
 
--(BOOL) parseDecklist:(NSDictionary*) decklist
+-(BOOL) parseJsonDecklist:(NSDictionary*) decklist
 {
     Deck* deck = [Deck new];
     
@@ -350,6 +402,22 @@ static DeckImport* instance;
     
     if (deck.identity != nil && deck.cards.count > 0)
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
+        return YES;
+    }
+    return NO;
+}
+
+-(BOOL) parseOctgnDeck:(NSXMLParser*)parser filename:(NSString*)filename
+{
+    OctgnImport* importer = [[OctgnImport alloc] init];
+    Deck* deck = [importer parseOctgnDeckWithParser:parser];
+    
+    if (deck.identity != nil && deck.cards.count > 0)
+    {
+        // NSLog(@"got deck: %@ %d", deck.identity.name, deck.cards.count);
+        // NSLog(@"name: %@", filename);
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
         return YES;
     }

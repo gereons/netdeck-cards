@@ -14,14 +14,12 @@
 #import "DeckManager.h"
 #import "ImageCache.h"
 #import "DeckCell.h"
+#import "OctgnImport.h"
 
 @interface ImportDecksViewController ()
 
 @property NSArray* deckNames;
 @property NSArray* decks;
-
-@property Deck* tmpDeck;
-@property BOOL setIdentity;
 @property NSDateFormatter* dateFormatter;
 
 @end
@@ -211,62 +209,26 @@
         NSDate* lastModified = file.info.modifiedTime;
         [file close];
         
-        NSXMLParser* parser = [[NSXMLParser alloc] initWithData:data];
-        parser.delegate = self;
-        self.tmpDeck = [Deck new];
+        OctgnImport* importer = [[OctgnImport alloc] init];
+        Deck* deck = [importer parseOctgnDeckFromData:data];
         
-        if ([parser parse])
+        if (deck)
         {
             NSRange textRange = [fileName rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
             
             if (textRange.location == fileName.length-4)
             {
-                self.tmpDeck.name = [fileName substringToIndex:textRange.location];
+                deck.name = [fileName substringToIndex:textRange.location];
             }
             else
             {
-                self.tmpDeck.name = fileName;
+                deck.name = fileName;
             }
-            self.tmpDeck.lastModified = lastModified;
-        }
-        else
-        {
-            self.tmpDeck = nil;
+            deck.lastModified = lastModified;
+            return deck;
         }
     }
-    return self.tmpDeck;
-}
-
-#pragma mark nsxml delegate
-
--(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-{
-    if ([elementName isEqualToString:@"section"])
-    {
-        NSString* name = attributeDict[@"name"];
-        self.setIdentity = [[name lowercaseString] isEqualToString:@"identity"];
-        // NSLog(@"start section: %@", name);
-    }
-    
-    if ([elementName isEqualToString:@"card"])
-    {
-        NSString* qty = attributeDict[@"qty"];
-        NSString* code = attributeDict[@"id"];
-        
-        Card* card = [Card cardByCode:[code substringFromIndex:31]];
-        int copies = [qty intValue];
-
-        // NSLog(@"card: %d %@", copies, card.name);
-        
-        if (self.setIdentity)
-        {
-            self.tmpDeck.identity = card;
-        }
-        else
-        {
-            [self.tmpDeck addCard:card copies:copies];
-        }
-    }
+    return nil;
 }
 
 @end
