@@ -145,7 +145,7 @@
 "Later" = "Pas encore";
 
 // unsaved changes alert
-"Discard" = "Annuler";
+"Discard" = "Jeter";
 "There are unsaved changes" = "Les modifications n'ont pas été enregistrées";
 
 // dropbox

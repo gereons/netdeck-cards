@@ -25,9 +25,7 @@
     
     self.navigationController.navigationBar.topItem.title = l10n(@"About");
     self.webView.delegate = self;
-    
-    self.webView.scrollView.bounces = NO;
-    
+        
     NSURL* url= [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"About" ofType:@"html"] isDirectory:NO];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
