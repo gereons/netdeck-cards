@@ -14,12 +14,20 @@
 #import <AFNetworking.h>
 #import <EXTScope.h>
 
+typedef NS_ENUM(NSInteger, DeckSource)
+{
+    DeckSourceNone,
+    DeckSourceNetrunnerDB,
+    DeckSourceMeteor
+};
+
 @interface DeckImport()
 
 @property UIAlertView* alert;
 @property AFHTTPRequestOperationManager* manager;
 @property BOOL downloadStopped;
 @property Deck* deck;
+@property DeckSource deckSource;
 @property NSString* deckId;
 
 @end
@@ -36,7 +44,6 @@ static DeckImport* instance;
     }
     return instance;
 }
-
 
 +(void) updateCount
 {
@@ -72,12 +79,28 @@ static DeckImport* instance;
     NSArray* lines = [clip componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
     self.deck = nil;
+    self.deckSource = DeckSourceNone;
+    self.deckId = [self checkForNetrunnerDbDeckURL:lines];
+    if (!self.deckId)
+    {
+        self.deckId = [self checkForMeteorDeckURL:lines];
+    }
     
-    self.deckId = [self checkForDeckURL:lines];
-    if (self.deckId)
+    if (self.deckId && self.deckSource == DeckSourceNetrunnerDB)
     {
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:l10n(@"Detected a deck list URL in your clipboard. Download and import this deck?")
+                                                        message:l10n(@"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?")
+                                                       delegate:self
+                                              cancelButtonTitle:l10n(@"No")
+                                              otherButtonTitles:l10n(@"Yes"), nil];
+        alert.tag = NO;
+        [alert show];
+        return;
+    }
+    else if (self.deckId && self.deckSource == DeckSourceMeteor)
+    {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
                                                        delegate:self
                                               cancelButtonTitle:l10n(@"No")
                                               otherButtonTitles:l10n(@"Yes"), nil];
@@ -102,7 +125,7 @@ static DeckImport* instance;
     }
 }
 
--(NSString*) checkForDeckURL:(NSArray*) lines
+-(NSString*) checkForNetrunnerDbDeckURL:(NSArray*) lines
 {
     // a netrunnerdb.com decklist url looks like this:
     // http://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
@@ -116,12 +139,36 @@ static DeckImport* instance;
         {
             NSString* deckId = [line substringWithRange:[match rangeAtIndex:1]];
             
+            self.deckSource = DeckSourceNetrunnerDB;
             return deckId;
         }
     }
 
     return nil;
 }
+
+-(NSString*) checkForMeteorDeckURL:(NSArray*) lines
+{
+    // a netrunner.meteor.com decklist url looks like this:
+    // http://netrunner.meteor.com/decks/yBMJ3GL6FPozt9nkQ/
+    
+    NSRegularExpression* urlRegex = [NSRegularExpression regularExpressionWithPattern:@"http://netrunner.meteor.com/decks/(.*)/" options:0 error:nil];
+    
+    for (NSString* line in lines)
+    {
+        NSTextCheckingResult* match = [urlRegex firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
+        if (match.numberOfRanges == 2)
+        {
+            NSString* deckId = [line substringWithRange:[match rangeAtIndex:1]];
+            
+            self.deckSource = DeckSourceMeteor;
+            return deckId;
+        }
+    }
+    
+    return nil;
+}
+
 
 -(Deck*) checkForTextDeck:(NSArray*)lines
 {
@@ -215,7 +262,12 @@ static DeckImport* instance;
 
 -(void) downloadDeck:(NSString*)deckId
 {
-    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Deck") message:nil delegate:self cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
+    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Deck")
+                                            message:nil
+                                           delegate:self
+                                  cancelButtonTitle:l10n(@"Stop")
+                                  otherButtonTitles:nil];
+    
     UIActivityIndicatorView* act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [act startAnimating];
     [self.alert setValue:act forKey:@"accessoryView"];
@@ -223,10 +275,17 @@ static DeckImport* instance;
     [self.alert show];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    [self performSelector:@selector(doDownloadDeck:) withObject:deckId afterDelay:0.01];
+    if (self.deckSource == DeckSourceNetrunnerDB)
+    {
+        [self performSelector:@selector(doDownloadDeckFromNetrunnerDb:) withObject:deckId afterDelay:0.01];
+    }
+    else
+    {
+        [self performSelector:@selector(doDownloadDeckFromMeteor:) withObject:deckId afterDelay:0.01];
+    }
 }
 
--(void) doDownloadDeck:(NSString*)deckId
+-(void) doDownloadDeckFromNetrunnerDb:(NSString*)deckId
 {
     NSString* deckUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api/decklist/%@", deckId];
     BOOL __block ok = NO;
@@ -252,6 +311,11 @@ static DeckImport* instance;
                   [self downloadFinished:NO];
               }
      ];
+}
+
+-(void) doDownloadDeckFromMeteor:(NSString*)deckId
+{
+#warning not implemented
 }
 
 -(void) downloadFinished:(BOOL)ok

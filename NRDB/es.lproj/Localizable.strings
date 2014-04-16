@@ -158,7 +158,8 @@
 "%@ (%d Cards)" = "%@ (%d Cartas)";
 "Deck imported" = "Mazo importado";
 "Detected a deck list in your clipboard. Import this deck?" = "Se ha detectado un mazo en su portapapeles. ¿Desea importar este mazo?";
-"Detected a deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la URL de un mazo en su portapapeles. ¿Desea descargar e importar este mazo?";
+"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la netrunnerb.com URL de un mazo en su portapapeles. ¿Desea descargar e importar este mazo?";
+"Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la meteor URL de un mazo en su portapapeles. ¿Desea descargar e importar este mazo?";
 "No Decks found" = "No se ha encontrado ningún mazo";
 "Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Copiar mazos con formato OCTGN (.o8d) en la carpeta Apps/Net Deck de su Dropbox para importarlos a esta aplicación.";
 "Loading decks from Dropbox" = "Loading decks from Dropbox";
