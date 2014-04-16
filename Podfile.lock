@@ -1,24 +1,23 @@
 PODS:
-  - AFNetworking (2.2.1):
+  - AFNetworking (2.2.2):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.2.1):
+  - AFNetworking/NSURLConnection (2.2.2):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.2.1):
+  - AFNetworking/NSURLSession (2.2.2):
     - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.2.1)
-  - AFNetworking/Security (2.2.1)
-  - AFNetworking/Serialization (2.2.1)
-  - AFNetworking/UIKit (2.2.1):
+  - AFNetworking/Reachability (2.2.2)
+  - AFNetworking/Security (2.2.2)
+  - AFNetworking/Serialization (2.2.2)
+  - AFNetworking/UIKit (2.2.2):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Appirater (2.0.2)
   - CorePlot (1.5.1)
   - Dropbox-Sync-API-SDK (2.1.0)
   - DTCoreText (1.6.11):
@@ -68,29 +67,23 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
-  - ObjectiveSugar (1.1.0)
   - SVProgressHUD (1.0)
   - TestFlightSDK (3.0.0)
   - TMCache (1.2.0)
-  - TPKeyboardAvoiding (1.2.3)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - Appirater
   - CorePlot
   - Dropbox-Sync-API-SDK
   - DTCoreText
   - GRMustache
   - libextobjc
-  - ObjectiveSugar
   - SVProgressHUD
   - TestFlightSDK
   - TMCache
-  - TPKeyboardAvoiding
 
 SPEC CHECKSUMS:
-  AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
-  Appirater: 32fb9089615b5e542c7ad7b5749741a8aed55290
+  AFNetworking: dd8c1868e57451e3d17ebd3516f2a8c16f9646fe
   CorePlot: 7b55ddfce42eb93051c0f9edba927fd246831f6d
   Dropbox-Sync-API-SDK: 0d1d50a14307def2f056aba1afa9e6bd4727b409
   DTCoreText: 4d56bb74ff05a3b2415fc15fccc4b5689ed3119c
@@ -98,10 +91,8 @@ SPEC CHECKSUMS:
   GRMustache: e17b24646727b52576b2b51fb878efbed820ae5a
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
   libextobjc: 2c9fc8226f0f38e562587f65172f93f0c9b4a47a
-  ObjectiveSugar: fed588577bcf9733546aeaa089de444e4bab9a52
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
   TestFlightSDK: fe0567a897456b6f65b180541892ef0154986e01
   TMCache: 4b05e1b124d9f7e8d449640e059cff4cda17ed27
-  TPKeyboardAvoiding: 17995aaa6db26ac2a9fa8714a86509c5888f0392
 
 COCOAPODS: 0.31.1
