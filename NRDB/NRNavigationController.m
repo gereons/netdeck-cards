@@ -18,6 +18,21 @@
 
 @implementation NRNavigationController
 
+-(void) viewDidLoad
+{
+    [super viewDidLoad];
+
+    [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
+}
+
+- (void)handlePopGesture:(UIGestureRecognizer *)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
+        [self popViewControllerAnimated:YES];
+    }
+}
+
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
     if (self.regularPop)
