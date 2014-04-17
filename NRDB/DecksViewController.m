@@ -20,14 +20,14 @@ typedef NS_ENUM(NSInteger, SortType) {
     SortDate, SortFaction, SortA_Z
 };
 typedef NS_ENUM(NSInteger, FilterType) {
-    FilterAll, FilterRunner, FilterCorp
+    FilterAll = NRRoleNone+1, FilterRunner = NRRoleRunner+1, FilterCorp = NRRoleCorp+1
 };
 
 @interface DecksViewController ()
 
-@property NRRole role;
-@property SortType sortType;
-@property NSMutableArray* decks;
+@property NSMutableArray* runnerDecks;
+@property NSMutableArray* corpDecks;
+@property NSArray* decks;
 @property NSDateFormatter *dateFormatter;
 @property UIActionSheet* popup;
 
@@ -35,14 +35,15 @@ typedef NS_ENUM(NSInteger, FilterType) {
 
 @implementation DecksViewController
 
+static FilterType filterType = FilterAll;
+static SortType sortType = SortA_Z;
+
 - (id) init
 {
     if ((self = [self initWithNibName:@"DecksViewController" bundle:nil]))
     {
-        self.role = NRRoleNone;
-        self.sortType = SortA_Z;
         self.dateFormatter = [[NSDateFormatter alloc] init];
-        [self.dateFormatter setDateStyle:NSDateFormatterLongStyle];
+        [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     }
     return self;
@@ -64,11 +65,11 @@ typedef NS_ENUM(NSInteger, FilterType) {
                                      action:nil];
     
     UISegmentedControl* sortControl = [[UISegmentedControl alloc] initWithItems:@[ l10n(@"Date"), l10n(@"Faction"), l10n(@"A-Z") ]];
-    sortControl.selectedSegmentIndex = SortA_Z;
+    sortControl.selectedSegmentIndex = sortType;
     [sortControl addTarget:self action:@selector(sortChanged:) forControlEvents:UIControlEventValueChanged];
     
     UISegmentedControl* filterControl = [[UISegmentedControl alloc] initWithItems:@[ l10n(@"All"), l10n(@"Runner"), l10n(@"Corp") ]];
-    filterControl.selectedSegmentIndex = FilterAll;
+    filterControl.selectedSegmentIndex = filterType;
     [filterControl addTarget:self action:@selector(filterChanged:) forControlEvents:UIControlEventValueChanged];
     
     topItem.leftBarButtonItems = @[
@@ -96,7 +97,7 @@ typedef NS_ENUM(NSInteger, FilterType) {
     {
         [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
     }
-    self.sortType = sender.selectedSegmentIndex;
+    sortType = sender.selectedSegmentIndex;
     [self updateDecks];
 }
 
@@ -106,17 +107,7 @@ typedef NS_ENUM(NSInteger, FilterType) {
     {
         [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
     }
-    switch (sender.selectedSegmentIndex) {
-        case FilterAll:
-            self.role = NRRoleNone;
-            break;
-        case FilterRunner:
-            self.role = NRRoleRunner;
-            break;
-        case FilterCorp:
-            self.role = NRRoleCorp;
-            break;
-    }
+    filterType = sender.selectedSegmentIndex;
     [self updateDecks];
 }
 
@@ -176,9 +167,20 @@ typedef NS_ENUM(NSInteger, FilterType) {
 
 -(void) updateDecks
 {
-    NSArray* decks = [DeckManager decksForRole:self.role];
+    NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSMutableArray array];
+    NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSMutableArray array];
     
-    switch (self.sortType)
+    self.runnerDecks = [self sortDecks:runnerDecks];
+    self.corpDecks = [self sortDecks:corpDecks];
+    
+    self.decks = @[ self.runnerDecks, self.corpDecks ];
+    
+    [self.tableView reloadData];
+}
+
+-(NSMutableArray*) sortDecks:(NSArray*)decks
+{
+    switch (sortType)
     {
         case SortA_Z:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
@@ -187,19 +189,34 @@ typedef NS_ENUM(NSInteger, FilterType) {
             break;
         case SortDate:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
-                return [d2.lastModified compare:d1.lastModified];
+                NSComparisonResult cmp = [d2.lastModified compare:d1.lastModified];
+                if (cmp == NSOrderedSame)
+                {
+                    return [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
+                }
+                return cmp;
             }];
             break;
         case SortFaction:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 NSString* faction1 = [Faction name:d1.identity.faction];
                 NSString* faction2 = [Faction name:d2.identity.faction];
-                return [faction1 compare:faction2];
+                NSComparisonResult cmp = [faction1 compare:faction2];
+                if (cmp == NSOrderedSame)
+                {
+                    cmp = [[d1.identity.name lowercaseString] compare:[d2.identity.name lowercaseString]];
+                    if (cmp == NSOrderedSame)
+                    {
+                        return [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
+                    }
+                    return cmp;
+                }
+                return cmp;
             }];
             break;
     }
-    self.decks = [decks mutableCopy];
-    [self.tableView reloadData];
+    
+    return [decks mutableCopy];
 }
 
 
@@ -210,7 +227,8 @@ typedef NS_ENUM(NSInteger, FilterType) {
 {
     DeckCell* cell = [tableView dequeueReusableCellWithIdentifier:@"deckCell" forIndexPath:indexPath];
     
-    Deck* deck = self.decks[indexPath.row];
+    NSArray* decks = self.decks[indexPath.section];
+    Deck* deck = decks[indexPath.row];
     cell.nameLabel.text = deck.name;
     
     if (deck.identity)
@@ -224,7 +242,16 @@ typedef NS_ENUM(NSInteger, FilterType) {
         cell.identityLabel.textColor = [UIColor darkGrayColor];
     }
     
-    NSString* summary = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence"), deck.size, deck.influence];
+    NSString* summary;
+    
+    if (deck.role == NRRoleRunner)
+    {
+        summary = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence"), deck.size, deck.influence];
+    }
+    else
+    {
+        summary = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence · %d AP"), deck.size, deck.influence, deck.agendaPoints];
+    }
     cell.summaryLabel.text = summary;
     BOOL valid = [deck checkValidity].count == 0;
     cell.summaryLabel.textColor = valid ? [UIColor blackColor] : [UIColor redColor];
@@ -236,7 +263,8 @@ typedef NS_ENUM(NSInteger, FilterType) {
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Deck* deck = [self.decks objectAtIndex:indexPath.row];
+    NSArray* decks = self.decks[indexPath.section];
+    Deck* deck = [decks objectAtIndex:indexPath.row];
     
     TF_CHECKPOINT(@"load deck");
     
@@ -251,9 +279,10 @@ typedef NS_ENUM(NSInteger, FilterType) {
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        Deck* deck = [self.decks objectAtIndex:indexPath.row];
+        NSMutableArray* decks = self.decks[indexPath.section];
+        Deck* deck = [decks objectAtIndex:indexPath.row];
         
-        [self.decks removeObjectAtIndex:indexPath.row];
+        [decks removeObjectAtIndex:indexPath.row];
         [DeckManager removeFile:deck.filename];
         
         [self.tableView beginUpdates];
@@ -274,7 +303,27 @@ typedef NS_ENUM(NSInteger, FilterType) {
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.decks.count;
+    switch (section)
+    {
+        case 0: return self.runnerDecks.count;
+        case 1: return self.corpDecks.count;
+    }
+    return 0;
+}
+
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+-(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section)
+    {
+        case 0: return self.runnerDecks.count > 0 ? l10n(@"Runner") : nil;
+        case 1: return self.corpDecks.count > 0 ? l10n(@"Corp") : nil;
+    }
+    return nil;
 }
 
 @end
