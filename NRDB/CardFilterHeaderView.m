@@ -61,13 +61,11 @@ static NSArray* scopes;
     self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
     self.apSlider.maximumValue = [CardData maxAgendaPoints]; // NB: no +1 here!
     
-    /*
     [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
     [self.muSlider setThumbImage:[UIImage imageNamed:@"mem_slider"] forState:UIControlStateNormal];
     [self.strengthSlider setThumbImage:[UIImage imageNamed:@"strength_slider"] forState:UIControlStateNormal];
     [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
     [self.apSlider setThumbImage:[UIImage imageNamed:@"point_slider"] forState:UIControlStateNormal];
-    */
     
     self.searchLabel.text = l10n(@"Search in:");
     self.searchField.placeholder = l10n(@"Search Cards");
