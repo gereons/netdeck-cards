@@ -21,6 +21,15 @@
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
     self.identityButton.hidden = card.type != NRCardTypeIdentity;
     
+    if (cc == nil)
+    {
+        [self.identityButton setTitle:l10n(@"Choose Identity") forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.identityButton setTitle:l10n(@"Switch Identity") forState:UIControlStateNormal];
+    }
+    
     self.copiesStepper.maximumValue = cc.card.maxCopies;
     self.copiesStepper.value = cc.count;
     
