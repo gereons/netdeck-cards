@@ -113,6 +113,22 @@ static SortType sortType = SortA_Z;
 
 -(void) newDeck:(UIBarButtonItem*)sender
 {
+    NSNumber* role;
+    
+    if (filterType == FilterRunner)
+    {
+        role = @(NRRoleRunner);
+    }
+    if (filterType == FilterCorp)
+    {
+        role = @(NRRoleCorp);
+    }
+    if (role)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
+        return;
+    }
+    
     if (self.popup)
     {
         [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
