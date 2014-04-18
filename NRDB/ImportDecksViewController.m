@@ -32,7 +32,7 @@
     if (self)
     {
         self.dateFormatter = [[NSDateFormatter alloc] init];
-        [self.dateFormatter setDateStyle:NSDateFormatterLongStyle];
+        [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     }
     return self;
@@ -177,7 +177,15 @@
         cell.identityLabel.textColor = [UIColor darkGrayColor];
     }
     
-    NSString* summary = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence"), deck.size, deck.influence];
+    NSString* summary;
+    if (deck.role == NRRoleRunner)
+    {
+        summary = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence"), deck.size, deck.influence];
+    }
+    else
+    {
+        summary = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence · %d AP"), deck.size, deck.influence, deck.agendaPoints];
+    }
     cell.summaryLabel.text = summary;
     BOOL valid = [deck checkValidity].count == 0;
     cell.summaryLabel.textColor = valid ? [UIColor blackColor] : [UIColor redColor];

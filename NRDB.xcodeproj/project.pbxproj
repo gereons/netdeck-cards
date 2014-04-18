@@ -553,7 +553,6 @@
 				3ABDE5A018AFC4B200AFEA88 /* Draw Simulator */,
 				3A595425186EE7C40074B3B1 /* Card Image Popover */,
 				3A595424186EDCED0074B3B1 /* Identity Selection Form */,
-				3A8532311854F70F00507B9A /* Master Views */,
 				3AA440E21854DA310051D4B0 /* Detail Views */,
 				3A1ECC8E1879A1B1003400A9 /* Deck Export */,
 				3A721DBE189CFA3A004EFDFE /* Deck Import */,
@@ -924,6 +923,7 @@
 		3AA440E21854DA310051D4B0 /* Detail Views */ = {
 			isa = PBXGroup;
 			children = (
+				3A8532311854F70F00507B9A /* Master Views */,
 				3AB9BD5518FADB1B004EAF10 /* Decks */,
 				3ADE909418773682006E187F /* Saved Decks */,
 				3A8532371854F8E200507B9A /* Deck List */,
