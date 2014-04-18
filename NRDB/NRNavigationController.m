@@ -22,16 +22,23 @@
 {
     [super viewDidLoad];
 
-    [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
+    // disable swipe gesture
+    self.interactivePopGestureRecognizer.enabled = NO;
+    
+    // TODO: figure out how to handle and intercept swipe gesture correctly
+    // [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
 }
 
+/*
 - (void)handlePopGesture:(UIGestureRecognizer *)gesture
 {
-    if (gesture.state == UIGestureRecognizerStateBegan)
+    if (gesture.state == UIGestureRecognizerStateEnded)
     {
+        NSLog(@"pop view");
         [self popViewControllerAnimated:NO];
     }
 }
+*/
 
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
