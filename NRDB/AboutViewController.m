@@ -152,11 +152,8 @@
     self.mailer = [[MFMailComposeViewController alloc] init];
     
     self.mailer.mailComposeDelegate = self;
-    
     [self.mailer setToRecipients:@[ @"netdeck@steffens.org" ]];
-    
     [self.mailer setSubject:l10n(@"Net Deck Feedback")];
-    
     [self presentViewController:self.mailer animated:NO completion:nil];
 }
 
@@ -172,7 +169,8 @@
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.mailer dismissViewControllerAnimated:NO completion:nil];
+    self.mailer = nil;
 }
 
 #pragma mark webview

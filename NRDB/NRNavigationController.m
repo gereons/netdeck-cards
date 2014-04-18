@@ -29,7 +29,7 @@
 {
     if (gesture.state == UIGestureRecognizerStateBegan)
     {
-        [self popViewControllerAnimated:YES];
+        [self popViewControllerAnimated:NO];
     }
 }
 
@@ -62,7 +62,7 @@
     else
     {
         self.regularPop = YES;
-        [self popViewControllerAnimated:YES];
+        [self popViewControllerAnimated:NO];
         return NO;
     }
 }
@@ -79,7 +79,7 @@
         [self.deckListViewController saveDeck:nil];
     }
     self.alertViewClicked = YES;
-    [self popViewControllerAnimated:YES];
+    [self popViewControllerAnimated:NO];
 }
 
 @end

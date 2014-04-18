@@ -210,7 +210,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
     nc.deckListViewController = filter.deckListViewController;
     
-    [self.navigationController pushViewController:filter animated:YES];
+    [self.navigationController pushViewController:filter animated:NO];
 }
 
 -(void)newDeck:(NSNotification*) notification
@@ -225,7 +225,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
     nc.deckListViewController = filter.deckListViewController;
     
-    [self.navigationController pushViewController:filter animated:YES];
+    [self.navigationController pushViewController:filter animated:NO];
 }
 
 -(void)importDeckFromClipboard:(NSNotification*) notification
@@ -243,7 +243,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     nc.deckListViewController = filter.deckListViewController;
     
     [self.navigationController popToRootViewControllerAnimated:NO];
-    [self.navigationController pushViewController:filter animated:YES];
+    [self.navigationController pushViewController:filter animated:NO];
 }
 
 -(void)loadCards:(id) sender
