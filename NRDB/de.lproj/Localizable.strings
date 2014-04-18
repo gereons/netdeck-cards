@@ -110,6 +110,7 @@
 "Load Corp Deck" = "Kon-Deck laden";
 "%@ · %d Cards · %d Influence" = "%@ · %d Karten · %d Einfluss";
 "%d Cards · %d Influence" = "%d Karten · %d Einfluss";
+"%d Cards · %d Influence · %d AP" = "%d Karten · %d Einfluss · %d AP";
 "Date" = "Datum";
 
 // filter

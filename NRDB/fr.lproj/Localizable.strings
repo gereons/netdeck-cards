@@ -107,12 +107,13 @@
 "Load Corp Deck" = "Charger un deck corpo";
 "%@ · %d Cards · %d Influence" = "%@ · %d Cartes · %d Influence";
 "%d Cards · %d Influence" = "%d Cartes · %d Influence";
+"%d Cards · %d Influence · %d AP" = "%d Cartes · %d Influence · %d PP";
 
 // filtre
-"Strength: %@" = "Force : %@";
-"MU: %@" = "UM : %@";
-"Cost: %@" = "Coût : %@";
-"AP: %@" = "Points de projet : %@";
+"Strength: %@" = "Force: %@";
+"MU: %@" = "UM: %@";
+"Cost: %@" = "Coût: %@";
+"AP: %@" = "PP: %@";
 "Influence: %@" = "Influence: %@";
 "Type" = "Type";
 "Subtype" = "Sous type";

@@ -108,6 +108,7 @@
 "Load Corp Deck" = "Cargar Mazo de Corporación";
 "%@ · %d Cards · %d Influence" = "%@ · %d Cartas · %d Influencia";
 "%d Cards · %d Influence" = "%d Cartas · %d Influencia";
+"%d Cards · %d Influence · %d AP" = "%d Cartas · %d Influencia · %d PP";
 "Date" = "Fecha";
 
 // filter
