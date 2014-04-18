@@ -42,6 +42,10 @@
 
 // about
 "About Net Deck %@" = "Über Net Deck %@";
+"Feedback" = "Feedback";
+"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store." = "Verbesserungsvorschläge und Ideen sind herzlich willkommen, genauso wie Rezensionen im Appstore.";
+"Write a Review" = "Rezension schreiben";
+"Contact Developers" = "Mail an Entwickler";
 
 // deck list
 "Save" = "Speichern";

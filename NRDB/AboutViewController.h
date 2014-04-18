@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "DetailViewManager.h"
+#import <StoreKit/StoreKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface AboutViewController : UIViewController<SubstitutableDetailViewController, UIWebViewDelegate>
+@interface AboutViewController : UIViewController<SubstitutableDetailViewController, UIWebViewDelegate, UIActionSheetDelegate, SKStoreProductViewControllerDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIWebView* webView;
 

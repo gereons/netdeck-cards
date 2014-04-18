@@ -10,6 +10,7 @@
 		3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A09184918B2925400DBE590 /* InfluenceStats.m */; };
 		3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E8D18BBC49C00C99FED /* Localizable.strings */; };
 		3A095E9118BBCB2200C99FED /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E9318BBCB2200C99FED /* About.html */; };
+		3A150C01190107AD00FDFD23 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A150C00190107AD00FDFD23 /* StoreKit.framework */; };
 		3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A167BD118B1E9C90023DF8A /* CardTypeStats.m */; };
 		3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EABD185DBA2D00DB7FFC /* Faction.m */; };
 		3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EAC0185DBC4700DB7FFC /* CardType.m */; };
@@ -198,6 +199,7 @@
 		3A095E9018BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A095E9218BBCB2200C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/About.html; sourceTree = "<group>"; };
 		3A095E9418BBCB2700C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = de; path = de.lproj/About.html; sourceTree = "<group>"; };
+		3A150C00190107AD00FDFD23 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3A167BD018B1E9C90023DF8A /* CardTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardTypeStats.h; sourceTree = "<group>"; };
 		3A167BD118B1E9C90023DF8A /* CardTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardTypeStats.m; sourceTree = "<group>"; };
 		3A16EABC185DBA2D00DB7FFC /* Faction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Faction.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -452,6 +454,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A150C01190107AD00FDFD23 /* StoreKit.framework in Frameworks */,
 				3A9CE56718E0CA2A007A26CD /* MessageUI.framework in Frameworks */,
 				3A994275184B8CBB004B6E05 /* MobileCoreServices.framework in Frameworks */,
 				3A994273184B8CB4004B6E05 /* CoreText.framework in Frameworks */,
@@ -512,6 +515,7 @@
 		3A3622601849320C007F2854 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A150C00190107AD00FDFD23 /* StoreKit.framework */,
 				3A9CE56618E0CA2A007A26CD /* MessageUI.framework */,
 				3A994274184B8CBB004B6E05 /* MobileCoreServices.framework */,
 				3A994272184B8CB4004B6E05 /* CoreText.framework */,

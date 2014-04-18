@@ -41,6 +41,10 @@
 
 // infos
 "About Net Deck %@" = "À propos de Net Deck %@";
+"Feedback" = "Retour";
+"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store." = "Suggestions et idées sont les bienvenues, ainsi que des avis positif sur l'AppStore.";
+"Write a Review" = "Laisser un avis";
+"Contact Developers" = "Mail au développeur";
 
 // liste de deck
 "Save" = "Sauvegarder";
@@ -176,5 +180,3 @@
 "Genesis Cycle" = "Cycle de la Genèse";
 "Spin Cycle" = "Cycle des Distorsions";
 "Lunar Cycle" = "Cycle de la Lune";
-
-*/
