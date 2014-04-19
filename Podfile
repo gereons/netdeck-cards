@@ -1,6 +1,6 @@
 platform :ios, '7.1'
 inhibit_all_warnings!
-pod 'DTCoreText'
+# pod 'DTCoreText'
 # pod 'TPKeyboardAvoiding'
 # pod 'ObjectiveSugar'
 pod 'AFNetworking', '~> 2.0'

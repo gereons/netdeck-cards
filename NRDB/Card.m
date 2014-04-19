@@ -8,14 +8,19 @@
 
 #import "Card.h"
 #import "CardData.h"
+#if USE_DTCORETEXT
 #import <DTCoreText.h>
+#endif
 
 @interface Card()
 
 @property CardData* data;
 @property NSString* filteredText;
+
+#if USE_DTCORETEXT
 @property NSAttributedString* attributedText;
 @property CGFloat attributedTextHeight;
+#endif
 
 @end
 
@@ -199,6 +204,7 @@ static NSMutableArray* allCorpIdentities;
     return self->_filteredText;
 }
 
+#if USE_DTCORETEXT
 -(NSAttributedString*) attributedText
 {
     if (!self->_attributedText)
@@ -224,7 +230,9 @@ static NSMutableArray* allCorpIdentities;
     }
     return self->_attributedText;
 }
+#endif
 
+#if USE_DTCORETEXT
 -(CGFloat) attributedTextHeight
 {
     if (!self->_attributedText)
@@ -234,6 +242,7 @@ static NSMutableArray* allCorpIdentities;
     }
     return self->_attributedTextHeight;
 }
+#endif
 
 -(NSString*) octgnCode
 {

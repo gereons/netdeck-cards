@@ -25,6 +25,8 @@
 #define TF_CHECKPOINT(chk)  /* nop */
 #endif
 
+#define  USE_DTCORETEXT     0
+
 #define l10n(str)   NSLocalizedString(str, nil)
 
 #import "NRTypes.h"
