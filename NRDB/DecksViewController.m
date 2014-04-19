@@ -186,8 +186,18 @@ static SortType sortType = SortA_Z;
     NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSMutableArray array];
     NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSMutableArray array];
     
-    self.runnerDecks = [self sortDecks:runnerDecks];
-    self.corpDecks = [self sortDecks:corpDecks];
+    if (sortType != SortDate)
+    {
+        self.runnerDecks = [self sortDecks:runnerDecks];
+        self.corpDecks = [self sortDecks:corpDecks];
+    }
+    else
+    {
+        NSMutableArray* arr = [NSMutableArray arrayWithArray:runnerDecks];
+        [arr addObjectsFromArray:corpDecks];
+        self.runnerDecks = [self sortDecks:arr];
+        self.corpDecks = [NSMutableArray array];
+    }
     
     self.decks = @[ self.runnerDecks, self.corpDecks ];
     
@@ -334,6 +344,10 @@ static SortType sortType = SortA_Z;
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if (sortType == SortDate)
+    {
+        return nil;
+    }
     switch (section)
     {
         case 0: return self.runnerDecks.count > 0 ? l10n(@"Runner") : nil;
