@@ -37,7 +37,7 @@ static struct cardSetData {
 } cardSetData[] = {
     {  1, "use_coreset", "core", NRCycleCoreDeluxe, YES },
     {  8, "use_creation_and_control", "cac", NRCycleCoreDeluxe, YES },
-    { 15, "use_honor_and_profit", "hap", NRCycleCoreDeluxe, NO },
+    { 15, "use_honor_and_profit", "hap", NRCycleCoreDeluxe, YES },
     
     // genesis
     { 2, "use_what_lies_ahead", "wla", NRCycleGenesis, YES },
