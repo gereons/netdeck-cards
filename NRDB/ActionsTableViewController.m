@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     self.appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 #else
     // CFBundleShortVersionString contains the main version
-    self.appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    self.appVersion = [@"v" stringByAppendingString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
 #endif
     
     footerLabel.text = [NSString stringWithFormat:@"%@", self.appVersion];
