@@ -15,6 +15,7 @@
 
 @property (readonly) Card* card;
 @property (nonatomic) int count;
+@property BOOL showAltArt;
 
 +(CardCounter*) initWithCard:(Card*)card;
 +(CardCounter*) initWithCard:(Card*)card andCount:(int)count;

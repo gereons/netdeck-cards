@@ -9,6 +9,7 @@
 #import "DrawSimulatorViewController.h"
 #import "Deck.h"
 #import "CardImageViewPopover.h"
+#import "Hypergeometric.h"
 
 @interface DrawSimulatorViewController ()
 @property Deck* deck;
@@ -48,6 +49,7 @@
     [self.doneButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
     
     [self.selector setTitle:l10n(@"All") forSegmentAtIndex:6];
+    self.selector.apportionsSegmentWidthsByContent = YES;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -74,6 +76,7 @@
         [self.cards exchangeObjectAtIndex:i withObjectAtIndex:n];
     }
     
+    self.oddsLabel.text = @"";
     self.drawnLabel.text = @"";
     if (drawInitialHand)
     {
@@ -99,15 +102,19 @@
 
 -(void) draw:(UISegmentedControl*)sender
 {
-    NSInteger numCards = sender.selectedSegmentIndex + 1;
-    
-    if (numCards == 6)
+    // segments are: 0=1, 1=2, 2=3, 3=4, 4=5, 5=9, 6=All
+    NSInteger numCards;
+    switch (sender.selectedSegmentIndex)
     {
-        numCards = 9;
-    }
-    else if (numCards == 7)
-    {
-        numCards = self.deck.size;
+        case 5:
+            numCards = 9;
+            break;
+        case 6:
+            numCards = self.deck.size;
+            break;
+        default:
+            numCards = sender.selectedSegmentIndex + 1;
+            break;
     }
     
     [self drawCards:numCards];
@@ -131,11 +138,21 @@
     [self.tableView reloadData];
     
     // scroll down if not all cards were drawn
-    if (numCards != self.deck.size)
+    if (numCards != self.deck.size && self.draw.count > 0)
     {
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.draw.count-1 inSection:0];
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }
+    
+    // calculate drawing odds
+    NSString* odds = [NSString localizedStringWithFormat:l10n(@"Odds to draw a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%"),
+                      [self oddsFor:1], [self oddsFor:2], [self oddsFor:3] ];
+    self.oddsLabel.text = odds;
+}
+
+-(double) oddsFor:(int)cardsInDeck
+{
+    return 100.0 * [Hypergeometric getProbabilityFor:1 cardsInDeck:self.deck.size desiredCardsInDeck:cardsInDeck cardsDrawn:self.draw.count];
 }
 
 #pragma mark tableview

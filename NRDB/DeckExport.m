@@ -14,6 +14,9 @@
 #import "Deck.h"
 #import "CardSets.h"
 
+#define APP_NAME    "Net Deck"
+#define APP_URL     "http://appstore.com/netdeck"
+
 @implementation DeckExport
 
 +(void) asOctgn:(Deck*)deck autoSave:(BOOL)autoSave
@@ -31,7 +34,7 @@
     NSString* octgnName = [NSString stringWithFormat:@"%@.o8d", deck.name];
     NSString* content = [template renderObject:objects error:&error];
     
-    [DeckExport writeToDropbox:content fileName:octgnName deckType:@"OCTGN Deck" autoSave:autoSave];
+    [DeckExport writeToDropbox:content fileName:octgnName deckType:l10n(@"OCTGN Deck") autoSave:autoSave];
 }
 
 +(NSString*) asPlaintextString:(Deck *)deck
@@ -55,7 +58,9 @@
             continue;
         }
         
-        [s appendString:[NSString stringWithFormat:@"\n%@ (%lu)\n", sections[i], (unsigned long)cards.count]];
+        int cnt = 0;
+        for (int j=0; j<cards.count; ++j) { CardCounter* cc = cards[j]; cnt += cc.count; }
+        [s appendString:[NSString stringWithFormat:@"\n%@ (%d)\n", sections[i], cnt]];
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
@@ -83,7 +88,7 @@
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with NRDB"];
+    [s appendString:@"\nDeck built with " APP_NAME ];
     return s;
 }
 
@@ -91,7 +96,7 @@
 {
     NSString* s = [DeckExport asPlaintextString:deck];
     NSString* txtName = [NSString stringWithFormat:@"%@.txt", deck.name];
-    [DeckExport writeToDropbox:s fileName:txtName deckType:@"Plain Text Deck" autoSave:NO];
+    [DeckExport writeToDropbox:s fileName:txtName deckType:l10n(@"Plain Text Deck") autoSave:NO];
 }
 
 +(NSString*) asMarkdownString:(Deck*)deck
@@ -115,7 +120,9 @@
             continue;
         }
         
-        [s appendString:[NSString stringWithFormat:@"\n## %@ (%lu)\n", sections[i], (unsigned long)cards.count]];
+        int cnt = 0;
+        for (int j=0; j<cards.count; ++j) { CardCounter* cc = cards[j]; cnt += cc.count; }
+        [s appendString:[NSString stringWithFormat:@"\n## %@ (%d)\n", sections[i], cnt]];
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
@@ -143,7 +150,7 @@
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with [NRDB](url=http://appstore.com/NRDB).\n"];
+    [s appendString:@"\nDeck built with [" APP_NAME "](url=" APP_URL ").\n"];
     return s;
 }
 
@@ -151,7 +158,7 @@
 {
     NSString* s = [DeckExport asMarkdownString:deck];
     NSString* mdName = [NSString stringWithFormat:@"%@.md", deck.name];
-    [DeckExport writeToDropbox:s fileName:mdName deckType:@"Markdown Deck" autoSave:NO];
+    [DeckExport writeToDropbox:s fileName:mdName deckType:l10n(@"Markdown Deck") autoSave:NO];
 }
 
 +(NSString*) asBBCodeString:(Deck*)deck
@@ -175,7 +182,9 @@
             continue;
         }
         
-        [s appendString:[NSString stringWithFormat:@"\n[b]%@[/b] (%lu)\n", sections[i], (unsigned long)cards.count]];
+        int cnt = 0;
+        for (int j=0; j<cards.count; ++j) { CardCounter* cc = cards[j]; cnt += cc.count; }
+        [s appendString:[NSString stringWithFormat:@"\n[b]%@[/b] (%d)\n", sections[i], cnt]];
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
@@ -204,7 +213,7 @@
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with [url=http://appstore.com/NRDB]NRDB[/url].\n"];
+    [s appendString:@"\nDeck built with [url=" APP_URL "]" APP_NAME "[/url].\n"];
     return s;
 }
 
@@ -212,7 +221,7 @@
 {
     NSString* s = [DeckExport asBBCodeString:deck];
     NSString* bbcName = [NSString stringWithFormat:@"%@.bbc", deck.name];
-    [DeckExport writeToDropbox:s fileName:bbcName deckType:@"BBCode Deck" autoSave:NO];
+    [DeckExport writeToDropbox:s fileName:bbcName deckType:l10n(@"BBCode Deck") autoSave:NO];
 }
 
 +(NSString*) dots:(int)count
@@ -234,11 +243,16 @@
     NSError* error;
     DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     DBPath* path = [[DBPath root] childPath:filename];
+    
+    DBFile* textFile;
     if ([filesystem fileInfoForPath:path error:&error] != nil)
     {
-        [filesystem deletePath:path error:nil];
+        textFile = [filesystem openFile:path error:&error];
     }
-    DBFile* textFile = [filesystem createFile:path error:nil];
+    else
+    {
+        textFile = [filesystem createFile:path error:&error];
+    }
     BOOL writeOk = [textFile writeString:content error:&error];
     [textFile close];
     
@@ -249,11 +263,11 @@
     
     if (writeOk)
     {
-        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@ exported", deckType]];
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:l10n(@"%@ exported"), deckType]];
     }
     else
     {
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error exporting %@", deckType]];
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:l10n(@"Error exporting %@"), deckType]];
     }
 }
 

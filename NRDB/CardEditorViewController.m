@@ -111,7 +111,7 @@ static struct cardField cardFields[] = {
     if (self.card == nil)
     {
         NSString* msg = [NSString stringWithFormat:@"Card Code %@ not found.", searchBar.text];
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:Nil message:msg delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
     else
@@ -146,7 +146,7 @@ static struct cardField cardFields[] = {
 {
     if (self.card != nil)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:Nil message:@"Really delete this card?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Really delete this card?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
         alert.tag = DELETE_CARD_TAG;
         [alert show];
     }
@@ -154,7 +154,7 @@ static struct cardField cardFields[] = {
 
 -(void) loadData:(id) sender
 {
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:Nil message:@"Load card data from NetrunnerDB.com?\nThis will replace all current cards." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Load card data from NetrunnerDB.com?\nThis will replace all current cards." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     alert.tag = LOAD_ALL_TAG;
     [alert show];
 }

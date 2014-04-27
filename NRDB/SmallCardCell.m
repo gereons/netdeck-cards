@@ -9,6 +9,7 @@
 #import "SmallCardCell.h"
 #import "CardCounter.h"
 #import "Deck.h"
+#import "SettingsKeys.h"
 
 @implementation SmallCardCell
 
@@ -18,6 +19,16 @@
     Card* card = cc.card;
     
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
+    self.identityButton.hidden = card.type != NRCardTypeIdentity;
+    
+    if (cc == nil)
+    {
+        [self.identityButton setTitle:l10n(@"Choose Identity") forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.identityButton setTitle:l10n(@"Switch Identity") forState:UIControlStateNormal];
+    }
     
     self.copiesStepper.maximumValue = cc.card.maxCopies;
     self.copiesStepper.value = cc.count;
@@ -33,6 +44,18 @@
     else
     {
         self.name.text = [NSString stringWithFormat:@"%d× %@", cc.count, card.name];
+    }
+    
+    self.name.textColor = [UIColor blackColor];
+    if ([card.setCode isEqualToString:@"core"])
+    {
+        NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
+        NSInteger owned = cores * card.quantity;
+        
+        if (owned < cc.count)
+        {
+            self.name.textColor = [UIColor redColor];
+        }
     }
     
     int influence = 0;

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TPKeyboardAvoidingTableView.h"
+// #import "TPKeyboardAvoidingTableView.h"
 
 @interface CardEditorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UISearchBarDelegate, UIAlertViewDelegate>
 
-@property (strong) IBOutlet TPKeyboardAvoidingTableView *tableView;
+@property (strong) IBOutlet UITableView *tableView;
 
 @end

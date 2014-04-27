@@ -57,6 +57,17 @@
     NSKeyedUnarchiver* decoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:savedData];
     Deck* deck = [decoder decodeObjectForKey:@"deck"];
     deck.filename = filename;
+    
+    // get the last modification date
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSDictionary* attrs = [fm attributesOfItemAtPath:filename error:nil];
+    
+    if (attrs != nil)
+    {
+        NSDate *date = (NSDate*)[attrs objectForKey: NSFileModificationDate];
+        deck.lastModified = date;
+    }
+    
     return deck;
 }
 
@@ -93,9 +104,9 @@
 {
     if (role == NRFactionNone)
     {
-        NSMutableArray* Decks = [self readDecksForRole:NRRoleRunner];
-        [Decks addObjectsFromArray:[self readDecksForRole:NRRoleCorp]];
-        return Decks;
+        NSMutableArray* decks = [self readDecksForRole:NRRoleRunner];
+        [decks addObjectsFromArray:[self readDecksForRole:NRRoleCorp]];
+        return decks;
     }
     else
     {

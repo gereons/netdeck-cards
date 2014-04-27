@@ -16,11 +16,7 @@
 #import "SettingsKeys.h"
 #import "CardSets.h"
 #import "DeckImport.h"
-#import "Notifications.h"
-
-@interface  AppDelegate()
-@property Deck* deck;
-@end
+#import "Card.h"
 
 @implementation AppDelegate
 
@@ -44,7 +40,7 @@
     
     SVProgressHUD.appearance.hudBackgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
     
-#if !DEBUG
+#if ADHOC && !TARGET_IPHONE_SIMULATOR
     [TestFlight takeOff:@"eb5e8194-c06f-46db-a1ce-42943ebaf902"];
 #endif
     
@@ -52,10 +48,12 @@
     self.window.rootViewController = self.splitViewController;
     [self.window makeKeyAndVisible];
     
-    // setup tmcache: 50mb space
-    [TMCache sharedCache].diskCache.byteLimit = 50 * 1024 * 1024;
-    
-    [self checkClipboardForDeck];
+    // setup tmcache
+    NSInteger cardCount = [Card allCards].count;
+    NSInteger byteLimit = cardCount == 0 ? 70*1024*1024 : cardCount * 120000;
+    [TMCache sharedCache].diskCache.byteLimit = byteLimit;
+
+    [DeckImport checkClipboardForDeck];
     
     return YES;
 }
@@ -72,7 +70,8 @@
         AUTO_SAVE: @(NO),
         AUTO_SAVE_DB: @(NO),
         DECK_VIEW_STYLE: @(1),
-        LANGUAGE: @"en"
+        LANGUAGE: @"en",
+        NUM_CORES: @(3)
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
@@ -93,7 +92,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [self checkClipboardForDeck];
+    [DeckImport checkClipboardForDeck];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -120,26 +119,6 @@
     [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
 	
 	return YES;
-}
-
--(void) checkClipboardForDeck
-{
-    self.deck = [DeckImport parseClipboard];
-    
-    if (self.deck != nil)
-    {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:l10n(@"Detected a deck list in your clipboard. Import this deck?") delegate:self cancelButtonTitle:l10n(@"No")otherButtonTitles:l10n(@"Yes"), nil];
-        [alert show];
-    }
-}
-
--(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
-        self.deck = nil;
-    }
 }
 
 @end

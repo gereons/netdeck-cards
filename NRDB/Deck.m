@@ -29,17 +29,60 @@
     return self;
 }
 
+-(Card*) identity
+{
+    return self.identityCc.card;
+}
+
+-(void) setIdentity:(Card *)identity
+{
+    if (identity)
+    {
+        self.identityCc = [CardCounter initWithCard:identity andCount:1];
+        self.role = identity.role;
+    }
+    else
+    {
+        self.identityCc = nil;
+    }
+}
+
 -(NSArray*) cards
 {
     return self->_cards;
 }
 
+-(NSArray*) allCards
+{
+    NSMutableArray* arr = [NSMutableArray array];
+    if (self.identityCc)
+    {
+        [arr addObject:self.identityCc];
+    }
+    [arr addObjectsFromArray:self.cards];
+    return arr;
+}
+
 -(NSArray*) checkValidity
 {
     NSMutableArray* reasons = [NSMutableArray array];
-    if (self.identity == nil)
+    if (self.identityCc == nil)
     {
         [reasons addObject:l10n(@"No Identity")];
+    }
+    else
+    {
+        NSAssert(self.identityCc.count == 1, @"identity count");
+    }
+    
+    if (self.influence > self.identity.influenceLimit)
+    {
+        [reasons addObject:l10n(@"Too much influence used")];
+    }
+    
+    if (self.size < self.identity.minimumDecksize)
+    {
+        [reasons addObject:l10n(@"Not enough cards")];
     }
     
     if (self.identity.role == NRRoleCorp)
@@ -48,7 +91,7 @@
         int apRequired = ((self.size / 5) + 1) * 2;
         if (self.agendaPoints != apRequired && self.agendaPoints != apRequired+1)
         {
-            [reasons addObject:[NSString stringWithFormat:l10n(@"Needs %d or %d Agenda Points"), apRequired, apRequired+1]];
+            [reasons addObject:[NSString stringWithFormat:l10n(@"AP must be %d or %d"), apRequired, apRequired+1]];
         }
     
         BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
@@ -79,15 +122,6 @@
         }
     }
     
-    if (self.size < self.identity.minimumDecksize)
-    {
-        [reasons addObject:l10n(@"Not enough cards")];
-    }
-    if (self.influence > self.identity.influenceLimit)
-    {
-        [reasons addObject:l10n(@"Too much influence used")];
-    }
-
     return reasons;
 }
 
@@ -159,6 +193,7 @@
 -(void) addCard:(Card *)card copies:(int)copies
 {
     NSAssert(copies > 0 && copies < 4, @"invalid card count");
+    NSAssert(card.type != NRCardTypeIdentity, @"can't add identity");
     
     int index = [self indexOfCard:card];
     if (index == -1)
@@ -185,6 +220,7 @@
 
 -(void) removeCard:(Card *)card copies:(int)copies
 {
+    NSAssert(card.type != NRCardTypeIdentity, @"can't remove identity");
     int index = [self indexOfCard:card];
     NSAssert(index != -1, @"removing card %@, not in deck", card.name);
     
@@ -199,12 +235,12 @@
     }
 }
 
--(Deck*) copy
+-(Deck*) duplicate
 {
     Deck* newDeck = [Deck new];
     
-    newDeck.name = [NSString stringWithFormat:@"Copy of %@", self.name];
-    newDeck.identity = self.identity;
+    newDeck.name = [NSString stringWithFormat:l10n(@"Copy of %@"), self.name];
+    newDeck.identityCc = self.identityCc;
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
     newDeck->_role = self.role;
     newDeck.filename = nil;
@@ -263,11 +299,17 @@
     
     [self sort];
     
-    if (self.identity)
+    if (self.identityCc)
     {
-        CardCounter* identity = [CardCounter initWithCard:self.identity];
-        [sections addObject:identity.card.typeStr];
-        [cards addObject:@[ identity ]];
+        [sections addObject:self.identityCc.card.typeStr];
+        [cards addObject:@[ self.identityCc ]];
+    }
+    else
+    {
+        // if there is no identity, get the typeStr of a known one and return a NSNull instance in its place
+        Card* dummyId = [Card cardByCode:ANDROMEDA];
+        [sections addObject:dummyId.typeStr];
+        [cards addObject:@[ [NSNull null] ]];
     }
     
     // delete all cards with count==0
@@ -320,7 +362,13 @@
         _name = [decoder decodeObjectForKey:@"name"];
         _role = [decoder decodeIntForKey:@"role"];
         NSString* identityCode = [decoder decodeObjectForKey:@"identity"];
-        _identity = [Card cardByCode:identityCode];
+        Card* identity = [Card cardByCode:identityCode];
+        if (identity)
+        {
+            _identityCc = [CardCounter initWithCard:identity andCount:1];
+        }
+        _identityCc.showAltArt = [decoder decodeBoolForKey:@"identityAltArt"];
+        _lastModified = nil;
     }
     return self;
 }
@@ -331,6 +379,7 @@
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeInt:self.role forKey:@"role"];
     [coder encodeObject:self.identity.code forKey:@"identity"];
+    [coder encodeBool:self.identityCc.showAltArt forKey:@"identityAltArt"];
 }
 
 

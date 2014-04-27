@@ -13,6 +13,8 @@
 #import "CardType.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
+#import "SettingsKeys.h"
+#import "ImageCache.h"
 
 @interface LargeCardCell()
 @property NSArray* pips;
@@ -21,11 +23,15 @@
 
 -(void) awakeFromNib
 {
+    [super awakeFromNib];
+    
     self.pips = @[ self.pip1, self.pip2, self.pip3, self.pip4, self.pip5 ];
     
-    for (UIView*pip in self.pips)
+    static int diameter = 8;
+    for (UIView* pip in self.pips)
     {
-        pip.layer.cornerRadius = 6;
+        pip.frame = CGRectSetSize(pip.frame, diameter, diameter);
+        pip.layer.cornerRadius = diameter/2;
     }
 }
 
@@ -41,11 +47,23 @@
     }
     else if (card.unique)
     {
-        self.name.text = [NSString stringWithFormat:@"%@ • ×%d", card.name, cc.count];
+        self.name.text = [NSString stringWithFormat:@"%d× %@ •", cc.count, card.name];
     }
     else
     {
-        self.name.text = [NSString stringWithFormat:@"%@ ×%d", card.name, cc.count];
+        self.name.text = [NSString stringWithFormat:@"%d× %@", cc.count, card.name];
+    }
+    
+    self.name.textColor = [UIColor blackColor];
+    if ([card.setCode isEqualToString:@"core"])
+    {
+        NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
+        NSInteger owned = cores * card.quantity;
+        
+        if (owned < cc.count)
+        {
+            self.name.textColor = [UIColor redColor];
+        }
     }
     
     NSString* factionName = [Faction name:card.faction];
@@ -54,11 +72,11 @@
     NSString* subtype = card.subtype;
     if (subtype)
     {
-        self.type.text = [NSString stringWithFormat:@"%@ %@: %@", factionName, typeName, card.subtype];
+        self.type.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];
     }
     else
     {
-        self.type.text = [NSString stringWithFormat:@"%@ %@", factionName, typeName];
+        self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
     
     int influence = 0;
@@ -81,20 +99,41 @@
     
     self.copiesLabel.hidden = card.type == NRCardTypeIdentity;
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
+    self.identityButton.hidden = card.type != NRCardTypeIdentity;
+    self.type.hidden = NO;
     
     // labels from top: cost/strength/mu
     switch (card.type)
     {
         case NRCardTypeIdentity:
-            self.cost.text = [@(card.minimumDecksize) stringValue];
-            self.strength.text = [@(card.influenceLimit) stringValue];
+            self.label1.text = [@(card.minimumDecksize) stringValue];
+            self.icon1.image = [ImageCache cardIcon];
+            self.label2.text = [@(card.influenceLimit) stringValue];
+            self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)
             {
-                self.mu.text = [NSString stringWithFormat:@"%d Link", card.baseLink];
+                self.label3.text = [NSString stringWithFormat:@"%d", card.baseLink];
+                self.icon3.image = [ImageCache linkIcon];
             }
             else
             {
-                self.mu.text = @"";
+                self.label3.text = @"";
+                self.icon3.image = nil;
+            }
+            if (cc == nil)
+            {
+                self.type.hidden = YES;
+                self.label1.text = @"";
+                self.label2.text = @"";
+                self.label3.text = @"";
+                self.icon1.image = nil;
+                self.icon2.image = nil;
+                self.icon3.image = nil;
+                [self.identityButton setTitle:l10n(@"Choose Identity") forState:UIControlStateNormal];
+            }
+            else
+            {
+                [self.identityButton setTitle:l10n(@"Switch Identity") forState:UIControlStateNormal];
             }
             break;
             
@@ -102,24 +141,41 @@
         case NRCardTypeResource:
         case NRCardTypeEvent:
         case NRCardTypeHardware:
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
+            self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.icon2.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
+            self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%d", card.mu] : @"";
+            self.icon3.image = card.mu != -1 ? [ImageCache muIcon] : nil;
+            break;
+            
         case NRCardTypeIce:
-            self.cost.text = card.cost != -1 ? [NSString stringWithFormat:@"%d Cr", card.cost] : @"";
-            self.strength.text = card.strength != -1 ? [NSString stringWithFormat:@"%d Str", card.strength] : @"";
-            self.mu.text = card.mu != -1 ? [NSString stringWithFormat:@"%d Str", card.mu] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
+            self.label2.text = @"";
+            self.icon2.image = nil;
+            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.icon3.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
             break;
             
         case NRCardTypeAgenda:
-            self.cost.text = [NSString stringWithFormat:@"%d Adv", card.advancementCost];
-            self.strength.text = [NSString stringWithFormat:@"%d AP", card.agendaPoints];
-            self.mu.text = @"";
+            self.label1.text = [NSString stringWithFormat:@"%d", card.advancementCost];
+            self.icon1.image = [ImageCache difficultyIcon];
+            self.label2.text = @"";
+            self.icon2.image = nil;
+            self.label3.text = [NSString stringWithFormat:@"%d", card.agendaPoints];
+            self.icon3.image = [ImageCache apIcon];
             break;
             
         case NRCardTypeAsset:
         case NRCardTypeOperation:
         case NRCardTypeUpgrade:
-            self.cost.text = card.cost != -1 ? [NSString stringWithFormat:@"%d Cr", card.cost] : @"";
-            self.strength.text = card.trash != -1 ? [NSString stringWithFormat:@"%d Tr", card.trash] : @"";
-            self.mu.text = @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
+            self.label2.text = @"";
+            self.icon2.image = nil;
+            self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%d", card.trash] : @"";
+            self.icon3.image = card.trash != -1 ? [ImageCache trashIcon] : nil;
             break;
             
         case NRCardTypeNone:

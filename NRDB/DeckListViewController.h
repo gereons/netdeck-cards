@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "DetailViewManager.h"
 
 @class Card, Deck;
 
-@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIPrintInteractionControllerDelegate, UITextFieldDelegate>
+@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIPrintInteractionControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong) IBOutlet UITableView* tableView;
 @property (strong) IBOutlet UICollectionView* collectionView;
@@ -30,6 +31,7 @@
 -(void) addCard:(Card*)card;
 -(void) loadDeckFromFile:(NSString*) filename;
 -(void) saveDeck:(id)sender;
+-(void) selectIdentity:(id)sender;
 
 -(IBAction)analysisClicked:(id)sender;
 -(IBAction)drawSimulatorClicked:(id)sender;

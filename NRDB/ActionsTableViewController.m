@@ -14,25 +14,21 @@
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "FilteredCardViewController.h"
-#import "CardEditorViewController.h"
 #import "SavedDecksViewController.h"
 #import "ImportDecksViewController.h"
+#import "DecksViewController.h"
 #import "Notifications.h"
 #import "CardData.h"
 #import "SettingsKeys.h"
 #import "Deck.h"
 #import "NRNavigationController.h"
 #import "DataDownload.h"
+#import "DeckManager.h"
 
 typedef NS_ENUM(NSInteger, NRMenuItem)
 {
-    NRMenuNewRunner,
-    NRMenuNewCorp,
-    NRMenuLoadRunner,
-    NRMenuLoadCorp,
-    NRMenuImportDecks,
+    NRMenuDecks,
     NRMenuSettings,
-    NRMenuCardEditor,
     NRMenuAbout,
     
     NRMenuItemCount
@@ -56,7 +52,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     self.lastSelection = -1;
     self.tableView.scrollEnabled = NO;
     
-    // self.title = NSLocalizedString(@"NRDB", nil);
+    self.title = l10n(@"Net Deck");
     
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];
@@ -75,7 +71,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     self.appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 #endif
     
-    footerLabel.text = [NSString stringWithFormat:@"Version %@", self.appVersion];
+    footerLabel.text = [NSString stringWithFormat:@"%@", self.appVersion];
     footerLabel.textAlignment = NSTextAlignmentCenter;
     footerLabel.backgroundColor = [UIColor clearColor];
     footerLabel.font = [UIFont systemFontOfSize:14];
@@ -83,6 +79,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
     [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
     [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
     [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
@@ -97,6 +94,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     }
 }
 
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void) viewDidAppear:(BOOL)animated
 {
     [self checkCardUpdate];
@@ -105,7 +107,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     [super viewDidAppear:animated];
     
-    if (self.lastSelection == NRMenuLoadRunner || self.lastSelection == NRMenuLoadCorp)
+    if (self.lastSelection == NRMenuDecks)
     {
         NSIndexPath* indexPath = [NSIndexPath indexPathForItem:self.lastSelection inSection:0];
         
@@ -125,6 +127,14 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         
         [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
         [defaults setObject:self.appVersion forKey:LAST_START_VERSION];
+        [defaults synchronize];
+    }
+    else if ([CardData cardsAvailable])
+    {
+        // initially select Decks view
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     }
 }
 
@@ -153,7 +163,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     if ([scheduled compare:now] == NSOrderedAscending)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Update cards") message:l10n(@"Card data may be out of date. Download now?") delegate:self cancelButtonTitle:l10n(@"Later") otherButtonTitles:@"OK", nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Update cards")
+                                                        message:l10n(@"Card data may be out of date. Download now?")
+                                                       delegate:self
+                                              cancelButtonTitle:l10n(@"Later")
+                                              otherButtonTitles:l10n(@"OK"), nil];
         alert.tag = 1;
         [alert show];
     }
@@ -196,7 +210,22 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
     nc.deckListViewController = filter.deckListViewController;
     
-    [self.navigationController pushViewController:filter animated:YES];
+    [self.navigationController pushViewController:filter animated:NO];
+}
+
+-(void)newDeck:(NSNotification*) notification
+{
+    NSDictionary* userInfo = notification.userInfo;
+    
+    NRRole role = [[userInfo objectForKey:@"role"] intValue];
+    
+    FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role];
+    NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
+    
+    NRNavigationController* nc = (NRNavigationController*)self.navigationController;
+    nc.deckListViewController = filter.deckListViewController;
+    
+    [self.navigationController pushViewController:filter animated:NO];
 }
 
 -(void)importDeckFromClipboard:(NSNotification*) notification
@@ -205,6 +234,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     Deck* deck = [userInfo objectForKey:@"deck"];
     NRRole role = deck.identity.role;
     
+    [DeckManager saveDeck:deck];
+    
     FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role andDeck:deck];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
@@ -212,7 +243,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     nc.deckListViewController = filter.deckListViewController;
     
     [self.navigationController popToRootViewControllerAnimated:NO];
-    [self.navigationController pushViewController:filter animated:YES];
+    [self.navigationController pushViewController:filter animated:NO];
 }
 
 -(void)loadCards:(id) sender
@@ -239,40 +270,19 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     }
     
     BOOL cardsAvailable = [CardData cardsAvailable];
-    BOOL dropboxLinked = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX];
     
     // Set appropriate labels for the cells.
     switch (indexPath.row)
     {
-        case NRMenuNewRunner:
-            cell.textLabel.text = l10n(@"New Runner Deck");
-            cell.textLabel.enabled = cardsAvailable;
-            break;
-        case NRMenuNewCorp:
-            cell.textLabel.text = l10n(@"New Corp Deck");
-            cell.textLabel.enabled = cardsAvailable;
-            break;
-        case NRMenuLoadRunner:
-            cell.textLabel.text = l10n(@"Load Runner Deck");
-            cell.textLabel.enabled = cardsAvailable;
-            break;
-        case NRMenuLoadCorp:
-            cell.textLabel.text = l10n(@"Load Corp Deck");
-            cell.textLabel.enabled = cardsAvailable;
-            break;
         case NRMenuAbout:
             cell.textLabel.text = l10n(@"About");
             break;
         case NRMenuSettings:
             cell.textLabel.text = l10n(@"Settings");
             break;
-        case NRMenuCardEditor:
-            cell.textLabel.text = l10n(@"Card Editor");
-            cell.textLabel.enabled = NO;
-            break;
-        case NRMenuImportDecks:
-            cell.textLabel.text = l10n(@"Import Decks");
-            cell.textLabel.enabled = cardsAvailable && dropboxLinked;
+        case NRMenuDecks:
+            cell.textLabel.text = l10n(@"Decks");
+            cell.textLabel.enabled = cardsAvailable;
             break;
     }
     
@@ -305,45 +315,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     self.lastSelection = indexPath.row;
     switch (indexPath.row)
     {
-        case NRMenuNewRunner:
+        case NRMenuDecks:
         {
-            TF_CHECKPOINT(@"new runner deck");
-            FilteredCardViewController *runner = [[FilteredCardViewController alloc] initWithRole:NRRoleRunner];
-            [self.navigationController pushViewController:runner animated:YES];
-            
-            NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
-        
-            NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-            nc.deckListViewController = runner.deckListViewController;
-            break;
-        }
-    
-        case NRMenuNewCorp:
-        {
-            TF_CHECKPOINT(@"new corp deck");
-            FilteredCardViewController *runner = [[FilteredCardViewController alloc] initWithRole:NRRoleCorp];
-            [self.navigationController pushViewController:runner animated:YES];
-            NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
-            
-            NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-            nc.deckListViewController = runner.deckListViewController;
-            break;
-        }
-            
-        case NRMenuLoadRunner:
-        {
-            TF_CHECKPOINT(@"load runner deck");
-            SavedDecksViewController* runner = [[SavedDecksViewController alloc] initWithRole:NRRoleRunner];
-            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:runner];
-            detailViewManager.detailViewController = self.snc;
-            break;
-        }
-            
-        case NRMenuLoadCorp:
-        {
-            TF_CHECKPOINT(@"load corp deck");
-            SavedDecksViewController* corp = [[SavedDecksViewController alloc] initWithRole:NRRoleCorp];
-            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:corp];
+            TF_CHECKPOINT(@"decks");
+            DecksViewController* decks = [[DecksViewController alloc] init];
+            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:decks];
             detailViewManager.detailViewController = self.snc;
             break;
         }
@@ -357,31 +333,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             break;
         }
             
-        case NRMenuImportDecks:
-        {
-            TF_CHECKPOINT(@"import decks");
-            ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
-            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:import];
-            detailViewManager.detailViewController = self.snc;
-            break;
-        }
-            
         case NRMenuAbout:
         {
             TF_CHECKPOINT(@"about");
             AboutViewController* about = [[AboutViewController alloc] initWithNibName:@"AboutView" bundle:nil];
             
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:about];
-            detailViewManager.detailViewController = self.snc;
-            break;
-        }
-            
-        case NRMenuCardEditor:
-        {
-            TF_CHECKPOINT(@"card editor");
-            CardEditorViewController* edit = [[CardEditorViewController alloc] initWithNibName:@"CardEditorViewController" bundle:nil];
-            
-            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:edit];
             detailViewManager.detailViewController = self.snc;
             break;
         }

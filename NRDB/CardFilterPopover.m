@@ -214,7 +214,7 @@ static UIPopoverController* popover;
         NSDictionary* userInfo = @{ @"type": [self.type lowercaseString], @"value": value };
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_FILTER object:self userInfo:userInfo];
         
-        NSString* title = [NSString stringWithFormat:@"%@: %@", self.type, l10n(value) ];
+        NSString* title = [NSString stringWithFormat:@"%@: %@", l10n(self.type), l10n(value) ];
         [self.button setTitle:title forState:UIControlStateNormal];
         
         [self.headerView filterCallback:self.button value:value];
@@ -238,7 +238,6 @@ static UIPopoverController* popover;
         }
         
         [self notifyWithMultipleSelection];
-        
     }
 }
 
@@ -277,7 +276,7 @@ static UIPopoverController* popover;
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_FILTER object:self userInfo:userInfo];
     
     NSString* selected = self.selectedValues.count == 0 ? l10n(kANY) : (self.selectedValues.count == 1 ? [[self.selectedValues allObjects] objectAtIndex:0] : @"⋯");
-    NSString* title = [NSString stringWithFormat:@"%@: %@", self.type, selected];
+    NSString* title = [NSString stringWithFormat:@"%@: %@", l10n(self.type), selected];
     [self.button setTitle:title forState:UIControlStateNormal];
     
     [self.headerView filterCallback:self.button value:self.selectedValues];

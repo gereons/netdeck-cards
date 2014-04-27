@@ -72,6 +72,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
     self.filterView = [[[NSBundle mainBundle] loadNibNamed:@"CardFilterHeaderView" owner:self options:nil] objectAtIndex:0];
     self.filterView.role = self.role;
@@ -87,7 +88,14 @@
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
-    [nc addObserver:self selector:@selector(deckLoaded:) name:DECK_LOADED object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -108,7 +116,7 @@
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFilters:)];
 }
 
--(void) deckLoaded:(id)sender
+-(void) deckChanged:(id)sender
 {
     [self.tableView reloadData];
 }
@@ -129,7 +137,7 @@
     
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords
-    float tableHeight = 768 - kbHeight - 44 - 85;
+    float tableHeight = 768 - kbHeight - 144; // screen height - kbd height - height of visible filter
     
     float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     [UIView animateWithDuration:animDuration
@@ -281,6 +289,10 @@
         NSAssert(num != nil, @"need number");
         [self.cardList filterByAgendaPoints:[num intValue]];
     }
+    else
+    {
+        NSAssert(NO, @"unknown filter '%@'", type);
+    }
     
     [self initCards];
     [self.tableView reloadData];
@@ -304,6 +316,7 @@
         {
             Card* card = arr[0];
             [self.deckListViewController addCard:card];
+            [self.tableView reloadData];
         }
     }
 }
@@ -344,13 +357,13 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
        
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        UIButton* button = [UIButton buttonWithType:UIButtonTypeContactAdd];
         button.frame = CGRectMake(0, 0, 30, 30);
         cell.accessoryView = button;
         
         [cell.contentView addSubview:button];
         
-        [button addTarget:self action:@selector(showImage:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];
     }
 
     cell.textLabel.font = [UIFont systemFontOfSize:17];
@@ -367,23 +380,24 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
     return NO;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section > self.cards.count)
+    {
+        return;
+    }
+    
     NSArray* cards = self.cards[indexPath.section];
     Card *card = cards[indexPath.row];
     
-    [self.deckListViewController addCard:card];
-    [self.tableView reloadData];
+    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
 }
 
-#pragma mark card popup
-
--(void) showImage:(UIButton*)sender
+- (void) addCardToDeck:(UIButton*)sender
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
@@ -391,8 +405,14 @@
     NSArray* cards = self.cards[indexPath.section];
     Card *card = cards[indexPath.row];
     
-    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-    // rect.origin.x = sender.frame.origin.x;
-    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
+    UITextField* textField = self.filterView.searchField;
+    if (textField.isFirstResponder && textField.text.length > 0)
+    {
+        [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
+    }
+    
+    [self.deckListViewController addCard:card];
+    [self.tableView reloadData];
 }
+
 @end

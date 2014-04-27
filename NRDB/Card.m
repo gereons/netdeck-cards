@@ -8,14 +8,19 @@
 
 #import "Card.h"
 #import "CardData.h"
+#if USE_DTCORETEXT
 #import <DTCoreText.h>
+#endif
 
 @interface Card()
 
 @property CardData* data;
 @property NSString* filteredText;
+
+#if USE_DTCORETEXT
 @property NSAttributedString* attributedText;
 @property CGFloat attributedTextHeight;
+#endif
 
 @end
 
@@ -45,6 +50,7 @@ PROPERTY_PROXY(NSString*, setName)
 PROPERTY_PROXY(NSString*, setCode)
 PROPERTY_PROXY(NSString*, artist)
 PROPERTY_PROXY(int, trash)
+PROPERTY_PROXY(int, quantity)
 PROPERTY_PROXY(BOOL, unique)
 PROPERTY_PROXY(NSString*, imageSrc)
 PROPERTY_PROXY(int, advancementCost)
@@ -100,6 +106,17 @@ static NSMutableArray* allCorpIdentities;
         }
         return NSOrderedSame;
     }];
+}
+
++(NSArray*) altCards
+{
+    NSMutableArray* altCards = [NSMutableArray array];
+    for (CardData* cd in [CardData altCards])
+    {
+        Card* card = [[Card alloc] initWithData:cd];
+        [altCards addObject:card];
+    }
+    return altCards;
 }
 
 +(NSArray*) allForRole:(NRRole)role
@@ -187,6 +204,7 @@ static NSMutableArray* allCorpIdentities;
     return self->_filteredText;
 }
 
+#if USE_DTCORETEXT
 -(NSAttributedString*) attributedText
 {
     if (!self->_attributedText)
@@ -212,7 +230,9 @@ static NSMutableArray* allCorpIdentities;
     }
     return self->_attributedText;
 }
+#endif
 
+#if USE_DTCORETEXT
 -(CGFloat) attributedTextHeight
 {
     if (!self->_attributedText)
@@ -222,10 +242,22 @@ static NSMutableArray* allCorpIdentities;
     }
     return self->_attributedTextHeight;
 }
+#endif
 
 -(NSString*) octgnCode
 {
     return [NSString stringWithFormat:@"bc0f047c-01b1-427f-a439-d451eda%@", self.code];
+}
+
+-(Card*) altCard
+{
+    CardData* alt = [CardData altFor:self.name];
+    if (alt)
+    {
+        Card* card = [[Card alloc] initWithData:alt];
+        return card;
+    }
+    return nil;
 }
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]

@@ -18,6 +18,28 @@
 
 @implementation NRNavigationController
 
+-(void) viewDidLoad
+{
+    [super viewDidLoad];
+
+    // disable swipe gesture
+    self.interactivePopGestureRecognizer.enabled = NO;
+    
+    // TODO: figure out how to handle and intercept swipe gesture correctly
+    // [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
+}
+
+/*
+- (void)handlePopGesture:(UIGestureRecognizer *)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateEnded)
+    {
+        NSLog(@"pop view");
+        [self popViewControllerAnimated:NO];
+    }
+}
+*/
+
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
     if (self.regularPop)
@@ -35,20 +57,19 @@
     if (unsavedChanges)
     {
         UIAlertView* alert = [[UIAlertView alloc]
-                          initWithTitle:Nil
+                          initWithTitle:nil
                           message:l10n(@"There are unsaved changes")
                           delegate:self
                           cancelButtonTitle:l10n(@"Cancel")
                           otherButtonTitles:l10n(@"Discard"), l10n(@"Save"), nil];
         [alert show];
         
-    
         return NO;
     }
     else
     {
         self.regularPop = YES;
-        [self popViewControllerAnimated:YES];
+        [self popViewControllerAnimated:NO];
         return NO;
     }
 }
@@ -65,7 +86,7 @@
         [self.deckListViewController saveDeck:nil];
     }
     self.alertViewClicked = YES;
-    [self popViewControllerAnimated:YES];
+    [self popViewControllerAnimated:NO];
 }
 
 @end

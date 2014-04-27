@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class Deck, CardCounter;
+@class Deck, CardCounter, DeckListViewController;
 
 @interface CardCell : UITableViewCell {
     @protected
@@ -16,7 +16,12 @@
 }
 
 @property Deck* deck;
+@property (weak) DeckListViewController* delegate;
+
 @property (nonatomic) CardCounter* cardCounter;
+@property IBOutlet UIButton* identityButton;
+
+-(IBAction)selectIdentity:(id)sender;
 
 -(IBAction)copiesChanged:(id)sender;
 

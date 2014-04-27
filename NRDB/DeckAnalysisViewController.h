@@ -13,6 +13,7 @@
 
 @property IBOutlet UILabel* titleLabel;
 @property IBOutlet UITableView* tableView;
+@property IBOutlet UIButton* okButton;
 
 -(IBAction)done:(id)sender;
 

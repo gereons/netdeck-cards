@@ -14,9 +14,14 @@
 @property IBOutlet UILabel* influenceLabel;
 @property IBOutlet UILabel* name;
 @property IBOutlet UILabel* type;
-@property IBOutlet UILabel* cost;
-@property IBOutlet UILabel* strength;
-@property IBOutlet UILabel* mu;
+
+@property IBOutlet UILabel* label1;
+@property IBOutlet UILabel* label2;
+@property IBOutlet UILabel* label3;
+@property IBOutlet UIImageView* icon1;
+@property IBOutlet UIImageView* icon2;
+@property IBOutlet UIImageView* icon3;
+
 @property IBOutlet UILabel* copiesLabel;
 @property IBOutlet UIStepper* copiesStepper;
 
@@ -25,7 +30,5 @@
 @property IBOutlet UIView* pip3;
 @property IBOutlet UIView* pip4;
 @property IBOutlet UIView* pip5;
-
-// -(IBAction)copiesChanged:(id)sender;
 
 @end

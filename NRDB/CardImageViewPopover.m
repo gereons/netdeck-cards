@@ -9,10 +9,12 @@
 #import "CardImageViewPopover.h"
 #import "Card.h"
 #import "ImageCache.h"
+#import <EXTScope.h>
 
 @interface CardImageViewPopover ()
 
 @property Card* card;
+@property BOOL showAlt;
 
 @end
 
@@ -53,6 +55,7 @@ static UIPopoverController* popover;
     if (self)
     {
         self.card = card;
+        self.showAlt = NO;
     }
     return self;
 }
@@ -66,16 +69,13 @@ static UIPopoverController* popover;
     imgTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:imgTap];
     
-    [self.activityIndicator startAnimating];
-    [[ImageCache sharedInstance] getImageFor:self.card
-                                     success:^(Card* card, UIImage* image) {
-                                         [self.activityIndicator stopAnimating];
-                                         self.imageView.image = image;
-                                     }
-                                     failure:^(Card* card, NSInteger statusCode, UIImage* placeholder) {
-                                        [self.activityIndicator stopAnimating];
-                                         self.imageView.image = placeholder;
-                                     }];
+    if (self.card.altCard == nil)
+    {
+        self.toggleButton.hidden = YES;
+    }
+    
+    [self.toggleButton setImage:[ImageCache altArtIcon:self.showAlt] forState:UIControlStateNormal];
+    [self loadCardImage:self.card];
 }
 
 -(void) imgTap:(UITapGestureRecognizer*)sender
@@ -84,6 +84,37 @@ static UIPopoverController* popover;
     {
         [CardImageViewPopover dismiss];
     }
+}
+
+-(void) toggleImage:(id)sender
+{
+    self.showAlt = !self.showAlt;
+    Card* altCard = self.card.altCard;
+    
+    if (altCard)
+    {
+        Card* card = self.showAlt ? altCard : self.card;
+        [self loadCardImage:card];
+        [self.toggleButton setImage:[ImageCache altArtIcon:self.showAlt] forState:UIControlStateNormal];
+    }
+}
+
+-(void) loadCardImage:(Card*)card
+{
+    [self.activityIndicator startAnimating];
+    @weakify(self);
+    [[ImageCache sharedInstance] getImageFor:card
+                                     success:^(Card* card, UIImage* image) {
+                                         @strongify(self);
+                                         [self.activityIndicator stopAnimating];
+                                         self.imageView.image = image;
+                                     }
+                                     failure:^(Card* card, UIImage* placeholder) {
+                                         @strongify(self);
+                                         [self.activityIndicator stopAnimating];
+                                         self.imageView.image = placeholder;
+                                     }];
+
 }
 
 @end

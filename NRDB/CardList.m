@@ -210,7 +210,7 @@
     }
     if (self.cost != -1)
     {
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"cost == %d", self.cost];
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"cost == %d || advancementCost == %d", self.cost, self.cost];
         [filteredCards filterUsingPredicate:predicate];
     }
     if (self.subtype.length > 0 && ![self.subtype isEqualToString:kANY])

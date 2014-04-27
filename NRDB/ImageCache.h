@@ -11,13 +11,28 @@
 @class Card;
 @interface ImageCache : NSObject
 
-typedef void (^SuccessCompletionBlock)(Card* card, UIImage* image);
-typedef void (^ErrorCompletionBlock)(Card* card, NSInteger statusCode, UIImage* placeholderImage);
+typedef void (^CompletionBlock)(Card* card, UIImage* image);
+typedef void (^UpdateCompletionBlock)(BOOL ok);
 
 +(ImageCache*) sharedInstance;
 
 -(void) clearCache;
--(void) getImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock;
--(void) getImageFor:(Card *)card success:(SuccessCompletionBlock)successBlock failure:(ErrorCompletionBlock)failureBlock forced:(BOOL)forced;
+-(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock;
+-(void) updateImageFor:(Card*)card completion:(UpdateCompletionBlock)completionBlock;
+
++(UIImage*) trashIcon;
++(UIImage*) strengthIcon;
++(UIImage*) creditIcon;
++(UIImage*) muIcon;
++(UIImage*) apIcon;
++(UIImage*) linkIcon;
++(UIImage*) cardIcon;
++(UIImage*) difficultyIcon;
++(UIImage*) influenceIcon;
+
++(UIImage*) altArtIcon:(BOOL)on;
+
++(UIImage*) placeholderFor:(NRRole)role;
++(UIImage*) hexTile;
 
 @end

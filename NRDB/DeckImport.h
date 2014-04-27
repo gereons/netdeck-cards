@@ -13,6 +13,6 @@
 @interface DeckImport : NSObject
 
 +(void) updateCount;
-+(Deck*) parseClipboard;
++(void) checkClipboardForDeck;
 
 @end

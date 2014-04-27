@@ -9,16 +9,18 @@
 #import "ImportDecksViewController.h"
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
+#import <EXTScope.h>
 #import "Deck.h"
 #import "DeckManager.h"
+#import "ImageCache.h"
+#import "DeckCell.h"
+#import "OctgnImport.h"
 
 @interface ImportDecksViewController ()
 
 @property NSArray* deckNames;
 @property NSArray* decks;
-
-@property Deck* tmpDeck;
-@property BOOL setIdentity;
+@property NSDateFormatter* dateFormatter;
 
 @end
 
@@ -27,8 +29,11 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self)
+    {
+        self.dateFormatter = [[NSDateFormatter alloc] init];
+        [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     }
     return self;
 }
@@ -37,9 +42,38 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+        
+    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self listFiles];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
+    
+    // do the initial listing in the background, as it may block the ui thread
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Loading decks from Dropbox")];
+    @weakify(self);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        @strongify(self);
+        NSUInteger count = [self listFiles];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            @strongify(self);
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            [SVProgressHUD dismiss];
+            if (count == 0)
+            {
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Decks found")
+                                                                message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.")
+                                                               delegate:nil
+                                                      cancelButtonTitle:l10n(@"OK")
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+
+            [self.tableView reloadData];
+        });
+    });
     
     DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     DBPath* path = [DBPath root];
@@ -50,7 +84,7 @@
     }];
 }
 
--(void) listFiles
+-(NSUInteger) listFiles
 {
     self.deckNames = @[ [NSMutableArray array], [NSMutableArray array] ];
     self.decks = @[ [NSMutableArray array], [NSMutableArray array] ];
@@ -58,6 +92,8 @@
     DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     DBPath* path = [DBPath root];
     DBError* error;
+    
+    NSUInteger totalDecks = 0;
     for (DBFileInfo* fileInfo in [filesystem listFolder:path error:&error])
     {
         NSString* name = fileInfo.path.name;
@@ -75,9 +111,12 @@
                 NSString* filename = fileInfo.path.name;
                 [names addObject:[filename substringToIndex:textRange.location]];
                 [decks addObject:deck];
+                ++totalDecks;
             }
         }
     }
+    
+    return totalDecks;
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -116,18 +155,42 @@
 {
     static NSString* cellIdentifier = @"deckCell";
     
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
-    }
+    DeckCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
     NSArray* names = self.deckNames[indexPath.section];
     NSArray* decks = self.decks[indexPath.section];
 
-    cell.textLabel.text = names[indexPath.row];
+    cell.nameLabel.text = names[indexPath.row];
     Deck* deck = decks[indexPath.row];
-    cell.detailTextLabel.text = [NSString stringWithFormat:l10n(@"%@ (%d Cards)"), deck.identity.name, deck.size];
+    
+    cell.nameLabel.text = deck.name;
+    
+    if (deck.identity)
+    {
+        cell.identityLabel.text = deck.identity.name;
+        cell.identityLabel.textColor = [deck.identity factionColor];
+    }
+    else
+    {
+        cell.identityLabel.text = l10n(@"No Identity");
+        cell.identityLabel.textColor = [UIColor darkGrayColor];
+    }
+    
+    NSString* summary;
+    if (deck.role == NRRoleRunner)
+    {
+        summary = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence"), deck.size, deck.influence];
+    }
+    else
+    {
+        summary = [NSString stringWithFormat:l10n(@"%d Cards · %d Influence · %d AP"), deck.size, deck.influence, deck.agendaPoints];
+    }
+    cell.summaryLabel.text = summary;
+    BOOL valid = [deck checkValidity].count == 0;
+    cell.summaryLabel.textColor = valid ? [UIColor blackColor] : [UIColor redColor];
+    
+    cell.dateLabel.text = [self.dateFormatter stringFromDate:deck.lastModified];
     
     return cell;
 }
@@ -151,64 +214,29 @@
     if (file)
     {
         NSData* data = [file readData:nil];
+        NSDate* lastModified = file.info.modifiedTime;
         [file close];
         
-        NSXMLParser* parser = [[NSXMLParser alloc] initWithData:data];
-        parser.delegate = self;
-        self.tmpDeck = [Deck new];
+        OctgnImport* importer = [[OctgnImport alloc] init];
+        Deck* deck = [importer parseOctgnDeckFromData:data];
         
-        if ([parser parse])
+        if (deck)
         {
             NSRange textRange = [fileName rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
             
             if (textRange.location == fileName.length-4)
             {
-                self.tmpDeck.name = [fileName substringToIndex:textRange.location];
+                deck.name = [fileName substringToIndex:textRange.location];
             }
             else
             {
-                self.tmpDeck.name = fileName;
+                deck.name = fileName;
             }
-        }
-        else
-        {
-            self.tmpDeck = nil;
+            deck.lastModified = lastModified;
+            return deck;
         }
     }
-    return self.tmpDeck;
-}
-
-#pragma mark nsxml delegate
-
--(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-{
-    if ([elementName isEqualToString:@"section"])
-    {
-        NSString* name = attributeDict[@"name"];
-        self.setIdentity = [[name lowercaseString] isEqualToString:@"identity"];
-        // NSLog(@"start section: %@", name);
-    }
-    
-    if ([elementName isEqualToString:@"card"])
-    {
-        NSString* qty = attributeDict[@"qty"];
-        NSString* code = attributeDict[@"id"];
-        
-        Card* card = [Card cardByCode:[code substringFromIndex:31]];
-        int copies = [qty intValue];
-
-        // NSLog(@"card: %d %@", copies, card.name);
-        
-        if (self.setIdentity)
-        {
-            self.tmpDeck.identity = card;
-            self.tmpDeck.role = card.role;
-        }
-        else
-        {
-            [self.tmpDeck addCard:card copies:copies];
-        }
-    }
+    return nil;
 }
 
 @end

@@ -25,6 +25,9 @@ static NSMutableDictionary* setNames;
 static NSMutableSet* setCodes;
 static NSMutableDictionary* releases;
 
+static NSArray* setGroups;
+static NSArray* setsPerGroup;
+
 static struct cardSetData {
     int setNum;
     char* settingsKey;
@@ -34,7 +37,7 @@ static struct cardSetData {
 } cardSetData[] = {
     {  1, "use_coreset", "core", NRCycleCoreDeluxe, YES },
     {  8, "use_creation_and_control", "cac", NRCycleCoreDeluxe, YES },
-    { 15, "use_honor_and_profit", "hap", NRCycleCoreDeluxe, NO },
+    { 15, "use_honor_and_profit", "hap", NRCycleCoreDeluxe, YES },
     
     // genesis
     { 2, "use_what_lies_ahead", "wla", NRCycleGenesis, YES },
@@ -50,10 +53,13 @@ static struct cardSetData {
     { 11, "use_mala_tempora", "mt", NRCycleSpin, YES },
     { 12, "use_true_colors", "tc", NRCycleSpin, YES },
     { 13, "use_fear_and_loathing", "fal", NRCycleSpin, YES },
-    { 14, "use_double_time", "dt", NRCycleSpin, NO },
+    { 14, "use_double_time", "dt", NRCycleSpin, YES },
     
     // lunar
     { 16, "use_upstalk", "up", NRCycleLunar, NO },
+    { 17, "use_spaces_between", "tsb", NRCycleLunar, NO },
+    { 18, "use_first_contact", "fc", NRCycleLunar, NO },
+    
     { 0 }
 };
 
@@ -81,6 +87,17 @@ static struct cardSetData {
         [cardSets addObject:csd];
         ++c;
     }
+    
+    setGroups = @[ @"", l10n(@"Core / Deluxe"), l10n(@"Genesis Cycle"), l10n(@"Spin Cycle"), l10n(@"Lunar Cycle") ];
+    setsPerGroup = @[
+        @[ @"" ],
+        @[ @"core", @"cac", @"hap" ],
+        @[ @"wla", @"ta", @"ce", @"asis", @"hs", @"fp" ],
+        @[ @"om", @"st", @"mt", @"tc", @"fal", @"dt" ],
+        @[ @"up", @"tsb", @"fc" ]
+    ];
+    
+    NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
 }
 
 +(void) initializeSetNames:(NSDictionary *)cards
@@ -89,13 +106,7 @@ static struct cardSetData {
     for (Card* c in [cards allValues])
     {
         [setNames setObject:c.setName forKey:c.setCode];
-        
-        if (setNames.count == setCodes.count)
-        {
-            break;
-        }
     }
-    NSLog(@"%@", setNames);
 }
 
 +(NSDictionary*) settingsDefaults
@@ -139,32 +150,112 @@ static struct cardSetData {
     return sets;
 }
 
-#define NAME(x) [setNames objectForKey:x]
 +(TableData*) allSetsForTableview
 {
-    NSArray* sections = @[ @"", @"Core / Deluxe", @"Genesis Cycle", @"Spin Cycle", @"Lunar Cycle" ];
-    NSArray* sets = @[
-        @[ kANY ],
-        @[ NAME(@"core"), NAME(@"cac"), NAME(@"hap") ],
-        @[ NAME(@"wla"), NAME(@"ta"), NAME(@"ce"), NAME(@"asis"), NAME(@"hs"), NAME(@"fp") ],
-        @[ NAME(@"om"), NAME(@"st"), NAME(@"mt"), NAME(@"tc"), NAME(@"fal"), NAME(@"dt") ],
-        @[ NAME(@"up") ]
-    ];
+    NSSet* disabledSets = [CardSets disabledSetCodes];
+    NSMutableArray* sections = [setGroups mutableCopy];
+    NSMutableArray* sets = [NSMutableArray array];
+    
+    for (NSArray* arr in setsPerGroup)
+    {
+        NSMutableArray* names = [NSMutableArray array];
+        for (NSString* setCode in arr)
+        {
+            if (setCode.length == 0)
+            {
+                [names addObject:kANY];
+            }
+            else if (![disabledSets containsObject:setCode])
+            {
+                NSString* name = [setNames objectForKey:setCode];
+                if (name)
+                {
+                    [names addObject:name];
+                }
+            }
+        }
+        [sets addObject:names];
+    }
+    
+    for (int i=0; i<sets.count; )
+    {
+        NSArray* arr = [sets objectAtIndex:i];
+        if (arr.count == 0)
+        {
+            [sets removeObjectAtIndex:i];
+            [sections removeObjectAtIndex:i];
+        }
+        else
+        {
+            ++i;
+        }
+    }
     
     return [[TableData alloc] initWithSections:sections andValues:sets];
+}
+
++(NSString*) setsUsedInDeck:(Deck*) deck
+{
+    NSMutableDictionary* sets = [NSMutableDictionary dictionary];
+    NSMutableDictionary* setNums = [NSMutableDictionary dictionary];
+    
+    for (CardCounter* cc in deck.allCards)
+    {
+        NSNumber*n = [sets objectForKey:cc.card.setCode];
+        BOOL isCore = [cc.card.setCode isEqualToString:@"core"];
+        
+        if (n == nil)
+        {
+            n = @1;
+        }
+        
+        if (isCore && cc.count > cc.card.quantity)
+        {
+            int needed = (int)(0.5 + (float)cc.count / cc.card.quantity);
+            if (needed > [n intValue])
+            {
+                n = @(needed);
+            }
+        }
+        
+        [sets setObject:n forKey:cc.card.setCode];
+        int rel = [[releases objectForKey:cc.card.setCode] intValue];
+        [setNums setObject:@(rel) forKey:cc.card.setCode];
+    }
+    
+    // NSLog(@"%@ %@", sets, setNums);
+    
+    NSArray* sorted = [[setNums allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString* s1, NSString* s2) {
+        NSNumber* n1 = [setNums objectForKey:s1];
+        NSNumber* n2 = [setNums objectForKey:s2];
+        return [n1 compare:n2];
+    }];
+    
+    NSMutableString* result = [NSMutableString string];
+    NSString* sep = @"";
+    for (NSString* s in sorted)
+    {
+        [result appendString:sep];
+        if ([s isEqualToString:@"core"])
+        {
+            NSNumber* needed = [sets objectForKey:s];
+            [result appendFormat:@"%@×%@", needed, [setNames objectForKey:s]];
+        }
+        else
+        {
+            [result appendString:[setNames objectForKey:s]];
+        }
+        sep = @", ";
+    }
+    // NSLog(@"%@", result);
+    return result;
 }
 
 +(NSString*) mostRecentSetUsedInDeck:(Deck *)deck
 {
     int maxRelease = 0;
-    
-    if (deck.identity)
-    {
-        int rel = [[releases objectForKey:deck.identity.setCode] intValue];
-        maxRelease = MAX(maxRelease, rel);
-    }
-    
-    for (CardCounter* cc in deck.cards)
+        
+    for (CardCounter* cc in deck.allCards)
     {
         int rel = [[releases objectForKey:cc.card.setCode] intValue];
         maxRelease = MAX(maxRelease, rel);

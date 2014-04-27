@@ -15,9 +15,11 @@
 #import "CardSets.h"
 #import "SettingsKeys.h"
 
-#define JSON_INT(key, attr)          c->_##key = [[json objectForKey:attr] intValue]
+// #define JSON_INT(key, attr)          c->_##key = [[json objectForKey:attr] intValue]
+#define JSON_INT(key, attr)          do { NSString*tmp = [json objectForKey:attr]; c->_##key = tmp ? [tmp intValue] : -1; } while (0)
 #define JSON_BOOL(key, attr)         c->_##key = [[json objectForKey:attr] boolValue]
 #define JSON_STR(key, attr)          c->_##key = [json objectForKey:attr]
+
 
 @implementation CardData
 
@@ -26,10 +28,11 @@ static NSDictionary* roleCodes;
 static NSArray* subtypes;       // array of dictionary type->array
 static NSArray* sortedSubtypes; // array of dictionary type->array
 static NSArray* subtypeCodes;   // array of array
-static NSArray* strengths;      // array of sets
 static NSMutableArray* sortedIdentities;
 
 static NSMutableDictionary* allCards;   // code -> card
+static NSMutableDictionary* altCards;   // name -> card (!)
+static NSMutableDictionary* altCardMap; // code -> code
 static NSMutableArray* allRunnerCards;
 static NSMutableArray* allCorpCards;
 static NSMutableArray* allIdentities;
@@ -52,6 +55,8 @@ NSString* const kANY = @"Any";
 +(void) resetData
 {
     allCards = [NSMutableDictionary dictionary];
+    altCards = [NSMutableDictionary dictionary];
+    altCardMap = [NSMutableDictionary dictionary];
     
     allRunnerCards = [NSMutableArray array];
     allCorpCards = [NSMutableArray array];
@@ -61,8 +66,6 @@ NSString* const kANY = @"Any";
     sortedSubtypes = @[ [NSMutableDictionary dictionary], [NSMutableDictionary dictionary] ];
     sortedIdentities = [@[ [NSMutableArray array], [NSMutableArray array] ] mutableCopy];
     subtypeCodes = @[ [NSMutableArray array], [NSMutableArray array] ];
-    strengths = @[ [NSMutableSet set], [NSMutableSet set] ];
-    
     allSets = [NSMutableSet set];
 
     roleCodes = @{ @"runner": @(NRRoleRunner), @"corp": @(NRRoleCorp) };
@@ -150,6 +153,16 @@ NSString* const kANY = @"Any";
             }
         }
         
+        // build the card-to-altcard mapping
+        for (CardData* cd in [allCards allValues])
+        {
+            CardData* alt = [altCards objectForKey:cd.name];
+            if (alt)
+            {
+                [altCardMap setObject:alt.code forKey:cd.code];
+            }
+        }
+        
         [Faction initializeFactionNames:allCards];
         [CardSets initializeSetNames:allCards];
         [CardType initializeCardTypes:allCards];
@@ -186,11 +199,11 @@ NSString* const kANY = @"Any";
     if (c.type == NRCardTypeNone) NSLog(@"oops %@", json);
     
     JSON_STR(setCode, @"set_code");
-    if ([c.setCode isEqualToString:@"alt"] || [c.setCode isEqualToString:@"special"])
+    if ([c.setCode isEqualToString:@"special"])
     {
         return nil;
     }
-        
+    
     JSON_STR(setName, @"setname");
     [allSets addObject:c.setName];
 
@@ -245,24 +258,12 @@ NSString* const kANY = @"Any";
     JSON_INT(minimumDecksize, @"minimumdecksize");
     JSON_INT(baseLink, @"baselink");
     JSON_INT(advancementCost, @"advancementcost");
-    NSString* ap = [json objectForKey:@"agendapoints"];
-    c->_agendaPoints = ap ? [ap intValue] : -1;
-    
-    NSString* strength = [json objectForKey:@"strength"];
-    c->_strength = strength ? [strength intValue] : -1;
-    [strengths[c.role] addObject:@(c.strength)];
-    
-    NSString* mu = [json objectForKey:@"memoryunits"];
-    c->_mu = mu ? [mu intValue] : -1;
-    
-    NSString* cost = [json objectForKey:@"cost"];
-    c->_cost = cost ? [cost intValue] : -1;
-    
-    NSString* influence = [json objectForKey:@"factioncost"];
-    c->_influence = influence ? [influence intValue] : -1;
-    
-    NSString* trash = [json objectForKey:@"trash"];
-    c->_trash = trash ? [trash intValue] : -1;
+    JSON_INT(agendaPoints, @"agendapoints");
+    JSON_INT(mu, @"memoryunits");
+    JSON_INT(strength, @"strength");
+    JSON_INT(cost, @"cost");
+    JSON_INT(influence, @"factioncost");
+    JSON_INT(trash, @"trash");
     
     JSON_STR(url, @"url");
     JSON_STR(imageSrc, @"imagesrc");
@@ -276,11 +277,21 @@ NSString* const kANY = @"Any";
     if (c.agendaPoints > maxAgendaPoints) maxAgendaPoints = c.agendaPoints;
     
     c.maxCopies = 3;
-    if ([c.code isEqualToString:DIR_HAAS_PET_PROJ])
+    if ([c.code isEqualToString:DIR_HAAS_PET_PROJ] || c.type == NRCardTypeIdentity)
     {
         c.maxCopies = 1;
     }
     
+    // if this is an alt card, store it separately
+    if ([c.setCode isEqualToString:@"alt"])
+    {
+        if (c.imageSrc.length > 0)
+        {
+            [altCards setObject:c forKey:c.name];
+        }
+        return nil;
+    }
+
     return c;
 }
 
@@ -366,6 +377,11 @@ NSString* const kANY = @"Any";
     return [allCards objectForKey:code];
 }
 
++(CardData*)altFor:(NSString *)name
+{
+    return [altCards objectForKey:name];
+}
+
 +(NSArray*) allRunnerCards
 {
     return allRunnerCards;
@@ -374,6 +390,11 @@ NSString* const kANY = @"Any";
 +(NSArray*) allCorpCards
 {
     return allCorpCards;
+}
+
++(NSArray*) altCards
+{
+    return [altCards allValues];
 }
 
 +(BOOL) cardsAvailable
@@ -520,7 +541,7 @@ NSString* const kANY = @"Any";
 }
 
 #define DECODE_OBJ(attr) self.attr = [decoder decodeObjectForKey:@#attr]
-#define DECODE_INT(attr) self.attr = [decoder decodeIntegerForKey:@#attr]
+#define DECODE_INT(attr) self.attr = [decoder decodeIntForKey:@#attr]
 
 -(id) initWithCoder:(NSCoder *)decoder
 {

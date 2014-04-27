@@ -1,5 +1,5 @@
 /*
-  Localizable.strings
+  Localizable.strings (de)
   NRDB
 
   Created by Gereon Steffens on 24.02.14.
@@ -22,6 +22,7 @@
 "Cost" = "Kosten";
 
 "Cancel" = "Abbrechen";
+"Stop" = "Stopp";
 "Edit" = "Bearbeiten";
 "Done" = "Fertig";
 "Remove" = "Entfernen";
@@ -40,26 +41,33 @@
 "About" = "Infos";
 
 // about
-"About NRDB v%@" = "Über NRDB v%@";
+"About Net Deck %@" = "Über Net Deck %@";
+"Feedback" = "Feedback";
+"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store." = "Verbesserungsvorschläge und Ideen sind herzlich willkommen, genauso wie Rezensionen im Appstore.";
+"Write a Review" = "Rezension schreiben";
+"Contact Developers" = "Mail an Entwickler";
 
 // deck list
 "Save" = "Speichern";
 "Saving..." = "Speichern...";
-"Copy" = "Kopieren";
+"Duplicate" = "Duplizieren";
+"Duplicate this deck?" = "Dieses Deck duplizieren?";
+"Yes, switch to copy" = "Ja, zur Kopie wechseln";
+"Yes, but stay here" = "Ja, hier bleiben";
 "Identity" = "Identität";
-"Switch to %@?" = "Zu %@ wechseln?";
-"Enter name" = "Namen eingeben";
-"Deck name" = "Deck-Name";
+"Enter Name" = "Namen eingeben";
+"Deck Name" = "Deck-Name";
 "Dropbox: Plain Text" = "Dropbox: Reiner Text";
 "Clipboard: Plain Text" = "Clipboard: Reiner Text";
 "Connect to your Dropbox account first." = "Dropbox-Verbindung nicht eingerichtet";
 "Deck needs to have an Identity." = "Das Deck hat keine Identität.";
 "Deck needs cards." = "Das Deck hat keine Karten";
 "Cards up to %@" = "Karten bis zu %@";
+"Copy of %@" = "Kopie von %@";
 
 // deck invalidity reasons
 "No Identity" = "Keine Identität";
-"Needs %d or %d Agenda Points" = "Nur %d oder %d Agendapunkte";
+"AP must be %d or %d" = "Nur %d oder %d AP erlaubt";
 "Too many pet projects" = "Zuviele Lieblingsprojekte";
 "Cannot include Jinteki" = "Jinteki nicht erlaubt";
 "Cannot use out-of-faction agendas" = "Fraktionsfremde Agenden";
@@ -69,16 +77,22 @@
 // card downloading
 "Downloading Card Data" = "Lade Karten-Daten";
 "Downloading Images" = "Lade Karten-Bilder";
+"Please download card data first" = "Bitte zuerst Karten-Daten laden";
+"Image %d of %d" = "Bild %d von %d";
 "Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche er später nochmal.";
 "%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";
+"Clear Cache? You will need to re-download all data from netrunnerdb.com." = "Cache löschen? Du musst danach alle Daten neu von netrunnerdb.com laden.";
+"An Internet connection is required." = "Internet-Verbindung wird benötigt.";
 
 // identity selection
-"Choose Identity" = "Identität auswählen";
+"Choose Identity" = "Identität wählen";
+"Switch Identity" = "Identität ändern";
 
 // draw simulator
 "Draw Simulator" = "Zug-Simulator";
 "%ld %@ drawn" = "%ld %@ gezogen";
 "Clear" = "Leeren";
+"Odds to draw a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Chance für eine Karte: 1×%.1f%%  2×%.1f%%  3×%.1f%%";
 
 // deck view
 "Draw" = "Karten";
@@ -100,6 +114,8 @@
 "Load Corp Deck" = "Kon-Deck laden";
 "%@ · %d Cards · %d Influence" = "%@ · %d Karten · %d Einfluss";
 "%d Cards · %d Influence" = "%d Karten · %d Einfluss";
+"%d Cards · %d Influence · %d AP" = "%d Karten · %d Einfluss · %d AP";
+"Date" = "Datum";
 
 // filter
 "Strength: %@" = "Stärke: %@";
@@ -114,14 +130,61 @@
 "Search in:" = "Suche in:";
 "Search Cards" = "Karten suchen";
 
+// section headers
+"Identity" = "Identität";
+"Program" = "Programm";
+"Resource" = "Ressource";
+"Event" = "Ereignis";
+"Hardware" = "Hardware";
+"Agenda" = "Agenda";
+"Asset" = "Aktivposten";
+"ICE" = "ICE";
+"Upgrade" = "Upgrade";
+"Operation" = "Operation";
+"Icebreaker" = "Ice-Brecher";
+
 // startup alert
 "No Card Data" = "Keine Karten-Daten";
 "To use this app, you must first download card data from netrunnerdb.com" = "Um diese App zu verwenden, musst du zuerst Kartendaten von netrunnerdb.com laden";
 "Not now" = "Jetzt nicht";
 "Download" = "Laden";
 
+"Update cards" = "Karten-Update";
+"Card data may be out of date. Download now?" = "Karten-Daten können veraltet sein. Jetzt aktualisieren?";
+"Later" = "Später";
+
 // unsaved changes alert
 "Discard" = "Verwerfen";
 "There are unsaved changes" = "Es gibt ungesicherte Änderungen";
+
+// dropbox
+"Successfully connected to your Dropbox account" = "Erfolgreich mit deiner Dropbox verbunden";
+
+// import
+"Import Deck" = "Deck importieren";
+"%@ (%d Cards)" = "%@ (%d Karten)";
+"Deck imported" = "Deck importiert";
+"Detected a deck list in your clipboard. Import this deck?" = "Deckliste in der Zwischenablage gefunden. Soll dieses Deck importiert werden?";
+"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?" = "URL einer Deckliste auf netrunnerdb.com in der Zwischenablage gefunden. Soll dieses Deck heruntergeladen und importiert werden?";
+"Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "URL einer Deckliste auf Meteor in der Zwischenablage gefunden. Soll dieses Deck heruntergeladen und importiert werden?";
+"No Decks found" = "Keine Decks gefunden";
+"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App." = "Kopiere Decks im OCTGN-Format (.o8d) in den Order Apps/Net Deck in deiner Dropbox, um sie in die App importieren zu können.";
+"Loading decks from Dropbox" = "Lade Decks aus Dropbox";
+
+// export
+"%@ exported" = "%@ exportiert";
+"Error exporting %@" = "%@: Fehler beim Export";
+"OCTGN Deck" = "OCTGN-Deck";
+"Plain Text Deck" = "Text-Deck";
+"Markdown Deck" = "Markdown-Deck";
+"BBCode Deck" = "BBCode-Deck";
+"As Email" = "Als E-Mail";
+"Print" = "Drucken";
+
+// cycles
+"Core / Deluxe" = "Grundspiel / Erweiterung";
+"Genesis Cycle" = "Genesis-Zyklus";
+"Spin Cycle" = "Spin-Zyklus";
+"Lunar Cycle" = "Luna-Zyklus";
 
 //

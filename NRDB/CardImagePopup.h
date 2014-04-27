@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class CardCounter;
+@class CardCounter, CardImageCell;
 
 @interface CardImagePopup : UIViewController
 
@@ -16,9 +16,11 @@
 @property IBOutlet UILabel* copiesLabel;
 @property IBOutlet UIStepper* copiesStepper;
 
+@property CardImageCell* cell;
+
 -(IBAction) copiesChanged:(id)sender;
 
-+(void) showForCard:(CardCounter*)card fromRect:(CGRect)rect inView:(UIView*)vc direction:(UIPopoverArrowDirection)direction;
++(CardImagePopup*) showForCard:(CardCounter*)card fromRect:(CGRect)rect inView:(UIView*)vc direction:(UIPopoverArrowDirection)direction;
 +(void) dismiss;
 
 @end

@@ -7,12 +7,13 @@
 //
 
 #import "EmptyDetailViewController.h"
+#import "ImageCache.h"
 
 @implementation EmptyDetailViewController
 
 -(void) viewDidLoad
 {
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     
     [super viewDidLoad];
 }

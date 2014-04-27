@@ -11,6 +11,7 @@
 #import "DeckManager.h"
 #import "Deck.h"
 #import "Notifications.h"
+#import "ImageCache.h"
 
 @interface SavedDecksViewController ()
 
@@ -36,7 +37,9 @@
 {
     [super viewDidLoad];
     
+    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.backgroundColor = [UIColor clearColor];
     
     UINavigationItem* top = self.navigationController.navigationBar.topItem;
     
@@ -52,7 +55,7 @@
 -(NSMutableArray*) sortDecks:(NSMutableArray*)arr
 {
     NSArray* sorted = [arr sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
-        NSComparisonResult res = [d1.name compare:d2.name];
+        NSComparisonResult res = [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
         return res;
     }];
     

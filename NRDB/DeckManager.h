@@ -13,10 +13,10 @@
 @interface DeckManager : NSObject
 
 // save deck in new file, return full pathname
-+(NSString*) saveDeck:(Deck*)decl;
++(NSString*) saveDeck:(Deck*)deck;
 
 // save deck in given file
-+(void) saveDeck:(Deck*)decl toPath:(NSString*)pathname;
++(void) saveDeck:(Deck*)deck toPath:(NSString*)pathname;
 
 // load deck from given file
 +(Deck*) loadDeckFromPath:(NSString*)pathname;

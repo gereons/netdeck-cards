@@ -14,6 +14,7 @@
 #import "CardData.h"
 #import "Notifications.h"
 #import "CardFilterPopover.h"
+#import "ImageCache.h"
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
@@ -60,6 +61,12 @@ static NSArray* scopes;
     self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
     self.apSlider.maximumValue = [CardData maxAgendaPoints]; // NB: no +1 here!
     
+    [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
+    [self.muSlider setThumbImage:[UIImage imageNamed:@"mem_slider"] forState:UIControlStateNormal];
+    [self.strengthSlider setThumbImage:[UIImage imageNamed:@"strength_slider"] forState:UIControlStateNormal];
+    [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
+    [self.apSlider setThumbImage:[UIImage imageNamed:@"point_slider"] forState:UIControlStateNormal];
+    
     self.searchLabel.text = l10n(@"Search in:");
     self.searchField.placeholder = l10n(@"Search Cards");
     [self.searchScope setTitle:l10n(@"All") forSegmentAtIndex:0];
@@ -87,15 +94,20 @@ static NSArray* scopes;
     self.searchField.text = @"";
     self.searchText = @"";
     
-    [self costValueChanged:nil];
     self.costSlider.value = 0;
-    [self muValueChanged:nil];
+    [self costValueChanged:nil];
+    
     self.muSlider.value = 0;
-    [self influenceValueChanged:nil];
+    [self muValueChanged:nil];
+    
     self.influenceSlider.value = 0;
-    [self strengthValueChanged:nil];
+    [self influenceValueChanged:nil];
+    
     self.strengthSlider.value = 0;
+    [self strengthValueChanged:nil];
+    
     self.apSlider.value = 0;
+    [self apValueChanged:nil];
     
     [self resetButton:TYPE_BUTTON];
     [self resetButton:SET_BUTTON];
@@ -137,7 +149,7 @@ static NSArray* scopes;
     }
     else
     {
-         data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
     }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     
@@ -244,13 +256,13 @@ static NSArray* scopes;
         case SET_BUTTON:
         {
             btn = self.setButton;
-            pfx = l10n(@"Set");
+            pfx = @"Set";
             break;
         }
         case TYPE_BUTTON:
         {
             btn = self.typeButton;
-            pfx = l10n(@"Type");
+            pfx = @"Type";
             // reset subtypes to "any"
             [self resetButton:SUBTYPE_BUTTON];
             break;
@@ -258,20 +270,20 @@ static NSArray* scopes;
         case SUBTYPE_BUTTON:
         {
             btn = self.subtypeButton;
-            pfx = l10n(@"Subtype");
+            pfx = @"Subtype";
             break;
         }
         case FACTION_BUTTON:
         {
             btn = self.factionButton;
-            pfx = l10n(@"Faction");
+            pfx = @"Faction";
             break;
         }
     }
     
     [self.selectedValues setObject:kANY forKey:@(tag)];
     [self postNotification:[pfx lowercaseString] value:kANY];
-    [btn setTitle:[NSString stringWithFormat:@"%@: %@", pfx, l10n(kANY)] forState:UIControlStateNormal];
+    [btn setTitle:[NSString stringWithFormat:@"%@: %@", l10n(pfx), l10n(kANY)] forState:UIControlStateNormal];
     
     NSAssert(btn != nil, @"no button");
 }
@@ -307,6 +319,7 @@ static NSArray* scopes;
 {
     if (self.searchText.length > 0)
     {
+        [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
         [[NSNotificationCenter defaultCenter] postNotificationName:ADD_TOP_CARD object:self];
     }
     else

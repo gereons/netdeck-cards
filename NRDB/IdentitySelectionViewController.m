@@ -95,7 +95,7 @@
     [self.cancelButton setTitle:l10n(@"Cancel") forState:UIControlStateNormal];
     
     // Do any additional setup after loading the view from its nib.
-    UINib* nib = [UINib nibWithNibName:@"IdentityViewCell" bundle:nil];
+    UINib* nib = [UINib nibWithNibName:@"IdentityViewCellSubtitle" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"identityCell"];
     
     UITapGestureRecognizer* doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
@@ -183,10 +183,12 @@
     if (self.role == NRRoleRunner)
     {
         cell.linkLabel.text = [NSString stringWithFormat:@"%d", c.baseLink];
+        cell.linkIcon.hidden = NO;
     }
     else
     {
         cell.linkLabel.text = @"";
+        cell.linkIcon.hidden = YES;
     }
     
     return cell;

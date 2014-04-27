@@ -15,6 +15,10 @@
 @property IBOutlet UILabel* influenceLimitLabel;
 @property IBOutlet UILabel* linkLabel;
 
+@property IBOutlet UIImageView* deckSizeIcon;
+@property IBOutlet UIImageView* influenceIcon;
+@property IBOutlet UIImageView* linkIcon;
+
 @property IBOutlet UIButton* infoButton;
 
 @end

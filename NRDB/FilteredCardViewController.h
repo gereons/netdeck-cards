@@ -12,12 +12,12 @@
 
 @interface FilteredCardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic) NRRole role;
+@property NRRole role;
 
 @property IBOutlet UIView *filterViewContainer;
 @property IBOutlet UITableView* tableView;
 
-@property (strong, nonatomic) DeckListViewController *deckListViewController;
+@property DeckListViewController *deckListViewController;
 
 -(id) initWithRole:(NRRole)role;
 -(id) initWithRole:(NRRole)role andFile:(NSString*) filename;
