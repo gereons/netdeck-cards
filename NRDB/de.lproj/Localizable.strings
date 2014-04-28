@@ -69,6 +69,7 @@
 "No Identity" = "Keine Identität";
 "AP must be %d or %d" = "Nur %d oder %d AP erlaubt";
 "Too many pet projects" = "Zuviele Lieblingsprojekte";
+"Too many entanglements" = "Zuviele Verschränkungen";
 "Cannot include Jinteki" = "Jinteki nicht erlaubt";
 "Cannot use out-of-faction agendas" = "Fraktionsfremde Agenden";
 "Not enough cards" = "Nicht genug Karten";

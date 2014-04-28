@@ -67,6 +67,7 @@
 "No Identity" = "Aucune identité";
 "AP must be %d or %d" = "Le nombre de points de projet doit être de %d ou de %d";
 "Too many pet projects" = "Trop de projet personnel";
+"Too many entanglements" = "Trop d'enchevêtrements";
 "Cannot include Jinteki" = "Ne peux pas inclure de cartes de la faction Jinteki";
 "Cannot use out-of-faction agendas" = "Ne peut pas utiliser des projets hors faction";
 "Not enough cards" = "Pas assez de cartes";
