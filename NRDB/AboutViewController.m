@@ -42,7 +42,7 @@
     NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 #else
     // CFBundleShortVersionString contains the main version
-    NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString* version = [@"v" stringByAppendingString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
 #endif
     
     NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck %@"), version];

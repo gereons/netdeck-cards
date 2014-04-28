@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 
 // some identities/cards we need to handle
-#define CUSTOM_BIOTICS      @"03002"    // no jinteki cards
-#define THE_PROFESSOR       @"03029"    // first copy of each program has influence 0
-#define DIR_HAAS_PET_PROJ   @"03004"    // max 1 per deck
-#define ANDROMEDA           @"02083"    // 9 card starting hand
+#define CUSTOM_BIOTICS          @"03002"    // no jinteki cards
+#define THE_PROFESSOR           @"03029"    // first copy of each program has influence 0
+#define DIRECTOR_HAAS_PET_PROJ  @"03004"    // max 1 per deck
+#define PHILOTIC_ENTANGLEMENT   @"05006"  // max 1 per deck
+#define ANDROMEDA               @"02083"    // 9 card starting hand
 
 // data for a single card
 

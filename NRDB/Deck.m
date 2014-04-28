@@ -96,16 +96,22 @@
     
         BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
         
-        BOOL petError = NO, jintekiError = NO, agendaError = NO;
+        BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
         
         // check dir. haas, custom biotics and out-of-faction agendas
         for (CardCounter* cc in self.cards)
         {
             Card* card = cc.card;
-            if ([card.code isEqualToString:DIR_HAAS_PET_PROJ] && cc.count > 1 && !petError)
+            if ([card.code isEqualToString:DIRECTOR_HAAS_PET_PROJ] && cc.count > 1 && !petError)
             {
                 petError = YES;
                 [reasons addObject:l10n(@"Too many pet projects")];
+            }
+            
+            if ([card.code isEqualToString:PHILOTIC_ENTANGLEMENT] && cc.count > 1 && !entError)
+            {
+                entError = YES;
+                [reasons addObject:l10n(@"Too many entanglements")];
             }
             
             if (noJinteki && card.faction == NRFactionJinteki && !jintekiError)
