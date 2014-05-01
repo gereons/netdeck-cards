@@ -39,7 +39,7 @@
                             <action selector="toggleImage:" destination="15q-CW-OmF" eventType="touchUpInside" id="rSW-lR-Xo1"/>
                         </connections>
                     </button>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Shv-7g-5Lh" userLabel="Detail View">
+                    <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Shv-7g-5Lh" userLabel="Detail View">
                         <rect key="frame" x="0.0" y="0.0" width="225" height="313"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>

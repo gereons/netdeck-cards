@@ -46,7 +46,7 @@
                         <action selector="toggleImage:" destination="-1" eventType="touchUpInside" id="7DM-ic-Wzk"/>
                     </connections>
                 </button>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZsW-nQ-4wd">
+                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZsW-nQ-4wd">
                     <rect key="frame" x="0.0" y="0.0" width="300" height="418"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
