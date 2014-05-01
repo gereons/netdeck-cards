@@ -178,7 +178,19 @@
 {
     if (inType == UIWebViewNavigationTypeLinkClicked)
     {
-        [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        NSString* scheme = [inRequest URL].scheme;
+        if ([scheme isEqualToString:@"mailto"])
+        {
+            [self sendEmail];
+        }
+        else if ([scheme isEqualToString:@"itms-apps"])
+        {
+            [self rateApp];
+        }
+        else
+        {
+            [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        }
         return NO;
     }
     
