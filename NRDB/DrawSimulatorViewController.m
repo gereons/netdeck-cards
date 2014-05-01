@@ -10,6 +10,7 @@
 #import "Deck.h"
 #import "CardImageViewPopover.h"
 #import "Hypergeometric.h"
+#import "ImageCache.h"
 
 @interface DrawSimulatorViewController ()
 @property Deck* deck;
@@ -177,7 +178,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        UIButton* button = [UIButton buttonWithType:UIButtonTypeSystem];
+        [button setImage:[ImageCache altArtIcon:YES] forState:UIControlStateNormal];
         button.frame = CGRectMake(470, 5, 30, 30);
         cell.accessoryView = button;
         
