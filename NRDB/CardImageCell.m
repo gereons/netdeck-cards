@@ -116,7 +116,7 @@
 {
     [self.activityIndicator startAnimating];
     [[ImageCache sharedInstance] getImageFor:card
-                                     success:^(Card* card, UIImage* img) {
+                                     completion:^(Card* card, UIImage* img, BOOL placeholder) {
                                          [self.activityIndicator stopAnimating];
                                          if ([self.cc.card.name isEqual:card.name])
                                          {
@@ -125,13 +125,6 @@
                                          else
                                          {
                                              NSLog(@"got img %@ for %@", card.name, self.cc.card.name);
-                                         }
-                                     }
-                                     failure:^(Card* card, UIImage* placeholder) {
-                                         [self.activityIndicator stopAnimating];
-                                         if ([self.cc.card.name isEqual:card.name])
-                                         {
-                                             self.imageView.image = placeholder;
                                          }
                                      }];
 }

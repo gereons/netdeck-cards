@@ -20,6 +20,15 @@ PODS:
     - AFNetworking/NSURLSession
   - CorePlot (1.5.1)
   - Dropbox-Sync-API-SDK (2.1.0)
+  - DTCoreText (1.6.11):
+    - DTFoundation/Core (~> 1.6.1)
+    - DTFoundation/DTHTMLParser (~> 1.6.1)
+    - DTFoundation/UIKit (~> 1.6.1)
+  - DTFoundation/Core (1.6.2)
+  - DTFoundation/DTHTMLParser (1.6.2):
+    - DTFoundation/Core
+  - DTFoundation/UIKit (1.6.2):
+    - DTFoundation/Core
   - GRMustache (7.0.2):
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
@@ -66,6 +75,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - CorePlot
   - Dropbox-Sync-API-SDK
+  - DTCoreText
   - GRMustache
   - libextobjc
   - SVProgressHUD
@@ -76,6 +86,8 @@ SPEC CHECKSUMS:
   AFNetworking: ae513199cca79e9d7af2708ccabe2ed075550c42
   CorePlot: 7b55ddfce42eb93051c0f9edba927fd246831f6d
   Dropbox-Sync-API-SDK: 0d1d50a14307def2f056aba1afa9e6bd4727b409
+  DTCoreText: 4d56bb74ff05a3b2415fc15fccc4b5689ed3119c
+  DTFoundation: 7c69990fa3cb7655cafa95ab59c3fcea014460f0
   GRMustache: e17b24646727b52576b2b51fb878efbed820ae5a
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
   libextobjc: 2c9fc8226f0f38e562587f65172f93f0c9b4a47a

@@ -98,7 +98,7 @@ static UIImage* hexTile;
     [[TMCache sharedCache] removeAllObjects];
 }
 
--(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock
+-(void) getImageFor:(Card *)card completion:(CompletionBlock)completionBlock
 {
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
@@ -112,9 +112,10 @@ static UIImage* hexTile;
             [self checkForImageUpdate:card withKey:key];
         }
         
-        if (successBlock)
+        if (completionBlock)
         {
-            successBlock(card, img);
+            BOOL isPlaceholder = img == runnerPlaceholder || img == corpPlaceholder;
+            completionBlock(card, img, isPlaceholder);
         }
         
         return;
@@ -122,15 +123,15 @@ static UIImage* hexTile;
     
     if (![AFNetworkReachabilityManager sharedManager].reachable)
     {
-        successBlock(card, [ImageCache placeholderFor:card.role]);
+        completionBlock(card, [ImageCache placeholderFor:card.role], YES);
     }
     else
     {
-        [self downloadImageFor:card withKey:key success:successBlock failure:failureBlock];
+        [self downloadImageFor:card withKey:key completion:completionBlock];
     }
 }
 
--(void) downloadImageFor:(Card *)card withKey:(NSString*)key success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock
+-(void) downloadImageFor:(Card *)card withKey:(NSString*)key completion:(CompletionBlock)completionBlock
 {
     NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
     
@@ -145,9 +146,9 @@ static UIImage* hexTile;
              
              NLOG(@"dl: GET %@: status 200", url);
              // invoke callback
-             if (successBlock)
+             if (completionBlock)
              {
-                 successBlock(card, responseObject);
+                 completionBlock(card, responseObject, NO);
              }
              
              NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
@@ -165,10 +166,10 @@ static UIImage* hexTile;
              NLOG(@"dl: GET %@ for %@: error %ld", url, card.name, (long)response.statusCode);
 #endif
              // invoke callback
-             if (failureBlock)
+             if (completionBlock)
              {
                  UIImage* img = [ImageCache placeholderFor:card.role];
-                 failureBlock(card, img);
+                 completionBlock(card, img, YES);
                  
                  // only store the placeholder if we had no previous image
                  UIImage* prevImg = [[TMCache sharedCache] objectForKey:key];
