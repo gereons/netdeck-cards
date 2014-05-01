@@ -112,7 +112,7 @@ static UIPopoverController* popover;
                                          [self.activityIndicator stopAnimating];
                                          self.imageView.image = image;
                                          
-                                         if (YES || placeholder)
+                                         if (placeholder)
                                          {
                                              [self setupDetailView];
                                          }
@@ -125,13 +125,14 @@ static UIPopoverController* popover;
     self.detailView.hidden = NO;
     self.detailView.backgroundColor = [UIColor colorWithWhite:1 alpha:.7];
     
-    self.cardName.text = self.card.name;
-    self.cardText.attributedText = self.card.attributedText;
-    
     Card* card = self.card;
+    
+    self.cardName.text = card.name;
+    self.cardText.attributedText = card.attributedText;
+    
     NSString* factionName = [Faction name:card.faction];
     NSString* typeName = [CardType name:card.type];
-    NSString* subtype = self.card.subtype;
+    NSString* subtype = card.subtype;
     if (subtype)
     {
         self.cardType.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];

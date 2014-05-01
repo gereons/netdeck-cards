@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @class Card;
 
 @interface CardImageViewPopover : UIViewController<UIPopoverControllerDelegate>

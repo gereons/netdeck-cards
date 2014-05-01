@@ -229,6 +229,7 @@ static UIImage* hexTile;
     
     NSDictionary* dict = [settings objectForKey:NEXT_CHECK];
     NSDate* nextCheck = [dict objectForKey:key];
+    NLOG(@"next check for %@: %@", key, nextCheck);
     if (nextCheck)
     {
         NSDate* now = [NSDate date];
@@ -270,11 +271,12 @@ static UIImage* hexTile;
         if (operation.response.statusCode == 304)
         {
             // not modified - update check date
-            [self setNextCheck:card.code withTimeIntervalFromNow:SUCCESS_INTERVAL];
+            [self setNextCheck:key withTimeIntervalFromNow:SUCCESS_INTERVAL];
         }
         else
         {
-            NSLog(@"%@", operation);
+            NLOG(@"%@", operation);
+            [self setNextCheck:key withTimeIntervalFromNow:ERROR_INTERVAL];
         }
     }];
     
@@ -284,7 +286,6 @@ static UIImage* hexTile;
 -(void) storeInCache:(UIImage*)image lastModified:(NSString*)lastModified forKey:(NSString*)key
 {
     // NSLog(@"store img for %@", key);
-    
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSTimeInterval interval = SUCCESS_INTERVAL;
     if (lastModified)
@@ -310,7 +311,10 @@ static UIImage* hexTile;
 
     NSTimeInterval nextCheck = [NSDate timeIntervalSinceReferenceDate];
     nextCheck += interval;
-    [dict setObject:[NSDate dateWithTimeIntervalSinceReferenceDate:nextCheck] forKey:key];
+    NSDate* next = [NSDate dateWithTimeIntervalSinceReferenceDate:nextCheck];
+    [dict setObject:next forKey:key];
+    
+    NLOG(@"set next check for %@ to %@", key, next);
     [settings setObject:dict forKey:NEXT_CHECK];
 }
 

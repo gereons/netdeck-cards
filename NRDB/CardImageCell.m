@@ -10,6 +10,8 @@
 #import "CardImageCell.h"
 #import "ImageCache.h"
 #import "CardCounter.h"
+#import "Faction.h"
+#import "CardType.h"
 
 @implementation CardImageCell
 
@@ -24,19 +26,23 @@
     // remove all constraints IB has generated
     self.translatesAutoresizingMaskIntoConstraints = NO;
     [self removeConstraints:self.constraints];
+    [self.detailView removeConstraints:self.detailView.constraints];
     
     NSDictionary* views = @{
                             @"image": self.imageView,
                             @"activity": self.activityIndicator,
                             @"toggle": self.toggleButton,
-                            @"label": self.copiesLabel
+                            @"label": self.copiesLabel,
+                            @"details": self.detailView,
                             };
     
     NSArray* constraints = @[
                              @"H:|[image]|",
                              @"H:|[label]|",
                              @"H:[toggle(28)]",
+                             @"H:|[details]|",
                              @"V:|[image][label(20)]|",
+                             @"V:|[details(==image)]",
                              @"V:[toggle(34)]",
                             ];
     
@@ -73,6 +79,49 @@
     {
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:c options:0 metrics:nil views:views]];
     }
+    
+    [self.detailView removeConstraints:self.detailView.constraints];
+    views = @{ @"name": self.cardName,
+               @"type": self.cardType,
+               @"text": self.cardText,
+               @"label1": self.label1,
+               @"label2": self.label2,
+               @"label3": self.label3,
+               @"icon1": self.icon1,
+               @"icon2": self.icon2,
+               @"icon3": self.icon3,
+               };
+
+    constraints = @[
+                    @"H:|-[name]-|",
+                    @"H:|-[type]-|",
+                    @"H:|-[text]-|",
+                    @"H:|-[label1][icon1]",
+                    @"H:[label3][icon3]-|",
+                    @"V:|-[name]-[label1]-[type]-[text]-|",
+                    @"V:|-[name]-[label2]",
+                    @"V:|-[name]-[label3]",
+                    @"V:|-[name]-[icon1]",
+                    @"V:|-[name]-[icon2]",
+                    @"V:|-[name]-[icon3]",
+                    ];
+    for (NSString* c in constraints)
+    {
+        [self.detailView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:c options:0 metrics:nil views:views]];
+    }
+    
+    [self.detailView addConstraint:[NSLayoutConstraint constraintWithItem:self.label2
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.detailView
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.f constant:-7.f]];
+    [self.detailView addConstraint:[NSLayoutConstraint constraintWithItem:self.icon2
+                                                                attribute:NSLayoutAttributeCenterX
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.detailView
+                                                                attribute:NSLayoutAttributeCenterX
+                                                               multiplier:1.f constant:8.f]];
     
     // add parallax effect to cells
     UIInterpolatingMotionEffect *effectX = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
@@ -126,7 +175,102 @@
                                          {
                                              NSLog(@"got img %@ for %@", card.name, self.cc.card.name);
                                          }
+                                         
+                                         self.detailView.hidden = !placeholder;
+                                         if (placeholder)
+                                         {
+                                             [self setupDetailView];
+                                         }
                                      }];
 }
+
+-(void) setupDetailView
+{
+    self.detailView.hidden = NO;
+    self.detailView.backgroundColor = [UIColor colorWithWhite:1 alpha:.7];
+    
+    Card* card = self.cc.card;
+    self.cardName.text = card.name;
+    self.cardText.attributedText = card.attributedText;
+    
+    NSString* factionName = [Faction name:card.faction];
+    NSString* typeName = [CardType name:card.type];
+    NSString* subtype = card.subtype;
+    if (subtype)
+    {
+        self.cardType.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];
+    }
+    else
+    {
+        self.cardType.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
+    }
+    
+    // labels from top: cost/strength/mu
+    switch (card.type)
+    {
+        case NRCardTypeIdentity:
+            self.label1.text = [@(card.minimumDecksize) stringValue];
+            self.icon1.image = [ImageCache cardIcon];
+            self.label2.text = [@(card.influenceLimit) stringValue];
+            self.icon2.image = [ImageCache influenceIcon];
+            if (card.role == NRRoleRunner)
+            {
+                self.label3.text = [NSString stringWithFormat:@"%d", card.baseLink];
+                self.icon3.image = [ImageCache linkIcon];
+            }
+            else
+            {
+                self.label3.text = @"";
+                self.icon3.image = nil;
+            }
+            break;
+            
+        case NRCardTypeProgram:
+        case NRCardTypeResource:
+        case NRCardTypeEvent:
+        case NRCardTypeHardware:
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
+            self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.icon2.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
+            self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%d", card.mu] : @"";
+            self.icon3.image = card.mu != -1 ? [ImageCache muIcon] : nil;
+            break;
+            
+        case NRCardTypeIce:
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
+            self.label2.text = @"";
+            self.icon2.image = nil;
+            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.icon3.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
+            break;
+            
+        case NRCardTypeAgenda:
+            self.label1.text = [NSString stringWithFormat:@"%d", card.advancementCost];
+            self.icon1.image = [ImageCache difficultyIcon];
+            self.label2.text = @"";
+            self.icon2.image = nil;
+            self.label3.text = [NSString stringWithFormat:@"%d", card.agendaPoints];
+            self.icon3.image = [ImageCache apIcon];
+            break;
+            
+        case NRCardTypeAsset:
+        case NRCardTypeOperation:
+        case NRCardTypeUpgrade:
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
+            self.label2.text = @"";
+            self.icon2.image = nil;
+            self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%d", card.trash] : @"";
+            self.icon3.image = card.trash != -1 ? [ImageCache trashIcon] : nil;
+            break;
+            
+        case NRCardTypeNone:
+            NSAssert(NO, @"this can't happen");
+            break;
+    }
+}
+
 
 @end
