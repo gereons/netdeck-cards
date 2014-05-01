@@ -131,26 +131,25 @@
             int influence = [deck influenceFor:cc];
             if (influence > 0)
             {
-                [s appendString:[NSString stringWithFormat:@" %@\n", [DeckExport dots:influence]]];
+                [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
             }
-            else
-            {
-                [s appendString:@"\n"];
-            }
+            
+            [s appendString:@"  \n"];
+            
             numCards += cc.count;
         }
     }
     
     [s appendFormat:@"\n"];
-    [s appendFormat:@"Cards in deck: %d (min %d)\n", numCards, deck.identity.minimumDecksize];
-    [s appendFormat:@"%d/%d influence used\n", deck.influence, deck.identity.influenceLimit];
+    [s appendFormat:@"Cards in deck: %d (min %d)  \n", numCards, deck.identity.minimumDecksize];
+    [s appendFormat:@"%d/%d influence used  \n", deck.influence, deck.identity.influenceLimit];
     if (deck.identity.role == NRRoleCorp)
     {
-        [s appendFormat:@"Agenda Points: %d\n", deck.agendaPoints];
+        [s appendFormat:@"Agenda Points: %d  \n", deck.agendaPoints];
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with [" APP_NAME "](url=" APP_URL ").\n"];
+    [s appendString:@"\nDeck built with [" APP_NAME "](" APP_URL ").\n"];
     return s;
 }
 
