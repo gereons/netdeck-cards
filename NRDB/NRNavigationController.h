@@ -10,7 +10,7 @@
 
 @class DeckListViewController;
 
-@interface NRNavigationController : UINavigationController <UINavigationBarDelegate, UIAlertViewDelegate>
+@interface NRNavigationController : UINavigationController <UINavigationBarDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
 
 @property DeckListViewController* deckListViewController;
 
