@@ -13,7 +13,7 @@
 @interface AboutViewController ()
 @property SKStoreProductViewController* storeViewController;
 @property MFMailComposeViewController *mailer;
-@property UIActionSheet* popup;
+// @property UIActionSheet* popup;
 @end
 
 @implementation AboutViewController

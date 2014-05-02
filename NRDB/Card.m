@@ -15,10 +15,7 @@
 @property CardData* data;
 @property NSString* filteredText;
 
-
 @property NSAttributedString* attributedText;
-@property CGFloat attributedTextHeight;
-
 
 @end
 
@@ -217,25 +214,9 @@ static NSMutableArray* allCorpIdentities;
                                                                                           }
                                                                    documentAttributes:NULL];
         
-        CGSize bounds = CGSizeMake(417, 1000);
-        CGRect textRect = [attrStr boundingRectWithSize:bounds
-                                                 options:NSStringDrawingUsesLineFragmentOrigin
-                                                 context:nil];
-        
         self->_attributedText = attrStr;
-        self->_attributedTextHeight = ceilf(textRect.size.height) + 15.0; // wtf?
     }
     return self->_attributedText;
-}
-
--(CGFloat) attributedTextHeight
-{
-    if (!self->_attributedText)
-    {
-        NSAttributedString* s = self.attributedText;
-        (void)s;
-    }
-    return self->_attributedTextHeight;
 }
 
 -(NSString*) octgnCode

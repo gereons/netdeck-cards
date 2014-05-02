@@ -55,7 +55,7 @@
 
 @property (nonatomic, readonly) NSString* filteredText;                // html removed
 @property (nonatomic, readonly) NSAttributedString* attributedText;    // html rendered
-@property (nonatomic, readonly) CGFloat attributedTextHeight;
+
 @property (readonly) NSString* octgnCode;
 
 @property (readonly) int maxCopies;
