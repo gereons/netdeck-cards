@@ -29,6 +29,12 @@
 @property NSMutableArray* cards;
 @end
 
+typedef NS_ENUM(NSInteger, DownloadScope)
+{
+    ALL,
+    MISSING
+};
+
 @implementation DataDownload
     
 +(void) downloadCardData
@@ -38,7 +44,12 @@
 
 +(void) downloadAllImages
 {
-    [[DataDownload sharedInstance] downloadAllImages];
+    [[DataDownload sharedInstance] downloadImages:ALL];
+}
+
++(void) downloadMissingImages
+{
+    [[DataDownload sharedInstance] downloadImages:MISSING];
 }
 
 static DataDownload* instance;
@@ -118,7 +129,7 @@ static DataDownload* instance;
 
 #pragma mark image download
 
--(void) downloadAllImages
+-(void) downloadImages:(DownloadScope)scope
 {
     self.cards = [[Card allCards] mutableCopy];
     [self.cards addObjectsFromArray:[Card altCards]];
@@ -138,7 +149,7 @@ static DataDownload* instance;
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 250, 20)];
     
     self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Images")
-                                            message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 0, self.cards.count]
+                                            message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count]
                                            delegate:self
                                   cancelButtonTitle:l10n(@"Stop")
                                   otherButtonTitles:nil];
@@ -148,47 +159,58 @@ static DataDownload* instance;
     self.downloadStopped = NO;
     self.downloadErrors = 0;
     
-    [self downloadImageForCard:@(0)];
+    [self downloadImageForCard:@{ @"index": @(0), @"scope": @(scope)} ];
 }
     
--(void) downloadImageForCard:(NSNumber*)index
+-(void) downloadImageForCard:(NSDictionary*)dict
 {
+    int index = [dict[@"index"] intValue];
+    DownloadScope scope = [dict[@"scope"] intValue];
+    
     if (self.downloadStopped)
     {
         return;
     }
     
-    int i = [index intValue];
-    if (i < self.cards.count)
+    if (index < self.cards.count)
     {
-        Card* card = [self.cards objectAtIndex:i];
+        Card* card = [self.cards objectAtIndex:index];
         
         @weakify(self);
-
-        [[ImageCache sharedInstance] updateImageFor:card completion:^(BOOL ok) {
+        UpdateCompletionBlock downloadNext = ^(BOOL ok) {
             @strongify(self);
             if (!ok)
             {
                 ++self.downloadErrors;
             }
-            [self downloadNextImage:i+1];
-        }];
+            [self downloadNextImage:@{ @"index": @(index+1), @"scope": @(scope)}];
+        };
+        
+        if (scope == ALL)
+        {
+            [[ImageCache sharedInstance] updateImageFor:card completion:downloadNext];
+        }
+        else
+        {
+            [[ImageCache sharedInstance] updateMissingImageFor:card completion:downloadNext];
+        }
     }
 }
     
-- (void) downloadNextImage:(int)i
+- (void) downloadNextImage:(NSDictionary*)dict
 {
-    if (i < self.cards.count)
+    int index = [dict[@"index"] intValue];
+    if (index < self.cards.count)
     {
-        float progress = (i * 100.0) / self.cards.count;
+        float progress = (index * 100.0) / self.cards.count;
         // NSLog(@"%@ - progress %.1f", card.name, progress);
         
         self.progressView.progress = progress/100.0;
         
-        self.alert.message = [NSString stringWithFormat:l10n(@"Image %d of %d"), i, self.cards.count ];
+        self.alert.message = [NSString stringWithFormat:l10n(@"Image %d of %d"), index+1, self.cards.count ];
         
         // use -performSelector: so the UI can refresh
-        [self performSelector:@selector(downloadImageForCard:) withObject:@(i) afterDelay:.01];
+        [self performSelector:@selector(downloadImageForCard:) withObject:dict afterDelay:.001];
     }
     else
     {

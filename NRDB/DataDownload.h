@@ -10,7 +10,8 @@
 
 @interface DataDownload : NSObject<UIAlertViewDelegate>
 
-+(void) downloadCardData;   // blocks UI, posts LOAD_CARDS notification when done
-+(void) downloadAllImages;  // blocks UI, returns when download is done
-    
++(void) downloadCardData;       // blocks UI, posts LOAD_CARDS notification when done
++(void) downloadAllImages;      // blocks UI, returns when download is done
++(void) downloadMissingImages;  // blocks UI, returns when download is done
+
 @end

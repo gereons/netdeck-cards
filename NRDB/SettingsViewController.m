@@ -136,6 +136,19 @@
             [self showOfflineAlert];
         }
     }
+    else if ([specifier.key isEqualToString:DOWNLOAD_MISSING_IMG])
+    {
+        TF_CHECKPOINT(@"download missing images");
+        if ([AFNetworkReachabilityManager sharedManager].reachable)
+        {
+            [DataDownload downloadMissingImages];
+        }
+        else
+        {
+            [self showOfflineAlert];
+        }
+
+    }
     else if ([specifier.key isEqualToString:CLEAR_CACHE])
     {
         TF_CHECKPOINT(@"clear cache");

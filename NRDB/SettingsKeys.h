@@ -17,6 +17,7 @@
 #define NEXT_DOWNLOAD   @"nextDownload"
 #define DOWNLOAD_DATA_NOW       @"downloadDataNow"
 #define DOWNLOAD_IMG_NOW        @"downloadImagesNow"
+#define DOWNLOAD_MISSING_IMG    @"downloadMissingImagesNow"
 #define CLEAR_CACHE     @"clearCache"
 
 #define CARD_SETS       @"cardSets"

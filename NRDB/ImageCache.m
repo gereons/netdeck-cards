@@ -181,6 +181,30 @@ static UIImage* hexTile;
          }];
 }
 
+-(void) updateMissingImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
+{
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
+    // NSLog(@"get img for %@", key);
+    
+    BOOL haveImage = NO;
+    UIImage* img = [[TMCache sharedCache] objectForKey:key];
+    if (img)
+    {
+        BOOL isPlaceholder = img == runnerPlaceholder || img == corpPlaceholder;
+        haveImage = !isPlaceholder;
+    }
+    
+    if (!haveImage)
+    {
+        [self updateImageFor:card completion:completionBlock];
+    }
+    else
+    {
+        completionBlock(YES);
+    }
+}
+
 -(void) updateImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
 {
     if (![AFNetworkReachabilityManager sharedManager].reachable)
