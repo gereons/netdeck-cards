@@ -14,7 +14,6 @@
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "FilteredCardViewController.h"
-#import "SavedDecksViewController.h"
 #import "ImportDecksViewController.h"
 #import "DecksViewController.h"
 #import "Notifications.h"
