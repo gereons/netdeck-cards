@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+@interface DecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UISearchBarDelegate>
 
 @property IBOutlet UITableView* tableView;
+@property IBOutlet UISearchBar* searchBar;
 
 @end

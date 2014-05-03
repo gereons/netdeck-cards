@@ -22,6 +22,14 @@ typedef NS_ENUM(NSInteger, SortType) {
 typedef NS_ENUM(NSInteger, FilterType) {
     FilterAll = NRRoleNone+1, FilterRunner = NRRoleRunner+1, FilterCorp = NRRoleCorp+1
 };
+typedef NS_ENUM(NSInteger, SearchScope) {
+    SearchAll, SearchName, SearchIdentity, SearchCard
+};
+
+static FilterType filterType = FilterAll;
+static SortType sortType = SortA_Z;
+static SearchScope searchScope = SearchAll;
+static NSString* filterText;
 
 @interface DecksViewController ()
 
@@ -34,9 +42,6 @@ typedef NS_ENUM(NSInteger, FilterType) {
 @end
 
 @implementation DecksViewController
-
-static FilterType filterType = FilterAll;
-static SortType sortType = SortA_Z;
 
 - (id) init
 {
@@ -82,13 +87,22 @@ static SortType sortType = SortA_Z;
         [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)],
     ];
     
-    // [self updateDecks];
+    self.searchBar.placeholder = l10n(@"Search for decks, identities or cards");
+    if (filterText.length > 0)
+    {
+        self.searchBar.text = filterText;
+    }
+    self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
+    self.searchBar.selectedScopeButtonIndex = searchScope;
 }
 
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self updateDecks];
+    
+    NSIndexPath* top = [NSIndexPath indexPathForRow:0 inSection:filterType == FilterCorp ? 1 : 0];
+    [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 -(void) sortChanged:(UISegmentedControl*)sender
@@ -198,6 +212,33 @@ static SortType sortType = SortA_Z;
         self.runnerDecks = [self sortDecks:arr];
         self.corpDecks = [NSMutableArray array];
     }
+
+    if (filterText.length > 0)
+    {
+        NSPredicate* namePredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", filterText];
+        NSPredicate* identityPredicate = [NSPredicate predicateWithFormat:@"identity.name CONTAINS[cd] %@", filterText];
+        NSPredicate* cardPredicate = [NSPredicate predicateWithFormat:@"ANY cards.card.name CONTAINS[cd] %@", filterText];
+        
+        NSPredicate* predicate;
+        switch (searchScope)
+        {
+            case SearchAll:
+                predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[ namePredicate, identityPredicate, cardPredicate ]];
+                break;
+            case SearchName:
+                predicate = namePredicate;
+                break;
+            case SearchIdentity:
+                predicate = identityPredicate;
+                break;
+            case SearchCard:
+                predicate = cardPredicate;
+                break;
+        }
+        
+        [self.runnerDecks filterUsingPredicate:predicate];
+        [self.corpDecks filterUsingPredicate:predicate];
+    }
     
     self.decks = @[ self.runnerDecks, self.corpDecks ];
     
@@ -245,9 +286,21 @@ static SortType sortType = SortA_Z;
     return [decks mutableCopy];
 }
 
+#pragma mark search bar
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    filterText = searchText;
+    [self updateDecks];
+}
+
+-(void) searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
+{
+    searchScope = selectedScope;
+    [self updateDecks];
+}
 
 #pragma mark tableview
-
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

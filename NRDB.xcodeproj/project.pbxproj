@@ -173,6 +173,7 @@
 		3AE0D51018F7B4A0007868A7 /* credit_slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE0D50618F7B4A0007868A7 /* credit_slider.png */; };
 		3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BA1883075500F6306B /* CardFilterPopover.m */; };
 		3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */; };
+		3AF424AB19150FC80005ACAA /* searchbar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF424AA19150FC80005ACAA /* searchbar-bg.png */; };
 		3AFA3B6918DF862900F59331 /* altarttoggle_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6518DF862900F59331 /* altarttoggle_off.png */; };
 		3AFA3B6A18DF862900F59331 /* altarttoggle_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6618DF862900F59331 /* altarttoggle_on.png */; };
 		3AFA3B6B18DF862900F59331 /* altarttoggle_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */; };
@@ -441,6 +442,7 @@
 		3AF2E8B91883075500F6306B /* CardFilterPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterPopover.h; sourceTree = "<group>"; };
 		3AF2E8BA1883075500F6306B /* CardFilterPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterPopover.m; sourceTree = "<group>"; };
 		3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterPopover.xib; sourceTree = "<group>"; };
+		3AF424AA19150FC80005ACAA /* searchbar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchbar-bg.png"; sourceTree = "<group>"; };
 		3AFA3B6518DF862900F59331 /* altarttoggle_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altarttoggle_off.png; sourceTree = "<group>"; };
 		3AFA3B6618DF862900F59331 /* altarttoggle_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altarttoggle_on.png; sourceTree = "<group>"; };
 		3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altarttoggle_on@2x.png"; sourceTree = "<group>"; };
@@ -774,6 +776,7 @@
 		3A76EEBC18B5DA68004DB586 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3AF424AA19150FC80005ACAA /* searchbar-bg.png */,
 				3A441C8A18E60A5300F46C92 /* hex_background@2x.png */,
 				3A441C8B18E60A5300F46C92 /* hex_background.png */,
 				3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */,
@@ -1157,6 +1160,7 @@
 				3AB9BD6318FB0E49004EAF10 /* 702-import.png in Resources */,
 				3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */,
 				3A82625018E05EC70038B4AC /* cardstats_decksize@2x.png in Resources */,
+				3AF424AB19150FC80005ACAA /* searchbar-bg.png in Resources */,
 				3A82624D18E05EC70038B4AC /* cardstats_influence@2x.png in Resources */,
 				3AE0D50718F7B4A0007868A7 /* influence_slider@2x.png in Resources */,
 				3AFA3B6B18DF862900F59331 /* altarttoggle_on@2x.png in Resources */,
