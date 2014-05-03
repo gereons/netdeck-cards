@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ImportDecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface ImportDecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property IBOutlet UITableView* tableView;
+@property IBOutlet UISearchBar* searchBar;
 
 @end

@@ -68,6 +68,10 @@ typedef NS_ENUM(NSInteger, NRSearchScope)
     NRSearchText
 };
 
+typedef NS_ENUM(NSInteger, NRDeckSearchScope) {
+    NRDeckSearchAll, NRDeckSearchName, NRDeckSearchIdentity, NRDeckSearchCard
+};
+
 typedef NS_ENUM(NSInteger, NRCycle)
 {
     NRCycleNone = -1,

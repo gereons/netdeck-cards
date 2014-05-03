@@ -22,13 +22,10 @@ typedef NS_ENUM(NSInteger, SortType) {
 typedef NS_ENUM(NSInteger, FilterType) {
     FilterAll = NRRoleNone+1, FilterRunner = NRRoleRunner+1, FilterCorp = NRRoleCorp+1
 };
-typedef NS_ENUM(NSInteger, SearchScope) {
-    SearchAll, SearchName, SearchIdentity, SearchCard
-};
 
 static FilterType filterType = FilterAll;
 static SortType sortType = SortA_Z;
-static SearchScope searchScope = SearchAll;
+static NRDeckSearchScope searchScope = NRDeckSearchAll;
 static NSString* filterText;
 
 @interface DecksViewController ()
@@ -94,15 +91,14 @@ static NSString* filterText;
     }
     self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
     self.searchBar.selectedScopeButtonIndex = searchScope;
+    
+    [self.tableView setContentOffset:CGPointMake(0,self.searchBar.frame.size.height) animated:NO];
 }
 
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self updateDecks];
-    
-    NSIndexPath* top = [NSIndexPath indexPathForRow:0 inSection:filterType == FilterCorp ? 1 : 0];
-    [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 -(void) sortChanged:(UISegmentedControl*)sender
@@ -222,16 +218,16 @@ static NSString* filterText;
         NSPredicate* predicate;
         switch (searchScope)
         {
-            case SearchAll:
+            case NRDeckSearchAll:
                 predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[ namePredicate, identityPredicate, cardPredicate ]];
                 break;
-            case SearchName:
+            case NRDeckSearchName:
                 predicate = namePredicate;
                 break;
-            case SearchIdentity:
+            case NRDeckSearchIdentity:
                 predicate = identityPredicate;
                 break;
-            case SearchCard:
+            case NRDeckSearchCard:
                 predicate = cardPredicate;
                 break;
         }
