@@ -7,7 +7,6 @@
 //
 
 #import <SVProgressHUD.h>
-#import <MessageUI/MessageUI.h>
 
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
@@ -431,9 +430,15 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
                                                    delegate:self
                                           cancelButtonTitle:@""
                                      destructiveButtonTitle:nil
-                                          otherButtonTitles:l10n(@"Dropbox: OCTGN"), l10n(@"Dropbox: BBCode"), l10n(@"Dropbox: Markdown"), l10n(@"Dropbox: Plain Text"),
-                        l10n(@"Clipboard: BBCode"), l10n(@"Clipboard: Markdown"), l10n(@"Clipboard: Plain Text"),
-                        l10n(@"As Email"), l10n(@"Print"), nil];
+                                          otherButtonTitles:l10n(@"Dropbox: OCTGN"),
+                                                            l10n(@"Dropbox: BBCode"),
+                                                            l10n(@"Dropbox: Markdown"),
+                                                            l10n(@"Dropbox: Plain Text"),
+                                                            l10n(@"Clipboard: BBCode"),
+                                                            l10n(@"Clipboard: Markdown"),
+                                                            l10n(@"Clipboard: Plain Text"),
+                                                            l10n(@"As Email"),
+                                                            l10n(@"Print"), nil];
 
     [self.actionSheet showFromBarButtonItem:sender animated:NO];
 }

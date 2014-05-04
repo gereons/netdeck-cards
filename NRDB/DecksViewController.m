@@ -9,6 +9,8 @@
 #import "DecksViewController.h"
 #import "DeckCell.h"
 #import "DeckManager.h"
+#import "DeckExport.h"
+#import "DeckImport.h"
 #import "Deck.h"
 #import "ImageCache.h"
 #import "Faction.h"
@@ -22,6 +24,7 @@ typedef NS_ENUM(NSInteger, SortType) {
 typedef NS_ENUM(NSInteger, FilterType) {
     FilterAll = NRRoleNone+1, FilterRunner = NRRoleRunner+1, FilterCorp = NRRoleCorp+1
 };
+enum { POPUP_NEW, POPUP_LONGPRESS };
 
 static FilterType filterType = FilterAll;
 static SortType sortType = SortA_Z;
@@ -35,6 +38,7 @@ static NSString* filterText;
 @property NSArray* decks;
 @property NSDateFormatter *dateFormatter;
 @property UIActionSheet* popup;
+@property Deck* deck;
 
 @end
 
@@ -93,6 +97,9 @@ static NSString* filterText;
     self.searchBar.selectedScopeButtonIndex = searchScope;
     
     [self.tableView setContentOffset:CGPointMake(0,self.searchBar.frame.size.height) animated:NO];
+    
+    UIGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self.tableView addGestureRecognizer:longPress];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -121,39 +128,6 @@ static NSString* filterText;
     [self updateDecks];
 }
 
--(void) newDeck:(UIBarButtonItem*)sender
-{
-    NSNumber* role;
-    
-    if (filterType == FilterRunner)
-    {
-        role = @(NRRoleRunner);
-    }
-    if (filterType == FilterCorp)
-    {
-        role = @(NRRoleCorp);
-    }
-    if (role)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
-        return;
-    }
-    
-    if (self.popup)
-    {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
-    }
-    else
-    {
-        self.popup = [[UIActionSheet alloc] initWithTitle:nil
-                                                 delegate:self
-                                        cancelButtonTitle:@""
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:l10n(@"New Runner Deck"), l10n(@"New Corp Deck"), nil];
-    
-        [self.popup showFromBarButtonItem:sender animated:NO];
-    }
-}
 
 -(void) importDecks:(UIBarButtonItem*)sender
 {
@@ -168,27 +142,6 @@ static NSString* filterText;
     
     ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
     [self.navigationController pushViewController:import animated:NO];
-}
-
--(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    NSNumber* role;
-    switch (buttonIndex)
-    {
-        case 0: // new runner
-            role = @(NRRoleRunner);
-            break;
-        case 1: // new corp
-            role = @(NRRoleCorp);
-            break;
-    }
-    if (role)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
-    }
-    
-    self.popup = nil;
-    return;
 }
 
 -(void) updateDecks
@@ -280,6 +233,132 @@ static NSString* filterText;
     }
     
     return [decks mutableCopy];
+}
+
+-(void) newDeck:(UIBarButtonItem*)sender
+{
+    NSNumber* role;
+    
+    if (filterType == FilterRunner)
+    {
+        role = @(NRRoleRunner);
+    }
+    if (filterType == FilterCorp)
+    {
+        role = @(NRRoleCorp);
+    }
+    if (role)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
+        return;
+    }
+    
+    if (self.popup)
+    {
+        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+    }
+    else
+    {
+        self.popup = [[UIActionSheet alloc] initWithTitle:nil
+                                                 delegate:self
+                                        cancelButtonTitle:@""
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:l10n(@"New Runner Deck"),
+                                                          l10n(@"New Corp Deck"), nil];
+        self.popup.tag = POPUP_NEW;
+        [self.popup showFromBarButtonItem:sender animated:NO];
+    }
+}
+
+-(void) longPress:(UIGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
+        CGPoint point = [gesture locationInView:self.tableView];
+        NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:point];
+        UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+        NSArray* decks = self.decks[indexPath.section];
+        self.deck = decks[indexPath.row];
+        
+        self.popup = [[UIActionSheet alloc] initWithTitle:self.deck.name
+                                                 delegate:self
+                                        cancelButtonTitle:@""
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:l10n(@"Duplicate"),
+                                                          l10n(@"Copy to Clipboard"),
+                                                          l10n(@"Send via Email"), nil];
+        
+        self.popup.tag = POPUP_LONGPRESS;
+        [self.popup showFromRect:cell.frame inView:self.tableView animated:NO];
+    }
+}
+
+#pragma mark action sheet
+
+-(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == actionSheet.cancelButtonIndex)
+    {
+        self.popup = nil;
+        return;
+    }
+    
+    if (actionSheet.tag == POPUP_NEW)
+    {
+        NSNumber* role;
+        switch (buttonIndex)
+        {
+            case 0: // new runner
+                role = @(NRRoleRunner);
+                break;
+            case 1: // new corp
+                role = @(NRRoleCorp);
+                break;
+        }
+        if (role)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
+        }
+    }
+    else if (actionSheet.tag == POPUP_LONGPRESS)
+    {
+        switch (buttonIndex) {
+            case 0: // duplicate
+            {
+                Deck* newDeck = [self.deck duplicate];
+                [DeckManager saveDeck:newDeck];
+                
+                NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+                BOOL autoSaveDropbox = [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
+                
+                if (autoSaveDropbox)
+                {
+                    if (newDeck.identity && newDeck.cards.count > 0)
+                    {
+                        [DeckExport asOctgn:newDeck autoSave:YES];
+                    }
+                }
+                
+                [self updateDecks];
+                break;
+            }
+            case 1: // clipboard
+            {
+                UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                pasteboard.string = [DeckExport asPlaintextString:self.deck];
+                [DeckImport updateCount];
+                break;
+            }
+            case 2: // email
+                [self sendAsEmail];
+                break;
+        }
+        self.deck = nil;
+    }
+    
+    self.popup = nil;
+    return;
 }
 
 #pragma mark search bar
@@ -404,5 +483,28 @@ static NSString* filterText;
     }
     return nil;
 }
+
+#pragma mark email
+
+-(void) sendAsEmail
+{
+    TF_CHECKPOINT(@"Send as Email");
+    
+    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+    
+    mailer.mailComposeDelegate = self;
+    NSString *emailBody = [DeckExport asPlaintextString:self.deck];
+    [mailer setMessageBody:emailBody isHTML:NO];
+    
+    [mailer setSubject:self.deck.name];
+    
+    [self presentViewController:mailer animated:NO completion:nil];
+}
+
+-(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
 
 @end
