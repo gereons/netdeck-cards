@@ -113,6 +113,9 @@
 "%@ · %d Cards · %d Influence" = "%@ · %d Cartes · %d Influence";
 "%d Cards · %d Influence" = "%d Cartes · %d Influence";
 "%d Cards · %d Influence · %d AP" = "%d Cartes · %d Influence · %d PP";
+"Date" = "Date";
+"Copy to Clipboard" = "Copie dans le presse papier";
+"Send via Email" = "Email";
 
 // filtre
 "Strength: %@" = "Force: %@";

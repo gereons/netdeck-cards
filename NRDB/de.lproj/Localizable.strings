@@ -117,6 +117,8 @@
 "%d Cards · %d Influence" = "%d Karten · %d Einfluss";
 "%d Cards · %d Influence · %d AP" = "%d Karten · %d Einfluss · %d AP";
 "Date" = "Datum";
+"Copy to Clipboard" = "Ins Clipboard kopieren";
+"Send via Email" = "Als E-Mail senden";
 
 // filter
 "Strength: %@" = "Stärke: %@";

@@ -115,6 +115,9 @@
 "%d Cards · %d Influence" = "%d Cartas · %d Influencia";
 "%d Cards · %d Influence · %d AP" = "%d Cartas · %d Influencia · %d PP";
 "Date" = "Fecha";
+"Copy to Clipboard" = "Copiar al portapapeles";
+"Send via Email" = "Enviar Email";
+
 
 // filter
 "Strength: %@" = "Fuerza: %@";
