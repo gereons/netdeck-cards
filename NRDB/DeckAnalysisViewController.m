@@ -19,11 +19,15 @@
 
 @property Deck* deck;
 @property NSArray* errors;
+@property BOOL showSets;
+@property NSArray* sets;
+
 @property CostStats* costStats;
 @property StrengthStats* strengthStats;
 @property IceTypeStats* iceTypeStats;
 @property CardTypeStats* cardTypeStats;
 @property InfluenceStats* influenceStats;
+@property UIButton* toggleButton;
 
 @end
 
@@ -47,6 +51,7 @@
         self.modalPresentationStyle = UIModalPresentationFormSheet;
         
         self.errors = [deck checkValidity];
+        self.sets = [CardSets setsUsedInDeck:deck];
         self.costStats = [[CostStats alloc] initWithDeck:deck];
         self.strengthStats = [[StrengthStats alloc] initWithDeck:deck];
         self.cardTypeStats = [[CardTypeStats alloc] initWithDeck:deck];
@@ -55,6 +60,11 @@
         {
             self.iceTypeStats = [[IceTypeStats alloc] initWithDeck:deck];
         }
+        
+        self.toggleButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        self.toggleButton.frame = CGRectMake(450, 7, 50, 30);
+        [self.toggleButton setImage:[UIImage imageNamed:@"764-arrow-down"] forState:UIControlStateNormal];
+        [self.toggleButton addTarget:self action:@selector(toggleSets:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -106,7 +116,7 @@
     switch (section)
     {
         case 0:
-            return MAX(2, self.errors.count + 1);
+            return MAX(2, self.errors.count + 1) + (self.showSets ? self.sets.count : 0);
         case 1:
         case 2:
         case 3:
@@ -142,6 +152,33 @@
     return nil;
 }
 
+- (void)toggleSets:(UIButton*)btn
+{
+    self.showSets = !self.showSets;
+    [btn setImage:[UIImage imageNamed:self.showSets ? @"763-arrow-up" : @"764-arrow-down"] forState:UIControlStateNormal];
+    
+    [self.tableView reloadData];
+}
+
+-(NSInteger) tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0)
+    {
+        if (self.errors.count > 0)
+        {
+            if (indexPath.row > self.errors.count)
+            {
+                return 1;
+            }
+        }
+        else if (indexPath.row > 1)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString* cellIdentifier = [NSString stringWithFormat:@"analysisCell%ld", (long)indexPath.section];
@@ -152,6 +189,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
     switch (indexPath.section)
     {
         case 0:
@@ -159,26 +198,37 @@
             
             if (self.errors.count > 0)
             {
-                if (indexPath.row == self.errors.count)
-                {
-                    cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [CardSets mostRecentSetUsedInDeck:self.deck]];
-                    cell.textLabel.textColor = [UIColor blackColor];
-                }
-                else
+                if (indexPath.row < self.errors.count)
                 {
                     cell.textLabel.text = [self.errors objectAtIndex:indexPath.row];
                     cell.textLabel.textColor = [UIColor redColor];
                 }
+                else if (indexPath.row == self.errors.count)
+                {
+                    cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [CardSets mostRecentSetUsedInDeck:self.deck]];
+                    cell.textLabel.textColor = [UIColor blackColor];
+                    [cell.contentView addSubview:self.toggleButton];
+                }
+                else if (indexPath.row > self.errors.count)
+                {
+                    cell.textLabel.text = [self.sets objectAtIndex:indexPath.row - self.errors.count - 1];
+                    cell.textLabel.textColor = [UIColor blackColor];
+                }
             }
             else
             {
-                if (indexPath.row == 0)
+                switch (indexPath.row)
                 {
-                    cell.textLabel.text = l10n(@"Deck is valid");
-                }
-                else
-                {
-                    cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [CardSets mostRecentSetUsedInDeck:self.deck]];
+                    case 0:
+                        cell.textLabel.text = l10n(@"Deck is valid");
+                        break;
+                    case 1:
+                        cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [CardSets mostRecentSetUsedInDeck:self.deck]];
+                        [cell.contentView addSubview:self.toggleButton];
+                        break;
+                    default:
+                        cell.textLabel.text = [self.sets objectAtIndex:indexPath.row-2];
+                        break;
                 }
                 
                 cell.textLabel.textColor = [UIColor blackColor];

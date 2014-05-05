@@ -194,7 +194,7 @@ static struct cardSetData {
     return [[TableData alloc] initWithSections:sections andValues:sets];
 }
 
-+(NSString*) setsUsedInDeck:(Deck*) deck
++(NSArray*) setsUsedInDeck:(Deck*) deck
 {
     NSMutableDictionary* sets = [NSMutableDictionary dictionary];
     NSMutableDictionary* setNums = [NSMutableDictionary dictionary];
@@ -231,21 +231,18 @@ static struct cardSetData {
         return [n1 compare:n2];
     }];
     
-    NSMutableString* result = [NSMutableString string];
-    NSString* sep = @"";
+    NSMutableArray* result = [NSMutableArray array];
     for (NSString* s in sorted)
     {
-        [result appendString:sep];
         if ([s isEqualToString:@"core"])
         {
             NSNumber* needed = [sets objectForKey:s];
-            [result appendFormat:@"%@×%@", needed, [setNames objectForKey:s]];
+            [result addObject:[NSString stringWithFormat:@"%@×%@", needed, [setNames objectForKey:s]]];
         }
         else
         {
-            [result appendString:[setNames objectForKey:s]];
+            [result addObject:[setNames objectForKey:s]];
         }
-        sep = @", ";
     }
     // NSLog(@"%@", result);
     return result;

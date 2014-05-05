@@ -48,6 +48,10 @@
 		3A461A7118BBF39500302A4D /* DataDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A461A7018BBF39500302A4D /* DataDownload.m */; };
 		3A4925041869C70300B22DC5 /* CardFilterHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4925031869C70300B22DC5 /* CardFilterHeaderView.m */; };
 		3A4C7BFA18FEE9C0009B4A4B /* OctgnImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C7BF918FEE9C0009B4A4B /* OctgnImport.m */; };
+		3A52E1911917F9EF00264C2A /* 763-arrow-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18D1917F9EF00264C2A /* 763-arrow-up.png */; };
+		3A52E1921917F9EF00264C2A /* 763-arrow-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18E1917F9EF00264C2A /* 763-arrow-up@2x.png */; };
+		3A52E1931917F9EF00264C2A /* 764-arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */; };
+		3A52E1941917F9EF00264C2A /* 764-arrow-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E1901917F9EF00264C2A /* 764-arrow-down@2x.png */; };
 		3A5794DA19157A2D005DA4B2 /* CardDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5794D919157A2D005DA4B2 /* CardDetailView.m */; };
 		3A594E2F18E1F56D00832901 /* 702-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2D18E1F56D00832901 /* 702-share.png */; };
 		3A594E3018E1F56D00832901 /* 702-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2E18E1F56D00832901 /* 702-share@2x.png */; };
@@ -266,6 +270,10 @@
 		3A4925031869C70300B22DC5 /* CardFilterHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardFilterHeaderView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A4C7BF818FEE9C0009B4A4B /* OctgnImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OctgnImport.h; sourceTree = "<group>"; };
 		3A4C7BF918FEE9C0009B4A4B /* OctgnImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OctgnImport.m; sourceTree = "<group>"; };
+		3A52E18D1917F9EF00264C2A /* 763-arrow-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "763-arrow-up.png"; sourceTree = "<group>"; };
+		3A52E18E1917F9EF00264C2A /* 763-arrow-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "763-arrow-up@2x.png"; sourceTree = "<group>"; };
+		3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "764-arrow-down.png"; sourceTree = "<group>"; };
+		3A52E1901917F9EF00264C2A /* 764-arrow-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "764-arrow-down@2x.png"; sourceTree = "<group>"; };
 		3A5794D819157A2D005DA4B2 /* CardDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDetailView.h; sourceTree = "<group>"; };
 		3A5794D919157A2D005DA4B2 /* CardDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardDetailView.m; sourceTree = "<group>"; };
 		3A594E2D18E1F56D00832901 /* 702-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share.png"; sourceTree = "<group>"; };
@@ -740,6 +748,10 @@
 		3A721E6418CE3FBF00799097 /* flat */ = {
 			isa = PBXGroup;
 			children = (
+				3A52E18D1917F9EF00264C2A /* 763-arrow-up.png */,
+				3A52E18E1917F9EF00264C2A /* 763-arrow-up@2x.png */,
+				3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */,
+				3A52E1901917F9EF00264C2A /* 764-arrow-down@2x.png */,
 				3A6E755318E3FF7400EF8DE1 /* cardstats_identity_link@2x.png */,
 				3A6E755418E3FF7400EF8DE1 /* cardstats_identity_link.png */,
 				3A6E755518E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png */,
@@ -1111,6 +1123,7 @@
 				3A6E755D18E3FF7400EF8DE1 /* cardstats_identity_decksize@2x.png in Resources */,
 				3A6E755A18E3FF7400EF8DE1 /* cardstats_identity_link.png in Resources */,
 				3A82624218E05EC70038B4AC /* cardstats_difficulty.png in Resources */,
+				3A52E1921917F9EF00264C2A /* 763-arrow-up@2x.png in Resources */,
 				3A82625818E05EC70038B4AC /* deckview_card@2x.png in Resources */,
 				3AE0D50D18F7B4A0007868A7 /* strength_slider@2x.png in Resources */,
 				3A82624318E05EC70038B4AC /* cardstats_strength@2x.png in Resources */,
@@ -1126,6 +1139,7 @@
 				3A82625118E05EC70038B4AC /* cardstats_decksize.png in Resources */,
 				3A82625918E05EC70038B4AC /* deckview_card.png in Resources */,
 				3A82624718E05EC70038B4AC /* cardstats_points.png in Resources */,
+				3A52E1931917F9EF00264C2A /* 764-arrow-down.png in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
 				3AFA3B6C18DF862900F59331 /* altarttoggle_off@2x.png in Resources */,
 				3A594E3018E1F56D00832901 /* 702-share@2x.png in Resources */,
@@ -1149,6 +1163,7 @@
 				3A82625718E05EC70038B4AC /* deckview_table.png in Resources */,
 				3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */,
 				3AB1B2341872ECA000F6AE45 /* FilteredCardViewController.xib in Resources */,
+				3A52E1911917F9EF00264C2A /* 763-arrow-up.png in Resources */,
 				3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */,
 				3A82624B18E05EC70038B4AC /* cardstats_link@2x.png in Resources */,
 				3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */,
@@ -1183,6 +1198,7 @@
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
 				3A6E756A18E401D400EF8DE1 /* iTunesArtwork@2x.png in Resources */,
 				3A82624918E05EC70038B4AC /* cardstats_mem@2x.png in Resources */,
+				3A52E1941917F9EF00264C2A /* 764-arrow-down@2x.png in Resources */,
 				3AE0D50818F7B4A0007868A7 /* influence_slider.png in Resources */,
 				3A82625618E05EC70038B4AC /* deckview_table@2x.png in Resources */,
 				3A82624818E05EC70038B4AC /* cardstats_strength.png in Resources */,

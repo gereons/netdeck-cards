@@ -19,7 +19,7 @@
 +(NSSet*) disabledSetCodes;
 
 +(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;
-+(NSString*) setsUsedInDeck:(Deck*) deck;
++(NSArray*) setsUsedInDeck:(Deck*) deck;
 
 +(void) initializeSetNames:(NSDictionary*)cards;
 
