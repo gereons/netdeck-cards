@@ -144,6 +144,10 @@
     self.toggleButton.hidden = self.cc.card.altCard == nil;
     self.toggleButton.layer.masksToBounds = YES;
     self.toggleButton.layer.cornerRadius = 3;
+    
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = 10;
+    
     [self.toggleButton setImage:[ImageCache altArtIcon:self.cc.showAltArt] forState:UIControlStateNormal];
 }
 

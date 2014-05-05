@@ -49,9 +49,9 @@
     [self.window makeKeyAndVisible];
     
     // setup tmcache
-    NSInteger cardCount = [Card allCards].count;
-    NSInteger byteLimit = cardCount == 0 ? 70*1024*1024 : cardCount * 120000;
-    [TMCache sharedCache].diskCache.byteLimit = byteLimit;
+    NSInteger cardCount = [Card allCards].count * 1.1;
+    cardCount = MAX(cardCount, 1000);
+    [TMCache sharedCache].diskCache.byteLimit = cardCount * 120000;
 
     [DeckImport checkClipboardForDeck];
     
