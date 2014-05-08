@@ -120,7 +120,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSString* lastVersion = [defaults objectForKey:LAST_START_VERSION];
     if (![self.appVersion isEqualToString:lastVersion])
     {
-        // yes, first start. show "about" tab, and do NOT load any previous saved state
+        // yes, first start. show "about" tab
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuAbout inSection:0];
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         
