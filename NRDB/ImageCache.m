@@ -47,6 +47,7 @@ static UIImage* strengthIcon;
 static UIImage* altArtIconOn;
 static UIImage* altArtIconOff;
 static UIImage* hexTile;
+static NSMutableSet* unavailableImages; // set of image keys
 
 +(void) initialize
 {
@@ -77,6 +78,8 @@ static UIImage* hexTile;
     {
         [settings setObject:@{} forKey:NEXT_CHECK];
     }
+    
+    unavailableImages = [NSMutableSet set];
 }
 
 +(ImageCache*) sharedInstance
@@ -114,14 +117,14 @@ static UIImage* hexTile;
         
         if (completionBlock)
         {
-            BOOL isPlaceholder = img == runnerPlaceholder || img == corpPlaceholder;
-            completionBlock(card, img, isPlaceholder);
+            completionBlock(card, img, NO);
         }
         
         return;
     }
     
-    if (![AFNetworkReachabilityManager sharedManager].reachable)
+    // return a placeholder if we're offline or already know that the img is unavailable
+    if (![AFNetworkReachabilityManager sharedManager].reachable || [unavailableImages containsObject:key])
     {
         completionBlock(card, [ImageCache placeholderFor:card.role], YES);
     }
@@ -159,7 +162,7 @@ static UIImage* hexTile;
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // download failed
-             @strongify(self);
+             // @strongify(self);
 
 #if NETWORK_LOG
              NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
@@ -170,14 +173,8 @@ static UIImage* hexTile;
              {
                  UIImage* img = [ImageCache placeholderFor:card.role];
                  completionBlock(card, img, YES);
-                 
-                 // only store the placeholder if we had no previous image
-                 UIImage* prevImg = [[TMCache sharedCache] objectForKey:key];
-                 if (prevImg == nil)
-                 {
-                     [self storeInCache:img lastModified:nil forKey:key];
-                 }
              }
+             [unavailableImages addObject:key];
          }];
 }
 
@@ -187,15 +184,9 @@ static UIImage* hexTile;
     NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
     // NSLog(@"get img for %@", key);
     
-    BOOL haveImage = NO;
     UIImage* img = [[TMCache sharedCache] objectForKey:key];
-    if (img)
-    {
-        BOOL isPlaceholder = img == runnerPlaceholder || img == corpPlaceholder;
-        haveImage = !isPlaceholder;
-    }
     
-    if (!haveImage)
+    if (img == nil)
     {
         [self updateImageFor:card completion:completionBlock];
     }

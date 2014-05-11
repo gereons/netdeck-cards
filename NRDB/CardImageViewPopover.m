@@ -153,6 +153,7 @@ static CGFloat popoverScale = 1.0;
                                          [self.activityIndicator stopAnimating];
                                          self.imageView.image = image;
                                          
+                                         self.detailView.hidden = !placeholder;
                                          if (placeholder)
                                          {
                                              [CardDetailView setupDetailViewFromPopover:self card:self.card];
