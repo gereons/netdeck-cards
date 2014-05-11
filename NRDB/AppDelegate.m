@@ -17,6 +17,7 @@
 #import "CardSets.h"
 #import "DeckImport.h"
 #import "Card.h"
+#import "CardImageViewPopover.h"
 
 @implementation AppDelegate
 
@@ -54,6 +55,7 @@
     [TMCache sharedCache].diskCache.byteLimit = cardCount * 120000;
 
     [DeckImport checkClipboardForDeck];
+    [CardImageViewPopover monitorKeyboard];
     
     return YES;
 }

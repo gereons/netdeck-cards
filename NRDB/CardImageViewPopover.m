@@ -12,6 +12,11 @@
 #import "CardDetailView.h"
 #import <EXTScope.h>
 
+#define IMAGE_WIDTH     300
+#define IMAGE_HEIGHT    418
+#define POPOVER_MARGIN  40 // 20px status bar + 10px top + 10px bottom
+#define SCREEN_HEIGHT   768
+
 @interface CardImageViewPopover ()
 
 @property Card* card;
@@ -19,16 +24,48 @@
 
 @end
 
+static UIPopoverController* popover;
+static BOOL keyboardVisible = NO;
+static CGFloat popoverScale = 1.0;
+
 @implementation CardImageViewPopover
 
-static UIPopoverController* popover;
++(void)monitorKeyboard
+{
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    
+    [nc addObserver:self selector:@selector(showKeyboard:) name:UIKeyboardDidShowNotification object:nil];
+    [nc addObserver:self selector:@selector(hideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+}
+
++(void) showKeyboard:(NSNotification*)notification
+{
+    keyboardVisible = YES;
+    NSValue* value = notification.userInfo [UIKeyboardFrameEndUserInfoKey];
+    CGFloat keyboardHeight = value.CGRectValue.size.width;
+    popoverScale = (SCREEN_HEIGHT - keyboardHeight - POPOVER_MARGIN) / IMAGE_HEIGHT;
+}
+
++(void) hideKeyboard:(NSNotification*)sender
+{
+    keyboardVisible = NO;
+    popoverScale = 1.0;
+    
+    if (popover)
+    {
+        CardImageViewPopover* ci = (CardImageViewPopover*)popover.contentViewController;
+        ci.view.transform = CGAffineTransformIdentity;
+        popover.popoverContentSize = CGSizeMake(IMAGE_WIDTH, IMAGE_HEIGHT);
+    }
+}
 
 +(void)showForCard:(Card *)card fromRect:(CGRect)rect inView:(UIView*)view
 {
     CardImageViewPopover* cardImageView = [[CardImageViewPopover alloc] initWithCard:card];
     
     popover = [[UIPopoverController alloc] initWithContentViewController:cardImageView];
-    popover.popoverContentSize = CGSizeMake(300, 418);
+    
+    popover.popoverContentSize = CGSizeMake((int)(IMAGE_WIDTH*popoverScale), (int)(IMAGE_HEIGHT*popoverScale));
     popover.backgroundColor = [UIColor whiteColor];
     popover.delegate = cardImageView;
     
@@ -58,6 +95,11 @@ static UIPopoverController* popover;
         self.card = card;
         self.showAlt = NO;
         self.detailView.hidden = YES;
+        
+        if (keyboardVisible)
+        {
+            self.view.transform = CGAffineTransformMakeScale(popoverScale, popoverScale);
+        }
     }
     return self;
 }

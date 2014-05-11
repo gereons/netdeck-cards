@@ -32,4 +32,6 @@
 
 -(IBAction) toggleImage:(id)sender;
 
++(void) monitorKeyboard;
+
 @end
