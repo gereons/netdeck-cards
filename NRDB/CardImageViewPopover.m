@@ -72,13 +72,15 @@ static CGFloat popoverScale = 1.0;
     [popover presentPopoverFromRect:rect inView:view permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight animated:NO];
 }
 
-+(void) dismiss
++(BOOL) dismiss
 {
     if (popover)
     {
         [popover dismissPopoverAnimated:NO];
         popover = nil;
+        return YES;
     }
+    return NO;
 }
 
 - (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController

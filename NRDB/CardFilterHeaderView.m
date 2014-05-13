@@ -15,6 +15,7 @@
 #import "Notifications.h"
 #import "CardFilterPopover.h"
 #import "ImageCache.h"
+#import "CardImageViewPopover.h"
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
@@ -299,6 +300,11 @@ static NSArray* scopes;
 
 -(BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    if ([CardImageViewPopover dismiss])
+    {
+        return NO;
+    }
+    
     self.searchText = [textField.text stringByReplacingCharactersInRange:range withString:string];
     // NSLog(@"search: %d %@", self.scope, self.searchText);
     
@@ -309,6 +315,11 @@ static NSArray* scopes;
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
+    if ([CardImageViewPopover dismiss])
+    {
+        return NO;
+    }
+    
     self.searchText = @"";
     
     [self postNotification:scopes[self.scope] value:self.searchText];
@@ -317,6 +328,11 @@ static NSArray* scopes;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    if ([CardImageViewPopover dismiss])
+    {
+        return NO;
+    }
+    
     if (self.searchText.length > 0)
     {
         [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];

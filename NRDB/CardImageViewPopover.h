@@ -12,7 +12,7 @@
 @interface CardImageViewPopover : UIViewController<UIPopoverControllerDelegate>
 
 +(void) showForCard:(Card*)card fromRect:(CGRect)rect inView:(UIView*)vc;
-+(void) dismiss;
++(BOOL) dismiss; // return YES if popup was visible
 
 @property IBOutlet UIImageView* imageView;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
