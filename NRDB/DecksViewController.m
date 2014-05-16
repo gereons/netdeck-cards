@@ -38,6 +38,7 @@ static NSString* filterText;
 @property NSArray* decks;
 @property NSDateFormatter *dateFormatter;
 @property UIActionSheet* popup;
+@property UIAlertView* nameAlert;
 @property Deck* deck;
 
 @end
@@ -286,7 +287,7 @@ static NSString* filterText;
                                         cancelButtonTitle:@""
                                    destructiveButtonTitle:nil
                                         otherButtonTitles:l10n(@"Duplicate"),
-                                                          l10n(@"Copy to Clipboard"),
+                                                          l10n(@"Rename"),
                                                           l10n(@"Send via Email"), nil];
         
         self.popup.tag = POPUP_LONGPRESS;
@@ -341,24 +342,62 @@ static NSString* filterText;
                 }
                 
                 [self updateDecks];
+                self.deck = nil;
                 break;
             }
-            case 1: // clipboard
+            case 1: // rename
             {
-                UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-                pasteboard.string = [DeckExport asPlaintextString:self.deck];
-                [DeckImport updateCount];
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Enter Name")
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:l10n(@"Cancel")
+                                                      otherButtonTitles:l10n(@"OK"), nil];
+                
+                alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+                
+                UITextField* textField = [alert textFieldAtIndex:0];
+                textField.placeholder = l10n(@"Deck Name");
+                textField.text = self.deck.name;
+                textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+                textField.clearButtonMode = UITextFieldViewModeAlways;
+                textField.returnKeyType = UIReturnKeyDone;
+                textField.delegate = self;
+                
+                self.nameAlert = alert;
+                [alert show];
+
                 break;
             }
             case 2: // email
                 [self sendAsEmail];
                 break;
         }
-        self.deck = nil;
     }
     
     self.popup = nil;
     return;
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.nameAlert dismissWithClickedButtonIndex:1 animated:NO];
+    [textField resignFirstResponder];
+    return NO;
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex)
+    {
+        return;
+    }
+    
+    self.deck.name = [alertView textFieldAtIndex:0].text;
+    [DeckManager saveDeck:self.deck toPath:self.deck.filename];
+    self.deck = nil;
+    [self updateDecks];
+    
+    self.nameAlert = nil;
 }
 
 #pragma mark search bar

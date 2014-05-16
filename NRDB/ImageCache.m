@@ -244,7 +244,6 @@ static NSMutableSet* unavailableImages; // set of image keys
     
     NSDictionary* dict = [settings objectForKey:NEXT_CHECK];
     NSDate* nextCheck = [dict objectForKey:key];
-    NLOG(@"next check for %@: %@", key, nextCheck);
     if (nextCheck)
     {
         NSDate* now = [NSDate date];
@@ -255,6 +254,7 @@ static NSMutableSet* unavailableImages; // set of image keys
         }
     }
     
+    NLOG(@"check for %@: %@", key, nextCheck);
     dict = [settings objectForKey:LAST_MOD_CACHE];
     NSString* lastModDate = [dict objectForKey:key];
     
