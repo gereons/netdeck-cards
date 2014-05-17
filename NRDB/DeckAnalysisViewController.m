@@ -152,10 +152,10 @@
     return nil;
 }
 
-- (void)toggleSets:(UIButton*)btn
+- (void)toggleSets:(id)sender
 {
     self.showSets = !self.showSets;
-    [btn setImage:[UIImage imageNamed:self.showSets ? @"763-arrow-up" : @"764-arrow-down"] forState:UIControlStateNormal];
+    [self.toggleButton setImage:[UIImage imageNamed:self.showSets ? @"763-arrow-up" : @"764-arrow-down"] forState:UIControlStateNormal];
     
     [self.tableView reloadData];
 }
@@ -177,6 +177,23 @@
         }
     }
     return 0;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int decksRow = self.errors.count > 0 ? indexPath.row == self.errors.count : 1;
+    if (indexPath.section == 0 && indexPath.row == decksRow)
+    {
+        return indexPath;
+    }
+    
+    return nil;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self toggleSets:nil];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
