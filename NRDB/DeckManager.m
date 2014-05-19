@@ -46,7 +46,7 @@
 +(Deck*) loadDeckFromPath:(NSString *)filename
 {
     // Check to see if the saved state file exists and if so, load it
-    NSMutableData* savedData = [NSData dataWithContentsOfFile:filename];
+    NSData* savedData = [NSData dataWithContentsOfFile:filename];
     if (savedData == nil)
     {
         // no saved data

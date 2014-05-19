@@ -49,6 +49,8 @@ static UIImage* altArtIconOff;
 static UIImage* hexTile;
 static NSMutableSet* unavailableImages; // set of image keys
 
+static NSCache* memCache;
+
 +(void) initialize
 {
     runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
@@ -80,6 +82,10 @@ static NSMutableSet* unavailableImages; // set of image keys
     }
     
     unavailableImages = [NSMutableSet set];
+    
+    memCache = [[NSCache alloc] init];
+    memCache.totalCostLimit = 100 * 120000; // about 100 cards
+    memCache.name = @"netdeck";
 }
 
 +(ImageCache*) sharedInstance
@@ -98,15 +104,16 @@ static NSMutableSet* unavailableImages; // set of image keys
     [settings setObject:@{} forKey:NEXT_CHECK];
     [settings synchronize];
     
-    [[TMCache sharedCache] removeAllObjects];
+    [ImageCache removeCacheDirectory];
 }
 
 -(void) getImageFor:(Card *)card completion:(CompletionBlock)completionBlock
 {
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
+    
     // NSLog(@"get img for %@", key);
-    UIImage* img = [[TMCache sharedCache] objectForKey:key];
+    UIImage* img = [ImageCache getImageFor:key];
     if (img)
     {
         // NSLog(@"cached, check for update");
@@ -184,8 +191,7 @@ static NSMutableSet* unavailableImages; // set of image keys
     NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
     // NSLog(@"get img for %@", key);
     
-    UIImage* img = [[TMCache sharedCache] objectForKey:key];
-    
+    UIImage* img = [ImageCache getImageFor:key];
     if (img == nil)
     {
         [self updateImageFor:card completion:completionBlock];
@@ -316,7 +322,7 @@ static NSMutableSet* unavailableImages; // set of image keys
     
     [self setNextCheck:key withTimeIntervalFromNow:interval];
     
-    [[TMCache sharedCache] setObject:image forKey:key];
+    [ImageCache saveImage:image forKey:key];
 }
 
 -(void) setNextCheck:(NSString*)key withTimeIntervalFromNow:(NSTimeInterval)interval
@@ -349,6 +355,81 @@ static NSMutableSet* unavailableImages; // set of image keys
 +(UIImage*) placeholderFor:(NRRole)role
 {
     return role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder;
+}
+
+#pragma mark simple filesystem cache
+
++(NSString*) directoryForImages
+{
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    directory = [directory stringByAppendingPathComponent:language];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:directory])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    return directory;
+}
+
++(void) removeCacheDirectory
+{
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:directory error:nil];
+}
+
++(UIImage*) getImageFor:(NSString*)key
+{
+    UIImage* img = [memCache objectForKey:key];
+    if (img)
+    {
+        return img;
+    }
+    
+    NSString* dir = [ImageCache directoryForImages];
+    NSString* file = [dir stringByAppendingPathComponent:key];
+    
+    NSData* imgData = [NSData dataWithContentsOfFile:file];
+    if (imgData)
+    {
+        img = [UIImage imageWithData:imgData];
+    }
+    if (!img)
+    {
+        // img in old TMcache? move it over
+        img = [[TMCache sharedCache] objectForKey:key];
+        if (img)
+        {
+            [ImageCache saveImage:img forKey:key];
+            [[TMCache sharedCache] removeObjectForKey:key];
+        }
+    }
+    
+    if (img)
+    {
+        [memCache setObject:img forKey:key cost:imgData.length];
+    }
+    return img;
+}
+
++(void) saveImage:(UIImage*)img forKey:(NSString*)code
+{
+    NLOG(@"save img for %@", code);
+    NSString* dir = [ImageCache directoryForImages];
+    NSString* file = [dir stringByAppendingPathComponent:code];
+    
+    NSData* data = UIImagePNGRepresentation(img);
+    
+    [data writeToFile:file atomically:YES];
 }
 
 @end

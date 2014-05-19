@@ -8,7 +8,7 @@
 
 #import <AFNetworking.h>
 #import <EXTScope.h>
-#import <TMCache.h>
+// #import <TMCache.h>
 
 #import "DataDownload.h"
 #import "CardData.h"
@@ -230,6 +230,7 @@ static DataDownload* instance;
     }
 }
 
+/*
 -(void) cacheStats
 {
     NSLog(@"%lu disk bytes", (unsigned long)[[TMCache sharedCache] diskByteCount]);
@@ -250,6 +251,7 @@ static DataDownload* instance;
                                                  }];
     
 }
+*/
 
 #pragma mark alert dismissal
 - (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
