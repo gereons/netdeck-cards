@@ -69,7 +69,6 @@ PODS:
   - libextobjc/UmbrellaHeader (0.4)
   - SVProgressHUD (1.0)
   - TestFlightSDK (3.0.2)
-  - TMCache (1.2.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
@@ -80,7 +79,6 @@ DEPENDENCIES:
   - libextobjc
   - SVProgressHUD
   - TestFlightSDK
-  - TMCache
 
 SPEC CHECKSUMS:
   AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
@@ -93,6 +91,5 @@ SPEC CHECKSUMS:
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
   SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
   TestFlightSDK: 0c24c533748d0d84bfe7a3cb6036fa79124d84ee
-  TMCache: ea1c509badaf9a1245422aabf3c975b3277ab138
 
 COCOAPODS: 0.33.1

@@ -7,7 +7,6 @@
 //
 
 #import "ImageCache.h"
-#import <TMCache.h>
 #import <AFNetworking.h>
 #import <EXTScope.h>
 
@@ -403,17 +402,7 @@ static NSCache* memCache;
     {
         img = [UIImage imageWithData:imgData];
     }
-    if (!img)
-    {
-        // img in old TMcache? move it over
-        img = [[TMCache sharedCache] objectForKey:key];
-        if (img)
-        {
-            [ImageCache saveImage:img forKey:key];
-            [[TMCache sharedCache] removeObjectForKey:key];
-        }
-    }
-    
+        
     if (img)
     {
         [memCache setObject:img forKey:key cost:imgData.length];

@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <TMCache.h>
 #import <AFNetworking.h>
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
@@ -49,11 +48,6 @@
     self.window.rootViewController = self.splitViewController;
     [self.window makeKeyAndVisible];
     
-    // setup tmcache
-    NSInteger cardCount = [Card allCards].count * 1.1;
-    cardCount = MAX(cardCount, 1000);
-    [TMCache sharedCache].diskCache.byteLimit = cardCount * 120000;
-
     [DeckImport checkClipboardForDeck];
     [CardImageViewPopover monitorKeyboard];
     

@@ -8,7 +8,6 @@
 
 #import <AFNetworking.h>
 #import <EXTScope.h>
-// #import <TMCache.h>
 
 #import "DataDownload.h"
 #import "CardData.h"
@@ -229,29 +228,6 @@ static DataDownload* instance;
         self.cards = nil;
     }
 }
-
-/*
--(void) cacheStats
-{
-    NSLog(@"%lu disk bytes", (unsigned long)[[TMCache sharedCache] diskByteCount]);
-    
-    int __block memCount = 0;
-    [[[TMCache sharedCache] memoryCache] enumerateObjectsWithBlock:^(TMMemoryCache*cache, NSString* key, id obj) {
-        ++memCount;
-    }
-                                                   completionBlock:^(TMMemoryCache* cache) {
-                                                       NSLog(@"%d in memory cache", memCount);
-                                                   }];
-    int __block diskCount = 0;
-    [[[TMCache sharedCache] diskCache] enumerateObjectsWithBlock:^(TMDiskCache*cache, NSString* key, id obj, NSURL* url) {
-        ++diskCount;
-    }
-                                                 completionBlock:^(TMDiskCache* cache) {
-                                                     NSLog(@"%d in disk cache", diskCount);
-                                                 }];
-    
-}
-*/
 
 #pragma mark alert dismissal
 - (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
