@@ -163,76 +163,78 @@
 -(NSMutableArray*) applyFilters
 {
     NSMutableArray* filteredCards = [self.initialCards mutableCopy];
+    NSMutableArray* predicates = [NSMutableArray array];
+    
     if (self.faction.length > 0 && ![self.faction isEqualToString:kANY])
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"factionStr LIKE[cd] %@", self.faction];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.factions.count > 0)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"factionStr IN %@", self.factions];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.type.length > 0 && ![self.type isEqualToString:kANY])
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"typeStr LIKE[cd] %@", self.type];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.types.count > 0)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"typeStr IN %@", self.types];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.mu != -1)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"mu == %d", self.mu];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.strength != -1)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"strength == %d", self.strength];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.influence != -1)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"influence == %d", self.influence];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.set.length > 0 && ![self.set isEqualToString:kANY])
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"setName LIKE[cd] %@", self.set];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.sets.count > 0)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"setName IN %@", self.sets];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.cost != -1)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"cost == %d || advancementCost == %d", self.cost, self.cost];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.subtype.length > 0 && ![self.subtype isEqualToString:kANY])
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%@ IN subtypes", self.subtype];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.subtypes.count > 0)
     {
-        NSMutableArray *predicates = [[NSMutableArray alloc] init];
+        NSMutableArray *predicates = [NSMutableArray array];
         for (NSString* subtype in self.subtypes)
         {
             [predicates addObject:[NSPredicate predicateWithFormat:@"%@ IN subtypes", subtype]];
         }
-        NSPredicate *compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
-        [filteredCards filterUsingPredicate:compoundPredicate];
+        NSPredicate *subtypePredicate = [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
+        [predicates addObject:subtypePredicate];
 
     }
     if (self.agendaPoints != -1)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"agendaPoints == %d", self.agendaPoints];
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
     }
     if (self.text.length > 0)
     {
@@ -249,7 +251,13 @@
                 predicate = [NSPredicate predicateWithFormat:@"text CONTAINS[cd] %@", self.text];
                 break;
         }
-        [filteredCards filterUsingPredicate:predicate];
+        [predicates addObject:predicate];
+    }
+    
+    if (predicates.count > 0)
+    {
+        NSPredicate* allPredicates = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+        [filteredCards filterUsingPredicate:allPredicates];
     }
     
     return filteredCards;
