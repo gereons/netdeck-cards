@@ -13,6 +13,8 @@
 @interface CardImageCell : UICollectionViewCell
 
 @property IBOutlet UIImageView* imageView;
+@property IBOutlet UIImageView* shadow1;
+@property IBOutlet UIImageView* shadow2;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
 @property IBOutlet UILabel* copiesLabel;
 @property IBOutlet UIButton* toggleButton;

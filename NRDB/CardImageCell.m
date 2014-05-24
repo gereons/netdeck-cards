@@ -29,6 +29,8 @@
     
     NSDictionary* views = @{
                             @"image": self.imageView,
+                            @"shadow1": self.shadow1,
+                            @"shadow2": self.shadow2,
                             @"activity": self.activityIndicator,
                             @"toggle": self.toggleButton,
                             @"label": self.copiesLabel,
@@ -36,11 +38,15 @@
                             };
     
     NSArray* constraints = @[
-                             @"H:|[image]|",
+                             @"H:|[shadow2]-10-|",
+                             @"H:|-5-[shadow1]-5-|",
+                             @"H:|-10-[image]|",
                              @"H:|[label]|",
                              @"H:[toggle(28)]",
                              @"H:|[details]|",
-                             @"V:|[image][label(20)]|",
+                             @"V:|[shadow2(image)]",
+                             @"V:|-5-[shadow1(image)]",
+                             @"V:|-10-[image][label(20)]|",
                              @"V:|[details(==image)]",
                              @"V:[toggle(34)]",
                             ];
@@ -148,7 +154,17 @@
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = 10;
     
+    [self setShadows];
+    
     [self.toggleButton setImage:[ImageCache altArtIcon:self.cc.showAltArt] forState:UIControlStateNormal];
+}
+
+-(void) setShadows
+{
+    UIImage* img = self.imageView.image;
+    
+    self.shadow1.image = self.cc.count > 1 ? img : nil;
+    self.shadow2.image = self.cc.count > 2 ? img : nil;
 }
 
 -(void) toggleImage:(id)sender
@@ -173,6 +189,7 @@
                                          if ([self.cc.card.name isEqual:card.name])
                                          {
                                              self.imageView.image = img;
+                                             [self setShadows];
                                          }
                                          else
                                          {

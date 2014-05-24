@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 // we can't have nice things (ie. multiple inheritance), so this class mirrors the IBOutlet properties
-// from both CardImageViewPopiver and CardImageCell - better than having to duplicate the code
+// from both CardImageViewPopover and CardImageCell - better than having to duplicate the code
 
 @class Card, CardImageViewPopover, CardImageCell;
 
