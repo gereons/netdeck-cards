@@ -19,6 +19,8 @@
 @property NSMutableArray* draw;
 @end
 
+static int viewMode;
+
 @implementation DrawSimulatorViewController
 
 +(void) showForDeck:(Deck*)deck inViewController:(UIViewController*)vc
@@ -53,10 +55,13 @@
     [self.selector setTitle:l10n(@"All") forSegmentAtIndex:6];
     self.selector.apportionsSegmentWidthsByContent = YES;
     
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.viewModeControl.selectedSegmentIndex = viewMode;
     
-    self.collectionView.hidden = YES;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.hidden = viewMode == 0;
+    
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
+    self.collectionView.hidden = viewMode == 1;
 }
 
 -(void) initCards:(BOOL)drawInitialHand
@@ -108,8 +113,9 @@
 
 -(void) viewModeChange:(UISegmentedControl*)sender
 {
-    self.tableView.hidden = sender.selectedSegmentIndex == 0;
-    self.collectionView.hidden = sender.selectedSegmentIndex == 1;
+    viewMode = sender.selectedSegmentIndex;
+    self.tableView.hidden = viewMode == 0;
+    self.collectionView.hidden = viewMode == 1;
 }
 
 -(void) draw:(UISegmentedControl*)sender
@@ -211,19 +217,26 @@
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* cellIdentifier = @"cardThumb";
+    Card *cellCard = [self.draw objectAtIndex:indexPath.row];
     
     CardThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    Card *card = [self.draw objectAtIndex:indexPath.row];
+    cell.imageView.image = nil;
     
-    [[ImageCache sharedInstance] getImageFor:card completion:^(Card* card, UIImage* img, BOOL placeholder) {
-        
-        CGRect rect = CGRectMake(10, card.cropY, 280, 209);
-        CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
-        UIImage *cropped = [UIImage imageWithCGImage:imageRef];
-        CGImageRelease(imageRef);
-                
-        cell.imageView.image = cropped;
+    [cell.activityIndicator startAnimating];
+    [[ImageCache sharedInstance] getImageFor:cellCard completion:^(Card* card, UIImage* img, BOOL placeholder)
+    {
+        if ([cellCard.code isEqual:card.code])
+        {
+            [cell.activityIndicator stopAnimating];
+            CGRect rect = CGRectMake(10, card.cropY, 280, 209);
+            CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
+            UIImage *cropped = [UIImage imageWithCGImage:imageRef];
+            CGImageRelease(imageRef);
+                    
+            cell.imageView.image = cropped;
+            cell.nameLabel.text = placeholder? card.name : nil;
+        }
     }];
     
     return cell;
@@ -235,9 +248,9 @@
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
     
     // convert to on-screen coordinates
-    CGRect rect = [collectionView convertRect:cell.frame toView:collectionView.superview];
+    CGRect rect = [collectionView convertRect:cell.frame toView:self.collectionView];
     
-    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.collectionView];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

@@ -11,7 +11,7 @@
 @class Deck;
 @interface DrawSimulatorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property IBOutlet UISegmentedControl* segmentedControl;
+@property IBOutlet UISegmentedControl* viewModeControl;
 @property IBOutlet UILabel* titleLabel;
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UICollectionView* collectionView;

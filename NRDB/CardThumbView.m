@@ -10,13 +10,11 @@
 
 @implementation CardThumbView
 
-- (id)initWithFrame:(CGRect)frame
+-(void) awakeFromNib
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    self.imageView.layer.cornerRadius = 8;
+    self.imageView.layer.masksToBounds = YES;
+    self.nameLabel.text = nil;
 }
 
 @end

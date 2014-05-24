@@ -11,11 +11,11 @@
                 <outlet property="doneButton" destination="JZj-tq-0z7" id="h0o-n4-aft"/>
                 <outlet property="drawnLabel" destination="ZGd-FG-xwp" id="I6v-0t-h3c"/>
                 <outlet property="oddsLabel" destination="yyO-zW-gdd" id="bml-OR-yQI"/>
-                <outlet property="segmentedControl" destination="Nma-aV-Uj4" id="42m-dL-wWJ"/>
                 <outlet property="selector" destination="iWJ-og-TEk" id="2dN-Tz-Jd6"/>
                 <outlet property="tableView" destination="lCa-vG-3Z7" id="301-2e-Ixr"/>
                 <outlet property="titleLabel" destination="4oc-gM-Xmv" id="AIL-un-ENh"/>
                 <outlet property="view" destination="2" id="3"/>
+                <outlet property="viewModeControl" destination="Nma-aV-Uj4" id="oEg-Yq-sNV"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
