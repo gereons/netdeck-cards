@@ -78,6 +78,8 @@
 		3A6E757218E402A300EF8DE1 /* Icon-Small-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E757018E402A300EF8DE1 /* Icon-Small-29@2x.png */; };
 		3A6E757318E402A300EF8DE1 /* Icon-Small-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E757118E402A300EF8DE1 /* Icon-Small-29.png */; };
 		3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71C9C7185CC4E200D66A27 /* CardSets.m */; };
+		3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71FFC71930BA6500C71C54 /* CardThumbView.xib */; };
+		3A71FFCB1930BAE800C71C54 /* CardThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71FFCA1930BAE800C71C54 /* CardThumbView.m */; };
 		3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A721DC0189CFA64004EFDFE /* DeckImport.m */; };
 		3A76EEBF18B5DA68004DB586 /* CorpPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */; };
 		3A76EEC018B5DA68004DB586 /* RunnerPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EEBE18B5DA68004DB586 /* RunnerPlaceholder.png */; };
@@ -312,6 +314,9 @@
 		3A6E757118E402A300EF8DE1 /* Icon-Small-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-29.png"; sourceTree = "<group>"; };
 		3A71C9C6185CC4E200D66A27 /* CardSets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardSets.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A71C9C7185CC4E200D66A27 /* CardSets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardSets.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3A71FFC71930BA6500C71C54 /* CardThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardThumbView.xib; sourceTree = "<group>"; };
+		3A71FFC91930BAE800C71C54 /* CardThumbView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardThumbView.h; sourceTree = "<group>"; };
+		3A71FFCA1930BAE800C71C54 /* CardThumbView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardThumbView.m; sourceTree = "<group>"; };
 		3A721DBF189CFA64004EFDFE /* DeckImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckImport.h; sourceTree = "<group>"; };
 		3A721DC0189CFA64004EFDFE /* DeckImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckImport.m; sourceTree = "<group>"; };
 		3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CorpPlaceholder.png; sourceTree = "<group>"; };
@@ -982,6 +987,9 @@
 				3ABDE5A118AFC52C00AFEA88 /* DrawSimulatorViewController.h */,
 				3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */,
 				3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */,
+				3A71FFC91930BAE800C71C54 /* CardThumbView.h */,
+				3A71FFCA1930BAE800C71C54 /* CardThumbView.m */,
+				3A71FFC71930BA6500C71C54 /* CardThumbView.xib */,
 			);
 			name = "Draw Simulator";
 			sourceTree = "<group>";
@@ -1199,6 +1207,7 @@
 				3A6E755E18E3FF7400EF8DE1 /* cardstats_identity_decksize.png in Resources */,
 				3AE0D51018F7B4A0007868A7 /* credit_slider.png in Resources */,
 				3A82625418E05EC70038B4AC /* deckview_list@2x.png in Resources */,
+				3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */,
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
 				3A6E756A18E401D400EF8DE1 /* iTunesArtwork@2x.png in Resources */,
 				3A82624918E05EC70038B4AC /* cardstats_mem@2x.png in Resources */,
@@ -1303,6 +1312,7 @@
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,
 				3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */,
+				3A71FFCB1930BAE800C71C54 /* CardThumbView.m in Sources */,
 				3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */,
 				3AD066791896CD2100FF1666 /* CardCell.m in Sources */,
 				3A5BC3F11849326B00E792F7 /* CardList.m in Sources */,

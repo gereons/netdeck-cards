@@ -11,6 +11,7 @@
 #import "CardImageViewPopover.h"
 #import "Hypergeometric.h"
 #import "ImageCache.h"
+#import "CardThumbView.h"
 
 @interface DrawSimulatorViewController ()
 @property Deck* deck;
@@ -53,6 +54,9 @@
     self.selector.apportionsSegmentWidthsByContent = YES;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.collectionView.hidden = YES;
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CardThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
 }
 
 -(void) initCards:(BOOL)drawInitialHand
@@ -99,6 +103,13 @@
 {
     [self initCards:NO];
     [self.tableView reloadData];
+    [self.collectionView reloadData];
+}
+
+-(void) viewModeChange:(UISegmentedControl*)sender
+{
+    self.tableView.hidden = sender.selectedSegmentIndex == 0;
+    self.collectionView.hidden = sender.selectedSegmentIndex == 1;
 }
 
 -(void) draw:(UISegmentedControl*)sender
@@ -137,12 +148,14 @@
     self.drawnLabel.text = [NSString stringWithFormat:l10n(@"%ld %@ drawn"), (unsigned long)drawn, drawn == 1 ? l10n(@"Card") : l10n(@"Cards") ];
     
     [self.tableView reloadData];
+    [self.collectionView reloadData];
     
     // scroll down if not all cards were drawn
     if (numCards != self.deck.size && self.draw.count > 0)
     {
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.draw.count-1 inSection:0];
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
     }
     
     // calculate drawing odds
@@ -177,13 +190,6 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeSystem];
-        [button setImage:[ImageCache altArtIcon:YES] forState:UIControlStateNormal];
-        button.frame = CGRectMake(470, 5, 30, 30);
-        cell.accessoryView = button;
-        
-        [button addTarget:self action:@selector(showImage:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     Card* card = [self.draw objectAtIndex:indexPath.row];
@@ -192,20 +198,66 @@
     return cell;
 }
 
-#pragma mark card popup
-
--(void) showImage:(UIButton*)sender
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    Card* card = self.draw[indexPath.row];
     
-    Card *card = [self.draw objectAtIndex:indexPath.row];
-    
-    CGRect rect = sender.frame;
-    rect.origin.y = [self.tableView rectForRowAtIndexPath:indexPath].origin.y + 3;
-
+    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
     [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
 }
 
+#pragma mark collectionview
+
+-(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString* cellIdentifier = @"cardThumb";
+    
+    CardThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    Card *card = [self.draw objectAtIndex:indexPath.row];
+    
+    [[ImageCache sharedInstance] getImageFor:card completion:^(Card* card, UIImage* img, BOOL placeholder) {
+        
+        CGRect rect = CGRectMake(10, card.cropY, 280, 209);
+        CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
+        UIImage *cropped = [UIImage imageWithCGImage:imageRef];
+        CGImageRelease(imageRef);
+                
+        cell.imageView.image = cropped;
+    }];
+    
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    Card* card = self.draw[indexPath.row];
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    
+    // convert to on-screen coordinates
+    CGRect rect = [collectionView convertRect:cell.frame toView:collectionView.superview];
+    
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(160, 119);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsZero;
+}
+
+-(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.draw.count;
+}
 
 @end

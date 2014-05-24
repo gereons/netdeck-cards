@@ -59,6 +59,7 @@
 @property (readonly) NSString* octgnCode;
 
 @property (readonly) int maxCopies;
+@property (readonly) int cropY;
 
 +(NSArray*) allCards;
 +(NSArray*) altCards;

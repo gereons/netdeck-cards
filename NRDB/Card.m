@@ -258,6 +258,43 @@ static NSMutableArray* allCorpIdentities;
     return UIColorFromRGB(rgb);
 }
 
+-(int) cropY
+{
+    switch (self.type)
+    {
+        case NRCardTypeAgenda:
+            return 15;
+            break;
+        case NRCardTypeAsset:
+            return 20;
+            break;
+        case NRCardTypeEvent:
+        case NRCardTypeOperation:
+            return 10;
+            break;
+        case NRCardTypeHardware:
+            return 18;
+            break;
+        case NRCardTypeIce:
+            return 209;
+            break;
+        case NRCardTypeProgram:
+            return 8;
+            break;
+        case NRCardTypeResource:
+            return 11;
+            break;
+        case NRCardTypeUpgrade:
+            return 22;
+            break;
+        default:
+            return 0;
+            break;
+    }
+}
+
+#pragma mark nsobject
+
 -(BOOL) isEqual:(id)object
 {
     Card* other = (Card*)object;
