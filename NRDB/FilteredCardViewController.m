@@ -157,6 +157,8 @@
         return;
     }
     
+    // explicitly resignFirstResponser, since the kb may have been auto-dismissed by the identity selection form
+    [self.filterView.searchField resignFirstResponder];
     float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
     [UIView animateWithDuration:animDuration

@@ -19,7 +19,7 @@
 @property NSMutableArray* draw;
 @end
 
-static int viewMode;
+static NSInteger viewMode;
 
 @implementation DrawSimulatorViewController
 
