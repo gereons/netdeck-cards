@@ -28,9 +28,9 @@
     [self.detailView removeConstraints:self.detailView.constraints];
     
     NSDictionary* views = @{
-                            @"image": self.imageView,
-                            @"shadow1": self.shadow1,
-                            @"shadow2": self.shadow2,
+                            @"image1": self.image1,
+                            @"image2": self.image2,
+                            @"image3": self.image3,
                             @"activity": self.activityIndicator,
                             @"toggle": self.toggleButton,
                             @"label": self.copiesLabel,
@@ -38,16 +38,16 @@
                             };
     
     NSArray* constraints = @[
-                             @"H:|[shadow2]-10-|",
-                             @"H:|-5-[shadow1]-5-|",
-                             @"H:|-10-[image]|",
+                             @"H:|[image1]-10-|",
+                             @"H:|-5-[image2]-5-|",
+                             @"H:|-10-[image3]|",
                              @"H:|[label]|",
                              @"H:[toggle(28)]",
                              @"H:|[details]|",
-                             @"V:|[shadow2(image)]",
-                             @"V:|-5-[shadow1(image)]",
-                             @"V:|-10-[image][label(20)]|",
-                             @"V:|[details(==image)]",
+                             @"V:|[image1(image3)]",
+                             @"V:|-5-[image2(image3)]",
+                             @"V:|-10-[image3][label(20)]|",
+                             @"V:|[details(==image3)]",
                              @"V:[toggle(34)]",
                             ];
     
@@ -55,30 +55,30 @@
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator
                                                      attribute:NSLayoutAttributeCenterX
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.imageView
+                                                        toItem:self
                                                      attribute:NSLayoutAttributeCenterX
-                                                    multiplier:1.f constant:0.f]];
+                                                    multiplier:1 constant:0]];
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator
                                                      attribute:NSLayoutAttributeCenterY
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.imageView
+                                                        toItem:self
                                                      attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1.f constant:0.f]];
+                                                    multiplier:1 constant:0]];
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.toggleButton
                                                      attribute:NSLayoutAttributeCenterY
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.imageView
+                                                        toItem:self.image2
                                                      attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1.f constant:0.f]];
+                                                    multiplier:1 constant:0]];
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.toggleButton
                                                      attribute:NSLayoutAttributeRight
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.imageView
+                                                        toItem:self.image3
                                                      attribute:NSLayoutAttributeRight
-                                                    multiplier:1.f constant:0.f]];
+                                                    multiplier:1 constant:0]];
     
     for (NSString* c in constraints)
     {
@@ -128,20 +128,17 @@
                                                                 attribute:NSLayoutAttributeCenterX
                                                                multiplier:1.f constant:8.f]];
     
-    // add parallax effect to cells
-    UIInterpolatingMotionEffect *effectX = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
-                                                              type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-    UIInterpolatingMotionEffect *effectY = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
-                                                              type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-	
-	float depth = 10;
-	effectX.maximumRelativeValue = @(depth);
-	effectX.minimumRelativeValue = @(-depth);
-	effectY.maximumRelativeValue = @(depth);
-	effectY.minimumRelativeValue = @(-depth);
-	
-	[self addMotionEffect:effectX];
-	[self addMotionEffect:effectY];
+    // add parallax effect to cell
+    [self addMotionEffect:[self effectX:10]];
+    [self addMotionEffect:[self effectY:10]];
+    
+    // round corners for images
+    self.image1.layer.masksToBounds = YES;
+    self.image1.layer.cornerRadius = 10;
+    self.image2.layer.masksToBounds = YES;
+    self.image2.layer.cornerRadius = 10;
+    self.image3.layer.masksToBounds = YES;
+    self.image3.layer.cornerRadius = 10;
 }
 
 -(void) setCc:(CardCounter *)cc
@@ -151,20 +148,23 @@
     self.toggleButton.layer.masksToBounds = YES;
     self.toggleButton.layer.cornerRadius = 3;
     
-    self.imageView.layer.masksToBounds = YES;
-    self.imageView.layer.cornerRadius = 10;
-    
-    [self setShadows];
+    [self setImageStack:self.image1.image];
     
     [self.toggleButton setImage:[ImageCache altArtIcon:self.cc.showAltArt] forState:UIControlStateNormal];
 }
 
--(void) setShadows
+-(void) setImageStack:(UIImage*)img
 {
-    UIImage* img = self.imageView.image;
+    self.image1.image = self.cc.count > 0 ? img : nil;
+    self.image2.image = self.cc.count > 1 ? img : nil;
+    self.image3.image = self.cc.count > 2 ? img : nil;
     
-    self.shadow1.image = self.cc.count > 1 ? img : nil;
-    self.shadow2.image = self.cc.count > 2 ? img : nil;
+    int c = MAX(self.cc.count-1, 0);
+    self.image1.layer.opacity = 1.0 - (c * 0.2);
+    c = MAX(c-1, 0);
+    self.image2.layer.opacity = 1.0 - (c * 0.2);
+    c = MAX(c-1, 0);
+    self.image3.layer.opacity = 1.0 - (c * 0.2);
 }
 
 -(void) toggleImage:(id)sender
@@ -188,12 +188,7 @@
                                          [self.activityIndicator stopAnimating];
                                          if ([self.cc.card.name isEqual:card.name])
                                          {
-                                             self.imageView.image = img;
-                                             [self setShadows];
-                                         }
-                                         else
-                                         {
-                                             NSLog(@"got img %@ for %@", card.name, self.cc.card.name);
+                                             [self setImageStack:img];
                                          }
                                          
                                          self.detailView.hidden = !placeholder;
@@ -202,6 +197,26 @@
                                              [CardDetailView setupDetailViewFromCell:self card:self.cc.card];
                                          }
                                      }];
+}
+
+-(UIInterpolatingMotionEffect*) effectX:(float)depth
+{
+    UIInterpolatingMotionEffect* effect = [[UIInterpolatingMotionEffect alloc]
+                                           initWithKeyPath:@"center.x"
+                                           type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    effect.minimumRelativeValue = @(-depth);
+    effect.maximumRelativeValue = @(depth);
+    return effect;
+}
+
+-(UIInterpolatingMotionEffect*) effectY:(float)depth
+{
+    UIInterpolatingMotionEffect* effect = [[UIInterpolatingMotionEffect alloc]
+                                           initWithKeyPath:@"center.y"
+                                           type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    effect.minimumRelativeValue = @(-depth);
+    effect.maximumRelativeValue = @(depth);
+    return effect;
 }
 
 @end

@@ -118,7 +118,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     // [defaults setObject:@"" forKey:LAST_START_VERSION];
     NSString* lastVersion = [defaults objectForKey:LAST_START_VERSION];
-    if (![self.appVersion isEqualToString:lastVersion])
+    if (![self.appVersion isEqualToString:lastVersion] && !DEBUG)
     {
         // yes, first start. show "about" tab
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuAbout inSection:0];

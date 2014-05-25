@@ -13,15 +13,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="225" height="333"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" alpha="0.59999999999999964" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L7o-k4-OnI" userLabel="Image View Shadow 2">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L7o-k4-OnI" userLabel="Image View 1">
                         <rect key="frame" x="0.0" y="0.0" width="210" height="289"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" alpha="0.79999999999999982" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5rw-t7-wUK" userLabel="Image View Shadow 1">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5rw-t7-wUK" userLabel="Image View 2">
                         <rect key="frame" x="7" y="12" width="210" height="289"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LFo-GU-rPr">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LFo-GU-rPr" userLabel="Image View 3">
                         <rect key="frame" x="15" y="24" width="210" height="289"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                     </imageView>
@@ -119,12 +119,12 @@
                 <outlet property="icon1" destination="HNI-oN-JGz" id="3eU-3D-0Jn"/>
                 <outlet property="icon2" destination="lxD-kE-nNy" id="dTS-ug-jIJ"/>
                 <outlet property="icon3" destination="jmN-Em-umD" id="Ei5-IK-hHS"/>
-                <outlet property="imageView" destination="LFo-GU-rPr" id="j2c-mw-QFT"/>
+                <outlet property="image1" destination="L7o-k4-OnI" id="Mzl-xG-r6H"/>
+                <outlet property="image2" destination="5rw-t7-wUK" id="xa3-W6-Rgv"/>
+                <outlet property="image3" destination="LFo-GU-rPr" id="Pp1-f7-xXR"/>
                 <outlet property="label1" destination="sh1-1h-ciT" id="yzS-BQ-2Je"/>
                 <outlet property="label2" destination="nuh-kc-vru" id="6iT-9e-Pzy"/>
                 <outlet property="label3" destination="VvC-4p-CVo" id="8n6-3S-JqV"/>
-                <outlet property="shadow1" destination="5rw-t7-wUK" id="Fzk-Y4-TGw"/>
-                <outlet property="shadow2" destination="L7o-k4-OnI" id="oTs-ot-Wfy"/>
                 <outlet property="toggleButton" destination="9ed-7e-oxz" id="AdO-Sj-37t"/>
             </connections>
         </collectionViewCell>

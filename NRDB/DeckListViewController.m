@@ -980,19 +980,13 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     if (![cell.cc.card isEqual:cc.card])
     {
-        cell.imageView.image = nil;
+        cell.image1.image = nil;
+        cell.image2.image = nil;
+        cell.image2.image = nil;
     }
     cell.cc = cc;
     
-    if (cc)
-    {
-        [cell loadImage];
-    }
-    else
-    {
-        cell.imageView.image = [ImageCache placeholderFor:self.deck.role];
-        [cell.activityIndicator stopAnimating];
-    }
+    [cell loadImage];
     
     return cell;
 }
