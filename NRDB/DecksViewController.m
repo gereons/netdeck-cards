@@ -40,6 +40,7 @@ static NSString* filterText;
 @property UIActionSheet* popup;
 @property UIAlertView* nameAlert;
 @property Deck* deck;
+@property UIBarButtonItem* editButton;
 
 @end
 
@@ -84,9 +85,14 @@ static NSString* filterText;
         [[UIBarButtonItem alloc] initWithCustomView:filterControl]
     ];
     
+    self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEdit:)];
+    self.editButton.possibleTitles = [NSSet setWithArray:@[ l10n(@"Edit"), l10n(@"Done") ]];
+    self.editButton.title = l10n(@"Edit");
+    
     topItem.rightBarButtonItems = @[
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDeck:)],
         [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)],
+        self.editButton,
     ];
     
     self.searchBar.placeholder = l10n(@"Search for decks, identities or cards");
@@ -412,6 +418,17 @@ static NSString* filterText;
 {
     searchScope = selectedScope;
     [self updateDecks];
+}
+
+#pragma mark edit toggle
+
+-(void) toggleEdit:(id)sender
+{
+    BOOL editing = self.tableView.editing;
+    
+    editing = !editing;
+    self.editButton.title = editing ? l10n(@"Done") : l10n(@"Edit");
+    self.tableView.editing = editing;
 }
 
 #pragma mark tableview
