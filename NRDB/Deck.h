@@ -21,6 +21,7 @@
 
 @property (strong) NSString* name;
 @property NRRole role;
+@property NRDeckState state;
 
 @property (readonly) int size;
 @property (readonly) int influence;

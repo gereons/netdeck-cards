@@ -54,6 +54,13 @@ typedef NS_ENUM(NSInteger, NRFaction)
     NRFactionCriminal
 };
 
+typedef NS_ENUM(NSInteger, NRDeckState)
+{
+    NRDeckStateActive,
+    NRDeckStateTesting,
+    NRDeckStateRetired
+};
+
 typedef NS_ENUM(NSInteger, FieldType)
 {
     StringField,
@@ -69,7 +76,10 @@ typedef NS_ENUM(NSInteger, NRSearchScope)
 };
 
 typedef NS_ENUM(NSInteger, NRDeckSearchScope) {
-    NRDeckSearchAll, NRDeckSearchName, NRDeckSearchIdentity, NRDeckSearchCard
+    NRDeckSearchAll,
+    NRDeckSearchName,
+    NRDeckSearchIdentity,
+    NRDeckSearchCard
 };
 
 typedef NS_ENUM(NSInteger, NRCycle)

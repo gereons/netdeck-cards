@@ -367,6 +367,7 @@
         _cards = [decoder decodeObjectForKey:@"cards"];
         _name = [decoder decodeObjectForKey:@"name"];
         _role = [decoder decodeIntForKey:@"role"];
+        _state = [decoder decodeIntForKey:@"state"];
         NSString* identityCode = [decoder decodeObjectForKey:@"identity"];
         Card* identity = [Card cardByCode:identityCode];
         if (identity)
@@ -384,6 +385,7 @@
     [coder encodeObject:self.cards forKey:@"cards"];
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeInt:self.role forKey:@"role"];
+    [coder encodeInt:self.state forKey:@"state"];
     [coder encodeObject:self.identity.code forKey:@"identity"];
     [coder encodeBool:self.identityCc.showAltArt forKey:@"identityAltArt"];
 }

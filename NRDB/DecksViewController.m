@@ -22,11 +22,16 @@ typedef NS_ENUM(NSInteger, SortType) {
     SortDate, SortFaction, SortA_Z
 };
 typedef NS_ENUM(NSInteger, FilterType) {
-    FilterAll = NRRoleNone+1, FilterRunner = NRRoleRunner+1, FilterCorp = NRRoleCorp+1
+    FilterTypeAll, FilterRunner, FilterCorp
 };
-enum { POPUP_NEW, POPUP_LONGPRESS };
+typedef NS_ENUM(NSInteger, FilterState) {
+    FilterStateAll=-1, FilterActive = NRDeckStateActive, FilterTesting = NRDeckStateTesting, FilterRetired = NRDeckStateRetired
+};
 
-static FilterType filterType = FilterAll;
+enum { POPUP_NEW, POPUP_LONGPRESS, POPUP_SORT, POPUP_SIDE, POPUP_STATE, POPUP_SETSTATE };
+
+static FilterType filterType = FilterTypeAll;
+static FilterState filterState = FilterActive;
 static SortType sortType = SortA_Z;
 static NRDeckSearchScope searchScope = NRDeckSearchAll;
 static NSString* filterText;
@@ -41,10 +46,24 @@ static NSString* filterText;
 @property UIAlertView* nameAlert;
 @property Deck* deck;
 @property UIBarButtonItem* editButton;
+@property UIBarButtonItem* sortButton;
+@property UIBarButtonItem* stateFilterButton;
+@property UIBarButtonItem* sideFilterButton;
 
 @end
 
 @implementation DecksViewController
+
+static NSDictionary* sortStr;
+static NSDictionary* sideStr;
+static NSDictionary* stateStr;
+
++(void) initialize
+{
+    sortStr = @{ @(SortDate): l10n(@"Date"), @(SortFaction): l10n(@"Faction"), @(SortA_Z): l10n(@"A-Z") };
+    sideStr = @{ @(FilterTypeAll): l10n(@"All"), @(FilterRunner): l10n(@"Runner"), @(FilterCorp): l10n(@"Corp") };
+    stateStr = @{ @(FilterStateAll): l10n(@"All"), @(FilterRetired): l10n(@"Retired"), @(FilterTesting): l10n(@"Testing"), @(FilterActive): l10n(@"Active") };
+}
 
 - (id) init
 {
@@ -72,17 +91,30 @@ static NSString* filterText;
                                      target:nil
                                      action:nil];
     
-    UISegmentedControl* sortControl = [[UISegmentedControl alloc] initWithItems:@[ l10n(@"Date"), l10n(@"Faction"), l10n(@"A-Z") ]];
-    sortControl.selectedSegmentIndex = sortType;
-    [sortControl addTarget:self action:@selector(sortChanged:) forControlEvents:UIControlEventValueChanged];
-    
-    UISegmentedControl* filterControl = [[UISegmentedControl alloc] initWithItems:@[ l10n(@"All"), l10n(@"Runner"), l10n(@"Corp") ]];
-    filterControl.selectedSegmentIndex = filterType;
-    [filterControl addTarget:self action:@selector(filterChanged:) forControlEvents:UIControlEventValueChanged];
+    self.sortButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), sortStr[@(sortType)]] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
+    self.sortButton.possibleTitles = [NSSet setWithArray:@[
+                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), l10n(@"Date")],
+                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), l10n(@"Faction")],
+                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), l10n(@"A-Z")],
+                                                           ]];
+    self.sideFilterButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Side"), sideStr[@(filterType)]] style:UIBarButtonItemStylePlain target:self action:@selector(changeSideFilter:)];
+    self.sideFilterButton.possibleTitles = [NSSet setWithArray:@[
+                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Side"), l10n(@"All")],
+                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Side"), l10n(@"Runner")],
+                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Side"), l10n(@"Corp")],
+                                                           ]];
+    self.stateFilterButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Status"), stateStr[@(filterState)]] style:UIBarButtonItemStylePlain target:self action:@selector(changeStateFilter:)];
+    self.stateFilterButton.possibleTitles = [NSSet setWithArray:@[
+                                                                 [NSString stringWithFormat:@"%@: %@", l10n(@"Status"), l10n(@"All")],
+                                                                 [NSString stringWithFormat:@"%@: %@", l10n(@"Status"), l10n(@"Active")],
+                                                                 [NSString stringWithFormat:@"%@: %@", l10n(@"Status"), l10n(@"Testing")],
+                                                                 [NSString stringWithFormat:@"%@: %@", l10n(@"Status"), l10n(@"Retired")],
+                                                                 ]];
     
     topItem.leftBarButtonItems = @[
-        [[UIBarButtonItem alloc] initWithCustomView:sortControl],
-        [[UIBarButtonItem alloc] initWithCustomView:filterControl]
+          self.sortButton,
+          self.sideFilterButton,
+          self.stateFilterButton
     ];
     
     self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEdit:)];
@@ -115,26 +147,44 @@ static NSString* filterText;
     [self updateDecks];
 }
 
--(void) sortChanged:(UISegmentedControl*)sender
+-(void) changeSort:(id)sender
 {
     if (self.popup)
     {
         [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        return;
     }
-    sortType = sender.selectedSegmentIndex;
-    [self updateDecks];
+    
+    self.popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:l10n(@"Date"), l10n(@"Faction"), l10n(@"A-Z"), nil];
+    self.popup.tag = POPUP_SORT;
+    [self.popup showFromBarButtonItem:sender animated:NO];
 }
 
--(void) filterChanged:(UISegmentedControl*)sender
+-(void) changeSideFilter:(id)sender
 {
     if (self.popup)
     {
         [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        return;
     }
-    filterType = sender.selectedSegmentIndex;
-    [self updateDecks];
+    
+    self.popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:l10n(@"All"), l10n(@"Runner"), l10n(@"Corp"), nil];
+    self.popup.tag = POPUP_SIDE;
+    [self.popup showFromBarButtonItem:sender animated:NO];
 }
 
+-(void) changeStateFilter:(id)sender
+{
+    if (self.popup)
+    {
+        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        return;
+    }
+    
+    self.popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:l10n(@"All"), l10n(@"Active"), l10n(@"Testing"), l10n(@"Retired"), nil];
+    self.popup.tag = POPUP_STATE;
+    [self.popup showFromBarButtonItem:sender animated:NO];
+}
 
 -(void) importDecks:(UIBarButtonItem*)sender
 {
@@ -153,8 +203,12 @@ static NSString* filterText;
 
 -(void) updateDecks
 {
-    NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSMutableArray array];
-    NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSMutableArray array];
+    [self.sortButton setTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), sortStr[@(sortType)]]];
+    [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Side"), sideStr[@(filterType)]]];
+    [self.stateFilterButton setTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Status"), stateStr[@(filterState)]]];
+
+    NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSMutableArray array];
+    NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSMutableArray array];
     
     if (sortType != SortDate)
     {
@@ -192,6 +246,13 @@ static NSString* filterText;
                 break;
         }
         
+        [self.runnerDecks filterUsingPredicate:predicate];
+        [self.corpDecks filterUsingPredicate:predicate];
+    }
+    
+    if (filterState != FilterStateAll)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"state == %d", filterState];
         [self.runnerDecks filterUsingPredicate:predicate];
         [self.corpDecks filterUsingPredicate:predicate];
     }
@@ -379,6 +440,79 @@ static NSString* filterText;
                 break;
         }
     }
+    else if (actionSheet.tag == POPUP_SORT)
+    {
+        switch (buttonIndex)
+        {
+            case 0:
+                sortType = SortDate;
+                break;
+            case 1:
+                sortType = SortFaction;
+                break;
+            case 2:
+                sortType = SortA_Z;
+                break;
+        }
+        [self updateDecks];
+    }
+    else if (actionSheet.tag == POPUP_SIDE)
+    {
+        switch (buttonIndex)
+        {
+            case 0:
+                filterType = FilterTypeAll;
+                break;
+            case 1:
+                filterType = FilterRunner;
+                break;
+            case 2:
+                filterType = FilterCorp;
+                break;
+        }
+        [self updateDecks];
+    }
+    else if (actionSheet.tag == POPUP_STATE)
+    {
+        switch (buttonIndex)
+        {
+            case 0:
+                filterState = FilterStateAll;
+                break;
+            case 1:
+                filterState = FilterActive;
+                break;
+            case 2:
+                filterState = FilterTesting;
+                break;
+            case 3:
+                filterState = FilterRetired;
+                break;
+        }
+        [self updateDecks];
+    }
+    else if (actionSheet.tag == POPUP_SETSTATE)
+    {
+        NRDeckState oldState = self.deck.state;
+        switch (buttonIndex)
+        {
+            case 0:
+                self.deck.state = NRDeckStateActive;
+                break;
+            case 1:
+                self.deck.state = NRDeckStateTesting;
+                break;
+            case 2:
+                self.deck.state = NRDeckStateRetired;
+                break;
+        }
+        if (self.deck.state != oldState)
+        {
+            [DeckManager saveDeck:self.deck toPath:self.deck.filename];
+            [self updateDecks];
+        }
+        self.deck = nil;
+    }
     
     self.popup = nil;
     return;
@@ -431,11 +565,43 @@ static NSString* filterText;
     self.tableView.editing = editing;
 }
 
+#pragma mark state popup
+
+-(void)statePopup:(UIButton*)sender
+{
+    NSInteger row = sender.tag / 10;
+    NSInteger section = sender.tag & 1;
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+    NSArray* decks = self.decks[indexPath.section];
+    self.deck = decks[indexPath.row];
+    
+    UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    CGRect frame = [cell.contentView convertRect:sender.frame toView:self.view];
+    
+    self.popup = [[UIActionSheet alloc] initWithTitle:nil
+                                                       delegate:self
+                                              cancelButtonTitle:@""
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:
+                            [NSString stringWithFormat:@"%@ %@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @"✓" : @""],
+                            [NSString stringWithFormat:@"%@ %@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @"✓" : @""],
+                            [NSString stringWithFormat:@"%@ %@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @"✓" : @""], nil];
+    
+    frame.origin.y -= 990;
+    frame.size.height = 2000;
+    self.popup.tag = POPUP_SETSTATE;
+    [self.popup showFromRect:frame inView:self.tableView.superview animated:NO];
+}
+
 #pragma mark tableview
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DeckCell* cell = [tableView dequeueReusableCellWithIdentifier:@"deckCell" forIndexPath:indexPath];
+    
+    // [cell.infoButton removeTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+    cell.infoButton.tag = indexPath.row * 10 + indexPath.section;
+    [cell.infoButton addTarget:self action:@selector(statePopup:) forControlEvents:UIControlEventTouchUpInside];
     
     NSArray* decks = self.decks[indexPath.section];
     Deck* deck = decks[indexPath.row];
@@ -466,7 +632,9 @@ static NSString* filterText;
     BOOL valid = [deck checkValidity].count == 0;
     cell.summaryLabel.textColor = valid ? [UIColor blackColor] : [UIColor redColor];
     
-    cell.dateLabel.text = [self.dateFormatter stringFromDate:deck.lastModified];
+    NSString* state = stateStr[@(deck.state)];
+    NSString* date = [self.dateFormatter stringFromDate:deck.lastModified];
+    cell.dateLabel.text = [NSString stringWithFormat:@"%@ · %@", state, date];
     
     return cell;
 }

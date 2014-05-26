@@ -120,6 +120,12 @@
 "Date" = "Datum";
 "Copy to Clipboard" = "Ins Clipboard kopieren";
 "Send via Email" = "Als E-Mail senden";
+"Sort" = "Sortierung";
+"Side" = "Seite";
+"Status" = "Status";
+"Active" = "Aktiv";
+"Testing" = "Test";
+"Retired" = "Inaktiv";
 
 // filter
 "Strength: %@" = "Stärke: %@";
