@@ -207,9 +207,18 @@ static UIPopoverController* popover;
 {
     NSArray* arr = self.values[indexPath.section];
     NSString* value = arr[indexPath.row];
+    
+    // first ("Any") cell tapped?
+    BOOL anyCell = indexPath.row == 0 && indexPath.section == 0;
+    
+    // if not, and we're 1 shy of checking all possible values, treat as a tap on "Any"
+    if (!anyCell && self.selectedValues.count == arr.count - 2)
+    {
+        anyCell = YES;
+        value = kANY;
+    }
 
-    BOOL firstCell = indexPath.row == 0 && indexPath.section == 0;
-    if (firstCell)
+    if (anyCell)
     {
         NSDictionary* userInfo = @{ @"type": [self.type lowercaseString], @"value": value };
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_FILTER object:self userInfo:userInfo];
