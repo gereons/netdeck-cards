@@ -222,14 +222,13 @@
     }
     if (self.subtypes.count > 0)
     {
-        NSMutableArray *predicates = [NSMutableArray array];
+        NSMutableArray *subPredicates = [NSMutableArray array];
         for (NSString* subtype in self.subtypes)
         {
-            [predicates addObject:[NSPredicate predicateWithFormat:@"%@ IN subtypes", subtype]];
+            [subPredicates addObject:[NSPredicate predicateWithFormat:@"%@ IN subtypes", subtype]];
         }
-        NSPredicate *subtypePredicate = [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
+        NSPredicate *subtypePredicate = [NSCompoundPredicate orPredicateWithSubpredicates:subPredicates];
         [predicates addObject:subtypePredicate];
-
     }
     if (self.agendaPoints != -1)
     {
