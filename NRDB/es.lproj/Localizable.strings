@@ -118,7 +118,12 @@
 "Date" = "Fecha";
 "Copy to Clipboard" = "Copiar al portapapeles";
 "Send via Email" = "Enviar Email";
-
+"Sort" = "Ordenación";
+"Side" = "Partido";
+"Status" = "Estado";
+"Active" = "Activo";
+"Testing" = "A Prueba";
+"Retired" = "Eetirado";
 
 // filter
 "Strength: %@" = "Fuerza: %@";

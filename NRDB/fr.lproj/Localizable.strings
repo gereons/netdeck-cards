@@ -117,6 +117,12 @@
 "Date" = "Date";
 "Copy to Clipboard" = "Copie dans le presse papier";
 "Send via Email" = "Email";
+"Sort" = "Triage";
+"Side" = "Partie";
+"Status" = "Status";
+"Active" = "Active";
+"Testing" = "Evaluation";
+"Retired" = "Retiré";
 
 // filtre
 "Strength: %@" = "Force: %@";

@@ -586,9 +586,12 @@ static NSDictionary* stateStr;
                             [NSString stringWithFormat:@"%@ %@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @"✓" : @""],
                             [NSString stringWithFormat:@"%@ %@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @"✓" : @""],
                             [NSString stringWithFormat:@"%@ %@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @"✓" : @""], nil];
-    
+
+    // fudge the frame so the popup appears to the left of the (I)
     frame.origin.y -= 990;
     frame.size.height = 2000;
+    frame.size.width = 500;
+
     self.popup.tag = POPUP_SETSTATE;
     [self.popup showFromRect:frame inView:self.tableView.superview animated:NO];
 }
