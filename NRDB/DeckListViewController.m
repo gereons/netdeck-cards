@@ -31,6 +31,7 @@
 #import "CGRectUtils.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"
+#import "DeckState.h"
 
 @interface DeckListViewController ()
 
@@ -42,6 +43,7 @@
 @property UIBarButtonItem* toggleViewButton;
 @property UIBarButtonItem* saveButton;
 @property UIBarButtonItem* exportButton;
+@property UIBarButtonItem* stateButton;
 
 @property NSString* filename;
 @property BOOL autoSave;
@@ -57,6 +59,7 @@
 
 enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 enum { NAME_ALERT = 1, SWITCH_ALERT };
+enum { POPUP_EXPORT, POPUP_STATE };
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -150,7 +153,14 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         [rightButtons addObject:self.saveButton];
     }
     [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)]];
-    // [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Identity") style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)]];
+    self.stateButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:self.deck.state] style:UIBarButtonItemStylePlain target:self action:@selector(changeState:)];
+    self.stateButton.possibleTitles = [NSSet setWithArray:@[
+                                                            [DeckState buttonLabelFor:NRDeckStateNone],
+                                                            [DeckState buttonLabelFor:NRDeckStateActive],
+                                                            [DeckState buttonLabelFor:NRDeckStateTesting],
+                                                            [DeckState buttonLabelFor:NRDeckStateRetired],
+                                                            ]];
+    [rightButtons addObject:self.stateButton];
     
     topItem.rightBarButtonItems = rightButtons;
 
@@ -288,6 +298,27 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
                                           otherButtonTitles:l10n(@"Yes, switch to copy"), l10n(@"Yes, but stay here"), nil];
     alert.tag = SWITCH_ALERT;
     [alert show];
+}
+
+#pragma mark deck state
+
+-(void) changeState:(id)sender
+{
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                   delegate:self
+                                          cancelButtonTitle:@""
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:
+                        [NSString stringWithFormat:@"%@%@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @" ✓" : @""],
+                        [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @" ✓" : @""],
+                        [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
+    self.actionSheet.tag = POPUP_STATE;
+    [self.actionSheet showFromBarButtonItem:sender animated:NO];
 }
 
 #pragma mark deck name
@@ -439,7 +470,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
                                                             l10n(@"Clipboard: Plain Text"),
                                                             l10n(@"As Email"),
                                                             l10n(@"Print"), nil];
-
+    self.actionSheet.tag = POPUP_EXPORT;
     [self.actionSheet showFromBarButtonItem:sender animated:NO];
 }
 
@@ -457,6 +488,42 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         return;
     }
     
+    switch (actionSheet.tag)
+    {
+        case POPUP_EXPORT:
+            [self handleExportDeck:buttonIndex];
+            break;
+        case POPUP_STATE:
+        {
+            NRDeckState oldState = self.deck.state;
+            switch (buttonIndex)
+            {
+                case 0:
+                    self.deck.state = NRDeckStateActive;
+                    break;
+                case 1:
+                    self.deck.state = NRDeckStateTesting;
+                    break;
+                case 2:
+                    self.deck.state = NRDeckStateRetired;
+                    break;
+            }
+            [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];
+            if (self.deck.state != oldState)
+            {
+                self.deckChanged = YES;
+                if (self.autoSave)
+                {
+                    [self saveDeck:nil];
+                }
+            }
+            break;
+        }
+    }
+}
+
+-(void) handleExportDeck:(NSInteger)buttonIndex
+{
     if (buttonIndex < 4 && ![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
     {
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:l10n(@"Connect to your Dropbox account first.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];

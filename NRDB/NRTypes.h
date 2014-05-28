@@ -56,6 +56,7 @@ typedef NS_ENUM(NSInteger, NRFaction)
 
 typedef NS_ENUM(NSInteger, NRDeckState)
 {
+    NRDeckStateNone = -1,
     NRDeckStateActive,
     NRDeckStateTesting,
     NRDeckStateRetired

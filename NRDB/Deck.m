@@ -25,6 +25,7 @@
     if ((self = [super init]))
     {
         self->_cards = [NSMutableArray array];
+        self.state = NRDeckStateTesting;
     }
     return self;
 }
@@ -250,6 +251,7 @@
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
     newDeck->_role = self.role;
     newDeck.filename = nil;
+    newDeck.state = self.state;
     
     return newDeck;
 }

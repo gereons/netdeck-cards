@@ -17,6 +17,7 @@
 #import "Notifications.h"
 #import "ImportDecksViewController.h"
 #import "SettingsKeys.h"
+#import "DeckState.h"
 
 typedef NS_ENUM(NSInteger, SortType) {
     SortDate, SortFaction, SortA_Z
@@ -24,14 +25,11 @@ typedef NS_ENUM(NSInteger, SortType) {
 typedef NS_ENUM(NSInteger, FilterType) {
     FilterTypeAll, FilterRunner, FilterCorp
 };
-typedef NS_ENUM(NSInteger, FilterState) {
-    FilterStateAll=-1, FilterActive = NRDeckStateActive, FilterTesting = NRDeckStateTesting, FilterRetired = NRDeckStateRetired
-};
 
 enum { POPUP_NEW, POPUP_LONGPRESS, POPUP_SORT, POPUP_SIDE, POPUP_STATE, POPUP_SETSTATE };
 
 static FilterType filterType = FilterTypeAll;
-static FilterState filterState = FilterActive;
+static NRDeckState filterState = NRDeckStateNone;
 static SortType sortType = SortA_Z;
 static NRDeckSearchScope searchScope = NRDeckSearchAll;
 static NSString* filterText;
@@ -56,13 +54,11 @@ static NSString* filterText;
 
 static NSDictionary* sortStr;
 static NSDictionary* sideStr;
-static NSDictionary* stateStr;
 
 +(void) initialize
 {
     sortStr = @{ @(SortDate): l10n(@"Date"), @(SortFaction): l10n(@"Faction"), @(SortA_Z): l10n(@"A-Z") };
     sideStr = @{ @(FilterTypeAll): l10n(@"All"), @(FilterRunner): l10n(@"Runner"), @(FilterCorp): l10n(@"Corp") };
-    stateStr = @{ @(FilterStateAll): l10n(@"All"), @(FilterRetired): l10n(@"Retired"), @(FilterTesting): l10n(@"Testing"), @(FilterActive): l10n(@"Active") };
 }
 
 - (id) init
@@ -103,12 +99,12 @@ static NSDictionary* stateStr;
                                                            [NSString stringWithFormat:@"%@: %@", l10n(@"Side"), l10n(@"Runner")],
                                                            [NSString stringWithFormat:@"%@: %@", l10n(@"Side"), l10n(@"Corp")],
                                                            ]];
-    self.stateFilterButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Status"), stateStr[@(filterState)]] style:UIBarButtonItemStylePlain target:self action:@selector(changeStateFilter:)];
+    self.stateFilterButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:filterState] style:UIBarButtonItemStylePlain target:self action:@selector(changeStateFilter:)];
     self.stateFilterButton.possibleTitles = [NSSet setWithArray:@[
-                                                                 [NSString stringWithFormat:@"%@: %@", l10n(@"Status"), l10n(@"All")],
-                                                                 [NSString stringWithFormat:@"%@: %@", l10n(@"Status"), l10n(@"Active")],
-                                                                 [NSString stringWithFormat:@"%@: %@", l10n(@"Status"), l10n(@"Testing")],
-                                                                 [NSString stringWithFormat:@"%@: %@", l10n(@"Status"), l10n(@"Retired")],
+                                                                 [DeckState buttonLabelFor:NRDeckStateNone],
+                                                                 [DeckState buttonLabelFor:NRDeckStateActive],
+                                                                 [DeckState buttonLabelFor:NRDeckStateTesting],
+                                                                 [DeckState buttonLabelFor:NRDeckStateRetired],
                                                                  ]];
     
     topItem.leftBarButtonItems = @[
@@ -205,7 +201,7 @@ static NSDictionary* stateStr;
 {
     [self.sortButton setTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), sortStr[@(sortType)]]];
     [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Side"), sideStr[@(filterType)]]];
-    [self.stateFilterButton setTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Status"), stateStr[@(filterState)]]];
+    [self.stateFilterButton setTitle:[DeckState buttonLabelFor:filterState]];
 
     NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSMutableArray array];
     NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSMutableArray array];
@@ -250,7 +246,7 @@ static NSDictionary* stateStr;
         [self.corpDecks filterUsingPredicate:predicate];
     }
     
-    if (filterState != FilterStateAll)
+    if (filterState != NRDeckStateNone)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"state == %d", filterState];
         [self.runnerDecks filterUsingPredicate:predicate];
@@ -481,16 +477,16 @@ static NSDictionary* stateStr;
         switch (buttonIndex)
         {
             case 0:
-                filterState = FilterStateAll;
+                filterState = NRDeckStateNone;
                 break;
             case 1:
-                filterState = FilterActive;
+                filterState = NRDeckStateActive;
                 break;
             case 2:
-                filterState = FilterTesting;
+                filterState = NRDeckStateTesting;
                 break;
             case 3:
-                filterState = FilterRetired;
+                filterState = NRDeckStateRetired;
                 break;
         }
         [self updateDecks];
@@ -587,9 +583,9 @@ static NSDictionary* stateStr;
                                               cancelButtonTitle:@""
                                          destructiveButtonTitle:nil
                                               otherButtonTitles:
-                            [NSString stringWithFormat:@"%@ %@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @"✓" : @""],
-                            [NSString stringWithFormat:@"%@ %@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @"✓" : @""],
-                            [NSString stringWithFormat:@"%@ %@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @"✓" : @""], nil];
+                            [NSString stringWithFormat:@"%@%@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @" ✓" : @""],
+                            [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @" ✓" : @""],
+                            [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
 
     // fudge the frame so the popup appears to the left of the (I)
     frame.origin.y -= 990;
@@ -639,7 +635,7 @@ static NSDictionary* stateStr;
     BOOL valid = [deck checkValidity].count == 0;
     cell.summaryLabel.textColor = valid ? [UIColor blackColor] : [UIColor redColor];
     
-    NSString* state = stateStr[@(deck.state)];
+    NSString* state = [DeckState labelFor:deck.state];
     NSString* date = [self.dateFormatter stringFromDate:deck.lastModified];
     cell.dateLabel.text = [NSString stringWithFormat:@"%@ · %@", state, date];
     
