@@ -344,21 +344,25 @@ static NSDictionary* stateStr;
     {
         CGPoint point = [gesture locationInView:self.tableView];
         NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:point];
-        UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        
+        if (indexPath)
+        {
+            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
-        NSArray* decks = self.decks[indexPath.section];
-        self.deck = decks[indexPath.row];
-        
-        self.popup = [[UIActionSheet alloc] initWithTitle:self.deck.name
-                                                 delegate:self
-                                        cancelButtonTitle:@""
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:l10n(@"Duplicate"),
-                                                          l10n(@"Rename"),
-                                                          l10n(@"Send via Email"), nil];
-        
-        self.popup.tag = POPUP_LONGPRESS;
-        [self.popup showFromRect:cell.frame inView:self.tableView animated:NO];
+            NSArray* decks = self.decks[indexPath.section];
+            self.deck = decks[indexPath.row];
+            
+            self.popup = [[UIActionSheet alloc] initWithTitle:self.deck.name
+                                                     delegate:self
+                                            cancelButtonTitle:@""
+                                       destructiveButtonTitle:nil
+                                            otherButtonTitles:l10n(@"Duplicate"),
+                                                              l10n(@"Rename"),
+                                                              l10n(@"Send via Email"), nil];
+            
+            self.popup.tag = POPUP_LONGPRESS;
+            [self.popup showFromRect:cell.frame inView:self.tableView animated:NO];
+        }
     }
 }
 
