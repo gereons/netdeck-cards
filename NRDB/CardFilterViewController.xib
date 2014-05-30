@@ -19,6 +19,7 @@
                 <outlet property="searchField" destination="q11-3e-1iG" id="MTr-hT-gOg"/>
                 <outlet property="searchLabel" destination="yG4-No-cEe" id="U3n-bJ-Zct"/>
                 <outlet property="searchScope" destination="ieK-Nj-A3c" id="fDb-v3-Hot"/>
+                <outlet property="searchSeparator" destination="z8T-eI-ayW" id="FOi-Ha-SDn"/>
                 <outlet property="setButton" destination="18k-Vz-FxP" id="2Z5-oG-5jr"/>
                 <outlet property="strengthLabel" destination="dCU-gr-s6k" id="xEM-tc-4bw"/>
                 <outlet property="strengthSlider" destination="D4b-HM-uae" id="2KU-0S-mdq"/>
@@ -61,6 +62,9 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="5wQ-ET-BC2"/>
+                            </connections>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

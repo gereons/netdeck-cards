@@ -13,7 +13,6 @@
 #import "DetailViewManager.h"
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
-// #import "FilteredCardViewController.h"
 #import "CardFilterViewController.h"
 #import "ImportDecksViewController.h"
 #import "DecksViewController.h"

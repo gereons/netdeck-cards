@@ -41,7 +41,9 @@
 @property IBOutlet UIButton* moreLessButton;
 @property IBOutlet UISegmentedControl* viewMode;
 
+@property IBOutlet UIView* searchSeparator; // the 1px "line" view beneath the search box
 @property IBOutlet UITableView* tableView;
+
 
 -(IBAction)strengthValueChanged:(id)sender;
 -(IBAction)costValueChanged:(id)sender;

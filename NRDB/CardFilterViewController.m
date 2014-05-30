@@ -18,6 +18,7 @@
 #import "CardFilterPopover.h"
 #import "Notifications.h"
 #import "CardImageViewPopover.h"
+#import "CGRectUtils.h"
 
 @interface CardFilterViewController ()
 
@@ -32,6 +33,7 @@
 @property BOOL sendNotifications;
 @property NSString* selectedType;
 @property NSSet* selectedTypes;
+@property CGRect normalTableFrame;
 
 @property NSMutableDictionary* selectedValues;
 
@@ -92,8 +94,8 @@ static NSArray* scopes;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(updateFilter:) name:UPDATE_FILTER object:nil];
-    // [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
-    // [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
     [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
     
@@ -238,6 +240,53 @@ static NSArray* scopes;
         }
     }
 }
+
+#pragma mark keyboard show/hide
+
+-(void) willShowKeyboard:(NSNotification*)sender
+{
+    if (!self.searchField.isFirstResponder)
+    {
+        return;
+    }
+    
+    TF_CHECKPOINT(@"filter text entry");
+    self.normalTableFrame = self.tableView.frame;
+    
+    CGFloat topY = self.searchSeparator.frame.origin.y;
+    
+    CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords!
+    float tableHeight = 768 - kbHeight - topY - 64; // screen height - kbd height - height of visible filter - height of status/nav bar
+    
+    float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    [UIView animateWithDuration:animDuration
+                     animations:^{
+                         self.tableView.frame = CGRectSetY(self.tableView.frame, topY+1);
+                     }
+                     completion:^(BOOL finished){
+                         self.tableView.frame = CGRectSetHeight(self.tableView.frame, tableHeight);
+                     }];
+}
+
+-(void) willHideKeyboard:(NSNotification*)sender
+{
+    if (!self.searchField.isFirstResponder)
+    {
+        return;
+    }
+    
+    // explicitly resignFirstResponser, since the kb may have been auto-dismissed by the identity selection form
+    [self.searchField resignFirstResponder];
+    float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    
+    [UIView animateWithDuration:animDuration
+                     animations:^{
+                         self.tableView.frame = self.normalTableFrame;
+                     }
+                     completion:nil];
+}
+
 #pragma mark button callbacks
 
 -(void) moreLessClicked:(id)sender
