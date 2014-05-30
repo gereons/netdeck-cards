@@ -34,7 +34,7 @@
 @property NSString* selectedType;
 @property NSSet* selectedTypes;
 @property CGRect normalTableFrame;
-
+@property CGFloat buttonBoxHeight;
 @property NSMutableDictionary* selectedValues;
 
 @end
@@ -43,6 +43,7 @@
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 static NSArray* scopes;
+static BOOL showAllFilters = YES;
 
 +(void)initialize
 {
@@ -101,8 +102,15 @@ static NSArray* scopes;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    self.moreLessButton.enabled = NO;
     self.viewMode.enabled = NO;
+    
+    self.buttonBoxHeight = self.bottomSeparator.frame.origin.y - self.sliderSeparator.frame.origin.y;
+    
+    NSString* moreLess = showAllFilters ? l10n(@"Less") : l10n(@"More");
+    [self.moreLessButton setTitle:moreLess forState:UIControlStateNormal];
+    self.buttonContainer.hidden = !showAllFilters;
+    
+    [self performSelector:@selector(initButtonContainer:) withObject:nil afterDelay:0.01];
     
     [self initFilters];
 }
@@ -118,6 +126,7 @@ static NSArray* scopes;
     
     [self setEdgesForExtendedLayout:UIRectEdgeBottom];
     
+    
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
     detailViewManager.detailViewController = self.snc;
 }
@@ -129,6 +138,17 @@ static NSArray* scopes;
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = l10n(@"Filter");
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFilters:)];
+}
+
+-(void) initButtonContainer:(id)sender
+{
+    if (!showAllFilters)
+    {
+        CGRect frame = self.tableView.frame;
+        frame.origin.y -= self.buttonBoxHeight;
+        frame.size.height += self.buttonBoxHeight;
+        self.tableView.frame = frame;
+    }
 }
 
 - (void) initCards
@@ -186,6 +206,7 @@ static NSArray* scopes;
 -(void) clearFilters:(id)sender
 {
     [self.cardList clearFilters];
+    [self clearFilters];
     
     [self initCards];
     [self.tableView reloadData];
@@ -259,14 +280,14 @@ static NSArray* scopes;
     float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords!
     float tableHeight = 768 - kbHeight - topY - 64; // screen height - kbd height - height of visible filter - height of status/nav bar
     
+    CGRect newFrame = self.tableView.frame;
+    newFrame.origin.y = topY + 1;
+    newFrame.size.height = tableHeight;
+    
     float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    [UIView animateWithDuration:animDuration
-                     animations:^{
-                         self.tableView.frame = CGRectSetY(self.tableView.frame, topY+1);
-                     }
-                     completion:^(BOOL finished){
-                         self.tableView.frame = CGRectSetHeight(self.tableView.frame, tableHeight);
-                     }];
+    [UIView animateWithDuration:animDuration animations:^{
+        self.tableView.frame = newFrame;
+    }];
 }
 
 -(void) willHideKeyboard:(NSNotification*)sender
@@ -278,20 +299,39 @@ static NSArray* scopes;
     
     // explicitly resignFirstResponser, since the kb may have been auto-dismissed by the identity selection form
     [self.searchField resignFirstResponder];
-    float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    NSTimeInterval animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
-    [UIView animateWithDuration:animDuration
-                     animations:^{
-                         self.tableView.frame = self.normalTableFrame;
-                     }
-                     completion:nil];
+    [UIView animateWithDuration:animDuration animations:^{
+        self.tableView.frame = self.normalTableFrame;
+    }];
 }
 
 #pragma mark button callbacks
 
 -(void) moreLessClicked:(id)sender
 {
+    showAllFilters = !showAllFilters;
     
+    CGRect frame = self.tableView.frame;
+    if (showAllFilters)
+    {
+        frame.origin.y += self.buttonBoxHeight;
+        frame.size.height -= self.buttonBoxHeight;
+    }
+    else
+    {
+        frame.origin.y -= self.buttonBoxHeight;
+        frame.size.height += self.buttonBoxHeight;
+    }
+    
+    NSString* moreLess = showAllFilters ? l10n(@"Less") : l10n(@"More");
+    [self.moreLessButton setTitle:moreLess forState:UIControlStateNormal];
+    self.buttonContainer.hidden = !showAllFilters;
+    
+    NSTimeInterval animDuration = 0.15;
+    [UIView animateWithDuration:animDuration animations:^{
+        self.tableView.frame = frame;
+    }];
 }
 
 -(void) viewModeChanged:(id)sender

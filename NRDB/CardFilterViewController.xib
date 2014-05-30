@@ -8,6 +8,8 @@
             <connections>
                 <outlet property="apLabel" destination="lhb-j8-bsW" id="tmQ-1Y-rJS"/>
                 <outlet property="apSlider" destination="S3v-iC-yQN" id="I1A-dx-qfB"/>
+                <outlet property="bottomSeparator" destination="tsO-Ri-D1U" id="2fz-07-5Br"/>
+                <outlet property="buttonContainer" destination="o9d-r4-Mps" id="mzY-Gj-suF"/>
                 <outlet property="costLabel" destination="MT7-Gw-VQh" id="Zbx-HE-1GQ"/>
                 <outlet property="costSlider" destination="CZ9-48-CMU" id="pwF-jj-HLV"/>
                 <outlet property="factionButton" destination="KBw-vu-Yq7" id="1CT-y5-NqJ"/>
@@ -21,6 +23,7 @@
                 <outlet property="searchScope" destination="ieK-Nj-A3c" id="fDb-v3-Hot"/>
                 <outlet property="searchSeparator" destination="z8T-eI-ayW" id="FOi-Ha-SDn"/>
                 <outlet property="setButton" destination="18k-Vz-FxP" id="2Z5-oG-5jr"/>
+                <outlet property="sliderSeparator" destination="WDc-eW-xDO" id="p3i-KL-Qg9"/>
                 <outlet property="strengthLabel" destination="dCU-gr-s6k" id="xEM-tc-4bw"/>
                 <outlet property="strengthSlider" destination="D4b-HM-uae" id="2KU-0S-mdq"/>
                 <outlet property="subtypeButton" destination="4D7-pT-c7r" id="SkN-nk-QeS"/>
