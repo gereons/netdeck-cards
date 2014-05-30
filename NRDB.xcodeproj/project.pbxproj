@@ -626,6 +626,9 @@
 				3AB2CF561938952600CCBE64 /* CardFilterViewController.h */,
 				3AB2CF571938952600CCBE64 /* CardFilterViewController.m */,
 				3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */,
+				3AF2E8B91883075500F6306B /* CardFilterPopover.h */,
+				3AF2E8BA1883075500F6306B /* CardFilterPopover.m */,
+				3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */,
 			);
 			name = "Filtered Cards";
 			sourceTree = "<group>";
@@ -860,9 +863,6 @@
 				3A4925021869C70300B22DC5 /* CardFilterHeaderView.h */,
 				3A4925031869C70300B22DC5 /* CardFilterHeaderView.m */,
 				3ACCEE241869B10700CC3537 /* CardFilterHeaderView.xib */,
-				3AF2E8B91883075500F6306B /* CardFilterPopover.h */,
-				3AF2E8BA1883075500F6306B /* CardFilterPopover.m */,
-				3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */,
 			);
 			name = "Filtered Cards (old)";
 			sourceTree = "<group>";

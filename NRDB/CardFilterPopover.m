@@ -10,7 +10,7 @@
 #import "CGRectUtils.h"
 #import "Notifications.h"
 #import "TableData.h"
-#import "CardFilterHeaderView.h"
+#import "CardFilterViewController.h"
 
 @interface CardFilterPopover ()
 
@@ -18,7 +18,7 @@
 @property NSArray* values;
 @property UIButton* button;
 @property NSString* type;
-@property CardFilterHeaderView* headerView;
+@property CardFilterViewController* headerView;
 @property NSMutableSet* selectedValues;
 @property NSMutableArray* sectionToggles;
 
@@ -30,14 +30,14 @@
 
 static UIPopoverController* popover;
 
-+(void) showFromButton:(UIButton *)button inView:(CardFilterHeaderView*)view entries:(TableData*)entries type:(NSString *)type selected:(id)preselected
++(void) showFromButton:(UIButton *)button inView:(CardFilterViewController*)vc entries:(TableData*)entries type:(NSString *)type selected:(id)preselected
 {
     CardFilterPopover* filter = [[CardFilterPopover alloc] initWithNibName:@"CardFilterPopover" bundle:nil];
     filter.sections = entries.sections;
     filter.values = entries.values;
     filter.button = button;
     filter.type = type;
-    filter.headerView = view;
+    filter.headerView = vc;
 
     if ([preselected isKindOfClass:[NSSet class]])
     {
@@ -70,7 +70,10 @@ static UIPopoverController* popover;
     CGSize tableSize = filter.tableView.frame.size;
     popover.popoverContentSize = tableSize;
     
-    [popover presentPopoverFromRect:button.frame inView:view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:NO];
+    CGRect rect = button.frame;
+    rect = [button.superview convertRect:rect toView:vc.view];
+    
+    [popover presentPopoverFromRect:rect inView:vc.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:NO];
 }
 
 +(void) dismiss

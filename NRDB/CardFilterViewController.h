@@ -10,7 +10,7 @@
 
 @class Deck, DeckListViewController;
 
-@interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate>
 
 @property DeckListViewController* deckListViewController;
 
@@ -61,5 +61,7 @@
 -(id) initWithRole:(NRRole)role;
 -(id) initWithRole:(NRRole)role andFile:(NSString*) filename;
 -(id) initWithRole:(NRRole)role andDeck:(Deck*) deck;
+
+-(void) filterCallback:(UIButton*)button value:(NSObject*)value;
 
 @end
