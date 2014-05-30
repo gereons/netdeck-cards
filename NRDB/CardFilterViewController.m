@@ -19,6 +19,8 @@
 #import "Notifications.h"
 #import "CardImageViewPopover.h"
 #import "CGRectUtils.h"
+#import "CardThumbView.h"
+#import "ImageCache.h"
 
 @interface CardFilterViewController ()
 
@@ -44,6 +46,7 @@
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 static NSArray* scopes;
 static BOOL showAllFilters = YES;
+static BOOL showImages = NO;
 
 +(void)initialize
 {
@@ -102,7 +105,7 @@ static BOOL showAllFilters = YES;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    self.viewMode.enabled = NO;
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CardThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
     
     self.buttonBoxHeight = self.bottomSeparator.frame.origin.y - self.sliderSeparator.frame.origin.y;
     
@@ -111,6 +114,9 @@ static BOOL showAllFilters = YES;
     self.buttonContainer.hidden = !showAllFilters;
     
     [self performSelector:@selector(initButtonContainer:) withObject:nil afterDelay:0.01];
+    
+    self.collectionView.hidden = !showImages;
+    self.tableView.hidden = showImages;
     
     [self initFilters];
 }
@@ -161,6 +167,7 @@ static BOOL showAllFilters = YES;
 -(void) deckChanged:(id)sender
 {
     [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 -(void) initFilters
@@ -210,6 +217,7 @@ static BOOL showAllFilters = YES;
     
     [self initCards];
     [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 -(void) clearFilters
@@ -336,7 +344,10 @@ static BOOL showAllFilters = YES;
 
 -(void) viewModeChanged:(id)sender
 {
+    showImages = !showImages;
     
+    self.collectionView.hidden = !showImages;
+    self.tableView.hidden = showImages;
 }
 
 -(void) typeClicked:(UIButton*)sender
@@ -679,6 +690,7 @@ static BOOL showAllFilters = YES;
     
     [self initCards];
     [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 -(void) postNotification:(NSString*)type value:(id)value
@@ -782,6 +794,71 @@ static BOOL showAllFilters = YES;
     
     [self.deckListViewController addCard:card];
     [self.tableView reloadData];
+}
+
+#pragma mark collectionview
+
+-(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString* cellIdentifier = @"cardThumb";
+    
+    NSArray* cards = self.cards[indexPath.section];
+    Card *cellCard = cards[indexPath.row];
+    
+    CardThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    cell.imageView.image = nil;
+    
+    [cell.activityIndicator startAnimating];
+    [[ImageCache sharedInstance] getImageFor:cellCard completion:^(Card* card, UIImage* img, BOOL placeholder)
+     {
+         if ([cellCard.code isEqual:card.code])
+         {
+             [cell.activityIndicator stopAnimating];
+             CGRect rect = CGRectMake(10, card.cropY, 280, 209);
+             CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
+             UIImage *cropped = [UIImage imageWithCGImage:imageRef];
+             CGImageRelease(imageRef);
+             
+             cell.imageView.image = cropped;
+             cell.nameLabel.text = placeholder? card.name : nil;
+         }
+     }];
+    
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray* cards = self.cards[indexPath.section];
+    Card *card = cards[indexPath.row];
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    
+    // convert to on-screen coordinates
+    CGRect rect = [collectionView convertRect:cell.frame toView:self.collectionView];
+    
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.collectionView];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(155, 115);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsZero;
+}
+
+-(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return self.cards.count;
+}
+
+-(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    NSArray* cards = self.cards[section];
+    return cards.count;
 }
 
 @end

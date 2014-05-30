@@ -577,7 +577,7 @@
 				3A9742AD18AF7DAE00F83520 /* Stats */,
 				3AD3248E18A93F8000D7AE5D /* Deck Analysis */,
 				3ABDE5A018AFC4B200AFEA88 /* Draw Simulator */,
-				3A595425186EE7C40074B3B1 /* Card Image Popover/Cell */,
+				3A595425186EE7C40074B3B1 /* Card Image Display */,
 				3A595424186EDCED0074B3B1 /* Identity Selection Form */,
 				3A8532311854F70F00507B9A /* Master Views */,
 				3AA440E21854DA310051D4B0 /* Detail Views */,
@@ -732,7 +732,7 @@
 			name = "Identity Selection Form";
 			sourceTree = "<group>";
 		};
-		3A595425186EE7C40074B3B1 /* Card Image Popover/Cell */ = {
+		3A595425186EE7C40074B3B1 /* Card Image Display */ = {
 			isa = PBXGroup;
 			children = (
 				3ADE909F18775A77006E187F /* CardImageViewPopover.h */,
@@ -743,8 +743,11 @@
 				3A7FD6B0188172C100F0926F /* CardImageCell.xib */,
 				3A5794D819157A2D005DA4B2 /* CardDetailView.h */,
 				3A5794D919157A2D005DA4B2 /* CardDetailView.m */,
+				3A71FFC91930BAE800C71C54 /* CardThumbView.h */,
+				3A71FFCA1930BAE800C71C54 /* CardThumbView.m */,
+				3A71FFC71930BA6500C71C54 /* CardThumbView.xib */,
 			);
-			name = "Card Image Popover/Cell";
+			name = "Card Image Display";
 			sourceTree = "<group>";
 		};
 		3A6AF0D71899BB3B00227C25 /* Icons */ = {
@@ -1021,9 +1024,6 @@
 				3ABDE5A118AFC52C00AFEA88 /* DrawSimulatorViewController.h */,
 				3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */,
 				3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */,
-				3A71FFC91930BAE800C71C54 /* CardThumbView.h */,
-				3A71FFCA1930BAE800C71C54 /* CardThumbView.m */,
-				3A71FFC71930BA6500C71C54 /* CardThumbView.xib */,
 			);
 			name = "Draw Simulator";
 			sourceTree = "<group>";

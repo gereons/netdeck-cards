@@ -45,8 +45,9 @@
 @property IBOutlet UIView* sliderSeparator; // the 1px "line" view beneath the sliders box
 @property IBOutlet UIView* buttonContainer;
 @property IBOutlet UIView* bottomSeparator; // the 1px "line" view between the filters and the results table
-@property IBOutlet UITableView* tableView;
 
+@property IBOutlet UITableView* tableView;
+@property IBOutlet UICollectionView* collectionView;
 
 -(IBAction)strengthValueChanged:(id)sender;
 -(IBAction)costValueChanged:(id)sender;
