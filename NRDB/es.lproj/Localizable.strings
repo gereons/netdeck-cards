@@ -123,7 +123,9 @@
 "Status" = "Estado";
 "Active" = "Activo";
 "Testing" = "A Prueba";
-"Retired" = "Eetirado";
+"Retired" = "Retirado";
+"Search for decks, identities or cards" = "Buscar mazos, identidades o cartas";
+
 
 // filter
 "Strength: %@" = "Fuerza: %@";
