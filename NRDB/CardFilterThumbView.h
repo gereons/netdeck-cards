@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class Card;
 @interface CardFilterThumbView : UICollectionViewCell
 
 @property IBOutlet UIImageView* imageView;
@@ -15,5 +16,7 @@
 @property IBOutlet UILabel* countLabel;
 @property IBOutlet UIButton* addButton;
 @property IBOutlet UILabel* nameLabel;
+
+@property (nonatomic) Card* card;
 
 @end

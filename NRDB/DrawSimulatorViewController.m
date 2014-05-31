@@ -10,7 +10,6 @@
 #import "Deck.h"
 #import "CardImageViewPopover.h"
 #import "Hypergeometric.h"
-#import "ImageCache.h"
 #import "CardThumbView.h"
 
 @interface DrawSimulatorViewController ()
@@ -228,29 +227,12 @@ static NSInteger viewMode;
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* cellIdentifier = @"cardThumb";
-    Card *cellCard = [self.draw objectAtIndex:indexPath.row];
+    Card *card = [self.draw objectAtIndex:indexPath.row];
     
     CardThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    cell.imageView.image = nil;
-    
-    [cell.activityIndicator startAnimating];
-    [[ImageCache sharedInstance] getImageFor:cellCard completion:^(Card* card, UIImage* img, BOOL placeholder)
-    {
-        if ([cellCard.code isEqual:card.code])
-        {
-            [cell.activityIndicator stopAnimating];
-            CGRect rect = CGRectMake(10, card.cropY, 280, 209);
-            CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
-            UIImage *cropped = [UIImage imageWithCGImage:imageRef];
-            CGImageRelease(imageRef);
-                    
-            cell.imageView.image = cropped;
-            cell.nameLabel.text = placeholder? card.name : nil;
-            
-            cell.imageView.layer.opacity = [self.played[indexPath.row] boolValue] ? .5 : 1;
-        }
-    }];
+    cell.card = card;
+    cell.imageView.layer.opacity = [self.played[indexPath.row] boolValue] ? .5 : 1;
     
     return cell;
 }

@@ -34,4 +34,7 @@
 
 #define CLIP_CHANGE_COUNT   @"clipChangeCount"
 
+#define SHOW_ALL_FILTERS    @"showAllFilters"
+#define FILTER_VIEW_MODE    @"filterViewMode"
+
 #endif

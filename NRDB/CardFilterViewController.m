@@ -18,9 +18,8 @@
 #import "CardFilterPopover.h"
 #import "Notifications.h"
 #import "CardImageViewPopover.h"
-#import "CGRectUtils.h"
 #import "CardFilterThumbView.h"
-#import "ImageCache.h"
+#import "SettingsKeys.h"
 
 @interface CardFilterViewController ()
 
@@ -35,8 +34,8 @@
 @property BOOL sendNotifications;
 @property NSString* selectedType;
 @property NSSet* selectedTypes;
-@property CGRect normalTableFrame;
-@property CGFloat buttonBoxHeight;
+@property CGRect smallResultFrame;
+@property CGRect largeResultFrame;
 @property NSMutableDictionary* selectedValues;
 
 @end
@@ -45,6 +44,8 @@
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 enum { VIEW_LIST, VIEW_IMG_2, VIEW_IMG_3 };
+enum { ADD_BUTTON_TABLE, ADD_BUTTON_COLLECTION };
+
 static NSArray* scopes;
 static BOOL showAllFilters = YES;
 static int viewMode = VIEW_LIST;
@@ -91,6 +92,10 @@ static int viewMode = VIEW_LIST;
 {
     [super viewDidLoad];
     
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    showAllFilters = [settings boolForKey:SHOW_ALL_FILTERS];
+    viewMode = [settings boolForKey:FILTER_VIEW_MODE];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
@@ -110,13 +115,17 @@ static int viewMode = VIEW_LIST;
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSmallThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardSmallThumb"];
     
     CGRect rect = [self.sliderContainer convertRect:self.influenceSeparator.frame toView:self.view];
-    self.buttonBoxHeight = self.bottomSeparator.frame.origin.y - rect.origin.y;
+    CGFloat buttonBoxHeight = self.bottomSeparator.frame.origin.y - rect.origin.y;
+    
+    rect = self.tableView.frame;
+    self.smallResultFrame = rect;
+    self.largeResultFrame = CGRectMake(rect.origin.x, rect.origin.y-buttonBoxHeight, rect.size.width, rect.size.height+buttonBoxHeight);
     
     NSString* moreLess = showAllFilters ? l10n(@"Less △") : l10n(@"More ▽");
     [self.moreLessButton setTitle:moreLess forState:UIControlStateNormal];
     self.influenceSeparator.hidden = showAllFilters;
     
-    [self performSelector:@selector(initButtonContainer:) withObject:nil afterDelay:0.01];
+    [self performSelector:@selector(setResultFrames:) withObject:nil afterDelay:0.01];
     
     self.viewMode.selectedSegmentIndex = viewMode;
     self.collectionView.hidden = viewMode == VIEW_LIST;
@@ -147,19 +156,22 @@ static int viewMode = VIEW_LIST;
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = l10n(@"Filter");
-    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFilters:)];
+    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFiltersClicked:)];
 }
 
--(void) initButtonContainer:(id)sender
+-(void) viewDidDisappear:(BOOL)animated
 {
-    if (!showAllFilters)
-    {
-        CGRect frame = self.tableView.frame;
-        frame.origin.y -= self.buttonBoxHeight;
-        frame.size.height += self.buttonBoxHeight;
-        self.tableView.frame = frame;
-        self.collectionView.frame = frame;
-    }
+    [super viewDidDisappear:animated];
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    [settings setObject:@(showAllFilters) forKey:SHOW_ALL_FILTERS];
+    [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
+}
+
+-(void) setResultFrames:(id)sender
+{
+    self.tableView.frame = showAllFilters ? self.smallResultFrame : self.largeResultFrame;
+    self.collectionView.frame = showAllFilters ? self.smallResultFrame : self.largeResultFrame;
 }
 
 - (void) initCards
@@ -215,7 +227,7 @@ static int viewMode = VIEW_LIST;
 
 #pragma mark clear filters
 
--(void) clearFilters:(id)sender
+-(void) clearFiltersClicked:(id)sender
 {
     [self.cardList clearFilters];
     [self clearFilters];
@@ -285,7 +297,6 @@ static int viewMode = VIEW_LIST;
     }
     
     TF_CHECKPOINT(@"filter text entry");
-    self.normalTableFrame = self.tableView.frame;
     
     CGFloat topY = self.searchSeparator.frame.origin.y;
     
@@ -316,8 +327,7 @@ static int viewMode = VIEW_LIST;
     NSTimeInterval animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
     [UIView animateWithDuration:animDuration animations:^{
-        self.tableView.frame = self.normalTableFrame;
-        self.collectionView.frame = self.normalTableFrame;
+        [self setResultFrames:nil];
     }];
 }
 
@@ -327,21 +337,25 @@ static int viewMode = VIEW_LIST;
 {
     showAllFilters = !showAllFilters;
     
+    if (!showAllFilters)
+    {
+        // reset all filters that are now inaccessible
+        self.costSlider.value = 0;
+        [self costValueChanged:nil];
+        
+        self.muSlider.value = 0;
+        [self muValueChanged:nil];
+        
+        self.strengthSlider.value = 0;
+        [self strengthValueChanged:nil];
+        
+        self.apSlider.value = 0;
+        [self apValueChanged:nil];
+    }
+    
     if ([self.searchField isFirstResponder])
     {
         [self.searchField resignFirstResponder];
-    }
-    
-    CGRect frame = self.tableView.frame;
-    if (showAllFilters)
-    {
-        frame.origin.y += self.buttonBoxHeight;
-        frame.size.height -= self.buttonBoxHeight;
-    }
-    else
-    {
-        frame.origin.y -= self.buttonBoxHeight;
-        frame.size.height += self.buttonBoxHeight;
     }
     
     NSString* moreLess = showAllFilters ? l10n(@"Less △") : l10n(@"More ▽");
@@ -355,8 +369,7 @@ static int viewMode = VIEW_LIST;
     NSTimeInterval animDuration = 0.15;
     [UIView animateWithDuration:animDuration
         animations:^{
-            self.tableView.frame = frame;
-            self.collectionView.frame = frame;
+            [self setResultFrames:nil];
         }
         completion:^(BOOL finished){
             self.influenceSeparator.hidden = showAllFilters;
@@ -369,9 +382,10 @@ static int viewMode = VIEW_LIST;
     
     self.collectionView.hidden = viewMode == VIEW_LIST;
     self.tableView.hidden = viewMode != VIEW_LIST;
-
-    [self.tableView reloadData];
+    
     [self.collectionView reloadData];
+    [self.tableView reloadData];
+    [self setResultFrames:nil];
 }
 
 -(void) typeClicked:(UIButton*)sender
@@ -764,6 +778,8 @@ static int viewMode = VIEW_LIST;
         
         UIButton* button = [UIButton buttonWithType:UIButtonTypeContactAdd];
         button.frame = CGRectMake(0, 0, 30, 30);
+        button.tag = ADD_BUTTON_TABLE;
+        
         cell.accessoryView = button;
         
         [cell.contentView addSubview:button];
@@ -804,8 +820,18 @@ static int viewMode = VIEW_LIST;
 
 - (void) addCardToDeck:(UIButton*)sender
 {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    NSIndexPath *indexPath;
+    
+    if (sender.tag == ADD_BUTTON_TABLE)
+    {
+        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    }
+    else
+    {
+        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
+        indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
+    }
     
     NSArray* cards = self.cards[indexPath.section];
     Card *card = cards[indexPath.row];
@@ -827,29 +853,16 @@ static int viewMode = VIEW_LIST;
     NSString* cellIdentifier = viewMode == VIEW_IMG_3 ? @"cardSmallThumb" : @"cardThumb";
     
     NSArray* cards = self.cards[indexPath.section];
-    Card *cellCard = cards[indexPath.row];
-    CardCounter* cc = [self.deckListViewController.deck findCard:cellCard];
+    Card *card = cards[indexPath.row];
+    CardCounter* cc = [self.deckListViewController.deck findCard:card];
     
     CardFilterThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.addButton.tag = ADD_BUTTON_COLLECTION;
+    
+    [cell.addButton addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];
     cell.countLabel.text = cc.count > 0 ? [NSString stringWithFormat:@"×%d",cc.count] : @"";
     
-    cell.imageView.image = nil;
-    
-    [cell.activityIndicator startAnimating];
-    [[ImageCache sharedInstance] getImageFor:cellCard completion:^(Card* card, UIImage* img, BOOL placeholder)
-     {
-         if ([cellCard.code isEqual:card.code])
-         {
-             [cell.activityIndicator stopAnimating];
-             CGRect rect = CGRectMake(10, card.cropY, 280, 209);
-             CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
-             UIImage *cropped = [UIImage imageWithCGImage:imageRef];
-             CGImageRelease(imageRef);
-             
-             cell.imageView.image = cropped;
-             cell.nameLabel.text = placeholder ? card.name : nil;
-         }
-     }];
+    cell.card = card;
     
     return cell;
 }
