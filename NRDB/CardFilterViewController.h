@@ -41,8 +41,11 @@
 @property IBOutlet UIButton* moreLessButton;
 @property IBOutlet UISegmentedControl* viewMode;
 
+@property IBOutlet UIView* searchContainer;
 @property IBOutlet UIView* searchSeparator; // the 1px "line" view beneath the search box
+@property IBOutlet UIView* sliderContainer;
 @property IBOutlet UIView* sliderSeparator; // the 1px "line" view beneath the sliders box
+@property IBOutlet UIView* influenceSeparator; // the 1px "line" view beneath the influence slider
 @property IBOutlet UIView* buttonContainer;
 @property IBOutlet UIView* bottomSeparator; // the 1px "line" view between the filters and the results table
 

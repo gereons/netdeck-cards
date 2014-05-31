@@ -15,15 +15,18 @@
                 <outlet property="costSlider" destination="CZ9-48-CMU" id="pwF-jj-HLV"/>
                 <outlet property="factionButton" destination="KBw-vu-Yq7" id="1CT-y5-NqJ"/>
                 <outlet property="influenceLabel" destination="T8Y-oe-9F8" id="MLI-O4-u7Y"/>
+                <outlet property="influenceSeparator" destination="8g3-ex-1mU" id="S6Q-0X-dlg"/>
                 <outlet property="influenceSlider" destination="bSH-gY-tzs" id="JpE-JT-Ifo"/>
-                <outlet property="moreLessButton" destination="MkN-eg-zXm" id="ksn-3U-Auv"/>
+                <outlet property="moreLessButton" destination="bzD-aM-Xxo" id="EFZ-hZ-g3m"/>
                 <outlet property="muLabel" destination="icV-T6-TTz" id="AkX-rf-Wwi"/>
                 <outlet property="muSlider" destination="NpC-7d-eWK" id="73P-ht-RjN"/>
+                <outlet property="searchContainer" destination="UKQ-ah-DCs" id="qkn-Az-d3w"/>
                 <outlet property="searchField" destination="q11-3e-1iG" id="MTr-hT-gOg"/>
                 <outlet property="searchLabel" destination="yG4-No-cEe" id="U3n-bJ-Zct"/>
                 <outlet property="searchScope" destination="ieK-Nj-A3c" id="fDb-v3-Hot"/>
                 <outlet property="searchSeparator" destination="z8T-eI-ayW" id="FOi-Ha-SDn"/>
                 <outlet property="setButton" destination="18k-Vz-FxP" id="2Z5-oG-5jr"/>
+                <outlet property="sliderContainer" destination="oRs-rz-ZMs" id="Xtd-Of-VXk"/>
                 <outlet property="sliderSeparator" destination="WDc-eW-xDO" id="p3i-KL-Qg9"/>
                 <outlet property="strengthLabel" destination="dCU-gr-s6k" id="xEM-tc-4bw"/>
                 <outlet property="strengthSlider" destination="D4b-HM-uae" id="2KU-0S-mdq"/>
@@ -31,7 +34,7 @@
                 <outlet property="tableView" destination="m0f-0m-SGz" id="mJB-qe-LxQ"/>
                 <outlet property="typeButton" destination="mDZ-Vg-JNL" id="Wnu-5y-ILG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="Wru-pR-l5F"/>
-                <outlet property="viewMode" destination="HqW-FV-vnr" id="5KB-zM-Klg"/>
+                <outlet property="viewMode" destination="nOt-DT-qaT" id="UqH-tX-Z4z"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -40,7 +43,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UKQ-ah-DCs" userLabel="Search Container">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Search in:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yG4-No-cEe">
@@ -70,115 +73,38 @@
                                 <outlet property="delegate" destination="-1" id="5wQ-ET-BC2"/>
                             </connections>
                         </textField>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z8T-eI-ayW" userLabel="Search Separator Line">
-                    <rect key="frame" x="0.0" y="81" width="320" height="1"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oRs-rz-ZMs" userLabel="Slider Container">
-                    <rect key="frame" x="0.0" y="82" width="320" height="197"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MT7-Gw-VQh">
-                            <rect key="frame" x="20" y="11" width="95" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="CZ9-48-CMU" userLabel="Cost Slider">
-                            <rect key="frame" x="119" y="5" width="184" height="31"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <connections>
-                                <action selector="costValueChanged:" destination="-1" eventType="valueChanged" id="Jsg-YD-YZ6"/>
-                            </connections>
-                        </slider>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Strength" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dCU-gr-s6k">
-                            <rect key="frame" x="20" y="49" width="95" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="D4b-HM-uae" userLabel="Strength Slider">
-                            <rect key="frame" x="119" y="43" width="184" height="31"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <connections>
-                                <action selector="strengthValueChanged:" destination="-1" eventType="valueChanged" id="dos-5L-p4P"/>
-                            </connections>
-                        </slider>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MU" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="icV-T6-TTz">
-                            <rect key="frame" x="20" y="87" width="95" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="NpC-7d-eWK" userLabel="MU Slider">
-                            <rect key="frame" x="118" y="81" width="184" height="31"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <connections>
-                                <action selector="muValueChanged:" destination="-1" eventType="valueChanged" id="aR6-qV-HHr"/>
-                            </connections>
-                        </slider>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="AP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lhb-j8-bsW">
-                            <rect key="frame" x="20" y="87" width="95" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="S3v-iC-yQN" userLabel="AP Slider">
-                            <rect key="frame" x="119" y="81" width="184" height="31"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <connections>
-                                <action selector="apValueChanged:" destination="-1" eventType="valueChanged" id="epP-aQ-ufA"/>
-                                <action selector="muValueChanged:" destination="-1" eventType="valueChanged" id="ZfJ-lp-8RK"/>
-                            </connections>
-                        </slider>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Influence" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T8Y-oe-9F8">
-                            <rect key="frame" x="20" y="125" width="95" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="bSH-gY-tzs" userLabel="Influence Slider">
-                            <rect key="frame" x="119" y="119" width="184" height="31"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <connections>
-                                <action selector="influenceValueChanged:" destination="-1" eventType="valueChanged" id="ST0-Yd-k4s"/>
-                            </connections>
-                        </slider>
-                        <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HqW-FV-vnr" userLabel="View Mode">
-                            <rect key="frame" x="214" y="157" width="86" height="29"/>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="nOt-DT-qaT" userLabel="View Mode">
+                            <rect key="frame" x="190" y="82" width="110" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="" image="deckview_card.png"/>
                                 <segment title="" image="deckview_list.png"/>
+                                <segment title="" image="filter_2col.png"/>
+                                <segment title="" image="filter_3col.png"/>
                             </segments>
                             <connections>
-                                <action selector="viewModeChanged:" destination="-1" eventType="valueChanged" id="lOS-0q-Jsc"/>
+                                <action selector="viewModeChanged:" destination="-1" eventType="valueChanged" id="cM1-Is-MDg"/>
                             </connections>
                         </segmentedControl>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MkN-eg-zXm">
-                            <rect key="frame" x="20" y="157" width="96" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bzD-aM-Xxo">
+                            <rect key="frame" x="20" y="82" width="96" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="More/Less">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="moreLessClicked:" destination="-1" eventType="touchUpInside" id="cWH-dk-98I"/>
+                                <action selector="moreLessClicked:" destination="-1" eventType="touchUpInside" id="xTs-ED-6sH"/>
                             </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDc-eW-xDO" userLabel="Slider Separator Line">
-                    <rect key="frame" x="0.0" y="280" width="320" height="1"/>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z8T-eI-ayW" userLabel="Search Separator Line">
+                    <rect key="frame" x="0.0" y="121" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o9d-r4-Mps" userLabel="Button Container">
-                    <rect key="frame" x="0.0" y="281" width="320" height="65"/>
+                    <rect key="frame" x="0.0" y="122" width="320" height="65"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KBw-vu-Yq7">
@@ -224,6 +150,89 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDc-eW-xDO" userLabel="Button Separator Line">
+                    <rect key="frame" x="0.0" y="187" width="320" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oRs-rz-ZMs" userLabel="Slider Container">
+                    <rect key="frame" x="0.0" y="189" width="320" height="157"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Influence" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T8Y-oe-9F8">
+                            <rect key="frame" x="20" y="9" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="bSH-gY-tzs" userLabel="Influence Slider">
+                            <rect key="frame" x="119" y="5" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="influenceValueChanged:" destination="-1" eventType="valueChanged" id="ST0-Yd-k4s"/>
+                            </connections>
+                        </slider>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8g3-ex-1mU" userLabel="Influence Separator Line">
+                            <rect key="frame" x="0.0" y="41" width="320" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Strength" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dCU-gr-s6k">
+                            <rect key="frame" x="20" y="49" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="D4b-HM-uae" userLabel="Strength Slider">
+                            <rect key="frame" x="119" y="43" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="strengthValueChanged:" destination="-1" eventType="valueChanged" id="dos-5L-p4P"/>
+                            </connections>
+                        </slider>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MU" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="icV-T6-TTz">
+                            <rect key="frame" x="20" y="87" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="NpC-7d-eWK" userLabel="MU Slider">
+                            <rect key="frame" x="118" y="81" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="muValueChanged:" destination="-1" eventType="valueChanged" id="aR6-qV-HHr"/>
+                            </connections>
+                        </slider>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="AP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lhb-j8-bsW">
+                            <rect key="frame" x="20" y="87" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="S3v-iC-yQN" userLabel="AP Slider">
+                            <rect key="frame" x="119" y="81" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="apValueChanged:" destination="-1" eventType="valueChanged" id="epP-aQ-ufA"/>
+                                <action selector="muValueChanged:" destination="-1" eventType="valueChanged" id="ZfJ-lp-8RK"/>
+                            </connections>
+                        </slider>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MT7-Gw-VQh">
+                            <rect key="frame" x="20" y="125" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="CZ9-48-CMU" userLabel="Cost Slider">
+                            <rect key="frame" x="119" y="119" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="costValueChanged:" destination="-1" eventType="valueChanged" id="Jsg-YD-YZ6"/>
+                            </connections>
+                        </slider>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tsO-Ri-D1U" userLabel="Bottom Separator Line">
                     <rect key="frame" x="0.0" y="347" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -242,8 +251,8 @@
                     <rect key="frame" x="0.0" y="348" width="320" height="356"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="D3e-3x-NGw">
-                        <size key="itemSize" width="155" height="115"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="D3e-3x-NGw">
+                        <size key="itemSize" width="159" height="154"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -261,7 +270,8 @@
         </view>
     </objects>
     <resources>
-        <image name="deckview_card.png" width="22" height="22"/>
         <image name="deckview_list.png" width="22" height="22"/>
+        <image name="filter_2col.png" width="22" height="22"/>
+        <image name="filter_3col.png" width="22" height="22"/>
     </resources>
 </document>

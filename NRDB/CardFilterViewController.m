@@ -19,7 +19,7 @@
 #import "Notifications.h"
 #import "CardImageViewPopover.h"
 #import "CGRectUtils.h"
-#import "CardThumbView.h"
+#import "CardFilterThumbView.h"
 #import "ImageCache.h"
 
 @interface CardFilterViewController ()
@@ -44,9 +44,10 @@
 @implementation CardFilterViewController
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
+enum { VIEW_LIST, VIEW_IMG_2, VIEW_IMG_3 };
 static NSArray* scopes;
 static BOOL showAllFilters = YES;
-static BOOL showImages = NO;
+static int viewMode = VIEW_LIST;
 
 +(void)initialize
 {
@@ -105,18 +106,21 @@ static BOOL showImages = NO;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CardThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSmallThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardSmallThumb"];
     
-    self.buttonBoxHeight = self.bottomSeparator.frame.origin.y - self.sliderSeparator.frame.origin.y;
+    CGRect rect = [self.sliderContainer convertRect:self.influenceSeparator.frame toView:self.view];
+    self.buttonBoxHeight = self.bottomSeparator.frame.origin.y - rect.origin.y;
     
-    NSString* moreLess = showAllFilters ? l10n(@"Less") : l10n(@"More");
+    NSString* moreLess = showAllFilters ? l10n(@"Less △") : l10n(@"More ▽");
     [self.moreLessButton setTitle:moreLess forState:UIControlStateNormal];
-    self.buttonContainer.hidden = !showAllFilters;
+    self.influenceSeparator.hidden = showAllFilters;
     
     [self performSelector:@selector(initButtonContainer:) withObject:nil afterDelay:0.01];
     
-    self.collectionView.hidden = !showImages;
-    self.tableView.hidden = showImages;
+    self.viewMode.selectedSegmentIndex = viewMode;
+    self.collectionView.hidden = viewMode == VIEW_LIST;
+    self.tableView.hidden = viewMode != VIEW_LIST;
     
     [self initFilters];
 }
@@ -154,6 +158,7 @@ static BOOL showImages = NO;
         frame.origin.y -= self.buttonBoxHeight;
         frame.size.height += self.buttonBoxHeight;
         self.tableView.frame = frame;
+        self.collectionView.frame = frame;
     }
 }
 
@@ -295,6 +300,7 @@ static BOOL showImages = NO;
     float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     [UIView animateWithDuration:animDuration animations:^{
         self.tableView.frame = newFrame;
+        self.collectionView.frame = newFrame;
     }];
 }
 
@@ -311,6 +317,7 @@ static BOOL showImages = NO;
     
     [UIView animateWithDuration:animDuration animations:^{
         self.tableView.frame = self.normalTableFrame;
+        self.collectionView.frame = self.normalTableFrame;
     }];
 }
 
@@ -319,6 +326,11 @@ static BOOL showImages = NO;
 -(void) moreLessClicked:(id)sender
 {
     showAllFilters = !showAllFilters;
+    
+    if ([self.searchField isFirstResponder])
+    {
+        [self.searchField resignFirstResponder];
+    }
     
     CGRect frame = self.tableView.frame;
     if (showAllFilters)
@@ -332,22 +344,34 @@ static BOOL showImages = NO;
         frame.size.height += self.buttonBoxHeight;
     }
     
-    NSString* moreLess = showAllFilters ? l10n(@"Less") : l10n(@"More");
+    NSString* moreLess = showAllFilters ? l10n(@"Less △") : l10n(@"More ▽");
     [self.moreLessButton setTitle:moreLess forState:UIControlStateNormal];
-    self.buttonContainer.hidden = !showAllFilters;
+   
+    if (showAllFilters)
+    {
+        self.influenceSeparator.hidden = YES;
+    }
     
     NSTimeInterval animDuration = 0.15;
-    [UIView animateWithDuration:animDuration animations:^{
-        self.tableView.frame = frame;
-    }];
+    [UIView animateWithDuration:animDuration
+        animations:^{
+            self.tableView.frame = frame;
+            self.collectionView.frame = frame;
+        }
+        completion:^(BOOL finished){
+            self.influenceSeparator.hidden = showAllFilters;
+        }];
 }
 
--(void) viewModeChanged:(id)sender
+-(void) viewModeChanged:(UISegmentedControl*)sender
 {
-    showImages = !showImages;
+    viewMode = sender.selectedSegmentIndex;
     
-    self.collectionView.hidden = !showImages;
-    self.tableView.hidden = showImages;
+    self.collectionView.hidden = viewMode == VIEW_LIST;
+    self.tableView.hidden = viewMode != VIEW_LIST;
+
+    [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 -(void) typeClicked:(UIButton*)sender
@@ -800,12 +824,14 @@ static BOOL showImages = NO;
 
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* cellIdentifier = @"cardThumb";
+    NSString* cellIdentifier = viewMode == VIEW_IMG_3 ? @"cardSmallThumb" : @"cardThumb";
     
     NSArray* cards = self.cards[indexPath.section];
     Card *cellCard = cards[indexPath.row];
+    CardCounter* cc = [self.deckListViewController.deck findCard:cellCard];
     
-    CardThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    CardFilterThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.countLabel.text = cc.count > 0 ? [NSString stringWithFormat:@"×%d",cc.count] : @"";
     
     cell.imageView.image = nil;
     
@@ -821,7 +847,7 @@ static BOOL showImages = NO;
              CGImageRelease(imageRef);
              
              cell.imageView.image = cropped;
-             cell.nameLabel.text = placeholder? card.name : nil;
+             cell.nameLabel.text = placeholder ? card.name : nil;
          }
      }];
     
@@ -842,7 +868,7 @@ static BOOL showImages = NO;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(155, 115);
+    return viewMode == VIEW_IMG_3 ? CGSizeMake(106, 102) : CGSizeMake(159, 144);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
