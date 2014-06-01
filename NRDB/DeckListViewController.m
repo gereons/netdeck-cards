@@ -13,6 +13,7 @@
 #import "IdentitySelectionViewController.h"
 #import "DeckAnalysisViewController.h"
 #import "DrawSimulatorViewController.h"
+#import "DeckNotesPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
 
@@ -44,6 +45,7 @@
 @property UIBarButtonItem* saveButton;
 @property UIBarButtonItem* exportButton;
 @property UIBarButtonItem* stateButton;
+@property UIBarButtonItem* notesButton;
 
 @property NSString* filename;
 @property BOOL autoSave;
@@ -170,6 +172,10 @@ enum { POPUP_EXPORT, POPUP_STATE };
                                                             ]];
     [rightButtons addObject:self.stateButton];
     
+#pragma warning find better place
+    self.notesButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Notes") style:UIBarButtonItemStylePlain target:self action:@selector(editNotes:)];
+    [rightButtons addObject:self.notesButton];
+
     topItem.rightBarButtonItems = rightButtons;
 
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
@@ -281,6 +287,11 @@ enum { POPUP_EXPORT, POPUP_STATE };
 -(void) drawSimulatorClicked:(id)sender
 {
     [DrawSimulatorViewController showForDeck:self.deck inViewController:self];
+}
+
+-(void) editNotes:(id)sender
+{
+    [DeckNotesPopup showForDeck:self.deck inViewController:self];
 }
 
 #pragma mark duplicate deck

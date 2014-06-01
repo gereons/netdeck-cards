@@ -19,6 +19,8 @@
 
 @implementation DeckExport
 
+#pragma warning add notes to export / print / email
+
 +(void) asOctgn:(Deck*)deck autoSave:(BOOL)autoSave
 {
     [GRMustache preventNSUndefinedKeyExceptionAttack];

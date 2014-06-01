@@ -621,14 +621,14 @@ static NSDictionary* sideStr;
     CGRect frame = [cell.contentView convertRect:sender.frame toView:self.view];
     
     self.popup = [[UIActionSheet alloc] initWithTitle:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@""
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:
-                            [NSString stringWithFormat:@"%@%@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @" ✓" : @""],
-                            [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @" ✓" : @""],
-                            [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
-
+                                             delegate:self
+                                    cancelButtonTitle:@""
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:
+                  [NSString stringWithFormat:@"%@%@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @" ✓" : @""],
+                  [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @" ✓" : @""],
+                  [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
+    
     // fudge the frame so the popup appears to the left of the (I)
     frame.origin.y -= 990;
     frame.size.height = 2000;
