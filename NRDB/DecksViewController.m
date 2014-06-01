@@ -508,7 +508,7 @@ static NSDictionary* sideStr;
         }
         if (self.deck.state != oldState)
         {
-            [DeckManager saveDeck:self.deck toPath:self.deck.filename];
+            [DeckManager saveDeck:self.deck];
             [DeckManager resetModificationDate:self.deck];
             
             [self updateDecks];
@@ -535,7 +535,7 @@ static NSDictionary* sideStr;
     }
     
     self.deck.name = [alertView textFieldAtIndex:0].text;
-    [DeckManager saveDeck:self.deck toPath:self.deck.filename];
+    [DeckManager saveDeck:self.deck];
     self.deck = nil;
     [self updateDecks];
     

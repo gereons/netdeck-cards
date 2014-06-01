@@ -15,6 +15,13 @@
 #import <EXTScope.h>
 #import "OctgnImport.h"
 
+#define IMPORT_ALWAYS   YES
+
+#if !defined(DEBUG)
+#undef IMPORT_ALWAYS
+#define IMPORT_ALWAYS   NO
+#endif
+
 typedef NS_ENUM(NSInteger, DeckBuilderSite)
 {
     DeckBuilderSiteNone,
@@ -70,7 +77,7 @@ static DeckImport* instance;
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     
     NSInteger lastChange = [[NSUserDefaults standardUserDefaults] integerForKey:CLIP_CHANGE_COUNT];
-    if (lastChange == pasteboard.changeCount)
+    if (lastChange == pasteboard.changeCount && !IMPORT_ALWAYS)
     {
         return;
     }
@@ -182,12 +189,20 @@ static DeckImport* instance;
 -(Deck*) checkForTextDeck:(NSArray*)lines
 {
     NSArray* cards = [Card allCards];
-    NSRegularExpression *regex1 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9])x" options:0 error:nil];
-    NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@" x([0-9])" options:0 error:nil];
+    NSRegularExpression *regex1 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9])x" options:0 error:nil]; // start with "1x ..."
+    NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@" x([0-9])" options:0 error:nil]; // end with "... x3"
+    NSRegularExpression *regex3 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9]) " options:0 error:nil]; // start with "1 ..."
     
-    Deck* deck = [Deck new];
+    NSString* name;
+    
+    Deck* deck = [[Deck alloc] init];
     for (NSString* line in lines)
     {
+        if (name == nil)
+        {
+            name = line;
+        }
+        
         for (Card* c in cards)
         {
             if ([line rangeOfString:c.name options:NSCaseInsensitiveSearch].location != NSNotFound)
@@ -203,6 +218,10 @@ static DeckImport* instance;
                     if (!match)
                     {
                         match = [regex2 firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
+                    }
+                    if (!match)
+                    {
+                        match = [regex3 firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
                     }
                     
                     if (match.numberOfRanges == 2)
@@ -225,6 +244,8 @@ static DeckImport* instance;
     
     if (deck.identity != nil && deck.cards.count > 0)
     {
+        deck.name = name;
+        
         return deck;
     }
     else

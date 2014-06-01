@@ -48,7 +48,7 @@ enum { ADD_BUTTON_TABLE, ADD_BUTTON_COLLECTION };
 
 static NSArray* scopes;
 static BOOL showAllFilters = YES;
-static int viewMode = VIEW_LIST;
+static NSInteger viewMode = VIEW_LIST;
 
 +(void)initialize
 {

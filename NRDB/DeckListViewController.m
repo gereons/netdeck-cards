@@ -252,14 +252,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
     {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
     }
-    if (self.deck.filename)
-    {
-        [DeckManager saveDeck:self.deck toPath:self.deck.filename];
-    }
-    else
-    {
-        self.deck.filename = [DeckManager saveDeck:self.deck];
-    }
+    [DeckManager saveDeck:self.deck];
+    
     self.saveButton.enabled = NO;
     
     if (self.autoSaveDropbox)
@@ -384,7 +378,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
                 self.deck = newDeck;
                 if (self.autoSave)
                 {
-                    self.deck.filename = [DeckManager saveDeck:self.deck];
+                    [DeckManager saveDeck:self.deck];
                 }
                 else
                 {
