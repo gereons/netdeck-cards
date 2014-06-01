@@ -37,4 +37,10 @@
 #define SHOW_ALL_FILTERS    @"showAllFilters"
 #define FILTER_VIEW_MODE    @"filterViewMode"
 
+#define DECK_FILTER_TYPE    @"deckFilterType"
+#define DECK_FILTER_STATE   @"deckFilterState"
+#define DECK_FILTER_SORT    @"deckFilterSort"
+
+#define DECK_VIEW_SCALE     @"deckViewScale"
+
 #endif

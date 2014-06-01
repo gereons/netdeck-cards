@@ -72,9 +72,23 @@ static NSDictionary* sideStr;
     return self;
 }
 
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    [settings setObject:@(filterType) forKey:DECK_FILTER_TYPE];
+    [settings setObject:@(filterState) forKey:DECK_FILTER_STATE];
+    [settings setObject:@(sortType) forKey:DECK_FILTER_SORT];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    filterType = [settings integerForKey:DECK_FILTER_TYPE];
+    filterState = [settings integerForKey:DECK_FILTER_STATE];
+    sortType = [settings integerForKey:DECK_FILTER_SORT];
     
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];

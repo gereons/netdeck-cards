@@ -88,13 +88,22 @@ static NSInteger viewMode = VIEW_LIST;
     return self;
 }
 
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    [settings setObject:@(showAllFilters) forKey:SHOW_ALL_FILTERS];
+    [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     showAllFilters = [settings boolForKey:SHOW_ALL_FILTERS];
-    viewMode = [settings boolForKey:FILTER_VIEW_MODE];
+    viewMode = [settings integerForKey:FILTER_VIEW_MODE];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
@@ -157,15 +166,6 @@ static NSInteger viewMode = VIEW_LIST;
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = l10n(@"Filter");
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFiltersClicked:)];
-}
-
--(void) viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setObject:@(showAllFilters) forKey:SHOW_ALL_FILTERS];
-    [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
 }
 
 -(void) setResultFrames:(id)sender

@@ -71,11 +71,20 @@ enum { POPUP_EXPORT, POPUP_STATE };
     return self;
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.scale = 1.0;
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
+    self.scale = scale == 0 ? 1.0 : scale;
     
     if (self.filename)
     {
@@ -141,7 +150,6 @@ enum { POPUP_EXPORT, POPUP_STATE };
     // right button
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
     
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     self.autoSave = [settings boolForKey:AUTO_SAVE];
     self.autoSaveDropbox = self.autoSave && [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
     
