@@ -62,6 +62,8 @@
 {
     self.detailView.hidden = NO;
     self.detailView.backgroundColor = [UIColor colorWithWhite:1 alpha:.7];
+    self.detailView.layer.cornerRadius = 10;
+    self.detailView.layer.masksToBounds = YES;
     
     Card* card = self.card;
     

@@ -35,6 +35,7 @@
 
 -(IBAction)toggleImage:(id)sender;
 
+-(void) setImageStack:(UIImage*)img;
 -(void) loadImage;
 
 @end

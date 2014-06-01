@@ -1058,7 +1058,14 @@ enum { POPUP_EXPORT, POPUP_STATE };
     }
     cell.cc = cc;
     
-    [cell loadImage];
+    if (cc.card)
+    {
+        [cell loadImage];
+    }
+    else
+    {
+        [cell setImageStack:[ImageCache placeholderFor:self.role]];
+    }
     
     return cell;
 }

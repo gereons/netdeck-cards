@@ -47,7 +47,7 @@
                              @"V:|[image1(image3)]",
                              @"V:|-5-[image2(image3)]",
                              @"V:|-10-[image3][label(20)]|",
-                             @"V:|[details(==image3)]",
+                             @"V:|[details]-20-|",
                              @"V:[toggle(34)]",
                             ];
     
@@ -155,7 +155,7 @@
 
 -(void) setImageStack:(UIImage*)img
 {
-    self.image1.image = self.cc.count > 0 ? img : nil;
+    self.image1.image = img;
     self.image2.image = self.cc.count > 1 ? img : nil;
     self.image3.image = self.cc.count > 2 ? img : nil;
     
@@ -189,12 +189,12 @@
                                          if ([self.cc.card.name isEqual:card.name])
                                          {
                                              [self setImageStack:img];
-                                         }
                                          
-                                         self.detailView.hidden = !placeholder;
-                                         if (placeholder)
-                                         {
-                                             [CardDetailView setupDetailViewFromCell:self card:self.cc.card];
+                                             self.detailView.hidden = !placeholder;
+                                             if (placeholder)
+                                             {
+                                                 [CardDetailView setupDetailViewFromCell:self card:self.cc.card];
+                                             }
                                          }
                                      }];
 }
