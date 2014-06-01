@@ -126,6 +126,7 @@
 "Active" = "Aktiv";
 "Testing" = "Test";
 "Retired" = "Inaktiv";
+"Search for decks, identities or cards" = "Suche nach Decks, Identität oder Karten";
 
 // filter
 "Strength: %@" = "Stärke: %@";

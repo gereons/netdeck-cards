@@ -1,23 +1,24 @@
 //
-//  CardThumbView.m
+//  CardFilterThumbView.m
 //  NRDB
 //
-//  Created by Gereon Steffens on 24.05.14.
+//  Created by Gereon Steffens on 31.05.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "CardThumbView.h"
+#import "CardFilterThumbView.h"
 #import "Card.h"
 #import "ImageCache.h"
 #import <EXTScope.h>
 
-@implementation CardThumbView
+@implementation CardFilterThumbView
 
 -(void) awakeFromNib
 {
     self.imageView.layer.cornerRadius = 8;
     self.imageView.layer.masksToBounds = YES;
     self.nameLabel.text = nil;
+    self.countLabel.text = nil;
 }
 
 -(void) setCard:(Card *)card
@@ -43,4 +44,5 @@
          }
      }];
 }
+
 @end

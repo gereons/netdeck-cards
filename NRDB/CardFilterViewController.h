@@ -1,16 +1,18 @@
 //
-//  CardFilterHeaderView.h
+//  CardFilterViewController.h
 //  NRDB
 //
-//  Created by Gereon Steffens on 24.12.13.
+//  Created by Gereon Steffens on 30.05.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface CardFilterHeaderView : UIView <UITextFieldDelegate>
+@class Deck, DeckListViewController;
 
-@property (nonatomic) NRRole role;
+@interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate>
+
+@property DeckListViewController* deckListViewController;
 
 @property IBOutlet UILabel* searchLabel;
 @property IBOutlet UITextField* searchField;
@@ -36,6 +38,19 @@
 @property IBOutlet UIButton* factionButton;
 @property IBOutlet UIButton* setButton;
 
+@property IBOutlet UIButton* moreLessButton;
+@property IBOutlet UISegmentedControl* viewMode;
+
+@property IBOutlet UIView* searchContainer;
+@property IBOutlet UIView* searchSeparator; // the 1px "line" view beneath the search box
+@property IBOutlet UIView* sliderContainer;
+@property IBOutlet UIView* sliderSeparator; // the 1px "line" view beneath the sliders box
+@property IBOutlet UIView* influenceSeparator; // the 1px "line" view beneath the influence slider
+@property IBOutlet UIView* buttonContainer;
+@property IBOutlet UIView* bottomSeparator; // the 1px "line" view between the filters and the results table
+
+@property IBOutlet UITableView* tableView;
+@property IBOutlet UICollectionView* collectionView;
 
 -(IBAction)strengthValueChanged:(id)sender;
 -(IBAction)costValueChanged:(id)sender;
@@ -48,9 +63,13 @@
 -(IBAction)factionClicked:(id)sender;
 -(IBAction)setClicked:(id)sender;
 
+-(IBAction)moreLessClicked:(id)sender;
 -(IBAction)scopeValueChanged:(id)sender;
+-(IBAction)viewModeChanged:(id)sender;
 
--(void) clearFilters;
+-(id) initWithRole:(NRRole)role;
+-(id) initWithRole:(NRRole)role andFile:(NSString*) filename;
+-(id) initWithRole:(NRRole)role andDeck:(Deck*) deck;
 
 -(void) filterCallback:(UIButton*)button value:(NSObject*)value;
 

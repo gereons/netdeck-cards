@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardFilterViewController">
+            <connections>
+                <outlet property="apLabel" destination="lhb-j8-bsW" id="tmQ-1Y-rJS"/>
+                <outlet property="apSlider" destination="S3v-iC-yQN" id="I1A-dx-qfB"/>
+                <outlet property="bottomSeparator" destination="tsO-Ri-D1U" id="2fz-07-5Br"/>
+                <outlet property="buttonContainer" destination="o9d-r4-Mps" id="mzY-Gj-suF"/>
+                <outlet property="collectionView" destination="ZXw-Bq-o8L" id="FNN-wi-H3Z"/>
+                <outlet property="costLabel" destination="MT7-Gw-VQh" id="Zbx-HE-1GQ"/>
+                <outlet property="costSlider" destination="CZ9-48-CMU" id="pwF-jj-HLV"/>
+                <outlet property="factionButton" destination="KBw-vu-Yq7" id="1CT-y5-NqJ"/>
+                <outlet property="influenceLabel" destination="T8Y-oe-9F8" id="MLI-O4-u7Y"/>
+                <outlet property="influenceSeparator" destination="8g3-ex-1mU" id="S6Q-0X-dlg"/>
+                <outlet property="influenceSlider" destination="bSH-gY-tzs" id="JpE-JT-Ifo"/>
+                <outlet property="moreLessButton" destination="bzD-aM-Xxo" id="EFZ-hZ-g3m"/>
+                <outlet property="muLabel" destination="icV-T6-TTz" id="AkX-rf-Wwi"/>
+                <outlet property="muSlider" destination="NpC-7d-eWK" id="73P-ht-RjN"/>
+                <outlet property="searchContainer" destination="UKQ-ah-DCs" id="qkn-Az-d3w"/>
+                <outlet property="searchField" destination="q11-3e-1iG" id="MTr-hT-gOg"/>
+                <outlet property="searchLabel" destination="yG4-No-cEe" id="U3n-bJ-Zct"/>
+                <outlet property="searchScope" destination="ieK-Nj-A3c" id="fDb-v3-Hot"/>
+                <outlet property="searchSeparator" destination="z8T-eI-ayW" id="FOi-Ha-SDn"/>
+                <outlet property="setButton" destination="18k-Vz-FxP" id="2Z5-oG-5jr"/>
+                <outlet property="sliderContainer" destination="oRs-rz-ZMs" id="Xtd-Of-VXk"/>
+                <outlet property="sliderSeparator" destination="WDc-eW-xDO" id="p3i-KL-Qg9"/>
+                <outlet property="strengthLabel" destination="dCU-gr-s6k" id="xEM-tc-4bw"/>
+                <outlet property="strengthSlider" destination="D4b-HM-uae" id="2KU-0S-mdq"/>
+                <outlet property="subtypeButton" destination="4D7-pT-c7r" id="SkN-nk-QeS"/>
+                <outlet property="tableView" destination="m0f-0m-SGz" id="mJB-qe-LxQ"/>
+                <outlet property="typeButton" destination="mDZ-Vg-JNL" id="Wnu-5y-ILG"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="Wru-pR-l5F"/>
+                <outlet property="viewMode" destination="nOt-DT-qaT" id="UqH-tX-Z4z"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="UKQ-ah-DCs" userLabel="Search Container">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search in:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yG4-No-cEe">
+                            <rect key="frame" x="20" y="11" width="77" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="ieK-Nj-A3c" userLabel="Search Scope">
+                            <rect key="frame" x="148" y="8" width="152" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Alle"/>
+                                <segment title="Name"/>
+                                <segment title="Text"/>
+                            </segments>
+                            <connections>
+                                <action selector="scopeValueChanged:" destination="-1" eventType="valueChanged" id="0wL-52-aJJ"/>
+                            </connections>
+                        </segmentedControl>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Cards" minimumFontSize="17" clearButtonMode="whileEditing" id="q11-3e-1iG">
+                            <rect key="frame" x="20" y="44" width="280" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="5wQ-ET-BC2"/>
+                            </connections>
+                        </textField>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="nOt-DT-qaT" userLabel="View Mode">
+                            <rect key="frame" x="190" y="82" width="110" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="" image="deckview_list.png"/>
+                                <segment title="" image="filter_2col.png"/>
+                                <segment title="" image="filter_3col.png"/>
+                            </segments>
+                            <connections>
+                                <action selector="viewModeChanged:" destination="-1" eventType="valueChanged" id="cM1-Is-MDg"/>
+                            </connections>
+                        </segmentedControl>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bzD-aM-Xxo">
+                            <rect key="frame" x="20" y="82" width="96" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="More/Less">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="moreLessClicked:" destination="-1" eventType="touchUpInside" id="xTs-ED-6sH"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="z8T-eI-ayW" userLabel="Search Separator Line">
+                    <rect key="frame" x="0.0" y="121" width="320" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="o9d-r4-Mps" userLabel="Button Container">
+                    <rect key="frame" x="0.0" y="122" width="320" height="65"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KBw-vu-Yq7">
+                            <rect key="frame" x="170" y="0.0" width="130" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Faction: Shaper">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="factionClicked:" destination="-1" eventType="touchUpInside" id="6j4-Ie-wWv"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="18k-Vz-FxP">
+                            <rect key="frame" x="170" y="35" width="130" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Set: All">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="setClicked:" destination="-1" eventType="touchUpInside" id="KaR-XL-3uz"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mDZ-Vg-JNL">
+                            <rect key="frame" x="20" y="0.0" width="130" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Type: All">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="typeClicked:" destination="-1" eventType="touchUpInside" id="cIc-J2-0RG"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4D7-pT-c7r">
+                            <rect key="frame" x="20" y="35" width="130" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Subtype: All">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="subtypeClicked:" destination="-1" eventType="touchUpInside" id="aNc-8t-O70"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="WDc-eW-xDO" userLabel="Button Separator Line">
+                    <rect key="frame" x="0.0" y="187" width="320" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="oRs-rz-ZMs" userLabel="Slider Container">
+                    <rect key="frame" x="0.0" y="189" width="320" height="157"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Influence" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="T8Y-oe-9F8">
+                            <rect key="frame" x="20" y="9" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="bSH-gY-tzs" userLabel="Influence Slider">
+                            <rect key="frame" x="119" y="5" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="influenceValueChanged:" destination="-1" eventType="valueChanged" id="ST0-Yd-k4s"/>
+                            </connections>
+                        </slider>
+                        <view contentMode="scaleToFill" id="8g3-ex-1mU" userLabel="Influence Separator Line">
+                            <rect key="frame" x="0.0" y="41" width="320" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Strength" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="dCU-gr-s6k">
+                            <rect key="frame" x="20" y="49" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="D4b-HM-uae" userLabel="Strength Slider">
+                            <rect key="frame" x="119" y="43" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="strengthValueChanged:" destination="-1" eventType="valueChanged" id="dos-5L-p4P"/>
+                            </connections>
+                        </slider>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MU" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="icV-T6-TTz">
+                            <rect key="frame" x="20" y="87" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="NpC-7d-eWK" userLabel="MU Slider">
+                            <rect key="frame" x="118" y="81" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="muValueChanged:" destination="-1" eventType="valueChanged" id="aR6-qV-HHr"/>
+                            </connections>
+                        </slider>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="lhb-j8-bsW">
+                            <rect key="frame" x="20" y="87" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="S3v-iC-yQN" userLabel="AP Slider">
+                            <rect key="frame" x="119" y="81" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="apValueChanged:" destination="-1" eventType="valueChanged" id="epP-aQ-ufA"/>
+                                <action selector="muValueChanged:" destination="-1" eventType="valueChanged" id="ZfJ-lp-8RK"/>
+                            </connections>
+                        </slider>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="MT7-Gw-VQh">
+                            <rect key="frame" x="20" y="125" width="95" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="CZ9-48-CMU" userLabel="Cost Slider">
+                            <rect key="frame" x="119" y="119" width="184" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="costValueChanged:" destination="-1" eventType="valueChanged" id="Jsg-YD-YZ6"/>
+                            </connections>
+                        </slider>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="tsO-Ri-D1U" userLabel="Bottom Separator Line">
+                    <rect key="frame" x="0.0" y="347" width="320" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="m0f-0m-SGz">
+                    <rect key="frame" x="0.0" y="348" width="320" height="356"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="dlD-Vx-SgL"/>
+                        <outlet property="delegate" destination="-1" id="nGd-hN-gwQ"/>
+                    </connections>
+                </tableView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" id="ZXw-Bq-o8L">
+                    <rect key="frame" x="0.0" y="348" width="320" height="356"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="D3e-3x-NGw">
+                        <size key="itemSize" width="159" height="154"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <cells/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="kMy-2i-Q1e"/>
+                        <outlet property="delegate" destination="-1" id="95l-fv-xcC"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="deckview_list.png" width="22" height="22"/>
+        <image name="filter_2col.png" width="22" height="22"/>
+        <image name="filter_3col.png" width="22" height="22"/>
+    </resources>
+</document>

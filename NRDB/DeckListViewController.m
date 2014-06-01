@@ -200,7 +200,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     
     if (self.deck.cards.count > 0)
     {
-        // so that FilteredCardViewController gets a chance to reload
+        // so that CardFilterViewController gets a chance to reload
         [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
         self.deckChanged = NO;
     }

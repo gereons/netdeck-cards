@@ -13,7 +13,7 @@
 #import "DetailViewManager.h"
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
-#import "FilteredCardViewController.h"
+#import "CardFilterViewController.h"
 #import "ImportDecksViewController.h"
 #import "DecksViewController.h"
 #import "Notifications.h"
@@ -208,7 +208,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRRole role = [[userInfo objectForKey:@"role"] intValue];
     NSString* filename = [userInfo objectForKey:@"filename"];
     
-    FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role andFile:filename];
+    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andFile:filename];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
@@ -223,7 +223,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     NRRole role = [[userInfo objectForKey:@"role"] intValue];
     
-    FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role];
+    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
@@ -240,7 +240,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     [DeckManager saveDeck:deck];
     
-    FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role andDeck:deck];
+    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andDeck:deck];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
