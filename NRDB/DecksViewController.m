@@ -47,6 +47,8 @@ static NSString* filterText;
 @property UIBarButtonItem* sortButton;
 @property UIBarButtonItem* stateFilterButton;
 @property UIBarButtonItem* sideFilterButton;
+@property UIBarButtonItem* importButton;
+@property UIBarButtonItem* addDeckButton;
 
 @end
 
@@ -76,8 +78,12 @@ static NSDictionary* sideStr;
 {
     [super viewDidDisappear:animated];
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
     [settings setObject:@(filterType) forKey:DECK_FILTER_TYPE];
-    [settings setObject:@(filterState) forKey:DECK_FILTER_STATE];
+    if ([settings objectForKey:DECK_FILTER_STATE] != nil)
+    {
+        [settings setObject:@(filterState) forKey:DECK_FILTER_STATE];
+    }
     [settings setObject:@(sortType) forKey:DECK_FILTER_SORT];
 }
 
@@ -131,9 +137,11 @@ static NSDictionary* sideStr;
     self.editButton.possibleTitles = [NSSet setWithArray:@[ l10n(@"Edit"), l10n(@"Done") ]];
     self.editButton.title = l10n(@"Edit");
     
+    self.addDeckButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDeck:)];
+    self.importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
     topItem.rightBarButtonItems = @[
-        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDeck:)],
-        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)],
+        self.addDeckButton,
+        self.importButton,
         self.editButton,
     ];
     
@@ -198,6 +206,12 @@ static NSDictionary* sideStr;
 
 -(void) importDecks:(UIBarButtonItem*)sender
 {
+    if (self.popup)
+    {
+        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        return;
+    }
+    
     BOOL useDropbox = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX];
     
     if (!useDropbox)
@@ -574,11 +588,23 @@ static NSDictionary* sideStr;
 
 -(void) toggleEdit:(id)sender
 {
+    if (self.popup)
+    {
+        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        return;
+    }
+    
     BOOL editing = self.tableView.editing;
     
     editing = !editing;
     self.editButton.title = editing ? l10n(@"Done") : l10n(@"Edit");
     self.tableView.editing = editing;
+    
+    self.sortButton.enabled = !editing;
+    self.sideFilterButton.enabled = !editing;
+    self.stateFilterButton.enabled = !editing;
+    self.importButton.enabled = !editing;
+    self.addDeckButton.enabled = !editing;
 }
 
 #pragma mark state popup
@@ -618,7 +644,6 @@ static NSDictionary* sideStr;
 {
     DeckCell* cell = [tableView dequeueReusableCellWithIdentifier:@"deckCell" forIndexPath:indexPath];
     
-    // [cell.infoButton removeTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     cell.infoButton.tag = indexPath.row * 10 + indexPath.section;
     [cell.infoButton addTarget:self action:@selector(statePopup:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -726,6 +751,7 @@ static NSDictionary* sideStr;
     }
     return nil;
 }
+
 
 #pragma mark email
 
