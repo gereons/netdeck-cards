@@ -181,8 +181,16 @@ static NSInteger viewMode = VIEW_LIST;
     self.sections = data.sections;
 }
 
--(void) deckChanged:(id)sender
+-(void) deckChanged:(NSNotification*)notification
 {
+    if (self.role == NRRoleCorp)
+    {
+        Card* identity = self.deckListViewController.deck.identity;
+        
+        [self.cardList filterAgendas:identity];
+        [self initCards];
+    }
+    
     [self.tableView reloadData];
     [self.collectionView reloadData];
 }

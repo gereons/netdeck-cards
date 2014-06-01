@@ -8,11 +8,13 @@
 
 #import "CardList.h"
 #import "Card.h"
+#import "Deck.h"
 #import "CardSets.h"
 #import "CardData.h"
 
 @interface CardList()
 
+@property NRRole role;
 @property NSMutableArray* initialCards;
 
 @property int cost;
@@ -38,16 +40,36 @@
 {
     if ((self = [super init]))
     {
-        self.initialCards = [NSMutableArray arrayWithArray:[Card allForRole:role]];
-        
-        // remove all cards from sets that are deselected
-        NSSet* removeSets = [CardSets disabledSetCodes];
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"!(setCode in %@)", removeSets];
-        [self.initialCards filterUsingPredicate:predicate];
-        
+        self.role = role;
+        [self resetInitialCards];
         [self clearFilters];
     }
     return self;
+}
+
+-(void) resetInitialCards
+{
+    self.initialCards = [NSMutableArray arrayWithArray:[Card allForRole:self.role]];
+    
+    // remove all cards from sets that are deselected
+    NSSet* removeSets = [CardSets disabledSetCodes];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"!(setCode in %@)", removeSets];
+    [self.initialCards filterUsingPredicate:predicate];
+}
+
+-(void) filterAgendas:(Card *)identity
+{
+    [self resetInitialCards];
+    
+    if (identity)
+    {
+        NSArray* factions = @[ @(NRFactionNeutral), @(identity.faction) ];
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"type != %d OR (type = %d AND faction in %@)", NRCardTypeAgenda, NRCardTypeAgenda, factions];
+        
+        [self.initialCards filterUsingPredicate:predicate];
+    }
+    
+    [self applyFilters];
 }
 
 -(void) clearFilters

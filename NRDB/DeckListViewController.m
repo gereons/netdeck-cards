@@ -444,6 +444,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
     {
         [self saveDeck:nil];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
 }
 
 -(void) exportDeck:(UIBarButtonItem*)sender

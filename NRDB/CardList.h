@@ -10,9 +10,12 @@
 
 #import "TableData.h"
 
+@class Card;
 @interface CardList : NSObject
 
 -(CardList*) initForRole:(NRRole)role;
+
+-(void) filterAgendas:(Card*)identity;
 
 -(void) filterByName:(NSString*) name;
 -(void) filterByText:(NSString*) text;
