@@ -840,9 +840,9 @@
 				3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */,
 				3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */,
 				3A1EB582193A45190048E2E2 /* filter_3col@2x.png */,
+				3A1EB587193A454F0048E2E2 /* filter_3col@.png */,
 				3A1EB586193A454F0048E2E2 /* filter_2col@.png */,
 				3A1EB583193A45190048E2E2 /* filter_2col@2x.png */,
-				3A1EB587193A454F0048E2E2 /* filter_3col@.png */,
 			);
 			name = flat;
 			sourceTree = "<group>";

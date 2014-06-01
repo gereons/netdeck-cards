@@ -509,6 +509,8 @@ static NSDictionary* sideStr;
         if (self.deck.state != oldState)
         {
             [DeckManager saveDeck:self.deck toPath:self.deck.filename];
+            [DeckManager resetModificationDate:self.deck];
+            
             [self updateDecks];
         }
         self.deck = nil;

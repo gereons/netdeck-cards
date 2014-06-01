@@ -27,6 +27,8 @@
 // remove a file
 +(void) removeFile:(NSString*)pathname;
 
++(void) resetModificationDate:(Deck*)deck;
+
 +(NSMutableArray*) decksForRole:(NRRole)role;
 
 +(NSString*) directoryForRole:(NRRole)role;

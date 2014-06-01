@@ -190,5 +190,17 @@
     [fileMgr removeItemAtPath:pathName error:&error];
 }
 
+// reset a deck's last modification timestamp
++(void) resetModificationDate:(Deck *)deck
+{
+    if (deck.filename)
+    {
+        NSDictionary *attrs = @{ NSFileModificationDate: deck.lastModified };
+        NSError *error;
+        NSFileManager* fileMgr = [NSFileManager defaultManager];
+
+        [fileMgr setAttributes:attrs ofItemAtPath:deck.filename error: &error];
+    }
+}
 
 @end

@@ -223,6 +223,7 @@ static NSString* filterText;
     
     DeckCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.infoButton.hidden = YES;
     
     NSArray* decks = self.filteredDecks[indexPath.section];
     Deck* deck = decks[indexPath.row];

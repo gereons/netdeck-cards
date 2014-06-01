@@ -515,6 +515,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
                 if (self.autoSave)
                 {
                     [self saveDeck:nil];
+                    [DeckManager resetModificationDate:self.deck];
                 }
             }
             break;
