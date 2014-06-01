@@ -140,6 +140,8 @@
 "Set" = "Set";
 "Search in:" = "Suche in:";
 "Search Cards" = "Karten suchen";
+"Less △" = "Weniger △";
+"More ▽" = "Mehr ▽";
 
 // section headers
 "Identity" = "Identität";

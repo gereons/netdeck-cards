@@ -138,6 +138,8 @@
 "Set" = "Extension";
 "Search in:" = "Chercher dans:";
 "Search Cards" = "Chercher les cartes";
+"Less △" = "Moins △";
+"More ▽" = "Plus ▽";
 
 // section headers
 "Identity" = "Indentité";

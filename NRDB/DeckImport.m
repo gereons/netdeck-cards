@@ -15,11 +15,14 @@
 #import <EXTScope.h>
 #import "OctgnImport.h"
 
-#define IMPORT_ALWAYS   YES
+#define IMPORT_ALWAYS   NO  // set to yes for easier debugging
 
 #if !defined(DEBUG)
+#if IMPORT_ALWAYS
+#warning resetting IMPORT_ALWAYS
 #undef IMPORT_ALWAYS
 #define IMPORT_ALWAYS   NO
+#endif
 #endif
 
 typedef NS_ENUM(NSInteger, DeckBuilderSite)
