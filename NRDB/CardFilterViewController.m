@@ -386,6 +386,46 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) viewModeChanged:(UISegmentedControl*)sender
 {
+    NSIndexPath* scrollToPath;
+    
+    if (viewMode != VIEW_LIST)
+    {
+        // remember the top-left visible card
+        
+        NSArray* cells = [self.collectionView indexPathsForVisibleItems]; // wtf is this unordered?
+        NSArray *sortedIndexPaths = [cells sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath* ip1, NSIndexPath* ip2) {
+            return [ip1 compare:ip2];
+        }];
+        // find the first cell that's completely visible
+        for (NSIndexPath* indexPath in sortedIndexPaths)
+        {
+            CGRect cellRect = [self.collectionView cellForItemAtIndexPath:indexPath].frame;
+            cellRect = [self.collectionView convertRect:cellRect toView:self.collectionView.superview];
+            BOOL completelyVisible = CGRectContainsRect(self.collectionView.frame, cellRect);
+            if (completelyVisible)
+            {
+                scrollToPath = indexPath;
+                break;
+            }
+        }
+    }
+    else
+    {
+        NSArray* cells = [self.tableView indexPathsForVisibleRows];
+        // find the first cell that's completely visible
+        for (NSIndexPath* indexPath in cells)
+        {
+            CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
+            cellRect = [self.tableView convertRect:cellRect toView:self.tableView.superview];
+            BOOL completelyVisible = CGRectContainsRect(self.tableView.frame, cellRect);
+            if (completelyVisible)
+            {
+                scrollToPath = indexPath;
+                break;
+            }
+        }
+    }
+    
     viewMode = sender.selectedSegmentIndex;
     
     self.collectionView.hidden = viewMode == VIEW_LIST;
@@ -394,6 +434,18 @@ static NSInteger viewMode = VIEW_LIST;
     [self.collectionView reloadData];
     [self.tableView reloadData];
     [self setResultFrames:nil];
+    
+    if (scrollToPath)
+    {
+        if (!self.collectionView.hidden)
+        {
+            [self.collectionView scrollToItemAtIndexPath:scrollToPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        }
+        if (!self.tableView.hidden)
+        {
+            [self.tableView scrollToRowAtIndexPath:scrollToPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        }
+    }
 }
 
 -(void) typeClicked:(UIButton*)sender
