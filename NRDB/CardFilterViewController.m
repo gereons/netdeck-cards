@@ -852,6 +852,7 @@ static NSInteger viewMode = VIEW_LIST;
     
     [self.deckListViewController addCard:card];
     [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 #pragma mark collectionview
