@@ -97,6 +97,7 @@
 // deck view
 "Draw" = "Robar";
 "Analysis" = "Análisis";
+"Notes" = "Nota";
 
 // deck analysis
 "Deck Analysis" = "Análisis del mazo";

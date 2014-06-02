@@ -18,5 +18,6 @@
 #define IMPORT_DECK     @"importDeck"       // import deck from clipboard, userInfo contains @"deck"
 #define LOAD_CARDS      @"loadCards"        // card download from netrunnerdb.com, userInfo contains @"success" (BOOL)
 #define DROPBOX_CHANGED @"dropboxChanged"   // dropbox link status changed, no userInfo
+#define NOTES_CHANGED   @"notesChanged"     // notes for a deck changed, no userInfo
 
 #endif

@@ -19,8 +19,6 @@
 
 @implementation DeckExport
 
-#pragma warning add notes to export / print / email
-
 +(void) asOctgn:(Deck*)deck autoSave:(BOOL)autoSave
 {
     [GRMustache preventNSUndefinedKeyExceptionAttack];
@@ -90,7 +88,12 @@
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with " APP_NAME ];
+    [s appendString:@"\nDeck built with " APP_NAME "\n"];
+    
+    [s appendString:@"\n"];
+    [s appendString:deck.notes];
+    [s appendString:@"\n"];
+    
     return s;
 }
 
@@ -152,6 +155,11 @@
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
     [s appendString:@"\nDeck built with [" APP_NAME "](" APP_URL ").\n"];
+    
+    [s appendString:@"\n"];
+    [s appendString:deck.notes];
+    [s appendString:@"\n"];
+    
     return s;
 }
 
@@ -215,6 +223,11 @@
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
     [s appendString:@"\nDeck built with [url=" APP_URL "]" APP_NAME "[/url].\n"];
+    
+    [s appendString:@"\n"];
+    [s appendString:deck.notes];
+    [s appendString:@"\n"];
+    
     return s;
 }
 

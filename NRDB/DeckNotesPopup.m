@@ -10,6 +10,7 @@
 #import "Deck.h"
 #import "SettingsKeys.h"
 #import "DeckManager.h"
+#import "Notifications.h"
 
 @interface DeckNotesPopup ()
 
@@ -61,15 +62,11 @@
     });
 }
 
--(void)okClicked:(id)sender
+-(void) okClicked:(id)sender
 {
     self.deck.notes = self.textView.text;
     
-#pragma warning set "deck changed" state
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_SAVE])
-    {
-        [DeckManager saveDeck:self.deck];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTES_CHANGED object:nil];
     [self cancelClicked:sender];
 }
 
