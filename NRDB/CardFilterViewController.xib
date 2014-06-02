@@ -214,7 +214,6 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <connections>
                                 <action selector="apValueChanged:" destination="-1" eventType="valueChanged" id="epP-aQ-ufA"/>
-                                <action selector="muValueChanged:" destination="-1" eventType="valueChanged" id="ZfJ-lp-8RK"/>
                             </connections>
                         </slider>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="MT7-Gw-VQh">
