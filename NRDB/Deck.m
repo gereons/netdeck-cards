@@ -378,6 +378,7 @@
         }
         _identityCc.showAltArt = [decoder decodeBoolForKey:@"identityAltArt"];
         _lastModified = nil;
+        _notes = [decoder decodeObjectForKey:@"notes"];
     }
     return self;
 }
@@ -390,6 +391,7 @@
     [coder encodeInt:self.state forKey:@"state"];
     [coder encodeObject:self.identity.code forKey:@"identity"];
     [coder encodeBool:self.identityCc.showAltArt forKey:@"identityAltArt"];
+    [coder encodeObject:self.notes forKey:@"notes"];
 }
 
 

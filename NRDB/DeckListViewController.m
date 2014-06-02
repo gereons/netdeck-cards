@@ -13,6 +13,7 @@
 #import "IdentitySelectionViewController.h"
 #import "DeckAnalysisViewController.h"
 #import "DrawSimulatorViewController.h"
+#import "DeckNotesPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
 
@@ -44,6 +45,7 @@
 @property UIBarButtonItem* saveButton;
 @property UIBarButtonItem* exportButton;
 @property UIBarButtonItem* stateButton;
+@property UIBarButtonItem* notesButton;
 
 @property NSString* filename;
 @property BOOL autoSave;
@@ -147,7 +149,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
     self.saveButton.enabled = NO;
     
-    // right button
+    // right buttons
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
     
     self.autoSave = [settings boolForKey:AUTO_SAVE];
@@ -161,6 +163,10 @@ enum { POPUP_EXPORT, POPUP_STATE };
         [rightButtons addObject:self.saveButton];
     }
     [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)]];
+    
+    self.notesButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Notes") style:UIBarButtonItemStylePlain target:self action:@selector(editNotes:)];
+    [rightButtons addObject:self.notesButton];
+    
     self.stateButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:self.deck.state] style:UIBarButtonItemStylePlain target:self action:@selector(changeState:)];
     self.stateButton.possibleTitles = [NSSet setWithArray:@[
                                                             [DeckState buttonLabelFor:NRDeckStateNone],
@@ -172,6 +178,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     
     topItem.rightBarButtonItems = rightButtons;
 
+    // set up bottom toolbar
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
     
@@ -180,6 +187,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    [nc addObserver:self selector:@selector(notesChanged:) name:NOTES_CHANGED object:nil];
 
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
@@ -281,6 +289,11 @@ enum { POPUP_EXPORT, POPUP_STATE };
 -(void) drawSimulatorClicked:(id)sender
 {
     [DrawSimulatorViewController showForDeck:self.deck inViewController:self];
+}
+
+-(void) editNotes:(id)sender
+{
+    [DeckNotesPopup showForDeck:self.deck inViewController:self];
 }
 
 #pragma mark duplicate deck
@@ -621,6 +634,16 @@ enum { POPUP_EXPORT, POPUP_STATE };
 }
 
 #pragma mark notifications
+
+-(void) notesChanged:(id)sender
+{
+    self.deckChanged = YES;
+    if (self.autoSave)
+    {
+        [self saveDeck:nil];
+    }
+    [self refresh];
+}
 
 -(void) deckChanged:(NSNotification*)sender
 {

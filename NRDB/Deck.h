@@ -30,6 +30,8 @@
 @property NSString* filename;
 @property NSDate* lastModified;
 
+@property NSString* notes;
+
 -(NSArray*) checkValidity; // returns array of reasons, deck is ok if count==0
 
 -(CardCounter*) findCard:(Card*)card;

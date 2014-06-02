@@ -96,6 +96,7 @@
 // deck view
 "Draw" = "Cartes";
 "Analysis" = "Analyse";
+"Notes" = "Note";
 
 // analyse du deck 
 "Deck Analysis" = "Analyse du deck";

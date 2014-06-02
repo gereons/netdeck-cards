@@ -99,6 +99,7 @@
 // deck view
 "Draw" = "Karten";
 "Analysis" = "Analyse";
+"Notes" = "Notizen";
 
 // deck analysis
 "Deck Analysis" = "Deck-Analyse";
