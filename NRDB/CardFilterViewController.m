@@ -198,6 +198,12 @@ static NSInteger viewMode = VIEW_LIST;
 -(void) initFilters
 {
     self.role = self.role;
+    
+    self.typeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.setButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.factionButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.subtypeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    
     self.typeButton.tag = TYPE_BUTTON;
     self.setButton.tag = SET_BUTTON;
     self.factionButton.tag = FACTION_BUTTON;
@@ -217,7 +223,10 @@ static NSInteger viewMode = VIEW_LIST;
     
     self.searchLabel.text = l10n(@"Search in:");
     self.searchField.placeholder = l10n(@"Search Cards");
-    [self.searchScope setTitle:l10n(@"All") forSegmentAtIndex:0];
+    [self.searchScope setTitle:l10n(@"All") forSegmentAtIndex:NRSearchAll];
+    [self.searchScope setTitle:l10n(@"Name") forSegmentAtIndex:NRSearchName];
+    [self.searchScope setTitle:l10n(@"Text") forSegmentAtIndex:NRSearchText];
+    [self.searchScope apportionsSegmentWidthsByContent];
     
     [self clearFilters];
 }
