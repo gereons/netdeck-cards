@@ -20,10 +20,9 @@
                 <outlet property="moreLessButton" destination="bzD-aM-Xxo" id="EFZ-hZ-g3m"/>
                 <outlet property="muLabel" destination="icV-T6-TTz" id="AkX-rf-Wwi"/>
                 <outlet property="muSlider" destination="NpC-7d-eWK" id="73P-ht-RjN"/>
+                <outlet property="scopeButton" destination="eXj-q7-SCF" id="cXX-df-IqW"/>
                 <outlet property="searchContainer" destination="UKQ-ah-DCs" id="qkn-Az-d3w"/>
                 <outlet property="searchField" destination="q11-3e-1iG" id="MTr-hT-gOg"/>
-                <outlet property="searchLabel" destination="yG4-No-cEe" id="U3n-bJ-Zct"/>
-                <outlet property="searchScope" destination="ieK-Nj-A3c" id="fDb-v3-Hot"/>
                 <outlet property="searchSeparator" destination="z8T-eI-ayW" id="FOi-Ha-SDn"/>
                 <outlet property="setButton" destination="18k-Vz-FxP" id="2Z5-oG-5jr"/>
                 <outlet property="sliderContainer" destination="oRs-rz-ZMs" id="Xtd-Of-VXk"/>
@@ -43,29 +42,11 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="UKQ-ah-DCs" userLabel="Search Container">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search in:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yG4-No-cEe">
-                            <rect key="frame" x="20" y="11" width="120" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="ieK-Nj-A3c" userLabel="Search Scope">
-                            <rect key="frame" x="148" y="8" width="152" height="29"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="Alle"/>
-                                <segment title="Name"/>
-                                <segment title="Text"/>
-                            </segments>
-                            <connections>
-                                <action selector="scopeValueChanged:" destination="-1" eventType="valueChanged" id="0wL-52-aJJ"/>
-                            </connections>
-                        </segmentedControl>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Cards" minimumFontSize="17" clearButtonMode="whileEditing" id="q11-3e-1iG">
-                            <rect key="frame" x="20" y="44" width="280" height="30"/>
+                            <rect key="frame" x="20" y="8" width="204" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no"/>
@@ -74,7 +55,7 @@
                             </connections>
                         </textField>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="nOt-DT-qaT" userLabel="View Mode">
-                            <rect key="frame" x="190" y="82" width="110" height="29"/>
+                            <rect key="frame" x="190" y="47" width="110" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="" image="deckview_list.png"/>
@@ -86,7 +67,7 @@
                             </connections>
                         </segmentedControl>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bzD-aM-Xxo">
-                            <rect key="frame" x="20" y="82" width="96" height="30"/>
+                            <rect key="frame" x="20" y="46" width="96" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="More/Less">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -95,16 +76,26 @@
                                 <action selector="moreLessClicked:" destination="-1" eventType="touchUpInside" id="xTs-ED-6sH"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eXj-q7-SCF" userLabel="Button - Search Scope">
+                            <rect key="frame" x="232" y="8" width="68" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Nombre x">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="scopeClicked:" destination="-1" eventType="touchUpInside" id="Sap-gJ-FVP"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="z8T-eI-ayW" userLabel="Search Separator Line">
-                    <rect key="frame" x="0.0" y="121" width="320" height="1"/>
+                    <rect key="frame" x="0.0" y="87" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="o9d-r4-Mps" userLabel="Button Container">
-                    <rect key="frame" x="0.0" y="122" width="320" height="65"/>
+                    <rect key="frame" x="0.0" y="88" width="320" height="65"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KBw-vu-Yq7">
@@ -151,12 +142,12 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="WDc-eW-xDO" userLabel="Button Separator Line">
-                    <rect key="frame" x="0.0" y="187" width="320" height="1"/>
+                    <rect key="frame" x="0.0" y="154" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="oRs-rz-ZMs" userLabel="Slider Container">
-                    <rect key="frame" x="0.0" y="189" width="320" height="157"/>
+                    <rect key="frame" x="0.0" y="155" width="320" height="157"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Influence" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="T8Y-oe-9F8">
@@ -233,12 +224,12 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="tsO-Ri-D1U" userLabel="Bottom Separator Line">
-                    <rect key="frame" x="0.0" y="347" width="320" height="1"/>
+                    <rect key="frame" x="0.0" y="312" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="m0f-0m-SGz">
-                    <rect key="frame" x="0.0" y="348" width="320" height="356"/>
+                    <rect key="frame" x="0.0" y="313" width="320" height="391"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -247,7 +238,7 @@
                     </connections>
                 </tableView>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" id="ZXw-Bq-o8L">
-                    <rect key="frame" x="0.0" y="348" width="320" height="356"/>
+                    <rect key="frame" x="0.0" y="313" width="320" height="391"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="D3e-3x-NGw">

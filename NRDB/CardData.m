@@ -41,7 +41,8 @@ static NSMutableSet* allSets;
 
 static int maxMU;
 static int maxStrength;
-static int maxCost;
+static int maxRunnerCost;
+static int maxCorpCost;
 static int maxInf;
 static int maxAgendaPoints;
 
@@ -270,11 +271,18 @@ NSString* const kANY = @"Any";
     JSON_STR(artist, @"illustrator");
     c->_lastModified = [json objectForKey:@"last-modified"];
     
-    if (c.mu > maxMU) maxMU = c.mu;
-    if (c.strength > maxStrength) maxStrength = c.strength;
-    if (c.influence > maxInf) maxInf = c.influence;
-    if (c.cost > maxCost) maxCost = c.cost;
-    if (c.agendaPoints > maxAgendaPoints) maxAgendaPoints = c.agendaPoints;
+    maxMU = MAX(c.mu, maxMU);
+    maxStrength = MAX(c.strength, maxStrength);
+    maxInf = MAX(c.influence, maxInf);
+    maxAgendaPoints = MAX(c.agendaPoints, maxAgendaPoints);
+    if (c.role == NRRoleRunner)
+    {
+        maxRunnerCost = MAX(c.cost, maxRunnerCost);
+    }
+    else
+    {
+        maxCorpCost = MAX(c.cost, maxCorpCost);
+    }
     
     c.maxCopies = 3;
     if ([c.code isEqualToString:DIRECTOR_HAAS_PET_PROJ] || [c.code isEqualToString:PHILOTIC_ENTANGLEMENT] || c.type == NRCardTypeIdentity)
@@ -480,7 +488,8 @@ NSString* const kANY = @"Any";
 +(int) maxMU { return maxMU; }
 +(int) maxStrength { return maxStrength; }
 +(int) maxInfluence { return maxInf; }
-+(int) maxCost { return maxCost; }
++(int) maxRunnerCost { return maxRunnerCost; }
++(int) maxCorpCost { return maxCorpCost; }
 +(int) maxAgendaPoints { return maxAgendaPoints; }
 
 #pragma mark NSObject

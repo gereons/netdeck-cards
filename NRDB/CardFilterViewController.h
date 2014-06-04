@@ -10,13 +10,12 @@
 
 @class Deck, DeckListViewController;
 
-@interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate>
+@interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIActionSheetDelegate>
 
 @property DeckListViewController* deckListViewController;
 
-@property IBOutlet UILabel* searchLabel;
 @property IBOutlet UITextField* searchField;
-@property IBOutlet UISegmentedControl* searchScope;
+@property IBOutlet UIButton* scopeButton;
 
 @property IBOutlet UISlider* costSlider;
 @property IBOutlet UILabel* costLabel;
@@ -64,7 +63,7 @@
 -(IBAction)setClicked:(id)sender;
 
 -(IBAction)moreLessClicked:(id)sender;
--(IBAction)scopeValueChanged:(id)sender;
+-(IBAction)scopeClicked:(id)sender;
 -(IBAction)viewModeChanged:(id)sender;
 
 -(id) initWithRole:(NRRole)role;

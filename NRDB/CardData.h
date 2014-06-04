@@ -30,7 +30,8 @@
 +(CardData*) altFor:(NSString*) name;
 
 +(int) maxStrength;
-+(int) maxCost;
++(int) maxRunnerCost;
++(int) maxCorpCost;
 +(int) maxMU;
 +(int) maxInfluence;
 +(int) maxAgendaPoints;

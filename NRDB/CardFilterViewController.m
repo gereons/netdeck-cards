@@ -47,12 +47,18 @@ enum { VIEW_LIST, VIEW_IMG_2, VIEW_IMG_3 };
 enum { ADD_BUTTON_TABLE, ADD_BUTTON_COLLECTION };
 
 static NSArray* scopes;
+static NSDictionary* scopeLabels;
 static BOOL showAllFilters = YES;
 static NSInteger viewMode = VIEW_LIST;
 
 +(void)initialize
 {
     scopes = @[ @"all text", @"card name", @"card text" ];
+    
+    scopeLabels = @{ @(NRSearchAll): l10n(@"All"),
+                     @(NRSearchName): l10n(@"Name"),
+                     @(NRSearchText): l10n(@"Text")
+                     };
 }
 
 - (id) initWithRole:(NRRole)role
@@ -139,8 +145,6 @@ static NSInteger viewMode = VIEW_LIST;
     self.viewMode.selectedSegmentIndex = viewMode;
     self.collectionView.hidden = viewMode == VIEW_LIST;
     self.tableView.hidden = viewMode != VIEW_LIST;
-    
-    [self initFilters];
 }
 
 -(void) dealloc
@@ -166,6 +170,8 @@ static NSInteger viewMode = VIEW_LIST;
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = l10n(@"Filter");
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFiltersClicked:)];
+    
+    [self initFilters];
 }
 
 -(void) setResultFrames:(id)sender
@@ -209,7 +215,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.factionButton.tag = FACTION_BUTTON;
     self.subtypeButton.tag = SUBTYPE_BUTTON;
     
-    self.costSlider.maximumValue = 1+[CardData maxCost];
+    self.costSlider.maximumValue = 1+(self.role == NRRoleRunner ? [CardData maxRunnerCost] : [CardData maxCorpCost]);
     self.muSlider.maximumValue = 1+[CardData maxMU];
     self.strengthSlider.maximumValue = 1+[CardData maxStrength];
     self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
@@ -221,12 +227,7 @@ static NSInteger viewMode = VIEW_LIST;
     [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
     [self.apSlider setThumbImage:[UIImage imageNamed:@"point_slider"] forState:UIControlStateNormal];
     
-    self.searchLabel.text = l10n(@"Search in:");
     self.searchField.placeholder = l10n(@"Search Cards");
-    [self.searchScope setTitle:l10n(@"All") forSegmentAtIndex:NRSearchAll];
-    [self.searchScope setTitle:l10n(@"Name") forSegmentAtIndex:NRSearchName];
-    [self.searchScope setTitle:l10n(@"Text") forSegmentAtIndex:NRSearchText];
-    [self.searchScope apportionsSegmentWidthsByContent];
     
     [self clearFilters];
 }
@@ -259,7 +260,10 @@ static NSInteger viewMode = VIEW_LIST;
     self.sendNotifications = NO;
     
     self.scope = NRSearchName;
-    self.searchScope.selectedSegmentIndex = self.scope;
+    [self.scopeButton setTitle:[NSString stringWithFormat:@"%@ ▾", scopeLabels[@(self.scope)]] forState:UIControlStateNormal];
+    self.scopeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.scopeButton.titleLabel.minimumScaleFactor = 0.5;
+    
     self.searchField.text = @"";
     self.searchText = @"";
     
@@ -622,10 +626,35 @@ static NSInteger viewMode = VIEW_LIST;
 
 #pragma mark text search
 
--(void) scopeValueChanged:(UISegmentedControl*)sender
+-(void) scopeClicked:(UIButton*)sender
 {
     TF_CHECKPOINT(@"filter scope");
-    self.scope = sender.selectedSegmentIndex;
+
+    UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                       delegate:self
+                                              cancelButtonTitle:@""
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:
+                            [NSString stringWithFormat:@"%@%@", l10n(@"All"), self.scope == NRSearchAll ? @" ✓" : @""],
+                            [NSString stringWithFormat:@"%@%@", l10n(@"Name"), self.scope == NRSearchName ? @" ✓" : @""],
+                            [NSString stringWithFormat:@"%@%@", l10n(@"Text"), self.scope == NRSearchText ? @" ✓" : @""],
+                            nil];
+    
+    [sheet showFromRect:sender.frame inView:self.view animated:NO];
+    
+    // [self postNotification:scopes[self.scope] value:self.searchText];
+}
+
+-(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == actionSheet.cancelButtonIndex)
+    {
+        return;
+    }
+    
+    self.scope = buttonIndex;
+    [self.scopeButton setTitle:[NSString stringWithFormat:@"%@ ▾", scopeLabels[@(self.scope)]] forState:UIControlStateNormal];
+    
     [self postNotification:scopes[self.scope] value:self.searchText];
 }
 
