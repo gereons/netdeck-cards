@@ -78,6 +78,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [super viewDidDisappear:animated];
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
+    
+    [settings synchronize];
 }
 
 - (void)viewDidLoad
@@ -293,6 +295,11 @@ enum { POPUP_EXPORT, POPUP_STATE };
 
 -(void) editNotes:(id)sender
 {
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
     [DeckNotesPopup showForDeck:self.deck inViewController:self];
 }
 

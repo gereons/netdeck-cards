@@ -84,6 +84,12 @@ typedef NS_ENUM(NSInteger, NRDeckSearchScope) {
     NRDeckSearchCard
 };
 
+typedef NS_ENUM(NSInteger, NRDeckSortType) {
+    NRDeckSortDate,
+    NRDeckSortFaction,
+    NRDeckSortA_Z
+};
+
 typedef NS_ENUM(NSInteger, NRCycle)
 {
     NRCycleNone = -1,

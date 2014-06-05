@@ -101,6 +101,8 @@ static NSInteger viewMode = VIEW_LIST;
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(showAllFilters) forKey:SHOW_ALL_FILTERS];
     [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
+    
+    [settings synchronize];
 }
 
 - (void)viewDidLoad
@@ -980,13 +982,13 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return viewMode == VIEW_IMG_3 ? CGSizeMake(106, 102) : CGSizeMake(159, 144);
+    return viewMode == VIEW_IMG_3 ? CGSizeMake(103, 107) : CGSizeMake(156, 140);
 }
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsZero;
-}
+//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+//{
+//    return UIEdgeInsetsZero;
+//}
 
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {

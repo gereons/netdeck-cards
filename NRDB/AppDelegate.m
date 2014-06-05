@@ -67,7 +67,11 @@
         AUTO_SAVE_DB: @(NO),
         DECK_VIEW_STYLE: @(1),
         LANGUAGE: @"en",
-        NUM_CORES: @(3)
+        NUM_CORES: @(3),
+        
+        SHOW_ALL_FILTERS: @(YES),
+        DECK_FILTER_STATE: @(NRDeckStateNone),
+        DECK_FILTER_SORT: @(NRDeckSortA_Z),
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];

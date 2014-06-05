@@ -19,9 +19,6 @@
 #import "SettingsKeys.h"
 #import "DeckState.h"
 
-typedef NS_ENUM(NSInteger, SortType) {
-    SortDate, SortFaction, SortA_Z
-};
 typedef NS_ENUM(NSInteger, FilterType) {
     FilterTypeAll, FilterRunner, FilterCorp
 };
@@ -30,7 +27,7 @@ enum { POPUP_NEW, POPUP_LONGPRESS, POPUP_SORT, POPUP_SIDE, POPUP_STATE, POPUP_SE
 
 static FilterType filterType = FilterTypeAll;
 static NRDeckState filterState = NRDeckStateNone;
-static SortType sortType = SortA_Z;
+static NRDeckSortType sortType = NRDeckSortA_Z;
 static NRDeckSearchScope searchScope = NRDeckSearchAll;
 static NSString* filterText;
 
@@ -59,7 +56,7 @@ static NSDictionary* sideStr;
 
 +(void) initialize
 {
-    sortStr = @{ @(SortDate): l10n(@"Date"), @(SortFaction): l10n(@"Faction"), @(SortA_Z): l10n(@"A-Z") };
+    sortStr = @{ @(NRDeckSortDate): l10n(@"Date"), @(NRDeckSortFaction): l10n(@"Faction"), @(NRDeckSortA_Z): l10n(@"A-Z") };
     sideStr = @{ @(FilterTypeAll): l10n(@"All"), @(FilterRunner): l10n(@"Runner"), @(FilterCorp): l10n(@"Corp") };
 }
 
@@ -80,11 +77,10 @@ static NSDictionary* sideStr;
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
     [settings setObject:@(filterType) forKey:DECK_FILTER_TYPE];
-    if ([settings objectForKey:DECK_FILTER_STATE] != nil)
-    {
-        [settings setObject:@(filterState) forKey:DECK_FILTER_STATE];
-    }
+    [settings setObject:@(filterState) forKey:DECK_FILTER_STATE];
     [settings setObject:@(sortType) forKey:DECK_FILTER_SORT];
+    
+    [settings synchronize];
 }
 
 - (void)viewDidLoad
@@ -234,7 +230,7 @@ static NSDictionary* sideStr;
     NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSMutableArray array];
     NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSMutableArray array];
     
-    if (sortType != SortDate)
+    if (sortType != NRDeckSortDate)
     {
         self.runnerDecks = [self sortDecks:runnerDecks];
         self.corpDecks = [self sortDecks:corpDecks];
@@ -290,12 +286,12 @@ static NSDictionary* sideStr;
 {
     switch (sortType)
     {
-        case SortA_Z:
+        case NRDeckSortA_Z:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 return [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
             }];
             break;
-        case SortDate:
+        case NRDeckSortDate:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 NSComparisonResult cmp = [d2.lastModified compare:d1.lastModified];
                 if (cmp == NSOrderedSame)
@@ -305,7 +301,7 @@ static NSDictionary* sideStr;
                 return cmp;
             }];
             break;
-        case SortFaction:
+        case NRDeckSortFaction:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 NSString* faction1 = [Faction name:d1.identity.faction];
                 NSString* faction2 = [Faction name:d2.identity.faction];
@@ -473,13 +469,13 @@ static NSDictionary* sideStr;
         switch (buttonIndex)
         {
             case 0:
-                sortType = SortDate;
+                sortType = NRDeckSortDate;
                 break;
             case 1:
-                sortType = SortFaction;
+                sortType = NRDeckSortFaction;
                 break;
             case 2:
-                sortType = SortA_Z;
+                sortType = NRDeckSortA_Z;
                 break;
         }
         [self updateDecks];
@@ -740,7 +736,7 @@ static NSDictionary* sideStr;
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (sortType == SortDate)
+    if (sortType == NRDeckSortDate)
     {
         return nil;
     }
