@@ -15,9 +15,6 @@
 +(void) addEnglishNames:(NSArray*)array;
 +(void) removeFile;
 
-+(void) addCard:(CardData*) card manually:(BOOL)manually;
-+(void) deleteCard:(CardData*) card;
-
 +(CardData*) cardByCode:(NSString*)code;
 +(NSArray*) allRunnerCards;
 +(NSArray*) allCorpCards;
@@ -38,8 +35,6 @@
 +(int) maxAgendaPoints;
 
 +(BOOL) cardsAvailable;
-
--(void) synthesizeMissingFields;
 
 @property (readonly) BOOL isValid;
 

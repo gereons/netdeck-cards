@@ -175,7 +175,7 @@ NSString* const kANY = @"Any";
             CardData* card = [CardData cardFromJson:obj];
             if (card)
             {
-                [CardData addCard:card manually:NO];
+                [CardData addCard:card];
             }
         }
         
@@ -367,14 +367,9 @@ NSString* const kANY = @"Any";
     }
 }
 
-+(void) addCard:(CardData*)c manually:(BOOL)manually
++(void) addCard:(CardData*)c
 {
     NSAssert(c != nil, @"invalid card");
-    
-    if (manually)
-    {
-        [c synthesizeMissingFields];
-    }
     
     if (c.isValid)
     {
@@ -391,18 +386,6 @@ NSString* const kANY = @"Any";
             [arr addObject:c];
         }
     }
-}
-
-+(void) deleteCard:(CardData *)c
-{
-    NSAssert(c != nil, @"invalid card");
-    [allCards removeObjectForKey:c.code];
-    
-    NSMutableArray* arr = allIdentities[c.role];
-    [arr removeObject:c];
-    
-    arr = c.role == NRRoleRunner ? allRunnerCards : allCorpCards;
-    [arr removeObject:c];
 }
 
 +(CardData*) cardByCode:(NSString *)code
