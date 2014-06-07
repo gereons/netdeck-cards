@@ -191,7 +191,6 @@
 		3AE0D51018F7B4A0007868A7 /* credit_slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE0D50618F7B4A0007868A7 /* credit_slider.png */; };
 		3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */; };
 		3AF2235E194364A80072FD9F /* CardFilterSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */; };
-		3AF2236119436E480072FD9F /* CardFilterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2236019436E480072FD9F /* CardFilterFlowLayout.m */; };
 		3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BA1883075500F6306B /* CardFilterPopover.m */; };
 		3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */; };
 		3AF424AB19150FC80005ACAA /* searchbar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF424AA19150FC80005ACAA /* searchbar-bg.png */; };
@@ -486,8 +485,6 @@
 		3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSectionHeaderView.xib; sourceTree = "<group>"; };
 		3AF2235C194364A80072FD9F /* CardFilterSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterSectionHeaderView.h; sourceTree = "<group>"; };
 		3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterSectionHeaderView.m; sourceTree = "<group>"; };
-		3AF2235F19436E480072FD9F /* CardFilterFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterFlowLayout.h; sourceTree = "<group>"; };
-		3AF2236019436E480072FD9F /* CardFilterFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterFlowLayout.m; sourceTree = "<group>"; };
 		3AF2E8B91883075500F6306B /* CardFilterPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterPopover.h; sourceTree = "<group>"; };
 		3AF2E8BA1883075500F6306B /* CardFilterPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterPopover.m; sourceTree = "<group>"; };
 		3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterPopover.xib; sourceTree = "<group>"; };
@@ -656,8 +653,6 @@
 				3AF2235C194364A80072FD9F /* CardFilterSectionHeaderView.h */,
 				3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */,
 				3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */,
-				3AF2235F19436E480072FD9F /* CardFilterFlowLayout.h */,
-				3AF2236019436E480072FD9F /* CardFilterFlowLayout.m */,
 			);
 			name = "Filtered Cards";
 			sourceTree = "<group>";
@@ -1387,7 +1382,6 @@
 				3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */,
 				3A4178AA18761BF600DEEFA6 /* IASKSwitch.m in Sources */,
 				3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */,
-				3AF2236119436E480072FD9F /* CardFilterFlowLayout.m in Sources */,
 				3A4178A818761BF600DEEFA6 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */,
 				3A4178A718761BF600DEEFA6 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,

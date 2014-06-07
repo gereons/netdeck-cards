@@ -20,6 +20,7 @@
 #import "CardImageViewPopover.h"
 #import "CardFilterThumbView.h"
 #import "CardFilterSectionHeaderView.h"
+#import <CSStickyHeaderFlowLayout.h>
 #import "SettingsKeys.h"
 
 @interface CardFilterViewController ()
@@ -133,6 +134,12 @@ static NSInteger viewMode = VIEW_LIST;
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSmallThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardSmallThumb"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
+    CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    layout.headerReferenceSize = CGSizeMake(320, 33);
+    layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
+    layout.minimumInteritemSpacing = 3;
+    layout.minimumLineSpacing = 3;
+
     CGRect rect = [self.sliderContainer convertRect:self.influenceSeparator.frame toView:self.view];
     CGFloat buttonBoxHeight = self.bottomSeparator.frame.origin.y - rect.origin.y;
     
@@ -996,6 +1003,11 @@ static NSInteger viewMode = VIEW_LIST;
 {
     NSArray* cards = self.cards[section];
     return cards.count;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(2, 2, 0, 2);
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
