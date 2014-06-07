@@ -90,9 +90,12 @@
     
     [s appendString:@"\nDeck built with " APP_NAME "\n"];
     
-    [s appendString:@"\n"];
-    [s appendString:deck.notes];
-    [s appendString:@"\n"];
+    if (deck.notes)
+    {
+        [s appendString:@"\n"];
+        [s appendString:deck.notes];
+        [s appendString:@"\n"];
+    }
     
     return s;
 }
