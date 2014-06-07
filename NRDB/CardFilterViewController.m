@@ -19,6 +19,7 @@
 #import "Notifications.h"
 #import "CardImageViewPopover.h"
 #import "CardFilterThumbView.h"
+#import "CardFilterSectionHeaderView.h"
 #import "SettingsKeys.h"
 
 @interface CardFilterViewController ()
@@ -130,6 +131,7 @@ static NSInteger viewMode = VIEW_LIST;
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSmallThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardSmallThumb"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
     CGRect rect = [self.sliderContainer convertRect:self.influenceSeparator.frame toView:self.view];
     CGFloat buttonBoxHeight = self.bottomSeparator.frame.origin.y - rect.origin.y;
@@ -985,11 +987,6 @@ static NSInteger viewMode = VIEW_LIST;
     return viewMode == VIEW_IMG_3 ? CGSizeMake(103, 107) : CGSizeMake(156, 140);
 }
 
-//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-//{
-//    return UIEdgeInsetsZero;
-//}
-
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return self.cards.count;
@@ -999,6 +996,19 @@ static NSInteger viewMode = VIEW_LIST;
 {
     NSArray* cards = self.cards[section];
     return cards.count;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    CardFilterSectionHeaderView* header = nil;
+    if (kind == UICollectionElementKindSectionHeader)
+    {
+        header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
+        
+        header.titleLabel.text = self.sections[indexPath.section];
+    }
+    
+    return header;
 }
 
 @end
