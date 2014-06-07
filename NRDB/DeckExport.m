@@ -34,6 +34,13 @@
     NSString* octgnName = [NSString stringWithFormat:@"%@.o8d", deck.name];
     NSString* content = [template renderObject:objects error:&error];
     
+    if (deck.notes.length > 0)
+    {
+        NSString* notesName = [NSString stringWithFormat:@"%@_notes.txt", deck.name];
+        
+        [DeckExport writeToDropbox:deck.notes fileName:notesName deckType:nil autoSave:YES];
+    }
+    
     [DeckExport writeToDropbox:content fileName:octgnName deckType:l10n(@"OCTGN Deck") autoSave:autoSave];
 }
 
@@ -90,7 +97,7 @@
     
     [s appendString:@"\nDeck built with " APP_NAME "\n"];
     
-    if (deck.notes)
+    if (deck.notes.length > 0)
     {
         [s appendString:@"\n"];
         [s appendString:deck.notes];
@@ -159,9 +166,12 @@
     
     [s appendString:@"\nDeck built with [" APP_NAME "](" APP_URL ").\n"];
     
-    [s appendString:@"\n"];
-    [s appendString:deck.notes];
-    [s appendString:@"\n"];
+    if (deck.notes.length > 0)
+    {
+        [s appendString:@"\n"];
+        [s appendString:deck.notes];
+        [s appendString:@"\n"];
+    }
     
     return s;
 }
@@ -227,9 +237,12 @@
     
     [s appendString:@"\nDeck built with [url=" APP_URL "]" APP_NAME "[/url].\n"];
     
-    [s appendString:@"\n"];
-    [s appendString:deck.notes];
-    [s appendString:@"\n"];
+    if (deck.notes.length > 0)
+    {
+        [s appendString:@"\n"];
+        [s appendString:deck.notes];
+        [s appendString:@"\n"];
+    }
     
     return s;
 }
