@@ -13,13 +13,13 @@
 
 @interface Deck : NSObject <NSCoding>
 
-@property (strong) CardCounter* identityCc;
+@property CardCounter* identityCc;
 @property (readonly) NSArray* cards;        // array of CardCounter, all cards except identity
 @property (readonly) NSArray* allCards;     // array of CardCounter, all cards including identity, id is first element
 
 @property (nonatomic) Card* identity;        // convenience accessor
 
-@property (strong) NSString* name;
+@property NSString* name;
 @property NRRole role;
 @property NRDeckState state;
 

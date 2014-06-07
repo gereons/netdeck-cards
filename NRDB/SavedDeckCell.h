@@ -10,9 +10,9 @@
 
 @interface SavedDeckCell: UITableViewCell
 
-@property (strong) UIButton* button;
-@property (strong) UILabel* nameLabel;
-@property (strong) UILabel* summaryLabel;
+@property UIButton* button;
+@property UILabel* nameLabel;
+@property UILabel* summaryLabel;
 
 - (SavedDeckCell*) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 

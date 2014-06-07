@@ -42,28 +42,28 @@
 
 @property (readonly) BOOL isValid;
 
-@property (strong) NSString* code;        // unique id of the card
-@property (strong) NSString* name;       // name
-@property (strong) NSString* text;
-@property (strong) NSString* flavor;
+@property NSString* code;        // unique id of the card
+@property NSString* name;       // name
+@property NSString* text;
+@property NSString* flavor;
 
-@property (strong) NSString* factionStr;
+@property NSString* factionStr;
 @property NRFaction faction;
 
-@property (strong) NSString* roleStr;    // Runner/Corp
+@property NSString* roleStr;    // Runner/Corp
 @property NRRole role;
 
-@property (strong) NSString* typeStr;
+@property NSString* typeStr;
 @property NRCardType type;
 
-@property (strong) NSString* subtype;
-@property (strong) NSArray* subtypes;     // array of strings
+@property NSString* subtype;
+@property NSArray* subtypes;     // array of strings
 
-@property (strong) NSString* subtypeCode;
-@property (strong) NSArray* subtypeCodes; // array of strings
+@property NSString* subtypeCode;
+@property NSArray* subtypeCodes; // array of strings
 
-@property (strong) NSString* setName;
-@property (strong) NSString* setCode;
+@property NSString* setName;
+@property NSString* setCode;
 @property int number;                     // number in set
 @property int quantity;                   // quantity in set
 
@@ -85,11 +85,11 @@
 
 @property int influence;
 
-@property (strong) NSString* url;
-@property (strong) NSString* imageSrc;
-@property (strong) NSString* artist ;
+@property NSString* url;
+@property NSString* imageSrc;
+@property NSString* artist ;
 
-@property (strong) NSString* lastModified;
+@property NSString* lastModified;
 
 @property int maxCopies;
 

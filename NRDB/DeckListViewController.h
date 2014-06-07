@@ -14,19 +14,19 @@
 
 @interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIPrintInteractionControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 
-@property (strong) IBOutlet UITableView* tableView;
-@property (strong) IBOutlet UICollectionView* collectionView;
+@property IBOutlet UITableView* tableView;
+@property IBOutlet UICollectionView* collectionView;
 
-@property (strong) IBOutlet UIToolbar* toolBar;
-@property (strong) IBOutlet UILabel* footerLabel;
-@property (strong) IBOutlet UILabel* deckNameLabel;
-@property (strong) IBOutlet UILabel* lastSetLabel;
-@property (strong) IBOutlet UIButton* drawButton;
-@property (strong) IBOutlet UIButton* analysisButton;
+@property IBOutlet UIToolbar* toolBar;
+@property IBOutlet UILabel* footerLabel;
+@property IBOutlet UILabel* deckNameLabel;
+@property IBOutlet UILabel* lastSetLabel;
+@property IBOutlet UIButton* drawButton;
+@property IBOutlet UIButton* analysisButton;
 
 @property BOOL deckChanged;
 @property NRRole role;
-@property (strong) Deck* deck;
+@property Deck* deck;
 
 -(void) addCard:(Card*)card;
 -(void) loadDeckFromFile:(NSString*) filename;

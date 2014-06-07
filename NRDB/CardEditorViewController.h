@@ -11,6 +11,6 @@
 
 @interface CardEditorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UISearchBarDelegate, UIAlertViewDelegate>
 
-@property (strong) IBOutlet UITableView *tableView;
+@property IBOutlet UITableView *tableView;
 
 @end

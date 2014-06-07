@@ -240,6 +240,16 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
+        <dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>All That Remains</string>
+			<key>Key</key>
+			<string>use_all_that_remains</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>SetSelection</string>
