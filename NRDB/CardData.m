@@ -15,11 +15,9 @@
 #import "CardSets.h"
 #import "SettingsKeys.h"
 
-// #define JSON_INT(key, attr)          c->_##key = [[json objectForKey:attr] intValue]
 #define JSON_INT(key, attr)          do { NSString*tmp = [json objectForKey:attr]; c->_##key = tmp ? [tmp intValue] : -1; } while (0)
 #define JSON_BOOL(key, attr)         c->_##key = [[json objectForKey:attr] boolValue]
 #define JSON_STR(key, attr)          c->_##key = [json objectForKey:attr]
-
 
 @implementation CardData
 
@@ -38,6 +36,7 @@ static NSMutableArray* allCorpCards;
 static NSMutableArray* allIdentities;
 
 static NSMutableSet* allSets;
+static NSArray* max1InDeck;
 
 static int maxMU;
 static int maxStrength;
@@ -51,6 +50,11 @@ NSString* const kANY = @"Any";
 +(void) initialize
 {
     [CardData resetData];
+    
+    max1InDeck = @[ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
+                    UTOPIA_SHARD,
+                    HADES_SHARD, HADES_FRAGMENT,
+                    EDEN_SHARD, EDEN_FRAGMENT ];
 }
 
 +(void) resetData
@@ -310,7 +314,7 @@ NSString* const kANY = @"Any";
     }
     
     c.maxCopies = 3;
-    if ([c.code isEqualToString:DIRECTOR_HAAS_PET_PROJ] || [c.code isEqualToString:PHILOTIC_ENTANGLEMENT] || c.type == NRCardTypeIdentity)
+    if ([max1InDeck containsObject:c.code] || c.type == NRCardTypeIdentity)
     {
         c.maxCopies = 1;
     }

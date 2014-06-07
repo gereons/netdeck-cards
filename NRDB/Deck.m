@@ -98,6 +98,7 @@
         BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
         
         BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
+        BOOL hfError = NO, hsError = NO, usError = NO, efError = NO, esError = NO;
         
         // check dir. haas, custom biotics and out-of-faction agendas
         for (CardCounter* cc in self.cards)
@@ -113,6 +114,36 @@
             {
                 entError = YES;
                 [reasons addObject:l10n(@"Too many entanglements")];
+            }
+            
+            if ([card.code isEqualToString:HADES_FRAGMENT] && cc.count > 1 && !hfError)
+            {
+                hfError = YES;
+                [reasons addObject:l10n(@"Too many Hades Fragments")];
+            }
+            
+            if ([card.code isEqualToString:HADES_SHARD] && cc.count > 1 && !hsError)
+            {
+                hsError = YES;
+                [reasons addObject:l10n(@"Too many Hades Shards")];
+            }
+            
+            if ([card.code isEqualToString:EDEN_FRAGMENT] && cc.count > 1 && !efError)
+            {
+                efError = YES;
+                [reasons addObject:l10n(@"Too many Eden Fragments")];
+            }
+            
+            if ([card.code isEqualToString:EDEN_SHARD] && cc.count > 1 && !esError)
+            {
+                esError = YES;
+                [reasons addObject:l10n(@"Too many Eden Shards")];
+            }
+            
+            if ([card.code isEqualToString:UTOPIA_SHARD] && cc.count > 1 && !usError)
+            {
+                usError = YES;
+                [reasons addObject:l10n(@"Too many Utopia Shards")];
             }
             
             if (noJinteki && card.faction == NRFactionJinteki && !jintekiError)

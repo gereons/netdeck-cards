@@ -69,6 +69,12 @@
 "AP must be %d or %d" = "Le nombre de points de projet doit être de %d ou de %d";
 "Too many pet projects" = "Trop de projet personnel";
 "Too many entanglements" = "Trop d'enchevêtrements";
+"Too many Utopia Shards" = "Trop d'Utopia Shards";
+"Too many Utopia Fragments" = "Trop d'Utopia Fragments";
+"Too many Hades Shards" = "Trop de Hades Shards";
+"Too many Hades Fragments" = "Trop de Hades Fragments";
+"Too many Eden Fragments" = "Trop d'Eden Fragments"
+"Too many Eden Shards" = "Trop d'Eden Shards";
 "Cannot include Jinteki" = "Ne peux pas inclure de cartes de la faction Jinteki";
 "Cannot use out-of-faction agendas" = "Ne peut pas utiliser des projets hors faction";
 "Not enough cards" = "Pas assez de cartes";

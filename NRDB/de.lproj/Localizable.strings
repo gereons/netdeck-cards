@@ -71,6 +71,12 @@
 "AP must be %d or %d" = "Nur %d oder %d AP erlaubt";
 "Too many pet projects" = "Zuviele Lieblingsprojekte";
 "Too many entanglements" = "Zuviele Verschränkungen";
+"Too many Utopia Shards" = "Zuviele Utopia Shards";
+"Too many Utopia Fragments" = "Zuviele Utopia Fragments";
+"Too many Hades Shards" = "Zuviele Hades Shards";
+"Too many Hades Fragments" = "Zuviele Hades Fragments";
+"Too many Eden Fragments" = "Zuviele Eden Fragments"
+"Too many Eden Shards" = "Zuviele Eden Shards";
 "Cannot include Jinteki" = "Jinteki nicht erlaubt";
 "Cannot use out-of-faction agendas" = "Fraktionsfremde Agenden";
 "Not enough cards" = "Nicht genug Karten";
