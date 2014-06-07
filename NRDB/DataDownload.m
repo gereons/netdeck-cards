@@ -98,7 +98,26 @@ static DataDownload* instance;
             {
                 ok = [CardData setupFromNetrunnerDbApi:responseObject];
             }
-            [self downloadFinished:ok];
+            
+            if ([language isEqualToString:@"en"])
+            {
+                [CardData addEnglishNames:nil];
+                [self downloadFinished:ok];
+            }
+            else
+            {
+                // download english data as well
+                [self.manager GET:cardsUrl parameters:@{ @"_locale": @"en" }
+                      success:^(AFHTTPRequestOperation *operation, id responseObject)
+                      {
+                          [CardData addEnglishNames:responseObject];
+                      }
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                      {
+                          @strongify(self);
+                          [self downloadFinished:NO];
+                      }];
+            }
         }
         failure:^(AFHTTPRequestOperation* operation, NSError* error) {
             @strongify(self);

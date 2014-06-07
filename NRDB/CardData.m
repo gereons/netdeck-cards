@@ -72,60 +72,59 @@ NSString* const kANY = @"Any";
     roleCodes = @{ @"runner": @(NRRoleRunner), @"corp": @(NRRoleCorp) };
 }
 
-+(NSString*) filename
++(NSString*) filenameForLanguage:(NSString*)language
 {
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
-    
-    NSString* filename;
-    
-    NSFileManager* fileMgr = [NSFileManager new];
-    NSString* oldfile = [documentsDirectory stringByAppendingPathComponent:@"nrcards.json"];
-    if ([fileMgr fileExistsAtPath:oldfile])
-    {
-        NSString* newfile = [documentsDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
-        NSError* error;
-        [fileMgr moveItemAtPath:oldfile toPath:newfile error:&error];
-    }
-    
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    if (language.length)
-    {
-        filename = [NSString stringWithFormat:@"nrcards_%@.json", language];
-    }
+    NSString* filename = [NSString stringWithFormat:@"nrcards_%@.json", language];
     
     return [documentsDirectory stringByAppendingPathComponent:filename];
 }
 
 +(void) removeFile
 {
-    NSString* filename = [CardData filename];
-    
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSFileManager* fileMgr = [NSFileManager defaultManager];
-    [fileMgr removeItemAtPath:filename error:nil];
+    [fileMgr removeItemAtPath:[CardData filenameForLanguage:language] error:nil];
+    [fileMgr removeItemAtPath:[CardData filenameForLanguage:@"en"] error:nil];
+    
     [CardData initialize];
 }
 
 +(BOOL) setupFromFile
 {
-    NSString* cardsFile = [CardData filename];
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    NSString* cardsFile = [CardData filenameForLanguage:language];
     
     NSFileManager* fileMgr = [NSFileManager defaultManager];
     if ([fileMgr fileExistsAtPath:cardsFile])
     {
         [CardData resetData];
         NSArray* data = [NSArray arrayWithContentsOfFile:cardsFile];
+        BOOL ok = NO;
         if (data)
         {
-            return [self setupFromJsonData:data];
+            ok = [self setupFromJsonData:data];
         }
+        
+        if (![language isEqualToString:@"en"])
+        {
+            cardsFile = [CardData filenameForLanguage:@"en"];
+            if ([fileMgr fileExistsAtPath:cardsFile])
+            {
+                data = [NSArray arrayWithContentsOfFile:cardsFile];
+                [CardData addEnglishNames:data];
+            }
+        }
+        return ok;
     }
     return NO;
 }
 
 +(BOOL) setupFromNetrunnerDbApi:(NSArray*)array
 {
-    NSString* cardsFile = [CardData filename];
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    NSString* cardsFile = [CardData filenameForLanguage:language];
     [array writeToFile:cardsFile atomically:YES];
     
     NSDateFormatter *fmt = [NSDateFormatter new];
@@ -139,6 +138,32 @@ NSString* const kANY = @"Any";
     
     [CardData resetData];
     return [self setupFromJsonData:array];
+}
+
++(void) addEnglishNames:(NSArray *)json
+{
+    if (json == nil)
+    {
+        // we already have the english names, just copy them over
+        for (CardData* cd in [allCards allValues])
+        {
+            cd.name_en = cd.name;
+        }
+    }
+    else
+    {
+        NSString* cardsFile = [CardData filenameForLanguage:@"en"];
+        [json writeToFile:cardsFile atomically:YES];
+        
+        for (NSDictionary* obj in json)
+        {
+            NSString* code = [obj objectForKey:@"code"];
+            NSString* name = [obj objectForKey:@"title"];
+            
+            CardData* cd = [allCards objectForKey:code];
+            cd.name_en = name;
+        }
+    }
 }
 
 +(BOOL) setupFromJsonData:(NSArray*)json
@@ -516,6 +541,7 @@ NSString* const kANY = @"Any";
 {
     ENCODE_OBJ(code);
     ENCODE_OBJ(name);
+    ENCODE_OBJ(name_en);
     ENCODE_OBJ(text);
     ENCODE_OBJ(flavor);
     ENCODE_OBJ(factionStr);
@@ -558,6 +584,7 @@ NSString* const kANY = @"Any";
     {
         DECODE_OBJ(code);
         DECODE_OBJ(name);
+        DECODE_OBJ(name_en);
         DECODE_OBJ(text);
         DECODE_OBJ(flavor);
         DECODE_OBJ(factionStr);

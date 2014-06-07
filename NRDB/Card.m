@@ -25,6 +25,7 @@
 
 PROPERTY_PROXY(NSString*, code)
 PROPERTY_PROXY(NSString*, name)
+PROPERTY_PROXY(NSString*, name_en)
 PROPERTY_PROXY(NSString*, text)
 PROPERTY_PROXY(NSString*, flavor)
 PROPERTY_PROXY(NSString*, typeStr)

@@ -12,6 +12,7 @@
 
 +(BOOL) setupFromFile;
 +(BOOL) setupFromNetrunnerDbApi:(NSArray*)array;
++(void) addEnglishNames:(NSArray*)array;
 +(void) removeFile;
 
 +(void) addCard:(CardData*) card manually:(BOOL)manually;
@@ -42,8 +43,9 @@
 
 @property (readonly) BOOL isValid;
 
-@property NSString* code;        // unique id of the card
+@property NSString* code;       // unique id of the card
 @property NSString* name;       // name
+@property NSString* name_en;    // name in english
 @property NSString* text;
 @property NSString* flavor;
 
