@@ -40,7 +40,7 @@
 
 @property NSString* code;       // unique id of the card
 @property NSString* name;       // name
-@property NSString* name_en;    // name in english
+@property (nonatomic) NSString* name_en;    // name in english
 @property NSString* text;
 @property NSString* flavor;
 
@@ -88,6 +88,7 @@
 
 @property NSString* lastModified;
 
+@property BOOL limited;                 // has a '1 per deck' limit
 @property int maxCopies;
 
 @end

@@ -120,6 +120,10 @@ NSString* const kANY = @"Any";
                 [CardData addEnglishNames:data];
             }
         }
+        else
+        {
+            [CardData addEnglishNames:nil];
+        }
         return ok;
     }
     return NO;
@@ -284,6 +288,7 @@ NSString* const kANY = @"Any";
     JSON_INT(number, @"number");
     JSON_INT(quantity, @"quantity");
     JSON_BOOL(unique, @"uniqueness");
+    JSON_BOOL(limited, @"limited");
     JSON_INT(influenceLimit, @"influencelimit");
     JSON_INT(minimumDecksize, @"minimumdecksize");
     JSON_INT(baseLink, @"baselink");
@@ -314,7 +319,7 @@ NSString* const kANY = @"Any";
     }
     
     c.maxCopies = 3;
-    if ([max1InDeck containsObject:c.code] || c.type == NRCardTypeIdentity)
+    if ([max1InDeck containsObject:c.code] || c.limited || c.type == NRCardTypeIdentity)
     {
         c.maxCopies = 1;
     }
@@ -330,45 +335,6 @@ NSString* const kANY = @"Any";
     }
 
     return c;
-}
-
--(void) synthesizeMissingFields
-{
-    self.faction = [Faction faction:[self.factionStr lowercaseString]];
-    
-    self.role = [[roleCodes objectForKey:[self.roleStr lowercaseString]] integerValue];
-    
-    self.type = [CardType type:[self.typeStr lowercaseString]];
-
-    if (self.subtype)
-    {
-        self.subtypes = [self.subtype componentsSeparatedByString:@" - "];
-        NSMutableArray* arr = subtypes[self.role];
-        for (NSString* st in self.subtypes)
-        {
-            if (![arr containsObject:st])
-            {
-                [arr addObject:st];
-            }
-        }
-    }
-    self.subtypeCode = [self.subtype lowercaseString];
-    if (self.subtype.length == 0)
-    {
-        self.subtypeCode = nil;
-    }
-    if (self.subtypeCode)
-    {
-        self.subtypeCodes = [self.subtypeCode componentsSeparatedByString:@" - "];
-        NSMutableArray* arr = subtypeCodes[self.role];
-        for (NSString* st in self.subtypeCodes)
-        {
-            if (![arr containsObject:st])
-            {
-                [arr addObject:st];
-            }
-        }
-    }
 }
 
 +(void) addCard:(CardData*)c
@@ -390,6 +356,11 @@ NSString* const kANY = @"Any";
             [arr addObject:c];
         }
     }
+}
+
+-(NSString*) name_en
+{
+    return self->_name_en ? self->_name_en : self->_name;
 }
 
 +(CardData*) cardByCode:(NSString *)code

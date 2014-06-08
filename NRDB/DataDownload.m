@@ -111,6 +111,7 @@ static DataDownload* instance;
                       success:^(AFHTTPRequestOperation *operation, id responseObject)
                       {
                           [CardData addEnglishNames:responseObject];
+                          [self downloadFinished:ok];
                       }
                       failure:^(AFHTTPRequestOperation *operation, NSError *error)
                       {
