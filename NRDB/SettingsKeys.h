@@ -23,6 +23,7 @@
 #define CARD_SETS       @"cardSets"
 #define SET_SELECTION   @"setSelection"
 #define NUM_CORES       @"number_coresets"
+#define UNPUBLISHED_IDS @"use_unpublished_identities"
 
 #define USE_DROPBOX     @"useDropbox"
 #define USE_EVERNOTE    @"useEvernote"

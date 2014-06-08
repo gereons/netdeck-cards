@@ -37,6 +37,7 @@ static NSMutableArray* allIdentities;
 
 static NSMutableSet* allSets;
 static NSArray* max1InDeck;
+static NSArray* specialIds;
 
 static int maxMU;
 static int maxStrength;
@@ -55,6 +56,8 @@ NSString* const kANY = @"Any";
                     UTOPIA_SHARD,
                     HADES_SHARD, HADES_FRAGMENT,
                     EDEN_SHARD, EDEN_FRAGMENT ];
+    
+    specialIds = @[ LARAMY_FISK, THE_COLLECTIVE, CHRONOS_PROTOCOL_HB, CHRONOS_PROTOCOL_JIN ];
 }
 
 +(void) resetData
@@ -233,7 +236,7 @@ NSString* const kANY = @"Any";
     if (c.type == NRCardTypeNone) NSLog(@"oops %@", json);
     
     JSON_STR(setCode, @"set_code");
-    if ([c.setCode isEqualToString:@"special"])
+    if ([c.setCode isEqualToString:@"special"] && ![specialIds containsObject:c.code])
     {
         return nil;
     }

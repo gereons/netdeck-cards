@@ -9,6 +9,7 @@
 #import "CardSets.h"
 #import "CardData.h"
 #import "Deck.h"
+#import "SettingsKeys.h"
 
 @interface CardSets()
 @property int setNum;
@@ -114,6 +115,7 @@ static struct cardSetData {
 +(NSDictionary*) settingsDefaults
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+    dict[UNPUBLISHED_IDS] = @(NO);
     for (CardSets* cs in cardSets)
     {
         [dict setObject:@(cs.released) forKey:cs.settingsKey];
@@ -131,6 +133,11 @@ static struct cardSetData {
         {
             [set addObject:cs.setCode];
         }
+    }
+    
+    if (![settings boolForKey:UNPUBLISHED_IDS])
+    {
+        [set addObject:@"special"];
     }
     return set;
 }
@@ -222,7 +229,10 @@ static struct cardSetData {
         
         [sets setObject:n forKey:cc.card.setCode];
         int rel = [[releases objectForKey:cc.card.setCode] intValue];
-        [setNums setObject:@(rel) forKey:cc.card.setCode];
+        if (rel > 0)
+        {
+            [setNums setObject:@(rel) forKey:cc.card.setCode];
+        }
     }
     
     // NSLog(@"%@ %@", sets, setNums);

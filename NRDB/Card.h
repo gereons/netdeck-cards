@@ -21,6 +21,12 @@
 #define HADES_FRAGMENT          @"06071"    // max 1 per deck
 // #define UTOPIA_FRAGMENT         @""         // max 1 per deck
 
+// plugged-in and chronos protocol identities
+#define LARAMY_FISK             @"00002"
+#define THE_COLLECTIVE          @"00001"
+#define CHRONOS_PROTOCOL_HB     @"00004"
+#define CHRONOS_PROTOCOL_JIN    @"00003"
+
 // data for a single card
 
 @interface Card : NSObject
