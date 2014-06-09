@@ -10,6 +10,11 @@
 #define NRDB_SettingsKeys_h
 
 #define LANGUAGE            @"language"
+#define LAST_MOD_CACHE  @"lastModified"
+#define NEXT_CHECK      @"nextCheck"
+#define UNAVAILABLE_IMG     @"unavailableImages"
+#define UNAVAIL_IMG_DATE    @"unavailableImagesDate"
+
 #define FILE_SEQ            @"fileSequence"
 #define LAST_START_VERSION  @"lastStartVersion"
 

@@ -13,9 +13,6 @@
 #import "Card.h"
 #import "SettingsKeys.h"
 
-#define LAST_MOD_CACHE  @"lastModified"
-#define NEXT_CHECK      @"nextCheck"
-
 #define SEC_PER_DAY         (24 * 60 * 60)
 #define SUCCESS_INTERVAL    (30*SEC_PER_DAY)
 #define ERROR_INTERVAL      (1*SEC_PER_DAY)
@@ -46,6 +43,7 @@ static UIImage* strengthIcon;
 static UIImage* altArtIconOn;
 static UIImage* altArtIconOff;
 static UIImage* hexTile;
+
 static NSMutableSet* unavailableImages; // set of image keys
 
 static NSCache* memCache;
@@ -79,8 +77,25 @@ static NSCache* memCache;
     {
         [settings setObject:@{} forKey:NEXT_CHECK];
     }
-    
-    unavailableImages = [NSMutableSet set];
+
+    NSArray* imgs = [settings objectForKey:UNAVAILABLE_IMG];
+    if (imgs == nil)
+    {
+        unavailableImages = [NSMutableSet set];
+    }
+    else
+    {
+        unavailableImages = [NSMutableSet setWithArray:imgs];
+    }
+    NSTimeInterval today = [NSDate date].timeIntervalSinceReferenceDate / (24*60*60);
+    NSTimeInterval lastCheck = [settings doubleForKey:UNAVAIL_IMG_DATE];
+    if (floor(lastCheck) < floor(today))
+    {
+        unavailableImages = [NSMutableSet set];
+        [settings setDouble:today forKey:UNAVAIL_IMG_DATE];
+        [settings setObject:@[] forKey:UNAVAILABLE_IMG];
+        [settings synchronize];
+    }
     
     memCache = [[NSCache alloc] init];
     memCache.totalCostLimit = 100 * 120000; // about 100 cards
@@ -181,6 +196,7 @@ static NSCache* memCache;
                  completionBlock(card, img, YES);
              }
              [unavailableImages addObject:key];
+             [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:UNAVAILABLE_IMG];
          }];
 }
 
