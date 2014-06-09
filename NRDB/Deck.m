@@ -86,7 +86,8 @@
         [reasons addObject:l10n(@"Not enough cards")];
     }
     
-    if (self.identity.role == NRRoleCorp)
+    NRRole role = self.identity.role;
+    if (role == NRRoleCorp)
     {
         // check agenda points
         int apRequired = ((self.size / 5) + 1) * 2;
@@ -94,16 +95,20 @@
         {
             [reasons addObject:[NSString stringWithFormat:l10n(@"AP must be %d or %d"), apRequired, apRequired+1]];
         }
+    }
     
-        BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
+    BOOL noJintekiAllowed = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
+    
+    BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
+    BOOL hfError = NO, hsError = NO, usError = NO, efError = NO, esError = NO;
+    
+    // check max 1 per deck restrictions
+    for (CardCounter* cc in self.cards)
+    {
+        Card* card = cc.card;
         
-        BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
-        BOOL hfError = NO, hsError = NO, usError = NO, efError = NO, esError = NO;
-        
-        // check dir. haas, custom biotics and out-of-faction agendas
-        for (CardCounter* cc in self.cards)
+        if (role == NRRoleCorp)
         {
-            Card* card = cc.card;
             if ([card.code isEqualToString:DIRECTOR_HAAS_PET_PROJ] && cc.count > 1 && !petError)
             {
                 petError = YES;
@@ -122,31 +127,13 @@
                 [reasons addObject:l10n(@"Too many Hades Fragments")];
             }
             
-            if ([card.code isEqualToString:HADES_SHARD] && cc.count > 1 && !hsError)
-            {
-                hsError = YES;
-                [reasons addObject:l10n(@"Too many Hades Shards")];
-            }
-            
             if ([card.code isEqualToString:EDEN_FRAGMENT] && cc.count > 1 && !efError)
             {
                 efError = YES;
                 [reasons addObject:l10n(@"Too many Eden Fragments")];
             }
             
-            if ([card.code isEqualToString:EDEN_SHARD] && cc.count > 1 && !esError)
-            {
-                esError = YES;
-                [reasons addObject:l10n(@"Too many Eden Shards")];
-            }
-            
-            if ([card.code isEqualToString:UTOPIA_SHARD] && cc.count > 1 && !usError)
-            {
-                usError = YES;
-                [reasons addObject:l10n(@"Too many Utopia Shards")];
-            }
-            
-            if (noJinteki && card.faction == NRFactionJinteki && !jintekiError)
+            if (noJintekiAllowed && card.faction == NRFactionJinteki && !jintekiError)
             {
                 jintekiError = YES;
                 [reasons addObject:l10n(@"Cannot include Jinteki")];
@@ -158,10 +145,30 @@
                 [reasons addObject:l10n(@"Cannot use out-of-faction agendas")];
             }
         }
+        else
+        {
+            // runner-only checks
+            if ([card.code isEqualToString:HADES_SHARD] && cc.count > 1 && !hsError)
+            {
+                hsError = YES;
+                [reasons addObject:l10n(@"Too many Hades Shards")];
+            }
+            if ([card.code isEqualToString:EDEN_SHARD] && cc.count > 1 && !esError)
+            {
+                esError = YES;
+                [reasons addObject:l10n(@"Too many Eden Shards")];
+            }
+            if ([card.code isEqualToString:UTOPIA_SHARD] && cc.count > 1 && !usError)
+            {
+                usError = YES;
+                [reasons addObject:l10n(@"Too many Utopia Shards")];
+            }
+        }
     }
     
     return reasons;
 }
+
 
 -(int) size
 {
