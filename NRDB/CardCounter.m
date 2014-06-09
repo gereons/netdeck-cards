@@ -27,9 +27,8 @@
     return cc;
 }
 
--(void) setCount:(int)count
+-(void) setCount:(NSUInteger)count
 {
-    NSAssert(count >= 0 && count < 4, @"wrong card count");
     self->_count = count;
 }
 
@@ -39,7 +38,7 @@
 {
     if ((self = [super init]))
     {
-        self.count = [decoder decodeIntForKey:@"count"];
+        self.count = [decoder decodeIntegerForKey:@"count"];
         self.showAltArt = [decoder decodeBoolForKey:@"altArt"];
         NSString* code = [decoder decodeObjectForKey:@"card"];
         _card = [Card cardByCode:code];
@@ -49,7 +48,7 @@
 
 -(void) encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeInt:self.count forKey:@"count"];
+    [coder encodeInteger:self.count forKey:@"count"];
     [coder encodeObject:self.card.code forKey:@"card"];
     [coder encodeBool:self.showAltArt forKey:@"altArt"];
 }

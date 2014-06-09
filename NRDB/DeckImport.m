@@ -236,7 +236,8 @@ static DeckImport* instance;
                         // NSLog(@"found card %@ x %@", count, c.name);
                         
                         int cnt = [count intValue];
-                        if (cnt > 0 && cnt < 4)
+                        int max = deck.isDraft ? 100 : 4;
+                        if (cnt > 0 && max)
                         {
                             [deck addCard:c copies:cnt];
                         }

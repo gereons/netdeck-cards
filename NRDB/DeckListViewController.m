@@ -683,7 +683,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     
     NSMutableString* footer = [NSMutableString string];
     [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
-    if (self.deck.identity)
+    if (self.deck.identity && !self.deck.isDraft)
     {
         [footer appendString:[NSString stringWithFormat:@" · %d/%d %@", self.deck.influence, self.deck.identity.influenceLimit, l10n(@"Influence")]];
     }
@@ -1017,7 +1017,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     
     if (cc && cc.card.type != NRCardTypeIdentity)
     {
-        CardImagePopup* cip = [CardImagePopup showForCard:cc fromRect:popupOrigin inView:self.collectionView direction:direction];
+        CardImagePopup* cip = [CardImagePopup showForCard:cc draft:self.deck.isDraft fromRect:popupOrigin inView:self.collectionView direction:direction];
         cip.cell = cell;
     }
     else
@@ -1053,23 +1053,23 @@ enum { POPUP_EXPORT, POPUP_STATE };
         
         if (cc.card.type == NRCardTypeAgenda)
         {
-            cell.copiesLabel.text = [NSString stringWithFormat:@"×%d · %d AP", cc.count, cc.count*cc.card.agendaPoints];
+            cell.copiesLabel.text = [NSString stringWithFormat:@"×%lu · %lu AP", (unsigned long)cc.count, (unsigned long)(cc.count*cc.card.agendaPoints)];
         }
         else
         {
-            int influence = [self.deck influenceFor:cc];
+            NSUInteger influence = [self.deck influenceFor:cc];
             if (influence > 0)
             {
-                cell.copiesLabel.text = [NSString stringWithFormat:@"×%d · %d %@", cc.count, influence, l10n(@"Influence")];
+                cell.copiesLabel.text = [NSString stringWithFormat:@"×%lu · %lu %@", (unsigned long)cc.count, (unsigned long)influence, l10n(@"Influence")];
             }
             else
             {
-                cell.copiesLabel.text = [NSString stringWithFormat:@"×%d", cc.count];
+                cell.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count];
             }
         }
         
         cell.copiesLabel.textColor = [UIColor blackColor];
-        if ([cc.card.setCode isEqualToString:@"core"])
+        if ([cc.card.setCode isEqualToString:@"core"] && !self.deck.isDraft)
         {
             NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
             NSInteger owned = cores * cc.card.quantity;

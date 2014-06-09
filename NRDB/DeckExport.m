@@ -71,9 +71,9 @@
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
-            [s appendString:[NSString stringWithFormat:@"%dx %@ (%@)", cc.count, cc.card.name, cc.card.setName]];
+            [s appendString:[NSString stringWithFormat:@"%lux %@ (%@)", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
-            int influence = [deck influenceFor:cc];
+            NSUInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 [s appendString:[NSString stringWithFormat:@" %@\n", [DeckExport dots:influence]]];
@@ -141,9 +141,9 @@
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
-            [s appendString:[NSString stringWithFormat:@"%dx [%@](%@) _(%@)_", cc.count, cc.card.name, cc.card.url, cc.card.setName]];
+            [s appendString:[NSString stringWithFormat:@"%lux [%@](%@) _(%@)_", (unsigned long)cc.count, cc.card.name, cc.card.url, cc.card.setName]];
             
-            int influence = [deck influenceFor:cc];
+            NSUInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
@@ -210,9 +210,9 @@
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
-            [s appendString:[NSString stringWithFormat:@"%dx [url=%@]%@[/url] [i](%@)[/i]", cc.count, cc.card.url, cc.card.name, cc.card.setName]];
+            [s appendString:[NSString stringWithFormat:@"%lux [url=%@]%@[/url] [i](%@)[/i]", (unsigned long)cc.count, cc.card.url, cc.card.name, cc.card.setName]];
             
-            int influence = [deck influenceFor:cc];
+            NSUInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 NSString* color = [NSString stringWithFormat:@"%lx", (unsigned long)cc.card.factionHexColor];
@@ -254,7 +254,7 @@
     [DeckExport writeToDropbox:s fileName:bbcName deckType:l10n(@"BBCode Deck") autoSave:NO];
 }
 
-+(NSString*) dots:(int)count
++(NSString*) dots:(NSUInteger)count
 {
     NSMutableString* s = [NSMutableString stringWithCapacity:count+5];
     for (int i=0; i<count; ++i)

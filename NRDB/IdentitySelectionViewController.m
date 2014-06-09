@@ -50,8 +50,11 @@
         
         NSMutableArray* factions = [[Faction factionsForRole:role] mutableCopy];
         
-        [factions removeObject:[Faction name:NRFactionNeutral]];
+        NSString* neutral = [Faction name:NRFactionNeutral];
         [factions removeObject:[Faction name:NRFactionNone]];
+        // move 'neutral' to the end
+        [factions removeObject:neutral];
+        [factions addObject:neutral];
         
         self.factionNames = [NSArray arrayWithArray:factions];
         
@@ -178,7 +181,15 @@
     cell.titleLabel.textColor = c.factionColor;
     
     cell.deckSizeLabel.text = [@(c.minimumDecksize) stringValue];
-    cell.influenceLimitLabel.text = [@(c.influenceLimit) stringValue];
+    
+    if (c.influenceLimit == -1)
+    {
+        cell.influenceLimitLabel.text = @"∞";
+    }
+    else
+    {
+        cell.influenceLimitLabel.text = [@(c.influenceLimit) stringValue];
+    }
     
     if (self.role == NRRoleRunner)
     {

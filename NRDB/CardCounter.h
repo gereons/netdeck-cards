@@ -14,7 +14,7 @@
 @interface CardCounter : NSObject <NSCoding>
 
 @property (readonly) Card* card;
-@property (nonatomic) int count;
+@property (nonatomic) NSUInteger count;
 @property BOOL showAltArt;
 
 +(CardCounter*) initWithCard:(Card*)card;

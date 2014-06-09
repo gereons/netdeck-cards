@@ -23,7 +23,7 @@
         NSMutableDictionary* influence = [NSMutableDictionary dictionary];
         for (CardCounter* cc in deck.cards)
         {
-            int inf = [deck influenceFor:cc];
+            NSUInteger inf = [deck influenceFor:cc];
             if (inf > 0)
             {
                 NSString* faction = [Faction name:cc.card.faction];

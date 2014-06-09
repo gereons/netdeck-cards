@@ -21,6 +21,10 @@
 #define HADES_FRAGMENT          @"06071"    // max 1 per deck
 // #define UTOPIA_FRAGMENT         @""         // max 1 per deck
 
+// draft ids
+#define THE_MASQUE              @"00006"
+#define THE_SHADOW              @"00005"
+
 // plugged-in and chronos protocol identities
 #define LARAMY_FISK             @"00002"
 #define THE_COLLECTIVE          @"00001"

@@ -970,7 +970,7 @@ static NSInteger viewMode = VIEW_LIST;
     cell.addButton.tag = ADD_BUTTON_COLLECTION;
     
     [cell.addButton addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];
-    cell.countLabel.text = cc.count > 0 ? [NSString stringWithFormat:@"×%d",cc.count] : @"";
+    cell.countLabel.text = cc.count > 0 ? [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count] : @"";
     
     cell.card = card;
     

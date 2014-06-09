@@ -18,7 +18,14 @@
 
 @end
 
+static NSArray* draftIds;
+
 @implementation Deck
+
++(void) initialize
+{
+    draftIds = @[ THE_MASQUE, THE_SHADOW ];
+}
 
 -(Deck*) init
 {
@@ -39,13 +46,15 @@
 {
     if (identity)
     {
-        self.identityCc = [CardCounter initWithCard:identity andCount:1];
+        self->_identityCc = [CardCounter initWithCard:identity andCount:1];
         self.role = identity.role;
     }
     else
     {
-        self.identityCc = nil;
+        self->_identityCc = nil;
     }
+    
+    self->_isDraft = [draftIds containsObject:identity.code];
 }
 
 -(NSArray*) cards
@@ -76,7 +85,7 @@
         NSAssert(self.identityCc.count == 1, @"identity count");
     }
     
-    if (self.influence > self.identity.influenceLimit)
+    if (!self.isDraft && self.influence > self.identity.influenceLimit)
     {
         [reasons addObject:l10n(@"Too much influence used")];
     }
@@ -188,7 +197,6 @@
     {
         if (cc.card.type == NRCardTypeAgenda)
         {
-            NSAssert(cc.count > 0 && cc.count < 4, @"invalid card count");
             ap += cc.card.agendaPoints * cc.count;
         }
     }
@@ -204,8 +212,7 @@
     {
         if (cc.card.faction != self.identity.faction && cc.card.influence != -1)
         {
-            int count = cc.count;
-            NSAssert(count > 0 && count < 4, @"invalid card count");
+            NSUInteger count = cc.count;
             
             if (isProfessor && cc.card.type == NRCardTypeProgram)
             {
@@ -218,15 +225,14 @@
     return inf;
 }
 
--(int) influenceFor:(CardCounter *)cc
+-(NSUInteger) influenceFor:(CardCounter *)cc
 {
     if (self.identity.faction == cc.card.faction || cc.card.influence == -1)
     {
         return 0;
     }
     
-    int count = cc.count;
-    NSAssert(count > 0 && count < 4, @"invalid card count");
+    NSUInteger count = cc.count;
     if (cc.card.type == NRCardTypeProgram && [self.identity.code isEqualToString:THE_PROFESSOR])
     {
         --count;
@@ -237,7 +243,6 @@
 
 -(void) addCard:(Card *)card copies:(int)copies
 {
-    NSAssert(copies > 0 && copies < 4, @"invalid card count");
     NSAssert(card.type != NRCardTypeIdentity, @"can't add identity");
     
     int index = [self indexOfCard:card];
@@ -246,7 +251,7 @@
         CardCounter* cc = [CardCounter initWithCard:card andCount:copies];
         [_cards addObject:cc];
     }
-    else
+    else if (!self.isDraft)
     {
         CardCounter* cc = [_cards objectAtIndex:index];
         int max = cc.card.maxCopies;
@@ -285,7 +290,8 @@
     Deck* newDeck = [Deck new];
     
     newDeck.name = [NSString stringWithFormat:l10n(@"Copy of %@"), self.name];
-    newDeck.identityCc = self.identityCc;
+    newDeck->_identityCc = self.identityCc;
+    newDeck->_isDraft = self.isDraft;
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
     newDeck->_role = self.role;
     newDeck.filename = nil;
@@ -408,6 +414,7 @@
         _name = [decoder decodeObjectForKey:@"name"];
         _role = [decoder decodeIntForKey:@"role"];
         _state = [decoder decodeIntForKey:@"state"];
+        _isDraft = [decoder decodeBoolForKey:@"draft"];
         NSString* identityCode = [decoder decodeObjectForKey:@"identity"];
         Card* identity = [Card cardByCode:identityCode];
         if (identity)
@@ -427,6 +434,7 @@
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeInt:self.role forKey:@"role"];
     [coder encodeInt:self.state forKey:@"state"];
+    [coder encodeBool:self.isDraft forKey:@"draft"];
     [coder encodeObject:self.identity.code forKey:@"identity"];
     [coder encodeBool:self.identityCc.showAltArt forKey:@"identityAltArt"];
     [coder encodeObject:self.notes forKey:@"notes"];
