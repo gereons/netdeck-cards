@@ -19,6 +19,13 @@
 #define JSON_BOOL(key, attr)         c->_##key = [[json objectForKey:attr] boolValue]
 #define JSON_STR(key, attr)          c->_##key = [json objectForKey:attr]
 
+@interface CardData()
+
+@property NSString* smallImageSrc;
+@property NSString* largeImageSrc;
+
+@end
+
 @implementation CardData
 
 static NSDictionary* roleCodes;
@@ -45,6 +52,7 @@ static int maxRunnerCost;
 static int maxCorpCost;
 static int maxInf;
 static int maxAgendaPoints;
+static BOOL isRetina;
 
 NSString* const kANY = @"Any";
 
@@ -58,6 +66,8 @@ NSString* const kANY = @"Any";
                     EDEN_SHARD, EDEN_FRAGMENT ];
     
     specialIds = @[ THE_SHADOW, THE_MASQUE, LARAMY_FISK, THE_COLLECTIVE, CHRONOS_PROTOCOL_HB, CHRONOS_PROTOCOL_JIN ];
+    
+    isRetina = [UIScreen mainScreen].scale == 2.0;
 }
 
 +(void) resetData
@@ -304,7 +314,8 @@ NSString* const kANY = @"Any";
     JSON_INT(trash, @"trash");
     
     JSON_STR(url, @"url");
-    JSON_STR(imageSrc, @"imagesrc");
+    JSON_STR(smallImageSrc, @"imagesrc");
+    JSON_STR(largeImageSrc, @"largeimagesrc");
     JSON_STR(artist, @"illustrator");
     c->_lastModified = [json objectForKey:@"last-modified"];
     
@@ -364,6 +375,18 @@ NSString* const kANY = @"Any";
 -(NSString*) name_en
 {
     return self->_name_en ? self->_name_en : self->_name;
+}
+
+-(NSString*) imageSrc
+{
+    if (isRetina && self.largeImageSrc)
+    {
+        return self.largeImageSrc;
+    }
+    else
+    {
+        return self.smallImageSrc;
+    }
 }
 
 +(CardData*) cardByCode:(NSString *)code
@@ -520,6 +543,7 @@ NSString* const kANY = @"Any";
     ENCODE_INT(number);
     ENCODE_INT(quantity);
     ENCODE_INT(unique);
+    ENCODE_INT(limited);
     ENCODE_INT(influenceLimit);
     ENCODE_INT(minimumDecksize);
     ENCODE_INT(baseLink);
@@ -531,7 +555,8 @@ NSString* const kANY = @"Any";
     ENCODE_INT(trash);
     ENCODE_INT(influence);
     ENCODE_OBJ(url);
-    ENCODE_OBJ(imageSrc);
+    ENCODE_OBJ(smallImageSrc);
+    ENCODE_OBJ(largeImageSrc);
     ENCODE_OBJ(artist);
     ENCODE_OBJ(lastModified);
 }
@@ -563,6 +588,7 @@ NSString* const kANY = @"Any";
         DECODE_INT(number);
         DECODE_INT(quantity);
         DECODE_INT(unique);
+        DECODE_INT(limited);
         DECODE_INT(influenceLimit);
         DECODE_INT(minimumDecksize);
         DECODE_INT(baseLink);
@@ -574,7 +600,8 @@ NSString* const kANY = @"Any";
         DECODE_INT(trash);
         DECODE_INT(influence);
         DECODE_OBJ(url);
-        DECODE_OBJ(imageSrc);
+        DECODE_OBJ(smallImageSrc);
+        DECODE_OBJ(largeImageSrc);
         DECODE_OBJ(artist);
         DECODE_OBJ(lastModified);
     }

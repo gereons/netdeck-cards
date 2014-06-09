@@ -83,7 +83,7 @@
 @property int influence;
 
 @property NSString* url;
-@property NSString* imageSrc;
+@property (readonly) NSString* imageSrc;
 @property NSString* artist ;
 
 @property NSString* lastModified;
