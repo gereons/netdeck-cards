@@ -541,6 +541,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
                     [self saveDeck:nil];
                     [DeckManager resetModificationDate:self.deck];
                 }
+                [self refresh];
             }
             break;
         }
