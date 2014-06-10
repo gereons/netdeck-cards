@@ -296,6 +296,7 @@ static NSArray* draftIds;
     newDeck->_role = self.role;
     newDeck.filename = nil;
     newDeck.state = self.state;
+    newDeck.notes = self.notes;
     
     return newDeck;
 }
