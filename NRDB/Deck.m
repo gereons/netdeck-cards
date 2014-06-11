@@ -251,13 +251,20 @@ static NSArray* draftIds;
         CardCounter* cc = [CardCounter initWithCard:card andCount:copies];
         [_cards addObject:cc];
     }
-    else if (!self.isDraft)
+    else
     {
         CardCounter* cc = [_cards objectAtIndex:index];
-        int max = cc.card.maxCopies;
-        if (cc.count < max)
+        if (self.isDraft)
         {
-            cc.count = MIN(max, cc.count + copies);
+            cc.count += copies;
+        }
+        else
+        {
+            int max = cc.card.maxCopies;
+            if (cc.count < max)
+            {
+                cc.count = MIN(max, cc.count + copies);
+            }
         }
     }
     [self sort];
