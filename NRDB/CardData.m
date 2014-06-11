@@ -316,6 +316,11 @@ NSString* const kANY = @"Any";
     JSON_STR(url, @"url");
     JSON_STR(smallImageSrc, @"imagesrc");
     JSON_STR(largeImageSrc, @"largeimagesrc");
+    if (c.largeImageSrc.length == 0)
+    {
+        c.largeImageSrc = nil;
+    }
+    
     JSON_STR(artist, @"illustrator");
     c->_lastModified = [json objectForKey:@"last-modified"];
     

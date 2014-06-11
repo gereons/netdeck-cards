@@ -183,8 +183,6 @@ static NSCache* memCache;
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // download failed
-             // @strongify(self);
-
 #if NETWORK_LOG
              NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
              NLOG(@"dl: GET %@ for %@: error %ld", url, card.name, (long)response.statusCode);
@@ -435,6 +433,22 @@ static NSCache* memCache;
     NSData* data = UIImagePNGRepresentation(img);
     
     [data writeToFile:file atomically:YES];
+}
+
+#pragma mark utility methods
+
++(UIImage*) croppedImage:(UIImage*)img y:(int)y
+{
+    float scale = 1.0;
+    if (img.size.width > 300)
+    {
+        scale = 1.436;
+    }
+    CGRect rect = CGRectMake((int)(10*scale), (int)(y*scale), (int)(280*scale), (int)(209*scale));
+    CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
+    UIImage *cropped = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return cropped;
 }
 
 @end

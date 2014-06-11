@@ -34,12 +34,8 @@
          if ([self.card.code isEqual:card.code])
          {
              [self.activityIndicator stopAnimating];
-             CGRect rect = CGRectMake(10, card.cropY, 280, 209);
-             CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
-             UIImage *cropped = [UIImage imageWithCGImage:imageRef];
-             CGImageRelease(imageRef);
              
-             self.imageView.image = cropped;
+             self.imageView.image = [ImageCache croppedImage:img y:card.cropY];
              self.nameLabel.text = placeholder ? card.name : nil;
          }
      }];
