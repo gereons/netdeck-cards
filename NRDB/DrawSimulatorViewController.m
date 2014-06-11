@@ -289,8 +289,9 @@ static NSInteger viewMode;
         BOOL played = [[self.played objectAtIndex:indexPath.row] boolValue];
         self.played[indexPath.row] = @(!played);
         
-        [self.tableView reloadData];
-        [self.collectionView reloadData];
+        NSArray* paths = @[ indexPath ];
+        [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+        [self.collectionView reloadItemsAtIndexPaths:paths];
     }
 }
 
