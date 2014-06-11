@@ -952,8 +952,10 @@ static NSInteger viewMode = VIEW_LIST;
     }
     
     [self.deckListViewController addCard:card];
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    
+    NSArray* paths = @[indexPath];
+    [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+    [self.collectionView reloadItemsAtIndexPaths:paths];
 }
 
 #pragma mark collectionview
