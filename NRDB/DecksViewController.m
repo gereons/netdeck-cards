@@ -57,7 +57,7 @@ static NSDictionary* sideStr;
 +(void) initialize
 {
     sortStr = @{ @(NRDeckSortDate): l10n(@"Date"), @(NRDeckSortFaction): l10n(@"Faction"), @(NRDeckSortA_Z): l10n(@"A-Z") };
-    sideStr = @{ @(FilterTypeAll): l10n(@"All"), @(FilterRunner): l10n(@"Runner"), @(FilterCorp): l10n(@"Corp") };
+    sideStr = @{ @(FilterTypeAll): l10n(@"Both"), @(FilterRunner): l10n(@"Runner"), @(FilterCorp): l10n(@"Corp") };
 }
 
 - (id) init
@@ -103,17 +103,17 @@ static NSDictionary* sideStr;
                                      target:nil
                                      action:nil];
     
-    self.sortButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), sortStr[@(sortType)]] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
+    self.sortButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(sortType)]] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
     self.sortButton.possibleTitles = [NSSet setWithArray:@[
-                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), l10n(@"Date")],
-                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), l10n(@"Faction")],
-                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), l10n(@"A-Z")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Date")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Faction")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"A-Z")],
                                                            ]];
     self.sideFilterButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Side"), sideStr[@(filterType)]] style:UIBarButtonItemStylePlain target:self action:@selector(changeSideFilter:)];
     self.sideFilterButton.possibleTitles = [NSSet setWithArray:@[
-                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Side"), l10n(@"All")],
-                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Side"), l10n(@"Runner")],
-                                                           [NSString stringWithFormat:@"%@: %@", l10n(@"Side"), l10n(@"Corp")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Both")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Runner")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Corp")],
                                                            ]];
     self.stateFilterButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:filterState] style:UIBarButtonItemStylePlain target:self action:@selector(changeStateFilter:)];
     self.stateFilterButton.possibleTitles = [NSSet setWithArray:@[
@@ -223,8 +223,8 @@ static NSDictionary* sideStr;
 
 -(void) updateDecks
 {
-    [self.sortButton setTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Sort"), sortStr[@(sortType)]]];
-    [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Side"), sideStr[@(filterType)]]];
+    [self.sortButton setTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(sortType)]]];
+    [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(filterType)]]];
     [self.stateFilterButton setTitle:[DeckState buttonLabelFor:filterState]];
 
     NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSMutableArray array];
