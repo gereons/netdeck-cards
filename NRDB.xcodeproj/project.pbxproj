@@ -168,6 +168,12 @@
 		3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066811896D5B800FF1666 /* SmallCardCell.xib */; };
 		3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD3249018A93FA300D7AE5D /* DeckAnalysisViewController.m */; };
 		3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */; };
+		3ADBB08E194CBBC8003815CC /* SDCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBB082194CBBC8003815CC /* SDCAlertView.m */; };
+		3ADBB08F194CBBC8003815CC /* SDCAlertViewBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBB084194CBBC8003815CC /* SDCAlertViewBackgroundView.m */; };
+		3ADBB090194CBBC8003815CC /* SDCAlertViewContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBB086194CBBC8003815CC /* SDCAlertViewContentView.m */; };
+		3ADBB091194CBBC8003815CC /* SDCAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBB088194CBBC8003815CC /* SDCAlertViewController.m */; };
+		3ADBB092194CBBC8003815CC /* SDCAlertViewCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBB08A194CBBC8003815CC /* SDCAlertViewCoordinator.m */; };
+		3ADBB093194CBBC8003815CC /* SDCIntrinsicallySizedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBB08D194CBBC8003815CC /* SDCIntrinsicallySizedView.m */; };
 		3ADC17311856401D00FA2DF7 /* CardData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC17301856401D00FA2DF7 /* CardData.m */; };
 		3ADE90921877317F006E187F /* DeckManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE90911877317F006E187F /* DeckManager.m */; };
 		3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE909D18775A77006E187F /* CardImageViewPopover.m */; };
@@ -448,6 +454,19 @@
 		3AD3248F18A93FA300D7AE5D /* DeckAnalysisViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckAnalysisViewController.h; sourceTree = "<group>"; };
 		3AD3249018A93FA300D7AE5D /* DeckAnalysisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckAnalysisViewController.m; sourceTree = "<group>"; };
 		3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckAnalysisViewController.xib; sourceTree = "<group>"; };
+		3ADBB081194CBBC8003815CC /* SDCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCAlertView.h; sourceTree = "<group>"; };
+		3ADBB082194CBBC8003815CC /* SDCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCAlertView.m; sourceTree = "<group>"; };
+		3ADBB083194CBBC8003815CC /* SDCAlertViewBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCAlertViewBackgroundView.h; sourceTree = "<group>"; };
+		3ADBB084194CBBC8003815CC /* SDCAlertViewBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCAlertViewBackgroundView.m; sourceTree = "<group>"; };
+		3ADBB085194CBBC8003815CC /* SDCAlertViewContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCAlertViewContentView.h; sourceTree = "<group>"; };
+		3ADBB086194CBBC8003815CC /* SDCAlertViewContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCAlertViewContentView.m; sourceTree = "<group>"; };
+		3ADBB087194CBBC8003815CC /* SDCAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCAlertViewController.h; sourceTree = "<group>"; };
+		3ADBB088194CBBC8003815CC /* SDCAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCAlertViewController.m; sourceTree = "<group>"; };
+		3ADBB089194CBBC8003815CC /* SDCAlertViewCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCAlertViewCoordinator.h; sourceTree = "<group>"; };
+		3ADBB08A194CBBC8003815CC /* SDCAlertViewCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCAlertViewCoordinator.m; sourceTree = "<group>"; };
+		3ADBB08B194CBBC8003815CC /* SDCAlertViewTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCAlertViewTransitioning.h; sourceTree = "<group>"; };
+		3ADBB08C194CBBC8003815CC /* SDCIntrinsicallySizedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCIntrinsicallySizedView.h; sourceTree = "<group>"; };
+		3ADBB08D194CBBC8003815CC /* SDCIntrinsicallySizedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCIntrinsicallySizedView.m; sourceTree = "<group>"; };
 		3ADC172F1856401D00FA2DF7 /* CardData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardData.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3ADC17301856401D00FA2DF7 /* CardData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardData.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ADE90901877317F006E187F /* DeckManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -665,6 +684,7 @@
 		3A41787A18761B9200DEEFA6 /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				3ADBB080194CBBC8003815CC /* SDCAlertView */,
 				3A41787D18761BF600DEEFA6 /* InAppSettingsKit */,
 			);
 			name = 3rdParty;
@@ -1041,6 +1061,27 @@
 			name = "Deck Analysis";
 			sourceTree = "<group>";
 		};
+		3ADBB080194CBBC8003815CC /* SDCAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				3ADBB081194CBBC8003815CC /* SDCAlertView.h */,
+				3ADBB082194CBBC8003815CC /* SDCAlertView.m */,
+				3ADBB083194CBBC8003815CC /* SDCAlertViewBackgroundView.h */,
+				3ADBB084194CBBC8003815CC /* SDCAlertViewBackgroundView.m */,
+				3ADBB085194CBBC8003815CC /* SDCAlertViewContentView.h */,
+				3ADBB086194CBBC8003815CC /* SDCAlertViewContentView.m */,
+				3ADBB087194CBBC8003815CC /* SDCAlertViewController.h */,
+				3ADBB088194CBBC8003815CC /* SDCAlertViewController.m */,
+				3ADBB089194CBBC8003815CC /* SDCAlertViewCoordinator.h */,
+				3ADBB08A194CBBC8003815CC /* SDCAlertViewCoordinator.m */,
+				3ADBB08B194CBBC8003815CC /* SDCAlertViewTransitioning.h */,
+				3ADBB08C194CBBC8003815CC /* SDCIntrinsicallySizedView.h */,
+				3ADBB08D194CBBC8003815CC /* SDCIntrinsicallySizedView.m */,
+			);
+			name = SDCAlertView;
+			path = NRDB/SDCAlertView;
+			sourceTree = "<group>";
+		};
 		3AE0D4FC18F7B48B007868A7 /* Sliders */ = {
 			isa = PBXGroup;
 			children = (
@@ -1299,10 +1340,14 @@
 				3A461A7118BBF39500302A4D /* DataDownload.m in Sources */,
 				3A3622721849320C007F2854 /* AppDelegate.m in Sources */,
 				3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */,
+				3ADBB08E194CBBC8003815CC /* SDCAlertView.m in Sources */,
+				3ADBB091194CBBC8003815CC /* SDCAlertViewController.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3A9E7C4C18845FDA00A507C3 /* TableData.m in Sources */,
 				3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */,
+				3ADBB090194CBBC8003815CC /* SDCAlertViewContentView.m in Sources */,
 				3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */,
+				3ADBB092194CBBC8003815CC /* SDCAlertViewCoordinator.m in Sources */,
 				3A4178AB18761BF600DEEFA6 /* IASKTextField.m in Sources */,
 				3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */,
 				3A4178A918761BF600DEEFA6 /* IASKSlider.m in Sources */,
@@ -1312,6 +1357,7 @@
 				3A4178A518761BF600DEEFA6 /* IASKSpecifier.m in Sources */,
 				3A4178A618761BF600DEEFA6 /* IASKPSSliderSpecifierViewCell.m in Sources */,
 				3AA440EF1854DA630051D4B0 /* DetailViewManager.m in Sources */,
+				3ADBB08F194CBBC8003815CC /* SDCAlertViewBackgroundView.m in Sources */,
 				3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */,
 				3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */,
 				3A4178A018761BF600DEEFA6 /* IASKSpecifierValuesViewController.m in Sources */,
@@ -1342,6 +1388,7 @@
 				3A4178AA18761BF600DEEFA6 /* IASKSwitch.m in Sources */,
 				3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */,
 				3A4178A818761BF600DEEFA6 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
+				3ADBB093194CBBC8003815CC /* SDCIntrinsicallySizedView.m in Sources */,
 				3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */,
 				3A4178A718761BF600DEEFA6 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
 				3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */,

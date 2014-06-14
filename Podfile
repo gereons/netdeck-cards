@@ -8,4 +8,7 @@ pod 'Dropbox-Sync-API-SDK'
 pod 'GRMustache'
 pod 'CorePlot'
 pod 'libextobjc'
-pod "CSStickyHeaderFlowLayout"
+pod 'CSStickyHeaderFlowLayout'
+# pod 'SDCAlertView'
+pod 'RBBAnimation'
+pod 'SDCAutoLayout'
