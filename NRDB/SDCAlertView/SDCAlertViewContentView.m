@@ -586,10 +586,10 @@ static NSInteger const SDCAlertViewDefaultFirstButtonIndex = 0;
 		[self.buttonTopSeparatorView sdc_pinHeight:SDCAlertViewGetSeparatorThickness()];
 	}
 	
-	[self.suggestedButtonTableView sdc_pinHeight:self.suggestedButtonTableView.rowHeight];
+	[self.suggestedButtonTableView sdc_pinHeight:MAX(44, self.suggestedButtonTableView.rowHeight)];
 		
 	if ([elements containsObject:self.otherButtonsTableView]) {
-		[self.otherButtonsTableView sdc_pinHeight:self.otherButtonsTableView.rowHeight * [self.otherButtonsTableView numberOfRowsInSection:0]];
+		[self.otherButtonsTableView sdc_pinHeight:MAX(44, self.otherButtonsTableView.rowHeight) * [self.otherButtonsTableView numberOfRowsInSection:0]];
 		
 		if ([self showsTableViewsSideBySide]) {
 			[self.suggestedButtonTableView sdc_alignEdges:UIRectEdgeRight withView:self];
