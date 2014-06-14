@@ -97,7 +97,7 @@ static struct cardSetData {
         @[ @"core", @"cac", @"hap" ],
         @[ @"wla", @"ta", @"ce", @"asis", @"hs", @"fp" ],
         @[ @"om", @"st", @"mt", @"tc", @"fal", @"dt" ],
-        @[ @"up", @"tsb", @"fc", @"atr" ]
+        @[ @"up", @"tsb", @"fc", @"uao", @"atr" ]
     ];
     
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
@@ -201,6 +201,11 @@ static struct cardSetData {
     }
     
     return [[TableData alloc] initWithSections:sections andValues:sets];
+}
+
++(NSSet*) allKnownSets
+{
+    return setCodes;
 }
 
 +(NSArray*) setsUsedInDeck:(Deck*) deck

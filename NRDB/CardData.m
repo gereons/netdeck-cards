@@ -226,6 +226,8 @@ NSString* const kANY = @"Any";
 {
     CardData* c = [CardData new];
     
+    BOOL allowSpecial = NO;
+    
     JSON_STR(code, @"code");
     JSON_STR(name, @"title");
     JSON_STR(text, @"text");
@@ -246,9 +248,16 @@ NSString* const kANY = @"Any";
     if (c.type == NRCardTypeNone) NSLog(@"oops %@", json);
     
     JSON_STR(setCode, @"set_code");
-    if ([c.setCode isEqualToString:@"special"] && ![specialIds containsObject:c.code])
+    if ([c.setCode isEqualToString:@"special"])
     {
-        return nil;
+        if (![specialIds containsObject:c.code])
+        {
+            return nil;
+        }
+        else
+        {
+            allowSpecial = YES;
+        }
     }
     
     JSON_STR(setName, @"setname");
@@ -350,6 +359,11 @@ NSString* const kANY = @"Any";
         {
             [altCards setObject:c forKey:c.name];
         }
+        return nil;
+    }
+    
+    if (!allowSpecial && ![[CardSets allKnownSets] containsObject:c.setCode])
+    {
         return nil;
     }
 

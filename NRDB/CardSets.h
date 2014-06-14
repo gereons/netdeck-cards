@@ -12,11 +12,17 @@
 @class Deck;
 @interface CardSets : NSObject
 
+// all sets that the user has selected
 +(NSArray*) allSets;
 +(TableData*) allSetsForTableview;
 
-+(NSDictionary*) settingsDefaults;
+// all sets that the user wants to ignore
 +(NSSet*) disabledSetCodes;
+
+// all sets that the app knows about
++(NSSet*) allKnownSets;
+
++(NSDictionary*) settingsDefaults;
 
 +(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;
 +(NSArray*) setsUsedInDeck:(Deck*) deck;
