@@ -36,6 +36,6 @@ typedef void (^UpdateCompletionBlock)(BOOL ok);
 +(UIImage*) placeholderFor:(NRRole)role;
 +(UIImage*) hexTile;
 
-+(UIImage*) croppedImage:(UIImage*)img y:(int)y;
++(UIImage*) croppedImage:(UIImage*)img forCard:(Card*)card;
 
 @end

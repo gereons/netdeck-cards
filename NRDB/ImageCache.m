@@ -98,7 +98,6 @@ static NSCache* memCache;
     }
     
     memCache = [[NSCache alloc] init];
-    memCache.totalCostLimit = 100 * 120000; // about 100 cards
     memCache.name = @"netdeck";
 }
 
@@ -419,7 +418,7 @@ static NSCache* memCache;
         
     if (img)
     {
-        [memCache setObject:img forKey:key cost:imgData.length];
+        [memCache setObject:img forKey:key];
     }
     return img;
 }
@@ -437,17 +436,25 @@ static NSCache* memCache;
 
 #pragma mark utility methods
 
-+(UIImage*) croppedImage:(UIImage*)img y:(int)y
++(UIImage*) croppedImage:(UIImage*)img forCard:(Card *)card
 {
     float scale = 1.0;
     if (img.size.width > 300)
     {
         scale = 1.436;
     }
-    CGRect rect = CGRectMake((int)(10*scale), (int)(y*scale), (int)(280*scale), (int)(209*scale));
-    CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
-    UIImage *cropped = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    NSString* key = [NSString stringWithFormat:@"%@:%@:crop", card.code, language];
+    
+    UIImage* cropped = [memCache objectForKey:key];
+    if (!cropped)
+    {
+        CGRect rect = CGRectMake((int)(10*scale), (int)(card.cropY*scale), (int)(280*scale), (int)(209*scale));
+        CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
+        cropped = [UIImage imageWithCGImage:imageRef];
+        CGImageRelease(imageRef);
+        [memCache setObject:cropped forKey:key];
+    }
     return cropped;
 }
 

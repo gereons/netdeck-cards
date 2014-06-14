@@ -35,7 +35,7 @@
          {
              [self.activityIndicator stopAnimating];
              
-             self.imageView.image = [ImageCache croppedImage:img y:card.cropY];
+             self.imageView.image = [ImageCache croppedImage:img forCard:card];
              self.nameLabel.text = placeholder ? card.name : nil;
          }
      }];
