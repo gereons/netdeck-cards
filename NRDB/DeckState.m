@@ -29,9 +29,7 @@ static NSDictionary* stateStr;
 
 +(NSString*) buttonLabelFor:(NRDeckState) state
 {
-    //  ▾
     return [NSString stringWithFormat:@"%@ ▾", stateStr[@(state)]];
-    // return [NSString stringWithFormat:@"%@: %@", l10n(@"Status"), stateStr[@(state)]];
 }
 
 @end

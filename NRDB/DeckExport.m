@@ -95,7 +95,7 @@
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with " APP_NAME "\n"];
+    [s appendString:@"\nDeck built with " APP_NAME " " APP_URL "\n"];
     
     if (deck.notes.length > 0)
     {
