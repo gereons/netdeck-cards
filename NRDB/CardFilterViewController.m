@@ -955,7 +955,9 @@ static NSInteger viewMode = VIEW_LIST;
     
     NSArray* paths = @[indexPath];
     [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+    [UIView setAnimationsEnabled:NO];
     [self.collectionView reloadItemsAtIndexPaths:paths];
+    [UIView setAnimationsEnabled:YES];
 }
 
 #pragma mark collectionview
@@ -972,8 +974,8 @@ static NSInteger viewMode = VIEW_LIST;
     cell.addButton.tag = ADD_BUTTON_COLLECTION;
     
     [cell.addButton addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];
-    cell.countLabel.text = cc.count > 0 ? [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count] : @"";
     
+    cell.countLabel.text = cc.count > 0 ? [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count] : @"";    
     cell.card = card;
     
     return cell;
