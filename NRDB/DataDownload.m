@@ -8,6 +8,7 @@
 
 #import <AFNetworking.h>
 #import <EXTScope.h>
+#import <SDCAlertView.h>
 
 #import "DataDownload.h"
 #import "CardData.h"
@@ -23,7 +24,7 @@
 
 @property AFHTTPRequestOperationManager *manager;
 
-@property UIAlertView* alert;
+@property SDCAlertView* alert;
 @property UIProgressView* progressView;
 @property NSMutableArray* cards;
 @end
@@ -65,14 +66,20 @@ static DataDownload* instance;
 
 -(void) downloadCardData
 {
-    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Card Data") message:nil delegate:self cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
-    UIActivityIndicatorView* act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [act startAnimating];
-    [self.alert setValue:act forKey:@"accessoryView"];
-    [self.alert show];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-    [self performSelector:@selector(doDownloadCardData) withObject:nil afterDelay:0.01];
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0,0, SDCAlertViewWidth, 20)];
+    UIActivityIndicatorView* act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    act.center = CGPointMake(SDCAlertViewWidth/2, view.frame.size.height/2);
+    [act startAnimating];
+    [view addSubview:act];
+    
+    self.alert = [SDCAlertView alertWithTitle:l10n(@"Downloading Card Data")
+                                      message:nil
+                                      subview:view
+                                      buttons:@[l10n(@"Stop")]];
+    self.alert.delegate = self;
+    
+    [self performSelector:@selector(doDownloadCardData) withObject:nil afterDelay:0.001];
 }
     
 -(void) doDownloadCardData
@@ -135,12 +142,9 @@ static DataDownload* instance;
     
     if (!ok && !self.downloadStopped)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:l10n(@"Unable to download cards at this time. Please try again later.")
-                                                       delegate:nil
-                                              cancelButtonTitle:nil
-                                              otherButtonTitles:l10n(@"OK"), nil];
-        [alert show];
+        [SDCAlertView alertWithTitle:nil
+                             message:l10n(@"Unable to download cards at this time. Please try again later.")
+                             buttons:@[l10n(@"OK")]];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
@@ -155,25 +159,25 @@ static DataDownload* instance;
     
     if (self.cards.count == 0)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Card Data")
-                                                        message:l10n(@"Please download card data first")
-                                                       delegate:nil
-                                              cancelButtonTitle:l10n(@"OK")
-                                              otherButtonTitles:nil];
-        [alert show];
+        [SDCAlertView alertWithTitle:l10n(@"No Card Data")
+                             message:l10n(@"Please download card data first")
+                             buttons:@[l10n(@"OK")]];
+        
         return;
     }
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 250, 20)];
+    self.progressView.center = CGPointMake(SDCAlertViewWidth/2, 10);
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0,0, SDCAlertViewWidth, 20)];
     
-    self.alert = [[UIAlertView alloc] initWithTitle:l10n(@"Downloading Images")
-                                            message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count]
-                                           delegate:self
-                                  cancelButtonTitle:l10n(@"Stop")
-                                  otherButtonTitles:nil];
-    [self.alert setValue:self.progressView forKey:@"accessoryView"];
-    [self.alert show];
+    [view addSubview:self.progressView];
+    
+    self.alert = [SDCAlertView alertWithTitle:l10n(@"Downloading Images")
+                                      message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count]
+                                      subview:view
+                                      buttons:@[l10n(@"Stop")]];
+    self.alert.delegate = self;
     
     self.downloadStopped = NO;
     self.downloadErrors = 0;
@@ -240,17 +244,16 @@ static DataDownload* instance;
         if (self.downloadErrors > 0)
         {
             NSString* msg = [NSString stringWithFormat:l10n(@"%d of %lu images could not be downloaded."), self.downloadErrors, (unsigned long)self.cards.count];
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil];
-            [alert show];
+            
+            [SDCAlertView alertWithTitle:nil message:msg buttons:@[l10n(@"OK")]];
         }
-        // [self cacheStats];
         
         self.cards = nil;
     }
 }
 
 #pragma mark alert dismissal
-- (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void) alertView:(SDCAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     

@@ -87,7 +87,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     if (![CardData cardsAvailable])
     {
         NSString* msg = l10n(@"To use this app, you must first download card data from netrunnerdb.com");
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Card Data") message:msg delegate:self cancelButtonTitle:l10n(@"Not now") otherButtonTitles:l10n(@"Download"), nil];
+        UIAlertView* alert = [[UIAlertView alloc]
+                              initWithTitle:l10n(@"No Card Data")
+                              message:msg delegate:self
+                              cancelButtonTitle:l10n(@"Not now")
+                              otherButtonTitles:l10n(@"Download"), nil];
         alert.tag = 0;
         [alert show];
     }

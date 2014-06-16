@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SDCAlertView.h>
 
 @class Deck;
 
-@interface DeckImport : NSObject
+@interface DeckImport : NSObject<SDCAlertViewDelegate>
 
 +(void) updateCount;
 +(void) checkClipboardForDeck;

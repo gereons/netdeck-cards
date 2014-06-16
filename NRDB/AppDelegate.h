@@ -10,7 +10,7 @@
 #import "DetailViewManager.h"
 #import "NRSplitViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

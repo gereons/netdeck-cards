@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "AboutViewController.h"
 #import <StoreKit/StoreKit.h>
 #import <MessageUI/MessageUI.h>
+#import <SDCAlertView.h>
+
+#import "AboutViewController.h"
 
 @interface AboutViewController ()
 @property SKStoreProductViewController* storeViewController;
@@ -71,7 +73,7 @@
         [self.popup showFromBarButtonItem:sender animated:NO];
     }
     */
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+    SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:nil
                                                     message:l10n(@"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store.")
                                                    delegate:self
                                           cancelButtonTitle:l10n(@"Cancel")
@@ -110,7 +112,7 @@
             break;
     }
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+    SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:nil
                                                     message:msg
                                                    delegate:self
                                           cancelButtonTitle:@"Cancel"
@@ -122,7 +124,7 @@
 
 #pragma mark alert view
 
--(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+-(void) alertView:(SDCAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex)
     {
