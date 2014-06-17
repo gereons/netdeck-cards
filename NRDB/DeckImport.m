@@ -208,6 +208,7 @@ static DeckImport* instance;
         
         for (Card* c in cards)
         {
+#pragma warning add lookup w/o accents/diacritics
             NSUInteger loc1 = [line rangeOfString:c.name options:NSCaseInsensitiveSearch].location;
             NSUInteger loc2 = [line rangeOfString:c.name_en options:NSCaseInsensitiveSearch].location;
             

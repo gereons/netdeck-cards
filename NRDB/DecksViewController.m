@@ -103,19 +103,31 @@ static NSDictionary* sideStr;
                                      target:nil
                                      action:nil];
     
-    self.sortButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(sortType)]] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
+    self.sortButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(sortType)]]
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(changeSort:)];
     self.sortButton.possibleTitles = [NSSet setWithArray:@[
                                                            [NSString stringWithFormat:@"%@ ▾", l10n(@"Date")],
                                                            [NSString stringWithFormat:@"%@ ▾", l10n(@"Faction")],
                                                            [NSString stringWithFormat:@"%@ ▾", l10n(@"A-Z")],
                                                            ]];
-    self.sideFilterButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@: %@", l10n(@"Side"), sideStr[@(filterType)]] style:UIBarButtonItemStylePlain target:self action:@selector(changeSideFilter:)];
+    
+    self.sideFilterButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(filterType)]]
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(changeSideFilter:)];
     self.sideFilterButton.possibleTitles = [NSSet setWithArray:@[
                                                            [NSString stringWithFormat:@"%@ ▾", l10n(@"Both")],
                                                            [NSString stringWithFormat:@"%@ ▾", l10n(@"Runner")],
                                                            [NSString stringWithFormat:@"%@ ▾", l10n(@"Corp")],
                                                            ]];
-    self.stateFilterButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:filterState] style:UIBarButtonItemStylePlain target:self action:@selector(changeStateFilter:)];
+    
+    self.stateFilterButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:filterState]
+                                                              style:UIBarButtonItemStylePlain
+                                                             target:self
+                                                             action:@selector(changeStateFilter:)];
+    
     self.stateFilterButton.possibleTitles = [NSSet setWithArray:@[
                                                                  [DeckState buttonLabelFor:NRDeckStateNone],
                                                                  [DeckState buttonLabelFor:NRDeckStateActive],
