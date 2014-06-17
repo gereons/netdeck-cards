@@ -148,7 +148,7 @@ static NSArray* draftIds;
                 [reasons addObject:l10n(@"Cannot include Jinteki")];
             }
             
-            if (card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction && !agendaError)
+            if (!self.isDraft && card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction && !agendaError)
             {
                 agendaError = YES;
                 [reasons addObject:l10n(@"Cannot use out-of-faction agendas")];

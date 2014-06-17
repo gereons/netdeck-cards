@@ -41,4 +41,11 @@
      }];
 }
 
+-(void) prepareForReuse
+{
+    self.nameLabel.text = nil;
+    self.countLabel.text = nil;
+    self.imageView.image = nil;
+}
+
 @end

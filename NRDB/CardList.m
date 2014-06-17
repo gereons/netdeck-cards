@@ -61,7 +61,7 @@
 {
     [self resetInitialCards];
     
-    if (identity)
+    if (identity && identity.faction != NRFactionNeutral)
     {
         NSArray* factions = @[ @(NRFactionNeutral), @(identity.faction) ];
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"type != %d OR (type = %d AND faction in %@)", NRCardTypeAgenda, NRCardTypeAgenda, factions];
