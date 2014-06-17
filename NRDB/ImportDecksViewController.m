@@ -7,9 +7,12 @@
 //
 
 #import "ImportDecksViewController.h"
+
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
 #import <EXTScope.h>
+#import <SDCAlertView.h>
+
 #import "Deck.h"
 #import "DeckManager.h"
 #import "ImageCache.h"
@@ -70,12 +73,9 @@ static NSString* filterText;
             [SVProgressHUD dismiss];
             if (count == 0)
             {
-                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Decks found")
-                                                                message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.")
-                                                               delegate:nil
-                                                      cancelButtonTitle:l10n(@"OK")
-                                                      otherButtonTitles:nil];
-                [alert show];
+                [SDCAlertView alertWithTitle:l10n(@"No Decks found")
+                                     message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.")
+                                      buttons:@[ l10n(@"OK") ]];
             }
             [self filterDecks];
             [self.tableView reloadData];

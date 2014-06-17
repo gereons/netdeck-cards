@@ -9,6 +9,7 @@
 #import <SVProgressHUD.h>
 #import <Dropbox/Dropbox.h>
 #import <AFNetworking.h>
+#import <SDCAlertView.h>
 
 #import "SettingsViewController.h"
 
@@ -153,37 +154,29 @@
     {
         TF_CHECKPOINT(@"clear cache");
         
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:l10n(@"Clear Cache? You will need to re-download all data from netrunnerdb.com.")
-                                                       delegate:self
-                                              cancelButtonTitle:l10n(@"No")
-                                              otherButtonTitles:l10n(@"Yes"), nil];
-        [alert show];
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
+                                                   message:l10n(@"Clear Cache? You will need to re-download all data from netrunnerdb.com.")
+                                                   buttons:@[l10n(@"No"), l10n(@"Yes") ]];
+        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+            if (buttonIndex == 1) // yes, clear
+            {
+                [[ImageCache sharedInstance] clearCache];
+                [CardData removeFile];
+                [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:LAST_DOWNLOAD];
+                [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:NEXT_DOWNLOAD];
+                [self refresh];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self];
+            }
+        };
     }
 }
 
 -(void) showOfflineAlert
 {
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:l10n(@"An Internet connection is required.")
-                                                   delegate:nil
-                                          cancelButtonTitle:l10n(@"OK")
-                                          otherButtonTitles:nil];
-    [alert show];
-}
-
--(void) alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex != alertView.cancelButtonIndex)
-    {
-        [[ImageCache sharedInstance] clearCache];
-        [CardData removeFile];
-        [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:LAST_DOWNLOAD];
-        [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:NEXT_DOWNLOAD];
-        [self refresh];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self];
-    }
+    [SDCAlertView alertWithTitle:nil
+                         message:l10n(@"An Internet connection is required.")
+                         buttons:@[l10n(@"OK")]];
 }
 
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender

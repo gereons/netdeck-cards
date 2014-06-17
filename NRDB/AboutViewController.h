@@ -11,7 +11,7 @@
 #import <StoreKit/StoreKit.h>
 #import <MessageUI/MessageUI.h>
 
-@interface AboutViewController : UIViewController<SubstitutableDetailViewController, UIWebViewDelegate, UIActionSheetDelegate, SKStoreProductViewControllerDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate>
+@interface AboutViewController : UIViewController<SubstitutableDetailViewController, UIWebViewDelegate, UIActionSheetDelegate, SKStoreProductViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIWebView* webView;
 

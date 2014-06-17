@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DataDownload : NSObject<UIAlertViewDelegate>
+@interface DataDownload : NSObject
 
 +(void) downloadCardData;       // blocks UI, posts LOAD_CARDS notification when done
 +(void) downloadAllImages;      // blocks UI, returns when download is done

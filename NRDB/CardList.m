@@ -266,8 +266,16 @@
                 predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@) OR (text CONTAINS[cd] %@)", self.text, self.text];
                 break;
             case NRSearchName:
+            {
                 predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", self.text];
+                unichar ch = [self.text characterAtIndex:0];
+                if (isdigit(ch))
+                {
+                    NSPredicate* codePredicate = [NSPredicate predicateWithFormat:@"code BEGINSWITH %@", self.text ];
+                    predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[ predicate, codePredicate ]];
+                }
                 break;
+            }
             case NRSearchText:
                 predicate = [NSPredicate predicateWithFormat:@"text CONTAINS[cd] %@", self.text];
                 break;
