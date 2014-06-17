@@ -77,7 +77,11 @@ static DataDownload* instance;
                                       message:nil
                                       subview:view
                                       buttons:@[l10n(@"Stop")]];
-    self.alert.delegate = self;
+    @weakify(self);
+    self.alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        @strongify(self);
+        [self stopDownload];
+    };
     
     [self performSelector:@selector(doDownloadCardData) withObject:nil afterDelay:0.001];
 }
@@ -177,7 +181,11 @@ static DataDownload* instance;
                                       message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count]
                                       subview:view
                                       buttons:@[l10n(@"Stop")]];
-    self.alert.delegate = self;
+    @weakify(self);
+    self.alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        @strongify(self);
+        [self stopDownload];
+    };
     
     self.downloadStopped = NO;
     self.downloadErrors = 0;
@@ -252,16 +260,14 @@ static DataDownload* instance;
     }
 }
 
-#pragma mark alert dismissal
-- (void) alertView:(SDCAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+
+- (void) stopDownload
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
-    if (buttonIndex == alertView.cancelButtonIndex)
-    {
-        self.downloadStopped = YES;
-        [self.manager.operationQueue cancelAllOperations];
-    }
+    self.downloadStopped = YES;
+    [self.manager.operationQueue cancelAllOperations];
+    
     self.alert = nil;
 }
 

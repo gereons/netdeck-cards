@@ -88,13 +88,17 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     if (![CardData cardsAvailable])
     {
         NSString* msg = l10n(@"To use this app, you must first download card data from netrunnerdb.com");
-        SDCAlertView* alert = [[SDCAlertView alloc]
-                              initWithTitle:l10n(@"No Card Data")
-                              message:msg delegate:self
-                              cancelButtonTitle:l10n(@"Not now")
-                              otherButtonTitles:l10n(@"Download"), nil];
-        alert.tag = 0;
-        [alert show];
+        
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"No Card Data")
+                                                   message:msg
+                                                   buttons:@[l10n(@"Not now"), l10n(@"Download")]];
+        
+        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+            if (buttonIndex == 1)
+            {
+                [DataDownload downloadCardData];
+            }
+        };
     }
 }
 
@@ -172,35 +176,25 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     if ([scheduled compare:now] == NSOrderedAscending)
     {
-        SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Update cards")
-                                                        message:l10n(@"Card data may be out of date. Download now?")
-                                                       delegate:self
-                                              cancelButtonTitle:l10n(@"Later")
-                                              otherButtonTitles:l10n(@"OK"), nil];
-        alert.tag = 1;
-        [alert show];
-    }
-}
-
-#pragma mark alerts
-
--(void) alertView:(SDCAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1)
-    {
-        [DataDownload downloadCardData];
-    }
-    
-    // "later" in update alert?
-    if (alertView.tag == 1 && buttonIndex == 0)
-    {
-        NSDateFormatter *fmt = [NSDateFormatter new];
-        [fmt setDateStyle:NSDateFormatterShortStyle]; // z.B. 08.10.2008
-        [fmt setTimeStyle:NSDateFormatterNoStyle];
-        
-        NSDate* next = [NSDate dateWithTimeIntervalSinceNow:24*60*60];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Update cards")
+                                                   message:l10n(@"Card data may be out of date. Download now?")
+                                                   buttons:@[l10n(@"Later"), l10n(@"OK")]];
+        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+            if (buttonIndex == 0) // later
+            {
+                NSDateFormatter *fmt = [NSDateFormatter new];
+                [fmt setDateStyle:NSDateFormatterShortStyle]; // dd.mm.yyyy
+                [fmt setTimeStyle:NSDateFormatterNoStyle];
+                // ask again tomorrow
+                NSDate* next = [NSDate dateWithTimeIntervalSinceNow:24*60*60];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
+            }
+            if (buttonIndex == 1) // ok
+            {
+                [DataDownload downloadCardData];
+            }
+        };
     }
 }
 

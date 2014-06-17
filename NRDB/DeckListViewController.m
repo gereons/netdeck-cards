@@ -7,6 +7,8 @@
 //
 
 #import <SVProgressHUD.h>
+#import <SDCAlertView.h>
+#import <EXTScope.h>
 
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
@@ -60,7 +62,6 @@
 @implementation DeckListViewController
 
 enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
-enum { NAME_ALERT = 1, SWITCH_ALERT };
 enum { POPUP_EXPORT, POPUP_STATE };
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -313,13 +314,42 @@ enum { POPUP_EXPORT, POPUP_STATE };
         return;
     }
     
-    SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Duplicate this deck?")
-                                                    message:nil
-                                                   delegate:self
-                                          cancelButtonTitle:l10n(@"No")
-                                          otherButtonTitles:l10n(@"Yes, switch to copy"), l10n(@"Yes, but stay here"), nil];
-    alert.tag = SWITCH_ALERT;
-    [alert show];
+    SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Duplicate this deck?")
+                                               message:nil
+                                               buttons:@[ l10n(@"No"), l10n(@"Yes, switch to copy"), l10n(@"Yes, but stay here") ]];
+    
+    @weakify(self);
+    alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        @strongify(self);
+        Deck* newDeck = [self.deck duplicate];
+        
+        switch (buttonIndex)
+        {
+            case 1: // dup and switch
+                self.deck = newDeck;
+                if (self.autoSave)
+                {
+                    [DeckManager saveDeck:self.deck];
+                }
+                else
+                {
+                    self.deckChanged = YES;
+                }
+                [self refresh];
+                break;
+                
+            case 2: // dup, stay here
+                [DeckManager saveDeck:newDeck];
+                if (self.autoSaveDropbox)
+                {
+                    if (newDeck.identity && newDeck.cards.count > 0)
+                    {
+                        [DeckExport asOctgn:newDeck autoSave:YES];
+                    }
+                }
+                break;
+        }
+    };
 }
 
 #pragma mark deck state
@@ -353,11 +383,14 @@ enum { POPUP_EXPORT, POPUP_STATE };
         return;
     }
     
-    SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name") message:nil delegate:self cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
-    alert.tag = NAME_ALERT;
-    alert.alertViewStyle = SDCAlertViewStylePlainTextInput;
+    self.nameAlert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name")
+                                                 message:nil
+                                                delegate:nil
+                                       cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
+                      
+    self.nameAlert.alertViewStyle = SDCAlertViewStylePlainTextInput;
     
-    UITextField* textField = [alert textFieldAtIndex:0];
+    UITextField* textField = [self.nameAlert textFieldAtIndex:0];
     textField.placeholder = l10n(@"Deck Name");
     textField.text = self.deck.name;
     textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
@@ -365,8 +398,22 @@ enum { POPUP_EXPORT, POPUP_STATE };
     textField.returnKeyType = UIReturnKeyDone;
     textField.delegate = self;
     
-    self.nameAlert = alert;
-    [alert show];
+    @weakify(self);
+    [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
+        @strongify(self);
+        if (buttonIndex == 1)
+        {
+            self.deck.name = [self.nameAlert textFieldAtIndex:0].text;
+            self.deckNameLabel.text = self.deck.name;
+            self.deckChanged = YES;
+            if (self.autoSave)
+            {
+                [self saveDeck:nil];
+            }
+            [self refresh];
+        }
+        self.nameAlert = nil;
+    }];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -375,68 +422,6 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [textField resignFirstResponder];
     return NO;
 }
-
-- (void)alertView:(SDCAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == alertView.cancelButtonIndex)
-    {
-        return;
-    }
-    
-    if (alertView.tag == NAME_ALERT)
-    {
-        self.deck.name = [alertView textFieldAtIndex:0].text;
-        self.deckNameLabel.text = self.deck.name;
-        self.deckChanged = YES;
-        if (self.autoSave)
-        {
-            [self saveDeck:nil];
-        }
-        [self refresh];
-        
-        self.nameAlert = nil;
-    }
-    else if (alertView.tag == SWITCH_ALERT)
-    {
-        Deck* newDeck = [self.deck duplicate];
-
-        switch (buttonIndex)
-        {
-            case 1: // dup and switch
-                self.deck = newDeck;
-                if (self.autoSave)
-                {
-                    [DeckManager saveDeck:self.deck];
-                }
-                else
-                {
-                    self.deckChanged = YES;
-                }
-                [self refresh];
-                break;
-                
-            case 2: // dup, stay here
-                [DeckManager saveDeck:newDeck];
-                if (self.autoSaveDropbox)
-                {
-                    if (newDeck.identity && newDeck.cards.count > 0)
-                    {
-                        [DeckExport asOctgn:newDeck autoSave:YES];
-                    }
-                }
-                break;
-                
-            default:
-                NSAssert(NO, @"unknown button");
-                break;
-        }
-    }
-    else
-    {
-        NSAssert(NO, @"this can't happen");
-    }
-}
-
 
 #pragma mark identity selection
 
@@ -552,8 +537,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
 {
     if (buttonIndex < 4 && ![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
     {
-        SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:nil message:l10n(@"Connect to your Dropbox account first.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Connect to your Dropbox account first.") buttons:@[l10n(@"OK")]];
+        return;
     }
     
     TF_CHECKPOINT(@"export deck");
@@ -563,12 +548,12 @@ enum { POPUP_EXPORT, POPUP_STATE };
         case 0: // octgn
             if (self.deck.identity == nil)
             {
-                [[[SDCAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have an Identity.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
+                [SDCAlertView alertWithTitle:nil message:l10n(@"Deck needs to have an Identity.") buttons:@[l10n(@"OK")]];
                 return;
             }
             if (self.deck.cards.count == 0)
             {
-                [[[SDCAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have Cards.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
+                [SDCAlertView alertWithTitle:nil message:l10n(@"Deck needs to have Cards.") buttons:@[l10n(@"OK")]];
                 return;
             }
             [DeckExport asOctgn:self.deck autoSave:NO];
@@ -1155,8 +1140,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
         {
             // NSLog(@"Printing could not complete because of error: %@", error);
             NSString* msg = error.localizedDescription;
-            SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Printing Problem") message:msg delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil];
-            [alert show];
+            [SDCAlertView alertWithTitle:l10n(@"Printing Problem") message:msg buttons:@[l10n(@"OK")]];
         }
     };
     

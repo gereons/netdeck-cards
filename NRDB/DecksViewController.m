@@ -443,14 +443,13 @@ static NSDictionary* sideStr;
             }
             case 1: // rename
             {
-                SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Enter Name")
-                                                           message:nil
-                                                           buttons:@[l10n(@"Cancel"), l10n(@"OK")]];
+                self.nameAlert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name")
+                                                                  message:nil
+                                                                 delegate:nil cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
 
-                self.nameAlert = alert;
-                alert.alertViewStyle = SDCAlertViewStylePlainTextInput;
+                self.nameAlert.alertViewStyle = SDCAlertViewStylePlainTextInput;
                 
-                UITextField* textField = [alert textFieldAtIndex:0];
+                UITextField* textField = [self.nameAlert textFieldAtIndex:0];
                 textField.placeholder = l10n(@"Deck Name");
                 textField.text = self.deck.name;
                 textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
@@ -459,20 +458,17 @@ static NSDictionary* sideStr;
                 textField.delegate = self;
                 
                 @weakify(self);
-                alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+                [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
                     @strongify(self);
-                    if (buttonIndex == 0) // cancel
+                    if (buttonIndex == 1)
                     {
-                        return;
+                        self.deck.name = [self.nameAlert textFieldAtIndex:0].text;
+                        [DeckManager saveDeck:self.deck];
+                        self.deck = nil;
+                        [self updateDecks];
                     }
-                    
-                    self.deck.name = [self.nameAlert textFieldAtIndex:0].text;
-                    [DeckManager saveDeck:self.deck];
-                    self.deck = nil;
-                    [self updateDecks];
-                    
                     self.nameAlert = nil;
-                };
+                }];
 
                 break;
             }

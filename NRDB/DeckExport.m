@@ -53,14 +53,17 @@
     NSMutableString* s = [NSMutableString stringWithCapacity:1000];
     
     [s appendString:[NSString stringWithFormat:@"%@\n\n", deck.name]];
-    [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
+    if (deck.identity)
+    {
+        [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
+    }
     
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (cc.card.type == NRCardTypeIdentity)
+        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -123,14 +126,17 @@
     NSMutableString* s = [NSMutableString stringWithCapacity:1000];
     
     [s appendString:[NSString stringWithFormat:@"# %@\n\n", deck.name]];
-    [s appendString:[NSString stringWithFormat:@"[%@](%@) _(%@)_\n", deck.identity.name, deck.identity.url, deck.identity.setName]];
+    if (deck.identity)
+    {
+        [s appendString:[NSString stringWithFormat:@"[%@](%@) _(%@)_\n", deck.identity.name, deck.identity.url, deck.identity.setName]];
+    }
     
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (cc.card.type == NRCardTypeIdentity)
+        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -192,14 +198,17 @@
     NSMutableString* s = [NSMutableString stringWithCapacity:1000];
     
     [s appendString:[NSString stringWithFormat:@"[b]%@[/b]\n\n", deck.name]];
-    [s appendString:[NSString stringWithFormat:@"[url=%@]%@[/url] (%@)\n", deck.identity.url, deck.identity.name, deck.identity.setName]];
+    if (deck.identity)
+    {
+        [s appendString:[NSString stringWithFormat:@"[url=%@]%@[/url] (%@)\n", deck.identity.url, deck.identity.name, deck.identity.setName]];
+    }
     
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (cc.card.type == NRCardTypeIdentity)
+        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }

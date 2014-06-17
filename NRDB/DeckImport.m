@@ -105,29 +105,20 @@ static DeckImport* instance;
         self.deckSource = [self checkForMeteorDeckURL:lines];
     }
     
+    SDCAlertView* alert = nil;
     if (self.deckSource)
     {
         if (self.deckSource.site == DeckBuilderSiteNetrunnerDB)
         {
-            SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:nil
-                                                            message:l10n(@"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?")
-                                                           delegate:self
-                                                  cancelButtonTitle:l10n(@"No")
-                                                  otherButtonTitles:l10n(@"Yes"), nil];
-            alert.tag = NO;
-            [alert show];
-            return;
+            alert = [SDCAlertView alertWithTitle:nil
+                                         message:l10n(@"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?")
+                                         buttons:@[l10n(@"No"), l10n(@"Yes")]];
         }
         else if (self.deckSource.site == DeckBuilderSiteMeteor)
         {
-            SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:nil
-                                                            message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
-                                                           delegate:self
-                                                  cancelButtonTitle:l10n(@"No")
-                                                  otherButtonTitles:l10n(@"Yes"), nil];
-            alert.tag = NO;
-            [alert show];
-            return;
+            alert = [SDCAlertView alertWithTitle:nil
+                                         message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
+                                         buttons:@[l10n(@"No"), l10n(@"Yes")]];
         }
     }
     else
@@ -136,14 +127,31 @@ static DeckImport* instance;
         
         if (self.deck != nil)
         {
-            SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:nil
-                                                            message:l10n(@"Detected a deck list in your clipboard. Import this deck?")
-                                                           delegate:self
-                                                  cancelButtonTitle:l10n(@"No")
-                                                  otherButtonTitles:l10n(@"Yes"), nil];
-            alert.tag = NO;
-            [alert show];
+            alert = [SDCAlertView alertWithTitle:nil
+                                         message:l10n(@"Detected a deck list in your clipboard. Import this deck?")
+                                         buttons:@[l10n(@"No"), l10n(@"Yes")]];
         }
+    }
+    
+    if (alert)
+    {
+        @weakify(self);
+        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+            @strongify(self);
+            if (buttonIndex == 1) // yes
+            {
+                if (self.deck)
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
+                }
+                else if (self.deckSource)
+                {
+                    [self downloadDeck:self.deckSource];
+                }
+                self.deck = nil;
+                self.deckSource = nil;
+            }
+        };
     }
 }
 
@@ -263,40 +271,6 @@ static DeckImport* instance;
     }
 }
 
-#pragma mark alertview
-
--(void) alertView:(SDCAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    BOOL stopAlert = alertView.tag;
-    
-    if (stopAlert)
-    {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        
-        self.downloadStopped = YES;
-        self.alert = nil;
-        
-        [self.manager.operationQueue cancelAllOperations];
-        return;
-    }
-    
-    if (buttonIndex == alertView.cancelButtonIndex)
-    {
-        return;
-    }
-    
-    if (self.deck)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
-    }
-    else if (self.deckSource)
-    {
-        [self downloadDeck:self.deckSource];
-    }
-    self.deck = nil;
-    self.deckSource = nil;
-}
-
 #pragma mark deck data download
 
 -(void) downloadDeck:(DeckSource*) deckSource
@@ -308,8 +282,18 @@ static DeckImport* instance;
     [view addSubview:act];
     
     self.alert = [SDCAlertView alertWithTitle:l10n(@"Downloading Deck") message:nil subview:view buttons:@[l10n(@"Stop")]];
-    self.alert.delegate = self;
-    self.alert.tag = YES;
+    
+    @weakify(self);
+    self.alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        @strongify(self);
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        
+        self.downloadStopped = YES;
+        self.alert = nil;
+        
+        [self.manager.operationQueue cancelAllOperations];
+        return;
+    };
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     

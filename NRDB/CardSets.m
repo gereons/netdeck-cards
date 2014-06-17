@@ -282,7 +282,7 @@ static struct cardSetData {
             return [setNames objectForKey:cs.setCode];
         }
     }
-    return nil;
+    return @"?";
 }
 
 @end
