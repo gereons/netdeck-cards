@@ -7,6 +7,10 @@
 //
 
 #import "DecksViewController.h"
+
+#import <SDCAlertView.h>
+#import <EXTScope.h>
+
 #import "DeckCell.h"
 #import "DeckManager.h"
 #import "DeckExport.h"
@@ -38,7 +42,7 @@ static NSString* filterText;
 @property NSArray* decks;
 @property NSDateFormatter *dateFormatter;
 @property UIActionSheet* popup;
-@property UIAlertView* nameAlert;
+@property SDCAlertView* nameAlert;
 @property Deck* deck;
 @property UIBarButtonItem* editButton;
 @property UIBarButtonItem* sortButton;
@@ -212,8 +216,9 @@ static NSDictionary* sideStr;
     
     if (!useDropbox)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Import Decks") message:l10n(@"Connect to your Dropbox account first.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];
+        [SDCAlertView alertWithTitle:l10n(@"Import Decks")
+                             message:l10n(@"Connect to your Dropbox account first.")
+                             buttons:@[l10n(@"OK")]];
         return;
     }
     
@@ -438,13 +443,12 @@ static NSDictionary* sideStr;
             }
             case 1: // rename
             {
-                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Enter Name")
-                                                                message:nil
-                                                               delegate:self
-                                                      cancelButtonTitle:l10n(@"Cancel")
-                                                      otherButtonTitles:l10n(@"OK"), nil];
-                
-                alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+                SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Enter Name")
+                                                           message:nil
+                                                           buttons:@[l10n(@"Cancel"), l10n(@"OK")]];
+
+                self.nameAlert = alert;
+                alert.alertViewStyle = SDCAlertViewStylePlainTextInput;
                 
                 UITextField* textField = [alert textFieldAtIndex:0];
                 textField.placeholder = l10n(@"Deck Name");
@@ -454,8 +458,21 @@ static NSDictionary* sideStr;
                 textField.returnKeyType = UIReturnKeyDone;
                 textField.delegate = self;
                 
-                self.nameAlert = alert;
-                [alert show];
+                @weakify(self);
+                alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+                    @strongify(self);
+                    if (buttonIndex == 0) // cancel
+                    {
+                        return;
+                    }
+                    
+                    self.deck.name = [self.nameAlert textFieldAtIndex:0].text;
+                    [DeckManager saveDeck:self.deck];
+                    self.deck = nil;
+                    [self updateDecks];
+                    
+                    self.nameAlert = nil;
+                };
 
                 break;
             }
@@ -549,21 +566,6 @@ static NSDictionary* sideStr;
     [self.nameAlert dismissWithClickedButtonIndex:1 animated:NO];
     [textField resignFirstResponder];
     return NO;
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == alertView.cancelButtonIndex)
-    {
-        return;
-    }
-    
-    self.deck.name = [alertView textFieldAtIndex:0].text;
-    [DeckManager saveDeck:self.deck];
-    self.deck = nil;
-    [self updateDecks];
-    
-    self.nameAlert = nil;
 }
 
 #pragma mark search bar

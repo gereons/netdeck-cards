@@ -153,7 +153,7 @@
     {
         TF_CHECKPOINT(@"clear cache");
         
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+        SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:nil
                                                         message:l10n(@"Clear Cache? You will need to re-download all data from netrunnerdb.com.")
                                                        delegate:self
                                               cancelButtonTitle:l10n(@"No")
@@ -164,7 +164,7 @@
 
 -(void) showOfflineAlert
 {
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+    SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:nil
                                                     message:l10n(@"An Internet connection is required.")
                                                    delegate:nil
                                           cancelButtonTitle:l10n(@"OK")
@@ -172,7 +172,7 @@
     [alert show];
 }
 
--(void) alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+-(void) alertView:(SDCAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != alertView.cancelButtonIndex)
     {

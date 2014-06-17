@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
+#import <SDCAlertView.h>
+
 #import "NRNavigationController.h"
 #import "DeckListViewController.h"
 
@@ -92,28 +94,24 @@
 
 -(void) showAlert
 {
-    UIAlertView* alert = [[UIAlertView alloc]
-                          initWithTitle:nil
-                          message:l10n(@"There are unsaved changes")
-                          delegate:self
-                          cancelButtonTitle:l10n(@"Cancel")
-                          otherButtonTitles:l10n(@"Discard"), l10n(@"Save"), nil];
-    [alert show];
-}
-
--(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == alertView.cancelButtonIndex)
-    {
-        return;
-    }
+    SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
+                                               message:l10n(@"There are unsaved changes")
+                                               buttons:@[l10n(@"Cancel"), l10n(@"Discard"), l10n(@"Save")]];
     
-    if (buttonIndex == 2)
-    {
-        [self.deckListViewController saveDeck:nil];
-    }
-    self.alertViewClicked = YES;
-    [self popViewControllerAnimated:NO];
+    alert.willDismissHandler = ^void(NSInteger buttonIndex) {
+        if (buttonIndex == 0) // cancel
+        {
+            return;
+        }
+        
+        if (buttonIndex == 2) // save
+        {
+            [self.deckListViewController saveDeck:nil];
+        }
+        self.alertViewClicked = YES;
+        [self popViewControllerAnimated:NO];
+
+    };
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <SVProgressHUD.h>
+#import <SDCAlertView.h>
 
 #import "ActionsTableViewController.h"
 #import "EmptyDetailViewController.h"
@@ -87,7 +88,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     if (![CardData cardsAvailable])
     {
         NSString* msg = l10n(@"To use this app, you must first download card data from netrunnerdb.com");
-        UIAlertView* alert = [[UIAlertView alloc]
+        SDCAlertView* alert = [[SDCAlertView alloc]
                               initWithTitle:l10n(@"No Card Data")
                               message:msg delegate:self
                               cancelButtonTitle:l10n(@"Not now")
@@ -171,7 +172,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     if ([scheduled compare:now] == NSOrderedAscending)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Update cards")
+        SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Update cards")
                                                         message:l10n(@"Card data may be out of date. Download now?")
                                                        delegate:self
                                               cancelButtonTitle:l10n(@"Later")
@@ -183,7 +184,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 #pragma mark alerts
 
--(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+-(void) alertView:(SDCAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1)
     {

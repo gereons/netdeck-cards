@@ -8,7 +8,8 @@
 
 
 #import <UIKit/UIKit.h>
+#import <SDCAlertView.h>
 
-@interface ActionsTableViewController : UITableViewController<UIAlertViewDelegate>
+@interface ActionsTableViewController : UITableViewController<SDCAlertViewDelegate>
 
 @end

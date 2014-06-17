@@ -53,7 +53,7 @@
 
 @property CGFloat scale;
 @property BOOL largeCells;
-@property UIAlertView* nameAlert;
+@property SDCAlertView* nameAlert;
 
 @end
 
@@ -313,7 +313,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
         return;
     }
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Duplicate this deck?")
+    SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Duplicate this deck?")
                                                     message:nil
                                                    delegate:self
                                           cancelButtonTitle:l10n(@"No")
@@ -353,9 +353,9 @@ enum { POPUP_EXPORT, POPUP_STATE };
         return;
     }
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Enter Name") message:nil delegate:self cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
+    SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name") message:nil delegate:self cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
     alert.tag = NAME_ALERT;
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.alertViewStyle = SDCAlertViewStylePlainTextInput;
     
     UITextField* textField = [alert textFieldAtIndex:0];
     textField.placeholder = l10n(@"Deck Name");
@@ -376,7 +376,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     return NO;
 }
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)alertView:(SDCAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == alertView.cancelButtonIndex)
     {
@@ -552,7 +552,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
 {
     if (buttonIndex < 4 && ![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:l10n(@"Connect to your Dropbox account first.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:nil message:l10n(@"Connect to your Dropbox account first.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
     }
     
@@ -563,12 +563,12 @@ enum { POPUP_EXPORT, POPUP_STATE };
         case 0: // octgn
             if (self.deck.identity == nil)
             {
-                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have an Identity.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
+                [[[SDCAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have an Identity.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
                 return;
             }
             if (self.deck.cards.count == 0)
             {
-                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have Cards.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
+                [[[SDCAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have Cards.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
                 return;
             }
             [DeckExport asOctgn:self.deck autoSave:NO];
@@ -1155,7 +1155,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
         {
             // NSLog(@"Printing could not complete because of error: %@", error);
             NSString* msg = error.localizedDescription;
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Printing Problem") message:msg delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil];
+            SDCAlertView* alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Printing Problem") message:msg delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil];
             [alert show];
         }
     };

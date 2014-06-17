@@ -266,6 +266,7 @@
                 predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@) OR (text CONTAINS[cd] %@)", self.text, self.text];
                 break;
             case NRSearchName:
+#warning support search by card code as well
                 predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", self.text];
                 break;
             case NRSearchText:
