@@ -286,7 +286,7 @@ static DeckImport* instance;
     @weakify(self);
     self.alert.didDismissHandler = ^void(NSInteger buttonIndex) {
         @strongify(self);
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         self.downloadStopped = YES;
         self.alert = nil;

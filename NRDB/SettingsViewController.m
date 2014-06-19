@@ -10,6 +10,7 @@
 #import <Dropbox/Dropbox.h>
 #import <AFNetworking.h>
 #import <SDCAlertView.h>
+#import <AFNetworking.h>
 
 #import "SettingsViewController.h"
 
@@ -61,7 +62,17 @@
         [hiddenKeys addObjectsFromArray:@[ CARD_SETS, SET_SELECTION ]];
     }
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    if (![settings objectForKey:NRDB_REMEMBERME])
+    {
+        [hiddenKeys addObject:NRDB_LOGOUT];
+    }
+    else
+    {
+        [hiddenKeys addObject:NRDB_LOGIN];
+    }
+    
+    if (![settings boolForKey:USE_DROPBOX])
     {
         [hiddenKeys addObject:AUTO_SAVE_DB];
     }
@@ -147,7 +158,6 @@
         {
             [self showOfflineAlert];
         }
-
     }
     else if ([specifier.key isEqualToString:CLEAR_CACHE])
     {
@@ -168,6 +178,157 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self];
             }
         };
+    }
+    else if ([specifier.key isEqualToString:NRDB_LOGOUT])
+    {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:NRDB_REMEMBERME];
+        [self refresh];
+    }
+    else if ([specifier.key isEqualToString:NRDB_LOGIN])
+    {
+        TF_CHECKPOINT(@"download missing images");
+        if ([AFNetworkReachabilityManager sharedManager].reachable)
+        {
+            [self netrunnerDbLogin];
+        }
+        else
+        {
+            [self showOfflineAlert];
+        }
+    }
+}
+
+-(void) netrunnerDbLogin
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Logging in...")];
+    
+    [self performSelector:@selector(checkNetrunnerDbLogin) withObject:nil afterDelay:0.01];
+}
+
+-(void) checkNetrunnerDbLogin
+{
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    NSString* user = [settings objectForKey:NRDB_USERNAME];
+    NSString* pass = [settings objectForKey:NRDB_PASSWORD];
+    
+    if (user.length == 0 || pass.length == 0)
+    {
+        [SDCAlertView alertWithTitle:nil
+                             message:l10n(@"Please enter username and password for your netrunnerdb.com account")
+                             buttons:@[l10n(@"OK")]];
+        return;
+    }
+    
+    // remove old REMEMBERME cookie
+    NSHTTPCookieStorage* jar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie* cookie in [jar cookies])
+    {
+        [jar deleteCookie:cookie];
+    }
+    
+    // fake PHPSESSID cookie
+    NSDictionary *sessionCookie = @{
+                                 NSHTTPCookiePath: @"/",
+                                 NSHTTPCookieDomain: @"netrunnerdb.com",
+                                 NSHTTPCookieName: @"PHPSESSID",
+                                 NSHTTPCookieValue: @"dontcare",
+                                };
+    NSDictionary *cookies = [NSHTTPCookie requestHeaderFieldsWithCookies:@[ [NSHTTPCookie cookieWithProperties:sessionCookie] ]];
+
+    NSError* error;
+    NSString* loginUrl = @"http://netrunnerdb.com/login_check";
+    NSDictionary* parameters = @{
+                                 @"_username": user,
+                                 @"_password": pass,
+                                 @"_remember_me": @"on",
+                                 @"_csrf_token": @"",
+                                 @"_submit": @"Login",
+                                 };
+
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST"
+                                                                                 URLString:loginUrl
+                                                                                parameters:parameters
+                                                                                     error:&error];
+    [request setAllHTTPHeaderFields:cookies];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray* cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+        
+        NSString* rememberme;
+        for (NSHTTPCookie* c in cookies)
+        {
+            if ([c.name isEqualToString:@"REMEMBERME"])
+            {
+                rememberme = c.value;
+                break;
+            }
+        }
+        
+        if (rememberme)
+        {
+            [settings setObject:rememberme forKey:NRDB_REMEMBERME];
+            [self checkLogin];
+        }
+        else
+        {
+            [self loginFinished:NO];
+        }
+    }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self loginFinished:NO];
+    }];
+    [operation start];
+}
+
+-(void) checkLogin
+{
+    NSString* decksUrl = @"http://netrunnerdb.com/api/decks";
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    NSDictionary *properties = @{
+                                 NSHTTPCookiePath: @"/",
+                                 NSHTTPCookieDomain: @"netrunnerdb.com",
+                                 NSHTTPCookieName: @"REMEMBERME",
+                                 NSHTTPCookieValue: [settings objectForKey:NRDB_REMEMBERME],
+                                 };
+    NSHTTPCookie* cookie = [NSHTTPCookie cookieWithProperties:properties];
+    NSDictionary *cookies = [NSHTTPCookie requestHeaderFieldsWithCookies:@[ cookie ]];
+    NSError* error;
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
+                                                                                 URLString:decksUrl
+                                                                                parameters:nil
+                                                                                     error:&error];
+    [request setAllHTTPHeaderFields:cookies];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"login successful");
+        [self loginFinished:YES];
+    }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"login failed");
+        [self loginFinished:NO];
+    }];
+    [operation start];
+}
+
+-(void) loginFinished:(BOOL)ok
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [SVProgressHUD dismiss];
+    
+    if (!ok)
+    {
+        [SDCAlertView alertWithTitle:nil
+                             message:l10n(@"Login at netrunnerdb.com failed")
+                             buttons:@[l10n(@"OK")]];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:NRDB_REMEMBERME];
+    }
+    else
+    {
+        [self refresh];
     }
 }
 

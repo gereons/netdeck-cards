@@ -48,4 +48,10 @@
 
 #define DECK_VIEW_SCALE     @"deckViewScale"
 
+#define NRDB_LOGIN          @"nrdbLogin"
+#define NRDB_LOGOUT         @"nrdbLogout"
+#define NRDB_USERNAME       @"nrdbUsername"
+#define NRDB_PASSWORD       @"nrdbPassword"
+#define NRDB_REMEMBERME     @"nrdbRememberme"
+
 #endif

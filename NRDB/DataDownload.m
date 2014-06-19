@@ -170,7 +170,7 @@ static DataDownload* instance;
         return;
     }
     
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 250, 20)];
     self.progressView.center = CGPointMake(SDCAlertViewWidth/2, 10);
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0,0, SDCAlertViewWidth, 20)];
@@ -245,7 +245,7 @@ static DataDownload* instance;
     }
     else
     {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [self.alert dismissWithClickedButtonIndex:99 animated:NO];
@@ -263,7 +263,7 @@ static DataDownload* instance;
 
 - (void) stopDownload
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     self.downloadStopped = YES;
     [self.manager.operationQueue cancelAllOperations];
