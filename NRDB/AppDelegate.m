@@ -62,7 +62,6 @@
         LAST_DOWNLOAD: l10n(@"never"),
         NEXT_DOWNLOAD: l10n(@"never"),
         USE_DROPBOX: @(NO),
-        USE_EVERNOTE: @(NO),
         AUTO_SAVE: @(NO),
         AUTO_SAVE_DB: @(NO),
         DECK_VIEW_STYLE: @(1),

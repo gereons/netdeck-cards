@@ -61,7 +61,6 @@
         [hiddenKeys addObjectsFromArray:@[ CARD_SETS, SET_SELECTION ]];
     }
     
-    [hiddenKeys addObject:USE_EVERNOTE];
     if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
     {
         [hiddenKeys addObject:AUTO_SAVE_DB];

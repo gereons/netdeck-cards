@@ -1,0 +1,20 @@
+/* CardData.strings - es */
+
+"Card Data" = "Datos de las cartas";
+
+"Language" = "Idioma";
+"English" = "Inglés";
+"German" = "Alemán";
+"Spanish" = "Español";
+"French" = "Francés";
+"Italian" = "Italiano";
+"Polish" = "Polaco";
+
+"Last Downloaded on" = "Última descarga el";
+"Next Download on" = "Próxima descarga el";
+"Update Card Data Now" = "Actualizar los datos de las cartas ahora";
+"Update Card Images Now" = "Actualizar las imágenes de las cartas ahora";
+"Download missing Card Images Now" = "Descargar faltante imágenes ahora";
+"Clear All Cached Data" = "Limpiar todos los datos almacenados";
+
+"LanguageFooterText" = "netrunnerdb.com's support for languages other than English is not 100% complete.\nIf you change this setting, you should update card data as well.";

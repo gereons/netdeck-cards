@@ -20,91 +20,19 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSMultiValueSpecifier</string>
-			<key>Title</key>
-			<string>Language</string>
-			<key>Key</key>
-			<string>language</string>
-			<key>DefaultValue</key>
-			<string>en</string>
-			<key>FooterText</key>
-			<string>LanguageFooterText</string>
-			<key>Values</key>
-			<array>
-				<string>en</string>
-				<string>de</string>
-				<string>fr</string>
-				<string>it</string>
-				<string>es</string>
-				<string>pl</string>
-			</array>
-			<key>Titles</key>
-			<array>
-				<string>English</string>
-				<string>German</string>
-				<string>French</string>
-				<string>Italian</string>
-				<string>Spanish</string>
-				<string>Polish</string>
-			</array>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTitleValueSpecifier</string>
-			<key>Title</key>
-			<string>Last Downloaded on</string>
-			<key>Key</key>
-			<string>lastDownload</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTitleValueSpecifier</string>
-			<key>Title</key>
-			<string>Next Download on</string>
-			<key>Key</key>
-			<string>nextDownload</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>IASKButtonSpecifier</string>
-			<key>Title</key>
-			<string>Update Card Data Now</string>
-			<key>Key</key>
-			<string>downloadDataNow</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>IASKButtonSpecifier</string>
-			<key>Title</key>
-			<string>Update Card Images Now</string>
-			<key>Key</key>
-			<string>downloadImagesNow</string>
-		</dict>
         <dict>
 			<key>Type</key>
-			<string>IASKButtonSpecifier</string>
+			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-			<string>Download missing Card Images Now</string>
-			<key>Key</key>
-			<string>downloadMissingImagesNow</string>
+			<string>Card Data</string>
+			<key>File</key>
+			<string>CardData</string>
 		</dict>
-		<dict>
-			<key>Type</key>
-			<string>IASKButtonSpecifier</string>
-			<key>Title</key>
-			<string>Clear All Cached Data</string>
-			<key>Key</key>
-			<string>clearCache</string>
-		</dict>
-		<dict>
+        <dict>
 			<key>Title</key>
 			<string>Card Sets</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
-			<key>Key</key>
-			<string>cardSets</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -113,8 +41,20 @@
 			<string>Set/Datapack Selection</string>
 			<key>File</key>
 			<string>SetSelection</string>
-			<key>Key</key>
-			<string>setSelection</string>
+		</dict>
+        <dict>
+			<key>Title</key>
+			<string>NetrunnerDB.com</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>Manage NetrunnerDB.com account</string>
+			<key>File</key>
+			<string>NetrunnerDBAccount</string>
 		</dict>
 		<dict>
 			<key>Title</key>
@@ -141,16 +81,6 @@
 			<string>Auto-save decks to Dropbox</string>
 			<key>Key</key>
 			<string>autoSaveDropbox</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Use Evernote</string>
-			<key>Key</key>
-			<string>useEvernote</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>

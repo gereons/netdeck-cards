@@ -31,7 +31,6 @@
 #define UNPUBLISHED_IDS @"use_unpublished_identities"
 
 #define USE_DROPBOX     @"useDropbox"
-#define USE_EVERNOTE    @"useEvernote"
 
 #define AUTO_SAVE       @"autoSave"
 #define AUTO_SAVE_DB    @"autoSaveDropbox"
