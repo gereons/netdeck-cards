@@ -823,7 +823,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
             }
         }
         
-        if (cnt)
+        if (section > 0 && cnt)
         {
             return [NSString stringWithFormat:@"%@ (%d)", name, cnt];
         }
