@@ -419,6 +419,7 @@ static NSArray* draftIds;
     if ((self = [super init]))
     {
         _cards = [decoder decodeObjectForKey:@"cards"];
+        _netrunnerDbId = [decoder decodeObjectForKey:@"netrunnerDbId"];
         _name = [decoder decodeObjectForKey:@"name"];
         _role = [decoder decodeIntForKey:@"role"];
         _state = [decoder decodeIntForKey:@"state"];
@@ -439,6 +440,7 @@ static NSArray* draftIds;
 -(void) encodeWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:self.cards forKey:@"cards"];
+    [coder encodeObject:self.netrunnerDbId forKey:@"netrunnerDbId"];
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeInt:self.role forKey:@"role"];
     [coder encodeInt:self.state forKey:@"state"];

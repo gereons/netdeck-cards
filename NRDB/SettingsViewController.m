@@ -11,6 +11,7 @@
 #import <AFNetworking.h>
 #import <SDCAlertView.h>
 #import <AFNetworking.h>
+#import <EXTScope.h>
 
 #import "SettingsViewController.h"
 
@@ -181,12 +182,13 @@
     }
     else if ([specifier.key isEqualToString:NRDB_LOGOUT])
     {
+        TF_CHECKPOINT(@"netrunnerdb.com logout");
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:NRDB_REMEMBERME];
         [self refresh];
     }
     else if ([specifier.key isEqualToString:NRDB_LOGIN])
     {
-        TF_CHECKPOINT(@"download missing images");
+        TF_CHECKPOINT(@"netrunnerdb.com login");
         if ([AFNetworkReachabilityManager sharedManager].reachable)
         {
             [self netrunnerDbLogin];
@@ -228,14 +230,9 @@
         [jar deleteCookie:cookie];
     }
     
-    // fake PHPSESSID cookie
-    NSDictionary *sessionCookie = @{
-                                 NSHTTPCookiePath: @"/",
-                                 NSHTTPCookieDomain: @"netrunnerdb.com",
-                                 NSHTTPCookieName: @"PHPSESSID",
-                                 NSHTTPCookieValue: @"dontcare",
-                                };
-    NSDictionary *cookies = [NSHTTPCookie requestHeaderFieldsWithCookies:@[ [NSHTTPCookie cookieWithProperties:sessionCookie] ]];
+    // fake a PHPSESSID cookie
+    NSHTTPCookie* cookie = [self nrdbCookie:@"PHPSESSID" value:@"dontcare"];
+    NSDictionary *cookies = [NSHTTPCookie requestHeaderFieldsWithCookies:@[ cookie ]];
 
     NSError* error;
     NSString* loginUrl = @"http://netrunnerdb.com/login_check";
@@ -254,15 +251,15 @@
     [request setAllHTTPHeaderFields:cookies];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
+    @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray* cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
-        
+        @strongify(self);
         NSString* rememberme;
-        for (NSHTTPCookie* c in cookies)
+        for (NSHTTPCookie* cookie in [jar cookies])
         {
-            if ([c.name isEqualToString:@"REMEMBERME"])
+            if ([cookie.name isEqualToString:@"REMEMBERME"])
             {
-                rememberme = c.value;
+                rememberme = cookie.value;
                 break;
             }
         }
@@ -287,14 +284,9 @@
 {
     NSString* decksUrl = @"http://netrunnerdb.com/api/decks";
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSDictionary *properties = @{
-                                 NSHTTPCookiePath: @"/",
-                                 NSHTTPCookieDomain: @"netrunnerdb.com",
-                                 NSHTTPCookieName: @"REMEMBERME",
-                                 NSHTTPCookieValue: [settings objectForKey:NRDB_REMEMBERME],
-                                 };
-    NSHTTPCookie* cookie = [NSHTTPCookie cookieWithProperties:properties];
+    NSHTTPCookie* cookie = [self nrdbCookie:@"REMEMBERME" value:[settings objectForKey:NRDB_REMEMBERME]];
     NSDictionary *cookies = [NSHTTPCookie requestHeaderFieldsWithCookies:@[ cookie ]];
+    
     NSError* error;
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
                                                                                  URLString:decksUrl
@@ -303,12 +295,14 @@
     [request setAllHTTPHeaderFields:cookies];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"login successful");
+        @strongify(self);
         [self loginFinished:YES];
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"login failed");
+        @strongify(self);
         [self loginFinished:NO];
     }];
     [operation start];
@@ -330,6 +324,17 @@
     {
         [self refresh];
     }
+}
+
+-(NSHTTPCookie*) nrdbCookie:(NSString*)name value:(NSString*)value
+{
+    NSDictionary *properties = @{
+                                 NSHTTPCookiePath: @"/",
+                                 NSHTTPCookieDomain: @"netrunnerdb.com",
+                                 NSHTTPCookieName: name,
+                                 NSHTTPCookieValue: value,
+                                 };
+    return [NSHTTPCookie cookieWithProperties:properties];
 }
 
 -(void) showOfflineAlert
