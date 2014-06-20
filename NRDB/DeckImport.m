@@ -394,6 +394,15 @@ static DeckImport* instance;
     Deck* deck = [Deck new];
     
     deck.name = [decklist objectForKey:@"name"];
+    
+    NSString* notes = [decklist objectForKey:@"description"];
+    if (notes.length > 0)
+    {
+        notes = [notes stringByReplacingOccurrencesOfString:@"<p>" withString:@""];
+        notes = [notes stringByReplacingOccurrencesOfString:@"</p>" withString:@""];
+        deck.notes = notes;
+    }
+    
     NSDictionary* cards = [decklist objectForKey:@"cards"];
     for (NSString* code in [cards allKeys])
     {
