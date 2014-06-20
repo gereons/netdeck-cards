@@ -244,8 +244,13 @@ static NSDictionary* sideStr;
     [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(filterType)]]];
     [self.stateFilterButton setTitle:[DeckState buttonLabelFor:filterState]];
 
-    NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSMutableArray array];
-    NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSMutableArray array];
+    NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
+    NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
+    
+#if defined(DEBUG) || defined(ADHOC)
+    [self checkDecks:self.runnerDecks];
+    [self checkDecks:self.corpDecks];
+#endif
     
     if (sortType != NRDeckSortDate)
     {
@@ -297,6 +302,18 @@ static NSDictionary* sideStr;
     self.decks = @[ self.runnerDecks, self.corpDecks ];
     
     [self.tableView reloadData];
+}
+
+-(void) checkDecks:(NSArray*)decks
+{
+    for (Deck* deck in decks)
+    {
+        if (deck.identity)
+        {
+            NSAssert(deck.role == deck.identity.role, @"deck role mismatch %@ %d != %d %@",
+                     deck.name, deck.role, deck.identity.role, deck.identity.name);
+        }
+    }
 }
 
 -(NSMutableArray*) sortDecks:(NSArray*)decks

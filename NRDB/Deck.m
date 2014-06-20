@@ -297,7 +297,7 @@ static NSArray* draftIds;
     Deck* newDeck = [Deck new];
     
     newDeck.name = [NSString stringWithFormat:l10n(@"Copy of %@"), self.name];
-    newDeck->_identityCc = self.identityCc;
+    newDeck->_identityCc = [CardCounter initWithCard:self.identity];
     newDeck->_isDraft = self.isDraft;
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
     newDeck->_role = self.role;
