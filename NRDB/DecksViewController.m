@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, FilterType) {
     FilterTypeAll, FilterRunner, FilterCorp
 };
 
-enum { POPUP_NEW, POPUP_LONGPRESS, POPUP_SORT, POPUP_SIDE, POPUP_STATE, POPUP_SETSTATE };
+enum { POPUP_NEW, POPUP_LONGPRESS, POPUP_SORT, POPUP_SIDE, POPUP_STATE, POPUP_SETSTATE, POPUP_IMPORTSOURCE };
 
 static FilterType filterType = FilterTypeAll;
 static NRDeckState filterState = NRDeckStateNone;
@@ -185,7 +185,11 @@ static NSDictionary* sideStr;
         return;
     }
     
-    self.popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:l10n(@"Date"), l10n(@"Faction"), l10n(@"A-Z"), nil];
+    self.popup = [[UIActionSheet alloc] initWithTitle:nil
+                                             delegate:self
+                                    cancelButtonTitle:@""
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:l10n(@"Date"), l10n(@"Faction"), l10n(@"A-Z"), nil];
     self.popup.tag = POPUP_SORT;
     [self.popup showFromBarButtonItem:sender animated:NO];
 }
@@ -198,7 +202,11 @@ static NSDictionary* sideStr;
         return;
     }
     
-    self.popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:l10n(@"All"), l10n(@"Runner"), l10n(@"Corp"), nil];
+    self.popup = [[UIActionSheet alloc] initWithTitle:nil
+                                             delegate:self
+                                    cancelButtonTitle:@""
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:l10n(@"All"), l10n(@"Runner"), l10n(@"Corp"), nil];
     self.popup.tag = POPUP_SIDE;
     [self.popup showFromBarButtonItem:sender animated:NO];
 }
@@ -211,7 +219,11 @@ static NSDictionary* sideStr;
         return;
     }
     
-    self.popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:l10n(@"All"), l10n(@"Active"), l10n(@"Testing"), l10n(@"Retired"), nil];
+    self.popup = [[UIActionSheet alloc] initWithTitle:nil
+                                             delegate:self
+                                    cancelButtonTitle:@""
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:l10n(@"All"), l10n(@"Active"), l10n(@"Testing"), l10n(@"Retired"), nil];
     self.popup.tag = POPUP_STATE;
     [self.popup showFromBarButtonItem:sender animated:NO];
 }
@@ -224,18 +236,41 @@ static NSDictionary* sideStr;
         return;
     }
     
-    BOOL useDropbox = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
+    BOOL useNetrunnerdb = [settings objectForKey:NRDB_REMEMBERME] != nil;
     
-    if (!useDropbox)
+    if (!useDropbox && !useNetrunnerdb)
     {
         [SDCAlertView alertWithTitle:l10n(@"Import Decks")
-                             message:l10n(@"Connect to your Dropbox account first.")
+                             message:l10n(@"Connect to your Dropbox and/or netrunnerdb.com account first.")
                              buttons:@[l10n(@"OK")]];
         return;
     }
     
-    ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
-    [self.navigationController pushViewController:import animated:NO];
+    if (useDropbox && useNetrunnerdb)
+    {
+        self.popup = [[UIActionSheet alloc] initWithTitle:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:@""
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:l10n(@"Import from Dropbox"), l10n(@"Import from netrunnerdb.com"), nil];
+        self.popup.tag = POPUP_IMPORTSOURCE;
+        [self.popup showFromBarButtonItem:sender animated:NO];
+    }
+    else
+    {
+        ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
+        if (useDropbox && !useNetrunnerdb)
+        {
+            import.source = NRImportSourceDropbox;
+        }
+        else
+        {
+            import.source = NRImportSourceNetrunnerDb;
+        }
+        [self.navigationController pushViewController:import animated:NO];
+    }
 }
 
 -(void) updateDecks
@@ -563,6 +598,19 @@ static NSDictionary* sideStr;
             [self updateDecks];
         }
         self.deck = nil;
+    }
+    else if (actionSheet.tag == POPUP_IMPORTSOURCE)
+    {
+        ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
+        if (buttonIndex == 0)
+        {
+            import.source = NRImportSourceDropbox;
+        }
+        else
+        {
+            import.source = NRImportSourceNetrunnerDb;
+        }
+        [self.navigationController pushViewController:import animated:NO];
     }
     
     self.popup = nil;

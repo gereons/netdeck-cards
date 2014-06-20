@@ -124,6 +124,7 @@
 		3A85327E185509B000507B9A /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85327C185509B000507B9A /* SettingsViewController.xib */; };
 		3A85328218550ACE00507B9A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85328018550ACE00507B9A /* AboutViewController.m */; };
 		3A85328318550ACE00507B9A /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328118550ACE00507B9A /* AboutView.xib */; };
+		3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8FBC9D19547260009ED6E3 /* NRDB.m */; };
 		3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C218B1630800AF5285 /* IceTypeStats.m */; };
 		3A9204C618B16B9B00AF5285 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C518B16B9B00AF5285 /* Stats.m */; };
 		3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AB18AF7DA900F83520 /* CostStats.m */; };
@@ -380,6 +381,8 @@
 		3A85327F18550ACE00507B9A /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AboutViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A85328018550ACE00507B9A /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AboutViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A85328118550ACE00507B9A /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
+		3A8FBC9C19547260009ED6E3 /* NRDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRDB.h; sourceTree = "<group>"; };
+		3A8FBC9D19547260009ED6E3 /* NRDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRDB.m; sourceTree = "<group>"; };
 		3A9204C118B1630800AF5285 /* IceTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IceTypeStats.h; sourceTree = "<group>"; };
 		3A9204C218B1630800AF5285 /* IceTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IceTypeStats.m; sourceTree = "<group>"; };
 		3A9204C418B16B9B00AF5285 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
@@ -602,6 +605,7 @@
 				3ABDE5A018AFC4B200AFEA88 /* Draw Simulator */,
 				3A595425186EE7C40074B3B1 /* Card Image Display */,
 				3A595424186EDCED0074B3B1 /* Identity Selection Form */,
+				3A8FBC9B195471E4009ED6E3 /* Netrunnerdb.com */,
 				3A8532311854F70F00507B9A /* Master Views */,
 				3AA440E21854DA310051D4B0 /* Detail Views */,
 				3A1ECC8E1879A1B1003400A9 /* Deck Export */,
@@ -947,6 +951,15 @@
 				3A095E9318BBCB2200C99FED /* About.html */,
 			);
 			name = "About Detail";
+			sourceTree = "<group>";
+		};
+		3A8FBC9B195471E4009ED6E3 /* Netrunnerdb.com */ = {
+			isa = PBXGroup;
+			children = (
+				3A8FBC9C19547260009ED6E3 /* NRDB.h */,
+				3A8FBC9D19547260009ED6E3 /* NRDB.m */,
+			);
+			name = Netrunnerdb.com;
 			sourceTree = "<group>";
 		};
 		3A9742AD18AF7DAE00F83520 /* Stats */ = {
@@ -1392,6 +1405,7 @@
 				3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */,
 				3A4178A718761BF600DEEFA6 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
 				3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */,
+				3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,
 				3A41789E18761BF600DEEFA6 /* IASKAppSettingsViewController.m in Sources */,
 				3ADC17311856401D00FA2DF7 /* CardData.m in Sources */,

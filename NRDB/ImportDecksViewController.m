@@ -12,12 +12,15 @@
 #import <SVProgressHUD.h>
 #import <EXTScope.h>
 #import <SDCAlertView.h>
+#import <AFNetworking.h>
 
 #import "Deck.h"
 #import "DeckManager.h"
 #import "ImageCache.h"
 #import "DeckCell.h"
 #import "OctgnImport.h"
+#import "SettingsKeys.h"
+#import "NRDB.h"
 
 static NRDeckSearchScope searchScope = NRDeckSearchAll;
 static NSString* filterText;
@@ -60,12 +63,103 @@ static NSString* filterText;
     
     // do the initial listing in the background, as it may block the ui thread
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Loading decks from Dropbox")];
     
+    if (self.source == NRImportSourceDropbox)
+    {
+        [SVProgressHUD showWithStatus:l10n(@"Loading decks from Dropbox")];
+        [self startDropboxImport];
+    }
+    else
+    {
+        [SVProgressHUD showWithStatus:l10n(@"Loading decks from netrunnerdb.com")];
+        [self getNetrunnerdbDecks];
+    }
+
+    self.searchBar.placeholder = l10n(@"Search for decks, identities or cards");
+    if (filterText.length > 0)
+    {
+        self.searchBar.text = filterText;
+    }
+    self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
+    self.searchBar.selectedScopeButtonIndex = searchScope;
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    self.navigationController.navigationBar.topItem.title = l10n(@"Import Deck");
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+    [filesystem removeObserver:self];
+}
+
+
+#pragma mark netrunnerdb.com import
+
+-(void) getNetrunnerdbDecks
+{
+    self.allDecks = @[ [NSMutableArray array], [NSMutableArray array] ];
+    
+    NRDB* nrdb = [NRDB sharedInstance];
+    
+    [nrdb decklist:^(NSArray* decks) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [SVProgressHUD dismiss];
+
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH':'mm':'ss"];
+        
+        for (NSDictionary* d in decks)
+        {
+            Deck* deck = [Deck new];
+            deck.name = d[@"name"];
+            deck.notes = d[@"description"];
+            deck.netrunnerDbId = [NSString stringWithFormat:@"%d", [d[@"id"] integerValue]];
+            
+            // parse creation date, '2014-06-19 13:52:24'
+            deck.lastModified = [formatter dateFromString:d[@"creation"]];
+            
+            for (NSDictionary* c in d[@"cards"])
+            {
+                NSString* code = c[@"card_code"];
+                NSInteger qty = [c[@"qty"] integerValue];
+                
+                Card* card = [Card cardByCode:code];
+                if (card.type == NRCardTypeIdentity)
+                {
+                    deck.identity = card;
+                }
+                else
+                {
+                    [deck addCard:card copies:qty];
+                }
+            }
+            
+            if (deck.role != NRRoleNone)
+            {
+                NSMutableArray* decks = self.allDecks[deck.role];
+                [decks addObject:deck];
+            }
+        }
+        
+        [self filterDecks];
+        [self.tableView reloadData];
+    }];
+}
+
+#pragma mark dropbox import
+
+-(void) startDropboxImport
+{
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         @strongify(self);
-        NSUInteger count = [self listFiles];
+        NSUInteger count = [self listDropboxFiles];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
@@ -75,7 +169,7 @@ static NSString* filterText;
             {
                 [SDCAlertView alertWithTitle:l10n(@"No Decks found")
                                      message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.")
-                                      buttons:@[ l10n(@"OK") ]];
+                                     buttons:@[ l10n(@"OK") ]];
             }
             [self filterDecks];
             [self.tableView reloadData];
@@ -86,21 +180,13 @@ static NSString* filterText;
     DBPath* path = [DBPath root];
     
     [filesystem addObserver:self forPathAndChildren:path block:^() {
-        [self listFiles];
+        [self listDropboxFiles];
         [self filterDecks];
         [self.tableView reloadData];
     }];
-    
-    self.searchBar.placeholder = l10n(@"Search for decks, identities or cards");
-    if (filterText.length > 0)
-    {
-        self.searchBar.text = filterText;
-    }
-    self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
-    self.searchBar.selectedScopeButtonIndex = searchScope;
 }
 
--(NSUInteger) listFiles
+-(NSUInteger) listDropboxFiles
 {
     self.allDecks = @[ [NSMutableArray array], [NSMutableArray array] ];
     
@@ -130,6 +216,8 @@ static NSString* filterText;
     
     return totalDecks;
 }
+
+#pragma mark filter
 
 -(void) filterDecks
 {
@@ -167,20 +255,6 @@ static NSString* filterText;
     {
         self.filteredDecks = self.allDecks;
     }
-}
-
--(void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    self.navigationController.navigationBar.topItem.title = l10n(@"Import Deck");
-}
-
--(void) viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    [filesystem removeObserver:self];
 }
 
 #pragma mark search bar

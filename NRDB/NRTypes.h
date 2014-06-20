@@ -99,4 +99,11 @@ typedef NS_ENUM(NSInteger, NRCycle)
     NRCycleLunar
 };
 
+typedef NS_ENUM(NSInteger, NRImportSource)
+{
+    NRImportSourceNone,
+    NRImportSourceDropbox,
+    NRImportSourceNetrunnerDb
+};
+
 #endif
