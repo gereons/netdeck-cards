@@ -24,6 +24,7 @@
 @property IBOutlet UILabel* lastSetLabel;
 @property IBOutlet UIButton* drawButton;
 @property IBOutlet UIButton* analysisButton;
+@property IBOutlet UIButton* nrdbButton;
 
 @property BOOL deckChanged;
 @property NRRole role;
@@ -36,5 +37,6 @@
 
 -(IBAction)analysisClicked:(id)sender;
 -(IBAction)drawSimulatorClicked:(id)sender;
+-(IBAction)nrdbButtonClicked:(id)sender;
 
 @end

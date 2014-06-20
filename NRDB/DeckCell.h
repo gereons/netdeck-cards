@@ -15,5 +15,6 @@
 @property IBOutlet UILabel* summaryLabel;
 @property IBOutlet UILabel* dateLabel;
 @property IBOutlet UIButton* infoButton;
+@property IBOutlet UIImageView* nrdbIcon;
 
 @end

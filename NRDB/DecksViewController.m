@@ -734,6 +734,8 @@ static NSDictionary* sideStr;
     NSString* date = [self.dateFormatter stringFromDate:deck.lastModified];
     cell.dateLabel.text = [NSString stringWithFormat:@"%@ · %@", state, date];
     
+    cell.nrdbIcon.hidden = deck.netrunnerDbId.length == 0;
+    
     return cell;
 }
 

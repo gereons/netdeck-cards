@@ -46,7 +46,7 @@ static NRDB* instance;
     [SVProgressHUD showWithStatus:l10n(@"Loading decks..")];
     self.decklistCompletionBlock = completionBlock;
     self.loginCompletionBlock = nil;
-    [self performSelector:@selector(checkNetrunnerDbLogin) withObject:nil afterDelay:0.01];
+    [self performSelector:@selector(getDecks) withObject:nil afterDelay:0.01];
 }
 
 -(void) checkNetrunnerDbLogin
@@ -114,11 +114,11 @@ static NRDB* instance;
         }
         else
         {
-            [self loginFinished:NO decks:nil];
+            [self finished:NO decks:nil];
         }
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self loginFinished:NO decks:nil];
+        [self finished:NO decks:nil];
     }];
     [operation start];
 }
@@ -142,16 +142,16 @@ static NRDB* instance;
     @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         @strongify(self);
-        [self loginFinished:YES decks:responseObject];
+        [self finished:YES decks:responseObject];
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         @strongify(self);
-        [self loginFinished:NO decks:nil];
+        [self finished:NO decks:nil];
     }];
     [operation start];
 }
 
--(void) loginFinished:(BOOL)ok decks:(NSArray*)decks
+-(void) finished:(BOOL)ok decks:(NSArray*)decks
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];

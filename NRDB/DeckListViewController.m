@@ -294,6 +294,13 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [DrawSimulatorViewController showForDeck:self.deck inViewController:self];
 }
 
+-(void) nrdbButtonClicked:(id)sender
+{
+    NSString* msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on netrunnerdb.com"), self.deck.netrunnerDbId ];
+    
+    [SDCAlertView alertWithTitle:nil message:msg buttons:@[l10n(@"OK")]];
+}
+
 -(void) editNotes:(id)sender
 {
     if (self.actionSheet)
@@ -665,6 +672,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     
     self.drawButton.enabled = self.deck.cards.count > 0;
     self.analysisButton.enabled = self.deck.cards.count > 0;
+    self.nrdbButton.hidden = self.deck.netrunnerDbId.length == 0;
     
     NSMutableString* footer = [NSMutableString string];
     [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
