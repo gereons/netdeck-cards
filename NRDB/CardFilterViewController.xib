@@ -59,8 +59,8 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="" image="deckview_list.png"/>
-                                <segment title="" image="filter_2col.png"/>
-                                <segment title="" image="filter_3col.png"/>
+                                <segment title="" image="deckview_2col.png"/>
+                                <segment title="" image="deckview_3col.png"/>
                             </segments>
                             <connections>
                                 <action selector="viewModeChanged:" destination="-1" eventType="valueChanged" id="cM1-Is-MDg"/>
@@ -255,8 +255,8 @@
         </view>
     </objects>
     <resources>
+        <image name="deckview_2col.png" width="22" height="22"/>
+        <image name="deckview_3col.png" width="22" height="22"/>
         <image name="deckview_list.png" width="22" height="22"/>
-        <image name="filter_2col.png" width="22" height="22"/>
-        <image name="filter_3col.png" width="22" height="22"/>
     </resources>
 </document>

@@ -16,10 +16,6 @@
 		3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EABD185DBA2D00DB7FFC /* Faction.m */; };
 		3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EAC0185DBC4700DB7FFC /* CardType.m */; };
 		3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */; };
-		3A1EB584193A45190048E2E2 /* filter_3col@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB582193A45190048E2E2 /* filter_3col@2x.png */; };
-		3A1EB585193A45190048E2E2 /* filter_2col@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB583193A45190048E2E2 /* filter_2col@2x.png */; };
-		3A1EB588193A454F0048E2E2 /* filter_2col.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB586193A454F0048E2E2 /* filter_2col.png */; };
-		3A1EB589193A454F0048E2E2 /* filter_3col.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB587193A454F0048E2E2 /* filter_3col.png */; };
 		3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ECC901879A1CC003400A9 /* DeckExport.m */; };
 		3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 3A1ECC921879A383003400A9 /* OCTGN.mustache */; };
 		3A3622621849320C007F2854 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622611849320C007F2854 /* Foundation.framework */; };
@@ -91,6 +87,10 @@
 		3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A721DC0189CFA64004EFDFE /* DeckImport.m */; };
 		3A76EEBF18B5DA68004DB586 /* CorpPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */; };
 		3A76EEC018B5DA68004DB586 /* RunnerPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EEBE18B5DA68004DB586 /* RunnerPlaceholder.png */; };
+		3A7F7759195425B400100F79 /* deckview_2col@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7755195425B400100F79 /* deckview_2col@2x.png */; };
+		3A7F775A195425B400100F79 /* deckview_3col@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7756195425B400100F79 /* deckview_3col@2x.png */; };
+		3A7F775B195425B400100F79 /* deckview_3col.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7757195425B400100F79 /* deckview_3col.png */; };
+		3A7F775C195425B400100F79 /* deckview_2col.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7758195425B400100F79 /* deckview_2col.png */; };
 		3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B0188172C100F0926F /* CardImageCell.xib */; };
 		3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B31881737700F0926F /* CardImageCell.m */; };
 		3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */; };
@@ -230,10 +230,6 @@
 		3A16EABF185DBC4700DB7FFC /* CardType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardType.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A16EAC0185DBC4700DB7FFC /* CardType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardType.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSmallThumbView.xib; sourceTree = "<group>"; };
-		3A1EB582193A45190048E2E2 /* filter_3col@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filter_3col@2x.png"; sourceTree = "<group>"; };
-		3A1EB583193A45190048E2E2 /* filter_2col@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filter_2col@2x.png"; sourceTree = "<group>"; };
-		3A1EB586193A454F0048E2E2 /* filter_2col.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter_2col.png; sourceTree = "<group>"; };
-		3A1EB587193A454F0048E2E2 /* filter_3col.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter_3col.png; sourceTree = "<group>"; };
 		3A1ECC8F1879A1CC003400A9 /* DeckExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckExport.h; sourceTree = "<group>"; };
 		3A1ECC901879A1CC003400A9 /* DeckExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckExport.m; sourceTree = "<group>"; };
 		3A1ECC921879A383003400A9 /* OCTGN.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OCTGN.mustache; sourceTree = "<group>"; };
@@ -343,6 +339,10 @@
 		3A721DC0189CFA64004EFDFE /* DeckImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckImport.m; sourceTree = "<group>"; };
 		3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CorpPlaceholder.png; sourceTree = "<group>"; };
 		3A76EEBE18B5DA68004DB586 /* RunnerPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RunnerPlaceholder.png; sourceTree = "<group>"; };
+		3A7F7755195425B400100F79 /* deckview_2col@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deckview_2col@2x.png"; sourceTree = "<group>"; };
+		3A7F7756195425B400100F79 /* deckview_3col@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deckview_3col@2x.png"; sourceTree = "<group>"; };
+		3A7F7757195425B400100F79 /* deckview_3col.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deckview_3col.png; sourceTree = "<group>"; };
+		3A7F7758195425B400100F79 /* deckview_2col.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deckview_2col.png; sourceTree = "<group>"; };
 		3A7FD6B0188172C100F0926F /* CardImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageCell.xib; sourceTree = "<group>"; };
 		3A7FD6B21881737700F0926F /* CardImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardImageCell.h; sourceTree = "<group>"; };
 		3A7FD6B31881737700F0926F /* CardImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardImageCell.m; sourceTree = "<group>"; };
@@ -823,6 +823,10 @@
 		3A721E6418CE3FBF00799097 /* flat */ = {
 			isa = PBXGroup;
 			children = (
+				3A7F7755195425B400100F79 /* deckview_2col@2x.png */,
+				3A7F7756195425B400100F79 /* deckview_3col@2x.png */,
+				3A7F7757195425B400100F79 /* deckview_3col.png */,
+				3A7F7758195425B400100F79 /* deckview_2col.png */,
 				3A52E18D1917F9EF00264C2A /* 763-arrow-up.png */,
 				3A52E18E1917F9EF00264C2A /* 763-arrow-up@2x.png */,
 				3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */,
@@ -861,10 +865,6 @@
 				3AFA3B6618DF862900F59331 /* altarttoggle_on.png */,
 				3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */,
 				3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */,
-				3A1EB582193A45190048E2E2 /* filter_3col@2x.png */,
-				3A1EB587193A454F0048E2E2 /* filter_3col.png */,
-				3A1EB586193A454F0048E2E2 /* filter_2col.png */,
-				3A1EB583193A45190048E2E2 /* filter_2col@2x.png */,
 			);
 			name = flat;
 			sourceTree = "<group>";
@@ -1187,6 +1187,7 @@
 				3AFA3B6918DF862900F59331 /* altarttoggle_off.png in Resources */,
 				3A82624A18E05EC70038B4AC /* cardstats_mem.png in Resources */,
 				3A82624618E05EC70038B4AC /* cardstats_points@2x.png in Resources */,
+				3A7F775B195425B400100F79 /* deckview_3col.png in Resources */,
 				3A6E755D18E3FF7400EF8DE1 /* cardstats_identity_decksize@2x.png in Resources */,
 				3A6E755A18E3FF7400EF8DE1 /* cardstats_identity_link.png in Resources */,
 				3A82624218E05EC70038B4AC /* cardstats_difficulty.png in Resources */,
@@ -1208,16 +1209,14 @@
 				3AB34E611939AA8D000A43BB /* CardFilterThumbView.xib in Resources */,
 				3A82625118E05EC70038B4AC /* cardstats_decksize.png in Resources */,
 				3A82625918E05EC70038B4AC /* deckview_card.png in Resources */,
-				3A1EB588193A454F0048E2E2 /* filter_2col.png in Resources */,
 				3A82624718E05EC70038B4AC /* cardstats_points.png in Resources */,
+				3A7F775C195425B400100F79 /* deckview_2col.png in Resources */,
 				3A52E1931917F9EF00264C2A /* 764-arrow-down.png in Resources */,
-				3A1EB585193A45190048E2E2 /* filter_2col@2x.png in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
 				3AFA3B6C18DF862900F59331 /* altarttoggle_off@2x.png in Resources */,
 				3A594E3018E1F56D00832901 /* 702-share@2x.png in Resources */,
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
 				3AE0D50F18F7B4A0007868A7 /* credit_slider@2x.png in Resources */,
-				3A1EB589193A454F0048E2E2 /* filter_3col.png in Resources */,
 				3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */,
 				3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
@@ -1233,6 +1232,7 @@
 				3A594E2F18E1F56D00832901 /* 702-share.png in Resources */,
 				3A6E756C18E401D400EF8DE1 /* Icon-Small-40@2x.png in Resources */,
 				3A82625718E05EC70038B4AC /* deckview_table.png in Resources */,
+				3A7F775A195425B400100F79 /* deckview_3col@2x.png in Resources */,
 				3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */,
 				3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */,
 				3A52E1911917F9EF00264C2A /* 763-arrow-up.png in Resources */,
@@ -1257,7 +1257,7 @@
 				3AF424AB19150FC80005ACAA /* searchbar-bg.png in Resources */,
 				3A82624D18E05EC70038B4AC /* cardstats_influence@2x.png in Resources */,
 				3AE0D50718F7B4A0007868A7 /* influence_slider@2x.png in Resources */,
-				3A1EB584193A45190048E2E2 /* filter_3col@2x.png in Resources */,
+				3A7F7759195425B400100F79 /* deckview_2col@2x.png in Resources */,
 				3AFA3B6B18DF862900F59331 /* altarttoggle_on@2x.png in Resources */,
 				3AB9BD6218FB0E49004EAF10 /* 702-import@2x.png in Resources */,
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
