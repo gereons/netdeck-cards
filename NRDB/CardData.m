@@ -45,6 +45,7 @@ static NSMutableArray* allIdentities;
 static NSMutableSet* allSets;
 static NSArray* max1InDeck;
 static NSArray* specialIds;
+static NSArray* draftIds;
 
 static int maxMU;
 static int maxStrength;
@@ -65,7 +66,8 @@ NSString* const kANY = @"Any";
                     HADES_SHARD, HADES_FRAGMENT,
                     EDEN_SHARD, EDEN_FRAGMENT ];
     
-    specialIds = @[ THE_SHADOW, THE_MASQUE, LARAMY_FISK, THE_COLLECTIVE, CHRONOS_PROTOCOL_HB, CHRONOS_PROTOCOL_JIN ];
+    draftIds = @[ THE_SHADOW, THE_MASQUE ];
+    specialIds = @[ LARAMY_FISK, THE_COLLECTIVE, CHRONOS_PROTOCOL_HB, CHRONOS_PROTOCOL_JIN ];
     
     isRetina = [UIScreen mainScreen].scale == 2.0;
 }
@@ -248,6 +250,13 @@ NSString* const kANY = @"Any";
     if (c.type == NRCardTypeNone) NSLog(@"oops %@", json);
     
     JSON_STR(setCode, @"set_code");
+    
+    if ([draftIds containsObject:c.code])
+    {
+        c.setCode = @"draft";
+        allowSpecial = YES;
+    }
+    
     if ([c.setCode isEqualToString:@"special"])
     {
         if (![specialIds containsObject:c.code])
