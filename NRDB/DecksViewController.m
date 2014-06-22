@@ -313,7 +313,7 @@ static NSDictionary* sideStr;
             if (deck.role != deck.identity.role)
             {
                 NSString* msg = [NSString stringWithFormat:@"deck role mismatch %@ %ld != %ld %@",
-                                 deck.name, deck.role, deck.identity.role, deck.identity.name];
+                                 deck.name, (long)deck.role, (long)deck.identity.role, deck.identity.name];
                 [SDCAlertView alertWithTitle:nil message:msg buttons:@[@"Oops"]];
             }
         }

@@ -135,7 +135,7 @@ static NSInteger viewMode = VIEW_LIST;
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
-    layout.headerReferenceSize = CGSizeMake(320, 33);
+    layout.headerReferenceSize = CGSizeMake(320, 22);
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
     layout.minimumInteritemSpacing = 3;
     layout.minimumLineSpacing = 3;
@@ -851,9 +851,14 @@ static NSInteger viewMode = VIEW_LIST;
 
 #pragma mark - Table View
 
+- (void) tableView:(UITableView *)tableView willDisplayHeaderView:(UITableViewHeaderFooterView *)view forSection:(NSInteger)section
+{
+    view.contentView.backgroundColor = UIColorFromRGB(0xEBEBEC);
+}
+
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 33;
+    return 22;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
