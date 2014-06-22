@@ -18,7 +18,7 @@
 #import "ImportDecksViewController.h"
 #import "DecksViewController.h"
 #import "Notifications.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "SettingsKeys.h"
 #import "Deck.h"
 #import "NRNavigationController.h"
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
     
     // check if card data is available
-    if (![CardData cardsAvailable])
+    if (![CardManager cardsAvailable])
     {
         NSString* msg = l10n(@"To use this app, you must first download card data from netrunnerdb.com");
         
@@ -142,7 +142,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         [defaults setObject:self.appVersion forKey:LAST_START_VERSION];
         [defaults synchronize];
     }
-    else if ([CardData cardsAvailable])
+    else if ([CardManager cardsAvailable])
     {
         // initially select Decks view
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
@@ -272,8 +272,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    BOOL cardsAvailable = [CardData cardsAvailable];
-    
     // Set appropriate labels for the cells.
     switch (indexPath.row)
     {
@@ -285,7 +283,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             break;
         case NRMenuDecks:
             cell.textLabel.text = l10n(@"Decks");
-            cell.textLabel.enabled = cardsAvailable;
+            cell.textLabel.enabled = [CardManager cardsAvailable];
             break;
     }
     

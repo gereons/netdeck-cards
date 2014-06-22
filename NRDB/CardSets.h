@@ -12,8 +12,7 @@
 @class Deck;
 @interface CardSets : NSObject
 
-// all sets that the user has selected
-+(NSArray*) allSets;
+// all sets that the user has enabled
 +(TableData*) allSetsForTableview;
 
 // all sets that the user wants to ignore
@@ -27,6 +26,6 @@
 +(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;
 +(NSArray*) setsUsedInDeck:(Deck*) deck;
 
-+(void) initializeSetNames:(NSDictionary*)cards;
++(void) initializeSetNames:(NSArray*)cards;
 
 @end

@@ -11,12 +11,14 @@
 #import <SVProgressHUD.h>
 
 #import "AppDelegate.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "SettingsKeys.h"
 #import "CardSets.h"
 #import "DeckImport.h"
 #import "Card.h"
 #import "CardImageViewPopover.h"
+
+NSString* const kANY = @"Any";
 
 @implementation AppDelegate
 
@@ -26,7 +28,7 @@
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
-    [CardData setupFromFile];
+    [CardManager setupFromFiles];
     
     DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"4mhw6piwd9wqti3" secret:@"5j8qxt2ywsrlk73"];
 	[DBAccountManager setSharedManager:accountManager];

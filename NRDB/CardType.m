@@ -7,7 +7,7 @@
 //
 
 #import "CardType.h"
-#import "CardData.h"
+#import "CardManager.h"
 
 @implementation CardType
 
@@ -34,11 +34,11 @@ static NSMutableArray* corpTypes;
     type2name = [NSMutableDictionary dictionary];
 }
     
-+(void) initializeCardTypes:(NSDictionary *)cards
++(void) initializeCardTypes:(NSArray*)cards
 {
     [type2name removeAllObjects];
     [type2name setObject:kANY forKey:@(NRCardTypeNone)];
-    for (CardData* c in [cards allValues])
+    for (Card* c in cards)
     {
         [type2name setObject:c.typeStr forKey:@(c.type)];
         
@@ -80,12 +80,12 @@ static NSMutableArray* corpTypes;
 
 +(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type
 {
-    return [CardData subtypesForRole:role andType:type];
+    return [CardManager subtypesForRole:role andType:type];
 }
 
 +(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types
 {
-    return [CardData subtypesForRole:role andTypes:types];
+    return [CardManager subtypesForRole:role andTypes:types];
 }
 
 @end

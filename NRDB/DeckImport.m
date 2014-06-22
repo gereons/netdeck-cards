@@ -12,7 +12,7 @@
 
 #import "DeckImport.h"
 #import "Deck.h"
-#import "Card.h"
+#import "CardManager.h"
 #import "SettingsKeys.h"
 #import "Notifications.h"
 #import "OctgnImport.h"
@@ -201,7 +201,7 @@ static DeckImport* instance;
 
 -(Deck*) checkForTextDeck:(NSArray*)lines
 {
-    NSArray* cards = [Card allCards];
+    NSArray* cards = [CardManager allCards];
     NSRegularExpression *regex1 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9])x" options:0 error:nil]; // start with "1x ..."
     NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@" x([0-9])" options:0 error:nil]; // end with "... x3"
     NSRegularExpression *regex3 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9]) " options:0 error:nil]; // start with "1 ..."
