@@ -303,7 +303,7 @@ static NSArray* draftIds;
     newDeck->_role = self.role;
     newDeck.filename = nil;
     newDeck.state = self.state;
-    newDeck.notes = self.notes;
+    newDeck.notes = self.notes ? [NSString stringWithString:self.notes] : nil;
     
     return newDeck;
 }
@@ -414,6 +414,7 @@ static NSArray* draftIds;
 }
 
 #pragma mark NSCoding
+
 -(id) initWithCoder:(NSCoder *)decoder
 {
     if ((self = [super init]))
