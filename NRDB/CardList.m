@@ -10,7 +10,7 @@
 #import "Card.h"
 #import "Deck.h"
 #import "CardSets.h"
-#import "CardData.h"
+#import "CardManager.h"
 
 @interface CardList()
 
@@ -49,7 +49,7 @@
 
 -(void) resetInitialCards
 {
-    self.initialCards = [NSMutableArray arrayWithArray:[Card allForRole:self.role]];
+    self.initialCards = [NSMutableArray arrayWithArray:[CardManager allForRole:self.role]];
     
     // remove all cards from sets that are deselected
     NSSet* removeSets = [CardSets disabledSetCodes];

@@ -11,7 +11,7 @@
 #import "Deck.h"
 #import "CardCounter.h"
 #import "CardList.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "CardType.h"
 #import "CardSets.h"
 #import "Faction.h"
@@ -226,11 +226,11 @@ static NSInteger viewMode = VIEW_LIST;
     self.factionButton.tag = FACTION_BUTTON;
     self.subtypeButton.tag = SUBTYPE_BUTTON;
     
-    self.costSlider.maximumValue = 1+(self.role == NRRoleRunner ? [CardData maxRunnerCost] : [CardData maxCorpCost]);
-    self.muSlider.maximumValue = 1+[CardData maxMU];
-    self.strengthSlider.maximumValue = 1+[CardData maxStrength];
-    self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
-    self.apSlider.maximumValue = [CardData maxAgendaPoints]; // NB: no +1 here!
+    self.costSlider.maximumValue = 1+(self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost]);
+    self.muSlider.maximumValue = 1+[CardManager maxMU];
+    self.strengthSlider.maximumValue = 1+[CardManager maxStrength];
+    self.influenceSlider.maximumValue = 1+[CardManager maxInfluence];
+    self.apSlider.maximumValue = [CardManager maxAgendaPoints]; // NB: no +1 here!
     
     [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
     [self.muSlider setThumbImage:[UIImage imageNamed:@"mem_slider"] forState:UIControlStateNormal];

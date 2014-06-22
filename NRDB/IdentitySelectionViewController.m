@@ -12,6 +12,7 @@
 
 #import "Faction.h"
 #import "Card.h"
+#import "CardManager.h"
 #import "CardSets.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
@@ -60,7 +61,7 @@
         
         NSSet* disabledSets = [CardSets disabledSetCodes];
         
-        NSArray* identities = [Card identitiesForRole:role];
+        NSArray* identities = [CardManager identitiesForRole:role];
         for (int i=0; i<factions.count; ++i)
         {
             [self.identities addObject:[NSMutableArray array]];

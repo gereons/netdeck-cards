@@ -37,16 +37,19 @@
 
 @property (readonly) NSString* code;
 @property (readonly) NSString* name;
-@property (readonly) NSString* name_en;
+@property (nonatomic) NSString* name_en;
 @property (readonly) NSString* text;
 @property (readonly) NSString* flavor;
 @property (readonly) NRCardType type;
 @property (readonly) NSString* typeStr;
-@property (readonly) NSString* subtype; // full subtype string like "Fracter - Icebreaker - AI"
-@property (readonly) NSArray* subtypes; // array of subtypes like @[ @"Fracter", @"Icebreaker", @"AI" ]
+@property (readonly) NSString* subtype;     // full subtype string like "Fracter - Icebreaker - AI"
+@property (readonly) NSArray* subtypes;     // array of subtypes like @[ @"Fracter", @"Icebreaker", @"AI" ]
+@property (readonly) NSString* subtypeCode; // full subtype codes
+@property (readonly) NSArray* subtypeCodes; // array of subtype codes
 @property (readonly) NRFaction faction;
 @property (readonly) NSString* factionStr;
 @property (readonly) NRRole role;
+@property (readonly) int number;
 @property (readonly) int influenceLimit;
 @property (readonly) int minimumDecksize;
 @property (readonly) int baseLink;
@@ -62,27 +65,21 @@
 @property (readonly) NSString* setCode;
 @property (readonly) NSString* artist;
 @property (readonly) BOOL unique;
+@property (readonly) BOOL limited;
 @property (readonly) NSString* imageSrc;
-@property (readonly) Card* altCard;
 @property (readonly) NSString* url;
 
-@property (readonly) NSString* detailText;
+@property (readonly) Card* altCard;
 @property (readonly) UIColor* factionColor;
 @property (readonly) NSUInteger factionHexColor;
-
-@property (nonatomic, readonly) NSString* filteredText;                // html removed
 @property (nonatomic, readonly) NSAttributedString* attributedText;    // html rendered
-
 @property (readonly) NSString* octgnCode;
-
 @property (readonly) int maxCopies;
 @property (readonly) int cropY;
-
-+(NSArray*) allCards;
-+(NSArray*) altCards;
-+(NSArray*) allForRole:(NRRole)role;
-+(NSArray*) identitiesForRole:(NRRole)role;
+@property (readonly, getter = isValid) BOOL valid;
 
 +(Card*) cardByCode:(NSString*)code;
+
++(Card*) cardFromJson:(NSDictionary*) json;
 
 @end
