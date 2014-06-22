@@ -34,6 +34,8 @@ static int maxCorpCost;
 static int maxInf;
 static int maxAgendaPoints;
 
+static BOOL initializing;
+
 +(void) initialize
 {
     allCards = [NSMutableDictionary dictionary];
@@ -50,6 +52,8 @@ static int maxAgendaPoints;
     sortedSubtypes = @[ [NSMutableDictionary dictionary], [NSMutableDictionary dictionary] ];
     sortedIdentities = [@[ [NSMutableArray array], [NSMutableArray array] ] mutableCopy];
     subtypeCodes = @[ [NSMutableArray array], [NSMutableArray array] ];
+    
+    initializing = NO;
 }
 
 +(Card*) cardByCode:(NSString*)code
@@ -94,7 +98,6 @@ static int maxAgendaPoints;
 +(NSArray*) allForRole:(NRRole)role
 {
     return role == NRRoleRunner ? allRunnerCards : allCorpCards;
-
 }
 
 +(NSArray*) identitiesForRole:(NRRole)role
@@ -183,7 +186,9 @@ static int maxAgendaPoints;
         BOOL ok = NO;
         if (data)
         {
+            initializing = YES;
             ok = [self setupFromJsonData:data];
+            initializing = NO;
         }
         
         if (![language isEqualToString:@"en"])
@@ -220,7 +225,10 @@ static int maxAgendaPoints;
     [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
     
     [CardManager initialize];
-    return [self setupFromJsonData:json];
+    initializing = YES;
+    BOOL ok = [self setupFromJsonData:json];
+    initializing = NO;
+    return ok;
 }
 
 +(void) addEnglishNames:(NSArray *)json
@@ -249,6 +257,7 @@ static int maxAgendaPoints;
     }
     
     // now that we have english names for everything, map the alt-art cards to the regular cards
+    altCardMap = [NSMutableDictionary dictionary];
     NSArray* cards = [allCards allValues];
     for (Card* altCard in [altCards allValues])
     {
@@ -264,6 +273,8 @@ static int maxAgendaPoints;
 
 +(BOOL) setupFromJsonData:(NSArray*)json
 {
+    NSAssert(initializing, @"oops");
+    
     if (json)
     {
         for (NSDictionary* obj in json)
@@ -303,6 +314,8 @@ static int maxAgendaPoints;
 
 +(void) addCard:(Card*)card
 {
+    NSAssert(initializing, @"oops");
+    
     // alt art card?
     if ([card.setCode isEqualToString:@"alt"])
     {
