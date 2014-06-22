@@ -310,8 +310,12 @@ static NSDictionary* sideStr;
     {
         if (deck.identity)
         {
-            NSAssert(deck.role == deck.identity.role, @"deck role mismatch %@ %d != %d %@",
-                     deck.name, deck.role, deck.identity.role, deck.identity.name);
+            if (deck.role != deck.identity.role)
+            {
+                NSString* msg = [NSString stringWithFormat:@"deck role mismatch %@ %ld != %ld %@",
+                                 deck.name, deck.role, deck.identity.role, deck.identity.name];
+                [SDCAlertView alertWithTitle:nil message:msg buttons:@[@"Oops"]];
+            }
         }
     }
 }
