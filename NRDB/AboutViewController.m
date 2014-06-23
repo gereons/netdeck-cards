@@ -16,6 +16,7 @@
 @property SKStoreProductViewController* storeViewController;
 @property MFMailComposeViewController *mailer;
 @property NSString* version;
+@property UIBarButtonItem* backButton;
 @end
 
 @implementation AboutViewController
@@ -30,10 +31,20 @@
     [super viewDidLoad];
     
     self.navigationController.navigationBar.topItem.title = l10n(@"About");
+    
+    self.backButton = [[UIBarButtonItem alloc] initWithTitle:@"◁" style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    
     self.webView.delegate = self;
+    self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
         
     NSURL* url= [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"About" ofType:@"html"] isDirectory:NO];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
+-(void) goBack:(id)sender
+{
+    [self.webView goBack];
+    self.navigationController.navigationBar.topItem.leftBarButtonItem = nil;
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -116,11 +127,12 @@
 }
 
 #pragma mark webview
--(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType
+
+-(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)type
 {
-    if (inType == UIWebViewNavigationTypeLinkClicked)
+    if (type == UIWebViewNavigationTypeLinkClicked)
     {
-        NSString* scheme = [inRequest URL].scheme;
+        NSString* scheme = [request URL].scheme;
         if ([scheme isEqualToString:@"mailto"])
         {
             [self sendEmail];
@@ -129,9 +141,18 @@
         {
             [self rateApp];
         }
+        else if ([scheme isEqualToString:@"file"])
+        {
+            NSString* path = [[NSBundle mainBundle] pathForResource:@"Acknowledgements" ofType:@"html"];
+            
+            NSURL* url= [NSURL fileURLWithPath:path isDirectory:NO];
+            [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+            self.navigationController.navigationBar.topItem.leftBarButtonItem = self.backButton;
+            return YES;
+        }
         else
         {
-            [[UIApplication sharedApplication] openURL:[inRequest URL]];
+            [[UIApplication sharedApplication] openURL:[request URL]];
         }
         return NO;
     }
