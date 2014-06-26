@@ -247,7 +247,7 @@ static NSDictionary* sideStr;
     NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
     NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
     
-#if defined(DEBUG) || defined(ADHOC)
+#if DEBUG
     [self checkDecks:self.runnerDecks];
     [self checkDecks:self.corpDecks];
 #endif
