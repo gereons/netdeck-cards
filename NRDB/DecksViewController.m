@@ -678,6 +678,19 @@ static NSDictionary* sideStr;
     Deck* deck = decks[indexPath.row];
     cell.nameLabel.text = deck.name;
     
+    NSString* icon;
+    switch (deck.state)
+    {
+        case NRDeckStateActive: icon = @"active";
+            break;
+        case NRDeckStateRetired: icon = @"retired";
+            break;
+        case NRDeckStateNone:
+        case NRDeckStateTesting: icon = @"testing";
+            break;
+    }
+    [cell.infoButton setImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
+    
     if (deck.identity)
     {
         cell.identityLabel.text = deck.identity.name;
