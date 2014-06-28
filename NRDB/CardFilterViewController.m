@@ -44,6 +44,9 @@
 
 @implementation CardFilterViewController
 
+#define LARGE_CELL_HEIGHT   140
+#define SMALL_CELL_HEIGHT   107
+
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 enum { VIEW_LIST, VIEW_IMG_2, VIEW_IMG_3 };
 enum { ADD_BUTTON_TABLE, ADD_BUTTON_COLLECTION };
@@ -423,7 +426,8 @@ static NSInteger viewMode = VIEW_LIST;
         // find the first cell that's completely visible
         for (NSIndexPath* indexPath in sortedIndexPaths)
         {
-            CGRect cellRect = [self.collectionView cellForItemAtIndexPath:indexPath].frame;
+            UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+            CGRect cellRect = cell.frame;
             cellRect = [self.collectionView convertRect:cellRect toView:self.collectionView.superview];
             BOOL completelyVisible = CGRectContainsRect(self.collectionView.frame, cellRect);
             if (completelyVisible)
@@ -463,7 +467,21 @@ static NSInteger viewMode = VIEW_LIST;
     {
         if (!self.collectionView.hidden)
         {
-            [self.collectionView scrollToItemAtIndexPath:scrollToPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+            // doesn't work, card images are below the sticky header
+            // [self.collectionView scrollToItemAtIndexPath:scrollToPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+            
+            // calculate scroll offset manually
+            CGFloat y;
+            if (viewMode == VIEW_IMG_2)
+            {
+                y = (scrollToPath.row / 2) * (LARGE_CELL_HEIGHT + 3);
+            }
+            else
+            {
+                y = (scrollToPath.row / 3) * (SMALL_CELL_HEIGHT + 3);
+                
+            }
+            [self.collectionView setContentOffset:CGPointMake(0, y) animated:NO];
         }
         if (!self.tableView.hidden)
         {
@@ -1000,7 +1018,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return viewMode == VIEW_IMG_3 ? CGSizeMake(103, 107) : CGSizeMake(156, 140);
+    return viewMode == VIEW_IMG_3 ? CGSizeMake(103, SMALL_CELL_HEIGHT) : CGSizeMake(156, LARGE_CELL_HEIGHT);
 }
 
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
