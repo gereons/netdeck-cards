@@ -9,6 +9,7 @@
 #import <SVProgressHUD.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
+#import <AFNetworking.h>
 
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
@@ -53,11 +54,12 @@
 @property NSString* filename;
 @property BOOL autoSave;
 @property BOOL autoSaveDropbox;
+@property BOOL useNetrunnerdb;
+@property BOOL autoSaveNRDB;
 
 @property CGFloat scale;
 @property BOOL largeCells;
 @property SDCAlertView* nameAlert;
-@property BOOL useNetrunerdb;
 
 @end
 
@@ -91,7 +93,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    self.useNetrunerdb = [settings objectForKey:NRDB_REMEMBERME] != nil;
+    self.useNetrunnerdb = [settings objectForKey:NRDB_REMEMBERME] != nil;
+    self.autoSaveNRDB = self.useNetrunnerdb && [settings boolForKey:NRDB_AUTOSAVE];
     
     CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
@@ -189,7 +192,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     // set up bottom toolbar
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
-    self.nrdbButton.enabled = self.useNetrunerdb;
+    self.nrdbButton.enabled = self.useNetrunnerdb;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
@@ -279,6 +282,11 @@ enum { POPUP_EXPORT, POPUP_STATE };
     }
     [DeckManager saveDeck:self.deck];
     
+    if (sender != nil && self.autoSaveNRDB)
+    {
+        [self saveDeckToNetrunnerdb];
+    }
+    
     self.saveButton.enabled = NO;
     
     if (self.autoSaveDropbox)
@@ -302,22 +310,56 @@ enum { POPUP_EXPORT, POPUP_STATE };
 
 -(void) nrdbButtonClicked:(id)sender
 {
-    NSString* msg;
-    
     if (self.deck.netrunnerDbId.length == 0)
     {
-        msg = l10n(@"This deck is not (yet) connected to a deck on netrunnerdb.com");
+        NSString* msg = l10n(@"This deck is not (yet) connected to a deck on netrunnerdb.com");
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
+                                                   message:msg
+                                                   buttons:@[ l10n(@"Save"), l10n(@"OK") ]];
+        
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
+            if (buttonIndex == 0)
+            {
+                [self saveDeckToNetrunnerdb];
+            }
+        };
     }
     else
     {
-        msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on netrunnerdb.com"), self.deck.netrunnerDbId ];
+        NSString* msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on netrunnerdb.com"), self.deck.netrunnerDbId ];
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
+                                                   message:msg
+                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Disconnect"), l10n(@"Save") ]];
+        
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
+            if (buttonIndex == 1)
+            {
+                self.deck.netrunnerDbId = nil;
+                self.deckChanged = YES;
+                if (self.autoSave)
+                {
+                    [self saveDeck:nil];
+                }
+                [self refresh];
+            }
+            if (buttonIndex == 2)
+            {
+                [self saveDeckToNetrunnerdb];
+            }
+        };
     }
-    
+}
+
+-(void) saveDeckToNetrunnerdb
+{
     [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
-        NSLog(@"deck saved %d %@", ok, deckId);
+        if (ok && deckId)
+        {
+            self.deck.netrunnerDbId = deckId;
+            [DeckManager saveDeck:self.deck];
+            [DeckManager resetModificationDate:self.deck];
+        }
     }];
-    
-    [SDCAlertView alertWithTitle:nil message:msg buttons:@[l10n(@"OK")]];
 }
 
 -(void) editNotes:(id)sender

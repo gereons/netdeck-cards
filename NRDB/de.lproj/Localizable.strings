@@ -208,4 +208,8 @@
 "Spin Cycle" = "Spin-Zyklus";
 "Lunar Cycle" = "Luna-Zyklus";
 
-//
+// netrunnerdb.com
+"This deck is not (yet) connected to a deck on netrunnerdb.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf netrunnerdb.com verknüpft";
+"This deck is connected to deck %@ on netrunnerdb.com" = "Dieses Deck ist mit Deck %@ auf netrunnerdb.com verknüpft";
+"Disconnect" = "Trennen";
+"Saving Deck..." = "Deck speichern...";
