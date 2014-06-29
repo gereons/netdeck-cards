@@ -35,6 +35,7 @@
 #import "Notifications.h"
 #import "SettingsKeys.h"
 #import "DeckState.h"
+#import "NRDB.h"
 
 @interface DeckListViewController ()
 
@@ -56,6 +57,7 @@
 @property CGFloat scale;
 @property BOOL largeCells;
 @property SDCAlertView* nameAlert;
+@property BOOL useNetrunerdb;
 
 @end
 
@@ -88,6 +90,9 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [super viewDidLoad];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    self.useNetrunerdb = [settings objectForKey:NRDB_REMEMBERME] != nil;
+    
     CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
     
@@ -184,6 +189,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     // set up bottom toolbar
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
+    self.nrdbButton.enabled = self.useNetrunerdb;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
@@ -296,7 +302,20 @@ enum { POPUP_EXPORT, POPUP_STATE };
 
 -(void) nrdbButtonClicked:(id)sender
 {
-    NSString* msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on netrunnerdb.com"), self.deck.netrunnerDbId ];
+    NSString* msg;
+    
+    if (self.deck.netrunnerDbId.length == 0)
+    {
+        msg = l10n(@"This deck is not (yet) connected to a deck on netrunnerdb.com");
+    }
+    else
+    {
+        msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on netrunnerdb.com"), self.deck.netrunnerDbId ];
+    }
+    
+    [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
+        NSLog(@"deck saved %d %@", ok, deckId);
+    }];
     
     [SDCAlertView alertWithTitle:nil message:msg buttons:@[l10n(@"OK")]];
 }
@@ -477,7 +496,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
                                                    delegate:self
                                           cancelButtonTitle:@""
                                      destructiveButtonTitle:nil
-                                          otherButtonTitles:l10n(@"Dropbox: OCTGN"),
+                                          otherButtonTitles:
+                                                            l10n(@"Dropbox: OCTGN"),
                                                             l10n(@"Dropbox: BBCode"),
                                                             l10n(@"Dropbox: Markdown"),
                                                             l10n(@"Dropbox: Plain Text"),
@@ -672,7 +692,6 @@ enum { POPUP_EXPORT, POPUP_STATE };
     
     self.drawButton.enabled = self.deck.cards.count > 0;
     self.analysisButton.enabled = self.deck.cards.count > 0;
-    self.nrdbButton.hidden = self.deck.netrunnerDbId.length == 0;
     
     NSMutableString* footer = [NSMutableString string];
     [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];

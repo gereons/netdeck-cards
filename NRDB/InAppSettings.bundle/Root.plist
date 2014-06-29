@@ -20,7 +20,7 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
-        <dict>
+		<dict>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
@@ -28,7 +28,7 @@
 			<key>File</key>
 			<string>CardData</string>
 		</dict>
-        <dict>
+		<dict>
 			<key>Title</key>
 			<string>Card Sets</string>
 			<key>Type</key>
@@ -42,7 +42,7 @@
 			<key>File</key>
 			<string>SetSelection</string>
 		</dict>
-        <dict>
+		<dict>
 			<key>Title</key>
 			<string>NetrunnerDB.com</string>
 			<key>Type</key>
@@ -52,7 +52,7 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-			<string>Manage NetrunnerDB.com account</string>
+			<string>NetrunnerDB.com Account</string>
 			<key>File</key>
 			<string>NetrunnerDBAccount</string>
 		</dict>

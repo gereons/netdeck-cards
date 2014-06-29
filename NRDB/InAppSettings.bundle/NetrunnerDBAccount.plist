@@ -46,6 +46,14 @@
 			<key>Key</key>
 			<string>nrdbLogout</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Auto-Save decks to NetrunnerDB.com</string>
+			<key>Key</key>
+			<string>nrdbAutoSave</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>NetrunnerDBAccount</string>

@@ -71,6 +71,8 @@
         SHOW_ALL_FILTERS: @(YES),
         DECK_FILTER_STATE: @(NRDeckStateNone),
         DECK_FILTER_SORT: @(NRDeckSortA_Z),
+        
+        NRDB_AUTOSAVE: @(NO)
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];

@@ -8,14 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+@class Deck;
+
 @interface NRDB : NSObject
 
 +(NRDB*) sharedInstance;
 
 typedef void (^LoginCompletionBlock)(BOOL ok);
 typedef void (^DecklistCompletionBlock)(NSArray* decks);
+typedef void (^SaveCompletionBlock)(BOOL ok, NSString* deckId);
 
 -(void)login:(LoginCompletionBlock)completionBlock;
 -(void)decklist:(DecklistCompletionBlock)completionBlock;
+
+-(void)saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock;
 
 @end

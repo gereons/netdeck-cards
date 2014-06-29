@@ -13,10 +13,13 @@
 
 #import "NRDB.h"
 #import "SettingsKeys.h"
+#import "Deck.h"
 
 @interface NRDB()
 @property (strong) LoginCompletionBlock loginCompletionBlock;
 @property (strong) DecklistCompletionBlock decklistCompletionBlock;
+@property (strong) SaveCompletionBlock saveCompletionBlock;
+@property BOOL fetchListAfterSave;
 @end
 
 @implementation NRDB
@@ -31,6 +34,7 @@ static NRDB* instance;
     return instance;
 }
 
+#pragma mark login
 -(void) login:(LoginCompletionBlock)completionBlock
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -38,15 +42,6 @@ static NRDB* instance;
     self.loginCompletionBlock = completionBlock;
     self.decklistCompletionBlock = nil;
     [self performSelector:@selector(checkNetrunnerDbLogin) withObject:nil afterDelay:0.01];
-}
-
--(void) decklist:(DecklistCompletionBlock)completionBlock
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Loading decks..")];
-    self.decklistCompletionBlock = completionBlock;
-    self.loginCompletionBlock = nil;
-    [self performSelector:@selector(getDecks) withObject:nil afterDelay:0.01];
 }
 
 -(void) checkNetrunnerDbLogin
@@ -123,6 +118,17 @@ static NRDB* instance;
     [operation start];
 }
 
+#pragma mark deck list
+
+-(void) decklist:(DecklistCompletionBlock)completionBlock
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Loading decks..")];
+    self.decklistCompletionBlock = completionBlock;
+    self.loginCompletionBlock = nil;
+    [self performSelector:@selector(getDecks) withObject:nil afterDelay:0.01];
+}
+
 -(void) getDecks
 {
     NSString* decksUrl = @"http://netrunnerdb.com/api/decks";
@@ -136,6 +142,9 @@ static NRDB* instance;
                                                                                 parameters:nil
                                                                                      error:&error];
     [request setAllHTTPHeaderFields:cookies];
+    // bypass cache!
+    request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     
@@ -173,6 +182,105 @@ static NRDB* instance;
         self.loginCompletionBlock(ok);
     }
 }
+
+#pragma mark save deck
+
+-(void) saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...")];
+    self.saveCompletionBlock = completionBlock;
+    [self performSelector:@selector(saveDeck:) withObject:deck afterDelay:0.01];
+}
+
+-(void) saveDeck:(Deck *)deck
+{
+    NSString* deckId = nil;
+    self.fetchListAfterSave = YES;
+    if (deck.netrunnerDbId.length > 0)
+    {
+        deckId = deck.netrunnerDbId;
+        self.fetchListAfterSave = NO;
+    }
+    
+    NSMutableDictionary* json = [NSMutableDictionary dictionary];
+    if (deck.identity)
+    {
+        json[deck.identity.code] = @1;
+    }
+    for (CardCounter* cc in deck.cards)
+    {
+        json[cc.card.code] = @(cc.count);
+    }
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:json options:NSJSONWritingPrettyPrinted error:nil];
+    NSString* jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    NSString* saveUrl = @"http://netrunnerdb.com/en/deck/save";
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    NSHTTPCookie* cookie = [self nrdbCookie:@"REMEMBERME" value:[settings objectForKey:NRDB_REMEMBERME]];
+    NSDictionary *cookies = [NSHTTPCookie requestHeaderFieldsWithCookies:@[ cookie ]];
+    
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    parameters[@"content"] = jsonStr;
+    parameters[@"copy"] = @"0";
+    if (deck.name)
+    {
+        parameters[@"name"] = deck.name;
+    }
+    if (deck.notes)
+    {
+        parameters[@"description"] = deck.notes;
+    }
+    if (deck.netrunnerDbId)
+    {
+        parameters[@"id"] = deck.netrunnerDbId;
+    }
+    
+    NSError* error;
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST"
+                                                                                 URLString:saveUrl
+                                                                                parameters:parameters
+                                                                                     error:&error];
+    
+    [request setAllHTTPHeaderFields:cookies];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    @weakify(self);
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        @strongify(self);
+        [self finishedSave:YES];
+    }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        @strongify(self);
+        [self finishedSave:NO];
+    }];
+    [operation start];
+}
+
+-(void) finishedSave:(BOOL)ok
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [SVProgressHUD dismiss];
+    
+    if (ok && self.fetchListAfterSave)
+    {
+        @weakify(self);
+        self.decklistCompletionBlock = ^void(NSArray* decks) {
+            @strongify(self);
+            NSDictionary* deck = [decks firstObject];
+            NSString* deckId = deck[@"id"];
+            // NSLog(@"new deck id %@", deckId);
+            self.saveCompletionBlock(ok, deckId);
+        };
+        [self getDecks];
+    }
+    else
+    {
+        self.saveCompletionBlock(ok, nil);
+    }
+}
+
+#pragma mark cookies
 
 -(NSHTTPCookie*) nrdbCookie:(NSString*)name value:(NSString*)value
 {

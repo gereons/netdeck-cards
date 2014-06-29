@@ -53,5 +53,6 @@
 #define NRDB_USERNAME       @"nrdbUsername"
 #define NRDB_PASSWORD       @"nrdbPassword"
 #define NRDB_REMEMBERME     @"nrdbRememberme"
+#define NRDB_AUTOSAVE       @"nrdbAutosave"
 
 #endif
