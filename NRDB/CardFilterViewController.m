@@ -331,8 +331,6 @@ static NSInteger viewMode = VIEW_LIST;
         return;
     }
     
-    TF_CHECKPOINT(@"filter text entry");
-    
     CGFloat topY = self.searchSeparator.frame.origin.y;
     
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -370,6 +368,8 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) moreLessClicked:(id)sender
 {
+    TF_CHECKPOINT(@"more/less toggle");
+    
     showAllFilters = !showAllFilters;
     
     if (!showAllFilters)
@@ -413,6 +413,8 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) viewModeChanged:(UISegmentedControl*)sender
 {
+    TF_CHECKPOINT(@"view mode toggle");
+    
     NSIndexPath* scrollToPath;
     
     if (viewMode != VIEW_LIST)
@@ -492,7 +494,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) typeClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter type");
     TableData* data = [[TableData alloc] initWithValues:[CardType typesForRole:self.role]];
     id selected = [self.selectedValues objectForKey:@(TYPE_BUTTON)];
     
@@ -501,14 +502,12 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) setClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter set");
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
     [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allSetsForTableview] type:@"Set" selected:selected];
 }
 
 -(void) subtypeClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter subtype");
     TableData* data;
     if (self.selectedTypes)
     {
@@ -525,7 +524,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) factionClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter faction");
     TableData* data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role]];
     id selected = [self.selectedValues objectForKey:@(FACTION_BUTTON)];
     
@@ -601,7 +599,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) strengthValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter strength");
     int value = round(sender.value);
     // NSLog(@"str: %f %d", sender.value, value);
     sender.value = value--;
@@ -611,7 +608,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) muValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter mu");
     int value = round(sender.value);
     // NSLog(@"mu: %f %d", sender.value, value);
     sender.value = value--;
@@ -621,7 +617,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) costValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter cost");
     int value = round(sender.value);
     // NSLog(@"cost: %f %d", sender.value, value);
     sender.value = value--;
@@ -631,7 +626,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) influenceValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter influence");
     int value = round(sender.value);
     // NSLog(@"inf: %f %d", sender.value, value);
     sender.value = value--;
@@ -641,7 +635,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) apValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter ap");
     int value = round(sender.value);
     // NSLog(@"ap: %f %d", sender.value, value);
     if (value == 0)
@@ -657,8 +650,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) scopeClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter scope");
-
     UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil
                                                        delegate:self
                                               cancelButtonTitle:@""

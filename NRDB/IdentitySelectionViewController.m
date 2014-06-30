@@ -40,6 +40,8 @@
 
 - (id)initWithRole:(NRRole)role andIdentity:(Card*)identity
 {
+    TF_CHECKPOINT(@"identity selection");
+    
     self = [super initWithNibName:@"IdentitySelectionViewController" bundle:nil];
     if (self)
     {

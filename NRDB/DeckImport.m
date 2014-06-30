@@ -309,6 +309,7 @@ static DeckImport* instance;
 
 -(void) doDownloadDeckFromNetrunnerDb:(NSString*)deckId
 {
+    TF_CHECKPOINT(@"deck d/l nrdb");
     NSString* deckUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api/decklist/%@", deckId];
     BOOL __block ok = NO;
     self.downloadStopped = NO;
@@ -337,6 +338,7 @@ static DeckImport* instance;
 
 -(void) doDownloadDeckFromMeteor:(NSString*)deckId
 {
+    TF_CHECKPOINT(@"deck d/l meteor");
     NSString* deckUrl = [NSString stringWithFormat:@"http://netrunner.meteor.com/deckexport/octgn/%@/", deckId];
     BOOL __block ok = NO;
     self.downloadStopped = NO;
