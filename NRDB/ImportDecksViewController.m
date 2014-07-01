@@ -296,17 +296,7 @@ static NSString* filterText;
             {
                 deck.name = fileName;
             }
-            
-            NSString* notesFilename = [NSString stringWithFormat:@"%@_notes.txt", deck.name];
-            DBPath* notesPath = [[DBPath root] childPath:notesFilename];
-            DBFile* notesFile = [[DBFilesystem sharedFilesystem] openFile:notesPath error:nil];
-            
-            if (notesFile)
-            {
-                deck.notes = [notesFile readString:nil];
-                [notesFile close];
-            }
-            
+                        
             deck.lastModified = lastModified;
             return deck;
         }

@@ -13,6 +13,7 @@
 @property NSXMLParser* parser;
 @property BOOL setIdentity;
 @property Deck* deck;
+@property NSMutableString* notes;
 
 @end
 
@@ -50,6 +51,8 @@
 
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
+    self.notes = nil;
+    
     if ([elementName isEqualToString:@"section"])
     {
         NSString* name = attributeDict[@"name"];
@@ -75,6 +78,24 @@
             [self.deck addCard:card copies:copies];
         }
     }
+    
+    if ([elementName isEqualToString:@"notes"])
+    {
+        self.notes = [NSMutableString string];
+    }
+}
+
+-(void) parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+{
+    if ([elementName isEqualToString:@"notes"])
+    {
+        self.deck.notes = self.notes;
+    }
+}
+
+-(void) parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+{
+    [self.notes appendString:string];
 }
 
 @end
