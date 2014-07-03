@@ -198,7 +198,7 @@ static NSDictionary* sideStr;
         return;
     }
     
-    self.popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:l10n(@"All"), l10n(@"Runner"), l10n(@"Corp"), nil];
+    self.popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:l10n(@"Both"), l10n(@"Runner"), l10n(@"Corp"), nil];
     self.popup.tag = POPUP_SIDE;
     [self.popup showFromBarButtonItem:sender animated:NO];
 }
