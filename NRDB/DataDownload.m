@@ -88,7 +88,7 @@ static DataDownload* instance;
     
 -(void) doDownloadCardData
 {
-    NSString* cardsUrl = @"http://netrunnerdb.com/api/cards";
+    NSString* cardsUrl = @"http://netrunnerdb.com/api/cards/";
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSDictionary* parameters = nil;
     if (language.length)
