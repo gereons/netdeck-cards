@@ -189,7 +189,7 @@
 // reset a deck's last modification timestamp
 +(void) resetModificationDate:(Deck *)deck
 {
-    if (deck.filename)
+    if (deck.filename && deck.lastModified)
     {
         NSDictionary *attrs = @{ NSFileModificationDate: deck.lastModified };
         NSError *error;
