@@ -13,7 +13,7 @@
 // a Card in a Deck: the card itself, a counter and a "show alt art" toggle
 @interface CardCounter : NSObject <NSCoding>
 
-@property (readonly) Card* card;
+@property (readonly, nonatomic) Card* card;
 @property (nonatomic) NSUInteger count;
 @property BOOL showAltArt;
 
