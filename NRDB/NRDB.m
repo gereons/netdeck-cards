@@ -134,6 +134,12 @@ static NRDB* instance;
         return;
     }
     
+    if ([settings objectForKey:NRDB_REFRESH_TOKEN] == nil)
+    {
+        [settings setObject:@(NO) forKey:USE_NRDB];
+        return;
+    }
+    
     NSDate* expiry = [settings objectForKey:NRDB_TOKEN_EXPIRY];
     NSDate* now = [NSDate date];
     NSTimeInterval diff = [expiry timeIntervalSinceDate:now];

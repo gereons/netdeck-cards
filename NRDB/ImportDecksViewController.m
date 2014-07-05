@@ -119,7 +119,7 @@ static NSString* filterText;
             Deck* deck = [Deck new];
             deck.name = d[@"name"];
             deck.notes = d[@"description"];
-            deck.netrunnerDbId = [NSString stringWithFormat:@"%d", [d[@"id"] integerValue]];
+            deck.netrunnerDbId = [NSString stringWithFormat:@"%ld", (long)[d[@"id"] integerValue]];
             
             // parse creation date, '2014-06-19 13:52:24'
             deck.lastModified = [formatter dateFromString:d[@"creation"]];
@@ -127,7 +127,7 @@ static NSString* filterText;
             for (NSDictionary* c in d[@"cards"])
             {
                 NSString* code = c[@"card_code"];
-                NSInteger qty = [c[@"qty"] integerValue];
+                int qty = [c[@"qty"] intValue];
                 
                 Card* card = [Card cardByCode:code];
                 if (card.type == NRCardTypeIdentity)
