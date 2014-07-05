@@ -34,7 +34,7 @@ static NRDBAuthPopupViewController* popup;
         return;
     }
     
-    NSLog(@"netdeck url %@", url);
+    // NSLog(@"netdeck url %@", url);
     
     BOOL codeFound = NO;
     

@@ -71,7 +71,7 @@ static NSString* filterText;
     }
     else
     {
-        [SVProgressHUD showWithStatus:l10n(@"Loading decks from netrunnerdb.com")];
+        [SVProgressHUD showWithStatus:l10n(@"Loading decks from NetrunnerDB.com")];
         [self getNetrunnerdbDecks];
     }
 
@@ -337,11 +337,38 @@ static NSString* filterText;
 {
     TF_CHECKPOINT(@"import deck");
     
-    [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
     
     NSArray* decks = self.filteredDecks[indexPath.section];
     Deck* deck = decks[indexPath.row];
-    [DeckManager saveDeck:deck];
+    
+    NSString* filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
+    
+    if (filename)
+    {
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
+                                                   message:l10n(@"A local copy of this deck already exists.")
+                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Overwrite"), l10n(@"Import as new")]];
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
+            switch (buttonIndex)
+            {
+                case 0: // cancel
+                    return;
+                case 1: // overwrite
+                    deck.filename = filename;
+                    break;
+                case 2: // new
+                    break;
+            }
+            
+            [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
+            [DeckManager saveDeck:deck];
+        };
+    }
+    else
+    {
+        [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
+        [DeckManager saveDeck:deck];
+    }
 }
 
 -(Deck*) parseDeck:(NSString*)fileName

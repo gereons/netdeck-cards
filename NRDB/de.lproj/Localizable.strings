@@ -61,7 +61,7 @@
 "Deck Name" = "Deck-Name";
 "Dropbox: Plain Text" = "Dropbox: Reiner Text";
 "Clipboard: Plain Text" = "Clipboard: Reiner Text";
-"Connect to your Dropbox account first." = "Dropbox-Verbindung nicht eingerichtet";
+"Connect to your Dropbox account first." = "Dropbox-Verbindung nicht eingerichtet.";
 "Deck needs to have an Identity." = "Das Deck hat keine Identität.";
 "Deck needs cards." = "Das Deck hat keine Karten";
 "Cards up to %@" = "Karten bis zu %@";
@@ -90,7 +90,7 @@
 "Image %d of %d" = "Bild %d von %d";
 "Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche es später nochmal.";
 "%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";
-"Clear Cache? You will need to re-download all data from netrunnerdb.com." = "Cache löschen? Du musst danach alle Daten neu von netrunnerdb.com laden.";
+"Clear Cache? You will need to re-download all data from NetrunnerDB.com." = "Cache löschen? Du musst danach alle Daten neu von NetrunnerDB.com laden.";
 "An Internet connection is required." = "Internet-Verbindung wird benötigt.";
 
 // identity selection
@@ -166,7 +166,7 @@
 
 // startup alert
 "No Card Data" = "Keine Karten-Daten";
-"To use this app, you must first download card data from netrunnerdb.com" = "Um diese App zu verwenden, musst du zuerst Kartendaten von netrunnerdb.com laden";
+"To use this app, you must first download card data from NetrunnerDB.com" = "Um diese App zu verwenden, musst du zuerst Kartendaten von NetrunnerDB.com laden";
 "Not now" = "Jetzt nicht";
 "Download" = "Laden";
 
@@ -186,7 +186,7 @@
 "%@ (%d Cards)" = "%@ (%d Karten)";
 "Deck imported" = "Deck importiert";
 "Detected a deck list in your clipboard. Import this deck?" = "Deckliste in der Zwischenablage gefunden. Soll dieses Deck importiert werden?";
-"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?" = "URL einer Deckliste auf netrunnerdb.com in der Zwischenablage gefunden. Soll dieses Deck heruntergeladen und importiert werden?";
+"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?" = "URL einer Deckliste auf NetrunnerDB.com in der Zwischenablage gefunden. Soll dieses Deck heruntergeladen und importiert werden?";
 "Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "URL einer Deckliste auf Meteor in der Zwischenablage gefunden. Soll dieses Deck heruntergeladen und importiert werden?";
 "No Decks found" = "Keine Decks gefunden";
 "Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App." = "Kopiere Decks im OCTGN-Format (.o8d) in den Order Apps/Net Deck in deiner Dropbox, um sie in die App importieren zu können.";
@@ -209,7 +209,15 @@
 "Lunar Cycle" = "Luna-Zyklus";
 
 // netrunnerdb.com
-"This deck is not (yet) connected to a deck on netrunnerdb.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf netrunnerdb.com verknüpft";
-"This deck is connected to deck %@ on netrunnerdb.com" = "Dieses Deck ist mit Deck %@ auf netrunnerdb.com verknüpft";
+"Import from Dropbox" = "Von Dropbox importieren";
+"Import from NetrunnerDB.com" = "Von NetrunnerDB.com importieren";
+"This deck is not (yet) connected to a deck on NetrunnerDB.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf NetrunnerDB.com verknüpft";
+"This deck is connected to deck %@ on NetrunnerDB.com" = "Dieses Deck ist mit Deck %@ auf NetrunnerDB.com verknüpft";
 "Disconnect" = "Trennen";
 "Saving Deck..." = "Deck speichern...";
+"Loading Decks..." = "Decks laden...";
+"A local copy of this deck already exists." = "Eine lokale Kopie dieses Decks existiert bereits.";
+"Overwrite" = "Überschreiben";
+"Import as new" = "Neu importieren";
+"Connect to your Dropbox and/or NetrunnerDB.com account first." = "Bitte Dropbox- und/oder NetrunnerDB.com-Verbindung einrichten.";
+

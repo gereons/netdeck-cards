@@ -27,4 +27,8 @@ typedef void (^SaveCompletionBlock)(BOOL ok, NSString* deckId);
 -(void)refreshAuthentication;
 -(void)stopRefresh;
 
+-(void)updateDeckMap:(NSArray*) decks;
+-(NSString*) filenameForId:(NSString*)deckId;
+-(void) deleteDeck:(NSString*)filename;
+
 @end

@@ -22,6 +22,7 @@
 #import "ImportDecksViewController.h"
 #import "SettingsKeys.h"
 #import "DeckState.h"
+#import "NRDB.h"
 
 typedef NS_ENUM(NSInteger, FilterType) {
     FilterTypeAll, FilterRunner, FilterCorp
@@ -244,7 +245,7 @@ static NSDictionary* sideStr;
     if (!useDropbox && !useNetrunnerdb)
     {
         [SDCAlertView alertWithTitle:l10n(@"Import Decks")
-                             message:l10n(@"Connect to your Dropbox and/or netrunnerdb.com account first.")
+                             message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")
                              buttons:@[l10n(@"OK")]];
         return;
     }
@@ -255,7 +256,7 @@ static NSDictionary* sideStr;
                                                            delegate:self
                                                   cancelButtonTitle:@""
                                              destructiveButtonTitle:nil
-                                                  otherButtonTitles:l10n(@"Import from Dropbox"), l10n(@"Import from netrunnerdb.com"), nil];
+                                                  otherButtonTitles:l10n(@"Import from Dropbox"), l10n(@"Import from NetrunnerDB.com"), nil];
         self.popup.tag = POPUP_IMPORTSOURCE;
         [self.popup showFromBarButtonItem:sender animated:NO];
     }
@@ -282,6 +283,10 @@ static NSDictionary* sideStr;
 
     NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
     NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
+    
+    NSMutableArray* allDecks = [NSMutableArray arrayWithArray:runnerDecks];
+    [allDecks addObjectsFromArray:corpDecks];
+    [[NRDB sharedInstance] updateDeckMap:allDecks];
     
 #if DEBUG
     [self checkDecks:self.runnerDecks];
@@ -769,7 +774,7 @@ static NSDictionary* sideStr;
     NSString* date = [self.dateFormatter stringFromDate:deck.lastModified];
     cell.dateLabel.text = [NSString stringWithFormat:@"%@ · %@", state, date];
     
-    cell.nrdbIcon.hidden = deck.netrunnerDbId.length == 0;
+    cell.nrdbIcon.hidden = deck.netrunnerDbId == nil;
     
     return cell;
 }
@@ -796,6 +801,7 @@ static NSDictionary* sideStr;
         Deck* deck = [decks objectAtIndex:indexPath.row];
         
         [decks removeObjectAtIndex:indexPath.row];
+        [[NRDB sharedInstance] deleteDeck:deck.netrunnerDbId];
         [DeckManager removeFile:deck.filename];
         
         [self.tableView beginUpdates];

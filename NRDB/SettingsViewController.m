@@ -131,7 +131,12 @@
         }
         else
         {
-            // [NRDB logout];
+            TF_CHECKPOINT(@"netrunnerdb.com logout");
+            NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+            [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
+            [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
+            [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
+            [settings removeObjectForKey:NRDB_TOKEN_TTL];
         }
     }
 }
@@ -179,7 +184,7 @@
         TF_CHECKPOINT(@"clear cache");
         
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
-                                                   message:l10n(@"Clear Cache? You will need to re-download all data from netrunnerdb.com.")
+                                                   message:l10n(@"Clear Cache? You will need to re-download all data from NetrunnerDB.com.")
                                                    buttons:@[l10n(@"No"), l10n(@"Yes") ]];
         alert.didDismissHandler = ^void(NSInteger buttonIndex) {
             if (buttonIndex == 1) // yes, clear

@@ -312,7 +312,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
 {
     if (self.deck.netrunnerDbId.length == 0)
     {
-        NSString* msg = l10n(@"This deck is not (yet) connected to a deck on netrunnerdb.com");
+        NSString* msg = l10n(@"This deck is not (yet) connected to a deck on NetrunnerDB.com");
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:msg
                                                    buttons:@[ l10n(@"Save"), l10n(@"OK") ]];
@@ -326,7 +326,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     }
     else
     {
-        NSString* msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on netrunnerdb.com"), self.deck.netrunnerDbId ];
+        NSString* msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on NetrunnerDB.com"), self.deck.netrunnerDbId ];
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:msg
                                                    buttons:@[ l10n(@"Cancel"), l10n(@"Disconnect"), l10n(@"Save") ]];

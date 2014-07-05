@@ -111,7 +111,7 @@ static DeckImport* instance;
         if (self.deckSource.site == DeckBuilderSiteNetrunnerDB)
         {
             alert = [SDCAlertView alertWithTitle:nil
-                                         message:l10n(@"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?")
+                                         message:l10n(@"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?")
                                          buttons:@[l10n(@"No"), l10n(@"Yes")]];
         }
         else if (self.deckSource.site == DeckBuilderSiteMeteor)

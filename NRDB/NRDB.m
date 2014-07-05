@@ -19,6 +19,7 @@
 @interface NRDB()
 @property (strong) DecklistCompletionBlock decklistCompletionBlock;
 @property (strong) SaveCompletionBlock saveCompletionBlock;
+@property NSMutableDictionary* deckMap;
 @property NSTimer* timer;
 @end
 
@@ -183,7 +184,7 @@ static NRDB* instance;
 -(void) decklist:(DecklistCompletionBlock)completionBlock
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Loading decks..")];
+    [SVProgressHUD showWithStatus:l10n(@"Loading Decks...")];
     self.decklistCompletionBlock = completionBlock;
     [self performSelector:@selector(getDecks) withObject:nil afterDelay:0.01];
 }
@@ -311,6 +312,33 @@ static NRDB* instance;
     [SVProgressHUD dismiss];
     
     self.saveCompletionBlock(ok, deckId);
+}
+
+#pragma mark deck map
+
+-(void) updateDeckMap:(NSArray *)decks
+{
+    self.deckMap = [NSMutableDictionary dictionary];
+    for (Deck* deck in decks)
+    {
+        if (deck.netrunnerDbId)
+        {
+            [self.deckMap setObject:deck.filename forKey:deck.netrunnerDbId];
+        }
+    }
+}
+
+-(void) deleteDeck:(NSString*) deckId
+{
+    if (deckId)
+    {
+        [self.deckMap removeObjectForKey:deckId];
+    }
+}
+
+-(NSString*) filenameForId:(NSString*)deckId
+{
+    return [self.deckMap objectForKey:deckId];
 }
 
 @end

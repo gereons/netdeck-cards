@@ -86,7 +86,7 @@
 "Downloading Images" = "Téléchargement des images en cours";
 "Unable to download cards at this time. Please try again later." = "Le téléchargement a échoué. Merci de réessayer ultérieurement.";
 "%d of %lu images could not be downloaded." = "%d de %lu d'images n'ont pu être téléchargé.";
-"Clear Cache? You will need to re-download all data from netrunnerdb.com." = "Vider le cache ? Il va falloir télécharger les données de netrunnerdb.com à nouveau.";
+"Clear Cache? You will need to re-download all data from NetrunnerDB.com." = "Vider le cache ? Il va falloir télécharger les données de NetrunnerDB.com à nouveau.";
 "An Internet connection is required." = "Une connection internet est requise.";
 "Image %d of %d" = "Image %d de %d";
 
@@ -167,7 +167,7 @@
 // startup alert
 "No Card Data" = "Pas de données de cartes";
 
-"To use this app, you must first download card data from netrunnerdb.com" = "Pour utiliser cette application, il faut d'abord télécharger les données des cartes depuis netrunnerdb.com";
+"To use this app, you must first download card data from NetrunnerDB.com" = "Pour utiliser cette application, il faut d'abord télécharger les données des cartes depuis NetrunnerDB.com";
 "Download" = "Téléchargement";
 
 "Update cards" = "Mise à jour des cartes";
@@ -186,7 +186,7 @@
 "%@ (%d Cards)" = "%@ (%d Cartes)";
 "Deck imported" = "Deck importé";
 "Detected a deck list in your clipboard. Import this deck?" = "Une decklist a été detectée dans votre presse papiers, l'importer ?";
-"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?" = "Une netrunnerdb.com URL d'une decklist a été detectée dans votre presse papiers, l'importer ?";
+"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?" = "Une NetrunnerDB.com URL d'une decklist a été detectée dans votre presse papiers, l'importer ?";
 "Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "Une meteor URL d'une decklist a été detectée dans votre presse papiers, l'importer ?";
 "No Decks found" = "Aucun deck trouvé";
 "Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Copier les decks au format OCTGN (.o8d) dans le fichier Apps/Net de Dropbox pour pouvoir les iporter dans l'application.";
