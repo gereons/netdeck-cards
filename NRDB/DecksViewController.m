@@ -239,7 +239,7 @@ static NSDictionary* sideStr;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
-    BOOL useNetrunnerdb = [settings objectForKey:NRDB_REMEMBERME] != nil;
+    BOOL useNetrunnerdb = [settings boolForKey:USE_NRDB];
     
     if (!useDropbox && !useNetrunnerdb)
     {

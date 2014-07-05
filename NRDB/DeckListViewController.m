@@ -93,7 +93,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    self.useNetrunnerdb = [settings objectForKey:NRDB_REMEMBERME] != nil;
+    self.useNetrunnerdb = [settings boolForKey:USE_NRDB];
     self.autoSaveNRDB = self.useNetrunnerdb && [settings boolForKey:NRDB_AUTOSAVE];
     
     CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
@@ -353,6 +353,10 @@ enum { POPUP_EXPORT, POPUP_STATE };
 -(void) saveDeckToNetrunnerdb
 {
     [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
+        if (!ok)
+        {
+            [SDCAlertView alertWithTitle:nil message:l10n(@"Saving the deck at NetrunnerDB.com failed") buttons:@[l10n(@"OK")]];
+        }
         if (ok && deckId)
         {
             self.deck.netrunnerDbId = deckId;

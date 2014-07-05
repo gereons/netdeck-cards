@@ -10,47 +10,14 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
-		<dict>
-			<key>Title</key>
-			<string>Username</string>
-			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>AutocapitalizationType</key>
-			<string>None</string>
-			<key>Key</key>
-			<string>nrdbUsername</string>
-			<key>AutocorrectionType</key>
-			<string>No</string>
-		</dict>
+		
 		<dict>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
+			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Password</string>
-			<key>IsSecure</key>
-			<true/>
-			<key>AutocapitalizationType</key>
-			<string>None</string>
+			<string>Connect to NetrunnerDB.com Account</string>
 			<key>Key</key>
-			<string>nrdbPassword</string>
-			<key>AutocorrectionType</key>
-			<string>No</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>IASKButtonSpecifier</string>
-			<key>Title</key>
-			<string>Login</string>
-			<key>Key</key>
-			<string>nrdbLogin</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>IASKButtonSpecifier</string>
-			<key>Title</key>
-			<string>Logout</string>
-			<key>Key</key>
-			<string>nrdbLogout</string>
+			<string>useNrdb</string>
 		</dict>
         <dict>
 			<key>Title</key>

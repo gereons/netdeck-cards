@@ -10,32 +10,32 @@
 #define NRDB_SettingsKeys_h
 
 #define LANGUAGE            @"language"
-#define LAST_MOD_CACHE  @"lastModified"
-#define NEXT_CHECK      @"nextCheck"
+#define LAST_MOD_CACHE      @"lastModified"
+#define NEXT_CHECK          @"nextCheck"
 #define UNAVAILABLE_IMG     @"unavailableImages"
 #define UNAVAIL_IMG_DATE    @"unavailableImagesDate"
 
 #define FILE_SEQ            @"fileSequence"
 #define LAST_START_VERSION  @"lastStartVersion"
 
-#define LAST_DOWNLOAD   @"lastDownload"
-#define NEXT_DOWNLOAD   @"nextDownload"
+#define LAST_DOWNLOAD       @"lastDownload"
+#define NEXT_DOWNLOAD       @"nextDownload"
 #define DOWNLOAD_DATA_NOW       @"downloadDataNow"
 #define DOWNLOAD_IMG_NOW        @"downloadImagesNow"
 #define DOWNLOAD_MISSING_IMG    @"downloadMissingImagesNow"
-#define CLEAR_CACHE     @"clearCache"
+#define CLEAR_CACHE         @"clearCache"
 
-#define CARD_SETS       @"cardSets"
-#define SET_SELECTION   @"setSelection"
-#define NUM_CORES       @"number_coresets"
-#define UNPUBLISHED_IDS @"use_unpublished_identities"
+#define CARD_SETS           @"cardSets"
+#define SET_SELECTION       @"setSelection"
+#define NUM_CORES           @"number_coresets"
+#define UNPUBLISHED_IDS     @"use_unpublished_identities"
 
-#define USE_DROPBOX     @"useDropbox"
+#define USE_DROPBOX         @"useDropbox"
 
-#define AUTO_SAVE       @"autoSave"
-#define AUTO_SAVE_DB    @"autoSaveDropbox"
+#define AUTO_SAVE           @"autoSave"
+#define AUTO_SAVE_DB        @"autoSaveDropbox"
 
-#define DECK_VIEW_STYLE @"deckViewStyle"
+#define DECK_VIEW_STYLE     @"deckViewStyle"
 
 #define CLIP_CHANGE_COUNT   @"clipChangeCount"
 
@@ -48,11 +48,10 @@
 
 #define DECK_VIEW_SCALE     @"deckViewScale"
 
-#define NRDB_LOGIN          @"nrdbLogin"
-#define NRDB_LOGOUT         @"nrdbLogout"
-#define NRDB_USERNAME       @"nrdbUsername"
-#define NRDB_PASSWORD       @"nrdbPassword"
-#define NRDB_REMEMBERME     @"nrdbRememberme"
+#define USE_NRDB            @"useNrdb"
+#define NRDB_ACCESS_TOKEN   @"nrdbAccessToken"
+#define NRDB_REFRESH_TOKEN  @"nrdbRefreshToken"
+#define NRDB_TOKEN_EXPIRY   @"nrdbTokenExpiry"
 #define NRDB_AUTOSAVE       @"nrdbAutoSave"
 
 #endif

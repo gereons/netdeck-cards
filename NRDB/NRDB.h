@@ -14,13 +14,16 @@
 
 +(NRDB*) sharedInstance;
 
-typedef void (^LoginCompletionBlock)(BOOL ok);
+typedef void (^AuthCompletionBlock)(BOOL ok);
 typedef void (^DecklistCompletionBlock)(NSArray* decks);
 typedef void (^SaveCompletionBlock)(BOOL ok, NSString* deckId);
 
--(void)login:(LoginCompletionBlock)completionBlock;
+-(void)authorizeWithCode:(NSString*)code completion:(AuthCompletionBlock)completionBlock;
+
 -(void)decklist:(DecklistCompletionBlock)completionBlock;
 
 -(void)saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock;
+
+-(void)refreshAuthentication;
 
 @end

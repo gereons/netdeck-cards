@@ -12,17 +12,19 @@
 #import <SDCAlertView.h>
 
 #import "NRDB.h"
+#import "NRDBAuth.h"
 #import "SettingsKeys.h"
 #import "Deck.h"
 
 @interface NRDB()
-@property (strong) LoginCompletionBlock loginCompletionBlock;
 @property (strong) DecklistCompletionBlock decklistCompletionBlock;
 @property (strong) SaveCompletionBlock saveCompletionBlock;
-@property BOOL fetchListAfterSave;
+@property NSTimer* timer;
 @end
 
 @implementation NRDB
+
+#define REFRESH_INTERVAL    3300 // 55 minutes
 
 static NRDB* instance;
 +(NRDB*) sharedInstance
@@ -34,88 +36,131 @@ static NRDB* instance;
     return instance;
 }
 
-#pragma mark login
--(void) login:(LoginCompletionBlock)completionBlock
+#pragma mark autorization
+
+-(void) authorizeWithCode:(NSString *)code completion:(AuthCompletionBlock)completionBlock
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Logging in...")];
-    self.loginCompletionBlock = completionBlock;
-    self.decklistCompletionBlock = nil;
-    [self performSelector:@selector(checkNetrunnerDbLogin) withObject:nil afterDelay:0.01];
+    // ?client_id=" CLIENT_ID "&client_secret=" CLIENT_SECRET "&grant_type=authorization_code&redirect_uri=" CLIENT_HOST "&code="
+    
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    parameters[@"client_id"] = @CLIENT_ID;
+    parameters[@"client_secret"] = @CLIENT_SECRET;
+    parameters[@"grant_type"] = @"authorization_code";
+    parameters[@"redirect_uri"] = @CLIENT_HOST;
+    parameters[@"code"] = code;
+    
+    [self getAuthorization:parameters completion:completionBlock];
 }
 
--(void) checkNetrunnerDbLogin
+-(void) refreshToken:(AuthCompletionBlock)completionBlock
+{
+    // ?client_id=" CLIENT_ID "&client_secret=" CLIENT_SECRET "&grant_type=refresh_token&redirect_uri=" CLIENT_HOST "&refresh_token="
+    
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    parameters[@"client_id"] = @CLIENT_ID;
+    parameters[@"client_secret"] = @CLIENT_SECRET;
+    parameters[@"grant_type"] = @"refresh_token";
+    parameters[@"redirect_uri"] = @CLIENT_HOST;
+    parameters[@"refresh_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_REFRESH_TOKEN];
+
+    [self getAuthorization:parameters completion:completionBlock];
+}
+
+-(void) getAuthorization:(NSDictionary*)parameters completion:(AuthCompletionBlock)completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager GET:@AUTH_URL parameters:parameters
+         success:^(AFHTTPRequestOperation* operation, id responseObject) {
+             // NSLog(@"auth response: %@", responseObject);
+             BOOL ok = YES;
+             
+             NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+             NSString* token = responseObject[@"access_token"];
+             if (token)
+             {
+                 [settings setObject:token forKey:NRDB_ACCESS_TOKEN];
+             }
+             else
+             {
+                 ok = NO;
+             }
+             
+             token = responseObject[@"refresh_token"];
+             if (token)
+             {
+                 [settings setObject:token forKey:NRDB_REFRESH_TOKEN];
+             }
+             else
+             {
+                 ok = NO;
+             }
+             NSNumber* exp = responseObject[@"expires_in"];
+             NSDate* expiry = [[NSDate date] dateByAddingTimeInterval:[exp intValue]];
+             [settings setObject:expiry forKey:NRDB_TOKEN_EXPIRY];
+             
+             if (!ok)
+             {
+                 [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
+                 [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
+                 [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
+             }
+             [settings synchronize];
+             
+             completionBlock(ok);
+         }
+         failure:^(AFHTTPRequestOperation* operation, NSError* error) {
+             NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+             [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
+             [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
+             [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
+             [settings setObject:@(NO) forKey:USE_NRDB];
+             [settings synchronize];
+             
+             completionBlock(NO);
+         }
+    ];
+}
+
+-(void) refreshAuthentication
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    NSString* user = [settings objectForKey:NRDB_USERNAME];
-    NSString* pass = [settings objectForKey:NRDB_PASSWORD];
-    
-    if (user.length == 0 || pass.length == 0)
+    if (![settings boolForKey:USE_NRDB])
     {
-        [SVProgressHUD dismiss];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        [SDCAlertView alertWithTitle:nil
-                             message:l10n(@"Please enter username and password for your netrunnerdb.com account")
-                             buttons:@[l10n(@"OK")]];
         return;
     }
     
-    // remove old REMEMBERME cookie
-    NSHTTPCookieStorage* jar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie* cookie in [jar cookies])
+    NSDate* expiry = [settings objectForKey:NRDB_TOKEN_EXPIRY];
+    NSDate* now = [NSDate date];
+    NSTimeInterval diff = [expiry timeIntervalSinceDate:now];
+    diff -= 5*60; // 5 minutes overlap
+    
+    if (diff < 0)
     {
-        [jar deleteCookie:cookie];
-    }
-    
-    // fake a PHPSESSID cookie
-    NSHTTPCookie* cookie = [self nrdbCookie:@"PHPSESSID" value:@"dontcare"];
-    NSDictionary *cookies = [NSHTTPCookie requestHeaderFieldsWithCookies:@[ cookie ]];
-    
-    NSError* error;
-    NSString* loginUrl = @"http://netrunnerdb.com/login_check";
-    NSDictionary* parameters = @{
-                                 @"_username": user,
-                                 @"_password": pass,
-                                 @"_remember_me": @"on",
-                                 @"_csrf_token": @"",
-                                 @"_submit": @"Login",
-                                 };
-    
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST"
-                                                                                 URLString:loginUrl
-                                                                                parameters:parameters
-                                                                                     error:&error];
-    [request setAllHTTPHeaderFields:cookies];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    @weakify(self);
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        @strongify(self);
-        NSString* rememberme;
-        for (NSHTTPCookie* cookie in [jar cookies])
-        {
-            if ([cookie.name isEqualToString:@"REMEMBERME"])
+        // token is expired, refresh now
+        [self refreshToken:^(BOOL ok) {
+            if (ok)
             {
-                rememberme = cookie.value;
-                break;
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL
+                                                              target:self
+                                                            selector:@selector(refreshTimerFire:)
+                                                            userInfo:nil
+                                                             repeats:YES];
             }
-        }
-        
-        if (rememberme)
-        {
-            [settings setObject:rememberme forKey:NRDB_REMEMBERME];
-            [self getDecks];
-        }
-        else
-        {
-            [self finished:NO decks:nil];
-        }
+        }];
     }
-    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self finished:NO decks:nil];
+    else
+    {
+        // token still valid, schedule refresh
+    }
+}
+
+-(void) refreshTimerFire:(NSTimer*)timer
+{
+    [self refreshToken:^(BOOL ok) {
     }];
-    [operation start];
 }
 
 #pragma mark deck list
@@ -125,23 +170,21 @@ static NRDB* instance;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [SVProgressHUD showWithStatus:l10n(@"Loading decks..")];
     self.decklistCompletionBlock = completionBlock;
-    self.loginCompletionBlock = nil;
     [self performSelector:@selector(getDecks) withObject:nil afterDelay:0.01];
 }
 
 -(void) getDecks
 {
-    NSString* decksUrl = @"http://netrunnerdb.com/api/decks";
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSHTTPCookie* cookie = [self nrdbCookie:@"REMEMBERME" value:[settings objectForKey:NRDB_REMEMBERME]];
-    NSDictionary *cookies = [NSHTTPCookie requestHeaderFieldsWithCookies:@[ cookie ]];
+    NSString* decksUrl = @"http://netrunnerdb.com/api_oauth2/decks";
     
     NSError* error;
+    NSDictionary* params = @{
+        @"access_token" : [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN]
+    };
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
                                                                                  URLString:decksUrl
-                                                                                parameters:nil
+                                                                                parameters:params
                                                                                      error:&error];
-    [request setAllHTTPHeaderFields:cookies];
     // bypass cache!
     request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     
@@ -151,16 +194,16 @@ static NRDB* instance;
     @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         @strongify(self);
-        [self finished:YES decks:responseObject];
+        [self finishedDecklist:YES decks:responseObject];
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         @strongify(self);
-        [self finished:NO decks:nil];
+        [self finishedDecklist:NO decks:nil];
     }];
     [operation start];
 }
 
--(void) finished:(BOOL)ok decks:(NSArray*)decks
+-(void) finishedDecklist:(BOOL)ok decks:(NSArray*)decks
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];
@@ -168,19 +211,12 @@ static NRDB* instance;
     if (!ok)
     {
         [SDCAlertView alertWithTitle:nil
-                             message:l10n(@"Login at netrunnerdb.com failed")
+                             message:l10n(@"Loading decks from NetrunnerDB.com failed")
                              buttons:@[l10n(@"OK")]];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:NRDB_REMEMBERME];
+        
     }
     
-    if (self.decklistCompletionBlock)
-    {
-        self.decklistCompletionBlock(decks);
-    }
-    else if (self.loginCompletionBlock)
-    {
-        self.loginCompletionBlock(ok);
-    }
+    self.decklistCompletionBlock(decks);
 }
 
 #pragma mark save deck
@@ -195,34 +231,28 @@ static NRDB* instance;
 
 -(void) saveDeck:(Deck *)deck
 {
-    NSString* deckId = nil;
-    self.fetchListAfterSave = YES;
-    if (deck.netrunnerDbId.length > 0)
-    {
-        deckId = deck.netrunnerDbId;
-        self.fetchListAfterSave = NO;
-    }
-    
-    NSMutableDictionary* json = [NSMutableDictionary dictionary];
+    NSMutableArray* json = [NSMutableArray array];
     if (deck.identity)
     {
-        json[deck.identity.code] = @1;
+        [json addObject:@{ @"card_code": deck.identity.code, @"qty": @1 }];
     }
     for (CardCounter* cc in deck.cards)
     {
-        json[cc.card.code] = @(cc.count);
+        [json addObject:@{ @"card_code": cc.card.code, @"qty": @(cc.count) }];
     }
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:json options:NSJSONWritingPrettyPrinted error:nil];
     NSString* jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    NSString* saveUrl = @"http://netrunnerdb.com/en/deck/save";
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSHTTPCookie* cookie = [self nrdbCookie:@"REMEMBERME" value:[settings objectForKey:NRDB_REMEMBERME]];
-    NSDictionary *cookies = [NSHTTPCookie requestHeaderFieldsWithCookies:@[ cookie ]];
+
+    NSString* deckId = @"0";
+    if (deck.netrunnerDbId)
+    {
+        deckId = deck.netrunnerDbId;
+    }
+    NSString* saveUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/save_deck/%@", deckId];
     
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
     parameters[@"content"] = jsonStr;
-    parameters[@"copy"] = @"0";
     if (deck.name)
     {
         parameters[@"name"] = deck.name;
@@ -237,60 +267,35 @@ static NRDB* instance;
     }
     
     NSError* error;
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST"
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
                                                                                  URLString:saveUrl
                                                                                 parameters:parameters
                                                                                      error:&error];
     
-    [request setAllHTTPHeaderFields:cookies];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
     
     @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         @strongify(self);
-        [self finishedSave:YES];
+        // NSLog(@"save ok: %@", responseObject);
+        NSString* deckId = responseObject[@"message"][@"id"];
+        [self finishedSave:YES deckId:deckId];
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         @strongify(self);
-        [self finishedSave:NO];
+        // NSLog(@"save failed: %@", operation);
+        [self finishedSave:NO deckId:nil];
     }];
     [operation start];
 }
 
--(void) finishedSave:(BOOL)ok
+-(void) finishedSave:(BOOL)ok deckId:(NSString*)deckId
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];
     
-    if (ok && self.fetchListAfterSave)
-    {
-        @weakify(self);
-        self.decklistCompletionBlock = ^void(NSArray* decks) {
-            @strongify(self);
-            NSDictionary* deck = [decks firstObject];
-            NSString* deckId = deck[@"id"];
-            // NSLog(@"new deck id %@", deckId);
-            self.saveCompletionBlock(ok, deckId);
-        };
-        [self getDecks];
-    }
-    else
-    {
-        self.saveCompletionBlock(ok, nil);
-    }
-}
-
-#pragma mark cookies
-
--(NSHTTPCookie*) nrdbCookie:(NSString*)name value:(NSString*)value
-{
-    NSDictionary *properties = @{
-                                 NSHTTPCookiePath: @"/",
-                                 NSHTTPCookieDomain: @"netrunnerdb.com",
-                                 NSHTTPCookieName: name,
-                                 NSHTTPCookieValue: value,
-                                 };
-    return [NSHTTPCookie cookieWithProperties:properties];
+    self.saveCompletionBlock(ok, deckId);
 }
 
 @end

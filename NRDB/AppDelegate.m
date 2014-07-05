@@ -17,6 +17,8 @@
 #import "DeckImport.h"
 #import "Card.h"
 #import "CardImageViewPopover.h"
+#import "NRDBAuthPopupViewController.h"
+#import "NRDB.h"
 
 NSString* const kANY = @"Any";
 
@@ -52,6 +54,7 @@ NSString* const kANY = @"Any";
     
     [DeckImport checkClipboardForDeck];
     [CardImageViewPopover monitorKeyboard];
+    // [[NRDB sharedInstance] refreshAuthentication];
     
     return YES;
 }
@@ -70,6 +73,7 @@ NSString* const kANY = @"Any";
         LANGUAGE: @"en",
         NUM_CORES: @(3),
         
+        USE_NRDB: @(NO),
         NRDB_AUTOSAVE: @(NO),
         
         SHOW_ALL_FILTERS: @(YES),
@@ -110,17 +114,26 @@ NSString* const kANY = @"Any";
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-	DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
-	if (account)
+    NSString* scheme = [url scheme];
+    
+    if ([scheme isEqualToString:@"netdeck"])
     {
-        [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
-        
-        TF_CHECKPOINT(@"dropbox linked");
-        DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
-        [DBFilesystem setSharedFilesystem:fileSystem];
-	}
-    [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
-	
+        [NRDBAuthPopupViewController handleOpenURL:url];
+    }
+    else
+    {
+        DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
+        if (account)
+        {
+            [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
+            
+            TF_CHECKPOINT(@"dropbox linked");
+            DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
+            [DBFilesystem setSharedFilesystem:fileSystem];
+        }
+        [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
+    }
+    
 	return YES;
 }
 

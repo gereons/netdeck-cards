@@ -21,7 +21,7 @@
 #import "ImageCache.h"
 #import "SettingsKeys.h"
 #import "Notifications.h"
-#import "NRDB.h"
+#import "NRDBAuthPopupViewController.h"
 
 @interface SettingsViewController ()
 
@@ -64,15 +64,6 @@
     }
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    if (![settings objectForKey:NRDB_REMEMBERME])
-    {
-        [hiddenKeys addObject:NRDB_LOGOUT];
-    }
-    else
-    {
-        [hiddenKeys addObject:NRDB_LOGIN];
-    }
-    
     if (![settings boolForKey:USE_DROPBOX])
     {
         [hiddenKeys addObject:AUTO_SAVE_DB];
@@ -91,6 +82,8 @@
 
 - (void) settingsChanged:(NSNotification*)notification
 {
+    UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    
     if ([notification.object isEqualToString:USE_DROPBOX])
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:USE_DROPBOX] boolValue];
@@ -119,6 +112,27 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_CHANGED object:self];
         [self refresh];
+    }
+    else if ([notification.object isEqualToString:USE_NRDB])
+    {
+        BOOL useNrdb = [[notification.userInfo objectForKey:USE_NRDB] boolValue];
+        
+        if (useNrdb)
+        {
+            TF_CHECKPOINT(@"netrunnerdb.com login");
+            if ([AFNetworkReachabilityManager sharedManager].reachable)
+            {
+                [NRDBAuthPopupViewController showInViewController:topMost];
+            }
+            else
+            {
+                [self showOfflineAlert];
+            }
+        }
+        else
+        {
+            // [NRDB logout];
+        }
     }
 }
 
@@ -180,38 +194,6 @@
             }
         };
     }
-    else if ([specifier.key isEqualToString:NRDB_LOGOUT])
-    {
-        TF_CHECKPOINT(@"netrunnerdb.com logout");
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:NRDB_REMEMBERME];
-        [self refresh];
-    }
-    else if ([specifier.key isEqualToString:NRDB_LOGIN])
-    {
-        TF_CHECKPOINT(@"netrunnerdb.com login");
-        if ([AFNetworkReachabilityManager sharedManager].reachable)
-        {
-            [self netrunnerDbLogin];
-        }
-        else
-        {
-            [self showOfflineAlert];
-        }
-    }
-}
-
--(void) netrunnerDbLogin
-{
-    NRDB* nrdb = [NRDB sharedInstance];
-    
-    @weakify(self);
-    [nrdb login:^(BOOL ok) {
-        @strongify(self);
-        if (ok)
-        {
-            [self refresh];
-        }
-    }];
 }
 
 -(void) showOfflineAlert
