@@ -17,6 +17,8 @@
 #import "DeckImport.h"
 #import "Card.h"
 #import "CardImageViewPopover.h"
+#import "NRDBAuthPopupViewController.h"
+#import "NRDB.h"
 
 NSString* const kANY = @"Any";
 
@@ -52,6 +54,7 @@ NSString* const kANY = @"Any";
     
     [DeckImport checkClipboardForDeck];
     [CardImageViewPopover monitorKeyboard];
+    [[NRDB sharedInstance] refreshAuthentication];
     
     return YES;
 }
@@ -64,12 +67,14 @@ NSString* const kANY = @"Any";
         LAST_DOWNLOAD: l10n(@"never"),
         NEXT_DOWNLOAD: l10n(@"never"),
         USE_DROPBOX: @(NO),
-        USE_EVERNOTE: @(NO),
         AUTO_SAVE: @(NO),
         AUTO_SAVE_DB: @(NO),
         DECK_VIEW_STYLE: @(1),
         LANGUAGE: @"en",
         NUM_CORES: @(3),
+        
+        USE_NRDB: @(NO),
+        NRDB_AUTOSAVE: @(NO),
         
         SHOW_ALL_FILTERS: @(YES),
         DECK_FILTER_STATE: @(NRDeckStateNone),
@@ -83,6 +88,7 @@ NSString* const kANY = @"Any";
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [[NRDB sharedInstance] stopRefresh];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -95,6 +101,7 @@ NSString* const kANY = @"Any";
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     [DeckImport checkClipboardForDeck];
+    [[NRDB sharedInstance] refreshAuthentication];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -109,17 +116,26 @@ NSString* const kANY = @"Any";
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-	DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
-	if (account)
+    NSString* scheme = [url scheme];
+    
+    if ([scheme isEqualToString:@"netdeck"])
     {
-        [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
-        
-        TF_CHECKPOINT(@"dropbox linked");
-        DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
-        [DBFilesystem setSharedFilesystem:fileSystem];
-	}
-    [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
-	
+        [NRDBAuthPopupViewController handleOpenURL:url];
+    }
+    else
+    {
+        DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
+        if (account)
+        {
+            [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
+            
+            TF_CHECKPOINT(@"dropbox linked");
+            DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
+            [DBFilesystem setSharedFilesystem:fileSystem];
+        }
+        [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
+    }
+    
 	return YES;
 }
 

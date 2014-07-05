@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+        <dict>
+			<key>Title</key>
+			<string>Account</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Connect to NetrunnerDB.com Account</string>
+			<key>Key</key>
+			<string>useNrdb</string>
+		</dict>
+        <dict>
+			<key>Title</key>
+			<string>Saving</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+        <dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Manually saving also uploads to NetrunnerDB.com</string>
+			<key>Key</key>
+			<string>nrdbAutoSave</string>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>NetrunnerDBAccount</string>
+</dict>
+</plist>

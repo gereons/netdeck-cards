@@ -88,7 +88,7 @@
 "Image %d of %d" = "Imágen %d de %d";
 "Unable to download cards at this time. Please try again later." = "Imposible descargar las cartas en este momento. Por favor, vuelva a intentarlo más tarde.";
 "%d of %lu images could not be downloaded." = "%d de %lu imágenes no han podido descargarse.";
-"Clear Cache? You will need to re-download all data from netrunnerdb.com." = "¿Desea limpiar la caché? Tendrá que volver a descargar todos los datos desde netrunnerdb.com.";
+"Clear Cache? You will need to re-download all data from NetrunnerDB.com." = "¿Desea limpiar la caché? Tendrá que volver a descargar todos los datos desde NetrunnerDB.com.";
 "An Internet connection is required." = "Se necesita conexión a Internet.";
 
 // identity selection
@@ -167,7 +167,7 @@
 
 // startup alert
 "No Card Data" = "No hay datos de cartas";
-"To use this app, you must first download card data from netrunnerdb.com" = "Para usar esta aplicación debe primero descargar los datos de las cartas desde netrunnerdb.com";
+"To use this app, you must first download card data from NetrunnerDB.com" = "Para usar esta aplicación debe primero descargar los datos de las cartas desde NetrunnerDB.com";
 "Not now" = "Ahora no";
 "Download" = "Descargar";
 
@@ -187,7 +187,7 @@
 "%@ (%d Cards)" = "%@ (%d Cartas)";
 "Deck imported" = "Mazo importado";
 "Detected a deck list in your clipboard. Import this deck?" = "Se ha detectado un mazo en su portapapeles. ¿Desea importar este mazo?";
-"Detected a netrunnerdb.com deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la netrunnerb.com URL de un mazo en su portapapeles. ¿Desea descargar e importar este mazo?";
+"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la NetrunnerDB.com URL de un mazo en su portapapeles. ¿Desea descargar e importar este mazo?";
 "Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la meteor URL de un mazo en su portapapeles. ¿Desea descargar e importar este mazo?";
 "No Decks found" = "No se ha encontrado ningún mazo";
 "Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Copiar mazos con formato OCTGN (.o8d) en la carpeta Apps/Net Deck de su Dropbox para importarlos a esta aplicación.";

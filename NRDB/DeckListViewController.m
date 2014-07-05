@@ -9,6 +9,7 @@
 #import <SVProgressHUD.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
+#import <AFNetworking.h>
 
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
@@ -35,6 +36,7 @@
 #import "Notifications.h"
 #import "SettingsKeys.h"
 #import "DeckState.h"
+#import "NRDB.h"
 
 @interface DeckListViewController ()
 
@@ -52,6 +54,8 @@
 @property NSString* filename;
 @property BOOL autoSave;
 @property BOOL autoSaveDropbox;
+@property BOOL useNetrunnerdb;
+@property BOOL autoSaveNRDB;
 
 @property CGFloat scale;
 @property BOOL largeCells;
@@ -88,6 +92,10 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [super viewDidLoad];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    self.useNetrunnerdb = [settings boolForKey:USE_NRDB];
+    self.autoSaveNRDB = self.useNetrunnerdb && [settings boolForKey:NRDB_AUTOSAVE];
+    
     CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
     
@@ -184,6 +192,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     // set up bottom toolbar
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
+    self.nrdbButton.enabled = self.useNetrunnerdb;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
@@ -273,6 +282,11 @@ enum { POPUP_EXPORT, POPUP_STATE };
     }
     [DeckManager saveDeck:self.deck];
     
+    if (sender != nil && self.autoSaveNRDB)
+    {
+        [self saveDeckToNetrunnerdb];
+    }
+    
     self.saveButton.enabled = NO;
     
     if (self.autoSaveDropbox)
@@ -292,6 +306,64 @@ enum { POPUP_EXPORT, POPUP_STATE };
 -(void) drawSimulatorClicked:(id)sender
 {
     [DrawSimulatorViewController showForDeck:self.deck inViewController:self];
+}
+
+-(void) nrdbButtonClicked:(id)sender
+{
+    if (self.deck.netrunnerDbId.length == 0)
+    {
+        NSString* msg = l10n(@"This deck is not (yet) connected to a deck on NetrunnerDB.com");
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
+                                                   message:msg
+                                                   buttons:@[ l10n(@"Save"), l10n(@"OK") ]];
+        
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
+            if (buttonIndex == 0)
+            {
+                [self saveDeckToNetrunnerdb];
+            }
+        };
+    }
+    else
+    {
+        NSString* msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on NetrunnerDB.com"), self.deck.netrunnerDbId ];
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
+                                                   message:msg
+                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Disconnect"), l10n(@"Save") ]];
+        
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
+            if (buttonIndex == 1)
+            {
+                self.deck.netrunnerDbId = nil;
+                self.deckChanged = YES;
+                if (self.autoSave)
+                {
+                    [self saveDeck:nil];
+                }
+                [self refresh];
+            }
+            if (buttonIndex == 2)
+            {
+                [self saveDeckToNetrunnerdb];
+            }
+        };
+    }
+}
+
+-(void) saveDeckToNetrunnerdb
+{
+    [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
+        if (!ok)
+        {
+            [SDCAlertView alertWithTitle:nil message:l10n(@"Saving the deck at NetrunnerDB.com failed") buttons:@[l10n(@"OK")]];
+        }
+        if (ok && deckId)
+        {
+            self.deck.netrunnerDbId = deckId;
+            [DeckManager saveDeck:self.deck];
+            [DeckManager resetModificationDate:self.deck];
+        }
+    }];
 }
 
 -(void) editNotes:(id)sender
@@ -470,7 +542,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
                                                    delegate:self
                                           cancelButtonTitle:@""
                                      destructiveButtonTitle:nil
-                                          otherButtonTitles:l10n(@"Dropbox: OCTGN"),
+                                          otherButtonTitles:
+                                                            l10n(@"Dropbox: OCTGN"),
                                                             l10n(@"Dropbox: BBCode"),
                                                             l10n(@"Dropbox: Markdown"),
                                                             l10n(@"Dropbox: Plain Text"),

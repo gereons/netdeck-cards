@@ -22,6 +22,7 @@
 @property NSString* name;
 @property NRRole role;
 @property NRDeckState state;
+@property NSString* netrunnerDbId;
 
 @property (readonly) int size;
 @property (readonly) int influence;

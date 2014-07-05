@@ -10,6 +10,7 @@
 #import <Dropbox/Dropbox.h>
 #import <AFNetworking.h>
 #import <SDCAlertView.h>
+#import <EXTScope.h>
 
 #import "SettingsViewController.h"
 
@@ -20,6 +21,7 @@
 #import "ImageCache.h"
 #import "SettingsKeys.h"
 #import "Notifications.h"
+#import "NRDBAuthPopupViewController.h"
 
 @interface SettingsViewController ()
 
@@ -61,8 +63,8 @@
         [hiddenKeys addObjectsFromArray:@[ CARD_SETS, SET_SELECTION ]];
     }
     
-    [hiddenKeys addObject:USE_EVERNOTE];
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    if (![settings boolForKey:USE_DROPBOX])
     {
         [hiddenKeys addObject:AUTO_SAVE_DB];
     }
@@ -80,6 +82,8 @@
 
 - (void) settingsChanged:(NSNotification*)notification
 {
+    UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    
     if ([notification.object isEqualToString:USE_DROPBOX])
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:USE_DROPBOX] boolValue];
@@ -108,6 +112,32 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_CHANGED object:self];
         [self refresh];
+    }
+    else if ([notification.object isEqualToString:USE_NRDB])
+    {
+        BOOL useNrdb = [[notification.userInfo objectForKey:USE_NRDB] boolValue];
+        
+        if (useNrdb)
+        {
+            TF_CHECKPOINT(@"netrunnerdb.com login");
+            if ([AFNetworkReachabilityManager sharedManager].reachable)
+            {
+                [NRDBAuthPopupViewController showInViewController:topMost];
+            }
+            else
+            {
+                [self showOfflineAlert];
+            }
+        }
+        else
+        {
+            TF_CHECKPOINT(@"netrunnerdb.com logout");
+            NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+            [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
+            [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
+            [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
+            [settings removeObjectForKey:NRDB_TOKEN_TTL];
+        }
     }
 }
 
@@ -148,14 +178,13 @@
         {
             [self showOfflineAlert];
         }
-
     }
     else if ([specifier.key isEqualToString:CLEAR_CACHE])
     {
         TF_CHECKPOINT(@"clear cache");
         
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
-                                                   message:l10n(@"Clear Cache? You will need to re-download all data from netrunnerdb.com.")
+                                                   message:l10n(@"Clear Cache? You will need to re-download all data from NetrunnerDB.com.")
                                                    buttons:@[l10n(@"No"), l10n(@"Yes") ]];
         alert.didDismissHandler = ^void(NSInteger buttonIndex) {
             if (buttonIndex == 1) // yes, clear

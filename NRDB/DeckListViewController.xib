@@ -12,6 +12,7 @@
                 <outlet property="drawButton" destination="ptD-Cs-H63" id="BYf-G7-KdS"/>
                 <outlet property="footerLabel" destination="Ocu-JS-mPn" id="o9l-Dc-bRh"/>
                 <outlet property="lastSetLabel" destination="Gyb-FN-lQv" id="BSf-TL-qw8"/>
+                <outlet property="nrdbButton" destination="7Dy-2f-fza" id="6iT-eL-Jac"/>
                 <outlet property="tableView" destination="TkI-yZ-OZS" id="gri-lb-5ag"/>
                 <outlet property="toolBar" destination="3wr-bR-riV" id="0Xn-Hg-HpA"/>
                 <outlet property="view" destination="2" id="7Xi-zK-kzL"/>
@@ -73,9 +74,21 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="pFX-bV-7AA"/>
+                        <barButtonItem style="plain" id="3ON-MN-GzU">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7Dy-2f-fza" userLabel="Button - NRDB">
+                                <rect key="frame" x="531" y="11" width="16" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="netrunnerdb_com.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="nrdbButtonClicked:" destination="-1" eventType="touchUpInside" id="nJ6-64-JsZ"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem title="Item" style="plain" id="yfE-uo-jcW">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ptD-Cs-H63">
-                                <rect key="frame" x="546" y="6" width="73" height="33"/>
+                                <rect key="frame" x="557" y="6" width="60" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Draw">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -87,7 +100,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" id="REx-R3-U7x">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZM9-wm-D2z">
-                                <rect key="frame" x="629" y="6" width="58" height="33"/>
+                                <rect key="frame" x="627" y="6" width="60" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Analysis">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -100,7 +113,7 @@
                     </items>
                 </toolbar>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ocu-JS-mPn">
-                    <rect key="frame" x="11" y="735" width="544" height="21"/>
+                    <rect key="frame" x="11" y="735" width="488" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -114,4 +127,7 @@
             <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <resources>
+        <image name="netrunnerdb_com.png" width="16" height="16"/>
+    </resources>
 </document>

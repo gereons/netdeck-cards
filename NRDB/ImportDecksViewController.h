@@ -13,4 +13,6 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UISearchBar* searchBar;
 
+@property NRImportSource source;
+
 @end

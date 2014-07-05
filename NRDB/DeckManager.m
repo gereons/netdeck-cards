@@ -14,7 +14,7 @@
 
 @implementation DeckManager
 
-// save a new Deck, return the new filename
+// save deck
 +(void) saveDeck:(Deck*)deck
 {
     if (deck.filename == nil)

@@ -70,7 +70,10 @@ static NSArray* draftIds;
 -(NSArray*) cards
 {
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     return self->_cards;
 }
@@ -78,7 +81,10 @@ static NSArray* draftIds;
 -(NSArray*) allCards
 {
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     NSMutableArray* arr = [NSMutableArray array];
     if (self.identityCc)
@@ -198,7 +204,10 @@ static NSArray* draftIds;
 -(int) size
 {
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     int sz = 0;
     for (CardCounter* cc in _cards)
@@ -211,7 +220,10 @@ static NSArray* draftIds;
 -(int) agendaPoints
 {
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     int ap = 0;
     
@@ -228,7 +240,10 @@ static NSArray* draftIds;
 -(int) influence
 {
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     int inf = 0;
     BOOL isProfessor = [self.identity.code isEqualToString:THE_PROFESSOR];
@@ -253,7 +268,10 @@ static NSArray* draftIds;
 -(NSUInteger) influenceFor:(CardCounter *)cc
 {
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     if (self.identity.faction == cc.card.faction || cc.card.influence == -1)
     {
@@ -273,7 +291,10 @@ static NSArray* draftIds;
 {
     NSAssert(card.type != NRCardTypeIdentity, @"can't add identity");
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     int index = [self indexOfCard:card];
     if (index == -1)
@@ -303,7 +324,10 @@ static NSArray* draftIds;
 -(void) removeCard:(Card *)card
 {
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     [self removeCard:card copies:-1];
 }
@@ -311,7 +335,10 @@ static NSArray* draftIds;
 -(void) removeCard:(Card *)card copies:(int)copies
 {
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     NSAssert(card.type != NRCardTypeIdentity, @"can't remove identity");
     int index = [self indexOfCard:card];
@@ -391,7 +418,10 @@ static NSArray* draftIds;
 -(TableData*) dataForTableView
 {
 #if DEBUG
-    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    if (self.idCode)
+    {
+        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+    }
 #endif
     NSMutableArray* sections = [NSMutableArray array];
     NSMutableArray* cards = [NSMutableArray array];
@@ -459,6 +489,7 @@ static NSArray* draftIds;
     if ((self = [super init]))
     {
         _cards = [decoder decodeObjectForKey:@"cards"];
+        _netrunnerDbId = [decoder decodeObjectForKey:@"netrunnerDbId"];
         _name = [decoder decodeObjectForKey:@"name"];
         _role = [decoder decodeIntForKey:@"role"];
         _state = [decoder decodeIntForKey:@"state"];
@@ -482,6 +513,7 @@ static NSArray* draftIds;
 -(void) encodeWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:self.cards forKey:@"cards"];
+    [coder encodeObject:self.netrunnerDbId forKey:@"netrunnerDbId"];
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeInt:self.role forKey:@"role"];
     [coder encodeInt:self.state forKey:@"state"];

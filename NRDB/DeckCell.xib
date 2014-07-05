@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Deck Name" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000027" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OL3-gy-8pE">
-                        <rect key="frame" x="50" y="2" width="401" height="21"/>
+                        <rect key="frame" x="50" y="2" width="389" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -45,6 +45,10 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="netrunnerdb_com.png" translatesAutoresizingMaskIntoConstraints="NO" id="URW-pe-QiY">
+                        <rect key="frame" x="447" y="5" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -52,8 +56,12 @@
                 <outlet property="identityLabel" destination="YaS-wv-3DE" id="chl-ah-OC3"/>
                 <outlet property="infoButton" destination="uTJ-nz-Wa5" id="KJb-fc-HIk"/>
                 <outlet property="nameLabel" destination="OL3-gy-8pE" id="WRy-RJ-QJA"/>
+                <outlet property="nrdbIcon" destination="URW-pe-QiY" id="i04-gd-Jhz"/>
                 <outlet property="summaryLabel" destination="DDE-Ef-nig" id="hk2-0m-hOy"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="netrunnerdb_com.png" width="16" height="16"/>
+    </resources>
 </document>

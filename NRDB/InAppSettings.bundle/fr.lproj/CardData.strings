@@ -1,0 +1,20 @@
+/* CardData.strings - fr */
+
+"Card Data" = "Base de données des cartes";
+
+"Language" = "Langage";
+"English" = "Anglais";
+"German" = "Allemand";
+"Spanish" = "Espagnol";
+"French" = "Français";
+"Italian" = "Italien";
+"Polish" = "Polonais";
+
+"Last Downloaded on" = "Dernier téléchargement";
+"Next Download on" = "Prochain téléchargement";
+"Update Card Data Now" = "Mettre à jour les données";
+"Update Card Images Now" = "Mettre à jour les images";
+"Download missing Card Images Now" = "Télécharger images manquant maintenant";
+"Clear All Cached Data" = "Supprimer tout les caches";
+
+"LanguageFooterText" = "Le support des langues autres que l'anglais sur NetrunnerDB.com n'est pas complet à 100%.\nSi vous modifiez cette préférence, une mise à jour de la base de donnée des cartes est préférable.";
