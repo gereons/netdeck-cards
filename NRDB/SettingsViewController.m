@@ -17,7 +17,7 @@
 #import "IASKAppSettingsViewController.h"
 #import "IASKSettingsReader.h"
 #import "DataDownload.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "ImageCache.h"
 #import "SettingsKeys.h"
 #import "Notifications.h"
@@ -58,7 +58,7 @@
 -(void) refresh
 {
     NSMutableSet* hiddenKeys = [NSMutableSet set];
-    if (![CardData cardsAvailable])
+    if (![CardManager cardsAvailable])
     {
         [hiddenKeys addObjectsFromArray:@[ CARD_SETS, SET_SELECTION ]];
     }
@@ -171,7 +171,7 @@
             if (buttonIndex == 1) // yes, clear
             {
                 [[ImageCache sharedInstance] clearCache];
-                [CardData removeFile];
+                [CardManager removeFiles];
                 [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:LAST_DOWNLOAD];
                 [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:NEXT_DOWNLOAD];
                 [self refresh];

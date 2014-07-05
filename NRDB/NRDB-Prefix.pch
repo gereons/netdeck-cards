@@ -6,10 +6,6 @@
 
 #import <Availability.h>
 
-#if ADHOC
-#import <TestFlight.h>
-#endif
-
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
@@ -20,6 +16,7 @@
 #endif
 
 #if ADHOC
+#import <TestFlight.h>
 #define TF_CHECKPOINT(chk)  [TestFlight passCheckpoint:chk]
 #else
 #define TF_CHECKPOINT(chk)  /* nop */

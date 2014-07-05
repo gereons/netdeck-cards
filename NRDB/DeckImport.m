@@ -12,7 +12,7 @@
 
 #import "DeckImport.h"
 #import "Deck.h"
-#import "Card.h"
+#import "CardManager.h"
 #import "SettingsKeys.h"
 #import "Notifications.h"
 #import "OctgnImport.h"
@@ -201,7 +201,7 @@ static DeckImport* instance;
 
 -(Deck*) checkForTextDeck:(NSArray*)lines
 {
-    NSArray* cards = [Card allCards];
+    NSArray* cards = [CardManager allCards];
     NSRegularExpression *regex1 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9])x" options:0 error:nil]; // start with "1x ..."
     NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@" x([0-9])" options:0 error:nil]; // end with "... x3"
     NSRegularExpression *regex3 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9]) " options:0 error:nil]; // start with "1 ..."
@@ -309,6 +309,7 @@ static DeckImport* instance;
 
 -(void) doDownloadDeckFromNetrunnerDb:(NSString*)deckId
 {
+    TF_CHECKPOINT(@"deck d/l nrdb");
     NSString* deckUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api/decklist/%@", deckId];
     BOOL __block ok = NO;
     self.downloadStopped = NO;
@@ -337,6 +338,7 @@ static DeckImport* instance;
 
 -(void) doDownloadDeckFromMeteor:(NSString*)deckId
 {
+    TF_CHECKPOINT(@"deck d/l meteor");
     NSString* deckUrl = [NSString stringWithFormat:@"http://netrunner.meteor.com/deckexport/octgn/%@/", deckId];
     BOOL __block ok = NO;
     self.downloadStopped = NO;
@@ -394,6 +396,15 @@ static DeckImport* instance;
     Deck* deck = [Deck new];
     
     deck.name = [decklist objectForKey:@"name"];
+    
+    NSString* notes = [decklist objectForKey:@"description"];
+    if (notes.length > 0)
+    {
+        notes = [notes stringByReplacingOccurrencesOfString:@"<p>" withString:@""];
+        notes = [notes stringByReplacingOccurrencesOfString:@"</p>" withString:@""];
+        deck.notes = notes;
+    }
+    
     NSDictionary* cards = [decklist objectForKey:@"cards"];
     for (NSString* code in [cards allKeys])
     {

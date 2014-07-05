@@ -26,20 +26,16 @@
     NSError* error;
     GRMustacheTemplate* template = [GRMustacheTemplate templateFromResource:@"OCTGN" bundle:nil error:&error];
     
-    NSDictionary* objects = @{
-        @"identity": deck.identity,
-        @"cards": deck.cards
-    };
+    NSMutableDictionary* objects = [NSMutableDictionary dictionary];
+    objects[@"identity"] = deck.identity;
+    objects[@"cards"] = deck.cards;
+    if (deck.notes)
+    {
+        objects[@"notes"] = deck.notes;
+    }
     
     NSString* octgnName = [NSString stringWithFormat:@"%@.o8d", deck.name];
     NSString* content = [template renderObject:objects error:&error];
-    
-    if (deck.notes.length > 0)
-    {
-        NSString* notesName = [NSString stringWithFormat:@"%@_notes.txt", deck.name];
-        
-        [DeckExport writeToDropbox:deck.notes fileName:notesName deckType:nil autoSave:YES];
-    }
     
     [DeckExport writeToDropbox:content fileName:octgnName deckType:l10n(@"OCTGN Deck") autoSave:autoSave];
 }

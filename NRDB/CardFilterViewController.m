@@ -11,7 +11,7 @@
 #import "Deck.h"
 #import "CardCounter.h"
 #import "CardList.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "CardType.h"
 #import "CardSets.h"
 #import "Faction.h"
@@ -43,6 +43,9 @@
 @end
 
 @implementation CardFilterViewController
+
+#define LARGE_CELL_HEIGHT   140
+#define SMALL_CELL_HEIGHT   107
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 enum { VIEW_LIST, VIEW_IMG_2, VIEW_IMG_3 };
@@ -135,7 +138,7 @@ static NSInteger viewMode = VIEW_LIST;
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
-    layout.headerReferenceSize = CGSizeMake(320, 33);
+    layout.headerReferenceSize = CGSizeMake(320, 22);
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
     layout.minimumInteritemSpacing = 3;
     layout.minimumLineSpacing = 3;
@@ -226,11 +229,11 @@ static NSInteger viewMode = VIEW_LIST;
     self.factionButton.tag = FACTION_BUTTON;
     self.subtypeButton.tag = SUBTYPE_BUTTON;
     
-    self.costSlider.maximumValue = 1+(self.role == NRRoleRunner ? [CardData maxRunnerCost] : [CardData maxCorpCost]);
-    self.muSlider.maximumValue = 1+[CardData maxMU];
-    self.strengthSlider.maximumValue = 1+[CardData maxStrength];
-    self.influenceSlider.maximumValue = 1+[CardData maxInfluence];
-    self.apSlider.maximumValue = [CardData maxAgendaPoints]; // NB: no +1 here!
+    self.costSlider.maximumValue = 1+(self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost]);
+    self.muSlider.maximumValue = 1+[CardManager maxMU];
+    self.strengthSlider.maximumValue = 1+[CardManager maxStrength];
+    self.influenceSlider.maximumValue = 1+[CardManager maxInfluence];
+    self.apSlider.maximumValue = [CardManager maxAgendaPoints]; // NB: no +1 here!
     
     [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
     [self.muSlider setThumbImage:[UIImage imageNamed:@"mem_slider"] forState:UIControlStateNormal];
@@ -328,8 +331,6 @@ static NSInteger viewMode = VIEW_LIST;
         return;
     }
     
-    TF_CHECKPOINT(@"filter text entry");
-    
     CGFloat topY = self.searchSeparator.frame.origin.y;
     
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -367,6 +368,8 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) moreLessClicked:(id)sender
 {
+    TF_CHECKPOINT(@"more/less toggle");
+    
     showAllFilters = !showAllFilters;
     
     if (!showAllFilters)
@@ -410,6 +413,8 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) viewModeChanged:(UISegmentedControl*)sender
 {
+    TF_CHECKPOINT(@"view mode toggle");
+    
     NSIndexPath* scrollToPath;
     
     if (viewMode != VIEW_LIST)
@@ -423,7 +428,8 @@ static NSInteger viewMode = VIEW_LIST;
         // find the first cell that's completely visible
         for (NSIndexPath* indexPath in sortedIndexPaths)
         {
-            CGRect cellRect = [self.collectionView cellForItemAtIndexPath:indexPath].frame;
+            UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+            CGRect cellRect = cell.frame;
             cellRect = [self.collectionView convertRect:cellRect toView:self.collectionView.superview];
             BOOL completelyVisible = CGRectContainsRect(self.collectionView.frame, cellRect);
             if (completelyVisible)
@@ -463,7 +469,21 @@ static NSInteger viewMode = VIEW_LIST;
     {
         if (!self.collectionView.hidden)
         {
-            [self.collectionView scrollToItemAtIndexPath:scrollToPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+            // doesn't work, card images are below the sticky header
+            // [self.collectionView scrollToItemAtIndexPath:scrollToPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+            
+            // calculate scroll offset manually
+            CGFloat y;
+            if (viewMode == VIEW_IMG_2)
+            {
+                y = (scrollToPath.row / 2) * (LARGE_CELL_HEIGHT + 3);
+            }
+            else
+            {
+                y = (scrollToPath.row / 3) * (SMALL_CELL_HEIGHT + 3);
+                
+            }
+            [self.collectionView setContentOffset:CGPointMake(0, y) animated:NO];
         }
         if (!self.tableView.hidden)
         {
@@ -474,7 +494,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) typeClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter type");
     TableData* data = [[TableData alloc] initWithValues:[CardType typesForRole:self.role]];
     id selected = [self.selectedValues objectForKey:@(TYPE_BUTTON)];
     
@@ -483,14 +502,12 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) setClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter set");
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
     [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allSetsForTableview] type:@"Set" selected:selected];
 }
 
 -(void) subtypeClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter subtype");
     TableData* data;
     if (self.selectedTypes)
     {
@@ -507,7 +524,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) factionClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter faction");
     TableData* data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role]];
     id selected = [self.selectedValues objectForKey:@(FACTION_BUTTON)];
     
@@ -583,7 +599,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) strengthValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter strength");
     int value = round(sender.value);
     // NSLog(@"str: %f %d", sender.value, value);
     sender.value = value--;
@@ -593,7 +608,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) muValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter mu");
     int value = round(sender.value);
     // NSLog(@"mu: %f %d", sender.value, value);
     sender.value = value--;
@@ -603,7 +617,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) costValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter cost");
     int value = round(sender.value);
     // NSLog(@"cost: %f %d", sender.value, value);
     sender.value = value--;
@@ -613,7 +626,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) influenceValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter influence");
     int value = round(sender.value);
     // NSLog(@"inf: %f %d", sender.value, value);
     sender.value = value--;
@@ -623,7 +635,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) apValueChanged:(UISlider*)sender
 {
-    TF_CHECKPOINT(@"filter ap");
     int value = round(sender.value);
     // NSLog(@"ap: %f %d", sender.value, value);
     if (value == 0)
@@ -639,8 +650,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) scopeClicked:(UIButton*)sender
 {
-    TF_CHECKPOINT(@"filter scope");
-
     UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil
                                                        delegate:self
                                               cancelButtonTitle:@""
@@ -851,9 +860,14 @@ static NSInteger viewMode = VIEW_LIST;
 
 #pragma mark - Table View
 
+- (void) tableView:(UITableView *)tableView willDisplayHeaderView:(UITableViewHeaderFooterView *)view forSection:(NSInteger)section
+{
+    view.contentView.backgroundColor = UIColorFromRGB(0xEBEBEC);
+}
+
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 33;
+    return 22;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -995,7 +1009,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return viewMode == VIEW_IMG_3 ? CGSizeMake(103, 107) : CGSizeMake(156, 140);
+    return viewMode == VIEW_IMG_3 ? CGSizeMake(103, SMALL_CELL_HEIGHT) : CGSizeMake(156, LARGE_CELL_HEIGHT);
 }
 
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView

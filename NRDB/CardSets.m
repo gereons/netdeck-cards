@@ -7,7 +7,7 @@
 //
 
 #import "CardSets.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "Deck.h"
 #import "SettingsKeys.h"
 
@@ -97,16 +97,16 @@ static struct cardSetData {
         @[ @"core", @"cac", @"hap" ],
         @[ @"wla", @"ta", @"ce", @"asis", @"hs", @"fp" ],
         @[ @"om", @"st", @"mt", @"tc", @"fal", @"dt" ],
-        @[ @"up", @"tsb", @"fc", @"uao", @"atr" ]
+        @[ @"up", /* @"tsb", @"fc", @"uao", @"atr" */ ]
     ];
     
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
 }
 
-+(void) initializeSetNames:(NSDictionary *)cards
++(void) initializeSetNames:(NSArray*)cards
 {
     [setNames removeAllObjects];
-    for (Card* c in [cards allValues])
+    for (Card* c in cards)
     {
         [setNames setObject:c.setName forKey:c.setCode];
     }
@@ -140,23 +140,6 @@ static struct cardSetData {
         [set addObject:@"special"];
     }
     return set;
-}
-
-+(NSArray*) allSets
-{
-    NSMutableArray* sets = [NSMutableArray arrayWithArray:[CardData allSets]];
-    
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    for (CardSets* cs in cardSets)
-    {
-        if (![settings boolForKey:cs.settingsKey])
-        {
-            NSString* name = [setNames objectForKey:cs.setCode];
-            [sets removeObject:name];
-        }
-    }
-    
-    return sets;
 }
 
 +(TableData*) allSetsForTableview

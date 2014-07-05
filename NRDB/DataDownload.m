@@ -11,7 +11,7 @@
 #import <SDCAlertView.h>
 
 #import "DataDownload.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "Card.h"
 #import "ImageCache.h"
 #import "SettingsKeys.h"
@@ -88,7 +88,7 @@ static DataDownload* instance;
     
 -(void) doDownloadCardData
 {
-    NSString* cardsUrl = @"http://netrunnerdb.com/api/cards";
+    NSString* cardsUrl = @"http://netrunnerdb.com/api/cards/";
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSDictionary* parameters = nil;
     if (language.length)
@@ -107,12 +107,12 @@ static DataDownload* instance;
             @strongify(self);
             if (!self.downloadStopped)
             {
-                ok = [CardData setupFromNetrunnerDbApi:responseObject];
+                ok = [CardManager setupFromNetrunnerDbApi:responseObject];
             }
             
             if ([language isEqualToString:@"en"])
             {
-                [CardData addEnglishNames:nil];
+                [CardManager addEnglishNames:nil];
                 [self downloadFinished:ok];
             }
             else
@@ -121,7 +121,7 @@ static DataDownload* instance;
                 [self.manager GET:cardsUrl parameters:@{ @"_locale": @"en" }
                       success:^(AFHTTPRequestOperation *operation, id responseObject)
                       {
-                          [CardData addEnglishNames:responseObject];
+                          [CardManager addEnglishNames:responseObject];
                           [self downloadFinished:ok];
                       }
                       failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -158,8 +158,8 @@ static DataDownload* instance;
 
 -(void) downloadImages:(DownloadScope)scope
 {
-    self.cards = [[Card allCards] mutableCopy];
-    [self.cards addObjectsFromArray:[Card altCards]];
+    self.cards = [[CardManager allCards] mutableCopy];
+    [self.cards addObjectsFromArray:[CardManager altCards]];
     
     if (self.cards.count == 0)
     {

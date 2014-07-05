@@ -17,6 +17,6 @@
 +(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type;
 +(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types;
 
-+(void) initializeCardTypes:(NSDictionary*)cards;
++(void) initializeCardTypes:(NSArray*)cards;
 
 @end

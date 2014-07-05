@@ -119,6 +119,7 @@ static NSInteger viewMode;
 
 -(void) viewModeChange:(UISegmentedControl*)sender
 {
+    TF_CHECKPOINT(@"draw view mode");
     viewMode = sender.selectedSegmentIndex;
     self.tableView.hidden = viewMode == 0;
     self.collectionView.hidden = viewMode == 1;
@@ -274,6 +275,8 @@ static NSInteger viewMode;
 {
     if (gesture.state == UIGestureRecognizerStateBegan)
     {
+        TF_CHECKPOINT(@"draw long press");
+        
         NSIndexPath* indexPath;
         if (self.tableView.hidden)
         {

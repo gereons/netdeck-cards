@@ -12,3 +12,9 @@ pod 'CSStickyHeaderFlowLayout'
 # pod 'SDCAlertView'
 pod 'RBBAnimation'
 pod 'SDCAutoLayout'
+
+post_install do | installer |
+  require 'fileutils'
+  # FileUtils.cp_r('Pods/Pods-acknowledgements.markdown', 'NRDB/Acknowledgements.html', :remove_destination => true)
+  system("awk -f ackhtml.awk <Pods/Pods-acknowledgements.markdown >NRDB/Acknowledgements.html")
+end

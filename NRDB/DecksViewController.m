@@ -202,11 +202,12 @@ static NSDictionary* sideStr;
         return;
     }
     
+
     self.popup = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self
                                     cancelButtonTitle:@""
                                destructiveButtonTitle:nil
-                                    otherButtonTitles:l10n(@"All"), l10n(@"Runner"), l10n(@"Corp"), nil];
+                                    otherButtonTitles:l10n(@"Both"), l10n(@"Runner"), l10n(@"Corp"), nil];
     self.popup.tag = POPUP_SIDE;
     [self.popup showFromBarButtonItem:sender animated:NO];
 }
@@ -279,8 +280,13 @@ static NSDictionary* sideStr;
     [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(filterType)]]];
     [self.stateFilterButton setTitle:[DeckState buttonLabelFor:filterState]];
 
-    NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSMutableArray array];
-    NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSMutableArray array];
+    NSArray* runnerDecks = (filterType == FilterRunner || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
+    NSArray* corpDecks = (filterType == FilterCorp || filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
+    
+#if DEBUG
+    [self checkDecks:self.runnerDecks];
+    [self checkDecks:self.corpDecks];
+#endif
     
     if (sortType != NRDeckSortDate)
     {
@@ -332,6 +338,22 @@ static NSDictionary* sideStr;
     self.decks = @[ self.runnerDecks, self.corpDecks ];
     
     [self.tableView reloadData];
+}
+
+-(void) checkDecks:(NSArray*)decks
+{
+    for (Deck* deck in decks)
+    {
+        if (deck.identity)
+        {
+            if (deck.role != deck.identity.role)
+            {
+                NSString* msg = [NSString stringWithFormat:@"deck role mismatch %@ %ld != %ld %@",
+                                 deck.name, (long)deck.role, (long)deck.identity.role, deck.identity.name];
+                [SDCAlertView alertWithTitle:nil message:msg buttons:@[@"Oops"]];
+            }
+        }
+    }
 }
 
 -(NSMutableArray*) sortDecks:(NSArray*)decks
@@ -704,6 +726,19 @@ static NSDictionary* sideStr;
     NSArray* decks = self.decks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     cell.nameLabel.text = deck.name;
+    
+    NSString* icon;
+    switch (deck.state)
+    {
+        case NRDeckStateActive: icon = @"active";
+            break;
+        case NRDeckStateRetired: icon = @"retired";
+            break;
+        case NRDeckStateNone:
+        case NRDeckStateTesting: icon = @"testing";
+            break;
+    }
+    [cell.infoButton setImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
     
     if (deck.identity)
     {
