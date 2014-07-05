@@ -24,8 +24,6 @@
 
 @implementation NRDB
 
-#define REFRESH_INTERVAL    3300 // 55 minutes
-
 static NRDB* instance;
 +(NRDB*) sharedInstance
 {
@@ -40,6 +38,7 @@ static NRDB* instance;
 
 -(void) authorizeWithCode:(NSString *)code completion:(AuthCompletionBlock)completionBlock
 {
+    // NSLog(@"auth code");
     // ?client_id=" CLIENT_ID "&client_secret=" CLIENT_SECRET "&grant_type=authorization_code&redirect_uri=" CLIENT_HOST "&code="
     
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
@@ -54,6 +53,7 @@ static NRDB* instance;
 
 -(void) refreshToken:(AuthCompletionBlock)completionBlock
 {
+    // NSLog(@"refresh token");
     // ?client_id=" CLIENT_ID "&client_secret=" CLIENT_SECRET "&grant_type=refresh_token&redirect_uri=" CLIENT_HOST "&refresh_token="
     
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
@@ -97,6 +97,7 @@ static NRDB* instance;
                  ok = NO;
              }
              NSNumber* exp = responseObject[@"expires_in"];
+             [settings setObject:exp forKey:NRDB_TOKEN_TTL];
              NSDate* expiry = [[NSDate date] dateByAddingTimeInterval:[exp intValue]];
              [settings setObject:expiry forKey:NRDB_TOKEN_EXPIRY];
              
@@ -136,31 +137,45 @@ static NRDB* instance;
     NSDate* now = [NSDate date];
     NSTimeInterval diff = [expiry timeIntervalSinceDate:now];
     diff -= 5*60; // 5 minutes overlap
+    // NSLog(@"start refresh in %f", diff);
     
     if (diff < 0)
     {
         // token is expired, refresh now
-        [self refreshToken:^(BOOL ok) {
-            if (ok)
-            {
-                self.timer = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL
-                                                              target:self
-                                                            selector:@selector(refreshTimerFire:)
-                                                            userInfo:nil
-                                                             repeats:YES];
-            }
-        }];
+        [self timedRefresh:nil];
     }
     else
     {
-        // token still valid, schedule refresh
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:diff
+                                                      target:self
+                                                    selector:@selector(timedRefresh:)
+                                                    userInfo:nil
+                                                     repeats:NO];
     }
 }
 
--(void) refreshTimerFire:(NSTimer*)timer
+-(void) timedRefresh:(NSTimer*) timer
 {
     [self refreshToken:^(BOOL ok) {
+        if (ok)
+        {
+            NSNumber* ttl = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_TOKEN_TTL];
+            NSTimeInterval ti = [ttl floatValue];
+            ti -= 300; // 5 minutes before expiry
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:ti
+                                                          target:self
+                                                        selector:@selector(timedRefresh:)
+                                                        userInfo:nil
+                                                         repeats:NO];
+        }
     }];
+}
+
+-(void) stopRefresh
+{
+    // NSLog(@"stopping refresh timer");
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 #pragma mark deck list

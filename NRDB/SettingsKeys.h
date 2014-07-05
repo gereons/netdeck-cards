@@ -52,6 +52,7 @@
 #define NRDB_ACCESS_TOKEN   @"nrdbAccessToken"
 #define NRDB_REFRESH_TOKEN  @"nrdbRefreshToken"
 #define NRDB_TOKEN_EXPIRY   @"nrdbTokenExpiry"
+#define NRDB_TOKEN_TTL      @"nrdbTokenTTL"
 #define NRDB_AUTOSAVE       @"nrdbAutoSave"
 
 #endif

@@ -25,5 +25,6 @@ typedef void (^SaveCompletionBlock)(BOOL ok, NSString* deckId);
 -(void)saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock;
 
 -(void)refreshAuthentication;
+-(void)stopRefresh;
 
 @end
