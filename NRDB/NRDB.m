@@ -35,6 +35,18 @@ static NRDB* instance;
     return instance;
 }
 
++(void) clearSettings
+{
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
+    [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
+    [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
+    [settings removeObjectForKey:NRDB_TOKEN_TTL];
+    [settings setObject:@(NO) forKey:USE_NRDB];
+    [settings synchronize];
+}
+
 #pragma mark autorization
 
 -(void) authorizeWithCode:(NSString *)code completion:(AuthCompletionBlock)completionBlock
@@ -104,21 +116,14 @@ static NRDB* instance;
              
              if (!ok)
              {
-                 [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
-                 [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
-                 [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
+                 [NRDB clearSettings];
              }
              [settings synchronize];
              
              completionBlock(ok);
          }
          failure:^(AFHTTPRequestOperation* operation, NSError* error) {
-             NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-             [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
-             [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
-             [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
-             [settings setObject:@(NO) forKey:USE_NRDB];
-             [settings synchronize];
+             [NRDB clearSettings];
              
              completionBlock(NO);
          }
@@ -136,7 +141,7 @@ static NRDB* instance;
     
     if ([settings objectForKey:NRDB_REFRESH_TOKEN] == nil)
     {
-        [settings setObject:@(NO) forKey:USE_NRDB];
+        [NRDB clearSettings];
         return;
     }
     

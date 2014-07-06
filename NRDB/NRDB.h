@@ -13,6 +13,7 @@
 @interface NRDB : NSObject
 
 +(NRDB*) sharedInstance;
++(void) clearSettings;
 
 typedef void (^AuthCompletionBlock)(BOOL ok);
 typedef void (^DecklistCompletionBlock)(NSArray* decks);

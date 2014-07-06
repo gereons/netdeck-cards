@@ -192,7 +192,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     // set up bottom toolbar
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
-    self.nrdbButton.enabled = self.useNetrunnerdb;
+    self.nrdbButton.hidden = !self.useNetrunnerdb;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
@@ -329,22 +329,28 @@ enum { POPUP_EXPORT, POPUP_STATE };
         NSString* msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on NetrunnerDB.com"), self.deck.netrunnerDbId ];
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:msg
-                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Disconnect"), l10n(@"Save") ]];
+                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Open in Safari"), l10n(@"Disconnect"), l10n(@"Save") ]];
         
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
-            if (buttonIndex == 1)
+            switch (buttonIndex)
             {
-                self.deck.netrunnerDbId = nil;
-                self.deckChanged = YES;
-                if (self.autoSave)
-                {
-                    [self saveDeck:nil];
-                }
-                [self refresh];
-            }
-            if (buttonIndex == 2)
-            {
-                [self saveDeckToNetrunnerdb];
+                case 1:
+                    [self openInSafari:self.deck];
+                    break;
+            
+                case 2:
+                    self.deck.netrunnerDbId = nil;
+                    self.deckChanged = YES;
+                    if (self.autoSave)
+                    {
+                        [self saveDeck:nil];
+                    }
+                    [self refresh];
+                    break;
+            
+                case 3:
+                    [self saveDeckToNetrunnerdb];
+                    break;
             }
         };
     }
@@ -364,6 +370,14 @@ enum { POPUP_EXPORT, POPUP_STATE };
             [DeckManager resetModificationDate:self.deck];
         }
     }];
+}
+
+-(void) openInSafari:(Deck*)deck
+{
+    // http://netrunnerdb.com/en/deck/edit/{id}
+    
+    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com/en/deck/edit/%@", deck.netrunnerDbId ];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 
 -(void) editNotes:(id)sender

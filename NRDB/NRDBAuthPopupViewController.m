@@ -24,7 +24,7 @@ static NRDBAuthPopupViewController* popup;
     popup = [[NRDBAuthPopupViewController alloc] initWithNibName:@"NRDBAuthPopupViewController" bundle:nil];
     
     [vc presentViewController:popup animated:NO completion:nil];
-    popup.view.superview.bounds = CGRectMake(0, 0, 850, 478);
+    popup.view.superview.bounds = CGRectMake(0, 0, 850, 466);
 }
 
 +(void) handleOpenURL:(NSURL *)url
@@ -35,7 +35,6 @@ static NRDBAuthPopupViewController* popup;
     }
     
     // NSLog(@"netdeck url %@", url);
-    
     BOOL codeFound = NO;
     
     NSString* query = [url query];
@@ -57,11 +56,7 @@ static NRDBAuthPopupViewController* popup;
     
     if (!codeFound)
     {
-        NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-        [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
-        [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
-        [settings setObject:@(NO) forKey:USE_NRDB];
-        
+        [NRDB clearSettings];
         [popup cancel:nil];
     }
 }
@@ -93,6 +88,8 @@ static NRDBAuthPopupViewController* popup;
 {
     [self dismissViewControllerAnimated:NO completion:nil];
     popup = nil;
+    
+    [NRDB clearSettings];
 }
 
 #pragma mark webview
@@ -102,5 +99,14 @@ static NRDBAuthPopupViewController* popup;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.activityIndicator stopAnimating];
 }
+
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [self.activityIndicator startAnimating];
+
+    return YES;
+}
+
 
 @end
