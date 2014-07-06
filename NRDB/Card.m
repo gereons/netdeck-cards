@@ -220,12 +220,16 @@ static BOOL isRetina;
     
     JSON_STR(url, @"url");
     JSON_STR(smallImageSrc, @"imagesrc");
+    if (c.smallImageSrc.length == 0)
+    {
+        c.smallImageSrc = nil;
+    }
     JSON_STR(largeImageSrc, @"largeimagesrc");
     if (c.largeImageSrc.length == 0)
     {
         c.largeImageSrc = nil;
     }
-    
+            
     JSON_STR(artist, @"illustrator");
     c->_lastModified = [json objectForKey:@"last-modified"];
     
