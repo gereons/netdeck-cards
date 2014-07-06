@@ -246,6 +246,26 @@ static NRDB* instance;
     self.decklistCompletionBlock(decks);
 }
 
+#pragma mark publish deck
+
+-(void) publishDeck:(Deck *)deck completion:(SaveCompletionBlock)completionBlock
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
+    self.saveCompletionBlock = completionBlock;
+    [self performSelector:@selector(publishDeck:) withObject:deck afterDelay:0.01];
+}
+
+-(void) publishDeck:(Deck *)deck
+{
+    NSString* publishUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/publish_deck/%@", deck.netrunnerDbId];
+    
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    
+    [self saveOrPublish:publishUrl parameters:parameters];
+}
+
 #pragma mark save deck
 
 -(void) saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock
@@ -293,9 +313,14 @@ static NRDB* instance;
         parameters[@"id"] = deck.netrunnerDbId;
     }
     
+    [self saveOrPublish:saveUrl parameters:parameters];
+}
+
+-(void) saveOrPublish:(NSString*)url parameters:(NSDictionary*)parameters
+{
     NSError* error;
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
-                                                                                 URLString:saveUrl
+                                                                                 URLString:url
                                                                                 parameters:parameters
                                                                                      error:&error];
     
@@ -305,9 +330,16 @@ static NRDB* instance;
     @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         @strongify(self);
-        // NSLog(@"save ok: %@", responseObject);
-        NSString* deckId = responseObject[@"message"][@"id"];
-        [self finishedSave:YES deckId:deckId];
+        BOOL success = [responseObject[@"success"] boolValue];
+        if (success)
+        {
+            NSString* deckId = responseObject[@"message"][@"id"];
+            [self finishedSave:YES deckId:deckId];
+        }
+        else
+        {
+            [self finishedSave:NO deckId:nil];
+        }
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         @strongify(self);

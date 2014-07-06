@@ -329,16 +329,20 @@ enum { POPUP_EXPORT, POPUP_STATE };
         NSString* msg = [NSString stringWithFormat:l10n(@"This deck is connected to deck %@ on NetrunnerDB.com"), self.deck.netrunnerDbId ];
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:msg
-                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Open in Safari"), l10n(@"Disconnect"), l10n(@"Save") ]];
+                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Open in Safari"), l10n(@"Publish deck"), l10n(@"Disconnect"), l10n(@"Save") ]];
         
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             switch (buttonIndex)
             {
-                case 1:
+                case 1: // open in safari
                     [self openInSafari:self.deck];
                     break;
             
-                case 2:
+                case 2: // publish
+                    [self publishDeck:self.deck];
+                    break;
+                    
+                case 3: // disconnect
                     self.deck.netrunnerDbId = nil;
                     self.deckChanged = YES;
                     if (self.autoSave)
@@ -348,7 +352,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
                     [self refresh];
                     break;
             
-                case 3:
+                case 4: // save/upload
                     [self saveDeckToNetrunnerdb];
                     break;
             }
@@ -361,7 +365,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
         if (!ok)
         {
-            [SDCAlertView alertWithTitle:nil message:l10n(@"Saving the deck at NetrunnerDB.com failed") buttons:@[l10n(@"OK")]];
+            [SDCAlertView alertWithTitle:nil message:l10n(@"Saving the deck at NetrunnerDB.com failed.") buttons:@[l10n(@"OK")]];
         }
         if (ok && deckId)
         {
@@ -373,11 +377,33 @@ enum { POPUP_EXPORT, POPUP_STATE };
 }
 
 -(void) openInSafari:(Deck*)deck
-{
-    // http://netrunnerdb.com/en/deck/edit/{id}
-    
-    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com/en/deck/edit/%@", deck.netrunnerDbId ];
+{    
+    NSString* lang = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com/%@/deck/view/%@", lang, deck.netrunnerDbId ];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
+
+-(void) publishDeck:(Deck*)deck
+{
+    NSArray* errors = [deck checkValidity];
+    if (errors.count == 0)
+    {
+        [[NRDB sharedInstance] publishDeck:deck completion:^(BOOL ok, NSString *deckId) {
+            if (!ok)
+            {
+                [SDCAlertView alertWithTitle:nil message:l10n(@"Publishing the deck at NetrunnerDB.com failed.") buttons:@[l10n(@"OK")]];
+            }
+            if (ok && deckId)
+            {
+                NSString* msg = [NSString stringWithFormat:l10n(@"Deck published with ID %@"), deckId];
+                [SDCAlertView alertWithTitle:nil message:msg buttons:@[l10n(@"OK")]];
+            }
+        }];
+    }
+    else
+    {
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Only valid decks can be published.") buttons:@[ l10n(@"OK") ]];
+    }
 }
 
 -(void) editNotes:(id)sender

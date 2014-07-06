@@ -48,7 +48,7 @@ static NRDBAuthPopupViewController* popup;
             NSString* code = kv[1];
             codeFound = YES;
             [[NRDB sharedInstance] authorizeWithCode:code completion:^(BOOL ok) {
-                [popup cancel:nil];
+                [popup dismiss];
             }];
             break;
         }
@@ -56,7 +56,6 @@ static NRDBAuthPopupViewController* popup;
     
     if (!codeFound)
     {
-        [NRDB clearSettings];
         [popup cancel:nil];
     }
 }
@@ -86,10 +85,14 @@ static NRDBAuthPopupViewController* popup;
 
 -(void) cancel:(id)sender
 {
+    [NRDB clearSettings];
+    [self dismiss];
+}
+
+-(void) dismiss
+{
     [self dismissViewControllerAnimated:NO completion:nil];
     popup = nil;
-    
-    [NRDB clearSettings];
 }
 
 #pragma mark webview
