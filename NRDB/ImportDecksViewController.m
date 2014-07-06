@@ -29,7 +29,7 @@ static NSString* filterText;
 
 @property NSArray* allDecks;
 @property NSArray* filteredDecks;
-
+@property UIBarButtonItem* importButton;
 @property NSDateFormatter* dateFormatter;
 
 @end
@@ -82,6 +82,8 @@ static NSString* filterText;
     }
     self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
     self.searchBar.selectedScopeButtonIndex = searchScope;
+    
+    self.importButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Import All") style:UIBarButtonItemStylePlain target:self action:@selector(importAll:)];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -98,6 +100,40 @@ static NSString* filterText;
     [filesystem removeObserver:self];
 }
 
+#pragma mark import all
+
+-(void) importAll:(id)sender
+{
+    NSString* msg;
+    
+    if (self.source == NRImportSourceDropbox)
+    {
+        msg = l10n(@"Import all decks from Dropbox?");
+    }
+    else
+    {
+        msg = l10n(@"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten.");
+    }
+    SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Import All")
+                                               message:msg
+                                               buttons:@[ l10n(@"Cancel"), l10n(@"OK") ]];
+    alert.didDismissHandler = ^(NSInteger buttonIndex) {
+        if (buttonIndex == 1) // ok, import
+        {
+            for (NSArray* arr in self.filteredDecks)
+            {
+                for (Deck* deck in arr)
+                {
+                    if (self.source == NRImportSourceNetrunnerDb)
+                    {
+                        deck.filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
+                    }
+                    [DeckManager saveDeck:deck];
+                }
+            }
+        }
+    };
+}
 
 #pragma mark netrunnerdb.com import
 
@@ -150,6 +186,7 @@ static NSString* filterText;
         
         [self filterDecks];
         [self.tableView reloadData];
+        self.navigationController.navigationBar.topItem.rightBarButtonItem = self.importButton;
     }];
 }
 
@@ -174,6 +211,7 @@ static NSString* filterText;
             }
             [self filterDecks];
             [self.tableView reloadData];
+            self.navigationController.navigationBar.topItem.rightBarButtonItem = self.importButton;
         });
     });
     
@@ -337,7 +375,6 @@ static NSString* filterText;
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TF_CHECKPOINT(@"import deck");
-    
     
     NSArray* decks = self.filteredDecks[indexPath.section];
     Deck* deck = decks[indexPath.row];

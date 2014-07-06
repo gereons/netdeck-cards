@@ -217,6 +217,7 @@
 "Saving Deck..." = "Deck speichern...";
 "Loading Decks..." = "Decks laden...";
 "Publishing Deck..." = "Deck veröffentlichen...";
+"Exporting Decks..." = "Decks exportieren...";
 "A local copy of this deck already exists." = "Eine lokale Kopie dieses Decks existiert bereits.";
 "Overwrite" = "Überschreiben";
 "Import as new" = "Neu importieren";
@@ -227,3 +228,8 @@
 "Saving the deck at NetrunnerDB.com failed." = "Speichern bei NetrunnerDB.com fehlgeschlagen.";
 "Publishing the deck at NetrunnerDB.com failed." = "Veröffentlichen bei NetrunnerDB.com fehlgeschlagen.";
 "Deck published with ID %@" = "Deck veröffentlicht, ID: %@";
+"Import All" = "Alle importieren";
+"Export Decks" = "Decks exporieren";
+"Export all currently visible decks" = "Exporiere alle gerade angezeigten Decks";
+"To Dropbox" = "Zu Dropbox";
+"To NetrunnerDB.com" = "Zu NetrunnerDB.com";

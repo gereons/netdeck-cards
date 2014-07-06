@@ -1061,7 +1061,7 @@
 		3AA440E21854DA310051D4B0 /* Detail Views */ = {
 			isa = PBXGroup;
 			children = (
-				3AB9BD5518FADB1B004EAF10 /* Decks */,
+				3AB9BD5518FADB1B004EAF10 /* Saved Decks */,
 				3A8532371854F8E200507B9A /* Deck List */,
 				3A8532771855079100507B9A /* Settings */,
 				3A85328418550AD100507B9A /* About Detail */,
@@ -1070,7 +1070,7 @@
 			name = "Detail Views";
 			sourceTree = "<group>";
 		};
-		3AB9BD5518FADB1B004EAF10 /* Decks */ = {
+		3AB9BD5518FADB1B004EAF10 /* Saved Decks */ = {
 			isa = PBXGroup;
 			children = (
 				3AB9BD5618FADB51004EAF10 /* DecksViewController.h */,
@@ -1083,7 +1083,7 @@
 				3AB9BD5C18FADC01004EAF10 /* DeckCell.m */,
 				3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */,
 			);
-			name = Decks;
+			name = "Saved Decks";
 			sourceTree = "<group>";
 		};
 		3ABDE5A018AFC4B200AFEA88 /* Draw Simulator */ = {
