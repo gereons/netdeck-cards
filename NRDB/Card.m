@@ -229,7 +229,7 @@ static BOOL isRetina;
     {
         c.largeImageSrc = nil;
     }
-            
+    
     JSON_STR(artist, @"illustrator");
     c->_lastModified = [json objectForKey:@"last-modified"];
     

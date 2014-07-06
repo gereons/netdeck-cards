@@ -105,9 +105,10 @@ static NSString* filterText;
 {
     self.allDecks = @[ [NSMutableArray array], [NSMutableArray array] ];
     
-    NRDB* nrdb = [NRDB sharedInstance];
+    [SVProgressHUD showWithStatus:l10n(@"Loading Decks...")];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    [nrdb decklist:^(NSArray* decks) {
+    [[NRDB sharedInstance] decklist:^(NSArray* decks) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [SVProgressHUD dismiss];
 

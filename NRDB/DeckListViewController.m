@@ -362,6 +362,9 @@ enum { POPUP_EXPORT, POPUP_STATE };
 
 -(void) saveDeckToNetrunnerdb
 {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...")];
+    
     [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
         if (!ok)
         {
@@ -373,6 +376,9 @@ enum { POPUP_EXPORT, POPUP_STATE };
             [DeckManager saveDeck:self.deck];
             [DeckManager resetModificationDate:self.deck];
         }
+        
+        [SVProgressHUD dismiss];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
 }
 
@@ -388,6 +394,9 @@ enum { POPUP_EXPORT, POPUP_STATE };
     NSArray* errors = [deck checkValidity];
     if (errors.count == 0)
     {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
+
         [[NRDB sharedInstance] publishDeck:deck completion:^(BOOL ok, NSString *deckId) {
             if (!ok)
             {
@@ -398,6 +407,9 @@ enum { POPUP_EXPORT, POPUP_STATE };
                 NSString* msg = [NSString stringWithFormat:l10n(@"Deck published with ID %@"), deckId];
                 [SDCAlertView alertWithTitle:nil message:msg buttons:@[l10n(@"OK")]];
             }
+            
+            [SVProgressHUD dismiss];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }];
     }
     else

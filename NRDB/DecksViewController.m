@@ -10,6 +10,7 @@
 
 #import <SDCAlertView.h>
 #import <EXTScope.h>
+#import <SVProgressHUD.h>
 
 #import "DeckCell.h"
 #import "DeckManager.h"
@@ -50,6 +51,7 @@ static NSString* filterText;
 @property UIBarButtonItem* stateFilterButton;
 @property UIBarButtonItem* sideFilterButton;
 @property UIBarButtonItem* importButton;
+@property UIBarButtonItem* exportButton;
 @property UIBarButtonItem* addDeckButton;
 
 @end
@@ -152,8 +154,10 @@ static NSDictionary* sideStr;
     
     self.addDeckButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDeck:)];
     self.importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
+    self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDecks:)];
     topItem.rightBarButtonItems = @[
         self.addDeckButton,
+        self.exportButton,
         self.importButton,
         self.editButton,
     ];
@@ -272,6 +276,116 @@ static NSDictionary* sideStr;
             import.source = NRImportSourceNetrunnerDb;
         }
         [self.navigationController pushViewController:import animated:NO];
+    }
+}
+
+-(void) exportDecks:(id)sender
+{
+    if (self.popup)
+    {
+        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        return;
+    }
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
+    BOOL useNetrunnerdb = [settings boolForKey:USE_NRDB];
+    
+    if (!useDropbox && !useNetrunnerdb)
+    {
+        [SDCAlertView alertWithTitle:l10n(@"Export Decks")
+                             message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")
+                             buttons:@[l10n(@"OK")]];
+        return;
+    }
+    
+    NSMutableArray* buttons = [NSMutableArray array];
+    NSInteger dbButton = 0;
+    NSInteger nrdbButton = 0;
+    [buttons addObject:l10n(@"Cancel")];
+    if (useDropbox)
+    {
+        [buttons addObject:l10n(@"To Dropbox")];
+        dbButton = 1;
+    }
+    if (useNetrunnerdb)
+    {
+        [buttons addObject:l10n(@"To NetrunnerDB.com")];
+        nrdbButton = dbButton + 1;
+    }
+    
+    SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Export Decks")
+                                               message:l10n(@"Export all currently visible decks")
+                                               buttons:buttons];
+    alert.didDismissHandler = ^(NSInteger buttonIndex) {
+        if (buttonIndex == 0) // cancel
+        {
+            return;
+        }
+        if (buttonIndex == dbButton)
+        {
+            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+            [self performSelector:@selector(exportAllToDropbox) withObject:nil afterDelay:0.01];
+        }
+        if (buttonIndex == nrdbButton)
+        {
+            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+            [self performSelector:@selector(exportAllToNetrunnerDB) withObject:nil afterDelay:0.01];
+        }
+    };
+}
+
+-(void) exportAllToDropbox
+{
+    for (NSArray* arr in self.decks)
+    {
+        for (Deck* deck in arr)
+        {
+            [DeckExport asOctgn:deck autoSave:YES];
+        }
+    }
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [SVProgressHUD dismiss];
+}
+
+-(void) exportAllToNetrunnerDB
+{
+    NSMutableArray* decks = [NSMutableArray array];
+    for (NSArray* arr in self.decks)
+    {
+        for (Deck* deck in arr)
+        {
+            [decks addObject:deck];
+        }
+    }
+    [self exportToNetrunnerDB:decks index:0];
+}
+
+-(void) exportToNetrunnerDB:(NSArray*)decks index:(NSInteger)index
+{
+    if (index < decks.count)
+    {
+        NSLog(@"export deck %d", index);
+        Deck* deck = [decks objectAtIndex:index];
+        [[NRDB sharedInstance] saveDeck:deck completion:^(BOOL ok, NSString* deckId) {
+            NSLog(@"saved %d, ok=%d id=%@", index, ok, deckId);
+            if (ok && deckId)
+            {
+                deck.netrunnerDbId = deckId;
+                [DeckManager saveDeck:deck];
+                [DeckManager resetModificationDate:deck];
+            }
+            [self exportToNetrunnerDB:decks index:index+1];
+        }];
+    }
+    else
+    {
+        NSLog(@"export done");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [SVProgressHUD dismiss];
+        [self updateDecks];
     }
 }
 

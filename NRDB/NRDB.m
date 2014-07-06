@@ -7,7 +7,6 @@
 //
 
 #import <AFNetworking.h>
-#import <SVProgressHUD.h>
 #import <EXTScope.h>
 #import <SDCAlertView.h>
 
@@ -194,10 +193,8 @@ static NRDB* instance;
 
 -(void) decklist:(DecklistCompletionBlock)completionBlock
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Loading Decks...")];
     self.decklistCompletionBlock = completionBlock;
-    [self performSelector:@selector(getDecks) withObject:nil afterDelay:0.01];
+    [self getDecks];
 }
 
 -(void) getDecks
@@ -232,15 +229,11 @@ static NRDB* instance;
 
 -(void) finishedDecklist:(BOOL)ok decks:(NSArray*)decks
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [SVProgressHUD dismiss];
-    
     if (!ok)
     {
         [SDCAlertView alertWithTitle:nil
                              message:l10n(@"Loading decks from NetrunnerDB.com failed")
                              buttons:@[l10n(@"OK")]];
-        
     }
     
     self.decklistCompletionBlock(decks);
@@ -250,10 +243,8 @@ static NRDB* instance;
 
 -(void) publishDeck:(Deck *)deck completion:(SaveCompletionBlock)completionBlock
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
     self.saveCompletionBlock = completionBlock;
-    [self performSelector:@selector(publishDeck:) withObject:deck afterDelay:0.01];
+    [self publishDeck:deck];
 }
 
 -(void) publishDeck:(Deck *)deck
@@ -270,10 +261,8 @@ static NRDB* instance;
 
 -(void) saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...")];
     self.saveCompletionBlock = completionBlock;
-    [self performSelector:@selector(saveDeck:) withObject:deck afterDelay:0.01];
+    [self saveDeck:deck];
 }
 
 -(void) saveDeck:(Deck *)deck
@@ -334,27 +323,19 @@ static NRDB* instance;
         if (success)
         {
             NSString* deckId = responseObject[@"message"][@"id"];
-            [self finishedSave:YES deckId:deckId];
+            self.saveCompletionBlock(YES, deckId);
         }
         else
         {
-            [self finishedSave:NO deckId:nil];
+            self.saveCompletionBlock(NO, nil);
         }
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         @strongify(self);
         // NSLog(@"save failed: %@", operation);
-        [self finishedSave:NO deckId:nil];
+        self.saveCompletionBlock(NO, nil);
     }];
     [operation start];
-}
-
--(void) finishedSave:(BOOL)ok deckId:(NSString*)deckId
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [SVProgressHUD dismiss];
-    
-    self.saveCompletionBlock(ok, deckId);
 }
 
 #pragma mark deck map
