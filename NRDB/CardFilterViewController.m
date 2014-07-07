@@ -904,8 +904,7 @@ static NSInteger viewMode = VIEW_LIST;
         button.tag = ADD_BUTTON_TABLE;
         
         cell.accessoryView = button;
-        
-        [cell.contentView addSubview:button];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [button addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];
     }
