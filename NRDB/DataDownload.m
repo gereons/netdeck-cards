@@ -9,6 +9,7 @@
 #import <AFNetworking.h>
 #import <EXTScope.h>
 #import <SDCAlertView.h>
+#import <UIView+SDCAutoLayout.h>
 
 #import "DataDownload.h"
 #import "CardManager.h"
@@ -67,16 +68,21 @@ static DataDownload* instance;
 -(void) downloadCardData
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0,0, SDCAlertViewWidth, 20)];
-    UIActivityIndicatorView* act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    act.center = CGPointMake(SDCAlertViewWidth/2, view.frame.size.height/2);
-    [act startAnimating];
-    [view addSubview:act];
     
-    self.alert = [SDCAlertView alertWithTitle:l10n(@"Downloading Card Data")
-                                      message:nil
-                                      subview:view
-                                      buttons:@[l10n(@"Stop")]];
+    UIActivityIndicatorView* act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [act startAnimating];
+    [act setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    self.alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Downloading Card Data")
+                                             message:nil
+                                            delegate:nil cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
+    
+    [self.alert.contentView addSubview:act];
+    
+    [act sdc_pinWidthToWidthOfView:self.alert.contentView];
+    [act sdc_horizontallyCenterInSuperview];
+    [self.alert show];
+    
     @weakify(self);
     self.alert.didDismissHandler = ^void(NSInteger buttonIndex) {
         @strongify(self);
@@ -171,16 +177,22 @@ static DataDownload* instance;
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 250, 20)];
-    self.progressView.center = CGPointMake(SDCAlertViewWidth/2, 10);
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0,0, SDCAlertViewWidth, 20)];
+    [self.progressView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Downloading Images")
+                                             message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count]
+                                            delegate:nil
+                                   cancelButtonTitle:l10n(@"Stop")
+                                   otherButtonTitles: nil];
+
+    [self.alert.contentView addSubview:self.progressView];
     
-    [view addSubview:self.progressView];
+    [self.progressView sdc_pinWidthToWidthOfView:self.alert.contentView offset:-20];
+    [self.progressView sdc_horizontallyCenterInSuperview];
     
-    self.alert = [SDCAlertView alertWithTitle:l10n(@"Downloading Images")
-                                      message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count]
-                                      subview:view
-                                      buttons:@[l10n(@"Stop")]];
+    [self.alert show];
+    
     @weakify(self);
     self.alert.didDismissHandler = ^void(NSInteger buttonIndex) {
         @strongify(self);
@@ -210,7 +222,7 @@ static DataDownload* instance;
         @weakify(self);
         UpdateCompletionBlock downloadNext = ^(BOOL ok) {
             @strongify(self);
-            if (!ok)
+            if (!ok && card.imageSrc != nil)
             {
                 ++self.downloadErrors;
             }
