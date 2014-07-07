@@ -148,6 +148,8 @@
 "Set" = "Set";
 "Search in:" = "Suche in:";
 "Search Cards" = "Karten suchen";
+"Name" = "Name";
+"Text" = "Text";
 "Less △" = "Weniger △";
 "More ▽" = "Mehr ▽";
 
@@ -199,8 +201,8 @@
 "Plain Text Deck" = "Text-Deck";
 "Markdown Deck" = "Markdown-Deck";
 "BBCode Deck" = "BBCode-Deck";
-"As Email" = "Als E-Mail";
 "Print" = "Drucken";
+"As Email" = "Als E-Mail";
 
 // cycles
 "Core / Deluxe" = "Grundspiel / Erweiterung";

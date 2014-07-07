@@ -53,6 +53,7 @@
 "Saving..." = "Guardando...";
 "Duplicate" = "Duplicar";
 "Rename" = "Renombrar";
+"Duplicate this deck?" = "Duplicate this deck?"; // en
 "Yes, switch to copy" = "Sí, pasar a Copiar";
 "Yes, but stay here" = "Sí, pero permanecer aquí";
 "Identity" = "Identidad";
@@ -85,6 +86,7 @@
 // card downloading
 "Downloading Card Data" = "Descargando datos de las cartas";
 "Downloading Images" = "Descargando imágenes";
+"Please download card data first" = "Please download card data first"; // en
 "Image %d of %d" = "Imágen %d de %d";
 "Unable to download cards at this time. Please try again later." = "Imposible descargar las cartas en este momento. Por favor, vuelva a intentarlo más tarde.";
 "%d of %lu images could not be downloaded." = "%d de %lu imágenes no han podido descargarse.";
@@ -133,7 +135,6 @@
 "Testing" = "A Prueba";
 "Retired" = "Retirado";
 "Search for decks, identities or cards" = "Buscar mazos, identidades o cartas";
-
 
 // filter
 "Strength: %@" = "Fuerza: %@";
@@ -209,4 +210,31 @@
 "Spin Cycle" = "Ciclo de la Tergiversación";
 "Lunar Cycle" = "Ciclo Lunar";
 
-//
+// netrunnerdb.com
+"Import from Dropbox" = "Von Dropbox importieren";
+"Import from NetrunnerDB.com" = "Von NetrunnerDB.com importieren";
+"This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf NetrunnerDB.com verknüpft";
+"This deck is linked to deck %@ on NetrunnerDB.com" = "Dieses Deck ist mit Deck %@ auf NetrunnerDB.com verknüpft";
+"Unlink" = "Trennen";
+"Saving Deck..." = "Deck speichern...";
+"Loading Decks..." = "Decks laden...";
+"Publishing Deck..." = "Deck veröffentlichen...";
+"Exporting Decks..." = "Decks exportieren...";
+"A local copy of this deck already exists." = "Eine lokale Kopie dieses Decks existiert bereits.";
+"Overwrite" = "Überschreiben";
+"Import as new" = "Neu importieren";
+"Connect to your Dropbox and/or NetrunnerDB.com account first." = "Bitte Dropbox- und/oder NetrunnerDB.com-Verbindung einrichten.";
+"Open in Safari" = "In Safari öffnen";
+"Publish deck" = "Deck veröffentlichen";
+"Only valid decks can be published." = "Nur valide Decks können veröffentlicht werden.";
+"Saving the deck at NetrunnerDB.com failed." = "Speichern bei NetrunnerDB.com fehlgeschlagen.";
+"Publishing the deck at NetrunnerDB.com failed." = "Veröffentlichen bei NetrunnerDB.com fehlgeschlagen.";
+"Deck published with ID %@" = "Deck veröffentlicht, ID: %@";
+"Import All" = "Alle importieren";
+"Export Decks" = "Decks exporieren";
+"Export all currently visible decks" = "Exporiere alle gerade angezeigten Decks";
+"To Dropbox" = "Zu Dropbox";
+"To NetrunnerDB.com" = "Zu NetrunnerDB.com";
+"Import all decks from Dropbox?" = "Alle Decks von Dropbox importieren?";
+"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Alle Decks von NetrunnerDB.com importieren? Existierende verknüpfte Decks werden überschrieben.";
+"Imported decks" = "Decks importiert";
