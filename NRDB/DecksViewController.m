@@ -367,10 +367,10 @@ static NSDictionary* sideStr;
 {
     if (index < decks.count)
     {
-        NSLog(@"export deck %d", index);
+        // NSLog(@"export deck %d", index);
         Deck* deck = [decks objectAtIndex:index];
         [[NRDB sharedInstance] saveDeck:deck completion:^(BOOL ok, NSString* deckId) {
-            NSLog(@"saved %d, ok=%d id=%@", index, ok, deckId);
+            // NSLog(@"saved %d, ok=%d id=%@", index, ok, deckId);
             if (ok && deckId)
             {
                 deck.netrunnerDbId = deckId;
@@ -382,7 +382,7 @@ static NSDictionary* sideStr;
     }
     else
     {
-        NSLog(@"export done");
+        // NSLog(@"export done");
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [SVProgressHUD dismiss];
         [self updateDecks];
