@@ -211,9 +211,9 @@
 // netrunnerdb.com
 "Import from Dropbox" = "Von Dropbox importieren";
 "Import from NetrunnerDB.com" = "Von NetrunnerDB.com importieren";
-"This deck is not (yet) connected to a deck on NetrunnerDB.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf NetrunnerDB.com verknüpft";
-"This deck is connected to deck %@ on NetrunnerDB.com" = "Dieses Deck ist mit Deck %@ auf NetrunnerDB.com verknüpft";
-"Disconnect" = "Trennen";
+"This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf NetrunnerDB.com verknüpft";
+"This deck is linked to deck %@ on NetrunnerDB.com" = "Dieses Deck ist mit Deck %@ auf NetrunnerDB.com verknüpft";
+"Unlink" = "Trennen";
 "Saving Deck..." = "Deck speichern...";
 "Loading Decks..." = "Decks laden...";
 "Publishing Deck..." = "Deck veröffentlichen...";
@@ -233,3 +233,6 @@
 "Export all currently visible decks" = "Exporiere alle gerade angezeigten Decks";
 "To Dropbox" = "Zu Dropbox";
 "To NetrunnerDB.com" = "Zu NetrunnerDB.com";
+"Import all decks from Dropbox?" = "Alle Decks von Dropbox importieren?";
+"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Alle Decks von NetrunnerDB.com importieren? Existierende verknüpfte Decks werden überschrieben.";
+"Imported decks" = "Decks importiert";

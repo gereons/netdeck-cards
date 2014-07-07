@@ -104,8 +104,9 @@ static NSString* filterText;
 
 -(void) importAll:(id)sender
 {
-    NSString* msg;
+    TF_CHECKPOINT(@"import all");
     
+    NSString* msg;
     if (self.source == NRImportSourceDropbox)
     {
         msg = l10n(@"Import all decks from Dropbox?");
@@ -117,9 +118,11 @@ static NSString* filterText;
     SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Import All")
                                                message:msg
                                                buttons:@[ l10n(@"Cancel"), l10n(@"OK") ]];
+    
     alert.didDismissHandler = ^(NSInteger buttonIndex) {
         if (buttonIndex == 1) // ok, import
         {
+            [SVProgressHUD showSuccessWithStatus:@"Imported decks"];
             for (NSArray* arr in self.filteredDecks)
             {
                 for (Deck* deck in arr)
