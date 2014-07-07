@@ -799,6 +799,7 @@ static NSDictionary* sideStr;
     self.sideFilterButton.enabled = !editing;
     self.stateFilterButton.enabled = !editing;
     self.importButton.enabled = !editing;
+    self.exportButton.enabled = !editing;
     self.addDeckButton.enabled = !editing;
 }
 
