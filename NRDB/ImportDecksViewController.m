@@ -122,7 +122,7 @@ static NSString* filterText;
     alert.didDismissHandler = ^(NSInteger buttonIndex) {
         if (buttonIndex == 1) // ok, import
         {
-            [SVProgressHUD showSuccessWithStatus:@"Imported decks"];
+            [SVProgressHUD showSuccessWithStatus:l10n(@"Imported decks")];
             for (NSArray* arr in self.filteredDecks)
             {
                 for (Deck* deck in arr)

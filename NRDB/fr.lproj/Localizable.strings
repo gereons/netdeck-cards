@@ -211,6 +211,7 @@
 "Lunar Cycle" = "Cycle de la Lune";
 
 // netrunnerdb.com
+/*
 "Import from Dropbox" = "Von Dropbox importieren";
 "Import from NetrunnerDB.com" = "Von NetrunnerDB.com importieren";
 "This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf NetrunnerDB.com verknüpft";
@@ -238,3 +239,4 @@
 "Import all decks from Dropbox?" = "Alle Decks von Dropbox importieren?";
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Alle Decks von NetrunnerDB.com importieren? Existierende verknüpfte Decks werden überschrieben.";
 "Imported decks" = "Decks importiert";
+ */
