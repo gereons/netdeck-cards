@@ -78,9 +78,8 @@ static DataDownload* instance;
                                             delegate:nil cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
     
     [self.alert.contentView addSubview:act];
-    
-    [act sdc_pinWidthToWidthOfView:self.alert.contentView];
-    [act sdc_horizontallyCenterInSuperview];
+
+    [act sdc_centerInSuperview];
     [self.alert show];
     
     @weakify(self);
@@ -178,7 +177,9 @@ static DataDownload* instance;
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 250, 20)];
+    self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+    self.progressView.progress = 0;
+    
     [self.progressView setTranslatesAutoresizingMaskIntoConstraints:NO];
     self.alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Downloading Images")
                                              message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count]
@@ -189,7 +190,7 @@ static DataDownload* instance;
     [self.alert.contentView addSubview:self.progressView];
     
     [self.progressView sdc_pinWidthToWidthOfView:self.alert.contentView offset:-20];
-    [self.progressView sdc_horizontallyCenterInSuperview];
+    [self.progressView sdc_centerInSuperview];
     
     [self.alert show];
     
