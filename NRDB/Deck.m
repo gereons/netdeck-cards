@@ -131,7 +131,7 @@ static NSArray* draftIds;
     BOOL noJintekiAllowed = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
     
     BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
-    BOOL hfError = NO, hsError = NO, usError = NO, efError = NO, esError = NO, ufError = no;
+    BOOL hfError = NO, hsError = NO, usError = NO, efError = NO, esError = NO, ufError = NO;
     
     // check max 1 per deck restrictions
     for (CardCounter* cc in self.cards)

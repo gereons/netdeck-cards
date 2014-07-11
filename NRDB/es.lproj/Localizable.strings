@@ -43,25 +43,25 @@
 
 // about
 "About Net Deck %@" = "Acerca de Net Deck %@";
-"Feedback" = "Feedback";
-"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store." = "Sugerencias e ideas son bienvenidas, así como las opiniones de la AppStore.";
-"Write a Review" = "Escribe una crítica";
-"Contact Developers" = "Mail al desarrollador";
+"Feedback" = "Sugerencias";
+"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store." = "Nos encantaría saber cómo podemos mejorar Net Deck; igualmente apreciamos tus opiniones en la AppStore.";
+"Write a Review" = "Escribir una crítica";
+"Contact Developers" = "Enviar un correo al desarrollador";
 
 // deck list
 "Save" = "Guardar";
 "Saving..." = "Guardando...";
 "Duplicate" = "Duplicar";
 "Rename" = "Renombrar";
-"Duplicate this deck?" = "Duplicate this deck?"; // en
-"Yes, switch to copy" = "Sí, pasar a Copiar";
+"Duplicate this deck?" = "¿Duplicar este mazo?"; // en
+"Yes, switch to copy" = "Sí, y pasar a la copia";
 "Yes, but stay here" = "Sí, pero permanecer aquí";
 "Identity" = "Identidad";
 "Enter Name" = "Introducir Nombre";
 "Deck Name" = "Nombre del Mazo";
 "Dropbox: Plain Text" = "Dropbox: Texto Simple";
 "Clipboard: Plain Text" = "Clipboard: Texto Simple";
-"Connect to your Dropbox account first." = "Primero conecte con su cuenta Dropbox";
+"Connect to your Dropbox account first." = "Primero conecta con tu cuenta Dropbox";
 "Deck needs to have an Identity." = "El mazo necesita tener una Identidad.";
 "Deck needs cards." = "El mazo necesita cartas";
 "Cards up to %@" = "Cartas hasta %@";
@@ -70,27 +70,27 @@
 // deck invalidity reasons
 "No Identity" = "Sin Identidad";
 "AP must be %d or %d" = "Los PP deben ser %d o %d";
-"Too many pet projects" = "Demasiados Proyecto Favorito";
-"Too many entanglements" = "Demasiados Enredo";
-"Too many Utopia Shards" = "Demasiados Utopia Shards";
-"Too many Utopia Fragments" = "Demasiados Utopia Fragments";
-"Too many Hades Shards" = "Demasiados Hades Shards";
-"Too many Hades Fragments" = "Demasiados Hades Fragments";
-"Too many Eden Fragments" = "Demasiados Eden Fragments";
-"Too many Eden Shards" = "Demasiados Eden Shards";
-"Cannot include Jinteki" = "No puede incluir cartas Jinteki";
-"Cannot use out-of-faction agendas" = "No puede usar Planes de otra facción";
+"Too many pet projects" = "Demasiadas Proyecto Favorito";
+"Too many entanglements" = "Demasiadas Maraña Filótica";
+"Too many Utopia Shards" = "Demasiadas Esquirla de Utopía";
+"Too many Utopia Fragments" = "Demasiadas Fragmento de Utopía";
+"Too many Hades Shards" = "Demasiadas Esquirla de Hades";
+"Too many Hades Fragments" = "Demasiadas Fragmento de Hades";
+"Too many Eden Fragments" = "Demasiadas Fragmento de Edén";
+"Too many Eden Shards" = "Demasiadas Esquirla de Edén";
+"Cannot include Jinteki" = "No puedes incluir cartas Jinteki";
+"Cannot use out-of-faction agendas" = "No puedes usar Planes de otra facción";
 "Not enough cards" = "No hay cartas suficientes";
 "Too much influence used" = "Se ha usado demasiada Influencia";
 
 // card downloading
 "Downloading Card Data" = "Descargando datos de las cartas";
 "Downloading Images" = "Descargando imágenes";
-"Please download card data first" = "Please download card data first"; // en
-"Image %d of %d" = "Imágen %d de %d";
-"Unable to download cards at this time. Please try again later." = "Imposible descargar las cartas en este momento. Por favor, vuelva a intentarlo más tarde.";
+"Please download card data first" = "Por favor, dercarga los datos de las cartas primero"; // en
+"Image %d of %d" = "%d imágenes de %d";
+"Unable to download cards at this time. Please try again later." = "Imposible descargar las cartas en este momento. Por favor, vuelve a intentarlo más tarde.";
 "%d of %lu images could not be downloaded." = "%d de %lu imágenes no han podido descargarse.";
-"Clear Cache? You will need to re-download all data from NetrunnerDB.com." = "¿Desea limpiar la caché? Tendrá que volver a descargar todos los datos desde NetrunnerDB.com.";
+"Clear Cache? You will need to re-download all data from NetrunnerDB.com." = "¿Deseas limpiar la caché? Tendrás que volver a descargar todos los datos desde NetrunnerDB.com.";
 "An Internet connection is required." = "Se necesita conexión a Internet.";
 
 // identity selection
@@ -106,7 +106,7 @@
 // deck view
 "Draw" = "Robar";
 "Analysis" = "Análisis";
-"Notes" = "Nota";
+"Notes" = "Notas";
 
 // deck analysis
 "Deck Analysis" = "Análisis del mazo";
@@ -132,7 +132,7 @@
 "Side" = "Partido";
 "Status" = "Estado";
 "Active" = "Activo";
-"Testing" = "A Prueba";
+"Testing" = "A prueba";
 "Retired" = "Retirado";
 "Search for decks, identities or cards" = "Buscar mazos, identidades o cartas";
 
@@ -168,7 +168,7 @@
 
 // startup alert
 "No Card Data" = "No hay datos de cartas";
-"To use this app, you must first download card data from NetrunnerDB.com" = "Para usar esta aplicación debe primero descargar los datos de las cartas desde NetrunnerDB.com";
+"To use this app, you must first download card data from NetrunnerDB.com" = "Para usar esta aplicación debes primero descargar los datos de las cartas desde NetrunnerDB.com";
 "Not now" = "Ahora no";
 "Download" = "Descargar";
 
@@ -181,18 +181,18 @@
 "There are unsaved changes" = "Hay cambios sin guardar";
 
 // dropbox
-"Successfully connected to your Dropbox account" = "Se ha conectado con éxito a su cuenta Dropbox";
+"Successfully connected to your Dropbox account" = "Conectado con éxito a tu cuenta Dropbox";
 
 // import
 "Import Deck" = "Importar Mazo";
 "%@ (%d Cards)" = "%@ (%d Cartas)";
 "Deck imported" = "Mazo importado";
-"Detected a deck list in your clipboard. Import this deck?" = "Se ha detectado un mazo en su portapapeles. ¿Desea importar este mazo?";
-"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la NetrunnerDB.com URL de un mazo en su portapapeles. ¿Desea descargar e importar este mazo?";
-"Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la meteor URL de un mazo en su portapapeles. ¿Desea descargar e importar este mazo?";
+"Detected a deck list in your clipboard. Import this deck?" = "Se ha detectado un mazo en el portapapeles. ¿Deseas importar este mazo?";
+"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la URL de un mazo de NetrunnerDB.com en el portapapeles. ¿Deseas descargar e importar este mazo?";
+"Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "Se ha detectado la URL de un mazo meteor en el portapapeles. ¿Deseas descargar e importar este mazo?";
 "No Decks found" = "No se ha encontrado ningún mazo";
-"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Copiar mazos con formato OCTGN (.o8d) en la carpeta Apps/Net Deck de su Dropbox para importarlos a esta aplicación.";
-"Loading decks from Dropbox" = "Loading decks from Dropbox";
+"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Copiar mazos con formato OCTGN (.o8d) en la carpeta Apps/Net Deck de tu Dropbox para importarlos a esta aplicación.";
+"Loading decks from Dropbox" = "Descargando mazos desde Dropbox";
 
 // export
 "%@ exported" = "%@ exportado";
@@ -202,7 +202,7 @@
 "Markdown Deck" = "Mazo Markdown";
 "BBCode Deck" = "Mazo BBCode";
 "Print" = "Imprimir";
-"As Email" = "A Email";
+"As Email" = "Por Email";
 
 // cycles
 "Core / Deluxe" = "Básico / Deluxe";
@@ -211,32 +211,31 @@
 "Lunar Cycle" = "Ciclo Lunar";
 
 // netrunnerdb.com
-/*
-"Import from Dropbox" = "Von Dropbox importieren";
-"Import from NetrunnerDB.com" = "Von NetrunnerDB.com importieren";
-"This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf NetrunnerDB.com verknüpft";
-"This deck is linked to deck %@ on NetrunnerDB.com" = "Dieses Deck ist mit Deck %@ auf NetrunnerDB.com verknüpft";
-"Unlink" = "Trennen";
-"Saving Deck..." = "Deck speichern...";
-"Loading Decks..." = "Decks laden...";
-"Publishing Deck..." = "Deck veröffentlichen...";
-"Exporting Decks..." = "Decks exportieren...";
-"A local copy of this deck already exists." = "Eine lokale Kopie dieses Decks existiert bereits.";
-"Overwrite" = "Überschreiben";
-"Import as new" = "Neu importieren";
-"Connect to your Dropbox and/or NetrunnerDB.com account first." = "Bitte Dropbox- und/oder NetrunnerDB.com-Verbindung einrichten.";
-"Open in Safari" = "In Safari öffnen";
-"Publish deck" = "Deck veröffentlichen";
-"Only valid decks can be published." = "Nur valide Decks können veröffentlicht werden.";
-"Saving the deck at NetrunnerDB.com failed." = "Speichern bei NetrunnerDB.com fehlgeschlagen.";
-"Publishing the deck at NetrunnerDB.com failed." = "Veröffentlichen bei NetrunnerDB.com fehlgeschlagen.";
-"Deck published with ID %@" = "Deck veröffentlicht, ID: %@";
-"Import All" = "Alle importieren";
-"Export Decks" = "Decks exporieren";
-"Export all currently visible decks" = "Exporiere alle gerade angezeigten Decks";
-"To Dropbox" = "Zu Dropbox";
-"To NetrunnerDB.com" = "Zu NetrunnerDB.com";
-"Import all decks from Dropbox?" = "Alle Decks von Dropbox importieren?";
-"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Alle Decks von NetrunnerDB.com importieren? Existierende verknüpfte Decks werden überschrieben.";
-"Imported decks" = "Decks importiert";
- */
+"Import from Dropbox" = "Importar desde Dropbox";
+"Import from NetrunnerDB.com" = "Importar desde NetrunnerDB.com";
+"This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Este mazo no está (todavía) enlazado a un mazo de NetrunnerDB.com";
+"This deck is linked to deck %@ on NetrunnerDB.com" = "Este mazo está enlazado al mazo %@ de NetrunnerDB.com";
+"Unlink" = "Desconectar";
+"Saving Deck..." = "Guardando mazo...";
+"Loading Decks..." = "Cargando mazos...";
+"Publishing Deck..." = "Publicando mazo...";
+"Exporting Decks..." = "Exportando mazos...";
+"A local copy of this deck already exists." = "Ya existe una copia local de este mazo.";
+"Overwrite" = "Sobrescribir";
+"Import as new" = "Importar como nuevo";
+"Connect to your Dropbox and/or NetrunnerDB.com account first." = "Conecta primero con tu cuenta Dropbox o NetrunnerDB.com.";
+"Open in Safari" = "Abrir en Safari";
+"Publish deck" = "Publicar mazo";
+"Only valid decks can be published." = "Sólo se puede publicar mazos válidos.";
+"Saving the deck at NetrunnerDB.com failed." = "Fallo al guardar el mazo en NetrunnerDB.com.";
+"Publishing the deck at NetrunnerDB.com failed." = "Fallo al publicar el mazo en NetrunnerDB.com.";
+"Deck published with ID %@" = "Mazo publicado con ID: %@";
+"Import All" = "Importar todos";
+"Export Decks" = "Exportar mazos";
+"Export all currently visible decks" = "Exportar todos los mazos visibles actualmente";
+"To Dropbox" = "A Dropbox";
+"To NetrunnerDB.com" = "A NetrunnerDB.com";
+"Import all decks from Dropbox?" = "¿Importar todos los mazos desde Dropbox?";
+"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "¿Importar todos los mazos desde NetrunnerDB.com? Los mazos enlazados existentes serán sobrescritos.";
+"Imported decks" = "Mazos importados";
+
