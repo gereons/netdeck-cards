@@ -174,7 +174,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSDate* scheduled = [fmt dateFromString:next];
     NSDate* now = [NSDate date];
     
-    if ([scheduled compare:now] == NSOrderedAscending)
+    if (APP_ONLINE && [scheduled compare:now] == NSOrderedAscending)
     {
         SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Update cards")
                                                    message:l10n(@"Card data may be out of date. Download now?")

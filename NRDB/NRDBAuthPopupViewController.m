@@ -105,7 +105,7 @@ static NRDBAuthPopupViewController* popup;
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    [self resignFirstResponder];
+    [self.webView resignFirstResponder];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.activityIndicator startAnimating];

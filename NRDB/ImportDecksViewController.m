@@ -12,7 +12,6 @@
 #import <SVProgressHUD.h>
 #import <EXTScope.h>
 #import <SDCAlertView.h>
-#import <AFNetworking.h>
 
 #import "Deck.h"
 #import "DeckManager.h"

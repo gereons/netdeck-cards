@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <AFNetworking.h>
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
 

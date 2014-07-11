@@ -25,3 +25,6 @@
 #define l10n(str)   NSLocalizedString(str, nil)
 
 #import "NRTypes.h"
+#import <AFNetworking.h>
+
+#define APP_ONLINE  [AFNetworkReachabilityManager sharedManager].reachable

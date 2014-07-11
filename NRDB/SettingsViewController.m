@@ -8,7 +8,6 @@
 
 #import <SVProgressHUD.h>
 #import <Dropbox/Dropbox.h>
-#import <AFNetworking.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
 
@@ -120,13 +119,14 @@
         if (useNrdb)
         {
             TF_CHECKPOINT(@"netrunnerdb.com login");
-            if ([AFNetworkReachabilityManager sharedManager].reachable)
+            if (APP_ONLINE)
             {
                 [NRDBAuthPopupViewController showInViewController:topMost];
             }
             else
             {
                 [self showOfflineAlert];
+                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:USE_NRDB];
             }
         }
         else
@@ -146,7 +146,7 @@
     if ([specifier.key isEqualToString:DOWNLOAD_DATA_NOW])
     {
         TF_CHECKPOINT(@"download data");
-        if ([AFNetworkReachabilityManager sharedManager].reachable)
+        if (APP_ONLINE)
         {
             [DataDownload downloadCardData];
         }
@@ -158,7 +158,7 @@
     else if ([specifier.key isEqualToString:DOWNLOAD_IMG_NOW])
     {
         TF_CHECKPOINT(@"download images");
-        if ([AFNetworkReachabilityManager sharedManager].reachable)
+        if (APP_ONLINE)
         {
             [DataDownload downloadAllImages];
         }
@@ -170,7 +170,7 @@
     else if ([specifier.key isEqualToString:DOWNLOAD_MISSING_IMG])
     {
         TF_CHECKPOINT(@"download missing images");
-        if ([AFNetworkReachabilityManager sharedManager].reachable)
+        if (APP_ONLINE)
         {
             [DataDownload downloadMissingImages];
         }

@@ -9,7 +9,6 @@
 #import <SVProgressHUD.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
-#import <AFNetworking.h>
 
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
@@ -335,11 +334,25 @@ enum { POPUP_EXPORT, POPUP_STATE };
             switch (buttonIndex)
             {
                 case 1: // open in safari
-                    [self openInSafari:self.deck];
+                    if (APP_ONLINE)
+                    {
+                        [self openInSafari:self.deck];
+                    }
+                    else
+                    {
+                        [self showOfflineAlert];
+                    }
                     break;
             
                 case 2: // publish
-                    [self publishDeck:self.deck];
+                    if (APP_ONLINE)
+                    {
+                        [self publishDeck:self.deck];
+                    }
+                    else
+                    {
+                        [self showOfflineAlert];
+                    }
                     break;
                     
                 case 3: // disconnect
@@ -352,7 +365,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
                     [self refresh];
                     break;
             
-                case 4: // save/upload
+                case 4: // save/upload                    
                     [self saveDeckToNetrunnerdb];
                     break;
             }
@@ -362,6 +375,12 @@ enum { POPUP_EXPORT, POPUP_STATE };
 
 -(void) saveDeckToNetrunnerdb
 {
+    if (!APP_ONLINE)
+    {
+        [self showOfflineAlert];
+        return;
+    }
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [SVProgressHUD showWithStatus:l10n(@"Saving Deck...")];
     
@@ -416,6 +435,13 @@ enum { POPUP_EXPORT, POPUP_STATE };
     {
         [SDCAlertView alertWithTitle:nil message:l10n(@"Only valid decks can be published.") buttons:@[ l10n(@"OK") ]];
     }
+}
+
+-(void) showOfflineAlert
+{
+    [SDCAlertView alertWithTitle:nil
+                         message:l10n(@"An Internet connection is required.")
+                         buttons:@[l10n(@"OK")]];
 }
 
 -(void) editNotes:(id)sender

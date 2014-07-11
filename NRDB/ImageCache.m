@@ -7,7 +7,6 @@
 //
 
 #import "ImageCache.h"
-#import <AFNetworking.h>
 #import <EXTScope.h>
 
 #import "Card.h"
@@ -130,7 +129,7 @@ static NSCache* memCache;
     if (img)
     {
         // NSLog(@"cached, check for update");
-        if ([AFNetworkReachabilityManager sharedManager].reachable)
+        if (APP_ONLINE)
         {
             [self checkForImageUpdate:card withKey:key];
         }
@@ -144,7 +143,7 @@ static NSCache* memCache;
     }
     
     // return a placeholder if we're offline or already know that the img is unavailable
-    if (![AFNetworkReachabilityManager sharedManager].reachable || [unavailableImages containsObject:key])
+    if (!APP_ONLINE || [unavailableImages containsObject:key])
     {
         completionBlock(card, [ImageCache placeholderFor:card.role], YES);
     }
@@ -228,7 +227,7 @@ static NSCache* memCache;
 -(void) updateImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
 {
     NSString* src = card.imageSrc;
-    if (![AFNetworkReachabilityManager sharedManager].reachable || src == nil)
+    if (!APP_ONLINE || src == nil)
     {
         completionBlock(NO);
         return;
