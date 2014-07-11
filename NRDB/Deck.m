@@ -131,7 +131,7 @@ static NSArray* draftIds;
     BOOL noJintekiAllowed = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
     
     BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
-    BOOL hfError = NO, hsError = NO, usError = NO, efError = NO, esError = NO;
+    BOOL hfError = NO, hsError = NO, usError = NO, efError = NO, esError = NO, ufError = no;
     
     // check max 1 per deck restrictions
     for (CardCounter* cc in self.cards)
@@ -162,6 +162,12 @@ static NSArray* draftIds;
             {
                 efError = YES;
                 [reasons addObject:l10n(@"Too many Eden Fragments")];
+            }
+            
+            if ([card.code isEqualToString:UTOPIA_FRAGMENT] && cc.count > 1 && !ufError)
+            {
+                ufError = YES;
+                [reasons addObject:l10n(@"Too many Utopia Fragments")];
             }
             
             if (noJintekiAllowed && card.faction == NRFactionJinteki && !jintekiError)

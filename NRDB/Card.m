@@ -39,7 +39,7 @@ static BOOL isRetina;
 +(void) initialize
 {
     max1InDeck = @[ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
-                    UTOPIA_SHARD,
+                    UTOPIA_SHARD, UTOPIA_FRAGMENT,
                     HADES_SHARD, HADES_FRAGMENT,
                     EDEN_SHARD, EDEN_FRAGMENT ];
     

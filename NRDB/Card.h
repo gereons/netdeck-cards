@@ -19,7 +19,7 @@
 #define EDEN_SHARD              @"06020"    // max 1 per deck
 #define EDEN_FRAGMENT           @"06030"    // max 1 per deck
 #define HADES_FRAGMENT          @"06071"    // max 1 per deck
-// #define UTOPIA_FRAGMENT         @""         // max 1 per deck
+#define UTOPIA_FRAGMENT         @"06110"    // max 1 per deck
 
 // draft ids
 #define THE_MASQUE              @"00006"
