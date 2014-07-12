@@ -57,7 +57,7 @@
                     </connections>
                 </button>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="eGs-tE-lbO">
-                    <rect key="frame" x="397" y="13" width="123" height="29"/>
+                    <rect key="frame" x="447" y="13" width="73" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
                         <segment title="" image="deckview_card.png"/>

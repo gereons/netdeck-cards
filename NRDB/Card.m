@@ -57,7 +57,7 @@ static BOOL isRetina;
     isRetina = [UIScreen mainScreen].scale == 2.0;
    
     factionColors = @{
-                      @(NRFactionJinteki):      @(0xc62026),
+                      @(NRFactionJinteki):      @(0x940c00),
                       @(NRFactionNBN):          @(0xd7a32d),
                       @(NRFactionWeyland):      @(0x2d7868),
                       @(NRFactionHaasBioroid):  @(0x6b2b8a),
