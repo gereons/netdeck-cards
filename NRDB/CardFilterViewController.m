@@ -159,6 +159,8 @@ static NSInteger viewMode = VIEW_LIST;
     self.viewMode.selectedSegmentIndex = viewMode;
     self.collectionView.hidden = viewMode == VIEW_LIST;
     self.tableView.hidden = viewMode != VIEW_LIST;
+    
+    [self resetAllButtons];
 }
 
 -(void) dealloc
@@ -296,10 +298,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.apSlider.value = 0;
     [self apValueChanged:nil];
     
-    [self resetButton:TYPE_BUTTON];
-    [self resetButton:SET_BUTTON];
-    [self resetButton:FACTION_BUTTON];
-    [self resetButton:SUBTYPE_BUTTON];
+    [self resetAllButtons];
     self.selectedType = kANY;
     self.selectedTypes = nil;
     
@@ -552,6 +551,14 @@ static NSInteger viewMode = VIEW_LIST;
         [self resetButton:SUBTYPE_BUTTON];
     }
     [self.selectedValues setObject:value ? value : values forKey:@(button.tag)];
+}
+
+-(void) resetAllButtons
+{
+    [self resetButton:TYPE_BUTTON];
+    [self resetButton:SET_BUTTON];
+    [self resetButton:FACTION_BUTTON];
+    [self resetButton:SUBTYPE_BUTTON];
 }
 
 -(void) resetButton:(NSInteger)tag
