@@ -215,7 +215,7 @@
 "Import from NetrunnerDB.com" = "Importar desde NetrunnerDB.com";
 "This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Este mazo no está (todavía) enlazado a un mazo de NetrunnerDB.com";
 "This deck is linked to deck %@ on NetrunnerDB.com" = "Este mazo está enlazado al mazo %@ de NetrunnerDB.com";
-"Unlink" = "Desconectar";
+"Unlink" = "Desenlazar";
 "Saving Deck..." = "Guardando mazo...";
 "Loading Decks..." = "Cargando mazos...";
 "Publishing Deck..." = "Publicando mazo...";
