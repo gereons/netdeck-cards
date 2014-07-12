@@ -11,6 +11,8 @@
 		3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A09184918B2925400DBE590 /* InfluenceStats.m */; };
 		3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E8D18BBC49C00C99FED /* Localizable.strings */; };
 		3A095E9118BBCB2200C99FED /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E9318BBCB2200C99FED /* About.html */; };
+		3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11C5F919715BE8003F2093 /* IdentitySectionHeaderView.m */; };
+		3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */; };
 		3A150C01190107AD00FDFD23 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A150C00190107AD00FDFD23 /* StoreKit.framework */; };
 		3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A167BD118B1E9C90023DF8A /* CardTypeStats.m */; };
 		3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EABD185DBA2D00DB7FFC /* Faction.m */; };
@@ -234,6 +236,9 @@
 		3A095E9018BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A095E9218BBCB2200C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/About.html; sourceTree = "<group>"; };
 		3A095E9418BBCB2700C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = de; path = de.lproj/About.html; sourceTree = "<group>"; };
+		3A11C5F819715BE8003F2093 /* IdentitySectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentitySectionHeaderView.h; sourceTree = "<group>"; };
+		3A11C5F919715BE8003F2093 /* IdentitySectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentitySectionHeaderView.m; sourceTree = "<group>"; };
+		3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentitySectionHeaderView.xib; sourceTree = "<group>"; };
 		3A150C00190107AD00FDFD23 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3A167BD018B1E9C90023DF8A /* CardTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardTypeStats.h; sourceTree = "<group>"; };
 		3A167BD118B1E9C90023DF8A /* CardTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardTypeStats.m; sourceTree = "<group>"; };
@@ -790,6 +795,9 @@
 				3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */,
 				3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */,
 				3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */,
+				3A11C5F819715BE8003F2093 /* IdentitySectionHeaderView.h */,
+				3A11C5F919715BE8003F2093 /* IdentitySectionHeaderView.m */,
+				3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */,
 			);
 			name = "Identity Selection Form";
 			sourceTree = "<group>";
@@ -1276,6 +1284,7 @@
 				3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */,
 				3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
+				3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */,
 				3A82625318E05EC70038B4AC /* cardstats_credit.png in Resources */,
 				3A82624C18E05EC70038B4AC /* cardstats_link.png in Resources */,
 				3A689FA5195D3EB8004EBC41 /* active.png in Resources */,
@@ -1471,6 +1480,7 @@
 				3AB34E5F1939AA7A000A43BB /* CardFilterThumbView.m in Sources */,
 				3A5BC3F21849326B00E792F7 /* Deck.m in Sources */,
 				3AF2235E194364A80072FD9F /* CardFilterSectionHeaderView.m in Sources */,
+				3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */,
 				3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */,
 				3A5BC3EF1849326B00E792F7 /* Card.m in Sources */,
 			);

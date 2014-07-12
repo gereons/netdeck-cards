@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
+#import <CSStickyHeaderFlowLayout.h>
+
 #import "IdentitySelectionViewController.h"
 #import "IdentityViewCell.h"
 #import "CardImageViewPopover.h"
@@ -17,11 +19,14 @@
 #import "CGRectUtils.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"
+#import "CardThumbView.h"
+#import "IdentitySectionHeaderView.h"
 
 @interface IdentitySelectionViewController ()
 
 @property NRRole role;
 
+@property NSArray* factions;
 @property NSArray* factionNames;
 @property NSMutableArray* identities;
 @property Card* selectedIdentity;
@@ -30,6 +35,8 @@
 @end
 
 @implementation IdentitySelectionViewController
+
+static NSInteger viewMode = 1;
 
 +(void) showForRole:(NRRole)role inViewController:(UIViewController*)vc withIdentity:(Card*)card
 {
@@ -109,6 +116,19 @@
     [self.tableView addGestureRecognizer:doubleTap];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CardThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"IdentitySectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
+    
+    CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    layout.headerReferenceSize = CGSizeMake(500, 22);
+    layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
+    layout.minimumInteritemSpacing = 3;
+    layout.minimumLineSpacing = 3;
+    
+    self.tableView.hidden = viewMode == 0;
+    self.collectionView.hidden = viewMode == 1;
+    self.selector.selectedSegmentIndex = viewMode;
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -118,6 +138,7 @@
     if (self.selectedIndexPath)
     {
         [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+        [self.collectionView selectItemAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionCenteredVertically];
     }
 }
 
@@ -143,6 +164,35 @@
     }
 }
 
+-(void)viewModeChange:(UISegmentedControl*)sender
+{
+    viewMode = sender.selectedSegmentIndex;
+    self.tableView.hidden = viewMode == 0;
+    self.collectionView.hidden = viewMode == 1;
+    
+    if (self.selectedIndexPath)
+    {
+        [self.tableView reloadData];
+        [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+        
+        [self.collectionView reloadData];
+        [self.collectionView selectItemAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionCenteredVertically];
+    }
+}
+
+-(void) showImage:(UIButton*)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    NSArray* arr = self.identities[indexPath.section];
+    Card* card = arr[indexPath.row];
+    
+    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
+    rect.origin.x = sender.frame.origin.x;
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
+}
+
 #pragma mark table view
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -152,7 +202,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSMutableArray* arr = self.identities[section];
+    NSArray* arr = self.identities[section];
     return arr.count;
 }
 
@@ -170,7 +220,7 @@
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    NSMutableArray* arr = self.identities[indexPath.section];
+    NSArray* arr = self.identities[indexPath.section];
     Card* c = arr[indexPath.row];
     
     if ([c isEqual:self.selectedIdentity])
@@ -231,17 +281,94 @@
     return self.factionNames[section];
 }
 
--(void) showImage:(UIButton*)sender
+#pragma mark collectionview
+
+-(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
+    static NSString* cellIdentifier = @"cardThumb";
     NSArray* arr = self.identities[indexPath.section];
     Card* card = arr[indexPath.row];
     
-    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-    rect.origin.x = sender.frame.origin.x;
-    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
+    CardThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.card = card;
+    
+    if (cell.selected)
+    {
+        cell.layer.borderWidth = 5;
+        cell.layer.borderColor = [card.factionColor CGColor];
+        cell.layer.cornerRadius = 8;
+    }
+    else
+    {
+        cell.layer.borderWidth = 0;
+    }
+    
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    cell.layer.borderWidth = 0;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray* arr = self.identities[indexPath.section];
+    Card* card = arr[indexPath.row];
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+
+    cell.layer.borderWidth = 5;
+    cell.layer.borderColor = [card.factionColor CGColor];
+    cell.layer.cornerRadius = 8;
+    
+    // convert to on-screen coordinates
+    CGRect rect = [collectionView convertRect:cell.frame toView:self.collectionView];
+
+    if ([self.selectedIdentity isEqual:card])
+    {
+        [CardImageViewPopover showForCard:card fromRect:rect inView:self.collectionView];
+    }
+    
+    self.selectedIdentity = card;
+    self.selectedIndexPath = indexPath;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(160, 119);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(2, 2, 0, 2);
+}
+
+-(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return self.identities.count;
+}
+
+-(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    NSArray* arr = self.identities[section];
+    return arr.count;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    IdentitySectionHeaderView* header = nil;
+    if (kind == UICollectionElementKindSectionHeader)
+    {
+        header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
+        
+        header.titleLabel.text = self.factionNames[indexPath.section];
+        NSArray* arr = self.identities[indexPath.section];
+        Card* card = arr[0];
+        header.titleLabel.textColor = card.factionColor;
+    }
+    
+    return header;
 }
 
 @end

@@ -70,6 +70,7 @@ static BOOL isRetina;
                    @(NRCardTypeAgenda): @15,
                    @(NRCardTypeAsset): @20,
                    @(NRCardTypeEvent): @10,
+                   @(NRCardTypeIdentity): @12,
                    @(NRCardTypeOperation): @10,
                    @(NRCardTypeHardware): @18,
                    @(NRCardTypeIce): @209,
