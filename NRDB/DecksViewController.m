@@ -57,19 +57,19 @@ static NSString* filterText;
 @property UIBarButtonItem* addDeckButton;
 @property UIBarButtonItem* diffButton;
 
-@property NSMutableArray* decksToDiff;
-
 @end
 
 @implementation DecksViewController
 
 static NSDictionary* sortStr;
 static NSDictionary* sideStr;
+static NSMutableArray* decksToDiff;
 
 +(void) initialize
 {
     sortStr = @{ @(NRDeckSortDate): l10n(@"Date"), @(NRDeckSortFaction): l10n(@"Faction"), @(NRDeckSortA_Z): l10n(@"A-Z") };
     sideStr = @{ @(FilterTypeAll): l10n(@"Both"), @(FilterRunner): l10n(@"Runner"), @(FilterCorp): l10n(@"Corp") };
+    decksToDiff = [NSMutableArray array];
 }
 
 - (id) init
@@ -79,7 +79,6 @@ static NSDictionary* sideStr;
         self.dateFormatter = [[NSDateFormatter alloc] init];
         [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-        self.decksToDiff = [NSMutableArray array];
     }
     return self;
 }
@@ -676,19 +675,19 @@ static NSDictionary* sideStr;
                 break;
             case 3: // select for diff
                 
-                if ([self.decksToDiff containsObject:self.deck])
+                if ([decksToDiff containsObject:self.deck])
                 {
-                    [self.decksToDiff removeObject:self.deck];
+                    [decksToDiff removeObject:self.deck];
                 }
                 else
                 {
-                    [self.decksToDiff addObject:self.deck];
+                    [decksToDiff addObject:self.deck];
                 }
-                while (self.decksToDiff.count > 2)
+                while (decksToDiff.count > 2)
                 {
-                    [self.decksToDiff removeObjectAtIndex:0];
+                    [decksToDiff removeObjectAtIndex:0];
                 }
-                self.diffButton.enabled = self.decksToDiff.count == 2;
+                self.diffButton.enabled = decksToDiff.count == 2;
                 [self.tableView reloadData];
                 break;
         }
@@ -866,10 +865,10 @@ static NSDictionary* sideStr;
 
 -(void) diffDecks:(id)sender
 {
-    NSAssert(self.decksToDiff.count == 2, @"count must be 2");
+    NSAssert(decksToDiff.count == 2, @"count must be 2");
     
-    Deck* deck1 = self.decksToDiff[0];
-    Deck* deck2 = self.decksToDiff[1];
+    Deck* deck1 = decksToDiff[0];
+    Deck* deck2 = decksToDiff[1];
     
     if (deck1.role != deck2.role)
     {
@@ -937,7 +936,7 @@ static NSDictionary* sideStr;
     
     cell.nrdbIcon.hidden = deck.netrunnerDbId == nil;
     
-    if ([self.decksToDiff containsObject:deck])
+    if ([decksToDiff containsObject:deck])
     {
         cell.nameLabel.textColor = [UIColor blueColor];
     }
