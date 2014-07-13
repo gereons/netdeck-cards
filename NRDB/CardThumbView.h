@@ -5,6 +5,8 @@
 //  Created by Gereon Steffens on 24.05.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
+//  used in draw simulator & identity picker
+//
 
 #import <UIKit/UIKit.h>
 

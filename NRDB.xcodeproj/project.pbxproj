@@ -91,6 +91,8 @@
 		3A6E756F18E401D400EF8DE1 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E756918E401D400EF8DE1 /* Icon-76.png */; };
 		3A6E757218E402A300EF8DE1 /* Icon-Small-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E757018E402A300EF8DE1 /* Icon-Small-29@2x.png */; };
 		3A6E757318E402A300EF8DE1 /* Icon-Small-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E757118E402A300EF8DE1 /* Icon-Small-29.png */; };
+		3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71628E197289E7001755BF /* DeckDiffViewController.m */; };
+		3A716291197289E7001755BF /* DeckDiffViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71628F197289E7001755BF /* DeckDiffViewController.xib */; };
 		3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71C9C7185CC4E200D66A27 /* CardSets.m */; };
 		3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71FFC71930BA6500C71C54 /* CardThumbView.xib */; };
 		3A71FFCB1930BAE800C71C54 /* CardThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71FFCA1930BAE800C71C54 /* CardThumbView.m */; };
@@ -357,6 +359,9 @@
 		3A6E756918E401D400EF8DE1 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
 		3A6E757018E402A300EF8DE1 /* Icon-Small-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-29@2x.png"; sourceTree = "<group>"; };
 		3A6E757118E402A300EF8DE1 /* Icon-Small-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-29.png"; sourceTree = "<group>"; };
+		3A71628D197289E7001755BF /* DeckDiffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckDiffViewController.h; sourceTree = "<group>"; };
+		3A71628E197289E7001755BF /* DeckDiffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckDiffViewController.m; sourceTree = "<group>"; };
+		3A71628F197289E7001755BF /* DeckDiffViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffViewController.xib; sourceTree = "<group>"; };
 		3A71C9C6185CC4E200D66A27 /* CardSets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardSets.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A71C9C7185CC4E200D66A27 /* CardSets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardSets.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A71FFC71930BA6500C71C54 /* CardThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardThumbView.xib; sourceTree = "<group>"; };
@@ -630,6 +635,7 @@
 				3A76EEBC18B5DA68004DB586 /* Images */,
 				3AA440DF1854DA0D0051D4B0 /* Data / Models */,
 				3A9742AD18AF7DAE00F83520 /* Stats */,
+				3A71628C197289BA001755BF /* Deck Diff */,
 				3AD3248E18A93F8000D7AE5D /* Deck Analysis */,
 				3ABDE5A018AFC4B200AFEA88 /* Draw Simulator */,
 				3A595425186EE7C40074B3B1 /* Card Image Display */,
@@ -813,6 +819,9 @@
 				3A7FD6B0188172C100F0926F /* CardImageCell.xib */,
 				3A5794D819157A2D005DA4B2 /* CardDetailView.h */,
 				3A5794D919157A2D005DA4B2 /* CardDetailView.m */,
+				3A71FFC91930BAE800C71C54 /* CardThumbView.h */,
+				3A71FFCA1930BAE800C71C54 /* CardThumbView.m */,
+				3A71FFC71930BA6500C71C54 /* CardThumbView.xib */,
 			);
 			name = "Card Image Display";
 			sourceTree = "<group>";
@@ -844,6 +853,16 @@
 				3A6E757118E402A300EF8DE1 /* Icon-Small-29.png */,
 			);
 			name = iTunes;
+			sourceTree = "<group>";
+		};
+		3A71628C197289BA001755BF /* Deck Diff */ = {
+			isa = PBXGroup;
+			children = (
+				3A71628D197289E7001755BF /* DeckDiffViewController.h */,
+				3A71628E197289E7001755BF /* DeckDiffViewController.m */,
+				3A71628F197289E7001755BF /* DeckDiffViewController.xib */,
+			);
+			name = "Deck Diff";
 			sourceTree = "<group>";
 		};
 		3A721DBE189CFA3A004EFDFE /* Deck Import */ = {
@@ -1102,9 +1121,6 @@
 				3ABDE5A118AFC52C00AFEA88 /* DrawSimulatorViewController.h */,
 				3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */,
 				3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */,
-				3A71FFC91930BAE800C71C54 /* CardThumbView.h */,
-				3A71FFCA1930BAE800C71C54 /* CardThumbView.m */,
-				3A71FFC71930BA6500C71C54 /* CardThumbView.xib */,
 			);
 			name = "Draw Simulator";
 			sourceTree = "<group>";
@@ -1289,6 +1305,7 @@
 				3A82624C18E05EC70038B4AC /* cardstats_link.png in Resources */,
 				3A689FA5195D3EB8004EBC41 /* active.png in Resources */,
 				3AE0D50E18F7B4A0007868A7 /* strength_slider.png in Resources */,
+				3A716291197289E7001755BF /* DeckDiffViewController.xib in Resources */,
 				3AE0D50918F7B4A0007868A7 /* point_slider@2x.png in Resources */,
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
@@ -1438,6 +1455,7 @@
 				3ABDE5A418AFC52C00AFEA88 /* DrawSimulatorViewController.m in Sources */,
 				3AB2CF591938952600CCBE64 /* CardFilterViewController.m in Sources */,
 				3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */,
+				3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */,
 				3A4178A118761BF600DEEFA6 /* IASKSettingsReader.m in Sources */,
 				3AB9BD5918FADB51004EAF10 /* DecksViewController.m in Sources */,
 				3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */,

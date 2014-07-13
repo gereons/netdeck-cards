@@ -24,6 +24,7 @@
 #import "SettingsKeys.h"
 #import "DeckState.h"
 #import "NRDB.h"
+#import "DeckDiffViewController.h"
 
 typedef NS_ENUM(NSInteger, FilterType) {
     FilterTypeAll, FilterRunner, FilterCorp
@@ -46,6 +47,7 @@ static NSString* filterText;
 @property UIActionSheet* popup;
 @property SDCAlertView* nameAlert;
 @property Deck* deck;
+
 @property UIBarButtonItem* editButton;
 @property UIBarButtonItem* sortButton;
 @property UIBarButtonItem* stateFilterButton;
@@ -53,6 +55,9 @@ static NSString* filterText;
 @property UIBarButtonItem* importButton;
 @property UIBarButtonItem* exportButton;
 @property UIBarButtonItem* addDeckButton;
+@property UIBarButtonItem* diffButton;
+
+@property NSMutableArray* decksToDiff;
 
 @end
 
@@ -74,6 +79,7 @@ static NSDictionary* sideStr;
         self.dateFormatter = [[NSDateFormatter alloc] init];
         [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        self.decksToDiff = [NSMutableArray array];
     }
     return self;
 }
@@ -152,6 +158,9 @@ static NSDictionary* sideStr;
     self.editButton.possibleTitles = [NSSet setWithArray:@[ l10n(@"Edit"), l10n(@"Done") ]];
     self.editButton.title = l10n(@"Edit");
     
+    self.diffButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Compare") style:UIBarButtonItemStylePlain target:self action:@selector(diffDecks:)];
+    self.diffButton.enabled = NO;
+    
     self.addDeckButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDeck:)];
     self.importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDecks:)];
@@ -160,6 +169,7 @@ static NSDictionary* sideStr;
         self.exportButton,
         self.importButton,
         self.editButton,
+        self.diffButton,
     ];
     
     self.searchBar.placeholder = l10n(@"Search for decks, identities or cards");
@@ -571,7 +581,8 @@ static NSDictionary* sideStr;
                                        destructiveButtonTitle:nil
                                             otherButtonTitles:l10n(@"Duplicate"),
                                                               l10n(@"Rename"),
-                                                              l10n(@"Send via Email"), nil];
+                                                              l10n(@"Send via Email"),
+                                                              l10n(@"Select to Compare"), nil];
             
             self.popup.tag = POPUP_LONGPRESS;
             [self.popup showFromRect:cell.frame inView:self.tableView animated:NO];
@@ -662,6 +673,23 @@ static NSDictionary* sideStr;
             }
             case 2: // email
                 [self sendAsEmail];
+                break;
+            case 3: // select for diff
+                
+                if ([self.decksToDiff containsObject:self.deck])
+                {
+                    [self.decksToDiff removeObject:self.deck];
+                }
+                else
+                {
+                    [self.decksToDiff addObject:self.deck];
+                }
+                while (self.decksToDiff.count > 2)
+                {
+                    [self.decksToDiff removeObjectAtIndex:0];
+                }
+                self.diffButton.enabled = self.decksToDiff.count == 2;
+                [self.tableView reloadData];
                 break;
         }
     }
@@ -834,6 +862,24 @@ static NSDictionary* sideStr;
     [self.popup showFromRect:frame inView:self.tableView.superview animated:NO];
 }
 
+#pragma mark deck diff
+
+-(void) diffDecks:(id)sender
+{
+    NSAssert(self.decksToDiff.count == 2, @"count must be 2");
+    
+    Deck* deck1 = self.decksToDiff[0];
+    Deck* deck2 = self.decksToDiff[1];
+    
+    if (deck1.role != deck2.role)
+    {
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Both decks must be for the same side.") buttons:@[ l10n(@"OK")]];
+        return;
+    }
+    
+    [DeckDiffViewController showForDecks:deck1 deck2:deck2 inViewController:self];
+}
+
 #pragma mark tableview
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -890,6 +936,15 @@ static NSDictionary* sideStr;
     cell.dateLabel.text = [NSString stringWithFormat:@"%@ · %@", state, date];
     
     cell.nrdbIcon.hidden = deck.netrunnerDbId == nil;
+    
+    if ([self.decksToDiff containsObject:deck])
+    {
+        cell.nameLabel.textColor = [UIColor blueColor];
+    }
+    else
+    {
+        cell.nameLabel.textColor = [UIColor blackColor];
+    }
     
     return cell;
 }
