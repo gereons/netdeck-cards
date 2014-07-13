@@ -63,6 +63,8 @@ static NSString* filterText;
 
 static NSDictionary* sortStr;
 static NSDictionary* sideStr;
+
+#warning selection needs to persist - store filenames?
 static NSMutableArray* decksToDiff;
 
 +(void) initialize

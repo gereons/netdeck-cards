@@ -19,9 +19,11 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UIButton* closeButton;
 @property IBOutlet UIButton* reverseButton;
+@property IBOutlet UIButton* diffModeButton;
 
 -(IBAction)close:(id)sender;
 -(IBAction)reverse:(id)sender;
+-(IBAction)diffMode:(id)sender;
 
 +(void) showForDecks:(Deck*)deck1 deck2:(Deck*)deck2 inViewController:(UIViewController*)vc;
 

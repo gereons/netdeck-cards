@@ -15,8 +15,11 @@
 @interface DeckDiffViewController ()
 @property Deck* deck1;
 @property Deck* deck2;
-@property NSMutableArray* diffRows;
-@property NSMutableArray* diffSections;
+@property NSMutableArray* fullDiffSections;
+@property NSMutableArray* fullDiffRows;
+@property NSMutableArray* smallDiffSections;
+@property NSMutableArray* smallDiffRows;
+@property BOOL fullDiff;
 @end
 
 @interface CardDiff: NSObject
@@ -45,7 +48,7 @@
     {
         self.deck1 = deck1;
         self.deck2 = deck2;
-        
+        self.fullDiff = YES;
         self.modalPresentationStyle = UIModalPresentationFullScreen;
     }
     return self;
@@ -55,6 +58,8 @@
 {
     [super viewDidLoad];
     
+    UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.tableView setTableFooterView:tableFoot];
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckDiffCell" bundle:nil] forCellReuseIdentifier:@"diffCell"];
     [self setup];
 }
@@ -75,28 +80,28 @@
     NSMutableSet* types = [NSMutableSet setWithArray:data1.sections];
     [types addObjectsFromArray:data2.sections];
     
-    self.diffSections = [NSMutableArray array];
+    self.fullDiffSections = [NSMutableArray array];
     NSMutableArray* availableTypes = [[CardType typesForRole:self.deck1.role] mutableCopy];
     availableTypes[0] = [CardType name:NRCardTypeIdentity];
     for (NSString* type in availableTypes)
     {
         if ([types containsObject:type])
         {
-            [self.diffSections addObject:type];
+            [self.fullDiffSections addObject:type];
         }
     }
     
     // create arrays for each section
-    self.diffRows = [NSMutableArray array];
-    for (int i=0; i<self.diffSections.count; ++i)
+    self.fullDiffRows = [NSMutableArray array];
+    for (int i=0; i<self.fullDiffSections.count; ++i)
     {
-        [self.diffRows addObject:[NSMutableArray array]];
+        [self.fullDiffRows addObject:[NSMutableArray array]];
     }
     
     // for each type, find cards in each deck
-    for (int i=0; i<self.diffSections.count; ++i)
+    for (int i=0; i<self.fullDiffSections.count; ++i)
     {
-        NSString* type = self.diffSections[i];
+        NSString* type = self.fullDiffSections[i];
         int idx1 = [self findValues:data1 forSection:type];
         int idx2 = [self findValues:data2 forSection:type];
         
@@ -147,8 +152,49 @@
             }
         }
         
-        [self.diffRows[i] addObjectsFromArray:cards.allValues];
+        // sort diffs by card name
+        NSArray* arr = [cards.allValues sortedArrayUsingComparator:^NSComparisonResult(CardDiff* cd1, CardDiff* cd2) {
+            return [cd1.card.name compare:cd2.card.name];
+        }];
+        [self.fullDiffRows[i] addObjectsFromArray:arr];
     }
+    
+    // from the full diff, create the (potentially) smaller arrays
+    
+    self.smallDiffRows = [NSMutableArray array];
+    for (int i=0; i<self.fullDiffRows.count; ++i)
+    {
+        NSMutableArray* arr = [NSMutableArray array];
+        [self.smallDiffRows addObject:arr];
+        
+        NSArray* diff = self.fullDiffRows[i];
+        for (int j=0; j<diff.count; ++j)
+        {
+            CardDiff* cd = diff[j];
+            if (cd.count1 != cd.count2)
+            {
+                [arr addObject:cd];
+            }
+        }
+    }
+    NSAssert(self.smallDiffRows.count == self.fullDiffRows.count, @"count mismatch");
+    
+    self.smallDiffSections = [NSMutableArray array];
+    for (int i=self.smallDiffRows.count-1; i >= 0; --i)
+    {
+        NSArray* arr = self.smallDiffRows[i];
+        if (arr.count > 0)
+        {
+            NSString* section = self.fullDiffSections[i];
+            [self.smallDiffSections addObject:section];
+        }
+        else
+        {
+            [self.smallDiffRows removeObjectAtIndex:i];
+        }
+    }
+    
+    NSAssert(self.smallDiffRows.count == self.smallDiffSections.count, @"count mismatch");
 }
 
 -(int) findValues:(TableData*)data forSection:(NSString*)type
@@ -178,21 +224,31 @@
     [self.tableView reloadData];
 }
 
+-(void) diffMode:(id)sender
+{
+    self.fullDiff = !self.fullDiff;
+    
+    NSString* label = self.fullDiff ? l10n(@"Show only differences") : l10n(@"Show full comparison");
+    [self.diffModeButton setTitle:label forState:UIControlStateNormal];
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark table view
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.diffSections[section];
+    return self.fullDiff ? self.fullDiffSections[section] : self.smallDiffSections[section];
 }
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.diffSections.count;
+    return self.fullDiff ? self.fullDiffSections.count : self.smallDiffSections.count;
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray* arr = self.diffRows[section];
+    NSArray* arr = self.fullDiff ? self.fullDiffRows[section] : self.smallDiffRows[section];
     return arr.count;
 }
 
@@ -200,7 +256,7 @@
 {
     DeckDiffCell* cell = [tableView dequeueReusableCellWithIdentifier:@"diffCell" forIndexPath:indexPath];
 
-    NSArray* arr = self.diffRows[indexPath.section];
+    NSArray* arr = self.fullDiff ? self.fullDiffRows[indexPath.section] : self.smallDiffRows[indexPath.section];
     CardDiff* cd = arr[indexPath.row];
     
     if (cd.count1 > 0)
