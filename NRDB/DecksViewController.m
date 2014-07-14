@@ -64,14 +64,13 @@ static NSString* filterText;
 static NSDictionary* sortStr;
 static NSDictionary* sideStr;
 
-#warning selection needs to persist - store filenames?
-static NSMutableArray* decksToDiff;
+static NSMutableArray* _decksToDiff;
 
 +(void) initialize
 {
     sortStr = @{ @(NRDeckSortDate): l10n(@"Date"), @(NRDeckSortFaction): l10n(@"Faction"), @(NRDeckSortA_Z): l10n(@"A-Z") };
     sideStr = @{ @(FilterTypeAll): l10n(@"Both"), @(FilterRunner): l10n(@"Runner"), @(FilterCorp): l10n(@"Corp") };
-    decksToDiff = [NSMutableArray array];
+    _decksToDiff = [NSMutableArray array];
 }
 
 - (id) init
@@ -677,19 +676,19 @@ static NSMutableArray* decksToDiff;
                 break;
             case 3: // select for diff
                 
-                if ([decksToDiff containsObject:self.deck])
+                if ([_decksToDiff containsObject:self.deck.filename])
                 {
-                    [decksToDiff removeObject:self.deck];
+                    [_decksToDiff removeObject:self.deck.filename];
                 }
                 else
                 {
-                    [decksToDiff addObject:self.deck];
+                    [_decksToDiff addObject:self.deck.filename];
                 }
-                while (decksToDiff.count > 2)
+                while (_decksToDiff.count > 2)
                 {
-                    [decksToDiff removeObjectAtIndex:0];
+                    [_decksToDiff removeObjectAtIndex:0];
                 }
-                self.diffButton.enabled = decksToDiff.count == 2;
+                self.diffButton.enabled = _decksToDiff.count == 2;
                 [self.tableView reloadData];
                 break;
         }
@@ -867,10 +866,10 @@ static NSMutableArray* decksToDiff;
 
 -(void) diffDecks:(id)sender
 {
-    NSAssert(decksToDiff.count == 2, @"count must be 2");
+    NSAssert(_decksToDiff.count == 2, @"count must be 2");
     
-    Deck* deck1 = decksToDiff[0];
-    Deck* deck2 = decksToDiff[1];
+    Deck* deck1 = [DeckManager loadDeckFromPath:_decksToDiff[0]];
+    Deck* deck2 = [DeckManager loadDeckFromPath:_decksToDiff[1]];
     
     if (deck1.role != deck2.role)
     {
@@ -938,7 +937,7 @@ static NSMutableArray* decksToDiff;
     
     cell.nrdbIcon.hidden = deck.netrunnerDbId == nil;
     
-    if ([decksToDiff containsObject:deck])
+    if ([_decksToDiff containsObject:deck.filename])
     {
         cell.nameLabel.textColor = [UIColor blueColor];
     }

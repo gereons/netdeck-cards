@@ -37,6 +37,7 @@
     DeckDiffViewController* ddvc = [[DeckDiffViewController alloc] initWithDecks:deck1 deck2:deck2];
     
     [vc presentViewController:ddvc animated:NO completion:nil];
+    ddvc.view.superview.bounds = CGRectMake(0, 0, 768, 728);
 }
 
 - (id)initWithDecks:(Deck*)deck1 deck2:(Deck*)deck2
@@ -49,7 +50,7 @@
         self.deck1 = deck1;
         self.deck2 = deck2;
         self.fullDiff = YES;
-        self.modalPresentationStyle = UIModalPresentationFullScreen;
+        self.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     return self;
 }
@@ -57,6 +58,10 @@
 -(void) viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.titleLabel.text = l10n(@"Deck Comparison");
+    [self.diffModeButton setTitle:l10n(@"Show only differences") forState:UIControlStateNormal];
+    [self.closeButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
     
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];

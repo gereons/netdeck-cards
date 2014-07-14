@@ -238,3 +238,11 @@
 "Import all decks from Dropbox?" = "Alle Decks von Dropbox importieren?";
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Alle Decks von NetrunnerDB.com importieren? Existierende verknüpfte Decks werden überschrieben.";
 "Imported decks" = "Decks importiert";
+
+// deck diff
+"Select to Compare" = "Für Vergleich auswählen";
+"Compare" = "Vergleichen";
+"Deck Comparison" = "Deckvergleich";
+"Reverse" = "Vertauschen";
+"Show only differences" = "Nur Unterschiede anzeigen";
+"Show full comparison" = "Kompletten Vergleich anzeigen";
