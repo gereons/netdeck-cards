@@ -34,6 +34,8 @@
 		3A3622861849320C007F2854 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622651849320C007F2854 /* UIKit.framework */; };
 		3A36228E1849320C007F2854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A36228C1849320C007F2854 /* InfoPlist.strings */; };
 		3A3622901849320C007F2854 /* NRDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36228F1849320C007F2854 /* NRDBTests.m */; };
+		3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */; };
+		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
 		3A41789E18761BF600DEEFA6 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41788018761BF600DEEFA6 /* IASKAppSettingsViewController.m */; };
 		3A41789F18761BF600DEEFA6 /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41788218761BF600DEEFA6 /* IASKAppSettingsWebViewController.m */; };
@@ -274,6 +276,9 @@
 		3A36228B1849320C007F2854 /* NRDBTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NRDBTests-Info.plist"; sourceTree = "<group>"; };
 		3A36228D1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A36228F1849320C007F2854 /* NRDBTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NRDBTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPipsView.xib; sourceTree = "<group>"; };
+		3A36A0FC1974F79300D8D26A /* SmallPipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallPipsView.h; sourceTree = "<group>"; };
+		3A36A0FD1974F79300D8D26A /* SmallPipsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallPipsView.m; sourceTree = "<group>"; };
 		3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NROutlineLabel.h; sourceTree = "<group>"; };
 		3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NROutlineLabel.m; sourceTree = "<group>"; };
 		3A41787F18761BF600DEEFA6 /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
@@ -704,6 +709,9 @@
 				3AF2235C194364A80072FD9F /* CardFilterSectionHeaderView.h */,
 				3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */,
 				3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */,
+				3A36A0FC1974F79300D8D26A /* SmallPipsView.h */,
+				3A36A0FD1974F79300D8D26A /* SmallPipsView.m */,
+				3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */,
 			);
 			name = "Filtered Cards";
 			sourceTree = "<group>";
@@ -1298,6 +1306,7 @@
 				3A82624718E05EC70038B4AC /* cardstats_points.png in Resources */,
 				3A7F775C195425B400100F79 /* deckview_2col.png in Resources */,
 				3A52E1931917F9EF00264C2A /* 764-arrow-down.png in Resources */,
+				3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
 				3AFA3B6C18DF862900F59331 /* altarttoggle_off@2x.png in Resources */,
 				3A594E3018E1F56D00832901 /* 702-share@2x.png in Resources */,
@@ -1474,6 +1483,7 @@
 				3AB9BD5E18FADC01004EAF10 /* DeckCell.m in Sources */,
 				3ADE90921877317F006E187F /* DeckManager.m in Sources */,
 				3A4178A418761BF600DEEFA6 /* IASKSettingsStoreUserDefaults.m in Sources */,
+				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
 				3A4178A318761BF600DEEFA6 /* IASKSettingsStoreFile.m in Sources */,
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,

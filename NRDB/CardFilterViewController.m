@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
+#import <CSStickyHeaderFlowLayout.h>
+
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
 #import "Deck.h"
@@ -20,8 +22,8 @@
 #import "CardImageViewPopover.h"
 #import "CardFilterThumbView.h"
 #import "CardFilterSectionHeaderView.h"
-#import <CSStickyHeaderFlowLayout.h>
 #import "SettingsKeys.h"
+#import "SmallPipsView.h"
 
 @interface CardFilterViewController ()
 
@@ -901,6 +903,10 @@ static NSInteger viewMode = VIEW_LIST;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* cellIdentifier = @"cardCell";
+    
+    NSArray* cards = self.cards[indexPath.section];
+    Card *card = cards[indexPath.row];
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil)
     {
@@ -913,12 +919,34 @@ static NSInteger viewMode = VIEW_LIST;
         cell.accessoryView = button;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        SmallPipsView* pips = [[[NSBundle mainBundle] loadNibNamed:@"SmallPipsView" owner:self options:nil] objectAtIndex:0];
+        pips.frame = CGRectMake(230, 0, 38, 38);
+        
+        [cell.contentView addSubview:pips];
+        
         [button addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];
     }
     
+    for (UIView* v in [cell.contentView subviews])
+    {
+        if ([v isKindOfClass:[SmallPipsView class]])
+        {
+            SmallPipsView* pips = (SmallPipsView*)v;
+            
+            Card* identity = self.deckListViewController.deck.identity;
+            
+            int influence = card.influence;
+            if (identity && card.faction == identity.faction)
+            {
+                influence = 0;
+            }
+            [pips setValue:influence];
+            [pips setColor:card.factionColor];
+            break;
+        }
+    }
+    
     cell.textLabel.font = [UIFont systemFontOfSize:17];
-    NSArray* cards = self.cards[indexPath.section];
-    Card *card = cards[indexPath.row];
     
     cell.textLabel.text = card.name;
     
