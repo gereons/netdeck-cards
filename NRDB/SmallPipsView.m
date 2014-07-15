@@ -48,7 +48,7 @@
             show = @[ self.pipCenter ];
             break;
         case 2:
-            show = @[ self.pipNW, self.pipSE ];
+            show = @[ self.pipNE, self.pipSW ];
             break;
         case 3:
             show = @[ self.pipNW, self.pipSE, self.pipCenter ];

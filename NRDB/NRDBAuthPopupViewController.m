@@ -105,7 +105,7 @@ static NRDBAuthPopupViewController* popup;
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    [self.webView resignFirstResponder];
+    [self.webView endEditing:YES];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.activityIndicator startAnimating];
@@ -113,5 +113,9 @@ static NRDBAuthPopupViewController* popup;
     return YES;
 }
 
+- (BOOL)disablesAutomaticKeyboardDismissal
+{
+    return NO;
+}
 
 @end

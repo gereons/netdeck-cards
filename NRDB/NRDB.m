@@ -123,6 +123,8 @@ static NRDB* instance;
          failure:^(AFHTTPRequestOperation* operation, NSError* error) {
              [NRDB clearSettings];
              
+             NSLog(@"nrdb (re)auth failed: %@", operation);
+             
              completionBlock(NO);
          }
     ];

@@ -370,6 +370,7 @@ static NSString* filterText;
     cell.summaryLabel.textColor = valid ? [UIColor blackColor] : [UIColor redColor];
     
     cell.dateLabel.text = [self.dateFormatter stringFromDate:deck.lastModified];
+    cell.nrdbIcon.hidden = self.source == NRImportSourceDropbox;
     
     return cell;
 }
