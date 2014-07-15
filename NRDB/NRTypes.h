@@ -106,4 +106,8 @@ typedef NS_ENUM(NSInteger, NRImportSource)
     NRImportSourceNetrunnerDb
 };
 
+typedef NS_ENUM(NSInteger, FilterType) {
+    FilterTypeAll, FilterRunner, FilterCorp
+};
+
 #endif

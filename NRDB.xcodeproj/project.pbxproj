@@ -177,6 +177,8 @@
 		3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */; };
 		3AB9BD6218FB0E49004EAF10 /* 702-import@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD6018FB0E49004EAF10 /* 702-import@2x.png */; };
 		3AB9BD6318FB0E49004EAF10 /* 702-import.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD6118FB0E49004EAF10 /* 702-import.png */; };
+		3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */; };
+		3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABC2EE51975A647007BBE3A /* CompareDecksList.m */; };
 		3ABDE5A418AFC52C00AFEA88 /* DrawSimulatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */; };
 		3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
@@ -484,6 +486,10 @@
 		3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckCell.xib; sourceTree = "<group>"; };
 		3AB9BD6018FB0E49004EAF10 /* 702-import@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-import@2x.png"; sourceTree = "<group>"; };
 		3AB9BD6118FB0E49004EAF10 /* 702-import.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-import.png"; sourceTree = "<group>"; };
+		3ABC2EE0197598E9007BBE3A /* SavedDecksList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedDecksList.h; sourceTree = "<group>"; };
+		3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedDecksList.m; sourceTree = "<group>"; };
+		3ABC2EE41975A647007BBE3A /* CompareDecksList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompareDecksList.h; sourceTree = "<group>"; };
+		3ABC2EE51975A647007BBE3A /* CompareDecksList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompareDecksList.m; sourceTree = "<group>"; };
 		3ABDE5A118AFC52C00AFEA88 /* DrawSimulatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSimulatorViewController.h; sourceTree = "<group>"; };
 		3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSimulatorViewController.m; sourceTree = "<group>"; };
 		3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawSimulatorViewController.xib; sourceTree = "<group>"; };
@@ -1104,8 +1110,9 @@
 		3AA440E21854DA310051D4B0 /* Detail Views */ = {
 			isa = PBXGroup;
 			children = (
-				3AB9BD5518FADB1B004EAF10 /* Saved Decks */,
 				3A8532371854F8E200507B9A /* Deck List */,
+				3AB9BD5518FADB1B004EAF10 /* Saved Decks */,
+				3ABC2EE31975A608007BBE3A /* Compare Decks */,
 				3A8532771855079100507B9A /* Settings */,
 				3A85328418550AD100507B9A /* About Detail */,
 				3A8532361854F8D300507B9A /* Empty Detail */,
@@ -1119,6 +1126,8 @@
 				3AB9BD5618FADB51004EAF10 /* DecksViewController.h */,
 				3AB9BD5718FADB51004EAF10 /* DecksViewController.m */,
 				3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */,
+				3ABC2EE0197598E9007BBE3A /* SavedDecksList.h */,
+				3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */,
 				3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */,
 				3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */,
 				3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */,
@@ -1127,6 +1136,15 @@
 				3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */,
 			);
 			name = "Saved Decks";
+			sourceTree = "<group>";
+		};
+		3ABC2EE31975A608007BBE3A /* Compare Decks */ = {
+			isa = PBXGroup;
+			children = (
+				3ABC2EE41975A647007BBE3A /* CompareDecksList.h */,
+				3ABC2EE51975A647007BBE3A /* CompareDecksList.m */,
+			);
+			name = "Compare Decks";
 			sourceTree = "<group>";
 		};
 		3ABDE5A018AFC4B200AFEA88 /* Draw Simulator */ = {
@@ -1465,6 +1483,7 @@
 				3ADBB08F194CBBC8003815CC /* SDCAlertViewBackgroundView.m in Sources */,
 				3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */,
 				3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */,
+				3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */,
 				3A4178A018761BF600DEEFA6 /* IASKSpecifierValuesViewController.m in Sources */,
 				3A8061E71972990E003ACF44 /* DeckDiffCell.m in Sources */,
 				3A85328218550ACE00507B9A /* AboutViewController.m in Sources */,
@@ -1506,6 +1525,7 @@
 				3A41789E18761BF600DEEFA6 /* IASKAppSettingsViewController.m in Sources */,
 				3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */,
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,
+				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,
 				3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */,
 				3A9204C618B16B9B00AF5285 /* Stats.m in Sources */,
 				3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */,
@@ -1774,7 +1794,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C066BDD9-D2D9-494F-825E-66CF208FD0D5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B905EFE8-D9A8-4BD0-926E-C5365C46307B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Externals/**";

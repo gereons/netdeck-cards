@@ -62,6 +62,7 @@
     self.titleLabel.text = l10n(@"Deck Comparison");
     [self.diffModeButton setTitle:l10n(@"Show only differences") forState:UIControlStateNormal];
     [self.closeButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
+    [self.reverseButton setTitle:l10n(@"Reverse") forState:UIControlStateNormal];
     
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];

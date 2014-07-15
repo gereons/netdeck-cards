@@ -15,8 +15,8 @@
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "CardFilterViewController.h"
-#import "ImportDecksViewController.h"
-#import "DecksViewController.h"
+#import "SavedDecksList.h"
+#import "CompareDecksList.h"
 #import "Notifications.h"
 #import "CardManager.h"
 #import "SettingsKeys.h"
@@ -28,6 +28,7 @@
 typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     NRMenuDecks,
+    NRMenuDeckDiff,
     NRMenuSettings,
     NRMenuAbout,
     
@@ -281,6 +282,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         case NRMenuSettings:
             cell.textLabel.text = l10n(@"Settings");
             break;
+        case NRMenuDeckDiff:
+            cell.textLabel.text = l10n(@"Compare Decks");
+            cell.textLabel.enabled = [CardManager cardsAvailable];
+            break;
         case NRMenuDecks:
             cell.textLabel.text = l10n(@"Decks");
             cell.textLabel.enabled = [CardManager cardsAvailable];
@@ -319,7 +324,16 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         case NRMenuDecks:
         {
             TF_CHECKPOINT(@"decks");
-            DecksViewController* decks = [[DecksViewController alloc] init];
+            SavedDecksList* decks = [[SavedDecksList alloc] init];
+            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:decks];
+            detailViewManager.detailViewController = self.snc;
+            break;
+        }
+            
+        case NRMenuDeckDiff:
+        {
+            TF_CHECKPOINT(@"deck diff");
+            CompareDecksList* decks = [[CompareDecksList alloc] init];
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:decks];
             detailViewManager.detailViewController = self.snc;
             break;

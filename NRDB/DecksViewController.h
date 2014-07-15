@@ -9,9 +9,29 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
+@class Deck;
+
+enum { POPUP_NEW, POPUP_LONGPRESS, POPUP_SORT, POPUP_SIDE, POPUP_STATE, POPUP_SETSTATE, POPUP_IMPORTSOURCE };
+
 @interface DecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UISearchBarDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UISearchBar* searchBar;
+
+@property UIBarButtonItem* stateFilterButton;
+@property UIBarButtonItem* sideFilterButton;
+@property UIBarButtonItem* sortButton;
+
+@property UIActionSheet* popup;
+@property NSArray* decks;
+@property Deck* deck;
+
+-(void) updateDecks;
+
+@property NSString* filterText;
+@property FilterType filterType;
+@property NRDeckState filterState;
+@property NRDeckSortType sortType;
+@property NRDeckSearchScope searchScope;
 
 @end
