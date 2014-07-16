@@ -239,3 +239,15 @@
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "¿Importar todos los mazos desde NetrunnerDB.com? Los mazos enlazados existentes serán sobrescritos.";
 "Imported decks" = "Mazos importados";
 
+// deck diff
+"Select to Compare" = "Selecciona para comparar";
+"Compare" = "Comparar";
+"Compare Decks" = "Comparar mazos";
+"Deck Comparison" = "Comparación de mazos";
+"Reverse" = "A la inversa";
+"Show only differences" = "Mostrar sólo diferencias";
+"Show full comparison" = "Mostrar comparación completa";
+"Both decks must be for the same side." = "Ambos mazos deben pertenecer al mismo bando.";
+
+
+
