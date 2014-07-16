@@ -26,12 +26,8 @@ enum { POPUP_NEW, POPUP_LONGPRESS, POPUP_SORT, POPUP_SIDE, POPUP_STATE, POPUP_SE
 @property NSArray* decks;
 @property Deck* deck;
 
--(void) updateDecks;
-
-@property NSString* filterText;
 @property FilterType filterType;
-@property NRDeckState filterState;
-@property NRDeckSortType sortType;
-@property NRDeckSearchScope searchScope;
+
+-(void) updateDecks;
 
 @end

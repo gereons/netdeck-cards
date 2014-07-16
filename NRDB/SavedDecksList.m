@@ -499,7 +499,9 @@
             {
                 self.nameAlert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name")
                                                              message:nil
-                                                            delegate:nil cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
+                                                            delegate:nil
+                                                   cancelButtonTitle:l10n(@"Cancel")
+                                                   otherButtonTitles:l10n(@"OK"), nil];
                 
                 self.nameAlert.alertViewStyle = SDCAlertViewStylePlainTextInput;
                 

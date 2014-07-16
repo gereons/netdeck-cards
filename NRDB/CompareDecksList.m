@@ -45,7 +45,7 @@
     
     if (deck1.role != deck2.role)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Both decks must be for the same side.") buttons:@[ l10n(@"OK")]];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Both decks must be for the same side.") buttons:@[ l10n(@"OK")] ];
         return;
     }
     

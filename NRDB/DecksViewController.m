@@ -25,6 +25,12 @@
 @property NSMutableArray* corpDecks;
 @property NSDateFormatter *dateFormatter;
 
+@property NRDeckSearchScope searchScope;
+@property NSString* filterText;
+
+@property NRDeckState filterState;
+@property NRDeckSortType sortType;
+
 @end
 
 @implementation DecksViewController
