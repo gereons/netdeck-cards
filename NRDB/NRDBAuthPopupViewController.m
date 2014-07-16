@@ -92,6 +92,7 @@ static NRDBAuthPopupViewController* popup;
 -(void) dismiss
 {
     [self dismissViewControllerAnimated:NO completion:nil];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     popup = nil;
 }
 

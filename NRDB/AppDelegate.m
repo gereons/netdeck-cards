@@ -53,8 +53,22 @@ NSString* const kANY = @"Any";
     
     [DeckImport checkClipboardForDeck];
     [CardImageViewPopover monitorKeyboard];
-    [[NRDB sharedInstance] refreshAuthentication];
     
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status)
+        {
+            case AFNetworkReachabilityStatusNotReachable:
+            case AFNetworkReachabilityStatusUnknown:
+                [[NRDB sharedInstance] stopRefresh];
+                break;
+                
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                [[NRDB sharedInstance] refreshAuthentication];
+                break;
+        }
+    }];
+        
     return YES;
 }
 

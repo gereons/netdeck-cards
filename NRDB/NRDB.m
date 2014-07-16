@@ -66,7 +66,7 @@ static NRDB* instance;
 {
     // NSLog(@"refresh token");
     // ?client_id=" CLIENT_ID "&client_secret=" CLIENT_SECRET "&grant_type=refresh_token&redirect_uri=" CLIENT_HOST "&refresh_token="
-    
+
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
     parameters[@"client_id"] = @CLIENT_ID;
     parameters[@"client_secret"] = @CLIENT_SECRET;
@@ -79,6 +79,12 @@ static NRDB* instance;
 
 -(void) getAuthorization:(NSDictionary*)parameters completion:(AuthCompletionBlock)completionBlock
 {
+    if (!APP_ONLINE)
+    {
+        completionBlock(NO);
+        return;
+    }
+    
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
@@ -134,7 +140,7 @@ static NRDB* instance;
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    if (![settings boolForKey:USE_NRDB])
+    if (![settings boolForKey:USE_NRDB] || !APP_ONLINE)
     {
         return;
     }
@@ -149,7 +155,7 @@ static NRDB* instance;
     NSDate* now = [NSDate date];
     NSTimeInterval diff = [expiry timeIntervalSinceDate:now];
     diff -= 5*60; // 5 minutes overlap
-    // NSLog(@"start refresh in %f", diff);
+    NSLog(@"start refresh in %f", diff);
     
     if (diff < 0)
     {
@@ -169,17 +175,19 @@ static NRDB* instance;
 -(void) timedRefresh:(NSTimer*) timer
 {
     [self refreshToken:^(BOOL ok) {
+        NSTimeInterval ti = 300;
         if (ok)
         {
             NSNumber* ttl = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_TOKEN_TTL];
-            NSTimeInterval ti = [ttl floatValue];
+            ti = [ttl floatValue];
             ti -= 300; // 5 minutes before expiry
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:ti
-                                                          target:self
-                                                        selector:@selector(timedRefresh:)
-                                                        userInfo:nil
-                                                         repeats:NO];
+            
         }
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:ti
+                                                      target:self
+                                                    selector:@selector(timedRefresh:)
+                                                    userInfo:nil
+                                                     repeats:NO];
     }];
 }
 
