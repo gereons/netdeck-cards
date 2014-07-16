@@ -192,7 +192,7 @@
         if (arr.count > 0)
         {
             NSString* section = self.fullDiffSections[i];
-            [self.smallDiffSections addObject:section];
+            [self.smallDiffSections insertObject:section atIndex:0];
         }
         else
         {
