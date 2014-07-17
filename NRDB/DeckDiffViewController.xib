@@ -9,7 +9,7 @@
                 <outlet property="closeButton" destination="FaQ-7d-pvV" id="GRO-CR-t6o"/>
                 <outlet property="deck1Name" destination="jFc-l7-sna" id="Hfn-bT-8St"/>
                 <outlet property="deck2Name" destination="ECD-8u-lqO" id="7oe-9s-M8H"/>
-                <outlet property="diffModeButton" destination="7JN-Ey-ygf" id="ANk-rR-zGC"/>
+                <outlet property="diffModeControl" destination="5VS-RS-bMg" id="Vic-k8-2Eu"/>
                 <outlet property="reverseButton" destination="6lC-dd-07o" id="F0M-Tv-yak"/>
                 <outlet property="tableView" destination="fvb-AG-CWj" id="WjR-yF-vLz"/>
                 <outlet property="titleLabel" destination="qrN-rK-hEg" id="RaT-xX-Ra8"/>
@@ -69,16 +69,18 @@
                         <outlet property="delegate" destination="-1" id="fKq-9u-zFb"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7JN-Ey-ygf">
-                    <rect key="frame" x="20" y="678" width="250" height="30"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5VS-RS-bMg">
+                    <rect key="frame" x="20" y="680" width="203" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Show only differences">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
+                    <segments>
+                        <segment title="Full"/>
+                        <segment title="Diff"/>
+                        <segment title="Intersect"/>
+                    </segments>
                     <connections>
-                        <action selector="diffMode:" destination="-1" eventType="touchUpInside" id="s9R-e8-F9b"/>
+                        <action selector="diffMode:" destination="-1" eventType="valueChanged" id="mle-hl-ucB"/>
                     </connections>
-                </button>
+                </segmentedControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>

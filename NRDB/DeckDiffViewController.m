@@ -12,14 +12,22 @@
 #import "CardCounter.h"
 #import "DeckDiffCell.h"
 
+typedef NS_ENUM(NSInteger, DiffMode) {
+    FullComparison, DiffOnly, Intersect
+};
+
 @interface DeckDiffViewController ()
 @property Deck* deck1;
 @property Deck* deck2;
+
 @property NSMutableArray* fullDiffSections;
 @property NSMutableArray* fullDiffRows;
 @property NSMutableArray* smallDiffSections;
 @property NSMutableArray* smallDiffRows;
-@property BOOL fullDiff;
+@property NSMutableArray* intersectSections;
+@property NSMutableArray* intersectRows;
+
+@property DiffMode diffMode;
 @end
 
 @interface CardDiff: NSObject
@@ -49,7 +57,7 @@
     {
         self.deck1 = deck1;
         self.deck2 = deck2;
-        self.fullDiff = YES;
+        self.diffMode = FullComparison;
         self.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     return self;
@@ -60,10 +68,11 @@
     [super viewDidLoad];
     
     self.titleLabel.text = l10n(@"Deck Comparison");
-    [self.diffModeButton setTitle:l10n(@"Show only differences") forState:UIControlStateNormal];
+    
     [self.closeButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
     [self.reverseButton setTitle:l10n(@"Reverse") forState:UIControlStateNormal];
     
+    self.diffModeControl.selectedSegmentIndex = FullComparison;
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckDiffCell" bundle:nil] forCellReuseIdentifier:@"diffCell"];
@@ -87,6 +96,7 @@
     [types addObjectsFromArray:data2.sections];
     
     self.fullDiffSections = [NSMutableArray array];
+    self.intersectSections = [NSMutableArray array];
     NSMutableArray* availableTypes = [[CardType typesForRole:self.deck1.role] mutableCopy];
     availableTypes[0] = [CardType name:NRCardTypeIdentity];
     for (NSString* type in availableTypes)
@@ -94,14 +104,17 @@
         if ([types containsObject:type])
         {
             [self.fullDiffSections addObject:type];
+            [self.intersectSections addObject:type];
         }
     }
     
     // create arrays for each section
     self.fullDiffRows = [NSMutableArray array];
+    self.intersectRows = [NSMutableArray array];
     for (int i=0; i<self.fullDiffSections.count; ++i)
     {
         [self.fullDiffRows addObject:[NSMutableArray array]];
+        [self.intersectRows addObject:[NSMutableArray array]];
     }
     
     // for each type, find cards in each deck
@@ -163,10 +176,33 @@
             return [cd1.card.name compare:cd2.card.name];
         }];
         [self.fullDiffRows[i] addObjectsFromArray:arr];
+        
+        // fill intersection - card is in both decks, and the total count is > 3
+        for (CardDiff* cd in self.fullDiffRows[i])
+        {
+            if (cd.count1 > 0 && cd.count2 > 0 && cd.count1+cd.count2 > 3)
+            {
+                [self.intersectRows[i] addObject:cd];
+            }
+        }
     }
     
-    // from the full diff, create the (potentially) smaller arrays
+    NSAssert(self.intersectSections.count == self.intersectSections.count, @"count mismatch");
+    // remove empty intersecion sections
+    for (long i=self.intersectRows.count-1; i >= 0; --i)
+    {
+        NSArray* arr = self.intersectRows[i];
+        
+        NSLog(@"section %@ %d", self.intersectSections[i], arr.count);
+        if (arr.count == 0)
+        {
+            [self.intersectSections removeObjectAtIndex:i];
+            [self.intersectRows removeObjectAtIndex:i];
+        }
+    }
+    NSAssert(self.intersectSections.count == self.intersectSections.count, @"count mismatch");
     
+    // from the full diff, create the (potentially) smaller diff-only arrays
     self.smallDiffRows = [NSMutableArray array];
     for (int i=0; i<self.fullDiffRows.count; ++i)
     {
@@ -186,7 +222,7 @@
     NSAssert(self.smallDiffRows.count == self.fullDiffRows.count, @"count mismatch");
     
     self.smallDiffSections = [NSMutableArray array];
-    for (int i=self.smallDiffRows.count-1; i >= 0; --i)
+    for (long i=self.smallDiffRows.count-1; i >= 0; --i)
     {
         NSArray* arr = self.smallDiffRows[i];
         if (arr.count > 0)
@@ -230,12 +266,9 @@
     [self.tableView reloadData];
 }
 
--(void) diffMode:(id)sender
+-(void) diffMode:(UISegmentedControl*)sender
 {
-    self.fullDiff = !self.fullDiff;
-    
-    NSString* label = self.fullDiff ? l10n(@"Show only differences") : l10n(@"Show full comparison");
-    [self.diffModeButton setTitle:label forState:UIControlStateNormal];
+    self.diffMode = sender.selectedSegmentIndex;
     
     [self.tableView reloadData];
 }
@@ -244,17 +277,47 @@
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.fullDiff ? self.fullDiffSections[section] : self.smallDiffSections[section];
+    switch (self.diffMode)
+    {
+        case FullComparison:
+            return self.fullDiffSections[section];
+        case DiffOnly:
+            return self.smallDiffSections[section];
+        case Intersect:
+            return self.intersectSections[section];
+    }
 }
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.fullDiff ? self.fullDiffSections.count : self.smallDiffSections.count;
+    switch (self.diffMode)
+    {
+        case FullComparison:
+            return self.fullDiffSections.count;
+        case DiffOnly:
+            return self.smallDiffSections.count;
+        case Intersect:
+            return self.intersectSections.count;
+    }
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray* arr = self.fullDiff ? self.fullDiffRows[section] : self.smallDiffRows[section];
+    NSArray* arr;
+    
+    switch (self.diffMode)
+    {
+        case FullComparison:
+            arr = self.fullDiffRows[section];
+            break;
+        case DiffOnly:
+            arr = self.smallDiffRows[section];
+            break;
+        case Intersect:
+            arr = self.intersectRows[section];
+            break;
+    }
+    
     return arr.count;
 }
 
@@ -262,7 +325,20 @@
 {
     DeckDiffCell* cell = [tableView dequeueReusableCellWithIdentifier:@"diffCell" forIndexPath:indexPath];
 
-    NSArray* arr = self.fullDiff ? self.fullDiffRows[indexPath.section] : self.smallDiffRows[indexPath.section];
+    NSArray* arr;
+    
+    switch (self.diffMode)
+    {
+        case FullComparison:
+            arr = self.fullDiffRows[indexPath.section];
+            break;
+        case DiffOnly:
+            arr = self.smallDiffRows[indexPath.section];
+            break;
+        case Intersect:
+            arr = self.intersectRows[indexPath.section];
+            break;
+    }
     CardDiff* cd = arr[indexPath.row];
     
     if (cd.count1 > 0)
@@ -291,6 +367,12 @@
     else
     {
         cell.diff.text = @"";
+    }
+    
+    if (self.diffMode == Intersect)
+    {
+        diff = cd.count1 + cd.count2 - 3;
+        cell.diff.text = [NSString stringWithFormat:@"%ld", (long)diff];
     }
     
     return cell;

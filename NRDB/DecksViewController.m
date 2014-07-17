@@ -25,6 +25,7 @@
 @property NSMutableArray* corpDecks;
 @property NSDateFormatter *dateFormatter;
 
+
 @property NRDeckSearchScope searchScope;
 @property NSString* filterText;
 
@@ -38,10 +39,24 @@
 static NSDictionary* sortStr;
 static NSDictionary* sideStr;
 
+// filterState, sortType and filterType look like normal properties, but are backed
+// by statics so that whenever we switch between views of subclasses, the filters
+// remain intact
+static NRDeckState _filterState = NRDeckStateNone;
+static NRDeckSortType _sortType = NRDeckSortA_Z;
+static NRFilterType _filterType = NRFilterAll;
+
+-(NRFilterType) filterType { return _filterType; }
+-(void) setFilterType:(NRFilterType)filterType { _filterType = filterType; }
+-(NRDeckSortType) sortType { return _sortType; }
+-(void) setSortType:(NRDeckSortType)sortType { _sortType = sortType; }
+-(NRDeckState) filterState { return _filterState; }
+-(void) setFilterState:(NRDeckState)filterState { _filterState = filterState; }
+
 +(void) initialize
 {
     sortStr = @{ @(NRDeckSortDate): l10n(@"Date"), @(NRDeckSortFaction): l10n(@"Faction"), @(NRDeckSortA_Z): l10n(@"A-Z") };
-    sideStr = @{ @(FilterTypeAll): l10n(@"Both"), @(FilterRunner): l10n(@"Runner"), @(FilterCorp): l10n(@"Corp") };
+    sideStr = @{ @(NRFilterAll): l10n(@"Both"), @(NRFilterRunner): l10n(@"Runner"), @(NRFilterCorp): l10n(@"Corp") };
 }
 
 - (id) init
@@ -70,11 +85,6 @@ static NSDictionary* sideStr;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    self.filterType = [settings integerForKey:DECK_FILTER_TYPE];
-    self.filterState = [settings integerForKey:DECK_FILTER_STATE];
-    self.sortType = [settings integerForKey:DECK_FILTER_SORT];
     
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -200,8 +210,8 @@ static NSDictionary* sideStr;
     [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(self.filterType)]]];
     [self.stateFilterButton setTitle:[DeckState buttonLabelFor:self.filterState]];
 
-    NSArray* runnerDecks = (self.filterType == FilterRunner || self.filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
-    NSArray* corpDecks = (self.filterType == FilterCorp || self.filterType == FilterTypeAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
+    NSArray* runnerDecks = (self.filterType == NRFilterRunner || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
+    NSArray* corpDecks = (self.filterType == NRFilterCorp || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
     
     NSMutableArray* allDecks = [NSMutableArray arrayWithArray:runnerDecks];
     [allDecks addObjectsFromArray:corpDecks];
@@ -346,13 +356,13 @@ static NSDictionary* sideStr;
         switch (buttonIndex)
         {
             case 0:
-                self.filterType = FilterTypeAll;
+                self.filterType = NRFilterAll;
                 break;
             case 1:
-                self.filterType = FilterRunner;
+                self.filterType = NRFilterRunner;
                 break;
             case 2:
-                self.filterType = FilterCorp;
+                self.filterType = NRFilterCorp;
                 break;
         }
         [self updateDecks];

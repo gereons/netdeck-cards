@@ -92,7 +92,7 @@ NSString* const kANY = @"Any";
         SHOW_ALL_FILTERS: @(YES),
         DECK_FILTER_STATE: @(NRDeckStateNone),
         DECK_FILTER_SORT: @(NRDeckSortA_Z),
-        DECK_FILTER_TYPE: @(FilterTypeAll),
+        DECK_FILTER_TYPE: @(NRFilterAll),
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];

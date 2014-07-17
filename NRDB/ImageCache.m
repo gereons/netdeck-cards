@@ -24,6 +24,8 @@
 #define NLOG(...)           do {} while(0)
 #endif
 
+#warning handle broken images? (frederic's problem)
+
 @implementation ImageCache
 
 static ImageCache* instance;

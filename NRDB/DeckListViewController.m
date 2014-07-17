@@ -329,6 +329,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:msg
                                                    buttons:@[ l10n(@"Cancel"), l10n(@"Open in Safari"), l10n(@"Publish deck"), l10n(@"Unlink"), l10n(@"Save") ]];
+#warning add "save as new deck" button
         
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             switch (buttonIndex)

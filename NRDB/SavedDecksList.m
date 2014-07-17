@@ -257,11 +257,11 @@
 {
     NSNumber* role;
     
-    if (self.filterType == FilterRunner)
+    if (self.filterType == NRFilterRunner)
     {
         role = @(NRRoleRunner);
     }
-    if (self.filterType == FilterCorp)
+    if (self.filterType == NRFilterCorp)
     {
         role = @(NRRoleCorp);
     }

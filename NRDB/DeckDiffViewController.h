@@ -19,7 +19,7 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UIButton* closeButton;
 @property IBOutlet UIButton* reverseButton;
-@property IBOutlet UIButton* diffModeButton;
+@property IBOutlet UISegmentedControl* diffModeControl;
 
 -(IBAction)close:(id)sender;
 -(IBAction)reverse:(id)sender;
