@@ -24,8 +24,6 @@
 #define NLOG(...)           do {} while(0)
 #endif
 
-#warning handle broken images? (frederic's problem)
-
 @implementation ImageCache
 
 static ImageCache* instance;
@@ -421,6 +419,7 @@ static NSCache* memCache;
 +(UIImage*) getImageFor:(NSString*)key
 {
     UIImage* img = [memCache objectForKey:key];
+    
     if (img)
     {
         return img;
@@ -433,6 +432,13 @@ static NSCache* memCache;
     if (imgData)
     {
         img = [UIImage imageWithData:imgData];
+    }
+    
+    if (img && img.size.width < 200)
+    {
+        // image is broken - remove it
+        img = nil;
+        [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
     }
         
     if (img)
