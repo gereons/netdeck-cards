@@ -245,6 +245,7 @@
 "Compare Decks" = "Decks vergleichen";
 "Deck Comparison" = "Deckvergleich";
 "Reverse" = "Tauschen";
-"Show only differences" = "Nur Unterschiede anzeigen";
-"Show full comparison" = "Kompletten Vergleich anzeigen";
+"Full" = "Alles";
+"Diff" = "Unterschiede";
+"Intersect" = "Schnittmenge";
 "Both decks must be for the same side." = "Decks der unterschiedlichen Seiten können nicht verglichen werden.";

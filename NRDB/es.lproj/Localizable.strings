@@ -245,8 +245,9 @@
 "Compare Decks" = "Comparar mazos";
 "Deck Comparison" = "Comparación de mazos";
 "Reverse" = "A la inversa";
-"Show only differences" = "Mostrar sólo diferencias";
-"Show full comparison" = "Mostrar comparación completa";
+"Full" = "Todos";
+"Diff" = "Diferencias";
+"Intersect" = "Intersección";
 "Both decks must be for the same side." = "Ambos mazos deben pertenecer al mismo bando.";
 
 

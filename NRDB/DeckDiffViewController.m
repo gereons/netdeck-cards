@@ -73,6 +73,11 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     [self.reverseButton setTitle:l10n(@"Reverse") forState:UIControlStateNormal];
     
     self.diffModeControl.selectedSegmentIndex = FullComparison;
+    [self.diffModeControl setTitle:l10n(@"Full") forSegmentAtIndex:FullComparison];
+    [self.diffModeControl setTitle:l10n(@"Diff") forSegmentAtIndex:DiffOnly];
+    [self.diffModeControl setTitle:l10n(@"Intersect") forSegmentAtIndex:Intersect];
+    self.diffModeControl.apportionsSegmentWidthsByContent = YES;
+    
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckDiffCell" bundle:nil] forCellReuseIdentifier:@"diffCell"];

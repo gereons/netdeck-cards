@@ -155,7 +155,7 @@ static NRDB* instance;
     NSDate* now = [NSDate date];
     NSTimeInterval diff = [expiry timeIntervalSinceDate:now];
     diff -= 5*60; // 5 minutes overlap
-    NSLog(@"start refresh in %f", diff);
+    // NSLog(@"start refresh in %f", diff);
     
     if (diff < 0)
     {
