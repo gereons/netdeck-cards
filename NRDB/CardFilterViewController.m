@@ -7,6 +7,7 @@
 //
 
 #import <CSStickyHeaderFlowLayout.h>
+#import <NRActionSheet.h>
 
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
@@ -655,12 +656,12 @@ static NSInteger viewMode = VIEW_LIST;
     [self postNotification:@"agendaPoints" value:@(value)];
 }
 
-#pragma mark text search
+#pragma mark scope
 
 -(void) scopeClicked:(UIButton*)sender
 {
-    UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                       delegate:self
+    NRActionSheet* sheet = [[NRActionSheet alloc] initWithTitle:nil
+                                                       delegate:nil
                                               cancelButtonTitle:@""
                                          destructiveButtonTitle:nil
                                               otherButtonTitles:
@@ -669,23 +670,19 @@ static NSInteger viewMode = VIEW_LIST;
                             [NSString stringWithFormat:@"%@%@", l10n(@"Text"), self.scope == NRSearchText ? @" ✓" : @""],
                             nil];
     
-    [sheet showFromRect:sender.frame inView:self.view animated:NO];
-    
-    // [self postNotification:scopes[self.scope] value:self.searchText];
+    [sheet showFromRect:sender.frame inView:self.view animated:NO action:^(NSInteger buttonIndex) {
+        if (buttonIndex == sheet.cancelButtonIndex)
+        {
+            return;
+        }
+        self.scope = buttonIndex;
+        [self.scopeButton setTitle:[NSString stringWithFormat:@"%@ ▾", scopeLabels[@(self.scope)]] forState:UIControlStateNormal];
+        
+        [self postNotification:scopes[self.scope] value:self.searchText];
+    }];
 }
 
--(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == actionSheet.cancelButtonIndex)
-    {
-        return;
-    }
-    
-    self.scope = buttonIndex;
-    [self.scopeButton setTitle:[NSString stringWithFormat:@"%@ ▾", scopeLabels[@(self.scope)]] forState:UIControlStateNormal];
-    
-    [self postNotification:scopes[self.scope] value:self.searchText];
-}
+#pragma mark text search
 
 -(BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {

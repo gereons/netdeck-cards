@@ -22,6 +22,7 @@
 		3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */; };
 		3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ECC901879A1CC003400A9 /* DeckExport.m */; };
 		3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 3A1ECC921879A383003400A9 /* OCTGN.mustache */; };
+		3A2089E5197AB40B00B8AE32 /* NRActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2089E4197AB40B00B8AE32 /* NRActionSheet.m */; };
 		3A3622621849320C007F2854 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622611849320C007F2854 /* Foundation.framework */; };
 		3A3622641849320C007F2854 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622631849320C007F2854 /* CoreGraphics.framework */; };
 		3A3622661849320C007F2854 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622651849320C007F2854 /* UIKit.framework */; };
@@ -262,6 +263,8 @@
 		3A1ECC8F1879A1CC003400A9 /* DeckExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckExport.h; sourceTree = "<group>"; };
 		3A1ECC901879A1CC003400A9 /* DeckExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckExport.m; sourceTree = "<group>"; };
 		3A1ECC921879A383003400A9 /* OCTGN.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OCTGN.mustache; sourceTree = "<group>"; };
+		3A2089E3197AB40B00B8AE32 /* NRActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRActionSheet.h; sourceTree = "<group>"; };
+		3A2089E4197AB40B00B8AE32 /* NRActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRActionSheet.m; sourceTree = "<group>"; };
 		3A36225E1849320C007F2854 /* NRDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NRDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3622611849320C007F2854 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3A3622631849320C007F2854 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -736,6 +739,8 @@
 				3A6AF0E51899C12500227C25 /* NRNavigationController.m */,
 				3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */,
 				3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */,
+				3A2089E3197AB40B00B8AE32 /* NRActionSheet.h */,
+				3A2089E4197AB40B00B8AE32 /* NRActionSheet.m */,
 			);
 			name = "Utility Classes / Headers";
 			sourceTree = "<group>";
@@ -1474,6 +1479,7 @@
 				3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */,
 				3A4178A918761BF600DEEFA6 /* IASKSlider.m in Sources */,
 				3AB357DA186DC1E50027D5FC /* IdentityViewCell.m in Sources */,
+				3A2089E5197AB40B00B8AE32 /* NRActionSheet.m in Sources */,
 				3A4178A218761BF600DEEFA6 /* IASKSettingsStore.m in Sources */,
 				3AB357D6186CC2010027D5FC /* IdentitySelectionViewController.m in Sources */,
 				3A4178A518761BF600DEEFA6 /* IASKSpecifier.m in Sources */,

@@ -10,7 +10,7 @@
 
 @class Deck, DeckListViewController;
 
-@interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIActionSheetDelegate, UICollectionViewDelegateFlowLayout>
+@interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout>
 
 @property DeckListViewController* deckListViewController;
 
