@@ -23,6 +23,7 @@
 @property NSMutableArray* sectionToggles;
 
 @property int sectionCount; // number of non-empty section headers
+@property int totalEntries; // total number of selectable entries
 
 @end
 
@@ -61,6 +62,12 @@ static UIPopoverController* popover;
         {
             ++filter.sectionCount;
         }
+    }
+    
+    filter.totalEntries = 0;
+    for (NSArray* arr in entries.values)
+    {
+        filter.totalEntries += arr.count;
     }
     
     popover = [[UIPopoverController alloc] initWithContentViewController:filter];
@@ -214,8 +221,8 @@ static UIPopoverController* popover;
     // first ("Any") cell tapped?
     BOOL anyCell = indexPath.row == 0 && indexPath.section == 0;
     
-    // if not, and we're 1 shy of checking all possible values, treat as a tap on "Any"
-    if (!anyCell && self.selectedValues.count == arr.count - 2)
+    // if not, and we adding a new selection, and we're 1 shy of checking all possible values, treat as a tap on "Any"
+    if (!anyCell && ![self.selectedValues containsObject:value] && self.selectedValues.count == self.totalEntries - 2)
     {
         anyCell = YES;
         value = kANY;
