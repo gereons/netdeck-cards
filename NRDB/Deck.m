@@ -512,6 +512,7 @@ static NSArray* draftIds;
         _identityCc.showAltArt = [decoder decodeBoolForKey:@"identityAltArt"];
         _lastModified = nil;
         _notes = [decoder decodeObjectForKey:@"notes"];
+        _tags = [decoder decodeObjectForKey:@"tags"];
     }
     return self;
 }
@@ -527,6 +528,7 @@ static NSArray* draftIds;
     [coder encodeObject:self.identity.code forKey:@"identity"];
     [coder encodeBool:self.identityCc.showAltArt forKey:@"identityAltArt"];
     [coder encodeObject:self.notes forKey:@"notes"];
+    [coder encodeObject:self.tags forKey:@"tags"];
 }
 
 

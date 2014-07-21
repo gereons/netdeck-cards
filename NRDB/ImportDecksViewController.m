@@ -158,6 +158,7 @@ static NSString* filterText;
             Deck* deck = [Deck new];
             deck.name = d[@"name"];
             deck.notes = d[@"description"];
+            deck.tags = d[@"tags"];
             deck.netrunnerDbId = [NSString stringWithFormat:@"%ld", (long)[d[@"id"] integerValue]];
             
             // parse creation date, '2014-06-19 13:52:24'

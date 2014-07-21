@@ -32,9 +32,10 @@
 @property NSString* filename;
 @property NSDate* lastModified;
 
+@property NSArray* tags;    // array of strings
 @property NSString* notes;
 
--(NSArray*) checkValidity; // returns array of reasons, deck is ok if count==0
+-(NSArray*) checkValidity;  // returns array of reasons, deck is ok if count==0
 
 -(CardCounter*) findCard:(Card*)card;
 -(void) addCard:(Card*) card copies:(int)copies;

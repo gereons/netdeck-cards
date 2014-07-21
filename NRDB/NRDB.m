@@ -310,6 +310,10 @@ static NRDB* instance;
     {
         parameters[@"id"] = deck.netrunnerDbId;
     }
+    if (deck.tags.count > 0)
+    {
+        parameters[@"tags"] = [deck.tags componentsJoinedByString:@" "];
+    }
     
     [self saveOrPublish:saveUrl parameters:parameters];
 }
