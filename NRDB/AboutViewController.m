@@ -103,8 +103,7 @@
     
     self.mailer.mailComposeDelegate = self;
     [self.mailer setToRecipients:@[ @"netdeck@steffens.org" ]];
-    NSMutableString* subject = [NSMutableString stringWithString:l10n(@"Net Deck Feedback")];
-    [subject appendString:@" v"];
+    NSMutableString* subject = [NSMutableString stringWithString:l10n(@"Net Deck Feedback ")];
     [subject appendString:self.version];
     [self.mailer setSubject:subject];
     [self presentViewController:self.mailer animated:NO completion:nil];
