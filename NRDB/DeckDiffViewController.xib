@@ -69,13 +69,13 @@
                         <outlet property="delegate" destination="-1" id="fKq-9u-zFb"/>
                     </connections>
                 </tableView>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5VS-RS-bMg">
-                    <rect key="frame" x="20" y="680" width="203" height="29"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5VS-RS-bMg">
+                    <rect key="frame" x="20" y="680" width="237" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
-                        <segment title="Full"/>
-                        <segment title="Diff"/>
-                        <segment title="Intersect"/>
+                        <segment title="Alles"/>
+                        <segment title="Unterschiede"/>
+                        <segment title="Schnittmenge"/>
                     </segments>
                     <connections>
                         <action selector="diffMode:" destination="-1" eventType="valueChanged" id="mle-hl-ucB"/>

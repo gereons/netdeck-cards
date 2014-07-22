@@ -72,10 +72,11 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     [self.closeButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
     [self.reverseButton setTitle:l10n(@"Reverse") forState:UIControlStateNormal];
     
-    self.diffModeControl.selectedSegmentIndex = FullComparison;
+    self.diffModeControl.selectedSegmentIndex = DiffOnly;
     [self.diffModeControl setTitle:l10n(@"Full") forSegmentAtIndex:FullComparison];
     [self.diffModeControl setTitle:l10n(@"Diff") forSegmentAtIndex:DiffOnly];
     [self.diffModeControl setTitle:l10n(@"Intersect") forSegmentAtIndex:Intersect];
+    [self.diffModeControl sizeToFit];
     self.diffModeControl.apportionsSegmentWidthsByContent = YES;
     
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
@@ -198,7 +199,6 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     {
         NSArray* arr = self.intersectRows[i];
         
-        NSLog(@"section %@ %d", self.intersectSections[i], arr.count);
         if (arr.count == 0)
         {
             [self.intersectSections removeObjectAtIndex:i];
