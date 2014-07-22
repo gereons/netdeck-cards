@@ -23,6 +23,7 @@
 
 -(void) showFromBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated action:(NRActionSheetBlock)action
 {
+    NSAssert(self.delegate == nil, @"delegate set");
     self.dismissalBlock = action;
     self.delegate = self;
     [self showFromBarButtonItem:item animated:animated];
@@ -30,6 +31,7 @@
 
 -(void) showFromRect:(CGRect)rect inView:(UIView *)view animated:(BOOL)animated action:(NRActionSheetBlock)action
 {
+    NSAssert(self.delegate == nil, @"delegate set");
     self.dismissalBlock = action;
     self.delegate = self;
     [self showFromRect:rect inView:view animated:animated];

@@ -18,7 +18,7 @@
 #import "DeckNotesPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
-
+#import "NRActionSheet.h"
 #import "Deck.h"
 #import "DeckManager.h"
 #import "CardCounter.h"
@@ -42,7 +42,7 @@
 @property NSArray* sections;
 @property NSArray* cards;
 
-@property UIActionSheet* actionSheet;
+@property NRActionSheet* actionSheet;
 @property UIPrintInteractionController* printController;
 @property UIBarButtonItem* toggleViewButton;
 @property UIBarButtonItem* saveButton;
@@ -65,7 +65,6 @@
 @implementation DeckListViewController
 
 enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
-enum { POPUP_EXPORT, POPUP_STATE };
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -511,16 +510,51 @@ enum { POPUP_EXPORT, POPUP_STATE };
         [self dismissActionSheet];
         return;
     }
-    self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                   delegate:self
+    self.actionSheet = [[NRActionSheet alloc] initWithTitle:nil
+                                                   delegate:nil
                                           cancelButtonTitle:@""
                                      destructiveButtonTitle:nil
                                           otherButtonTitles:
                         [NSString stringWithFormat:@"%@%@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @" ✓" : @""],
                         [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @" ✓" : @""],
                         [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
-    self.actionSheet.tag = POPUP_STATE;
-    [self.actionSheet showFromBarButtonItem:sender animated:NO];
+
+    @weakify(self);
+    [self.actionSheet showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
+        @strongify(self);
+        
+        NSInteger cancelBtn = self.actionSheet.cancelButtonIndex;
+        self.actionSheet = nil;
+        if (buttonIndex == -1 || buttonIndex == cancelBtn)
+        {
+            return;
+        }
+
+        NRDeckState oldState = self.deck.state;
+        switch (buttonIndex)
+        {
+            case 0:
+                self.deck.state = NRDeckStateActive;
+                break;
+            case 1:
+                self.deck.state = NRDeckStateTesting;
+                break;
+            case 2:
+                self.deck.state = NRDeckStateRetired;
+                break;
+        }
+        [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];
+        if (self.deck.state != oldState)
+        {
+            self.deckChanged = YES;
+            if (self.autoSave)
+            {
+                [self saveDeck:nil];
+                [DeckManager resetModificationDate:self.deck];
+            }
+            [self refresh];
+        }
+    }];
 }
 
 #pragma mark deck name
@@ -603,6 +637,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
 }
 
+#pragma mark export
+
 -(void) exportDeck:(UIBarButtonItem*)sender
 {
     if (self.actionSheet)
@@ -616,8 +652,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
         return;
     }
     
-    self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                   delegate:self
+    self.actionSheet = [[NRActionSheet alloc] initWithTitle:nil
+                                                   delegate:nil
                                           cancelButtonTitle:@""
                                      destructiveButtonTitle:nil
                                           otherButtonTitles:
@@ -630,61 +666,13 @@ enum { POPUP_EXPORT, POPUP_STATE };
                                                             l10n(@"Clipboard: Plain Text"),
                                                             l10n(@"As Email"),
                                                             l10n(@"Print"), nil];
-    self.actionSheet.tag = POPUP_EXPORT;
-    [self.actionSheet showFromBarButtonItem:sender animated:NO];
+
+    [self.actionSheet showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
+        [self doExportDeck:buttonIndex];
+    }];
 }
 
--(void) dismissActionSheet
-{
-    [self.actionSheet dismissWithClickedButtonIndex:-1 animated:NO];
-    self.actionSheet = nil;
-}
-
--(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    self.actionSheet = nil;
-    if (buttonIndex == -1 || buttonIndex == actionSheet.cancelButtonIndex)
-    {
-        return;
-    }
-    
-    switch (actionSheet.tag)
-    {
-        case POPUP_EXPORT:
-            [self handleExportDeck:buttonIndex];
-            break;
-        case POPUP_STATE:
-        {
-            NRDeckState oldState = self.deck.state;
-            switch (buttonIndex)
-            {
-                case 0:
-                    self.deck.state = NRDeckStateActive;
-                    break;
-                case 1:
-                    self.deck.state = NRDeckStateTesting;
-                    break;
-                case 2:
-                    self.deck.state = NRDeckStateRetired;
-                    break;
-            }
-            [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];
-            if (self.deck.state != oldState)
-            {
-                self.deckChanged = YES;
-                if (self.autoSave)
-                {
-                    [self saveDeck:nil];
-                    [DeckManager resetModificationDate:self.deck];
-                }
-                [self refresh];
-            }
-            break;
-        }
-    }
-}
-
--(void) handleExportDeck:(NSInteger)buttonIndex
+-(void) doExportDeck:(NSInteger)buttonIndex
 {
     if (buttonIndex < 4 && ![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
     {
@@ -718,7 +706,7 @@ enum { POPUP_EXPORT, POPUP_STATE };
         case 3: // plain text
             [DeckExport asPlaintext:self.deck];
             break;
-    
+            
         case 4: // bbcode
             pasteboard.string = [DeckExport asBBCodeString:self.deck];
             [DeckImport updateCount];
@@ -739,6 +727,14 @@ enum { POPUP_EXPORT, POPUP_STATE };
             break;
     }
 }
+
+-(void) dismissActionSheet
+{
+    [self.actionSheet dismissWithClickedButtonIndex:-1 animated:NO];
+    self.actionSheet = nil;
+}
+
+#pragma mark toggle view
 
 -(void) toggleView:(UISegmentedControl*)sender
 {
@@ -763,6 +759,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
     
     [self reloadViews];
 }
+
+#pragma mark reload
 
 -(void) reloadViews
 {

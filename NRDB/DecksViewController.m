@@ -10,6 +10,7 @@
 
 #import <SDCAlertView.h>
 
+#import "NRActionSheet.h"
 #import "DeckCell.h"
 #import "DeckManager.h"
 #import "Deck.h"
@@ -152,56 +153,111 @@ static NRFilterType _filterType = NRFilterAll;
     [self updateDecks];
 }
 
+#pragma mark action sheet
+
+-(void) dismissPopup
+{
+    [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+    self.popup = nil;
+}
+
 -(void) changeSort:(id)sender
 {
     if (self.popup)
     {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        [self dismissPopup];
         return;
     }
     
-    self.popup = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self
+    self.popup = [[NRActionSheet alloc] initWithTitle:nil
+                                             delegate:nil
                                     cancelButtonTitle:@""
                                destructiveButtonTitle:nil
                                     otherButtonTitles:l10n(@"Date"), l10n(@"Faction"), l10n(@"A-Z"), nil];
-    self.popup.tag = POPUP_SORT;
-    [self.popup showFromBarButtonItem:sender animated:NO];
+
+    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
+        switch (buttonIndex)
+        {
+            case 0:
+                self.sortType = NRDeckSortDate;
+                break;
+            case 1:
+                self.sortType = NRDeckSortFaction;
+                break;
+            case 2:
+                self.sortType = NRDeckSortA_Z;
+                break;
+        }
+        self.popup = nil;
+        [self updateDecks];
+    }];
 }
 
 -(void) changeSideFilter:(id)sender
 {
     if (self.popup)
     {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        [self dismissPopup];
         return;
     }
-    
 
-    self.popup = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self
+    self.popup = [[NRActionSheet alloc] initWithTitle:nil
+                                             delegate:nil
                                     cancelButtonTitle:@""
                                destructiveButtonTitle:nil
                                     otherButtonTitles:l10n(@"Both"), l10n(@"Runner"), l10n(@"Corp"), nil];
-    self.popup.tag = POPUP_SIDE;
-    [self.popup showFromBarButtonItem:sender animated:NO];
+
+    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
+        switch (buttonIndex)
+        {
+            case 0:
+                self.filterType = NRFilterAll;
+                break;
+            case 1:
+                self.filterType = NRFilterRunner;
+                break;
+            case 2:
+                self.filterType = NRFilterCorp;
+                break;
+        }
+        self.popup = nil;
+        [self updateDecks];
+    }];
 }
 
 -(void) changeStateFilter:(id)sender
 {
     if (self.popup)
     {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        [self dismissPopup];
         return;
     }
     
-    self.popup = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self
+    self.popup = [[NRActionSheet alloc] initWithTitle:nil
+                                             delegate:nil
                                     cancelButtonTitle:@""
                                destructiveButtonTitle:nil
                                     otherButtonTitles:l10n(@"All"), l10n(@"Active"), l10n(@"Testing"), l10n(@"Retired"), nil];
-    self.popup.tag = POPUP_STATE;
-    [self.popup showFromBarButtonItem:sender animated:NO];
+
+    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
+        switch (buttonIndex)
+        {
+            case 0:
+                self.filterState = NRDeckStateNone;
+                break;
+            case 1:
+                self.filterState = NRDeckStateActive;
+                break;
+            case 2:
+                self.filterState = NRDeckStateTesting;
+                break;
+            case 3:
+                self.filterState = NRDeckStateRetired;
+                break;
+        }
+        self.popup = nil;
+        [self updateDecks];
+    }];
 }
 
 -(void) updateDecks
@@ -329,66 +385,6 @@ static NRFilterType _filterType = NRFilterAll;
     }
     
     return [decks mutableCopy];
-}
-
-#pragma mark action sheet
-
--(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (actionSheet.tag == POPUP_SORT)
-    {
-        switch (buttonIndex)
-        {
-            case 0:
-                self.sortType = NRDeckSortDate;
-                break;
-            case 1:
-                self.sortType = NRDeckSortFaction;
-                break;
-            case 2:
-                self.sortType = NRDeckSortA_Z;
-                break;
-        }
-        [self updateDecks];
-    }
-    else if (actionSheet.tag == POPUP_SIDE)
-    {
-        switch (buttonIndex)
-        {
-            case 0:
-                self.filterType = NRFilterAll;
-                break;
-            case 1:
-                self.filterType = NRFilterRunner;
-                break;
-            case 2:
-                self.filterType = NRFilterCorp;
-                break;
-        }
-        [self updateDecks];
-    }
-    else if (actionSheet.tag == POPUP_STATE)
-    {
-        switch (buttonIndex)
-        {
-            case 0:
-                self.filterState = NRDeckStateNone;
-                break;
-            case 1:
-                self.filterState = NRDeckStateActive;
-                break;
-            case 2:
-                self.filterState = NRDeckStateTesting;
-                break;
-            case 3:
-                self.filterState = NRDeckStateRetired;
-                break;
-        }
-        [self updateDecks];
-    }
-        
-    self.popup = nil;
-    return;
 }
 
 #pragma mark search bar
