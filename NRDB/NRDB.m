@@ -42,7 +42,9 @@ static NRDB* instance;
     [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
     [settings removeObjectForKey:NRDB_TOKEN_TTL];
     [settings setObject:@(NO) forKey:USE_NRDB];
+    
     [settings synchronize];
+    [[NRDB sharedInstance].timer invalidate];
 }
 
 #pragma mark autorization
@@ -67,12 +69,20 @@ static NRDB* instance;
     // NSLog(@"refresh token");
     // ?client_id=" CLIENT_ID "&client_secret=" CLIENT_SECRET "&grant_type=refresh_token&redirect_uri=" CLIENT_HOST "&refresh_token="
 
+    NSString* token = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_REFRESH_TOKEN];
+    
+    if (token == nil)
+    {
+        completionBlock(NO);
+        return;
+    }
+    
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
     parameters[@"client_id"] = @CLIENT_ID;
     parameters[@"client_secret"] = @CLIENT_SECRET;
     parameters[@"grant_type"] = @"refresh_token";
     parameters[@"redirect_uri"] = @CLIENT_HOST;
-    parameters[@"refresh_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_REFRESH_TOKEN];
+    parameters[@"refresh_token"] = token;
 
     [self getAuthorization:parameters completion:completionBlock];
 }
