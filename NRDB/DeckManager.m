@@ -21,6 +21,7 @@
     {
         deck.filename = [DeckManager pathForRole:deck.role];
     }
+    // NSLog(@"saving deck %@ (%@)", deck.name, deck.identity.name);
     
     // Set up the encoder and storage for the saved state data
     NSMutableData* savedData = [NSMutableData data];

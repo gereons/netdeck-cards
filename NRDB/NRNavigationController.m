@@ -98,7 +98,7 @@
                                                message:l10n(@"There are unsaved changes")
                                                buttons:@[l10n(@"Cancel"), l10n(@"Discard"), l10n(@"Save")]];
     
-    alert.willDismissHandler = ^void(NSInteger buttonIndex) {
+    alert.didDismissHandler = ^(NSInteger buttonIndex) {
         if (buttonIndex == 0) // cancel
         {
             return;
@@ -110,7 +110,6 @@
         }
         self.alertViewClicked = YES;
         [self popViewControllerAnimated:NO];
-
     };
 }
 

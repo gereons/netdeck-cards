@@ -66,18 +66,14 @@
 
 enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void) dealloc
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        // Custom initialization
-    }
-    return self;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidDisappear:animated];
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
@@ -213,11 +209,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     {
         [self selectIdentity:nil];
     }
-}
-
--(void) dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -468,7 +459,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
                                                buttons:@[ l10n(@"No"), l10n(@"Yes, switch to copy"), l10n(@"Yes, but stay here") ]];
     
     @weakify(self);
-    alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+    alert.didDismissHandler = ^(NSInteger buttonIndex) {
         @strongify(self);
         Deck* newDeck = [self.deck duplicate];
         
@@ -624,15 +615,15 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 -(void) identitySelected:(NSNotification*)sender
 {
     NSString* code = [sender.userInfo objectForKey:@"code"];
-    self.deck.identity = [Card cardByCode:code];
+    Card* card = [Card cardByCode:code];
+    if (card)
+    {
+        NSAssert(card.role == self.deck.role, @"role mismatch");
+    }
     
+    self.deck.identity = card;
     self.deckChanged = YES;
     [self refresh];
-    
-    if (self.autoSave)
-    {
-        [self saveDeck:nil];
-    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
 }
@@ -916,7 +907,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     [UIView animateWithDuration:0.1
                           delay:0.0
                         options:UIViewAnimationOptionAllowUserInteraction
-                     animations:^void() {
+                     animations:^() {
                          cell.backgroundColor = [UIColor lightGrayColor];
                      }
                      completion:^(BOOL finished) {
@@ -931,7 +922,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     [UIView animateWithDuration:0.1
                           delay:0.0
                         options:UIViewAnimationOptionAllowUserInteraction
-                     animations:^void() {
+                     animations:^() {
                          cell.transform = CGAffineTransformMakeScale(1.05, 1.05);
                      }
                      completion:^(BOOL finished) {

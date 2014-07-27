@@ -102,8 +102,18 @@ static NSInteger viewMode = VIEW_LIST;
     return self;
 }
 
+-(void) dealloc
+{
+    NSLog(@"filter dealloc");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void) viewDidDisappear:(BOOL)animated
 {
+    NSLog(@"filter disappear");
+    self.deckListViewController = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [super viewDidDisappear:animated];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -126,13 +136,6 @@ static NSInteger viewMode = VIEW_LIST;
     
     self.cardList = [[CardList alloc] initForRole:self.role];
     [self initCards];
-    
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(updateFilter:) name:UPDATE_FILTER object:nil];
-    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
-    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -166,11 +169,6 @@ static NSInteger viewMode = VIEW_LIST;
     [self resetAllButtons];
 }
 
--(void) dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -184,11 +182,19 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    NSLog(@"filter appear");
     [super viewDidAppear:animated];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = l10n(@"Filter");
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFiltersClicked:)];
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(updateFilter:) name:UPDATE_FILTER object:nil];
+    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
     
     [self initFilters];
 }

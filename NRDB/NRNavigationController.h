@@ -12,6 +12,6 @@
 
 @interface NRNavigationController : UINavigationController <UINavigationBarDelegate, UIGestureRecognizerDelegate>
 
-@property DeckListViewController* deckListViewController;
+@property (weak) DeckListViewController* deckListViewController;
 
 @end

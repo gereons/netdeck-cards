@@ -78,13 +78,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     footerLabel.font = [UIFont systemFontOfSize:14];
     [footer addSubview:footerLabel];
     
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
-    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
-    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
-    
     // check if card data is available
     if (![CardManager cardsAvailable])
     {
@@ -94,7 +87,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
                                                    message:msg
                                                    buttons:@[l10n(@"Not now"), l10n(@"Download")]];
         
-        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
             if (buttonIndex == 1)
             {
                 [DataDownload downloadCardData];
@@ -108,8 +101,21 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewDidDisappear:animated];
+}
+
 -(void) viewDidAppear:(BOOL)animated
 {
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
+
     [self checkCardUpdate];
     
     [self resetDetailView];
@@ -180,7 +186,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Update cards")
                                                    message:l10n(@"Card data may be out of date. Download now?")
                                                    buttons:@[l10n(@"Later"), l10n(@"OK")]];
-        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
             if (buttonIndex == 0) // later
             {
                 NSDateFormatter *fmt = [NSDateFormatter new];
