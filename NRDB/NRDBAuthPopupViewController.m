@@ -81,6 +81,8 @@ static NRDBAuthPopupViewController* popup;
     NSURL* url= [NSURL URLWithString:@CODE_URL];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    [self.cancelButton setTitle:l10n(@"Cancel") forState:UIControlStateNormal];
 }
 
 -(void) cancel:(id)sender
