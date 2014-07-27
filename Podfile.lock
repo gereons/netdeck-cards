@@ -28,11 +28,11 @@ PODS:
     - DTFoundation/DTAnimatedGIF (~> 1.7.1)
     - DTFoundation/DTHTMLParser (~> 1.7.1)
     - DTFoundation/UIKit (~> 1.7.1)
-  - DTFoundation/Core (1.7.1)
-  - DTFoundation/DTAnimatedGIF (1.7.1)
-  - DTFoundation/DTHTMLParser (1.7.1):
+  - DTFoundation/Core (1.7.2)
+  - DTFoundation/DTAnimatedGIF (1.7.2)
+  - DTFoundation/DTHTMLParser (1.7.2):
     - DTFoundation/Core
-  - DTFoundation/UIKit (1.7.1):
+  - DTFoundation/UIKit (1.7.2):
     - DTFoundation/Core
   - GRMustache (7.0.2):
     - JRSwizzle (~> 1.0)
@@ -81,7 +81,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - CorePlot
   - CSStickyHeaderFlowLayout
-  - Dropbox-Sync-API-SDK
+  - Dropbox-Sync-API-SDK (~> 2.0)
   - DTCoreText
   - GRMustache
   - libextobjc
@@ -96,7 +96,7 @@ SPEC CHECKSUMS:
   CSStickyHeaderFlowLayout: b6530bc5f95d656b6963ddb6dd692c0f61890a98
   Dropbox-Sync-API-SDK: af3eb48dc092d4cac9f4962f1e9994bdad610fca
   DTCoreText: 84eb8ba2e70448fdd9d837540e371f9f587b65ba
-  DTFoundation: ef6fb95da64f202d1600bc23dde79c6fd74c0c2d
+  DTFoundation: 126729614911ae7dbab3dcc1c078f189943bee66
   GRMustache: 7cce2570d81711b90d91d2e539f6f575a703db22
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
