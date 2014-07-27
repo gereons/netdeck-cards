@@ -116,6 +116,8 @@ static NSCache* memCache;
     [settings setObject:@{} forKey:NEXT_CHECK];
     [settings synchronize];
     
+    [memCache removeAllObjects];
+    
     [ImageCache removeCacheDirectory];
 }
 
@@ -464,7 +466,7 @@ static NSCache* memCache;
 +(UIImage*) croppedImage:(UIImage*)img forCard:(Card *)card
 {
     float scale = 1.0;
-    if (img.size.width > 300)
+    if (img.size.width * img.scale > 300)
     {
         scale = 1.436;
     }
