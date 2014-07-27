@@ -104,13 +104,11 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) dealloc
 {
-    NSLog(@"filter dealloc");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
 {
-    NSLog(@"filter disappear");
     self.deckListViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -182,7 +180,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    NSLog(@"filter appear");
     [super viewDidAppear:animated];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
