@@ -23,7 +23,7 @@
 @property NSMutableArray* sectionToggles;
 
 @property int sectionCount; // number of non-empty section headers
-@property int totalEntries; // total number of selectable entries
+@property NSUInteger totalEntries; // total number of selectable entries
 
 @end
 
