@@ -244,7 +244,8 @@
     NSInteger section = sender.tag & 1;
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:section];
     NSArray* decks = self.decks[indexPath.section];
-    self.deck = decks[indexPath.row];
+
+    Deck* deck = decks[indexPath.row];
     
     UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
     CGRect frame = [cell.contentView convertRect:sender.frame toView:self.view];
@@ -254,9 +255,9 @@
                                     cancelButtonTitle:@""
                                destructiveButtonTitle:nil
                                     otherButtonTitles:
-                  [NSString stringWithFormat:@"%@%@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @" ✓" : @""],
-                  [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @" ✓" : @""],
-                  [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
+                  [NSString stringWithFormat:@"%@%@", l10n(@"Active"), deck.state == NRDeckStateActive ? @" ✓" : @""],
+                  [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), deck.state == NRDeckStateTesting ? @" ✓" : @""],
+                  [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
     
     // fudge the frame so the popup appears to the left of the (I)
     frame.origin.y -= 990;
@@ -264,19 +265,25 @@
     frame.size.width = 500;
     
     [self.popup showFromRect:frame inView:self.tableView.superview animated:NO action:^(NSInteger buttonIndex) {
-        NSNumber* role;
+        NRDeckState oldState = deck.state;
         switch (buttonIndex)
         {
-            case 0: // new runner
-                role = @(NRRoleRunner);
+            case 0:
+                deck.state = NRDeckStateActive;
                 break;
-            case 1: // new corp
-                role = @(NRRoleCorp);
+            case 1:
+                deck.state = NRDeckStateTesting;
+                break;
+            case 2:
+                deck.state = NRDeckStateRetired;
                 break;
         }
-        if (role)
+        if (deck.state != oldState)
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
+            [DeckManager saveDeck:deck];
+            [DeckManager resetModificationDate:deck];
+            
+            [self updateDecks];
         }
     }];
 }
@@ -343,9 +350,9 @@
             UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
             
             NSArray* decks = self.decks[indexPath.section];
-            self.deck = decks[indexPath.row];
+            Deck* deck = decks[indexPath.row];
             
-            self.popup = [[NRActionSheet alloc] initWithTitle:self.deck.name
+            self.popup = [[NRActionSheet alloc] initWithTitle:deck.name
                                                      delegate:nil
                                             cancelButtonTitle:@""
                                        destructiveButtonTitle:nil
@@ -358,7 +365,7 @@
                 switch (buttonIndex) {
                     case 0: // duplicate
                     {
-                        Deck* newDeck = [self.deck duplicate];
+                        Deck* newDeck = [deck duplicate];
                         [DeckManager saveDeck:newDeck];
                         
                         NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -373,7 +380,6 @@
                         }
                         
                         [self updateDecks];
-                        self.deck = nil;
                         break;
                     }
                     case 1: // rename
@@ -388,7 +394,7 @@
                         
                         UITextField* textField = [self.nameAlert textFieldAtIndex:0];
                         textField.placeholder = l10n(@"Deck Name");
-                        textField.text = self.deck.name;
+                        textField.text = deck.name;
                         textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
                         textField.clearButtonMode = UITextFieldViewModeAlways;
                         textField.returnKeyType = UIReturnKeyDone;
@@ -399,9 +405,8 @@
                             @strongify(self);
                             if (buttonIndex == 1)
                             {
-                                self.deck.name = [self.nameAlert textFieldAtIndex:0].text;
-                                [DeckManager saveDeck:self.deck];
-                                self.deck = nil;
+                                deck.name = [self.nameAlert textFieldAtIndex:0].text;
+                                [DeckManager saveDeck:deck];
                                 [self updateDecks];
                             }
                             self.nameAlert = nil;
@@ -410,17 +415,17 @@
                         break;
                     }
                     case 2: // email
-                        [self sendAsEmail];
+                        [self sendAsEmail:deck];
                         break;
                     case 3: // select for diff
                         
-                        if ([self.decksToDiff containsObject:self.deck.filename])
+                        if ([self.decksToDiff containsObject:deck.filename])
                         {
-                            [self.decksToDiff removeObject:self.deck.filename];
+                            [self.decksToDiff removeObject:deck.filename];
                         }
                         else
                         {
-                            [self.decksToDiff addObject:self.deck.filename];
+                            [self.decksToDiff addObject:deck.filename];
                         }
                         while (self.decksToDiff.count > 2)
                         {
@@ -566,17 +571,17 @@
 
 #pragma mark email
 
--(void) sendAsEmail
+-(void) sendAsEmail:(Deck*)deck
 {
     TF_CHECKPOINT(@"Send as Email");
     
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     
     mailer.mailComposeDelegate = self;
-    NSString *emailBody = [DeckExport asPlaintextString:self.deck];
+    NSString *emailBody = [DeckExport asPlaintextString:deck];
     [mailer setMessageBody:emailBody isHTML:NO];
     
-    [mailer setSubject:self.deck.name];
+    [mailer setSubject:deck.name];
     
     [self presentViewController:mailer animated:NO completion:nil];
 }

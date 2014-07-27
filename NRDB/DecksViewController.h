@@ -22,7 +22,6 @@
 
 @property NRActionSheet* popup;
 @property NSArray* decks;
-@property Deck* deck;
 
 @property NRFilterType filterType;
 
