@@ -116,7 +116,8 @@ static struct cardSetData {
 +(NSDictionary*) settingsDefaults
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-    dict[UNPUBLISHED_IDS] = @(NO);
+    dict[USE_UNPUBLISHED_IDS] = @(NO);
+    dict[USE_DRAFT_IDS] = @(NO);
     for (CardSets* cs in cardSets)
     {
         [dict setObject:@(cs.released) forKey:cs.settingsKey];
@@ -136,9 +137,13 @@ static struct cardSetData {
         }
     }
     
-    if (![settings boolForKey:UNPUBLISHED_IDS])
+    if (![settings boolForKey:USE_UNPUBLISHED_IDS])
     {
         [set addObject:@"special"];
+    }
+    if (![settings boolForKey:USE_DRAFT_IDS])
+    {
+        [set addObject:@"draft"];
     }
     return set;
 }

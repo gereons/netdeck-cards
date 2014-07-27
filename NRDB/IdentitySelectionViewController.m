@@ -64,7 +64,10 @@ static NSInteger viewMode = 1;
         [factions removeObject:[Faction name:NRFactionNone]];
         // move 'neutral' to the end
         [factions removeObject:neutral];
-        [factions addObject:neutral];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
+        {
+            [factions addObject:neutral];
+        }
         
         self.factionNames = [NSArray arrayWithArray:factions];
         
@@ -95,6 +98,8 @@ static NSInteger viewMode = 1;
                 }
             }
         }
+        
+        NSAssert(self.identities.count == self.factionNames.count, @"count mismatch");
     }
     return self;
 }

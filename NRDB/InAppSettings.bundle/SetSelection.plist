@@ -78,6 +78,16 @@
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
+        <dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Draft</string>
+			<key>Key</key>
+			<string>use_draft_identities</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
 		<dict>
 			<key>Title</key>
 			<string>Genesis Cycle</string>
