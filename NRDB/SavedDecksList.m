@@ -73,6 +73,7 @@
     if (self.popup)
     {
         [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        self.popup = nil;
         return;
     }
     
@@ -129,6 +130,7 @@
     if (self.popup)
     {
         [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        self.popup = nil;
         return;
     }
     
@@ -300,33 +302,33 @@
     if (self.popup)
     {
         [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        self.popup = nil;
+        return;
     }
-    else
-    {
-        self.popup = [[NRActionSheet alloc] initWithTitle:nil
-                                                 delegate:nil
-                                        cancelButtonTitle:@""
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:l10n(@"New Runner Deck"),
-                      l10n(@"New Corp Deck"), nil];
-        
-        [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-            NSNumber* role;
-            switch (buttonIndex)
-            {
-                case 0: // new runner
-                    role = @(NRRoleRunner);
-                    break;
-                case 1: // new corp
-                    role = @(NRRoleCorp);
-                    break;
-            }
-            if (role)
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
-            }
-        }];
-    }
+
+    self.popup = [[NRActionSheet alloc] initWithTitle:nil
+                                             delegate:nil
+                                    cancelButtonTitle:@""
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:l10n(@"New Runner Deck"),
+                  l10n(@"New Corp Deck"), nil];
+    
+    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
+        NSNumber* role;
+        switch (buttonIndex)
+        {
+            case 0: // new runner
+                role = @(NRRoleRunner);
+                break;
+            case 1: // new corp
+                role = @(NRRoleCorp);
+                break;
+        }
+        if (role)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
+        }
+    }];
 }
 
 -(void) longPress:(UIGestureRecognizer*)gesture
@@ -440,6 +442,7 @@
     if (self.popup)
     {
         [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        self.popup = nil;
         return;
     }
     
