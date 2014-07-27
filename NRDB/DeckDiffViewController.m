@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     {
         self.deck1 = deck1;
         self.deck2 = deck2;
-        self.diffMode = FullComparison;
+        self.diffMode = DiffOnly;
         self.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     return self;
