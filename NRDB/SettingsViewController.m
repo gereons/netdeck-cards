@@ -186,7 +186,7 @@
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:l10n(@"Clear Cache? You will need to re-download all data from NetrunnerDB.com.")
                                                    buttons:@[l10n(@"No"), l10n(@"Yes") ]];
-        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
             if (buttonIndex == 1) // yes, clear
             {
                 [[ImageCache sharedInstance] clearCache];

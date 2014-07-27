@@ -82,7 +82,7 @@ static DataDownload* instance;
     [self.alert show];
     
     @weakify(self);
-    self.alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+    self.alert.didDismissHandler = ^(NSInteger buttonIndex) {
         @strongify(self);
         [self stopDownload];
     };
@@ -194,7 +194,7 @@ static DataDownload* instance;
     [self.alert show];
     
     @weakify(self);
-    self.alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+    self.alert.didDismissHandler = ^(NSInteger buttonIndex) {
         @strongify(self);
         [self stopDownload];
     };

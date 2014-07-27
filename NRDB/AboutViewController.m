@@ -72,7 +72,7 @@
     SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                message:msg
                                                buttons:@[l10n(@"Cancel"), l10n(@"Write a Review"), l10n(@"Contact Developers")]];
-    alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+    alert.didDismissHandler = ^(NSInteger buttonIndex) {
         switch (buttonIndex)
         {
             case 1:

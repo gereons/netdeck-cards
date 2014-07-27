@@ -135,7 +135,7 @@ static DeckImport* instance;
     if (alert)
     {
         @weakify(self);
-        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
             @strongify(self);
             if (buttonIndex == 1) // yes
             {
@@ -283,7 +283,7 @@ static DeckImport* instance;
     self.alert = [SDCAlertView alertWithTitle:l10n(@"Downloading Deck") message:nil subview:view buttons:@[l10n(@"Stop")]];
     
     @weakify(self);
-    self.alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+    self.alert.didDismissHandler = ^(NSInteger buttonIndex) {
         @strongify(self);
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
