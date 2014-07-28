@@ -7,19 +7,46 @@
 //
 
 #import "DeckDiffCell.h"
+#import "CardImageViewPopover.h"
+
+@interface DeckDiffCell()
+
+@end
 
 @implementation DeckDiffCell
 
 - (void)awakeFromNib
 {
-    // Initialization code
+    UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popupCard1:)];
+    [self.deck1Card addGestureRecognizer:tap1];
+    self.deck1Card.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popupCard2:)];
+    [self.deck2Card addGestureRecognizer:tap2];
+    self.deck2Card.userInteractionEnabled = YES;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+-(void) popupCard1:(UITapGestureRecognizer*)sender
 {
-    [super setSelected:selected animated:animated];
+    if (self.card1)
+    {
+        NSIndexPath* idx = [self.tableView indexPathForRowAtPoint:[sender locationInView:self.tableView]];
+        CGRect rect = [self.tableView rectForRowAtIndexPath:idx];
+        rect.size.width = 330;
+        [CardImageViewPopover showForCard:self.card1 fromRect:rect inView:self.tableView];
+    }
+}
 
-    // Configure the view for the selected state
+-(void) popupCard2:(id)sender
+{
+    if (self.card2)
+    {
+        NSIndexPath* idx = [self.tableView indexPathForRowAtPoint:[sender locationInView:self.tableView]];
+        CGRect rect = [self.tableView rectForRowAtIndexPath:idx];
+        rect.origin.x = 400;
+        rect.size.width = 310;
+        [CardImageViewPopover showForCard:self.card2 fromRect:rect inView:self.tableView];
+    }
 }
 
 @end

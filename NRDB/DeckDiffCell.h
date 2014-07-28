@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class Card;
+
 @interface DeckDiffCell : UITableViewCell
+
+@property (weak) UITableView* tableView;
+@property Card* card1;
+@property Card* card2;
 
 @property IBOutlet UILabel* deck1Card;
 @property IBOutlet UILabel* deck2Card;

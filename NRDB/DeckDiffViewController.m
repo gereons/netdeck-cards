@@ -346,9 +346,14 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     }
     CardDiff* cd = arr[indexPath.row];
     
+    cell.tableView = self.tableView;
+    cell.card1 = nil;
+    cell.card2 = nil;
+    
     if (cd.count1 > 0)
     {
         cell.deck1Card.text = [NSString stringWithFormat:@"%lu× %@", (unsigned long)cd.count1, cd.card.name];
+        cell.card1 = cd.card;
     }
     else
     {
@@ -358,6 +363,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     if (cd.count2 > 0)
     {
         cell.deck2Card.text = [NSString stringWithFormat:@"%lu× %@", (unsigned long)cd.count2, cd.card.name];
+        cell.card2 = cd.card;
     }
     else
     {
