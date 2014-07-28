@@ -20,10 +20,12 @@
 @property IBOutlet UIButton* cancelButton;
 @property IBOutlet UILabel* titleLabel;
 
-@property IBOutlet UISegmentedControl* selector;
+@property IBOutlet UISegmentedControl* modeSelector;
+@property IBOutlet UISegmentedControl* factionSelector;
 
 -(IBAction)okClicked:(id)sender;
 -(IBAction)cancelClicked:(id)sender;
 -(IBAction)viewModeChange:(id)sender;
+-(IBAction)factionChange:(id)sender;
 
 @end

@@ -621,11 +621,14 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
         NSAssert(card.role == self.deck.role, @"role mismatch");
     }
     
-    self.deck.identity = card;
-    self.deckChanged = YES;
-    [self refresh];
+    if (card && ![self.deck.identity isEqual:card])
+    {
+        self.deck.identity = card;
+        self.deckChanged = YES;
+        [self refresh];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+    }
 }
 
 #pragma mark export

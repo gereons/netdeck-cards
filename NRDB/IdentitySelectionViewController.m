@@ -133,7 +133,36 @@ static NSInteger viewMode = 1;
     
     self.tableView.hidden = viewMode == 0;
     self.collectionView.hidden = viewMode == 1;
-    self.selector.selectedSegmentIndex = viewMode;
+    self.modeSelector.selectedSegmentIndex = viewMode;
+    
+    CGPoint oldCenter = self.factionSelector.center;
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
+    {
+        [self.factionSelector removeSegmentAtIndex:5 animated:NO];
+    }
+    else
+    {
+        [self.factionSelector setTitle:l10n(@"Neutral") forSegmentAtIndex:5];
+    }
+    
+    if (self.role == NRRoleRunner)
+    {
+        [self.factionSelector removeSegmentAtIndex:4 animated:NO];
+        [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
+        [self.factionSelector setTitle:[Faction name:NRFactionAnarch] forSegmentAtIndex:1];
+        [self.factionSelector setTitle:[Faction name:NRFactionCriminal] forSegmentAtIndex:2];
+        [self.factionSelector setTitle:[Faction name:NRFactionShaper] forSegmentAtIndex:3];
+    }
+    else
+    {
+        [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
+        [self.factionSelector setTitle:l10n(@"H-B") forSegmentAtIndex:1];
+        [self.factionSelector setTitle:l10n(@"NBN") forSegmentAtIndex:2];
+        [self.factionSelector setTitle:l10n(@"Jinteki") forSegmentAtIndex:3];
+        [self.factionSelector setTitle:l10n(@"Weyland") forSegmentAtIndex:4];
+    }
+    self.factionSelector.center = oldCenter;
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -183,6 +212,11 @@ static NSInteger viewMode = 1;
         [self.collectionView reloadData];
         [self.collectionView selectItemAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionCenteredVertically];
     }
+}
+
+-(void) factionChange:(UISegmentedControl*)sender
+{
+    NSLog(@"select faction %d", sender.selectedSegmentIndex);
 }
 
 -(void) showImage:(UIButton*)sender

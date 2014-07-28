@@ -8,8 +8,9 @@
             <connections>
                 <outlet property="cancelButton" destination="XPl-aK-i3R" id="jBC-de-ygO"/>
                 <outlet property="collectionView" destination="oc6-uP-KFD" id="d9J-C4-386"/>
+                <outlet property="factionSelector" destination="A7r-Ld-GpX" id="iv8-0n-agU"/>
+                <outlet property="modeSelector" destination="eGs-tE-lbO" id="lmQ-6q-qCV"/>
                 <outlet property="okButton" destination="3GR-3R-4qU" id="9aJ-y3-7nj"/>
-                <outlet property="selector" destination="eGs-tE-lbO" id="zj4-wr-tL3"/>
                 <outlet property="tableView" destination="cBN-xX-UhP" id="nrw-zB-etD"/>
                 <outlet property="titleLabel" destination="41o-TO-qhd" id="S4J-fG-cag"/>
                 <outlet property="view" destination="2" id="3"/>
@@ -83,6 +84,21 @@
                         <outlet property="delegate" destination="-1" id="m6H-lK-qql"/>
                     </connections>
                 </collectionView>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="A7r-Ld-GpX">
+                    <rect key="frame" x="119" y="572" width="302" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <segments>
+                        <segment title="All"/>
+                        <segment title="H-B"/>
+                        <segment title="NBN"/>
+                        <segment title="Jinteki"/>
+                        <segment title="Weyland"/>
+                        <segment title="Neutral"/>
+                    </segments>
+                    <connections>
+                        <action selector="factionChange:" destination="-1" eventType="valueChanged" id="wyO-C2-E0H"/>
+                    </connections>
+                </segmentedControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
