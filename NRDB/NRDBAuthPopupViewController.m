@@ -27,6 +27,48 @@ static NRDBAuthPopupViewController* popup;
     popup.view.superview.bounds = CGRectMake(0, 0, 850, 466);
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self)
+    {
+        self.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.webView.delegate = self;
+    self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
+    
+    // NSLog(@"%@", @CODE_URL);
+    NSURL* url= [NSURL URLWithString:@CODE_URL];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    [self.cancelButton setTitle:l10n(@"Cancel") forState:UIControlStateNormal];
+}
+
+#pragma mark buttons
+
+-(void) cancel:(id)sender
+{
+    [NRDB clearSettings];
+    [self dismiss];
+}
+
+-(void) dismiss
+{
+    [self dismissViewControllerAnimated:NO completion:nil];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    popup = nil;
+}
+
+#pragma mark url handler 
+
 +(void) handleOpenURL:(NSURL *)url
 {
     if (!popup)
@@ -58,44 +100,6 @@ static NRDBAuthPopupViewController* popup;
     {
         [popup cancel:nil];
     }
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        self.modalPresentationStyle = UIModalPresentationFormSheet;
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.webView.delegate = self;
-    self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
-    
-    // NSLog(@"%@", @CODE_URL);
-    NSURL* url= [NSURL URLWithString:@CODE_URL];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    [self.cancelButton setTitle:l10n(@"Cancel") forState:UIControlStateNormal];
-}
-
--(void) cancel:(id)sender
-{
-    [NRDB clearSettings];
-    [self dismiss];
-}
-
--(void) dismiss
-{
-    [self dismissViewControllerAnimated:NO completion:nil];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    popup = nil;
 }
 
 #pragma mark webview

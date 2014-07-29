@@ -71,16 +71,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewDidDisappear:animated];
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
-    
-    [settings synchronize];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -221,6 +211,16 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
         [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
         self.deckChanged = NO;
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewDidDisappear:animated];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
+    
+    [settings synchronize];
 }
 
 #pragma mark keyboard show/hide

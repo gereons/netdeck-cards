@@ -65,69 +65,6 @@ static NSInteger viewMode = 1;
     return self;
 }
 
-- (void)initIdentities
-{
-    NSMutableArray* factions;
-    
-    if (self.selectedFaction == NRFactionNone)
-    {
-        factions = [[Faction factionsForRole:self.role] mutableCopy];
-        
-        // remove entry for "none"
-        [factions removeObject:[Faction name:NRFactionNone]];
-        
-        // move 'neutral' to the end
-        NSString* neutral = [Faction name:NRFactionNeutral];
-        [factions removeObject:neutral];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
-        {
-            [factions addObject:neutral];
-        }
-    }
-    else
-    {
-        factions = [NSMutableArray array];
-        [factions addObject:[Faction name:self.selectedFaction]];
-    }
-    
-    self.identities = [NSMutableArray array];
-    self.factionNames = [NSArray arrayWithArray:factions];
-    
-    NSSet* disabledSets = [CardSets disabledSetCodes];
-    
-    NSArray* identities = [CardManager identitiesForRole:self.role];
-    for (int i=0; i<factions.count; ++i)
-    {
-        [self.identities addObject:[NSMutableArray array]];
-        
-        for (int j=0; j<identities.count; ++j)
-        {
-            Card* card = identities[j];
-            if ([disabledSets containsObject:card.setCode])
-            {
-                continue;
-            }
-            if (self.selectedFaction != NRFactionNone && card.faction != self.selectedFaction)
-            {
-                continue;
-            }
-            
-            if ([[factions objectAtIndex:i] isEqualToString:card.factionStr])
-            {
-                NSMutableArray* arr = self.identities[i];
-                [arr addObject:card];
-                
-                if ([self.initialIdentity isEqual:card])
-                {
-                    self.selectedIndexPath = [NSIndexPath indexPathForRow:arr.count-1 inSection:i];
-                }
-            }
-        }
-    }
-    
-    NSAssert(self.identities.count == self.factionNames.count, @"count mismatch");
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -200,6 +137,71 @@ static NSInteger viewMode = 1;
     }
 }
 
+- (void)initIdentities
+{
+    NSMutableArray* factions;
+    
+    if (self.selectedFaction == NRFactionNone)
+    {
+        factions = [[Faction factionsForRole:self.role] mutableCopy];
+        
+        // remove entry for "none"
+        [factions removeObject:[Faction name:NRFactionNone]];
+        
+        // move 'neutral' to the end
+        NSString* neutral = [Faction name:NRFactionNeutral];
+        [factions removeObject:neutral];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
+        {
+            [factions addObject:neutral];
+        }
+    }
+    else
+    {
+        factions = [NSMutableArray array];
+        [factions addObject:[Faction name:self.selectedFaction]];
+    }
+    
+    self.identities = [NSMutableArray array];
+    self.factionNames = [NSArray arrayWithArray:factions];
+    
+    NSSet* disabledSets = [CardSets disabledSetCodes];
+    
+    NSArray* identities = [CardManager identitiesForRole:self.role];
+    for (int i=0; i<factions.count; ++i)
+    {
+        [self.identities addObject:[NSMutableArray array]];
+        
+        for (int j=0; j<identities.count; ++j)
+        {
+            Card* card = identities[j];
+            if ([disabledSets containsObject:card.setCode])
+            {
+                continue;
+            }
+            if (self.selectedFaction != NRFactionNone && card.faction != self.selectedFaction)
+            {
+                continue;
+            }
+            
+            if ([[factions objectAtIndex:i] isEqualToString:card.factionStr])
+            {
+                NSMutableArray* arr = self.identities[i];
+                [arr addObject:card];
+                
+                if ([self.initialIdentity isEqual:card])
+                {
+                    self.selectedIndexPath = [NSIndexPath indexPathForRow:arr.count-1 inSection:i];
+                }
+            }
+        }
+    }
+    
+    NSAssert(self.identities.count == self.factionNames.count, @"count mismatch");
+}
+
+#pragma mark buttons
+
 -(void) okClicked:(id)sender
 {
     if (self.selectedIdentity)
@@ -239,9 +241,7 @@ static NSInteger viewMode = 1;
 }
 
 -(void) factionChange:(UISegmentedControl*)sender
-{
-    NSLog(@"select faction %d", sender.selectedSegmentIndex);
-    
+{    
     switch (sender.selectedSegmentIndex)
     {
         case 0:

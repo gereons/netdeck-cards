@@ -14,12 +14,6 @@
 
 @implementation CardImageCell
 
-/*
- TODO: draw stack border around card
- see https://stackoverflow.com/questions/6434925/how-to-draw-uibezierpaths
- see http://ronnqvi.st/thinking-like-a-bzier-path/
- */
-
 -(void) awakeFromNib
 {
     // remove all constraints IB has generated
@@ -132,7 +126,7 @@
     [self addMotionEffect:[self effectX:10]];
     [self addMotionEffect:[self effectY:10]];
     
-    // round corners for images
+    // rounded corners for images
     self.image1.layer.masksToBounds = YES;
     self.image1.layer.cornerRadius = 10;
     self.image2.layer.masksToBounds = YES;
@@ -199,6 +193,8 @@
                                          }
                                      }];
 }
+
+#pragma mark parallax helpers
 
 -(UIInterpolatingMotionEffect*) effectX:(float)depth
 {

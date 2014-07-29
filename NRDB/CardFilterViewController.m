@@ -107,20 +107,6 @@ static NSInteger viewMode = VIEW_LIST;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void) viewDidDisappear:(BOOL)animated
-{
-    self.deckListViewController = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    [super viewDidDisappear:animated];
-    
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setObject:@(showAllFilters) forKey:SHOW_ALL_FILTERS];
-    [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
-    
-    [settings synchronize];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -194,6 +180,20 @@ static NSInteger viewMode = VIEW_LIST;
     [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
     
     [self initFilters];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    self.deckListViewController = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [super viewDidDisappear:animated];
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    [settings setObject:@(showAllFilters) forKey:SHOW_ALL_FILTERS];
+    [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
+    
+    [settings synchronize];
 }
 
 -(void) setResultFrames:(id)sender

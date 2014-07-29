@@ -105,6 +105,8 @@ static NSInteger viewMode;
     }
 }
 
+#pragma mark buttons
+
 -(void) done:(id)sender
 {
     [self dismissViewControllerAnimated:NO completion:nil];

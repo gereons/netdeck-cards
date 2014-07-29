@@ -46,6 +46,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 @implementation ActionsTableViewController
 
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void) viewDidLoad
 {
     [super viewDidLoad];
@@ -94,17 +99,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             }
         };
     }
-}
-
--(void) dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
--(void) viewDidDisappear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewDidDisappear:animated];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -156,6 +150,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     }
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewDidDisappear:animated];
 }
 
 -(void) resetDetailView

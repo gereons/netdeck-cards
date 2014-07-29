@@ -256,6 +256,8 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     return -1;
 }
 
+#pragma mark buttons
+
 - (void) close:(id)sender
 {
     [self dismissViewControllerAnimated:NO completion:nil];

@@ -41,12 +41,6 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
--(void) goBack:(id)sender
-{
-    [self.webView goBack];
-    self.navigationController.navigationBar.topItem.leftBarButtonItem = nil;
-}
-
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -63,6 +57,14 @@
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Feedback" style:UIBarButtonItemStyleBordered target:self action:@selector(leaveFeedback:)];
+}
+
+#pragma mark buttons
+
+-(void) goBack:(id)sender
+{
+    [self.webView goBack];
+    self.navigationController.navigationBar.topItem.leftBarButtonItem = nil;
 }
 
 -(void) leaveFeedback:(id)sender

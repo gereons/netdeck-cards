@@ -32,6 +32,11 @@
 
 @implementation SettingsViewController
 
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -47,11 +52,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:LOAD_CARDS object:nil];
     
     [self refresh];
-}
-
--(void) dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void) refresh

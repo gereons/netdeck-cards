@@ -71,18 +71,6 @@ static NRFilterType _filterType = NRFilterAll;
     return self;
 }
 
--(void) viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    
-    [settings setObject:@(self.filterType) forKey:DECK_FILTER_TYPE];
-    [settings setObject:@(self.filterState) forKey:DECK_FILTER_STATE];
-    [settings setObject:@(self.sortType) forKey:DECK_FILTER_SORT];
-    
-    [settings synchronize];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -151,6 +139,18 @@ static NRFilterType _filterType = NRFilterAll;
 {
     [super viewDidAppear:animated];
     [self updateDecks];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    [settings setObject:@(self.filterType) forKey:DECK_FILTER_TYPE];
+    [settings setObject:@(self.filterState) forKey:DECK_FILTER_STATE];
+    [settings setObject:@(self.sortType) forKey:DECK_FILTER_SORT];
+    
+    [settings synchronize];
 }
 
 #pragma mark action sheet

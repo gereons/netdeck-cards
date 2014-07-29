@@ -30,6 +30,8 @@ static CGFloat popoverScale = 1.0;
 
 @implementation CardImageViewPopover
 
+#pragma mark keyboard monitor
+
 +(void)monitorKeyboard
 {
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
@@ -58,6 +60,8 @@ static CGFloat popoverScale = 1.0;
         popover.popoverContentSize = CGSizeMake(IMAGE_WIDTH, IMAGE_HEIGHT);
     }
 }
+
+#pragma mark show/dismiss
 
 +(void)showForCard:(Card *)card fromRect:(CGRect)rect inView:(UIView*)view
 {
