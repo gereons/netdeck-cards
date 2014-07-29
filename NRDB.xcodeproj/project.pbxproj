@@ -222,6 +222,8 @@
 		3AFA3B6A18DF862900F59331 /* altarttoggle_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6618DF862900F59331 /* altarttoggle_on.png */; };
 		3AFA3B6B18DF862900F59331 /* altarttoggle_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */; };
 		3AFA3B6C18DF862900F59331 /* altarttoggle_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */; };
+		3AFB25401987789E0051C894 /* netrunnerdb_com-bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */; };
+		3AFB25411987789E0051C894 /* netrunnerdb_com-bw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */; };
 		ED15EBD876484EC4BAF34F26 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69129A4A2D3A4A50B7C75895 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -555,6 +557,8 @@
 		3AFA3B6618DF862900F59331 /* altarttoggle_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altarttoggle_on.png; sourceTree = "<group>"; };
 		3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altarttoggle_on@2x.png"; sourceTree = "<group>"; };
 		3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altarttoggle_off@2x.png"; sourceTree = "<group>"; };
+		3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw.png"; sourceTree = "<group>"; };
+		3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw@2x.png"; sourceTree = "<group>"; };
 		51B908737050483393874704 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		69129A4A2D3A4A50B7C75895 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -906,6 +910,8 @@
 		3A721E6418CE3FBF00799097 /* flat */ = {
 			isa = PBXGroup;
 			children = (
+				3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */,
+				3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */,
 				3A8FBC9F19548933009ED6E3 /* netrunnerdb_com@2x.png */,
 				3A8FBCA019548933009ED6E3 /* netrunnerdb_com.png */,
 				3A689FA1195D3EB8004EBC41 /* retired.png */,
@@ -1326,7 +1332,9 @@
 				3AB34E611939AA8D000A43BB /* CardFilterThumbView.xib in Resources */,
 				3A82625118E05EC70038B4AC /* cardstats_decksize.png in Resources */,
 				3A82625918E05EC70038B4AC /* deckview_card.png in Resources */,
+				3AFB25401987789E0051C894 /* netrunnerdb_com-bw.png in Resources */,
 				3A82624718E05EC70038B4AC /* cardstats_points.png in Resources */,
+				3AFB25411987789E0051C894 /* netrunnerdb_com-bw@2x.png in Resources */,
 				3A7F775C195425B400100F79 /* deckview_2col.png in Resources */,
 				3A52E1931917F9EF00264C2A /* 764-arrow-down.png in Resources */,
 				3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */,
