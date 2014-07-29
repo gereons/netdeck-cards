@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -9,10 +9,10 @@
                 <outlet property="analysisButton" destination="ZM9-wm-D2z" id="lY9-6z-E2n"/>
                 <outlet property="collectionView" destination="Zk2-4C-1CS" id="r3d-KH-wIo"/>
                 <outlet property="deckNameLabel" destination="JY5-GK-UJa" id="exF-Si-N7U"/>
-                <outlet property="drawButton" destination="ptD-Cs-H63" id="BYf-G7-KdS"/>
+                <outlet property="drawButton" destination="ptD-Cs-H63" id="ioY-Xx-ED2"/>
                 <outlet property="footerLabel" destination="Ocu-JS-mPn" id="o9l-Dc-bRh"/>
                 <outlet property="lastSetLabel" destination="Gyb-FN-lQv" id="BSf-TL-qw8"/>
-                <outlet property="nrdbButton" destination="7Dy-2f-fza" id="6iT-eL-Jac"/>
+                <outlet property="notesButton" destination="0IP-7H-enu" id="K2G-zc-SZU"/>
                 <outlet property="tableView" destination="TkI-yZ-OZS" id="gri-lb-5ag"/>
                 <outlet property="toolBar" destination="3wr-bR-riV" id="0Xn-Hg-HpA"/>
                 <outlet property="view" destination="2" id="7Xi-zK-kzL"/>
@@ -74,19 +74,19 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="pFX-bV-7AA"/>
-                        <barButtonItem style="plain" id="3ON-MN-GzU">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7Dy-2f-fza" userLabel="Button - NRDB">
-                                <rect key="frame" x="531" y="11" width="16" height="22"/>
+                        <barButtonItem style="plain" id="ZwH-Ij-eY0">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0IP-7H-enu">
+                                <rect key="frame" x="487" y="6" width="60" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="netrunnerdb_com.png">
+                                <state key="normal" title="Notes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="nrdbButtonClicked:" destination="-1" eventType="touchUpInside" id="nJ6-64-JsZ"/>
+                                    <action selector="notesButtonClicked:" destination="-1" eventType="touchUpInside" id="mq8-s6-PgN"/>
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem title="Item" style="plain" id="yfE-uo-jcW">
+                        <barButtonItem style="plain" id="yfE-uo-jcW" userLabel="Bar Button Item">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ptD-Cs-H63">
                                 <rect key="frame" x="557" y="6" width="60" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -127,7 +127,4 @@
             <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
-    <resources>
-        <image name="netrunnerdb_com.png" width="16" height="16"/>
-    </resources>
 </document>

@@ -18,13 +18,14 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UICollectionView* collectionView;
 
-@property IBOutlet UIToolbar* toolBar;
 @property IBOutlet UILabel* footerLabel;
 @property IBOutlet UILabel* deckNameLabel;
 @property IBOutlet UILabel* lastSetLabel;
+
+@property IBOutlet UIToolbar* toolBar;
 @property IBOutlet UIButton* drawButton;
 @property IBOutlet UIButton* analysisButton;
-@property IBOutlet UIButton* nrdbButton;
+@property IBOutlet UIButton* notesButton;
 
 @property BOOL deckChanged;
 @property NRRole role;
@@ -37,6 +38,6 @@
 
 -(IBAction)analysisClicked:(id)sender;
 -(IBAction)drawSimulatorClicked:(id)sender;
--(IBAction)nrdbButtonClicked:(id)sender;
+-(IBAction)notesButtonClicked:(id)sender;
 
 @end

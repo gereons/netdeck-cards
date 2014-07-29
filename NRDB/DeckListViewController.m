@@ -48,7 +48,7 @@
 @property UIBarButtonItem* saveButton;
 @property UIBarButtonItem* exportButton;
 @property UIBarButtonItem* stateButton;
-@property UIBarButtonItem* notesButton;
+@property UIBarButtonItem* nrdbButton;
 
 @property NSString* filename;
 @property BOOL autoSave;
@@ -141,27 +141,19 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
         self.toggleViewButton,
     ];
     
-    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
-    self.saveButton.enabled = NO;
+    self.autoSave = [settings boolForKey:AUTO_SAVE];
+    self.autoSaveDropbox = self.autoSave && [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
     
     // right buttons
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
     
-    self.autoSave = [settings boolForKey:AUTO_SAVE];
-    self.autoSaveDropbox = self.autoSave && [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
+    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
+    self.saveButton.enabled = NO;
     
-    NSMutableArray* rightButtons = [NSMutableArray array];
-    [rightButtons addObject:self.exportButton];
-    [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)]];
-    if (!self.autoSave)
-    {
-        [rightButtons addObject:self.saveButton];
-    }
-    [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)]];
-    
-    self.notesButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Notes") style:UIBarButtonItemStylePlain target:self action:@selector(editNotes:)];
-    [rightButtons addObject:self.notesButton];
-    
+    UIImage* img = [[UIImage imageNamed:@"netrunnerdb_com"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.nrdbButton = [[UIBarButtonItem alloc] initWithImage:img style:UIBarButtonItemStylePlain target:self action:@selector(nrdbButtonClicked:)];
+    self.nrdbButton.enabled = self.useNetrunnerdb;
+
     self.stateButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:self.deck.state] style:UIBarButtonItemStylePlain target:self action:@selector(changeState:)];
     self.stateButton.possibleTitles = [NSSet setWithArray:@[
                                                             [DeckState buttonLabelFor:NRDeckStateNone],
@@ -169,6 +161,20 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
                                                             [DeckState buttonLabelFor:NRDeckStateTesting],
                                                             [DeckState buttonLabelFor:NRDeckStateRetired],
                                                             ]];
+    
+    UIBarButtonItem* dupButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)];
+    UIBarButtonItem* nameButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)];
+    
+    // add from right to left!
+    NSMutableArray* rightButtons = [NSMutableArray array];
+    [rightButtons addObject:self.exportButton];
+    [rightButtons addObject:dupButton];
+    [rightButtons addObject:self.nrdbButton];
+    if (!self.autoSave)
+    {
+        [rightButtons addObject:self.saveButton];
+    }
+    [rightButtons addObject:nameButton];
     [rightButtons addObject:self.stateButton];
     
     topItem.rightBarButtonItems = rightButtons;
@@ -176,7 +182,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     // set up bottom toolbar
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
-    self.nrdbButton.hidden = !self.useNetrunnerdb;
+    [self.notesButton setTitle:l10n(@"Notes") forState:UIControlStateNormal];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
@@ -434,7 +440,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
                          buttons:@[l10n(@"OK")]];
 }
 
--(void) editNotes:(id)sender
+-(void) notesButtonClicked:(id)sender
 {
     if (self.actionSheet)
     {
