@@ -126,13 +126,6 @@ static NSInteger viewMode = VIEW_LIST;
     self.cardList = [[CardList alloc] initForRole:self.role];
     [self initCards];
     
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(updateFilter:) name:UPDATE_FILTER object:nil];
-    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
-    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
-    
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
@@ -188,6 +181,13 @@ static NSInteger viewMode = VIEW_LIST;
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFiltersClicked:)];
     
     [self initFilters];
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(updateFilter:) name:UPDATE_FILTER object:nil];
+    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
 }
 
 -(void) setResultFrames:(id)sender

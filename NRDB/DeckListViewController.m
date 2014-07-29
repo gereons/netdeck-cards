@@ -187,13 +187,6 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
     
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
-    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
-    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(notesChanged:) name:NOTES_CHANGED object:nil];
-
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
     
@@ -225,6 +218,13 @@ enum { POPUP_EXPORT, POPUP_STATE };
         [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
         self.deckChanged = NO;
     }
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    [nc addObserver:self selector:@selector(notesChanged:) name:NOTES_CHANGED object:nil];
 }
 
 #pragma mark keyboard show/hide
