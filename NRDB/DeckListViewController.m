@@ -81,6 +81,8 @@ enum { POPUP_EXPORT, POPUP_STATE };
     [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
     
     [settings synchronize];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad

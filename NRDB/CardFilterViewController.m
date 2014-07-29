@@ -108,6 +108,8 @@ static NSInteger viewMode = VIEW_LIST;
     [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
     
     [settings synchronize];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad

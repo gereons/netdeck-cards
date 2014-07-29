@@ -107,6 +107,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void) viewDidAppear:(BOOL)animated
 {
     [self checkCardUpdate];
