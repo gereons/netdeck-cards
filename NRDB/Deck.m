@@ -14,11 +14,7 @@
 @interface Deck()
 {
     NSMutableArray* _cards; // array of CardCounter
-    
 }
-#if DEBUG
-@property NSString* idCode;
-#endif
 
 @end
 
@@ -37,6 +33,7 @@ static NSArray* draftIds;
     {
         self->_cards = [NSMutableArray array];
         self.state = NRDeckStateTesting;
+        self.role = NRRoleNone;
     }
     return self;
 }
@@ -51,17 +48,15 @@ static NSArray* draftIds;
     if (identity)
     {
         self->_identityCc = [CardCounter initWithCard:identity andCount:1];
+        if (self.role != NRRoleNone)
+        {
+            NSAssert(self.role == identity.role, @"role mismatch");
+        }
         self.role = identity.role;
-#if DEBUG
-        self.idCode = identity.code;
-#endif
     }
     else
     {
         self->_identityCc = nil;
-#if DEBUG
-        self.idCode = nil;
-#endif
     }
     
     self->_isDraft = [draftIds containsObject:identity.code];
@@ -69,23 +64,11 @@ static NSArray* draftIds;
 
 -(NSArray*) cards
 {
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
     return self->_cards;
 }
 
 -(NSArray*) allCards
 {
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
     NSMutableArray* arr = [NSMutableArray array];
     if (self.identityCc)
     {
@@ -209,12 +192,6 @@ static NSArray* draftIds;
 
 -(int) size
 {
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
     int sz = 0;
     for (CardCounter* cc in _cards)
     {
@@ -225,12 +202,6 @@ static NSArray* draftIds;
 
 -(int) agendaPoints
 {
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
     int ap = 0;
     
     for (CardCounter* cc in _cards)
@@ -245,12 +216,6 @@ static NSArray* draftIds;
 
 -(int) influence
 {
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
     int inf = 0;
     BOOL isProfessor = [self.identity.code isEqualToString:THE_PROFESSOR];
     
@@ -273,12 +238,6 @@ static NSArray* draftIds;
 
 -(NSUInteger) influenceFor:(CardCounter *)cc
 {
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
     if (self.identity.faction == cc.card.faction || cc.card.influence == -1)
     {
         return 0;
@@ -296,12 +255,7 @@ static NSArray* draftIds;
 -(void) addCard:(Card *)card copies:(int)copies
 {
     NSAssert(card.type != NRCardTypeIdentity, @"can't add identity");
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
+
     int index = [self indexOfCard:card];
     if (index == -1)
     {
@@ -329,23 +283,11 @@ static NSArray* draftIds;
 
 -(void) removeCard:(Card *)card
 {
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
     [self removeCard:card copies:-1];
 }
 
 -(void) removeCard:(Card *)card copies:(int)copies
 {
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
     NSAssert(card.type != NRCardTypeIdentity, @"can't remove identity");
     int index = [self indexOfCard:card];
     NSAssert(index != -1, @"removing card %@, not in deck", card.name);
@@ -423,12 +365,6 @@ static NSArray* draftIds;
 
 -(TableData*) dataForTableView
 {
-#if DEBUG
-    if (self.idCode)
-    {
-        NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
-    }
-#endif
     NSMutableArray* sections = [NSMutableArray array];
     NSMutableArray* cards = [NSMutableArray array];
     
@@ -506,9 +442,6 @@ static NSArray* draftIds;
         {
             _identityCc = [CardCounter initWithCard:identity andCount:1];
         }
-#if DEBUG
-        self.idCode = identity.code;
-#endif
         _identityCc.showAltArt = [decoder decodeBoolForKey:@"identityAltArt"];
         _lastModified = nil;
         _notes = [decoder decodeObjectForKey:@"notes"];
