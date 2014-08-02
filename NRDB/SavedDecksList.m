@@ -28,11 +28,16 @@
 @property UIBarButtonItem* importButton;
 @property UIBarButtonItem* exportButton;
 @property UIBarButtonItem* addDeckButton;
-@property UIBarButtonItem* diffButton;
+
+@property UIBarButtonItem* diffCancelButton;
+
+@property NSArray* normalRightButtons;
+@property NSArray* diffRightButtons;
 
 @property SDCAlertView* nameAlert;
 
-@property NSMutableArray* decksToDiff;
+@property BOOL diffSelection;
+@property NSString* diffDeck;
 
 @end
 
@@ -42,27 +47,27 @@
 {
     [super viewDidLoad];
     
-    self.decksToDiff = [NSMutableArray array];
+    self.diffSelection = NO;
     
     self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEdit:)];
     self.editButton.possibleTitles = [NSSet setWithArray:@[ l10n(@"Edit"), l10n(@"Done") ]];
     self.editButton.title = l10n(@"Edit");
     
-    self.diffButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Compare") style:UIBarButtonItemStylePlain target:self action:@selector(diffDecks:)];
-    self.diffButton.enabled = NO;
+    self.diffCancelButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Cancel") style:UIBarButtonItemStylePlain target:self action:@selector(diffCancel:)];
+    self.diffRightButtons = @[ self.diffCancelButton ];
     
     self.addDeckButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDeck:)];
     self.importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDecks:)];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.rightBarButtonItems = @[
-                                    self.addDeckButton,
-                                    self.exportButton,
-                                    self.importButton,
-                                    self.editButton,
-                                    self.diffButton,
-                                    ];
+    self.normalRightButtons = @[
+        self.addDeckButton,
+        self.exportButton,
+        self.importButton,
+        self.editButton,
+    ];
+    topItem.rightBarButtonItems = self.normalRightButtons;
     
     UIGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     [self.tableView addGestureRecognizer:longPress];
@@ -359,7 +364,7 @@
                                             otherButtonTitles:l10n(@"Duplicate"),
                           l10n(@"Rename"),
                           l10n(@"Send via Email"),
-                          l10n(@"Select to Compare"), nil];
+                          l10n(@"Compare to ..."), nil];
             
             [self.popup showFromRect:cell.frame inView:self.tableView animated:NO action:^(NSInteger buttonIndex) {
                 switch (buttonIndex) {
@@ -418,20 +423,10 @@
                         [self sendAsEmail:deck];
                         break;
                     case 3: // select for diff
+                        self.diffDeck = deck.filename;
+                        self.diffSelection = YES;
+                        self.navigationController.navigationBar.topItem.rightBarButtonItems = self.diffRightButtons;
                         
-                        if ([self.decksToDiff containsObject:deck.filename])
-                        {
-                            [self.decksToDiff removeObject:deck.filename];
-                        }
-                        else
-                        {
-                            [self.decksToDiff addObject:deck.filename];
-                        }
-                        while (self.decksToDiff.count > 2)
-                        {
-                            [self.decksToDiff removeObjectAtIndex:0];
-                        }
-                        self.diffButton.enabled = self.decksToDiff.count == 2;
                         [self.tableView reloadData];
                         break;
                 }
@@ -467,20 +462,15 @@
 
 #pragma mark deck diff
 
--(void) diffDecks:(id)sender
+-(void) diffCancel:(id)sender
 {
-    NSAssert(_decksToDiff.count == 2, @"count must be 2");
+    NSAssert(self.diffSelection, @"not in diff mode");
+    self.diffSelection = NO;
     
-    Deck* deck1 = [DeckManager loadDeckFromPath:_decksToDiff[0]];
-    Deck* deck2 = [DeckManager loadDeckFromPath:_decksToDiff[1]];
+    self.diffDeck = nil;
+    [self.tableView reloadData];
     
-    if (deck1.role != deck2.role)
-    {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Both decks must be for the same side.") buttons:@[ l10n(@"OK")]];
-        return;
-    }
-    
-    [DeckDiffViewController showForDecks:deck1 deck2:deck2 inViewController:self];
+    self.navigationController.navigationBar.topItem.rightBarButtonItems = self.normalRightButtons;
 }
 
 #pragma mark table view
@@ -509,7 +499,7 @@
     }
     [cell.infoButton setImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
 
-    if ([self.decksToDiff containsObject:deck.filename])
+    if ([self.diffDeck isEqualToString:deck.filename])
     {
         cell.nameLabel.textColor = [UIColor blueColor];
     }
@@ -526,13 +516,28 @@
     NSArray* decks = self.decks[indexPath.section];
     Deck* deck = [decks objectAtIndex:indexPath.row];
     
-    TF_CHECKPOINT(@"load deck");
-    
-    NSDictionary* userInfo = @{
-                               @"filename" : deck.filename,
-                               @"role" : @(deck.role)
-                               };
-    [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_DECK object:self userInfo:userInfo];
+    if (self.diffSelection)
+    {
+        NSAssert(self.diffDeck, @"no diff deck");
+        Deck* d = [DeckManager loadDeckFromPath:self.diffDeck];
+        if (d.role != deck.role)
+        {
+            [SDCAlertView alertWithTitle:nil message:l10n(@"Both decks must be for the same side.") buttons:@[ l10n(@"OK")]];
+            return;
+        }
+
+        [DeckDiffViewController showForDecks:d deck2:deck inViewController:self];
+    }
+    else
+    {
+        TF_CHECKPOINT(@"load deck");
+        
+        NSDictionary* userInfo = @{
+                                   @"filename" : deck.filename,
+                                   @"role" : @(deck.role)
+                                   };
+        [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_DECK object:self userInfo:userInfo];
+    }
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
