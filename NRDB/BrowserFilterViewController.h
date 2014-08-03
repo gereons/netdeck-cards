@@ -37,6 +37,24 @@
 @property IBOutlet UILabel* apLabel;
 @property IBOutlet UISlider* apSlider;
 
+@property IBOutlet UILabel* uniqueLabel;
 @property IBOutlet UISwitch* uniqueSwitch;
+
+@property IBOutlet UILabel* limitedLabel;
+@property IBOutlet UISwitch* limitedSwitch;
+
+-(IBAction)sideSelected:(id)sender;
+-(IBAction)scopeSelected:(id)sender;
+-(IBAction)typeClicked:(id)sender;
+-(IBAction)subtypeClicked:(id)sender;
+-(IBAction)factionClicked:(id)sender;
+-(IBAction)setClicked:(id)sender;
+-(IBAction)influenceChanged:(id)sender;
+-(IBAction)costChanged:(id)sender;
+-(IBAction)strengthChanged:(id)sender;
+-(IBAction)apChanged:(id)sender;
+-(IBAction)muChanged:(id)sender;
+-(IBAction)uniqueChanged:(id)sender;
+-(IBAction)limitedChanged:(id)sender;
 
 @end

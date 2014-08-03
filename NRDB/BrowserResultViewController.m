@@ -13,7 +13,6 @@
 
 @interface BrowserResultViewController ()
 
-@property CardList* cardList;
 @property NSArray* sections;
 @property NSArray* values;
 
@@ -24,11 +23,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.cardList = [[CardList alloc] initForRole:NRRoleRunner];
-    TableData* td = [self.cardList dataForTableView];
+}
+
+- (void) updateDisplay:(CardList *)cardList
+{
+    TableData* td = [cardList dataForTableView];
     self.sections = td.sections;
     self.values = td.values;
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark tableview

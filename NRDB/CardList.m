@@ -32,6 +32,8 @@
 @property int agendaPoints;
 @property NSString* text;
 @property NRSearchScope searchScope;
+@property BOOL unique;
+@property BOOL limited;
 @end
 
 @implementation CardList
@@ -47,10 +49,45 @@
     return self;
 }
 
++(CardList*) browserInitForRole:(NRRole)role
+{
+    CardList* cl = [[CardList alloc] init];
+    
+    cl.role = role;
+    NSArray* roles;
+    switch (role)
+    {
+        case NRRoleNone:
+            roles = @[ @(NRRoleRunner), @(NRRoleCorp) ];
+            break;
+        case NRRoleCorp:
+            roles = @[ @(NRRoleCorp) ];
+            break;
+        case NRRoleRunner:
+            roles = @[ @(NRRoleRunner) ];
+            break;
+    }
+    
+    cl.initialCards = [NSMutableArray array];
+    
+    for (NSNumber* r in roles)
+    {
+        [cl.initialCards addObjectsFromArray:[CardManager allForRole:r.intValue]];
+        [cl.initialCards addObjectsFromArray:[CardManager identitiesForRole:r.intValue]];
+    }
+    [cl filterDeselectedSets];
+    
+    return cl;
+}
+
 -(void) resetInitialCards
 {
     self.initialCards = [NSMutableArray arrayWithArray:[CardManager allForRole:self.role]];
-    
+    [self filterDeselectedSets];
+}
+
+-(void) filterDeselectedSets
+{
     // remove all cards from sets that are deselected
     NSSet* removeSets = [CardSets disabledSetCodes];
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"!(setCode in %@)", removeSets];
@@ -89,6 +126,8 @@
     self.agendaPoints = -1;
     self.text = @"";
     self.searchScope = NRSearchAll;
+    self.unique = NO;
+    self.limited = NO;
 }
 
 -(void) filterByType:(NSString*) type
@@ -180,6 +219,16 @@
 -(void) filterByAgendaPoints:(int)ap
 {
     self.agendaPoints = ap;
+}
+
+-(void) filterByUniqueness:(BOOL)unique
+{
+    self.unique = unique;
+}
+
+-(void) filterByLimited:(BOOL)limited
+{
+    self.limited = limited;
 }
 
 -(NSMutableArray*) applyFilters
@@ -282,7 +331,17 @@
         }
         [predicates addObject:predicate];
     }
-    
+    if (self.unique)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"unique == %d", self.unique];
+        [predicates addObject:predicate];
+    }
+    if (self.limited)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"limited == %d", self.limited];
+        [predicates addObject:predicate];
+    }
+
     if (predicates.count > 0)
     {
         NSPredicate* allPredicates = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];

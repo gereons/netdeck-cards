@@ -6,6 +6,29 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowserFilterViewController">
             <connections>
+                <outlet property="apLabel" destination="SsX-UV-w2J" id="aUi-Ig-aqK"/>
+                <outlet property="apSlider" destination="Ax9-qW-bIv" id="jry-q1-E4P"/>
+                <outlet property="costLabel" destination="1Tf-b5-DNl" id="lle-5b-2Zm"/>
+                <outlet property="costSlider" destination="3Es-On-TDT" id="fGt-7g-HNg"/>
+                <outlet property="factionButton" destination="sg5-4y-mov" id="34Q-08-rFt"/>
+                <outlet property="influenceLabel" destination="vHA-hv-Vhy" id="vPF-Dt-5eu"/>
+                <outlet property="influenceSlider" destination="s6P-be-p8r" id="4Gl-py-pHx"/>
+                <outlet property="limitedLabel" destination="aog-2r-hSS" id="mV3-aU-Qy9"/>
+                <outlet property="limitedSwitch" destination="MA1-BH-Fju" id="kkA-tR-uul"/>
+                <outlet property="muLabel" destination="xMu-cQ-mTF" id="HOY-zw-eVu"/>
+                <outlet property="muSlider" destination="BDY-SE-94P" id="PhD-gI-28U"/>
+                <outlet property="scopeSelector" destination="3pL-eN-Luw" id="crY-W3-qgx"/>
+                <outlet property="searchLabel" destination="w93-eD-dNy" id="nwc-sz-UHC"/>
+                <outlet property="setButton" destination="nQQ-7B-jdD" id="rih-X8-iOr"/>
+                <outlet property="sideLabel" destination="Zpy-LA-3Sv" id="Axz-hp-40x"/>
+                <outlet property="sideSelector" destination="EcS-OP-5Kh" id="efp-ao-Re5"/>
+                <outlet property="strengthLabel" destination="ZSw-pP-Tqj" id="DV4-gj-udZ"/>
+                <outlet property="strengthSlider" destination="J5W-Mz-wK0" id="YsA-Az-bah"/>
+                <outlet property="subtypeButton" destination="Vii-oW-4IX" id="CC2-bN-3pH"/>
+                <outlet property="textField" destination="R6M-WU-oun" id="iC2-Gb-sM9"/>
+                <outlet property="typeButton" destination="Yfa-7o-1Ib" id="E0G-S2-e0U"/>
+                <outlet property="uniqueLabel" destination="yO7-tR-U1Y" id="Yz4-o9-CB3"/>
+                <outlet property="uniqueSwitch" destination="mMG-Ke-ata" id="MB8-9l-4hz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,6 +45,9 @@
                         <segment title="Runner"/>
                         <segment title="Corpo"/>
                     </segments>
+                    <connections>
+                        <action selector="sideSelected:" destination="-1" eventType="valueChanged" id="hMP-qE-8su"/>
+                    </connections>
                 </segmentedControl>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Cards" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R6M-WU-oun">
                     <rect key="frame" x="20" y="73" width="281" height="30"/>
@@ -35,6 +61,9 @@
                     <state key="normal" title="Type: All">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="typeClicked:" destination="-1" eventType="touchUpInside" id="DO6-gJ-eSu"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vii-oW-4IX">
                     <rect key="frame" x="20" y="195" width="125" height="30"/>
@@ -42,6 +71,9 @@
                     <state key="normal" title="Subtype: All">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="subtypeClicked:" destination="-1" eventType="touchUpInside" id="HXZ-dE-fU0"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQQ-7B-jdD">
                     <rect key="frame" x="174" y="195" width="125" height="30"/>
@@ -49,6 +81,9 @@
                     <state key="normal" title="Set: All">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="setClicked:" destination="-1" eventType="touchUpInside" id="VOj-k2-san"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sg5-4y-mov">
                     <rect key="frame" x="174" y="157" width="126" height="30"/>
@@ -56,22 +91,37 @@
                     <state key="normal" title="Faction: All">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="factionClicked:" destination="-1" eventType="touchUpInside" id="S6Y-6e-fF9"/>
+                    </connections>
                 </button>
-                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="s6P-be-p8r">
+                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="s6P-be-p8r">
                     <rect key="frame" x="119" y="246" width="184" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="influenceChanged:" destination="-1" eventType="valueChanged" id="ChO-Dp-PqF"/>
+                    </connections>
                 </slider>
-                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ax9-qW-bIv">
+                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ax9-qW-bIv">
                     <rect key="frame" x="119" y="398" width="184" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="apChanged:" destination="-1" eventType="valueChanged" id="0Xj-gc-u69"/>
+                    </connections>
                 </slider>
-                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="J5W-Mz-wK0">
+                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="J5W-Mz-wK0">
                     <rect key="frame" x="119" y="284" width="184" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="strengthChanged:" destination="-1" eventType="valueChanged" id="jvR-Is-o7N"/>
+                    </connections>
                 </slider>
-                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="BDY-SE-94P">
+                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="BDY-SE-94P">
                     <rect key="frame" x="119" y="322" width="184" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="muChanged:" destination="-1" eventType="valueChanged" id="qpe-O5-XKb"/>
+                    </connections>
                 </slider>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Influence: All" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHA-hv-Vhy">
                     <rect key="frame" x="20" y="250" width="95" height="21"/>
@@ -110,6 +160,9 @@
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mMG-Ke-ata">
                     <rect key="frame" x="250" y="436" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="uniqueChanged:" destination="-1" eventType="valueChanged" id="V2j-JI-Rr0"/>
+                    </connections>
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unique" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yO7-tR-U1Y">
                     <rect key="frame" x="21" y="446" width="95" height="21"/>
@@ -117,9 +170,12 @@
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3Es-On-TDT">
+                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3Es-On-TDT">
                     <rect key="frame" x="119" y="360" width="184" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="costChanged:" destination="-1" eventType="valueChanged" id="RwT-dO-fCG"/>
+                    </connections>
                 </slider>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3pL-eN-Luw">
                     <rect key="frame" x="125" y="111" width="176" height="29"/>
@@ -129,6 +185,9 @@
                         <segment title="All"/>
                         <segment title="Text"/>
                     </segments>
+                    <connections>
+                        <action selector="scopeSelected:" destination="-1" eventType="valueChanged" id="fZI-qg-6ho"/>
+                    </connections>
                 </segmentedControl>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Side:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zpy-LA-3Sv">
                     <rect key="frame" x="21" y="23" width="95" height="21"/>
@@ -140,6 +199,20 @@
                     <rect key="frame" x="20" y="114" width="95" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MA1-BH-Fju">
+                    <rect key="frame" x="252" y="475" width="51" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="limitedChanged:" destination="-1" eventType="valueChanged" id="8nJ-4C-6O5"/>
+                    </connections>
+                </switch>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Limited" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aog-2r-hSS">
+                    <rect key="frame" x="21" y="480" width="95" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

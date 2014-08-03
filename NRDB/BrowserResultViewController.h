@@ -10,8 +10,12 @@
 
 #import "DetailViewManager.h"
 
+@class CardList;
+
 @interface BrowserResultViewController : UIViewController <SubstitutableDetailViewController, UITabBarControllerDelegate, UITableViewDataSource>
 
 @property IBOutlet UITableView* tableView;
+
+-(void)updateDisplay:(CardList*)cardList;
 
 @end

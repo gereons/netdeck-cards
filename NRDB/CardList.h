@@ -14,6 +14,7 @@
 @interface CardList : NSObject
 
 -(CardList*) initForRole:(NRRole)role;
++(CardList*) browserInitForRole:(NRRole)role;
 
 -(void) filterAgendas:(Card*)identity;
 
@@ -34,6 +35,8 @@
 -(void) filterBySets:(NSSet*)sets;
 -(void) filterByStrength:(int)strength;
 -(void) filterByAgendaPoints:(int)ap;
+-(void) filterByUniqueness:(BOOL)unique;
+-(void) filterByLimited:(BOOL)limited;
 
 -(void) clearFilters;
 
