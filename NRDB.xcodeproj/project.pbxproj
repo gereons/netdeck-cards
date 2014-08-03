@@ -186,6 +186,8 @@
 		3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACCEE221869A25500CC3537 /* LargeCardCell.m */; };
 		3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */; };
 		3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */; };
+		3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */; };
+		3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */; };
 		3AD066791896CD2100FF1666 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD066781896CD2100FF1666 /* CardCell.m */; };
 		3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0667D1896D0F100FF1666 /* SmallCardCell.m */; };
 		3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066811896D5B800FF1666 /* SmallCardCell.xib */; };
@@ -504,6 +506,9 @@
 		3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportDecksViewController.h; sourceTree = "<group>"; };
 		3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportDecksViewController.m; sourceTree = "<group>"; };
 		3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportDecksViewController.xib; sourceTree = "<group>"; };
+		3ACF259B198D485F00E6267E /* BrowserFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserFilterViewController.h; sourceTree = "<group>"; };
+		3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserFilterViewController.m; sourceTree = "<group>"; };
+		3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserFilterViewController.xib; sourceTree = "<group>"; };
 		3AD066771896CD2100FF1666 /* CardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCell.h; sourceTree = "<group>"; };
 		3AD066781896CD2100FF1666 /* CardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCell.m; sourceTree = "<group>"; };
 		3AD0667C1896D0F100FF1666 /* SmallCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallCardCell.h; sourceTree = "<group>"; };
@@ -984,6 +989,7 @@
 			children = (
 				3AA440E11854DA260051D4B0 /* Actions View */,
 				3A3850CE1938826C00EB2EB0 /* Filtered Cards */,
+				3ACF259A198D482600E6267E /* Browser Filter */,
 			);
 			name = "Master Views";
 			sourceTree = "<group>";
@@ -1123,6 +1129,7 @@
 			children = (
 				3A8532371854F8E200507B9A /* Deck List */,
 				3AB9BD5518FADB1B004EAF10 /* Saved Decks */,
+				3ACF2599198D47EE00E6267E /* Card Browser */,
 				3ABC2EE31975A608007BBE3A /* Compare Decks */,
 				3A8532771855079100507B9A /* Settings */,
 				3A85328418550AD100507B9A /* About Detail */,
@@ -1168,6 +1175,23 @@
 				3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */,
 			);
 			name = "Draw Simulator";
+			sourceTree = "<group>";
+		};
+		3ACF2599198D47EE00E6267E /* Card Browser */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Card Browser";
+			sourceTree = "<group>";
+		};
+		3ACF259A198D482600E6267E /* Browser Filter */ = {
+			isa = PBXGroup;
+			children = (
+				3ACF259B198D485F00E6267E /* BrowserFilterViewController.h */,
+				3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */,
+				3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */,
+			);
+			name = "Browser Filter";
 			sourceTree = "<group>";
 		};
 		3AD3248E18A93F8000D7AE5D /* Deck Analysis */ = {
@@ -1375,6 +1399,7 @@
 				3A6E756F18E401D400EF8DE1 /* Icon-76.png in Resources */,
 				3A6E755C18E3FF7400EF8DE1 /* cardstats_identity_influence.png in Resources */,
 				3A85327E185509B000507B9A /* SettingsViewController.xib in Resources */,
+				3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */,
 				3AFA3B6A18DF862900F59331 /* altarttoggle_on.png in Resources */,
 				3AE0D50C18F7B4A0007868A7 /* mem_slider.png in Resources */,
 				3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */,
@@ -1537,6 +1562,7 @@
 				3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,
 				3A41789E18761BF600DEEFA6 /* IASKAppSettingsViewController.m in Sources */,
+				3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */,
 				3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */,
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,
 				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,

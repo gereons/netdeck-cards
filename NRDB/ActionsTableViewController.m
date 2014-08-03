@@ -15,6 +15,7 @@
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "CardFilterViewController.h"
+#import "BrowserFilterViewController.h"
 #import "SavedDecksList.h"
 #import "CompareDecksList.h"
 #import "Notifications.h"
@@ -29,6 +30,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     NRMenuDecks,
     NRMenuDeckDiff,
+    NRMenuCardBrowser,
     NRMenuSettings,
     NRMenuAbout,
     
@@ -296,6 +298,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             cell.textLabel.text = l10n(@"Decks");
             cell.textLabel.enabled = [CardManager cardsAvailable];
             break;
+        case NRMenuCardBrowser:
+            cell.textLabel.text = l10n(@"Card Browser");
+            cell.textLabel.enabled = [CardManager cardsAvailable];
+            break;
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -342,6 +348,14 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             CompareDecksList* decks = [[CompareDecksList alloc] init];
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:decks];
             detailViewManager.detailViewController = self.snc;
+            break;
+        }
+            
+        case NRMenuCardBrowser:
+        {
+            TF_CHECKPOINT(@"card browser");
+            BrowserFilterViewController* browser = [[BrowserFilterViewController alloc] init];            
+            [self.navigationController pushViewController:browser animated:NO];
             break;
         }
             
