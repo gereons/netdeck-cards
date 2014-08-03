@@ -240,9 +240,85 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
             self.selectedTypes = values;
         }
         
-        // [self resetButton:SUBTYPE_BUTTON];
+        [self resetButton:SUBTYPE_BUTTON];
     }
     [self.selectedValues setObject:value ? value : values forKey:@(button.tag)];
+    
+    NSLog(@"button: %d", button.tag);
+    NSLog(@"value: %@", value ? value : values);
+    
+    SEL selector;
+    switch (button.tag)
+    {
+        case TYPE_BUTTON:
+            selector = value ? @selector(filterByType:) : @selector(filterByTypes:);
+            break;
+        case SUBTYPE_BUTTON:
+            selector = value ? @selector(filterBySubtype:) : @selector(filterBySubtypes:);
+            break;
+        case FACTION_BUTTON:
+            selector = value ? @selector(filterByFaction:) : @selector(filterByFactions:);
+            break;
+        case SET_BUTTON:
+            selector = value ? @selector(filterBySet:) : @selector(filterBySets:);
+            break;
+    }
+    id obj = value ? value : values;
+    // see https://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
+    // for why we can't simply call [self.cardList performSelector:selector withObject:obj]
+    IMP imp = [self.cardList methodForSelector:selector];
+    void (*func)(id, SEL, id) = (void*)imp;
+    func(self.cardList, selector, obj);
+    
+    [self.browser updateDisplay:self.cardList];
+}
+
+-(void) resetAllButtons
+{
+    [self resetButton:TYPE_BUTTON];
+    [self resetButton:SET_BUTTON];
+    [self resetButton:FACTION_BUTTON];
+    [self resetButton:SUBTYPE_BUTTON];
+}
+
+-(void) resetButton:(NSInteger)tag
+{
+    UIButton* btn;
+    NSString* pfx;
+    switch (tag)
+    {
+        case SET_BUTTON:
+        {
+            btn = self.setButton;
+            pfx = @"Set";
+            break;
+        }
+        case TYPE_BUTTON:
+        {
+            btn = self.typeButton;
+            pfx = @"Type";
+            // reset subtypes to "any"
+            [self resetButton:SUBTYPE_BUTTON];
+            break;
+        }
+        case SUBTYPE_BUTTON:
+        {
+            btn = self.subtypeButton;
+            pfx = @"Subtype";
+            break;
+        }
+        case FACTION_BUTTON:
+        {
+            btn = self.factionButton;
+            pfx = @"Faction";
+            break;
+        }
+    }
+    
+    [self.selectedValues setObject:kANY forKey:@(tag)];
+    [btn setTitle:[NSString stringWithFormat:@"%@: %@", l10n(pfx), l10n(kANY)] forState:UIControlStateNormal];
+    
+    NSAssert(btn != nil, @"no button");
 }
 
 #pragma mark text search
