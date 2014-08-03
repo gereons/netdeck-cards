@@ -111,6 +111,8 @@
 		3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */; };
 		3A8061E71972990E003ACF44 /* DeckDiffCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8061E51972990E003ACF44 /* DeckDiffCell.m */; };
 		3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8061E61972990E003ACF44 /* DeckDiffCell.xib */; };
+		3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A818EEA198E3A0900126495 /* BrowserResultViewController.m */; };
+		3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */; };
 		3A82624218E05EC70038B4AC /* cardstats_difficulty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82622A18E05EC70038B4AC /* cardstats_difficulty.png */; };
 		3A82624318E05EC70038B4AC /* cardstats_strength@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82622B18E05EC70038B4AC /* cardstats_strength@2x.png */; };
 		3A82624418E05EC70038B4AC /* cardstats_trash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82622C18E05EC70038B4AC /* cardstats_trash@2x.png */; };
@@ -398,6 +400,9 @@
 		3A8061E41972990E003ACF44 /* DeckDiffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckDiffCell.h; sourceTree = "<group>"; };
 		3A8061E51972990E003ACF44 /* DeckDiffCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckDiffCell.m; sourceTree = "<group>"; };
 		3A8061E61972990E003ACF44 /* DeckDiffCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffCell.xib; sourceTree = "<group>"; };
+		3A818EE9198E3A0900126495 /* BrowserResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserResultViewController.h; sourceTree = "<group>"; };
+		3A818EEA198E3A0900126495 /* BrowserResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserResultViewController.m; sourceTree = "<group>"; };
+		3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserResultViewController.xib; sourceTree = "<group>"; };
 		3A82622A18E05EC70038B4AC /* cardstats_difficulty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardstats_difficulty.png; sourceTree = "<group>"; };
 		3A82622B18E05EC70038B4AC /* cardstats_strength@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_strength@2x.png"; sourceTree = "<group>"; };
 		3A82622C18E05EC70038B4AC /* cardstats_trash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_trash@2x.png"; sourceTree = "<group>"; };
@@ -1180,6 +1185,9 @@
 		3ACF2599198D47EE00E6267E /* Card Browser */ = {
 			isa = PBXGroup;
 			children = (
+				3A818EE9198E3A0900126495 /* BrowserResultViewController.h */,
+				3A818EEA198E3A0900126495 /* BrowserResultViewController.m */,
+				3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */,
 			);
 			name = "Card Browser";
 			sourceTree = "<group>";
@@ -1384,6 +1392,7 @@
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A6E755918E3FF7400EF8DE1 /* cardstats_identity_link@2x.png in Resources */,
+				3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,
 				3A594E2F18E1F56D00832901 /* 702-share.png in Resources */,
 				3A6E756C18E401D400EF8DE1 /* Icon-Small-40@2x.png in Resources */,
@@ -1544,6 +1553,7 @@
 				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
 				3A4178A318761BF600DEEFA6 /* IASKSettingsStoreFile.m in Sources */,
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
+				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,
 				3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */,
 				3A71FFCB1930BAE800C71C54 /* CardThumbView.m in Sources */,

@@ -159,7 +159,6 @@ static NSInteger viewMode = VIEW_LIST;
     
     [self setEdgesForExtendedLayout:UIRectEdgeBottom];
     
-    
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
     detailViewManager.detailViewController = self.snc;
 }
