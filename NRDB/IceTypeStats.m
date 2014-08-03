@@ -17,7 +17,7 @@
 
 -(IceTypeStats*) initWithDeck:(Deck *)deck
 {
-    NSArray* iceTypes = @[ @"Code Gate", @"Sentry" , @"Barrier", @"Mythic" ];
+    NSArray* iceTypes = @[ @"Code Gate", @"Sentry" , @"Barrier", @"Mythic", @"Grail" ];
     
     if ((self = [super init]))
     {
