@@ -1741,6 +1741,7 @@
 		};
 		3A3622971849320C007F2854 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51B908737050483393874704 /* Pods.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NRDB.app/NRDB";
 				FRAMEWORK_SEARCH_PATHS = (
