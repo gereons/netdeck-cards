@@ -10,6 +10,12 @@
 #import "BrowserResultViewController.h"
 #import "CardManager.h"
 #import "CardList.h"
+#import "CardType.h"
+#import "CardSets.h"
+#import "Faction.h"
+#import "CardFilterPopover.h"
+
+enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
 @interface BrowserFilterViewController ()
 
@@ -18,6 +24,12 @@
 
 @property CardList* cardList;
 @property NRRole role;
+@property NRSearchScope scope;
+@property NSString* searchText;
+
+@property NSString* selectedType;
+@property NSSet* selectedTypes;
+@property NSMutableDictionary* selectedValues;
 
 @end
 
@@ -46,16 +58,21 @@
     
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFiltersClicked:)];
     
+    // side
     [self.sideSelector setTitle:l10n(@"Both") forSegmentAtIndex:0];
     [self.sideSelector setTitle:l10n(@"Runner") forSegmentAtIndex:1];
     [self.sideSelector setTitle:l10n(@"Corp") forSegmentAtIndex:2];
     self.sideLabel.text = l10n(@"Side:");
     
+    // text/scope
     [self.scopeSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
     [self.scopeSelector setTitle:l10n(@"Name") forSegmentAtIndex:1];
     [self.scopeSelector setTitle:l10n(@"Text") forSegmentAtIndex:2];
     self.searchLabel.text = l10n(@"Search in:");
+    self.scope = NRSearchAll;
+    self.textField.delegate = self;
     
+    // sliders
     self.costSlider.maximumValue = 1+(self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost]);
     self.costSlider.minimumValue = 0;
     [self costChanged:nil];
@@ -81,6 +98,17 @@
     [self.strengthSlider setThumbImage:[UIImage imageNamed:@"strength_slider"] forState:UIControlStateNormal];
     [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
     [self.apSlider setThumbImage:[UIImage imageNamed:@"point_slider"] forState:UIControlStateNormal];
+    
+    // buttons
+    self.typeButton.tag = TYPE_BUTTON;
+    self.setButton.tag = SET_BUTTON;
+    self.factionButton.tag = FACTION_BUTTON;
+    self.subtypeButton.tag = SUBTYPE_BUTTON;
+    
+    self.typeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.setButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.factionButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.subtypeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -89,18 +117,48 @@
     
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
     detailViewManager.detailViewController = self.snc;
-    
-    self.cardList = [CardList browserInitForRole:self.role];
-    [self.cardList clearFilters];
-    [self.browser updateDisplay:self.cardList];
+
+    [self clearFiltersClicked:nil];
 }
 
 #pragma mark buttons
 
 -(void) clearFiltersClicked:(id)sender
 {
+    // reset segment controllers
+    self.role = NRRoleNone;
+    self.sideSelector.selectedSegmentIndex = 0;
+    self.scopeSelector.selectedSegmentIndex = 0;
+    
+    // clear textfield
+    self.textField.text = @"";
+    self.searchText = @"";
+    self.scope = NRSearchAll;
+    
+    // reset sliders
+    self.apSlider.value = 0;
+    [self apChanged:nil];
+    self.muSlider.value = 0;
+    [self muChanged:nil];
+    self.influenceSlider.value = 0;
+    [self influenceChanged:nil];
+    self.strengthSlider.value = 0;
+    [self strengthChanged:nil];
+    self.costSlider.value = 0;
+    [self costChanged:nil];
+    
+    // reset switches
+    self.uniqueSwitch.on = NO;
+    self.limitedSwitch.on = NO;
+    
+    self.cardList = [CardList browserInitForRole:self.role];
     [self.cardList clearFilters];
     [self.browser updateDisplay:self.cardList];
+    
+    // type selection
+    self.selectedType = kANY;
+    self.selectedTypes = nil;
+    self.selectedValues = [NSMutableDictionary dictionary];
 }
 
 -(IBAction)sideSelected:(UISegmentedControl*)sender
@@ -123,11 +181,121 @@
     [self.browser updateDisplay:self.cardList];
 }
 
--(IBAction)scopeSelected:(id)sender {}
--(IBAction)typeClicked:(id)sender {}
--(IBAction)subtypeClicked:(id)sender {}
--(IBAction)factionClicked:(id)sender {}
--(IBAction)setClicked:(id)sender {}
+#pragma mark buttons for popovers
+
+-(void) typeClicked:(UIButton*)sender
+{
+    TableData* data = [[TableData alloc] initWithValues:[CardType typesForRole:self.role]];
+    id selected = [self.selectedValues objectForKey:@(TYPE_BUTTON)];
+    
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Type" selected:selected];
+}
+
+-(void) setClicked:(UIButton*)sender
+{
+    id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
+    [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allSetsForTableview] type:@"Set" selected:selected];
+}
+
+-(void) subtypeClicked:(UIButton*)sender
+{
+    TableData* data;
+    if (self.selectedTypes)
+    {
+        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andTypes:self.selectedTypes]];
+    }
+    else
+    {
+        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+    }
+    id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
+    
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Subtype" selected:selected];
+}
+
+-(void) factionClicked:(UIButton*)sender
+{
+    TableData* data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role]];
+    id selected = [self.selectedValues objectForKey:@(FACTION_BUTTON)];
+    
+    [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Faction" selected:selected];
+}
+
+-(void) filterCallback:(UIButton *)button value:(NSObject *)object
+{
+    NSString* value = [object isKindOfClass:[NSString class]] ? (NSString*)object : nil;
+    NSSet* values = [object isKindOfClass:[NSSet class]] ? (NSSet*)object : nil;
+    NSAssert(value != nil || values != nil, @"values");
+    
+    if (button.tag == TYPE_BUTTON)
+    {
+        if (value)
+        {
+            self.selectedType = value;
+            self.selectedTypes = nil;
+        }
+        if (values)
+        {
+            self.selectedType = @"";
+            self.selectedTypes = values;
+        }
+        
+        // [self resetButton:SUBTYPE_BUTTON];
+    }
+    [self.selectedValues setObject:value ? value : values forKey:@(button.tag)];
+}
+
+#pragma mark text search
+
+-(IBAction)scopeSelected:(UISegmentedControl*)sender
+{
+    switch (sender.selectedSegmentIndex)
+    {
+        case 0:
+            self.scope = NRSearchAll;
+            break;
+        case 1:
+            self.scope = NRSearchName;
+            break;
+        case 2:
+            self.scope = NRSearchText;
+            break;
+    }
+    
+    [self filterWithText];
+}
+
+-(void) filterWithText
+{
+    switch (self.scope)
+    {
+        case NRSearchText:
+            [self.cardList filterByText:self.searchText];
+            break;
+        case NRSearchAll:
+            [self.cardList filterByTextOrName:self.searchText];
+            break;
+        case NRSearchName:
+            [self.cardList filterByName:self.searchText];
+            break;
+    }
+    [self.browser updateDisplay:self.cardList];
+}
+
+-(BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    self.searchText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    // NSLog(@"search: %d %@", self.scope, self.searchText);
+    [self filterWithText];
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    self.searchText = @"";
+    [self filterWithText];
+    return YES;
+}
 
 #pragma mark sliders
 

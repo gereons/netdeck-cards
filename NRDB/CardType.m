@@ -15,6 +15,7 @@ static NSDictionary* code2type;
 static NSMutableDictionary* type2name;
 static NSMutableArray* runnerTypes;
 static NSMutableArray* corpTypes;
+static NSMutableArray* allTypes;
 
 +(void) initialize
 {
@@ -50,17 +51,32 @@ static NSMutableArray* corpTypes;
     
     NRCardType rt[] = { NRCardTypeNone, NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram };
     NRCardType ct[] = { NRCardTypeNone, NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
+    NRCardType at[] = { NRCardTypeIdentity,
+                            NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram,
+                            NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
     
     runnerTypes = [NSMutableArray array];
     for (int i=0; i<DIM(rt); ++i)
     {
         [runnerTypes addObject:[CardType name:rt[i]]];
     }
+    
     corpTypes = [NSMutableArray array];
     for (int i=0; i<DIM(ct); ++i)
     {
         [corpTypes addObject:[CardType name:ct[i]]];
     }
+    
+    // allTypes is sorted, with "Any" as the first entry
+    allTypes = [NSMutableArray array];
+    for (int i=0; i<DIM(at); ++i)
+    {
+        [allTypes addObject:[CardType name:at[i]]];
+    }
+    [allTypes sortUsingComparator:^NSComparisonResult(NSString* s1, NSString* s2) {
+        return [s1 compare:s2];
+    }];
+    [allTypes insertObject:[CardType name:NRCardTypeNone] atIndex:0];
 }
 
 +(NRCardType) type:(NSString*)code
@@ -75,7 +91,12 @@ static NSMutableArray* corpTypes;
 
 +(NSArray*) typesForRole:(NRRole)role
 {
-    return role == NRRoleRunner ? runnerTypes : corpTypes;
+    switch (role)
+    {
+        case NRRoleRunner: return runnerTypes;
+        case NRRoleCorp: return corpTypes;
+        case NRRoleNone: return allTypes;
+    }
 }
 
 +(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type

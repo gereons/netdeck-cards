@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FilterCallback.h"
 
-@interface BrowserFilterViewController : UIViewController
+@interface BrowserFilterViewController : UIViewController <UITextFieldDelegate, FilterCallback>
 
 @property IBOutlet UILabel* sideLabel;
 @property IBOutlet UISegmentedControl* sideSelector;

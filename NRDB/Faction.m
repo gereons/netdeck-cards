@@ -16,6 +16,7 @@ static NSMutableDictionary* faction2name;
 
 static NSMutableArray* runnerFactions;
 static NSMutableArray* corpFactions;
+static NSMutableArray* allFactions;
 
 +(void) initialize
 {
@@ -51,17 +52,31 @@ static NSMutableArray* corpFactions;
     
     NRFaction rf[] = { NRFactionNone, NRFactionNeutral, NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
     NRFaction cf[] = { NRFactionNone, NRFactionNeutral, NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
+    NRFaction af[] = { NRFactionNeutral,
+        NRFactionAnarch, NRFactionCriminal, NRFactionShaper,
+        NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
+    
     runnerFactions = [NSMutableArray array];
     for (int i=0; i<DIM(rf); ++i)
     {
         [runnerFactions addObject:[Faction name:rf[i]]];
     }
+    
     corpFactions = [NSMutableArray array];
     for (int i=0; i<DIM(cf); ++i)
     {
         [corpFactions addObject:[Faction name:cf[i]]];
     }
 
+    allFactions = [NSMutableArray array];
+    for (int i=0; i<DIM(af); ++i)
+    {
+        [allFactions addObject:[Faction name:af[i]]];
+    }
+    [allFactions sortUsingComparator:^NSComparisonResult(NSString* s1, NSString* s2) {
+        return [s1 compare:s2];
+    }];
+    [allFactions insertObject:[Faction name:NRFactionNone] atIndex:0];
 }
 
 +(NSString*) name:(NRFaction)faction
@@ -76,7 +91,12 @@ static NSMutableArray* corpFactions;
 
 +(NSArray*) factionsForRole:(NRRole)role
 {
-    return role == NRRoleRunner ? runnerFactions : corpFactions;
+    switch (role)
+    {
+        case NRRoleRunner: return runnerFactions;
+        case NRRoleCorp: return corpFactions;
+        case NRRoleNone: return allFactions;
+    }
 }
 
 @end
