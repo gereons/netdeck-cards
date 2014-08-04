@@ -8,12 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class TableData;
+
 @interface CardType : NSObject
 
 +(NRCardType) type:(NSString*)code;
 +(NSString*) name:(NRCardType)type;
 
 +(NSArray*) typesForRole:(NRRole)role;
++(TableData*) allTypes;
+
 +(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type;
 +(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types;
 

@@ -8,6 +8,7 @@
 
 #import "CardType.h"
 #import "CardManager.h"
+#import "TableData.h"
 
 @implementation CardType
 
@@ -15,7 +16,7 @@ static NSDictionary* code2type;
 static NSMutableDictionary* type2name;
 static NSMutableArray* runnerTypes;
 static NSMutableArray* corpTypes;
-static NSMutableArray* allTypes;
+static TableData* allTypes;
 
 +(void) initialize
 {
@@ -51,9 +52,6 @@ static NSMutableArray* allTypes;
     
     NRCardType rt[] = { NRCardTypeNone, NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram };
     NRCardType ct[] = { NRCardTypeNone, NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
-    NRCardType at[] = { NRCardTypeIdentity,
-                            NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram,
-                            NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
     
     runnerTypes = [NSMutableArray array];
     for (int i=0; i<DIM(rt); ++i)
@@ -67,18 +65,23 @@ static NSMutableArray* allTypes;
         [corpTypes addObject:[CardType name:ct[i]]];
     }
     
-    // allTypes is sorted, with "Any" as the first entry
-    allTypes = [NSMutableArray array];
-    for (int i=0; i<DIM(at); ++i)
-    {
-        [allTypes addObject:[CardType name:at[i]]];
-    }
-    [allTypes sortUsingComparator:^NSComparisonResult(NSString* s1, NSString* s2) {
-        return [s1 compare:s2];
-    }];
-    [allTypes insertObject:[CardType name:NRCardTypeNone] atIndex:0];
-}
+    NSMutableArray* types = [NSMutableArray array];
+    types = [NSMutableArray array];
+    [types addObject:@[ [CardType name:NRCardTypeNone ], [CardType name:NRCardTypeIdentity] ]];
+    
+    NSRange range = { 1, runnerTypes.count-1 };
+    NSIndexSet* runnerSet = [NSIndexSet indexSetWithIndexesInRange:range];
+    [types addObject:[NSArray arrayWithArray:[runnerTypes objectsAtIndexes:runnerSet]]];
+    
+    range.length = corpTypes.count-1;
+    NSIndexSet* corpSet = [NSIndexSet indexSetWithIndexesInRange:range];
+    [types addObject:[NSArray arrayWithArray:[corpTypes objectsAtIndexes:corpSet]]];
+    
+    NSArray* typeSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
+    
+    allTypes = [[TableData alloc] initWithSections:typeSections andValues:types];
 
+}
 +(NRCardType) type:(NSString*)code
 {
     return [[code2type objectForKey:code] intValue];
@@ -91,12 +94,8 @@ static NSMutableArray* allTypes;
 
 +(NSArray*) typesForRole:(NRRole)role
 {
-    switch (role)
-    {
-        case NRRoleRunner: return runnerTypes;
-        case NRRoleCorp: return corpTypes;
-        case NRRoleNone: return allTypes;
-    }
+    NSAssert(role != NRRoleNone, @"no role");
+    return role == NRRoleRunner ? runnerTypes : corpTypes;
 }
 
 +(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type
@@ -107,6 +106,11 @@ static NSMutableArray* allTypes;
 +(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types
 {
     return [CardManager subtypesForRole:role andTypes:types];
+}
+
++(TableData*) allTypes
+{
+    return allTypes;
 }
 
 @end

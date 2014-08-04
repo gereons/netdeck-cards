@@ -34,6 +34,7 @@
 @property NRSearchScope searchScope;
 @property BOOL unique;
 @property BOOL limited;
+@property BOOL altart;
 @end
 
 @implementation CardList
@@ -128,6 +129,7 @@
     self.searchScope = NRSearchAll;
     self.unique = NO;
     self.limited = NO;
+    self.altart = NO;
 }
 
 -(void) filterByType:(NSString*) type
@@ -229,6 +231,11 @@
 -(void) filterByLimited:(BOOL)limited
 {
     self.limited = limited;
+}
+
+-(void) filterByAltArt:(BOOL)altart
+{
+    self.altart = altart;
 }
 
 -(NSMutableArray*) applyFilters
@@ -339,6 +346,11 @@
     if (self.limited)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"limited == %d", self.limited];
+        [predicates addObject:predicate];
+    }
+    if (self.altart)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"altCard != NIL"];
         [predicates addObject:predicate];
     }
 

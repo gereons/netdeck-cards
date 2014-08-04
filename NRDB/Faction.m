@@ -8,6 +8,7 @@
 
 #import "Faction.h"
 #import "CardManager.h"
+#import "TableData.h"
 
 @implementation Faction
 
@@ -16,7 +17,7 @@ static NSMutableDictionary* faction2name;
 
 static NSMutableArray* runnerFactions;
 static NSMutableArray* corpFactions;
-static NSMutableArray* allFactions;
+static TableData* allFactions;
 
 +(void) initialize
 {
@@ -52,9 +53,6 @@ static NSMutableArray* allFactions;
     
     NRFaction rf[] = { NRFactionNone, NRFactionNeutral, NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
     NRFaction cf[] = { NRFactionNone, NRFactionNeutral, NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
-    NRFaction af[] = { NRFactionNeutral,
-        NRFactionAnarch, NRFactionCriminal, NRFactionShaper,
-        NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
     
     runnerFactions = [NSMutableArray array];
     for (int i=0; i<DIM(rf); ++i)
@@ -68,15 +66,21 @@ static NSMutableArray* allFactions;
         [corpFactions addObject:[Faction name:cf[i]]];
     }
 
-    allFactions = [NSMutableArray array];
-    for (int i=0; i<DIM(af); ++i)
-    {
-        [allFactions addObject:[Faction name:af[i]]];
-    }
-    [allFactions sortUsingComparator:^NSComparisonResult(NSString* s1, NSString* s2) {
-        return [s1 compare:s2];
-    }];
-    [allFactions insertObject:[Faction name:NRFactionNone] atIndex:0];
+    NSMutableArray* factions = [NSMutableArray array];
+    factions = [NSMutableArray array];
+    [factions addObject:@[ [Faction name:NRFactionNone ], [Faction name:NRFactionNeutral ]]];
+
+    NSRange range = { 2, runnerFactions.count-2 };
+    NSIndexSet* runnerSet = [NSIndexSet indexSetWithIndexesInRange:range];
+    [factions addObject:[NSArray arrayWithArray:[runnerFactions objectsAtIndexes:runnerSet]]];
+    
+    range.length = corpFactions.count-2;
+    NSIndexSet* corpSet = [NSIndexSet indexSetWithIndexesInRange:range];
+    [factions addObject:[NSArray arrayWithArray:[corpFactions objectsAtIndexes:corpSet]]];
+    
+    NSArray* factionSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
+    
+    allFactions = [[TableData alloc] initWithSections:factionSections andValues:factions];
 }
 
 +(NSString*) name:(NRFaction)faction
@@ -91,12 +95,13 @@ static NSMutableArray* allFactions;
 
 +(NSArray*) factionsForRole:(NRRole)role
 {
-    switch (role)
-    {
-        case NRRoleRunner: return runnerFactions;
-        case NRRoleCorp: return corpFactions;
-        case NRRoleNone: return allFactions;
-    }
+    NSAssert(role != NRRoleNone, @"no role");
+    return role == NRRoleRunner ? runnerFactions : corpFactions;
+}
+
++(TableData*) allFactions
+{
+    return allFactions;
 }
 
 @end

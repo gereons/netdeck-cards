@@ -185,7 +185,15 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
 -(void) typeClicked:(UIButton*)sender
 {
-    TableData* data = [[TableData alloc] initWithValues:[CardType typesForRole:self.role]];
+    TableData* data;
+    if (self.role == NRRoleNone)
+    {
+        data = [CardType allTypes];
+    }
+    else
+    {
+        data = [[TableData alloc] initWithValues:[CardType typesForRole:self.role]];
+    }
     id selected = [self.selectedValues objectForKey:@(TYPE_BUTTON)];
     
     [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Type" selected:selected];
@@ -215,7 +223,16 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
 -(void) factionClicked:(UIButton*)sender
 {
-    TableData* data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role]];
+    TableData* data;
+    
+    if (self.role == NRRoleNone)
+    {
+        data = [Faction allFactions];
+    }
+    else
+    {
+        data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role]];
+    }
     id selected = [self.selectedValues objectForKey:@(FACTION_BUTTON)];
     
     [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Faction" selected:selected];
@@ -436,6 +453,12 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(IBAction)limitedChanged:(UISwitch*)sender
 {
     [self.cardList filterByLimited:sender.on];
+    [self.browser updateDisplay:self.cardList];
+}
+
+-(IBAction)altartChanged:(UISwitch*)sender
+{
+    [self.cardList filterByAltArt:sender.on];
     [self.browser updateDisplay:self.cardList];
 }
 

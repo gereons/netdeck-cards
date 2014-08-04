@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowserFilterViewController">
             <connections>
+                <outlet property="altartLabel" destination="kHY-Ro-mIl" id="V0Y-HJ-JIg"/>
+                <outlet property="altartSwitch" destination="8nv-cw-fsd" id="Kab-Zo-sxs"/>
                 <outlet property="apLabel" destination="SsX-UV-w2J" id="aUi-Ig-aqK"/>
                 <outlet property="apSlider" destination="Ax9-qW-bIv" id="jry-q1-E4P"/>
                 <outlet property="costLabel" destination="1Tf-b5-DNl" id="lle-5b-2Zm"/>
@@ -212,6 +214,20 @@
                     <rect key="frame" x="21" y="480" width="95" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8nv-cw-fsd">
+                    <rect key="frame" x="252" y="514" width="51" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="altartChanged:" destination="-1" eventType="valueChanged" id="lad-1U-reo"/>
+                    </connections>
+                </switch>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Alt Art" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHY-Ro-mIl">
+                    <rect key="frame" x="21" y="519" width="95" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
