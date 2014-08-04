@@ -241,7 +241,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.muSlider.maximumValue = 1+[CardManager maxMU];
     self.strengthSlider.maximumValue = 1+[CardManager maxStrength];
     self.influenceSlider.maximumValue = 1+[CardManager maxInfluence];
-    self.apSlider.maximumValue = [CardManager maxAgendaPoints]; // NB: no +1 here!
+    self.apSlider.maximumValue = 1+[CardManager maxAgendaPoints];
     
     [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
     [self.muSlider setThumbImage:[UIImage imageNamed:@"mem_slider"] forState:UIControlStateNormal];
@@ -650,11 +650,7 @@ static NSInteger viewMode = VIEW_LIST;
 {
     int value = round(sender.value);
     // NSLog(@"ap: %f %d", sender.value, value);
-    if (value == 0)
-    {
-        value = -1;
-    }
-    sender.value = value;
+    sender.value = value--;
     self.apLabel.text = [NSString stringWithFormat:l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self postNotification:@"agendaPoints" value:@(value)];
 }
