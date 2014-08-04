@@ -208,13 +208,38 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(void) subtypeClicked:(UIButton*)sender
 {
     TableData* data;
-    if (self.selectedTypes)
+    if (self.role == NRRoleNone)
     {
-        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andTypes:self.selectedTypes]];
+        NSArray* runner;
+        NSArray* corp;
+        if (self.selectedTypes)
+        {
+            runner = [CardType subtypesForRole:NRRoleRunner andTypes:self.selectedTypes];
+            corp = [CardType subtypesForRole:NRRoleCorp andTypes:self.selectedTypes];
+        }
+        else
+        {
+            runner = [CardType subtypesForRole:NRRoleRunner andType:self.selectedType];
+            corp = [CardType subtypesForRole:NRRoleCorp andType:self.selectedType];
+        }
+        NSArray* sections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
+        NSArray* values = @[
+            @[ kANY ],
+            runner,
+            corp
+        ];
+        data = [[TableData alloc] initWithSections:sections andValues:values];
     }
     else
     {
-        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+        if (self.selectedTypes)
+        {
+            data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andTypes:self.selectedTypes]];
+        }
+        else
+        {
+            data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+        }
     }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     

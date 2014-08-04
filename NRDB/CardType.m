@@ -100,11 +100,13 @@ static TableData* allTypes;
 
 +(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type
 {
+    NSAssert(role != NRRoleNone, @"no role");
     return [CardManager subtypesForRole:role andType:type];
 }
 
 +(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types
 {
+    NSAssert(role != NRRoleNone, @"no role");
     return [CardManager subtypesForRole:role andTypes:types];
 }
 
