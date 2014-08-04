@@ -20,8 +20,9 @@ static NSMutableArray* allRunnerIdentities;     // all runner ids
 static NSMutableArray* allCorpIdentities;       // all corp ids
 
 static NSArray* subtypes;       // array[role] of dictionary type->array
-static NSArray* sortedSubtypes; // array[role] of dictionary type->array
-static NSArray* subtypeCodes;   // array of array
+static NSArray* identitySubtypes; // array[role] of set of strings
+static NSString* identityKey;
+
 static NSMutableArray* sortedIdentities;
 
 static NSMutableDictionary* allCards;   // code -> card
@@ -49,9 +50,8 @@ static BOOL initializing;
     allCorpIdentities = [NSMutableArray array];
     
     subtypes = @[ [NSMutableDictionary dictionary], [NSMutableDictionary dictionary] ];
-    sortedSubtypes = @[ [NSMutableDictionary dictionary], [NSMutableDictionary dictionary] ];
+    identitySubtypes = @[ [NSMutableSet set], [NSMutableSet set] ];
     sortedIdentities = [@[ [NSMutableArray array], [NSMutableArray array] ] mutableCopy];
-    subtypeCodes = @[ [NSMutableArray array], [NSMutableArray array] ];
     
     initializing = NO;
 }
@@ -117,31 +117,39 @@ static BOOL initializing;
 
 #pragma mark subtypes
 
-+(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type
++(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIds
 {
-    NSMutableArray* sorted = sortedSubtypes[role][type];
+    NSMutableArray* arr = subtypes[role][type];
     
-    if (sorted.count == 0)
+    includeIds = includeIds && ([type isEqualToString:kANY] || [type isEqualToString:identityKey]);
+    if (includeIds)
     {
-        NSArray* arr = subtypes[role][type];
-        
-        if (arr)
+        if (!arr)
         {
-            sorted = [[arr sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] mutableCopy];
-            [sorted insertObject:kANY atIndex:0];
-            sortedSubtypes[role][type] = sorted;
+            arr = [NSMutableArray array];
+        }
+        NSSet* set = identitySubtypes[role];
+        for (NSString* s in set)
+        {
+            [arr addObject:s];
         }
     }
     
-    return sorted;
+    if (arr)
+    {
+        NSMutableArray* sorted = [[arr sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] mutableCopy];
+        [sorted insertObject:kANY atIndex:0];
+        return sorted;
+    }
+    return nil;
 }
 
-+(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types
++(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIds
 {
     NSMutableSet* subtypes = [NSMutableSet set];
     for (NSString* type in types)
     {
-        NSMutableArray* arr = [NSMutableArray arrayWithArray:[CardManager subtypesForRole:role andType:type]];
+        NSMutableArray* arr = [NSMutableArray arrayWithArray:[CardManager subtypesForRole:role andType:type includeIdentities:includeIds]];
         if (arr.count > 0)
         {
             [arr removeObjectAtIndex:0]; // remove "Any" entry
@@ -150,6 +158,7 @@ static BOOL initializing;
     }
     
     NSMutableArray* result = [[[subtypes allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] mutableCopy];
+    // add "Any" back
     [result insertObject:kANY atIndex:0];
     return result;
 }
@@ -358,40 +367,39 @@ static BOOL initializing;
     }
     
     // fill subtypes per role
-    if (card.subtype && card.type != NRCardTypeIdentity)
+    if (card.subtype)
     {
-        // NSLog(@"%@", c.subtype);
-        NSMutableDictionary* dict = subtypes[card.role];
-        
-        if (dict[card.typeStr] == nil)
+        // NSLog(@"%@", card.subtype);
+        if (card.type == NRCardTypeIdentity)
         {
-            dict[card.typeStr] = [NSMutableArray array];
-        }
-        if (dict[kANY] == nil)
-        {
-            dict[kANY] = [NSMutableArray array];
-        }
-        for (NSString* st in card.subtypes)
-        {
-            for (NSMutableArray* arr in @[ dict[card.typeStr], dict[kANY]])
+            identityKey = card.typeStr;
+            NSMutableSet* set = identitySubtypes[card.role];
+            for (NSString* st in card.subtypes)
             {
-                if (![arr containsObject:st])
-                {
-                    [arr addObject:st];
-                }
+                [set addObject:st];
             }
         }
-    }
-    
-    // fill subtype codes per role
-    if (card.subtypeCode && card.type != NRCardTypeIdentity)
-    {
-        NSMutableArray* arr = subtypeCodes[card.role];
-        for (NSString* st in card.subtypeCodes)
+        else
         {
-            if (![arr containsObject:st])
+            NSMutableDictionary* dict = subtypes[card.role];
+            
+            if (dict[card.typeStr] == nil)
             {
-                [arr addObject:st];
+                dict[card.typeStr] = [NSMutableArray array];
+            }
+            if (dict[kANY] == nil)
+            {
+                dict[kANY] = [NSMutableArray array];
+            }
+            for (NSString* st in card.subtypes)
+            {
+                for (NSMutableArray* arr in @[ dict[card.typeStr], dict[kANY]])
+                {
+                    if (![arr containsObject:st])
+                    {
+                        [arr addObject:st];
+                    }
+                }
             }
         }
     }

@@ -20,8 +20,8 @@
 +(NSArray*) allForRole:(NRRole)role;
 +(NSArray*) identitiesForRole:(NRRole)role;
 
-+(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type;
-+(NSArray*) subtypesForRole:(NRRole)tole andTypes:(NSSet*)types;
++(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIdentities;
++(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIdentities;
 
 +(int) maxStrength;
 +(int) maxRunnerCost;

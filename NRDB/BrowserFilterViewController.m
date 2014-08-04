@@ -214,31 +214,42 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
         NSArray* corp;
         if (self.selectedTypes)
         {
-            runner = [CardType subtypesForRole:NRRoleRunner andTypes:self.selectedTypes];
-            corp = [CardType subtypesForRole:NRRoleCorp andTypes:self.selectedTypes];
+            runner = [CardManager subtypesForRole:NRRoleRunner andTypes:self.selectedTypes includeIdentities:YES];
+            corp = [CardManager subtypesForRole:NRRoleCorp andTypes:self.selectedTypes includeIdentities:YES];
         }
         else
         {
-            runner = [CardType subtypesForRole:NRRoleRunner andType:self.selectedType];
-            corp = [CardType subtypesForRole:NRRoleCorp andType:self.selectedType];
+            runner = [CardManager subtypesForRole:NRRoleRunner andType:self.selectedType includeIdentities:YES];
+            corp = [CardManager subtypesForRole:NRRoleCorp andType:self.selectedType includeIdentities:YES];
         }
-        NSArray* sections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
-        NSArray* values = @[
-            @[ kANY ],
-            runner,
-            corp
-        ];
+        NSRange runnerRange = { 1, runner.count-1 };
+        NSRange corpRange = { 1, corp.count-1 };
+        NSMutableArray* sections = [NSMutableArray array];
+        NSMutableArray* values = [NSMutableArray array];
+        [values addObject:@[ kANY ]];
+        [sections addObject:@""];
+        if (runner.count > 1)
+        {
+            [values addObject:[NSArray arrayWithArray:[runner objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:runnerRange]]]];
+            [sections addObject:l10n(@"Runner")];
+        }
+        if (corp.count > 1)
+        {
+            [values addObject:[NSArray arrayWithArray:[corp objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:corpRange]]]];
+            [sections addObject:l10n(@"Corp")];
+        }
+        
         data = [[TableData alloc] initWithSections:sections andValues:values];
     }
     else
     {
         if (self.selectedTypes)
         {
-            data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andTypes:self.selectedTypes]];
+            data = [[TableData alloc] initWithValues:[CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:YES]];
         }
         else
         {
-            data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+            data = [[TableData alloc] initWithValues:[CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:YES]];
         }
     }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];

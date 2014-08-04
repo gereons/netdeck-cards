@@ -18,9 +18,6 @@
 +(NSArray*) typesForRole:(NRRole)role;
 +(TableData*) allTypes;
 
-+(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type;
-+(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types;
-
 +(void) initializeCardTypes:(NSArray*)cards;
 
 @end

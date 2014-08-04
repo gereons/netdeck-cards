@@ -189,7 +189,7 @@ static BOOL isRetina;
     {
         c->_subtype = nil;
     }
-    if (c.subtype && c.type != NRCardTypeIdentity)
+    if (c.subtype)
     {
         c->_subtypes = [c.subtype componentsSeparatedByString:@" - "];
     }
@@ -199,7 +199,7 @@ static BOOL isRetina;
     {
         c->_subtypeCode = nil;
     }
-    if (c.subtypeCode && c.type != NRCardTypeIdentity)
+    if (c.subtypeCode)
     {
         c->_subtypeCodes = [c.subtypeCode componentsSeparatedByString:@" - "];
     }

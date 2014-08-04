@@ -515,11 +515,11 @@ static NSInteger viewMode = VIEW_LIST;
     TableData* data;
     if (self.selectedTypes)
     {
-        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andTypes:self.selectedTypes]];
+        data = [[TableData alloc] initWithValues:[CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:NO]];
     }
     else
     {
-        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+        data = [[TableData alloc] initWithValues:[CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:NO]];
     }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     
