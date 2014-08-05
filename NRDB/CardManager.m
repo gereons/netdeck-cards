@@ -117,7 +117,7 @@ static BOOL initializing;
 
 #pragma mark subtypes
 
-+(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIds
++(NSMutableArray*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIds
 {
     NSMutableArray* arr = subtypes[role][type];
     
@@ -137,14 +137,13 @@ static BOOL initializing;
     
     if (arr)
     {
-        NSMutableArray* sorted = [[arr sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] mutableCopy];
-        [sorted insertObject:kANY atIndex:0];
-        return sorted;
+        [arr sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+        return arr;
     }
     return nil;
 }
 
-+(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIds
++(NSMutableArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIds
 {
     NSMutableSet* subtypes = [NSMutableSet set];
     for (NSString* type in types)
@@ -152,15 +151,11 @@ static BOOL initializing;
         NSMutableArray* arr = [NSMutableArray arrayWithArray:[CardManager subtypesForRole:role andType:type includeIdentities:includeIds]];
         if (arr.count > 0)
         {
-            [arr removeObjectAtIndex:0]; // remove "Any" entry
             [subtypes addObjectsFromArray:arr];
         }
     }
     
-    NSMutableArray* result = [[[subtypes allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] mutableCopy];
-    // add "Any" back
-    [result insertObject:kANY atIndex:0];
-    return result;
+    return [[[subtypes allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] mutableCopy];
 }
 
 #pragma mark initalization

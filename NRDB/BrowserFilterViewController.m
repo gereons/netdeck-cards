@@ -121,7 +121,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     [self clearFiltersClicked:nil];
 }
 
-#pragma mark buttons
+#pragma mark - buttons
 
 -(void) clearFiltersClicked:(id)sender
 {
@@ -181,7 +181,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     [self.browser updateDisplay:self.cardList];
 }
 
-#pragma mark buttons for popovers
+#pragma mark - buttons for popovers
 
 -(void) typeClicked:(UIButton*)sender
 {
@@ -222,20 +222,18 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
             runner = [CardManager subtypesForRole:NRRoleRunner andType:self.selectedType includeIdentities:YES];
             corp = [CardManager subtypesForRole:NRRoleCorp andType:self.selectedType includeIdentities:YES];
         }
-        NSRange runnerRange = { 1, runner.count-1 };
-        NSRange corpRange = { 1, corp.count-1 };
         NSMutableArray* sections = [NSMutableArray array];
         NSMutableArray* values = [NSMutableArray array];
         [values addObject:@[ kANY ]];
         [sections addObject:@""];
         if (runner.count > 1)
         {
-            [values addObject:[NSArray arrayWithArray:[runner objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:runnerRange]]]];
+            [values addObject:runner];
             [sections addObject:l10n(@"Runner")];
         }
         if (corp.count > 1)
         {
-            [values addObject:[NSArray arrayWithArray:[corp objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:corpRange]]]];
+            [values addObject:corp];
             [sections addObject:l10n(@"Corp")];
         }
         
@@ -243,14 +241,17 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     }
     else
     {
+        NSMutableArray* arr;
         if (self.selectedTypes)
         {
-            data = [[TableData alloc] initWithValues:[CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:YES]];
+            arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:YES];
         }
         else
         {
-            data = [[TableData alloc] initWithValues:[CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:YES]];
+            arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:YES];
         }
+        [arr insertObject:kANY atIndex:0];
+        data = [[TableData alloc] initWithValues:arr];
     }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     
@@ -374,7 +375,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     NSAssert(btn != nil, @"no button");
 }
 
-#pragma mark text search
+#pragma mark - text search
 
 -(IBAction)scopeSelected:(UISegmentedControl*)sender
 {
@@ -426,7 +427,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     return YES;
 }
 
-#pragma mark sliders
+#pragma mark - sliders
 
 -(IBAction)influenceChanged:(UISlider*)sender
 {
@@ -478,7 +479,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     [self.browser updateDisplay:self.cardList];
 }
 
-#pragma mark switches
+#pragma mark - switches
 
 -(IBAction)uniqueChanged:(UISwitch*)sender
 {
