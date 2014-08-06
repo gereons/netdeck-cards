@@ -50,8 +50,8 @@ static TableData* allTypes;
         }
     }
     
-    NRCardType rt[] = { NRCardTypeNone, NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram };
-    NRCardType ct[] = { NRCardTypeNone, NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
+    NRCardType rt[] = { NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram };
+    NRCardType ct[] = { NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
     
     runnerTypes = [NSMutableArray array];
     for (int i=0; i<DIM(rt); ++i)
@@ -65,23 +65,18 @@ static TableData* allTypes;
         [corpTypes addObject:[CardType name:ct[i]]];
     }
     
-    NSMutableArray* types = [NSMutableArray array];
-    types = [NSMutableArray array];
-    [types addObject:@[ [CardType name:NRCardTypeNone ], [CardType name:NRCardTypeIdentity] ]];
-    
-    NSRange range = { 1, runnerTypes.count-1 };
-    NSIndexSet* runnerSet = [NSIndexSet indexSetWithIndexesInRange:range];
-    [types addObject:[NSArray arrayWithArray:[runnerTypes objectsAtIndexes:runnerSet]]];
-    
-    range.length = corpTypes.count-1;
-    NSIndexSet* corpSet = [NSIndexSet indexSetWithIndexesInRange:range];
-    [types addObject:[NSArray arrayWithArray:[corpTypes objectsAtIndexes:corpSet]]];
-    
     NSArray* typeSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
+    NSMutableArray* types = [NSMutableArray array];
+    [types addObject:@[ [CardType name:NRCardTypeNone ], [CardType name:NRCardTypeIdentity] ]];
+    [types addObject:runnerTypes];
+    [types addObject:corpTypes];
     
     allTypes = [[TableData alloc] initWithSections:typeSections andValues:types];
 
+    [runnerTypes insertObject:[CardType name:NRCardTypeNone] atIndex:0];
+    [corpTypes insertObject:[CardType name:NRCardTypeNone] atIndex:0];
 }
+
 +(NRCardType) type:(NSString*)code
 {
     return [[code2type objectForKey:code] intValue];
