@@ -51,8 +51,9 @@ static TableData* allFactions;
         }
     }
     
-    NRFaction rf[] = { NRFactionNone, NRFactionNeutral, NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
-    NRFaction cf[] = { NRFactionNone, NRFactionNeutral, NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
+    NRFaction rf[] = { NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
+    NRFaction cf[] = { NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
+    NSArray* common = @[ [Faction name:NRFactionNone ], [Faction name:NRFactionNeutral ]];
     
     runnerFactions = [NSMutableArray array];
     for (int i=0; i<DIM(rf); ++i)
@@ -66,21 +67,18 @@ static TableData* allFactions;
         [corpFactions addObject:[Faction name:cf[i]]];
     }
 
+    NSArray* factionSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
     NSMutableArray* factions = [NSMutableArray array];
     factions = [NSMutableArray array];
-    [factions addObject:@[ [Faction name:NRFactionNone ], [Faction name:NRFactionNeutral ]]];
-
-    NSRange range = { 2, runnerFactions.count-2 };
-    NSIndexSet* runnerSet = [NSIndexSet indexSetWithIndexesInRange:range];
-    [factions addObject:[NSArray arrayWithArray:[runnerFactions objectsAtIndexes:runnerSet]]];
-    
-    range.length = corpFactions.count-2;
-    NSIndexSet* corpSet = [NSIndexSet indexSetWithIndexesInRange:range];
-    [factions addObject:[NSArray arrayWithArray:[corpFactions objectsAtIndexes:corpSet]]];
-    
-    NSArray* factionSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
-    
+    [factions addObject:common];
+    [factions addObject:runnerFactions];
+    [factions addObject:corpFactions];
     allFactions = [[TableData alloc] initWithSections:factionSections andValues:factions];
+    
+    NSMutableIndexSet* indexes = [NSMutableIndexSet indexSetWithIndex:0];
+    [indexes addIndex:1];
+    [runnerFactions insertObjects:common atIndexes:indexes];
+    [corpFactions insertObjects:common atIndexes:indexes];
 }
 
 +(NSString*) name:(NRFaction)faction
