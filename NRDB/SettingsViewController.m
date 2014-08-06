@@ -42,15 +42,10 @@
     self.navigationController.navigationBar.topItem.title = l10n(@"Settings");
     [self.navigationController setViewControllers:@[ self.iask ]];
     
-    [self refresh];
-}
-
--(void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:kIASKAppSettingChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:LOAD_CARDS object:nil];
+    
+    [self refresh];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
