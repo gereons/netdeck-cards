@@ -11,6 +11,7 @@
 #import "Faction.h"
 #import "CardSets.h"
 #import "CardType.h"
+#import "ImageCache.h"
 
 @implementation CardManager
 
@@ -214,6 +215,7 @@ static BOOL initializing;
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSString* cardsFile = [CardManager filenameForLanguage:language];
     [json writeToFile:cardsFile atomically:YES];
+    [ImageCache dontBackupFile:cardsFile];
     
     NSDateFormatter *fmt = [NSDateFormatter new];
     [fmt setDateStyle:NSDateFormatterShortStyle]; // e.g. 08.10.2008 for locale=de
@@ -245,6 +247,7 @@ static BOOL initializing;
     {
         NSString* cardsFile = [CardManager filenameForLanguage:@"en"];
         [json writeToFile:cardsFile atomically:YES];
+        [ImageCache dontBackupFile:cardsFile];
         
         for (NSDictionary* obj in json)
         {

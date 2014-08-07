@@ -459,6 +459,16 @@ static NSCache* memCache;
     NSData* data = UIImagePNGRepresentation(img);
     
     [data writeToFile:file atomically:YES];
+    [self dontBackupFile:file];
+}
+
++(void)dontBackupFile:(NSString*)filename
+{
+    NSURL* url = [NSURL fileURLWithPath:filename];
+    NSAssert([[NSFileManager defaultManager] fileExistsAtPath:[url path]], @"file doesn't exist");
+    
+    NSError *error = nil;
+    [url setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&error];
 }
 
 #pragma mark utility methods
