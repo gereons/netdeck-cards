@@ -15,7 +15,6 @@
 
 -(void) setCardCounter:(CardCounter *)cc
 {
-    _cardCounter = cc;
     Card* card = cc.card;
     
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;

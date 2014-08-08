@@ -37,6 +37,7 @@
 #define AUTO_SAVE_DB        @"autoSaveDropbox"
 
 #define DECK_VIEW_STYLE     @"deckViewStyle"
+#define BROWSER_VIEW_STYLE  @"browserViewStyle"
 
 #define CLIP_CHANGE_COUNT   @"clipChangeCount"
 

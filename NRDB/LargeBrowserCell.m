@@ -1,25 +1,24 @@
 //
-//  LargeCardCell.m
+//  LargeBrowserCell.m
 //  NRDB
 //
-//  Created by Gereon Steffens on 24.12.13.
+//  Created by Gereon Steffens on 08.08.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "LargeCardCell.h"
-#import "CardCounter.h"
-#import "Deck.h"
+#import "LargeBrowserCell.h"
+#import "CGRectUtils.h"
+#import "Card.h"
 #import "Faction.h"
 #import "CardType.h"
-#import "CGRectUtils.h"
-#import "Notifications.h"
-#import "SettingsKeys.h"
 #import "ImageCache.h"
 
-@interface LargeCardCell()
+@interface LargeBrowserCell()
 @property NSArray* pips;
+
 @end
-@implementation LargeCardCell
+
+@implementation LargeBrowserCell
 
 -(void) awakeFromNib
 {
@@ -35,34 +34,11 @@
     }
 }
 
--(void) setCardCounter:(CardCounter *)cc
+-(void) setCard:(Card*)card
 {
-    Card* card = cc.card;
-    
-    if (card.type == NRCardTypeIdentity)
-    {
-        self.name.text = card.name;
-    }
-    else if (card.unique)
-    {
-        self.name.text = [NSString stringWithFormat:@"%lu× %@ •", (unsigned long)cc.count, card.name];
-    }
-    else
-    {
-        self.name.text = [NSString stringWithFormat:@"%lu× %@", (unsigned long)cc.count, card.name];
-    }
+    self.name.text = card.name;
     
     self.name.textColor = [UIColor blackColor];
-    if ([card.setCode isEqualToString:@"core"] && !self.deck.isDraft)
-    {
-        NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
-        NSInteger owned = cores * card.quantity;
-        
-        if (owned < cc.count)
-        {
-            self.name.textColor = [UIColor redColor];
-        }
-    }
     
     NSString* factionName = [Faction name:card.faction];
     NSString* typeName = [CardType name:card.type];
@@ -77,28 +53,16 @@
         self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
     
-    NSUInteger influence = 0;
+    NSInteger influence = 0;
     if (card.type == NRCardTypeAgenda)
     {
-        influence = card.agendaPoints * cc.count;
+        influence = card.agendaPoints;
     }
     else
     {
-        if (self.deck)
-        {
-            influence = [self.deck influenceFor:cc];
-        }
-        else
-        {
-            influence = card.influence * cc.count;
-        }
+        influence = card.influence;
     }
-    [self setInfluence:influence andCard:card];
-    
-    self.copiesLabel.hidden = card.type == NRCardTypeIdentity;
-    self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
-    self.identityButton.hidden = card.type != NRCardTypeIdentity;
-    self.type.hidden = NO;
+    [self setInfluence:influence withColor:card.factionColor];
     
     // labels from top: cost/strength/mu
     switch (card.type)
@@ -124,21 +88,6 @@
             {
                 self.label3.text = @"";
                 self.icon3.image = nil;
-            }
-            if (cc == nil)
-            {
-                self.type.hidden = YES;
-                self.label1.text = @"";
-                self.label2.text = @"";
-                self.label3.text = @"";
-                self.icon1.image = nil;
-                self.icon2.image = nil;
-                self.icon3.image = nil;
-                [self.identityButton setTitle:l10n(@"Choose Identity") forState:UIControlStateNormal];
-            }
-            else
-            {
-                [self.identityButton setTitle:l10n(@"Switch Identity") forState:UIControlStateNormal];
             }
             break;
             
@@ -187,26 +136,21 @@
             NSAssert(NO, @"this can't happen");
             break;
     }
-    
-    self.copiesStepper.maximumValue = self.deck.isDraft ? 100 : cc.card.maxCopies;
-    self.copiesStepper.value = cc.count;
-    self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count];
 }
 
--(void) setInfluence:(NSUInteger)influence andCard:(Card*)card
+-(void) setInfluence:(NSInteger)influence withColor:(UIColor*)color
 {
     if (influence > 0)
     {
-        self.influenceLabel.textColor = card.factionColor;
+        self.influenceLabel.textColor = color;
         self.influenceLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)influence];
-        
-        CGColorRef color = card.factionColor.CGColor;
         
         for (int i=0; i<self.pips.count; ++i)
         {
             UIView* pip = self.pips[i];
-            pip.layer.backgroundColor = color;
-            pip.hidden = i >= card.influence;
+            pip.layer.backgroundColor = [color CGColor];
+            pip.hidden = i >= influence;
+            // NSLog(@"%d %d", i, pip.hidden);
         }
     }
     else
@@ -218,5 +162,6 @@
         }
     }
 }
+
 
 @end

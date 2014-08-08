@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BrowserCell.h"
 
 #import "SmallPipsView.h"
 
-@interface SmallBrowserCell : UITableViewCell
+@interface SmallBrowserCell : BrowserCell
 
 @property IBOutlet UILabel* nameLabel;
 @property IBOutlet UILabel* typeLabel;

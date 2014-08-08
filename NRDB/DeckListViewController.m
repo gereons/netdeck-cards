@@ -746,7 +746,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     
     NSInteger viewMode = sender.selectedSegmentIndex;
     [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:DECK_VIEW_STYLE];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     [self doToggleView:viewMode];
 }
 

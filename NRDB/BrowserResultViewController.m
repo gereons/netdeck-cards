@@ -13,20 +13,46 @@
 #import "ImageCache.h"
 #import "Faction.h"
 #import "CardImageViewPopover.h"
-#import "SmallBrowserCell.h"
+#import "BrowserCell.h"
+#import "SettingsKeys.h"
 
 @interface BrowserResultViewController ()
 
 @property NSArray* sections;
 @property NSArray* values;
 
+@property UIBarButtonItem* toggleViewButton;
+@property BOOL largeCells;
+
 @end
+
+enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 
 @implementation BrowserResultViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    
+    // left buttons
+    NSArray* selections = @[
+                            [UIImage imageNamed:@"deckview_card"],   // CARD_VIEW
+                            [UIImage imageNamed:@"deckview_table"],  // TABLE_VIEW
+                            [UIImage imageNamed:@"deckview_list"]    // LIST_VIEW
+                            ];
+    UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
+    [viewSelector setEnabled:NO forSegmentAtIndex:0];
+    viewSelector.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:BROWSER_VIEW_STYLE];
+    [viewSelector addTarget:self action:@selector(toggleView:) forControlEvents:UIControlEventValueChanged];
+    self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
+    [self doToggleView:viewSelector.selectedSegmentIndex];
+    
+    topItem.leftBarButtonItems = @[
+                                   self.toggleViewButton,
+                                   ];
+
     
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -35,6 +61,7 @@
     self.tableView.tableFooterView = footer;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SmallBrowserCell" bundle:nil] forCellReuseIdentifier:@"smallBrowserCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LargeBrowserCell" bundle:nil] forCellReuseIdentifier:@"largeBrowserCell"];
 }
 
 - (void) updateDisplay:(CardList *)cardList
@@ -46,7 +73,35 @@
     [self.tableView reloadData];
 }
 
+-(void) toggleView:(UISegmentedControl*)sender
+{
+    NSInteger viewMode = sender.selectedSegmentIndex;
+    [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:BROWSER_VIEW_STYLE];
+    [self doToggleView:viewMode];
+}
+
+-(void) doToggleView:(NSInteger)viewMode
+{
+    self.tableView.hidden = viewMode == CARD_VIEW;
+    // self.collectionView.hidden = viewMode != CARD_VIEW;
+    
+    self.largeCells = viewMode == TABLE_VIEW;
+    
+    [self reloadViews];
+}
+
+-(void) reloadViews
+{
+    [self.tableView reloadData];
+    // [self.collectionView reloadData];
+}
+
 #pragma mark tableview
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return self.largeCells ? 83 : 40;
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -61,36 +116,20 @@
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [self.sections objectAtIndex:section];
+    NSArray* arr = [self.values objectAtIndex:section];
+    return [NSString stringWithFormat:@"%@ (%lu)", [self.sections objectAtIndex:section], (unsigned long)arr.count];
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* cellIdentifier = @"smallBrowserCell";
-    SmallBrowserCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    NSString* cellIdentifier = self.largeCells ? @"largeBrowserCell" : @"smallBrowserCell";
+    BrowserCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     NSArray* arr = [self.values objectAtIndex:indexPath.section];
     Card* card = [arr objectAtIndex:indexPath.row];
     
-    cell.nameLabel.text = card.name;
-    
-    if (card.subtypes.count > 0)
-    {
-        cell.typeLabel.text = [NSString stringWithFormat:@"%@ · %@: %@",
-                                 [Faction name:card.faction],
-                                 card.typeStr,
-                                 [card.subtypes componentsJoinedByString:@" "]];
-    }
-    else
-    {
-        cell.typeLabel.text = [NSString stringWithFormat:@"%@ · %@",
-                               [Faction name:card.faction],
-                               card.typeStr];
-    }
-    
-    [cell.pips setValue:card.type == NRCardTypeAgenda ? card.agendaPoints : card.influence];
-    [cell.pips setColor:card.factionColor];
+    cell.card = card;
     
     return cell;
 }

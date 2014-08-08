@@ -10,10 +10,7 @@
 
 @class Deck, CardCounter, DeckListViewController;
 
-@interface CardCell : UITableViewCell {
-    @protected
-    CardCounter* _cardCounter;
-}
+@interface CardCell : UITableViewCell
 
 @property Deck* deck;
 @property (weak) DeckListViewController* delegate;
