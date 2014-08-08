@@ -298,8 +298,8 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     }
     [self.selectedValues setObject:value ? value : values forKey:@(button.tag)];
     
-    NSLog(@"button: %d", button.tag);
-    NSLog(@"value: %@", value ? value : values);
+    // NSLog(@"button: %d", button.tag);
+    // NSLog(@"value: %@", value ? value : values);
     
     SEL selector;
     switch (button.tag)

@@ -920,9 +920,7 @@ static NSInteger viewMode = VIEW_LIST;
         cell.accessoryView = button;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        SmallPipsView* pips = [[[NSBundle mainBundle] loadNibNamed:@"SmallPipsView" owner:self options:nil] objectAtIndex:0];
-        pips.frame = CGRectMake(230, 0, 38, 38);
-        
+        SmallPipsView* pips = [SmallPipsView createWithFrame:CGRectMake(230, 0, 38, 38)];
         [cell.contentView addSubview:pips];
         
         [button addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];

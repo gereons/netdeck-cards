@@ -150,6 +150,8 @@
 		3A9204C618B16B9B00AF5285 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C518B16B9B00AF5285 /* Stats.m */; };
 		3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AB18AF7DA900F83520 /* CostStats.m */; };
 		3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AF18AF95E700F83520 /* StrengthStats.m */; };
+		3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A98964019953AAD0023880B /* SmallBrowserCell.m */; };
+		3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A98964119953AAD0023880B /* SmallBrowserCell.xib */; };
 		3A99426D184B8C9E004B6E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426C184B8C9E004B6E05 /* libxml2.dylib */; };
 		3A99426F184B8CA6004B6E05 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426E184B8CA6004B6E05 /* ImageIO.framework */; };
 		3A994271184B8CAB004B6E05 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A994270184B8CAB004B6E05 /* QuartzCore.framework */; };
@@ -453,6 +455,9 @@
 		3A9742AB18AF7DA900F83520 /* CostStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CostStats.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A9742AE18AF95E700F83520 /* StrengthStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrengthStats.h; sourceTree = "<group>"; };
 		3A9742AF18AF95E700F83520 /* StrengthStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StrengthStats.m; sourceTree = "<group>"; };
+		3A98963F19953AAD0023880B /* SmallBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallBrowserCell.h; sourceTree = "<group>"; };
+		3A98964019953AAD0023880B /* SmallBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallBrowserCell.m; sourceTree = "<group>"; };
+		3A98964119953AAD0023880B /* SmallBrowserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallBrowserCell.xib; sourceTree = "<group>"; };
 		3A99426C184B8C9E004B6E05 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		3A99426E184B8CA6004B6E05 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		3A994270184B8CAB004B6E05 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1190,6 +1195,9 @@
 				3A818EE9198E3A0900126495 /* BrowserResultViewController.h */,
 				3A818EEA198E3A0900126495 /* BrowserResultViewController.m */,
 				3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */,
+				3A98963F19953AAD0023880B /* SmallBrowserCell.h */,
+				3A98964019953AAD0023880B /* SmallBrowserCell.m */,
+				3A98964119953AAD0023880B /* SmallBrowserCell.xib */,
 			);
 			name = "Card Browser";
 			sourceTree = "<group>";
@@ -1416,6 +1424,7 @@
 				3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
 				3A82625218E05EC70038B4AC /* cardstats_credit@2x.png in Resources */,
+				3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */,
 				3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */,
 				3AE0D50B18F7B4A0007868A7 /* mem_slider@2x.png in Resources */,
 				3A6E756E18E401D400EF8DE1 /* Icon-76@2x.png in Resources */,
@@ -1556,6 +1565,7 @@
 				3A4178A318761BF600DEEFA6 /* IASKSettingsStoreFile.m in Sources */,
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
 				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
+				3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,
 				3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */,
 				3A71FFCB1930BAE800C71C54 /* CardThumbView.m in Sources */,
