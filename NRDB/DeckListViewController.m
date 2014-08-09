@@ -231,8 +231,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 
 #pragma mark keyboard show/hide
 
-#define KEYBOARD_HEIGHT_OFFSET  225
-
 -(void) willShowKeyboard:(NSNotification*)sender
 {
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];

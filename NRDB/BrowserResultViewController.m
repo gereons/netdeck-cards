@@ -35,6 +35,11 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 
 @implementation BrowserResultViewController
 
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -85,10 +90,19 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     layout.minimumLineSpacing = 3;
 }
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+}
+
 -(void) viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.scale) forKey:BROWSER_VIEW_SCALE];
     [settings synchronize];
@@ -246,6 +260,32 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     self.scale = MIN(self.scale, 1.0);
     
     [self.collectionView reloadData];
+}
+
+#pragma mark keyboard show/hide
+
+-(void) willShowKeyboard:(NSNotification*)sender
+{
+    CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+    
+    self.collectionView.contentInset = contentInsets;
+    self.collectionView.scrollIndicatorInsets = contentInsets;
+}
+
+-(void) willHideKeyboard:(NSNotification*)sender
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64, 0, 0, 0);
+    
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+    
+    self.collectionView.contentInset = contentInsets;
+    self.collectionView.scrollIndicatorInsets = contentInsets;
 }
 
 @end
