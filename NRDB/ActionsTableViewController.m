@@ -244,7 +244,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         }
         
         filter = [[CardFilterViewController alloc] initWithRole:deck.role andDeck:deck];
-        // [self.navigationController popToRootViewControllerAnimated:NO];
     }
     else
     {
@@ -255,6 +254,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
     nc.deckListViewController = filter.deckListViewController;
+    
     [self.navigationController pushViewController:filter animated:NO];
 }
 
@@ -375,7 +375,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         case NRMenuCardBrowser:
         {
             TF_CHECKPOINT(@"card browser");
-            BrowserFilterViewController* browser = [[BrowserFilterViewController alloc] init];            
+            BrowserFilterViewController* browser = [[BrowserFilterViewController alloc] init];
             [self.navigationController pushViewController:browser animated:NO];
             break;
         }

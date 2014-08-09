@@ -109,6 +109,7 @@
             [self.deckListViewController saveDeck:nil];
         }
         self.alertViewClicked = YES;
+        // NSLog(@"pop from alert");
         [self popViewControllerAnimated:NO];
     };
 }
