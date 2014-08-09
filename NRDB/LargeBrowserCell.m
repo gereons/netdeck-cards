@@ -12,8 +12,11 @@
 #import "Faction.h"
 #import "CardType.h"
 #import "ImageCache.h"
+#import "NRActionSheet.h"
+#import "Notifications.h"
 
 @interface LargeBrowserCell()
+
 @property NSArray* pips;
 
 @end
@@ -36,6 +39,7 @@
 
 -(void) setCard:(Card*)card
 {
+    [super setCard:card];
     self.name.text = card.name;
     
     self.name.textColor = [UIColor blackColor];
@@ -142,9 +146,6 @@
 {
     if (influence > 0)
     {
-        self.influenceLabel.textColor = color;
-        self.influenceLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)influence];
-        
         for (int i=0; i<self.pips.count; ++i)
         {
             UIView* pip = self.pips[i];
@@ -155,7 +156,6 @@
     }
     else
     {
-        self.influenceLabel.text = @"";
         for (UIView* pip in self.pips)
         {
             pip.hidden = YES;
@@ -163,5 +163,19 @@
     }
 }
 
+-(void) moreClicked:(UIButton*)sender
+{
+    NRActionSheet* sheet = [[NRActionSheet alloc] initWithTitle:nil
+                                                       delegate:nil
+                                              cancelButtonTitle:@""
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:l10n(@"Find decks using this card"), l10n(@"New deck with this card"), nil];
+    
+    CGRect rect = sender.frame;
+    [sheet showFromRect:rect inView:self animated:NO action:^(NSInteger buttonIndex) {
+        NSString* name = buttonIndex == 0 ? BROWSER_FIND : BROWSER_NEW;
+        [[NSNotificationCenter defaultCenter] postNotificationName:name object:self userInfo:@{ @"code": self.card.code }];
+    }];
+}
 
 @end

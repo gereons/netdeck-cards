@@ -10,4 +10,9 @@
 
 @implementation BrowserCell
 
+-(void)foo
+{
+    self->_card = nil;
+}
+
 @end

@@ -94,6 +94,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(id) initWithRole:(NRRole)role andDeck:(Deck *)deck
 {
+    NSAssert(role == deck.role, @"role mismatch");
     if ((self = [self initWithRole:role]))
     {
         self.deckListViewController.deck = deck;

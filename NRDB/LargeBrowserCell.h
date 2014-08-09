@@ -11,7 +11,6 @@
 
 @interface LargeBrowserCell : BrowserCell
 
-@property IBOutlet UILabel* influenceLabel;
 @property IBOutlet UILabel* name;
 @property IBOutlet UILabel* type;
 
@@ -27,5 +26,9 @@
 @property IBOutlet UIView* pip3;
 @property IBOutlet UIView* pip4;
 @property IBOutlet UIView* pip5;
+
+@property IBOutlet UIButton* moreButton;
+
+-(IBAction)moreClicked:(id)sender;
 
 @end

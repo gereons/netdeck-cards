@@ -13,44 +13,50 @@
                 <rect key="frame" x="0.0" y="0.0" width="700" height="81"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nQH-Uu-tVN" userLabel="Influence">
-                        <rect key="frame" x="0.0" y="21" width="42" height="40"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Self Modifying Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hsm-AF-3xd" userLabel="Card Name">
-                        <rect key="frame" x="70" y="14" width="410" height="21"/>
+                        <rect key="frame" x="35" y="10" width="410" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shaper Program: Daemon - AI - Illicit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hne-66-YHG" userLabel="Card Type">
-                        <rect key="frame" x="70" y="50" width="410" height="21"/>
+                        <rect key="frame" x="35" y="51" width="410" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="X5u-hl-7ca" userLabel="Label 1">
-                        <rect key="frame" x="535" y="8" width="22" height="21"/>
+                        <rect key="frame" x="588" y="9" width="22" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mCI-f8-i9R" userLabel="Label 2">
-                        <rect key="frame" x="535" y="30" width="22" height="21"/>
+                        <rect key="frame" x="588" y="31" width="22" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fa0-KW-T0K" userLabel="Label 3">
-                        <rect key="frame" x="535" y="51" width="22" height="21"/>
+                        <rect key="frame" x="588" y="52" width="22" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="v2W-65-Tqh" userLabel="Icon 1">
+                        <rect key="frame" x="612" y="9" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="DPQ-Hc-Pwy" userLabel="Icon 2">
+                        <rect key="frame" x="612" y="31" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Yb0-Y2-FW9" userLabel="Icon 3">
+                        <rect key="frame" x="612" y="52" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <view contentMode="scaleToFill" id="SxW-kL-ZyY" userLabel="Pips">
-                        <rect key="frame" x="50" y="7" width="12" height="68"/>
+                        <rect key="frame" x="15" y="7" width="12" height="68"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="HnN-y2-JbA" userLabel="Pip 1">
@@ -81,28 +87,24 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="v2W-65-Tqh" userLabel="Icon 1">
-                        <rect key="frame" x="559" y="8" width="20" height="20"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="s3d-2O-ku1">
+                        <rect key="frame" x="640" y="30" width="40" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="DPQ-Hc-Pwy" userLabel="Icon 2">
-                        <rect key="frame" x="559" y="30" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Yb0-Y2-FW9" userLabel="Icon 3">
-                        <rect key="frame" x="559" y="51" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
+                        <state key="normal" image="727-more.png"/>
+                        <connections>
+                            <action selector="moreClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="K9x-Jl-bi3"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="icon1" destination="v2W-65-Tqh" id="BBz-lq-8YB"/>
                 <outlet property="icon2" destination="DPQ-Hc-Pwy" id="3FX-7Y-cfR"/>
                 <outlet property="icon3" destination="Yb0-Y2-FW9" id="MTP-Y3-Gbj"/>
-                <outlet property="influenceLabel" destination="nQH-Uu-tVN" id="v2k-4i-4mk"/>
                 <outlet property="label1" destination="X5u-hl-7ca" id="MwZ-HH-iQA"/>
                 <outlet property="label2" destination="mCI-f8-i9R" id="qg4-Oa-hmt"/>
                 <outlet property="label3" destination="Fa0-KW-T0K" id="suF-aP-Ywd"/>
+                <outlet property="moreButton" destination="s3d-2O-ku1" id="3XJ-fb-GGp"/>
                 <outlet property="name" destination="hsm-AF-3xd" id="moo-V1-jIj"/>
                 <outlet property="pip1" destination="HnN-y2-JbA" id="d2M-Xe-ZNl"/>
                 <outlet property="pip2" destination="hh9-H9-i0k" id="VnE-NP-I3E"/>
@@ -113,4 +115,7 @@
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="727-more.png" width="28" height="6"/>
+    </resources>
 </document>

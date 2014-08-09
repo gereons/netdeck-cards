@@ -26,11 +26,15 @@
 #import "DataDownload.h"
 #import "DeckManager.h"
 
+#define ENABLE_BROWSER  1
+
 typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     NRMenuDecks,
     NRMenuDeckDiff,
+#if ENABLE_BROWSER
     NRMenuCardBrowser,
+#endif
     NRMenuSettings,
     NRMenuAbout,
     
@@ -108,6 +112,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
     [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:BROWSER_NEW object:nil];
     [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
     [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
     [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
@@ -152,12 +157,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     }
-}
-
--(void) viewDidDisappear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewDidDisappear:animated];
 }
 
 -(void) resetDetailView
@@ -228,15 +227,34 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 -(void)newDeck:(NSNotification*) notification
 {
     NSDictionary* userInfo = notification.userInfo;
+    CardFilterViewController* filter;
     
-    NRRole role = [[userInfo objectForKey:@"role"] intValue];
+    if ([notification.name isEqualToString:BROWSER_NEW])
+    {
+        Card* card = [Card cardByCode:[userInfo objectForKey:@"code"]];
+        Deck* deck = [[Deck alloc] init];
+        deck.role = card.role;
+        if (card.type == NRCardTypeIdentity)
+        {
+            deck.identity = card;
+        }
+        else
+        {
+            [deck addCard:card copies:1];
+        }
+        
+        filter = [[CardFilterViewController alloc] initWithRole:deck.role andDeck:deck];
+        // [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    else
+    {
+        NRRole role = [[userInfo objectForKey:@"role"] intValue];
+        filter = [[CardFilterViewController alloc] initWithRole:role];
+    }
     
-    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
-    
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
     nc.deckListViewController = filter.deckListViewController;
-    
     [self.navigationController pushViewController:filter animated:NO];
 }
 
@@ -298,10 +316,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             cell.textLabel.text = l10n(@"Decks");
             cell.textLabel.enabled = [CardManager cardsAvailable];
             break;
+#if ENABLE_BROWSER
         case NRMenuCardBrowser:
             cell.textLabel.text = l10n(@"Card Browser");
             cell.textLabel.enabled = [CardManager cardsAvailable];
             break;
+#endif
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -351,6 +371,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             break;
         }
             
+#if ENABLE_BROWSER
         case NRMenuCardBrowser:
         {
             TF_CHECKPOINT(@"card browser");
@@ -358,6 +379,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             [self.navigationController pushViewController:browser animated:NO];
             break;
         }
+#endif
             
         case NRMenuSettings:
         {
