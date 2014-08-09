@@ -11,7 +11,7 @@
 // we can't have nice things (ie. multiple inheritance), so this class mirrors the IBOutlet properties
 // from both CardImageViewPopover and CardImageCell - better than having to duplicate the code
 
-@class Card, CardImageViewPopover, CardImageCell;
+@class Card, CardImageViewPopover, CardImageCell, BrowserImageCell;
 
 @interface CardDetailView : NSObject
 
@@ -31,5 +31,6 @@
 
 +(void) setupDetailViewFromPopover:(CardImageViewPopover*)popover card:(Card*)card;
 +(void) setupDetailViewFromCell:(CardImageCell *)cell card:(Card*)card;
++(void) setupDetailViewFromBrowser:(BrowserImageCell *)cell card:(Card*)card;
 
 @end

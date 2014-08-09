@@ -178,19 +178,19 @@
 {
     [self.activityIndicator startAnimating];
     [[ImageCache sharedInstance] getImageFor:card
-                                     completion:^(Card* card, UIImage* img, BOOL placeholder) {
-                                         [self.activityIndicator stopAnimating];
-                                         if ([self.cc.card.name isEqual:card.name])
-                                         {
-                                             [self setImageStack:img];
-                                         
-                                             self.detailView.hidden = !placeholder;
-                                             if (placeholder)
-                                             {
-                                                 [CardDetailView setupDetailViewFromCell:self card:self.cc.card];
-                                             }
-                                         }
-                                     }];
+                                  completion:^(Card* card, UIImage* img, BOOL placeholder) {
+                                      [self.activityIndicator stopAnimating];
+                                      if ([self.cc.card.name isEqual:card.name])
+                                      {
+                                          [self setImageStack:img];
+                                          
+                                          self.detailView.hidden = !placeholder;
+                                          if (placeholder)
+                                          {
+                                              [CardDetailView setupDetailViewFromCell:self card:self.cc.card];
+                                          }
+                                      }
+                                  }];
 }
 
 #pragma mark parallax helpers

@@ -9,6 +9,7 @@
 #import "BrowserImageCell.h"
 #import "Card.h"
 #import "ImageCache.h"
+#import "CardDetailView.h"
 
 @interface BrowserImageCell()
 @property BOOL showAltArt;
@@ -31,12 +32,15 @@
     
     NSDictionary* views = @{
         @"image": self.image,
-        @"toggle": self.toggleButton
+        @"toggle": self.toggleButton,
+        @"details": self.detailView
     };
     NSArray* constraints = @[
                              @"H:|[image]|",
                              @"H:[toggle]|",
                              @"V:|[image]|",
+                             @"H:|[details]|",
+                             @"V:|[details]|",
                              ];
 
     for (NSString* c in constraints)
@@ -64,6 +68,50 @@
                                                         toItem:self
                                                      attribute:NSLayoutAttributeCenterY
                                                     multiplier:1 constant:0]];
+    
+    
+    [self.detailView removeConstraints:self.detailView.constraints];
+    views = @{ @"name": self.cardName,
+               @"type": self.cardType,
+               @"text": self.cardText,
+               @"label1": self.label1,
+               @"label2": self.label2,
+               @"label3": self.label3,
+               @"icon1": self.icon1,
+               @"icon2": self.icon2,
+               @"icon3": self.icon3,
+               };
+    
+    constraints = @[
+                    @"H:|-[name]-|",
+                    @"H:|-[type]-|",
+                    @"H:|-[text]-|",
+                    @"H:|-[label1][icon1]",
+                    @"H:[label3][icon3]-|",
+                    @"V:|-[name]-[label1]-[type]-[text]-|",
+                    @"V:|-[name]-[label2]",
+                    @"V:|-[name]-[label3]",
+                    @"V:|-[name]-[icon1]",
+                    @"V:|-[name]-[icon2]",
+                    @"V:|-[name]-[icon3]",
+                    ];
+    for (NSString* c in constraints)
+    {
+        [self.detailView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:c options:0 metrics:nil views:views]];
+    }
+    
+    [self.detailView addConstraint:[NSLayoutConstraint constraintWithItem:self.label2
+                                                                attribute:NSLayoutAttributeCenterX
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.detailView
+                                                                attribute:NSLayoutAttributeCenterX
+                                                               multiplier:1.f constant:-7.f]];
+    [self.detailView addConstraint:[NSLayoutConstraint constraintWithItem:self.icon2
+                                                                attribute:NSLayoutAttributeCenterX
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.detailView
+                                                                attribute:NSLayoutAttributeCenterX
+                                                               multiplier:1.f constant:8.f]];
 }
 
 -(void) prepareForReuse
@@ -103,6 +151,12 @@
                                       if ([self.card.name isEqual:card.name])
                                       {
                                           self.image.image = img;
+                                          
+                                          self.detailView.hidden = !placeholder;
+                                          if (placeholder)
+                                          {
+                                              [CardDetailView setupDetailViewFromBrowser:self card:card];
+                                          }
                                       }
                                   }];
 }
