@@ -14,7 +14,7 @@
 @interface SmallBrowserCell : BrowserCell
 
 @property IBOutlet UILabel* nameLabel;
-@property IBOutlet UILabel* typeLabel;
+
 @property SmallPipsView* pips;
 
 @end

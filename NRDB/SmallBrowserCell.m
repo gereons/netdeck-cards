@@ -22,21 +22,7 @@
 -(void) setCard:(Card *)card
 {
     self.nameLabel.text = card.name;
-    
-    if (card.subtypes.count > 0)
-    {
-        self.typeLabel.text = [NSString stringWithFormat:@"%@ · %@: %@",
-                               [Faction name:card.faction],
-                               card.typeStr,
-                               [card.subtypes componentsJoinedByString:@" "]];
-    }
-    else
-    {
-        self.typeLabel.text = [NSString stringWithFormat:@"%@ · %@",
-                               [Faction name:card.faction],
-                               card.typeStr];
-    }
-    
+        
     [self.pips setValue:card.type == NRCardTypeAgenda ? card.agendaPoints : card.influence];
     [self.pips setColor:card.factionColor];
 }
