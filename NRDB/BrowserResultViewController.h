@@ -12,9 +12,10 @@
 
 @class CardList;
 
-@interface BrowserResultViewController : UIViewController <SubstitutableDetailViewController, UITabBarControllerDelegate, UITableViewDataSource>
+@interface BrowserResultViewController : UIViewController <SubstitutableDetailViewController, UITabBarControllerDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property IBOutlet UITableView* tableView;
+@property IBOutlet UICollectionView* collectionView;
 
 -(void)updateDisplay:(CardList*)cardList;
 

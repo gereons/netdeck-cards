@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */; };
+		3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A08DE6B1996175400F2025E /* BrowserImageCell.m */; };
+		3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */; };
 		3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A09184918B2925400DBE590 /* InfluenceStats.m */; };
 		3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E8D18BBC49C00C99FED /* Localizable.strings */; };
 		3A095E9118BBCB2200C99FED /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E9318BBCB2200C99FED /* About.html */; };
@@ -248,6 +250,9 @@
 
 /* Begin PBXFileReference section */
 		3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewReminder.txt; sourceTree = "<group>"; };
+		3A08DE6A1996175400F2025E /* BrowserImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserImageCell.h; sourceTree = "<group>"; };
+		3A08DE6B1996175400F2025E /* BrowserImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserImageCell.m; sourceTree = "<group>"; };
+		3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserImageCell.xib; sourceTree = "<group>"; };
 		3A09184818B2925400DBE590 /* InfluenceStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfluenceStats.h; sourceTree = "<group>"; };
 		3A09184918B2925400DBE590 /* InfluenceStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfluenceStats.m; sourceTree = "<group>"; };
 		3A095E8C18BBC49C00C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1211,6 +1216,9 @@
 				3A56371019954B28006AD431 /* LargeBrowserCell.h */,
 				3A56371119954B28006AD431 /* LargeBrowserCell.m */,
 				3A56371219954B28006AD431 /* LargeBrowserCell.xib */,
+				3A08DE6A1996175400F2025E /* BrowserImageCell.h */,
+				3A08DE6B1996175400F2025E /* BrowserImageCell.m */,
+				3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */,
 			);
 			name = "Card Browser";
 			sourceTree = "<group>";
@@ -1441,6 +1449,7 @@
 				3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */,
 				3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */,
 				3AE0D50B18F7B4A0007868A7 /* mem_slider@2x.png in Resources */,
+				3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */,
 				3A6E756E18E401D400EF8DE1 /* Icon-76@2x.png in Resources */,
 				3AB9BD6318FB0E49004EAF10 /* 702-import.png in Resources */,
 				3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */,
@@ -1535,6 +1544,7 @@
 				3A3622721849320C007F2854 /* AppDelegate.m in Sources */,
 				3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */,
 				3ADBB08E194CBBC8003815CC /* SDCAlertView.m in Sources */,
+				3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */,
 				3ADBB091194CBBC8003815CC /* SDCAlertViewController.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3A9E7C4C18845FDA00A507C3 /* TableData.m in Sources */,

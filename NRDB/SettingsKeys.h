@@ -49,6 +49,7 @@
 #define DECK_FILTER_SORT    @"deckFilterSort"
 
 #define DECK_VIEW_SCALE     @"deckViewScale"
+#define BROWSER_VIEW_SCALE  @"browserViewScale"
 
 #define USE_NRDB            @"useNrdb"
 #define NRDB_ACCESS_TOKEN   @"nrdbAccessToken"

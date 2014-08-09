@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
 #import "CardImageCell.h"
 #import "ImageCache.h"
 #import "CardCounter.h"
