@@ -56,6 +56,8 @@
 		3A4178AB18761BF600DEEFA6 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41789D18761BF600DEEFA6 /* IASKTextField.m */; };
 		3A441C8C18E60A5300F46C92 /* hex_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8A18E60A5300F46C92 /* hex_background@2x.png */; };
 		3A441C8D18E60A5300F46C92 /* hex_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8B18E60A5300F46C92 /* hex_background.png */; };
+		3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */; };
+		3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */; };
 		3A461A7118BBF39500302A4D /* DataDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A461A7018BBF39500302A4D /* DataDownload.m */; };
 		3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4866E5193B85560045C927 /* DeckNotesPopup.m */; };
 		3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A4866E6193B85560045C927 /* DeckNotesPopup.xib */; };
@@ -333,6 +335,9 @@
 		3A41789D18761BF600DEEFA6 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
 		3A441C8A18E60A5300F46C92 /* hex_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex_background@2x.png"; sourceTree = "<group>"; };
 		3A441C8B18E60A5300F46C92 /* hex_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hex_background.png; sourceTree = "<group>"; };
+		3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserSectionHeaderView.h; sourceTree = "<group>"; };
+		3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserSectionHeaderView.m; sourceTree = "<group>"; };
+		3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserSectionHeaderView.xib; sourceTree = "<group>"; };
 		3A461A6F18BBF39500302A4D /* DataDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownload.h; sourceTree = "<group>"; };
 		3A461A7018BBF39500302A4D /* DataDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownload.m; sourceTree = "<group>"; };
 		3A4866E4193B85560045C927 /* DeckNotesPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckNotesPopup.h; sourceTree = "<group>"; };
@@ -1219,6 +1224,9 @@
 				3A08DE6A1996175400F2025E /* BrowserImageCell.h */,
 				3A08DE6B1996175400F2025E /* BrowserImageCell.m */,
 				3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */,
+				3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */,
+				3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */,
+				3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */,
 			);
 			name = "Card Browser";
 			sourceTree = "<group>";
@@ -1465,6 +1473,7 @@
 				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
 				3A6E757218E402A300EF8DE1 /* Icon-Small-29@2x.png in Resources */,
 				3A76EEC018B5DA68004DB586 /* RunnerPlaceholder.png in Resources */,
+				3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */,
 				3A82624418E05EC70038B4AC /* cardstats_trash@2x.png in Resources */,
 				3A82624518E05EC70038B4AC /* cardstats_trash.png in Resources */,
 				3A6E755E18E3FF7400EF8DE1 /* cardstats_identity_decksize.png in Resources */,
@@ -1548,6 +1557,7 @@
 				3ADBB091194CBBC8003815CC /* SDCAlertViewController.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3A9E7C4C18845FDA00A507C3 /* TableData.m in Sources */,
+				3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */,
 				3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */,
 				3ADBB090194CBBC8003815CC /* SDCAlertViewContentView.m in Sources */,
 				3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */,

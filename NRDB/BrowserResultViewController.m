@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
+#import <CSStickyHeaderFlowLayout.h>
+
 #import "BrowserResultViewController.h"
 #import "CardList.h"
 #import "Card.h"
@@ -16,6 +18,7 @@
 #import "BrowserCell.h"
 #import "SettingsKeys.h"
 #import "BrowserImageCell.h"
+#import "BrowserSectionHeaderView.h"
 
 @interface BrowserResultViewController ()
 
@@ -69,10 +72,17 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     [self.tableView registerNib:[UINib nibWithNibName:@"LargeBrowserCell" bundle:nil] forCellReuseIdentifier:@"largeBrowserCell"];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"BrowserImageCell" bundle:nil] forCellWithReuseIdentifier:@"browserImageCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"BrowserSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
     self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0);
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
+    
+    CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    layout.headerReferenceSize = CGSizeMake(703, 22);
+    layout.sectionInset = UIEdgeInsetsMake(2, 2, 2, 2);
+    layout.minimumInteritemSpacing = 3;
+    layout.minimumLineSpacing = 3;
 }
 
 -(void) viewDidDisappear:(BOOL)animated
@@ -199,10 +209,26 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     NSArray* arr = self.values[indexPath.section];
     Card* card = arr[indexPath.row];
 
-    [cell loadImageFor:card];
+    cell.card = card;
     
     return cell;
 }
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    BrowserSectionHeaderView* header = nil;
+    if (kind == UICollectionElementKindSectionHeader)
+    {
+        header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
+        
+        NSArray* arr = self.values[indexPath.section];
+        header.header.text = [NSString stringWithFormat:@"%@ (%lu)", self.sections[indexPath.section], (unsigned long)arr.count ];
+    }
+    
+    return header;
+}
+
+#pragma mark pinch gesture
 
 -(void) pinchGesture:(UIPinchGestureRecognizer*)gesture
 {

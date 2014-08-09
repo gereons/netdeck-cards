@@ -11,7 +11,7 @@
 #import "ImageCache.h"
 
 @interface BrowserImageCell()
-@property Card* card;
+@property BOOL showAltArt;
 @end
 
 @implementation BrowserImageCell
@@ -21,16 +21,21 @@
     // rounded corners for images
     self.image.layer.masksToBounds = YES;
     self.image.layer.cornerRadius = 10;
+    self.showAltArt = NO;
     
-    self.altArtButton.hidden = YES;
+    self.toggleButton.hidden = YES;
     
     // remove all constraints IB has generated
     self.translatesAutoresizingMaskIntoConstraints = NO;
     [self removeConstraints:self.constraints];
     
-    NSDictionary* views = @{ @"image": self.image };
+    NSDictionary* views = @{
+        @"image": self.image,
+        @"toggle": self.toggleButton
+    };
     NSArray* constraints = @[
                              @"H:|[image]|",
+                             @"H:[toggle]|",
                              @"V:|[image]|",
                              ];
 
@@ -52,6 +57,36 @@
                                                         toItem:self
                                                      attribute:NSLayoutAttributeCenterY
                                                     multiplier:1 constant:0]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.toggleButton
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1 constant:0]];
+}
+
+-(void) prepareForReuse
+{
+    self.showAltArt = NO;
+}
+
+-(void) setCard:(Card *)card
+{
+    self->_card = card;
+    self.toggleButton.hidden = card.altCard == nil;
+    [self.toggleButton setImage:[ImageCache altArtIcon:self.showAltArt] forState:UIControlStateNormal];
+    
+    [self loadImageFor:card];
+}
+
+-(void) toggleImage:(id)sender
+{
+    self.showAltArt = !self.showAltArt;
+    [self.toggleButton setImage:[ImageCache altArtIcon:self.showAltArt] forState:UIControlStateNormal];
+    Card* card = self.showAltArt ? self.card.altCard : self.card;
+    
+    [self loadImageFor:card];
 }
 
 -(void) loadImageFor:(Card *)card
@@ -60,13 +95,12 @@
     {
         self.image.image = nil;
     }
-    self.card = card;
     
     [self.activityIndicator startAnimating];
     [[ImageCache sharedInstance] getImageFor:card
-                                  completion:^(Card* c, UIImage* img, BOOL placeholder) {
+                                  completion:^(Card* card, UIImage* img, BOOL placeholder) {
                                       [self.activityIndicator stopAnimating];
-                                      if ([self.card.name isEqual:c.name])
+                                      if ([self.card.name isEqual:card.name])
                                       {
                                           self.image.image = img;
                                       }

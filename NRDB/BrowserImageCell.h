@@ -13,9 +13,11 @@
 @interface BrowserImageCell : UICollectionViewCell
 
 @property IBOutlet UIImageView* image;
-@property IBOutlet UIButton* altArtButton;
+@property IBOutlet UIButton* toggleButton;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
 
--(void) loadImageFor:(Card*)card;
+@property (nonatomic) Card* card;
+
+-(IBAction)toggleImage:(id)sender;
 
 @end
