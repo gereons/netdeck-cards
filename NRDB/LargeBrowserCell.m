@@ -175,6 +175,11 @@
     CGRect rect = sender.frame;
     @weakify(self);
     [sheet showFromRect:rect inView:self animated:NO action:^(NSInteger buttonIndex) {
+        if (buttonIndex == sheet.cancelButtonIndex)
+        {
+            return;
+        }
+        
         @strongify(self);
         NSString* name = buttonIndex == 0 ? BROWSER_FIND : BROWSER_NEW;
         // NSLog(@"send %@ %@", name, self.card.code);

@@ -14,6 +14,7 @@
 #import "CardSets.h"
 #import "Faction.h"
 #import "CardFilterPopover.h"
+#import "Notifications.h"
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
@@ -46,6 +47,11 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
         self.cardList = [CardList browserInitForRole:self.role];
     }
     return self;
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad
@@ -115,10 +121,25 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 {
     [super viewWillAppear:animated];
     
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(dismissKeyboard:) name:BROWSER_FIND object:nil];
+    [nc addObserver:self selector:@selector(dismissKeyboard:) name:BROWSER_NEW object:nil];
+    
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
     detailViewManager.detailViewController = self.snc;
 
     [self clearFiltersClicked:nil];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void) dismissKeyboard:(id)sender
+{
+    [self.textField resignFirstResponder];
 }
 
 #pragma mark - buttons
