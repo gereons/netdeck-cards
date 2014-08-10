@@ -114,6 +114,11 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
     [self.apSlider setThumbImage:[UIImage imageNamed:@"point_slider"] forState:UIControlStateNormal];
     [self.trashSlider setThumbImage:[UIImage imageNamed:@"trash_slider"] forState:UIControlStateNormal];
+    
+    // switches
+    self.uniqueLabel.text = l10n(@"Unique");
+    self.limitedLabel.text = l10n(@"Limited");
+    self.altartLabel.text = l10n(@"Alt Art");
 
     // buttons
     self.typeButton.tag = TYPE_BUTTON;
@@ -125,6 +130,8 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     self.setButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.factionButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.subtypeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    
+    [self resetAllButtons];
 }
 
 -(void) viewWillAppear:(BOOL)animated

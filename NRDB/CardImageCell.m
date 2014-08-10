@@ -152,7 +152,8 @@
     self.image2.image = self.cc.count > 1 ? img : nil;
     self.image3.image = self.cc.count > 2 ? img : nil;
     
-    NSUInteger max3 = MIN(self.cc.count, 3);
+    NSUInteger count = self.cc ? self.cc.count : 1;
+    NSUInteger max3 = MIN(count, 3);
     NSUInteger c = MAX(max3-1, 0);
     self.image1.layer.opacity = 1.0 - (c * 0.2);
     c = MAX(c-1, 0);

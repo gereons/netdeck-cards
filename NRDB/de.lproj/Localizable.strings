@@ -253,3 +253,12 @@
 "Selected ‘%@’, select one more to compare" = "‘%@’ ausgewählt, wähle noch eins für den Vergleich";
 "Selected ‘%@’ and ‘%@’, tap to compare" = "‘%@’ und ‘%@’ ausgewählt, jetzt vergleichen";
 "Compare to ..." = "Vergleichen mit ...";
+
+// card browser
+"Card Browser" = "Karten";
+"Side:" = "Seite:";
+"Unique" = "Einmalig";
+"Limited" = "Limitiert";
+"Alt Art" = "Promokarte";
+"Find decks using this card" = "Decks mit dieser Karte";
+"New deck with this card" = "Neues Deck mit dieser Karte";
