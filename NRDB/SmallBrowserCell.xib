@@ -20,11 +20,23 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5Z-dy-ISg">
+                        <rect key="frame" x="648" y="2" width="35" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" image="727-more.png"/>
+                        <connections>
+                            <action selector="moreClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qz8-9v-9hs"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="moreButton" destination="U5Z-dy-ISg" id="gX4-jH-Jo2"/>
                 <outlet property="nameLabel" destination="n78-33-j8J" id="ade-pm-O1J"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="727-more.png" width="28" height="6"/>
+    </resources>
 </document>

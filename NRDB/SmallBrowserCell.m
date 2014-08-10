@@ -21,6 +21,7 @@
 
 -(void) setCard:(Card *)card
 {
+    [super setCard:card];
     self.nameLabel.text = card.name;
         
     [self.pips setValue:card.type == NRCardTypeAgenda ? card.agendaPoints : card.influence];

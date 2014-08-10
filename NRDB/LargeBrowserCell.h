@@ -27,8 +27,4 @@
 @property IBOutlet UIView* pip4;
 @property IBOutlet UIView* pip5;
 
-@property IBOutlet UIButton* moreButton;
-
--(IBAction)moreClicked:(id)sender;
-
 @end

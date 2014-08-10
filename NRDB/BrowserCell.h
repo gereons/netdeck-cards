@@ -13,5 +13,8 @@
 @interface BrowserCell : UITableViewCell
 
 @property (nonatomic) Card* card;
+@property IBOutlet UIButton* moreButton;
+
+-(IBAction)moreClicked:(id)sender;
 
 @end
