@@ -38,6 +38,9 @@
 @property IBOutlet UILabel* apLabel;
 @property IBOutlet UISlider* apSlider;
 
+@property IBOutlet UILabel* trashLabel;
+@property IBOutlet UISlider* trashSlider;
+
 @property IBOutlet UILabel* uniqueLabel;
 @property IBOutlet UISwitch* uniqueSwitch;
 
@@ -58,6 +61,7 @@
 -(IBAction)strengthChanged:(id)sender;
 -(IBAction)apChanged:(id)sender;
 -(IBAction)muChanged:(id)sender;
+-(IBAction)trashChanged:(id)sender;
 -(IBAction)uniqueChanged:(id)sender;
 -(IBAction)limitedChanged:(id)sender;
 -(IBAction)altartChanged:(id)sender;

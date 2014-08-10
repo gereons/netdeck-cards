@@ -24,6 +24,7 @@
 @property NSSet* subtypes;
 @property int strength;
 @property int mu;
+@property int trash;
 @property NSString* faction;
 @property NSSet* factions;
 @property int influence;
@@ -119,6 +120,7 @@
     self.subtypes = nil;
     self.strength = -1;
     self.mu = -1;
+    self.trash = -1;
     self.faction = @"";
     self.factions = nil;
     self.influence = -1;
@@ -196,6 +198,11 @@
     self.mu = mu;
 }
 
+-(void) filterByTrash:(int)trash
+{
+    self.trash = trash;
+}
+
 -(void) filterByCost:(int)cost
 {
     self.cost = cost;
@@ -266,6 +273,11 @@
     if (self.mu != -1)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"mu == %d", self.mu];
+        [predicates addObject:predicate];
+    }
+    if (self.trash != -1)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"trash == %d", self.trash];
         [predicates addObject:predicate];
     }
     if (self.strength != -1)

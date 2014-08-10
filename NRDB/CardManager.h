@@ -29,6 +29,7 @@
 +(int) maxMU;
 +(int) maxInfluence;
 +(int) maxAgendaPoints;
++(int) maxTrash;
 
 // initialization
 +(BOOL) cardsAvailable;

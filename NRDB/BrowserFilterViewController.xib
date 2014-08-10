@@ -28,6 +28,8 @@
                 <outlet property="strengthSlider" destination="J5W-Mz-wK0" id="YsA-Az-bah"/>
                 <outlet property="subtypeButton" destination="Vii-oW-4IX" id="CC2-bN-3pH"/>
                 <outlet property="textField" destination="R6M-WU-oun" id="iC2-Gb-sM9"/>
+                <outlet property="trashLabel" destination="2hP-Mp-lrg" id="4Ol-Gq-AaV"/>
+                <outlet property="trashSlider" destination="x7A-8K-25S" id="xT0-cc-DKF"/>
                 <outlet property="typeButton" destination="Yfa-7o-1Ib" id="E0G-S2-e0U"/>
                 <outlet property="uniqueLabel" destination="yO7-tR-U1Y" id="Yz4-o9-CB3"/>
                 <outlet property="uniqueSwitch" destination="mMG-Ke-ata" id="MB8-9l-4hz"/>
@@ -160,14 +162,14 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mMG-Ke-ata">
-                    <rect key="frame" x="250" y="456" width="51" height="31"/>
+                    <rect key="frame" x="250" y="505" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="uniqueChanged:" destination="-1" eventType="valueChanged" id="V2j-JI-Rr0"/>
                     </connections>
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unique" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yO7-tR-U1Y">
-                    <rect key="frame" x="21" y="466" width="95" height="21"/>
+                    <rect key="frame" x="21" y="510" width="95" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="highlightedColor"/>
@@ -204,28 +206,28 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MA1-BH-Fju">
-                    <rect key="frame" x="252" y="495" width="51" height="31"/>
+                    <rect key="frame" x="252" y="544" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="limitedChanged:" destination="-1" eventType="valueChanged" id="8nJ-4C-6O5"/>
                     </connections>
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Limited" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aog-2r-hSS">
-                    <rect key="frame" x="21" y="500" width="95" height="21"/>
+                    <rect key="frame" x="21" y="549" width="95" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8nv-cw-fsd">
-                    <rect key="frame" x="252" y="534" width="51" height="31"/>
+                    <rect key="frame" x="252" y="583" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="altartChanged:" destination="-1" eventType="valueChanged" id="lad-1U-reo"/>
                     </connections>
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Alt Art" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHY-Ro-mIl">
-                    <rect key="frame" x="21" y="539" width="95" height="21"/>
+                    <rect key="frame" x="21" y="588" width="95" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -247,10 +249,23 @@
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Cg-wy-eiL" userLabel="Separator">
-                    <rect key="frame" x="0.0" y="440" width="320" height="1"/>
+                    <rect key="frame" x="0.0" y="482" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="x7A-8K-25S">
+                    <rect key="frame" x="119" y="436" width="184" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="trashChanged:" destination="-1" eventType="valueChanged" id="lWt-VA-5XN"/>
+                    </connections>
+                </slider>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trash: All" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hP-Mp-lrg">
+                    <rect key="frame" x="20" y="440" width="95" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>

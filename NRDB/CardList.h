@@ -28,6 +28,7 @@
 -(void) filterBySubtype:(NSString*) subtype;
 -(void) filterBySubtypes:(NSSet*) subtypes;
 -(void) filterByMU:(int)mu;
+-(void) filterByTrash:(int)trash;
 -(void) filterByFaction:(NSString*) faction;
 -(void) filterByFactions:(NSSet*) factions;
 -(void) filterByInfluence:(int)influence;

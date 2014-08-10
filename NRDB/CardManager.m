@@ -34,6 +34,7 @@ static int maxRunnerCost;
 static int maxCorpCost;
 static int maxInf;
 static int maxAgendaPoints;
+static int maxTrash;
 
 static BOOL initializing;
 
@@ -349,6 +350,7 @@ static BOOL initializing;
     
     // calculate max values for filter sliders
     maxMU = MAX(card.mu, maxMU);
+    maxTrash = MAX(card.trash, maxTrash);
     maxStrength = MAX(card.strength, maxStrength);
     maxInf = MAX(card.influence, maxInf);
     maxAgendaPoints = MAX(card.agendaPoints, maxAgendaPoints);
@@ -408,5 +410,6 @@ static BOOL initializing;
 +(int) maxRunnerCost { return maxRunnerCost; }
 +(int) maxCorpCost { return maxCorpCost; }
 +(int) maxAgendaPoints { return maxAgendaPoints; }
++(int) maxTrash { return maxTrash; }
 
 @end

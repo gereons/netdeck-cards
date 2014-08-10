@@ -79,7 +79,12 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     self.textField.delegate = self;
     
     // sliders
-    self.costSlider.maximumValue = 1+(self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost]);
+    int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
+    if (self.role != NRRoleNone)
+    {
+        maxCost = self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost];
+    }
+    self.costSlider.maximumValue = 1+maxCost;
     self.costSlider.minimumValue = 0;
     [self costChanged:nil];
     
@@ -99,12 +104,17 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     self.apSlider.minimumValue = 0;
     [self apChanged:nil];
     
+    self.trashSlider.maximumValue = 1+[CardManager maxTrash];
+    self.trashSlider.minimumValue = 0;
+    [self trashChanged:nil];
+    
     [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
     [self.muSlider setThumbImage:[UIImage imageNamed:@"mem_slider"] forState:UIControlStateNormal];
     [self.strengthSlider setThumbImage:[UIImage imageNamed:@"strength_slider"] forState:UIControlStateNormal];
     [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
     [self.apSlider setThumbImage:[UIImage imageNamed:@"point_slider"] forState:UIControlStateNormal];
-    
+    [self.trashSlider setThumbImage:[UIImage imageNamed:@"trash_slider"] forState:UIControlStateNormal];
+
     // buttons
     self.typeButton.tag = TYPE_BUTTON;
     self.setButton.tag = SET_BUTTON;
@@ -196,6 +206,13 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
             self.role = NRRoleCorp;
             break;
     }
+    
+    int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
+    if (self.role != NRRoleNone)
+    {
+        maxCost = self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost];
+    }
+    self.costSlider.maximumValue = 1+maxCost;
     
     self.cardList = [CardList browserInitForRole:self.role];
     [self.cardList clearFilters];
@@ -453,7 +470,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(IBAction)influenceChanged:(UISlider*)sender
 {
     int value = round(sender.value);
-    // NSLog(@"mu: %f %d", sender.value, value);
+    // NSLog(@"inf: %f %d", sender.value, value);
     sender.value = value--;
     self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByInfluence:value];
@@ -463,7 +480,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(IBAction)costChanged:(UISlider*)sender
 {
     int value = round(sender.value);
-    // NSLog(@"mu: %f %d", sender.value, value);
+    // NSLog(@"cost: %f %d", sender.value, value);
     sender.value = value--;
     self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByCost:value];
@@ -473,7 +490,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(IBAction)strengthChanged:(UISlider*)sender
 {
     int value = round(sender.value);
-    // NSLog(@"mu: %f %d", sender.value, value);
+    // NSLog(@"str: %f %d", sender.value, value);
     sender.value = value--;
     self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByStrength:value];
@@ -483,7 +500,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(IBAction)apChanged:(UISlider*)sender
 {
     int value = round(sender.value);
-    // NSLog(@"mu: %f %d", sender.value, value);
+    // NSLog(@"ap: %f %d", sender.value, value);
     sender.value = value--;
     self.apLabel.text = [NSString stringWithFormat:l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByAgendaPoints:value];
@@ -497,6 +514,16 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     sender.value = value--;
     self.muLabel.text = [NSString stringWithFormat:l10n(@"MU: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByMU:value];
+    [self.browser updateDisplay:self.cardList];
+}
+
+-(IBAction)trashChanged:(UISlider*)sender
+{
+    int value = round(sender.value);
+    // NSLog(@"trash: %f %d", sender.value, value);
+    sender.value = value--;
+    self.trashLabel.text = [NSString stringWithFormat:l10n(@"Trash: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+    [self.cardList filterByTrash:value];
     [self.browser updateDisplay:self.cardList];
 }
 
