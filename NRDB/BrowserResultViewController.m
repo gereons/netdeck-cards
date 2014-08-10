@@ -9,6 +9,7 @@
 #import <CSStickyHeaderFlowLayout.h>
 
 #import "BrowserResultViewController.h"
+#import "NRActionSheet.h"
 #import "CardList.h"
 #import "Card.h"
 #import "TableData.h"
@@ -22,18 +23,30 @@
 
 @interface BrowserResultViewController ()
 
+@property NRCardListSortType sortType;
+@property CardList* cardList;
 @property NSArray* sections;
 @property NSArray* values;
 
 @property UIBarButtonItem* toggleViewButton;
+@property UIBarButtonItem* sortButton;
+
+@property NRActionSheet* popup;
+
 @property BOOL largeCells;
 @property CGFloat scale;
 
 @end
 
 enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
+static NSDictionary* sortStr;
 
 @implementation BrowserResultViewController
+
++ (void) initialize
+{
+    sortStr = @{ @(NRCardListSortA_Z): l10n(@"A-Z"), @(NRCardListSortFactionA_Z): l10n(@"Faction/A-Z") };
+}
 
 - (void) dealloc
 {
@@ -47,6 +60,8 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     CGFloat scale = [settings floatForKey:BROWSER_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
+    
+    self.sortType = [settings integerForKey:BROWSER_SORT_TYPE];
     
     // left buttons
     NSArray* selections = @[
@@ -65,6 +80,15 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
                                    self.toggleViewButton,
                                    ];
 
+    // right buttons
+    self.sortButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]]
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(sortPopup:)];
+    self.sortButton.possibleTitles = [NSSet setWithArray:@[
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"A-Z")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Faction/A-Z")] ] ];
+    topItem.rightBarButtonItem = self.sortButton;
     
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -105,16 +129,54 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.scale) forKey:BROWSER_VIEW_SCALE];
+    [settings setObject:@(self.sortType) forKey:BROWSER_SORT_TYPE];
     [settings synchronize];
 }
 
 - (void) updateDisplay:(CardList *)cardList
 {
+    self.cardList = cardList;
+    [cardList sortBy:self.sortType];
     TableData* td = [cardList dataForTableView];
     self.sections = td.sections;
     self.values = td.values;
     
     [self reloadViews];
+}
+
+-(void) sortPopup:(UIBarButtonItem*)sender
+{
+    if (self.popup)
+    {
+        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        self.popup = nil;
+        return;
+    }
+    self.popup = [[NRActionSheet alloc] initWithTitle:nil
+                                                       delegate:nil
+                                              cancelButtonTitle:@""
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:l10n(@"A-Z"), l10n(@"Faction/A-Z"), nil];
+    
+    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
+        if (buttonIndex == self.popup.cancelButtonIndex)
+        {
+            return;
+        }
+        
+        switch (buttonIndex)
+        {
+            case 0: // A-Z
+                self.sortType = NRCardListSortA_Z;
+                break;
+            case 1: // Faction, then A-Z
+                self.sortType = NRCardListSortFactionA_Z;
+                break;
+        }
+        self.sortButton.title = [NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]];
+        [self updateDisplay:self.cardList];
+        self.popup = nil;
+    }];
 }
 
 -(void) toggleView:(UISegmentedControl*)sender
@@ -201,7 +263,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 {
     return UIEdgeInsetsMake(2, 2, 5, 2);
 }
-
 
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {

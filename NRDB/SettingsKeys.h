@@ -50,6 +50,7 @@
 
 #define DECK_VIEW_SCALE     @"deckViewScale"
 #define BROWSER_VIEW_SCALE  @"browserViewScale"
+#define BROWSER_SORT_TYPE   @"browserSortType"
 
 #define USE_NRDB            @"useNrdb"
 #define NRDB_ACCESS_TOKEN   @"nrdbAccessToken"

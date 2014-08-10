@@ -117,6 +117,7 @@
 -(void) prepareForReuse
 {
     self.showAltArt = NO;
+    self.image.image = nil;
 }
 
 -(void) setCard:(Card *)card

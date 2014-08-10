@@ -232,7 +232,7 @@
 "Deck published with ID %@" = "Deck veröffentlicht, ID: %@";
 "Import All" = "Alle importieren";
 "Export Decks" = "Decks exportieren";
-"Export all currently visible decks" = "Exporiere alle gerade angezeigten Decks";
+"Export all currently visible decks" = "Exportiere alle gerade angezeigten Decks";
 "To Dropbox" = "Zu Dropbox";
 "To NetrunnerDB.com" = "Zu NetrunnerDB.com";
 "Import all decks from Dropbox?" = "Alle Decks von Dropbox importieren?";
@@ -257,8 +257,9 @@
 // card browser
 "Card Browser" = "Karten";
 "Side:" = "Seite:";
-"Unique" = "Einmalig";
+"Unique" = "Einzigartig";
 "Limited" = "Limitiert";
 "Alt Art" = "Promokarte";
 "Find decks using this card" = "Decks mit dieser Karte";
 "New deck with this card" = "Neues Deck mit dieser Karte";
+"Faction/A-Z" = "Fraktion/A-Z";

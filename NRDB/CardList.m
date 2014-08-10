@@ -36,6 +36,9 @@
 @property BOOL unique;
 @property BOOL limited;
 @property BOOL altart;
+
+@property NRCardListSortType sortType;
+
 @end
 
 @implementation CardList
@@ -45,6 +48,7 @@
     if ((self = [super init]))
     {
         self.role = role;
+        self.sortType = NRCardListSortA_Z;
         [self resetInitialCards];
         [self clearFilters];
     }
@@ -245,6 +249,11 @@
     self.altart = altart;
 }
 
+-(void) sortBy:(NRCardListSortType)sortType
+{
+    self.sortType = sortType;
+}
+
 -(NSMutableArray*) applyFilters
 {
     NSMutableArray* filteredCards = [self.initialCards mutableCopy];
@@ -386,10 +395,17 @@
         {
             return NSOrderedAscending;
         }
-        else
+        
+        NSComparisonResult cmp = NSOrderedSame;
+        if (self.sortType == NRCardListSortFactionA_Z)
+        {
+            cmp = [c1.factionStr compare:c2.factionStr];
+        }
+        if (cmp == NSOrderedSame)
         {
             return [c1.name localizedCaseInsensitiveCompare:c2.name];
         }
+        return cmp;
     }];
 }
 

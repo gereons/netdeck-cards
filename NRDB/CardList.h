@@ -42,6 +42,8 @@
 
 -(void) clearFilters;
 
+-(void) sortBy:(NRCardListSortType)sortType;
+
 -(TableData*) dataForTableView;
 
 @end

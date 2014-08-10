@@ -77,6 +77,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     self.searchLabel.text = l10n(@"Search in:");
     self.scope = NRSearchAll;
     self.textField.delegate = self;
+    self.textField.placeholder = l10n(@"Search Cards");
     
     // sliders
     int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);

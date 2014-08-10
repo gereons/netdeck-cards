@@ -330,7 +330,10 @@ static BOOL initializing;
     // alt art card?
     if ([card.setCode isEqualToString:@"alt"])
     {
-        [altCards setObject:card forKey:card.code];
+        if (card.imageSrc) // but only if it really *has* art...
+        {
+            [altCards setObject:card forKey:card.code];
+        }
         return;
     }
     
