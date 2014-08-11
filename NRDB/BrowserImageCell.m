@@ -11,6 +11,8 @@
 #import "ImageCache.h"
 #import "CardDetailView.h"
 
+#warning todo: remember alt-art state, add find/new deck popup
+
 @interface BrowserImageCell()
 @property BOOL showAltArt;
 @end

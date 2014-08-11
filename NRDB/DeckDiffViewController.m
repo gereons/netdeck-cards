@@ -383,10 +383,12 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         cell.diff.text = @"";
     }
     
+#warning # of core sets?
     if (self.diffMode == Intersect)
     {
         diff = cd.count1 + cd.count2 - 3;
         cell.diff.text = [NSString stringWithFormat:@"%ld", (long)diff];
+        cell.diff.textColor = [UIColor blackColor];
     }
     
     return cell;

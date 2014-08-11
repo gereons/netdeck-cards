@@ -114,6 +114,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     [self.strengthSlider setThumbImage:[UIImage imageNamed:@"strength_slider"] forState:UIControlStateNormal];
     [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
     [self.apSlider setThumbImage:[UIImage imageNamed:@"point_slider"] forState:UIControlStateNormal];
+#warning trash_slider image
     [self.trashSlider setThumbImage:[UIImage imageNamed:@"trash_slider"] forState:UIControlStateNormal];
     
     // switches
@@ -214,6 +215,8 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
             self.role = NRRoleCorp;
             break;
     }
+    
+#warning todo: disable/reset sliders depending on selected side
     
     int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
     if (self.role != NRRoleNone)

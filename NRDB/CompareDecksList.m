@@ -92,6 +92,7 @@
     NSArray* decks = self.decks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     
+#warning move checked indicator to left
     cell.accessoryType = UITableViewCellAccessoryNone;
     if ([self.decksToDiff containsObject:deck.filename])
     {
