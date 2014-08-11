@@ -56,6 +56,8 @@
 		3A4178AB18761BF600DEEFA6 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41789D18761BF600DEEFA6 /* IASKTextField.m */; };
 		3A441C8C18E60A5300F46C92 /* hex_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8A18E60A5300F46C92 /* hex_background@2x.png */; };
 		3A441C8D18E60A5300F46C92 /* hex_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8B18E60A5300F46C92 /* hex_background.png */; };
+		3A445F711998AEF9000AD1C4 /* trash_slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */; };
+		3A445F721998AEF9000AD1C4 /* trash_slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A445F701998AEF9000AD1C4 /* trash_slider.png */; };
 		3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */; };
 		3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */; };
 		3A461A7118BBF39500302A4D /* DataDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A461A7018BBF39500302A4D /* DataDownload.m */; };
@@ -337,6 +339,8 @@
 		3A41789D18761BF600DEEFA6 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
 		3A441C8A18E60A5300F46C92 /* hex_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex_background@2x.png"; sourceTree = "<group>"; };
 		3A441C8B18E60A5300F46C92 /* hex_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hex_background.png; sourceTree = "<group>"; };
+		3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash_slider@2x.png"; sourceTree = "<group>"; };
+		3A445F701998AEF9000AD1C4 /* trash_slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_slider.png; sourceTree = "<group>"; };
 		3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserSectionHeaderView.h; sourceTree = "<group>"; };
 		3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserSectionHeaderView.m; sourceTree = "<group>"; };
 		3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserSectionHeaderView.xib; sourceTree = "<group>"; };
@@ -1283,6 +1287,8 @@
 			children = (
 				3AE0D4FD18F7B4A0007868A7 /* influence_slider@2x.png */,
 				3AE0D4FE18F7B4A0007868A7 /* influence_slider.png */,
+				3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */,
+				3A445F701998AEF9000AD1C4 /* trash_slider.png */,
 				3AE0D4FF18F7B4A0007868A7 /* point_slider@2x.png */,
 				3AE0D50018F7B4A0007868A7 /* point_slider.png */,
 				3AE0D50118F7B4A0007868A7 /* mem_slider@2x.png */,
@@ -1440,6 +1446,7 @@
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A6E755918E3FF7400EF8DE1 /* cardstats_identity_link@2x.png in Resources */,
+				3A445F721998AEF9000AD1C4 /* trash_slider.png in Resources */,
 				3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,
 				3A594E2F18E1F56D00832901 /* 702-share.png in Resources */,
@@ -1495,6 +1502,7 @@
 				3A82624918E05EC70038B4AC /* cardstats_mem@2x.png in Resources */,
 				3A52E1941917F9EF00264C2A /* 764-arrow-down@2x.png in Resources */,
 				3AE0D50818F7B4A0007868A7 /* influence_slider.png in Resources */,
+				3A445F711998AEF9000AD1C4 /* trash_slider@2x.png in Resources */,
 				3A82625618E05EC70038B4AC /* deckview_table@2x.png in Resources */,
 				3A82624818E05EC70038B4AC /* cardstats_strength.png in Resources */,
 				3A8FBCA219548933009ED6E3 /* netrunnerdb_com.png in Resources */,
