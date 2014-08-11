@@ -20,8 +20,8 @@
 +(NSArray*) allForRole:(NRRole)role;
 +(NSArray*) identitiesForRole:(NRRole)role;
 
-+(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type;
-+(NSArray*) subtypesForRole:(NRRole)tole andTypes:(NSSet*)types;
++(NSMutableArray*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIdentities;
++(NSMutableArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIdentities;
 
 +(int) maxStrength;
 +(int) maxRunnerCost;
@@ -29,6 +29,7 @@
 +(int) maxMU;
 +(int) maxInfluence;
 +(int) maxAgendaPoints;
++(int) maxTrash;
 
 // initialization
 +(BOOL) cardsAvailable;

@@ -14,6 +14,7 @@
 @interface CardList : NSObject
 
 -(CardList*) initForRole:(NRRole)role;
++(CardList*) browserInitForRole:(NRRole)role;
 
 -(void) filterAgendas:(Card*)identity;
 
@@ -27,6 +28,7 @@
 -(void) filterBySubtype:(NSString*) subtype;
 -(void) filterBySubtypes:(NSSet*) subtypes;
 -(void) filterByMU:(int)mu;
+-(void) filterByTrash:(int)trash;
 -(void) filterByFaction:(NSString*) faction;
 -(void) filterByFactions:(NSSet*) factions;
 -(void) filterByInfluence:(int)influence;
@@ -34,8 +36,13 @@
 -(void) filterBySets:(NSSet*)sets;
 -(void) filterByStrength:(int)strength;
 -(void) filterByAgendaPoints:(int)ap;
+-(void) filterByUniqueness:(BOOL)unique;
+-(void) filterByLimited:(BOOL)limited;
+-(void) filterByAltArt:(BOOL)altart;
 
 -(void) clearFilters;
+
+-(void) sortBy:(NRCardListSortType)sortType;
 
 -(TableData*) dataForTableView;
 

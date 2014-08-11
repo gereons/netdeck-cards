@@ -24,6 +24,7 @@
 @property NSSet* subtypes;
 @property int strength;
 @property int mu;
+@property int trash;
 @property NSString* faction;
 @property NSSet* factions;
 @property int influence;
@@ -32,6 +33,12 @@
 @property int agendaPoints;
 @property NSString* text;
 @property NRSearchScope searchScope;
+@property BOOL unique;
+@property BOOL limited;
+@property BOOL altart;
+
+@property NRCardListSortType sortType;
+
 @end
 
 @implementation CardList
@@ -41,16 +48,52 @@
     if ((self = [super init]))
     {
         self.role = role;
+        self.sortType = NRCardListSortA_Z;
         [self resetInitialCards];
         [self clearFilters];
     }
     return self;
 }
 
++(CardList*) browserInitForRole:(NRRole)role
+{
+    CardList* cl = [[CardList alloc] init];
+    
+    cl.role = role;
+    NSArray* roles;
+    switch (role)
+    {
+        case NRRoleNone:
+            roles = @[ @(NRRoleRunner), @(NRRoleCorp) ];
+            break;
+        case NRRoleCorp:
+            roles = @[ @(NRRoleCorp) ];
+            break;
+        case NRRoleRunner:
+            roles = @[ @(NRRoleRunner) ];
+            break;
+    }
+    
+    cl.initialCards = [NSMutableArray array];
+    
+    for (NSNumber* r in roles)
+    {
+        [cl.initialCards addObjectsFromArray:[CardManager allForRole:r.intValue]];
+        [cl.initialCards addObjectsFromArray:[CardManager identitiesForRole:r.intValue]];
+    }
+    [cl filterDeselectedSets];
+    
+    return cl;
+}
+
 -(void) resetInitialCards
 {
     self.initialCards = [NSMutableArray arrayWithArray:[CardManager allForRole:self.role]];
-    
+    [self filterDeselectedSets];
+}
+
+-(void) filterDeselectedSets
+{
     // remove all cards from sets that are deselected
     NSSet* removeSets = [CardSets disabledSetCodes];
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"!(setCode in %@)", removeSets];
@@ -81,6 +124,7 @@
     self.subtypes = nil;
     self.strength = -1;
     self.mu = -1;
+    self.trash = -1;
     self.faction = @"";
     self.factions = nil;
     self.influence = -1;
@@ -89,6 +133,9 @@
     self.agendaPoints = -1;
     self.text = @"";
     self.searchScope = NRSearchAll;
+    self.unique = NO;
+    self.limited = NO;
+    self.altart = NO;
 }
 
 -(void) filterByType:(NSString*) type
@@ -155,6 +202,11 @@
     self.mu = mu;
 }
 
+-(void) filterByTrash:(int)trash
+{
+    self.trash = trash;
+}
+
 -(void) filterByCost:(int)cost
 {
     self.cost = cost;
@@ -180,6 +232,26 @@
 -(void) filterByAgendaPoints:(int)ap
 {
     self.agendaPoints = ap;
+}
+
+-(void) filterByUniqueness:(BOOL)unique
+{
+    self.unique = unique;
+}
+
+-(void) filterByLimited:(BOOL)limited
+{
+    self.limited = limited;
+}
+
+-(void) filterByAltArt:(BOOL)altart
+{
+    self.altart = altart;
+}
+
+-(void) sortBy:(NRCardListSortType)sortType
+{
+    self.sortType = sortType;
 }
 
 -(NSMutableArray*) applyFilters
@@ -210,6 +282,11 @@
     if (self.mu != -1)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"mu == %d", self.mu];
+        [predicates addObject:predicate];
+    }
+    if (self.trash != -1)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"trash == %d", self.trash];
         [predicates addObject:predicate];
     }
     if (self.strength != -1)
@@ -282,7 +359,22 @@
         }
         [predicates addObject:predicate];
     }
-    
+    if (self.unique)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"unique == %d", self.unique];
+        [predicates addObject:predicate];
+    }
+    if (self.limited)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"limited == %d", self.limited];
+        [predicates addObject:predicate];
+    }
+    if (self.altart)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"altCard != NIL"];
+        [predicates addObject:predicate];
+    }
+
     if (predicates.count > 0)
     {
         NSPredicate* allPredicates = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
@@ -303,10 +395,17 @@
         {
             return NSOrderedAscending;
         }
-        else
+        
+        NSComparisonResult cmp = NSOrderedSame;
+        if (self.sortType == NRCardListSortFactionA_Z)
+        {
+            cmp = [c1.factionStr compare:c2.factionStr];
+        }
+        if (cmp == NSOrderedSame)
         {
             return [c1.name localizedCaseInsensitiveCompare:c2.name];
         }
+        return cmp;
     }];
 }
 

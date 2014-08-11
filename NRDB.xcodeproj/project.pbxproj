@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */; };
+		3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A08DE6B1996175400F2025E /* BrowserImageCell.m */; };
+		3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */; };
 		3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A09184918B2925400DBE590 /* InfluenceStats.m */; };
 		3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E8D18BBC49C00C99FED /* Localizable.strings */; };
 		3A095E9118BBCB2200C99FED /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E9318BBCB2200C99FED /* About.html */; };
@@ -54,6 +56,10 @@
 		3A4178AB18761BF600DEEFA6 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A41789D18761BF600DEEFA6 /* IASKTextField.m */; };
 		3A441C8C18E60A5300F46C92 /* hex_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8A18E60A5300F46C92 /* hex_background@2x.png */; };
 		3A441C8D18E60A5300F46C92 /* hex_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8B18E60A5300F46C92 /* hex_background.png */; };
+		3A445F711998AEF9000AD1C4 /* trash_slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */; };
+		3A445F721998AEF9000AD1C4 /* trash_slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A445F701998AEF9000AD1C4 /* trash_slider.png */; };
+		3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */; };
+		3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */; };
 		3A461A7118BBF39500302A4D /* DataDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A461A7018BBF39500302A4D /* DataDownload.m */; };
 		3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4866E5193B85560045C927 /* DeckNotesPopup.m */; };
 		3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A4866E6193B85560045C927 /* DeckNotesPopup.xib */; };
@@ -63,6 +69,9 @@
 		3A52E1931917F9EF00264C2A /* 764-arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */; };
 		3A52E1941917F9EF00264C2A /* 764-arrow-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E1901917F9EF00264C2A /* 764-arrow-down@2x.png */; };
 		3A54C3E01935B0810064C1F0 /* DeckState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A54C3DF1935B0810064C1F0 /* DeckState.m */; };
+		3A56371319954B28006AD431 /* LargeBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A56371119954B28006AD431 /* LargeBrowserCell.m */; };
+		3A56371419954B28006AD431 /* LargeBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A56371219954B28006AD431 /* LargeBrowserCell.xib */; };
+		3A563717199552BA006AD431 /* BrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A563716199552BA006AD431 /* BrowserCell.m */; };
 		3A5794DA19157A2D005DA4B2 /* CardDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5794D919157A2D005DA4B2 /* CardDetailView.m */; };
 		3A594E2F18E1F56D00832901 /* 702-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2D18E1F56D00832901 /* 702-share.png */; };
 		3A594E3018E1F56D00832901 /* 702-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2E18E1F56D00832901 /* 702-share@2x.png */; };
@@ -80,6 +89,8 @@
 		3A689FA8195D3EB8004EBC41 /* testing.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A689FA2195D3EB8004EBC41 /* testing.png */; };
 		3A689FA9195D3EB8004EBC41 /* active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A689FA3195D3EB8004EBC41 /* active@2x.png */; };
 		3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AF0E51899C12500227C25 /* NRNavigationController.m */; };
+		3A6C68501996BC0B00B29588 /* 727-more.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6C684E1996BC0B00B29588 /* 727-more.png */; };
+		3A6C68511996BC0B00B29588 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6C684F1996BC0B00B29588 /* 727-more@2x.png */; };
 		3A6E755918E3FF7400EF8DE1 /* cardstats_identity_link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755318E3FF7400EF8DE1 /* cardstats_identity_link@2x.png */; };
 		3A6E755A18E3FF7400EF8DE1 /* cardstats_identity_link.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755418E3FF7400EF8DE1 /* cardstats_identity_link.png */; };
 		3A6E755B18E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755518E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png */; };
@@ -111,6 +122,8 @@
 		3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */; };
 		3A8061E71972990E003ACF44 /* DeckDiffCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8061E51972990E003ACF44 /* DeckDiffCell.m */; };
 		3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8061E61972990E003ACF44 /* DeckDiffCell.xib */; };
+		3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A818EEA198E3A0900126495 /* BrowserResultViewController.m */; };
+		3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */; };
 		3A82624218E05EC70038B4AC /* cardstats_difficulty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82622A18E05EC70038B4AC /* cardstats_difficulty.png */; };
 		3A82624318E05EC70038B4AC /* cardstats_strength@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82622B18E05EC70038B4AC /* cardstats_strength@2x.png */; };
 		3A82624418E05EC70038B4AC /* cardstats_trash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82622C18E05EC70038B4AC /* cardstats_trash@2x.png */; };
@@ -148,6 +161,8 @@
 		3A9204C618B16B9B00AF5285 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C518B16B9B00AF5285 /* Stats.m */; };
 		3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AB18AF7DA900F83520 /* CostStats.m */; };
 		3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AF18AF95E700F83520 /* StrengthStats.m */; };
+		3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A98964019953AAD0023880B /* SmallBrowserCell.m */; };
+		3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A98964119953AAD0023880B /* SmallBrowserCell.xib */; };
 		3A99426D184B8C9E004B6E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426C184B8C9E004B6E05 /* libxml2.dylib */; };
 		3A99426F184B8CA6004B6E05 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426E184B8CA6004B6E05 /* ImageIO.framework */; };
 		3A994271184B8CAB004B6E05 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A994270184B8CAB004B6E05 /* QuartzCore.framework */; };
@@ -186,6 +201,8 @@
 		3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACCEE221869A25500CC3537 /* LargeCardCell.m */; };
 		3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */; };
 		3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */; };
+		3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */; };
+		3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */; };
 		3AD066791896CD2100FF1666 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD066781896CD2100FF1666 /* CardCell.m */; };
 		3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0667D1896D0F100FF1666 /* SmallCardCell.m */; };
 		3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066811896D5B800FF1666 /* SmallCardCell.xib */; };
@@ -239,6 +256,9 @@
 
 /* Begin PBXFileReference section */
 		3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewReminder.txt; sourceTree = "<group>"; };
+		3A08DE6A1996175400F2025E /* BrowserImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserImageCell.h; sourceTree = "<group>"; };
+		3A08DE6B1996175400F2025E /* BrowserImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserImageCell.m; sourceTree = "<group>"; };
+		3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserImageCell.xib; sourceTree = "<group>"; };
 		3A09184818B2925400DBE590 /* InfluenceStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfluenceStats.h; sourceTree = "<group>"; };
 		3A09184918B2925400DBE590 /* InfluenceStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfluenceStats.m; sourceTree = "<group>"; };
 		3A095E8C18BBC49C00C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -319,6 +339,11 @@
 		3A41789D18761BF600DEEFA6 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
 		3A441C8A18E60A5300F46C92 /* hex_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex_background@2x.png"; sourceTree = "<group>"; };
 		3A441C8B18E60A5300F46C92 /* hex_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hex_background.png; sourceTree = "<group>"; };
+		3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash_slider@2x.png"; sourceTree = "<group>"; };
+		3A445F701998AEF9000AD1C4 /* trash_slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_slider.png; sourceTree = "<group>"; };
+		3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserSectionHeaderView.h; sourceTree = "<group>"; };
+		3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserSectionHeaderView.m; sourceTree = "<group>"; };
+		3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserSectionHeaderView.xib; sourceTree = "<group>"; };
 		3A461A6F18BBF39500302A4D /* DataDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownload.h; sourceTree = "<group>"; };
 		3A461A7018BBF39500302A4D /* DataDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownload.m; sourceTree = "<group>"; };
 		3A4866E4193B85560045C927 /* DeckNotesPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckNotesPopup.h; sourceTree = "<group>"; };
@@ -332,6 +357,11 @@
 		3A52E1901917F9EF00264C2A /* 764-arrow-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "764-arrow-down@2x.png"; sourceTree = "<group>"; };
 		3A54C3DE1935B0810064C1F0 /* DeckState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckState.h; sourceTree = "<group>"; };
 		3A54C3DF1935B0810064C1F0 /* DeckState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckState.m; sourceTree = "<group>"; };
+		3A56371019954B28006AD431 /* LargeBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LargeBrowserCell.h; sourceTree = "<group>"; };
+		3A56371119954B28006AD431 /* LargeBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LargeBrowserCell.m; sourceTree = "<group>"; };
+		3A56371219954B28006AD431 /* LargeBrowserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargeBrowserCell.xib; sourceTree = "<group>"; };
+		3A563715199552BA006AD431 /* BrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserCell.h; sourceTree = "<group>"; };
+		3A563716199552BA006AD431 /* BrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserCell.m; sourceTree = "<group>"; };
 		3A5794D819157A2D005DA4B2 /* CardDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDetailView.h; sourceTree = "<group>"; };
 		3A5794D919157A2D005DA4B2 /* CardDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardDetailView.m; sourceTree = "<group>"; };
 		3A594E2D18E1F56D00832901 /* 702-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share.png"; sourceTree = "<group>"; };
@@ -359,6 +389,8 @@
 		3A689FA3195D3EB8004EBC41 /* active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "active@2x.png"; sourceTree = "<group>"; };
 		3A6AF0E41899C12500227C25 /* NRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRNavigationController.h; sourceTree = "<group>"; };
 		3A6AF0E51899C12500227C25 /* NRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRNavigationController.m; sourceTree = "<group>"; };
+		3A6C684E1996BC0B00B29588 /* 727-more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more.png"; sourceTree = "<group>"; };
+		3A6C684F1996BC0B00B29588 /* 727-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more@2x.png"; sourceTree = "<group>"; };
 		3A6E755318E3FF7400EF8DE1 /* cardstats_identity_link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_identity_link@2x.png"; sourceTree = "<group>"; };
 		3A6E755418E3FF7400EF8DE1 /* cardstats_identity_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardstats_identity_link.png; sourceTree = "<group>"; };
 		3A6E755518E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_identity_influence@2x.png"; sourceTree = "<group>"; };
@@ -396,6 +428,9 @@
 		3A8061E41972990E003ACF44 /* DeckDiffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckDiffCell.h; sourceTree = "<group>"; };
 		3A8061E51972990E003ACF44 /* DeckDiffCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckDiffCell.m; sourceTree = "<group>"; };
 		3A8061E61972990E003ACF44 /* DeckDiffCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffCell.xib; sourceTree = "<group>"; };
+		3A818EE9198E3A0900126495 /* BrowserResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserResultViewController.h; sourceTree = "<group>"; };
+		3A818EEA198E3A0900126495 /* BrowserResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserResultViewController.m; sourceTree = "<group>"; };
+		3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserResultViewController.xib; sourceTree = "<group>"; };
 		3A82622A18E05EC70038B4AC /* cardstats_difficulty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardstats_difficulty.png; sourceTree = "<group>"; };
 		3A82622B18E05EC70038B4AC /* cardstats_strength@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_strength@2x.png"; sourceTree = "<group>"; };
 		3A82622C18E05EC70038B4AC /* cardstats_trash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_trash@2x.png"; sourceTree = "<group>"; };
@@ -446,6 +481,9 @@
 		3A9742AB18AF7DA900F83520 /* CostStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CostStats.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A9742AE18AF95E700F83520 /* StrengthStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrengthStats.h; sourceTree = "<group>"; };
 		3A9742AF18AF95E700F83520 /* StrengthStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StrengthStats.m; sourceTree = "<group>"; };
+		3A98963F19953AAD0023880B /* SmallBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallBrowserCell.h; sourceTree = "<group>"; };
+		3A98964019953AAD0023880B /* SmallBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallBrowserCell.m; sourceTree = "<group>"; };
+		3A98964119953AAD0023880B /* SmallBrowserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallBrowserCell.xib; sourceTree = "<group>"; };
 		3A99426C184B8C9E004B6E05 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		3A99426E184B8CA6004B6E05 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		3A994270184B8CAB004B6E05 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -504,6 +542,9 @@
 		3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportDecksViewController.h; sourceTree = "<group>"; };
 		3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportDecksViewController.m; sourceTree = "<group>"; };
 		3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportDecksViewController.xib; sourceTree = "<group>"; };
+		3ACF259B198D485F00E6267E /* BrowserFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserFilterViewController.h; sourceTree = "<group>"; };
+		3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserFilterViewController.m; sourceTree = "<group>"; };
+		3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserFilterViewController.xib; sourceTree = "<group>"; };
 		3AD066771896CD2100FF1666 /* CardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCell.h; sourceTree = "<group>"; };
 		3AD066781896CD2100FF1666 /* CardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCell.m; sourceTree = "<group>"; };
 		3AD0667C1896D0F100FF1666 /* SmallCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallCardCell.h; sourceTree = "<group>"; };
@@ -546,6 +587,7 @@
 		3AE0D50618F7B4A0007868A7 /* credit_slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = credit_slider.png; sourceTree = "<group>"; };
 		3AE0E62B1957222600633A71 /* CardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardManager.h; sourceTree = "<group>"; };
 		3AE0E62C1957222600633A71 /* CardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardManager.m; sourceTree = "<group>"; };
+		3AE9EA20198EA9E300DC867C /* FilterCallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterCallback.h; sourceTree = "<group>"; };
 		3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSectionHeaderView.xib; sourceTree = "<group>"; };
 		3AF2235C194364A80072FD9F /* CardFilterSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterSectionHeaderView.h; sourceTree = "<group>"; };
 		3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterSectionHeaderView.m; sourceTree = "<group>"; };
@@ -709,6 +751,7 @@
 		3A3850CE1938826C00EB2EB0 /* Filtered Cards */ = {
 			isa = PBXGroup;
 			children = (
+				3AE9EA20198EA9E300DC867C /* FilterCallback.h */,
 				3AB2CF561938952600CCBE64 /* CardFilterViewController.h */,
 				3AB2CF571938952600CCBE64 /* CardFilterViewController.m */,
 				3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */,
@@ -845,6 +888,9 @@
 				3A7FD6B21881737700F0926F /* CardImageCell.h */,
 				3A7FD6B31881737700F0926F /* CardImageCell.m */,
 				3A7FD6B0188172C100F0926F /* CardImageCell.xib */,
+				3A08DE6A1996175400F2025E /* BrowserImageCell.h */,
+				3A08DE6B1996175400F2025E /* BrowserImageCell.m */,
+				3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */,
 				3A5794D819157A2D005DA4B2 /* CardDetailView.h */,
 				3A5794D919157A2D005DA4B2 /* CardDetailView.m */,
 				3A71FFC91930BAE800C71C54 /* CardThumbView.h */,
@@ -910,6 +956,8 @@
 		3A721E6418CE3FBF00799097 /* flat */ = {
 			isa = PBXGroup;
 			children = (
+				3A6C684E1996BC0B00B29588 /* 727-more.png */,
+				3A6C684F1996BC0B00B29588 /* 727-more@2x.png */,
 				3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */,
 				3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */,
 				3A8FBC9F19548933009ED6E3 /* netrunnerdb_com@2x.png */,
@@ -984,6 +1032,7 @@
 			children = (
 				3AA440E11854DA260051D4B0 /* Actions View */,
 				3A3850CE1938826C00EB2EB0 /* Filtered Cards */,
+				3ACF259A198D482600E6267E /* Browser Filter */,
 			);
 			name = "Master Views";
 			sourceTree = "<group>";
@@ -1123,6 +1172,7 @@
 			children = (
 				3A8532371854F8E200507B9A /* Deck List */,
 				3AB9BD5518FADB1B004EAF10 /* Saved Decks */,
+				3ACF2599198D47EE00E6267E /* Card Browser */,
 				3ABC2EE31975A608007BBE3A /* Compare Decks */,
 				3A8532771855079100507B9A /* Settings */,
 				3A85328418550AD100507B9A /* About Detail */,
@@ -1170,6 +1220,37 @@
 			name = "Draw Simulator";
 			sourceTree = "<group>";
 		};
+		3ACF2599198D47EE00E6267E /* Card Browser */ = {
+			isa = PBXGroup;
+			children = (
+				3A818EE9198E3A0900126495 /* BrowserResultViewController.h */,
+				3A818EEA198E3A0900126495 /* BrowserResultViewController.m */,
+				3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */,
+				3A563715199552BA006AD431 /* BrowserCell.h */,
+				3A563716199552BA006AD431 /* BrowserCell.m */,
+				3A98963F19953AAD0023880B /* SmallBrowserCell.h */,
+				3A98964019953AAD0023880B /* SmallBrowserCell.m */,
+				3A98964119953AAD0023880B /* SmallBrowserCell.xib */,
+				3A56371019954B28006AD431 /* LargeBrowserCell.h */,
+				3A56371119954B28006AD431 /* LargeBrowserCell.m */,
+				3A56371219954B28006AD431 /* LargeBrowserCell.xib */,
+				3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */,
+				3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */,
+				3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */,
+			);
+			name = "Card Browser";
+			sourceTree = "<group>";
+		};
+		3ACF259A198D482600E6267E /* Browser Filter */ = {
+			isa = PBXGroup;
+			children = (
+				3ACF259B198D485F00E6267E /* BrowserFilterViewController.h */,
+				3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */,
+				3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */,
+			);
+			name = "Browser Filter";
+			sourceTree = "<group>";
+		};
 		3AD3248E18A93F8000D7AE5D /* Deck Analysis */ = {
 			isa = PBXGroup;
 			children = (
@@ -1206,6 +1287,8 @@
 			children = (
 				3AE0D4FD18F7B4A0007868A7 /* influence_slider@2x.png */,
 				3AE0D4FE18F7B4A0007868A7 /* influence_slider.png */,
+				3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */,
+				3A445F701998AEF9000AD1C4 /* trash_slider.png */,
 				3AE0D4FF18F7B4A0007868A7 /* point_slider@2x.png */,
 				3AE0D50018F7B4A0007868A7 /* point_slider.png */,
 				3AE0D50118F7B4A0007868A7 /* mem_slider@2x.png */,
@@ -1316,6 +1399,7 @@
 				3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */,
 				3A82625818E05EC70038B4AC /* deckview_card@2x.png in Resources */,
 				3AE0D50D18F7B4A0007868A7 /* strength_slider@2x.png in Resources */,
+				3A6C68511996BC0B00B29588 /* 727-more@2x.png in Resources */,
 				3A82624318E05EC70038B4AC /* cardstats_strength@2x.png in Resources */,
 				3A6E757318E402A300EF8DE1 /* Icon-Small-29.png in Resources */,
 				3A6E756B18E401D400EF8DE1 /* iTunesArtwork.png in Resources */,
@@ -1334,6 +1418,7 @@
 				3A82625918E05EC70038B4AC /* deckview_card.png in Resources */,
 				3AFB25401987789E0051C894 /* netrunnerdb_com-bw.png in Resources */,
 				3A82624718E05EC70038B4AC /* cardstats_points.png in Resources */,
+				3A56371419954B28006AD431 /* LargeBrowserCell.xib in Resources */,
 				3AFB25411987789E0051C894 /* netrunnerdb_com-bw@2x.png in Resources */,
 				3A7F775C195425B400100F79 /* deckview_2col.png in Resources */,
 				3A52E1931917F9EF00264C2A /* 764-arrow-down.png in Resources */,
@@ -1344,6 +1429,7 @@
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
 				3AE0D50F18F7B4A0007868A7 /* credit_slider@2x.png in Resources */,
 				3A689FA8195D3EB8004EBC41 /* testing.png in Resources */,
+				3A6C68501996BC0B00B29588 /* 727-more.png in Resources */,
 				3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */,
 				3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */,
 				3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */,
@@ -1360,6 +1446,8 @@
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A6E755918E3FF7400EF8DE1 /* cardstats_identity_link@2x.png in Resources */,
+				3A445F721998AEF9000AD1C4 /* trash_slider.png in Resources */,
+				3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,
 				3A594E2F18E1F56D00832901 /* 702-share.png in Resources */,
 				3A6E756C18E401D400EF8DE1 /* Icon-Small-40@2x.png in Resources */,
@@ -1375,13 +1463,16 @@
 				3A6E756F18E401D400EF8DE1 /* Icon-76.png in Resources */,
 				3A6E755C18E3FF7400EF8DE1 /* cardstats_identity_influence.png in Resources */,
 				3A85327E185509B000507B9A /* SettingsViewController.xib in Resources */,
+				3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */,
 				3AFA3B6A18DF862900F59331 /* altarttoggle_on.png in Resources */,
 				3AE0D50C18F7B4A0007868A7 /* mem_slider.png in Resources */,
 				3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
 				3A82625218E05EC70038B4AC /* cardstats_credit@2x.png in Resources */,
+				3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */,
 				3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */,
 				3AE0D50B18F7B4A0007868A7 /* mem_slider@2x.png in Resources */,
+				3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */,
 				3A6E756E18E401D400EF8DE1 /* Icon-76@2x.png in Resources */,
 				3AB9BD6318FB0E49004EAF10 /* 702-import.png in Resources */,
 				3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */,
@@ -1397,6 +1488,7 @@
 				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
 				3A6E757218E402A300EF8DE1 /* Icon-Small-29@2x.png in Resources */,
 				3A76EEC018B5DA68004DB586 /* RunnerPlaceholder.png in Resources */,
+				3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */,
 				3A82624418E05EC70038B4AC /* cardstats_trash@2x.png in Resources */,
 				3A82624518E05EC70038B4AC /* cardstats_trash.png in Resources */,
 				3A6E755E18E3FF7400EF8DE1 /* cardstats_identity_decksize.png in Resources */,
@@ -1410,6 +1502,7 @@
 				3A82624918E05EC70038B4AC /* cardstats_mem@2x.png in Resources */,
 				3A52E1941917F9EF00264C2A /* 764-arrow-down@2x.png in Resources */,
 				3AE0D50818F7B4A0007868A7 /* influence_slider.png in Resources */,
+				3A445F711998AEF9000AD1C4 /* trash_slider@2x.png in Resources */,
 				3A82625618E05EC70038B4AC /* deckview_table@2x.png in Resources */,
 				3A82624818E05EC70038B4AC /* cardstats_strength.png in Resources */,
 				3A8FBCA219548933009ED6E3 /* netrunnerdb_com.png in Resources */,
@@ -1476,9 +1569,11 @@
 				3A3622721849320C007F2854 /* AppDelegate.m in Sources */,
 				3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */,
 				3ADBB08E194CBBC8003815CC /* SDCAlertView.m in Sources */,
+				3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */,
 				3ADBB091194CBBC8003815CC /* SDCAlertViewController.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3A9E7C4C18845FDA00A507C3 /* TableData.m in Sources */,
+				3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */,
 				3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */,
 				3ADBB090194CBBC8003815CC /* SDCAlertViewContentView.m in Sources */,
 				3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */,
@@ -1519,6 +1614,8 @@
 				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
 				3A4178A318761BF600DEEFA6 /* IASKSettingsStoreFile.m in Sources */,
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
+				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
+				3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,
 				3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */,
 				3A71FFCB1930BAE800C71C54 /* CardThumbView.m in Sources */,
@@ -1537,6 +1634,7 @@
 				3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,
 				3A41789E18761BF600DEEFA6 /* IASKAppSettingsViewController.m in Sources */,
+				3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */,
 				3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */,
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,
 				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,
@@ -1545,6 +1643,7 @@
 				3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */,
 				3A85327D185509B000507B9A /* SettingsViewController.m in Sources */,
 				3A61D69D18CA458100E091DD /* Hypergeometric.m in Sources */,
+				3A563717199552BA006AD431 /* BrowserCell.m in Sources */,
 				3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */,
 				3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */,
 				3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */,
@@ -1552,6 +1651,7 @@
 				3AB34E5F1939AA7A000A43BB /* CardFilterThumbView.m in Sources */,
 				3A5BC3F21849326B00E792F7 /* Deck.m in Sources */,
 				3AF2235E194364A80072FD9F /* CardFilterSectionHeaderView.m in Sources */,
+				3A56371319954B28006AD431 /* LargeBrowserCell.m in Sources */,
 				3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */,
 				3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */,
 				3A5BC3EF1849326B00E792F7 /* Card.m in Sources */,

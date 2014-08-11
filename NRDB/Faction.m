@@ -8,6 +8,7 @@
 
 #import "Faction.h"
 #import "CardManager.h"
+#import "TableData.h"
 
 @implementation Faction
 
@@ -16,6 +17,7 @@ static NSMutableDictionary* faction2name;
 
 static NSMutableArray* runnerFactions;
 static NSMutableArray* corpFactions;
+static TableData* allFactions;
 
 +(void) initialize
 {
@@ -49,19 +51,34 @@ static NSMutableArray* corpFactions;
         }
     }
     
-    NRFaction rf[] = { NRFactionNone, NRFactionNeutral, NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
-    NRFaction cf[] = { NRFactionNone, NRFactionNeutral, NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
+    NRFaction rf[] = { NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
+    NRFaction cf[] = { NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
+    NSArray* common = @[ [Faction name:NRFactionNone ], [Faction name:NRFactionNeutral ]];
+    
     runnerFactions = [NSMutableArray array];
     for (int i=0; i<DIM(rf); ++i)
     {
         [runnerFactions addObject:[Faction name:rf[i]]];
     }
+    
     corpFactions = [NSMutableArray array];
     for (int i=0; i<DIM(cf); ++i)
     {
         [corpFactions addObject:[Faction name:cf[i]]];
     }
 
+    NSArray* factionSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
+    NSMutableArray* factions = [NSMutableArray array];
+    factions = [NSMutableArray array];
+    [factions addObject:common];
+    [factions addObject:runnerFactions];
+    [factions addObject:corpFactions];
+    allFactions = [[TableData alloc] initWithSections:factionSections andValues:factions];
+    
+    NSMutableIndexSet* indexes = [NSMutableIndexSet indexSetWithIndex:0];
+    [indexes addIndex:1];
+    [runnerFactions insertObjects:common atIndexes:indexes];
+    [corpFactions insertObjects:common atIndexes:indexes];
 }
 
 +(NSString*) name:(NRFaction)faction
@@ -76,7 +93,13 @@ static NSMutableArray* corpFactions;
 
 +(NSArray*) factionsForRole:(NRRole)role
 {
+    NSAssert(role != NRRoleNone, @"no role");
     return role == NRRoleRunner ? runnerFactions : corpFactions;
+}
+
++(TableData*) allFactions
+{
+    return allFactions;
 }
 
 @end

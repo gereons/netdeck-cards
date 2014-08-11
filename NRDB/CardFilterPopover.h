@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FilterCallback.h"
+
 @class TableData;
 @class CardFilterViewController;
 
@@ -15,6 +17,6 @@
 
 @property IBOutlet UITableView* tableView;
 
-+(void) showFromButton:(UIButton*)button inView:(CardFilterViewController*)vc entries:(TableData*)entries type:(NSString*)type selected:(id)selected;
++(void) showFromButton:(UIButton*)button inView:(UIViewController<FilterCallback>*)vc entries:(TableData*)entries type:(NSString*)type selected:(id)selected;
 
 @end

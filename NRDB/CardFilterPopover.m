@@ -18,7 +18,7 @@
 @property NSArray* values;
 @property UIButton* button;
 @property NSString* type;
-@property CardFilterViewController* headerView;
+@property UIViewController<FilterCallback>* headerView;
 @property NSMutableSet* selectedValues;
 @property NSMutableArray* sectionToggles;
 
@@ -31,7 +31,7 @@
 
 static UIPopoverController* popover;
 
-+(void) showFromButton:(UIButton *)button inView:(CardFilterViewController*)vc entries:(TableData*)entries type:(NSString *)type selected:(id)preselected
++(void) showFromButton:(UIButton *)button inView:(UIViewController<FilterCallback>*)vc entries:(TableData*)entries type:(NSString *)type selected:(id)preselected
 {
     CardFilterPopover* filter = [[CardFilterPopover alloc] initWithNibName:@"CardFilterPopover" bundle:nil];
     filter.sections = entries.sections;

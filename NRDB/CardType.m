@@ -8,6 +8,7 @@
 
 #import "CardType.h"
 #import "CardManager.h"
+#import "TableData.h"
 
 @implementation CardType
 
@@ -15,6 +16,7 @@ static NSDictionary* code2type;
 static NSMutableDictionary* type2name;
 static NSMutableArray* runnerTypes;
 static NSMutableArray* corpTypes;
+static TableData* allTypes;
 
 +(void) initialize
 {
@@ -48,19 +50,31 @@ static NSMutableArray* corpTypes;
         }
     }
     
-    NRCardType rt[] = { NRCardTypeNone, NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram };
-    NRCardType ct[] = { NRCardTypeNone, NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
+    NRCardType rt[] = { NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram };
+    NRCardType ct[] = { NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
     
     runnerTypes = [NSMutableArray array];
     for (int i=0; i<DIM(rt); ++i)
     {
         [runnerTypes addObject:[CardType name:rt[i]]];
     }
+    
     corpTypes = [NSMutableArray array];
     for (int i=0; i<DIM(ct); ++i)
     {
         [corpTypes addObject:[CardType name:ct[i]]];
     }
+    
+    NSArray* typeSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
+    NSMutableArray* types = [NSMutableArray array];
+    [types addObject:@[ [CardType name:NRCardTypeNone ], [CardType name:NRCardTypeIdentity] ]];
+    [types addObject:runnerTypes];
+    [types addObject:corpTypes];
+    
+    allTypes = [[TableData alloc] initWithSections:typeSections andValues:types];
+
+    [runnerTypes insertObject:[CardType name:NRCardTypeNone] atIndex:0];
+    [corpTypes insertObject:[CardType name:NRCardTypeNone] atIndex:0];
 }
 
 +(NRCardType) type:(NSString*)code
@@ -75,17 +89,13 @@ static NSMutableArray* corpTypes;
 
 +(NSArray*) typesForRole:(NRRole)role
 {
+    NSAssert(role != NRRoleNone, @"no role");
     return role == NRRoleRunner ? runnerTypes : corpTypes;
 }
 
-+(NSArray*) subtypesForRole:(NRRole)role andType:(NSString*)type
++(TableData*) allTypes
 {
-    return [CardManager subtypesForRole:role andType:type];
-}
-
-+(NSArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types
-{
-    return [CardManager subtypesForRole:role andTypes:types];
+    return allTypes;
 }
 
 @end

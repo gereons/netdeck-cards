@@ -19,4 +19,6 @@
 -(void) setValue:(int)value;
 -(void) setColor:(UIColor*)color;
 
++(SmallPipsView*) createWithFrame:(CGRect)rect;
+
 @end

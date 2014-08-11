@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class TableData;
 @interface Faction : NSObject
 
 +(NSString*) name:(NRFaction)faction;
 +(NRFaction) faction:(NSString*)code;
 
 +(NSArray*) factionsForRole:(NRRole)role;
++(TableData*) allFactions;
 
 +(void) initializeFactionNames:(NSArray*)cards;
 

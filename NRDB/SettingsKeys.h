@@ -37,6 +37,7 @@
 #define AUTO_SAVE_DB        @"autoSaveDropbox"
 
 #define DECK_VIEW_STYLE     @"deckViewStyle"
+#define BROWSER_VIEW_STYLE  @"browserViewStyle"
 
 #define CLIP_CHANGE_COUNT   @"clipChangeCount"
 
@@ -48,6 +49,8 @@
 #define DECK_FILTER_SORT    @"deckFilterSort"
 
 #define DECK_VIEW_SCALE     @"deckViewScale"
+#define BROWSER_VIEW_SCALE  @"browserViewScale"
+#define BROWSER_SORT_TYPE   @"browserSortType"
 
 #define USE_NRDB            @"useNrdb"
 #define NRDB_ACCESS_TOKEN   @"nrdbAccessToken"

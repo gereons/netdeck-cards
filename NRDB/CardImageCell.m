@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
 #import "CardImageCell.h"
 #import "ImageCache.h"
 #import "CardCounter.h"
@@ -153,7 +152,8 @@
     self.image2.image = self.cc.count > 1 ? img : nil;
     self.image3.image = self.cc.count > 2 ? img : nil;
     
-    NSUInteger max3 = MIN(self.cc.count, 3);
+    NSUInteger count = self.cc ? self.cc.count : 1;
+    NSUInteger max3 = MIN(count, 3);
     NSUInteger c = MAX(max3-1, 0);
     self.image1.layer.opacity = 1.0 - (c * 0.2);
     c = MAX(c-1, 0);
@@ -179,19 +179,19 @@
 {
     [self.activityIndicator startAnimating];
     [[ImageCache sharedInstance] getImageFor:card
-                                     completion:^(Card* card, UIImage* img, BOOL placeholder) {
-                                         [self.activityIndicator stopAnimating];
-                                         if ([self.cc.card.name isEqual:card.name])
-                                         {
-                                             [self setImageStack:img];
-                                         
-                                             self.detailView.hidden = !placeholder;
-                                             if (placeholder)
-                                             {
-                                                 [CardDetailView setupDetailViewFromCell:self card:self.cc.card];
-                                             }
-                                         }
-                                     }];
+                                  completion:^(Card* card, UIImage* img, BOOL placeholder) {
+                                      [self.activityIndicator stopAnimating];
+                                      if ([self.cc.card.name isEqual:card.name])
+                                      {
+                                          [self setImageStack:img];
+                                          
+                                          self.detailView.hidden = !placeholder;
+                                          if (placeholder)
+                                          {
+                                              [CardDetailView setupDetailViewFromCell:self card:self.cc.card];
+                                          }
+                                      }
+                                  }];
 }
 
 #pragma mark parallax helpers

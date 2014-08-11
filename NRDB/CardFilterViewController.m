@@ -94,6 +94,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(id) initWithRole:(NRRole)role andDeck:(Deck *)deck
 {
+    NSAssert(role == deck.role, @"role mismatch");
     if ((self = [self initWithRole:role]))
     {
         self.deckListViewController.deck = deck;
@@ -158,7 +159,6 @@ static NSInteger viewMode = VIEW_LIST;
     [super viewWillAppear:animated];
     
     [self setEdgesForExtendedLayout:UIRectEdgeBottom];
-    
     
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
     detailViewManager.detailViewController = self.snc;
@@ -513,15 +513,17 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) subtypeClicked:(UIButton*)sender
 {
-    TableData* data;
+    NSMutableArray* arr;
     if (self.selectedTypes)
     {
-        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andTypes:self.selectedTypes]];
+        arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:NO];
     }
     else
     {
-        data = [[TableData alloc] initWithValues:[CardType subtypesForRole:self.role andType:self.selectedType]];
+        arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:NO];
     }
+    [arr insertObject:kANY atIndex:0];
+    TableData* data = [[TableData alloc] initWithValues:arr];
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     
     [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Subtype" selected:selected];
@@ -915,9 +917,7 @@ static NSInteger viewMode = VIEW_LIST;
         cell.accessoryView = button;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        SmallPipsView* pips = [[[NSBundle mainBundle] loadNibNamed:@"SmallPipsView" owner:self options:nil] objectAtIndex:0];
-        pips.frame = CGRectMake(230, 0, 38, 38);
-        
+        SmallPipsView* pips = [SmallPipsView createWithFrame:CGRectMake(230, 0, 38, 38)];
         [cell.contentView addSubview:pips];
         
         [button addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];

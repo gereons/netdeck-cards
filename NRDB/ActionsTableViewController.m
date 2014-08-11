@@ -15,6 +15,7 @@
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "CardFilterViewController.h"
+#import "BrowserFilterViewController.h"
 #import "SavedDecksList.h"
 #import "CompareDecksList.h"
 #import "Notifications.h"
@@ -25,10 +26,15 @@
 #import "DataDownload.h"
 #import "DeckManager.h"
 
+#define ENABLE_BROWSER  1
+
 typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     NRMenuDecks,
     NRMenuDeckDiff,
+#if ENABLE_BROWSER
+    NRMenuCardBrowser,
+#endif
     NRMenuSettings,
     NRMenuAbout,
     
@@ -37,10 +43,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 @interface ActionsTableViewController()
 
-@property NRMenuItem lastSelection;
 @property SubstitutableNavigationController* snc;
 @property SettingsViewController* settings;
 @property NSString* appVersion;
+@property Card* searchForCard;
 
 @end
 
@@ -55,7 +61,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     [super viewDidLoad];
 
-    self.lastSelection = -1;
     self.tableView.scrollEnabled = NO;
     
     self.title = l10n(@"Net Deck");
@@ -99,31 +104,23 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             }
         };
     }
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:BROWSER_NEW object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(listDecks:) name:BROWSER_FIND object:nil];
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
-    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
-    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
-
     [self checkCardUpdate];
     
-    [self resetDetailView];
-    
     [super viewDidAppear:animated];
-    
-    if (self.lastSelection == NRMenuDecks)
-    {
-        NSIndexPath* indexPath = [NSIndexPath indexPathForItem:self.lastSelection inSection:0];
-        
-        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-    }
-    
+
     // first start with this version?
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     // [defaults setObject:@"" forKey:LAST_START_VERSION];
@@ -138,24 +135,22 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         // yes, first start. show "about" tab
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuAbout inSection:0];
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        
         [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
         [defaults setObject:self.appVersion forKey:LAST_START_VERSION];
         [defaults synchronize];
+        return;
     }
-    else if ([CardManager cardsAvailable])
+    
+    if (![CardManager cardsAvailable])
     {
-        // initially select Decks view
-        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
-        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+        [self resetDetailView];
+        return;
     }
-}
-
--(void) viewDidDisappear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewDidDisappear:animated];
+    
+    // select Decks view
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
+    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
 }
 
 -(void) resetDetailView
@@ -220,22 +215,42 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
     nc.deckListViewController = filter.deckListViewController;
     
-    [self.navigationController pushViewController:filter animated:NO];
+    [nc pushViewController:filter animated:NO];
 }
 
 -(void)newDeck:(NSNotification*) notification
 {
-    NSDictionary* userInfo = notification.userInfo;
-    
-    NRRole role = [[userInfo objectForKey:@"role"] intValue];
-    
-    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
-    
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-    nc.deckListViewController = filter.deckListViewController;
+
+    NSDictionary* userInfo = notification.userInfo;
+    CardFilterViewController* filter;
     
-    [self.navigationController pushViewController:filter animated:NO];
+    if ([notification.name isEqualToString:BROWSER_NEW])
+    {
+        Card* card = [Card cardByCode:[userInfo objectForKey:@"code"]];
+        Deck* deck = [[Deck alloc] init];
+        deck.role = card.role;
+        if (card.type == NRCardTypeIdentity)
+        {
+            deck.identity = card;
+        }
+        else
+        {
+            [deck addCard:card copies:1];
+        }
+        
+        filter = [[CardFilterViewController alloc] initWithRole:deck.role andDeck:deck];
+        [nc popToRootViewControllerAnimated:NO];
+    }
+    else
+    {
+        NRRole role = [[userInfo objectForKey:@"role"] intValue];
+        filter = [[CardFilterViewController alloc] initWithRole:role];
+    }
+    
+    nc.deckListViewController = filter.deckListViewController;
+    [nc pushViewController:filter animated:NO];
 }
 
 -(void)importDeckFromClipboard:(NSNotification*) notification
@@ -252,13 +267,19 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
     nc.deckListViewController = filter.deckListViewController;
     
-    [self.navigationController popToRootViewControllerAnimated:NO];
-    [self.navigationController pushViewController:filter animated:NO];
+    [nc popToRootViewControllerAnimated:NO];
+    [nc pushViewController:filter animated:NO];
 }
 
 -(void)loadCards:(id) sender
 {
     [self.tableView reloadData];
+}
+
+-(void) listDecks:(NSNotification*)sender
+{
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    self.searchForCard = [Card cardByCode:[sender.userInfo objectForKey:@"code"]];
 }
 
 #pragma mark Table view data source
@@ -296,6 +317,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             cell.textLabel.text = l10n(@"Decks");
             cell.textLabel.enabled = [CardManager cardsAvailable];
             break;
+#if ENABLE_BROWSER
+        case NRMenuCardBrowser:
+            cell.textLabel.text = l10n(@"Card Browser");
+            cell.textLabel.enabled = [CardManager cardsAvailable];
+            break;
+#endif
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -324,13 +351,21 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     // DetailViewManager is the delegate of our split view.
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
 
-    self.lastSelection = indexPath.row;
     switch (indexPath.row)
     {
         case NRMenuDecks:
         {
             TF_CHECKPOINT(@"decks");
-            SavedDecksList* decks = [[SavedDecksList alloc] init];
+            SavedDecksList* decks;
+            if (self.searchForCard == nil)
+            {
+                decks = [[SavedDecksList alloc] init];
+            }
+            else
+            {
+                decks = [[SavedDecksList alloc] initWithCardFilter:self.searchForCard];
+                self.searchForCard = nil;
+            }
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:decks];
             detailViewManager.detailViewController = self.snc;
             break;
@@ -344,6 +379,16 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             detailViewManager.detailViewController = self.snc;
             break;
         }
+            
+#if ENABLE_BROWSER
+        case NRMenuCardBrowser:
+        {
+            TF_CHECKPOINT(@"card browser");
+            BrowserFilterViewController* browser = [[BrowserFilterViewController alloc] init];
+            [self.navigationController pushViewController:browser animated:NO];
+            break;
+        }
+#endif
             
         case NRMenuSettings:
         {

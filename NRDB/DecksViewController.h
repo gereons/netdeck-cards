@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
-@class Deck, NRActionSheet;
+@class Card, Deck, NRActionSheet;
 
 @interface DecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate>
 
@@ -24,6 +24,8 @@
 @property NSArray* decks;
 
 @property NRFilterType filterType;
+
+-(id) initWithCardFilter:(Card*)card;
 
 -(void) updateDecks;
 

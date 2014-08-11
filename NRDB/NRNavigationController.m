@@ -16,6 +16,7 @@
 @property BOOL alertViewClicked;
 @property BOOL regularPop;
 @property BOOL swipePop;
+@property BOOL popToRoot;
 
 @end
 
@@ -28,6 +29,12 @@
     self.interactivePopGestureRecognizer.delegate = self;
     
     [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
+}
+
+-(NSArray*) popToRootViewControllerAnimated:(BOOL)animated
+{
+    self.popToRoot = YES;
+    return [super popToRootViewControllerAnimated:animated];
 }
 
 - (void)handlePopGesture:(UIGestureRecognizer *)gesture
@@ -58,6 +65,13 @@
 
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
+    if (self.popToRoot)
+    {
+        // NSLog(@"pop to root");
+        self.popToRoot = NO;
+        return YES;
+    }
+    
     if (self.swipePop)
     {
         // NSLog(@"should pop1: YES");
@@ -109,6 +123,7 @@
             [self.deckListViewController saveDeck:nil];
         }
         self.alertViewClicked = YES;
+        // NSLog(@"pop from alert");
         [self popViewControllerAnimated:NO];
     };
 }

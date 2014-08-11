@@ -14,6 +14,13 @@
 
 @implementation SmallPipsView
 
++(SmallPipsView*) createWithFrame:(CGRect)rect
+{
+    SmallPipsView* pips = [[[NSBundle mainBundle] loadNibNamed:@"SmallPipsView" owner:self options:nil] objectAtIndex:0];
+    pips.frame = rect;
+    return pips;
+}
+
 -(void)awakeFromNib
 {
     self.views = @[ self.pipNW, self.pipNE, self.pipCenter, self.pipSW, self.pipSE ];

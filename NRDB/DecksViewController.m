@@ -71,6 +71,16 @@ static NRFilterType _filterType = NRFilterAll;
     return self;
 }
 
+- (id) initWithCardFilter:(Card*)card
+{
+    if ((self = [self init]))
+    {
+        self.filterText = card.name;
+        self.searchScope = card.type == NRCardTypeIdentity ? NRDeckSearchIdentity : NRDeckSearchCard;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -132,7 +142,8 @@ static NRFilterType _filterType = NRFilterAll;
     self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
     self.searchBar.selectedScopeButtonIndex = self.searchScope;
     
-    [self.tableView setContentOffset:CGPointMake(0,self.searchBar.frame.size.height) animated:NO];
+    CGFloat height = self.filterText.length == 0 ? self.searchBar.frame.size.height : 0;
+    [self.tableView setContentOffset:CGPointMake(0,height) animated:NO];
 }
 
 - (void) viewDidAppear:(BOOL)animated

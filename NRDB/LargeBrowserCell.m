@@ -1,109 +1,71 @@
 //
-//  CardDetailView.m
+//  LargeBrowserCell.m
 //  NRDB
 //
-//  Created by Gereon Steffens on 03.05.14.
+//  Created by Gereon Steffens on 08.08.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "CardDetailView.h"
-#import "CardImageViewPopover.h"
-#import "CardImageCell.h"
-#import "BrowserImageCell.h"
+#import "LargeBrowserCell.h"
+#import "CGRectUtils.h"
 #import "Card.h"
-#import "CardType.h"
 #import "Faction.h"
+#import "CardType.h"
 #import "ImageCache.h"
+#import "NRActionSheet.h"
 
-@implementation CardDetailView
+@interface LargeBrowserCell()
 
-+(void) setupDetailViewFromPopover:(CardImageViewPopover *)popover card:(Card*)card
+@property NSArray* pips;
+
+@end
+
+@implementation LargeBrowserCell
+
+-(void) awakeFromNib
 {
-    CardDetailView* cdv = [[CardDetailView alloc] init];
+    [super awakeFromNib];
     
-    cdv.card = card;
-    cdv.detailView = popover.detailView;
-    cdv.cardName = popover.cardName;
-    cdv.cardType = popover.cardType;
-    cdv.cardText = popover.cardText;
+    self.pips = @[ self.pip1, self.pip2, self.pip3, self.pip4, self.pip5 ];
     
-    cdv.icon1 = popover.icon1;
-    cdv.icon2 = popover.icon2;
-    cdv.icon3 = popover.icon3;
-    
-    cdv.label1 = popover.label1;
-    cdv.label2 = popover.label2;
-    cdv.label3 = popover.label3;
-    
-    [cdv setupDetailView];
+    static int diameter = 8;
+    for (UIView* pip in self.pips)
+    {
+        pip.frame = CGRectSetSize(pip.frame, diameter, diameter);
+        pip.layer.cornerRadius = diameter/2;
+    }
 }
 
-+(void) setupDetailViewFromCell:(CardImageCell *)cell card:(Card*)card
+-(void) setCard:(Card*)card
 {
-    CardDetailView* cdv = [[CardDetailView alloc] init];
+    [super setCard:card];
+    self.name.text = card.name;
     
-    cdv.card = card;
-    cdv.detailView = cell.detailView;
-    cdv.cardName = cell.cardName;
-    cdv.cardType = cell.cardType;
-    cdv.cardText = cell.cardText;
-    
-    cdv.icon1 = cell.icon1;
-    cdv.icon2 = cell.icon2;
-    cdv.icon3 = cell.icon3;
-    
-    cdv.label1 = cell.label1;
-    cdv.label2 = cell.label2;
-    cdv.label3 = cell.label3;
-    
-    [cdv setupDetailView];
-}
-
-+(void) setupDetailViewFromBrowser:(BrowserImageCell *)cell card:(Card*)card
-{
-    CardDetailView* cdv = [[CardDetailView alloc] init];
-    
-    cdv.card = card;
-    cdv.detailView = cell.detailView;
-    cdv.cardName = cell.cardName;
-    cdv.cardType = cell.cardType;
-    cdv.cardText = cell.cardText;
-    
-    cdv.icon1 = cell.icon1;
-    cdv.icon2 = cell.icon2;
-    cdv.icon3 = cell.icon3;
-    
-    cdv.label1 = cell.label1;
-    cdv.label2 = cell.label2;
-    cdv.label3 = cell.label3;
-    
-    [cdv setupDetailView];
-}
-
-
--(void) setupDetailView
-{
-    self.detailView.hidden = NO;
-    self.detailView.backgroundColor = [UIColor colorWithWhite:1 alpha:.7];
-    self.detailView.layer.cornerRadius = 10;
-    self.detailView.layer.masksToBounds = YES;
-    
-    Card* card = self.card;
-    
-    self.cardName.text = card.name;
-    self.cardText.attributedText = card.attributedText;
+    self.name.textColor = [UIColor blackColor];
     
     NSString* factionName = [Faction name:card.faction];
     NSString* typeName = [CardType name:card.type];
+    
     NSString* subtype = card.subtype;
     if (subtype)
     {
-        self.cardType.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];
+        self.type.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];
     }
     else
     {
-        self.cardType.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
+        self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
+    
+    NSInteger influence = 0;
+    if (card.type == NRCardTypeAgenda)
+    {
+        influence = card.agendaPoints;
+    }
+    else
+    {
+        influence = card.influence;
+    }
+    [self setInfluence:influence withColor:card.factionColor];
     
     // labels from top: cost/strength/mu
     switch (card.type)
@@ -111,7 +73,14 @@
         case NRCardTypeIdentity:
             self.label1.text = [@(card.minimumDecksize) stringValue];
             self.icon1.image = [ImageCache cardIcon];
-            self.label2.text = [@(card.influenceLimit) stringValue];
+            if (card.influenceLimit == -1)
+            {
+                self.label2.text = @"∞";
+            }
+            else
+            {
+                self.label2.text = [@(card.influenceLimit) stringValue];
+            }
             self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)
             {
@@ -169,6 +138,27 @@
         case NRCardTypeNone:
             NSAssert(NO, @"this can't happen");
             break;
+    }
+}
+
+-(void) setInfluence:(NSInteger)influence withColor:(UIColor*)color
+{
+    if (influence > 0)
+    {
+        for (int i=0; i<self.pips.count; ++i)
+        {
+            UIView* pip = self.pips[i];
+            pip.layer.backgroundColor = [color CGColor];
+            pip.hidden = i >= influence;
+            // NSLog(@"%d %d", i, pip.hidden);
+        }
+    }
+    else
+    {
+        for (UIView* pip in self.pips)
+        {
+            pip.hidden = YES;
+        }
     }
 }
 

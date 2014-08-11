@@ -37,8 +37,6 @@
 
 -(void) setCardCounter:(CardCounter *)cc
 {
-    _cardCounter = cc;
-    
     Card* card = cc.card;
     
     if (card.type == NRCardTypeIdentity)
@@ -80,7 +78,7 @@
     }
     
     NSUInteger influence = 0;
-    if (self.cardCounter.card.type == NRCardTypeAgenda)
+    if (card.type == NRCardTypeAgenda)
     {
         influence = card.agendaPoints * cc.count;
     }
@@ -95,7 +93,7 @@
             influence = card.influence * cc.count;
         }
     }
-    [self setInfluence:influence];
+    [self setInfluence:influence andCard:card];
     
     self.copiesLabel.hidden = card.type == NRCardTypeIdentity;
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
@@ -195,20 +193,20 @@
     self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count];
 }
 
--(void) setInfluence:(NSUInteger)influence
+-(void) setInfluence:(NSUInteger)influence andCard:(Card*)card
 {
     if (influence > 0)
     {
-        self.influenceLabel.textColor = self.cardCounter.card.factionColor;
+        self.influenceLabel.textColor = card.factionColor;
         self.influenceLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)influence];
         
-        CGColorRef color = self.cardCounter.card.factionColor.CGColor;
+        CGColorRef color = card.factionColor.CGColor;
         
         for (int i=0; i<self.pips.count; ++i)
         {
             UIView* pip = self.pips[i];
             pip.layer.backgroundColor = color;
-            pip.hidden = i >= self.cardCounter.card.influence;
+            pip.hidden = i >= card.influence;
         }
     }
     else

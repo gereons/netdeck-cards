@@ -390,6 +390,24 @@ static NSCache* memCache;
 
 #pragma mark simple filesystem cache
 
+#warning move images cache over to NSCachesDirectory
+
++(void) moveToCaches
+{
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
+    paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString* cachesDirectory = [paths objectAtIndex:0];
+    
+    NSString* images = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    NSFileManager* mgr = [NSFileManager defaultManager];
+    if ([mgr fileExistsAtPath:images])
+    {
+        [mgr moveItemAtPath:images toPath:cachesDirectory error:nil];
+    }
+}
+
 +(NSString*) directoryForImages
 {
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];

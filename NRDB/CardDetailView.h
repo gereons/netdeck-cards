@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-// we can't have nice things (ie. multiple inheritance), so this class mirrors the IBOutlet properties
-// from both CardImageViewPopover and CardImageCell - better than having to duplicate the code
+// since we can't have nice things (ie. multiple inheritance), this class mirrors the IBOutlet properties
+// from CardImageViewPopover, CardImageCell and BrowserImageCell - better than having to duplicate the code
 
-@class Card, CardImageViewPopover, CardImageCell;
+// TODO for later: convert this to a category that uses objc_setAssociatedObject/obj_getAssociatedObject
+
+@class Card, CardImageViewPopover, CardImageCell, BrowserImageCell;
 
 @interface CardDetailView : NSObject
 
@@ -31,5 +33,6 @@
 
 +(void) setupDetailViewFromPopover:(CardImageViewPopover*)popover card:(Card*)card;
 +(void) setupDetailViewFromCell:(CardImageCell *)cell card:(Card*)card;
++(void) setupDetailViewFromBrowser:(BrowserImageCell *)cell card:(Card*)card;
 
 @end

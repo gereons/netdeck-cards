@@ -19,5 +19,7 @@
 #define LOAD_CARDS      @"loadCards"        // card download from netrunnerdb.com, userInfo contains @"success" (BOOL)
 #define DROPBOX_CHANGED @"dropboxChanged"   // dropbox link status changed, no userInfo
 #define NOTES_CHANGED   @"notesChanged"     // notes for a deck changed, no userInfo
+#define BROWSER_NEW     @"browserNew"       // new deck with card, userInfo contains @"code"
+#define BROWSER_FIND    @"browserFind"      // find decks with card, userInfo contains @"code"
 
 #endif

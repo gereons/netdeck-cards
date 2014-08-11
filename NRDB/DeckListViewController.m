@@ -86,6 +86,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     if (self.filename)
     {
         self.deck = [DeckManager loadDeckFromPath:self.filename];
+        NSAssert(self.role == self.deck.role, @"role mismatch");
         self.deckNameLabel.text = self.deck.name;
     }
     
@@ -201,7 +202,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
 
-    if (self.deck.identity == nil && self.filename == nil)
+    if (self.deck.identity == nil && self.filename == nil && self.deck.cards.count == 0)
     {
         [self selectIdentity:nil];
     }
@@ -211,7 +212,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 {
     [super viewDidAppear:animated];
     
-    if (self.deck.cards.count > 0)
+    if (self.deck.cards.count > 0 || self.deck.identity != nil)
     {
         // so that CardFilterViewController gets a chance to reload
         [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
@@ -230,8 +231,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 }
 
 #pragma mark keyboard show/hide
-
-#define KEYBOARD_HEIGHT_OFFSET  225
 
 -(void) willShowKeyboard:(NSNotification*)sender
 {
@@ -746,7 +745,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     
     NSInteger viewMode = sender.selectedSegmentIndex;
     [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:DECK_VIEW_STYLE];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     [self doToggleView:viewMode];
 }
 

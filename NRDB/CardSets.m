@@ -58,7 +58,7 @@ static struct cardSetData {
     
     // lunar
     { 16, "use_upstalk", "up", NRCycleLunar, YES },
-    { 17, "use_spaces_between", "tsb", NRCycleLunar, NO },
+    { 17, "use_spaces_between", "tsb", NRCycleLunar, YES },
     { 18, "use_first_contact", "fc", NRCycleLunar, NO },
     { 19, "use_up_and_over", "uao", NRCycleLunar, NO },
     { 20, "use_all_that_remains", "atr", NRCycleLunar, NO },
