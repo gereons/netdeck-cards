@@ -15,6 +15,7 @@
 
 -(void) setCardCounter:(CardCounter *)cc
 {
+    [super setCardCounter:cc];
     Card* card = cc.card;
     
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
@@ -58,7 +59,7 @@
     }
     
     NSUInteger influence = 0;
-    if (self.cardCounter.card.type == NRCardTypeAgenda)
+    if (card.type == NRCardTypeAgenda)
     {
         influence = card.agendaPoints * cc.count;
     }
@@ -76,7 +77,7 @@
     
     if (influence > 0)
     {
-        self.influenceLabel.textColor = self.cardCounter.card.factionColor;
+        self.influenceLabel.textColor = card.factionColor;
         self.influenceLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)influence];
     }
     else

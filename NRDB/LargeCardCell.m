@@ -37,6 +37,7 @@
 
 -(void) setCardCounter:(CardCounter *)cc
 {
+    [super setCardCounter:cc];
     Card* card = cc.card;
     
     if (card.type == NRCardTypeIdentity)
