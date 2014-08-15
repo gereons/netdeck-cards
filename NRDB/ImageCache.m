@@ -98,6 +98,8 @@ static NSCache* memCache;
     
     memCache = [[NSCache alloc] init];
     memCache.name = @"netdeck";
+    
+    [ImageCache moveToCaches];
 }
 
 +(ImageCache*) sharedInstance
@@ -390,8 +392,6 @@ static NSCache* memCache;
 
 #pragma mark simple filesystem cache
 
-#warning move images cache over to NSCachesDirectory
-
 +(void) moveToCaches
 {
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -400,19 +400,22 @@ static NSCache* memCache;
     paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* cachesDirectory = [paths objectAtIndex:0];
     
-    NSString* images = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    NSString* srcImages = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    NSString* dstImages = [cachesDirectory stringByAppendingPathComponent:@"images"];
+    
     NSFileManager* mgr = [NSFileManager defaultManager];
-    if ([mgr fileExistsAtPath:images])
+    if ([mgr fileExistsAtPath:srcImages])
     {
-        [mgr moveItemAtPath:images toPath:cachesDirectory error:nil];
+        [mgr moveItemAtPath:srcImages toPath:dstImages error:nil];
     }
+    [mgr removeItemAtPath:srcImages error:nil];
 }
 
 +(NSString*) directoryForImages
 {
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     
     NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
@@ -428,7 +431,7 @@ static NSCache* memCache;
 
 +(void) removeCacheDirectory
 {
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     
     NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
