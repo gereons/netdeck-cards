@@ -36,6 +36,7 @@
 @property BOOL unique;
 @property BOOL limited;
 @property BOOL altart;
+@property NRFaction faction4inf;    // faction for influence filter
 
 @property NRCardListSortType sortType;
 
@@ -49,6 +50,7 @@
     {
         self.role = role;
         self.sortType = NRCardListSortA_Z;
+        self.faction4inf = NRFactionNone;
         [self resetInitialCards];
         [self clearFilters];
     }
@@ -58,8 +60,9 @@
 +(CardList*) browserInitForRole:(NRRole)role
 {
     CardList* cl = [[CardList alloc] init];
-    
+    cl.sortType = NRCardListSortA_Z;
     cl.role = role;
+    
     NSArray* roles;
     switch (role)
     {
@@ -82,6 +85,7 @@
         [cl.initialCards addObjectsFromArray:[CardManager identitiesForRole:r.intValue]];
     }
     [cl filterDeselectedSets];
+    [cl clearFilters];
     
     return cl;
 }
@@ -136,6 +140,7 @@
     self.unique = NO;
     self.limited = NO;
     self.altart = NO;
+    self.faction4inf = NRFactionNone;
 }
 
 -(void) filterByType:(NSString*) type
@@ -195,6 +200,13 @@
 -(void) filterByInfluence:(int)influence
 {
     self.influence = influence;
+    self.faction4inf = NRFactionNone;
+}
+
+-(void) filterByInfluence:(int)influence forFaction:(NRFaction)faction
+{
+    self.influence = influence;
+    self.faction4inf = faction;
 }
 
 -(void) filterByMU:(int)mu
@@ -296,8 +308,16 @@
     }
     if (self.influence != -1)
     {
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"influence == %d", self.influence];
-        [predicates addObject:predicate];
+        if (self.faction4inf == NRFactionNone)
+        {
+            NSPredicate* predicate = [NSPredicate predicateWithFormat:@"influence == %d", self.influence];
+            [predicates addObject:predicate];
+        }
+        else
+        {
+            NSPredicate* predicate = [NSPredicate predicateWithFormat:@"influence == %d && faction != %d", self.influence, self.faction4inf];
+            [predicates addObject:predicate];
+        }
     }
     if (self.set.length > 0 && ![self.set isEqualToString:kANY])
     {

@@ -32,6 +32,7 @@
 -(void) filterByFaction:(NSString*) faction;
 -(void) filterByFactions:(NSSet*) factions;
 -(void) filterByInfluence:(int)influence;
+-(void) filterByInfluence:(int)influence forFaction:(NRFaction)faction;
 -(void) filterBySet:(NSString*)set;
 -(void) filterBySets:(NSSet*)sets;
 -(void) filterByStrength:(int)strength;

@@ -21,9 +21,6 @@
 
 const NSString* const kANY = @"Any";
 
-#warning nrdb button: disable/hide when not authenticated
-#warning influence filter - don't show in-faction cards (setting?)
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

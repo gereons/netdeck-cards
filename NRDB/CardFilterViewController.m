@@ -43,6 +43,8 @@
 @property CGRect largeResultFrame;
 @property NSMutableDictionary* selectedValues;
 
+@property int influenceValue;
+
 @end
 
 @implementation CardFilterViewController
@@ -211,11 +213,22 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) deckChanged:(NSNotification*)notification
 {
+    Card* identity = self.deckListViewController.deck.identity;
     if (self.role == NRRoleCorp)
     {
-        Card* identity = self.deckListViewController.deck.identity;
-        
         [self.cardList filterAgendas:identity];
+        [self initCards];
+    }
+    if (self.influenceValue != -1)
+    {
+        if (identity)
+        {
+            [self.cardList filterByInfluence:self.influenceValue forFaction:identity.faction];
+        }
+        else
+        {
+            [self.cardList filterByInfluence:self.influenceValue];
+        }
         [self initCards];
     }
     
@@ -644,6 +657,7 @@ static NSInteger viewMode = VIEW_LIST;
     int value = round(sender.value);
     // NSLog(@"inf: %f %d", sender.value, value);
     sender.value = value--;
+    self.influenceValue = value;
     self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self postNotification:@"influence" value:@(value)];
 }
@@ -767,7 +781,15 @@ static NSInteger viewMode = VIEW_LIST;
     else if ([type isEqualToString:@"influence"])
     {
         NSAssert(num != nil, @"need number");
-        [self.cardList filterByInfluence:[num intValue]];
+        Card* identity = self.deckListViewController.deck.identity;
+        if (identity)
+        {
+            [self.cardList filterByInfluence:[num intValue] forFaction:identity.faction];
+        }
+        else
+        {
+            [self.cardList filterByInfluence:[num intValue]];
+        }
     }
     else if ([type isEqualToString:@"faction"])
     {
