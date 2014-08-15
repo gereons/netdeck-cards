@@ -263,6 +263,4 @@
 "Find decks using this card" = "Mazos usando esta carta";
 "New deck with this card" = "Nueva Mazo con esta carta";
 "Faction/A-Z" = "Facción/A-Z";
-
-
-
+"Trash: %@" = "Destrucción: %@";

@@ -210,8 +210,7 @@
 "Spin Cycle" = "Cycle des Distorsions";
 "Lunar Cycle" = "Cycle de la Lune";
 
-// netrunnerdb.com
-/*
+/* // netrunnerdb.com
 "Import from Dropbox" = "Von Dropbox importieren";
 "Import from NetrunnerDB.com" = "Von NetrunnerDB.com importieren";
 "This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf NetrunnerDB.com verknüpft";
@@ -240,13 +239,29 @@
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Alle Decks von NetrunnerDB.com importieren? Existierende verknüpfte Decks werden überschrieben.";
 "Imported decks" = "Decks importiert";
  
- // deck diff
- "Select to Compare" = "Für Vergleich auswählen";
- "Compare" = "Vergleichen";
- "Compare Decks" = "Decks vergleichen";
- "Deck Comparison" = "Deckvergleich";
- "Reverse" = "Tauschen";
- "Show only differences" = "Nur Unterschiede anzeigen";
- "Show full comparison" = "Kompletten Vergleich anzeigen";
- "Both decks must be for the same side." = "Decks der unterschiedlichen Seiten können nicht verglichen werden.";
- */
+// deck diff
+"Select to Compare" = "Für Vergleich auswählen";
+"Compare" = "Vergleichen";
+"Compare Decks" = "Decks vergleichen";
+"Deck Comparison" = "Deckvergleich";
+"Reverse" = "Tauschen";
+"Full" = "";
+"Diff" = "";
+"Intersect" = "";
+"Show full comparison" = "Kompletten Vergleich anzeigen";
+"Both decks must be for the same side." = "Decks der unterschiedlichen Seiten können nicht verglichen werden.";
+"Select two decks to compare them" = "Seleccione dos cubiertas para la comparación";
+"Selected ‘%@’, select one more to compare" = "‘%@’ seleccionado, elija otro para la comparación";
+"Selected ‘%@’ and ‘%@’, tap to compare" = "‘%@’ y ‘%@’ seleccionado, ahora comparar";
+"Compare to ..." = "Comparar con ...";
+
+// card browser
+"Card Browser" = "Cartas";
+"Side:" = "Partido:";
+"Unique" = "Único";
+"Limited" = "Limitada";
+"Alt Art" = "Carta promo";
+"Find decks using this card" = "Mazos usando esta carta";
+"New deck with this card" = "Nueva Mazo con esta carta";
+"Faction/A-Z" = "Facción/A-Z";
+"Trash: %@" = "Destrucción: %@"; */
