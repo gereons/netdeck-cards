@@ -9,7 +9,7 @@ pod 'GRMustache'
 pod 'CorePlot'
 pod 'libextobjc'
 pod 'CSStickyHeaderFlowLayout'
-# pod 'SDCAlertView'
+pod 'SDCAlertView', :git => 'https://github.com/Scott90/SDCAlertView.git'
 pod 'RBBAnimation'
 pod 'SDCAutoLayout'
 
