@@ -9,10 +9,6 @@
 #import "DeckDiffCell.h"
 #import "CardImageViewPopover.h"
 
-@interface DeckDiffCell()
-
-@end
-
 @implementation DeckDiffCell
 
 - (void)awakeFromNib

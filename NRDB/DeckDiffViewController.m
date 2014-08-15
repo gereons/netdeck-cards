@@ -186,7 +186,8 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         // fill intersection - card is in both decks, and the total count is > 3
         for (CardDiff* cd in self.fullDiffRows[i])
         {
-            if (cd.count1 > 0 && cd.count2 > 0 && cd.count1+cd.count2 > 3)
+            NSInteger owned = 3;
+            if (cd.count1 > 0 && cd.count2 > 0 && cd.count1+cd.count2 > owned)
             {
                 [self.intersectRows[i] addObject:cd];
             }
@@ -383,10 +384,10 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         cell.diff.text = @"";
     }
     
-#warning # of core sets?
     if (self.diffMode == Intersect)
     {
-        diff = cd.count1 + cd.count2 - 3;
+        NSInteger owned = 3;
+        diff = cd.count1 + cd.count2 - owned;
         cell.diff.text = [NSString stringWithFormat:@"%ld", (long)diff];
         cell.diff.textColor = [UIColor blackColor];
     }

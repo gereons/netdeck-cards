@@ -575,6 +575,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     textField.text = self.deck.name;
     textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     textField.clearButtonMode = UITextFieldViewModeAlways;
+    textField.autocorrectionType = UITextAutocorrectionTypeNo;
     textField.returnKeyType = UIReturnKeyDone;
     textField.delegate = self;
     
