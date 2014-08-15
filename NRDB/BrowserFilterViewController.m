@@ -185,6 +185,8 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     [self strengthChanged:nil];
     self.costSlider.value = 0;
     [self costChanged:nil];
+    self.trashSlider.value = 0;
+    [self trashChanged:nil];
     
     // reset switches
     self.uniqueSwitch.on = NO;
@@ -209,13 +211,28 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
             break;
         case 1:
             self.role = NRRoleRunner;
+            self.apSlider.value = 0;
+            [self apChanged:nil];
+            self.trashSlider.value = 0;
+            [self trashChanged:nil];
             break;
         case 2:
             self.role = NRRoleCorp;
+            self.muSlider.value = 0;
+            [self muChanged:nil];
             break;
     }
-    
-#warning todo: disable/reset sliders depending on selected side
+
+    NSArray* runnerEnabled = @[ self.muLabel, self.muSlider ];
+    NSArray* corpEnabled = @[ self.apLabel, self.apSlider, self.trashLabel, self.trashSlider ];
+    for (UIControl* v in runnerEnabled)
+    {
+        v.enabled = self.role != NRRoleCorp;
+    }
+    for (UIControl* v in corpEnabled)
+    {
+        v.enabled = self.role != NRRoleRunner;
+    }
     
     int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
     if (self.role != NRRoleNone)
