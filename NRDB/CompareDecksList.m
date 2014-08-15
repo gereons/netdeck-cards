@@ -92,11 +92,14 @@
     NSArray* decks = self.decks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     
-#warning move checked indicator to left
+    cell.infoButton.hidden = YES;
     cell.accessoryType = UITableViewCellAccessoryNone;
     if ([self.decksToDiff containsObject:deck.filename])
     {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        // cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.infoButton.hidden = NO;
+        cell.infoButton.userInteractionEnabled = NO;
+        [cell.infoButton setImage:[UIImage imageNamed:@"888-checkmark-selected"] forState:UIControlStateNormal];
     }
     
     return cell;
