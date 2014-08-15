@@ -39,6 +39,7 @@ static struct cardSetData {
     {  1, "use_coreset", "core", NRCycleCoreDeluxe, YES },
     {  8, "use_creation_and_control", "cac", NRCycleCoreDeluxe, YES },
     { 15, "use_honor_and_profit", "hap", NRCycleCoreDeluxe, YES },
+    { 22, "use_order_and_chaos", "oac", NRCycleCoreDeluxe, NO },
     
     // genesis
     { 2, "use_what_lies_ahead", "wla", NRCycleGenesis, YES },
@@ -95,7 +96,7 @@ static struct cardSetData {
     setGroups = @[ @"", l10n(@"Core / Deluxe"), l10n(@"Genesis Cycle"), l10n(@"Spin Cycle"), l10n(@"Lunar Cycle") ];
     setsPerGroup = @[
         @[ @"" ],
-        @[ @"core", @"cac", @"hap" ],
+        @[ @"core", @"cac", @"hap", @"oac" ],
         @[ @"wla", @"ta", @"ce", @"asis", @"hs", @"fp" ],
         @[ @"om", @"st", @"mt", @"tc", @"fal", @"dt" ],
         @[ @"up", @"tsb", @"fc", @"uao", @"atr", @"ts" ]
