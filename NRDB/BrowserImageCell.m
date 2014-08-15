@@ -11,13 +11,18 @@
 #import "ImageCache.h"
 #import "CardDetailView.h"
 
-#warning todo: remember alt-art state, add find/new deck popup
+static NSMutableSet* altArt;
 
 @interface BrowserImageCell()
 @property BOOL showAltArt;
 @end
 
 @implementation BrowserImageCell
+
++(void) initialize
+{
+    altArt = [NSMutableSet set];
+}
 
 -(void) awakeFromNib
 {
@@ -118,7 +123,6 @@
 
 -(void) prepareForReuse
 {
-    self.showAltArt = NO;
     self.image.image = nil;
 }
 
@@ -126,14 +130,30 @@
 {
     self->_card = card;
     self.toggleButton.hidden = card.altCard == nil;
-    [self.toggleButton setImage:[ImageCache altArtIcon:self.showAltArt] forState:UIControlStateNormal];
+    self.showAltArt = NO;
     
+    if (card.altCard && [altArt containsObject:card.code])
+    {
+        card = card.altCard;
+        self.showAltArt = YES;
+    }
+    
+    [self.toggleButton setImage:[ImageCache altArtIcon:self.showAltArt] forState:UIControlStateNormal];
     [self loadImageFor:card];
 }
 
 -(void) toggleImage:(id)sender
 {
     self.showAltArt = !self.showAltArt;
+    if (self.showAltArt)
+    {
+        [altArt addObject:self.card.code];
+    }
+    else
+    {
+        [altArt removeObject:self.card.code];
+    }
+    
     [self.toggleButton setImage:[ImageCache altArtIcon:self.showAltArt] forState:UIControlStateNormal];
     Card* card = self.showAltArt ? self.card.altCard : self.card;
     

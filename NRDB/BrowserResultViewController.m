@@ -7,6 +7,7 @@
 //
 
 #import <CSStickyHeaderFlowLayout.h>
+#import <EXTScope.h>
 
 #import "BrowserResultViewController.h"
 #import "NRActionSheet.h"
@@ -20,6 +21,7 @@
 #import "SettingsKeys.h"
 #import "BrowserImageCell.h"
 #import "BrowserSectionHeaderView.h"
+#import "Notifications.h"
 
 @interface BrowserResultViewController ()
 
@@ -287,6 +289,40 @@ static NSDictionary* sortStr;
     cell.card = card;
     
     return cell;
+}
+
+-(void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    CGRect rect = cell.frame;
+    
+    NSArray* arr = self.values[indexPath.section];
+    Card* card = arr[indexPath.row];
+
+    [BrowserResultViewController showPopupForCard:card inView:collectionView fromRect:rect];
+}
+
++(void) showPopupForCard:(Card*)card inView:(UIView*)view fromRect:(CGRect)rect
+{
+    NRActionSheet* sheet = [[NRActionSheet alloc] initWithTitle:nil
+                                                       delegate:nil
+                                              cancelButtonTitle:@""
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:l10n(@"Find decks using this card"), l10n(@"New deck with this card"), nil];
+
+    @weakify(self);
+    [sheet showFromRect:rect inView:view animated:NO action:^(NSInteger buttonIndex) {
+        if (buttonIndex == sheet.cancelButtonIndex)
+        {
+            return;
+        }
+        
+        @strongify(self);
+        NSString* name = buttonIndex == 0 ? BROWSER_FIND : BROWSER_NEW;
+        // NSLog(@"send %@ %@", name, self.card.code);
+        [[NSNotificationCenter defaultCenter] postNotificationName:name object:self userInfo:@{ @"code": card.code }];
+    }];
+
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath

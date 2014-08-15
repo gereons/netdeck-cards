@@ -10,7 +10,7 @@
 
 #import "DetailViewManager.h"
 
-@class CardList;
+@class Card, CardList;
 
 @interface BrowserResultViewController : UIViewController <SubstitutableDetailViewController, UITabBarControllerDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -18,5 +18,7 @@
 @property IBOutlet UICollectionView* collectionView;
 
 -(void)updateDisplay:(CardList*)cardList;
+
++(void) showPopupForCard:(Card*)card inView:(UIView*)view fromRect:(CGRect)rect;
 
 @end
