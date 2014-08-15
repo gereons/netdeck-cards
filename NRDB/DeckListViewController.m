@@ -153,7 +153,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     
     UIImage* img = [[UIImage imageNamed:@"netrunnerdb_com"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.nrdbButton = [[UIBarButtonItem alloc] initWithImage:img style:UIBarButtonItemStylePlain target:self action:@selector(nrdbButtonClicked:)];
-    self.nrdbButton.enabled = self.useNetrunnerdb;
 
     self.stateButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:self.deck.state] style:UIBarButtonItemStylePlain target:self action:@selector(changeState:)];
     self.stateButton.possibleTitles = [NSSet setWithArray:@[
@@ -170,7 +169,10 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     NSMutableArray* rightButtons = [NSMutableArray array];
     [rightButtons addObject:self.exportButton];
     [rightButtons addObject:dupButton];
-    [rightButtons addObject:self.nrdbButton];
+    if (self.useNetrunnerdb)
+    {
+        [rightButtons addObject:self.nrdbButton];
+    }
     if (!self.autoSave)
     {
         [rightButtons addObject:self.saveButton];
