@@ -19,7 +19,14 @@
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"
 
-NSString* const kANY = @"Any";
+const NSString* const kANY = @"Any";
+
+#warning switch sdcalertview to cocoapods
+// #warning alert when automatic nrdb.com re-auth fails
+// #warning deck name: disable autocorrect
+// #warning deck diff: vertical line thickness/color
+#warning nrdb button: disable/hide when not authenticated
+#warning influence filter - don't show in-faction cards (setting?)
 
 @implementation AppDelegate
 

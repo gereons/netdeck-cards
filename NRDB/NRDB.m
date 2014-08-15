@@ -98,7 +98,7 @@ static NRDB* instance;
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    [manager GET:@AUTH_URL parameters:parameters
+    [manager GET:@TOKEN_URL parameters:parameters
          success:^(AFHTTPRequestOperation* operation, id responseObject) {
              // NSLog(@"auth response: %@", responseObject);
              BOOL ok = YES;
