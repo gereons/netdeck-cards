@@ -119,7 +119,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     [self.tableView registerNib:[UINib nibWithNibName:@"SmallCardCell" bundle:nil] forCellReuseIdentifier:@"smallCardCell"];
 
     self.largeCells = YES;
-    [self refresh];
+    
     
     UIView* footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
@@ -208,6 +208,8 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     {
         [self selectIdentity:nil];
     }
+    
+    [self refresh];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -794,8 +796,8 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     if (!initialLoad)
     {
         self.deckChanged = YES;
+        [self refresh];
     }
-    [self refresh];
     
     if (self.autoSave && self.deckChanged)
     {
