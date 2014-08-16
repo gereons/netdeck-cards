@@ -235,6 +235,8 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
         v.enabled = self.role != NRRoleRunner;
     }
     
+#warning remove types/subtypes that don't apply to self.role
+    
     int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
     if (self.role != NRRoleNone)
     {
@@ -258,7 +260,9 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     }
     else
     {
-        data = [[TableData alloc] initWithValues:[CardType typesForRole:self.role]];
+        NSMutableArray* types = [NSMutableArray arrayWithArray:[CardType typesForRole:self.role]];
+        [types insertObject:[CardType name:NRCardTypeIdentity] atIndex:1];
+        data = [[TableData alloc] initWithValues:types];
     }
     id selected = [self.selectedValues objectForKey:@(TYPE_BUTTON)];
     

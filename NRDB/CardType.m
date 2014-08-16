@@ -68,8 +68,8 @@ static TableData* allTypes;
     NSArray* typeSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
     NSMutableArray* types = [NSMutableArray array];
     [types addObject:@[ [CardType name:NRCardTypeNone ], [CardType name:NRCardTypeIdentity] ]];
-    [types addObject:runnerTypes];
-    [types addObject:corpTypes];
+    [types addObject:[NSArray arrayWithArray:runnerTypes]];
+    [types addObject:[NSArray arrayWithArray:corpTypes]];
     
     allTypes = [[TableData alloc] initWithSections:typeSections andValues:types];
 
