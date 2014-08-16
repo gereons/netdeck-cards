@@ -236,7 +236,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
         v.enabled = self.role != NRRoleRunner;
     }
     
-#warning remove types/subtypes that don't apply to self.role
+    [self resetAllButtons];
     
     int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
     if (self.role != NRRoleNone)
@@ -422,6 +422,8 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
         {
             btn = self.typeButton;
             pfx = @"Type";
+            self.selectedType = kANY;
+            self.selectedTypes = nil;
             // reset subtypes to "any"
             [self resetButton:SUBTYPE_BUTTON];
             break;
