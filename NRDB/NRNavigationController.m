@@ -26,9 +26,16 @@
 {
     [super viewDidLoad];
 
-    self.interactivePopGestureRecognizer.delegate = self;
+    if (IS_IOS8)
+    {
+         self.interactivePopGestureRecognizer.enabled = NO;
+    }
+    else
+    {
+        self.interactivePopGestureRecognizer.delegate = self;
     
-    [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
+        [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
+    }
 }
 
 -(NSArray*) popToRootViewControllerAnimated:(BOOL)animated
