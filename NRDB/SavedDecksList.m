@@ -73,6 +73,22 @@
     [self.tableView addGestureRecognizer:longPress];
 }
 
+// WTF is this necessary? if we don't do this, the import/export/add buttons will appear inactive after we return here from
+// the import view
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    topItem.rightBarButtonItems = nil;
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    topItem.rightBarButtonItems = self.normalRightButtons;
+}
+
 -(void) importDecks:(UIBarButtonItem*)sender
 {
     if (self.popup)
@@ -103,16 +119,23 @@
                                         otherButtonTitles:l10n(@"Import from Dropbox"), l10n(@"Import from NetrunnerDB.com"), nil];
 
         [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-            ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
-            if (buttonIndex == 0)
+            NRImportSource src = NRImportSourceNone;
+            switch (buttonIndex)
             {
-                import.source = NRImportSourceDropbox;
+                case 0:
+                    src = NRImportSourceDropbox;
+                    break;
+                case 1:
+                    src = NRImportSourceNetrunnerDb;
+                    break;
             }
-            else
+            if (src != NRImportSourceNone)
             {
-                import.source = NRImportSourceNetrunnerDb;
+                ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
+                import.source = src;
+                [self.navigationController pushViewController:import animated:NO];
             }
-            [self.navigationController pushViewController:import animated:NO];
+            self.popup = nil;
         }];
     }
     else
@@ -322,8 +345,7 @@
                                              delegate:nil
                                     cancelButtonTitle:@""
                                destructiveButtonTitle:nil
-                                    otherButtonTitles:l10n(@"New Runner Deck"),
-                  l10n(@"New Corp Deck"), nil];
+                                    otherButtonTitles:l10n(@"New Runner Deck"), l10n(@"New Corp Deck"), nil];
     
     [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
         NSNumber* role;
@@ -430,6 +452,7 @@
                         [self.tableView reloadData];
                         break;
                 }
+                self.popup = nil;
             }];
         }
     }
