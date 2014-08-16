@@ -88,6 +88,7 @@ static NRFilterType _filterType = NRFilterAll;
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.rowHeight = 44;
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
