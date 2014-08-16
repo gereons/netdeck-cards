@@ -730,6 +730,8 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
             [self printDeck:self.exportButton];
             break;
     }
+    
+    self.actionSheet = nil;
 }
 
 -(void) dismissActionSheet
@@ -1266,12 +1268,6 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 
 -(void) printDeck:(id)sender
 {
-    if (self.actionSheet)
-    {
-        [self dismissActionSheet];
-        return;
-    }
-    
     self.printController = [UIPrintInteractionController sharedPrintController];
     self.printController.delegate = self;
     UIPrintInfo *printInfo = [UIPrintInfo printInfo];
