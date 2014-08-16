@@ -91,6 +91,11 @@
     Card* card = self.card;
     
     self.cardName.text = card.name;
+    
+    // hack: remove padding from the text view
+    // see https://stackoverflow.com/questions/746670/how-to-lose-margin-padding-in-uitextview
+    self.cardText.textContainer.lineFragmentPadding = 0;
+    self.cardText.textContainerInset = UIEdgeInsetsZero;
     self.cardText.attributedText = card.attributedText;
     
     NSString* factionName = [Faction name:card.faction];

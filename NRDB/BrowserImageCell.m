@@ -76,7 +76,6 @@ static NSMutableSet* altArt;
                                                      attribute:NSLayoutAttributeCenterY
                                                     multiplier:1 constant:0]];
     
-    
     [self.detailView removeConstraints:self.detailView.constraints];
     views = @{ @"name": self.cardName,
                @"type": self.cardType,
