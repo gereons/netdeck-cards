@@ -127,17 +127,18 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     self.factionButton.tag = FACTION_BUTTON;
     self.subtypeButton.tag = SUBTYPE_BUTTON;
     
-    self.typeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    self.setButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    self.factionButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    self.subtypeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    
     [self resetAllButtons];
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    // weird - if we do this in viewDidLoad, the buttons flicker.
+    self.typeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.setButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.factionButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.subtypeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(dismissKeyboard:) name:BROWSER_FIND object:nil];
@@ -433,11 +434,10 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
             break;
         }
     }
+    NSAssert(btn != nil, @"no button");
     
     [self.selectedValues setObject:kANY forKey:@(tag)];
     [btn setTitle:[NSString stringWithFormat:@"%@: %@", l10n(pfx), l10n(kANY)] forState:UIControlStateNormal];
-    
-    NSAssert(btn != nil, @"no button");
 }
 
 #pragma mark - text search
