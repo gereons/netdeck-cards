@@ -381,7 +381,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...")];
+    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...") maskType:SVProgressHUDMaskTypeBlack];
     
     [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
         if (!ok)
@@ -413,7 +413,7 @@ enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
     if (errors.count == 0)
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
+        [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...") maskType:SVProgressHUDMaskTypeBlack];
 
         [[NRDB sharedInstance] publishDeck:deck completion:^(BOOL ok, NSString *deckId) {
             if (!ok)

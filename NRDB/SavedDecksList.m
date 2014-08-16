@@ -176,13 +176,13 @@
         }
         if (buttonIndex == dbButton)
         {
-            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
+            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...") maskType:SVProgressHUDMaskTypeBlack];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToDropbox) withObject:nil afterDelay:0.01];
         }
         if (buttonIndex == nrdbButton)
         {
-            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
+            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...") maskType:SVProgressHUDMaskTypeBlack];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToNetrunnerDB) withObject:nil afterDelay:0.01];
         }
