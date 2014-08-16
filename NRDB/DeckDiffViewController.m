@@ -137,6 +137,11 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         {
             for (CardCounter* cc in data1.values[idx1])
             {
+                if (ISNULL(cc))
+                {
+                    continue;
+                }
+                
                 CardDiff* cd = [CardDiff new];
                 cd.card = cc.card;
                 cd.count1 = cc.count;
@@ -146,6 +151,11 @@ typedef NS_ENUM(NSInteger, DiffMode) {
                 {
                     for (CardCounter* cc2 in data2.values[idx2])
                     {
+                        if (ISNULL(cc2))
+                        {
+                            continue;
+                        }
+                        
                         if ([cc2.card isEqual:cc.card])
                         {
                             count2 = cc2.count;
@@ -164,6 +174,11 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         {
             for (CardCounter* cc in data2.values[idx2])
             {
+                if (ISNULL(cc))
+                {
+                    continue;
+                }
+                
                 CardDiff* cd = [cards objectForKey:cc.card.code];
                 if (cd)
                 {
