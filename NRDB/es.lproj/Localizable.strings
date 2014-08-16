@@ -264,3 +264,5 @@
 "New deck with this card" = "Nueva Mazo con esta carta";
 "Faction/A-Z" = "Facción/A-Z";
 "Trash: %@" = "Destrucción: %@";
+"%lu matching card" = "%lu tarjeta a juego";
+"%lu matching cards" = "%lu tarjetas a juego";

@@ -195,7 +195,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     
     self.cardList = [CardList browserInitForRole:self.role];
     [self.cardList clearFilters];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
     
     // type selection
     self.selectedType = kANY;
@@ -247,7 +247,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     
     self.cardList = [CardList browserInitForRole:self.role];
     [self.cardList clearFilters];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 #pragma mark - buttons for popovers
@@ -395,7 +395,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     void (*func)(id, SEL, id) = (void*)imp;
     func(self.cardList, selector, obj);
     
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 -(void) resetAllButtons
@@ -481,7 +481,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
             [self.cardList filterByName:self.searchText];
             break;
     }
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 -(BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -508,7 +508,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     sender.value = value--;
     self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByInfluence:value];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 -(IBAction)costChanged:(UISlider*)sender
@@ -518,7 +518,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     sender.value = value--;
     self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByCost:value];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 -(IBAction)strengthChanged:(UISlider*)sender
@@ -528,7 +528,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     sender.value = value--;
     self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByStrength:value];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 -(IBAction)apChanged:(UISlider*)sender
@@ -538,7 +538,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     sender.value = value--;
     self.apLabel.text = [NSString stringWithFormat:l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByAgendaPoints:value];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 -(IBAction)muChanged:(UISlider*)sender
@@ -548,7 +548,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     sender.value = value--;
     self.muLabel.text = [NSString stringWithFormat:l10n(@"MU: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByMU:value];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 -(IBAction)trashChanged:(UISlider*)sender
@@ -558,7 +558,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     sender.value = value--;
     self.trashLabel.text = [NSString stringWithFormat:l10n(@"Trash: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByTrash:value];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 #pragma mark - switches
@@ -566,18 +566,28 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(IBAction)uniqueChanged:(UISwitch*)sender
 {
     [self.cardList filterByUniqueness:sender.on];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 -(IBAction)limitedChanged:(UISwitch*)sender
 {
     [self.cardList filterByLimited:sender.on];
-    [self.browser updateDisplay:self.cardList];
+    [self updateResults];
 }
 
 -(IBAction)altartChanged:(UISwitch*)sender
 {
     [self.cardList filterByAltArt:sender.on];
+    [self updateResults];
+}
+
+#pragma mark update results
+
+-(void) updateResults
+{
+    NSUInteger count = self.cardList.count;
+    NSString* fmt = count == 1 ? l10n(@"%lu matching card") : l10n(@"%lu matching cards");
+    self.summaryLabel.text = [NSString stringWithFormat:fmt, count ];
     [self.browser updateDisplay:self.cardList];
 }
 

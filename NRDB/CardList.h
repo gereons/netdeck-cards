@@ -13,6 +13,8 @@
 @class Card;
 @interface CardList : NSObject
 
+@property (readonly) NSUInteger count;
+
 -(CardList*) initForRole:(NRRole)role;
 +(CardList*) browserInitForRole:(NRRole)role;
 

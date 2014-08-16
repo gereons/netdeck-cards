@@ -50,6 +50,8 @@
 @property IBOutlet UILabel* altartLabel;
 @property IBOutlet UISwitch* altartSwitch;
 
+@property IBOutlet UILabel* summaryLabel;
+
 -(IBAction)sideSelected:(id)sender;
 -(IBAction)scopeSelected:(id)sender;
 -(IBAction)typeClicked:(id)sender;

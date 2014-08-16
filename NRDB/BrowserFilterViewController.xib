@@ -27,6 +27,7 @@
                 <outlet property="strengthLabel" destination="ZSw-pP-Tqj" id="DV4-gj-udZ"/>
                 <outlet property="strengthSlider" destination="J5W-Mz-wK0" id="YsA-Az-bah"/>
                 <outlet property="subtypeButton" destination="Vii-oW-4IX" id="CC2-bN-3pH"/>
+                <outlet property="summaryLabel" destination="HsH-WO-dUc" id="gLZ-QV-DdT"/>
                 <outlet property="textField" destination="R6M-WU-oun" id="iC2-Gb-sM9"/>
                 <outlet property="trashLabel" destination="2hP-Mp-lrg" id="4Ol-Gq-AaV"/>
                 <outlet property="trashSlider" destination="x7A-8K-25S" id="xT0-cc-DKF"/>
@@ -262,6 +263,17 @@
                 </slider>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trash: All" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2hP-Mp-lrg">
                     <rect key="frame" x="20" y="442" width="95" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Chi-Xw-3ZL">
+                    <rect key="frame" x="0.0" y="660" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items/>
+                </toolbar>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HsH-WO-dUc">
+                    <rect key="frame" x="20" y="671" width="279" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="highlightedColor"/>

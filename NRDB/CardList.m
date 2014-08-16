@@ -429,6 +429,12 @@
     }];
 }
 
+-(NSUInteger) count
+{
+    NSArray* arr = [self applyFilters];
+    return arr.count;
+}
+
 -(TableData*) dataForTableView
 {
     NSMutableArray* sections = [NSMutableArray array];
