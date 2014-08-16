@@ -34,7 +34,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.2):
     - DTFoundation/Core
-  - GRMustache (7.0.2):
+  - GRMustache (7.1.0):
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
   - libextobjc (0.4):
@@ -77,7 +77,7 @@ PODS:
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0)
-  - SVProgressHUD (1.0)
+  - SVProgressHUD (HEAD based on 1.0)
   - TestFlightSDK (3.0.2)
 
 DEPENDENCIES:
@@ -91,7 +91,7 @@ DEPENDENCIES:
   - RBBAnimation
   - SDCAlertView (from `https://github.com/Scott90/SDCAlertView.git`)
   - SDCAutoLayout
-  - SVProgressHUD
+  - SVProgressHUD (HEAD)
   - TestFlightSDK
 
 EXTERNAL SOURCES:
@@ -105,7 +105,7 @@ SPEC CHECKSUMS:
   Dropbox-Sync-API-SDK: e672f9c163d3feb5929c97890b6945a6c5fae5f1
   DTCoreText: 84eb8ba2e70448fdd9d837540e371f9f587b65ba
   DTFoundation: 126729614911ae7dbab3dcc1c078f189943bee66
-  GRMustache: 7cce2570d81711b90d91d2e539f6f575a703db22
+  GRMustache: 4bbf2c0aebcb762f4faa9a0b6e251b1ee1afe2de
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64

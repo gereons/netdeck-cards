@@ -41,7 +41,7 @@ const NSString* const kANY = @"Any";
         [DBFilesystem setSharedFilesystem:fileSystem];
     }
     
-    SVProgressHUD.appearance.hudBackgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
+    [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     
 #if ADHOC && !TARGET_IPHONE_SIMULATOR
     [TestFlight takeOff:@"eb5e8194-c06f-46db-a1ce-42943ebaf902"];
