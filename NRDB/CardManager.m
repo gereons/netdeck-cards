@@ -121,7 +121,7 @@ static BOOL initializing;
 
 +(NSMutableArray*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIds
 {
-    NSMutableArray* arr = subtypes[role][type];
+    NSMutableArray* arr = [NSMutableArray arrayWithArray:subtypes[role][type]];
     
     includeIds = includeIds && ([type isEqualToString:kANY] || [type isEqualToString:identityKey]);
     if (includeIds)

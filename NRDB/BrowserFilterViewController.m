@@ -224,6 +224,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
             break;
     }
 
+    // enable/disable sliders depending on role
     NSArray* runnerEnabled = @[ self.muLabel, self.muSlider ];
     NSArray* corpEnabled = @[ self.apLabel, self.apSlider, self.trashLabel, self.trashSlider ];
     for (UIControl* v in runnerEnabled)
