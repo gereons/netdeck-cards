@@ -383,8 +383,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         case NRMenuCardBrowser:
         {
             TF_CHECKPOINT(@"card browser");
+            
+            NRNavigationController* nc = (NRNavigationController*)self.navigationController;
+            nc.deckListViewController = nil;
+            
             BrowserFilterViewController* browser = [[BrowserFilterViewController alloc] init];
-            [self.navigationController pushViewController:browser animated:NO];
+            [nc pushViewController:browser animated:NO];
             break;
         }
 #endif
