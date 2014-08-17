@@ -47,7 +47,10 @@ static NSDictionary* sortStr;
 
 + (void) initialize
 {
-    sortStr = @{ @(NRCardListSortA_Z): l10n(@"A-Z"), @(NRCardListSortFactionA_Z): l10n(@"Faction/A-Z") };
+    sortStr = @{
+                @(NRCardListSortA_Z): l10n(@"A-Z"),
+                @(NRCardListSortFactionA_Z): l10n(@"Faction/A-Z")
+    };
 }
 
 - (void) dealloc
@@ -155,10 +158,10 @@ static NSDictionary* sortStr;
         return;
     }
     self.popup = [[NRActionSheet alloc] initWithTitle:nil
-                                                       delegate:nil
-                                              cancelButtonTitle:@""
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:l10n(@"A-Z"), l10n(@"Faction/A-Z"), nil];
+                                             delegate:nil
+                                    cancelButtonTitle:@""
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:l10n(@"A-Z"), l10n(@"Faction/A-Z"), nil];
     
     [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
         if (buttonIndex == self.popup.cancelButtonIndex)
