@@ -134,12 +134,19 @@ static NRDB* instance;
              }
              [settings synchronize];
              
+             NSLog(@"nrdb (re)auth success, status: %d", ok);
              completionBlock(ok);
          }
          failure:^(AFHTTPRequestOperation* operation, NSError* error) {
              [NRDB clearSettings];
              
-             NSLog(@"nrdb (re)auth failed: %@", operation);
+             // NSLog(@"nrdb (re)auth failed: %@", operation);
+             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+                                                             message:l10n(@"Authorization at NetrunnerDB.com failed")
+                                                            delegate:nil
+                                                   cancelButtonTitle:nil
+                                                   otherButtonTitles:l10n(@"OK"), nil ];
+             [alert show];
              
              completionBlock(NO);
          }
@@ -165,7 +172,7 @@ static NRDB* instance;
     NSDate* now = [NSDate date];
     NSTimeInterval diff = [expiry timeIntervalSinceDate:now];
     diff -= 5*60; // 5 minutes overlap
-    // NSLog(@"start refresh in %f", diff);
+    NSLog(@"start nrdb auth refresh in %f seconds", diff);
     
     if (diff < 0)
     {
