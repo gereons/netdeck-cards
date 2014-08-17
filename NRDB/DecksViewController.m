@@ -26,7 +26,6 @@
 @property NSMutableArray* corpDecks;
 @property NSDateFormatter *dateFormatter;
 
-
 @property NRDeckSearchScope searchScope;
 @property NSString* filterText;
 
@@ -67,6 +66,12 @@ static NRFilterType _filterType = NRFilterAll;
         self.dateFormatter = [[NSDateFormatter alloc] init];
         [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        
+        NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+        
+        self.filterType = [settings integerForKey:DECK_FILTER_TYPE];
+        self.filterState = [settings integerForKey:DECK_FILTER_STATE];
+        self.sortType = [settings integerForKey:DECK_FILTER_SORT];
     }
     return self;
 }
