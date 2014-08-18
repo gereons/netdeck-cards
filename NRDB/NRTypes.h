@@ -93,6 +93,12 @@ typedef NS_ENUM(NSInteger, NRDeckSortType) {
     NRDeckSortA_Z
 };
 
+typedef NS_ENUM(NSInteger, NRCardViewType) {
+    NRCardViewImage,
+    NRCardViewLargeTable,
+    NRCardViewSmallTable
+};
+
 typedef NS_ENUM(NSInteger, NRCardListSortType) {
     NRCardListSortA_Z,
     NRCardListSortFactionA_Z

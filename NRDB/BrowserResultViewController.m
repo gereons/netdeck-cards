@@ -40,7 +40,6 @@
 
 @end
 
-enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
 static NSDictionary* sortStr;
 
 @implementation BrowserResultViewController
@@ -70,9 +69,9 @@ static NSDictionary* sortStr;
     
     // left buttons
     NSArray* selections = @[
-                            [UIImage imageNamed:@"deckview_card"],   // CARD_VIEW
-                            [UIImage imageNamed:@"deckview_table"],  // TABLE_VIEW
-                            [UIImage imageNamed:@"deckview_list"]    // LIST_VIEW
+                            [UIImage imageNamed:@"deckview_card"],   // NRCardViewImage
+                            [UIImage imageNamed:@"deckview_table"],  // NRCardViewLargeTable
+                            [UIImage imageNamed:@"deckview_list"]    // NRCardViewSmallTable
                             ];
     UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
     viewSelector.selectedSegmentIndex = [settings integerForKey:BROWSER_VIEW_STYLE];
@@ -193,10 +192,10 @@ static NSDictionary* sortStr;
 
 -(void) doToggleView:(NSInteger)viewMode
 {
-    self.tableView.hidden = viewMode == CARD_VIEW;
-    self.collectionView.hidden = viewMode != CARD_VIEW;
+    self.tableView.hidden = viewMode == NRCardViewImage;
+    self.collectionView.hidden = viewMode != NRCardViewImage;
     
-    self.largeCells = viewMode == TABLE_VIEW;
+    self.largeCells = viewMode == NRCardViewLargeTable;
     
     [self reloadViews];
 }

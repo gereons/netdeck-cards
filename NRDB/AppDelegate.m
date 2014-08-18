@@ -79,21 +79,27 @@ const NSString* const kANY = @"Any";
     [dict addEntriesFromDictionary:@{
         LAST_DOWNLOAD: l10n(@"never"),
         NEXT_DOWNLOAD: l10n(@"never"),
-        USE_DROPBOX: @(NO),
-        AUTO_SAVE: @(NO),
-        AUTO_SAVE_DB: @(NO),
-        DECK_VIEW_STYLE: @(1),
-        BROWSER_VIEW_STYLE: @(1),
-        LANGUAGE: @"en",
-        NUM_CORES: @(3),
         
+        AUTO_SAVE: @(NO),
+        USE_DROPBOX: @(NO),
+        AUTO_SAVE_DB: @(NO),
         USE_NRDB: @(NO),
         NRDB_AUTOSAVE: @(NO),
         
-        SHOW_ALL_FILTERS: @(YES),
         DECK_FILTER_STATE: @(NRDeckStateNone),
+        DECK_VIEW_STYLE: @(NRCardViewLargeTable),
+        DECK_VIEW_SCALE: @(1.0),
         DECK_FILTER_SORT: @(NRDeckSortA_Z),
         DECK_FILTER_TYPE: @(NRFilterAll),
+        
+        BROWSER_VIEW_STYLE: @(NRCardViewLargeTable),
+        BROWSER_VIEW_SCALE: @(1.0),
+        BROWSER_SORT_TYPE: @(NRCardListSortA_Z),
+        
+        LANGUAGE: @"en",
+        NUM_CORES: @(3),
+        
+        SHOW_ALL_FILTERS: @(YES),
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];

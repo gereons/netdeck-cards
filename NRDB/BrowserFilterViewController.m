@@ -60,7 +60,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.title = l10n(@"Browser");
+    topItem.title = l10n(@"Cards");
     
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFiltersClicked:)];
     
