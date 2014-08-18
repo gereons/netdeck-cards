@@ -238,7 +238,7 @@
 "Import all decks from Dropbox?" = "¿Importar todos los mazos desde Dropbox?";
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "¿Importar todos los mazos desde NetrunnerDB.com? Los mazos enlazados existentes serán sobrescritos.";
 "Imported decks" = "Mazos importados";
-"Authorization at NetrunnerDB.com failed" = "Autorización en NetrunnerDB.com falló";
+"Authorization at NetrunnerDB.com failed" = "La autorización de NetrunnerDB.com ha fallado";
 
 // deck diff
 "Select to Compare" = "Selecciona para comparar";
@@ -248,23 +248,23 @@
 "Reverse" = "A la inversa";
 "Full" = "Todos";
 "Diff" = "Diferencias";
-"Intersect" = "Intersección";
+"Intersect" = "Coincidencias";
 "Both decks must be for the same side." = "Ambos mazos deben pertenecer al mismo bando.";
-"Select two decks to compare them" = "Seleccione dos cubiertas para la comparación";
+"Select two decks to compare them" = "Selecciona dos mazos para compararlos";
 "Selected ‘%@’, select one more to compare" = "‘%@’ seleccionado, elija otro para la comparación";
-"Selected ‘%@’ and ‘%@’, tap to compare" = "‘%@’ y ‘%@’ seleccionado, ahora comparar";
+"Selected ‘%@’ and ‘%@’, tap to compare" = "‘%@’ y ‘%@’ seleccionados, pulsa para comparar";
 "Compare to ..." = "Comparar con ...";
 
 // card browser
-"Browser" = "Browser";
-"Card Browser" = "Cartas";
-"Side:" = "Partido:";
-"Unique" = "Único";
+"Browser" = "Buscador";
+"Card Browser" = "Buscador de cartas";
+"Side:" = "Bando:";
+"Unique" = "Única";
 "Limited" = "Limitada";
 "Alt Art" = "Carta promo";
-"Find decks using this card" = "Mazos usando esta carta";
-"New deck with this card" = "Nueva Mazo con esta carta";
+"Find decks using this card" = "Buscar mazos que usen esta carta";
+"New deck with this card" = "Nuevo mazo con esta carta";
 "Faction/A-Z" = "Facción/A-Z";
 "Trash: %@" = "Destrucción: %@";
-"%lu matching card" = "%lu tarjeta a juego";
-"%lu matching cards" = "%lu tarjetas a juego";
+"%lu matching card" = "%lu carta coincidente";
+"%lu matching cards" = "%lu cartas coincidentes";
