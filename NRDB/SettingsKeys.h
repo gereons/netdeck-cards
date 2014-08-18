@@ -59,4 +59,6 @@
 #define NRDB_TOKEN_TTL      @"nrdbTokenTTL"
 #define NRDB_AUTOSAVE       @"nrdbAutoSave"
 
+#define IDENTITY_TABLE      @"identityTable"
+
 #endif

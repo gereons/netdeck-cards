@@ -100,6 +100,7 @@ const NSString* const kANY = @"Any";
         NUM_CORES: @(3),
         
         SHOW_ALL_FILTERS: @(YES),
+        IDENTITY_TABLE: @(YES),
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];

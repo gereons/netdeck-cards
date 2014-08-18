@@ -21,6 +21,7 @@
 #import "SettingsKeys.h"
 #import "CardThumbView.h"
 #import "IdentitySectionHeaderView.h"
+#import "SettingsKeys.h"
 
 @interface IdentitySelectionViewController ()
 
@@ -33,12 +34,11 @@
 @property Card* selectedIdentity;
 @property NSIndexPath* selectedIndexPath;
 @property NRFaction selectedFaction;
+@property BOOL viewTable;
 
 @end
 
 @implementation IdentitySelectionViewController
-
-static NSInteger viewMode = 1;
 
 +(void) showForRole:(NRRole)role inViewController:(UIViewController*)vc withIdentity:(Card*)card
 {
@@ -59,6 +59,7 @@ static NSInteger viewMode = 1;
         self.initialIdentity = identity;
         self.selectedIdentity = identity;
         self.selectedFaction = NRFactionNone;
+        self.viewTable = [[NSUserDefaults standardUserDefaults] boolForKey:IDENTITY_TABLE];
         
         [self initIdentities];
     }
@@ -73,18 +74,24 @@ static NSInteger viewMode = 1;
     [self.okButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
     [self.cancelButton setTitle:l10n(@"Cancel") forState:UIControlStateNormal];
     
-    // Do any additional setup after loading the view from its nib.
+    // setup tableview
     UINib* nib = [UINib nibWithNibName:@"IdentityViewCellSubtitle" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"identityCell"];
     
-    UITapGestureRecognizer* doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
-    doubleTap.numberOfTapsRequired = 2;
-    [self.tableView addGestureRecognizer:doubleTap];
+    UITapGestureRecognizer* tableTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+    tableTap.numberOfTapsRequired = 2;
+    [self.tableView addGestureRecognizer:tableTap];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    // setup collectionview
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"IdentitySectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
+    
+    UITapGestureRecognizer* collectionTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+    collectionTap.numberOfTapsRequired = 2;
+    collectionTap.delaysTouchesBegan = YES;
+    [self.collectionView addGestureRecognizer:collectionTap];
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(500, 22);
@@ -92,9 +99,9 @@ static NSInteger viewMode = 1;
     layout.minimumInteritemSpacing = 3;
     layout.minimumLineSpacing = 3;
     
-    self.tableView.hidden = viewMode == 0;
-    self.collectionView.hidden = viewMode == 1;
-    self.modeSelector.selectedSegmentIndex = viewMode;
+    self.tableView.hidden = !self.viewTable;
+    self.collectionView.hidden = self.viewTable;
+    self.modeSelector.selectedSegmentIndex = self.viewTable;
     
     CGPoint oldCenter = self.factionSelector.center;
     
@@ -216,6 +223,8 @@ static NSInteger viewMode = 1;
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
+#pragma mark double-tap handler
+
 -(void) doubleTap:(UITapGestureRecognizer*)sender
 {
     if (UIGestureRecognizerStateEnded == sender.state)
@@ -226,9 +235,10 @@ static NSInteger viewMode = 1;
 
 -(void)viewModeChange:(UISegmentedControl*)sender
 {
-    viewMode = sender.selectedSegmentIndex;
-    self.tableView.hidden = viewMode == 0;
-    self.collectionView.hidden = viewMode == 1;
+    self.viewTable = sender.selectedSegmentIndex;
+    self.tableView.hidden = !self.viewTable;
+    self.collectionView.hidden = self.viewTable;
+    [[NSUserDefaults standardUserDefaults] setBool:self.viewTable forKey:IDENTITY_TABLE];
     
     if (self.selectedIndexPath)
     {
