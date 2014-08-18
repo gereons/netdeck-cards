@@ -238,6 +238,7 @@
 "Import all decks from Dropbox?" = "¿Importar todos los mazos desde Dropbox?";
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "¿Importar todos los mazos desde NetrunnerDB.com? Los mazos enlazados existentes serán sobrescritos.";
 "Imported decks" = "Mazos importados";
+"Authorization at NetrunnerDB.com failed" = "Autorización en NetrunnerDB.com falló";
 
 // deck diff
 "Select to Compare" = "Selecciona para comparar";
@@ -255,6 +256,7 @@
 "Compare to ..." = "Comparar con ...";
 
 // card browser
+"Browser" = "Browser";
 "Card Browser" = "Cartas";
 "Side:" = "Partido:";
 "Unique" = "Único";
