@@ -227,10 +227,19 @@
 
 -(void) doubleTap:(UITapGestureRecognizer*)sender
 {
-    if (UIGestureRecognizerStateEnded == sender.state)
+    if (UIGestureRecognizerStateEnded != sender.state)
     {
-        [self okClicked:nil];
+        return;
     }
+    
+    if (!self.viewTable)
+    {
+        NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:[sender locationInView:self.collectionView]];
+        NSArray* arr = self.identities[indexPath.section];
+        self.selectedIdentity = arr[indexPath.row];
+        self.selectedIndexPath = indexPath;
+    }
+    [self okClicked:nil];
 }
 
 -(void)viewModeChange:(UISegmentedControl*)sender
