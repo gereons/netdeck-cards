@@ -17,6 +17,12 @@
 
 -(IceTypeStats*) initWithDeck:(Deck *)deck
 {
+    NSString* sentryType = [Card cardByCode:ROTOTURRET].typeStr;
+    NSString* codegateType = [Card cardByCode:ENIGMA].typeStr;
+    NSString* barrierType = [Card cardByCode:ICEWALL].typeStr;
+    NSString* mythicType = [Card cardByCode:CHIMERA].typeStr;
+    NSString* grailType = [Card cardByCode:LANCELOT].typeStr;
+    NSString* trapType = [Card cardByCode:DATAMINE].typeStr;
     NSArray* iceTypes = @[ @"Code Gate", @"Sentry" , @"Barrier", @"Mythic", @"Grail" ];
     
     if ((self = [super init]))
