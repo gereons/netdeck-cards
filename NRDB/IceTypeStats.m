@@ -17,37 +17,36 @@
 
 -(IceTypeStats*) initWithDeck:(Deck *)deck
 {
-    NSString* sentryType = [Card cardByCode:ROTOTURRET].typeStr;
-    NSString* codegateType = [Card cardByCode:ENIGMA].typeStr;
-    NSString* barrierType = [Card cardByCode:ICEWALL].typeStr;
-    NSString* mythicType = [Card cardByCode:CHIMERA].typeStr;
-    NSString* grailType = [Card cardByCode:LANCELOT].typeStr;
-    NSString* trapType = [Card cardByCode:DATAMINE].typeStr;
-    NSArray* iceTypes = @[ @"Code Gate", @"Sentry" , @"Barrier", @"Mythic", @"Grail" ];
+    NSArray* multiIce = @[ RAINBOW ];
     
     if ((self = [super init]))
     {
         self.iceCount = 0;
         
         // calculate ice type distribution
+        int multi = 0;
         NSMutableDictionary* ice = [NSMutableDictionary dictionary];
+        
         for (CardCounter* cc in deck.cards)
         {
-            if (cc.card.type == NRCardTypeIce)
+            self.iceCount += cc.count;
+            if ([multiIce containsObject:cc.card.code])
             {
-                for (NSString* subtype in cc.card.subtypes)
-                {
-                    if ([iceTypes containsObject:subtype])
-                    {
-                        NSNumber* n = [ice objectForKey:subtype];
-                        int prev = n == nil ? 0 : [n intValue];
-                        n = @(prev + cc.count);
-                        [ice setObject:n forKey:subtype];
-                        self.iceCount += cc.count;
-                        break;
-                    }
-                }
+                multi += cc.count;
+                continue;
             }
+            else
+            {
+                NSString* iceType = [cc.card.subtypes objectAtIndex:0];
+                NSNumber* n = [ice objectForKey:iceType];
+                int cnt = n==nil ? 0 : [n intValue];
+                n = @(cnt + cc.count);
+                [ice setObject:n forKey:iceType];
+            }
+        }
+        if (multi > 0)
+        {
+            [ice setObject:@(multi) forKey:l10n(@"Multi")];
         }
         
         NSArray* sections = [[ice allKeys] sortedArrayUsingComparator:^(NSString* s1, NSString* s2) { return [s1 compare:s2]; }];

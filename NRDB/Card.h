@@ -24,19 +24,6 @@
 // multitype ice
 #define RAINBOW                 @"05025"
 
-// grail ice
-#define GALAHAD                 @"06011"
-#define LANCELOT                @"06051"
-#define EXCALIBUR               @"06111"
-#define MERLIN                  @"06091"
-
-// examples for each basic ice type
-#define ENIGMA                  @"01111"    // code gate
-#define ICEWALL                 @"01103"    // barrier
-#define ROTOTURRET              @"01064"    // sentry
-#define CHIMERA                 @"02060"    // mythic
-#define DATAMINE                @"01076"    // trap
-
 // draft ids
 #define THE_MASQUE              @"00006"
 #define THE_SHADOW              @"00005"
