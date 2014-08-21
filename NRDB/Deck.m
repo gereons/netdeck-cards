@@ -358,7 +358,16 @@ static NSArray* draftIds;
         }
         else
         {
-            return [c1.card.name localizedCaseInsensitiveCompare:c2.card.name];
+            NSComparisonResult cmp = NSOrderedSame;
+            if (c1.card.type == NRCardTypeIce && c2.card.type == NRCardTypeIce)
+            {
+                cmp = [c1.card.iceType compare:c2.card.iceType];
+            }
+            if (cmp == NSOrderedSame)
+            {
+                cmp = [c1.card.name localizedCaseInsensitiveCompare:c2.card.name];
+            }
+            return cmp;
         }
     }];
 }
@@ -397,13 +406,19 @@ static NSArray* draftIds;
         [self removeCard:card];
     }
     
-    NRCardType prevType = NRCardTypeNone;
+    NSString* prevType = @"";
     NSMutableArray* arr;
+    
     for (CardCounter* cc in self.cards)
     {
-        if (cc.card.type != prevType)
+        NSString* type = cc.card.typeStr;
+        if (cc.card.type == NRCardTypeIce)
         {
-            [sections addObject:cc.card.typeStr];
+            type = cc.card.iceType;
+        }
+        if (![type isEqualToString:prevType])
+        {
+            [sections addObject:type];
             if (arr != nil)
             {
                 [cards addObject:arr];
@@ -411,7 +426,7 @@ static NSArray* draftIds;
             arr = [NSMutableArray array];
         }
         [arr addObject:cc];
-        prevType = cc.card.type;
+        prevType = type;
     }
     
     if (arr.count > 0)

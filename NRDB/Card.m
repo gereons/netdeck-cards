@@ -31,6 +31,7 @@ static NSDictionary* roleCodes;
 static NSArray* max1InDeck;
 static NSArray* specialIds;
 static NSArray* draftIds;
+static NSArray* multiIce;
 static NSDictionary* coreTextOptions;
 static NSDictionary* factionColors;
 static NSDictionary* cropValues;
@@ -45,6 +46,7 @@ static BOOL isRetina;
     
     draftIds = @[ THE_SHADOW, THE_MASQUE ];
     specialIds = @[ LARAMY_FISK, THE_COLLECTIVE, CHRONOS_PROTOCOL_HB, CHRONOS_PROTOCOL_JIN ];
+    multiIce = @[ RAINBOW ];
     
     roleCodes = @{ @"runner": @(NRRoleRunner), @"corp": @(NRRoleCorp) };
     
@@ -147,6 +149,18 @@ static BOOL isRetina;
     }
 }
 
+-(NSString*) iceType
+{
+    NSAssert(self.type == NRCardTypeIce, @"not an ice");
+    
+    if ([multiIce containsObject:self.code])
+    {
+        return l10n(@"Multi");
+    }
+    
+    NSString* type = [self.subtypes objectAtIndex:0];
+    return type == nil ? l10n(@"ICE") : type;
+}
 
 #pragma mark from json
 

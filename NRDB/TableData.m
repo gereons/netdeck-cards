@@ -14,6 +14,7 @@
 {
     if ((self = [super init]))
     {
+        NSAssert(sections.count == values.count, @"sections/values count mismatch");
         self.sections = sections;
         self.values = values;
     }

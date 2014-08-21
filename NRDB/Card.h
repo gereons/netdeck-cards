@@ -49,6 +49,7 @@
 @property (readonly) NSArray* subtypes;     // array of subtypes like @[ @"Fracter", @"Icebreaker", @"AI" ]
 @property (readonly) NSString* subtypeCode; // full subtype codes
 @property (readonly) NSArray* subtypeCodes; // array of subtype codes
+@property (readonly) NSString* iceType;     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
 @property (readonly) NRFaction faction;
 @property (readonly) NSString* factionStr;
 @property (readonly) NRRole role;

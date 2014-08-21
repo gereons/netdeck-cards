@@ -17,45 +17,37 @@
 
 -(IceTypeStats*) initWithDeck:(Deck *)deck
 {
-    NSArray* multiIce = @[ RAINBOW ];
-    
     if ((self = [super init]))
     {
         self.iceCount = 0;
         
         // calculate ice type distribution
-        int multi = 0;
         NSMutableDictionary* ice = [NSMutableDictionary dictionary];
         
         for (CardCounter* cc in deck.cards)
         {
-            self.iceCount += cc.count;
-            if ([multiIce containsObject:cc.card.code])
+            if (cc.card.type != NRCardTypeIce)
             {
-                multi += cc.count;
                 continue;
             }
-            else
-            {
-                NSString* iceType = [cc.card.subtypes objectAtIndex:0];
-                NSNumber* n = [ice objectForKey:iceType];
-                int cnt = n==nil ? 0 : [n intValue];
-                n = @(cnt + cc.count);
-                [ice setObject:n forKey:iceType];
-            }
+            self.iceCount += cc.count;
+            NSString* iceType = cc.card.iceType;
+            
+            NSNumber* n = [ice objectForKey:iceType];
+            int cnt = n==nil ? 0 : [n intValue];
+            n = @(cnt + cc.count);
+            [ice setObject:n forKey:iceType];
         }
-        if (multi > 0)
-        {
-            [ice setObject:@(multi) forKey:l10n(@"Multi")];
-        }
-        
-        NSArray* sections = [[ice allKeys] sortedArrayUsingComparator:^(NSString* s1, NSString* s2) { return [s1 compare:s2]; }];
+
+        NSArray* sections = [[ice allKeys] sortedArrayUsingComparator:^(NSString* s1, NSString* s2) {
+            return [s1 compare:s2];
+        }];
         NSMutableArray* values = [NSMutableArray array];
+        
         for (NSString*s in sections)
         {
             [values addObject:[ice objectForKey:s]];
         }
-        NSAssert(sections.count == values.count, @"");
         self.tableData = [[TableData alloc] initWithSections:sections andValues:values];
     }
     return self;
