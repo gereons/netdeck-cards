@@ -10,8 +10,7 @@ pod 'CorePlot'
 pod 'libextobjc'
 pod 'CSStickyHeaderFlowLayout'
 pod 'SDCAlertView', :git => 'https://github.com/Scott90/SDCAlertView.git'
-pod 'RBBAnimation'
-pod 'SDCAutoLayout'
+pod 'YOLOKit'
 
 post_install do | installer |
   require 'fileutils'
