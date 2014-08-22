@@ -94,6 +94,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
 
 -(void) calcDiff
 {
+#warning rather use YES and keep type order - but how?
     TableData* data1 = [self.deck1 dataForTableView:NO];
     TableData* data2 = [self.deck2 dataForTableView:NO];
     
