@@ -42,7 +42,7 @@
 
 +(NSString*) asPlaintextString:(Deck *)deck
 {
-    TableData* data = [deck dataForTableView];
+    TableData* data = [deck dataForTableView:YES];
     NSArray* cardsArray = data.values;
     NSArray* sections = data.sections;
     
@@ -115,7 +115,7 @@
 
 +(NSString*) asMarkdownString:(Deck*)deck
 {
-    TableData* data = [deck dataForTableView];
+    TableData* data = [deck dataForTableView:YES];
     NSArray* cardsArray = data.values;
     NSArray* sections = data.sections;
     
@@ -187,7 +187,7 @@
 
 +(NSString*) asBBCodeString:(Deck*)deck
 {
-    TableData* data = [deck dataForTableView];
+    TableData* data = [deck dataForTableView:YES];
     NSArray* cardsArray = data.values;
     NSArray* sections = data.sections;
     

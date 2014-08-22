@@ -46,6 +46,6 @@
 
 -(Deck*) duplicate;
 
--(TableData*) dataForTableView;
+-(TableData*) dataForTableView:(BOOL)splitIce;
 
 @end

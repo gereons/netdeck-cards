@@ -372,7 +372,7 @@ static NSArray* draftIds;
     }];
 }
 
--(TableData*) dataForTableView
+-(TableData*) dataForTableView:(BOOL)splitIce
 {
     NSMutableArray* sections = [NSMutableArray array];
     NSMutableArray* cards = [NSMutableArray array];
@@ -412,7 +412,7 @@ static NSArray* draftIds;
     for (CardCounter* cc in self.cards)
     {
         NSString* type = cc.card.typeStr;
-        if (cc.card.type == NRCardTypeIce)
+        if (splitIce && cc.card.type == NRCardTypeIce)
         {
             type = cc.card.iceType;
         }

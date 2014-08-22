@@ -94,8 +94,8 @@ typedef NS_ENUM(NSInteger, DiffMode) {
 
 -(void) calcDiff
 {
-    TableData* data1 = [self.deck1 dataForTableView];
-    TableData* data2 = [self.deck2 dataForTableView];
+    TableData* data1 = [self.deck1 dataForTableView:NO];
+    TableData* data2 = [self.deck2 dataForTableView:NO];
     
     // find union of card types used in both decks
     NSMutableSet* types = [NSMutableSet setWithArray:data1.sections];
