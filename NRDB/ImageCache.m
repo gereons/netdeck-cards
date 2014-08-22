@@ -479,8 +479,11 @@ static NSCache* memCache;
     
     NSData* data = UIImagePNGRepresentation(img);
     
-    [data writeToFile:file atomically:YES];
-    [self dontBackupFile:file];
+    if (data != nil)
+    {
+        [data writeToFile:file atomically:YES];
+        [self dontBackupFile:file];
+    }
 }
 
 +(void)dontBackupFile:(NSString*)filename
