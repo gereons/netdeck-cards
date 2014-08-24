@@ -9,7 +9,7 @@ pod 'GRMustache'
 pod 'CorePlot'
 pod 'libextobjc'
 pod 'CSStickyHeaderFlowLayout'
-pod 'SDCAlertView', :git => 'https://github.com/Scott90/SDCAlertView.git'
+pod 'SDCAlertView', :head
 pod 'YOLOKit'
 
 post_install do | installer |
