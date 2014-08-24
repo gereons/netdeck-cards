@@ -24,6 +24,9 @@
 // multitype ice
 #define RAINBOW                 @"05025"
 
+// hack for NEXT Silver
+#define NEXT_SILVER             @"06002"
+
 // draft ids
 #define THE_MASQUE              @"00006"
 #define THE_SHADOW              @"00005"

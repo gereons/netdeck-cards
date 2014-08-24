@@ -203,6 +203,11 @@ static BOOL isRetina;
     {
         c->_subtype = nil;
     }
+    // hack hack hack
+    if ([c.code isEqualToString:NEXT_SILVER] && [c.subtype isEqualToString:@"NEXT - Barrier"])
+    {
+        c->_subtype = @"Barrier - NEXT";
+    }
     if (c.subtype)
     {
         c->_subtypes = [c.subtype componentsSeparatedByString:@" - "];
