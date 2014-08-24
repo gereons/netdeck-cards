@@ -859,7 +859,7 @@
 
 -(void) initCards
 {
-    TableData* data = [self.deck dataForTableView:YES];
+    TableData* data = [self.deck dataForTableView];
     self.cards = data.values;
     self.sections = data.sections;
 }

@@ -94,21 +94,45 @@ typedef NS_ENUM(NSInteger, DiffMode) {
 
 -(void) calcDiff
 {
-#warning rather use YES and keep type order - but how?
-    TableData* data1 = [self.deck1 dataForTableView:NO];
-    TableData* data2 = [self.deck2 dataForTableView:NO];
+    TableData* data1 = [self.deck1 dataForTableView];
+    TableData* data2 = [self.deck2 dataForTableView];
     
     // find union of card types used in both decks
-    NSMutableSet* types = [NSMutableSet setWithArray:data1.sections];
-    [types addObjectsFromArray:data2.sections];
+    NSMutableSet* typesInDecks = [NSMutableSet setWithArray:data1.sections];
+    [typesInDecks addObjectsFromArray:data2.sections];
     
     self.fullDiffSections = [NSMutableArray array];
     self.intersectSections = [NSMutableArray array];
-    NSMutableArray* availableTypes = [[CardType typesForRole:self.deck1.role] mutableCopy];
-    availableTypes[0] = [CardType name:NRCardTypeIdentity];
-    for (NSString* type in availableTypes)
+    
+    // all possible types for this role
+    NSMutableArray* allTypes = [[CardType typesForRole:self.deck1.role] mutableCopy];
+    // overwrite None/Any entry with "identity"
+    allTypes[0] = [CardType name:NRCardTypeIdentity];
+    if (self.deck1.role == NRRoleCorp)
     {
-        if ([types containsObject:type])
+        // remove "ICE"
+        [allTypes removeLastObject];
+        
+        NSMutableArray* iceTypes = [NSMutableArray array];
+        // find every type that is not already in allTypes - i.e. the ice subtypes
+        for (NSString* t in typesInDecks)
+        {
+            if (![allTypes containsObject:t])
+            {
+                [iceTypes addObject:t];
+            }
+        }
+        
+        // sort iceTypes and append to allTypes
+        [iceTypes sortUsingComparator:^NSComparisonResult(NSString* t1, NSString* t2) {
+            return [t1 compare:t2];
+        }];
+        [allTypes addObjectsFromArray:iceTypes];
+    }
+    
+    for (NSString* type in allTypes)
+    {
+        if ([typesInDecks containsObject:type])
         {
             [self.fullDiffSections addObject:type];
             [self.intersectSections addObject:type];
