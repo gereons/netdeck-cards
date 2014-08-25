@@ -44,10 +44,11 @@ static NSMutableSet* altArt;
     };
     NSArray* constraints = @[
                              @"H:|[image]|",
-                             @"H:[toggle]|",
+                             @"H:[toggle(28)]|",
                              @"V:|[image]|",
                              @"H:|[details]|",
                              @"V:|[details]|",
+                             @"V:[toggle(34)]",
                              ];
 
     for (NSString* c in constraints)
@@ -118,6 +119,14 @@ static NSMutableSet* altArt;
                                                                    toItem:self.detailView
                                                                 attribute:NSLayoutAttributeCenterX
                                                                multiplier:1.f constant:8.f]];
+    
+    // rounded corners for image
+    self.image.layer.masksToBounds = YES;
+    self.image.layer.cornerRadius = 10;
+    
+    // rounded corners for toggle button
+    self.toggleButton.layer.masksToBounds = YES;
+    self.toggleButton.layer.cornerRadius = 3;
 }
 
 -(void) prepareForReuse

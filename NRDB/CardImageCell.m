@@ -132,14 +132,16 @@
     self.image2.layer.cornerRadius = 10;
     self.image3.layer.masksToBounds = YES;
     self.image3.layer.cornerRadius = 10;
+    
+    // rounded corners for toggle button
+    self.toggleButton.layer.masksToBounds = YES;
+    self.toggleButton.layer.cornerRadius = 3;
 }
 
 -(void) setCc:(CardCounter *)cc
 {
     self->_cc = cc;
     self.toggleButton.hidden = self.cc.card.altCard == nil;
-    self.toggleButton.layer.masksToBounds = YES;
-    self.toggleButton.layer.cornerRadius = 3;
     
     [self setImageStack:self.image1.image];
     

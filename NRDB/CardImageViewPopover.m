@@ -124,6 +124,10 @@ static CGFloat popoverScale = 1.0;
         self.toggleButton.hidden = YES;
     }
     
+    // rounded corners for toggle button
+    self.toggleButton.layer.masksToBounds = YES;
+    self.toggleButton.layer.cornerRadius = 3;
+    
     [self.toggleButton setImage:[ImageCache altArtIcon:self.showAlt] forState:UIControlStateNormal];
     [self loadCardImage:self.card];
 }
