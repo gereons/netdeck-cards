@@ -36,6 +36,7 @@ static int maxCorpCost;
 static int maxInf;
 static int maxAgendaPoints;
 static int maxTrash;
+static NSString* iceBreakerType;
 
 static BOOL initializing;
 
@@ -283,6 +284,10 @@ static BOOL initializing;
             }
         }
     }
+    
+    // lastly, set get the "Icebreaker" subtype string from a known Icebreaker
+    Card* yog = [CardManager cardByCode:YOG_0];
+    iceBreakerType = [yog.subtypes objectAtIndex:0];
 }
 
 +(BOOL) setupFromJsonData:(NSArray*)json
@@ -417,5 +422,7 @@ static BOOL initializing;
 +(int) maxCorpCost { return maxCorpCost; }
 +(int) maxAgendaPoints { return maxAgendaPoints; }
 +(int) maxTrash { return maxTrash; }
+
++(NSString*) iceBreakerType { return iceBreakerType; }
 
 @end

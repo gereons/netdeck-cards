@@ -162,6 +162,18 @@ static BOOL isRetina;
     return type == nil ? l10n(@"ICE") : type;
 }
 
+-(NSString*) programType
+{
+    NSAssert(self.type == NRCardTypeProgram, @"not a program");
+    
+    NSString* type = [self.subtypes objectAtIndex:0];
+    if ([type isEqualToString:[CardManager iceBreakerType]])
+    {
+        return type;
+    }
+    return self.typeStr;
+}
+
 #pragma mark from json
 
 #define JSON_INT(key, attr)          do { NSString*tmp = [json objectForKey:attr]; c->_##key = tmp ? [tmp intValue] : -1; } while (0)

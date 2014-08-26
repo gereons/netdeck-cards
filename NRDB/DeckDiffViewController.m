@@ -108,27 +108,26 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     NSMutableArray* allTypes = [[CardType typesForRole:self.deck1.role] mutableCopy];
     // overwrite None/Any entry with "identity"
     allTypes[0] = [CardType name:NRCardTypeIdentity];
-    if (self.deck1.role == NRRoleCorp)
+    
+    // remove "ICE" / "Program"
+    [allTypes removeLastObject];
+    
+    NSMutableArray* additionalTypes = [NSMutableArray array];
+    // find every type that is not already in allTypes - i.e. the ice subtypes
+    for (NSString* t in typesInDecks)
     {
-        // remove "ICE"
-        [allTypes removeLastObject];
-        
-        NSMutableArray* iceTypes = [NSMutableArray array];
-        // find every type that is not already in allTypes - i.e. the ice subtypes
-        for (NSString* t in typesInDecks)
+        if (![allTypes containsObject:t])
         {
-            if (![allTypes containsObject:t])
-            {
-                [iceTypes addObject:t];
-            }
+            [additionalTypes addObject:t];
         }
-        
-        // sort iceTypes and append to allTypes
-        [iceTypes sortUsingComparator:^NSComparisonResult(NSString* t1, NSString* t2) {
-            return [t1 compare:t2];
-        }];
-        [allTypes addObjectsFromArray:iceTypes];
     }
+    
+    // sort iceTypes and append to allTypes
+    [additionalTypes sortUsingComparator:^NSComparisonResult(NSString* t1, NSString* t2) {
+        return [t1 compare:t2];
+    }];
+    [allTypes addObjectsFromArray:additionalTypes];
+
     
     for (NSString* type in allTypes)
     {

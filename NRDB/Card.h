@@ -24,6 +24,9 @@
 // multitype ice
 #define RAINBOW                 @"05025"
 
+// example for an Icebreaker
+#define YOG_0                   @"01014"
+
 // draft ids
 #define THE_MASQUE              @"00006"
 #define THE_SHADOW              @"00005"
@@ -50,6 +53,7 @@
 @property (readonly) NSString* subtypeCode; // full subtype codes
 @property (readonly) NSArray* subtypeCodes; // array of subtype codes
 @property (readonly) NSString* iceType;     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
+@property (readonly) NSString* programType; // special for Programs: return "Icebreaker" for icebreakers, "Program" for other programs
 @property (readonly) NRFaction faction;
 @property (readonly) NSString* factionStr;
 @property (readonly) NRRole role;

@@ -52,7 +52,7 @@ static TableData* allTypes;
     
     NRCardType rt[] = { NRCardTypeEvent, NRCardTypeHardware, NRCardTypeResource, NRCardTypeProgram };
     NRCardType ct[] = { NRCardTypeAgenda, NRCardTypeAsset, NRCardTypeUpgrade, NRCardTypeOperation, NRCardTypeIce };
-    // NB: Card diff depends on ICE being the last entry
+    // NB: Card diff depends on ICE/Program being the last entries
     
     runnerTypes = [NSMutableArray array];
     for (int i=0; i<DIM(rt); ++i)

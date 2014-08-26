@@ -363,6 +363,10 @@ static NSArray* draftIds;
             {
                 cmp = [c1.card.iceType compare:c2.card.iceType];
             }
+            if (c1.card.type == NRCardTypeProgram && c2.card.type == NRCardTypeProgram)
+            {
+                cmp = [c1.card.programType compare:c2.card.programType];
+            }
             if (cmp == NSOrderedSame)
             {
                 cmp = [c1.card.name localizedCaseInsensitiveCompare:c2.card.name];
@@ -415,6 +419,10 @@ static NSArray* draftIds;
         if (cc.card.type == NRCardTypeIce)
         {
             type = cc.card.iceType;
+        }
+        if (cc.card.type == NRCardTypeProgram)
+        {
+            type = cc.card.programType;
         }
         if (![type isEqualToString:prevType])
         {
