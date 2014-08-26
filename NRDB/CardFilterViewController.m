@@ -129,6 +129,7 @@ static NSInteger viewMode = VIEW_LIST;
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSmallThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardSmallThumb"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
+    self.collectionView.alwaysBounceVertical = YES;
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(320, 22);
