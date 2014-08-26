@@ -499,6 +499,7 @@ static NSCache* memCache;
 
 +(UIImage*) croppedImage:(UIImage*)img forCard:(Card *)card
 {
+    NSAssert(img != nil, @"nil image to crop");
     float scale = 1.0;
     if (img.size.width * img.scale > 300)
     {
@@ -513,8 +514,12 @@ static NSCache* memCache;
         CGRect rect = CGRectMake((int)(10*scale), (int)(card.cropY*scale), (int)(280*scale), (int)(209*scale));
         CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
         cropped = [UIImage imageWithCGImage:imageRef];
+        NSAssert(cropped != nil, @"nil cropped image");
         CGImageRelease(imageRef);
-        [memCache setObject:cropped forKey:key];
+        if (!cropped)
+        {
+            [memCache setObject:cropped forKey:key];
+        }
     }
     return cropped;
 }
