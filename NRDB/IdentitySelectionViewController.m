@@ -19,7 +19,7 @@
 #import "CGRectUtils.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"
-#import "CardThumbView.h"
+#import "IdentityCardView.h"
 #import "IdentitySectionHeaderView.h"
 #import "SettingsKeys.h"
 
@@ -85,12 +85,11 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // setup collectionview
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CardThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"IdentityCardView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"IdentitySectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
     UITapGestureRecognizer* collectionTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
     collectionTap.numberOfTapsRequired = 2;
-    collectionTap.delaysTouchesBegan = YES;
     [self.collectionView addGestureRecognizer:collectionTap];
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
@@ -398,12 +397,16 @@
     NSArray* arr = self.identities[indexPath.section];
     Card* card = arr[indexPath.row];
     
-    CardThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    IdentityCardView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.card = card;
+    [cell.selectButton addTarget:self action:@selector(selectCell:) forControlEvents:UIControlEventTouchUpInside];
     
-    if (cell.selected)
+    NSInteger tag = (indexPath.section * 1000) + indexPath.row;
+    cell.selectButton.tag = tag;
+    
+    if (self.selectedIndexPath && [self.selectedIndexPath compare:indexPath] == NSOrderedSame)
     {
-        cell.layer.borderWidth = 5;
+        cell.layer.borderWidth = 4;
         cell.layer.borderColor = [card.factionColor CGColor];
         cell.layer.cornerRadius = 8;
     }
@@ -415,37 +418,21 @@
     return cell;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.layer.borderWidth = 0;
-}
-
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray* arr = self.identities[indexPath.section];
     Card* card = arr[indexPath.row];
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
 
-    cell.layer.borderWidth = 5;
-    cell.layer.borderColor = [card.factionColor CGColor];
-    cell.layer.cornerRadius = 8;
-    
     // convert to on-screen coordinates
     CGRect rect = [collectionView convertRect:cell.frame toView:self.collectionView];
 
-    if ([self.selectedIdentity isEqual:card])
-    {
-        [CardImageViewPopover showForCard:card fromRect:rect inView:self.collectionView];
-    }
-    
-    self.selectedIdentity = card;
-    self.selectedIndexPath = indexPath;
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.collectionView];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(160, 119);
+    return CGSizeMake(160, 148);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -478,6 +465,22 @@
     }
     
     return header;
+}
+
+#pragma mark select cell
+
+-(void) selectCell:(UIButton*)sender
+{
+    // NSLog(@"select cell %d", sender.tag);
+    NSInteger section = sender.tag / 1000;
+    NSInteger item = sender.tag - (1000 * section);
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:item inSection:section];
+    
+    NSArray* arr = self.identities[indexPath.section];
+    self.selectedIdentity = arr[indexPath.row];
+    self.selectedIndexPath = indexPath;
+    
+    [self.collectionView reloadData];
 }
 
 @end

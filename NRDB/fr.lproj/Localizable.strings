@@ -96,6 +96,7 @@
 // selection de l'identité
 "Choose Identity" = "Choisir l'identité";
 "Switch Identity" = "Modifier l'identité";
+"Select" = "Choisir";
 
 // simulateur de pioche
 "Draw Simulator" = "Simulateur de pioche";

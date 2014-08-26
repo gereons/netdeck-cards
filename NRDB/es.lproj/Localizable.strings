@@ -96,6 +96,7 @@
 // identity selection
 "Choose Identity" = "Escoger Identidad";
 "Switch Identity" = "Cambiar Identidad";
+"Select" = "Escoger";
 
 // draw simulator
 "Draw Simulator" = "Simulador de robo";

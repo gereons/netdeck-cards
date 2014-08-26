@@ -96,6 +96,7 @@
 // identity selection
 "Choose Identity" = "Identität wählen";
 "Switch Identity" = "Identität ändern";
+"Select" = "Auswählen";
 
 // draw simulator
 "Draw Simulator" = "Zug-Simulator";
