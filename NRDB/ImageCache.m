@@ -259,8 +259,11 @@ static NSCache* memCache;
         @strongify(self);
         NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
         NLOG(@"up: GOT %@ If-Modified-Since %@: status 200", url, lastModDate ?: @"n/a");
-        [self storeInCache:responseObject lastModified:lastModified forKey:key];
-        completionBlock(YES);
+        if (responseObject)
+        {
+            [self storeInCache:responseObject lastModified:lastModified forKey:key];
+        }
+        completionBlock(responseObject != nil);
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // @strongify(self);
@@ -339,6 +342,7 @@ static NSCache* memCache;
 
 -(void) storeInCache:(UIImage*)image lastModified:(NSString*)lastModified forKey:(NSString*)key
 {
+    NSAssert(image != nil, @"no image");
     // NSLog(@"store img for %@", key);
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSTimeInterval interval = SUCCESS_INTERVAL;
@@ -355,7 +359,13 @@ static NSCache* memCache;
     
     [self setNextCheck:key withTimeIntervalFromNow:interval];
     
-    [ImageCache saveImage:image forKey:key];
+    BOOL ok = [ImageCache saveImage:image forKey:key];
+    if (!ok)
+    {
+        NSMutableDictionary* dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
+        [dict removeObjectForKey:key];
+        [settings setObject:dict forKey:LAST_MOD_CACHE];
+    }
 }
 
 -(void) setNextCheck:(NSString*)key withTimeIntervalFromNow:(NSTimeInterval)interval
@@ -457,11 +467,16 @@ static NSCache* memCache;
         img = [UIImage imageWithData:imgData];
     }
     
-    if (img && img.size.width < 200)
+    if (img == nil || img.size.width < 200)
     {
         // image is broken - remove it
         img = nil;
         [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
+        
+        NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+        NSMutableDictionary* dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
+        [dict removeObjectForKey:key];
+        [settings setObject:dict forKey:LAST_MOD_CACHE];
     }
         
     if (img)
@@ -471,7 +486,7 @@ static NSCache* memCache;
     return img;
 }
 
-+(void) saveImage:(UIImage*)img forKey:(NSString*)code
++(BOOL) saveImage:(UIImage*)img forKey:(NSString*)code
 {
     NLOG(@"save img for %@", code);
     NSString* dir = [ImageCache directoryForImages];
@@ -483,7 +498,9 @@ static NSCache* memCache;
     {
         [data writeToFile:file atomically:YES];
         [self dontBackupFile:file];
+        return YES;
     }
+    return NO;
 }
 
 +(void)dontBackupFile:(NSString*)filename
