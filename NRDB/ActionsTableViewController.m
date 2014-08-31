@@ -25,15 +25,11 @@
 #import "DataDownload.h"
 #import "DeckManager.h"
 
-#define ENABLE_BROWSER  1
-
 typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     NRMenuDecks,
     NRMenuDeckDiff,
-#if ENABLE_BROWSER
     NRMenuCardBrowser,
-#endif
     NRMenuSettings,
     NRMenuAbout,
     
@@ -124,12 +120,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     // [defaults setObject:@"" forKey:LAST_START_VERSION];
     NSString* lastVersion = [defaults objectForKey:LAST_START_VERSION];
-#if DEBUG
-    BOOL skipCheck = YES;
-#else
-    BOOL skipCheck = NO;
-#endif
-    if (![self.appVersion isEqualToString:lastVersion] && !skipCheck)
+    if (![self.appVersion isEqualToString:lastVersion] && !DEBUG)
     {
         // yes, first start. show "about" tab
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuAbout inSection:0];
@@ -316,12 +307,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             cell.textLabel.text = l10n(@"Decks");
             cell.textLabel.enabled = [CardManager cardsAvailable];
             break;
-#if ENABLE_BROWSER
         case NRMenuCardBrowser:
             cell.textLabel.text = l10n(@"Card Browser");
             cell.textLabel.enabled = [CardManager cardsAvailable];
             break;
-#endif
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -379,7 +368,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             break;
         }
             
-#if ENABLE_BROWSER
         case NRMenuCardBrowser:
         {
             TF_CHECKPOINT(@"card browser");
@@ -391,7 +379,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             [nc pushViewController:browser animated:NO];
             break;
         }
-#endif
             
         case NRMenuSettings:
         {
