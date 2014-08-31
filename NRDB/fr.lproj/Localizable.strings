@@ -86,7 +86,7 @@
 // téléchargement de cartes
 "Downloading Card Data" = "Téléchargement de données en cours";
 "Downloading Images" = "Téléchargement des images en cours";
-"Please download card data first" = "Please download card data first"; // en
+"Please download card data first" = "Télécharger les données d'abord";
 "Image %d of %d" = "Image %d de %d";
 "Unable to download cards at this time. Please try again later." = "Le téléchargement a échoué. Merci de réessayer ultérieurement.";
 "%d of %lu images could not be downloaded." = "%d de %lu d'images n'ont pu être téléchargé.";
@@ -192,8 +192,8 @@
 "Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?" = "Une NetrunnerDB.com URL d'une decklist a été detectée dans votre presse papiers, l'importer ?";
 "Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "Une meteor URL d'une decklist a été detectée dans votre presse papiers, l'importer ?";
 "No Decks found" = "Aucun deck trouvé";
-"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Copier les decks au format OCTGN (.o8d) dans le fichier Apps/Net de Dropbox pour pouvoir les iporter dans l'application.";
-"Loading decks from Dropbox" = "Loading decks from Dropbox"; // en
+"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Copier les decks au format OCTGN (.o8d) dans le fichier Apps/Net de Dropbox pour pouvoir les importer dans l'application.";
+"Loading decks from Dropbox" = "Charger des Decks de Dropbox";
 
 // export
 "%@ exported" = "%@ exporté";
@@ -203,7 +203,7 @@
 "Markdown Deck" = "Deck en Markdown";
 "BBCode Deck" = "Deck en BBCode";
 "Print" = "Imprimer";
-"As Email" = "As Email"; // en
+"As Email" = "Comme Email";
 
 // cycles
 "Core / Deluxe" = "Boite de base / Deluxe";
@@ -211,62 +211,61 @@
 "Spin Cycle" = "Cycle des Distorsions";
 "Lunar Cycle" = "Cycle de la Lune";
 
-/* // netrunnerdb.com
-"Import from Dropbox" = "Von Dropbox importieren";
-"Import from NetrunnerDB.com" = "Von NetrunnerDB.com importieren";
-"This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf NetrunnerDB.com verknüpft";
-"This deck is linked to deck %@ on NetrunnerDB.com" = "Dieses Deck ist mit Deck %@ auf NetrunnerDB.com verknüpft";
-"Unlink" = "Trennen";
-"Saving Deck..." = "Deck speichern...";
-"Loading Decks..." = "Decks laden...";
-"Publishing Deck..." = "Deck veröffentlichen...";
-"Exporting Decks..." = "Decks exportieren...";
-"A local copy of this deck already exists." = "Eine lokale Kopie dieses Decks existiert bereits.";
-"Overwrite" = "Überschreiben";
-"Import as new" = "Neu importieren";
-"Connect to your Dropbox and/or NetrunnerDB.com account first." = "Bitte Dropbox- und/oder NetrunnerDB.com-Verbindung einrichten.";
-"Open in Safari" = "In Safari öffnen";
-"Publish deck" = "Deck veröffentlichen";
-"Only valid decks can be published." = "Nur valide Decks können veröffentlicht werden.";
-"Saving the deck at NetrunnerDB.com failed." = "Speichern bei NetrunnerDB.com fehlgeschlagen.";
-"Publishing the deck at NetrunnerDB.com failed." = "Veröffentlichen bei NetrunnerDB.com fehlgeschlagen.";
-"Deck published with ID %@" = "Deck veröffentlicht, ID: %@";
-"Import All" = "Alle importieren";
-"Export Decks" = "Decks exportieren";
-"Export all currently visible decks" = "Exporiere alle gerade angezeigten Decks";
-"To Dropbox" = "Zu Dropbox";
-"To NetrunnerDB.com" = "Zu NetrunnerDB.com";
-"Import all decks from Dropbox?" = "Alle Decks von Dropbox importieren?";
-"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Alle Decks von NetrunnerDB.com importieren? Existierende verknüpfte Decks werden überschrieben.";
-"Imported decks" = "Decks importiert";
+// netrunnerdb.com
+"Import from Dropbox" = "Importer de Dropbox";
+"Import from NetrunnerDB.com" = "Importer de NetrunnerDB.com";
+"This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Ce Deck n'est pas encore attaché à un deck de NetrunnerDB.com";
+"This deck is linked to deck %@ on NetrunnerDB.com" = "Ce Deck est attaché au Deck %@ de NetrunnerDB.com";
+"Unlink" = "Séparer";
+"Saving Deck..." = "Sauvegarder ce Deck...";
+"Loading Decks..." = "Charger des Decks...";
+"Publishing Deck..." = "Publier ce Deck...";
+"Exporting Decks..." = "Exporter ces Decks...";
+"A local copy of this deck already exists." = "Une copie locale existe déjà.";
+"Overwrite" = "Récrire";
+"Import as new" = "Importer comme nouveau";
+"Connect to your Dropbox and/or NetrunnerDB.com account first." = "Connecter à votre compte Dropbox et/ou NetrunnerDB.com.";
+"Open in Safari" = "Ouvrir en Safari";
+"Publish deck" = "Publiez ce Deck";
+"Only valid decks can be published." = "Vous pouvez seulement publier des Decks légaux.";
+"Saving the deck at NetrunnerDB.com failed." = "Sauvegarder non réussi à NetrunnerDB.com.";
+"Publishing the deck at NetrunnerDB.com failed." = "Publier non réussi à NetrunnerDB.com.";
+"Deck published with ID %@" = "Deck publié avec ID: %@";
+"Import All" = "Importer tout";
+"Export Decks" = "Exporter tous les Decks";
+"Export all currently visible decks" = "Exporter tous les Decks visibles";
+"To Dropbox" = "À Dropbox";
+"To NetrunnerDB.com" = "À NetrunnerDB.com";
+"Import all decks from Dropbox?" = "Importer tous les Decks de Dropbox?";
+"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Importer tous les Decks de NetrunnerDB.com? Des Decks existants et attachés vont être récrits.";
+"Imported decks" = "Des Decks importés";
  "Authorization at NetrunnerDB.com failed" = "Autorisation à NetrunnerDB.com échoué";
  
 // deck diff
-"Select to Compare" = "Für Vergleich auswählen";
-"Compare" = "Vergleichen";
-"Compare Decks" = "Decks vergleichen";
-"Deck Comparison" = "Deckvergleich";
-"Reverse" = "Tauschen";
-"Full" = "";
-"Diff" = "";
+"Select to Compare" = "Sélectionner pour la comparaison";
+"Compare" = "Comparer";
+"Compare Decks" = "Comparer des Decks";
+"Deck Comparison" = "Comparaison des Decks";
+"Reverse" = "Renverser";
+"Full" = "Complet";
+"Diff" = "Différence";
 "Intersect" = "";
-"Show full comparison" = "Kompletten Vergleich anzeigen";
-"Both decks must be for the same side." = "Decks der unterschiedlichen Seiten können nicht verglichen werden.";
-"Select two decks to compare them" = "Seleccione dos cubiertas para la comparación";
-"Selected ‘%@’, select one more to compare" = "‘%@’ seleccionado, elija otro para la comparación";
-"Selected ‘%@’ and ‘%@’, tap to compare" = "‘%@’ y ‘%@’ seleccionado, ahora comparar";
-"Compare to ..." = "Comparar con ...";
+"Both decks must be for the same side." = "Les Decks des partis différents ne peuvent être comparer.";
+"Select two decks to compare them" = "Sélectionner deux Decks pour la comparaison";
+"Selected ‘%@’, select one more to compare" = "‘%@’ sélectionné, choisir encore un pour comparer";
+"Selected ‘%@’ and ‘%@’, tap to compare" = "‘%@’ et ‘%@’ sélectionnés, taper pour comparer";
+"Compare to ..." = "Comparer avec ...";
 
 // card browser
-"Browser" = "Browser";
+"Browser" = "Cartes";
 "Card Browser" = "Cartes";
-"Side:" = "Partido:";
-"Unique" = "Único";
-"Limited" = "Limitada";
-"Alt Art" = "Carta promo";
-"Find decks using this card" = "Mazos usando esta carta";
-"New deck with this card" = "Nueva Mazo con esta carta";
-"Faction/A-Z" = "Facción/A-Z";
-"Trash: %@" = "Destrucción: %@"; 
-"%lu matching card" = "%lu passende Karte";
-"%lu matching cards" = "%lu passende Karten"; */
+"Side:" = "Parti:";
+"Unique" = "Unique";
+"Limited" = "Limité";
+"Alt Art" = "Carte promo";
+"Find decks using this card" = "Trouver des Decks avec cette carte";
+"New deck with this card" = "Deck nouveau avec cette carte";
+"Faction/A-Z" = "Fraction/A-Z";
+"Trash: %@" = "Destruction: %@";
+"%lu matching card" = "%lu carte choisie";
+"%lu matching cards" = "%lu cartes choisies";
