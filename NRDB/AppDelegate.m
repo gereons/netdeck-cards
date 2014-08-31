@@ -22,6 +22,10 @@
 
 const NSString* const kANY = @"Any";
 
+#warning iOS8 todos
+// - progresshud rotation
+// - re-auth failed alert 
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

@@ -1519,8 +1519,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "./Crashlytics.framework/run fe0f0f5f919be6211c1de668d91332e311ddad9e fa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8";
-			shellScript = "";
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" != \"Debug\" ]; then\n./Crashlytics.framework/run fe0f0f5f919be6211c1de668d91332e311ddad9efa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8\nfi";
 		};
 		725041DF7F0E4BE9AF0B94A3 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
