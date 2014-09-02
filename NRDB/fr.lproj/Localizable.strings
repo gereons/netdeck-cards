@@ -249,7 +249,7 @@
 "Reverse" = "Renverser";
 "Full" = "Complet";
 "Diff" = "Différence";
-"Intersect" = "";
+"Intersect" = "Intersection";
 "Both decks must be for the same side." = "Les Decks des partis différents ne peuvent être comparer.";
 "Select two decks to compare them" = "Sélectionner deux Decks pour la comparaison";
 "Selected ‘%@’, select one more to compare" = "‘%@’ sélectionné, choisir encore un pour comparer";
