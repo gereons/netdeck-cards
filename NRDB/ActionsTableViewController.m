@@ -116,11 +116,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     [super viewDidAppear:animated];
 
+#if !DEBUG
     // first start with this version?
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     // [defaults setObject:@"" forKey:LAST_START_VERSION];
     NSString* lastVersion = [defaults objectForKey:LAST_START_VERSION];
-    if (![self.appVersion isEqualToString:lastVersion] && !DEBUG)
+    if (![self.appVersion isEqualToString:lastVersion])
     {
         // yes, first start. show "about" tab
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuAbout inSection:0];
@@ -130,6 +131,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         [defaults synchronize];
         return;
     }
+#endif
     
     if (![CardManager cardsAvailable])
     {

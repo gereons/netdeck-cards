@@ -1,0 +1,7 @@
+/* Crashlytics.strings (de) */
+
+"CrashlyticsCrashSubmissionPromptTitle" = "Absturzbericht senden?";
+"CrashlyticsCrashSubmissionPromptMessage" = "Offenbar ist Net Deck abgestürzt. Möchtest du mithelfen, dass dieser Bug behoben wird?";
+"CrashlyticsCrashSubmissionSendTitle" = "Senden";
+"CrashlyticsCrashSubmissionAlwaysSendTitle" = "Immer senden";
+"CrashlyticsCrashSubmissionCancelTitle" = "Nicht senden";
