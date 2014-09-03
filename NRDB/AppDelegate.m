@@ -24,8 +24,6 @@ const NSString* const kANY = @"Any";
 
 #warning iOS8 todos
 // - progresshud rotation
-// - re-auth failed alert
-// - sdcalertview text entry?
 
 @implementation AppDelegate
 
@@ -53,7 +51,9 @@ const NSString* const kANY = @"Any";
     [TestFlight takeOff:@"eb5e8194-c06f-46db-a1ce-42943ebaf902"];
 #endif
     
+#if !DEBUG
     [Crashlytics startWithAPIKey:@"fe0f0f5f919be6211c1de668d91332e311ddad9e"];
+#endif
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.splitViewController;
