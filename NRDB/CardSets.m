@@ -37,9 +37,6 @@ static struct cardSetData {
     BOOL released;
 } cardSetData[] = {
     {  1, "use_coreset", "core", NRCycleCoreDeluxe, YES },
-    {  8, "use_creation_and_control", "cac", NRCycleCoreDeluxe, YES },
-    { 15, "use_honor_and_profit", "hap", NRCycleCoreDeluxe, YES },
-    { 22, "use_order_and_chaos", "oac", NRCycleCoreDeluxe, NO },
     
     // genesis
     { 2, "use_what_lies_ahead", "wla", NRCycleGenesis, YES },
@@ -48,6 +45,8 @@ static struct cardSetData {
     { 5, "use_study_in_static", "asis", NRCycleGenesis, YES },
     { 6, "use_humanitys_shadow", "hs", NRCycleGenesis, YES },
     { 7, "use_future_proof", "fp", NRCycleGenesis, YES },
+    // creation and control
+    { 8, "use_creation_and_control", "cac", NRCycleCoreDeluxe, YES },
     
     // spin
     {  9, "use_opening_moves", "om", NRCycleSpin, YES },
@@ -56,6 +55,8 @@ static struct cardSetData {
     { 12, "use_true_colors", "tc", NRCycleSpin, YES },
     { 13, "use_fear_and_loathing", "fal", NRCycleSpin, YES },
     { 14, "use_double_time", "dt", NRCycleSpin, YES },
+    // honor and profit
+    { 15, "use_honor_and_profit", "hap", NRCycleCoreDeluxe, YES },
     
     // lunar
     { 16, "use_upstalk", "up", NRCycleLunar, YES },
@@ -64,6 +65,8 @@ static struct cardSetData {
     { 19, "use_up_and_over", "uao", NRCycleLunar, NO },
     { 20, "use_all_that_remains", "atr", NRCycleLunar, NO },
     { 21, "use_the_source", "ts", NRCycleLunar, NO },
+    // order and chaos
+    { 22, "use_order_and_chaos", "oac", NRCycleCoreDeluxe, NO },
     
     { 0 }
 };
@@ -92,6 +95,9 @@ static struct cardSetData {
         [cardSets addObject:csd];
         ++c;
     }
+    
+    [setCodes addObject:DRAFT_SET];
+    [setCodes addObject:SPECIAL_SET];
     
     setGroups = @[ @"", l10n(@"Core / Deluxe"), l10n(@"Genesis Cycle"), l10n(@"Spin Cycle"), l10n(@"Lunar Cycle") ];
     setsPerGroup = @[
@@ -140,11 +146,11 @@ static struct cardSetData {
     
     if (![settings boolForKey:USE_UNPUBLISHED_IDS])
     {
-        [set addObject:@"special"];
+        [set addObject:SPECIAL_SET];
     }
     if (![settings boolForKey:USE_DRAFT_IDS])
     {
-        [set addObject:@"draft"];
+        [set addObject:DRAFT_SET];
     }
     return set;
 }

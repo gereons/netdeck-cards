@@ -7,6 +7,7 @@
 //
 
 #import "Card.h"
+#import "CardSets.h"
 #import "CardManager.h"
 #import "CardType.h"
 #import "Faction.h"
@@ -207,7 +208,7 @@ static BOOL isRetina;
     JSON_STR(setCode, @"set_code");
     if ([draftIds containsObject:c.code])
     {
-        c.setCode = @"draft";
+        c.setCode = DRAFT_SET;
     }
     
     JSON_STR(subtype, @"subtype");

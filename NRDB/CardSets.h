@@ -12,6 +12,9 @@
 @class Deck;
 @interface CardSets : NSObject
 
+#define DRAFT_SET   @"draft"
+#define SPECIAL_SET @"special"
+
 // all sets that the user has enabled
 +(TableData*) allSetsForTableview;
 

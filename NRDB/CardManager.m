@@ -294,13 +294,18 @@ static BOOL initializing;
 {
     NSAssert(initializing, @"oops");
     
+    NSSet* knownSets = [CardSets allKnownSets];
     if (json)
     {
         for (NSDictionary* obj in json)
         {
             Card* card = [Card cardFromJson:obj];
             NSAssert(card.isValid, @"invalid card from %@", obj);
-            [CardManager addCard:card];
+            
+            if ([knownSets containsObject:card.setCode])
+            {
+                [CardManager addCard:card];
+            }
         }
         
         NSArray* cards = [allCards allValues];
