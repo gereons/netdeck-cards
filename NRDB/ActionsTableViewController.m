@@ -7,7 +7,7 @@
 //
 
 #import <SDCAlertView.h>
-
+#import "NRAlertView.h"
 #import "ActionsTableViewController.h"
 #import "EmptyDetailViewController.h"
 #import "DetailViewManager.h"

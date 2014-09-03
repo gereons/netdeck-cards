@@ -9,7 +9,7 @@
 #import <SVProgressHUD.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
-
+#import "NRAlertView.h"
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"
@@ -58,7 +58,7 @@
 
 @property CGFloat scale;
 @property BOOL largeCells;
-@property SDCAlertView* nameAlert;
+@property NRAlertView* nameAlert;
 
 @end
 
@@ -188,8 +188,8 @@
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
     [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
-    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
-    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    // [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    // [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(notesChanged:) name:NOTES_CHANGED object:nil];
 
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
@@ -565,12 +565,12 @@
         return;
     }
     
-    self.nameAlert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name")
+    self.nameAlert = [[NRAlertView alloc] initWithTitle:l10n(@"Enter Name")
                                                  message:nil
                                                 delegate:nil
                                        cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
                       
-    self.nameAlert.alertViewStyle = SDCAlertViewStylePlainTextInput;
+    self.nameAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
     UITextField* textField = [self.nameAlert textFieldAtIndex:0];
     textField.placeholder = l10n(@"Deck Name");

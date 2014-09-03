@@ -11,6 +11,7 @@
 #import <EXTScope.h>
 
 #import "NRActionSheet.h"
+#import "NRAlertView.h"
 #import "SavedDecksList.h"
 #import "Deck.h"
 #import "ImportDecksViewController.h"
@@ -34,7 +35,7 @@
 @property NSArray* normalRightButtons;
 @property NSArray* diffRightButtons;
 
-@property SDCAlertView* nameAlert;
+@property NRAlertView* nameAlert;
 
 @property BOOL diffSelection;
 @property NSString* diffDeck;
@@ -411,13 +412,13 @@
                     }
                     case 1: // rename
                     {
-                        self.nameAlert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name")
+                        self.nameAlert = [[NRAlertView alloc] initWithTitle:l10n(@"Enter Name")
                                                                      message:nil
                                                                     delegate:nil
                                                            cancelButtonTitle:l10n(@"Cancel")
                                                            otherButtonTitles:l10n(@"OK"), nil];
                         
-                        self.nameAlert.alertViewStyle = SDCAlertViewStylePlainTextInput;
+                        self.nameAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
                         
                         UITextField* textField = [self.nameAlert textFieldAtIndex:0];
                         textField.placeholder = l10n(@"Deck Name");

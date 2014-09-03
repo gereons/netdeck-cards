@@ -240,6 +240,7 @@
 		3AFA3B6C18DF862900F59331 /* altarttoggle_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */; };
 		3AFB25401987789E0051C894 /* netrunnerdb_com-bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */; };
 		3AFB25411987789E0051C894 /* netrunnerdb_com-bw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */; };
+		3AFEC40719B73E76000D025C /* NRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEC40619B73E76000D025C /* NRAlertView.m */; };
 		ED15EBD876484EC4BAF34F26 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69129A4A2D3A4A50B7C75895 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -593,6 +594,8 @@
 		3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altarttoggle_off@2x.png"; sourceTree = "<group>"; };
 		3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw.png"; sourceTree = "<group>"; };
 		3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw@2x.png"; sourceTree = "<group>"; };
+		3AFEC40519B73E76000D025C /* NRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRAlertView.h; sourceTree = "<group>"; };
+		3AFEC40619B73E76000D025C /* NRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRAlertView.m; sourceTree = "<group>"; };
 		51B908737050483393874704 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		69129A4A2D3A4A50B7C75895 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -782,6 +785,8 @@
 				3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */,
 				3A2089E3197AB40B00B8AE32 /* NRActionSheet.h */,
 				3A2089E4197AB40B00B8AE32 /* NRActionSheet.m */,
+				3AFEC40519B73E76000D025C /* NRAlertView.h */,
+				3AFEC40619B73E76000D025C /* NRAlertView.m */,
 			);
 			name = "Utility Classes / Headers";
 			sourceTree = "<group>";
@@ -1586,6 +1591,7 @@
 				3A8061E71972990E003ACF44 /* DeckDiffCell.m in Sources */,
 				3A85328218550ACE00507B9A /* AboutViewController.m in Sources */,
 				3A41789F18761BF600DEEFA6 /* IASKAppSettingsWebViewController.m in Sources */,
+				3AFEC40719B73E76000D025C /* NRAlertView.m in Sources */,
 				3A5794DA19157A2D005DA4B2 /* CardDetailView.m in Sources */,
 				3AE0E62D1957222600633A71 /* CardManager.m in Sources */,
 				3ABDE5A418AFC52C00AFEA88 /* DrawSimulatorViewController.m in Sources */,
