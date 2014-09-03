@@ -24,7 +24,8 @@ const NSString* const kANY = @"Any";
 
 #warning iOS8 todos
 // - progresshud rotation
-// - re-auth failed alert 
+// - re-auth failed alert
+// - sdcalertview text entry?
 
 @implementation AppDelegate
 

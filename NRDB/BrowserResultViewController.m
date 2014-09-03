@@ -107,7 +107,7 @@ static NSDictionary* sortStr;
     [self.collectionView registerNib:[UINib nibWithNibName:@"BrowserImageCell" bundle:nil] forCellWithReuseIdentifier:@"browserImageCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"BrowserSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
-    self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0);
+    self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
     

@@ -134,19 +134,16 @@ static NRDB* instance;
              }
              [settings synchronize];
              
-             NSLog(@"nrdb (re)auth success, status: %d", ok);
+             // NSLog(@"nrdb (re)auth success, status: %d", ok);
              completionBlock(ok);
          }
          failure:^(AFHTTPRequestOperation* operation, NSError* error) {
              [NRDB clearSettings];
              
-             // NSLog(@"nrdb (re)auth failed: %@", operation);
-             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                             message:l10n(@"Authorization at NetrunnerDB.com failed")
-                                                            delegate:nil
-                                                   cancelButtonTitle:nil
-                                                   otherButtonTitles:l10n(@"OK"), nil ];
-             [alert show];
+             NSLog(@"nrdb (re)auth failed: %@", operation);
+             [SDCAlertView alertWithTitle:nil
+                                  message:l10n(@"Authorization at NetrunnerDB.com failed")
+                                  buttons:@[ l10n(@"OK") ]];
              
              completionBlock(NO);
          }
@@ -173,7 +170,7 @@ static NRDB* instance;
     NSTimeInterval diff = [expiry timeIntervalSinceDate:now];
     diff -= 5*60; // 5 minutes overlap
     NSLog(@"start nrdb auth refresh in %f seconds", diff);
-    
+
     if (diff < 0)
     {
         // token is expired, refresh now
