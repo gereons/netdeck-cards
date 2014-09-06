@@ -91,10 +91,6 @@ static NRFilterType _filterType = NRFilterAll;
     [super viewDidLoad];
     
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.rowHeight = 44;
-    [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Decks")
@@ -146,10 +142,22 @@ static NRFilterType _filterType = NRFilterAll;
         self.searchBar.text = self.filterText;
     }
     self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
+    self.searchBar.showsScopeBar = YES;
     self.searchBar.selectedScopeButtonIndex = self.searchScope;
+    // wtf is this needed on iOS8?
+    CGRect frame = self.searchBar.frame;
+    if (frame.size.height == 44)
+    {
+        frame.size.height = 88;
+        self.searchBar.frame = frame;
+    }
     
-    CGFloat height = self.filterText.length == 0 ? self.searchBar.frame.size.height : 0;
-    [self.tableView setContentOffset:CGPointMake(0,height) animated:NO];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.rowHeight = 44;
+    [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
+    
+    [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
 }
 
 - (void) viewDidAppear:(BOOL)animated

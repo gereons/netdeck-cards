@@ -53,13 +53,28 @@ static NSString* filterText;
     // Do any additional setup after loading the view from its nib.
         
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    
+    self.searchBar.placeholder = l10n(@"Search for decks, identities or cards");
+    if (filterText.length > 0)
+    {
+        self.searchBar.text = filterText;
+    }
+    self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
+    self.searchBar.selectedScopeButtonIndex = searchScope;
+    self.searchBar.showsScopeBar = YES;
+    // wtf is this needed on iOS8?
+    CGRect frame = self.searchBar.frame;
+    if (frame.size.height == 44)
+    {
+        frame.size.height = 88;
+        self.searchBar.frame = frame;
+    }
+    
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.rowHeight = 44;
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
-    
-    [self.tableView setContentOffset:CGPointMake(0,self.searchBar.frame.size.height) animated:NO];
+    [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
     
     // do the initial listing in the background, as it may block the ui thread
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -75,14 +90,6 @@ static NSString* filterText;
         [self getNetrunnerdbDecks];
     }
 
-    self.searchBar.placeholder = l10n(@"Search for decks, identities or cards");
-    if (filterText.length > 0)
-    {
-        self.searchBar.text = filterText;
-    }
-    self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
-    self.searchBar.selectedScopeButtonIndex = searchScope;
-    
     self.importButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Import All") style:UIBarButtonItemStylePlain target:self action:@selector(importAll:)];
 }
 
