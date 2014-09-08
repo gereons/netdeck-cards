@@ -11,6 +11,8 @@
 #import "Deck.h"
 #import "SettingsKeys.h"
 
+#warning TODO: use netrunnerdb.com/api/sets for this?
+
 @interface CardSets()
 @property int setNum;
 @property NSString* setCode;
