@@ -11,7 +11,7 @@
 #import "CardManager.h"
 #import "CardType.h"
 #import "Faction.h"
-
+#import "SettingsKeys.h"
 #import <DTCoreText.h>
 
 @interface Card()
@@ -23,6 +23,7 @@
 @property NSString* smallImageSrc;
 @property NSString* largeImageSrc;
 @property NSString* lastModified;
+@property (readwrite) BOOL isCore;
 
 @end
 
@@ -133,6 +134,16 @@ static BOOL isRetina;
     return [n intValue];
 }
 
+-(NSInteger) owned
+{
+    if (self.isCore)
+    {
+        NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
+        return MIN(3, cores * self.quantity);
+    }
+    return 3;
+}
+
 -(NSString*) name_en
 {
     return self->_name_en ? self->_name_en : self->_name;
@@ -210,6 +221,7 @@ static BOOL isRetina;
     {
         c.setCode = DRAFT_SET;
     }
+    c.isCore = [c.setCode isEqualToString:CORE_SET];
     
     JSON_STR(subtype, @"subtype");
     if (c.subtype.length == 0)

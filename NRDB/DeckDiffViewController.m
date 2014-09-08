@@ -222,11 +222,10 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         }];
         [self.fullDiffRows[i] addObjectsFromArray:arr];
         
-        // fill intersection - card is in both decks, and the total count is > 3
+        // fill intersection - card is in both decks, and the total count is more than we own
         for (CardDiff* cd in self.fullDiffRows[i])
         {
-            NSInteger owned = 3;
-            if (cd.count1 > 0 && cd.count2 > 0 && cd.count1+cd.count2 > owned)
+            if (cd.count1 > 0 && cd.count2 > 0 && (cd.count1+cd.count2) > cd.card.owned)
             {
                 [self.intersectRows[i] addObject:cd];
             }
@@ -392,10 +391,17 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     cell.card1 = nil;
     cell.card2 = nil;
     
+    cell.deck1Card.textColor = [UIColor blackColor];
+    cell.deck2Card.textColor = [UIColor blackColor];
+    
     if (cd.count1 > 0)
     {
         cell.deck1Card.text = [NSString stringWithFormat:@"%lu× %@", (unsigned long)cd.count1, cd.card.name];
         cell.card1 = cd.card;
+        if (cd.card.isCore && cd.count1 > cd.card.owned)
+        {
+            cell.deck1Card.textColor = [UIColor redColor];
+        }
     }
     else
     {
@@ -406,6 +412,10 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     {
         cell.deck2Card.text = [NSString stringWithFormat:@"%lu× %@", (unsigned long)cd.count2, cd.card.name];
         cell.card2 = cd.card;
+        if (cd.card.isCore && cd.count2 > cd.card.owned)
+        {
+            cell.deck2Card.textColor = [UIColor redColor];
+        }
     }
     else
     {
@@ -425,8 +435,12 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     
     if (self.diffMode == Intersect)
     {
-        NSInteger owned = 3;
+        NSInteger owned = cd.card.owned;
         diff = cd.count1 + cd.count2 - owned;
+        if (owned != 3)
+        {
+            diff = MIN(MIN(cd.count1,cd.count2), diff);
+        }
         cell.diff.text = [NSString stringWithFormat:@"%ld", (long)diff];
         cell.diff.textColor = [UIColor blackColor];
     }

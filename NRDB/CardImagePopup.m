@@ -113,12 +113,9 @@ static UIPopoverController* popover;
     }
     
     self.copiesLabel.textColor = [UIColor blackColor];
-    if ([self.cc.card.setCode isEqualToString:@"core"] && !self.draft)
+    if (self.cc.card.isCore && !self.draft)
     {
-        NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
-        NSInteger owned = cores * self.cc.card.quantity;
-        
-        if (owned < self.cc.count)
+        if (self.cc.card.owned < self.cc.count)
         {
             self.copiesLabel.textColor = [UIColor redColor];
         }

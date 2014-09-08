@@ -1206,12 +1206,9 @@
         }
         
         cell.copiesLabel.textColor = [UIColor blackColor];
-        if ([cc.card.setCode isEqualToString:@"core"] && !self.deck.isDraft)
+        if (cc.card.isCore && !self.deck.isDraft)
         {
-            NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
-            NSInteger owned = cores * cc.card.quantity;
-            
-            if (owned < cc.count)
+            if (cc.card.owned < cc.count)
             {
                 cell.copiesLabel.textColor = [UIColor redColor];
             }

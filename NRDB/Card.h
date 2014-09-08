@@ -23,6 +23,7 @@
 
 // multitype ice
 #define RAINBOW                 @"05025"
+// #define ORION                @"0xxxx"    // not out yet
 
 // example for an Icebreaker
 #define YOG_0                   @"01014"
@@ -85,6 +86,8 @@
 @property (readonly) int maxCopies;
 @property (readonly) int cropY;
 @property (readonly, getter = isValid) BOOL valid;
+@property (readonly) BOOL isCore;       // card is from core set
+@property (readonly) NSInteger owned;   // how many copies owned
 
 +(Card*) cardByCode:(NSString*)code;
 

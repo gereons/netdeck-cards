@@ -54,12 +54,9 @@
     }
     
     self.name.textColor = [UIColor blackColor];
-    if ([card.setCode isEqualToString:@"core"] && !self.deck.isDraft)
+    if (card.isCore && !self.deck.isDraft)
     {
-        NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
-        NSInteger owned = cores * card.quantity;
-        
-        if (owned < cc.count)
+        if (card.owned < cc.count)
         {
             self.name.textColor = [UIColor redColor];
         }

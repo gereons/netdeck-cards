@@ -14,6 +14,7 @@
 
 #define DRAFT_SET   @"draft"
 #define SPECIAL_SET @"special"
+#define CORE_SET    @"core"
 
 // all sets that the user has enabled
 +(TableData*) allSetsForTableview;
