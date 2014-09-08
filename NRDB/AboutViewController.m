@@ -6,14 +6,17 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "AboutViewController.h"
 #import <StoreKit/StoreKit.h>
 #import <MessageUI/MessageUI.h>
+#import <SDCAlertView.h>
+
+#import "AboutViewController.h"
 
 @interface AboutViewController ()
 @property SKStoreProductViewController* storeViewController;
 @property MFMailComposeViewController *mailer;
-@property UIActionSheet* popup;
+@property NSString* version;
+@property UIBarButtonItem* backButton;
 @end
 
 @implementation AboutViewController
@@ -28,10 +31,20 @@
     [super viewDidLoad];
     
     self.navigationController.navigationBar.topItem.title = l10n(@"About");
+    
+    self.backButton = [[UIBarButtonItem alloc] initWithTitle:@"◁" style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    
     self.webView.delegate = self;
+    self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
         
     NSURL* url= [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"About" ofType:@"html"] isDirectory:NO];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
+-(void) goBack:(id)sender
+{
+    [self.webView goBack];
+    self.navigationController.navigationBar.topItem.leftBarButtonItem = nil;
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -39,13 +52,13 @@
     [super viewDidAppear:animated];
 #if defined(DEBUG) || defined(ADHOC)
     // CFBundleVersion contains the git describe output
-    NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    self.version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 #else
     // CFBundleShortVersionString contains the main version
-    NSString* version = [@"v" stringByAppendingString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+    self.version = [@"v" stringByAppendingString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
 #endif
     
-    NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck %@"), version];
+    NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck %@"), self.version];
     self.navigationController.navigationBar.topItem.title = title;
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
@@ -54,85 +67,22 @@
 
 -(void) leaveFeedback:(id)sender
 {
-    /*
-    if (self.popup)
-    {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
-        self.popup = nil;
-    }
-    else
-    {
-        self.popup = [[UIActionSheet alloc] initWithTitle:l10n(@"How do you feel about Net Deck?")
-                                                 delegate:self
-                                        cancelButtonTitle:@""
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:l10n(@"Happy"), l10n(@"Confused"), l10n(@"Unhappy"), nil];
-        
-        [self.popup showFromBarButtonItem:sender animated:NO];
-    }
-    */
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:l10n(@"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store.")
-                                                   delegate:self
-                                          cancelButtonTitle:l10n(@"Cancel")
-                                          otherButtonTitles:l10n(@"Write a Review"), l10n(@"Contact Developers"), nil];
-    [alert show];
-}
-
-#pragma mark action sheet
-
-/*
--(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    NSString *msg, *btn1, *btn2, *btn3;
+    NSString* msg = l10n(@"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store.");
     
-    self.popup = nil;
-    if (buttonIndex == actionSheet.cancelButtonIndex)
-    {
-        return;
-    }
-    
-    switch (buttonIndex)
-    {
-        case 0: // happy
-            msg = l10n(@"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store.");
-            btn1 = l10n(@"Write a Review");
-            btn2 = l10n(@"Contact Developers");
-            // btn3 = l10n(@"Tell your Friends");
-            break;
-        case 1: // confused
-            msg = l10n(@"If you're unsure about how to use Net Deck, why not contact the developers?");
-            btn1 = l10n(@"Contact");
-            break;
-        case 2: // unhappy
-            msg = l10n(@"Go die in a fire.");
-            btn1 = l10n(@"Contact");
-            break;
-    }
-    
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:msg
-                                                   delegate:self
-                                          cancelButtonTitle:@"Cancel"
-                                         otherButtonTitles:btn1, btn2, btn3, nil];
-    alert.tag = buttonIndex;
-    [alert show];
-}
-*/
-
-#pragma mark alert view
-
--(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex)
-    {
-        case 1:
-            [self rateApp];
-            break;
-        case 2:
-            [self sendEmail];
-            break;
-    }
+    SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
+                                               message:msg
+                                               buttons:@[l10n(@"Cancel"), l10n(@"Write a Review"), l10n(@"Contact Developers")]];
+    alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        switch (buttonIndex)
+        {
+            case 1:
+                [self rateApp];
+                break;
+            case 2:
+                [self sendEmail];
+                break;
+        }
+    };
 }
 
 -(void) rateApp
@@ -153,7 +103,10 @@
     
     self.mailer.mailComposeDelegate = self;
     [self.mailer setToRecipients:@[ @"netdeck@steffens.org" ]];
-    [self.mailer setSubject:l10n(@"Net Deck Feedback")];
+    NSMutableString* subject = [NSMutableString stringWithString:l10n(@"Net Deck Feedback")];
+    [subject appendString:@" v"];
+    [subject appendString:self.version];
+    [self.mailer setSubject:subject];
     [self presentViewController:self.mailer animated:NO completion:nil];
 }
 
@@ -174,11 +127,33 @@
 }
 
 #pragma mark webview
--(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType
+
+-(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)type
 {
-    if (inType == UIWebViewNavigationTypeLinkClicked)
+    if (type == UIWebViewNavigationTypeLinkClicked)
     {
-        [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        NSString* scheme = [request URL].scheme;
+        if ([scheme isEqualToString:@"mailto"])
+        {
+            [self sendEmail];
+        }
+        else if ([scheme isEqualToString:@"itms-apps"])
+        {
+            [self rateApp];
+        }
+        else if ([scheme isEqualToString:@"file"])
+        {
+            NSString* path = [[NSBundle mainBundle] pathForResource:@"Acknowledgements" ofType:@"html"];
+            
+            NSURL* url= [NSURL fileURLWithPath:path isDirectory:NO];
+            [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+            self.navigationController.navigationBar.topItem.leftBarButtonItem = self.backButton;
+            return YES;
+        }
+        else
+        {
+            [[UIApplication sharedApplication] openURL:[request URL]];
+        }
         return NO;
     }
     

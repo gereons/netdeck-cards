@@ -15,17 +15,13 @@
 @implementation DeckManager
 
 // save a new Deck, return the new filename
-+(NSString*) saveDeck:(Deck*)deck
++(void) saveDeck:(Deck*)deck
 {
-    NSString* savePath = [DeckManager pathForRole:deck.role];
+    if (deck.filename == nil)
+    {
+        deck.filename = [DeckManager pathForRole:deck.role];
+    }
     
-    [DeckManager saveDeck:deck toPath:savePath];
-    return savePath;
-}
-
-// save a Deck
-+(void) saveDeck:(Deck*)deck toPath:(NSString*)filename
-{
     // Set up the encoder and storage for the saved state data
     NSMutableData* savedData = [NSMutableData data];
     NSKeyedArchiver* encoder = [[NSKeyedArchiver alloc] initForWritingWithMutableData:savedData];
@@ -35,10 +31,10 @@
     // Finish encoding and write to the file
     [encoder finishEncoding];
     
-    BOOL saveOk = [savedData writeToFile:filename atomically:YES];
+    BOOL saveOk = [savedData writeToFile:deck.filename atomically:YES];
     if (!saveOk)
     {
-        [DeckManager removeFile:filename];
+        [DeckManager removeFile:deck.filename];
     }
 }
 
@@ -46,7 +42,7 @@
 +(Deck*) loadDeckFromPath:(NSString *)filename
 {
     // Check to see if the saved state file exists and if so, load it
-    NSMutableData* savedData = [NSData dataWithContentsOfFile:filename];
+    NSData* savedData = [NSData dataWithContentsOfFile:filename];
     if (savedData == nil)
     {
         // no saved data
@@ -190,5 +186,17 @@
     [fileMgr removeItemAtPath:pathName error:&error];
 }
 
+// reset a deck's last modification timestamp
++(void) resetModificationDate:(Deck *)deck
+{
+    if (deck.filename && deck.lastModified)
+    {
+        NSDictionary *attrs = @{ NSFileModificationDate: deck.lastModified };
+        NSError *error;
+        NSFileManager* fileMgr = [NSFileManager defaultManager];
+
+        [fileMgr setAttributes:attrs ofItemAtPath:deck.filename error: &error];
+    }
+}
 
 @end

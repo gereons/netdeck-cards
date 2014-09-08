@@ -10,6 +10,7 @@
 "never" = "nie";
 "All" = "Alle";
 "Any" = "Alle";
+"Both" = "Beide";
 "card" = "Karte";
 "Card" = "Karte";
 "cards" = "Karten";
@@ -51,6 +52,7 @@
 "Save" = "Speichern";
 "Saving..." = "Speichern...";
 "Duplicate" = "Duplizieren";
+"Rename" = "Umbenennen";
 "Duplicate this deck?" = "Dieses Deck duplizieren?";
 "Yes, switch to copy" = "Ja, zur Kopie wechseln";
 "Yes, but stay here" = "Ja, hier bleiben";
@@ -70,6 +72,12 @@
 "AP must be %d or %d" = "Nur %d oder %d AP erlaubt";
 "Too many pet projects" = "Zuviele Lieblingsprojekte";
 "Too many entanglements" = "Zuviele Verschränkungen";
+"Too many Utopia Shards" = "Zuviele Utopia Shards";
+"Too many Utopia Fragments" = "Zuviele Utopia Fragments";
+"Too many Hades Shards" = "Zuviele Hades Shards";
+"Too many Hades Fragments" = "Zuviele Hades Fragments";
+"Too many Eden Fragments" = "Zuviele Eden Fragments";
+"Too many Eden Shards" = "Zuviele Eden Shards";
 "Cannot include Jinteki" = "Jinteki nicht erlaubt";
 "Cannot use out-of-faction agendas" = "Fraktionsfremde Agenden";
 "Not enough cards" = "Nicht genug Karten";
@@ -80,7 +88,7 @@
 "Downloading Images" = "Lade Karten-Bilder";
 "Please download card data first" = "Bitte zuerst Karten-Daten laden";
 "Image %d of %d" = "Bild %d von %d";
-"Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche er später nochmal.";
+"Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche es später nochmal.";
 "%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";
 "Clear Cache? You will need to re-download all data from netrunnerdb.com." = "Cache löschen? Du musst danach alle Daten neu von netrunnerdb.com laden.";
 "An Internet connection is required." = "Internet-Verbindung wird benötigt.";
@@ -98,6 +106,7 @@
 // deck view
 "Draw" = "Karten";
 "Analysis" = "Analyse";
+"Notes" = "Notizen";
 
 // deck analysis
 "Deck Analysis" = "Deck-Analyse";
@@ -117,6 +126,15 @@
 "%d Cards · %d Influence" = "%d Karten · %d Einfluss";
 "%d Cards · %d Influence · %d AP" = "%d Karten · %d Einfluss · %d AP";
 "Date" = "Datum";
+"Copy to Clipboard" = "Ins Clipboard kopieren";
+"Send via Email" = "Als E-Mail senden";
+"Sort" = "Sortierung";
+"Side" = "Seite";
+"Status" = "Status";
+"Active" = "Aktiv";
+"Testing" = "Test";
+"Retired" = "Inaktiv";
+"Search for decks, identities or cards" = "Suche nach Decks, Identität oder Karten";
 
 // filter
 "Strength: %@" = "Stärke: %@";
@@ -130,6 +148,8 @@
 "Set" = "Set";
 "Search in:" = "Suche in:";
 "Search Cards" = "Karten suchen";
+"Less △" = "Weniger △";
+"More ▽" = "Mehr ▽";
 
 // section headers
 "Identity" = "Identität";

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
+#import <SDCAlertView.h>
+
 #import "NRNavigationController.h"
 #import "DeckListViewController.h"
 
@@ -13,6 +15,7 @@
 
 @property BOOL alertViewClicked;
 @property BOOL regularPop;
+@property BOOL swipePop;
 
 @end
 
@@ -22,71 +25,93 @@
 {
     [super viewDidLoad];
 
-    // disable swipe gesture
-    self.interactivePopGestureRecognizer.enabled = NO;
+    self.interactivePopGestureRecognizer.delegate = self;
     
-    // TODO: figure out how to handle and intercept swipe gesture correctly
-    // [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
+    [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
 }
 
-/*
 - (void)handlePopGesture:(UIGestureRecognizer *)gesture
 {
+    // NSLog(@"handle gesture, state=%d", gesture.state);
     if (gesture.state == UIGestureRecognizerStateEnded)
     {
-        NSLog(@"pop view");
+        // NSLog(@"end swipe, pop");
         [self popViewControllerAnimated:NO];
     }
 }
-*/
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer == self.interactivePopGestureRecognizer)
+    {
+        if (self.deckListViewController.deckChanged)
+        {
+            [self showAlert];
+            self.swipePop = NO;
+            return NO;
+        }
+    }
+    self.swipePop = YES;
+    // NSLog(@"swipe start ok");
+    return YES;
+}
 
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
+    if (self.swipePop)
+    {
+        // NSLog(@"should pop1: YES");
+        self.swipePop = NO;
+        return YES;
+    }
     if (self.regularPop)
     {
+        // NSLog(@"should pop2: YES");
         self.regularPop = NO;
         return YES;
     }
     if (self.alertViewClicked)
     {
+        // NSLog(@"should pop3: YES");
         self.alertViewClicked = NO;
         return YES;
     }
     
-    BOOL unsavedChanges = self.deckListViewController.deckChanged;
-    if (unsavedChanges)
+    if (self.deckListViewController.deckChanged)
     {
-        UIAlertView* alert = [[UIAlertView alloc]
-                          initWithTitle:nil
-                          message:l10n(@"There are unsaved changes")
-                          delegate:self
-                          cancelButtonTitle:l10n(@"Cancel")
-                          otherButtonTitles:l10n(@"Discard"), l10n(@"Save"), nil];
-        [alert show];
-        
+        // NSLog(@"should pop4: NO");
+        [self showAlert];
         return NO;
     }
     else
     {
+        // NSLog(@"should pop5: NO, pop self");
         self.regularPop = YES;
         [self popViewControllerAnimated:NO];
         return NO;
     }
 }
 
--(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+-(void) showAlert
 {
-    if (buttonIndex == alertView.cancelButtonIndex)
-    {
-        return;
-    }
+    SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
+                                               message:l10n(@"There are unsaved changes")
+                                               buttons:@[l10n(@"Cancel"), l10n(@"Discard"), l10n(@"Save")]];
     
-    if (buttonIndex == 2)
-    {
-        [self.deckListViewController saveDeck:nil];
-    }
-    self.alertViewClicked = YES;
-    [self popViewControllerAnimated:NO];
+    alert.willDismissHandler = ^void(NSInteger buttonIndex) {
+        if (buttonIndex == 0) // cancel
+        {
+            return;
+        }
+        
+        if (buttonIndex == 2) // save
+        {
+            [self.deckListViewController saveDeck:nil];
+        }
+        self.alertViewClicked = YES;
+        [self popViewControllerAnimated:NO];
+
+    };
 }
 
 @end

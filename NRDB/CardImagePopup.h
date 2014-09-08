@@ -20,7 +20,7 @@
 
 -(IBAction) copiesChanged:(id)sender;
 
-+(CardImagePopup*) showForCard:(CardCounter*)card fromRect:(CGRect)rect inView:(UIView*)vc direction:(UIPopoverArrowDirection)direction;
++(CardImagePopup*) showForCard:(CardCounter*)card draft:(BOOL)draft fromRect:(CGRect)rect inView:(UIView*)vc direction:(UIPopoverArrowDirection)direction;
 +(void) dismiss;
 
 @end

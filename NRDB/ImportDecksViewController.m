@@ -7,19 +7,26 @@
 //
 
 #import "ImportDecksViewController.h"
+
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
 #import <EXTScope.h>
+#import <SDCAlertView.h>
+
 #import "Deck.h"
 #import "DeckManager.h"
 #import "ImageCache.h"
 #import "DeckCell.h"
 #import "OctgnImport.h"
 
+static NRDeckSearchScope searchScope = NRDeckSearchAll;
+static NSString* filterText;
+
 @interface ImportDecksViewController ()
 
-@property NSArray* deckNames;
-@property NSArray* decks;
+@property NSArray* allDecks;
+@property NSArray* filteredDecks;
+
 @property NSDateFormatter* dateFormatter;
 
 @end
@@ -49,9 +56,12 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
     
+    [self.tableView setContentOffset:CGPointMake(0,self.searchBar.frame.size.height) animated:NO];
+    
     // do the initial listing in the background, as it may block the ui thread
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [SVProgressHUD showWithStatus:l10n(@"Loading decks from Dropbox")];
+    
     @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         @strongify(self);
@@ -63,14 +73,11 @@
             [SVProgressHUD dismiss];
             if (count == 0)
             {
-                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Decks found")
-                                                                message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.")
-                                                               delegate:nil
-                                                      cancelButtonTitle:l10n(@"OK")
-                                                      otherButtonTitles:nil];
-                [alert show];
+                [SDCAlertView alertWithTitle:l10n(@"No Decks found")
+                                     message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.")
+                                      buttons:@[ l10n(@"OK") ]];
             }
-
+            [self filterDecks];
             [self.tableView reloadData];
         });
     });
@@ -80,14 +87,22 @@
     
     [filesystem addObserver:self forPathAndChildren:path block:^() {
         [self listFiles];
+        [self filterDecks];
         [self.tableView reloadData];
     }];
+    
+    self.searchBar.placeholder = l10n(@"Search for decks, identities or cards");
+    if (filterText.length > 0)
+    {
+        self.searchBar.text = filterText;
+    }
+    self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
+    self.searchBar.selectedScopeButtonIndex = searchScope;
 }
 
 -(NSUInteger) listFiles
 {
-    self.deckNames = @[ [NSMutableArray array], [NSMutableArray array] ];
-    self.decks = @[ [NSMutableArray array], [NSMutableArray array] ];
+    self.allDecks = @[ [NSMutableArray array], [NSMutableArray array] ];
     
     DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     DBPath* path = [DBPath root];
@@ -105,11 +120,8 @@
             Deck* deck = [self parseDeck:fileInfo.path.name];
             if (deck)
             {
-                NSMutableArray* names = self.deckNames[deck.role];
-                NSMutableArray* decks = self.decks[deck.role];
-                
-                NSString* filename = fileInfo.path.name;
-                [names addObject:[filename substringToIndex:textRange.location]];
+                NSMutableArray* decks = self.allDecks[deck.role];
+
                 [decks addObject:deck];
                 ++totalDecks;
             }
@@ -117,6 +129,44 @@
     }
     
     return totalDecks;
+}
+
+-(void) filterDecks
+{
+    if (filterText.length > 0)
+    {
+        // NSLog(@"filter %@ %d", filterText, searchScope);
+        
+        NSPredicate* namePredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", filterText];
+        NSPredicate* identityPredicate = [NSPredicate predicateWithFormat:@"identity.name CONTAINS[cd] %@", filterText];
+        NSPredicate* cardPredicate = [NSPredicate predicateWithFormat:@"ANY cards.card.name CONTAINS[cd] %@", filterText];
+        
+        NSPredicate* predicate;
+        switch (searchScope)
+        {
+            case NRDeckSearchAll:
+                predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[ namePredicate, identityPredicate, cardPredicate ]];
+                break;
+            case NRDeckSearchName:
+                predicate = namePredicate;
+                break;
+            case NRDeckSearchIdentity:
+                predicate = identityPredicate;
+                break;
+            case NRDeckSearchCard:
+                predicate = cardPredicate;
+                break;
+        }
+        
+        self.filteredDecks = @[
+                               [self.allDecks[NRRoleRunner] filteredArrayUsingPredicate:predicate],
+                               [self.allDecks[NRRoleCorp] filteredArrayUsingPredicate:predicate]
+                               ];
+    }
+    else
+    {
+        self.filteredDecks = self.allDecks;
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -133,6 +183,22 @@
     [filesystem removeObserver:self];
 }
 
+#pragma mark search bar
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    filterText = searchText;
+    [self filterDecks];
+    [self.tableView reloadData];
+}
+
+-(void) searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
+{
+    searchScope = selectedScope;
+    [self filterDecks];
+    [self.tableView reloadData];
+}
+
 #pragma mark tableView
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -142,7 +208,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray* arr = self.deckNames[section];
+    NSArray* arr = self.filteredDecks[section];
     return arr.count;
 }
 
@@ -157,11 +223,9 @@
     
     DeckCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.infoButton.hidden = YES;
     
-    NSArray* names = self.deckNames[indexPath.section];
-    NSArray* decks = self.decks[indexPath.section];
-
-    cell.nameLabel.text = names[indexPath.row];
+    NSArray* decks = self.filteredDecks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     
     cell.nameLabel.text = deck.name;
@@ -201,7 +265,7 @@
     
     [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
     
-    NSArray* decks = self.decks[indexPath.section];
+    NSArray* decks = self.filteredDecks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     [DeckManager saveDeck:deck];
 }
@@ -232,6 +296,7 @@
             {
                 deck.name = fileName;
             }
+                        
             deck.lastModified = lastModified;
             return deck;
         }

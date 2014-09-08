@@ -10,12 +10,16 @@
 #import "Deck.h"
 #import "CardImageViewPopover.h"
 #import "Hypergeometric.h"
+#import "CardThumbView.h"
 
 @interface DrawSimulatorViewController ()
 @property Deck* deck;
-@property NSMutableArray* cards;
-@property NSMutableArray* draw;
+@property NSMutableArray* cards;    // cards in deck
+@property NSMutableArray* draw;     // cards drawn
+@property NSMutableArray* played;   // card's played state (BOOL)
 @end
+
+static NSInteger viewMode;
 
 @implementation DrawSimulatorViewController
 
@@ -51,13 +55,25 @@
     [self.selector setTitle:l10n(@"All") forSegmentAtIndex:6];
     self.selector.apportionsSegmentWidthsByContent = YES;
     
+    self.viewModeControl.selectedSegmentIndex = viewMode;
+    
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.hidden = viewMode == 0;
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CardThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
+    self.collectionView.hidden = viewMode == 1;
+    
+    // each view needs its own long press recognizer
+    [self.tableView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    [self.collectionView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
 -(void) initCards:(BOOL)drawInitialHand
 {
     self.draw = [NSMutableArray array];
     self.cards = [NSMutableArray array];
+    self.played = [NSMutableArray array];
+    
     for (CardCounter* cc in self.deck.cards)
     {
         for (int c=0; c<cc.count; ++c)
@@ -98,6 +114,15 @@
 {
     [self initCards:NO];
     [self.tableView reloadData];
+    [self.collectionView reloadData];
+}
+
+-(void) viewModeChange:(UISegmentedControl*)sender
+{
+    TF_CHECKPOINT(@"draw view mode");
+    viewMode = sender.selectedSegmentIndex;
+    self.tableView.hidden = viewMode == 0;
+    self.collectionView.hidden = viewMode == 1;
 }
 
 -(void) draw:(UISegmentedControl*)sender
@@ -129,19 +154,24 @@
             Card* card = [self.cards objectAtIndex:0];
             [self.cards removeObjectAtIndex:0];
             [self.draw addObject:card];
+            [self.played addObject:@(NO)];
         }
     }
+    
+    NSAssert(self.draw.count == self.played.count, @"size mismatch");
     
     NSUInteger drawn = self.draw.count;
     self.drawnLabel.text = [NSString stringWithFormat:l10n(@"%ld %@ drawn"), (unsigned long)drawn, drawn == 1 ? l10n(@"Card") : l10n(@"Cards") ];
     
     [self.tableView reloadData];
+    [self.collectionView reloadData];
     
     // scroll down if not all cards were drawn
     if (numCards != self.deck.size && self.draw.count > 0)
     {
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.draw.count-1 inSection:0];
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
     }
     
     // calculate drawing odds
@@ -176,34 +206,96 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        button.frame = CGRectMake(470, 5, 30, 30);
-        cell.accessoryView = button;
-        
-        [button addTarget:self action:@selector(showImage:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     Card* card = [self.draw objectAtIndex:indexPath.row];
     cell.textLabel.text = card.name;
+    cell.textLabel.textColor = [self.played[indexPath.row] boolValue] ? [UIColor lightGrayColor] : [UIColor blackColor];
     
     return cell;
 }
 
-#pragma mark card popup
-
--(void) showImage:(UIButton*)sender
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    Card* card = self.draw[indexPath.row];
     
-    Card *card = [self.draw objectAtIndex:indexPath.row];
-    
-    CGRect rect = sender.frame;
-    rect.origin.y = [self.tableView rectForRowAtIndexPath:indexPath].origin.y + 3;
-
+    CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
     [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
 }
 
+#pragma mark collectionview
+
+-(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString* cellIdentifier = @"cardThumb";
+    Card *card = [self.draw objectAtIndex:indexPath.row];
+    
+    CardThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    cell.card = card;
+    cell.imageView.layer.opacity = [self.played[indexPath.row] boolValue] ? .5 : 1;
+    
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    Card* card = self.draw[indexPath.row];
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    
+    // convert to on-screen coordinates
+    CGRect rect = [collectionView convertRect:cell.frame toView:self.collectionView];
+    
+    [CardImageViewPopover showForCard:card fromRect:rect inView:self.collectionView];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(160, 119);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsZero;
+}
+
+-(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.draw.count;
+}
+
+#pragma mark longpress
+
+-(void) longPress:(UIGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
+        TF_CHECKPOINT(@"draw long press");
+        
+        NSIndexPath* indexPath;
+        if (self.tableView.hidden)
+        {
+            CGPoint point = [gesture locationInView:self.collectionView];
+            indexPath = [self.collectionView indexPathForItemAtPoint:point];
+        }
+        else
+        {
+            CGPoint point = [gesture locationInView:self.tableView];
+            indexPath = [self.tableView indexPathForRowAtPoint:point];
+        }
+        
+        BOOL played = [[self.played objectAtIndex:indexPath.row] boolValue];
+        self.played[indexPath.row] = @(!played);
+        
+        NSArray* paths = @[ indexPath ];
+        [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+        [self.collectionView reloadItemsAtIndexPaths:paths];
+    }
+}
 
 @end

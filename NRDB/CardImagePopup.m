@@ -15,6 +15,7 @@
 @interface CardImagePopup ()
 
 @property CardCounter* cc;
+@property BOOL draft;
 
 @end
 
@@ -22,9 +23,9 @@
 
 static UIPopoverController* popover;
 
-+(CardImagePopup*) showForCard:(CardCounter *)cc fromRect:(CGRect)rect inView:(UIView*)view direction:(UIPopoverArrowDirection)direction
++(CardImagePopup*) showForCard:(CardCounter *)cc draft:(BOOL)draft fromRect:(CGRect)rect inView:(UIView*)view direction:(UIPopoverArrowDirection)direction
 {
-    CardImagePopup* cip = [[CardImagePopup alloc] initWithCard:cc];
+    CardImagePopup* cip = [[CardImagePopup alloc] initWithCard:cc draft:(BOOL)draft];
     
     popover = [[UIPopoverController alloc] initWithContentViewController:cip];
     popover.popoverContentSize = cip.view.frame.size;
@@ -43,12 +44,13 @@ static UIPopoverController* popover;
     }
 }
 
-- (id)initWithCard:(CardCounter*)cc
+- (id)initWithCard:(CardCounter*)cc draft:(BOOL)draft
 {
     self = [super initWithNibName:@"CardImagePopup" bundle:nil];
     if (self)
     {
         self.cc = cc;
+        self.draft = draft;
         self.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     return self;
@@ -59,8 +61,8 @@ static UIPopoverController* popover;
     [super viewDidLoad];
     
     self.copiesStepper.value = self.cc.count;
-    self.copiesStepper.maximumValue = self.cc.card.maxCopies;
-    self.copiesLabel.text = [NSString stringWithFormat:@"×%d", self.cc.count];
+    self.copiesStepper.maximumValue = self.draft ? 100 : self.cc.card.maxCopies;
+    self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)self.cc.count];
     self.nameLabel.text = self.cc.card.name;
     
     // auto-scaling of fonts does not work in multiline labels. DIY :(
@@ -107,11 +109,11 @@ static UIPopoverController* popover;
     }
     else
     {
-        self.copiesLabel.text = [NSString stringWithFormat:@"×%d", self.cc.count];
+        self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)self.cc.count];
     }
     
     self.copiesLabel.textColor = [UIColor blackColor];
-    if ([self.cc.card.setCode isEqualToString:@"core"])
+    if ([self.cc.card.setCode isEqualToString:@"core"] && !self.draft)
     {
         NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
         NSInteger owned = cores * self.cc.card.quantity;

@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class TableData;
-@class CardFilterHeaderView;
+@class CardFilterViewController;
 
 @interface CardFilterPopover : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property IBOutlet UITableView* tableView;
 
-+(void) showFromButton:(UIButton*)button inView:(CardFilterHeaderView*)view entries:(TableData*)entries type:(NSString*)type selected:(id)selected;
++(void) showFromButton:(UIButton*)button inView:(CardFilterViewController*)vc entries:(TableData*)entries type:(NSString*)type selected:(id)selected;
 
 @end

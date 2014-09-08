@@ -7,18 +7,18 @@
 //
 
 #import <SVProgressHUD.h>
+#import <SDCAlertView.h>
 
 #import "ActionsTableViewController.h"
 #import "EmptyDetailViewController.h"
 #import "DetailViewManager.h"
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
-#import "FilteredCardViewController.h"
-#import "SavedDecksViewController.h"
+#import "CardFilterViewController.h"
 #import "ImportDecksViewController.h"
 #import "DecksViewController.h"
 #import "Notifications.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "SettingsKeys.h"
 #import "Deck.h"
 #import "NRNavigationController.h"
@@ -85,12 +85,20 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
     
     // check if card data is available
-    if (![CardData cardsAvailable])
+    if (![CardManager cardsAvailable])
     {
         NSString* msg = l10n(@"To use this app, you must first download card data from netrunnerdb.com");
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"No Card Data") message:msg delegate:self cancelButtonTitle:l10n(@"Not now") otherButtonTitles:l10n(@"Download"), nil];
-        alert.tag = 0;
-        [alert show];
+        
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"No Card Data")
+                                                   message:msg
+                                                   buttons:@[l10n(@"Not now"), l10n(@"Download")]];
+        
+        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+            if (buttonIndex == 1)
+            {
+                [DataDownload downloadCardData];
+            }
+        };
     }
 }
 
@@ -119,9 +127,14 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     // [defaults setObject:@"" forKey:LAST_START_VERSION];
     NSString* lastVersion = [defaults objectForKey:LAST_START_VERSION];
-    if (![self.appVersion isEqualToString:lastVersion])
+#if DEBUG
+    BOOL skipCheck = YES;
+#else
+    BOOL skipCheck = NO;
+#endif
+    if (![self.appVersion isEqualToString:lastVersion] && !skipCheck)
     {
-        // yes, first start. show "about" tab, and do NOT load any previous saved state
+        // yes, first start. show "about" tab
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuAbout inSection:0];
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         
@@ -129,7 +142,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         [defaults setObject:self.appVersion forKey:LAST_START_VERSION];
         [defaults synchronize];
     }
-    else if ([CardData cardsAvailable])
+    else if ([CardManager cardsAvailable])
     {
         // initially select Decks view
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
@@ -163,35 +176,25 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     if ([scheduled compare:now] == NSOrderedAscending)
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Update cards")
-                                                        message:l10n(@"Card data may be out of date. Download now?")
-                                                       delegate:self
-                                              cancelButtonTitle:l10n(@"Later")
-                                              otherButtonTitles:l10n(@"OK"), nil];
-        alert.tag = 1;
-        [alert show];
-    }
-}
-
-#pragma mark alerts
-
--(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1)
-    {
-        [DataDownload downloadCardData];
-    }
-    
-    // "later" in update alert?
-    if (alertView.tag == 1 && buttonIndex == 0)
-    {
-        NSDateFormatter *fmt = [NSDateFormatter new];
-        [fmt setDateStyle:NSDateFormatterShortStyle]; // z.B. 08.10.2008
-        [fmt setTimeStyle:NSDateFormatterNoStyle];
-        
-        NSDate* next = [NSDate dateWithTimeIntervalSinceNow:24*60*60];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Update cards")
+                                                   message:l10n(@"Card data may be out of date. Download now?")
+                                                   buttons:@[l10n(@"Later"), l10n(@"OK")]];
+        alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+            if (buttonIndex == 0) // later
+            {
+                NSDateFormatter *fmt = [NSDateFormatter new];
+                [fmt setDateStyle:NSDateFormatterShortStyle]; // dd.mm.yyyy
+                [fmt setTimeStyle:NSDateFormatterNoStyle];
+                // ask again tomorrow
+                NSDate* next = [NSDate dateWithTimeIntervalSinceNow:24*60*60];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
+            }
+            if (buttonIndex == 1) // ok
+            {
+                [DataDownload downloadCardData];
+            }
+        };
     }
 }
 
@@ -204,7 +207,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRRole role = [[userInfo objectForKey:@"role"] intValue];
     NSString* filename = [userInfo objectForKey:@"filename"];
     
-    FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role andFile:filename];
+    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andFile:filename];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
@@ -219,7 +222,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     NRRole role = [[userInfo objectForKey:@"role"] intValue];
     
-    FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role];
+    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
@@ -236,7 +239,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     [DeckManager saveDeck:deck];
     
-    FilteredCardViewController *filter = [[FilteredCardViewController alloc] initWithRole:role andDeck:deck];
+    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andDeck:deck];
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
@@ -269,8 +272,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    BOOL cardsAvailable = [CardData cardsAvailable];
-    
     // Set appropriate labels for the cells.
     switch (indexPath.row)
     {
@@ -282,7 +283,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             break;
         case NRMenuDecks:
             cell.textLabel.text = l10n(@"Decks");
-            cell.textLabel.enabled = cardsAvailable;
+            cell.textLabel.enabled = [CardManager cardsAvailable];
             break;
     }
     

@@ -10,6 +10,7 @@
 "never" = "Nunca";
 "All" = "Todos";
 "Any" = "Cualquiera";
+"Both" = "Ambos";
 "card" = "carta";
 "Card" = "Carta";
 "cards" = "cartas";
@@ -51,6 +52,7 @@
 "Save" = "Guardar";
 "Saving..." = "Guardando...";
 "Duplicate" = "Duplicar";
+"Rename" = "Renombrar";
 "Yes, switch to copy" = "Sí, pasar a Copiar";
 "Yes, but stay here" = "Sí, pero permanecer aquí";
 "Identity" = "Identidad";
@@ -69,6 +71,12 @@
 "AP must be %d or %d" = "Los PP deben ser %d o %d";
 "Too many pet projects" = "Demasiados Proyecto Favorito";
 "Too many entanglements" = "Demasiados Enredo";
+"Too many Utopia Shards" = "Demasiados Utopia Shards";
+"Too many Utopia Fragments" = "Demasiados Utopia Fragments";
+"Too many Hades Shards" = "Demasiados Hades Shards";
+"Too many Hades Fragments" = "Demasiados Hades Fragments";
+"Too many Eden Fragments" = "Demasiados Eden Fragments";
+"Too many Eden Shards" = "Demasiados Eden Shards";
 "Cannot include Jinteki" = "No puede incluir cartas Jinteki";
 "Cannot use out-of-faction agendas" = "No puede usar Planes de otra facción";
 "Not enough cards" = "No hay cartas suficientes";
@@ -96,6 +104,7 @@
 // deck view
 "Draw" = "Robar";
 "Analysis" = "Análisis";
+"Notes" = "Nota";
 
 // deck analysis
 "Deck Analysis" = "Análisis del mazo";
@@ -115,6 +124,16 @@
 "%d Cards · %d Influence" = "%d Cartas · %d Influencia";
 "%d Cards · %d Influence · %d AP" = "%d Cartas · %d Influencia · %d PP";
 "Date" = "Fecha";
+"Copy to Clipboard" = "Copiar al portapapeles";
+"Send via Email" = "Enviar Email";
+"Sort" = "Ordenación";
+"Side" = "Partido";
+"Status" = "Estado";
+"Active" = "Activo";
+"Testing" = "A Prueba";
+"Retired" = "Retirado";
+"Search for decks, identities or cards" = "Buscar mazos, identidades o cartas";
+
 
 // filter
 "Strength: %@" = "Fuerza: %@";
@@ -128,6 +147,10 @@
 "Set" = "Set";
 "Search in:" = "Buscar en:";
 "Search Cards" = "Buscar Cartas";
+"Name" = "Nombre";
+"Text" = "Texto";
+"Less △" = "Menos △";
+"More ▽" = "Más ▽";
 
 // section headers
 "Identity" = "Identidad";

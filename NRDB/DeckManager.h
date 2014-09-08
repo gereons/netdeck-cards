@@ -12,11 +12,11 @@
 
 @interface DeckManager : NSObject
 
-// save deck in new file, return full pathname
-+(NSString*) saveDeck:(Deck*)deck;
+// save deck, create new file if deck.filename is nil
++(void) saveDeck:(Deck*)deck;
 
 // save deck in given file
-+(void) saveDeck:(Deck*)deck toPath:(NSString*)pathname;
+// +(void) saveDeck:(Deck*)deck toPath:(NSString*)pathname;
 
 // load deck from given file
 +(Deck*) loadDeckFromPath:(NSString*)pathname;
@@ -26,6 +26,8 @@
 
 // remove a file
 +(void) removeFile:(NSString*)pathname;
+
++(void) resetModificationDate:(Deck*)deck;
 
 +(NSMutableArray*) decksForRole:(NRRole)role;
 

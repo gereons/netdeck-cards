@@ -14,17 +14,29 @@
 @interface Deck()
 {
     NSMutableArray* _cards; // array of CardCounter
+    
 }
+#if DEBUG
+@property NSString* idCode;
+#endif
 
 @end
 
+static NSArray* draftIds;
+
 @implementation Deck
+
++(void) initialize
+{
+    draftIds = @[ THE_MASQUE, THE_SHADOW ];
+}
 
 -(Deck*) init
 {
     if ((self = [super init]))
     {
         self->_cards = [NSMutableArray array];
+        self.state = NRDeckStateTesting;
     }
     return self;
 }
@@ -38,22 +50,36 @@
 {
     if (identity)
     {
-        self.identityCc = [CardCounter initWithCard:identity andCount:1];
+        self->_identityCc = [CardCounter initWithCard:identity andCount:1];
         self.role = identity.role;
+#if DEBUG
+        self.idCode = identity.code;
+#endif
     }
     else
     {
-        self.identityCc = nil;
+        self->_identityCc = nil;
+#if DEBUG
+        self.idCode = nil;
+#endif
     }
+    
+    self->_isDraft = [draftIds containsObject:identity.code];
 }
 
 -(NSArray*) cards
 {
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     return self->_cards;
 }
 
 -(NSArray*) allCards
 {
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     NSMutableArray* arr = [NSMutableArray array];
     if (self.identityCc)
     {
@@ -75,7 +101,7 @@
         NSAssert(self.identityCc.count == 1, @"identity count");
     }
     
-    if (self.influence > self.identity.influenceLimit)
+    if (!self.isDraft && self.influence > self.identity.influenceLimit)
     {
         [reasons addObject:l10n(@"Too much influence used")];
     }
@@ -85,7 +111,8 @@
         [reasons addObject:l10n(@"Not enough cards")];
     }
     
-    if (self.identity.role == NRRoleCorp)
+    NRRole role = self.identity.role;
+    if (role == NRRoleCorp)
     {
         // check agenda points
         int apRequired = ((self.size / 5) + 1) * 2;
@@ -93,15 +120,20 @@
         {
             [reasons addObject:[NSString stringWithFormat:l10n(@"AP must be %d or %d"), apRequired, apRequired+1]];
         }
+    }
     
-        BOOL noJinteki = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
+    BOOL noJintekiAllowed = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
+    
+    BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
+    BOOL hfError = NO, hsError = NO, usError = NO, efError = NO, esError = NO;
+    
+    // check max 1 per deck restrictions
+    for (CardCounter* cc in self.cards)
+    {
+        Card* card = cc.card;
         
-        BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
-        
-        // check dir. haas, custom biotics and out-of-faction agendas
-        for (CardCounter* cc in self.cards)
+        if (role == NRRoleCorp)
         {
-            Card* card = cc.card;
             if ([card.code isEqualToString:DIRECTOR_HAAS_PET_PROJ] && cc.count > 1 && !petError)
             {
                 petError = YES;
@@ -114,16 +146,47 @@
                 [reasons addObject:l10n(@"Too many entanglements")];
             }
             
-            if (noJinteki && card.faction == NRFactionJinteki && !jintekiError)
+            if ([card.code isEqualToString:HADES_FRAGMENT] && cc.count > 1 && !hfError)
+            {
+                hfError = YES;
+                [reasons addObject:l10n(@"Too many Hades Fragments")];
+            }
+            
+            if ([card.code isEqualToString:EDEN_FRAGMENT] && cc.count > 1 && !efError)
+            {
+                efError = YES;
+                [reasons addObject:l10n(@"Too many Eden Fragments")];
+            }
+            
+            if (noJintekiAllowed && card.faction == NRFactionJinteki && !jintekiError)
             {
                 jintekiError = YES;
                 [reasons addObject:l10n(@"Cannot include Jinteki")];
             }
             
-            if (card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction && !agendaError)
+            if (!self.isDraft && card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction && !agendaError)
             {
                 agendaError = YES;
                 [reasons addObject:l10n(@"Cannot use out-of-faction agendas")];
+            }
+        }
+        else
+        {
+            // runner-only checks
+            if ([card.code isEqualToString:HADES_SHARD] && cc.count > 1 && !hsError)
+            {
+                hsError = YES;
+                [reasons addObject:l10n(@"Too many Hades Shards")];
+            }
+            if ([card.code isEqualToString:EDEN_SHARD] && cc.count > 1 && !esError)
+            {
+                esError = YES;
+                [reasons addObject:l10n(@"Too many Eden Shards")];
+            }
+            if ([card.code isEqualToString:UTOPIA_SHARD] && cc.count > 1 && !usError)
+            {
+                usError = YES;
+                [reasons addObject:l10n(@"Too many Utopia Shards")];
             }
         }
     }
@@ -131,8 +194,12 @@
     return reasons;
 }
 
+
 -(int) size
 {
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     int sz = 0;
     for (CardCounter* cc in _cards)
     {
@@ -143,13 +210,15 @@
 
 -(int) agendaPoints
 {
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     int ap = 0;
     
     for (CardCounter* cc in _cards)
     {
         if (cc.card.type == NRCardTypeAgenda)
         {
-            NSAssert(cc.count > 0 && cc.count < 4, @"invalid card count");
             ap += cc.card.agendaPoints * cc.count;
         }
     }
@@ -158,6 +227,9 @@
 
 -(int) influence
 {
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     int inf = 0;
     BOOL isProfessor = [self.identity.code isEqualToString:THE_PROFESSOR];
     
@@ -165,8 +237,7 @@
     {
         if (cc.card.faction != self.identity.faction && cc.card.influence != -1)
         {
-            int count = cc.count;
-            NSAssert(count > 0 && count < 4, @"invalid card count");
+            NSUInteger count = cc.count;
             
             if (isProfessor && cc.card.type == NRCardTypeProgram)
             {
@@ -179,15 +250,17 @@
     return inf;
 }
 
--(int) influenceFor:(CardCounter *)cc
+-(NSUInteger) influenceFor:(CardCounter *)cc
 {
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     if (self.identity.faction == cc.card.faction || cc.card.influence == -1)
     {
         return 0;
     }
     
-    int count = cc.count;
-    NSAssert(count > 0 && count < 4, @"invalid card count");
+    NSUInteger count = cc.count;
     if (cc.card.type == NRCardTypeProgram && [self.identity.code isEqualToString:THE_PROFESSOR])
     {
         --count;
@@ -198,9 +271,10 @@
 
 -(void) addCard:(Card *)card copies:(int)copies
 {
-    NSAssert(copies > 0 && copies < 4, @"invalid card count");
     NSAssert(card.type != NRCardTypeIdentity, @"can't add identity");
-    
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     int index = [self indexOfCard:card];
     if (index == -1)
     {
@@ -210,10 +284,17 @@
     else
     {
         CardCounter* cc = [_cards objectAtIndex:index];
-        int max = cc.card.maxCopies;
-        if (cc.count < max)
+        if (self.isDraft)
         {
-            cc.count = MIN(max, cc.count + copies);
+            cc.count += copies;
+        }
+        else
+        {
+            int max = cc.card.maxCopies;
+            if (cc.count < max)
+            {
+                cc.count = MIN(max, cc.count + copies);
+            }
         }
     }
     [self sort];
@@ -221,11 +302,17 @@
 
 -(void) removeCard:(Card *)card
 {
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     [self removeCard:card copies:-1];
 }
 
 -(void) removeCard:(Card *)card copies:(int)copies
 {
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     NSAssert(card.type != NRCardTypeIdentity, @"can't remove identity");
     int index = [self indexOfCard:card];
     NSAssert(index != -1, @"removing card %@, not in deck", card.name);
@@ -246,10 +333,13 @@
     Deck* newDeck = [Deck new];
     
     newDeck.name = [NSString stringWithFormat:l10n(@"Copy of %@"), self.name];
-    newDeck.identityCc = self.identityCc;
+    newDeck->_identityCc = [CardCounter initWithCard:self.identity];
+    newDeck->_isDraft = self.isDraft;
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
     newDeck->_role = self.role;
     newDeck.filename = nil;
+    newDeck.state = self.state;
+    newDeck.notes = self.notes ? [NSString stringWithString:self.notes] : nil;
     
     return newDeck;
 }
@@ -300,6 +390,9 @@
 
 -(TableData*) dataForTableView
 {
+#if DEBUG
+    NSAssert([self.idCode isEqualToString:self.identity.code], @"code mismatch");
+#endif
     NSMutableArray* sections = [NSMutableArray array];
     NSMutableArray* cards = [NSMutableArray array];
     
@@ -360,6 +453,7 @@
 }
 
 #pragma mark NSCoding
+
 -(id) initWithCoder:(NSCoder *)decoder
 {
     if ((self = [super init]))
@@ -367,14 +461,20 @@
         _cards = [decoder decodeObjectForKey:@"cards"];
         _name = [decoder decodeObjectForKey:@"name"];
         _role = [decoder decodeIntForKey:@"role"];
+        _state = [decoder decodeIntForKey:@"state"];
+        _isDraft = [decoder decodeBoolForKey:@"draft"];
         NSString* identityCode = [decoder decodeObjectForKey:@"identity"];
         Card* identity = [Card cardByCode:identityCode];
         if (identity)
         {
             _identityCc = [CardCounter initWithCard:identity andCount:1];
         }
+#if DEBUG
+        self.idCode = identity.code;
+#endif
         _identityCc.showAltArt = [decoder decodeBoolForKey:@"identityAltArt"];
         _lastModified = nil;
+        _notes = [decoder decodeObjectForKey:@"notes"];
     }
     return self;
 }
@@ -384,8 +484,11 @@
     [coder encodeObject:self.cards forKey:@"cards"];
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeInt:self.role forKey:@"role"];
+    [coder encodeInt:self.state forKey:@"state"];
+    [coder encodeBool:self.isDraft forKey:@"draft"];
     [coder encodeObject:self.identity.code forKey:@"identity"];
     [coder encodeBool:self.identityCc.showAltArt forKey:@"identityAltArt"];
+    [coder encodeObject:self.notes forKey:@"notes"];
 }
 
 

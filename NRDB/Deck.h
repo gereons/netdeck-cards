@@ -13,21 +13,25 @@
 
 @interface Deck : NSObject <NSCoding>
 
-@property (strong) CardCounter* identityCc;
+@property (readonly) CardCounter* identityCc;
 @property (readonly) NSArray* cards;        // array of CardCounter, all cards except identity
 @property (readonly) NSArray* allCards;     // array of CardCounter, all cards including identity, id is first element
 
 @property (nonatomic) Card* identity;        // convenience accessor
 
-@property (strong) NSString* name;
+@property NSString* name;
 @property NRRole role;
+@property NRDeckState state;
 
 @property (readonly) int size;
 @property (readonly) int influence;
 @property (readonly) int agendaPoints;
+@property (readonly) BOOL isDraft;
 
 @property NSString* filename;
 @property NSDate* lastModified;
+
+@property NSString* notes;
 
 -(NSArray*) checkValidity; // returns array of reasons, deck is ok if count==0
 
@@ -36,7 +40,7 @@
 -(void) removeCard:(Card*) card;
 -(void) removeCard:(Card*) card copies:(int)copies;
 
--(int) influenceFor:(CardCounter*)cc;
+-(NSUInteger) influenceFor:(CardCounter*)cc;
 
 -(Deck*) duplicate;
 

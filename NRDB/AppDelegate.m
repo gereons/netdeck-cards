@@ -6,17 +6,19 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <TMCache.h>
 #import <AFNetworking.h>
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
 
 #import "AppDelegate.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "SettingsKeys.h"
 #import "CardSets.h"
 #import "DeckImport.h"
 #import "Card.h"
+#import "CardImageViewPopover.h"
+
+NSString* const kANY = @"Any";
 
 @implementation AppDelegate
 
@@ -26,7 +28,7 @@
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
-    [CardData setupFromFile];
+    [CardManager setupFromFiles];
     
     DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"4mhw6piwd9wqti3" secret:@"5j8qxt2ywsrlk73"];
 	[DBAccountManager setSharedManager:accountManager];
@@ -48,12 +50,8 @@
     self.window.rootViewController = self.splitViewController;
     [self.window makeKeyAndVisible];
     
-    // setup tmcache
-    NSInteger cardCount = [Card allCards].count;
-    NSInteger byteLimit = cardCount == 0 ? 70*1024*1024 : cardCount * 120000;
-    [TMCache sharedCache].diskCache.byteLimit = byteLimit;
-
     [DeckImport checkClipboardForDeck];
+    [CardImageViewPopover monitorKeyboard];
     
     return YES;
 }
@@ -71,7 +69,11 @@
         AUTO_SAVE_DB: @(NO),
         DECK_VIEW_STYLE: @(1),
         LANGUAGE: @"en",
-        NUM_CORES: @(3)
+        NUM_CORES: @(3),
+        
+        SHOW_ALL_FILTERS: @(YES),
+        DECK_FILTER_STATE: @(NRDeckStateNone),
+        DECK_FILTER_SORT: @(NRDeckSortA_Z),
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];

@@ -10,6 +10,7 @@
 "never" = "jamais";
 "All" = "Tous";
 "Any" = "Tous";
+"Both" = "Deux";
 "card" = "carte";
 "Card" = "Carte";
 "cards" = "cartes";
@@ -50,6 +51,7 @@
 "Save" = "Sauvegarder";
 "Saving..." = "Sauvegarde en cours...";
 "Duplicate" = "Dupliquer";
+"Rename" = "Renommer";
 "Yes, switch to copy" = "Oui, modifier en tant que copie";
 "Yes, but stay here" = "Oui, mais rester ici";
 "Identity" = "Identité";
@@ -68,6 +70,12 @@
 "AP must be %d or %d" = "Le nombre de points de projet doit être de %d ou de %d";
 "Too many pet projects" = "Trop de projet personnel";
 "Too many entanglements" = "Trop d'enchevêtrements";
+"Too many Utopia Shards" = "Trop d'Utopia Shards";
+"Too many Utopia Fragments" = "Trop d'Utopia Fragments";
+"Too many Hades Shards" = "Trop de Hades Shards";
+"Too many Hades Fragments" = "Trop de Hades Fragments";
+"Too many Eden Fragments" = "Trop d'Eden Fragments";
+"Too many Eden Shards" = "Trop d'Eden Shards";
 "Cannot include Jinteki" = "Ne peux pas inclure de cartes de la faction Jinteki";
 "Cannot use out-of-faction agendas" = "Ne peut pas utiliser des projets hors faction";
 "Not enough cards" = "Pas assez de cartes";
@@ -95,6 +103,7 @@
 // deck view
 "Draw" = "Cartes";
 "Analysis" = "Analyse";
+"Notes" = "Note";
 
 // analyse du deck 
 "Deck Analysis" = "Analyse du deck";
@@ -113,6 +122,17 @@
 "%@ · %d Cards · %d Influence" = "%@ · %d Cartes · %d Influence";
 "%d Cards · %d Influence" = "%d Cartes · %d Influence";
 "%d Cards · %d Influence · %d AP" = "%d Cartes · %d Influence · %d PP";
+"Date" = "Date";
+"Copy to Clipboard" = "Copie dans le presse papier";
+"Send via Email" = "Email";
+"Sort" = "Triage";
+"Side" = "Partie";
+"Status" = "Status";
+"Active" = "Active";
+"Testing" = "Evaluation";
+"Retired" = "Retiré";
+"Search for decks, identities or cards" = "Recherche pour les decks, les identités ou les cartes";
+
 
 // filtre
 "Strength: %@" = "Force: %@";
@@ -125,7 +145,11 @@
 "Faction" = "Faction";
 "Set" = "Extension";
 "Search in:" = "Chercher dans:";
+"Name" = "Nom";
+"Text" = "Texte";
 "Search Cards" = "Chercher les cartes";
+"Less △" = "Moins △";
+"More ▽" = "Plus ▽";
 
 // section headers
 "Identity" = "Indentité";

@@ -7,7 +7,7 @@
 //
 
 #import "Faction.h"
-#import "CardData.h"
+#import "CardManager.h"
 
 @implementation Faction
 
@@ -34,14 +34,14 @@ static NSMutableArray* corpFactions;
     faction2name[@(NRFactionNone)] = kANY;
 }
 
-+(void) initializeFactionNames:(NSDictionary*)cards
++(void) initializeFactionNames:(NSArray*)cards
 {
     [faction2name removeAllObjects];
     faction2name[@(NRFactionNone)] = kANY;
     
-    for (CardData* cd in [cards allValues])
+    for (Card* c in cards)
     {
-        [faction2name setObject:cd.factionStr forKey:@(cd.faction)];
+        [faction2name setObject:c.factionStr forKey:@(c.faction)];
         
         if (faction2name.count == code2faction.count + 1)
         {

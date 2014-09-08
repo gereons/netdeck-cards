@@ -12,6 +12,7 @@
 
 #import "Faction.h"
 #import "Card.h"
+#import "CardManager.h"
 #import "CardSets.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
@@ -39,6 +40,8 @@
 
 - (id)initWithRole:(NRRole)role andIdentity:(Card*)identity
 {
+    TF_CHECKPOINT(@"identity selection");
+    
     self = [super initWithNibName:@"IdentitySelectionViewController" bundle:nil];
     if (self)
     {
@@ -50,14 +53,17 @@
         
         NSMutableArray* factions = [[Faction factionsForRole:role] mutableCopy];
         
-        [factions removeObject:[Faction name:NRFactionNeutral]];
+        NSString* neutral = [Faction name:NRFactionNeutral];
         [factions removeObject:[Faction name:NRFactionNone]];
+        // move 'neutral' to the end
+        [factions removeObject:neutral];
+        [factions addObject:neutral];
         
         self.factionNames = [NSArray arrayWithArray:factions];
         
         NSSet* disabledSets = [CardSets disabledSetCodes];
         
-        NSArray* identities = [Card identitiesForRole:role];
+        NSArray* identities = [CardManager identitiesForRole:role];
         for (int i=0; i<factions.count; ++i)
         {
             [self.identities addObject:[NSMutableArray array]];
@@ -178,7 +184,15 @@
     cell.titleLabel.textColor = c.factionColor;
     
     cell.deckSizeLabel.text = [@(c.minimumDecksize) stringValue];
-    cell.influenceLimitLabel.text = [@(c.influenceLimit) stringValue];
+    
+    if (c.influenceLimit == -1)
+    {
+        cell.influenceLimitLabel.text = @"∞";
+    }
+    else
+    {
+        cell.influenceLimitLabel.text = [@(c.influenceLimit) stringValue];
+    }
     
     if (self.role == NRRoleRunner)
     {

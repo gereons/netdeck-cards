@@ -9,6 +9,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ActionsTableViewController : UITableViewController<UIAlertViewDelegate>
+@interface ActionsTableViewController : UITableViewController
 
 @end

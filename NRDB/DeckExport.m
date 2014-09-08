@@ -26,10 +26,13 @@
     NSError* error;
     GRMustacheTemplate* template = [GRMustacheTemplate templateFromResource:@"OCTGN" bundle:nil error:&error];
     
-    NSDictionary* objects = @{
-        @"identity": deck.identity,
-        @"cards": deck.cards
-    };
+    NSMutableDictionary* objects = [NSMutableDictionary dictionary];
+    objects[@"identity"] = deck.identity;
+    objects[@"cards"] = deck.cards;
+    if (deck.notes)
+    {
+        objects[@"notes"] = deck.notes;
+    }
     
     NSString* octgnName = [NSString stringWithFormat:@"%@.o8d", deck.name];
     NSString* content = [template renderObject:objects error:&error];
@@ -46,14 +49,17 @@
     NSMutableString* s = [NSMutableString stringWithCapacity:1000];
     
     [s appendString:[NSString stringWithFormat:@"%@\n\n", deck.name]];
-    [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
+    if (deck.identity)
+    {
+        [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
+    }
     
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (cc.card.type == NRCardTypeIdentity)
+        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -64,9 +70,9 @@
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
-            [s appendString:[NSString stringWithFormat:@"%dx %@ (%@)", cc.count, cc.card.name, cc.card.setName]];
+            [s appendString:[NSString stringWithFormat:@"%lux %@ (%@)", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
-            int influence = [deck influenceFor:cc];
+            NSUInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 [s appendString:[NSString stringWithFormat:@" %@\n", [DeckExport dots:influence]]];
@@ -88,7 +94,15 @@
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with " APP_NAME ];
+    [s appendString:@"\nDeck built with " APP_NAME " " APP_URL "\n"];
+    
+    if (deck.notes.length > 0)
+    {
+        [s appendString:@"\n"];
+        [s appendString:deck.notes];
+        [s appendString:@"\n"];
+    }
+    
     return s;
 }
 
@@ -108,14 +122,17 @@
     NSMutableString* s = [NSMutableString stringWithCapacity:1000];
     
     [s appendString:[NSString stringWithFormat:@"# %@\n\n", deck.name]];
-    [s appendString:[NSString stringWithFormat:@"[%@](%@) _(%@)_\n", deck.identity.name, deck.identity.url, deck.identity.setName]];
+    if (deck.identity)
+    {
+        [s appendString:[NSString stringWithFormat:@"[%@](%@) _(%@)_\n", deck.identity.name, deck.identity.url, deck.identity.setName]];
+    }
     
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (cc.card.type == NRCardTypeIdentity)
+        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -126,31 +143,38 @@
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
-            [s appendString:[NSString stringWithFormat:@"%dx [%@](%@) _(%@)_", cc.count, cc.card.name, cc.card.url, cc.card.setName]];
+            [s appendString:[NSString stringWithFormat:@"%lux [%@](%@) _(%@)_", (unsigned long)cc.count, cc.card.name, cc.card.url, cc.card.setName]];
             
-            int influence = [deck influenceFor:cc];
+            NSUInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
-                [s appendString:[NSString stringWithFormat:@" %@\n", [DeckExport dots:influence]]];
+                [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
             }
-            else
-            {
-                [s appendString:@"\n"];
-            }
+            
+            [s appendString:@"  \n"];
+            
             numCards += cc.count;
         }
     }
     
     [s appendFormat:@"\n"];
-    [s appendFormat:@"Cards in deck: %d (min %d)\n", numCards, deck.identity.minimumDecksize];
-    [s appendFormat:@"%d/%d influence used\n", deck.influence, deck.identity.influenceLimit];
+    [s appendFormat:@"Cards in deck: %d (min %d)  \n", numCards, deck.identity.minimumDecksize];
+    [s appendFormat:@"%d/%d influence used  \n", deck.influence, deck.identity.influenceLimit];
     if (deck.identity.role == NRRoleCorp)
     {
-        [s appendFormat:@"Agenda Points: %d\n", deck.agendaPoints];
+        [s appendFormat:@"Agenda Points: %d  \n", deck.agendaPoints];
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with [" APP_NAME "](url=" APP_URL ").\n"];
+    [s appendString:@"\nDeck built with [" APP_NAME "](" APP_URL ").\n"];
+    
+    if (deck.notes.length > 0)
+    {
+        [s appendString:@"\n"];
+        [s appendString:deck.notes];
+        [s appendString:@"\n"];
+    }
+    
     return s;
 }
 
@@ -170,14 +194,17 @@
     NSMutableString* s = [NSMutableString stringWithCapacity:1000];
     
     [s appendString:[NSString stringWithFormat:@"[b]%@[/b]\n\n", deck.name]];
-    [s appendString:[NSString stringWithFormat:@"[url=%@]%@[/url] (%@)\n", deck.identity.url, deck.identity.name, deck.identity.setName]];
+    if (deck.identity)
+    {
+        [s appendString:[NSString stringWithFormat:@"[url=%@]%@[/url] (%@)\n", deck.identity.url, deck.identity.name, deck.identity.setName]];
+    }
     
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (cc.card.type == NRCardTypeIdentity)
+        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -188,9 +215,9 @@
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
-            [s appendString:[NSString stringWithFormat:@"%dx [url=%@]%@[/url] [i](%@)[/i]", cc.count, cc.card.url, cc.card.name, cc.card.setName]];
+            [s appendString:[NSString stringWithFormat:@"%lux [url=%@]%@[/url] [i](%@)[/i]", (unsigned long)cc.count, cc.card.url, cc.card.name, cc.card.setName]];
             
-            int influence = [deck influenceFor:cc];
+            NSUInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 NSString* color = [NSString stringWithFormat:@"%lx", (unsigned long)cc.card.factionHexColor];
@@ -214,6 +241,14 @@
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
     [s appendString:@"\nDeck built with [url=" APP_URL "]" APP_NAME "[/url].\n"];
+    
+    if (deck.notes.length > 0)
+    {
+        [s appendString:@"\n"];
+        [s appendString:deck.notes];
+        [s appendString:@"\n"];
+    }
+    
     return s;
 }
 
@@ -224,7 +259,7 @@
     [DeckExport writeToDropbox:s fileName:bbcName deckType:l10n(@"BBCode Deck") autoSave:NO];
 }
 
-+(NSString*) dots:(int)count
++(NSString*) dots:(NSUInteger)count
 {
     NSMutableString* s = [NSMutableString stringWithCapacity:count+5];
     for (int i=0; i<count; ++i)

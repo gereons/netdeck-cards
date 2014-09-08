@@ -64,6 +64,22 @@
 		</dict>
 		<dict>
 			<key>Title</key>
+			<string>Unpublished Identities</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Plugged-In &amp; Chronos Protocol</string>
+			<key>Key</key>
+			<string>use_unpublished_identities</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Title</key>
 			<string>Genesis Cycle</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
@@ -210,7 +226,7 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
+		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
@@ -220,13 +236,33 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
+		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
 			<string>First Contact</string>
 			<key>Key</key>
 			<string>use_first_contact</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Up and Over</string>
+			<key>Key</key>
+			<string>use_up_and_over</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>All That Remains</string>
+			<key>Key</key>
+			<string>use_all_that_remains</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

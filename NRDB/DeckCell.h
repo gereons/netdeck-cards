@@ -14,5 +14,6 @@
 @property IBOutlet UILabel* identityLabel;
 @property IBOutlet UILabel* summaryLabel;
 @property IBOutlet UILabel* dateLabel;
+@property IBOutlet UIButton* infoButton;
 
 @end

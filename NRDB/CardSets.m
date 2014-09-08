@@ -7,8 +7,9 @@
 //
 
 #import "CardSets.h"
-#import "CardData.h"
+#import "CardManager.h"
 #import "Deck.h"
+#import "SettingsKeys.h"
 
 @interface CardSets()
 @property int setNum;
@@ -59,6 +60,8 @@ static struct cardSetData {
     { 16, "use_upstalk", "up", NRCycleLunar, NO },
     { 17, "use_spaces_between", "tsb", NRCycleLunar, NO },
     { 18, "use_first_contact", "fc", NRCycleLunar, NO },
+    { 19, "use_up_and_over", "uao", NRCycleLunar, NO },
+    { 20, "use_all_that_remains", "atr", NRCycleLunar, NO },
     
     { 0 }
 };
@@ -94,16 +97,16 @@ static struct cardSetData {
         @[ @"core", @"cac", @"hap" ],
         @[ @"wla", @"ta", @"ce", @"asis", @"hs", @"fp" ],
         @[ @"om", @"st", @"mt", @"tc", @"fal", @"dt" ],
-        @[ @"up", @"tsb", @"fc" ]
+        @[ @"up", /* @"tsb", @"fc", @"uao", @"atr" */ ]
     ];
     
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
 }
 
-+(void) initializeSetNames:(NSDictionary *)cards
++(void) initializeSetNames:(NSArray*)cards
 {
     [setNames removeAllObjects];
-    for (Card* c in [cards allValues])
+    for (Card* c in cards)
     {
         [setNames setObject:c.setName forKey:c.setCode];
     }
@@ -112,6 +115,7 @@ static struct cardSetData {
 +(NSDictionary*) settingsDefaults
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+    dict[UNPUBLISHED_IDS] = @(NO);
     for (CardSets* cs in cardSets)
     {
         [dict setObject:@(cs.released) forKey:cs.settingsKey];
@@ -130,24 +134,12 @@ static struct cardSetData {
             [set addObject:cs.setCode];
         }
     }
-    return set;
-}
-
-+(NSArray*) allSets
-{
-    NSMutableArray* sets = [NSMutableArray arrayWithArray:[CardData allSets]];
     
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    for (CardSets* cs in cardSets)
+    if (![settings boolForKey:UNPUBLISHED_IDS])
     {
-        if (![settings boolForKey:cs.settingsKey])
-        {
-            NSString* name = [setNames objectForKey:cs.setCode];
-            [sets removeObject:name];
-        }
+        [set addObject:@"special"];
     }
-    
-    return sets;
+    return set;
 }
 
 +(TableData*) allSetsForTableview
@@ -194,7 +186,12 @@ static struct cardSetData {
     return [[TableData alloc] initWithSections:sections andValues:sets];
 }
 
-+(NSString*) setsUsedInDeck:(Deck*) deck
++(NSSet*) allKnownSets
+{
+    return setCodes;
+}
+
++(NSArray*) setsUsedInDeck:(Deck*) deck
 {
     NSMutableDictionary* sets = [NSMutableDictionary dictionary];
     NSMutableDictionary* setNums = [NSMutableDictionary dictionary];
@@ -220,7 +217,10 @@ static struct cardSetData {
         
         [sets setObject:n forKey:cc.card.setCode];
         int rel = [[releases objectForKey:cc.card.setCode] intValue];
-        [setNums setObject:@(rel) forKey:cc.card.setCode];
+        if (rel > 0)
+        {
+            [setNums setObject:@(rel) forKey:cc.card.setCode];
+        }
     }
     
     // NSLog(@"%@ %@", sets, setNums);
@@ -231,21 +231,18 @@ static struct cardSetData {
         return [n1 compare:n2];
     }];
     
-    NSMutableString* result = [NSMutableString string];
-    NSString* sep = @"";
+    NSMutableArray* result = [NSMutableArray array];
     for (NSString* s in sorted)
     {
-        [result appendString:sep];
         if ([s isEqualToString:@"core"])
         {
             NSNumber* needed = [sets objectForKey:s];
-            [result appendFormat:@"%@×%@", needed, [setNames objectForKey:s]];
+            [result addObject:[NSString stringWithFormat:@"%@×%@", needed, [setNames objectForKey:s]]];
         }
         else
         {
-            [result appendString:[setNames objectForKey:s]];
+            [result addObject:[setNames objectForKey:s]];
         }
-        sep = @", ";
     }
     // NSLog(@"%@", result);
     return result;
@@ -268,7 +265,7 @@ static struct cardSetData {
             return [setNames objectForKey:cs.setCode];
         }
     }
-    return nil;
+    return @"?";
 }
 
 @end

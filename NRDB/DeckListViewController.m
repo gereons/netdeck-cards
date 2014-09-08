@@ -7,13 +7,15 @@
 //
 
 #import <SVProgressHUD.h>
-#import <MessageUI/MessageUI.h>
+#import <SDCAlertView.h>
+#import <EXTScope.h>
 
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"
 #import "DeckAnalysisViewController.h"
 #import "DrawSimulatorViewController.h"
+#import "DeckNotesPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
 
@@ -32,17 +34,20 @@
 #import "CGRectUtils.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"
+#import "DeckState.h"
 
 @interface DeckListViewController ()
 
-@property (strong) NSArray* sections;
-@property (strong) NSArray* cards;
+@property NSArray* sections;
+@property NSArray* cards;
 
 @property UIActionSheet* actionSheet;
 @property UIPrintInteractionController* printController;
 @property UIBarButtonItem* toggleViewButton;
 @property UIBarButtonItem* saveButton;
 @property UIBarButtonItem* exportButton;
+@property UIBarButtonItem* stateButton;
+@property UIBarButtonItem* notesButton;
 
 @property NSString* filename;
 @property BOOL autoSave;
@@ -50,14 +55,14 @@
 
 @property CGFloat scale;
 @property BOOL largeCells;
-@property UIAlertView* nameAlert;
+@property SDCAlertView* nameAlert;
 
 @end
 
 @implementation DeckListViewController
 
 enum { CARD_VIEW, TABLE_VIEW, LIST_VIEW };
-enum { NAME_ALERT = 1, SWITCH_ALERT };
+enum { POPUP_EXPORT, POPUP_STATE };
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -69,11 +74,22 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     return self;
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
+    
+    [settings synchronize];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.scale = 1.0;
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
+    self.scale = scale == 0 ? 1.0 : scale;
     
     if (self.filename)
     {
@@ -136,10 +152,9 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
     self.saveButton.enabled = NO;
     
-    // right button
+    // right buttons
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
     
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     self.autoSave = [settings boolForKey:AUTO_SAVE];
     self.autoSaveDropbox = self.autoSave && [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
     
@@ -151,10 +166,22 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         [rightButtons addObject:self.saveButton];
     }
     [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)]];
-    // [rightButtons addObject:[[UIBarButtonItem alloc] initWithTitle:l10n(@"Identity") style:UIBarButtonItemStylePlain target:self action:@selector(selectIdentity:)]];
+    
+    self.notesButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Notes") style:UIBarButtonItemStylePlain target:self action:@selector(editNotes:)];
+    [rightButtons addObject:self.notesButton];
+    
+    self.stateButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:self.deck.state] style:UIBarButtonItemStylePlain target:self action:@selector(changeState:)];
+    self.stateButton.possibleTitles = [NSSet setWithArray:@[
+                                                            [DeckState buttonLabelFor:NRDeckStateNone],
+                                                            [DeckState buttonLabelFor:NRDeckStateActive],
+                                                            [DeckState buttonLabelFor:NRDeckStateTesting],
+                                                            [DeckState buttonLabelFor:NRDeckStateRetired],
+                                                            ]];
+    [rightButtons addObject:self.stateButton];
     
     topItem.rightBarButtonItems = rightButtons;
 
+    // set up bottom toolbar
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
     
@@ -163,6 +190,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    [nc addObserver:self selector:@selector(notesChanged:) name:NOTES_CHANGED object:nil];
 
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
@@ -191,7 +219,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     if (self.deck.cards.count > 0)
     {
-        // so that FilteredCardViewController gets a chance to reload
+        // so that CardFilterViewController gets a chance to reload
         [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
         self.deckChanged = NO;
     }
@@ -243,14 +271,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
     }
-    if (self.deck.filename)
-    {
-        [DeckManager saveDeck:self.deck toPath:self.deck.filename];
-    }
-    else
-    {
-        self.deck.filename = [DeckManager saveDeck:self.deck];
-    }
+    [DeckManager saveDeck:self.deck];
+    
     self.saveButton.enabled = NO;
     
     if (self.autoSaveDropbox)
@@ -272,6 +294,16 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     [DrawSimulatorViewController showForDeck:self.deck inViewController:self];
 }
 
+-(void) editNotes:(id)sender
+{
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
+    [DeckNotesPopup showForDeck:self.deck inViewController:self];
+}
+
 #pragma mark duplicate deck
 
 -(void) duplicateDeck:(id)sender
@@ -282,79 +314,22 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         return;
     }
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Duplicate this deck?")
-                                                    message:nil
-                                                   delegate:self
-                                          cancelButtonTitle:l10n(@"No")
-                                          otherButtonTitles:l10n(@"Yes, switch to copy"), l10n(@"Yes, but stay here"), nil];
-    alert.tag = SWITCH_ALERT;
-    [alert show];
-}
-
-#pragma mark deck name
-
--(void) enterName:(id)sender
-{
-    if (self.actionSheet)
-    {
-        [self dismissActionSheet];
-        return;
-    }
+    SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Duplicate this deck?")
+                                               message:nil
+                                               buttons:@[ l10n(@"No"), l10n(@"Yes, switch to copy"), l10n(@"Yes, but stay here") ]];
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Enter Name") message:nil delegate:self cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
-    alert.tag = NAME_ALERT;
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    
-    UITextField* textField = [alert textFieldAtIndex:0];
-    textField.placeholder = l10n(@"Deck Name");
-    textField.text = self.deck.name;
-    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    textField.clearButtonMode = UITextFieldViewModeAlways;
-    textField.returnKeyType = UIReturnKeyDone;
-    textField.delegate = self;
-    
-    self.nameAlert = alert;
-    [alert show];
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self.nameAlert dismissWithClickedButtonIndex:1 animated:NO];
-    [textField resignFirstResponder];
-    return NO;
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == alertView.cancelButtonIndex)
-    {
-        return;
-    }
-    
-    if (alertView.tag == NAME_ALERT)
-    {
-        self.deck.name = [alertView textFieldAtIndex:0].text;
-        self.deckNameLabel.text = self.deck.name;
-        self.deckChanged = YES;
-        if (self.autoSave)
-        {
-            [self saveDeck:nil];
-        }
-        [self refresh];
-        
-        self.nameAlert = nil;
-    }
-    else if (alertView.tag == SWITCH_ALERT)
-    {
+    @weakify(self);
+    alert.didDismissHandler = ^void(NSInteger buttonIndex) {
+        @strongify(self);
         Deck* newDeck = [self.deck duplicate];
-
+        
         switch (buttonIndex)
         {
             case 1: // dup and switch
                 self.deck = newDeck;
                 if (self.autoSave)
                 {
-                    self.deck.filename = [DeckManager saveDeck:self.deck];
+                    [DeckManager saveDeck:self.deck];
                 }
                 else
                 {
@@ -373,18 +348,80 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
                     }
                 }
                 break;
-                
-            default:
-                NSAssert(NO, @"unknown button");
-                break;
         }
-    }
-    else
-    {
-        NSAssert(NO, @"this can't happen");
-    }
+    };
 }
 
+#pragma mark deck state
+
+-(void) changeState:(id)sender
+{
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                   delegate:self
+                                          cancelButtonTitle:@""
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:
+                        [NSString stringWithFormat:@"%@%@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @" ✓" : @""],
+                        [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @" ✓" : @""],
+                        [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
+    self.actionSheet.tag = POPUP_STATE;
+    [self.actionSheet showFromBarButtonItem:sender animated:NO];
+}
+
+#pragma mark deck name
+
+-(void) enterName:(id)sender
+{
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
+    
+    self.nameAlert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name")
+                                                 message:nil
+                                                delegate:nil
+                                       cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];
+                      
+    self.nameAlert.alertViewStyle = SDCAlertViewStylePlainTextInput;
+    
+    UITextField* textField = [self.nameAlert textFieldAtIndex:0];
+    textField.placeholder = l10n(@"Deck Name");
+    textField.text = self.deck.name;
+    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    textField.clearButtonMode = UITextFieldViewModeAlways;
+    textField.returnKeyType = UIReturnKeyDone;
+    textField.delegate = self;
+    
+    @weakify(self);
+    [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
+        @strongify(self);
+        if (buttonIndex == 1)
+        {
+            self.deck.name = [self.nameAlert textFieldAtIndex:0].text;
+            self.deckNameLabel.text = self.deck.name;
+            self.deckChanged = YES;
+            if (self.autoSave)
+            {
+                [self saveDeck:nil];
+            }
+            [self refresh];
+        }
+        self.nameAlert = nil;
+    }];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.nameAlert dismissWithClickedButtonIndex:1 animated:NO];
+    [textField resignFirstResponder];
+    return NO;
+}
 
 #pragma mark identity selection
 
@@ -412,6 +449,8 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     {
         [self saveDeck:nil];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
 }
 
 -(void) exportDeck:(UIBarButtonItem*)sender
@@ -431,10 +470,16 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
                                                    delegate:self
                                           cancelButtonTitle:@""
                                      destructiveButtonTitle:nil
-                                          otherButtonTitles:l10n(@"Dropbox: OCTGN"), l10n(@"Dropbox: BBCode"), l10n(@"Dropbox: Markdown"), l10n(@"Dropbox: Plain Text"),
-                        l10n(@"Clipboard: BBCode"), l10n(@"Clipboard: Markdown"), l10n(@"Clipboard: Plain Text"),
-                        l10n(@"As Email"), l10n(@"Print"), nil];
-
+                                          otherButtonTitles:l10n(@"Dropbox: OCTGN"),
+                                                            l10n(@"Dropbox: BBCode"),
+                                                            l10n(@"Dropbox: Markdown"),
+                                                            l10n(@"Dropbox: Plain Text"),
+                                                            l10n(@"Clipboard: BBCode"),
+                                                            l10n(@"Clipboard: Markdown"),
+                                                            l10n(@"Clipboard: Plain Text"),
+                                                            l10n(@"As Email"),
+                                                            l10n(@"Print"), nil];
+    self.actionSheet.tag = POPUP_EXPORT;
     [self.actionSheet showFromBarButtonItem:sender animated:NO];
 }
 
@@ -452,10 +497,48 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         return;
     }
     
+    switch (actionSheet.tag)
+    {
+        case POPUP_EXPORT:
+            [self handleExportDeck:buttonIndex];
+            break;
+        case POPUP_STATE:
+        {
+            NRDeckState oldState = self.deck.state;
+            switch (buttonIndex)
+            {
+                case 0:
+                    self.deck.state = NRDeckStateActive;
+                    break;
+                case 1:
+                    self.deck.state = NRDeckStateTesting;
+                    break;
+                case 2:
+                    self.deck.state = NRDeckStateRetired;
+                    break;
+            }
+            [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];
+            if (self.deck.state != oldState)
+            {
+                self.deckChanged = YES;
+                if (self.autoSave)
+                {
+                    [self saveDeck:nil];
+                    [DeckManager resetModificationDate:self.deck];
+                }
+                [self refresh];
+            }
+            break;
+        }
+    }
+}
+
+-(void) handleExportDeck:(NSInteger)buttonIndex
+{
     if (buttonIndex < 4 && ![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:l10n(@"Connect to your Dropbox account first.") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Connect to your Dropbox account first.") buttons:@[l10n(@"OK")]];
+        return;
     }
     
     TF_CHECKPOINT(@"export deck");
@@ -465,12 +548,12 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         case 0: // octgn
             if (self.deck.identity == nil)
             {
-                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have an Identity.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
+                [SDCAlertView alertWithTitle:nil message:l10n(@"Deck needs to have an Identity.") buttons:@[l10n(@"OK")]];
                 return;
             }
             if (self.deck.cards.count == 0)
             {
-                [[[UIAlertView alloc] initWithTitle:nil message:l10n(@"Deck needs to have Cards.") delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil] show];
+                [SDCAlertView alertWithTitle:nil message:l10n(@"Deck needs to have Cards.") buttons:@[l10n(@"OK")]];
                 return;
             }
             [DeckExport asOctgn:self.deck autoSave:NO];
@@ -545,6 +628,16 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
 
 #pragma mark notifications
 
+-(void) notesChanged:(id)sender
+{
+    self.deckChanged = YES;
+    if (self.autoSave)
+    {
+        [self saveDeck:nil];
+    }
+    [self refresh];
+}
+
 -(void) deckChanged:(NSNotification*)sender
 {
     BOOL initialLoad = [[sender.userInfo objectForKey:@"initialLoad"] boolValue];
@@ -575,7 +668,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     NSMutableString* footer = [NSMutableString string];
     [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
-    if (self.deck.identity)
+    if (self.deck.identity && !self.deck.isDraft)
     {
         [footer appendString:[NSString stringWithFormat:@" · %d/%d %@", self.deck.influence, self.deck.identity.influenceLimit, l10n(@"Influence")]];
     }
@@ -730,7 +823,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
             }
         }
         
-        if (cnt)
+        if (section > 0 && cnt)
         {
             return [NSString stringWithFormat:@"%@ (%d)", name, cnt];
         }
@@ -909,7 +1002,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     if (cc && cc.card.type != NRCardTypeIdentity)
     {
-        CardImagePopup* cip = [CardImagePopup showForCard:cc fromRect:popupOrigin inView:self.collectionView direction:direction];
+        CardImagePopup* cip = [CardImagePopup showForCard:cc draft:self.deck.isDraft fromRect:popupOrigin inView:self.collectionView direction:direction];
         cip.cell = cell;
     }
     else
@@ -945,23 +1038,23 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         
         if (cc.card.type == NRCardTypeAgenda)
         {
-            cell.copiesLabel.text = [NSString stringWithFormat:@"×%d · %d AP", cc.count, cc.count*cc.card.agendaPoints];
+            cell.copiesLabel.text = [NSString stringWithFormat:@"×%lu · %lu AP", (unsigned long)cc.count, (unsigned long)(cc.count*cc.card.agendaPoints)];
         }
         else
         {
-            int influence = [self.deck influenceFor:cc];
+            NSUInteger influence = [self.deck influenceFor:cc];
             if (influence > 0)
             {
-                cell.copiesLabel.text = [NSString stringWithFormat:@"×%d · %d %@", cc.count, influence, l10n(@"Influence")];
+                cell.copiesLabel.text = [NSString stringWithFormat:@"×%lu · %lu %@", (unsigned long)cc.count, (unsigned long)influence, l10n(@"Influence")];
             }
             else
             {
-                cell.copiesLabel.text = [NSString stringWithFormat:@"×%d", cc.count];
+                cell.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count];
             }
         }
         
         cell.copiesLabel.textColor = [UIColor blackColor];
-        if ([cc.card.setCode isEqualToString:@"core"])
+        if ([cc.card.setCode isEqualToString:@"core"] && !self.deck.isDraft)
         {
             NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
             NSInteger owned = cores * cc.card.quantity;
@@ -975,18 +1068,19 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
     
     if (![cell.cc.card isEqual:cc.card])
     {
-        cell.imageView.image = nil;
+        cell.image1.image = nil;
+        cell.image2.image = nil;
+        cell.image2.image = nil;
     }
     cell.cc = cc;
     
-    if (cc)
+    if (cc.card)
     {
         [cell loadImage];
     }
     else
     {
-        cell.imageView.image = [ImageCache placeholderFor:self.deck.role];
-        [cell.activityIndicator stopAnimating];
+        [cell setImageStack:[ImageCache placeholderFor:self.role]];
     }
     
     return cell;
@@ -1046,8 +1140,7 @@ enum { NAME_ALERT = 1, SWITCH_ALERT };
         {
             // NSLog(@"Printing could not complete because of error: %@", error);
             NSString* msg = error.localizedDescription;
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:l10n(@"Printing Problem") message:msg delegate:nil cancelButtonTitle:l10n(@"OK") otherButtonTitles:nil];
-            [alert show];
+            [SDCAlertView alertWithTitle:l10n(@"Printing Problem") message:msg buttons:@[l10n(@"OK")]];
         }
     };
     

@@ -7,15 +7,11 @@
 //
 
 #import "ImageCache.h"
-#import <TMCache.h>
 #import <AFNetworking.h>
 #import <EXTScope.h>
 
 #import "Card.h"
 #import "SettingsKeys.h"
-
-#define LAST_MOD_CACHE  @"lastModified"
-#define NEXT_CHECK      @"nextCheck"
 
 #define SEC_PER_DAY         (24 * 60 * 60)
 #define SUCCESS_INTERVAL    (30*SEC_PER_DAY)
@@ -48,6 +44,10 @@ static UIImage* altArtIconOn;
 static UIImage* altArtIconOff;
 static UIImage* hexTile;
 
+static NSMutableSet* unavailableImages; // set of image keys
+
+static NSCache* memCache;
+
 +(void) initialize
 {
     runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
@@ -77,6 +77,28 @@ static UIImage* hexTile;
     {
         [settings setObject:@{} forKey:NEXT_CHECK];
     }
+
+    NSArray* imgs = [settings objectForKey:UNAVAILABLE_IMG];
+    if (imgs == nil)
+    {
+        unavailableImages = [NSMutableSet set];
+    }
+    else
+    {
+        unavailableImages = [NSMutableSet setWithArray:imgs];
+    }
+    NSTimeInterval today = [NSDate date].timeIntervalSinceReferenceDate / (48*60*60);
+    NSTimeInterval lastCheck = [settings doubleForKey:UNAVAIL_IMG_DATE];
+    if (floor(lastCheck) < floor(today))
+    {
+        unavailableImages = [NSMutableSet set];
+        [settings setDouble:today forKey:UNAVAIL_IMG_DATE];
+        [settings setObject:@[] forKey:UNAVAILABLE_IMG];
+        [settings synchronize];
+    }
+    
+    memCache = [[NSCache alloc] init];
+    memCache.name = @"netdeck";
 }
 
 +(ImageCache*) sharedInstance
@@ -95,15 +117,16 @@ static UIImage* hexTile;
     [settings setObject:@{} forKey:NEXT_CHECK];
     [settings synchronize];
     
-    [[TMCache sharedCache] removeAllObjects];
+    [ImageCache removeCacheDirectory];
 }
 
--(void) getImageFor:(Card *)card success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock
+-(void) getImageFor:(Card *)card completion:(CompletionBlock)completionBlock
 {
     NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
+    
     // NSLog(@"get img for %@", key);
-    UIImage* img = [[TMCache sharedCache] objectForKey:key];
+    UIImage* img = [ImageCache getImageFor:key];
     if (img)
     {
         // NSLog(@"cached, check for update");
@@ -112,25 +135,26 @@ static UIImage* hexTile;
             [self checkForImageUpdate:card withKey:key];
         }
         
-        if (successBlock)
+        if (completionBlock)
         {
-            successBlock(card, img);
+            completionBlock(card, img, NO);
         }
         
         return;
     }
     
-    if (![AFNetworkReachabilityManager sharedManager].reachable)
+    // return a placeholder if we're offline or already know that the img is unavailable
+    if (![AFNetworkReachabilityManager sharedManager].reachable || [unavailableImages containsObject:key])
     {
-        successBlock(card, [ImageCache placeholderFor:card.role]);
+        completionBlock(card, [ImageCache placeholderFor:card.role], YES);
     }
     else
     {
-        [self downloadImageFor:card withKey:key success:successBlock failure:failureBlock];
+        [self downloadImageFor:card withKey:key completion:completionBlock];
     }
 }
 
--(void) downloadImageFor:(Card *)card withKey:(NSString*)key success:(CompletionBlock)successBlock failure:(CompletionBlock)failureBlock
+-(void) downloadImageFor:(Card *)card withKey:(NSString*)key completion:(CompletionBlock)completionBlock
 {
     NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
     
@@ -145,9 +169,9 @@ static UIImage* hexTile;
              
              NLOG(@"dl: GET %@: status 200", url);
              // invoke callback
-             if (successBlock)
+             if (completionBlock)
              {
-                 successBlock(card, responseObject);
+                 completionBlock(card, responseObject, NO);
              }
              
              NSString* lastModified = operation.response.allHeaderFields[@"Last-Modified"];
@@ -158,26 +182,36 @@ static UIImage* hexTile;
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // download failed
-             @strongify(self);
-
 #if NETWORK_LOG
              NSHTTPURLResponse* response = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
              NLOG(@"dl: GET %@ for %@: error %ld", url, card.name, (long)response.statusCode);
 #endif
              // invoke callback
-             if (failureBlock)
+             if (completionBlock)
              {
                  UIImage* img = [ImageCache placeholderFor:card.role];
-                 failureBlock(card, img);
-                 
-                 // only store the placeholder if we had no previous image
-                 UIImage* prevImg = [[TMCache sharedCache] objectForKey:key];
-                 if (prevImg == nil)
-                 {
-                     [self storeInCache:img lastModified:nil forKey:key];
-                 }
+                 completionBlock(card, img, YES);
              }
+             [unavailableImages addObject:key];
+             [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:UNAVAILABLE_IMG];
          }];
+}
+
+-(void) updateMissingImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
+{
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
+    // NSLog(@"get img for %@", key);
+    
+    UIImage* img = [ImageCache getImageFor:key];
+    if (img == nil)
+    {
+        [self updateImageFor:card completion:completionBlock];
+    }
+    else
+    {
+        completionBlock(YES);
+    }
 }
 
 -(void) updateImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
@@ -238,6 +272,7 @@ static UIImage* hexTile;
         }
     }
     
+    NLOG(@"check for %@: %@", key, nextCheck);
     dict = [settings objectForKey:LAST_MOD_CACHE];
     NSString* lastModDate = [dict objectForKey:key];
     
@@ -269,11 +304,12 @@ static UIImage* hexTile;
         if (operation.response.statusCode == 304)
         {
             // not modified - update check date
-            [self setNextCheck:card.code withTimeIntervalFromNow:SUCCESS_INTERVAL];
+            [self setNextCheck:key withTimeIntervalFromNow:SUCCESS_INTERVAL];
         }
         else
         {
-            NSLog(@"%@", operation);
+            NLOG(@"%@", operation);
+            [self setNextCheck:key withTimeIntervalFromNow:ERROR_INTERVAL];
         }
     }];
     
@@ -283,7 +319,6 @@ static UIImage* hexTile;
 -(void) storeInCache:(UIImage*)image lastModified:(NSString*)lastModified forKey:(NSString*)key
 {
     // NSLog(@"store img for %@", key);
-    
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSTimeInterval interval = SUCCESS_INTERVAL;
     if (lastModified)
@@ -299,7 +334,7 @@ static UIImage* hexTile;
     
     [self setNextCheck:key withTimeIntervalFromNow:interval];
     
-    [[TMCache sharedCache] setObject:image forKey:key];
+    [ImageCache saveImage:image forKey:key];
 }
 
 -(void) setNextCheck:(NSString*)key withTimeIntervalFromNow:(NSTimeInterval)interval
@@ -309,7 +344,10 @@ static UIImage* hexTile;
 
     NSTimeInterval nextCheck = [NSDate timeIntervalSinceReferenceDate];
     nextCheck += interval;
-    [dict setObject:[NSDate dateWithTimeIntervalSinceReferenceDate:nextCheck] forKey:key];
+    NSDate* next = [NSDate dateWithTimeIntervalSinceReferenceDate:nextCheck];
+    [dict setObject:next forKey:key];
+    
+    NLOG(@"set next check for %@ to %@", key, next);
     [settings setObject:dict forKey:NEXT_CHECK];
 }
 
@@ -329,6 +367,95 @@ static UIImage* hexTile;
 +(UIImage*) placeholderFor:(NRRole)role
 {
     return role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder;
+}
+
+#pragma mark simple filesystem cache
+
++(NSString*) directoryForImages
+{
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    directory = [directory stringByAppendingPathComponent:language];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:directory])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    return directory;
+}
+
++(void) removeCacheDirectory
+{
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:directory error:nil];
+}
+
++(UIImage*) getImageFor:(NSString*)key
+{
+    UIImage* img = [memCache objectForKey:key];
+    if (img)
+    {
+        return img;
+    }
+    
+    NSString* dir = [ImageCache directoryForImages];
+    NSString* file = [dir stringByAppendingPathComponent:key];
+    
+    NSData* imgData = [NSData dataWithContentsOfFile:file];
+    if (imgData)
+    {
+        img = [UIImage imageWithData:imgData];
+    }
+        
+    if (img)
+    {
+        [memCache setObject:img forKey:key];
+    }
+    return img;
+}
+
++(void) saveImage:(UIImage*)img forKey:(NSString*)code
+{
+    NLOG(@"save img for %@", code);
+    NSString* dir = [ImageCache directoryForImages];
+    NSString* file = [dir stringByAppendingPathComponent:code];
+    
+    NSData* data = UIImagePNGRepresentation(img);
+    
+    [data writeToFile:file atomically:YES];
+}
+
+#pragma mark utility methods
+
++(UIImage*) croppedImage:(UIImage*)img forCard:(Card *)card
+{
+    float scale = 1.0;
+    if (img.size.width > 300)
+    {
+        scale = 1.436;
+    }
+    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
+    NSString* key = [NSString stringWithFormat:@"%@:%@:crop", card.code, language];
+    
+    UIImage* cropped = [memCache objectForKey:key];
+    if (!cropped)
+    {
+        CGRect rect = CGRectMake((int)(10*scale), (int)(card.cropY*scale), (int)(280*scale), (int)(209*scale));
+        CGImageRef imageRef = CGImageCreateWithImageInRect([img CGImage], rect);
+        cropped = [UIImage imageWithCGImage:imageRef];
+        CGImageRelease(imageRef);
+        [memCache setObject:cropped forKey:key];
+    }
+    return cropped;
 }
 
 @end

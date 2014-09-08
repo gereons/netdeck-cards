@@ -7,204 +7,83 @@
 //
 
 #import "Card.h"
-#import "CardData.h"
-#if USE_DTCORETEXT
+#import "CardManager.h"
+#import "CardType.h"
+#import "Faction.h"
+
 #import <DTCoreText.h>
-#endif
 
 @interface Card()
 
-@property CardData* data;
-@property NSString* filteredText;
-
-#if USE_DTCORETEXT
 @property NSAttributedString* attributedText;
-@property CGFloat attributedTextHeight;
-#endif
+
+@property NSString* roleStr;
+@property NSString* setCode;
+@property NSString* smallImageSrc;
+@property NSString* largeImageSrc;
+@property NSString* lastModified;
 
 @end
 
 @implementation Card
 
-#define PROPERTY_PROXY(type, attr) -(type)attr { return self.data.attr; }
+static NSDictionary* roleCodes;
+static NSArray* max1InDeck;
+static NSArray* specialIds;
+static NSArray* draftIds;
+static NSDictionary* coreTextOptions;
+static NSDictionary* factionColors;
+static NSDictionary* cropValues;
+static BOOL isRetina;
 
-PROPERTY_PROXY(NSString*, code)
-PROPERTY_PROXY(NSString*, name)
-PROPERTY_PROXY(NSString*, text)
-PROPERTY_PROXY(NSString*, flavor)
-PROPERTY_PROXY(NSString*, typeStr)
-PROPERTY_PROXY(NSString*, subtype)
-PROPERTY_PROXY(NSArray*, subtypes)
-PROPERTY_PROXY(NRCardType, type)
-PROPERTY_PROXY(NRFaction, faction)
-PROPERTY_PROXY(NSString*, factionStr)
-PROPERTY_PROXY(NRRole, role)
-PROPERTY_PROXY(int, influenceLimit)
-PROPERTY_PROXY(int, minimumDecksize)
-PROPERTY_PROXY(int, baseLink)
-PROPERTY_PROXY(int, influence)
-PROPERTY_PROXY(int, cost)
-PROPERTY_PROXY(int, strength)
-PROPERTY_PROXY(int, mu)
-PROPERTY_PROXY(NSString*, setName)
-PROPERTY_PROXY(NSString*, setCode)
-PROPERTY_PROXY(NSString*, artist)
-PROPERTY_PROXY(int, trash)
-PROPERTY_PROXY(int, quantity)
-PROPERTY_PROXY(BOOL, unique)
-PROPERTY_PROXY(NSString*, imageSrc)
-PROPERTY_PROXY(int, advancementCost)
-PROPERTY_PROXY(int, agendaPoints)
-PROPERTY_PROXY(NSString*, url)
-PROPERTY_PROXY(int, maxCopies)
-
-static NSMutableArray* allRunnerCards;
-static NSMutableArray* allCorpCards;
-static NSMutableArray* allRunnerIdentities;
-static NSMutableArray* allCorpIdentities;
-
--(id) initWithData:(CardData*)data
++(void) initialize
 {
-    if ((self = [super init]))
-    {
-        self.data = data;
-    }
-    return self;
-}
-
-+(Card*) cardByCode:(NSString*)code
-{
-    CardData* cd = [CardData cardByCode:code];
-    if (cd == nil)
-    {
-        return nil;
-    }
+    max1InDeck = @[ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
+                    UTOPIA_SHARD,
+                    HADES_SHARD, HADES_FRAGMENT,
+                    EDEN_SHARD, EDEN_FRAGMENT ];
     
-    Card* card = [Card new];
-    card.data = cd;
-    return card;
-}
-
-+(NSArray*) allCards
-{
-    NSMutableArray* cards = [NSMutableArray array];
-    [cards addObjectsFromArray:[Card allForRole:NRRoleRunner]];
-    [cards addObjectsFromArray:[Card allForRole:NRRoleCorp]];
-    [cards addObjectsFromArray:[Card identitiesForRole:NRRoleRunner]];
-    [cards addObjectsFromArray:[Card identitiesForRole:NRRoleCorp]];
+    draftIds = @[ THE_SHADOW, THE_MASQUE ];
+    specialIds = @[ LARAMY_FISK, THE_COLLECTIVE, CHRONOS_PROTOCOL_HB, CHRONOS_PROTOCOL_JIN ];
     
-    return [cards sortedArrayUsingComparator:^(Card* c1, Card *c2) {
-        NSUInteger l1 = c1.name.length;
-        NSUInteger l2 = c2.name.length;
-        if (l1 > l2)
-        {
-            return NSOrderedAscending;
-        }
-        else if (l1 < l2)
-        {
-            return NSOrderedDescending;
-        }
-        return NSOrderedSame;
-    }];
-}
-
-+(NSArray*) altCards
-{
-    NSMutableArray* altCards = [NSMutableArray array];
-    for (CardData* cd in [CardData altCards])
-    {
-        Card* card = [[Card alloc] initWithData:cd];
-        [altCards addObject:card];
-    }
-    return altCards;
-}
-
-+(NSArray*) allForRole:(NRRole)role
-{
-    NSMutableArray* arr;
-    @synchronized(self)
-    {
-        arr = role == NRRoleRunner ? allRunnerCards : allCorpCards;
-        if (!arr)
-        {
-            arr = [NSMutableArray array];
-            NSArray* src = role == NRRoleRunner ? [CardData allRunnerCards] : [CardData allCorpCards];
-            for (CardData* cd in src)
-            {
-                Card* card = [[Card alloc] initWithData:cd];
-                [arr addObject:card];
-            }
-        }
-    }
-    return arr;
-}
-
-+(NSArray*) identitiesForRole:(NRRole)role
-{
-    NSMutableArray* arr = role == NRRoleRunner ? allRunnerIdentities : allCorpIdentities;
+    roleCodes = @{ @"runner": @(NRRoleRunner), @"corp": @(NRRoleCorp) };
     
-    if (!arr)
-    {
-        arr = [NSMutableArray array];
-        for (CardData*cd in [CardData identitiesForRole:role])
-        {
-            Card* card = [[Card alloc] initWithData:cd];
-            [arr addObject:card];
-        }
-    }
-    return arr;
+    coreTextOptions = @{
+                     DTUseiOS6Attributes: @(YES),
+                     DTDefaultFontFamily: @"Helvetica",
+                     DTDefaultFontSize: @(13)
+    };
+    
+    isRetina = [UIScreen mainScreen].scale == 2.0;
+   
+    factionColors = @{
+                      @(NRFactionJinteki):      @(0xc62026),
+                      @(NRFactionNBN):          @(0xd7a32d),
+                      @(NRFactionWeyland):      @(0x2d7868),
+                      @(NRFactionHaasBioroid):  @(0x6b2b8a),
+                      @(NRFactionShaper):       @(0x6ab545),
+                      @(NRFactionCriminal):     @(0x4f67b0),
+                      @(NRFactionAnarch):       @(0xf47c28)
+    };
+    
+    cropValues = @{
+                   @(NRCardTypeAgenda): @15,
+                   @(NRCardTypeAsset): @20,
+                   @(NRCardTypeEvent): @10,
+                   @(NRCardTypeOperation): @10,
+                   @(NRCardTypeHardware): @18,
+                   @(NRCardTypeIce): @209,
+                   @(NRCardTypeProgram): @8,
+                   @(NRCardTypeResource): @11,
+                   @(NRCardTypeUpgrade): @22,
+    };
 }
 
--(NSString*) detailText
++(Card*) cardByCode:(NSString *)code
 {
-    NSString *s = self.typeStr;
-    
-    if (self.subtype)
-    {
-        s = [s stringByAppendingFormat:@" (%@)", self.subtype];
-    }
-    
-    if (self.type == NRCardTypeProgram)
-    {
-        s = [s stringByAppendingFormat:@" - %d MU", self.mu];
-    }
-    if (self.cost != -1)
-    {
-        s = [s stringByAppendingFormat:@" - Cost %d", self.cost];
-    }
-    if (self.strength != -1)
-    {
-        s = [s stringByAppendingFormat:@" - Str %d", self.strength];
-    }
-    if (self.trash != -1)
-    {
-        s = [s stringByAppendingFormat:@" - Trash %d", self.trash];
-    }
-    if (self.influence != -1)
-    {
-        s = [s stringByAppendingFormat:@" - Inf %d", self.influence];
-    }
-    if (self.unique)
-    {
-        s = [s stringByAppendingFormat:@" - Unique"];
-    }
-    
-    s = [s stringByAppendingFormat:@" (%@)", [self.setCode uppercaseString]];
-    
-    return s;
+    return [CardManager cardByCode:code];
 }
 
--(NSString*) filteredText
-{
-    if (!self->_filteredText)
-    {
-        NSString *str = [self.text stringByReplacingOccurrencesOfString:@"<strong>" withString:@""];
-        self->_filteredText = [str stringByReplacingOccurrencesOfString:@"</strong>" withString:@""];
-    }
-    return self->_filteredText;
-}
-
-#if USE_DTCORETEXT
 -(NSAttributedString*) attributedText
 {
     if (!self->_attributedText)
@@ -214,35 +93,13 @@ static NSMutableArray* allCorpIdentities;
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
         
         NSAttributedString* attrStr = [[NSAttributedString alloc] initWithHTMLData:data
-                                                                              options: @{ DTUseiOS6Attributes: @(YES),
-                                                                                          DTDefaultFontFamily: @"Helvetica",
-                                                                                          DTDefaultFontSize: @(13)
-                                                                                          }
-                                                                   documentAttributes:NULL];
-        
-        CGSize bounds = CGSizeMake(417, 1000);
-        CGRect textRect = [attrStr boundingRectWithSize:bounds
-                                                 options:NSStringDrawingUsesLineFragmentOrigin
-                                                 context:nil];
+                                                                              options:coreTextOptions
+                                                                   documentAttributes:nil];
         
         self->_attributedText = attrStr;
-        self->_attributedTextHeight = ceilf(textRect.size.height) + 15.0; // wtf?
     }
     return self->_attributedText;
 }
-#endif
-
-#if USE_DTCORETEXT
--(CGFloat) attributedTextHeight
-{
-    if (!self->_attributedText)
-    {
-        NSAttributedString* s = self.attributedText;
-        (void)s;
-    }
-    return self->_attributedTextHeight;
-}
-#endif
 
 -(NSString*) octgnCode
 {
@@ -251,30 +108,13 @@ static NSMutableArray* allCorpIdentities;
 
 -(Card*) altCard
 {
-    CardData* alt = [CardData altFor:self.name];
-    if (alt)
-    {
-        Card* card = [[Card alloc] initWithData:alt];
-        return card;
-    }
-    return nil;
+    return [CardManager altCardFor:self.code];
 }
-
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 -(NSUInteger) factionHexColor
 {
-    switch (self.faction)
-    {
-        case NRFactionJinteki:      return 0xc62026;
-        case NRFactionNBN:          return 0xd7a32d;
-        case NRFactionWeyland:      return 0x2d7868;
-        case NRFactionHaasBioroid:  return 0x6b2b8a;
-        case NRFactionShaper:       return 0x6ab545;
-        case NRFactionCriminal:     return 0x4f67b0;
-        case NRFactionAnarch:       return 0xf47c28;
-        default: return 0;
-    }
+    NSNumber*n = factionColors[@(self.faction)];
+    return [n unsignedIntegerValue];
 }
 
 -(UIColor*) factionColor
@@ -282,6 +122,128 @@ static NSMutableArray* allCorpIdentities;
     NSUInteger rgb = [self factionHexColor];
     return UIColorFromRGB(rgb);
 }
+
+-(int) cropY
+{
+    NSNumber*n = cropValues[@(self.type)];
+    return [n intValue];
+}
+
+-(NSString*) name_en
+{
+    return self->_name_en ? self->_name_en : self->_name;
+}
+
+-(NSString*) imageSrc
+{
+    if (isRetina && self.largeImageSrc)
+    {
+        return self.largeImageSrc;
+    }
+    else
+    {
+        return self.smallImageSrc;
+    }
+}
+
+
+#pragma mark from json
+
+#define JSON_INT(key, attr)          do { NSString*tmp = [json objectForKey:attr]; c->_##key = tmp ? [tmp intValue] : -1; } while (0)
+#define JSON_BOOL(key, attr)         c->_##key = [[json objectForKey:attr] boolValue]
+#define JSON_STR(key, attr)          c->_##key = [json objectForKey:attr]
+
++(Card*) cardFromJson:(NSDictionary*)json
+{
+    Card* c = [Card new];
+    
+    JSON_STR(code, @"code");
+    JSON_STR(name, @"title");
+    JSON_STR(text, @"text");
+    JSON_STR(flavor, @"flavor");
+    JSON_STR(factionStr, @"faction");
+    NSString* factionCode = [json objectForKey:@"faction_code"];
+    c->_faction = [Faction faction:factionCode];
+    NSAssert(c.faction != NRFactionNone, @"no faction for %@", c.code);
+    
+    JSON_STR(roleStr, @"side");
+    NSString* roleCode = [json objectForKey:@"side_code"];
+    c->_role = [[roleCodes objectForKey:roleCode] integerValue];
+    NSAssert(c.role != NRRoleNone, @"no role for %@", c.code);
+
+    JSON_STR(typeStr, @"type");
+    NSString* typeCode = [json objectForKey:@"type_code"];
+    c->_type = [CardType type:typeCode];
+    NSAssert(c.type != NRCardTypeNone, @"no type for %@", c.code);
+    
+    JSON_STR(setName, @"setname");
+    JSON_STR(setCode, @"set_code");
+    if ([draftIds containsObject:c.code])
+    {
+        c.setCode = @"draft";
+    }
+    
+    JSON_STR(subtype, @"subtype");
+    if (c.subtype.length == 0)
+    {
+        c->_subtype = nil;
+    }
+    if (c.subtype && c.type != NRCardTypeIdentity)
+    {
+        c->_subtypes = [c.subtype componentsSeparatedByString:@" - "];
+    }
+    
+    JSON_STR(subtypeCode, @"subtype_code");
+    if (c.subtypeCode.length == 0)
+    {
+        c->_subtypeCode = nil;
+    }
+    if (c.subtypeCode && c.type != NRCardTypeIdentity)
+    {
+        c->_subtypeCodes = [c.subtypeCode componentsSeparatedByString:@" - "];
+    }
+    
+    JSON_INT(number, @"number");
+    JSON_INT(quantity, @"quantity");
+    JSON_BOOL(unique, @"uniqueness");
+    JSON_BOOL(limited, @"limited");
+    JSON_INT(influenceLimit, @"influencelimit");
+    JSON_INT(minimumDecksize, @"minimumdecksize");
+    JSON_INT(baseLink, @"baselink");
+    JSON_INT(advancementCost, @"advancementcost");
+    JSON_INT(agendaPoints, @"agendapoints");
+    JSON_INT(mu, @"memoryunits");
+    JSON_INT(strength, @"strength");
+    JSON_INT(cost, @"cost");
+    JSON_INT(influence, @"factioncost");
+    JSON_INT(trash, @"trash");
+    
+    JSON_STR(url, @"url");
+    JSON_STR(smallImageSrc, @"imagesrc");
+    JSON_STR(largeImageSrc, @"largeimagesrc");
+    if (c.largeImageSrc.length == 0)
+    {
+        c.largeImageSrc = nil;
+    }
+    
+    JSON_STR(artist, @"illustrator");
+    c->_lastModified = [json objectForKey:@"last-modified"];
+    
+    c->_maxCopies = 3;
+    if ([max1InDeck containsObject:c.code] || c.limited || c.type == NRCardTypeIdentity)
+    {
+        c->_maxCopies = 1;
+    }
+    
+    return c;
+}
+
+-(BOOL) isValid
+{
+    return self.code.length > 0 && self.name.length > 0 && self.faction != NRFactionNone && self.role != NRRoleNone;
+}
+
+#pragma mark nsobject
 
 -(BOOL) isEqual:(id)object
 {

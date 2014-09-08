@@ -47,15 +47,15 @@
     }
     else if (card.unique)
     {
-        self.name.text = [NSString stringWithFormat:@"%d× %@ •", cc.count, card.name];
+        self.name.text = [NSString stringWithFormat:@"%lu× %@ •", (unsigned long)cc.count, card.name];
     }
     else
     {
-        self.name.text = [NSString stringWithFormat:@"%d× %@", cc.count, card.name];
+        self.name.text = [NSString stringWithFormat:@"%lu× %@", (unsigned long)cc.count, card.name];
     }
     
     self.name.textColor = [UIColor blackColor];
-    if ([card.setCode isEqualToString:@"core"])
+    if ([card.setCode isEqualToString:@"core"] && !self.deck.isDraft)
     {
         NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
         NSInteger owned = cores * card.quantity;
@@ -79,7 +79,7 @@
         self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
     
-    int influence = 0;
+    NSUInteger influence = 0;
     if (self.cardCounter.card.type == NRCardTypeAgenda)
     {
         influence = card.agendaPoints * cc.count;
@@ -108,7 +108,14 @@
         case NRCardTypeIdentity:
             self.label1.text = [@(card.minimumDecksize) stringValue];
             self.icon1.image = [ImageCache cardIcon];
-            self.label2.text = [@(card.influenceLimit) stringValue];
+            if (card.influenceLimit == -1)
+            {
+                self.label2.text = @"∞";
+            }
+            else
+            {
+                self.label2.text = [@(card.influenceLimit) stringValue];
+            }
             self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)
             {
@@ -183,17 +190,17 @@
             break;
     }
     
-    self.copiesStepper.maximumValue = cc.card.maxCopies;
+    self.copiesStepper.maximumValue = self.deck.isDraft ? 100 : cc.card.maxCopies;
     self.copiesStepper.value = cc.count;
-    self.copiesLabel.text = [NSString stringWithFormat:@"×%d", cc.count];
+    self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count];
 }
 
--(void) setInfluence:(int)influence
+-(void) setInfluence:(NSUInteger)influence
 {
     if (influence > 0)
     {
         self.influenceLabel.textColor = self.cardCounter.card.factionColor;
-        self.influenceLabel.text = [NSString stringWithFormat:@"%d", influence];
+        self.influenceLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)influence];
         
         CGColorRef color = self.cardCounter.card.factionColor.CGColor;
         

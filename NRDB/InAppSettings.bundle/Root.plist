@@ -82,6 +82,14 @@
 			<key>Key</key>
 			<string>downloadImagesNow</string>
 		</dict>
+        <dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>Download missing Card Images Now</string>
+			<key>Key</key>
+			<string>downloadMissingImagesNow</string>
+		</dict>
 		<dict>
 			<key>Type</key>
 			<string>IASKButtonSpecifier</string>

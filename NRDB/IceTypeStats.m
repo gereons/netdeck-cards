@@ -10,7 +10,7 @@
 #import "Deck.h"
 
 @interface IceTypeStats()
-@property int iceCount;
+@property NSUInteger iceCount;
 @end
 
 @implementation IceTypeStats
