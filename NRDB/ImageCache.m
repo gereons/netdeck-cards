@@ -156,7 +156,18 @@ static NSCache* memCache;
 
 -(void) downloadImageFor:(Card *)card withKey:(NSString*)key completion:(CompletionBlock)completionBlock
 {
-    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
+    NSString* src = card.imageSrc;
+    if (src == nil)
+    {
+        if (completionBlock)
+        {
+            UIImage* img = [ImageCache placeholderFor:card.role];
+            completionBlock(card, img, YES);
+        }
+        return;
+    }
+    
+    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", src];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFImageResponseSerializer serializer];
@@ -216,7 +227,8 @@ static NSCache* memCache;
 
 -(void) updateImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
 {
-    if (![AFNetworkReachabilityManager sharedManager].reachable)
+    NSString* src = card.imageSrc;
+    if (![AFNetworkReachabilityManager sharedManager].reachable || src == nil)
     {
         completionBlock(NO);
         return;
@@ -229,7 +241,7 @@ static NSCache* memCache;
     NSDictionary* dict = [settings objectForKey:LAST_MOD_CACHE];
     NSString* lastModDate = [dict objectForKey:key];
     
-    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
+    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", src];
     NSURL *URL = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
     if (lastModDate)
@@ -258,6 +270,12 @@ static NSCache* memCache;
 
 -(void) checkForImageUpdate:(Card*)card withKey:(NSString*)key
 {
+    NSString* src = card.imageSrc;
+    if (src == nil)
+    {
+        return;
+    }
+    
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
     NSDictionary* dict = [settings objectForKey:NEXT_CHECK];
@@ -276,7 +294,7 @@ static NSCache* memCache;
     dict = [settings objectForKey:LAST_MOD_CACHE];
     NSString* lastModDate = [dict objectForKey:key];
     
-    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", card.imageSrc];
+    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", src];
     NSURL *URL = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
     if (lastModDate)
@@ -432,6 +450,16 @@ static NSCache* memCache;
     NSData* data = UIImagePNGRepresentation(img);
     
     [data writeToFile:file atomically:YES];
+    [self dontBackupFile:file];
+}
+
++(void)dontBackupFile:(NSString*)filename
+{
+    NSURL* url = [NSURL fileURLWithPath:filename];
+    NSAssert([[NSFileManager defaultManager] fileExistsAtPath:[url path]], @"file doesn't exist");
+    
+    NSError *error = nil;
+    [url setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&error];
 }
 
 #pragma mark utility methods

@@ -77,13 +77,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     footerLabel.font = [UIFont systemFontOfSize:14];
     [footer addSubview:footerLabel];
     
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
-    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
-    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
-    
     // check if card data is available
     if (![CardManager cardsAvailable])
     {
@@ -104,6 +97,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 -(void) dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -149,6 +148,13 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     }
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
 }
 
 -(void) resetDetailView

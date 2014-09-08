@@ -39,7 +39,7 @@ static BOOL isRetina;
 +(void) initialize
 {
     max1InDeck = @[ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
-                    UTOPIA_SHARD,
+                    UTOPIA_SHARD, UTOPIA_FRAGMENT,
                     HADES_SHARD, HADES_FRAGMENT,
                     EDEN_SHARD, EDEN_FRAGMENT ];
     
@@ -220,12 +220,16 @@ static BOOL isRetina;
     
     JSON_STR(url, @"url");
     JSON_STR(smallImageSrc, @"imagesrc");
+    if (c.smallImageSrc.length == 0)
+    {
+        c.smallImageSrc = nil;
+    }
     JSON_STR(largeImageSrc, @"largeimagesrc");
     if (c.largeImageSrc.length == 0)
     {
         c.largeImageSrc = nil;
     }
-    
+            
     JSON_STR(artist, @"illustrator");
     c->_lastModified = [json objectForKey:@"last-modified"];
     

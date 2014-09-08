@@ -57,11 +57,12 @@ static struct cardSetData {
     { 14, "use_double_time", "dt", NRCycleSpin, YES },
     
     // lunar
-    { 16, "use_upstalk", "up", NRCycleLunar, NO },
+    { 16, "use_upstalk", "up", NRCycleLunar, YES },
     { 17, "use_spaces_between", "tsb", NRCycleLunar, NO },
     { 18, "use_first_contact", "fc", NRCycleLunar, NO },
     { 19, "use_up_and_over", "uao", NRCycleLunar, NO },
     { 20, "use_all_that_remains", "atr", NRCycleLunar, NO },
+    { 21, "use_the_source", "ts", NRCycleLunar, NO },
     
     { 0 }
 };
@@ -97,7 +98,7 @@ static struct cardSetData {
         @[ @"core", @"cac", @"hap" ],
         @[ @"wla", @"ta", @"ce", @"asis", @"hs", @"fp" ],
         @[ @"om", @"st", @"mt", @"tc", @"fal", @"dt" ],
-        @[ @"up", /* @"tsb", @"fc", @"uao", @"atr" */ ]
+        @[ @"up", @"tsb", @"fc", @"uao", @"atr", @"ts" ]
     ];
     
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");

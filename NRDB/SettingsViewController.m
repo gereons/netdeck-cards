@@ -48,6 +48,12 @@
     [self refresh];
 }
 
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

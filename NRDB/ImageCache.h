@@ -38,4 +38,6 @@ typedef void (^UpdateCompletionBlock)(BOOL ok);
 
 +(UIImage*) croppedImage:(UIImage*)img forCard:(Card*)card;
 
++(void)dontBackupFile:(NSString*)filename;
+
 @end
