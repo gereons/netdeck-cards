@@ -250,6 +250,7 @@
 "Full" = "Alles";
 "Diff" = "Unterschiede";
 "Intersect" = "Schnittmenge";
+"Overlap" = "Gemeinsamkeiten";
 "Both decks must be for the same side." = "Decks der unterschiedlichen Seiten können nicht verglichen werden.";
 "Select two decks to compare them" = "Zwei Decks für den Vergleich auswählen";
 "Selected ‘%@’, select one more to compare" = "‘%@’ ausgewählt, wähle noch eins für den Vergleich";

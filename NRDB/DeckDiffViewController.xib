@@ -70,12 +70,13 @@
                     </connections>
                 </tableView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5VS-RS-bMg">
-                    <rect key="frame" x="20" y="680" width="237" height="29"/>
+                    <rect key="frame" x="20" y="680" width="346" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
                         <segment title="Alles"/>
                         <segment title="Unterschiede"/>
                         <segment title="Schnittmenge"/>
+                        <segment title="Gemeinsamkeit"/>
                     </segments>
                     <connections>
                         <action selector="diffMode:" destination="-1" eventType="valueChanged" id="mle-hl-ucB"/>

@@ -13,7 +13,7 @@
 #import "DeckDiffCell.h"
 
 typedef NS_ENUM(NSInteger, DiffMode) {
-    FullComparison, DiffOnly, Intersect
+    FullComparison, DiffOnly, Intersect, Overlap
 };
 
 @interface DeckDiffViewController ()
@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger, DiffMode) {
 @property NSMutableArray* smallDiffRows;
 @property NSMutableArray* intersectSections;
 @property NSMutableArray* intersectRows;
+@property NSMutableArray* overlapSections;
+@property NSMutableArray* overlapRows;
 
 @property DiffMode diffMode;
 @end
@@ -76,6 +78,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     [self.diffModeControl setTitle:l10n(@"Full") forSegmentAtIndex:FullComparison];
     [self.diffModeControl setTitle:l10n(@"Diff") forSegmentAtIndex:DiffOnly];
     [self.diffModeControl setTitle:l10n(@"Intersect") forSegmentAtIndex:Intersect];
+    [self.diffModeControl setTitle:l10n(@"Overlap") forSegmentAtIndex:Overlap];
     [self.diffModeControl sizeToFit];
     self.diffModeControl.apportionsSegmentWidthsByContent = YES;
     
@@ -103,6 +106,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     
     self.fullDiffSections = [NSMutableArray array];
     self.intersectSections = [NSMutableArray array];
+    self.overlapSections = [NSMutableArray array];
     
     // all possible types for this role
     NSMutableArray* allTypes = [[CardType typesForRole:self.deck1.role] mutableCopy];
@@ -128,23 +132,26 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     }];
     [allTypes addObjectsFromArray:additionalTypes];
 
-    
     for (NSString* type in allTypes)
     {
         if ([typesInDecks containsObject:type])
         {
             [self.fullDiffSections addObject:type];
             [self.intersectSections addObject:type];
+            [self.overlapSections addObject:type];
         }
     }
     
     // create arrays for each section
     self.fullDiffRows = [NSMutableArray array];
     self.intersectRows = [NSMutableArray array];
+    self.overlapRows = [NSMutableArray array];
     for (int i=0; i<self.fullDiffSections.count; ++i)
     {
         [self.fullDiffRows addObject:[NSMutableArray array]];
         [self.intersectRows addObject:[NSMutableArray array]];
+        [self.overlapRows addObject:[NSMutableArray array]];
+
     }
     
     // for each type, find cards in each deck
@@ -222,17 +229,24 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         }];
         [self.fullDiffRows[i] addObjectsFromArray:arr];
         
-        // fill intersection - card is in both decks, and the total count is more than we own
+        // fill intersection and overlap - card is in both decks, and the total count is more than we own (for intersect)
         for (CardDiff* cd in self.fullDiffRows[i])
         {
-            if (cd.count1 > 0 && cd.count2 > 0 && (cd.count1+cd.count2) > cd.card.owned)
+            if (cd.count1 > 0 && cd.count2 > 0)
             {
-                [self.intersectRows[i] addObject:cd];
+                [self.overlapRows[i] addObject:cd];
+                
+                if (cd.count1+cd.count2 > cd.card.owned)
+                {
+                    [self.intersectRows[i] addObject:cd];
+                }
             }
         }
     }
     
-    NSAssert(self.intersectSections.count == self.intersectSections.count, @"count mismatch");
+    NSAssert(self.intersectSections.count == self.intersectRows.count, @"count mismatch");
+    NSAssert(self.overlapSections.count == self.overlapRows.count, @"count mismatch");
+    
     // remove empty intersecion sections
     for (long i=self.intersectRows.count-1; i >= 0; --i)
     {
@@ -244,7 +258,20 @@ typedef NS_ENUM(NSInteger, DiffMode) {
             [self.intersectRows removeObjectAtIndex:i];
         }
     }
-    NSAssert(self.intersectSections.count == self.intersectSections.count, @"count mismatch");
+    NSAssert(self.intersectSections.count == self.intersectRows.count, @"count mismatch");
+
+    // remove empty overlap sections
+    for (long i=self.overlapRows.count-1; i >= 0; --i)
+    {
+        NSArray* arr = self.overlapRows[i];
+        
+        if (arr.count == 0)
+        {
+            [self.overlapSections removeObjectAtIndex:i];
+            [self.overlapRows removeObjectAtIndex:i];
+        }
+    }
+    NSAssert(self.overlapSections.count == self.overlapRows.count, @"count mismatch");
     
     // from the full diff, create the (potentially) smaller diff-only arrays
     self.smallDiffRows = [NSMutableArray array];
@@ -331,6 +358,8 @@ typedef NS_ENUM(NSInteger, DiffMode) {
             return self.smallDiffSections[section];
         case Intersect:
             return self.intersectSections[section];
+        case Overlap:
+            return self.overlapSections[section];
     }
 }
 
@@ -344,6 +373,8 @@ typedef NS_ENUM(NSInteger, DiffMode) {
             return self.smallDiffSections.count;
         case Intersect:
             return self.intersectSections.count;
+        case Overlap:
+            return self.overlapSections.count;
     }
 }
 
@@ -361,6 +392,9 @@ typedef NS_ENUM(NSInteger, DiffMode) {
             break;
         case Intersect:
             arr = self.intersectRows[section];
+            break;
+        case Overlap:
+            arr = self.overlapRows[section];
             break;
     }
     
@@ -383,6 +417,9 @@ typedef NS_ENUM(NSInteger, DiffMode) {
             break;
         case Intersect:
             arr = self.intersectRows[indexPath.section];
+            break;
+        case Overlap:
+            arr = self.overlapRows[indexPath.section];
             break;
     }
     CardDiff* cd = arr[indexPath.row];
@@ -422,27 +459,35 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         cell.deck2Card.text = @"";
     }
     
-    NSInteger diff = cd.count2 - cd.count1;
-    if (diff != 0)
-    {
-        cell.diff.text = [NSString stringWithFormat:@"%+ld", (long)diff];
-        cell.diff.textColor = diff > 0 ? UIColorFromRGB(0x177a00) : UIColorFromRGB(0xdb0c0c);
-    }
-    else
-    {
-        cell.diff.text = @"";
-    }
-    
     if (self.diffMode == Intersect)
     {
         NSInteger owned = cd.card.owned;
-        diff = cd.count1 + cd.count2 - owned;
+        NSInteger diff = cd.count1 + cd.count2 - owned;
         if (owned != 3)
         {
             diff = MIN(MIN(cd.count1,cd.count2), diff);
         }
         cell.diff.text = [NSString stringWithFormat:@"%ld", (long)diff];
         cell.diff.textColor = [UIColor blackColor];
+    }
+    else if (self.diffMode == Overlap)
+    {
+        NSInteger diff = MIN(cd.count1, cd.count2);
+        cell.diff.text = [NSString stringWithFormat:@"%ld", (long)diff];
+        cell.diff.textColor = [UIColor blackColor];
+    }
+    else
+    {
+        NSInteger diff = cd.count2 - cd.count1;
+        if (diff != 0)
+        {
+            cell.diff.text = [NSString stringWithFormat:@"%+ld", (long)diff];
+            cell.diff.textColor = diff > 0 ? UIColorFromRGB(0x177a00) : UIColorFromRGB(0xdb0c0c);
+        }
+        else
+        {
+            cell.diff.text = @"";
+        }
     }
     
     return cell;
