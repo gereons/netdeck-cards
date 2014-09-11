@@ -74,7 +74,7 @@ PODS:
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
   - RBBAnimation (0.3.0)
-  - SDCAlertView (HEAD based on 1.4):
+  - SDCAlertView (HEAD based on 1.4.1):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0)
@@ -269,7 +269,7 @@ SPEC CHECKSUMS:
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64
-  SDCAlertView: 9d75ea96555ff4b68e09e856b913d0549e3ba8d3
+  SDCAlertView: 73b84d53e9c2e994b47b07c441fa1aa696c8049b
   SDCAutoLayout: 6acad78fe6a09278a064ac71609e8f484a7249fc
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
   TestFlightSDK: 0c24c533748d0d84bfe7a3cb6036fa79124d84ee

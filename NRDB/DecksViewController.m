@@ -144,13 +144,8 @@ static NRFilterType _filterType = NRFilterAll;
     self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
     self.searchBar.showsScopeBar = YES;
     self.searchBar.selectedScopeButtonIndex = self.searchScope;
-    // wtf is this needed on iOS8?
-    CGRect frame = self.searchBar.frame;
-    if (frame.size.height == 44)
-    {
-        frame.size.height = 88;
-        self.searchBar.frame = frame;
-    }
+    // needed on iOS8
+    [self.searchBar sizeToFit];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
