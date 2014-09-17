@@ -60,8 +60,8 @@ static UIPopoverController* popover;
 {
     [super viewDidLoad];
     
-    self.copiesStepper.value = self.cc.count;
     self.copiesStepper.maximumValue = self.draft ? 100 : self.cc.card.maxCopies;
+    self.copiesStepper.value = self.cc.count;
     self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)self.cc.count];
     self.nameLabel.text = self.cc.card.name;
     
