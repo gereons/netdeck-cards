@@ -366,7 +366,7 @@ static NSDictionary* sortStr;
 -(void) willShowKeyboard:(NSNotification*)sender
 {
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords
+    float kbHeight = IS_IOS7 ? kbRect.size.width : kbRect.size.height; // kbRect is screen/portrait coords
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight, 0.0);
     self.tableView.contentInset = contentInsets;

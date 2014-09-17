@@ -353,7 +353,7 @@ static NSInteger viewMode = VIEW_LIST;
     CGFloat topY = self.searchSeparator.frame.origin.y;
     
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    float kbHeight = kbRect.size.width; // kbRect is screen/portrait coords!
+    float kbHeight = IS_IOS7 ? kbRect.size.width : kbRect.size.height; // kbRect is screen/portrait coords!
     float tableHeight = 768 - kbHeight - topY - 64; // screen height - kbd height - height of visible filter - height of status/nav bar
     
     CGRect newFrame = self.tableView.frame;
