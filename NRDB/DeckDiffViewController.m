@@ -48,6 +48,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     
     [vc presentViewController:ddvc animated:NO completion:nil];
     ddvc.view.superview.bounds = CGRectMake(0, 0, 768, 728);
+    ddvc.preferredContentSize = CGSizeMake(768, 728);
 }
 
 - (id)initWithDecks:(Deck*)deck1 deck2:(Deck*)deck2
@@ -85,6 +86,8 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckDiffCell" bundle:nil] forCellReuseIdentifier:@"diffCell"];
+    self.tableView.rowHeight = 44;
+    
     [self setup];
 }
 
