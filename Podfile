@@ -1,9 +1,9 @@
-platform :ios, '7.1'
+platform :ios, '8.0'
 inhibit_all_warnings!
 pod 'DTCoreText'
 pod 'AFNetworking', '~> 2.0'
-# pod 'SVProgressHUD', :head
-pod 'SVProgressHUD', :path => '~/dev/SVProgressHUD', :branch => 'master'
+pod 'SVProgressHUD', :head
+# pod 'SVProgressHUD', :path => '~/dev/SVProgressHUD', :branch => 'master'
 pod 'TestFlightSDK'
 pod 'Dropbox-Sync-API-SDK'
 pod 'GRMustache'

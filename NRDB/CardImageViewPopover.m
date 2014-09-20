@@ -44,7 +44,7 @@ static CGFloat popoverScale = 1.0;
 {
     keyboardVisible = YES;
     NSValue* value = notification.userInfo [UIKeyboardFrameEndUserInfoKey];
-    CGFloat keyboardHeight = IS_IOS7 ? value.CGRectValue.size.width : value.CGRectValue.size.height;
+    CGFloat keyboardHeight = value.CGRectValue.size.height;
     popoverScale = (SCREEN_HEIGHT - keyboardHeight - POPOVER_MARGIN) / IMAGE_HEIGHT;
 }
 

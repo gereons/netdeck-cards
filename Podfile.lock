@@ -28,13 +28,13 @@ PODS:
     - DTFoundation/DTAnimatedGIF (~> 1.7.1)
     - DTFoundation/DTHTMLParser (~> 1.7.1)
     - DTFoundation/UIKit (~> 1.7.1)
-  - DTFoundation/Core (1.7.2)
-  - DTFoundation/DTAnimatedGIF (1.7.2)
-  - DTFoundation/DTHTMLParser (1.7.2):
+  - DTFoundation/Core (1.7.3)
+  - DTFoundation/DTAnimatedGIF (1.7.3)
+  - DTFoundation/DTHTMLParser (1.7.3):
     - DTFoundation/Core
-  - DTFoundation/UIKit (1.7.2):
+  - DTFoundation/UIKit (1.7.3):
     - DTFoundation/Core
-  - GRMustache (7.2.0):
+  - GRMustache (7.3.0):
     - JRSwizzle (~> 1.0)
   - InAppSettingsKit (HEAD based on 2.1)
   - JRSwizzle (1.0)
@@ -78,7 +78,7 @@ PODS:
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0)
-  - SVProgressHUD (1.0)
+  - SVProgressHUD (HEAD based on 1.0)
   - TestFlightSDK (3.0.2)
   - YOLOKit (11):
     - YOLOKit/all
@@ -248,30 +248,25 @@ DEPENDENCIES:
   - InAppSettingsKit (HEAD)
   - libextobjc
   - SDCAlertView (HEAD)
-  - SVProgressHUD (from `~/dev/SVProgressHUD`)
+  - SVProgressHUD (HEAD)
   - TestFlightSDK
   - YOLOKit
-
-EXTERNAL SOURCES:
-  SVProgressHUD:
-    :branch: master
-    :path: ~/dev/SVProgressHUD
 
 SPEC CHECKSUMS:
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   CorePlot: b15cb1a9a687b9576545104248d6e22033e678bb
   CSStickyHeaderFlowLayout: 79e586ba3d94941c79146832227ddbc6702c8705
-  Dropbox-Sync-API-SDK: e672f9c163d3feb5929c97890b6945a6c5fae5f1
+  Dropbox-Sync-API-SDK: 8110afff9598478e7fdc2d161e54024dab09a0d2
   DTCoreText: 84eb8ba2e70448fdd9d837540e371f9f587b65ba
-  DTFoundation: 126729614911ae7dbab3dcc1c078f189943bee66
-  GRMustache: b6c9c1535cd41b5a62edaaaf06334e0270a7a94f
+  DTFoundation: 360bc65ab44f588611f47324b8cfb0f18e04b263
+  GRMustache: efecd3b603f0a7a99cf6bdf3998782ee0c465726
   InAppSettingsKit: 853cdc9fcc76b87a4694f8d2b930e116463b5a29
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64
   SDCAlertView: 73b84d53e9c2e994b47b07c441fa1aa696c8049b
   SDCAutoLayout: 6acad78fe6a09278a064ac71609e8f484a7249fc
-  SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
+  SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
   TestFlightSDK: 0c24c533748d0d84bfe7a3cb6036fa79124d84ee
   YOLOKit: e83d381f83f33f2b66abf6fe0249fca57b05a541
 

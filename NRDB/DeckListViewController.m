@@ -237,7 +237,7 @@
 -(void) willShowKeyboard:(NSNotification*)sender
 {
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    float kbHeight = IS_IOS7 ? kbRect.size.width : kbRect.size.height; // kbRect is screen/portrait coords
+    float kbHeight = kbRect.size.height;
 
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight, 0.0);
     self.tableView.contentInset = contentInsets;

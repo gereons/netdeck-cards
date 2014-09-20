@@ -28,4 +28,3 @@
 #import <AFNetworking.h>
 
 #define APP_ONLINE  [AFNetworkReachabilityManager sharedManager].reachable
-#define IS_IOS7     (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1)
