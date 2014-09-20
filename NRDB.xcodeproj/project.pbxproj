@@ -1797,7 +1797,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1A709445-5590-4053-8DE0-DC922F53BA3A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4a1ef9e6-c38c-49bc-88e0-7612ccc9118d";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Externals/**";
@@ -1823,7 +1823,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1A709445-5590-4053-8DE0-DC922F53BA3A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4a1ef9e6-c38c-49bc-88e0-7612ccc9118d";
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Core/Externals/DTFoundation/**";
 				WRAPPER_EXTENSION = app;
 			};
