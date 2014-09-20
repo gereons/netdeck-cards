@@ -17,8 +17,11 @@
 #import "DeckImport.h"
 #import "Card.h"
 #import "CardImageViewPopover.h"
+
+#if _NRDB_
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"
+#endif
 
 const NSString* const kANY = @"Any";
 
@@ -26,7 +29,7 @@ const NSString* const kANY = @"Any";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [AppDelegate setUserDefaults];
+    [self setUserDefaults];
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
@@ -59,6 +62,7 @@ const NSString* const kANY = @"Any";
     [DeckImport checkClipboardForDeck];
     [CardImageViewPopover monitorKeyboard];
     
+#if _NRDB_
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status)
         {
@@ -73,11 +77,12 @@ const NSString* const kANY = @"Any";
                 break;
         }
     }];
-        
+#endif
+    
     return YES;
 }
 
-+(void) setUserDefaults
+-(void) setUserDefaults
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:[CardSets settingsDefaults]];
     
@@ -108,14 +113,16 @@ const NSString* const kANY = @"Any";
         IDENTITY_TABLE: @(YES),
     }];
     
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dict];    
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+#if _NRDB_
     [[NRDB sharedInstance] stopRefresh];
+#endif
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -128,7 +135,9 @@ const NSString* const kANY = @"Any";
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     [DeckImport checkClipboardForDeck];
+#if _NRDB_
     [[NRDB sharedInstance] refreshAuthentication];
+#endif
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -147,7 +156,9 @@ const NSString* const kANY = @"Any";
     
     if ([scheme isEqualToString:@"netdeck"])
     {
+#if _NRDB_
         [NRDBAuthPopupViewController handleOpenURL:url];
+#endif
     }
     else
     {

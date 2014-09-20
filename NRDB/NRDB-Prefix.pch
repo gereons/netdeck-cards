@@ -28,3 +28,5 @@
 #import <AFNetworking.h>
 
 #define APP_ONLINE  [AFNetworkReachabilityManager sharedManager].reachable
+
+#define _NRDB_      0

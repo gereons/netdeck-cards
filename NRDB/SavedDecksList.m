@@ -101,7 +101,11 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
+#if _NRDB_
     BOOL useNetrunnerdb = [settings boolForKey:USE_NRDB];
+#else
+    BOOL useNetrunnerdb = NO;
+#endif
     
     if (!useDropbox && !useNetrunnerdb)
     {
@@ -165,7 +169,11 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
+#if _NRDB_
     BOOL useNetrunnerdb = [settings boolForKey:USE_NRDB];
+#else
+    BOOL useNetrunnerdb = NO;
+#endif
     
     if (!useDropbox && !useNetrunnerdb)
     {

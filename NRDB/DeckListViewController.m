@@ -75,8 +75,10 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
+#if _NRDB_
     self.useNetrunnerdb = [settings boolForKey:USE_NRDB];
     self.autoSaveNRDB = self.useNetrunnerdb && [settings boolForKey:NRDB_AUTOSAVE];
+#endif
     
     CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
@@ -149,9 +151,11 @@
     self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
     self.saveButton.enabled = NO;
     
+#if _NRDB_
     UIImage* img = [[UIImage imageNamed:@"netrunnerdb_com"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.nrdbButton = [[UIBarButtonItem alloc] initWithImage:img style:UIBarButtonItemStylePlain target:self action:@selector(nrdbButtonClicked:)];
-
+#endif
+    
     self.stateButton = [[UIBarButtonItem alloc] initWithTitle:[DeckState buttonLabelFor:self.deck.state] style:UIBarButtonItemStylePlain target:self action:@selector(changeState:)];
     self.stateButton.possibleTitles = [NSSet setWithArray:@[
                                                             [DeckState buttonLabelFor:NRDeckStateNone],
