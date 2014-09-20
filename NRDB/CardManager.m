@@ -36,7 +36,7 @@ static int maxCorpCost;
 static int maxInf;
 static int maxAgendaPoints;
 static int maxTrash;
-static NSString* iceBreakerType;
+static NSString* iceBreakerType = @"Icebreaker";
 
 static BOOL initializing;
 
@@ -179,9 +179,7 @@ static BOOL initializing;
 
 +(void) removeFiles
 {
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
     NSFileManager* fileMgr = [NSFileManager defaultManager];
-    [fileMgr removeItemAtPath:[CardManager filenameForLanguage:language] error:nil];
     [fileMgr removeItemAtPath:[CardManager filenameForLanguage:@"en"] error:nil];
     
     [CardManager initialize];
@@ -189,8 +187,7 @@ static BOOL initializing;
 
 +(BOOL) setupFromFiles
 {
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    NSString* cardsFile = [CardManager filenameForLanguage:language];
+    NSString* cardsFile = [CardManager filenameForLanguage:@"en"];
     
     NSFileManager* fileMgr = [NSFileManager defaultManager];
     if ([fileMgr fileExistsAtPath:cardsFile])
@@ -204,19 +201,6 @@ static BOOL initializing;
             initializing = NO;
         }
         
-        if (![language isEqualToString:@"en"])
-        {
-            cardsFile = [CardManager filenameForLanguage:@"en"];
-            if ([fileMgr fileExistsAtPath:cardsFile])
-            {
-                data = [NSArray arrayWithContentsOfFile:cardsFile];
-                [CardManager addEnglishNames:data];
-            }
-        }
-        else
-        {
-            [CardManager addEnglishNames:nil];
-        }
         return ok;
     }
     return NO;
@@ -224,8 +208,7 @@ static BOOL initializing;
 
 +(BOOL) setupFromNetrunnerDbApi:(NSArray*)json
 {
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    NSString* cardsFile = [CardManager filenameForLanguage:language];
+    NSString* cardsFile = [CardManager filenameForLanguage:@"en"];
     [json writeToFile:cardsFile atomically:YES];
     [ImageCache dontBackupFile:cardsFile];
     
@@ -243,51 +226,6 @@ static BOOL initializing;
     BOOL ok = [self setupFromJsonData:json];
     initializing = NO;
     return ok;
-}
-
-+(void) addEnglishNames:(NSArray *)json
-{
-    if (json == nil)
-    {
-        // we already have the english names, just copy them over
-        for (Card* c in [allCards allValues])
-        {
-            c.name_en = c.name;
-        }
-    }
-    else
-    {
-        NSString* cardsFile = [CardManager filenameForLanguage:@"en"];
-        [json writeToFile:cardsFile atomically:YES];
-        [ImageCache dontBackupFile:cardsFile];
-        
-        for (NSDictionary* obj in json)
-        {
-            NSString* code = [obj objectForKey:@"code"];
-            NSString* name = [obj objectForKey:@"title"];
-            
-            Card* c = [allCards objectForKey:code];
-            c.name_en = name;
-        }
-    }
-    
-    // now that we have english names for everything, map the alt-art cards to the regular cards
-    altCardMap = [NSMutableDictionary dictionary];
-    NSArray* cards = [allCards allValues];
-    for (Card* altCard in [altCards allValues])
-    {
-        for (Card* card in cards)
-        {
-            if ([altCard.name_en isEqualToString:card.name_en])
-            {
-                [altCardMap setObject:altCard.code forKey:card.code];
-            }
-        }
-    }
-    
-    // lastly, set get the "Icebreaker" subtype string from a known Icebreaker
-    Card* yog = [CardManager cardByCode:YOG_0];
-    iceBreakerType = [yog.subtypes objectAtIndex:0];
 }
 
 +(BOOL) setupFromJsonData:(NSArray*)json

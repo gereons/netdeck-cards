@@ -125,8 +125,7 @@ static NSCache* memCache;
 
 -(void) getImageFor:(Card *)card completion:(CompletionBlock)completionBlock
 {
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
+    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, @"en"];
     
     // NSLog(@"get img for %@", key);
     UIImage* img = [ImageCache getImageFor:key];
@@ -213,8 +212,7 @@ static NSCache* memCache;
 
 -(void) updateMissingImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
 {
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
+    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, @"en"];
     // NSLog(@"get img for %@", key);
     
     UIImage* img = [ImageCache getImageFor:key];
@@ -237,8 +235,7 @@ static NSCache* memCache;
         return;
     }
     
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, language];
+    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, @"en"];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSDictionary* dict = [settings objectForKey:LAST_MOD_CACHE];
@@ -423,13 +420,11 @@ static NSCache* memCache;
 
 +(NSString*) directoryForImages
 {
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     
     NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
-    directory = [directory stringByAppendingPathComponent:language];
+    directory = [directory stringByAppendingPathComponent:@"en"];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:directory])
     {
@@ -522,8 +517,7 @@ static NSCache* memCache;
     {
         scale = 1.436;
     }
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    NSString* key = [NSString stringWithFormat:@"%@:%@:crop", card.code, language];
+    NSString* key = [NSString stringWithFormat:@"%@:%@:crop", card.code, @"en"];
     
     UIImage* cropped = [memCache objectForKey:key];
     if (!cropped)

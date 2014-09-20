@@ -217,10 +217,9 @@ static DeckImport* instance;
         
         for (Card* c in cards)
         {
-            NSUInteger loc1 = [line rangeOfString:c.name options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch].location;
-            NSUInteger loc2 = [line rangeOfString:c.name_en options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch].location;
+            NSUInteger loc = [line rangeOfString:c.name options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch].location;
             
-            if (loc1 != NSNotFound || loc2 != NSNotFound)
+            if (loc != NSNotFound)
             {
                 if (c.type == NRCardTypeIdentity)
                 {

@@ -106,7 +106,6 @@ const NSString* const kANY = @"Any";
         BROWSER_VIEW_SCALE: @(1.0),
         BROWSER_SORT_TYPE: @(NRCardListSortA_Z),
         
-        LANGUAGE: @"en",
         NUM_CORES: @(3),
         
         SHOW_ALL_FILTERS: @(YES),

@@ -93,12 +93,6 @@ static DataDownload* instance;
 -(void) doDownloadCardData
 {
     NSString* cardsUrl = @"http://netrunnerdb.com/api/cards/";
-    NSString* language = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    NSDictionary* parameters = nil;
-    if (language.length)
-    {
-        parameters = @{ @"_locale" : language };
-    }
     BOOL __block ok = NO;
     self.downloadStopped = NO;
     
@@ -106,34 +100,13 @@ static DataDownload* instance;
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     @weakify(self);
-    [self.manager GET:cardsUrl parameters:parameters
+    [self.manager GET:cardsUrl parameters:nil
         success:^(AFHTTPRequestOperation* operation, id responseObject) {
             @strongify(self);
             if (!self.downloadStopped)
             {
                 ok = [CardManager setupFromNetrunnerDbApi:responseObject];
-            }
-            
-            if ([language isEqualToString:@"en"])
-            {
-                [CardManager addEnglishNames:nil];
-                [self downloadFinished:ok];
-            }
-            else
-            {
-                // download english data as well
-                [self.manager GET:cardsUrl parameters:@{ @"_locale": @"en" }
-                      success:^(AFHTTPRequestOperation *operation, id responseObject)
-                      {
-                          [CardManager addEnglishNames:responseObject];
-                          [self downloadFinished:ok];
-                      }
-                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                      {
-                          @strongify(self);
-                          [self downloadFinished:NO];
-                      }];
-            }
+            }            
         }
         failure:^(AFHTTPRequestOperation* operation, NSError* error) {
             @strongify(self);

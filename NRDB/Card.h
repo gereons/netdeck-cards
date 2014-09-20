@@ -44,7 +44,6 @@
 
 @property (readonly) NSString* code;
 @property (readonly) NSString* name;
-@property (nonatomic) NSString* name_en;
 @property (readonly) NSString* text;
 @property (readonly) NSString* flavor;
 @property (readonly) NRCardType type;

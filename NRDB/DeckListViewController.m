@@ -403,9 +403,8 @@
 }
 
 -(void) openInSafari:(Deck*)deck
-{    
-    NSString* lang = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE];
-    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com/%@/deck/view/%@", lang, deck.netrunnerDbId ];
+{
+    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com/en/deck/view/%@", deck.netrunnerDbId ];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 

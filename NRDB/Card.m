@@ -144,11 +144,6 @@ static BOOL isRetina;
     return 3;
 }
 
--(NSString*) name_en
-{
-    return self->_name_en ? self->_name_en : self->_name;
-}
-
 -(NSString*) imageSrc
 {
     if (isRetina && self.largeImageSrc)

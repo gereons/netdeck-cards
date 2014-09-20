@@ -39,6 +39,5 @@
 +(BOOL) setupFromFiles;
 +(void) removeFiles;
 +(BOOL) setupFromNetrunnerDbApi:(NSArray*)json;
-+(void) addEnglishNames:(NSArray*)json;
 
 @end

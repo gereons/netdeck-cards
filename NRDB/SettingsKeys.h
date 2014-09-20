@@ -9,7 +9,6 @@
 #ifndef NRDB_SettingsKeys_h
 #define NRDB_SettingsKeys_h
 
-#define LANGUAGE            @"language"
 #define LAST_MOD_CACHE      @"lastModified"
 #define NEXT_CHECK          @"nextCheck"
 #define UNAVAILABLE_IMG     @"unavailableImages"
