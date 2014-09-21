@@ -89,27 +89,20 @@ static UIPopoverController* popover;
     popover = nil;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self setTableHeight]; // wtf do i have to call this twice?
+    [self setTableHeight];
+    
+    popover.popoverContentSize = self.tableView.frame.size;
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setTableHeight]; // wtf do i have to call this twice?
+    [self setTableHeight];
 }
 
 #define CELL_HEIGHT     40

@@ -18,11 +18,7 @@
 
 @property NSAttributedString* attributedText;
 
-@property NSString* roleStr;
-@property NSString* setCode;
-@property NSString* smallImageSrc;
-@property NSString* largeImageSrc;
-@property NSString* lastModified;
+
 @property (readwrite) BOOL isCore;
 
 @end
@@ -50,7 +46,7 @@ static BOOL isRetina;
     specialIds = @[ LARAMY_FISK, THE_COLLECTIVE, CHRONOS_PROTOCOL_HB, CHRONOS_PROTOCOL_JIN ];
     multiIce = @[ RAINBOW ];
     
-    roleCodes = @{ @"runner": @(NRRoleRunner), @"corp": @(NRRoleCorp) };
+    roleCodes = @{ @"Runner": @(NRRoleRunner), @"Corp": @(NRRoleCorp) };
     
     coreTextOptions = @{
                      DTUseiOS6Attributes: @(YES),
@@ -144,18 +140,6 @@ static BOOL isRetina;
     return 3;
 }
 
--(NSString*) imageSrc
-{
-    if (isRetina && self.largeImageSrc)
-    {
-        return self.largeImageSrc;
-    }
-    else
-    {
-        return self.smallImageSrc;
-    }
-}
-
 -(NSString*) iceType
 {
     NSAssert(self.type == NRCardTypeIce, @"not an ice");
@@ -196,27 +180,22 @@ static BOOL isRetina;
     JSON_STR(text, @"text");
     JSON_STR(flavor, @"flavor");
     JSON_STR(factionStr, @"faction");
-    NSString* factionCode = [json objectForKey:@"faction_code"];
-    c->_faction = [Faction faction:factionCode];
+    c->_faction = [Faction faction:c.factionStr];
     NSAssert(c.faction != NRFactionNone, @"no faction for %@", c.code);
     
     JSON_STR(roleStr, @"side");
-    NSString* roleCode = [json objectForKey:@"side_code"];
-    c->_role = [[roleCodes objectForKey:roleCode] integerValue];
+
+    NSNumber* rc = [roleCodes objectForKey:c.roleStr];
+    c->_role = rc ? rc.integerValue : NRRoleNone;
     NSAssert(c.role != NRRoleNone, @"no role for %@", c.code);
 
     JSON_STR(typeStr, @"type");
-    NSString* typeCode = [json objectForKey:@"type_code"];
-    c->_type = [CardType type:typeCode];
-    NSAssert(c.type != NRCardTypeNone, @"no type for %@", c.code);
+
+    c->_type = [CardType type:c.typeStr];
+    NSAssert(c.type != NRCardTypeNone, @"no type for %@ (%@)", c.code, c.typeStr);
     
-    JSON_STR(setName, @"setname");
-    JSON_STR(setCode, @"set_code");
-    if ([draftIds containsObject:c.code])
-    {
-        c.setCode = DRAFT_SET;
-    }
-    c.isCore = [c.setCode isEqualToString:CORE_SET];
+    JSON_STR(setName, @"set");
+    c.isCore = [c.setName.lowercaseString isEqualToString:CORE_SET];
     
     JSON_STR(subtype, @"subtype");
     if (c.subtype.length == 0)
@@ -228,25 +207,32 @@ static BOOL isRetina;
         c->_subtypes = [c.subtype componentsSeparatedByString:@" - "];
     }
     
-    JSON_STR(subtypeCode, @"subtype_code");
-    if (c.subtypeCode.length == 0)
-    {
-        c->_subtypeCode = nil;
-    }
-    if (c.subtypeCode)
-    {
-        c->_subtypeCodes = [c.subtypeCode componentsSeparatedByString:@" - "];
-    }
-    
     JSON_INT(number, @"number");
     JSON_INT(quantity, @"quantity");
     JSON_BOOL(unique, @"uniqueness");
     JSON_BOOL(limited, @"limited");
-    JSON_INT(influenceLimit, @"influencelimit");
-    JSON_INT(minimumDecksize, @"minimumdecksize");
-    JSON_INT(baseLink, @"baselink");
-    JSON_INT(advancementCost, @"advancementcost");
-    JSON_INT(agendaPoints, @"agendapoints");
+    if (c.type == NRCardTypeIdentity)
+    {
+        JSON_INT(influenceLimit, @"influencelimit");
+        JSON_INT(minimumDecksize, @"minimumdecksize");
+        JSON_INT(baseLink, @"baselink");
+    }
+    else
+    {
+        c->_influenceLimit = -1;
+        c->_minimumDecksize = -1;
+        c->_baseLink = -1;
+    }
+    if (c.type == NRCardTypeAgenda)
+    {
+        JSON_INT(advancementCost, @"advancementcost");
+        JSON_INT(agendaPoints, @"agendapoints");
+    }
+    else
+    {
+        c->_advancementCost = -1;
+        c->_agendaPoints = -1;
+    }
     JSON_INT(mu, @"memoryunits");
     JSON_INT(strength, @"strength");
     JSON_INT(cost, @"cost");
@@ -254,19 +240,9 @@ static BOOL isRetina;
     JSON_INT(trash, @"trash");
     
     JSON_STR(url, @"url");
-    JSON_STR(smallImageSrc, @"imagesrc");
-    if (c.smallImageSrc.length == 0)
-    {
-        c.smallImageSrc = nil;
-    }
-    JSON_STR(largeImageSrc, @"largeimagesrc");
-    if (c.largeImageSrc.length == 0)
-    {
-        c.largeImageSrc = nil;
-    }
+    JSON_STR(imageSrc, @"imagesrc");
     
     JSON_STR(artist, @"illustrator");
-    c->_lastModified = [json objectForKey:@"last-modified"];
     
     c->_maxCopies = 3;
     if ([max1InDeck containsObject:c.code] || c.limited || c.type == NRCardTypeIdentity)

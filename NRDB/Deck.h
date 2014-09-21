@@ -19,7 +19,6 @@
 
 @property (nonatomic) Card* identity;        // convenience accessor
 
-#warning how can .name be nil?
 @property NSString* name;
 @property NRRole role;
 @property NRDeckState state;

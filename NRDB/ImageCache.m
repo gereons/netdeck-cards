@@ -16,7 +16,7 @@
 #define SUCCESS_INTERVAL    (30*SEC_PER_DAY)
 #define ERROR_INTERVAL      (1*SEC_PER_DAY)
 
-#define NETWORK_LOG         (DEBUG && 0)
+#define NETWORK_LOG         (DEBUG && 1)
 
 #if NETWORK_LOG
 #define NLOG(fmt, ...)      do { NSLog(fmt, ##__VA_ARGS__); } while(0)
@@ -169,8 +169,7 @@ static NSCache* memCache;
         return;
     }
     
-    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", src];
-    
+    NSString* url = card.imageSrc;
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFImageResponseSerializer serializer];
     @weakify(self);
@@ -228,8 +227,8 @@ static NSCache* memCache;
 
 -(void) updateImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
 {
-    NSString* src = card.imageSrc;
-    if (!APP_ONLINE || src == nil)
+    NSString* url = card.imageSrc;
+    if (!APP_ONLINE || url == nil)
     {
         completionBlock(NO);
         return;
@@ -241,7 +240,6 @@ static NSCache* memCache;
     NSDictionary* dict = [settings objectForKey:LAST_MOD_CACHE];
     NSString* lastModDate = [dict objectForKey:key];
     
-    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", src];
     NSURL *URL = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
     if (lastModDate)
@@ -273,8 +271,8 @@ static NSCache* memCache;
 
 -(void) checkForImageUpdate:(Card*)card withKey:(NSString*)key
 {
-    NSString* src = card.imageSrc;
-    if (src == nil)
+    NSString* url = card.imageSrc;
+    if (url == nil)
     {
         return;
     }
@@ -297,7 +295,6 @@ static NSCache* memCache;
     dict = [settings objectForKey:LAST_MOD_CACHE];
     NSString* lastModDate = [dict objectForKey:key];
     
-    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com%@", src];
     NSURL *URL = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
     if (lastModDate)

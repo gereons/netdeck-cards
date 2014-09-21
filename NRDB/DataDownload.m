@@ -92,7 +92,8 @@ static DataDownload* instance;
     
 -(void) doDownloadCardData
 {
-    NSString* cardsUrl = @"http://netrunnerdb.com/api/cards/";
+#warning fixme
+    NSString* cardsUrl = @"http://deepthought.parseapp.com/cards/";
     BOOL __block ok = NO;
     self.downloadStopped = NO;
     
@@ -106,7 +107,8 @@ static DataDownload* instance;
             if (!self.downloadStopped)
             {
                 ok = [CardManager setupFromNetrunnerDbApi:responseObject];
-            }            
+            }
+            [self downloadFinished:ok];
         }
         failure:^(AFHTTPRequestOperation* operation, NSError* error) {
             @strongify(self);

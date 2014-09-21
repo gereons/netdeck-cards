@@ -78,9 +78,9 @@ static TableData* allTypes;
     [corpTypes insertObject:[CardType name:NRCardTypeNone] atIndex:0];
 }
 
-+(NRCardType) type:(NSString*)code
++(NRCardType) type:(NSString*)type
 {
-    return [[code2type objectForKey:code] intValue];
+    return [[code2type objectForKey:type.lowercaseString] intValue];
 }
 
 +(NSString*) name:(NRCardType)type

@@ -99,8 +99,8 @@
 -(void) filterDeselectedSets
 {
     // remove all cards from sets that are deselected
-    NSSet* removeSets = [CardSets disabledSetCodes];
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"!(setCode in %@)", removeSets];
+    NSSet* removeSets = [CardSets disabledSets];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"!(setName in %@)", removeSets];
     [self.initialCards filterUsingPredicate:predicate];
 }
 

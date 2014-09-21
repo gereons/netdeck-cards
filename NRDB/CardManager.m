@@ -232,7 +232,6 @@ static BOOL initializing;
 {
     NSAssert(initializing, @"oops");
     
-    NSSet* knownSets = [CardSets allKnownSets];
     if (json)
     {
         for (NSDictionary* obj in json)
@@ -240,15 +239,11 @@ static BOOL initializing;
             Card* card = [Card cardFromJson:obj];
             NSAssert(card.isValid, @"invalid card from %@", obj);
             
-            if ([knownSets containsObject:card.setCode])
-            {
-                [CardManager addCard:card];
-            }
+            [CardManager addCard:card];
         }
         
         NSArray* cards = [allCards allValues];
         [Faction initializeFactionNames:cards];
-        [CardSets initializeSetNames:cards];
         [CardType initializeCardTypes:cards];
         
         // sort identities by faction and name
@@ -277,16 +272,6 @@ static BOOL initializing;
 +(void) addCard:(Card*)card
 {
     NSAssert(initializing, @"oops");
-    
-    // alt art card?
-    if ([card.setCode isEqualToString:@"alt"])
-    {
-        if (card.imageSrc) // but only if it really *has* art...
-        {
-            [altCards setObject:card forKey:card.code];
-        }
-        return;
-    }
     
     // add to dictionaries/arrays
     [allCards setObject:card forKey:card.code];

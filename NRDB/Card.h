@@ -50,13 +50,12 @@
 @property (readonly) NSString* typeStr;
 @property (readonly) NSString* subtype;     // full subtype string like "Fracter - Icebreaker - AI"
 @property (readonly) NSArray* subtypes;     // array of subtypes like @[ @"Fracter", @"Icebreaker", @"AI" ]
-@property (readonly) NSString* subtypeCode; // full subtype codes
-@property (readonly) NSArray* subtypeCodes; // array of subtype codes
 @property (readonly) NSString* iceType;     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
 @property (readonly) NSString* programType; // special for Programs: return "Icebreaker" for icebreakers, "Program" for other programs
 @property (readonly) NRFaction faction;
 @property (readonly) NSString* factionStr;
 @property (readonly) NRRole role;
+@property (readonly) NSString* roleStr;
 @property (readonly) int number;
 @property (readonly) int influenceLimit;
 @property (readonly) int minimumDecksize;
@@ -70,7 +69,6 @@
 @property (readonly) int trash;
 @property (readonly) int quantity;
 @property (readonly) NSString* setName;
-@property (readonly) NSString* setCode;
 @property (readonly) NSString* artist;
 @property (readonly) BOOL unique;
 @property (readonly) BOOL limited;

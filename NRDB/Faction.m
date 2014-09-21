@@ -23,7 +23,7 @@ static TableData* allFactions;
 {
     code2faction = @{
         @"haas-bioroid": @(NRFactionHaasBioroid),
-        @"weyland-consortium": @(NRFactionWeyland),
+        @"the weyland consortium": @(NRFactionWeyland),
         @"jinteki": @(NRFactionJinteki),
         @"nbn": @(NRFactionNBN),
         @"anarch": @(NRFactionAnarch),
@@ -86,9 +86,10 @@ static TableData* allFactions;
     return [faction2name objectForKey:@(faction)];
 }
 
-+(NRFaction) faction:(NSString*)code
++(NRFaction) faction:(NSString*)faction
 {
-    return [[code2faction objectForKey:code] intValue];
+    NSNumber* n = [code2faction objectForKey:faction.lowercaseString];
+    return n ? n.integerValue : NRFactionNone;
 }
 
 +(NSArray*) factionsForRole:(NRRole)role
