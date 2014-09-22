@@ -74,32 +74,6 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>Unpublished Identities</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Plugged-In &amp; Chronos Protocol</string>
-			<key>Key</key>
-			<string>use_unpublished_identities</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
-        <dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Draft</string>
-			<key>Key</key>
-			<string>use_draft_identities</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>Title</key>
 			<string>Genesis Cycle</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>

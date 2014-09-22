@@ -42,8 +42,6 @@ static BOOL isRetina;
                     HADES_SHARD, HADES_FRAGMENT,
                     EDEN_SHARD, EDEN_FRAGMENT ];
     
-    draftIds = @[ THE_SHADOW, THE_MASQUE ];
-    specialIds = @[ LARAMY_FISK, THE_COLLECTIVE, CHRONOS_PROTOCOL_HB, CHRONOS_PROTOCOL_JIN ];
     multiIce = @[ RAINBOW ];
     
     roleCodes = @{ @"Runner": @(NRRoleRunner), @"Corp": @(NRRoleCorp) };

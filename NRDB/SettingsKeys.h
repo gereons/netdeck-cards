@@ -28,10 +28,6 @@
 #define SET_SELECTION       @"setSelection"
 #define NUM_CORES           @"number_coresets"
 
-#warning remove
-#define USE_UNPUBLISHED_IDS @"use_unpublished_identities"
-#define USE_DRAFT_IDS       @"use_draft_identities"
-
 #define USE_DROPBOX         @"useDropbox"
 
 #define AUTO_SAVE           @"autoSave"

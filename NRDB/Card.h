@@ -25,19 +25,6 @@
 #define RAINBOW                 @"05025"
 // #define ORION                @"0xxxx"    // not out yet
 
-// example for an Icebreaker
-#define YOG_0                   @"01014"
-
-// draft ids
-#define THE_MASQUE              @"00006"
-#define THE_SHADOW              @"00005"
-
-// plugged-in and chronos protocol identities
-#define LARAMY_FISK             @"00002"
-#define THE_COLLECTIVE          @"00001"
-#define CHRONOS_PROTOCOL_HB     @"00004"
-#define CHRONOS_PROTOCOL_JIN    @"00003"
-
 // data for a single card
 
 @interface Card : NSObject

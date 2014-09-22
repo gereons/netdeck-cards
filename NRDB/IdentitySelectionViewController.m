@@ -104,22 +104,13 @@
     
     CGPoint oldCenter = self.factionSelector.center;
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
-    {
-        [self.factionSelector removeSegmentAtIndex:5 animated:NO];
-    }
-    else
-    {
-        [self.factionSelector setTitle:l10n(@"Neutral") forSegmentAtIndex:5];
-    }
-    
     if (self.role == NRRoleRunner)
     {
-        [self.factionSelector removeSegmentAtIndex:4 animated:NO];
         [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
         [self.factionSelector setTitle:[Faction name:NRFactionAnarch] forSegmentAtIndex:1];
         [self.factionSelector setTitle:[Faction name:NRFactionCriminal] forSegmentAtIndex:2];
         [self.factionSelector setTitle:[Faction name:NRFactionShaper] forSegmentAtIndex:3];
+        [self.factionSelector removeSegmentAtIndex:4 animated:NO];
     }
     else
     {
@@ -157,10 +148,7 @@
         // move 'neutral' to the end
         NSString* neutral = [Faction name:NRFactionNeutral];
         [factions removeObject:neutral];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
-        {
-            [factions addObject:neutral];
-        }
+        [factions addObject:neutral];
     }
     else
     {
