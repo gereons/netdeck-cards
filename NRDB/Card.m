@@ -207,7 +207,7 @@ static BOOL isRetina;
     if (c.type == NRCardTypeIdentity)
     {
         JSON_INT(influenceLimit, @"influencelimit");
-        JSON_INT(minimumDecksize, @"minimumdecksize");
+        JSON_INT(minimumDecksize, @"mindecksize");
         JSON_INT(baseLink, @"baselink");
     }
     else

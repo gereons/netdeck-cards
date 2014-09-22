@@ -93,7 +93,7 @@ static DataDownload* instance;
 -(void) doDownloadCardData
 {
 #warning fixme
-    NSString* cardsUrl = @"http://deepthought.parseapp.com/cards/";
+    NSString* cardsUrl = @"https://deepthought.parseapp.com/cards/";
     BOOL __block ok = NO;
     self.downloadStopped = NO;
     

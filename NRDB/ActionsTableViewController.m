@@ -86,7 +86,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     // check if card data is available
     if (![CardManager cardsAvailable])
     {
-        NSString* msg = l10n(@"To use this app, you must first download card data from NetrunnerDB.com");
+#warning fixme
+        NSString* msg = l10n(@"To use this app, you must first download card data from a Datasucker API Server");
         
         SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"No Card Data")
                                                    message:msg
