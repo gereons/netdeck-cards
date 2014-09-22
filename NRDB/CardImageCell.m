@@ -25,7 +25,6 @@
                             @"image2": self.image2,
                             @"image3": self.image3,
                             @"activity": self.activityIndicator,
-                            @"toggle": self.toggleButton,
                             @"label": self.copiesLabel,
                             @"details": self.detailView,
                             };
@@ -35,13 +34,11 @@
                              @"H:|-5-[image2]-5-|",
                              @"H:|-10-[image3]|",
                              @"H:|[label]|",
-                             @"H:[toggle(28)]",
                              @"H:|[details]|",
                              @"V:|[image1(image3)]",
                              @"V:|-5-[image2(image3)]",
                              @"V:|-10-[image3][label(20)]|",
                              @"V:|[details]-20-|",
-                             @"V:[toggle(34)]",
                             ];
     
     // see http://stackoverflow.com/questions/12873372/centering-a-view-in-its-superview-using-visual-format-language
@@ -57,20 +54,6 @@
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self
                                                      attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1 constant:0]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.toggleButton
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.image2
-                                                     attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1 constant:0]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.toggleButton
-                                                     attribute:NSLayoutAttributeRight
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.image3
-                                                     attribute:NSLayoutAttributeRight
                                                     multiplier:1 constant:0]];
     
     for (NSString* c in constraints)
@@ -132,20 +115,13 @@
     self.image2.layer.cornerRadius = 10;
     self.image3.layer.masksToBounds = YES;
     self.image3.layer.cornerRadius = 10;
-    
-    // rounded corners for toggle button
-    self.toggleButton.layer.masksToBounds = YES;
-    self.toggleButton.layer.cornerRadius = 3;
 }
 
 -(void) setCc:(CardCounter *)cc
 {
     self->_cc = cc;
-    self.toggleButton.hidden = self.cc.card.altCard == nil;
     
     [self setImageStack:self.image1.image];
-    
-    [self.toggleButton setImage:[ImageCache altArtIcon:self.cc.showAltArt] forState:UIControlStateNormal];
 }
 
 -(void) setImageStack:(UIImage*)img
@@ -164,17 +140,9 @@
     self.image3.layer.opacity = 1.0 - (c * 0.2);
 }
 
--(void) toggleImage:(id)sender
-{
-    self.cc.showAltArt = !self.cc.showAltArt;
-    [self.toggleButton setImage:[ImageCache altArtIcon:self.cc.showAltArt] forState:UIControlStateNormal];
-    [self loadImage];
-}
-
 -(void) loadImage
 {
-    Card* card = self.cc.showAltArt ? self.cc.card.altCard : self.cc.card;
-    [self loadImage:card];
+    [self loadImage:self.cc.card];
 }
 
 -(void) loadImage:(Card*)card

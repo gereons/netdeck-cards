@@ -75,7 +75,6 @@
 @property (readonly) NSString* imageSrc;
 @property (readonly) NSString* url;
 
-@property (readonly) Card* altCard;
 @property (readonly) UIColor* factionColor;
 @property (readonly) NSUInteger factionHexColor;
 @property (nonatomic, readonly) NSAttributedString* attributedText;    // html rendered

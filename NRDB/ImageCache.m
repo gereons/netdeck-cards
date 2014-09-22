@@ -98,8 +98,6 @@ static NSCache* memCache;
     
     memCache = [[NSCache alloc] init];
     memCache.name = @"netdeck";
-    
-    [ImageCache moveToCaches];
 }
 
 +(ImageCache*) sharedInstance
@@ -125,10 +123,10 @@ static NSCache* memCache;
 
 -(void) getImageFor:(Card *)card completion:(CompletionBlock)completionBlock
 {
-    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, @"en"];
+    NSString* key = card.code;
     
     // NSLog(@"get img for %@", key);
-    UIImage* img = [ImageCache getImageFor:key];
+    UIImage* img = [ImageCache getImageFor:card.code];
     if (img)
     {
         // NSLog(@"cached, check for update");
@@ -211,10 +209,9 @@ static NSCache* memCache;
 
 -(void) updateMissingImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
 {
-    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, @"en"];
     // NSLog(@"get img for %@", key);
     
-    UIImage* img = [ImageCache getImageFor:key];
+    UIImage* img = [ImageCache getImageFor:card.code];
     if (img == nil)
     {
         [self updateImageFor:card completion:completionBlock];
@@ -234,7 +231,7 @@ static NSCache* memCache;
         return;
     }
     
-    NSString* key = [NSString stringWithFormat:@"%@:%@", card.code, @"en"];
+    NSString* key = card.code;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSDictionary* dict = [settings objectForKey:LAST_MOD_CACHE];
@@ -261,7 +258,6 @@ static NSCache* memCache;
         completionBlock(responseObject != nil);
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        // @strongify(self);
         NSInteger status = operation.response.statusCode;
         NLOG(@"up: GOT %@ If-Modified-Since %@: status %ld", url, lastModDate ?: @"n/a", (long)status);
         completionBlock(status == 304);
@@ -396,32 +392,12 @@ static NSCache* memCache;
 
 #pragma mark simple filesystem cache
 
-+(void) moveToCaches
-{
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
-    
-    paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* cachesDirectory = [paths objectAtIndex:0];
-    
-    NSString* srcImages = [documentsDirectory stringByAppendingPathComponent:@"images"];
-    NSString* dstImages = [cachesDirectory stringByAppendingPathComponent:@"images"];
-    
-    NSFileManager* mgr = [NSFileManager defaultManager];
-    if ([mgr fileExistsAtPath:srcImages])
-    {
-        [mgr moveItemAtPath:srcImages toPath:dstImages error:nil];
-    }
-    [mgr removeItemAtPath:srcImages error:nil];
-}
-
 +(NSString*) directoryForImages
 {
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     
     NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
-    directory = [directory stringByAppendingPathComponent:@"en"];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:directory])
     {
@@ -489,19 +465,9 @@ static NSCache* memCache;
     if (data != nil)
     {
         [data writeToFile:file atomically:YES];
-        [self dontBackupFile:file];
         return YES;
     }
     return NO;
-}
-
-+(void)dontBackupFile:(NSString*)filename
-{
-    NSURL* url = [NSURL fileURLWithPath:filename];
-    NSAssert([[NSFileManager defaultManager] fileExistsAtPath:[url path]], @"file doesn't exist");
-    
-    NSError *error = nil;
-    [url setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&error];
 }
 
 #pragma mark utility methods
@@ -514,7 +480,7 @@ static NSCache* memCache;
     {
         scale = 1.436;
     }
-    NSString* key = [NSString stringWithFormat:@"%@:%@:crop", card.code, @"en"];
+    NSString* key = [NSString stringWithFormat:@"%@:crop", card.code ];
     
     UIImage* cropped = [memCache objectForKey:key];
     if (!cropped)

@@ -62,6 +62,8 @@ const NSString* const kANY = @"Any";
     [DeckImport checkClipboardForDeck];
     [CardImageViewPopover monitorKeyboard];
     
+    [self removeOldNrdbData];
+    
 #if _NRDB_
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status)
@@ -113,6 +115,30 @@ const NSString* const kANY = @"Any";
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];    
+}
+
+-(void) removeOldNrdbData
+{
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    if ([settings boolForKey:@"_nrdb_removed_"])
+    {
+        return;
+    }
+    
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString* images = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    
+    NSFileManager* mgr = [NSFileManager defaultManager];
+    [mgr removeItemAtPath:images error:nil];
+    
+    NSString* json = [documentsDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
+    [mgr removeItemAtPath:json error:nil];
+    
+    [settings setBool:YES forKey:@"_nrdb_removed_"];
+    [settings synchronize];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

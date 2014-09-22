@@ -168,26 +168,25 @@ static BOOL initializing;
     return allRunnerCards.count > 0 && allCorpCards.count > 0;
 }
 
-+(NSString*) filenameForLanguage:(NSString*)language
++(NSString*) filename
 {
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
-    NSString* filename = [NSString stringWithFormat:@"nrcards_%@.json", language];
     
-    return [documentsDirectory stringByAppendingPathComponent:filename];
+    return [documentsDirectory stringByAppendingPathComponent:@"nrcards.json"];
 }
 
 +(void) removeFiles
 {
     NSFileManager* fileMgr = [NSFileManager defaultManager];
-    [fileMgr removeItemAtPath:[CardManager filenameForLanguage:@"en"] error:nil];
+    [fileMgr removeItemAtPath:[CardManager filename] error:nil];
     
     [CardManager initialize];
 }
 
 +(BOOL) setupFromFiles
 {
-    NSString* cardsFile = [CardManager filenameForLanguage:@"en"];
+    NSString* cardsFile = [CardManager filename];
     
     NSFileManager* fileMgr = [NSFileManager defaultManager];
     if ([fileMgr fileExistsAtPath:cardsFile])
@@ -208,9 +207,8 @@ static BOOL initializing;
 
 +(BOOL) setupFromNetrunnerDbApi:(NSArray*)json
 {
-    NSString* cardsFile = [CardManager filenameForLanguage:@"en"];
+    NSString* cardsFile = [CardManager filename];
     [json writeToFile:cardsFile atomically:YES];
-    [ImageCache dontBackupFile:cardsFile];
     
     NSDateFormatter *fmt = [NSDateFormatter new];
     [fmt setDateStyle:NSDateFormatterShortStyle]; // e.g. 08.10.2008 for locale=de

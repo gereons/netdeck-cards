@@ -107,11 +107,6 @@ static BOOL isRetina;
     return [NSString stringWithFormat:@"bc0f047c-01b1-427f-a439-d451eda%@", self.code];
 }
 
--(Card*) altCard
-{
-    return [CardManager altCardFor:self.code];
-}
-
 -(NSUInteger) factionHexColor
 {
     NSNumber*n = factionColors[@(self.faction)];
