@@ -87,12 +87,6 @@ static CGFloat popoverScale = 1.0;
     return NO;
 }
 
-- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
-{
-    [popoverController dismissPopoverAnimated:NO];
-    return YES;
-}
-
 - (id)initWithCard:(Card*)card
 {
     self = [super initWithNibName:@"CardImageView" bundle:nil];
