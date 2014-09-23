@@ -22,7 +22,7 @@ PODS:
     - AFNetworking/NSURLSession
   - CorePlot (1.5.1)
   - CSStickyHeaderFlowLayout (0.2.2)
-  - Dropbox-Sync-API-SDK (3.0.2)
+  - Dropbox-Sync-API-SDK (3.1.0)
   - DTCoreText (1.6.13):
     - DTFoundation/Core (~> 1.7.1)
     - DTFoundation/DTAnimatedGIF (~> 1.7.1)
@@ -73,6 +73,45 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
+  - OMGHTTPURLRQ (2.0.1):
+    - OMGHTTPURLRQ/RQ
+    - OMGHTTPURLRQ/UserAgent
+    - OMGHTTPURLRQ/UserAgent
+  - OMGHTTPURLRQ/RQ (2.0.1):
+    - OMGHTTPURLRQ/UserAgent
+  - OMGHTTPURLRQ/UserAgent (2.0.1):
+    - OMGHTTPURLRQ/UserAgent
+  - PromiseKit (0.9.17):
+    - PromiseKit/NSNotificationCenter
+    - PromiseKit/NSURLConnection
+    - PromiseKit/Pause
+    - PromiseKit/UIActionSheet
+    - PromiseKit/UIAlertView
+    - PromiseKit/UIView
+    - PromiseKit/UIViewController
+    - PromiseKit/Until
+    - PromiseKit/When
+  - PromiseKit/NSNotificationCenter (0.9.17):
+    - PromiseKit/Promise
+  - PromiseKit/NSURLConnection (0.9.17):
+    - OMGHTTPURLRQ
+    - PromiseKit/Promise
+  - PromiseKit/Pause (0.9.17):
+    - PromiseKit/Promise
+  - PromiseKit/Promise (0.9.17)
+  - PromiseKit/UIActionSheet (0.9.17):
+    - PromiseKit/Promise
+  - PromiseKit/UIAlertView (0.9.17):
+    - PromiseKit/Promise
+  - PromiseKit/UIView (0.9.17):
+    - PromiseKit/Promise
+  - PromiseKit/UIViewController (0.9.17):
+    - PromiseKit/Promise
+  - PromiseKit/Until (0.9.17):
+    - PromiseKit/Promise
+    - PromiseKit/When
+  - PromiseKit/When (0.9.17):
+    - PromiseKit/Promise
   - RBBAnimation (0.3.0)
   - SDCAlertView (HEAD based on 1.4.1):
     - RBBAnimation (~> 0.3)
@@ -247,6 +286,7 @@ DEPENDENCIES:
   - GRMustache
   - InAppSettingsKit (HEAD)
   - libextobjc
+  - PromiseKit
   - SDCAlertView (HEAD)
   - SVProgressHUD (HEAD)
   - TestFlightSDK
@@ -256,13 +296,15 @@ SPEC CHECKSUMS:
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   CorePlot: b15cb1a9a687b9576545104248d6e22033e678bb
   CSStickyHeaderFlowLayout: 79e586ba3d94941c79146832227ddbc6702c8705
-  Dropbox-Sync-API-SDK: 8110afff9598478e7fdc2d161e54024dab09a0d2
+  Dropbox-Sync-API-SDK: 41f973bd5b29f234fdca91e66066a52c4f98b4ad
   DTCoreText: 84eb8ba2e70448fdd9d837540e371f9f587b65ba
   DTFoundation: 360bc65ab44f588611f47324b8cfb0f18e04b263
   GRMustache: efecd3b603f0a7a99cf6bdf3998782ee0c465726
   InAppSettingsKit: 853cdc9fcc76b87a4694f8d2b930e116463b5a29
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
+  OMGHTTPURLRQ: 4297af2a7f7ca7adb3f8331203001e0fd2dae16f
+  PromiseKit: 7a18d7b8d41a156cda0268c3cb065d272d5aa554
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64
   SDCAlertView: 73b84d53e9c2e994b47b07c441fa1aa696c8049b
   SDCAutoLayout: 6acad78fe6a09278a064ac71609e8f484a7249fc

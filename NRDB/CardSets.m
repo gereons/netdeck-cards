@@ -105,6 +105,11 @@ static struct cardSetData {
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
 }
 
++(BOOL) setupFromDatasuckerApi:(NSArray *)json
+{
+#warning fixme
+    return YES;
+}
 
 +(NSDictionary*) settingsDefaults
 {

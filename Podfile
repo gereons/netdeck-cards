@@ -13,6 +13,7 @@ pod 'CSStickyHeaderFlowLayout'
 pod 'SDCAlertView', :head
 pod 'YOLOKit'
 pod 'InAppSettingsKit', :head
+pod 'PromiseKit'
 
 post_install do | installer |
   require 'fileutils'

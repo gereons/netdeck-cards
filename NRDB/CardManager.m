@@ -191,7 +191,7 @@ static BOOL initializing;
     return NO;
 }
 
-+(BOOL) setupFromNetrunnerDbApi:(NSArray*)json
++(BOOL) setupFromDatasuckerApi:(NSArray*)json
 {
     NSString* cardsFile = [CardManager filename];
     [json writeToFile:cardsFile atomically:YES];

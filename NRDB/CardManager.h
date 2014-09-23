@@ -37,6 +37,6 @@
 
 +(BOOL) setupFromFiles;
 +(void) removeFiles;
-+(BOOL) setupFromNetrunnerDbApi:(NSArray*)json;
++(BOOL) setupFromDatasuckerApi:(NSArray*)json;
 
 @end

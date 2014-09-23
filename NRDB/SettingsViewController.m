@@ -10,6 +10,7 @@
 #import <Dropbox/Dropbox.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
+#import <PromiseKit.h>
 
 #import "SettingsViewController.h"
 
@@ -86,7 +87,6 @@
 
 - (void) settingsChanged:(NSNotification*)notification
 {
-    
     if ([notification.object isEqualToString:USE_DROPBOX])
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:USE_DROPBOX] boolValue];
@@ -206,6 +206,127 @@
             }
         };
     }
+    else if ([specifier.key isEqualToString:TEST_DATASUCKER])
+    {
+        TF_CHECKPOINT(@"datasucker test");
+        if (APP_ONLINE)
+        {
+            [self testDatasucker];
+        }
+        else
+        {
+            [self showOfflineAlert];
+        }
+    }
+}
+
+-(void) testDatasucker
+{
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    NSString* lockpick = [settings objectForKey:LOCKPICK_CODE];
+    NSString* cardsUrl = [settings objectForKey:CARDS_ENDPOINT];
+    NSString* setsUrl = [settings objectForKey:SETS_ENDPOINT];
+    
+    BOOL ok = lockpick.length || (cardsUrl.length && setsUrl.length);
+    if (!ok)
+    {
+        [SDCAlertView alertWithTitle:nil message:@"Please enter either a lockpick code or both endpoint URLs" buttons:@[@"OK"]];
+        return;
+    }
+
+    [SVProgressHUD showWithStatus:l10n(@"Testing...")];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    NSString* __block lockpickResult, * __block cardsResult, * __block setsResult;
+    NSInteger __block lockpickIndex = -1, cardsIndex = -1, setsIndex = -1;
+    NSInteger index = 0;
+    NSMutableArray* promises = [NSMutableArray array];
+    
+    PMKPromise* promise;
+    if (lockpick.length)
+    {
+        NSString* lockpickUrl = [NSString stringWithFormat:@"https://lockpick.parseapp.com/datasucker/%@", lockpick ];
+        promise = [NSURLConnection GET:lockpickUrl];
+        promise.catch(^(NSError *error) {
+            lockpickResult = @"Lockpick: Fail";
+        });
+        [promises addObject:promise];
+        lockpickIndex = index++;
+    }
+    else
+    {
+        lockpickResult = @"Lockpick: not tested.";
+    }
+    
+    if (cardsUrl.length)
+    {
+        PMKPromise *promise = [NSURLConnection GET:cardsUrl];
+        promise.catch(^(NSError *error) {
+            cardsResult = @"Cards: Fail";
+        });
+        [promises addObject:promise];
+        cardsIndex = index++;
+    }
+    else
+    {
+        cardsResult = @"Cards: not tested";
+    }
+    
+    if (setsUrl.length)
+    {
+        PMKPromise *promise = [NSURLConnection GET:setsUrl];
+        promise.catch(^(NSError *error) {
+            setsResult = @"Sets: Fail";
+        });
+        [promises addObject:promise];
+        setsIndex = index++;
+    }
+    else
+    {
+        setsResult = @"Sets: not tested";
+    }
+    
+    [PMKPromise when:promises].then(^(NSArray *results) {
+        NSLog(@"%d results", results.count);
+        if (lockpickIndex != -1)
+        {
+            NSDictionary* dict = results[lockpickIndex];
+            if (dict)
+            {
+                lockpickResult = @"Lockpick: OK";
+            }
+            else
+            {
+                lockpickResult = @"Lockpick: Fail";
+            }
+        }
+        if (cardsIndex != -1)
+        {
+            NSDictionary* data = results[cardsIndex];
+            cardsResult = data ? @"Cards: OK" : @"Cards: Fail";
+        }
+        if (setsIndex != -1)
+        {
+            NSDictionary* data = results[setsIndex];
+            setsResult = data ? @"Sets: OK" : @"Sets: Fail";
+        }
+    }).finally(^{
+        NSMutableString *message = [NSMutableString stringWithString:lockpickResult ? lockpickResult : @"Lockpick: not tested"];
+        [message appendString:@"\n"];
+        [message appendString:cardsResult ? cardsResult : @"Cards: not tested"];
+        [message appendString:@"\n"];
+        [message appendString:setsResult ? setsResult : @"Sets: not tested"];
+        
+        [self finishDatasuckerTests:message];
+    });
+}
+
+-(void) finishDatasuckerTests:(NSString*)message
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [SVProgressHUD dismiss];
+    
+    [SDCAlertView alertWithTitle:nil message:message buttons:@[ l10n(@"OK") ]];
 }
 
 -(void) showOfflineAlert

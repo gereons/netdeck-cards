@@ -25,4 +25,6 @@
 +(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;
 +(NSArray*) setsUsedInDeck:(Deck*) deck;
 
++(BOOL) setupFromDatasuckerApi:(NSArray*)json;
+
 @end
