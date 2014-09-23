@@ -33,6 +33,8 @@
 			<string>Card Sets</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
+            <key>Key</key>
+            <string>sets_hide_1</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -41,6 +43,8 @@
 			<string>Set/Datapack Selection</string>
 			<key>File</key>
 			<string>SetSelection</string>
+            <key>Key</key>
+            <string>sets_hide_2</string>
 		</dict>
 		<dict>
 			<key>Title</key>

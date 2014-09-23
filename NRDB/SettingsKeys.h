@@ -24,8 +24,6 @@
 #define DOWNLOAD_MISSING_IMG    @"downloadMissingImagesNow"
 #define CLEAR_CACHE         @"clearCache"
 
-#define CARD_SETS           @"cardSets"
-#define SET_SELECTION       @"setSelection"
 #define NUM_CORES           @"number_coresets"
 
 #define USE_DROPBOX         @"useDropbox"

@@ -62,7 +62,7 @@
     NSMutableSet* hiddenKeys = [NSMutableSet set];
     if (![CardManager cardsAvailable])
     {
-        [hiddenKeys addObjectsFromArray:@[ CARD_SETS, SET_SELECTION ]];
+        [hiddenKeys addObjectsFromArray:@[ @"sets_hide_1", @"sets_hide_2" ]];
     }
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -191,7 +191,7 @@
         TF_CHECKPOINT(@"clear cache");
         
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
-                                                   message:l10n(@"Clear Cache? You will need to re-download all data from NetrunnerDB.com.")
+                                                   message:l10n(@"Clear Cache? You will need to re-download all data.")
                                                    buttons:@[l10n(@"No"), l10n(@"Yes") ]];
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             if (buttonIndex == 1) // yes, clear
