@@ -119,7 +119,6 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     // switches
     self.uniqueLabel.text = l10n(@"Unique");
     self.limitedLabel.text = l10n(@"Limited");
-    self.altartLabel.text = l10n(@"Alt Art");
 
     // buttons
     self.typeButton.tag = TYPE_BUTTON;
@@ -572,12 +571,6 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(IBAction)limitedChanged:(UISwitch*)sender
 {
     [self.cardList filterByLimited:sender.on];
-    [self updateResults];
-}
-
--(IBAction)altartChanged:(UISwitch*)sender
-{
-    [self.cardList filterByAltArt:sender.on];
     [self updateResults];
 }
 

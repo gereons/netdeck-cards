@@ -27,8 +27,7 @@ static NSString* identityKey;
 static NSMutableArray* sortedIdentities;
 
 static NSMutableDictionary* allCards;   // code -> card
-static NSMutableDictionary* altCards;   // code -> alt art card
-static NSMutableDictionary* altCardMap; // card code -> alt art card code
+
 static int maxMU;
 static int maxStrength;
 static int maxRunnerCost;
@@ -43,8 +42,6 @@ static BOOL initializing;
 +(void) initialize
 {
     allCards = [NSMutableDictionary dictionary];
-    altCards = [NSMutableDictionary dictionary];
-    altCardMap = [NSMutableDictionary dictionary];
     
     allRunnerCards = [NSMutableArray array];
     allCorpCards = [NSMutableArray array];
@@ -62,17 +59,6 @@ static BOOL initializing;
 +(Card*) cardByCode:(NSString*)code
 {
     return [allCards objectForKey:code];
-}
-
-+(Card*) altCardFor:(NSString *)code
-{
-    NSString* altCode = [altCardMap objectForKey:code];
-    return [altCards objectForKey:altCode];
-}
-
-+(NSArray*) altCards
-{
-    return [altCards allValues];
 }
 
 +(NSArray*) allCards

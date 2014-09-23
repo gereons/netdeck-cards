@@ -11,18 +11,11 @@
 #import "ImageCache.h"
 #import "CardDetailView.h"
 
-static NSMutableSet* altArt;
-
 @interface BrowserImageCell()
 
 @end
 
 @implementation BrowserImageCell
-
-+(void) initialize
-{
-    altArt = [NSMutableSet set];
-}
 
 -(void) awakeFromNib
 {

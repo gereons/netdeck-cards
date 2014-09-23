@@ -13,10 +13,9 @@
 @interface CardManager : NSObject
 
 +(Card*) cardByCode:(NSString*)code;
-+(Card*) altCardFor:(NSString*)code;
 
 +(NSArray*) allCards;
-+(NSArray*) altCards;
+
 +(NSArray*) allForRole:(NRRole)role;
 +(NSArray*) identitiesForRole:(NRRole)role;
 

@@ -35,7 +35,6 @@
 @property NRSearchScope searchScope;
 @property BOOL unique;
 @property BOOL limited;
-@property BOOL altart;
 @property NRFaction faction4inf;    // faction for influence filter
 
 @property NRCardListSortType sortType;
@@ -139,7 +138,6 @@
     self.searchScope = NRSearchAll;
     self.unique = NO;
     self.limited = NO;
-    self.altart = NO;
     self.faction4inf = NRFactionNone;
 }
 
@@ -254,11 +252,6 @@
 -(void) filterByLimited:(BOOL)limited
 {
     self.limited = limited;
-}
-
--(void) filterByAltArt:(BOOL)altart
-{
-    self.altart = altart;
 }
 
 -(void) sortBy:(NRCardListSortType)sortType
@@ -387,11 +380,6 @@
     if (self.limited)
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"limited == %d", self.limited];
-        [predicates addObject:predicate];
-    }
-    if (self.altart)
-    {
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"altCard != NIL"];
         [predicates addObject:predicate];
     }
 
