@@ -11,6 +11,8 @@
 #import "Deck.h"
 #import "SettingsKeys.h"
 
+#warning use /sets API to get names!
+
 @interface CardSets()
 @property int setNum;
 @property NSString* setName;

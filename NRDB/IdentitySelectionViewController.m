@@ -114,6 +114,7 @@
     }
     else
     {
+#warning derive short names from API somehow
         [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
         [self.factionSelector setTitle:l10n(@"H-B") forSegmentAtIndex:1];
         [self.factionSelector setTitle:l10n(@"NBN") forSegmentAtIndex:2];
@@ -142,13 +143,9 @@
     {
         factions = [[Faction factionsForRole:self.role] mutableCopy];
         
-        // remove entry for "none"
+        // remove entries for "none" and "neutral"
         [factions removeObject:[Faction name:NRFactionNone]];
-        
-        // move 'neutral' to the end
-        NSString* neutral = [Faction name:NRFactionNeutral];
-        [factions removeObject:neutral];
-        [factions addObject:neutral];
+        [factions removeObject:[Faction name:NRFactionNeutral]];
     }
     else
     {

@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define IMAGE_WIDTH     300
+#define IMAGE_HEIGHT    418
+
 @class Card;
 @interface ImageCache : NSObject
 

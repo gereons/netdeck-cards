@@ -16,7 +16,7 @@
 #define SUCCESS_INTERVAL    (30*SEC_PER_DAY)
 #define ERROR_INTERVAL      (1*SEC_PER_DAY)
 
-#define NETWORK_LOG         (DEBUG && 1)
+#define NETWORK_LOG         (DEBUG && 0)
 
 #if NETWORK_LOG
 #define NLOG(fmt, ...)      do { NSLog(fmt, ##__VA_ARGS__); } while(0)
@@ -420,7 +420,6 @@ static NSCache* memCache;
 +(UIImage*) getImageFor:(NSString*)key
 {
     UIImage* img = [memCache objectForKey:key];
-    
     if (img)
     {
         return img;
@@ -454,12 +453,22 @@ static NSCache* memCache;
     return img;
 }
 
-+(BOOL) saveImage:(UIImage*)img forKey:(NSString*)code
++(BOOL) saveImage:(UIImage*)img forKey:(NSString*)key
 {
-    NLOG(@"save img for %@", code);
+    NLOG(@"save img for %@", key);
     NSString* dir = [ImageCache directoryForImages];
-    NSString* file = [dir stringByAppendingPathComponent:code];
+    NSString* file = [dir stringByAppendingPathComponent:key];
     
+    if (img && img.size.width > 300)
+    {
+        // rescale image to 300x418 and save the scaled-down version
+        UIImage* newImg = [ImageCache scaleImage:img toSize:CGSizeMake(IMAGE_WIDTH, IMAGE_HEIGHT)];
+        if (newImg)
+        {
+            img = newImg;
+        }
+    }
+
     NSData* data = UIImagePNGRepresentation(img);
     
     if (data != nil)
@@ -471,6 +480,17 @@ static NSCache* memCache;
 }
 
 #pragma mark utility methods
+
++(UIImage*) scaleImage:(UIImage*)srcImage toSize:(CGSize)size
+{
+    UIGraphicsBeginImageContext(size);
+    
+    [srcImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
 
 #warning fixme
 +(UIImage*) croppedImage:(UIImage*)img forCard:(Card *)card

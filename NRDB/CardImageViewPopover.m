@@ -12,15 +12,12 @@
 #import "CardDetailView.h"
 #import <EXTScope.h>
 
-#define IMAGE_WIDTH     300
-#define IMAGE_HEIGHT    418
 #define POPOVER_MARGIN  40 // 20px status bar + 10px top + 10px bottom
 #define SCREEN_HEIGHT   768
 
 @interface CardImageViewPopover ()
 
 @property Card* card;
-@property BOOL showAlt;
 
 @end
 
@@ -93,7 +90,6 @@ static CGFloat popoverScale = 1.0;
     if (self)
     {
         self.card = card;
-        self.showAlt = NO;
         self.detailView.hidden = YES;
         
         if (keyboardVisible)
