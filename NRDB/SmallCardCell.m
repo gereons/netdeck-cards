@@ -30,7 +30,7 @@
         [self.identityButton setTitle:l10n(@"Switch Identity") forState:UIControlStateNormal];
     }
     
-    self.copiesStepper.maximumValue = self.deck.isDraft ? 100 : cc.card.maxCopies;
+    self.copiesStepper.maximumValue = self.deck.isDraft ? 100 : cc.card.maxPerDeck;
     self.copiesStepper.value = cc.count;
     
     if (card.type == NRCardTypeIdentity)

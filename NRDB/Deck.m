@@ -262,7 +262,7 @@
         }
         else
         {
-            int max = cc.card.maxCopies;
+            int max = cc.card.maxPerDeck;
             if (cc.count < max)
             {
                 cc.count = MIN(max, cc.count + copies);

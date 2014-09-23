@@ -186,7 +186,7 @@
             break;
     }
     
-    self.copiesStepper.maximumValue = self.deck.isDraft ? 100 : cc.card.maxCopies;
+    self.copiesStepper.maximumValue = self.deck.isDraft ? 100 : cc.card.maxPerDeck;
     self.copiesStepper.value = cc.count;
     self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count];
 }

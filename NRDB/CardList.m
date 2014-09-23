@@ -374,12 +374,12 @@
     }
     if (self.unique)
     {
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"unique == %d", self.unique];
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"unique == 1"];
         [predicates addObject:predicate];
     }
     if (self.limited)
     {
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"limited == %d", self.limited];
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"maxPerDeck == 1"];
         [predicates addObject:predicate];
     }
 

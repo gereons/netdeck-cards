@@ -43,30 +43,28 @@
 @property (readonly) NSString* factionStr;
 @property (readonly) NRRole role;
 @property (readonly) NSString* roleStr;
-@property (readonly) int number;
-@property (readonly) int influenceLimit;
-@property (readonly) int minimumDecksize;
-@property (readonly) int baseLink;
+@property (readonly) int influenceLimit;    // for id
+@property (readonly) int minimumDecksize;   // for id
+@property (readonly) int baseLink;          // for runner id
 @property (readonly) int influence;
 @property (readonly) int mu;
 @property (readonly) int strength;
 @property (readonly) int cost;
-@property (readonly) int advancementCost;
-@property (readonly) int agendaPoints;
+@property (readonly) int advancementCost;   // agenda
+@property (readonly) int agendaPoints;      // agenda
 @property (readonly) int trash;
-@property (readonly) int quantity;
+@property (readonly) int quantity;          // number of cards in set
+@property (readonly) int number;            // card no. in set
 @property (readonly) NSString* setName;
-@property (readonly) NSString* artist;
+@property (readonly) NSString* setCode;
 @property (readonly) BOOL unique;
-@property (readonly) BOOL limited;
+@property (readonly) int maxPerDeck;        // limited cards
 @property (readonly) NSString* imageSrc;
-@property (readonly) NSString* url;
 
 @property (readonly) UIColor* factionColor;
 @property (readonly) NSUInteger factionHexColor;
 @property (nonatomic, readonly) NSAttributedString* attributedText;    // html rendered
 @property (readonly) NSString* octgnCode;
-@property (readonly) int maxCopies;
 @property (readonly) int cropY;
 @property (readonly, getter = isValid) BOOL valid;
 @property (readonly) BOOL isCore;       // card is from core set

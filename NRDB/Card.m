@@ -18,7 +18,6 @@
 
 @property NSAttributedString* attributedText;
 
-
 @property (readwrite) BOOL isCore;
 
 @end
@@ -177,18 +176,17 @@ static BOOL isRetina;
     NSAssert(c.faction != NRFactionNone, @"no faction for %@", c.code);
     
     JSON_STR(roleStr, @"side");
-
     NSNumber* rc = [roleCodes objectForKey:c.roleStr];
     c->_role = rc ? rc.integerValue : NRRoleNone;
     NSAssert(c.role != NRRoleNone, @"no role for %@", c.code);
 
     JSON_STR(typeStr, @"type");
-
     c->_type = [CardType type:c.typeStr];
     NSAssert(c.type != NRCardTypeNone, @"no type for %@ (%@)", c.code, c.typeStr);
     
     JSON_STR(setName, @"set");
-    c.isCore = [c.setName.lowercaseString isEqualToString:CORE_SET];
+    c->_isCore = [c.setName.lowercaseString isEqualToString:CORE_SET];
+    JSON_STR(setCode, @"setcode");
     
     JSON_STR(subtype, @"subtype");
     if (c.subtype.length == 0)
@@ -203,7 +201,7 @@ static BOOL isRetina;
     JSON_INT(number, @"number");
     JSON_INT(quantity, @"quantity");
     JSON_BOOL(unique, @"uniqueness");
-    JSON_BOOL(limited, @"limited");
+    
     if (c.type == NRCardTypeIdentity)
     {
         JSON_INT(influenceLimit, @"influencelimit");
@@ -232,15 +230,12 @@ static BOOL isRetina;
     JSON_INT(influence, @"factioncost");
     JSON_INT(trash, @"trash");
     
-    JSON_STR(url, @"url");
     JSON_STR(imageSrc, @"imagesrc");
     
-    JSON_STR(artist, @"illustrator");
-    
-    c->_maxCopies = 3;
-    if ([max1InDeck containsObject:c.code] || c.limited || c.type == NRCardTypeIdentity)
+    JSON_INT(maxPerDeck, @"maxperdeck");
+    if ([max1InDeck containsObject:c.code] || c.type == NRCardTypeIdentity)
     {
-        c->_maxCopies = 1;
+        c->_maxPerDeck = 1;
     }
     
     return c;

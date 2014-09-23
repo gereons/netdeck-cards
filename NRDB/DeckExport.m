@@ -124,7 +124,7 @@
     [s appendString:[NSString stringWithFormat:@"# %@\n\n", deck.name]];
     if (deck.identity)
     {
-        [s appendString:[NSString stringWithFormat:@"[%@](%@) _(%@)_\n", deck.identity.name, deck.identity.url, deck.identity.setName]];
+        [s appendString:[NSString stringWithFormat:@"%@ _(%@)_\n", deck.identity.name, deck.identity.setName]];
     }
     
     int numCards = 0;
@@ -143,7 +143,7 @@
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
-            [s appendString:[NSString stringWithFormat:@"%lux [%@](%@) _(%@)_", (unsigned long)cc.count, cc.card.name, cc.card.url, cc.card.setName]];
+            [s appendString:[NSString stringWithFormat:@"%lux %@ _(%@)_", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
             NSUInteger influence = [deck influenceFor:cc];
             if (influence > 0)
@@ -196,7 +196,7 @@
     [s appendString:[NSString stringWithFormat:@"[b]%@[/b]\n\n", deck.name]];
     if (deck.identity)
     {
-        [s appendString:[NSString stringWithFormat:@"[url=%@]%@[/url] (%@)\n", deck.identity.url, deck.identity.name, deck.identity.setName]];
+        [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
     }
     
     int numCards = 0;
@@ -215,7 +215,7 @@
         for (int j=0; j<cards.count; ++j)
         {
             CardCounter* cc = cards[j];
-            [s appendString:[NSString stringWithFormat:@"%lux [url=%@]%@[/url] [i](%@)[/i]", (unsigned long)cc.count, cc.card.url, cc.card.name, cc.card.setName]];
+            [s appendString:[NSString stringWithFormat:@"%lux %@ [i](%@)[/i]", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
             NSUInteger influence = [deck influenceFor:cc];
             if (influence > 0)
