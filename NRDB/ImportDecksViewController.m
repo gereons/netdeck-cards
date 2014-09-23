@@ -61,7 +61,8 @@ static NSString* filterText;
     }
     self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
     self.searchBar.selectedScopeButtonIndex = searchScope;
-    self.searchBar.showsScopeBar = YES;
+    self.searchBar.showsScopeBar = NO;
+    self.searchBar.showsCancelButton = NO;
     // needed on iOS8
     [self.searchBar sizeToFit];
     
@@ -249,7 +250,7 @@ static NSString* filterText;
         {
             // NSLog(@"%@", fileInfo.path);
             Deck* deck = [self parseDeck:fileInfo.path.name];
-            if (deck)
+            if (deck && deck.role != NRRoleNone)
             {
                 NSMutableArray* decks = self.allDecks[deck.role];
 
@@ -316,6 +317,27 @@ static NSString* filterText;
     searchScope = selectedScope;
     [self filterDecks];
     [self.tableView reloadData];
+}
+
+-(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = NO;
+    searchBar.showsScopeBar = NO;
+    [searchBar sizeToFit];
+    self.tableView.tableHeaderView = self.searchBar;
+}
+
+-(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = YES;
+    searchBar.showsScopeBar = YES;
+    [searchBar sizeToFit];
+    self.tableView.tableHeaderView = self.searchBar;
+}
+
+-(void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
 }
 
 #pragma mark tableView

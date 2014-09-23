@@ -144,7 +144,8 @@ static NRFilterType _filterType = NRFilterAll;
         self.searchBar.text = self.filterText;
     }
     self.searchBar.scopeButtonTitles = @[ l10n(@"All"), l10n(@"Name"), l10n(@"Identity"), l10n(@"Card") ];
-    self.searchBar.showsScopeBar = YES;
+    self.searchBar.showsScopeBar = NO;
+    self.searchBar.showsCancelButton = NO;
     self.searchBar.selectedScopeButtonIndex = self.searchScope;
     // needed on iOS8
     [self.searchBar sizeToFit];
@@ -423,6 +424,27 @@ static NRFilterType _filterType = NRFilterAll;
 {
     self.searchScope = selectedScope;
     [self updateDecks];
+}
+
+-(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = NO;
+    searchBar.showsScopeBar = NO;
+    [searchBar sizeToFit];
+    self.tableView.tableHeaderView = self.searchBar;
+}
+
+-(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = YES;
+    searchBar.showsScopeBar = YES;
+    [searchBar sizeToFit];
+    self.tableView.tableHeaderView = self.searchBar;
+}
+
+-(void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
 }
 
 #pragma mark tableview

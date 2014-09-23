@@ -69,14 +69,17 @@
         Card* card = [Card cardByCode:[code substringFromIndex:31]];
         int copies = [qty intValue];
         
-        // NSLog(@"card: %d %@", copies, card.name);
-        if (self.setIdentity)
+        if (card)
         {
-            self.deck.identity = card;
-        }
-        else
-        {
-            [self.deck addCard:card copies:copies];
+            // NSLog(@"card: %d %@", copies, card.name);
+            if (self.setIdentity)
+            {
+                self.deck.identity = card;
+            }
+            else
+            {
+                [self.deck addCard:card copies:copies];
+            }
         }
     }
     

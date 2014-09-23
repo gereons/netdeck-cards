@@ -92,8 +92,8 @@ static DataDownload* instance;
     
 -(void) doDownloadCardData
 {
-#warning fixme
-    NSString* cardsUrl = @"https://deepthought.parseapp.com/cards/";
+    NSString* cardsUrl = [[NSUserDefaults standardUserDefaults] objectForKey:CARDS_ENDPOINT];
+    
     BOOL __block ok = NO;
     self.downloadStopped = NO;
     

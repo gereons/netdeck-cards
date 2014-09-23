@@ -472,6 +472,7 @@ static NSCache* memCache;
 
 #pragma mark utility methods
 
+#warning fixme
 +(UIImage*) croppedImage:(UIImage*)img forCard:(Card *)card
 {
     NSAssert(img != nil, @"nil image to crop");
