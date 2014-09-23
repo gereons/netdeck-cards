@@ -165,6 +165,7 @@ static NSDictionary* sortStr;
     [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
         if (buttonIndex == self.popup.cancelButtonIndex)
         {
+            self.popup = nil;
             return;
         }
         
