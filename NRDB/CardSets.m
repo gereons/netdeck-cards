@@ -62,7 +62,7 @@ static struct cardSetData {
     // lunar
     { 16, "use_us", "333", NRCycleLunar, YES },
     { 17, "use_tsb", "358", NRCycleLunar, YES },
-    // { 18, "use_fc", "359", NRCycleLunar, YES },
+    { 18, "use_fc", "359", NRCycleLunar, YES },
     // { 19, "use_uao", "", NRCycleLunar, NO },
     // { 20, "use_atr", "", NRCycleLunar, NO },
     // { 21, "use_ts", "", NRCycleLunar, NO },
