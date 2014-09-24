@@ -12,6 +12,7 @@
 @interface Faction : NSObject
 
 +(NSString*) name:(NRFaction)faction;
++(NSString*) shortName:(NRFaction)faction;
 +(NRFaction) faction:(NSString*)code;
 
 +(NSArray*) factionsForRole:(NRRole)role;

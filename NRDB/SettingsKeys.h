@@ -49,7 +49,6 @@
 
 #define LOCKPICK_CODE       @"lockpick_code"
 #define CARDS_ENDPOINT      @"cards_endpoint"
-#define SETS_ENDPOINT       @"sets_endpoint"
 #define TEST_DATASUCKER     @"test_datasucker"
 
 #define USE_NRDB            @"useNrdb"

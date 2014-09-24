@@ -21,6 +21,7 @@ static TableData* allFactions;
 
 +(void) initialize
 {
+#warning remove names
     code2faction = @{
         @"haas-bioroid": @(NRFactionHaasBioroid),
         @"the weyland consortium": @(NRFactionWeyland),
@@ -79,6 +80,12 @@ static TableData* allFactions;
     [indexes addIndex:1];
     [runnerFactions insertObjects:common atIndexes:indexes];
     [corpFactions insertObjects:common atIndexes:indexes];
+}
+
++(NSString*) shortName:(NRFaction)faction
+{
+    #warning fixme for HB, Weyland
+    return [Faction name:faction];
 }
 
 +(NSString*) name:(NRFaction)faction

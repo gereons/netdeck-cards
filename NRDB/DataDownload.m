@@ -68,10 +68,10 @@ static DataDownload* instance;
 -(void) downloadCardData
 {
     NSString* cardsUrl = [[NSUserDefaults standardUserDefaults] objectForKey:CARDS_ENDPOINT];
-    NSString* setsUrl = [[NSUserDefaults standardUserDefaults] objectForKey:SETS_ENDPOINT];
-    if (!cardsUrl.length || !setsUrl.length)
+
+    if (!cardsUrl.length)
     {
-        [SDCAlertView alertWithTitle:nil message:@"Cards and Sets API Endpoints are required" buttons:@[@"OK"]];
+        [SDCAlertView alertWithTitle:nil message:@"Cards API Endpoint is required" buttons:@[@"OK"]];
         return;
     }
     
@@ -117,14 +117,7 @@ static DataDownload* instance;
             {
                 ok = [CardManager setupFromDatasuckerApi:responseObject];
             }
-            if (ok)
-            {
-                [self doDownloadSetsData];
-            }
-            else
-            {
-                [self downloadFinished:ok];
-            }
+            [self downloadFinished:ok];
         }
         failure:^(AFHTTPRequestOperation* operation, NSError* error) {
             @strongify(self);
@@ -132,34 +125,6 @@ static DataDownload* instance;
             [self downloadFinished:NO];
         }
     ];
-}
-
--(void) doDownloadSetsData
-{
-    NSString* setsUrl = [[NSUserDefaults standardUserDefaults] objectForKey:SETS_ENDPOINT];
-    
-    BOOL __block ok = NO;
-    self.downloadStopped = NO;
-    
-    self.manager = [AFHTTPRequestOperationManager manager];
-    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    
-    @weakify(self);
-    [self.manager GET:setsUrl parameters:nil
-              success:^(AFHTTPRequestOperation* operation, id responseObject) {
-                  @strongify(self);
-                  if (!self.downloadStopped)
-                  {
-                      ok = [CardSets setupFromDatasuckerApi:responseObject];
-                  }
-                  [self downloadFinished:ok];
-              }
-              failure:^(AFHTTPRequestOperation* operation, NSError* error) {
-                  @strongify(self);
-                  // NSLog(@"download failed %@", operation);
-                  [self downloadFinished:NO];
-              }
-     ];
 }
 
 -(void) downloadFinished:(BOOL)ok

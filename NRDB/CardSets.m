@@ -11,15 +11,15 @@
 #import "Deck.h"
 #import "SettingsKeys.h"
 
-#warning use /sets API to get names!
-
 @interface CardSets()
 @property int setNum;
-@property NSString* setName;
+@property NSString* setCode;
 @property NSString* settingsKey;
 @property NRCycle cycle;
 @property BOOL released;
 @end
+
+#warning test: cards from unknown sets?
 
 @implementation CardSets
 
@@ -32,41 +32,41 @@ static NSArray* setsPerGroup;
 static struct cardSetData {
     int setNum;
     char* settingsKey;
-    char* setName;
+    char* setCode;
     NRCycle cycle;
     BOOL released;
 } cardSetData[] = {
-    {  1, "use_coreset", "Core", NRCycleCoreDeluxe, YES },
+    {  1, "use_coreset", "223", NRCycleCoreDeluxe, YES },
     
     // genesis
-    { 2, "use_what_lies_ahead", "What Lies Ahead", NRCycleGenesis, YES },
-    { 3, "use_trace_amount", "Trace Amount", NRCycleGenesis, YES },
-    { 4, "use_cyber_exodus", "Cyber Exodus", NRCycleGenesis, YES },
-    { 5, "use_study_in_static", "A Study In Static", NRCycleGenesis, YES },
-    { 6, "use_humanitys_shadow", "Humanity's Shadow", NRCycleGenesis, YES },
-    { 7, "use_future_proof", "Future Proof", NRCycleGenesis, YES },
+    { 2, "use_what_lies_ahead", "241", NRCycleGenesis, YES },
+    { 3, "use_trace_amount", "242", NRCycleGenesis, YES },
+    { 4, "use_cyber_exodus", "260", NRCycleGenesis, YES },
+    { 5, "use_study_in_static", "264", NRCycleGenesis, YES },
+    { 6, "use_humanitys_shadow", "278", NRCycleGenesis, YES },
+    { 7, "use_future_proof", "279", NRCycleGenesis, YES },
     // creation and control
-    { 8, "use_creation_and_control", "Creation and Control", NRCycleCoreDeluxe, YES },
+    { 8, "use_creation_and_control", "280", NRCycleCoreDeluxe, YES },
     
     // spin
-    {  9, "use_opening_moves", "Opening Moves", NRCycleSpin, YES },
-    { 10, "use_second_thoughts", "Second Thoughts", NRCycleSpin, YES},
-    { 11, "use_mala_tempora", "Mala Tempora", NRCycleSpin, YES },
-    { 12, "use_true_colors", "True Colors", NRCycleSpin, YES },
-    { 13, "use_fear_and_loathing", "Fear and Loathing", NRCycleSpin, YES },
-    { 14, "use_double_time", "Double Time", NRCycleSpin, YES },
+    {  9, "use_opening_moves", "307", NRCycleSpin, YES },
+    { 10, "use_second_thoughts", "308", NRCycleSpin, YES},
+    { 11, "use_mala_tempora", "309", NRCycleSpin, YES },
+    { 12, "use_true_colors", "310", NRCycleSpin, YES },
+    { 13, "use_fear_and_loathing", "311", NRCycleSpin, YES },
+    { 14, "use_double_time", "312", NRCycleSpin, YES },
     // honor and profit
-    { 15, "use_honor_and_profit", "Honor and Profit", NRCycleCoreDeluxe, YES },
+    { 15, "use_honor_and_profit", "342", NRCycleCoreDeluxe, YES },
     
     // lunar
-    { 16, "use_upstalk", "Upstalk", NRCycleLunar, YES },
-    { 17, "use_spaces_between", "The Spaces Between", NRCycleLunar, YES },
-    { 18, "use_first_contact", "First Contact", NRCycleLunar, YES },
-    { 19, "use_up_and_over", "Up and Over", NRCycleLunar, NO },
-    { 20, "use_all_that_remains", "All That Remains", NRCycleLunar, NO },
-    { 21, "use_the_source", "The Source", NRCycleLunar, NO },
+    { 16, "use_upstalk", "333", NRCycleLunar, YES },
+    { 17, "use_spaces_between", "358", NRCycleLunar, YES },
+    { 18, "use_first_contact", "359", NRCycleLunar, YES },
+    { 19, "use_up_and_over", "", NRCycleLunar, NO },
+    { 20, "use_all_that_remains", "", NRCycleLunar, NO },
+    { 21, "use_the_source", "", NRCycleLunar, NO },
     // order and chaos
-    { 22, "use_order_and_chaos", "Order and Chaos", NRCycleCoreDeluxe, NO },
+    { 22, "use_order_and_chaos", "", NRCycleCoreDeluxe, NO },
     
     { 0 }
 };
@@ -82,18 +82,17 @@ static struct cardSetData {
     {
         CardSets* csd = [CardSets new];
         csd.setNum = c->setNum;
-        csd.setName = [NSString stringWithUTF8String:c->setName];
+        csd.setCode = [NSString stringWithUTF8String:c->setCode];
         csd.settingsKey = [NSString stringWithUTF8String:c->settingsKey];
         csd.cycle = c->cycle;
         csd.released = c->released;
         
-        [releases setObject:@(csd.setNum) forKey:csd.setName];
-        [setNames setObject:csd.setName forKey:@(csd.setNum)];
+        [releases setObject:@(csd.setNum) forKey:csd.setCode];
         [cardSets addObject:csd];
         ++c;
     }
     
-    setGroups = @[ @"", l10n(@"Core / Deluxe"), l10n(@"Genesis Cycle"), l10n(@"Spin Cycle"), l10n(@"Lunar Cycle") ];
+    setGroups = @[ @"", l10n(@"Core / Deluxe"), l10n(@"Cycle #1"), l10n(@"Cycle #2"), l10n(@"Cycle #3") ];
     setsPerGroup = @[
         @[  @0 ],
         @[  @1,  @8, @15, @22 ],
@@ -105,10 +104,13 @@ static struct cardSetData {
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
 }
 
-+(BOOL) setupFromDatasuckerApi:(NSArray *)json
++(void) setupSetNames
 {
-#warning fixme
-    return YES;
+    NSArray* cards = [CardManager allCards];
+    for (Card* card in cards)
+    {
+        [setNames setObject:card.setName forKey:card.setCode];
+    }
 }
 
 +(NSDictionary*) settingsDefaults
@@ -129,7 +131,11 @@ static struct cardSetData {
     {
         if (![settings boolForKey:cs.settingsKey])
         {
-            [set addObject:cs.setName];
+            NSString* name = setNames[cs.setCode];
+            if (name != nil)
+            {
+                [set addObject:name];
+            }
         }
     }
     
@@ -145,16 +151,22 @@ static struct cardSetData {
     for (NSArray* arr in setsPerGroup)
     {
         NSMutableArray* names = [NSMutableArray array];
-        for (NSNumber* setNum in arr)
+        for (NSNumber* setNumber in arr)
         {
-            NSString* setName = [setNames objectForKey:setNum];
-            if (setNum.integerValue == 0)
+            NSInteger setNum = setNumber.intValue;
+            
+            if (setNum == 0)
             {
                 [names addObject:kANY];
             }
-            else if (![disabledSets containsObject:setName])
+            else
             {
-                [names addObject:setName];
+                CardSets* cs = [cardSets objectAtIndex:setNum-1];
+                NSString* setName = [setNames objectForKey:cs.setCode];
+                if (setName && ![disabledSets containsObject:setName])
+                {
+                    [names addObject:setName];
+                }
             }
         }
         [sets addObject:names];
@@ -201,11 +213,11 @@ static struct cardSetData {
             }
         }
         
-        [sets setObject:n forKey:cc.card.setName];
-        int rel = [[releases objectForKey:cc.card.setName] intValue];
+        [sets setObject:n forKey:cc.card.setCode];
+        int rel = [[releases objectForKey:cc.card.setCode] intValue];
         if (rel > 0)
         {
-            [setNums setObject:@(rel) forKey:cc.card.setName];
+            [setNums setObject:@(rel) forKey:cc.card.setCode];
         }
     }
     
@@ -240,7 +252,7 @@ static struct cardSetData {
         
     for (CardCounter* cc in deck.allCards)
     {
-        int rel = [[releases objectForKey:cc.card.setName] intValue];
+        int rel = [[releases objectForKey:cc.card.setCode] intValue];
         maxRelease = MAX(maxRelease, rel);
     }
 
@@ -248,7 +260,7 @@ static struct cardSetData {
     {
         if (cs.setNum == maxRelease)
         {
-            return [setNames objectForKey:cs.setName];
+            return [setNames objectForKey:cs.setCode];
         }
     }
     return @"?";

@@ -207,9 +207,9 @@
 
 // cycles
 "Core / Deluxe" = "Grundspiel / Erweiterung";
-"Genesis Cycle" = "Genesis-Zyklus";
-"Spin Cycle" = "Spin-Zyklus";
-"Lunar Cycle" = "Luna-Zyklus";
+"Cycle #1" = "1. Zyklus";
+"Cycle #2" = "2. Zyklus";
+"Cycle #3" = "3. Zyklus";
 
 // netrunnerdb.com
 "Import from Dropbox" = "Von Dropbox importieren";

@@ -47,24 +47,6 @@
 			<string>PSTextFieldSpecifier</string>
 		</dict>
 		<dict>
-			<key>AutocapitalizationType</key>
-			<string>None</string>
-			<key>AutocorrectionType</key>
-			<string>No</string>
-			<key>DefaultValue</key>
-			<string></string>
-			<key>IsSecure</key>
-			<false/>
-			<key>Key</key>
-			<string>sets_endpoint</string>
-			<key>KeyboardType</key>
-			<string>Alphabet</string>
-			<key>Title</key>
-			<string>Sets Endpoint URL</string>
-			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-		</dict>
-		<dict>
 			<key>Type</key>
 			<string>IASKButtonSpecifier</string>
 			<key>Title</key>

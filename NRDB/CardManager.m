@@ -229,6 +229,7 @@ static BOOL initializing;
         NSArray* cards = [allCards allValues];
         [Faction initializeFactionNames:cards];
         [CardType initializeCardTypes:cards];
+        [CardSets setupSetNames];
         
         // sort identities by faction and name
         for (NSMutableArray* arr in @[ allRunnerIdentities, allCorpIdentities ])

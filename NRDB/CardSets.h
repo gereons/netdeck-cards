@@ -14,6 +14,8 @@
 
 #define CORE_SET    @"core"
 
++(void) setupSetNames;
+
 // all sets that the user has enabled
 +(TableData*) allSetsForTableview;
 
@@ -24,7 +26,5 @@
 
 +(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;
 +(NSArray*) setsUsedInDeck:(Deck*) deck;
-
-+(BOOL) setupFromDatasuckerApi:(NSArray*)json;
 
 @end

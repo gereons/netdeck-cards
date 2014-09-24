@@ -62,7 +62,7 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
+		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
@@ -74,7 +74,7 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>Genesis Cycle</string>
+			<string>Cycle #1</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -140,7 +140,7 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>Spin Cycle</string>
+			<string>Cycle #2</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -206,7 +206,7 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>Lunar Cycle</string>
+			<string>Cycle #3</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -260,7 +260,7 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
+		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>

@@ -114,12 +114,11 @@
     }
     else
     {
-#warning derive short names from API somehow
         [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
-        [self.factionSelector setTitle:l10n(@"H-B") forSegmentAtIndex:1];
-        [self.factionSelector setTitle:l10n(@"NBN") forSegmentAtIndex:2];
-        [self.factionSelector setTitle:l10n(@"Jinteki") forSegmentAtIndex:3];
-        [self.factionSelector setTitle:l10n(@"Weyland") forSegmentAtIndex:4];
+        [self.factionSelector setTitle:[Faction shortName:NRFactionHaasBioroid] forSegmentAtIndex:1];
+        [self.factionSelector setTitle:[Faction shortName:NRFactionNBN] forSegmentAtIndex:2];
+        [self.factionSelector setTitle:[Faction shortName:NRFactionJinteki] forSegmentAtIndex:3];
+        [self.factionSelector setTitle:[Faction shortName:NRFactionWeyland] forSegmentAtIndex:4];
     }
     self.factionSelector.center = oldCenter;
 }
