@@ -155,7 +155,7 @@
     self.identities = [NSMutableArray array];
     self.factionNames = [NSArray arrayWithArray:factions];
     
-    NSSet* disabledSets = [CardSets disabledSets];
+    NSSet* disabledSetCodes = [CardSets disabledSetCodes];
     
     NSArray* identities = [CardManager identitiesForRole:self.role];
     for (int i=0; i<factions.count; ++i)
@@ -165,7 +165,7 @@
         for (int j=0; j<identities.count; ++j)
         {
             Card* card = identities[j];
-            if ([disabledSets containsObject:card.setName])
+            if ([disabledSetCodes containsObject:card.setCode])
             {
                 continue;
             }

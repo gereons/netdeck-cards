@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A058B1919D334660090F53A /* NRSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A058B1819D334660090F53A /* NRSwitch.m */; };
 		3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */; };
 		3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A08DE6B1996175400F2025E /* BrowserImageCell.m */; };
 		3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */; };
@@ -242,6 +243,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A058B1719D334660090F53A /* NRSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRSwitch.h; sourceTree = "<group>"; };
+		3A058B1819D334660090F53A /* NRSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRSwitch.m; sourceTree = "<group>"; };
 		3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewReminder.txt; sourceTree = "<group>"; };
 		3A08DE6A1996175400F2025E /* BrowserImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserImageCell.h; sourceTree = "<group>"; };
 		3A08DE6B1996175400F2025E /* BrowserImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserImageCell.m; sourceTree = "<group>"; };
@@ -746,6 +749,8 @@
 				3A2089E4197AB40B00B8AE32 /* NRActionSheet.m */,
 				3AFEC40519B73E76000D025C /* NRAlertView.h */,
 				3AFEC40619B73E76000D025C /* NRAlertView.m */,
+				3A058B1719D334660090F53A /* NRSwitch.h */,
+				3A058B1819D334660090F53A /* NRSwitch.m */,
 			);
 			name = "Utility Classes / Headers";
 			sourceTree = "<group>";
@@ -1491,6 +1496,7 @@
 				3ADE90921877317F006E187F /* DeckManager.m in Sources */,
 				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
+				3A058B1919D334660090F53A /* NRSwitch.m in Sources */,
 				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
 				3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,

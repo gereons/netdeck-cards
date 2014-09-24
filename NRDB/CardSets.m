@@ -28,6 +28,7 @@ static NSMutableDictionary* releases;
 static NSMutableDictionary* setNames;
 static NSArray* setGroups;
 static NSArray* setsPerGroup;
+static NSMutableSet* newSetCodes;
 
 static struct cardSetData {
     int setNum;
@@ -39,34 +40,34 @@ static struct cardSetData {
     {  1, "use_coreset", "223", NRCycleCoreDeluxe, YES },
     
     // genesis
-    { 2, "use_what_lies_ahead", "241", NRCycleGenesis, YES },
-    { 3, "use_trace_amount", "242", NRCycleGenesis, YES },
-    { 4, "use_cyber_exodus", "260", NRCycleGenesis, YES },
-    { 5, "use_study_in_static", "264", NRCycleGenesis, YES },
-    { 6, "use_humanitys_shadow", "278", NRCycleGenesis, YES },
-    { 7, "use_future_proof", "279", NRCycleGenesis, YES },
+    { 2, "use_wla", "241", NRCycleGenesis, YES },
+    { 3, "use_ta", "242", NRCycleGenesis, YES },
+    { 4, "use_ce", "260", NRCycleGenesis, YES },
+    { 5, "use_asis", "264", NRCycleGenesis, YES },
+    { 6, "use_hs", "278", NRCycleGenesis, YES },
+    { 7, "use_fp", "279", NRCycleGenesis, YES },
     // creation and control
-    { 8, "use_creation_and_control", "280", NRCycleCoreDeluxe, YES },
+    { 8, "use_cac", "280", NRCycleCoreDeluxe, YES },
     
     // spin
-    {  9, "use_opening_moves", "307", NRCycleSpin, YES },
-    { 10, "use_second_thoughts", "308", NRCycleSpin, YES},
-    { 11, "use_mala_tempora", "309", NRCycleSpin, YES },
-    { 12, "use_true_colors", "310", NRCycleSpin, YES },
-    { 13, "use_fear_and_loathing", "311", NRCycleSpin, YES },
-    { 14, "use_double_time", "312", NRCycleSpin, YES },
+    {  9, "use_om", "307", NRCycleSpin, YES },
+    { 10, "use_st", "308", NRCycleSpin, YES},
+    { 11, "use_mt", "309", NRCycleSpin, YES },
+    { 12, "use_tc", "310", NRCycleSpin, YES },
+    { 13, "use_fal", "311", NRCycleSpin, YES },
+    { 14, "use_dt", "312", NRCycleSpin, YES },
     // honor and profit
-    { 15, "use_honor_and_profit", "342", NRCycleCoreDeluxe, YES },
+    { 15, "use_hap", "342", NRCycleCoreDeluxe, YES },
     
     // lunar
-    { 16, "use_upstalk", "333", NRCycleLunar, YES },
-    { 17, "use_spaces_between", "358", NRCycleLunar, YES },
-    { 18, "use_first_contact", "359", NRCycleLunar, YES },
-    { 19, "use_up_and_over", "", NRCycleLunar, NO },
-    { 20, "use_all_that_remains", "", NRCycleLunar, NO },
-    { 21, "use_the_source", "", NRCycleLunar, NO },
+    { 16, "use_us", "333", NRCycleLunar, YES },
+    { 17, "use_tsb", "358", NRCycleLunar, YES },
+    // { 18, "use_fc", "359", NRCycleLunar, YES },
+    // { 19, "use_uao", "", NRCycleLunar, NO },
+    // { 20, "use_atr", "", NRCycleLunar, NO },
+    // { 21, "use_ts", "", NRCycleLunar, NO },
     // order and chaos
-    { 22, "use_order_and_chaos", "", NRCycleCoreDeluxe, NO },
+    // { 22, "use_oac", "", NRCycleCoreDeluxe, NO },
     
     { 0 }
 };
@@ -76,6 +77,7 @@ static struct cardSetData {
     cardSets = [NSMutableArray array];
     releases = [NSMutableDictionary dictionary];
     setNames = [NSMutableDictionary dictionary];
+    newSetCodes = [NSMutableSet set];
     
     struct cardSetData* c = cardSetData;
     while (c->setNum > 0)
@@ -107,10 +109,28 @@ static struct cardSetData {
 +(void) setupSetNames
 {
     NSArray* cards = [CardManager allCards];
+    NSSet* knownCodes = [CardSets knownSetCodes];
     for (Card* card in cards)
     {
         [setNames setObject:card.setName forKey:card.setCode];
+        
+        if (![knownCodes containsObject:card.setCode])
+        {
+            [newSetCodes addObject:card.setCode];
+        }
     }
+}
+
++(NSString*) nameForKey:(NSString *)key
+{
+    for (CardSets* cs in cardSets)
+    {
+        if ([cs.settingsKey isEqualToString:key])
+        {
+            return [setNames objectForKey:cs.setCode];
+        }
+    }
+    return nil;
 }
 
 +(NSDictionary*) settingsDefaults
@@ -123,7 +143,7 @@ static struct cardSetData {
     return dict;
 }
 
-+(NSSet*) disabledSets
++(NSSet*) disabledSetCodes
 {
     NSMutableSet* set = [NSMutableSet set];
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -131,20 +151,32 @@ static struct cardSetData {
     {
         if (![settings boolForKey:cs.settingsKey])
         {
-            NSString* name = setNames[cs.setCode];
-            if (name != nil)
-            {
-                [set addObject:name];
-            }
+            [set addObject:cs.setCode];
         }
+    }
+    
+    if ([settings boolForKey:IGNORE_UNKNOWN_SETS])
+    {
+        [set addObjectsFromArray:newSetCodes.allObjects];
     }
     
     return set;
 }
 
++(NSSet*) knownSetCodes
+{
+    NSMutableSet* knownSets = [NSMutableSet set];
+    for (CardSets* cs in cardSets)
+    {
+        [knownSets addObject:cs.setCode];
+    }
+    
+    return knownSets;
+}
+
 +(TableData*) allSetsForTableview
 {
-    NSSet* disabledSets = [CardSets disabledSets];
+    NSSet* disabledSetCodes = [CardSets disabledSetCodes];
     NSMutableArray* sections = [setGroups mutableCopy];
     NSMutableArray* sets = [NSMutableArray array];
     
@@ -159,11 +191,11 @@ static struct cardSetData {
             {
                 [names addObject:kANY];
             }
-            else
+            else if (setNum <= cardSets.count)
             {
                 CardSets* cs = [cardSets objectAtIndex:setNum-1];
                 NSString* setName = [setNames objectForKey:cs.setCode];
-                if (setName && ![disabledSets containsObject:setName])
+                if (setName && ![disabledSetCodes containsObject:cs.setCode])
                 {
                     [names addObject:setName];
                 }

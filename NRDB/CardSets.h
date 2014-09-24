@@ -20,11 +20,14 @@
 +(TableData*) allSetsForTableview;
 
 // all sets that the user wants to ignore
-+(NSSet*) disabledSets;
++(NSSet*) disabledSetCodes;
+// all sets we know about
++(NSSet*) knownSetCodes;
 
 +(NSDictionary*) settingsDefaults;
 
 +(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;
 +(NSArray*) setsUsedInDeck:(Deck*) deck;
++(NSString*) nameForKey:(NSString*) key;
 
 @end

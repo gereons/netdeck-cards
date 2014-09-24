@@ -63,12 +63,8 @@ static BOOL initializing;
 
 +(NSArray*) allCards
 {
-    NSMutableArray* cards = [NSMutableArray array];
-    [cards addObjectsFromArray:[CardManager allForRole:NRRoleRunner]];
-    [cards addObjectsFromArray:[CardManager allForRole:NRRoleCorp]];
-    [cards addObjectsFromArray:[CardManager identitiesForRole:NRRoleRunner]];
-    [cards addObjectsFromArray:[CardManager identitiesForRole:NRRoleCorp]];
-    
+    NSMutableArray* cards = allCards.allValues.mutableCopy;
+
     return [cards sortedArrayUsingComparator:^(Card* c1, Card *c2) {
         NSUInteger l1 = c1.name.length;
         NSUInteger l2 = c2.name.length;

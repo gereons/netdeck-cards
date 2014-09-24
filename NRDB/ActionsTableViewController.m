@@ -86,19 +86,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     // check if card data is available
     if (![CardManager cardsAvailable])
     {
-#warning fixme
-        NSString* msg = l10n(@"To use this app, you must first download card data from a Datasucker API Server");
+        NSString* msg = l10n(@"To use this app, you must first download card data from a Datasucker API Server.\n"
+                              "Go to Settings > Card Data to do this.");
         
-        SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"No Card Data")
-                                                   message:msg
-                                                   buttons:@[l10n(@"Not now"), l10n(@"Download")]];
-        
-        alert.didDismissHandler = ^(NSInteger buttonIndex) {
-            if (buttonIndex == 1)
-            {
-                [DataDownload downloadCardData];
-            }
-        };
+        [SDCAlertView alertWithTitle:l10n(@"No Card Data")
+                             message:msg
+                             buttons:@[l10n(@"OK")]];
     }
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];

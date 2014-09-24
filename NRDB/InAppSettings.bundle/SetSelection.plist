@@ -4,6 +4,16 @@
 <dict>
 	<key>PreferenceSpecifiers</key>
 	<array>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Ignore unknown Sets</string>
+            <key>Key</key>
+            <string>ignore_unknown_sets</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
 		<dict>
 			<key>Title</key>
 			<string>Core Set and Deluxe Expansions</string>
@@ -12,7 +22,7 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Core Set</string>
 			<key>Key</key>
@@ -44,31 +54,31 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Creation and Control</string>
 			<key>Key</key>
-			<string>use_creation_and_control</string>
+			<string>use_cac</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Honor and Profit</string>
 			<key>Key</key>
-			<string>use_honor_and_profit</string>
+			<string>use_hap</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Order and Chaos</string>
 			<key>Key</key>
-			<string>use_order_and_chaos</string>
+			<string>use_oac</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
@@ -80,61 +90,61 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>What Lies Ahead</string>
 			<key>Key</key>
-			<string>use_what_lies_ahead</string>
+			<string>use_wla</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Trace Amount</string>
 			<key>Key</key>
-			<string>use_trace_amount</string>
+			<string>use_ta</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Cyber Exodus</string>
 			<key>Key</key>
-			<string>use_cyber_exodus</string>
+			<string>use_ce</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>A Study In Static</string>
 			<key>Key</key>
-			<string>use_study_in_static</string>
+			<string>use_asis</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Humanity&apos;s Shadow</string>
 			<key>Key</key>
-			<string>use_humanitys_shadow</string>
+			<string>use_hs</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Future Proof</string>
 			<key>Key</key>
-			<string>use_future_proof</string>
+			<string>use_fp</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
@@ -146,61 +156,61 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Opening Moves</string>
 			<key>Key</key>
-			<string>use_opening_moves</string>
+			<string>use_om</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Second Thoughts</string>
 			<key>Key</key>
-			<string>use_second_thoughts</string>
+			<string>use_st</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Mala Tempora</string>
 			<key>Key</key>
-			<string>use_mala_tempora</string>
+			<string>use_mt</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>True Colors</string>
 			<key>Key</key>
-			<string>use_true_colors</string>
+			<string>use_tc</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Fear and Loathing</string>
 			<key>Key</key>
-			<string>use_fear_and_loathing</string>
+			<string>use_fal</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Double Time</string>
 			<key>Key</key>
-			<string>use_double_time</string>
+			<string>use_dt</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
@@ -212,61 +222,61 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Upstalk</string>
 			<key>Key</key>
-			<string>use_upstalk</string>
+			<string>use_us</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>The Spaces Between</string>
 			<key>Key</key>
-			<string>use_spaces_between</string>
+			<string>use_tsb</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>First Contact</string>
 			<key>Key</key>
-			<string>use_first_contact</string>
+			<string>use_fc</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>Up and Over</string>
 			<key>Key</key>
-			<string>use_up_and_over</string>
+			<string>use_uao</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>All That Remains</string>
 			<key>Key</key>
-			<string>use_all_that_remains</string>
+			<string>use_atr</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
 			<string>The Source</string>
 			<key>Key</key>
-			<string>use_the_source</string>
+			<string>use_ts</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

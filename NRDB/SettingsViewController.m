@@ -11,9 +11,9 @@
 #import <SDCAlertView.h>
 #import <EXTScope.h>
 #import <PromiseKit.h>
-
+#import "NRSwitch.h"
 #import "SettingsViewController.h"
-
+#import "CardSets.h"
 #import "IASKAppSettingsViewController.h"
 #import "IASKSettingsReader.h"
 #import "DataDownload.h"
@@ -24,8 +24,6 @@
 #if _NRDB_
 #import "NRDBAuthPopupViewController.h"
 #endif
-
-#warning setselection - use names from card sets!
 
 @interface SettingsViewController ()
 
@@ -220,6 +218,40 @@
             [self showOfflineAlert];
         }
     }
+}
+
+- (CGFloat)tableView:(UITableView*)tableView heightForSpecifier:(IASKSpecifier*)specifier
+{
+    return 44;
+}
+
+- (UITableViewCell*)tableView:(UITableView*)tableView cellForSpecifier:(IASKSpecifier*)specifier
+{
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"toggleCell"];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"toggleCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    NRSwitch* setSwitch = [[NRSwitch alloc] initWithHandler:^(BOOL on) {
+        [[NSUserDefaults standardUserDefaults] setBool:on forKey:specifier.key];
+    }];
+    
+    setSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:specifier.key];
+    cell.accessoryView = setSwitch;
+    cell.textLabel.textColor = [UIColor blackColor];
+    NSString* setName = [CardSets nameForKey:specifier.key];
+    if (!setName)
+    {
+        setName = l10n(@"-Unreleased-");
+        setSwitch.enabled = NO;
+        cell.textLabel.textColor = [UIColor lightGrayColor];
+    }
+    
+    cell.textLabel.text = setName;
+    
+    return cell;
 }
 
 -(void) testDatasucker

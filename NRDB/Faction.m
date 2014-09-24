@@ -21,20 +21,19 @@ static TableData* allFactions;
 
 +(void) initialize
 {
-#warning remove names
     code2faction = @{
-        @"haas-bioroid": @(NRFactionHaasBioroid),
-        @"the weyland consortium": @(NRFactionWeyland),
-        @"jinteki": @(NRFactionJinteki),
-        @"nbn": @(NRFactionNBN),
-        @"anarch": @(NRFactionAnarch),
-        @"shaper": @(NRFactionShaper),
-        @"criminal": @(NRFactionCriminal),
-        @"neutral": @(NRFactionNeutral)
+        @2785191102: @(NRFactionHaasBioroid),
+        @651781086: @(NRFactionWeyland),
+        @2999189621: @(NRFactionJinteki),
+        @523930185: @(NRFactionNBN),
+        @941525555: @(NRFactionAnarch),
+        @4164734921: @(NRFactionShaper),
+        @2313630807: @(NRFactionCriminal),
+        @480720642: @(NRFactionNeutral)
     };
     
     faction2name = [NSMutableDictionary dictionary];
-    faction2name[@(NRFactionNone)] = kANY;
+    faction2name[@(NRFactionNone)] = kANY;    
 }
 
 +(void) initializeFactionNames:(NSArray*)cards
@@ -84,8 +83,15 @@ static TableData* allFactions;
 
 +(NSString*) shortName:(NRFaction)faction
 {
-    #warning fixme for HB, Weyland
-    return [Faction name:faction];
+    switch (faction)
+    {
+        case NRFactionHaasBioroid:
+            return @"H-B";
+        case NRFactionWeyland:
+            return @"Weyland";
+        default:
+            return [Faction name:faction];
+    }
 }
 
 +(NSString*) name:(NRFaction)faction
@@ -95,7 +101,7 @@ static TableData* allFactions;
 
 +(NRFaction) faction:(NSString*)faction
 {
-    NSNumber* n = [code2faction objectForKey:faction.lowercaseString];
+    NSNumber* n = [code2faction objectForKey:@(faction.lowercaseString.hash)];
     return n ? n.integerValue : NRFactionNone;
 }
 

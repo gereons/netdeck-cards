@@ -92,6 +92,7 @@ const NSString* const kANY = @"Any";
         LAST_DOWNLOAD: l10n(@"never"),
         NEXT_DOWNLOAD: l10n(@"never"),
         
+        IGNORE_UNKNOWN_SETS: @(YES),
         AUTO_SAVE: @(NO),
         USE_DROPBOX: @(NO),
         AUTO_SAVE_DB: @(NO),

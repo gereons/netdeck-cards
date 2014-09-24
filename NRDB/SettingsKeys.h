@@ -25,6 +25,7 @@
 #define CLEAR_CACHE         @"clearCache"
 
 #define NUM_CORES           @"number_coresets"
+#define IGNORE_UNKNOWN_SETS @"ignore_unknown_sets"
 
 #define USE_DROPBOX         @"useDropbox"
 
