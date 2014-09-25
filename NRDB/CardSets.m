@@ -19,8 +19,6 @@
 @property BOOL released;
 @end
 
-#warning test: cards from unknown sets?
-
 @implementation CardSets
 
 static NSMutableArray* cardSets;

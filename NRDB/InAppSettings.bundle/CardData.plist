@@ -24,7 +24,7 @@
 			<key>KeyboardType</key>
 			<string>Alphabet</string>
 			<key>Title</key>
-			<string>Lockpick Code</string>
+			<string>Lockpick Code (not used yet)</string>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 		</dict>
@@ -40,7 +40,7 @@
 			<key>Key</key>
 			<string>cards_endpoint</string>
 			<key>KeyboardType</key>
-			<string>Alphabet</string>
+			<string>URL</string>
 			<key>Title</key>
 			<string>Cards Endpoint URL</string>
 			<key>Type</key>

@@ -12,6 +12,7 @@
 #import "CardType.h"
 #import "Faction.h"
 #import "SettingsKeys.h"
+#import "NSString+stripHTML.h"
 #import <DTCoreText.h>
 
 @interface Card()
@@ -169,7 +170,9 @@ static BOOL isRetina;
     
     JSON_STR(code, @"code");
     JSON_STR(name, @"title");
+    c->_name = [c->_name stringByReplacingHTMLEntities];
     JSON_STR(text, @"text");
+    c->_text = [c->_text stringByReplacingHTMLEntities];
     JSON_STR(flavor, @"flavor");
     JSON_STR(factionStr, @"faction");
     c->_faction = [Faction faction:c.factionStr];

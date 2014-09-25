@@ -12,7 +12,6 @@
 
 @implementation Faction
 
-static NSDictionary* code2faction;
 static NSMutableDictionary* faction2name;
 
 static NSMutableArray* runnerFactions;
@@ -21,17 +20,6 @@ static TableData* allFactions;
 
 +(void) initialize
 {
-    code2faction = @{
-        @2785191102: @(NRFactionHaasBioroid),
-        @651781086: @(NRFactionWeyland),
-        @2999189621: @(NRFactionJinteki),
-        @523930185: @(NRFactionNBN),
-        @941525555: @(NRFactionAnarch),
-        @4164734921: @(NRFactionShaper),
-        @2313630807: @(NRFactionCriminal),
-        @480720642: @(NRFactionNeutral)
-    };
-    
     faction2name = [NSMutableDictionary dictionary];
     faction2name[@(NRFactionNone)] = kANY;    
 }
@@ -44,11 +32,6 @@ static TableData* allFactions;
     for (Card* c in cards)
     {
         [faction2name setObject:c.factionStr forKey:@(c.faction)];
-        
-        if (faction2name.count == code2faction.count + 1)
-        {
-            break;
-        }
     }
     
     NRFaction rf[] = { NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
@@ -101,8 +84,19 @@ static TableData* allFactions;
 
 +(NRFaction) faction:(NSString*)faction
 {
-    NSNumber* n = [code2faction objectForKey:@(faction.lowercaseString.hash)];
-    return n ? n.integerValue : NRFactionNone;
+    unichar ch = [faction characterAtIndex:0];
+    switch (ch)
+    {
+        case 'A': return NRFactionAnarch;
+        case 'C': return NRFactionCriminal;
+        case 'S': return NRFactionShaper;
+        case 'H': return NRFactionHaasBioroid;
+        case 'J': return NRFactionJinteki;
+        case 'T': return NRFactionWeyland;
+        case 'N':
+            return [faction isEqualToString:@"Neutral"] ? NRFactionNeutral : NRFactionNBN;
+    }
+    return NRFactionNone;
 }
 
 +(NSArray*) factionsForRole:(NRRole)role
