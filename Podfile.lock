@@ -73,50 +73,11 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
-  - OMGHTTPURLRQ (2.0.1):
-    - OMGHTTPURLRQ/RQ
-    - OMGHTTPURLRQ/UserAgent
-    - OMGHTTPURLRQ/UserAgent
-  - OMGHTTPURLRQ/RQ (2.0.1):
-    - OMGHTTPURLRQ/UserAgent
-  - OMGHTTPURLRQ/UserAgent (2.0.1):
-    - OMGHTTPURLRQ/UserAgent
-  - PromiseKit (0.9.17):
-    - PromiseKit/NSNotificationCenter
-    - PromiseKit/NSURLConnection
-    - PromiseKit/Pause
-    - PromiseKit/UIActionSheet
-    - PromiseKit/UIAlertView
-    - PromiseKit/UIView
-    - PromiseKit/UIViewController
-    - PromiseKit/Until
-    - PromiseKit/When
-  - PromiseKit/NSNotificationCenter (0.9.17):
-    - PromiseKit/Promise
-  - PromiseKit/NSURLConnection (0.9.17):
-    - OMGHTTPURLRQ
-    - PromiseKit/Promise
-  - PromiseKit/Pause (0.9.17):
-    - PromiseKit/Promise
-  - PromiseKit/Promise (0.9.17)
-  - PromiseKit/UIActionSheet (0.9.17):
-    - PromiseKit/Promise
-  - PromiseKit/UIAlertView (0.9.17):
-    - PromiseKit/Promise
-  - PromiseKit/UIView (0.9.17):
-    - PromiseKit/Promise
-  - PromiseKit/UIViewController (0.9.17):
-    - PromiseKit/Promise
-  - PromiseKit/Until (0.9.17):
-    - PromiseKit/Promise
-    - PromiseKit/When
-  - PromiseKit/When (0.9.17):
-    - PromiseKit/Promise
   - RBBAnimation (0.3.0)
   - SDCAlertView (HEAD based on 1.4.1):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
-  - SDCAutoLayout (2.0)
+  - SDCAutoLayout (2.0.1)
   - SVProgressHUD (HEAD based on 1.0)
   - TestFlightSDK (3.0.2)
   - YOLOKit (11):
@@ -286,7 +247,6 @@ DEPENDENCIES:
   - GRMustache
   - InAppSettingsKit (HEAD)
   - libextobjc
-  - PromiseKit
   - SDCAlertView (HEAD)
   - SVProgressHUD (HEAD)
   - TestFlightSDK
@@ -303,11 +263,9 @@ SPEC CHECKSUMS:
   InAppSettingsKit: 853cdc9fcc76b87a4694f8d2b930e116463b5a29
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
-  OMGHTTPURLRQ: 4297af2a7f7ca7adb3f8331203001e0fd2dae16f
-  PromiseKit: 7a18d7b8d41a156cda0268c3cb065d272d5aa554
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64
   SDCAlertView: 73b84d53e9c2e994b47b07c441fa1aa696c8049b
-  SDCAutoLayout: 6acad78fe6a09278a064ac71609e8f484a7249fc
+  SDCAutoLayout: 9998a215ce25c352bef27233240b997880015a7f
   SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
   TestFlightSDK: 0c24c533748d0d84bfe7a3cb6036fa79124d84ee
   YOLOKit: e83d381f83f33f2b66abf6fe0249fca57b05a541

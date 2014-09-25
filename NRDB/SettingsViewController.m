@@ -10,7 +10,7 @@
 #import <Dropbox/Dropbox.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
-#import <PromiseKit.h>
+
 #import "NRSwitch.h"
 #import "SettingsViewController.h"
 #import "CardSets.h"
@@ -28,8 +28,6 @@
 @interface SettingsViewController ()
 
 @property IASKAppSettingsViewController* iask;
-
-@property NSInteger index;
 
 @end
 
@@ -53,7 +51,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:kIASKAppSettingChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:LOAD_CARDS object:nil];
-    
     
     [self refresh];
 }
@@ -257,87 +254,45 @@
 -(void) testDatasucker
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSString* lockpick = [settings objectForKey:LOCKPICK_CODE];
     NSString* cardsUrl = [settings objectForKey:CARDS_ENDPOINT];
     
-    BOOL ok = lockpick.length || cardsUrl.length;
-    if (!ok)
+    if (cardsUrl.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:@"Please enter either a lockpick code or an endpoint URL" buttons:@[@"OK"]];
+        [SDCAlertView alertWithTitle:nil message:@"Cards endpoint URL is not set" buttons:@[@"OK"]];
         return;
     }
 
     [SVProgressHUD showWithStatus:l10n(@"Testing...")];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    NSString* __block lockpickResult, * __block cardsResult;
-    NSInteger __block lockpickIndex = -1, cardsIndex = -1;
-    NSInteger index = 0;
-    NSMutableArray* promises = [NSMutableArray array];
-    
-    PMKPromise* promise;
-    if (lockpick.length)
-    {
-        NSString* lockpickUrl = [NSString stringWithFormat:@"https://lockpick.parseapp.com/datasucker/%@", lockpick ];
-        promise = [NSURLConnection GET:lockpickUrl];
-        promise.catch(^(NSError *error) {
-            lockpickResult = @"Lockpick: Fail";
-        });
-        [promises addObject:promise];
-        lockpickIndex = index++;
-    }
-    else
-    {
-        lockpickResult = @"Lockpick: not tested.";
-    }
-    
+
     if (cardsUrl.length)
     {
-        PMKPromise *promise = [NSURLConnection GET:cardsUrl];
-        promise.catch(^(NSError *error) {
-            cardsResult = @"Cards: Fail";
-        });
-        [promises addObject:promise];
-        cardsIndex = index++;
-    }
-    else
-    {
-        cardsResult = @"Cards: not tested";
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager GET:cardsUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            BOOL ok = YES;
+            if ([responseObject isKindOfClass:[NSArray class]])
+            {
+                NSArray* arr = responseObject;
+                NSDictionary* dict = arr[0];
+                if (dict[@"code"] == nil)
+                {
+                    ok = NO;
+                }
+            }
+            [self finishDatasuckerTests:ok];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self finishDatasuckerTests:NO];
+        }];
     }
     
-    [PMKPromise when:promises].then(^(NSArray *results) {
-        // NSLog(@"%d results", results.count);
-        if (lockpickIndex != -1)
-        {
-            NSDictionary* dict = results[lockpickIndex];
-            if (dict)
-            {
-                lockpickResult = @"Lockpick: OK";
-            }
-            else
-            {
-                lockpickResult = @"Lockpick: Fail";
-            }
-        }
-        if (cardsIndex != -1)
-        {
-            NSDictionary* data = results[cardsIndex];
-            cardsResult = data ? @"Cards: OK" : @"Cards: Fail";
-        }
-
-    }).finally(^{
-        NSMutableString *message = [NSMutableString stringWithString:lockpickResult ? lockpickResult : @"Lockpick: not tested"];
-        [message appendString:@"\n"];
-        [message appendString:cardsResult ? cardsResult : @"Cards: not tested"];
-        
-        [self finishDatasuckerTests:message];
-    });
 }
 
--(void) finishDatasuckerTests:(NSString*)message
+-(void) finishDatasuckerTests:(BOOL)ok
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];
+    
+    NSString* message = ok ? @"Cards endpoint URL is OK" : @"Cards endpoint URL is invalid";
     
     [SDCAlertView alertWithTitle:nil message:message buttons:@[ l10n(@"OK") ]];
 }
