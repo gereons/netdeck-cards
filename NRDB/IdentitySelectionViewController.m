@@ -104,13 +104,24 @@
     
     CGPoint oldCenter = self.factionSelector.center;
     
+    BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
+    
     if (self.role == NRRoleRunner)
     {
+        [self.factionSelector removeSegmentAtIndex:5 animated:NO];
+        
         [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
         [self.factionSelector setTitle:[Faction name:NRFactionAnarch] forSegmentAtIndex:1];
         [self.factionSelector setTitle:[Faction name:NRFactionCriminal] forSegmentAtIndex:2];
         [self.factionSelector setTitle:[Faction name:NRFactionShaper] forSegmentAtIndex:3];
-        [self.factionSelector removeSegmentAtIndex:4 animated:NO];
+        if (includeDraft)
+        {
+            [self.factionSelector setTitle:[Faction name:NRFactionNeutral] forSegmentAtIndex:4];
+        }
+        else
+        {
+            [self.factionSelector removeSegmentAtIndex:4 animated:NO];
+        }
     }
     else
     {
@@ -119,6 +130,14 @@
         [self.factionSelector setTitle:[Faction shortName:NRFactionNBN] forSegmentAtIndex:2];
         [self.factionSelector setTitle:[Faction shortName:NRFactionJinteki] forSegmentAtIndex:3];
         [self.factionSelector setTitle:[Faction shortName:NRFactionWeyland] forSegmentAtIndex:4];
+        if (includeDraft)
+        {
+            [self.factionSelector setTitle:[Faction name:NRFactionNeutral] forSegmentAtIndex:5];
+        }
+        else
+        {
+            [self.factionSelector removeSegmentAtIndex:5 animated:NO];
+        }
     }
     self.factionSelector.center = oldCenter;
 }
@@ -144,7 +163,14 @@
         
         // remove entries for "none" and "neutral"
         [factions removeObject:[Faction name:NRFactionNone]];
-        [factions removeObject:[Faction name:NRFactionNeutral]];
+
+        // move 'neutral' to the end
+        NSString* neutral = [Faction name:NRFactionNeutral];
+        [factions removeObject:neutral];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
+        {
+            [factions addObject:neutral];
+        }
     }
     else
     {

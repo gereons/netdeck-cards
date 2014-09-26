@@ -79,13 +79,14 @@
                     </connections>
                 </collectionView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="A7r-Ld-GpX">
-                    <rect key="frame" x="119" y="571" width="302" height="29"/>
+                    <rect key="frame" x="119" y="571" width="303" height="29"/>
                     <segments>
                         <segment title="All"/>
                         <segment title="H-B"/>
                         <segment title="NBN"/>
                         <segment title="Jinteki"/>
                         <segment title="Weyland"/>
+                        <segment title="Neutral"/>
                     </segments>
                     <connections>
                         <action selector="factionChange:" destination="-1" eventType="valueChanged" id="wyO-C2-E0H"/>

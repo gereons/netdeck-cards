@@ -99,10 +99,6 @@
                                                                    toItem:self.detailView
                                                                 attribute:NSLayoutAttributeCenterX
                                                                multiplier:1.f constant:8.f]];
-    
-    // rounded corners for image
-    self.image.layer.masksToBounds = YES;
-    self.image.layer.cornerRadius = 10;
 }
 
 -(void) prepareForReuse
