@@ -201,6 +201,8 @@
 		3AD2DF80199E47C20054B470 /* 888-checkmark-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD2DF7E199E47C20054B470 /* 888-checkmark-selected@2x.png */; };
 		3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD3249018A93FA300D7AE5D /* DeckAnalysisViewController.m */; };
 		3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */; };
+		3AD4FBB219D60929000BF9B4 /* red_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD4FBB019D60929000BF9B4 /* red_placeholder.png */; };
+		3AD4FBB319D60929000BF9B4 /* blue_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD4FBB119D60929000BF9B4 /* blue_placeholder.png */; };
 		3ADE90921877317F006E187F /* DeckManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE90911877317F006E187F /* DeckManager.m */; };
 		3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE909D18775A77006E187F /* CardImageViewPopover.m */; };
 		3ADE90A118775A77006E187F /* CardImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageView.xib */; };
@@ -523,6 +525,8 @@
 		3AD3248F18A93FA300D7AE5D /* DeckAnalysisViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckAnalysisViewController.h; sourceTree = "<group>"; };
 		3AD3249018A93FA300D7AE5D /* DeckAnalysisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckAnalysisViewController.m; sourceTree = "<group>"; };
 		3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckAnalysisViewController.xib; sourceTree = "<group>"; };
+		3AD4FBB019D60929000BF9B4 /* red_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_placeholder.png; sourceTree = "<group>"; };
+		3AD4FBB119D60929000BF9B4 /* blue_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_placeholder.png; sourceTree = "<group>"; };
 		3ADE90901877317F006E187F /* DeckManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3ADE90911877317F006E187F /* DeckManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ADE9093187734B5006E187F /* SettingsKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsKeys.h; sourceTree = "<group>"; };
@@ -926,6 +930,8 @@
 				3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */,
 				3A76EEBE18B5DA68004DB586 /* RunnerPlaceholder.png */,
 				3A663978193B4CBF00635447 /* card_backs.png */,
+				3AD4FBB019D60929000BF9B4 /* red_placeholder.png */,
+				3AD4FBB119D60929000BF9B4 /* blue_placeholder.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -1329,6 +1335,7 @@
 				3AE0D50918F7B4A0007868A7 /* point_slider@2x.png in Resources */,
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
+				3AD4FBB219D60929000BF9B4 /* red_placeholder.png in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A6E755918E3FF7400EF8DE1 /* cardstats_identity_link@2x.png in Resources */,
 				3A445F721998AEF9000AD1C4 /* trash_slider.png in Resources */,
@@ -1370,6 +1377,7 @@
 				3AFA3B6B18DF862900F59331 /* altarttoggle_on@2x.png in Resources */,
 				3AB9BD6218FB0E49004EAF10 /* 702-import@2x.png in Resources */,
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
+				3AD4FBB319D60929000BF9B4 /* blue_placeholder.png in Resources */,
 				3A82625518E05EC70038B4AC /* deckview_list.png in Resources */,
 				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
 				3A6E757218E402A300EF8DE1 /* Icon-Small-29@2x.png in Resources */,

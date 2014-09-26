@@ -90,8 +90,12 @@
 "Image %d of %d" = "Bild %d von %d";
 "Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche es später nochmal.";
 "%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";
-"Clear Cache? You will need to re-download all data from NetrunnerDB.com." = "Cache löschen? Du musst danach alle Daten neu von NetrunnerDB.com laden.";
+"Clear Cache? You will need to re-download all data." = "Cache löschen? Du musst danach alle Daten neu laden.";
 "An Internet connection is required." = "Internet-Verbindung wird benötigt.";
+"Cards endpoint URL is not set" = "Cards-URL ist leer";
+"Testing..." = "Test läuft...";
+"Cards endpoint URL is OK" = "Cards-URL ist OK";
+"Cards endpoint URL is invalid" = "Cards-URL ist nicht OK";
 
 // identity selection
 "Choose Identity" = "Identität wählen";
@@ -169,7 +173,7 @@
 
 // startup alert
 "No Card Data" = "Keine Karten-Daten";
-"To use this app, you must first download card data from NetrunnerDB.com" = "Um diese App zu verwenden, musst du zuerst Kartendaten von NetrunnerDB.com laden";
+"To use this app, you must first download card data from a Datasucker API Server.\nGo to Settings > Card Data to do this." = "Um diese App zu benutzen, musst du zuerst Daten von einem Datasucker-API-Server laden. Benutze dafür Einstellungen > Karten-Daten.";
 "Not now" = "Jetzt nicht";
 "Download" = "Laden";
 
@@ -210,6 +214,7 @@
 "Cycle #1" = "1. Zyklus";
 "Cycle #2" = "2. Zyklus";
 "Cycle #3" = "3. Zyklus";
+"-Unreleased-" = "-Unveröffentlicht-";
 
 // netrunnerdb.com
 "Import from Dropbox" = "Von Dropbox importieren";

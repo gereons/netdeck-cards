@@ -66,7 +66,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Creation and Control</string>
+			<string>cac</string>
 			<key>Key</key>
 			<string>use_cac</string>
 			<key>DefaultValue</key>
@@ -76,7 +76,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Honor and Profit</string>
+			<string>hap</string>
 			<key>Key</key>
 			<string>use_hap</string>
 			<key>DefaultValue</key>
@@ -86,7 +86,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Order and Chaos</string>
+			<string>oac</string>
 			<key>Key</key>
 			<string>use_oac</string>
 			<key>DefaultValue</key>
@@ -102,7 +102,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>What Lies Ahead</string>
+			<string>wla</string>
 			<key>Key</key>
 			<string>use_wla</string>
 			<key>DefaultValue</key>
@@ -112,7 +112,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Trace Amount</string>
+			<string>ta</string>
 			<key>Key</key>
 			<string>use_ta</string>
 			<key>DefaultValue</key>
@@ -122,7 +122,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Cyber Exodus</string>
+			<string>ce</string>
 			<key>Key</key>
 			<string>use_ce</string>
 			<key>DefaultValue</key>
@@ -132,7 +132,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>A Study In Static</string>
+			<string>asis</string>
 			<key>Key</key>
 			<string>use_asis</string>
 			<key>DefaultValue</key>
@@ -142,7 +142,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Humanity&apos;s Shadow</string>
+			<string>hs</string>
 			<key>Key</key>
 			<string>use_hs</string>
 			<key>DefaultValue</key>
@@ -152,7 +152,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Future Proof</string>
+			<string>fp</string>
 			<key>Key</key>
 			<string>use_fp</string>
 			<key>DefaultValue</key>
@@ -168,7 +168,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Opening Moves</string>
+			<string>om</string>
 			<key>Key</key>
 			<string>use_om</string>
 			<key>DefaultValue</key>
@@ -178,7 +178,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Second Thoughts</string>
+			<string>st</string>
 			<key>Key</key>
 			<string>use_st</string>
 			<key>DefaultValue</key>
@@ -188,7 +188,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Mala Tempora</string>
+			<string>mt</string>
 			<key>Key</key>
 			<string>use_mt</string>
 			<key>DefaultValue</key>
@@ -198,7 +198,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>True Colors</string>
+			<string>tc</string>
 			<key>Key</key>
 			<string>use_tc</string>
 			<key>DefaultValue</key>
@@ -208,7 +208,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Fear and Loathing</string>
+			<string>fal</string>
 			<key>Key</key>
 			<string>use_fal</string>
 			<key>DefaultValue</key>
@@ -218,7 +218,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Double Time</string>
+			<string>dt</string>
 			<key>Key</key>
 			<string>use_dt</string>
 			<key>DefaultValue</key>
@@ -234,7 +234,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Upstalk</string>
+			<string>us</string>
 			<key>Key</key>
 			<string>use_us</string>
 			<key>DefaultValue</key>
@@ -244,7 +244,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>The Spaces Between</string>
+			<string>tsb</string>
 			<key>Key</key>
 			<string>use_tsb</string>
 			<key>DefaultValue</key>
@@ -254,7 +254,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>First Contact</string>
+			<string>fc</string>
 			<key>Key</key>
 			<string>use_fc</string>
 			<key>DefaultValue</key>
@@ -264,7 +264,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>Up and Over</string>
+			<string>uao</string>
 			<key>Key</key>
 			<string>use_uao</string>
 			<key>DefaultValue</key>
@@ -274,7 +274,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>All That Remains</string>
+			<string>atr</string>
 			<key>Key</key>
 			<string>use_atr</string>
 			<key>DefaultValue</key>
@@ -284,7 +284,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>The Source</string>
+			<string>ts</string>
 			<key>Key</key>
 			<string>use_ts</string>
 			<key>DefaultValue</key>

@@ -47,8 +47,8 @@ static NSCache* memCache;
 
 +(void) initialize
 {
-    runnerPlaceholder = [UIImage imageNamed:@"RunnerPlaceholder"];
-    corpPlaceholder = [UIImage imageNamed:@"CorpPlaceholder"];
+    runnerPlaceholder = [UIImage imageNamed:@"red_placeholder"];
+    corpPlaceholder = [UIImage imageNamed:@"blue_placeholder"];
     
     trashIcon = [UIImage imageNamed:@"cardstats_trash"];
     strengthIcon = [UIImage imageNamed:@"cardstats_strength"];
