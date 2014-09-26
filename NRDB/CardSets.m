@@ -143,22 +143,26 @@ static struct cardSetData {
 
 +(NSSet*) disabledSetCodes
 {
-    NSMutableSet* set = [NSMutableSet set];
+    NSMutableSet* sets = [NSMutableSet set];
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     for (CardSets* cs in cardSets)
     {
         if (![settings boolForKey:cs.settingsKey])
         {
-            [set addObject:cs.setCode];
+            [sets addObject:cs.setCode];
         }
     }
     
     if ([settings boolForKey:IGNORE_UNKNOWN_SETS])
     {
-        [set addObjectsFromArray:newSetCodes.allObjects];
+        [sets addObjectsFromArray:newSetCodes.allObjects];
+    }
+    if (![settings boolForKey:USE_DRAFT_IDS])
+    {
+        [sets addObject:DRAFT_SET_CODE];
     }
     
-    return set;
+    return sets;
 }
 
 +(NSSet*) knownSetCodes

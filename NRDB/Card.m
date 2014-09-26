@@ -41,7 +41,7 @@ static BOOL isRetina;
                     UTOPIA_SHARD, UTOPIA_FRAGMENT,
                     HADES_SHARD, HADES_FRAGMENT,
                     EDEN_SHARD, EDEN_FRAGMENT ];
-    
+
     multiIce = @[ RAINBOW ];
     
     roleCodes = @{ @"Runner": @(NRRoleRunner), @"Corp": @(NRRoleCorp) };
@@ -247,6 +247,39 @@ static BOOL isRetina;
 -(BOOL) isValid
 {
     return self.code.length > 0 && self.name.length > 0 && self.faction != NRFactionNone && self.role != NRRoleNone;
+}
+
+#pragma mark draft ids
+
++(NSArray*) draftIds
+{
+    Card* runner = [Card new];
+    runner->_role = NRRoleRunner;
+    runner->_code = THE_MASQUE;
+    runner->_name = @"Masque";
+    runner->_type = NRCardTypeIdentity;
+    runner->_typeStr = @"Identity";
+    runner->_faction = NRFactionNeutral;
+    runner->_factionStr = @"Neutral";
+    runner->_minimumDecksize = 30;
+    runner->_influenceLimit = -1;
+    runner->_setCode = @"000";
+    runner->_setName = DRAFT_SET;
+    
+    Card* corp = [Card new];
+    corp->_role = NRRoleCorp;
+    corp->_code = THE_SHADOW;
+    corp->_name = @"Shadow";
+    corp->_type = NRCardTypeIdentity;
+    corp->_typeStr = @"Identity";
+    corp->_faction = NRFactionNeutral;
+    corp->_factionStr = @"Neutral";
+    corp->_minimumDecksize = 30;
+    corp->_influenceLimit = -1;
+    corp->_setCode = @"000";
+    corp->_setName = DRAFT_SET;
+    
+    return @[runner, corp];
 }
 
 #pragma mark nsobject

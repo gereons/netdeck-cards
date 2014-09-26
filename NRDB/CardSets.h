@@ -12,7 +12,9 @@
 @class Deck;
 @interface CardSets : NSObject
 
-#define CORE_SET    @"core"
+#define CORE_SET        @"core"
+#define DRAFT_SET       @"draft"
+#define DRAFT_SET_CODE  @"000"
 
 +(void) setupSetNames;
 

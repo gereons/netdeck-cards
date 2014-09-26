@@ -222,6 +222,11 @@ static BOOL initializing;
             [CardManager addCard:card];
         }
         
+        for (Card* c in [Card draftIds])
+        {
+            [CardManager addCard:c];
+        }
+        
         NSArray* cards = [allCards allValues];
         [Faction initializeFactionNames:cards];
         [CardType initializeCardTypes:cards];

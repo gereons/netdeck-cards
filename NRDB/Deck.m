@@ -20,6 +20,13 @@
 
 @implementation Deck
 
+static NSArray* draftIds;
+
++(void) initialize
+{
+    draftIds = @[ THE_MASQUE, THE_SHADOW ];
+}
+
 -(Deck*) init
 {
     if ((self = [super init]))
@@ -51,6 +58,7 @@
     {
         self->_identityCc = nil;
     }
+    self->_isDraft = [draftIds containsObject:identity.code];
 }
 
 -(NSArray*) cards

@@ -258,7 +258,7 @@
     
     if (cardsUrl.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:@"Cards endpoint URL is not set" buttons:@[@"OK"]];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Cards endpoint URL is not set") buttons:@[l10n(@"OK")]];
         return;
     }
 
@@ -292,7 +292,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];
     
-    NSString* message = ok ? @"Cards endpoint URL is OK" : @"Cards endpoint URL is invalid";
+    NSString* message = ok ? l10n(@"Cards endpoint URL is OK") : l10n(@"Cards endpoint URL is invalid");
     
     [SDCAlertView alertWithTitle:nil message:message buttons:@[ l10n(@"OK") ]];
 }

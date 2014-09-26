@@ -21,6 +21,10 @@
 #define HADES_FRAGMENT          @"06071"    // max 1 per deck
 #define UTOPIA_FRAGMENT         @"06110"    // max 1 per deck
 
+// draft ids
+#define THE_MASQUE              @"00006"
+#define THE_SHADOW              @"00005"
+
 // multitype ice
 #define RAINBOW                 @"05025"
 // #define ORION                @"0xxxx"    // not out yet
@@ -73,5 +77,7 @@
 +(Card*) cardByCode:(NSString*)code;
 
 +(Card*) cardFromJson:(NSDictionary*) json;
+
++(NSArray*) draftIds;
 
 @end

@@ -14,6 +14,16 @@
             <key>DefaultValue</key>
             <true/>
         </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Include Draft Identities</string>
+            <key>Key</key>
+            <string>use_draft_identities</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
 		<dict>
 			<key>Title</key>
 			<string>Core Set and Deluxe Expansions</string>

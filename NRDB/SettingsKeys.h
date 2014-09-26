@@ -26,6 +26,7 @@
 
 #define NUM_CORES           @"number_coresets"
 #define IGNORE_UNKNOWN_SETS @"ignore_unknown_sets"
+#define USE_DRAFT_IDS       @"use_draft_identities"
 
 #define USE_DROPBOX         @"useDropbox"
 

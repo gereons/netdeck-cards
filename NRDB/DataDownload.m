@@ -71,7 +71,7 @@ static DataDownload* instance;
 
     if (!cardsUrl.length)
     {
-        [SDCAlertView alertWithTitle:nil message:@"Cards API Endpoint is required" buttons:@[@"OK"]];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Cards endpoint URL is not set") buttons:@[l10n(@"OK")]];
         return;
     }
     
