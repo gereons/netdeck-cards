@@ -203,6 +203,7 @@ static BOOL isRetina;
     
     JSON_INT(number, @"number");
     JSON_INT(quantity, @"quantity");
+    c->_quantity = MIN(3, c->_quantity);
     JSON_BOOL(unique, @"uniqueness");
     
     if (c.type == NRCardTypeIdentity)

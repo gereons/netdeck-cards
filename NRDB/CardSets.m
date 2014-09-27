@@ -172,6 +172,7 @@ static struct cardSetData {
     {
         [knownSets addObject:cs.setCode];
     }
+    [knownSets addObject:DRAFT_SET_CODE];
     
     return knownSets;
 }
