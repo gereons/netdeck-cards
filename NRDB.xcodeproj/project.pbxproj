@@ -1694,6 +1694,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
+				PROVISIONING_PROFILE = "0291bf03-d8dd-4a66-b294-1db98a37a44c";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Externals/**";
@@ -1741,7 +1742,7 @@
 				INFOPLIST_FILE = "NRDB/NRDB-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0291bf03-d8dd-4a66-b294-1db98a37a44c";
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Core/Externals/DTFoundation/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1817,7 +1818,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4a1ef9e6-c38c-49bc-88e0-7612ccc9118d";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "b5069f6d-871c-40ea-966c-97b1269ab0b1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Externals/**";
@@ -1843,7 +1844,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4a1ef9e6-c38c-49bc-88e0-7612ccc9118d";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "b5069f6d-871c-40ea-966c-97b1269ab0b1";
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Core/Externals/DTFoundation/**";
 				WRAPPER_EXTENSION = app;
 			};
