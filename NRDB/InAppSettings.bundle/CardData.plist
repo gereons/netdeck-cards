@@ -9,6 +9,8 @@
 			<string>Datasucker API</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
+            <key>FooterText</key>
+            <string>Either an Endpoint URL or a Lockpick code is required. Endpoint URL takes precedence.</string>
 		</dict>
 		<dict>
 			<key>AutocapitalizationType</key>
@@ -28,6 +30,24 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 		</dict>
+        <dict>
+            <key>AutocapitalizationType</key>
+            <string>None</string>
+            <key>AutocorrectionType</key>
+            <string>No</string>
+            <key>DefaultValue</key>
+            <string></string>
+            <key>IsSecure</key>
+            <false/>
+            <key>Key</key>
+            <string>lockpick_code</string>
+            <key>KeyboardType</key>
+            <string>Alphabet</string>
+            <key>Title</key>
+            <string>Lockpick Code</string>
+            <key>Type</key>
+            <string>PSTextFieldSpecifier</string>
+        </dict>
 		<dict>
 			<key>Type</key>
 			<string>IASKButtonSpecifier</string>

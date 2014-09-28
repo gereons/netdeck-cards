@@ -68,13 +68,59 @@ static DataDownload* instance;
 -(void) downloadCardData
 {
     NSString* cardsUrl = [[NSUserDefaults standardUserDefaults] objectForKey:CARDS_ENDPOINT];
-
-    if (!cardsUrl.length)
+    NSString* lockpickCode = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKPICK_CODE];
+    
+    if (cardsUrl.length == 0 && lockpickCode.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Cards endpoint URL is not set") buttons:@[l10n(@"OK")]];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Cards Endpoint URL and/or a Lockpick code") buttons:@[l10n(@"OK")]];
         return;
     }
-    
+
+    if (cardsUrl.length == 0 )
+    {
+        NSString* code = [lockpickCode stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
+        NSString* lockpickUrl =[NSString stringWithFormat:@"https://lockpick.parseapp.com/datasucker/%@", code];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager GET:lockpickUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString* url;
+            if ([responseObject isKindOfClass:[NSDictionary class]])
+            {
+                NSDictionary* dict = responseObject;
+                url = dict[@"url"];
+            }
+            if (url.length > 0)
+            {
+                BOOL http = [url hasPrefix:@"http://"] || [url hasPrefix:@"https://"];
+                if (!http)
+                {
+                    url = [NSString stringWithFormat:@"http://%@", url];
+                }
+                url = [NSString stringWithFormat:@"%@/cards", url];
+                
+                [self startDownloadCardData:url];
+            }
+            else
+            {
+                [self showLockpickError];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self showLockpickError];
+        }];
+    }
+    else
+    {
+        [self startDownloadCardData:cardsUrl];
+    }
+}
+
+-(void) showLockpickError
+{
+    [SDCAlertView alertWithTitle:nil message:l10n(@"Lockpick request failed") buttons:@[l10n(@"OK")]];
+}
+
+-(void) startDownloadCardData:(NSString*)url
+{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     UIActivityIndicatorView* act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -96,13 +142,11 @@ static DataDownload* instance;
         [self stopDownload];
     };
     
-    [self performSelector:@selector(doDownloadCardData) withObject:nil afterDelay:0.001];
+    [self performSelector:@selector(doDownloadCardData:) withObject:url afterDelay:0.001];
 }
     
--(void) doDownloadCardData
+-(void) doDownloadCardData:(NSString*)cardsUrl
 {
-    NSString* cardsUrl = [[NSUserDefaults standardUserDefaults] objectForKey:CARDS_ENDPOINT];
-    
     BOOL __block ok = NO;
     self.downloadStopped = NO;
     

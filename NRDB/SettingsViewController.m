@@ -255,10 +255,11 @@
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSString* cardsUrl = [settings objectForKey:CARDS_ENDPOINT];
+    NSString* lockpickCode = [settings objectForKey:LOCKPICK_CODE];
     
-    if (cardsUrl.length == 0)
+    if (cardsUrl.length == 0 && lockpickCode.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Cards endpoint URL is not set") buttons:@[l10n(@"OK")]];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Cards Endpoint URL and/or a Lockpick code") buttons:@[l10n(@"OK")]];
         return;
     }
 
@@ -279,21 +280,76 @@
                     ok = NO;
                 }
             }
-            [self finishDatasuckerTests:ok];
+            
+            [self testLockpick:@(ok)];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self finishDatasuckerTests:NO];
+            [self testLockpick:@(NO)];
         }];
     }
-    
+    else
+    {
+        [self testLockpick:nil];
+    }
 }
 
--(void) finishDatasuckerTests:(BOOL)ok
+-(void) testLockpick:(NSNumber*)cardsOk
+{
+    NSString* lockpickCode = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKPICK_CODE];
+
+    if (lockpickCode.length)
+    {
+        NSString* code = [lockpickCode stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
+        NSString* lockpickUrl =[NSString stringWithFormat:@"https://lockpick.parseapp.com/datasucker/%@", code];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager GET:lockpickUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            BOOL ok = YES;
+            if ([responseObject isKindOfClass:[NSDictionary class]])
+            {
+                NSDictionary* dict = responseObject;
+                if (dict[@"url"] == nil)
+                {
+                    ok = NO;
+                }
+            }
+            
+            [self finishDatasuckerTests:cardsOk lockpickOk:@(ok)];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self finishDatasuckerTests:cardsOk lockpickOk:@(NO)];
+        }];
+    }
+    else
+    {
+        [self finishDatasuckerTests:cardsOk lockpickOk:nil];
+    }
+}
+
+-(void) finishDatasuckerTests:(NSNumber*)cardsOk lockpickOk:(NSNumber*)lockpickOk
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];
     
-    NSString* message = ok ? l10n(@"Cards endpoint URL is OK") : l10n(@"Cards endpoint URL is invalid");
+    NSString* cardsMsg;
+    if (cardsOk)
+    {
+        cardsMsg = cardsOk.intValue ? l10n(@"Cards endpoint URL is OK") : l10n(@"Cards endpoint URL is invalid");
+    }
+    else
+    {
+        cardsMsg = l10n(@"Cards endpoint URL not tested");
+    }
     
+    NSString* lockpickMsg;
+    if (lockpickOk)
+    {
+        lockpickMsg = lockpickOk.intValue ? l10n(@"Lockpick code is OK") : l10n(@"Lockpick code is invalid");
+    }
+    else
+    {
+        lockpickMsg = l10n(@"Lockpick code not tested");
+    }
+    
+    NSString* message = [NSString stringWithFormat:@"%@\n%@", cardsMsg, lockpickMsg];
     [SDCAlertView alertWithTitle:nil message:message buttons:@[ l10n(@"OK") ]];
 }
 
