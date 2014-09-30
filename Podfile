@@ -1,3 +1,4 @@
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 inhibit_all_warnings!
 pod 'DTCoreText'
@@ -16,6 +17,5 @@ pod 'InAppSettingsKit', :head
 
 post_install do | installer |
   require 'fileutils'
-  # FileUtils.cp_r('Pods/Pods-acknowledgements.markdown', 'NRDB/Acknowledgements.html', :remove_destination => true)
-  system("awk -f ackhtml.awk <Pods/Pods-acknowledgements.markdown >NRDB/Acknowledgements.html")
+  system("awk -f ackhtml.awk <'Pods/Target Support Files/Pods/Pods-acknowledgements.markdown' >NRDB/Acknowledgements.html")
 end
