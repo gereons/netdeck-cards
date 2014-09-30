@@ -78,6 +78,7 @@ static DataDownload* instance;
 
     if (cardsUrl.length == 0 )
     {
+        [self showDownloadAlert];
         NSString* code = [lockpickCode stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
         NSString* lockpickUrl =[NSString stringWithFormat:@"https://lockpick.parseapp.com/datasucker/%@", code];
         
@@ -98,7 +99,10 @@ static DataDownload* instance;
                 }
                 url = [NSString stringWithFormat:@"%@/cards", url];
                 
-                [self startDownloadCardData:url];
+                if (!self.downloadStopped)
+                {
+                    [self startDownloadCardData:url];
+                }
             }
             else
             {
@@ -110,6 +114,7 @@ static DataDownload* instance;
     }
     else
     {
+        [self showDownloadAlert];
         [self startDownloadCardData:cardsUrl];
     }
 }
@@ -119,7 +124,7 @@ static DataDownload* instance;
     [SDCAlertView alertWithTitle:nil message:l10n(@"Lockpick request failed") buttons:@[l10n(@"OK")]];
 }
 
--(void) startDownloadCardData:(NSString*)url
+-(void) showDownloadAlert
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
@@ -132,7 +137,7 @@ static DataDownload* instance;
                                             delegate:nil cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
     
     [self.alert.contentView addSubview:act];
-
+    
     [act sdc_centerInSuperview];
     [self.alert show];
     
@@ -141,7 +146,10 @@ static DataDownload* instance;
         @strongify(self);
         [self stopDownload];
     };
-    
+}
+
+-(void) startDownloadCardData:(NSString*)url
+{
     [self performSelector:@selector(doDownloadCardData:) withObject:url afterDelay:0.001];
 }
     

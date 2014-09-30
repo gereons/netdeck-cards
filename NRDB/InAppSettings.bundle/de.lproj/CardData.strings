@@ -2,14 +2,6 @@
 
 "Card Data" = "Karten-Daten";
 
-"Language" = "Sprache";
-"English" = "Englisch";
-"German" = "Deutsch";
-"Spanish" = "Spanisch";
-"French" = "Französisch";
-"Italian" = "Italienisch";
-"Polish" = "Polnisch";
-
 "Last Downloaded on" = "Letzter Download am";
 "Next Download on" = "Nächster Download am";
 "Update Card Data Now" = "Karten-Daten jetzt aktualisieren";
@@ -18,5 +10,6 @@
 "Clear All Cached Data" = "Cache löschen";
 
 "Test API Connection" = "API-Verbindung testen";
-
-"LanguageFooterText" = "NetrunnerDB.com unterstützt andere Sprachen als Englisch nur unvollständig.\nWenn du diese Einstellung änderst, solltest du die Karten-Daten aktualisieren.";
+"Lockpick Code" = "Lockpick-Code";
+"Cards Endpoint URL" = "Cards-URL";
+"Either an Endpoint URL or a Lockpick code is required. Endpoint URL takes precedence." = "Entweder Cards-URL oder Lockpick-Code sind erforderlich. Cards-URL hat Vorrang.";
