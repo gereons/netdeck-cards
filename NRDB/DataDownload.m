@@ -67,17 +67,20 @@ static DataDownload* instance;
 
 -(void) downloadCardData
 {
-    NSString* cardsUrl = [[NSUserDefaults standardUserDefaults] objectForKey:CARDS_ENDPOINT];
-    NSString* lockpickCode = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKPICK_CODE];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    NSString* nrdbHost = [settings objectForKey:NRDB_HOST];
+    NSString* cardsUrl = [settings objectForKey:CARDS_ENDPOINT];
+    NSString* lockpickCode = [settings objectForKey:LOCKPICK_CODE];
     
-    if (cardsUrl.length == 0 && lockpickCode.length == 0)
+    if (nrdbHost.length == 0 && cardsUrl.length == 0 && lockpickCode.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Cards Endpoint URL and/or a Lockpick code") buttons:@[l10n(@"OK")]];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Server Name, Cards Endpoint URL, and/or a Lockpick code") buttons:@[l10n(@"OK")]];
         return;
     }
 
-    if (cardsUrl.length == 0 )
+    if (cardsUrl.length == 0 && nrdbHost.length == 0)
     {
+        // fetch a datasucker url from lockpic
         [self showDownloadAlert];
         NSString* code = [lockpickCode stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
         NSString* lockpickUrl =[NSString stringWithFormat:@"https://lockpick.parseapp.com/datasucker/%@", code];
@@ -114,6 +117,10 @@ static DataDownload* instance;
     }
     else
     {
+        if (nrdbHost.length)
+        {
+            cardsUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
+        }
         [self showDownloadAlert];
         [self startDownloadCardData:cardsUrl];
     }

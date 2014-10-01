@@ -12,4 +12,6 @@
 "Test API Connection" = "API-Verbindung testen";
 "Lockpick Code" = "Lockpick-Code";
 "Cards Endpoint URL" = "Cards-URL";
-"Either an Endpoint URL or a Lockpick code is required. Endpoint URL takes precedence." = "Entweder Cards-URL oder Lockpick-Code sind erforderlich. Cards-URL hat Vorrang.";
+"API Settings" = "API-Einstellungen";
+"NetrunnerDB Server" = "NetrunnerDB-Server";
+"Either a Server, Endpoint URL or a Lockpick code is required. Precedence: Server > Endpoint > Lockpick" = "Entweder Servername, Cards-URL oder Lockpick-Code ist erforderlich. Vorrang: Server > Cards-URL > Lockpick";

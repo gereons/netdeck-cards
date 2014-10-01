@@ -217,9 +217,12 @@ static BOOL initializing;
         for (NSDictionary* obj in json)
         {
             Card* card = [Card cardFromJson:obj];
-            NSAssert(card.isValid, @"invalid card from %@", obj);
+            if (card)
+            {
+                NSAssert(card.isValid, @"invalid card from %@", obj);
             
-            [CardManager addCard:card];
+                [CardManager addCard:card];
+            }
         }
         
         for (Card* c in [Card draftIds])

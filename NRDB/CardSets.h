@@ -12,9 +12,10 @@
 @class Deck;
 @interface CardSets : NSObject
 
-#define CORE_SET        @"core"
-#define DRAFT_SET       @"draft"
-#define DRAFT_SET_CODE  @"000"
+#define CORE_SET            @"core"
+#define DRAFT_SET           @"draft"
+#define DRAFT_SET_CODE      @"000"
+#define UNKNOWN_SET_CODE    @"001"
 
 +(void) setupSetNames;
 
@@ -25,6 +26,7 @@
 +(NSSet*) disabledSetCodes;
 // all sets we know about
 +(NSSet*) knownSetCodes;
++(NSString*) setCodeForNrdbCode:(NSString*)code;
 
 +(NSDictionary*) settingsDefaults;
 

@@ -168,6 +168,17 @@ static BOOL isRetina;
 {
     Card* c = [Card new];
     
+    BOOL isNrdb = [json objectForKey:@"type_code"] != nil;
+    if (isNrdb)
+    {
+        // ignore "alt" and "special" sets
+        NSString* setCode = [json objectForKey:@"set_code"];
+        if ([@[ @"alt", @"special" ] containsObject:setCode])
+        {
+            return nil;
+        }
+    }
+    
     JSON_STR(code, @"code");
     JSON_STR(name, @"title");
     c->_name = [c->_name stringByReplacingHTMLEntities];
@@ -188,8 +199,22 @@ static BOOL isRetina;
     NSAssert(c.type != NRCardTypeNone, @"no type for %@ (%@)", c.code, c.typeStr);
     
     JSON_STR(setName, @"set");
-    c->_isCore = [c.setName.lowercaseString isEqualToString:CORE_SET];
     JSON_STR(setCode, @"setcode");
+    if (isNrdb)
+    {
+        JSON_STR(setName, @"setname");
+        c->_setCode = [CardSets setCodeForNrdbCode:[json objectForKey:@"set_code"]];
+        if (c->_setCode == nil)
+        {
+            c->_setCode = UNKNOWN_SET_CODE;
+        }
+
+        if ([c->_setName isEqualToString:@"Core Set"])
+        {
+            c->_setName = @"Core";
+        }
+    }
+    c->_isCore = [c.setName.lowercaseString isEqualToString:CORE_SET];
     
     JSON_STR(subtype, @"subtype");
     if (c.subtype.length == 0)
@@ -210,6 +235,10 @@ static BOOL isRetina;
     {
         JSON_INT(influenceLimit, @"influencelimit");
         JSON_INT(minimumDecksize, @"mindecksize");
+        if (isNrdb)
+        {
+            JSON_INT(minimumDecksize, @"minimumdecksize");
+        }
         JSON_INT(baseLink, @"baselink");
     }
     else
@@ -235,8 +264,21 @@ static BOOL isRetina;
     JSON_INT(trash, @"trash");
     
     JSON_STR(imageSrc, @"imagesrc");
+    if (isNrdb)
+    {
+        NSString* host = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_HOST];
+        c->_imageSrc = [NSString stringWithFormat:@"http://%@%@", host, c->_imageSrc];
+    }
     
     JSON_INT(maxPerDeck, @"maxperdeck");
+    if (isNrdb)
+    {
+        NSNumber* limited = [json objectForKey:@"limited"];
+        if (limited && limited.boolValue)
+        {
+            c->_maxPerDeck = 1;
+        }
+    }
     if ([max1InDeck containsObject:c.code] || c.type == NRCardTypeIdentity)
     {
         c->_maxPerDeck = 1;

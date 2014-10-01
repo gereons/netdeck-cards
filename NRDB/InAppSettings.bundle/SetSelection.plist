@@ -4,26 +4,26 @@
 <dict>
 	<key>PreferenceSpecifiers</key>
 	<array>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Ignore unknown Sets</string>
-            <key>Key</key>
-            <string>ignore_unknown_sets</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Include Draft Identities</string>
-            <key>Key</key>
-            <string>use_draft_identities</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Ignore unknown Sets</string>
+			<key>Key</key>
+			<string>ignore_unknown_sets</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Include Draft Identities</string>
+			<key>Key</key>
+			<string>use_draft_identities</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 		<dict>
 			<key>Title</key>
 			<string>Core Set and Deluxe Expansions</string>
@@ -36,7 +36,7 @@
 			<key>Title</key>
 			<string>Core Set</string>
 			<key>Key</key>
-			<string>use_coreset</string>
+			<string>use_core</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
@@ -234,9 +234,9 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>us</string>
+			<string>up</string>
 			<key>Key</key>
-			<string>use_us</string>
+			<string>use_up</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

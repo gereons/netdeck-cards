@@ -92,7 +92,8 @@ static TableData* allFactions;
         case 'S': return NRFactionShaper;
         case 'H': return NRFactionHaasBioroid;
         case 'J': return NRFactionJinteki;
-        case 'T': return NRFactionWeyland;
+        case 'W':
+        case 'T': return NRFactionWeyland;  // catch both "W..." and "The W..."
         case 'N':
             return [faction isEqualToString:@"Neutral"] ? NRFactionNeutral : NRFactionNBN;
     }
