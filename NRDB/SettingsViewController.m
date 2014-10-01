@@ -205,10 +205,10 @@
     }
     else if ([specifier.key isEqualToString:TEST_DATASUCKER])
     {
-        TF_CHECKPOINT(@"datasucker test");
+        TF_CHECKPOINT(@"api settings test");
         if (APP_ONLINE)
         {
-            [self testDatasucker];
+            [self testApiSettings];
         }
         else
         {
@@ -251,21 +251,54 @@
     return cell;
 }
 
--(void) testDatasucker
+-(void) testApiSettings
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    NSString* nrdbHost = [settings objectForKey:NRDB_HOST];
     NSString* cardsUrl = [settings objectForKey:CARDS_ENDPOINT];
     NSString* lockpickCode = [settings objectForKey:LOCKPICK_CODE];
     
-    if (cardsUrl.length == 0 && lockpickCode.length == 0)
+    if (nrdbHost.length == 0 && cardsUrl.length == 0 && lockpickCode.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Cards Endpoint URL and/or a Lockpick code") buttons:@[l10n(@"OK")]];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Server Name, Cards Endpoint URL, and/or a Lockpick code") buttons:@[l10n(@"OK")]];
         return;
     }
 
     [SVProgressHUD showWithStatus:l10n(@"Testing...")];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
+    if (nrdbHost.length)
+    {
+        NSString* nrdbUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager GET:nrdbUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            BOOL ok = YES;
+            if ([responseObject isKindOfClass:[NSArray class]])
+            {
+                NSArray* arr = responseObject;
+                NSDictionary* dict = arr[0];
+                if (dict[@"code"] == nil)
+                {
+                    ok = NO;
+                }
+            }
+            
+            [self testDatasucker:@{ @"nrdb": @(ok) }];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self testDatasucker:@{ @"nrdb": @NO }];
+        }];
+    }
+    else
+    {
+        [self testDatasucker:@{}];
+    }
+}
+
+-(void) testDatasucker:(NSDictionary*)previousResults;
+{
+    NSMutableDictionary* results = previousResults.mutableCopy;
+    
+    NSString* cardsUrl = [[NSUserDefaults standardUserDefaults] objectForKey:CARDS_ENDPOINT];
     if (cardsUrl.length)
     {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -281,18 +314,20 @@
                 }
             }
             
-            [self testLockpick:@(ok)];
+            results[@"datasucker"] = @(ok);
+            [self testLockpick:results];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self testLockpick:@(NO)];
+            results[@"datasucker"] = @NO;
+            [self testLockpick:results];
         }];
     }
     else
     {
-        [self testLockpick:nil];
+        [self testLockpick:results];
     }
 }
 
--(void) testLockpick:(NSNumber*)cardsOk
+-(void) testLockpick:(NSMutableDictionary*)results
 {
     NSString* lockpickCode = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKPICK_CODE];
 
@@ -313,21 +348,32 @@
                 }
             }
             
-            [self finishDatasuckerTests:cardsOk lockpickOk:@(ok)];
+            results[@"lockpick"] = @(ok);
+            [self finishDatasuckerTests:results];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self finishDatasuckerTests:cardsOk lockpickOk:@(NO)];
+            results[@"lockpick"] = @NO;
+            [self finishDatasuckerTests:results];
         }];
     }
     else
     {
-        [self finishDatasuckerTests:cardsOk lockpickOk:nil];
+        [self finishDatasuckerTests:results];
     }
 }
 
--(void) finishDatasuckerTests:(NSNumber*)cardsOk lockpickOk:(NSNumber*)lockpickOk
+-(void) finishDatasuckerTests:(NSDictionary*)results
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];
+    NSNumber* nrdbOk = results[@"nrdb"];
+    NSNumber* cardsOk = results[@"datasucker"];
+    NSNumber* lockpickOk = results[@"lockpick"];
+    
+    NSString* nrdbMsg;
+    if (nrdbOk)
+    {
+        nrdbMsg = nrdbOk.intValue ? l10n(@"NetrunnerDB is OK") : l10n(@"NetrunnerDB is invalid");
+    }
     
     NSString* cardsMsg;
     if (cardsOk)
@@ -349,7 +395,7 @@
         lockpickMsg = l10n(@"Lockpick code not tested");
     }
     
-    NSString* message = [NSString stringWithFormat:@"%@\n%@", cardsMsg, lockpickMsg];
+    NSString* message = [NSString stringWithFormat:@"%@\n%@\n%@", nrdbMsg, cardsMsg, lockpickMsg];
     [SDCAlertView alertWithTitle:nil message:message buttons:@[ l10n(@"OK") ]];
 }
 

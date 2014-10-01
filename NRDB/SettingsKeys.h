@@ -49,6 +49,7 @@
 #define BROWSER_VIEW_SCALE  @"browserViewScale"
 #define BROWSER_SORT_TYPE   @"browserSortType"
 
+#define NRDB_HOST           @"nrdb_host"
 #define LOCKPICK_CODE       @"lockpick_code"
 #define CARDS_ENDPOINT      @"cards_endpoint"
 #define TEST_DATASUCKER     @"test_datasucker"

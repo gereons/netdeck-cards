@@ -6,12 +6,30 @@
 	<array>
 		<dict>
 			<key>Title</key>
-			<string>Datasucker API</string>
+			<string>API Settings</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
             <key>FooterText</key>
-            <string>Either an Endpoint URL or a Lockpick code is required. Endpoint URL takes precedence.</string>
+            <string>Either a Server, Endpoint URL or a Lockpick code is required. Precedence: Server > Endpoint > Lockpick</string>
 		</dict>
+        <dict>
+            <key>AutocapitalizationType</key>
+            <string>None</string>
+            <key>AutocorrectionType</key>
+            <string>No</string>
+            <key>DefaultValue</key>
+            <string></string>
+            <key>IsSecure</key>
+            <false/>
+            <key>Key</key>
+            <string>nrdb_host</string>
+            <key>KeyboardType</key>
+            <string>URL</string>
+            <key>Title</key>
+            <string>NetrunnerDB Server</string>
+            <key>Type</key>
+            <string>PSTextFieldSpecifier</string>
+        </dict>
 		<dict>
 			<key>AutocapitalizationType</key>
 			<string>None</string>
