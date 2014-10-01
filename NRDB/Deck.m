@@ -113,7 +113,7 @@ static NSArray* draftIds;
     BOOL noJintekiAllowed = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
     
     BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
-    BOOL hfError = NO, hsError = NO, usError = NO, efError = NO, esError = NO, ufError = NO;
+    BOOL fragError = NO, shardError = NO;
     
     // check max 1 per deck restrictions
     for (CardCounter* cc in self.cards)
@@ -134,28 +134,17 @@ static NSArray* draftIds;
                 [reasons addObject:l10n(@"Too many entanglements")];
             }
             
-            if ([card.code isEqualToString:HADES_FRAGMENT] && cc.count > 1 && !hfError)
+            BOOL isFragment = [card.code isEqualToString:HADES_FRAGMENT] || [card.code isEqualToString:EDEN_FRAGMENT] || [card.code isEqualToString:UTOPIA_FRAGMENT];
+            if (isFragment && cc.count > 1 && !fragError)
             {
-                hfError = YES;
-                [reasons addObject:l10n(@"Too many Hades Fragments")];
-            }
-            
-            if ([card.code isEqualToString:EDEN_FRAGMENT] && cc.count > 1 && !efError)
-            {
-                efError = YES;
-                [reasons addObject:l10n(@"Too many Eden Fragments")];
-            }
-            
-            if ([card.code isEqualToString:UTOPIA_FRAGMENT] && cc.count > 1 && !ufError)
-            {
-                ufError = YES;
-                [reasons addObject:l10n(@"Too many Utopia Fragments")];
+                fragError = YES;
+                [reasons addObject:l10n(@"Too many fragments")];
             }
             
             if (noJintekiAllowed && card.faction == NRFactionJinteki && !jintekiError)
             {
                 jintekiError = YES;
-                [reasons addObject:l10n(@"Cannot include Jinteki")];
+                [reasons addObject:l10n(@"Faction no allowed")];
             }
             
             if (!self.isDraft && card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction && !agendaError)
@@ -167,20 +156,11 @@ static NSArray* draftIds;
         else
         {
             // runner-only checks
-            if ([card.code isEqualToString:HADES_SHARD] && cc.count > 1 && !hsError)
+            BOOL isShard = [card.code isEqualToString:HADES_SHARD] || [card.code isEqualToString:EDEN_SHARD] || [card.code isEqualToString:UTOPIA_SHARD];
+            if (isShard && cc.count > 1 && !shardError)
             {
-                hsError = YES;
-                [reasons addObject:l10n(@"Too many Hades Shards")];
-            }
-            if ([card.code isEqualToString:EDEN_SHARD] && cc.count > 1 && !esError)
-            {
-                esError = YES;
-                [reasons addObject:l10n(@"Too many Eden Shards")];
-            }
-            if ([card.code isEqualToString:UTOPIA_SHARD] && cc.count > 1 && !usError)
-            {
-                usError = YES;
-                [reasons addObject:l10n(@"Too many Utopia Shards")];
+                shardError = YES;
+                [reasons addObject:l10n(@"Too many shards")];
             }
         }
     }
