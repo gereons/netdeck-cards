@@ -6,14 +6,12 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <StoreKit/StoreKit.h>
 #import <MessageUI/MessageUI.h>
 #import <SDCAlertView.h>
 
 #import "AboutViewController.h"
 
 @interface AboutViewController ()
-@property SKStoreProductViewController* storeViewController;
 @property MFMailComposeViewController *mailer;
 @property NSString* version;
 @property UIBarButtonItem* backButton;
