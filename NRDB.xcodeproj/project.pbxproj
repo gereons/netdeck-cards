@@ -1209,6 +1209,7 @@
 				3A36225B1849320C007F2854 /* Frameworks */,
 				3A36225C1849320C007F2854 /* Resources */,
 				874BC020E2E4438DA4A0C588 /* Copy Pods Resources */,
+				3A66FFB619DEE75000B847E7 /* ShellScript */,
 				3A814EC519ADBEEE008C3285 /* ShellScript */,
 			);
 			buildRules = (
@@ -1431,6 +1432,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3A66FFB619DEE75000B847E7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" != \"Release\" ]; then\nGITVERSION=$(git describe --dirty=M)\necho \"add git version... $GITVERSION\"\necho -n \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\" | xargs -0 /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $GITVERSION\"\nfi\n";
+		};
 		3A814EC519ADBEEE008C3285 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
