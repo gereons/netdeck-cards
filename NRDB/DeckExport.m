@@ -14,9 +14,6 @@
 #import "Deck.h"
 #import "CardSets.h"
 
-#define APP_NAME    "Net Deck"
-#define APP_URL     "http://appstore.com/netdeck"
-
 @implementation DeckExport
 
 +(void) asOctgn:(Deck*)deck autoSave:(BOOL)autoSave
@@ -94,7 +91,7 @@
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with " APP_NAME " " APP_URL "\n"];
+    [s appendString:@"\nDeck built with Net Deck\n"];
     
     if (deck.notes.length > 0)
     {
@@ -166,7 +163,7 @@
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with [" APP_NAME "](" APP_URL ").\n"];
+    [s appendString:@"\nDeck built with Net Deck.\n"];
     
     if (deck.notes.length > 0)
     {
@@ -240,7 +237,7 @@
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
-    [s appendString:@"\nDeck built with [url=" APP_URL "]" APP_NAME "[/url].\n"];
+    [s appendString:@"\nDeck built with Net Deck\n"];
     
     if (deck.notes.length > 0)
     {

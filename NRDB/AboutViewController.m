@@ -69,34 +69,19 @@
 
 -(void) leaveFeedback:(id)sender
 {
-    NSString* msg = l10n(@"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store.");
+    NSString* msg = l10n(@"We'd love to know how we can make Net Deck even better.");
     
     SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                message:msg
-                                               buttons:@[l10n(@"Cancel"), l10n(@"Write a Review"), l10n(@"Contact Developers")]];
+                                               buttons:@[l10n(@"Cancel"), l10n(@"Contact Developers")]];
     alert.didDismissHandler = ^(NSInteger buttonIndex) {
         switch (buttonIndex)
         {
             case 1:
-                [self rateApp];
-                break;
-            case 2:
                 [self sendEmail];
                 break;
         }
     };
-}
-
--(void) rateApp
-{
-    self.storeViewController = [[SKStoreProductViewController alloc] init];
-    
-    NSNumber *appId = @(865963530);
-    
-    [self.storeViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:appId} completionBlock:nil];
-    self.storeViewController.delegate = self;
-    
-    [self presentViewController:self.storeViewController animated:NO completion:nil];
 }
 
 -(void) sendEmail
@@ -109,14 +94,6 @@
     [subject appendString:self.version];
     [self.mailer setSubject:subject];
     [self presentViewController:self.mailer animated:NO completion:nil];
-}
-
-#pragma mark store kit
-
-- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController
-{
-    [self.storeViewController dismissViewControllerAnimated:NO completion:nil];
-    self.storeViewController = nil;
 }
 
 #pragma mark mail compose
@@ -137,10 +114,6 @@
         if ([scheme isEqualToString:@"mailto"])
         {
             [self sendEmail];
-        }
-        else if ([scheme isEqualToString:@"itms-apps"])
-        {
-            [self rateApp];
         }
         else if ([scheme isEqualToString:@"file"])
         {

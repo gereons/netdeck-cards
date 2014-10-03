@@ -14,4 +14,4 @@
 "Cards Endpoint URL" = "Cards-URL";
 "API Settings" = "API-Einstellungen";
 "NetrunnerDB Server" = "NetrunnerDB-Server";
-"Either a Server, Endpoint URL or a Lockpick code is required. Precedence: Server > Endpoint > Lockpick" = "Entweder Servername, Cards-URL oder Lockpick-Code ist erforderlich. Vorrang: Server > Cards-URL > Lockpick";
+"apiSettingsFooter" = "Entweder Servername, Cards-URL oder Lockpick-Code ist erforderlich.\nPriorität: Server > Cards-URL > Lockpick";
