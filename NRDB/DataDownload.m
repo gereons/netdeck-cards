@@ -141,18 +141,21 @@ static DataDownload* instance;
     
     self.alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Downloading Card Data")
                                              message:nil
-                                            delegate:nil cancelButtonTitle:l10n(@"Stop") otherButtonTitles:nil];
+                                            delegate:nil
+                                   cancelButtonTitle:l10n(@"Stop")
+                                   otherButtonTitles:nil];
     
     [self.alert.contentView addSubview:act];
     
-    [act sdc_centerInSuperview];
-    [self.alert show];
+    self.downloadStopped = NO;
+    self.downloadErrors = 0;
     
+    [act sdc_centerInSuperview];
     @weakify(self);
-    self.alert.didDismissHandler = ^(NSInteger buttonIndex) {
+    [self.alert showWithDismissHandler:^(NSInteger buttonIndex) {
         @strongify(self);
         [self stopDownload];
-    };
+    }];
 }
 
 -(void) startDownloadCardData:(NSString*)url
@@ -167,23 +170,31 @@ static DataDownload* instance;
     
     self.manager = [AFHTTPRequestOperationManager manager];
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
+                                                                                 URLString:cardsUrl
+                                                                                parameters:nil
+                                                                                     error:nil];
+    // bypass cache!
+    request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     
     @weakify(self);
-    [self.manager GET:cardsUrl parameters:nil
-        success:^(AFHTTPRequestOperation* operation, id responseObject) {
-            @strongify(self);
-            if (!self.downloadStopped)
-            {
-                ok = [CardManager setupFromDatasuckerApi:responseObject];
-            }
-            [self downloadFinished:ok];
-        }
-        failure:^(AFHTTPRequestOperation* operation, NSError* error) {
-            @strongify(self);
-            // NSLog(@"download failed %@", operation);
-            [self downloadFinished:NO];
-        }
-    ];
+    AFHTTPRequestOperation *operation = [self.manager HTTPRequestOperationWithRequest:request
+      success:^(AFHTTPRequestOperation* operation, id responseObject) {
+          @strongify(self);
+          if (!self.downloadStopped)
+          {
+              ok = [CardManager setupFromDatasuckerApi:responseObject];
+          }
+          [self downloadFinished:ok];
+      } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
+          @strongify(self);
+          // NSLog(@"download failed %@", operation);
+          [self downloadFinished:NO];
+      }];
+    
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation start];
 }
 
 -(void) downloadFinished:(BOOL)ok
@@ -233,13 +244,11 @@ static DataDownload* instance;
     [self.progressView sdc_pinWidthToWidthOfView:self.alert.contentView offset:-20];
     [self.progressView sdc_centerInSuperview];
     
-    [self.alert show];
-    
     @weakify(self);
-    self.alert.didDismissHandler = ^(NSInteger buttonIndex) {
+    [self.alert showWithDismissHandler:^(NSInteger buttonIndex) {
         @strongify(self);
         [self stopDownload];
-    };
+    }];
     
     self.downloadStopped = NO;
     self.downloadErrors = 0;
@@ -313,7 +322,6 @@ static DataDownload* instance;
         self.cards = nil;
     }
 }
-
 
 - (void) stopDownload
 {

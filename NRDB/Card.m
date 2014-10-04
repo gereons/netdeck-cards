@@ -181,6 +181,7 @@ static BOOL isRetina;
     
     JSON_STR(code, @"code");
     JSON_STR(name, @"title");
+    
     c->_name = [c->_name stringByReplacingHTMLEntities];
     JSON_STR(text, @"text");
     c->_text = [c->_text stringByReplacingHTMLEntities];
