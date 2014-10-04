@@ -86,7 +86,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>oac</string>
+            <string>Deluxe Expansion #3</string>
 			<key>Key</key>
 			<string>use_oac</string>
 			<key>DefaultValue</key>
@@ -264,7 +264,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>uao</string>
+            <string>Data Pack #4</string>
 			<key>Key</key>
 			<string>use_uao</string>
 			<key>DefaultValue</key>
@@ -274,7 +274,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>atr</string>
+            <string>Data Pack #5</string>
 			<key>Key</key>
 			<string>use_atr</string>
 			<key>DefaultValue</key>
@@ -284,7 +284,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>ts</string>
+            <string>Data Pack #6</string>
 			<key>Key</key>
 			<string>use_ts</string>
 			<key>DefaultValue</key>

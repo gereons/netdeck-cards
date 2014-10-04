@@ -239,14 +239,16 @@
     cell.accessoryView = setSwitch;
     cell.textLabel.textColor = [UIColor blackColor];
     NSString* setName = [CardSets nameForKey:specifier.key];
-    if (!setName)
+    if (setName)
     {
-        setName = l10n(@"-Unreleased-");
-        setSwitch.enabled = NO;
+        cell.textLabel.text = setName;
+    }
+    else
+    {
+        // setName = l10n(@"-Unreleased-");
+        cell.textLabel.text = specifier.title;
         cell.textLabel.textColor = [UIColor lightGrayColor];
     }
-    
-    cell.textLabel.text = setName;
     
     return cell;
 }
@@ -349,19 +351,19 @@
             }
             
             results[@"lockpick"] = @(ok);
-            [self finishDatasuckerTests:results];
+            [self finishApiTests:results];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             results[@"lockpick"] = @NO;
-            [self finishDatasuckerTests:results];
+            [self finishApiTests:results];
         }];
     }
     else
     {
-        [self finishDatasuckerTests:results];
+        [self finishApiTests:results];
     }
 }
 
--(void) finishDatasuckerTests:(NSDictionary*)results
+-(void) finishApiTests:(NSDictionary*)results
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];

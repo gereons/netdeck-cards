@@ -27,7 +27,7 @@ static NSMutableDictionary* setNames;
 static NSArray* setGroups;
 static NSArray* setsPerGroup;
 static NSMutableSet* newSetCodes;
-static NSMutableDictionary* nrdbToCgdbMap;
+static NSMutableDictionary* cgdbToNrdbMap;
 
 static struct cardSetData {
     int setNum;
@@ -62,11 +62,11 @@ static struct cardSetData {
     { 16, "up", "333", NRCycleLunar, YES },
     { 17, "tsb", "358", NRCycleLunar, YES },
     { 18, "fc", "359", NRCycleLunar, YES },
-    // { 19, "uao", "", NRCycleLunar, NO },
-    // { 20, "atr", "", NRCycleLunar, NO },
-    // { 21, "ts", "", NRCycleLunar, NO },
+    { 19, "uao", "", NRCycleLunar, NO },
+    { 20, "atr", "", NRCycleLunar, NO },
+    { 21, "ts", "", NRCycleLunar, NO },
     // o&c
-    // { 22, "oac", "", NRCycleCoreDeluxe, NO },
+    { 22, "oac", "", NRCycleCoreDeluxe, NO },
     
     { 0 }
 };
@@ -77,19 +77,19 @@ static struct cardSetData {
     releases = [NSMutableDictionary dictionary];
     setNames = [NSMutableDictionary dictionary];
     newSetCodes = [NSMutableSet set];
-    nrdbToCgdbMap = [NSMutableDictionary dictionary];
+    cgdbToNrdbMap = [NSMutableDictionary dictionary];
     
     struct cardSetData* c = cardSetData;
     while (c->setNum > 0)
     {
         CardSets* csd = [CardSets new];
         csd.setNum = c->setNum;
-        csd.setCode = [NSString stringWithUTF8String:c->cgdbCode];
+        csd.setCode = [NSString stringWithUTF8String:c->nrdbCode];
         NSString* nrdbCode = [NSString stringWithUTF8String:c->nrdbCode];
         csd.settingsKey = [NSString stringWithFormat:@"use_%@", nrdbCode];
         csd.cycle = c->cycle;
         csd.released = c->released;
-        nrdbToCgdbMap[nrdbCode] = csd.setCode;
+        cgdbToNrdbMap[@(c->cgdbCode)] = csd.setCode;
         
         [releases setObject:@(csd.setNum) forKey:csd.setCode];
         [cardSets addObject:csd];
@@ -181,9 +181,14 @@ static struct cardSetData {
     return knownSets;
 }
 
-+(NSString*) setCodeForNrdbCode:(NSString*)code
++(NSString*) setCodeForCgdbCode:(NSString*)setCode
 {
-    return nrdbToCgdbMap[code];
+    return cgdbToNrdbMap[setCode];
+}
+
++(void) registerNrdbCode:(NSString *)setCode andName:(NSString *)setName
+{
+    setNames[setCode] = setName;
 }
 
 +(TableData*) allSetsForTableview

@@ -26,7 +26,8 @@
 +(NSSet*) disabledSetCodes;
 // all sets we know about
 +(NSSet*) knownSetCodes;
-+(NSString*) setCodeForNrdbCode:(NSString*)code;
++(NSString*) setCodeForCgdbCode:(NSString*)cgdbCode;
++(void) registerNrdbCode:(NSString*)setCode andName:(NSString*)setName;
 
 +(NSDictionary*) settingsDefaults;
 

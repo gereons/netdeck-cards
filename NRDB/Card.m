@@ -200,11 +200,12 @@ static BOOL isRetina;
     NSAssert(c.type != NRCardTypeNone, @"no type for %@ (%@)", c.code, c.typeStr);
     
     JSON_STR(setName, @"set");
-    JSON_STR(setCode, @"setcode");
     if (isNrdb)
     {
         JSON_STR(setName, @"setname");
-        c->_setCode = [CardSets setCodeForNrdbCode:[json objectForKey:@"set_code"]];
+        NSString* setCode = [json objectForKey:@"set_code"];
+        [CardSets registerNrdbCode:setCode andName:c->_setName];
+        c->_setCode = setCode;
         if (c->_setCode == nil)
         {
             c->_setCode = UNKNOWN_SET_CODE;
@@ -215,6 +216,12 @@ static BOOL isRetina;
             c->_setName = @"Core";
         }
     }
+    else
+    {
+        NSString* setCode = [json objectForKey:@"setcode"];
+        c->_setCode = [CardSets setCodeForCgdbCode:setCode];
+    }
+    
     c->_isCore = [c.setName.lowercaseString isEqualToString:CORE_SET];
     
     JSON_STR(subtype, @"subtype");
