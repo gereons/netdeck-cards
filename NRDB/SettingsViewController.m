@@ -376,6 +376,10 @@
     {
         nrdbMsg = nrdbOk.intValue ? l10n(@"NetrunnerDB is OK") : l10n(@"NetrunnerDB is invalid");
     }
+    else
+    {
+        nrdbMsg = l10n(@"NetrunnerDB not tested");
+    }
     
     NSString* cardsMsg;
     if (cardsOk)
