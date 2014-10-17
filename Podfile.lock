@@ -21,8 +21,8 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CorePlot (1.5.1)
-  - CSStickyHeaderFlowLayout (0.2.2)
-  - Dropbox-Sync-API-SDK (3.1.0)
+  - CSStickyHeaderFlowLayout (0.2.3)
+  - Dropbox-Sync-API-SDK (3.1.1)
   - DTCoreText (1.6.13):
     - DTFoundation/Core (~> 1.7.1)
     - DTFoundation/DTAnimatedGIF (~> 1.7.1)
@@ -74,7 +74,7 @@ PODS:
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
   - RBBAnimation (0.3.0)
-  - SDCAlertView (HEAD based on 1.4.1):
+  - SDCAlertView (HEAD based on 2.0):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.1)
@@ -255,8 +255,8 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   CorePlot: b15cb1a9a687b9576545104248d6e22033e678bb
-  CSStickyHeaderFlowLayout: 79e586ba3d94941c79146832227ddbc6702c8705
-  Dropbox-Sync-API-SDK: 41f973bd5b29f234fdca91e66066a52c4f98b4ad
+  CSStickyHeaderFlowLayout: c5595da1cf91cce22aca70c44ab80b59247c723c
+  Dropbox-Sync-API-SDK: 503de85fc9397f2f8e30c70c71ed7707aa9d70c1
   DTCoreText: 84eb8ba2e70448fdd9d837540e371f9f587b65ba
   DTFoundation: 360bc65ab44f588611f47324b8cfb0f18e04b263
   GRMustache: efecd3b603f0a7a99cf6bdf3998782ee0c465726
@@ -264,10 +264,10 @@ SPEC CHECKSUMS:
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64
-  SDCAlertView: 73b84d53e9c2e994b47b07c441fa1aa696c8049b
+  SDCAlertView: a29095832e8133a7e9b9310724b9a6e31e11bd29
   SDCAutoLayout: 9998a215ce25c352bef27233240b997880015a7f
   SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
   TestFlightSDK: 0c24c533748d0d84bfe7a3cb6036fa79124d84ee
   YOLOKit: e83d381f83f33f2b66abf6fe0249fca57b05a541
 
-COCOAPODS: 0.34.1
+COCOAPODS: 0.34.2
