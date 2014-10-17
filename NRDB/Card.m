@@ -281,6 +281,7 @@ static BOOL isRetina;
     JSON_INT(maxPerDeck, @"maxperdeck");
     if (isNrdb)
     {
+        c->_maxPerDeck = 3;
         NSNumber* limited = [json objectForKey:@"limited"];
         if (limited && limited.boolValue)
         {
