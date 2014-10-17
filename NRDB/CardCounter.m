@@ -62,6 +62,8 @@
     {
         NSString* code = [decoder decodeObjectForKey:@"card"];
         _card = [Card cardByCode:code];
+        NSAssert(_card != nil, @"deck contains unknown card");
+#warning this needs more work
 #if DEBUG
         _code = code;
 #endif
