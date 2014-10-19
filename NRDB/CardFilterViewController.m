@@ -491,7 +491,6 @@ static NSInteger viewMode = VIEW_LIST;
             // doesn't work, card images are below the sticky header
             // [self.collectionView scrollToItemAtIndexPath:scrollToPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
             
-#warning try scrollRectToVisible instead??
             // calculate scroll offset manually
             CGFloat y;
             if (viewMode == VIEW_IMG_2)
