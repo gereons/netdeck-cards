@@ -18,7 +18,8 @@
 #define SPECIAL_SET         @"special"
 
 #define DRAFT_SET_CODE      @"000"
-#define UNKNOWN_SET_CODE    @"001"
+#define SPECIAL_SET_CODE    @"001"
+#define UNKNOWN_SET_CODE    @"002"
 
 +(void) setupSetNames;
 

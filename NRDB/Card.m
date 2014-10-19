@@ -27,8 +27,6 @@
 
 static NSDictionary* roleCodes;
 static NSArray* max1InDeck;
-static NSArray* specialIds;
-static NSArray* draftIds;
 static NSArray* multiIce;
 static NSDictionary* coreTextOptions;
 static NSDictionary* factionColors;
@@ -219,10 +217,15 @@ static BOOL isRetina;
         c->_setCode = [CardSets setCodeForCgdbCode:setCode];
     }
     
-    if ([[Card draftIds] containsObject:c->_code])
+    if ([DRAFT_IDS containsObject:c.code])
     {
         c->_setCode = DRAFT_SET_CODE;
         c->_setName = DRAFT_SET;
+    }
+    if ([SPECIAL_IDS containsObject:c.code])
+    {
+        c->_setCode = SPECIAL_SET_CODE;
+        c->_setName = SPECIAL_SET;
     }
     
     c->_isCore = [c.setName.lowercaseString isEqualToString:CORE_SET];

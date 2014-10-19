@@ -15,16 +15,6 @@
 			<true/>
 		</dict>
 		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Include Draft Identities</string>
-			<key>Key</key>
-			<string>use_draft_identities</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
-		<dict>
 			<key>Title</key>
 			<string>Core Set and Deluxe Expansions</string>
 			<key>Type</key>
@@ -92,6 +82,32 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
+        <dict>
+            <key>Title</key>
+            <string>Special Identities</string>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Include Draft Identities</string>
+            <key>Key</key>
+            <string>use_draft_identities</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Include Unpublished Identities</string>
+            <key>Key</key>
+            <string>use_unpublished_identities</string>
+            <key>DefaultValue</key>
+            <false/>
+        </dict>
 		<dict>
 			<key>Title</key>
 			<string>Cycle #1</string>

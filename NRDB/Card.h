@@ -24,10 +24,18 @@
 // draft ids
 #define THE_MASQUE              @"00006"
 #define THE_SHADOW              @"00005"
+#define DRAFT_IDS               @[ THE_MASQUE, THE_SHADOW ]
 
 // multitype ice
 #define RAINBOW                 @"05025"
 // #define ORION                @"0xxxx"    // not out yet
+
+// plugged-in and chronos protocol identities
+#define LARAMY_FISK             @"00002"
+#define THE_COLLECTIVE          @"00001"
+#define CHRONOS_PROTOCOL_HB     @"00004"
+#define CHRONOS_PROTOCOL_JIN    @"00003"
+#define SPECIAL_IDS             @[ LARAMY_FISK, THE_COLLECTIVE, CHRONOS_PROTOCOL_HB, CHRONOS_PROTOCOL_JIN ]
 
 // data for a single card
 
