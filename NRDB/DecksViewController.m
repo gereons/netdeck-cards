@@ -160,11 +160,18 @@ static NRFilterType _filterType = NRFilterAll;
 {
     [super viewDidAppear:animated];
     [self updateDecks];
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
     [settings setObject:@(self.filterType) forKey:DECK_FILTER_TYPE];
@@ -515,6 +522,26 @@ static NRFilterType _filterType = NRFilterAll;
         case 1: return self.corpDecks.count > 0 ? l10n(@"Corp") : nil;
     }
     return nil;
+}
+
+#pragma mark keyboard show/hide
+
+-(void) willShowKeyboard:(NSNotification*)sender
+{
+    CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    float kbHeight = kbRect.size.height;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
+-(void) willHideKeyboard:(NSNotification*)sender
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64, 0, 0, 0);
+    
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
 }
 
 @end

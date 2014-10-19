@@ -94,6 +94,10 @@ static NSString* filterText;
     [super viewDidAppear:animated];
     
     self.navigationController.navigationBar.topItem.title = l10n(@"Import Deck");
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
@@ -101,6 +105,7 @@ static NSString* filterText;
     [super viewDidDisappear:animated];
     DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     [filesystem removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark import all
@@ -469,6 +474,26 @@ static NSString* filterText;
         }
     }
     return nil;
+}
+
+#pragma mark keyboard show/hide
+
+-(void) willShowKeyboard:(NSNotification*)sender
+{
+    CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    float kbHeight = kbRect.size.height;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
+-(void) willHideKeyboard:(NSNotification*)sender
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64, 0, 0, 0);
+    
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
 }
 
 @end
