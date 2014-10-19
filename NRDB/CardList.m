@@ -386,7 +386,7 @@
     }
     if (self.limited)
     {
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"maxPerDeck == 1"];
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"type != %d AND maxPerDeck == 1", NRCardTypeIdentity];
         [predicates addObject:predicate];
     }
     if (self.altart)
