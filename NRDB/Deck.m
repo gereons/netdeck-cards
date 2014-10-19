@@ -427,7 +427,7 @@
     {
         _cards = [decoder decodeObjectForKey:@"cards"];
         // remove any cards we couldn't deserialize
-        for (int i = _cards.count-1; i>=0; --i)
+        for (long i = _cards.count-1; i>=0; --i)
         {
             CardCounter* cc = _cards[i];
             if (cc.card == nil)
