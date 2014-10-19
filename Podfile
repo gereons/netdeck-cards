@@ -11,7 +11,7 @@ pod 'GRMustache'
 pod 'CorePlot'
 pod 'libextobjc'
 pod 'CSStickyHeaderFlowLayout'
-pod 'SDCAlertView', :head
+pod 'SDCAlertView'
 pod 'YOLOKit'
 pod 'InAppSettingsKit', :head
 
