@@ -433,6 +433,16 @@ static NSArray* draftIds;
     if ((self = [super init]))
     {
         _cards = [decoder decodeObjectForKey:@"cards"];
+        // remove any cards we couldn't deserialize
+        for (int i = _cards.count-1; i>=0; --i)
+        {
+            CardCounter* cc = _cards[i];
+            if (cc.card == nil)
+            {
+                [_cards removeObjectAtIndex:i];
+            }
+        }
+        
         _netrunnerDbId = [decoder decodeObjectForKey:@"netrunnerDbId"];
         _name = [decoder decodeObjectForKey:@"name"];
         _role = [decoder decodeIntForKey:@"role"];
