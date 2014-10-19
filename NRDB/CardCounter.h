@@ -15,6 +15,7 @@
 
 @property (readonly, nonatomic) Card* card;
 @property (nonatomic) NSUInteger count;
+@property BOOL showAltArt;
 
 +(CardCounter*) initWithCard:(Card*)card;
 +(CardCounter*) initWithCard:(Card*)card andCount:(int)count;

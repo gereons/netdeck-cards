@@ -24,6 +24,7 @@
     CardCounter* cc = [CardCounter new];
     cc->_card = card;
     cc.count = count;
+    cc.showAltArt = NO;
         
     return cc;
 }
@@ -34,6 +35,7 @@
 {
     if ((self = [super init]))
     {
+        self.showAltArt = [decoder decodeBoolForKey:@"altArt"];
         NSString* code = [decoder decodeObjectForKey:@"card"];
         _card = [Card cardByCode:code];
         self.count = [decoder decodeIntegerForKey:@"count"];
@@ -45,6 +47,7 @@
 {
     [coder encodeInteger:self.count forKey:@"count"];
     [coder encodeObject:self.card.code forKey:@"card"];
+    [coder encodeBool:self.showAltArt forKey:@"altArt"];
 }
 
 @end

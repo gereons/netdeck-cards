@@ -17,6 +17,7 @@
 @property IBOutlet UIImageView* image3;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
 @property IBOutlet UILabel* copiesLabel;
+@property IBOutlet UIButton* toggleButton;
 
 @property IBOutlet UIView* detailView;
 @property IBOutlet UILabel* cardName;
@@ -31,6 +32,8 @@
 @property IBOutlet UIImageView* icon3;
 
 @property (nonatomic) CardCounter* cc;
+
+-(IBAction)toggleImage:(id)sender;
 
 -(void) setImageStack:(UIImage*)img;
 -(void) loadImage;
