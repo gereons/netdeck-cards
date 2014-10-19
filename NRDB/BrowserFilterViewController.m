@@ -244,9 +244,24 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
         maxCost = self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost];
     }
     self.costSlider.maximumValue = 1+maxCost;
+    self.costSlider.value = MIN(1+maxCost, round(self.costSlider.value));
     
     self.cardList = [CardList browserInitForRole:self.role];
     [self.cardList clearFilters];
+    [self costChanged:self.costSlider];
+    [self.cardList filterByInfluence:round(self.influenceSlider.value)-1];
+    [self.cardList filterByStrength:round(self.strengthSlider.value)-1];
+    [self.cardList filterByCost:round(self.costSlider.value)-1];
+    [self.cardList filterByAgendaPoints:round(self.apSlider.value)-1];
+    [self.cardList filterByMU:round(self.muSlider.value)-1];
+    [self.cardList filterByTrash:round(self.trashSlider.value)-1];
+    
+    [self.cardList filterByLimited:self.limitedSwitch.on];
+    [self.cardList filterByUniqueness:self.uniqueSwitch.on];
+    [self.cardList filterByAltArt:self.altartSwitch.on];
+    
+    [self filterWithText];
+    
     [self updateResults];
 }
 
@@ -487,7 +502,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     self.searchText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSLog(@"search: %d %@", self.scope, self.searchText);
+    // NSLog(@"search: %d %@", self.scope, self.searchText);
     [self filterWithText];
     return YES;
 }
