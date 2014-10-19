@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "TableData.h"
 
 @class Deck;

@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 #define IMAGE_WIDTH     300
 #define IMAGE_HEIGHT    418
 

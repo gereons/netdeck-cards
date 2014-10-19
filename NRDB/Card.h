@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 // some identities/cards we need to handle
 #define CUSTOM_BIOTICS          @"03002"    // no jinteki cards
 #define THE_PROFESSOR           @"03029"    // first copy of each program has influence 0

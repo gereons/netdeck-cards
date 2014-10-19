@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "CardCounter.h"
 #import "TableData.h"
 

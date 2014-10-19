@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "Card.h"
 
 // a Card in a Deck: the card itself, a counter and a "show alt art" toggle

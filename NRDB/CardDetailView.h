@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 // since we can't have nice things (ie. multiple inheritance), this class mirrors the IBOutlet properties
 // from CardImageViewPopover, CardImageCell and BrowserImageCell - better than having to duplicate the code
 

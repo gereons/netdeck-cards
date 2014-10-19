@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface DataDownload : NSObject
 
 +(void) downloadCardData;       // blocks UI, posts LOAD_CARDS notification when done
