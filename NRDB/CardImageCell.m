@@ -173,7 +173,11 @@
 
 -(void) loadImage
 {
-    Card* card = self.cc.showAltArt ? self.cc.card.altCard : self.cc.card;
+    Card* card = self.cc.card;
+    if (self.cc.showAltArt && self.cc.card.altCard)
+    {
+        card = self.cc.card.altCard;
+    }
     [self loadImage:card];
 }
 

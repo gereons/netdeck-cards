@@ -159,7 +159,11 @@ static NSMutableSet* altArt;
     }
     
     [self.toggleButton setImage:[ImageCache altArtIcon:self.showAltArt] forState:UIControlStateNormal];
-    Card* card = self.showAltArt ? self.card.altCard : self.card;
+    Card* card = self.card;
+    if (self.showAltArt && self.card.altCard)
+    {
+        card = self.card.altCard;
+    }
     
     [self loadImageFor:card];
 }
