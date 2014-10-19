@@ -2,14 +2,6 @@
 
 "Card Data" = "Datos de las cartas";
 
-"Language" = "Idioma";
-"English" = "Inglés";
-"German" = "Alemán";
-"Spanish" = "Español";
-"French" = "Francés";
-"Italian" = "Italiano";
-"Polish" = "Polaco";
-
 "Last Downloaded on" = "Última descarga el";
 "Next Download on" = "Próxima descarga el";
 "Update Card Data Now" = "Actualizar los datos de las cartas ahora";
@@ -17,4 +9,4 @@
 "Download missing Card Images Now" = "Descargar el resto de imágenes ahora";
 "Clear All Cached Data" = "Limpiar todos los datos almacenados";
 
-"LanguageFooterText" = "El soporte de NetrunnerDB.com en otros idiomas distintos del inglés no está completado al 100%.\nSi cambias esta configuración debes actualizar los datos de las cartas también.";
+"apiSettingsFooter" = "Either a Server, Endpoint URL or a Lockpick code is required.\nPrecedence: Server > Endpoint > Lockpick";

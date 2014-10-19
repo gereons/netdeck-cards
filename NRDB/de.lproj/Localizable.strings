@@ -177,7 +177,7 @@
 
 // startup alert
 "No Card Data" = "Keine Karten-Daten";
-"To use this app, you must first download card data from a Datasucker API Server.\nGo to Settings > Card Data to do this." = "Um diese App zu benutzen, musst du zuerst Daten von einem Datasucker-API-Server laden. Benutze dafür Einstellungen > Karten-Daten.";
+"To use this app, you must first download card data.\nGo to Settings > Card Data to do this." = "Um diese App zu benutzen, musst du zuerst Karten-Daten laden. Benutze dafür Einstellungen > Karten-Daten.";
 "Not now" = "Jetzt nicht";
 "Download" = "Laden";
 

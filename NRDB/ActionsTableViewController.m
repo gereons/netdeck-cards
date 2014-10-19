@@ -84,9 +84,9 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [footer addSubview:footerLabel];
     
     // check if card data is available
-    if (![CardManager cardsAvailable])
+    if (YES) // (![CardManager cardsAvailable])
     {
-        NSString* msg = l10n(@"To use this app, you must first download card data from a Datasucker API Server.\n"
+        NSString* msg = l10n(@"To use this app, you must first download card data.\n"
                               "Go to Settings > Card Data to do this.");
         
         [SDCAlertView alertWithTitle:l10n(@"No Card Data")

@@ -1,1 +1,3 @@
+/* CardData.strings - en */
+
 "apiSettingsFooter" = "Either a Server, Endpoint URL or a Lockpick code is required.\nPrecedence: Server > Endpoint > Lockpick";
