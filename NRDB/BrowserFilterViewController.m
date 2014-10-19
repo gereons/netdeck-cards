@@ -487,7 +487,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     self.searchText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    // NSLog(@"search: %d %@", self.scope, self.searchText);
+    NSLog(@"search: %d %@", self.scope, self.searchText);
     [self filterWithText];
     return YES;
 }
@@ -497,6 +497,11 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     self.searchText = @"";
     [self filterWithText];
     return YES;
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    return NO;
 }
 
 #pragma mark - sliders
