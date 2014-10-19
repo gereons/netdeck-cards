@@ -18,9 +18,7 @@
 #import "Faction.h"
 #import "SettingsKeys.h"
 #import "DeckState.h"
-#if _NRDB_
 #import "NRDB.h"
-#endif
 
 @interface DecksViewController ()
 
@@ -294,9 +292,8 @@ static NRFilterType _filterType = NRFilterAll;
     
     NSMutableArray* allDecks = [NSMutableArray arrayWithArray:runnerDecks];
     [allDecks addObjectsFromArray:corpDecks];
-#if _NRDB_
     [[NRDB sharedInstance] updateDeckMap:allDecks];
-#endif
+
     
 #if DEBUG
     [self checkDecks:self.runnerDecks];
@@ -485,11 +482,7 @@ static NRFilterType _filterType = NRFilterAll;
     NSString* date = [self.dateFormatter stringFromDate:deck.lastModified];
     cell.dateLabel.text = [NSString stringWithFormat:@"%@ · %@", state, date];
     
-#if _NRDB_
     cell.nrdbIcon.hidden = deck.netrunnerDbId == nil;
-#else
-    cell.nrdbIcon.hidden = YES;
-#endif
     cell.infoButton.hidden = YES;
     
     return cell;

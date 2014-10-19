@@ -21,9 +21,7 @@
 #import "ImageCache.h"
 #import "SettingsKeys.h"
 #import "Notifications.h"
-#if _NRDB_
 #import "NRDBAuthPopupViewController.h"
-#endif
 
 @interface SettingsViewController ()
 
@@ -68,9 +66,6 @@
     {
         [hiddenKeys addObject:AUTO_SAVE_DB];
     }
-#if !_NRDB_
-    [hiddenKeys addObjectsFromArray:@[ @"nrdb_hide_1", @"nrdb_hide_2" ]];
-#endif
     [self.iask setHiddenKeys:hiddenKeys];
 }
 
@@ -113,7 +108,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_CHANGED object:self];
         [self refresh];
     }
-#if _NRDB_
     else if ([notification.object isEqualToString:USE_NRDB])
     {
         BOOL useNrdb = [[notification.userInfo objectForKey:USE_NRDB] boolValue];
@@ -142,7 +136,6 @@
             [settings removeObjectForKey:NRDB_TOKEN_TTL];
         }
     }
-#endif
 }
 
 - (void)settingsViewController:(id)sender buttonTappedForSpecifier:(IASKSpecifier *)specifier

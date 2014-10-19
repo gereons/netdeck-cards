@@ -11,7 +11,8 @@
 #endif
 
 #ifdef __OBJC__
-    #import <UIKit/UIKit.h>
+    @import UIKit;
+    // #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
 
@@ -29,4 +30,3 @@
 
 #define APP_ONLINE  [AFNetworkReachabilityManager sharedManager].reachable
 
-#define _NRDB_      0

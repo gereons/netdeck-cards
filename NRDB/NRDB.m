@@ -24,9 +24,9 @@
 @implementation NRDB
 
 static NRDB* instance;
+
 +(NRDB*) sharedInstance
 {
-    NSAssert(_NRDB_, @"no nrdb support");
     if (!instance)
     {
         instance = [[NRDB alloc] init];

@@ -396,11 +396,7 @@ static NSString* filterText;
     cell.summaryLabel.textColor = valid ? [UIColor blackColor] : [UIColor redColor];
     
     cell.dateLabel.text = [self.dateFormatter stringFromDate:deck.lastModified];
-#if _NRDB_
     cell.nrdbIcon.hidden = self.source == NRImportSourceDropbox;
-#else
-    cell.nrdbIcon.hidden = YES;
-#endif
     
     return cell;
 }
@@ -412,12 +408,7 @@ static NSString* filterText;
     NSArray* decks = self.filteredDecks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     
-#if _NRDB_
-    NSString* filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
-#else
-    NSString* filename = nil;
-#endif
-    
+    NSString* filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];    
     if (filename)
     {
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil

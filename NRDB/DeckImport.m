@@ -98,10 +98,7 @@ static DeckImport* instance;
     
     self.deck = nil;
     
-#if _NRDB_
-    self.deckSource = [self checkForNetrunnerDbDeckURL:lines];
-#endif
-    
+    self.deckSource = [self checkForNetrunnerDbDeckURL:lines];    
     if (!self.deckSource)
     {
         self.deckSource = [self checkForMeteorDeckURL:lines];
