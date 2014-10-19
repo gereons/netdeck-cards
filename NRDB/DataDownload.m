@@ -217,6 +217,7 @@ static DataDownload* instance;
 -(void) downloadImages:(DownloadScope)scope
 {
     self.cards = [[CardManager allCards] mutableCopy];
+    [self.cards addObjectsFromArray:[CardManager altCards]];
     
     if (self.cards.count == 0)
     {

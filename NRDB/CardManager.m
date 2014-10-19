@@ -27,6 +27,8 @@ static NSString* identityKey;
 static NSMutableArray* sortedIdentities;
 
 static NSMutableDictionary* allCards;   // code -> card
+static NSMutableDictionary* altCards;   // code -> card for alt-art cards
+static NSMutableDictionary* altCardMap; // regular code -> alt art code
 
 static int maxMU;
 static int maxStrength;
@@ -42,6 +44,8 @@ static BOOL initializing;
 +(void) initialize
 {
     allCards = [NSMutableDictionary dictionary];
+    altCards = [NSMutableDictionary dictionary];
+    altCardMap = [NSMutableDictionary dictionary];
     
     allRunnerCards = [NSMutableArray array];
     allCorpCards = [NSMutableArray array];
@@ -61,6 +65,12 @@ static BOOL initializing;
     return [allCards objectForKey:code];
 }
 
++(Card*) altCardFor:(NSString *)code
+{
+    NSString* altCode = [altCardMap objectForKey:code];
+    return [altCards objectForKey:altCode];
+}
+
 +(NSArray*) allCards
 {
     NSMutableArray* cards = allCards.allValues.mutableCopy;
@@ -78,6 +88,11 @@ static BOOL initializing;
         }
         return NSOrderedSame;
     }];
+}
+
++(NSArray*) altCards
+{
+    return [altCards allValues];
 }
 
 +(NSArray*) allForRole:(NRRole)role
@@ -225,15 +240,32 @@ static BOOL initializing;
             }
         }
         
+        // add built-in draft IDs if not already present
         for (Card* c in [Card draftIds])
         {
-            [CardManager addCard:c];
+            Card* c2 = [Card cardByCode:c.code];
+            if (c2 == nil)
+            {
+                [CardManager addCard:c];
+            }
         }
         
         NSArray* cards = [allCards allValues];
         [Faction initializeFactionNames:cards];
         [CardType initializeCardTypes:cards];
         [CardSets setupSetNames];
+        
+        // map cards to alt-art cards
+        for (Card* card in cards)
+        {
+            for (Card* altCard in [altCards allValues])
+            {
+                if ([altCard.name isEqualToString:card.name])
+                {
+                    [altCardMap setObject:altCard.code forKey:card.code];
+                }
+            }
+        }
         
         // sort identities by faction and name
         for (NSMutableArray* arr in @[ allRunnerIdentities, allCorpIdentities ])
@@ -261,6 +293,12 @@ static BOOL initializing;
 +(void) addCard:(Card*)card
 {
     NSAssert(initializing, @"oops");
+    
+    if ([card.setCode isEqualToString:ALT_SET])
+    {
+        [altCards setObject:card forKey:card.code];
+        return;
+    }
     
     // add to dictionaries/arrays
     [allCards setObject:card forKey:card.code];

@@ -83,6 +83,11 @@ static BOOL isRetina;
     return [CardManager cardByCode:code];
 }
 
+-(Card*) altCard
+{
+    return [CardManager altCardFor:self.code];
+}
+
 -(NSAttributedString*) attributedText
 {
     if (!self->_attributedText)
@@ -169,22 +174,14 @@ static BOOL isRetina;
     Card* c = [Card new];
     
     BOOL isNrdb = [json objectForKey:@"type_code"] != nil;
-    if (isNrdb)
-    {
-        // ignore "alt" and "special" sets
-        NSString* setCode = [json objectForKey:@"set_code"];
-        if ([@[ @"alt", @"special" ] containsObject:setCode])
-        {
-            return nil;
-        }
-    }
     
     JSON_STR(code, @"code");
     JSON_STR(name, @"title");
-    
     c->_name = [c->_name stringByReplacingHTMLEntities];
+    
     JSON_STR(text, @"text");
     c->_text = [c->_text stringByReplacingHTMLEntities];
+    
     JSON_STR(flavor, @"flavor");
     JSON_STR(factionStr, @"faction");
     c->_faction = [Faction faction:c.factionStr];
@@ -220,6 +217,12 @@ static BOOL isRetina;
     {
         NSString* setCode = [json objectForKey:@"setcode"];
         c->_setCode = [CardSets setCodeForCgdbCode:setCode];
+    }
+    
+    if ([[Card draftIds] containsObject:c->_code])
+    {
+        c->_setCode = DRAFT_SET_CODE;
+        c->_setName = DRAFT_SET;
     }
     
     c->_isCore = [c.setName.lowercaseString isEqualToString:CORE_SET];
@@ -305,33 +308,33 @@ static BOOL isRetina;
 
 +(NSArray*) draftIds
 {
-    Card* runner = [Card new];
-    runner->_role = NRRoleRunner;
-    runner->_code = THE_MASQUE;
-    runner->_name = @"Masque";
-    runner->_type = NRCardTypeIdentity;
-    runner->_typeStr = @"Identity";
-    runner->_faction = NRFactionNeutral;
-    runner->_factionStr = @"Neutral";
-    runner->_minimumDecksize = 30;
-    runner->_influenceLimit = -1;
-    runner->_setCode = @"000";
-    runner->_setName = DRAFT_SET;
+    Card* masque = [Card new];
+    masque->_role = NRRoleRunner;
+    masque->_code = THE_MASQUE;
+    masque->_name = @"Masque";
+    masque->_type = NRCardTypeIdentity;
+    masque->_typeStr = @"Identity";
+    masque->_faction = NRFactionNeutral;
+    masque->_factionStr = @"Neutral";
+    masque->_minimumDecksize = 30;
+    masque->_influenceLimit = -1;
+    masque->_setCode = DRAFT_SET_CODE;
+    masque->_setName = DRAFT_SET;
     
-    Card* corp = [Card new];
-    corp->_role = NRRoleCorp;
-    corp->_code = THE_SHADOW;
-    corp->_name = @"Shadow";
-    corp->_type = NRCardTypeIdentity;
-    corp->_typeStr = @"Identity";
-    corp->_faction = NRFactionNeutral;
-    corp->_factionStr = @"Neutral";
-    corp->_minimumDecksize = 30;
-    corp->_influenceLimit = -1;
-    corp->_setCode = @"000";
-    corp->_setName = DRAFT_SET;
+    Card* shadow = [Card new];
+    shadow->_role = NRRoleCorp;
+    shadow->_code = THE_SHADOW;
+    shadow->_name = @"Shadow";
+    shadow->_type = NRCardTypeIdentity;
+    shadow->_typeStr = @"Identity";
+    shadow->_faction = NRFactionNeutral;
+    shadow->_factionStr = @"Neutral";
+    shadow->_minimumDecksize = 30;
+    shadow->_influenceLimit = -1;
+    shadow->_setCode = DRAFT_SET_CODE;
+    shadow->_setName = DRAFT_SET;
     
-    return @[runner, corp];
+    return @[masque, shadow];
 }
 
 #pragma mark nsobject

@@ -11,17 +11,31 @@
 #import "ImageCache.h"
 #import "CardDetailView.h"
 
-@interface BrowserImageCell()
+static NSMutableSet* altArt;
 
+@interface BrowserImageCell()
+@property BOOL showAltArt;
 @end
 
 @implementation BrowserImageCell
+
++(void) initialize
+{
+    altArt = [NSMutableSet set];
+}
 
 -(void) awakeFromNib
 {
     // rounded corners for images
     self.image.layer.masksToBounds = YES;
     self.image.layer.cornerRadius = 10;
+    self.showAltArt = NO;
+    
+    // rounded corners for toggle button
+    self.toggleButton.layer.masksToBounds = YES;
+    self.toggleButton.layer.cornerRadius = 3;
+    
+    self.toggleButton.hidden = YES;
     
     // remove all constraints IB has generated
     self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -29,13 +43,16 @@
     
     NSDictionary* views = @{
         @"image": self.image,
+        @"toggle": self.toggleButton,
         @"details": self.detailView
     };
     NSArray* constraints = @[
                              @"H:|[image]|",
+                             @"H:[toggle(28)]|",
                              @"V:|[image]|",
                              @"H:|[details]|",
                              @"V:|[details]|",
+                             @"V:[toggle(34)]",
                              ];
 
     for (NSString* c in constraints)
@@ -51,6 +68,13 @@
                                                     multiplier:1 constant:0]];
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1 constant:0]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.toggleButton
                                                      attribute:NSLayoutAttributeCenterY
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self
@@ -109,7 +133,34 @@
 -(void) setCard:(Card *)card
 {
     self->_card = card;
+    self.toggleButton.hidden = card.altCard == nil;
+    self.showAltArt = NO;
+    
+    if (card.altCard && [altArt containsObject:card.code])
+    {
+        card = card.altCard;
+        self.showAltArt = YES;
+    }
+    
+    [self.toggleButton setImage:[ImageCache altArtIcon:self.showAltArt] forState:UIControlStateNormal];
+    [self loadImageFor:card];
+}
 
+-(void) toggleImage:(id)sender
+{
+    self.showAltArt = !self.showAltArt;
+    if (self.showAltArt)
+    {
+        [altArt addObject:self.card.code];
+    }
+    else
+    {
+        [altArt removeObject:self.card.code];
+    }
+    
+    [self.toggleButton setImage:[ImageCache altArtIcon:self.showAltArt] forState:UIControlStateNormal];
+    Card* card = self.showAltArt ? self.card.altCard : self.card;
+    
     [self loadImageFor:card];
 }
 

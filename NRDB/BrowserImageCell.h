@@ -13,6 +13,7 @@
 @interface BrowserImageCell : UICollectionViewCell
 
 @property IBOutlet UIImageView* image;
+@property IBOutlet UIButton* toggleButton;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
 
 @property IBOutlet UIView* detailView;
@@ -28,5 +29,7 @@
 @property IBOutlet UIImageView* icon3;
 
 @property (nonatomic) Card* card;
+
+-(IBAction)toggleImage:(id)sender;
 
 @end

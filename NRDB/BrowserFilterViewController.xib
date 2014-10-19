@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowserFilterViewController">
             <connections>
+                <outlet property="altartLabel" destination="TV8-ch-1VE" id="nAm-L4-6yr"/>
+                <outlet property="altartSwitch" destination="Yer-YD-lGS" id="kWs-g7-zsh"/>
                 <outlet property="apLabel" destination="SsX-UV-w2J" id="aUi-Ig-aqK"/>
                 <outlet property="apSlider" destination="Ax9-qW-bIv" id="jry-q1-E4P"/>
                 <outlet property="costLabel" destination="1Tf-b5-DNl" id="lle-5b-2Zm"/>
@@ -231,6 +233,18 @@
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Alt Art" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TV8-ch-1VE">
+                    <rect key="frame" x="20" y="579" width="95" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Yer-YD-lGS">
+                    <rect key="frame" x="250" y="574" width="51" height="31"/>
+                    <connections>
+                        <action selector="altartChanged:" destination="-1" eventType="valueChanged" id="Dn2-Um-cRc"/>
+                    </connections>
+                </switch>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>

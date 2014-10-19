@@ -34,6 +34,8 @@ typedef void (^UpdateCompletionBlock)(BOOL ok);
 +(UIImage*) difficultyIcon;
 +(UIImage*) influenceIcon;
 
++(UIImage*) altArtIcon:(BOOL)on;
+
 +(UIImage*) placeholderFor:(NRRole)role;
 +(UIImage*) hexTile;
 

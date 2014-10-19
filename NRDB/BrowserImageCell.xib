@@ -19,6 +19,16 @@
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Gyn-UA-5Fy">
                         <rect key="frame" x="102" y="147" width="20" height="20"/>
                     </activityIndicatorView>
+                    <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krw-sc-bBd">
+                        <rect key="frame" x="197" y="140" width="28" height="34"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <state key="normal" image="altarttoggle_off.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="toggleImage:" destination="PrL-Ck-oiQ" eventType="touchUpInside" id="Um5-Ki-3dU"/>
+                        </connections>
+                    </button>
                     <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcm-Os-ZlN" userLabel="Detail View">
                         <rect key="frame" x="0.0" y="0.0" width="225" height="313"/>
                         <subviews>
@@ -90,9 +100,13 @@
                 <outlet property="label1" destination="1n9-sN-Srt" id="le5-xG-Kjx"/>
                 <outlet property="label2" destination="zZS-Y4-0Wb" id="S56-uL-tVn"/>
                 <outlet property="label3" destination="6O5-gE-kZk" id="HHp-BP-taw"/>
+                <outlet property="toggleButton" destination="krw-sc-bBd" id="4cg-PO-7pq"/>
             </connections>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="altarttoggle_off.png" width="22" height="28"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
