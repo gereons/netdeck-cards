@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [footer addSubview:footerLabel];
     
     // check if card data is available
-    if (YES) // (![CardManager cardsAvailable])
+    if (![CardManager cardsAvailable])
     {
         NSString* msg = l10n(@"To use this app, you must first download card data.\n"
                               "Go to Settings > Card Data to do this.");
