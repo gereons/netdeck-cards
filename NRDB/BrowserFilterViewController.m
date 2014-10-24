@@ -236,6 +236,9 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
         v.enabled = self.role != NRRoleRunner;
     }
     
+    // remember which sets were selected
+    id selectedSets = [self.selectedValues objectForKey:@(SET_BUTTON)];
+    
     [self resetAllButtons];
     
     int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
@@ -248,6 +251,21 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     
     self.cardList = [CardList browserInitForRole:self.role];
     [self.cardList clearFilters];
+    
+    [self filterCallback:self.setButton value:selectedSets];
+    NSString* selected;
+    if ([selectedSets isKindOfClass:[NSSet class]])
+    {
+        NSSet* set = (NSSet*) selectedSets;
+        selected = set.count == 0 ? l10n(kANY) : (set.count == 1 ? [[set allObjects] objectAtIndex:0] : @"⋯");
+    }
+    else
+    {
+        selected = l10n(kANY);
+    }
+    NSString* title = [NSString stringWithFormat:@"%@: %@", l10n(@"Set"), selected];
+    [self.setButton setTitle:title forState:UIControlStateNormal];
+    
     [self costChanged:self.costSlider];
     [self.cardList filterByInfluence:round(self.influenceSlider.value)-1];
     [self.cardList filterByStrength:round(self.strengthSlider.value)-1];
