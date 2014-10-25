@@ -38,7 +38,7 @@
 @property BOOL altart;
 @property NRFaction faction4inf;    // faction for influence filter
 
-@property NRCardListSortType sortType;
+@property NRCardListSort sortType;
 
 @end
 
@@ -261,7 +261,7 @@
     self.altart = altart;
 }
 
--(void) sortBy:(NRCardListSortType)sortType
+-(void) sortBy:(NRCardListSort)sortType
 {
     self.sortType = sortType;
 }

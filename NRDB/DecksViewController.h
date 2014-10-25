@@ -23,7 +23,7 @@
 @property NRActionSheet* popup;
 @property NSArray* decks;
 
-@property NRFilterType filterType;
+@property NRFilter filterType;
 
 -(id) initWithCardFilter:(Card*)card;
 

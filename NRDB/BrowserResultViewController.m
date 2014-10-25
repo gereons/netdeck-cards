@@ -25,7 +25,7 @@
 
 @interface BrowserResultViewController ()
 
-@property NRCardListSortType sortType;
+@property NRCardListSort sortType;
 @property CardList* cardList;
 @property NSArray* sections;
 @property NSArray* values;

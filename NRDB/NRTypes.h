@@ -66,11 +66,12 @@ typedef NS_ENUM(NSInteger, NRDeckState)
     NRDeckStateRetired
 };
 
-typedef NS_ENUM(NSInteger, FieldType)
+typedef NS_ENUM(NSInteger, NRDeckSort)
 {
-    StringField,
-    IntField,
-    BooleanField
+    NRDeckSortType,
+    NRDeckSortSetType,
+    NRDeckSortFactionType,
+    NRDeckSortSetNum,
 };
 
 typedef NS_ENUM(NSInteger, NRSearchScope)
@@ -87,19 +88,19 @@ typedef NS_ENUM(NSInteger, NRDeckSearchScope) {
     NRDeckSearchCard
 };
 
-typedef NS_ENUM(NSInteger, NRDeckSortType) {
-    NRDeckSortDate,
-    NRDeckSortFaction,
-    NRDeckSortA_Z
+typedef NS_ENUM(NSInteger, NRDeckListSort) {
+    NRDeckListSortDate,
+    NRDeckListSortFaction,
+    NRDeckListSortA_Z
 };
 
-typedef NS_ENUM(NSInteger, NRCardViewType) {
+typedef NS_ENUM(NSInteger, NRCardView) {
     NRCardViewImage,
     NRCardViewLargeTable,
     NRCardViewSmallTable
 };
 
-typedef NS_ENUM(NSInteger, NRCardListSortType) {
+typedef NS_ENUM(NSInteger, NRCardListSort) {
     NRCardListSortA_Z,
     NRCardListSortFactionA_Z
 };
@@ -120,7 +121,7 @@ typedef NS_ENUM(NSInteger, NRImportSource)
     NRImportSourceNetrunnerDb
 };
 
-typedef NS_ENUM(NSInteger, NRFilterType) {
+typedef NS_ENUM(NSInteger, NRFilter) {
     NRFilterAll,
     NRFilterRunner,
     NRFilterCorp
