@@ -67,6 +67,7 @@
 @property (readonly) int number;            // card no. in set
 @property (readonly) NSString* setName;
 @property (readonly) NSString* setCode;
+@property (readonly) int setNumber;         // our own internal set number, for sorting by set release
 @property (readonly) BOOL unique;
 @property (readonly) int maxPerDeck;        // limited cards
 @property (readonly) NSString* imageSrc;

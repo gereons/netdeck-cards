@@ -216,6 +216,9 @@ static BOOL isRetina;
         NSString* setCode = [json objectForKey:@"setcode"];
         c->_setCode = [CardSets setCodeForCgdbCode:setCode];
     }
+    c->_setNumber = [CardSets setNumForCode:c->_setCode];
+    
+    NSLog(@"%@ %@ %d", c.name, c.setCode, c.setNumber);
     
     if ([DRAFT_IDS containsObject:c.code])
     {

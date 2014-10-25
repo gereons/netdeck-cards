@@ -37,5 +37,6 @@
 +(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;
 +(NSArray*) setsUsedInDeck:(Deck*) deck;
 +(NSString*) nameForKey:(NSString*) key;
++(int) setNumForCode:(NSString*)code;
 
 @end

@@ -145,6 +145,12 @@ static struct cardSetData {
     return dict;
 }
 
++(int) setNumForCode:(NSString*)code
+{
+    NSNumber* n = [releases objectForKey:code];
+    return [n intValue];
+}
+
 +(NSSet*) disabledSetCodes
 {
     NSMutableSet* sets = [NSMutableSet set];
