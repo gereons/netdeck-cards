@@ -22,27 +22,12 @@
 
 @implementation NRNavigationController
 
-static BOOL isIOS8;
-
-+(void) initialize
-{
-#warning test this
-    isIOS8 = YES;
-}
-
 -(void) viewDidLoad
 {
     [super viewDidLoad];
 
-    if (isIOS8)
-    {
-         self.interactivePopGestureRecognizer.enabled = NO;
-    }
-    else
-    {
-        self.interactivePopGestureRecognizer.delegate = self;
-        [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
-    }
+    self.interactivePopGestureRecognizer.delegate = self;
+    [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
 }
 
 -(NSArray*) popToRootViewControllerAnimated:(BOOL)animated

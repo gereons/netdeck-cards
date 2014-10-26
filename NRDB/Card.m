@@ -31,7 +31,6 @@ static NSArray* multiIce;
 static NSDictionary* coreTextOptions;
 static NSDictionary* factionColors;
 static NSDictionary* cropValues;
-static BOOL isRetina;
 
 +(void) initialize
 {
@@ -50,8 +49,6 @@ static BOOL isRetina;
                      DTDefaultFontSize: @(13)
     };
     
-    isRetina = [UIScreen mainScreen].scale == 2.0;
-   
     factionColors = @{
                       @(NRFactionJinteki):      @(0x940c00),
                       @(NRFactionNBN):          @(0xd7a32d),
