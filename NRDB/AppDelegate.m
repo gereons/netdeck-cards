@@ -100,8 +100,10 @@ const NSString* const kANY = @"Any";
         DECK_FILTER_STATE: @(NRDeckStateNone),
         DECK_VIEW_STYLE: @(NRCardViewLargeTable),
         DECK_VIEW_SCALE: @(1.0),
+        DECK_VIEW_SORT: @(NRDeckSortType),
         DECK_FILTER_SORT: @(NRDeckListSortA_Z),
         DECK_FILTER_TYPE: @(NRFilterAll),
+        
         
         BROWSER_VIEW_STYLE: @(NRCardViewLargeTable),
         BROWSER_VIEW_SCALE: @(1.0),

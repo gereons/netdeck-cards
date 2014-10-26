@@ -34,9 +34,6 @@
 #define AUTO_SAVE           @"autoSave"
 #define AUTO_SAVE_DB        @"autoSaveDropbox"
 
-#define DECK_VIEW_STYLE     @"deckViewStyle"
-#define BROWSER_VIEW_STYLE  @"browserViewStyle"
-
 #define CLIP_CHANGE_COUNT   @"clipChangeCount"
 
 #define SHOW_ALL_FILTERS    @"showAllFilters"
@@ -46,8 +43,12 @@
 #define DECK_FILTER_STATE   @"deckFilterState"
 #define DECK_FILTER_SORT    @"deckFilterSort"
 
+#define DECK_VIEW_STYLE     @"deckViewStyle"
+#define DECK_VIEW_SORT      @"deckSort"
 #define DECK_VIEW_SCALE     @"deckViewScale"
+
 #define BROWSER_VIEW_SCALE  @"browserViewScale"
+#define BROWSER_VIEW_STYLE  @"browserViewStyle"
 #define BROWSER_SORT_TYPE   @"browserSortType"
 
 #define NRDB_HOST           @"nrdb_host"

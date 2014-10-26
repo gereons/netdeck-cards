@@ -230,6 +230,7 @@
     [super viewDidDisappear:animated];
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
+    [settings setObject:@(self.sortType) forKey:DECK_VIEW_SORT];
     
     [settings synchronize];
 }
