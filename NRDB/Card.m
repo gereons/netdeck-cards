@@ -179,6 +179,7 @@ static NSDictionary* cropValues;
     
     JSON_STR(flavor, @"flavor");
     JSON_STR(factionStr, @"faction");
+    c->_factionStr = [c->_factionStr stringByReplacingOccurrencesOfString:@" Consortium" withString:@""];
     c->_faction = [Faction faction:c.factionStr];
     NSAssert(c.faction != NRFactionNone, @"no faction for %@", c.code);
     
