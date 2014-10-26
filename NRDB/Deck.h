@@ -44,6 +44,6 @@
 
 -(Deck*) duplicate;
 
--(TableData*) dataForTableView;
+-(TableData*) dataForTableView:(NRDeckSort)sortType;
 
 @end

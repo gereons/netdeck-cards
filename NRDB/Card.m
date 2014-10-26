@@ -217,9 +217,7 @@ static BOOL isRetina;
         c->_setCode = [CardSets setCodeForCgdbCode:setCode];
     }
     c->_setNumber = [CardSets setNumForCode:c->_setCode];
-    
-    NSLog(@"%@ %@ %d", c.name, c.setCode, c.setNumber);
-    
+        
     if ([DRAFT_IDS containsObject:c.code])
     {
         c->_setCode = DRAFT_SET_CODE;

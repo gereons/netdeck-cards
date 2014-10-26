@@ -15,6 +15,7 @@
 {
     NSMutableArray* _cards; // array of CardCounter
 }
+@property NRDeckSort sortType;
 
 @end
 
@@ -27,6 +28,7 @@
         self->_cards = [NSMutableArray array];
         self.state = NRDeckStateTesting;
         self.role = NRRoleNone;
+        self.sortType = NRDeckSortType;
     }
     return self;
 }
@@ -320,36 +322,46 @@
 -(void) sort
 {
     [_cards sortUsingComparator:^NSComparisonResult(CardCounter* c1, CardCounter* c2) {
-        if (c1.card.type > c2.card.type)
+        if (self.sortType == NRDeckSortSetType || self.sortType == NRDeckSortSetNum)
         {
-            return NSOrderedDescending;
+            if (c1.card.setNumber > c2.card.setNumber) return NSOrderedDescending;
+            if (c1.card.setNumber < c2.card.setNumber) return NSOrderedAscending;
         }
-        else if (c1.card.type < c2.card.type)
+        if (self.sortType == NRDeckSortFactionType)
         {
-            return NSOrderedAscending;
+            if (c1.card.faction > c2.card.faction) return NSOrderedDescending;
+            if (c1.card.faction < c2.card.faction) return NSOrderedAscending;
         }
-        else
+        
+        if (self.sortType == NRDeckSortSetNum)
         {
-            NSComparisonResult cmp = NSOrderedSame;
-            if (c1.card.type == NRCardTypeIce && c2.card.type == NRCardTypeIce)
-            {
-                cmp = [c1.card.iceType compare:c2.card.iceType];
-            }
-            if (c1.card.type == NRCardTypeProgram && c2.card.type == NRCardTypeProgram)
-            {
-                cmp = [c1.card.programType compare:c2.card.programType];
-            }
-            if (cmp == NSOrderedSame)
-            {
-                cmp = [c1.card.name localizedCaseInsensitiveCompare:c2.card.name];
-            }
-            return cmp;
+            return [@(c1.card.number) compare:@(c2.card.number)];
         }
+        
+        if (c1.card.type > c2.card.type) return NSOrderedDescending;
+        if (c1.card.type < c2.card.type) return NSOrderedAscending;
+        
+        NSComparisonResult cmp = NSOrderedSame;
+        if (c1.card.type == NRCardTypeIce && c2.card.type == NRCardTypeIce)
+        {
+            cmp = [c1.card.iceType compare:c2.card.iceType];
+        }
+        if (c1.card.type == NRCardTypeProgram && c2.card.type == NRCardTypeProgram)
+        {
+            cmp = [c1.card.programType compare:c2.card.programType];
+        }
+        if (cmp == NSOrderedSame)
+        {
+            cmp = [c1.card.name localizedCaseInsensitiveCompare:c2.card.name];
+        }
+        return cmp;
     }];
 }
 
--(TableData*) dataForTableView
+-(TableData*) dataForTableView:(NRDeckSort)sortType
 {
+    self.sortType = sortType;
+    
     NSMutableArray* sections = [NSMutableArray array];
     NSMutableArray* cards = [NSMutableArray array];
     
@@ -382,23 +394,38 @@
         [self removeCard:card];
     }
     
-    NSString* prevType = @"";
+    NSString* prevSection = @"";
     NSMutableArray* arr;
     
     for (CardCounter* cc in self.cards)
     {
-        NSString* type = cc.card.typeStr;
-        if (cc.card.type == NRCardTypeIce)
+        NSString* section;
+        
+        switch (self.sortType)
         {
-            type = cc.card.iceType;
+            case NRDeckSortType:
+                section = cc.card.typeStr;
+                if (cc.card.type == NRCardTypeIce)
+                {
+                    section = cc.card.iceType;
+                }
+                if (cc.card.type == NRCardTypeProgram)
+                {
+                    section = cc.card.programType;
+                }
+                break;
+            case NRDeckSortSetType:
+            case NRDeckSortSetNum:
+                section = cc.card.setName;
+                break;
+            case NRDeckSortFactionType:
+                section = cc.card.factionStr;
+                break;
         }
-        if (cc.card.type == NRCardTypeProgram)
+        
+        if (![section isEqualToString:prevSection])
         {
-            type = cc.card.programType;
-        }
-        if (![type isEqualToString:prevType])
-        {
-            [sections addObject:type];
+            [sections addObject:section];
             if (arr != nil)
             {
                 [cards addObject:arr];
@@ -406,7 +433,7 @@
             arr = [NSMutableArray array];
         }
         [arr addObject:cc];
-        prevType = type;
+        prevSection = section;
     }
     
     if (arr.count > 0)
@@ -451,6 +478,7 @@
         _lastModified = nil;
         _notes = [decoder decodeObjectForKey:@"notes"];
         _tags = [decoder decodeObjectForKey:@"tags"];
+        _sortType = NRDeckSortType;
     }
     return self;
 }

@@ -56,6 +56,7 @@
 @property BOOL useNetrunnerdb;
 @property BOOL autoSaveNRDB;
 
+@property NRDeckSort sortType;
 @property CGFloat scale;
 @property BOOL largeCells;
 @property NRAlertView* nameAlert;
@@ -118,7 +119,6 @@
 
     self.largeCells = YES;
     
-    
     UIView* footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
     
@@ -162,10 +162,12 @@
     
     UIBarButtonItem* dupButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)];
     UIBarButtonItem* nameButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)];
+    UIBarButtonItem* sortButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"890-sort-ascending"] style:UIBarButtonItemStylePlain target:self action:@selector(sortPopup:)];
     
     // add from right to left!
     NSMutableArray* rightButtons = [NSMutableArray array];
     [rightButtons addObject:self.exportButton];
+    [rightButtons addObject:sortButton];
     [rightButtons addObject:dupButton];
     if (self.useNetrunnerdb)
     {
@@ -638,6 +640,37 @@
     }
 }
 
+#pragma mark sort
+
+-(void) sortPopup:(UIBarButtonItem*)sender
+{
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
+    if (self.printController)
+    {
+        [self dismissPrintController];
+        return;
+    }
+    
+    self.actionSheet = [[NRActionSheet alloc] initWithTitle:nil
+                                                   delegate:nil
+                                          cancelButtonTitle:@""
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:l10n(@"by Type"), l10n(@"by Faction"), l10n(@"by Set/Type"), l10n(@"by Set/Number"), nil];
+    
+    [self.actionSheet showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
+        if (buttonIndex != self.actionSheet.cancelButtonIndex)
+        {
+            self.sortType = buttonIndex;
+        }
+        self.actionSheet = nil;
+        [self refresh];
+    }];
+}
+
 #pragma mark export
 
 -(void) exportDeck:(UIBarButtonItem*)sender
@@ -858,7 +891,7 @@
 
 -(void) initCards
 {
-    TableData* data = [self.deck dataForTableView];
+    TableData* data = [self.deck dataForTableView:self.sortType];
     self.cards = data.values;
     self.sections = data.sections;
 }

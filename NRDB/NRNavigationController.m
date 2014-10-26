@@ -26,7 +26,8 @@ static BOOL isIOS8;
 
 +(void) initialize
 {
-    isIOS8 = IS_IOS8;
+#warning test this
+    isIOS8 = YES;
 }
 
 -(void) viewDidLoad
