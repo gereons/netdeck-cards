@@ -36,6 +36,8 @@
     return [super popToRootViewControllerAnimated:animated];
 }
 
+#pragma mark gesture recognizer
+
 - (void)handlePopGesture:(UIGestureRecognizer *)gesture
 {
     // NSLog(@"handle gesture, state=%d", gesture.state);
@@ -44,6 +46,16 @@
         // NSLog(@"end swipe, pop");
         [self popViewControllerAnimated:NO];
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([touch.view isKindOfClass:[UISlider class]])
+    {
+        // prevent recognizing touches on the filter sliders
+        return NO;
+    }
+    return YES;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -61,6 +73,8 @@
     // NSLog(@"swipe start ok");
     return YES;
 }
+
+#pragma mark nav bar delegate
 
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
