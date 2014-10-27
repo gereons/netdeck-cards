@@ -33,7 +33,7 @@
 @property UIBarButtonItem* toggleViewButton;
 @property UIBarButtonItem* sortButton;
 
-@property NRActionSheet* popup;
+@property UIAlertController* popup;
 
 @property BOOL largeCells;
 @property CGFloat scale;
@@ -43,6 +43,8 @@
 static NSDictionary* sortStr;
 
 @implementation BrowserResultViewController
+
+static BrowserResultViewController* instance;
 
 + (void) initialize
 {
@@ -60,6 +62,7 @@ static NSDictionary* sortStr;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    instance = self;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     CGFloat scale = [settings floatForKey:BROWSER_VIEW_SCALE];
@@ -135,6 +138,8 @@ static NSDictionary* sortStr;
     [settings setObject:@(self.scale) forKey:BROWSER_VIEW_SCALE];
     [settings setObject:@(self.sortType) forKey:BROWSER_SORT_TYPE];
     [settings synchronize];
+    
+    instance = nil;
 }
 
 - (void) updateDisplay:(CardList *)cardList
@@ -152,36 +157,39 @@ static NSDictionary* sortStr;
 {
     if (self.popup)
     {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        [self.popup dismissViewControllerAnimated:NO completion:nil];
         self.popup = nil;
         return;
     }
-    self.popup = [[NRActionSheet alloc] initWithTitle:nil
-                                             delegate:nil
-                                    cancelButtonTitle:@""
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:l10n(@"A-Z"), l10n(@"Faction/A-Z"), nil];
     
-    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-        if (buttonIndex == self.popup.cancelButtonIndex)
-        {
-            self.popup = nil;
-            return;
-        }
-        
-        switch (buttonIndex)
-        {
-            case 0: // A-Z
-                self.sortType = NRCardListSortA_Z;
-                break;
-            case 1: // Faction, then A-Z
-                self.sortType = NRCardListSortFactionA_Z;
-                break;
-        }
-        self.sortButton.title = [NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]];
-        [self updateDisplay:self.cardList];
+    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeSortType:NRCardListSortA_Z];
+    }]];
+    
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction/A-Z") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeSortType:NRCardListSortFactionA_Z];
+    }]];
+    
+    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         self.popup = nil;
-    }];
+    }]];
+    
+    UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
+    popover.barButtonItem = sender;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    
+    [self presentViewController:self.popup animated:NO completion:nil];
+}
+
+-(void) changeSortType:(NRCardListSort)sortType
+{
+    self->_sortType = sortType;
+    self.sortButton.title = [NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]];
+    [self updateDisplay:self.cardList];
+    self.popup = nil;
 }
 
 -(void) toggleView:(UISegmentedControl*)sender
@@ -307,25 +315,22 @@ static NSDictionary* sortStr;
 
 +(void) showPopupForCard:(Card*)card inView:(UIView*)view fromRect:(CGRect)rect
 {
-    NRActionSheet* sheet = [[NRActionSheet alloc] initWithTitle:nil
-                                                       delegate:nil
-                                              cancelButtonTitle:@""
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:l10n(@"Find decks using this card"), l10n(@"New deck with this card"), nil];
-
-    @weakify(self);
-    [sheet showFromRect:rect inView:view animated:NO action:^(NSInteger buttonIndex) {
-        if (buttonIndex == sheet.cancelButtonIndex)
-        {
-            return;
-        }
-        
-        @strongify(self);
-        NSString* name = buttonIndex == 0 ? BROWSER_FIND : BROWSER_NEW;
-        // NSLog(@"send %@ %@", name, self.card.code);
-        [[NSNotificationCenter defaultCenter] postNotificationName:name object:self userInfo:@{ @"code": card.code }];
-    }];
-
+    UIAlertController* sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"Find decks using this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:BROWSER_FIND object:self userInfo:@{ @"code": card.code }];
+    }]];
+    [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"New deck with this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:BROWSER_NEW object:self userInfo:@{ @"code": card.code }];
+    }]];
+    
+    UIPopoverPresentationController* popover = sheet.popoverPresentationController;
+    popover.sourceRect = rect;
+    popover.sourceView = view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown;
+    
+    NSAssert(instance != nil, @"oops");
+    [instance presentViewController:sheet animated:NO completion:nil];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
