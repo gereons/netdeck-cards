@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 /*
  SubstitutableDetailViewController defines the protocol that detail view controllers must adopt.
  The protocol specifies a property for the bar button item controlling the navigation pane.

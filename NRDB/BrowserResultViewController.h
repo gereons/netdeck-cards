@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import "DetailViewManager.h"
 
 @class Card, CardList;

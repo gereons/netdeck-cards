@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @class Deck;
+
 @interface DrawSimulatorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property IBOutlet UISegmentedControl* viewModeControl;

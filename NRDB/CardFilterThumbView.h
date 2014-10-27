@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @class Card;
+
 @interface CardFilterThumbView : UICollectionViewCell
 
 @property IBOutlet UIImageView* imageView;

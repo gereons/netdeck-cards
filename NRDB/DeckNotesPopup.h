@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @class Deck;
+
 @interface DeckNotesPopup : UIViewController
 
 @property IBOutlet UILabel* titleLabel;
