@@ -57,6 +57,7 @@
     UIEdgeInsets insets = self.tableView.contentInset;
     insets.bottom = 40;
     self.tableView.contentInset = insets;
+    self.tableView.scrollIndicatorInsets = insets;
 }
 
 -(void) diffDecks:(id)sender

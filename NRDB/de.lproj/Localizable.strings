@@ -66,6 +66,11 @@
 "Deck needs cards." = "Das Deck hat keine Karten";
 "Cards up to %@" = "Karten bis zu %@";
 "Copy of %@" = "Kopie von %@";
+"Sort" = "Sortierung";
+"by Type" = "nach Typ";
+"by Faction" = "nach Fraktion";
+"by Set/Type" = "nach Set/Typ";
+"by Set/Number" = "nach Set/Nummer";
 
 // deck invalidity reasons
 "No Identity" = "Keine Identität";

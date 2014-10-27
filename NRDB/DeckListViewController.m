@@ -78,6 +78,7 @@
     
     self.useNetrunnerdb = [settings boolForKey:USE_NRDB];
     self.autoSaveNRDB = self.useNetrunnerdb && [settings boolForKey:NRDB_AUTOSAVE];
+    self.sortType = [settings integerForKey:DECK_VIEW_SORT];
     
     CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
@@ -112,7 +113,9 @@
     self.collectionView.backgroundColor = [UIColor clearColor];
     
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 44, 0);
     self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0); // top == 0 because this is the first view in the .xib. wtf?
+    self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 44, 0);
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LargeCardCell" bundle:nil] forCellReuseIdentifier:@"largeCardCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SmallCardCell" bundle:nil] forCellReuseIdentifier:@"smallCardCell"];
@@ -162,7 +165,7 @@
     
     UIBarButtonItem* dupButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)];
     UIBarButtonItem* nameButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)];
-    UIBarButtonItem* sortButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"890-sort-ascending"] style:UIBarButtonItemStylePlain target:self action:@selector(sortPopup:)];
+    UIBarButtonItem* sortButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Sort") style:UIBarButtonItemStylePlain target:self action:@selector(sortPopup:)];
     
     // add from right to left!
     NSMutableArray* rightButtons = [NSMutableArray array];
@@ -660,7 +663,12 @@
                                                    delegate:nil
                                           cancelButtonTitle:@""
                                      destructiveButtonTitle:nil
-                                          otherButtonTitles:l10n(@"by Type"), l10n(@"by Faction"), l10n(@"by Set/Type"), l10n(@"by Set/Number"), nil];
+                                          otherButtonTitles:
+                        [NSString stringWithFormat:@"%@%@", l10n(@"by Type"), self.sortType == NRDeckSortType ? @" ✓" : @""],
+                        [NSString stringWithFormat:@"%@%@", l10n(@"by Faction"), self.sortType == NRDeckSortFactionType ? @" ✓" : @""],
+                        [NSString stringWithFormat:@"%@%@", l10n(@"by Set/Type"), self.sortType == NRDeckSortSetType ? @" ✓" : @""],
+                        [NSString stringWithFormat:@"%@%@", l10n(@"by Set/Number"), self.sortType == NRDeckSortSetNum ? @" ✓" : @""],
+                        nil];
     
     [self.actionSheet showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
         if (buttonIndex != self.actionSheet.cancelButtonIndex)
