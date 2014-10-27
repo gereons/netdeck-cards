@@ -6,11 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <EXTScope.h>
+
 #import "BrowserCell.h"
-#import "NRActionSheet.h"
-#import "Notifications.h"
-#import "Card.h"
 #import "BrowserResultViewController.h"
 
 @implementation BrowserCell

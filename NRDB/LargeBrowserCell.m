@@ -12,7 +12,6 @@
 #import "Faction.h"
 #import "CardType.h"
 #import "ImageCache.h"
-#import "NRActionSheet.h"
 
 @interface LargeBrowserCell()
 
