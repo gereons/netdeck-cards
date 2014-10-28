@@ -25,7 +25,7 @@
     DeckNotesPopup* dnp = [[DeckNotesPopup alloc] initWithDeck:deck];
     
     [vc presentViewController:dnp animated:NO completion:nil];
-    dnp.view.superview.bounds = CGRectMake(0, 0, 540, 380);
+    dnp.preferredContentSize = CGSizeMake(540, 380);
 }
 
 - (id)initWithDeck:(Deck*)deck

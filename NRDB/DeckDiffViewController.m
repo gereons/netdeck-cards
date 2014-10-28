@@ -47,7 +47,6 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     DeckDiffViewController* ddvc = [[DeckDiffViewController alloc] initWithDecks:deck1 deck2:deck2];
     
     [vc presentViewController:ddvc animated:NO completion:nil];
-    ddvc.view.superview.bounds = CGRectMake(0, 0, 768, 728);
     ddvc.preferredContentSize = CGSizeMake(768, 728);
 }
 

@@ -24,7 +24,6 @@ static NRDBAuthPopupViewController* popup;
     popup = [[NRDBAuthPopupViewController alloc] initWithNibName:@"NRDBAuthPopupViewController" bundle:nil];
     
     [vc presentViewController:popup animated:NO completion:nil];
-    // popup.view.superview.bounds = CGRectMake(0, 0, 850, 466);
     popup.preferredContentSize = CGSizeMake(850, 466);
 }
 
