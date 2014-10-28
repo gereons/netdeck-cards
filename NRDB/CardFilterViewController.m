@@ -677,17 +677,17 @@ static NSInteger viewMode = VIEW_LIST;
 {
     UIAlertController* sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [sheet addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%@%@", l10n(@"All"), self.scope == NRSearchAll ? @" ✓" : @""]
+    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"All"), self.scope == NRSearchAll )
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
                                                 [self changeScope:NRSearchAll];
                                             }]];
-    [sheet addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%@%@", l10n(@"Name"), self.scope == NRSearchName ? @" ✓" : @""]
+    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Name"), self.scope == NRSearchName)
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
                                                 [self changeScope:NRSearchName];
                                             }]];
-    [sheet addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%@%@", l10n(@"Text"), self.scope == NRSearchText ? @" ✓" : @""]
+    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Text"), self.scope == NRSearchText)
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
                                                 [self changeScope:NRSearchText];

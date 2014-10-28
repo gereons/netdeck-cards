@@ -9,8 +9,7 @@
 #import <SDCAlertView.h>
 #import <SVProgressHud.h>
 #import <EXTScope.h>
-
-#import "NRActionSheet.h"
+#import "UIAlertAction+NRDB.h"
 #import "NRAlertView.h"
 #import "SavedDecksList.h"
 #import "Deck.h"
@@ -114,13 +113,13 @@
     if (useDropbox && useNetrunnerdb)
     {
         self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Import from Dropbox") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Import from Dropbox") handler:^(UIAlertAction *action) {
             [self importFromSource:NRImportSourceDropbox];
         }]];
-        [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Import from NetrunnerDB.com") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Import from NetrunnerDB.com") handler:^(UIAlertAction *action) {
             [self importFromSource:NRImportSourceNetrunnerDb];
         }]];
-        [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
             self.popup = nil;
         }]];
         
@@ -281,16 +280,16 @@
     
     self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Active"), deck.state == NRDeckStateActive) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Active"), deck.state == NRDeckStateActive) handler:^(UIAlertAction *action) {
         [self changeState:deck newState:NRDeckStateActive];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Testing"), deck.state == NRDeckStateTesting) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Testing"), deck.state == NRDeckStateTesting) handler:^(UIAlertAction *action) {
         [self changeState:deck newState:NRDeckStateTesting];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Retired"), deck.state == NRDeckStateRetired) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Retired"), deck.state == NRDeckStateRetired) handler:^(UIAlertAction *action) {
         [self changeState:deck newState:NRDeckStateRetired];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     
@@ -347,15 +346,15 @@
     }
 
     self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") handler:^(UIAlertAction *action) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": @(NRRoleRunner)}];
         self.popup = nil;
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Corp Deck") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Corp Deck") handler:^(UIAlertAction *action) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": @(NRRoleCorp)}];
         self.popup = nil;
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     
@@ -430,11 +429,11 @@
                 }];
                 self.popup = nil;
             }]];
-            [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Send via Email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Send via Email") handler:^(UIAlertAction *action) {
                 [self sendAsEmail:deck];
                 self.popup = nil;
             }]];
-            [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Compare to ...") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Compare to ...") handler:^(UIAlertAction *action) {
                 self.diffDeck = deck.filename;
                 self.diffSelection = YES;
                 self.navigationController.navigationBar.topItem.rightBarButtonItems = self.diffRightButtons;
@@ -442,7 +441,7 @@
                 [self.tableView reloadData];
                 self.popup = nil;
             }]];
-            [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
                 self.popup = nil;
             }]];
             

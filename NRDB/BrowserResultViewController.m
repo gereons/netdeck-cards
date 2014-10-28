@@ -9,6 +9,7 @@
 #import <CSStickyHeaderFlowLayout.h>
 #import <EXTScope.h>
 
+#import "UIAlertAction+NRDB.h"
 #import "BrowserResultViewController.h"
 #import "CardList.h"
 #import "Card.h"
@@ -163,15 +164,15 @@ static BrowserResultViewController* instance;
     
     self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
         [self changeSortType:NRCardListSortA_Z];
     }]];
     
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction/A-Z") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction/A-Z") handler:^(UIAlertAction *action) {
         [self changeSortType:NRCardListSortFactionA_Z];
     }]];
     
-    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     

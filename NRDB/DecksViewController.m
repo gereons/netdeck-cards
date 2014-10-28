@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "DecksViewController.h"
-
 #import <SDCAlertView.h>
 
+#import "DecksViewController.h"
+#import "UIAlertAction+NRDB.h"
 #import "DeckCell.h"
 #import "DeckManager.h"
 #import "Deck.h"
@@ -198,16 +198,16 @@ static NRFilter _filterType = NRFilterAll;
     
     self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Date") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortDate];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortFaction];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortA_Z];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     
@@ -236,16 +236,16 @@ static NRFilter _filterType = NRFilterAll;
 
     self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Both") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Both") handler:^(UIAlertAction *action) {
         [self changeSide:NRFilterAll];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Runner") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Runner") handler:^(UIAlertAction *action) {
         [self changeSide:NRFilterRunner];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Corp") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Corp") handler:^(UIAlertAction *action) {
         [self changeSide:NRFilterCorp];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     
@@ -274,19 +274,19 @@ static NRFilter _filterType = NRFilterAll;
     
     self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"All") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"All") handler:^(UIAlertAction *action) {
         [self changeState:NRDeckStateNone];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Active") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Active") handler:^(UIAlertAction *action) {
         [self changeState:NRDeckStateActive];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Testing") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Testing") handler:^(UIAlertAction *action) {
         [self changeState:NRDeckStateTesting];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Retired") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Retired") handler:^(UIAlertAction *action) {
         [self changeState:NRDeckStateRetired];
     }]];
-    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     

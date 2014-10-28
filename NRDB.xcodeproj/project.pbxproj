@@ -26,7 +26,6 @@
 		3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */; };
 		3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ECC901879A1CC003400A9 /* DeckExport.m */; };
 		3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 3A1ECC921879A383003400A9 /* OCTGN.mustache */; };
-		3A2089E5197AB40B00B8AE32 /* NRActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2089E4197AB40B00B8AE32 /* NRActionSheet.m */; };
 		3A3622621849320C007F2854 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622611849320C007F2854 /* Foundation.framework */; };
 		3A3622641849320C007F2854 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622631849320C007F2854 /* CoreGraphics.framework */; };
 		3A3622661849320C007F2854 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622651849320C007F2854 /* UIKit.framework */; };
@@ -43,6 +42,7 @@
 		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
 		3A3D841519F1A24F00642CE7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3D841419F1A24F00642CE7 /* StoreKit.framework */; };
+		3A3E26E81A005042000C6D32 /* UIAlertAction+NRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlertAction+NRDB.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
 		3A40EA4E19FD2CBE00B9CFDA /* 890-sort-ascending.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */; };
 		3A441C8C18E60A5300F46C92 /* hex_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8A18E60A5300F46C92 /* hex_background@2x.png */; };
@@ -283,8 +283,6 @@
 		3A1ECC8F1879A1CC003400A9 /* DeckExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckExport.h; sourceTree = "<group>"; };
 		3A1ECC901879A1CC003400A9 /* DeckExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckExport.m; sourceTree = "<group>"; };
 		3A1ECC921879A383003400A9 /* OCTGN.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OCTGN.mustache; sourceTree = "<group>"; };
-		3A2089E3197AB40B00B8AE32 /* NRActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRActionSheet.h; sourceTree = "<group>"; };
-		3A2089E4197AB40B00B8AE32 /* NRActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRActionSheet.m; sourceTree = "<group>"; };
 		3A36225E1849320C007F2854 /* NRDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NRDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3622611849320C007F2854 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3A3622631849320C007F2854 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -307,6 +305,8 @@
 		3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NROutlineLabel.h; sourceTree = "<group>"; };
 		3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NROutlineLabel.m; sourceTree = "<group>"; };
 		3A3D841419F1A24F00642CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		3A3E26E61A004FD7000C6D32 /* UIAlertAction+NRDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertAction+NRDB.h"; sourceTree = "<group>"; };
+		3A3E26E71A005042000C6D32 /* UIAlertAction+NRDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertAction+NRDB.m"; sourceTree = "<group>"; };
 		3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending@2x.png"; sourceTree = "<group>"; };
 		3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending.png"; sourceTree = "<group>"; };
 		3A441C8A18E60A5300F46C92 /* hex_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex_background@2x.png"; sourceTree = "<group>"; };
@@ -758,14 +758,14 @@
 				3A6AF0E51899C12500227C25 /* NRNavigationController.m */,
 				3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */,
 				3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */,
-				3A2089E3197AB40B00B8AE32 /* NRActionSheet.h */,
-				3A2089E4197AB40B00B8AE32 /* NRActionSheet.m */,
 				3AFEC40519B73E76000D025C /* NRAlertView.h */,
 				3AFEC40619B73E76000D025C /* NRAlertView.m */,
 				3A058B1719D334660090F53A /* NRSwitch.h */,
 				3A058B1819D334660090F53A /* NRSwitch.m */,
 				3AC6BC7219D3F37E002C7759 /* NSString+stripHTML.h */,
 				3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */,
+				3A3E26E61A004FD7000C6D32 /* UIAlertAction+NRDB.h */,
+				3A3E26E71A005042000C6D32 /* UIAlertAction+NRDB.m */,
 			);
 			name = "Utility Classes / Headers";
 			sourceTree = "<group>";
@@ -1527,7 +1527,6 @@
 				3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */,
 				3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */,
 				3AB357DA186DC1E50027D5FC /* IdentityViewCell.m in Sources */,
-				3A2089E5197AB40B00B8AE32 /* NRActionSheet.m in Sources */,
 				3AB357D6186CC2010027D5FC /* IdentitySelectionViewController.m in Sources */,
 				3A1777DF1967EA0B0066E095 /* NRDBAuthPopupViewController.m in Sources */,
 				3AA440EF1854DA630051D4B0 /* DetailViewManager.m in Sources */,
@@ -1544,6 +1543,7 @@
 				3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */,
 				3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */,
 				3AB9BD5918FADB51004EAF10 /* DecksViewController.m in Sources */,
+				3A3E26E81A005042000C6D32 /* UIAlertAction+NRDB.m in Sources */,
 				3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */,
 				3A54C3E01935B0810064C1F0 /* DeckState.m in Sources */,
 				3A11342219AC5C580012494E /* IdentityCardView.m in Sources */,

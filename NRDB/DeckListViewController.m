@@ -9,6 +9,8 @@
 #import <SVProgressHUD.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
+#import "UIAlertAction+NRDB.h"
+
 #import "NRAlertView.h"
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
@@ -517,23 +519,18 @@
     
     
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Active"), self.deck.state == NRDeckStateActive)
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [self changeDeckState:NRDeckStateActive];
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Testing"), self.deck.state == NRDeckStateTesting)
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [self changeDeckState:NRDeckStateTesting];
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Retired"), self.deck.state == NRDeckStateRetired)
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [self changeDeckState:NRDeckStateRetired];
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:@""
-                                                         style:UIAlertActionStyleCancel
-                                                       handler:^(UIAlertAction *action) {
+    [self.actionSheet addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
                                                            self.actionSheet = nil;
                                                        }]];
     
@@ -685,9 +682,7 @@
                                                        handler:^(UIAlertAction *action) {
                                                            [self changeDeckSort:NRDeckSortSetNum];
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:@""
-                                                         style:UIAlertActionStyleCancel
-                                                       handler:^(UIAlertAction *action) {
+    [self.actionSheet addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
                                                            self.actionSheet = nil;
                                                        }]];
     
@@ -724,64 +719,53 @@
     self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: OCTGN")
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [self octgnExport];
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: BBCode")
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [DeckExport asBBCode:self.deck];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Markdown")
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [DeckExport asMarkdown:self.deck];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Plain Text")
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [DeckExport asPlaintext:self.deck];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: BBCode")
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asBBCodeString:self.deck];
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: Markdown")
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asMarkdownString:self.deck];
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: Plain Text")
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asPlaintextString:self.deck];
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"As Email")
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [self sendAsEmail];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Print")
-                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
                                                            [self printDeck:self.exportButton];
                                                            self.actionSheet = nil;
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:@""
-                                                         style:UIAlertActionStyleCancel
-                                                       handler:^(UIAlertAction *action) {
+    [self.actionSheet addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
                                                            self.actionSheet = nil;
                                                        }]];
     
