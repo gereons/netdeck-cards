@@ -10,7 +10,6 @@
 #import <EXTScope.h>
 
 #import "BrowserResultViewController.h"
-#import "NRActionSheet.h"
 #import "CardList.h"
 #import "Card.h"
 #import "TableData.h"

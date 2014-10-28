@@ -7,7 +7,6 @@
 //
 
 #import <CSStickyHeaderFlowLayout.h>
-#import <NRActionSheet.h>
 
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
@@ -676,26 +675,38 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) scopeClicked:(UIButton*)sender
 {
-    NRActionSheet* sheet = [[NRActionSheet alloc] initWithTitle:nil
-                                                       delegate:nil
-                                              cancelButtonTitle:@""
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:
-                            [NSString stringWithFormat:@"%@%@", l10n(@"All"), self.scope == NRSearchAll ? @" ✓" : @""],
-                            [NSString stringWithFormat:@"%@%@", l10n(@"Name"), self.scope == NRSearchName ? @" ✓" : @""],
-                            [NSString stringWithFormat:@"%@%@", l10n(@"Text"), self.scope == NRSearchText ? @" ✓" : @""],
-                            nil];
+    UIAlertController* sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [sheet showFromRect:sender.frame inView:self.view animated:NO action:^(NSInteger buttonIndex) {
-        if (buttonIndex == sheet.cancelButtonIndex)
-        {
-            return;
-        }
-        self.scope = buttonIndex;
-        [self.scopeButton setTitle:[NSString stringWithFormat:@"%@ ▾", scopeLabels[@(self.scope)]] forState:UIControlStateNormal];
-        
-        [self postNotification:scopes[self.scope] value:self.searchText];
-    }];
+    [sheet addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%@%@", l10n(@"All"), self.scope == NRSearchAll ? @" ✓" : @""]
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction *action) {
+                                                [self changeScope:NRSearchAll];
+                                            }]];
+    [sheet addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%@%@", l10n(@"Name"), self.scope == NRSearchName ? @" ✓" : @""]
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction *action) {
+                                                [self changeScope:NRSearchName];
+                                            }]];
+    [sheet addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%@%@", l10n(@"Text"), self.scope == NRSearchText ? @" ✓" : @""]
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction *action) {
+                                                [self changeScope:NRSearchText];
+                                            }]];
+    
+    UIPopoverPresentationController* popover = sheet.popoverPresentationController;
+    popover.sourceRect = sender.frame;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    
+    [self presentViewController:sheet animated:NO completion:nil];
+}
+
+-(void) changeScope:(NRSearchScope)scope
+{
+    self.scope = scope;
+    [self.scopeButton setTitle:[NSString stringWithFormat:@"%@ ▾", scopeLabels[@(self.scope)]] forState:UIControlStateNormal];
+    
+    [self postNotification:scopes[self.scope] value:self.searchText];
 }
 
 #pragma mark text search
