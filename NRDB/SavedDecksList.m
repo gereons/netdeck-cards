@@ -94,7 +94,7 @@
 {
     if (self.popup)
     {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        [self.popup dismissViewControllerAnimated:NO completion:nil];
         self.popup = nil;
         return;
     }
@@ -113,52 +113,52 @@
     
     if (useDropbox && useNetrunnerdb)
     {
-        self.popup = [[NRActionSheet alloc] initWithTitle:nil
-                                                 delegate:nil
-                                        cancelButtonTitle:@""
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:l10n(@"Import from Dropbox"), l10n(@"Import from NetrunnerDB.com"), nil];
-
-        [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-            NRImportSource src = NRImportSourceNone;
-            switch (buttonIndex)
-            {
-                case 0:
-                    src = NRImportSourceDropbox;
-                    break;
-                case 1:
-                    src = NRImportSourceNetrunnerDb;
-                    break;
-            }
-            if (src != NRImportSourceNone)
-            {
-                ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
-                import.source = src;
-                [self.navigationController pushViewController:import animated:NO];
-            }
+        self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Import from Dropbox") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self importFromSource:NRImportSourceDropbox];
+        }]];
+        [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Import from NetrunnerDB.com") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self importFromSource:NRImportSourceNetrunnerDb];
+        }]];
+        [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             self.popup = nil;
-        }];
+        }]];
+        
+        UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
+        popover.barButtonItem = sender;
+        popover.sourceView = self.view;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        
+        [self presentViewController:self.popup animated:NO completion:nil];
     }
     else
     {
-        ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
+        NRImportSource src;
         if (useDropbox && !useNetrunnerdb)
         {
-            import.source = NRImportSourceDropbox;
+            src = NRImportSourceDropbox;
         }
         else
         {
-            import.source = NRImportSourceNetrunnerDb;
+            src = NRImportSourceNetrunnerDb;
         }
-        [self.navigationController pushViewController:import animated:NO];
+        [self importFromSource:src];
     }
+}
+
+-(void) importFromSource:(NRImportSource) importSource
+{
+    ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
+    import.source = importSource;
+    [self.navigationController pushViewController:import animated:NO];
+    self.popup = nil;
 }
 
 -(void) exportDecks:(id)sender
 {
     if (self.popup)
     {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        [self.popup dismissViewControllerAnimated:NO completion:nil];
         self.popup = nil;
         return;
     }
@@ -279,42 +279,46 @@
     UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
     CGRect frame = [cell.contentView convertRect:sender.frame toView:self.view];
     
-    self.popup = [[NRActionSheet alloc] initWithTitle:nil
-                                             delegate:nil
-                                    cancelButtonTitle:@""
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:
-                  [NSString stringWithFormat:@"%@%@", l10n(@"Active"), deck.state == NRDeckStateActive ? @" ✓" : @""],
-                  [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), deck.state == NRDeckStateTesting ? @" ✓" : @""],
-                  [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
+    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Active"), deck.state == NRDeckStateActive) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeState:deck newState:NRDeckStateActive];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Testing"), deck.state == NRDeckStateTesting) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeState:deck newState:NRDeckStateTesting];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Retired"), deck.state == NRDeckStateRetired) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeState:deck newState:NRDeckStateRetired];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        self.popup = nil;
+    }]];
     
     // fudge the frame so the popup appears to the left of the (I)
     frame.origin.y -= 990;
     frame.size.height = 2000;
     frame.size.width = 500;
     
-    [self.popup showFromRect:frame inView:self.tableView.superview animated:NO action:^(NSInteger buttonIndex) {
-        NRDeckState oldState = deck.state;
-        switch (buttonIndex)
-        {
-            case 0:
-                deck.state = NRDeckStateActive;
-                break;
-            case 1:
-                deck.state = NRDeckStateTesting;
-                break;
-            case 2:
-                deck.state = NRDeckStateRetired;
-                break;
-        }
-        if (deck.state != oldState)
-        {
-            [DeckManager saveDeck:deck];
-            [DeckManager resetModificationDate:deck];
-            
-            [self updateDecks];
-        }
-    }];
+    UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
+    popover.sourceView = self.view;
+    popover.sourceRect = frame;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
+    
+    [self presentViewController:self.popup animated:NO completion:nil];
+}
+
+-(void) changeState:(Deck*)deck newState:(NRDeckState)newState
+{
+    NRDeckState oldState = deck.state;
+    deck.state = newState;
+    if (deck.state != oldState)
+    {
+        [DeckManager saveDeck:deck];
+        [DeckManager resetModificationDate:deck];
+        
+        [self updateDecks];
+    }
+    self.popup = nil;
 }
 
 -(void) newDeck:(UIBarButtonItem*)sender
@@ -337,33 +341,30 @@
     
     if (self.popup)
     {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        [self.popup dismissViewControllerAnimated:NO completion:nil];
         self.popup = nil;
         return;
     }
 
-    self.popup = [[NRActionSheet alloc] initWithTitle:nil
-                                             delegate:nil
-                                    cancelButtonTitle:@""
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:l10n(@"New Runner Deck"), l10n(@"New Corp Deck"), nil];
+    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": @(NRRoleRunner)}];
+        self.popup = nil;
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Corp Deck") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": @(NRRoleCorp)}];
+        self.popup = nil;
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        self.popup = nil;
+    }]];
     
-    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-        NSNumber* role;
-        switch (buttonIndex)
-        {
-            case 0: // new runner
-                role = @(NRRoleRunner);
-                break;
-            case 1: // new corp
-                role = @(NRRoleCorp);
-                break;
-        }
-        if (role)
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
-        }
-    }];
+    UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
+    popover.barButtonItem = sender;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    
+    [self presentViewController:self.popup animated:NO completion:nil];
 }
 
 -(void) longPress:(UIGestureRecognizer*)gesture
@@ -380,81 +381,77 @@
             NSArray* decks = self.decks[indexPath.section];
             Deck* deck = decks[indexPath.row];
             
-            self.popup = [[NRActionSheet alloc] initWithTitle:deck.name
-                                                     delegate:nil
-                                            cancelButtonTitle:@""
-                                       destructiveButtonTitle:nil
-                                            otherButtonTitles:l10n(@"Duplicate"),
-                          l10n(@"Rename"),
-                          l10n(@"Send via Email"),
-                          l10n(@"Compare to ..."), nil];
-            
-            [self.popup showFromRect:cell.frame inView:self.tableView animated:NO action:^(NSInteger buttonIndex) {
-                switch (buttonIndex) {
-                    case 0: // duplicate
+            self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Duplicate") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                Deck* newDeck = [deck duplicate];
+                [DeckManager saveDeck:newDeck];
+                
+                NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+                BOOL autoSaveDropbox = [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
+                
+                if (autoSaveDropbox)
+                {
+                    if (newDeck.identity && newDeck.cards.count > 0)
                     {
-                        Deck* newDeck = [deck duplicate];
-                        [DeckManager saveDeck:newDeck];
-                        
-                        NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-                        BOOL autoSaveDropbox = [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
-                        
-                        if (autoSaveDropbox)
-                        {
-                            if (newDeck.identity && newDeck.cards.count > 0)
-                            {
-                                [DeckExport asOctgn:newDeck autoSave:YES];
-                            }
-                        }
-                        
-                        [self updateDecks];
-                        break;
+                        [DeckExport asOctgn:newDeck autoSave:YES];
                     }
-                    case 1: // rename
-                    {
-                        self.nameAlert = [[NRAlertView alloc] initWithTitle:l10n(@"Enter Name")
-                                                                     message:nil
-                                                                    delegate:nil
-                                                           cancelButtonTitle:l10n(@"Cancel")
-                                                           otherButtonTitles:l10n(@"OK"), nil];
-                        
-                        self.nameAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-                        
-                        UITextField* textField = [self.nameAlert textFieldAtIndex:0];
-                        textField.placeholder = l10n(@"Deck Name");
-                        textField.text = deck.name;
-                        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-                        textField.clearButtonMode = UITextFieldViewModeAlways;
-                        textField.returnKeyType = UIReturnKeyDone;
-                        textField.delegate = self;
-                        
-                        @weakify(self);
-                        [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
-                            @strongify(self);
-                            if (buttonIndex == 1)
-                            {
-                                deck.name = [self.nameAlert textFieldAtIndex:0].text;
-                                [DeckManager saveDeck:deck];
-                                [self updateDecks];
-                            }
-                            self.nameAlert = nil;
-                        }];
-                        
-                        break;
-                    }
-                    case 2: // email
-                        [self sendAsEmail:deck];
-                        break;
-                    case 3: // select for diff
-                        self.diffDeck = deck.filename;
-                        self.diffSelection = YES;
-                        self.navigationController.navigationBar.topItem.rightBarButtonItems = self.diffRightButtons;
-                        
-                        [self.tableView reloadData];
-                        break;
                 }
+                
+                [self updateDecks];
                 self.popup = nil;
-            }];
+            }]];
+            [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Rename") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                self.nameAlert = [[NRAlertView alloc] initWithTitle:l10n(@"Enter Name")
+                                                            message:nil
+                                                           delegate:nil
+                                                  cancelButtonTitle:l10n(@"Cancel")
+                                                  otherButtonTitles:l10n(@"OK"), nil];
+                
+                self.nameAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+                
+                UITextField* textField = [self.nameAlert textFieldAtIndex:0];
+                textField.placeholder = l10n(@"Deck Name");
+                textField.text = deck.name;
+                textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+                textField.clearButtonMode = UITextFieldViewModeAlways;
+                textField.returnKeyType = UIReturnKeyDone;
+                textField.delegate = self;
+                
+                @weakify(self);
+                [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
+                    @strongify(self);
+                    if (buttonIndex == 1)
+                    {
+                        deck.name = [self.nameAlert textFieldAtIndex:0].text;
+                        [DeckManager saveDeck:deck];
+                        [self updateDecks];
+                    }
+                    self.nameAlert = nil;
+                }];
+                self.popup = nil;
+            }]];
+            [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Send via Email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [self sendAsEmail:deck];
+                self.popup = nil;
+            }]];
+            [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Compare to ...") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                self.diffDeck = deck.filename;
+                self.diffSelection = YES;
+                self.navigationController.navigationBar.topItem.rightBarButtonItems = self.diffRightButtons;
+                
+                [self.tableView reloadData];
+                self.popup = nil;
+            }]];
+            [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                self.popup = nil;
+            }]];
+            
+            UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
+            popover.sourceRect = cell.frame;
+            popover.sourceView = self.tableView;
+            popover.permittedArrowDirections = UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown;
+            
+            [self presentViewController:self.popup animated:NO completion:nil];
         }
     }
 }
@@ -465,7 +462,7 @@
 {
     if (self.popup)
     {
-        [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+        [self.popup dismissViewControllerAnimated:NO completion:nil];
         self.popup = nil;
         return;
     }

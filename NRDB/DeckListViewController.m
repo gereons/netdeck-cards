@@ -18,7 +18,6 @@
 #import "DeckNotesPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
-#import "NRActionSheet.h"
 #import "Deck.h"
 #import "DeckManager.h"
 #import "CardCounter.h"
@@ -42,7 +41,7 @@
 @property NSArray* sections;
 @property NSArray* cards;
 
-@property NRActionSheet* actionSheet;
+@property UIAlertController* actionSheet;
 @property UIPrintInteractionController* printController;
 @property UIBarButtonItem* toggleViewButton;
 @property UIBarButtonItem* saveButton;
@@ -513,51 +512,55 @@
         [self dismissActionSheet];
         return;
     }
-    self.actionSheet = [[NRActionSheet alloc] initWithTitle:nil
-                                                   delegate:nil
-                                          cancelButtonTitle:@""
-                                     destructiveButtonTitle:nil
-                                          otherButtonTitles:
-                        [NSString stringWithFormat:@"%@%@", l10n(@"Active"), self.deck.state == NRDeckStateActive ? @" ✓" : @""],
-                        [NSString stringWithFormat:@"%@%@", l10n(@"Testing"), self.deck.state == NRDeckStateTesting ? @" ✓" : @""],
-                        [NSString stringWithFormat:@"%@%@", l10n(@"Retired"), self.deck.state == NRDeckStateRetired ? @" ✓" : @""], nil];
+    
+    self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Active"), self.deck.state == NRDeckStateActive)
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self changeDeckState:NRDeckStateActive];
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Testing"), self.deck.state == NRDeckStateTesting)
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self changeDeckState:NRDeckStateTesting];
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Retired"), self.deck.state == NRDeckStateRetired)
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self changeDeckState:NRDeckStateRetired];
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:@""
+                                                         style:UIAlertActionStyleCancel
+                                                       handler:^(UIAlertAction *action) {
+                                                           self.actionSheet = nil;
+                                                       }]];
+    
+    UIPopoverPresentationController* popover = self.actionSheet.popoverPresentationController;
+    popover.barButtonItem = sender;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    
+    [self presentViewController:self.actionSheet animated:NO completion:nil];
+}
 
-    @weakify(self);
-    [self.actionSheet showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-        @strongify(self);
-        
-        NSInteger cancelBtn = self.actionSheet.cancelButtonIndex;
-        self.actionSheet = nil;
-        if (buttonIndex == -1 || buttonIndex == cancelBtn)
+-(void) changeDeckState:(NRDeckState)newState
+{
+    NRDeckState oldState = self.deck.state;
+    self.deck.state = newState;
+    [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];
+    if (self.deck.state != oldState)
+    {
+        self.deckChanged = YES;
+        if (self.autoSave)
         {
-            return;
+            [self saveDeck:nil];
+            [DeckManager resetModificationDate:self.deck];
         }
-
-        NRDeckState oldState = self.deck.state;
-        switch (buttonIndex)
-        {
-            case 0:
-                self.deck.state = NRDeckStateActive;
-                break;
-            case 1:
-                self.deck.state = NRDeckStateTesting;
-                break;
-            case 2:
-                self.deck.state = NRDeckStateRetired;
-                break;
-        }
-        [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];
-        if (self.deck.state != oldState)
-        {
-            self.deckChanged = YES;
-            if (self.autoSave)
-            {
-                [self saveDeck:nil];
-                [DeckManager resetModificationDate:self.deck];
-            }
-            [self refresh];
-        }
-    }];
+        [self refresh];
+    }
+    self.actionSheet = nil;
 }
 
 #pragma mark deck name
@@ -659,25 +662,48 @@
         return;
     }
     
-    self.actionSheet = [[NRActionSheet alloc] initWithTitle:nil
-                                                   delegate:nil
-                                          cancelButtonTitle:@""
-                                     destructiveButtonTitle:nil
-                                          otherButtonTitles:
-                        [NSString stringWithFormat:@"%@%@", l10n(@"by Type"), self.sortType == NRDeckSortType ? @" ✓" : @""],
-                        [NSString stringWithFormat:@"%@%@", l10n(@"by Faction"), self.sortType == NRDeckSortFactionType ? @" ✓" : @""],
-                        [NSString stringWithFormat:@"%@%@", l10n(@"by Set/Type"), self.sortType == NRDeckSortSetType ? @" ✓" : @""],
-                        [NSString stringWithFormat:@"%@%@", l10n(@"by Set/Number"), self.sortType == NRDeckSortSetNum ? @" ✓" : @""],
-                        nil];
+    self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self.actionSheet showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-        if (buttonIndex != self.actionSheet.cancelButtonIndex)
-        {
-            self.sortType = buttonIndex;
-        }
-        self.actionSheet = nil;
-        [self refresh];
-    }];
+    
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Type"), self.sortType == NRDeckSortType)
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self changeDeckSort:NRDeckSortType];
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Faction"), self.sortType == NRDeckSortFactionType)
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self changeDeckSort:NRDeckSortFactionType];
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Set/Type"), self.sortType == NRDeckSortSetType)
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self changeDeckSort:NRDeckSortSetType];
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Set/Number"), self.sortType == NRDeckSortSetNum)
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self changeDeckSort:NRDeckSortSetNum];
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:@""
+                                                         style:UIAlertActionStyleCancel
+                                                       handler:^(UIAlertAction *action) {
+                                                           self.actionSheet = nil;
+                                                       }]];
+    
+    UIPopoverPresentationController* popover = self.actionSheet.popoverPresentationController;
+    popover.barButtonItem = sender;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    
+    [self presentViewController:self.actionSheet animated:NO completion:nil];
+}
+
+-(void) changeDeckSort:(NRDeckSort)sortType
+{
+    self.sortType = sortType;
+    self.actionSheet = nil;
+    [self refresh];
 }
 
 #pragma mark export
@@ -695,87 +721,97 @@
         return;
     }
     
-    self.actionSheet = [[NRActionSheet alloc] initWithTitle:nil
-                                                   delegate:nil
-                                          cancelButtonTitle:@""
-                                     destructiveButtonTitle:nil
-                                          otherButtonTitles:
-                                                            l10n(@"Dropbox: OCTGN"),
-                                                            l10n(@"Dropbox: BBCode"),
-                                                            l10n(@"Dropbox: Markdown"),
-                                                            l10n(@"Dropbox: Plain Text"),
-                                                            l10n(@"Clipboard: BBCode"),
-                                                            l10n(@"Clipboard: Markdown"),
-                                                            l10n(@"Clipboard: Plain Text"),
-                                                            l10n(@"As Email"),
-                                                            l10n(@"Print"), nil];
-
-    [self.actionSheet showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-        [self doExportDeck:buttonIndex];
-    }];
-}
-
--(void) doExportDeck:(NSInteger)buttonIndex
-{
-    if (buttonIndex < 4 && ![[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
-    {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Connect to your Dropbox account first.") buttons:@[l10n(@"OK")]];
-        return;
-    }
+    self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    TF_CHECKPOINT(@"export deck");
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    switch (buttonIndex)
-    {
-        case 0: // octgn
-            if (self.deck.identity == nil)
-            {
-                [SDCAlertView alertWithTitle:nil message:l10n(@"Deck needs to have an Identity.") buttons:@[l10n(@"OK")]];
-                return;
-            }
-            if (self.deck.cards.count == 0)
-            {
-                [SDCAlertView alertWithTitle:nil message:l10n(@"Deck needs to have Cards.") buttons:@[l10n(@"OK")]];
-                return;
-            }
-            [DeckExport asOctgn:self.deck autoSave:NO];
-            break;
-        case 1: // bbcode
-            [DeckExport asBBCode:self.deck];
-            break;
-        case 2: // markdown
-            [DeckExport asMarkdown:self.deck];
-            break;
-        case 3: // plain text
-            [DeckExport asPlaintext:self.deck];
-            break;
-            
-        case 4: // bbcode
-            pasteboard.string = [DeckExport asBBCodeString:self.deck];
-            [DeckImport updateCount];
-            break;
-        case 5: // markdown
-            pasteboard.string = [DeckExport asMarkdownString:self.deck];
-            [DeckImport updateCount];
-            break;
-        case 6: // plain text
-            pasteboard.string = [DeckExport asPlaintextString:self.deck];
-            [DeckImport updateCount];
-            break;
-        case 7: // email
-            [self sendAsEmail];
-            break;
-        case 8: // print
-            [self printDeck:self.exportButton];
-            break;
-    }
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: OCTGN")
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self octgnExport];
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: BBCode")
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [DeckExport asBBCode:self.deck];
+                                                           self.actionSheet = nil;
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Markdown")
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [DeckExport asMarkdown:self.deck];
+                                                           self.actionSheet = nil;
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Plain Text")
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [DeckExport asPlaintext:self.deck];
+                                                           self.actionSheet = nil;
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: BBCode")
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [UIPasteboard generalPasteboard].string = [DeckExport asBBCodeString:self.deck];
+                                                           [DeckImport updateCount];
+                                                           self.actionSheet = nil;
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: Markdown")
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [UIPasteboard generalPasteboard].string = [DeckExport asMarkdownString:self.deck];
+                                                           [DeckImport updateCount];
+                                                           self.actionSheet = nil;
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: Plain Text")
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [UIPasteboard generalPasteboard].string = [DeckExport asPlaintextString:self.deck];
+                                                           [DeckImport updateCount];
+                                                           self.actionSheet = nil;
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"As Email")
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self sendAsEmail];
+                                                           self.actionSheet = nil;
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Print")
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           [self printDeck:self.exportButton];
+                                                           self.actionSheet = nil;
+                                                       }]];
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:@""
+                                                         style:UIAlertActionStyleCancel
+                                                       handler:^(UIAlertAction *action) {
+                                                           self.actionSheet = nil;
+                                                       }]];
     
-    self.actionSheet = nil;
+    UIPopoverPresentationController* popover = self.actionSheet.popoverPresentationController;
+    popover.barButtonItem = sender;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    
+    [self presentViewController:self.actionSheet animated:NO completion:nil];
 }
 
 -(void) dismissActionSheet
 {
-    [self.actionSheet dismissWithClickedButtonIndex:-1 animated:NO];
+    [self.actionSheet dismissViewControllerAnimated:NO completion:nil];
+    self.actionSheet = nil;
+}
+
+-(void) octgnExport
+{
+    if (self.deck.identity == nil)
+    {
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Deck needs to have an Identity.") buttons:@[l10n(@"OK")]];
+        return;
+    }
+    if (self.deck.cards.count == 0)
+    {
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Deck needs to have Cards.") buttons:@[l10n(@"OK")]];
+        return;
+    }
+    [DeckExport asOctgn:self.deck autoSave:NO];
     self.actionSheet = nil;
 }
 

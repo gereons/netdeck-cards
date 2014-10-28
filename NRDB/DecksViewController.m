@@ -10,7 +10,6 @@
 
 #import <SDCAlertView.h>
 
-#import "NRActionSheet.h"
 #import "DeckCell.h"
 #import "DeckManager.h"
 #import "Deck.h"
@@ -185,7 +184,7 @@ static NRFilter _filterType = NRFilterAll;
 
 -(void) dismissPopup
 {
-    [self.popup dismissWithClickedButtonIndex:self.popup.cancelButtonIndex animated:NO];
+    [self.popup dismissViewControllerAnimated:NO completion:nil];
     self.popup = nil;
 }
 
@@ -197,28 +196,34 @@ static NRFilter _filterType = NRFilterAll;
         return;
     }
     
-    self.popup = [[NRActionSheet alloc] initWithTitle:nil
-                                             delegate:nil
-                                    cancelButtonTitle:@""
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:l10n(@"Date"), l10n(@"Faction"), l10n(@"A-Z"), nil];
-
-    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-        switch (buttonIndex)
-        {
-            case 0:
-                self.sortType = NRDeckListSortDate;
-                break;
-            case 1:
-                self.sortType = NRDeckListSortFaction;
-                break;
-            case 2:
-                self.sortType = NRDeckListSortA_Z;
-                break;
-        }
+    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Date") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeSortType:NRDeckListSortDate];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeSortType:NRDeckListSortFaction];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeSortType:NRDeckListSortA_Z];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         self.popup = nil;
-        [self updateDecks];
-    }];
+    }]];
+    
+    UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
+    popover.barButtonItem = sender;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    
+    [self presentViewController:self.popup animated:NO completion:nil];
+}
+
+-(void) changeSortType:(NRDeckListSort)sortType
+{
+    self.sortType = sortType;
+    self.popup = nil;
+    [self updateDecks];
 }
 
 -(void) changeSideFilter:(id)sender
@@ -229,28 +234,34 @@ static NRFilter _filterType = NRFilterAll;
         return;
     }
 
-    self.popup = [[NRActionSheet alloc] initWithTitle:nil
-                                             delegate:nil
-                                    cancelButtonTitle:@""
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:l10n(@"Both"), l10n(@"Runner"), l10n(@"Corp"), nil];
-
-    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-        switch (buttonIndex)
-        {
-            case 0:
-                self.filterType = NRFilterAll;
-                break;
-            case 1:
-                self.filterType = NRFilterRunner;
-                break;
-            case 2:
-                self.filterType = NRFilterCorp;
-                break;
-        }
+    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Both") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeSide:NRFilterAll];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Runner") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeSide:NRFilterRunner];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Corp") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeSide:NRFilterCorp];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         self.popup = nil;
-        [self updateDecks];
-    }];
+    }]];
+    
+    UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
+    popover.barButtonItem = sender;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    
+    [self presentViewController:self.popup animated:NO completion:nil];
+}
+
+-(void) changeSide:(NRFilter)filterType
+{
+    self.filterType = filterType;
+    self.popup = nil;
+    [self updateDecks];
 }
 
 -(void) changeStateFilter:(id)sender
@@ -261,31 +272,37 @@ static NRFilter _filterType = NRFilterAll;
         return;
     }
     
-    self.popup = [[NRActionSheet alloc] initWithTitle:nil
-                                             delegate:nil
-                                    cancelButtonTitle:@""
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:l10n(@"All"), l10n(@"Active"), l10n(@"Testing"), l10n(@"Retired"), nil];
-
-    [self.popup showFromBarButtonItem:sender animated:NO action:^(NSInteger buttonIndex) {
-        switch (buttonIndex)
-        {
-            case 0:
-                self.filterState = NRDeckStateNone;
-                break;
-            case 1:
-                self.filterState = NRDeckStateActive;
-                break;
-            case 2:
-                self.filterState = NRDeckStateTesting;
-                break;
-            case 3:
-                self.filterState = NRDeckStateRetired;
-                break;
-        }
+    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"All") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeState:NRDeckStateNone];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Active") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeState:NRDeckStateActive];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Testing") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeState:NRDeckStateTesting];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Retired") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeState:NRDeckStateRetired];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         self.popup = nil;
-        [self updateDecks];
-    }];
+    }]];
+    
+    UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
+    popover.barButtonItem = sender;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    
+    [self presentViewController:self.popup animated:NO completion:nil];
+}
+
+-(void) changeState:(NRDeckState)filterState
+{
+    self.filterState = filterState;
+    self.popup = nil;
+    [self updateDecks];
 }
 
 -(void) updateDecks

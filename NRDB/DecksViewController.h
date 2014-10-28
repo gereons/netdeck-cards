@@ -8,7 +8,7 @@
 
 #import <MessageUI/MessageUI.h>
 
-@class Card, Deck, NRActionSheet;
+@class Card, Deck;
 
 @interface DecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate>
 
@@ -19,7 +19,7 @@
 @property UIBarButtonItem* sideFilterButton;
 @property UIBarButtonItem* sortButton;
 
-@property NRActionSheet* popup;
+@property UIAlertController* popup;
 @property NSArray* decks;
 
 @property NRFilter filterType;
