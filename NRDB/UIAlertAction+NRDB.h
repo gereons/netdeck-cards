@@ -1,5 +1,5 @@
 //
-//  UIAlertAction+cancel.h
+//  UIAlertAction+NRDB.h
 //  NRDB
 //
 //  Created by Gereon Steffens on 28.10.14.

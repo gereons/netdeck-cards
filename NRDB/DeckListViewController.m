@@ -718,25 +718,28 @@
     
     self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: OCTGN")
-                                                       handler:^(UIAlertAction *action) {
-                                                           [self octgnExport];
-                                                       }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: BBCode")
-                                                       handler:^(UIAlertAction *action) {
-                                                           [DeckExport asBBCode:self.deck];
-                                                           self.actionSheet = nil;
-                                                       }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Markdown")
-                                                       handler:^(UIAlertAction *action) {
-                                                           [DeckExport asMarkdown:self.deck];
-                                                           self.actionSheet = nil;
-                                                       }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Plain Text")
-                                                       handler:^(UIAlertAction *action) {
-                                                           [DeckExport asPlaintext:self.deck];
-                                                           self.actionSheet = nil;
-                                                       }]];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
+    {
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: OCTGN")
+                                                           handler:^(UIAlertAction *action) {
+                                                               [self octgnExport];
+                                                           }]];
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: BBCode")
+                                                           handler:^(UIAlertAction *action) {
+                                                               [DeckExport asBBCode:self.deck];
+                                                               self.actionSheet = nil;
+                                                           }]];
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Markdown")
+                                                           handler:^(UIAlertAction *action) {
+                                                               [DeckExport asMarkdown:self.deck];
+                                                               self.actionSheet = nil;
+                                                           }]];
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Plain Text")
+                                                           handler:^(UIAlertAction *action) {
+                                                               [DeckExport asPlaintext:self.deck];
+                                                               self.actionSheet = nil;
+                                                           }]];
+    }
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: BBCode")
                                                        handler:^(UIAlertAction *action) {
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asBBCodeString:self.deck];
