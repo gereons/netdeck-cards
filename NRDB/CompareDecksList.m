@@ -111,6 +111,7 @@
     NSArray* decks = self.decks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     
+#warning fails if both decks have the same name
     if (self.selectedRole != deck.role)
     {
         [self.decksToDiff removeAllObjects];
@@ -135,6 +136,7 @@
         [self.names removeObjectAtIndex:0];
     }
     
+    NSAssert(self.decksToDiff.count == self.names.count, @"array size mismatch");
     self.diffButton.enabled = self.decksToDiff.count == 2;
     
     switch (self.decksToDiff.count)

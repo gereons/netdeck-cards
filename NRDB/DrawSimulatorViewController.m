@@ -291,12 +291,14 @@ static NSInteger viewMode;
             indexPath = [self.tableView indexPathForRowAtPoint:point];
         }
         
-        BOOL played = [[self.played objectAtIndex:indexPath.row] boolValue];
-        self.played[indexPath.row] = @(!played);
-        
-        NSArray* paths = @[ indexPath ];
-        [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
-        [self.collectionView reloadItemsAtIndexPaths:paths];
+        if (indexPath)
+        {
+            BOOL played = [[self.played objectAtIndex:indexPath.row] boolValue];
+            self.played[indexPath.row] = @(!played);
+            NSArray* paths = @[ indexPath ];
+            [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+            [self.collectionView reloadItemsAtIndexPaths:paths];
+        }
     }
 }
 

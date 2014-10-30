@@ -36,7 +36,7 @@ PODS:
     - DTFoundation/Core
   - GRMustache (7.3.0):
     - JRSwizzle (~> 1.0)
-  - InAppSettingsKit (HEAD based on 2.1)
+  - InAppSettingsKit (HEAD based on 2.2)
   - JRSwizzle (1.0)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT
@@ -260,7 +260,7 @@ SPEC CHECKSUMS:
   DTCoreText: 1fc0aadfa238d14c6cc56035af4e2b76b958e3b1
   DTFoundation: 360bc65ab44f588611f47324b8cfb0f18e04b263
   GRMustache: efecd3b603f0a7a99cf6bdf3998782ee0c465726
-  InAppSettingsKit: 853cdc9fcc76b87a4694f8d2b930e116463b5a29
+  InAppSettingsKit: 08d5d21057973c5fd6cd9f7063fc27f73aa0d7a3
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: d6146fce3ebea986b7f75fcb4c967639200b88b0
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64

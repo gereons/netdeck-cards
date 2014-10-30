@@ -258,6 +258,7 @@
     self.collectionView.hidden = self.viewTable;
     [[NSUserDefaults standardUserDefaults] setBool:self.viewTable forKey:IDENTITY_TABLE];
     
+#warning fails is selectedIndexPath is invalid when faction filter is on
     if (self.selectedIndexPath)
     {
         [self.tableView reloadData];

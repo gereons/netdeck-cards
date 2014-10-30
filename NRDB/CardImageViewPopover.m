@@ -65,6 +65,7 @@ static CGFloat popoverScale = 1.0;
 {
     CardImageViewPopover* cardImageView = [[CardImageViewPopover alloc] initWithCard:card];
     
+    NSAssert(popover == nil, @"previous popover still visible?");
     popover = [[UIPopoverController alloc] initWithContentViewController:cardImageView];
     
     popover.popoverContentSize = CGSizeMake((int)(IMAGE_WIDTH*popoverScale), (int)(IMAGE_HEIGHT*popoverScale));
@@ -83,6 +84,11 @@ static CGFloat popoverScale = 1.0;
         return YES;
     }
     return NO;
+}
+
+-(void) popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    popover = nil;
 }
 
 - (id)initWithCard:(Card*)card
