@@ -1026,31 +1026,24 @@
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (self.largeCells)
+    NSString* name = [self.sections objectAtIndex:section];
+    NSArray* arr = self.cards[section];
+    int cnt = 0;
+    for (CardCounter* cc in arr)
     {
-        NSString* name = [self.sections objectAtIndex:section];
-        NSArray* arr = self.cards[section];
-        int cnt = 0;
-        for (CardCounter* cc in arr)
+        if (!ISNULL(cc))
         {
-            if (!ISNULL(cc))
-            {
-                cnt += cc.count;
-            }
+            cnt += cc.count;
         }
-        
-        if (section > 0 && cnt)
-        {
-            return [NSString stringWithFormat:@"%@ (%d)", name, cnt];
-        }
-        else
-        {
-            return name;
-        }
+    }
+    
+    if (section > 0 && cnt)
+    {
+        return [NSString stringWithFormat:@"%@ (%d)", name, cnt];
     }
     else
     {
-        return nil;
+        return name;
     }
 }
 
