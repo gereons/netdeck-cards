@@ -111,7 +111,6 @@
     NSArray* decks = self.decks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     
-#warning fails if both decks have the same name
     if (self.selectedRole != deck.role)
     {
         [self.decksToDiff removeAllObjects];
@@ -122,7 +121,15 @@
     if ([self.decksToDiff containsObject:deck.filename])
     {
         [self.decksToDiff removeObject:deck.filename];
-        [self.names removeObject:deck.name];
+        // can't use removeObject for names - if both decks have the same name, it would remove both entries
+        for (int i=0; i<self.names.count; ++i)
+        {
+            if ([self.names[i] isEqualToString:deck.name])
+            {
+                [self.names removeObjectAtIndex:i];
+                break;
+            }
+        }
     }
     else
     {
