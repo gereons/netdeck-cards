@@ -181,6 +181,7 @@
     self.identities = [NSMutableArray array];
     self.factionNames = [NSArray arrayWithArray:factions];
     
+    self.selectedIndexPath = nil;
     NSSet* disabledSetCodes = [CardSets disabledSetCodes];
     
     NSArray* identities = [CardManager identitiesForRole:self.role];
@@ -205,7 +206,7 @@
                 NSMutableArray* arr = self.identities[i];
                 [arr addObject:card];
                 
-                if ([self.initialIdentity isEqual:card])
+                if ([self.selectedIdentity isEqual:card])
                 {
                     self.selectedIndexPath = [NSIndexPath indexPathForRow:arr.count-1 inSection:i];
                 }
@@ -258,7 +259,6 @@
     self.collectionView.hidden = self.viewTable;
     [[NSUserDefaults standardUserDefaults] setBool:self.viewTable forKey:IDENTITY_TABLE];
     
-#warning fails is selectedIndexPath is invalid when faction filter is on
     if (self.selectedIndexPath)
     {
         [self.tableView reloadData];
