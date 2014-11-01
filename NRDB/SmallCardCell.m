@@ -20,6 +20,7 @@
     
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
     self.identityButton.hidden = card.type != NRCardTypeIdentity;
+    self.factionLabel.hidden = card.type == NRCardTypeIdentity;
     
     if (cc == nil)
     {
@@ -81,6 +82,8 @@
     {
         self.influenceLabel.text = @"";
     }
+    
+    self.factionLabel.text = card.factionStr;
 }
 
 @end

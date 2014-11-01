@@ -12,6 +12,7 @@
 
 @property IBOutlet UILabel* name;
 @property IBOutlet UILabel* influenceLabel;
+@property IBOutlet UILabel* factionLabel;
 @property IBOutlet UIStepper* copiesStepper;
 
 @end
