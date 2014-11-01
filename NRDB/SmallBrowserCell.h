@@ -12,6 +12,7 @@
 @interface SmallBrowserCell : BrowserCell
 
 @property IBOutlet UILabel* nameLabel;
+@property IBOutlet UILabel* factionLabel;
 
 @property SmallPipsView* pips;
 

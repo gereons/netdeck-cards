@@ -26,6 +26,7 @@
         
     [self.pips setValue:card.type == NRCardTypeAgenda ? card.agendaPoints : card.influence];
     [self.pips setColor:card.factionColor];
+    self.factionLabel.text = card.factionStr;
 }
 
 @end
