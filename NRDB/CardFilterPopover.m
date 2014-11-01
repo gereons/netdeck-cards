@@ -94,6 +94,11 @@ static UIPopoverController* popover;
     [super viewDidLoad];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    UITapGestureRecognizer* tableTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+    tableTap.numberOfTapsRequired = 2;
+    [self.tableView addGestureRecognizer:tableTap];
+    
     [self setTableHeight];
     
     popover.popoverContentSize = self.tableView.frame.size;
@@ -103,6 +108,11 @@ static UIPopoverController* popover;
 {
     [super viewWillAppear:animated];
     [self setTableHeight];
+}
+
+-(void) doubleTap:(UIGestureRecognizer*) gesture
+{
+    [CardFilterPopover dismiss];
 }
 
 #define CELL_HEIGHT     40
