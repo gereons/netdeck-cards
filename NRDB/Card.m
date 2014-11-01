@@ -160,7 +160,7 @@ static NSDictionary* cropValues;
 
 #pragma mark from json
 
-#define JSON_INT(key, attr)          do { NSString*tmp = [json objectForKey:attr]; c->_##key = tmp ? [tmp intValue] : -1; } while (0)
+#define JSON_INT(key, attr)          do { NSString* tmp = [json objectForKey:attr]; c->_##key = tmp ? [tmp intValue] : -1; } while (0)
 #define JSON_BOOL(key, attr)         c->_##key = [[json objectForKey:attr] boolValue]
 #define JSON_STR(key, attr)          c->_##key = [json objectForKey:attr]
 
@@ -282,6 +282,17 @@ static NSDictionary* cropValues;
         NSString* host = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_HOST];
         c->_imageSrc = [NSString stringWithFormat:@"http://%@%@", host, c->_imageSrc];
     }
+    
+    if (c->_imageSrc == nil)
+    {
+        NSArray* images = [json objectForKey:@"images"];
+        if ([images isKindOfClass:[NSArray class]] && images.count > 0)
+        {
+            NSDictionary* img = images[0];
+            c->_imageSrc = [img objectForKey:@"src"];
+        }
+    }
+    
     
     JSON_INT(maxPerDeck, @"maxperdeck");
     if (isNrdb)
