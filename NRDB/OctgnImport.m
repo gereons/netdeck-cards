@@ -40,7 +40,7 @@
 {
     self.deck = [[Deck alloc] init];
     
-    if ([self.parser parse])
+    if ([self.parser parse] && self.deck.role != NRRoleNone)
     {
         return self.deck;
     }
@@ -80,6 +80,7 @@
             {
                 [self.deck addCard:card copies:copies];
             }
+            self.deck.role = card.role;
         }
     }
     

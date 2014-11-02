@@ -134,7 +134,7 @@
     else
     {
         [self.decksToDiff addObject:deck.filename];
-        [self.names addObject:deck.name];
+        [self.names addObject:deck.name ? deck.name : @"n/a"];
     }
     
     while (self.decksToDiff.count > 2)
