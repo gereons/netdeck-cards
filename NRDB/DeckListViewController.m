@@ -1360,13 +1360,16 @@
     
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     
-    mailer.mailComposeDelegate = self;
-    NSString *emailBody = [DeckExport asPlaintextString:self.deck];
-    [mailer setMessageBody:emailBody isHTML:NO];
-    
-    [mailer setSubject:self.deck.name];
-    
-    [self presentViewController:mailer animated:NO completion:nil];
+    if (mailer)
+    {
+        mailer.mailComposeDelegate = self;
+        NSString *emailBody = [DeckExport asPlaintextString:self.deck];
+        [mailer setMessageBody:emailBody isHTML:NO];
+        
+        [mailer setSubject:self.deck.name];
+        
+        [self presentViewController:mailer animated:NO completion:nil];
+    }
 }
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
