@@ -758,16 +758,23 @@
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"As Email")
+    
+    if ([MFMailComposeViewController canSendMail])
+    {
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"As Email")
                                                        handler:^(UIAlertAction *action) {
                                                            [self sendAsEmail];
                                                            self.actionSheet = nil;
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Print")
-                                                       handler:^(UIAlertAction *action) {
-                                                           [self printDeck:self.exportButton];
-                                                           self.actionSheet = nil;
-                                                       }]];
+    }
+    if ([UIPrintInteractionController isPrintingAvailable])
+    {
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Print")
+                                                           handler:^(UIAlertAction *action) {
+                                                               [self printDeck:self.exportButton];
+                                                               self.actionSheet = nil;
+                                                           }]];
+    }
     [self.actionSheet addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
                                                            self.actionSheet = nil;
                                                        }]];

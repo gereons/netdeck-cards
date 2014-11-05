@@ -429,10 +429,13 @@
                 }];
                 self.popup = nil;
             }]];
-            [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Send via Email") handler:^(UIAlertAction *action) {
-                [self sendAsEmail:deck];
-                self.popup = nil;
-            }]];
+            if ([MFMailComposeViewController canSendMail])
+            {
+                [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Send via Email") handler:^(UIAlertAction *action) {
+                    [self sendAsEmail:deck];
+                    self.popup = nil;
+                }]];
+            }
             [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Compare to ...") handler:^(UIAlertAction *action) {
                 self.diffDeck = deck.filename;
                 self.diffSelection = YES;
@@ -602,13 +605,16 @@
     
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     
-    mailer.mailComposeDelegate = self;
-    NSString *emailBody = [DeckExport asPlaintextString:deck];
-    [mailer setMessageBody:emailBody isHTML:NO];
-    
-    [mailer setSubject:deck.name];
-    
-    [self presentViewController:mailer animated:NO completion:nil];
+    if (mailer)
+    {
+        mailer.mailComposeDelegate = self;
+        NSString *emailBody = [DeckExport asPlaintextString:deck];
+        [mailer setMessageBody:emailBody isHTML:NO];
+        
+        [mailer setSubject:deck.name];
+        
+        [self presentViewController:mailer animated:NO completion:nil];
+    }
 }
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
