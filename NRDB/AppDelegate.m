@@ -198,4 +198,17 @@ const NSString* const kANY = @"Any";
 	return YES;
 }
 
++(NSString*) appVersion
+{
+    NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
+    // CFBundleShortVersionString contains the main version
+    NSString* version = [@"v" stringByAppendingString:[bundleInfo objectForKey:@"CFBundleShortVersionString"]];
+    
+#if defined(DEBUG) || defined(ADHOC)
+    // CFBundleVersion contains the git rev-parse output
+    version = [NSString stringWithFormat:@"%@-%@", version, [bundleInfo objectForKey:@"CFBundleVersion"]];
+#endif
+    
+    return version;
+}
 @end

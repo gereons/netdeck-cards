@@ -16,4 +16,6 @@
 @property (nonatomic, retain) IBOutlet NRSplitViewController *splitViewController;
 @property (nonatomic, retain) IBOutlet DetailViewManager *detailViewManager;
 
++(NSString*) appVersion;
+
 @end

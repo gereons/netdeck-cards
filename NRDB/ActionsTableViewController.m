@@ -8,6 +8,7 @@
 
 #import <SDCAlertView.h>
 #import "NRAlertView.h"
+#import "AppDelegate.h"
 #import "ActionsTableViewController.h"
 #import "EmptyDetailViewController.h"
 #import "DetailViewManager.h"
@@ -40,7 +41,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 @property SubstitutableNavigationController* snc;
 @property SettingsViewController* settings;
-@property NSString* appVersion;
 @property Card* searchForCard;
 
 @end
@@ -69,15 +69,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     UILabel* footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 320, 40)];
     
-#if defined(DEBUG) || defined(ADHOC)
-    // CFBundleVersion contains the git describe output
-    self.appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-#else
-    // CFBundleShortVersionString contains the main version
-    self.appVersion = [@"v" stringByAppendingString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-#endif
-    
-    footerLabel.text = [NSString stringWithFormat:@"%@", self.appVersion];
+    footerLabel.text = [AppDelegate appVersion];
     footerLabel.textAlignment = NSTextAlignmentCenter;
     footerLabel.backgroundColor = [UIColor clearColor];
     footerLabel.font = [UIFont systemFontOfSize:14];
@@ -115,13 +107,14 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     // [defaults setObject:@"" forKey:LAST_START_VERSION];
     NSString* lastVersion = [defaults objectForKey:LAST_START_VERSION];
-    if (![self.appVersion isEqualToString:lastVersion])
+    NSString* thisVersion = [AppDelegate appVersion];
+    if ([thisVersion isEqualToString:lastVersion])
     {
         // yes, first start. show "about" tab
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuAbout inSection:0];
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-        [defaults setObject:self.appVersion forKey:LAST_START_VERSION];
+        [defaults setObject:thisVersion forKey:LAST_START_VERSION];
         [defaults synchronize];
         return;
     }

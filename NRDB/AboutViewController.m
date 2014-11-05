@@ -11,11 +11,11 @@
 #import <SDCAlertView.h>
 
 #import "AboutViewController.h"
+#import "AppDelegate.h"
 
 @interface AboutViewController ()
 @property SKStoreProductViewController* storeViewController;
 @property MFMailComposeViewController *mailer;
-@property NSString* version;
 @property UIBarButtonItem* backButton;
 @end
 
@@ -44,15 +44,8 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-#if defined(DEBUG) || defined(ADHOC)
-    // CFBundleVersion contains the git describe output
-    self.version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-#else
-    // CFBundleShortVersionString contains the main version
-    self.version = [@"v" stringByAppendingString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-#endif
     
-    NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck %@"), self.version];
+    NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck %@"), [AppDelegate appVersion]];
     self.navigationController.navigationBar.topItem.title = title;
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
@@ -106,7 +99,7 @@
     self.mailer.mailComposeDelegate = self;
     [self.mailer setToRecipients:@[ @"netdeck@steffens.org" ]];
     NSMutableString* subject = [NSMutableString stringWithString:l10n(@"Net Deck Feedback ")];
-    [subject appendString:self.version];
+    [subject appendString:[AppDelegate appVersion]];
     [self.mailer setSubject:subject];
     [self presentViewController:self.mailer animated:NO completion:nil];
 }
