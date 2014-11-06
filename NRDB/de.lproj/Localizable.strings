@@ -220,9 +220,10 @@
 
 // cycles
 "Core / Deluxe" = "Grundspiel / Erweiterung";
-"Cycle #1" = "1. Zyklus";
-"Cycle #2" = "2. Zyklus";
-"Cycle #3" = "3. Zyklus";
+"Cycle #1" = "Genesis-Zyklus";
+"Cycle #2" = "Spin-Zyklus";
+"Cycle #3" = "Lunar-Zyklus";
+"Cycle #4" = "SanSan-Zyklus";
 "-Unreleased-" = "-Unveröffentlicht-";
 
 // netrunnerdb.com
