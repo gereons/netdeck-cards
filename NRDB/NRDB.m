@@ -286,7 +286,16 @@ static NRDB* instance;
 -(void) saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock
 {
     self.saveCompletionBlock = completionBlock;
-    [self saveDeck:deck];
+    
+    NSString* token = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    if (token)
+    {
+        [self saveDeck:deck];
+    }
+    else
+    {
+        completionBlock(NO, nil);
+    }
 }
 
 -(void) saveDeck:(Deck *)deck
