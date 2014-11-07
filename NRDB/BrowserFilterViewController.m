@@ -252,7 +252,10 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     self.cardList = [CardList browserInitForRole:self.role];
     [self.cardList clearFilters];
     
-    [self filterCallback:self.setButton value:selectedSets];
+    if (selectedSets)
+    {
+        [self filterCallback:self.setButton value:selectedSets];
+    }
     NSString* selected;
     if ([selectedSets isKindOfClass:[NSSet class]])
     {
