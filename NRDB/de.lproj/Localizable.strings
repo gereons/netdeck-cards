@@ -21,7 +21,7 @@
 "Agenda Points" = "Agendapunkte";
 "Strength" = "Stärke";
 "Cost" = "Kosten";
-
+"OK" = "OK";
 "Cancel" = "Abbrechen";
 "Stop" = "Stopp";
 "Edit" = "Bearbeiten";
@@ -30,7 +30,10 @@
 "Delete" = "Löschen";
 "No" = "Nein";
 "Yes" = "Ja";
+"Runner" = "Runner";
 "Corp" = "Kon";
+"Deck" = "Deck";
+"Decks" = "Decks";
 
 // main menu
 "New Runner Deck" = "Neues Runner-Deck";
@@ -140,6 +143,7 @@
 "%d Cards · %d Influence" = "%d Karten · %d Einfluss";
 "%d Cards · %d Influence · %d AP" = "%d Karten · %d Einfluss · %d AP";
 "Date" = "Datum";
+"A-Z" = "A-Z";
 "Copy to Clipboard" = "Ins Clipboard kopieren";
 "Send via Email" = "Als E-Mail senden";
 "Sort" = "Sortierung";
@@ -151,6 +155,7 @@
 "Search for decks, identities or cards" = "Suche nach Decks, Identität oder Karten";
 
 // filter
+"Filter" = "Filter";
 "Strength: %@" = "Stärke: %@";
 "MU: %@" = "SE: %@";
 "Cost: %@" = "Kosten: %@";
