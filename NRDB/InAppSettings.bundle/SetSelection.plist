@@ -56,7 +56,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>cac</string>
+            <string>Deluxe #1</string>
 			<key>Key</key>
 			<string>use_cac</string>
 			<key>DefaultValue</key>
@@ -66,7 +66,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>hap</string>
+            <string>Deluxe #2</string>
 			<key>Key</key>
 			<string>use_hap</string>
 			<key>DefaultValue</key>
@@ -76,7 +76,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-            <string>Deluxe Expansion #3</string>
+            <string>Deluxe #3</string>
 			<key>Key</key>
 			<string>use_oac</string>
 			<key>DefaultValue</key>
@@ -118,7 +118,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>wla</string>
+			<string>Data Pack #1</string>
 			<key>Key</key>
 			<string>use_wla</string>
 			<key>DefaultValue</key>
@@ -128,7 +128,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>ta</string>
+			<string>Data Pack #2</string>
 			<key>Key</key>
 			<string>use_ta</string>
 			<key>DefaultValue</key>
@@ -138,7 +138,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>ce</string>
+			<string>Data Pack #3</string>
 			<key>Key</key>
 			<string>use_ce</string>
 			<key>DefaultValue</key>
@@ -148,7 +148,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>asis</string>
+			<string>Data Pack #4</string>
 			<key>Key</key>
 			<string>use_asis</string>
 			<key>DefaultValue</key>
@@ -158,7 +158,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>hs</string>
+			<string>Data Pack #5</string>
 			<key>Key</key>
 			<string>use_hs</string>
 			<key>DefaultValue</key>
@@ -168,7 +168,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>fp</string>
+			<string>Data Pack #6</string>
 			<key>Key</key>
 			<string>use_fp</string>
 			<key>DefaultValue</key>
@@ -184,7 +184,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>om</string>
+			<string>Data Pack #1</string>
 			<key>Key</key>
 			<string>use_om</string>
 			<key>DefaultValue</key>
@@ -194,7 +194,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>st</string>
+			<string>Data Pack #2</string>
 			<key>Key</key>
 			<string>use_st</string>
 			<key>DefaultValue</key>
@@ -204,7 +204,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>mt</string>
+			<string>Data Pack #3</string>
 			<key>Key</key>
 			<string>use_mt</string>
 			<key>DefaultValue</key>
@@ -214,7 +214,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>tc</string>
+			<string>Data Pack #4</string>
 			<key>Key</key>
 			<string>use_tc</string>
 			<key>DefaultValue</key>
@@ -224,7 +224,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>fal</string>
+			<string>Data Pack #5</string>
 			<key>Key</key>
 			<string>use_fal</string>
 			<key>DefaultValue</key>
@@ -234,7 +234,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>dt</string>
+			<string>Data Pack #6</string>
 			<key>Key</key>
 			<string>use_dt</string>
 			<key>DefaultValue</key>
@@ -250,7 +250,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>up</string>
+			<string>Data Pack #1</string>
 			<key>Key</key>
 			<string>use_up</string>
 			<key>DefaultValue</key>
@@ -260,7 +260,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>tsb</string>
+			<string>Data Pack #2</string>
 			<key>Key</key>
 			<string>use_tsb</string>
 			<key>DefaultValue</key>
@@ -270,7 +270,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-			<string>fc</string>
+            <string>Data Pack #3</string>
 			<key>Key</key>
 			<string>use_fc</string>
 			<key>DefaultValue</key>
@@ -306,6 +306,22 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
+        <dict>
+            <key>Title</key>
+            <string>Cycle #4</string>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>IASKCustomViewSpecifier</string>
+            <key>Title</key>
+            <string>Data Pack #1</string>
+            <key>Key</key>
+            <string>use_tv</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
 	</array>
 	<key>StringsTable</key>
 	<string>SetSelection</string>

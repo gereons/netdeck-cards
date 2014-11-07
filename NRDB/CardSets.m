@@ -68,6 +68,9 @@ static struct cardSetData {
     // o&c
     { 22, "oac", "", NRCycleCoreDeluxe, NO },
     
+    // sansan
+    { 23, "tv", "", NRCycleSanSan, NO },
+    
     { 0 }
 };
 
@@ -96,13 +99,14 @@ static struct cardSetData {
         ++c;
     }
     
-    setGroups = @[ @"", l10n(@"Core / Deluxe"), l10n(@"Cycle #1"), l10n(@"Cycle #2"), l10n(@"Cycle #3") ];
+    setGroups = @[ @"", l10n(@"Core / Deluxe"), l10n(@"Cycle #1"), l10n(@"Cycle #2"), l10n(@"Cycle #3"), l10n(@"Cycle #4") ];
     setsPerGroup = @[
         @[  @0 ],
         @[  @1,  @8, @15, @22 ],
         @[  @2,  @3,  @4,  @5,  @6,  @7 ],
         @[  @9, @10, @11, @12, @13, @14 ],
-        @[ @16, @17, @18, @19, @20, @21 ]
+        @[ @16, @17, @18, @19, @20, @21 ],
+        @[ @23 ]
     ];
     
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
