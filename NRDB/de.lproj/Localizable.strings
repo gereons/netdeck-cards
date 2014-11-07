@@ -34,6 +34,7 @@
 "Corp" = "Kon";
 "Deck" = "Deck";
 "Decks" = "Decks";
+"Password" = "Passwort";
 
 // main menu
 "New Runner Deck" = "Neues Runner-Deck";
