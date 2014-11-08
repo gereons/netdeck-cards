@@ -38,7 +38,7 @@
 @property BOOL altart;
 @property NRFaction faction4inf;    // faction for influence filter
 
-@property NRCardListSort sortType;
+@property NRBrowserSort sortType;
 
 @end
 
@@ -49,7 +49,7 @@
     if ((self = [super init]))
     {
         self.role = role;
-        self.sortType = NRCardListSortA_Z;
+        self.sortType = NRBrowserSortType;
         self.faction4inf = NRFactionNone;
         [self resetInitialCards];
         [self clearFilters];
@@ -60,7 +60,7 @@
 +(CardList*) browserInitForRole:(NRRole)role
 {
     CardList* cl = [[CardList alloc] init];
-    cl.sortType = NRCardListSortA_Z;
+    cl.sortType = NRBrowserSortType;
     cl.role = role;
     
     NSArray* roles;
@@ -261,7 +261,7 @@
     self.altart = altart;
 }
 
--(void) sortBy:(NRCardListSort)sortType
+-(void) sortBy:(NRBrowserSort)sortType
 {
     self.sortType = sortType;
 }
@@ -407,23 +407,48 @@
 -(void) sort:(NSMutableArray*)cards
 {
     [cards sortUsingComparator:^NSComparisonResult(Card* c1, Card* c2) {
-        if (c1.type > c2.type)
+        NSComparisonResult cmp = NSOrderedSame;
+        
+        switch (self.sortType)
         {
-            return NSOrderedDescending;
-        }
-        else if (c1.type < c2.type)
-        {
-            return NSOrderedAscending;
+            case NRBrowserSortType:
+            case NRBrowserSortTypeFaction:
+                cmp = [@(c1.type) compare:@(c2.type)];
+                break;
+                
+            case NRBrowserSortFaction:
+                cmp = [c1.factionStr compare:c2.factionStr];
+                break;
+                
+            case NRBrowserSortSet:
+            case NRBrowserSortSetType:
+            case NRBrowserSortSetFaction:
+                cmp = [@(c1.setNumber) compare:@(c2.setNumber)];
+                break;
         }
         
-        NSComparisonResult cmp = NSOrderedSame;
-        if (self.sortType == NRCardListSortFactionA_Z)
-        {
-            cmp = [c1.factionStr compare:c2.factionStr];
-        }
         if (cmp == NSOrderedSame)
         {
-            return [c1.name localizedCaseInsensitiveCompare:c2.name];
+            switch (self.sortType)
+            {
+                case NRBrowserSortTypeFaction:
+                case NRBrowserSortSetFaction:
+                    cmp = [c1.factionStr compare:c2.factionStr];
+                    break;
+                    
+                case NRBrowserSortSetType:
+                case NRBrowserSortFaction:
+                    cmp = [@(c1.type) compare:@(c2.type)];
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+        
+        if (cmp == NSOrderedSame)
+        {
+            cmp = [c1.name localizedCaseInsensitiveCompare:c2.name];
         }
         return cmp;
     }];
@@ -442,13 +467,30 @@
     
     NSMutableArray* filteredCards = [self applyFilters];
     [self sort:filteredCards];
-    NRCardType prevType = NRCardTypeNone;
+    
+    NSString* prevSection = @"";
     NSMutableArray* arr;
     for (Card* card in filteredCards)
     {
-        if (card.type != prevType)
+        NSString* section;
+        switch (self.sortType)
         {
-            [sections addObject:card.typeStr];
+            case NRBrowserSortType:
+            case NRBrowserSortTypeFaction:
+                section = card.typeStr;
+                break;
+            case NRBrowserSortFaction:
+                section = card.factionStr;
+                break;
+            case NRBrowserSortSet:
+            case NRBrowserSortSetType:
+            case NRBrowserSortSetFaction:
+                section = card.setName;
+                break;
+        }
+        if (![section isEqualToString:prevSection])
+        {
+            [sections addObject:section];
             if (arr != nil)
             {
                 [cards addObject:arr];
@@ -456,7 +498,7 @@
             arr = [NSMutableArray array];
         }
         [arr addObject:card];
-        prevType = card.type;
+        prevSection = section;
     }
     
     if (arr.count > 0)

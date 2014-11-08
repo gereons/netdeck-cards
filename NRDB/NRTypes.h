@@ -99,9 +99,13 @@ typedef NS_ENUM(NSInteger, NRCardView) {
     NRCardViewSmallTable
 };
 
-typedef NS_ENUM(NSInteger, NRCardListSort) {
-    NRCardListSortA_Z,
-    NRCardListSortFactionA_Z
+typedef NS_ENUM(NSInteger, NRBrowserSort) {
+    NRBrowserSortType,
+    NRBrowserSortFaction,
+    NRBrowserSortTypeFaction,
+    NRBrowserSortSet,
+    NRBrowserSortSetFaction,
+    NRBrowserSortSetType
 };
 
 typedef NS_ENUM(NSInteger, NRCycle)

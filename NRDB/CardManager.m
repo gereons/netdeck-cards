@@ -294,7 +294,7 @@ static BOOL initializing;
 {
     NSAssert(initializing, @"oops");
     
-    if ([card.setCode isEqualToString:ALT_SET])
+    if ([card.setCode caseInsensitiveCompare:ALT_SET] == NSOrderedSame)
     {
         [altCards setObject:card forKey:card.code];
         return;

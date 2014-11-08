@@ -227,7 +227,7 @@ static NSDictionary* cropValues;
         c->_setName = SPECIAL_SET;
     }
     
-    c->_isCore = [c.setName.lowercaseString isEqualToString:CORE_SET];
+    c->_isCore = [c.setName caseInsensitiveCompare:CORE_SET] == NSOrderedSame;
     
     JSON_STR(subtype, @"subtype");
     if (c.subtype.length == 0)

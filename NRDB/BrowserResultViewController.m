@@ -25,7 +25,7 @@
 
 @interface BrowserResultViewController ()
 
-@property NRCardListSort sortType;
+@property NRBrowserSort sortType;
 @property CardList* cardList;
 @property NSArray* sections;
 @property NSArray* values;
@@ -49,8 +49,12 @@ static BrowserResultViewController* instance;
 + (void) initialize
 {
     sortStr = @{
-                @(NRCardListSortA_Z): l10n(@"A-Z"),
-                @(NRCardListSortFactionA_Z): l10n(@"Faction/A-Z")
+                @(NRBrowserSortType): l10n(@"Type"),
+                @(NRBrowserSortFaction): l10n(@"Faction"),
+                @(NRBrowserSortTypeFaction): l10n(@"Type/Faction"),
+                @(NRBrowserSortSet): l10n(@"Set"),
+                @(NRBrowserSortSetFaction): l10n(@"Set/Faction"),
+                @(NRBrowserSortSetType): l10n(@"Set/Type"),
     };
 }
 
@@ -93,8 +97,13 @@ static BrowserResultViewController* instance;
                                                       target:self
                                                       action:@selector(sortPopup:)];
     self.sortButton.possibleTitles = [NSSet setWithArray:@[
-                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"A-Z")],
-                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Faction/A-Z")] ] ];
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Type")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Faction")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Type/Faction")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Set")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Set/Faction")],
+                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Set/Type")],
+                                                           ] ];
     topItem.rightBarButtonItem = self.sortButton;
     
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
@@ -164,12 +173,23 @@ static BrowserResultViewController* instance;
     
     self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRCardListSortA_Z];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Type") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRBrowserSortType];
     }]];
-    
-    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction/A-Z") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRCardListSortFactionA_Z];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRBrowserSortFaction];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Type/Faction") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRBrowserSortTypeFaction];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Set") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRBrowserSortSet];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Set/Faction") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRBrowserSortSetFaction];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Set/Type") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRBrowserSortSetType];
     }]];
     
     [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
@@ -184,7 +204,7 @@ static BrowserResultViewController* instance;
     [self presentViewController:self.popup animated:NO completion:nil];
 }
 
--(void) changeSortType:(NRCardListSort)sortType
+-(void) changeSortType:(NRBrowserSort)sortType
 {
     self->_sortType = sortType;
     self.sortButton.title = [NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]];

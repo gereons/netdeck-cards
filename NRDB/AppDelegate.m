@@ -107,7 +107,7 @@ const NSString* const kANY = @"Any";
         
         BROWSER_VIEW_STYLE: @(NRCardViewLargeTable),
         BROWSER_VIEW_SCALE: @(1.0),
-        BROWSER_SORT_TYPE: @(NRCardListSortA_Z),
+        BROWSER_SORT_TYPE: @(NRBrowserSortType),
         
         NUM_CORES: @(3),
         
