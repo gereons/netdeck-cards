@@ -79,6 +79,8 @@
 
 - (void) settingsChanged:(NSNotification*)notification
 {
+    [CardSets clearDisabledSets];
+    
     if ([notification.object isEqualToString:USE_DROPBOX])
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:USE_DROPBOX] boolValue];
@@ -225,6 +227,7 @@
     }
     
     NRSwitch* setSwitch = [[NRSwitch alloc] initWithHandler:^(BOOL on) {
+        [CardSets clearDisabledSets];
         [[NSUserDefaults standardUserDefaults] setBool:on forKey:specifier.key];
     }];
     

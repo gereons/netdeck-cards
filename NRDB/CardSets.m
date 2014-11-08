@@ -28,6 +28,7 @@ static NSArray* setGroups;
 static NSArray* setsPerGroup;
 static NSMutableSet* newSetCodes;
 static NSMutableDictionary* cgdbToNrdbMap;
+static NSSet* disabledSets;
 
 static struct cardSetData {
     int setNum;
@@ -157,30 +158,39 @@ static struct cardSetData {
 
 +(NSSet*) disabledSetCodes
 {
-    NSMutableSet* sets = [NSMutableSet set];
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    for (CardSets* cs in cardSets)
+    if (disabledSets == nil)
     {
-        if (![settings boolForKey:cs.settingsKey])
+        NSMutableSet* sets = [NSMutableSet set];
+        NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+        for (CardSets* cs in cardSets)
         {
-            [sets addObject:cs.setCode];
+            if (![settings boolForKey:cs.settingsKey])
+            {
+                [sets addObject:cs.setCode];
+            }
         }
+        
+        if ([settings boolForKey:IGNORE_UNKNOWN_SETS])
+        {
+            [sets addObjectsFromArray:newSetCodes.allObjects];
+        }
+        if (![settings boolForKey:USE_DRAFT_IDS])
+        {
+            [sets addObject:DRAFT_SET_CODE];
+        }
+        if (![settings boolForKey:USE_UNPUBLISHED_IDS])
+        {
+            [sets addObject:SPECIAL_SET_CODE];
+        }
+        disabledSets = sets;
     }
     
-    if ([settings boolForKey:IGNORE_UNKNOWN_SETS])
-    {
-        [sets addObjectsFromArray:newSetCodes.allObjects];
-    }
-    if (![settings boolForKey:USE_DRAFT_IDS])
-    {
-        [sets addObject:DRAFT_SET_CODE];
-    }
-    if (![settings boolForKey:USE_UNPUBLISHED_IDS])
-    {
-        [sets addObject:SPECIAL_SET_CODE];
-    }
-    
-    return sets;
+    return disabledSets;
+}
+
++(void) clearDisabledSets
+{
+    disabledSets = nil;
 }
 
 +(NSSet*) knownSetCodes

@@ -27,6 +27,8 @@
 
 // all sets that the user wants to ignore
 +(NSSet*) disabledSetCodes;
++(void) clearDisabledSets;
+
 // all sets we know about
 +(NSSet*) knownSetCodes;
 +(NSString*) setCodeForCgdbCode:(NSString*)cgdbCode;
