@@ -98,6 +98,10 @@ static NSCache* memCache;
     
     memCache = [[NSCache alloc] init];
     memCache.name = @"netdeck";
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [ImageCache initializeMemCache];
+    });
 }
 
 +(ImageCache*) sharedInstance
@@ -117,6 +121,7 @@ static NSCache* memCache;
     [settings synchronize];
     
     [memCache removeAllObjects];
+    unavailableImages = [NSMutableSet set];
     
     [ImageCache removeCacheDirectory];
 }
@@ -125,33 +130,48 @@ static NSCache* memCache;
 {
     NSString* key = card.code;
     
-    // NSLog(@"get img for %@", key);
-    UIImage* img = [ImageCache getImageFor:card.code];
+    UIImage* img = [memCache objectForKey:key];
     if (img)
     {
-        // NSLog(@"cached, check for update");
-        if (APP_ONLINE)
-        {
-            [self checkForImageUpdate:card withKey:key];
-        }
-        
-        if (completionBlock)
-        {
-            completionBlock(card, img, NO);
-        }
-        
+        completionBlock(card, img, NO);
         return;
     }
     
-    // return a placeholder if we're offline or already know that the img is unavailable
-    if (!APP_ONLINE || [unavailableImages containsObject:key])
-    {
-        completionBlock(card, [ImageCache placeholderFor:card.role], YES);
-    }
-    else
-    {
-        [self downloadImageFor:card withKey:key completion:completionBlock];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        UIImage* img = [ImageCache getDecodedImageFor:key];
+        
+        if (img)
+        {
+            if (APP_ONLINE)
+            {
+                [self checkForImageUpdate:card withKey:key];
+            }
+            
+            [memCache setObject:img forKey:key];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionBlock(card, img, NO);
+            });
+        }
+        else
+        {
+            // return a placeholder if we're offline or already know that the img is unavailable
+            if (!APP_ONLINE || [unavailableImages containsObject:key])
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionBlock(card, [ImageCache placeholderFor:card.role], YES);
+                });
+            }
+            else
+            {
+                [self downloadImageFor:card withKey:key completion:^(Card *card, UIImage *image, BOOL placeholder) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completionBlock(card, image, placeholder);
+                    });
+                }];
+            }
+
+        }
+    });
 }
 
 -(void) downloadImageFor:(Card *)card withKey:(NSString*)key completion:(CompletionBlock)completionBlock
@@ -392,6 +412,28 @@ static NSCache* memCache;
 
 #pragma mark simple filesystem cache
 
++(void) initializeMemCache
+{
+    // NSLog(@"start initMemCache");
+    NSString* dir = [ImageCache directoryForImages];
+    NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:nil];
+    
+    for (NSString* file in files)
+    {
+        NSString* imgFile = [dir stringByAppendingPathComponent:file];
+        NSData* imgData = [NSData dataWithContentsOfFile:imgFile];
+        if (imgData)
+        {
+            UIImage* img = [ImageCache decodedImage:[UIImage imageWithData:imgData]];
+            if (img)
+            {
+                [memCache setObject:img forKey:file];
+            }
+        }
+    }
+    // NSLog(@"end initMemCache");
+}
+
 +(NSString*) directoryForImages
 {
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -425,13 +467,25 @@ static NSCache* memCache;
         return img;
     }
     
+    img = [ImageCache getDecodedImageFor:key];
+        
+    if (img)
+    {
+        [memCache setObject:img forKey:key];
+    }
+    return img;
+}
+
++(UIImage*) getDecodedImageFor:(NSString*) key
+{
     NSString* dir = [ImageCache directoryForImages];
     NSString* file = [dir stringByAppendingPathComponent:key];
     
     NSData* imgData = [NSData dataWithContentsOfFile:file];
+    UIImage* img = nil;
     if (imgData)
     {
-        img = [UIImage imageWithData:imgData];
+        img = [ImageCache decodedImage:[UIImage imageWithData:imgData]];
     }
     
     if (img == nil || img.size.width < 200)
@@ -445,11 +499,7 @@ static NSCache* memCache;
         [dict removeObjectForKey:key];
         [settings setObject:dict forKey:LAST_MOD_CACHE];
     }
-        
-    if (img)
-    {
-        [memCache setObject:img forKey:key];
-    }
+    
     return img;
 }
 
@@ -469,6 +519,7 @@ static NSCache* memCache;
         }
     }
 
+    [memCache setObject:img forKey:key];
     NSData* data = UIImagePNGRepresentation(img);
     
     if (data != nil)
@@ -516,6 +567,37 @@ static NSCache* memCache;
         }
     }
     return cropped;
+}
+
+// see https://stackoverflow.com/questions/12096338/images-from-documents-asynchronous
++(UIImage*) decodedImage:(UIImage*)img
+{
+    CGImageRef imageRef = img.CGImage;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(NULL,
+                                                 CGImageGetWidth(imageRef),
+                                                 CGImageGetHeight(imageRef),
+                                                 8,
+                                                 // Just always return width * 4 will be enough
+                                                 CGImageGetWidth(imageRef) * 4,
+                                                 // System only supports RGB, set explicitly
+                                                 colorSpace,
+                                                 // Makes system don't need to do extra conversion when displayed.
+                                                 kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little);
+    CGColorSpaceRelease(colorSpace);
+    if (!context)
+    {
+        return nil;
+    }
+    
+    CGRect rect = CGRectMake(0, 0, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef));
+    CGContextDrawImage(context, rect, imageRef);
+    CGImageRef decompressedImageRef = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
+    
+    UIImage *decompressedImage = [[UIImage alloc] initWithCGImage:decompressedImageRef scale:img.scale orientation:img.imageOrientation];
+    CGImageRelease(decompressedImageRef);
+    return decompressedImage;
 }
 
 @end
