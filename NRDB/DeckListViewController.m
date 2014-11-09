@@ -62,6 +62,8 @@
 @property BOOL largeCells;
 @property NRAlertView* nameAlert;
 
+@property BOOL initializing;
+
 @end
 
 @implementation DeckListViewController
@@ -74,6 +76,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.initializing = YES;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
@@ -226,6 +229,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
         self.deckChanged = NO;
     }
+    self.initializing = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -838,6 +842,11 @@
 
 -(void) reloadViews
 {
+    if (self.initializing)
+    {
+        return;
+    }
+    
     if (!self.tableView.hidden)
     {
         [self.tableView reloadData];
