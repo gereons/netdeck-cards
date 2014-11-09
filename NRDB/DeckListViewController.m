@@ -211,11 +211,6 @@
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
 
-    if (self.deck.identity == nil && self.filename == nil && self.deck.cards.count == 0)
-    {
-        [self selectIdentity:nil];
-    }
-    
     [self refresh];
 }
 
@@ -230,6 +225,11 @@
         self.deckChanged = NO;
     }
     self.initializing = NO;
+    
+    if (self.deck.identity == nil && self.filename == nil && self.deck.cards.count == 0)
+    {
+        [self selectIdentity:nil];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
