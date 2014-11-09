@@ -32,6 +32,8 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 @property NSSet* selectedTypes;
 @property NSMutableDictionary* selectedValues;
 
+@property BOOL inititalizing;
+
 @end
 
 @implementation BrowserFilterViewController
@@ -57,6 +59,8 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.inititalizing = YES;
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
@@ -148,6 +152,9 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     detailViewManager.detailViewController = self.snc;
 
     [self clearFiltersClicked:nil];
+    
+    self.inititalizing = NO;
+    [self updateResults];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -629,7 +636,10 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     NSUInteger count = self.cardList.count;
     NSString* fmt = count == 1 ? l10n(@"%lu matching card") : l10n(@"%lu matching cards");
     self.summaryLabel.text = [NSString stringWithFormat:fmt, count ];
-    [self.browser updateDisplay:self.cardList];
+    if (!self.inititalizing)
+    {
+        [self.browser updateDisplay:self.cardList];
+    }
 }
 
 @end

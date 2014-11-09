@@ -311,7 +311,7 @@ static BrowserResultViewController* instance;
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* cellIdentifier = @"browserImageCell";
-    
+
     BrowserImageCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     NSArray* arr = self.values[indexPath.section];
