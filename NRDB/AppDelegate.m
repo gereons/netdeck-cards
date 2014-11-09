@@ -30,6 +30,8 @@ const NSString* const kANY = @"Any";
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
+    [self removeOldNrdbData];
+    
     [CardManager setupFromFiles];
     
     DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"4mhw6piwd9wqti3" secret:@"5j8qxt2ywsrlk73"];
@@ -58,8 +60,6 @@ const NSString* const kANY = @"Any";
     
     [DeckImport checkClipboardForDeck];
     [CardImageViewPopover monitorKeyboard];
-    
-    [self removeOldNrdbData];
     
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status)
@@ -121,22 +121,23 @@ const NSString* const kANY = @"Any";
 -(void) removeOldNrdbData
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    
     if ([settings boolForKey:@"_nrdb_removed_"])
     {
         return;
     }
     
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
-    
-    NSString* images = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString* cachesDirectory = [paths objectAtIndex:0];
+    NSString* oldImages = [cachesDirectory stringByAppendingPathComponent:@"images"];
     
     NSFileManager* mgr = [NSFileManager defaultManager];
-    [mgr removeItemAtPath:images error:nil];
-    
-    NSString* json = [documentsDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
-    [mgr removeItemAtPath:json error:nil];
+    BOOL ok = [mgr removeItemAtPath:oldImages error:nil];
+
+    paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentDirectory = paths[0];
+    NSString* oldJson = [documentDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
+    NSString* newJson = [cachesDirectory stringByAppendingPathComponent:@"nrcards.json"];
+    ok = [mgr moveItemAtPath:oldJson toPath:newJson error:nil];
     
     [settings setBool:YES forKey:@"_nrdb_removed_"];
     [settings synchronize];
