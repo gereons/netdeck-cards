@@ -122,6 +122,7 @@ static BrowserResultViewController* instance;
     self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
+    self.collectionView.alwaysBounceVertical = YES;
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(703, 22);

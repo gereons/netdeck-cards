@@ -114,12 +114,15 @@
     
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.backgroundColor = [UIColor clearColor];
-    self.collectionView.backgroundColor = [UIColor clearColor];
     
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0);
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 44, 0);
+    
     self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0); // top == 0 because this is the first view in the .xib. wtf?
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 44, 0);
+    
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    self.collectionView.alwaysBounceVertical = YES;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LargeCardCell" bundle:nil] forCellReuseIdentifier:@"largeCardCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SmallCardCell" bundle:nil] forCellReuseIdentifier:@"smallCardCell"];

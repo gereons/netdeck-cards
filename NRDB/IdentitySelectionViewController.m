@@ -91,6 +91,7 @@
     UITapGestureRecognizer* collectionTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
     collectionTap.numberOfTapsRequired = 2;
     [self.collectionView addGestureRecognizer:collectionTap];
+    self.collectionView.alwaysBounceVertical = YES;
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(500, 22);
