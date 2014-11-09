@@ -36,7 +36,7 @@ PODS:
     - DTFoundation/Core
   - GRMustache (7.3.0):
     - JRSwizzle (~> 1.0)
-  - InAppSettingsKit (HEAD based on 2.2)
+  - InAppSettingsKit (2.2.1)
   - JRSwizzle (1.0)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT
@@ -77,7 +77,7 @@ PODS:
   - SDCAlertView (2.0.1):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
-  - SDCAutoLayout (2.0.1)
+  - SDCAutoLayout (2.0.2)
   - SVProgressHUD (HEAD based on 1.0)
   - TestFlightSDK (3.0.2)
   - YOLOKit (11):
@@ -245,7 +245,7 @@ DEPENDENCIES:
   - Dropbox-Sync-API-SDK
   - DTCoreText
   - GRMustache
-  - InAppSettingsKit (HEAD)
+  - InAppSettingsKit
   - libextobjc
   - SDCAlertView
   - SVProgressHUD (HEAD)
@@ -260,12 +260,12 @@ SPEC CHECKSUMS:
   DTCoreText: 1fc0aadfa238d14c6cc56035af4e2b76b958e3b1
   DTFoundation: 360bc65ab44f588611f47324b8cfb0f18e04b263
   GRMustache: efecd3b603f0a7a99cf6bdf3998782ee0c465726
-  InAppSettingsKit: 08d5d21057973c5fd6cd9f7063fc27f73aa0d7a3
+  InAppSettingsKit: 1d23ffbc68f628fb5d6fce0c2eed46ac6b4f3ce7
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: d6146fce3ebea986b7f75fcb4c967639200b88b0
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64
   SDCAlertView: 07ff004fe7adc4216db6344afaa851ea203f6f54
-  SDCAutoLayout: 9998a215ce25c352bef27233240b997880015a7f
+  SDCAutoLayout: 4a963629725ed2b7d665e789ca4d6cfcd7446822
   SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
   TestFlightSDK: 0c24c533748d0d84bfe7a3cb6036fa79124d84ee
   YOLOKit: e83d381f83f33f2b66abf6fe0249fca57b05a541

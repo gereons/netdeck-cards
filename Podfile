@@ -12,7 +12,7 @@ pod 'libextobjc'
 pod 'CSStickyHeaderFlowLayout'
 pod 'SDCAlertView'
 pod 'YOLOKit'
-pod 'InAppSettingsKit', :head
+pod 'InAppSettingsKit'
 
 post_install do | installer |
   require 'fileutils'
