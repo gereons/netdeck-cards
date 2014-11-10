@@ -218,7 +218,10 @@
     {
         for (Deck* deck in arr)
         {
-            [DeckExport asOctgn:deck autoSave:YES];
+            if (deck.identity)
+            {
+                [DeckExport asOctgn:deck autoSave:YES];
+            }
         }
     }
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
