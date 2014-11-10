@@ -169,7 +169,7 @@
 
 // startup alert
 "No Card Data" = "No hay datos de cartas";
-"To use this app, you must first download card data.\nGo to Settings > Card Data to do this." = "Para usar esta aplicación debes primero descargar los datos de las cartas";
+"To use this app, you must first download card data." = "Para usar esta aplicación debes primero descargar los datos de las cartas.";
 "Not now" = "Ahora no";
 "Download" = "Descargar";
 

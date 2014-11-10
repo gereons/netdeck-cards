@@ -188,7 +188,7 @@
 
 // startup alert
 "No Card Data" = "Keine Karten-Daten";
-"To use this app, you must first download card data.\nGo to Settings > Card Data to do this." = "Um diese App zu benutzen, musst du zuerst Karten-Daten laden. Benutze dafür Einstellungen > Karten-Daten.";
+"To use this app, you must first download card data." = "Um diese App zu benutzen, musst du zuerst Karten-Daten laden.";
 "Not now" = "Jetzt nicht";
 "Download" = "Laden";
 
