@@ -70,7 +70,7 @@ static struct cardSetData {
     { 22, "oac", "", NRCycleCoreDeluxe, NO },
     
     // sansan
-    { 23, "tv", "", NRCycleSanSan, NO },
+    { 23, "val", "", NRCycleSanSan, NO },
     
     { 0 }
 };
@@ -88,8 +88,8 @@ static struct cardSetData {
     {
         CardSets* csd = [CardSets new];
         csd.setNum = c->setNum;
-        csd.setCode = [NSString stringWithUTF8String:c->nrdbCode];
         NSString* nrdbCode = [NSString stringWithUTF8String:c->nrdbCode];
+        csd.setCode = nrdbCode;
         csd.settingsKey = [NSString stringWithFormat:@"use_%@", nrdbCode];
         csd.cycle = c->cycle;
         csd.released = c->released;

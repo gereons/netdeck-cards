@@ -56,7 +56,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-            <string>Deluxe #1</string>
+			<string>Deluxe #1</string>
 			<key>Key</key>
 			<string>use_cac</string>
 			<key>DefaultValue</key>
@@ -66,7 +66,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-            <string>Deluxe #2</string>
+			<string>Deluxe #2</string>
 			<key>Key</key>
 			<string>use_hap</string>
 			<key>DefaultValue</key>
@@ -76,38 +76,38 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-            <string>Deluxe #3</string>
+			<string>Deluxe #3</string>
 			<key>Key</key>
 			<string>use_oac</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
-            <key>Title</key>
-            <string>Special Identities</string>
-            <key>Type</key>
-            <string>PSGroupSpecifier</string>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Include Draft Identities</string>
-            <key>Key</key>
-            <string>use_draft_identities</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Include Unpublished Identities</string>
-            <key>Key</key>
-            <string>use_unpublished_identities</string>
-            <key>DefaultValue</key>
-            <false/>
-        </dict>
+		<dict>
+			<key>Title</key>
+			<string>Special Identities</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Include Draft Identities</string>
+			<key>Key</key>
+			<string>use_draft_identities</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Include Unpublished Identities</string>
+			<key>Key</key>
+			<string>use_unpublished_identities</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
 		<dict>
 			<key>Title</key>
 			<string>Cycle #1</string>
@@ -270,7 +270,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-            <string>Data Pack #3</string>
+			<string>Data Pack #3</string>
 			<key>Key</key>
 			<string>use_fc</string>
 			<key>DefaultValue</key>
@@ -280,7 +280,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-            <string>Data Pack #4</string>
+			<string>Data Pack #4</string>
 			<key>Key</key>
 			<string>use_uao</string>
 			<key>DefaultValue</key>
@@ -290,7 +290,7 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-            <string>Data Pack #5</string>
+			<string>Data Pack #5</string>
 			<key>Key</key>
 			<string>use_atr</string>
 			<key>DefaultValue</key>
@@ -300,28 +300,28 @@
 			<key>Type</key>
 			<string>IASKCustomViewSpecifier</string>
 			<key>Title</key>
-            <string>Data Pack #6</string>
+			<string>Data Pack #6</string>
 			<key>Key</key>
 			<string>use_ts</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
-            <key>Title</key>
-            <string>Cycle #4</string>
-            <key>Type</key>
-            <string>PSGroupSpecifier</string>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>IASKCustomViewSpecifier</string>
-            <key>Title</key>
-            <string>Data Pack #1</string>
-            <key>Key</key>
-            <string>use_tv</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
+		<dict>
+			<key>Title</key>
+			<string>Cycle #4</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKCustomViewSpecifier</string>
+			<key>Title</key>
+			<string>Data Pack #1</string>
+			<key>Key</key>
+			<string>use_val</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>SetSelection</string>
