@@ -380,11 +380,11 @@
     NSString* cardsMsg;
     if (cardsOk)
     {
-        cardsMsg = cardsOk.intValue ? l10n(@"Cards endpoint URL is OK") : l10n(@"Cards endpoint URL is invalid");
+        cardsMsg = cardsOk.intValue ? l10n(@"Cards Endpoint URL is OK") : l10n(@"Cards Endpoint URL is invalid");
     }
     else
     {
-        cardsMsg = l10n(@"Cards endpoint URL not tested");
+        cardsMsg = l10n(@"Cards Endpoint URL not tested");
     }
     
     NSString* lockpickMsg;

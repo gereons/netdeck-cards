@@ -9,9 +9,5 @@
 "Download missing Card Images Now" = "Fehlende Karten-Bilder jetzt laden";
 "Clear All Cached Data" = "Cache löschen";
 
-"Test API Connection" = "API-Verbindung testen";
-"Lockpick Code" = "Lockpick-Code";
-"Cards Endpoint URL" = "Cards-URL";
+"Expert Settings" = "Experten-Einstellungen";
 "API Settings" = "API-Einstellungen";
-"NetrunnerDB Server" = "NetrunnerDB-Server";
-"apiSettingsFooter" = "Entweder Servername, Cards-URL oder Lockpick-Code ist erforderlich.\nPriorität: Server > Cards-URL > Lockpick";

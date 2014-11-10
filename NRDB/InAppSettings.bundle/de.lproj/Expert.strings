@@ -1,0 +1,8 @@
+/* Expert.strings - de */
+
+"Test API Connection" = "API-Verbindung testen";
+"Lockpick Code" = "Lockpick-Code";
+"Cards Endpoint URL" = "Cards-URL";
+"API Settings" = "API-Einstellungen";
+"NetrunnerDB Server" = "NetrunnerDB-Server";
+"apiSettingsFooter" = "Entweder Servername, Cards-URL oder Lockpick-Code ist erforderlich.\nPriorität: Server > Cards-URL > Lockpick";
