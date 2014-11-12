@@ -277,7 +277,7 @@ static NSDictionary* cropValues;
     JSON_INT(trash, @"trash");
     
     JSON_STR(imageSrc, @"imagesrc");
-    if (isNrdb)
+    if (isNrdb && c->_imageSrc.length > 0)
     {
         NSString* host = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_HOST];
         c->_imageSrc = [NSString stringWithFormat:@"http://%@%@", host, c->_imageSrc];
