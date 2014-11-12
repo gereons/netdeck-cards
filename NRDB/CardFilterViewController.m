@@ -194,8 +194,6 @@ static NSInteger viewMode = VIEW_LIST;
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(showAllFilters) forKey:SHOW_ALL_FILTERS];
     [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
-    
-    [settings synchronize];
 }
 
 -(void) setResultFrames:(id)sender

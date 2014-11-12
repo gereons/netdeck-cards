@@ -242,8 +242,6 @@
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
     [settings setObject:@(self.sortType) forKey:DECK_VIEW_SORT];
-    
-    [settings synchronize];
 }
 
 #pragma mark keyboard show/hide
@@ -1034,6 +1032,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if (tableView.hidden)
+    {
+        return 0;
+    }
     return self.sections.count;
 }
 
@@ -1150,6 +1152,10 @@
 
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    if (collectionView.hidden)
+    {
+        return 0;
+    }
     return 1;
 }
 

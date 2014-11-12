@@ -93,7 +93,6 @@ static NSCache* memCache;
         unavailableImages = [NSMutableSet set];
         [settings setDouble:today forKey:UNAVAIL_IMG_DATE];
         [settings setObject:@[] forKey:UNAVAILABLE_IMG];
-        [settings synchronize];
     }
     
     memCache = [[NSCache alloc] init];

@@ -147,7 +147,6 @@ static BrowserResultViewController* instance;
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.scale) forKey:BROWSER_VIEW_SCALE];
     [settings setObject:@(self.sortType) forKey:BROWSER_SORT_TYPE];
-    [settings synchronize];
     
     instance = nil;
 }
@@ -251,6 +250,10 @@ static BrowserResultViewController* instance;
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if (tableView.hidden)
+    {
+        return 0;
+    }
     return self.sections.count;
 }
 
@@ -300,6 +303,10 @@ static BrowserResultViewController* instance;
 
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    if (collectionView.hidden)
+    {
+        return 0;
+    }
     return self.sections.count;
 }
 
