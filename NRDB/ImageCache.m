@@ -560,7 +560,7 @@ static NSCache* memCache;
         cropped = [UIImage imageWithCGImage:imageRef];
         NSAssert(cropped != nil, @"nil cropped image");
         CGImageRelease(imageRef);
-        if (!cropped)
+        if (cropped)
         {
             [memCache setObject:cropped forKey:key];
         }
