@@ -175,7 +175,6 @@ static NSInteger viewMode = VIEW_LIST;
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFiltersClicked:)];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(updateFilter:) name:UPDATE_FILTER object:nil];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
@@ -548,7 +547,7 @@ static NSInteger viewMode = VIEW_LIST;
     [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Faction" selected:selected];
 }
 
--(void) filterCallback:(UIButton *)button value:(NSObject *)object
+-(void) filterCallback:(UIButton *)button type:(NSString*)type value:(NSObject *)object
 {
     NSString* value = [object isKindOfClass:[NSString class]] ? (NSString*)object : nil;
     NSSet* values = [object isKindOfClass:[NSSet class]] ? (NSSet*)object : nil;
@@ -570,6 +569,8 @@ static NSInteger viewMode = VIEW_LIST;
         [self resetButton:SUBTYPE_BUTTON];
     }
     [self.selectedValues setObject:value ? value : values forKey:@(button.tag)];
+    
+    [self updateFilter:type value:object];
 }
 
 -(void) resetAllButtons
@@ -615,7 +616,7 @@ static NSInteger viewMode = VIEW_LIST;
     }
     
     [self.selectedValues setObject:kANY forKey:@(tag)];
-    [self postNotification:[pfx lowercaseString] value:kANY];
+    [self updateFilter:[pfx lowercaseString] value:kANY];
     [btn setTitle:[NSString stringWithFormat:@"%@: %@", l10n(pfx), l10n(kANY)] forState:UIControlStateNormal];
     
     NSAssert(btn != nil, @"no button");
@@ -629,7 +630,7 @@ static NSInteger viewMode = VIEW_LIST;
     // NSLog(@"str: %f %d", sender.value, value);
     sender.value = value--;
     self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self postNotification:@"strength" value:@(value)];
+    [self updateFilter:@"strength" value:@(value)];
 }
 
 -(void) muValueChanged:(UISlider*)sender
@@ -638,7 +639,7 @@ static NSInteger viewMode = VIEW_LIST;
     // NSLog(@"mu: %f %d", sender.value, value);
     sender.value = value--;
     self.muLabel.text = [NSString stringWithFormat:l10n(@"MU: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self postNotification:@"mu" value:@(value)];
+    [self updateFilter:@"mu" value:@(value)];
 }
 
 -(void) costValueChanged:(UISlider*)sender
@@ -647,7 +648,7 @@ static NSInteger viewMode = VIEW_LIST;
     // NSLog(@"cost: %f %d", sender.value, value);
     sender.value = value--;
     self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self postNotification:@"card cost" value:@(value)];
+    [self updateFilter:@"card cost" value:@(value)];
 }
 
 -(void) influenceValueChanged:(UISlider*)sender
@@ -657,7 +658,7 @@ static NSInteger viewMode = VIEW_LIST;
     sender.value = value--;
     self.influenceValue = value;
     self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self postNotification:@"influence" value:@(value)];
+    [self updateFilter:@"influence" value:@(value)];
 }
 
 -(void) apValueChanged:(UISlider*)sender
@@ -666,7 +667,7 @@ static NSInteger viewMode = VIEW_LIST;
     // NSLog(@"ap: %f %d", sender.value, value);
     sender.value = value--;
     self.apLabel.text = [NSString stringWithFormat:l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self postNotification:@"agendaPoints" value:@(value)];
+    [self updateFilter:@"agendaPoints" value:@(value)];
 }
 
 #pragma mark scope
@@ -704,7 +705,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.scope = scope;
     [self.scopeButton setTitle:[NSString stringWithFormat:@"%@ ▾", scopeLabels[@(self.scope)]] forState:UIControlStateNormal];
     
-    [self postNotification:scopes[self.scope] value:self.searchText];
+    [self updateFilter:scopes[self.scope] value:self.searchText];
 }
 
 #pragma mark text search
@@ -719,7 +720,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.searchText = [textField.text stringByReplacingCharactersInRange:range withString:string];
     // NSLog(@"search: %d %@", self.scope, self.searchText);
     
-    [self postNotification:scopes[self.scope] value:self.searchText];
+    [self updateFilter:scopes[self.scope] value:self.searchText];
     
     return YES;
 }
@@ -733,7 +734,7 @@ static NSInteger viewMode = VIEW_LIST;
     
     self.searchText = @"";
     
-    [self postNotification:scopes[self.scope] value:self.searchText];
+    [self updateFilter:scopes[self.scope] value:self.searchText];
     return YES;
 }
 
@@ -759,27 +760,25 @@ static NSInteger viewMode = VIEW_LIST;
 
 #pragma mark notification
 
--(void) updateFilter:(NSNotification*)notification
+-(void) updateFilter:(NSString*)type value:(NSObject*)valueObject
 {
-    // NSLog(@"update filter %@", notification.userInfo);
-    
-    NSString* type = [notification.userInfo objectForKey:@"type"];
+    NSLog(@"update filter %@ %@", type, valueObject);
     
     NSString* value;
     NSSet* values;
     NSNumber* num;
-    NSObject* v = [notification.userInfo objectForKey:@"value"];
-    if ([v isKindOfClass:[NSString class]])
+    
+    if ([valueObject isKindOfClass:[NSString class]])
     {
-        value = (NSString*)v;
+        value = (NSString*)valueObject;
     }
-    else if ([v isKindOfClass:[NSSet class]])
+    else if ([valueObject isKindOfClass:[NSSet class]])
     {
-        values = (NSSet*)v;
+        values = (NSSet*)valueObject;
     }
-    else if ([v isKindOfClass:[NSNumber class]])
+    else if ([valueObject isKindOfClass:[NSNumber class]])
     {
-        num = (NSNumber*)v;
+        num = (NSNumber*)valueObject;
     }
     NSAssert(value != nil || values != nil || num != nil, @"invalid values type");
     
@@ -886,15 +885,6 @@ static NSInteger viewMode = VIEW_LIST;
     [self initCards];
     [self.tableView reloadData];
     [self.collectionView reloadData];
-}
-
--(void) postNotification:(NSString*)type value:(id)value
-{
-    if (self.sendNotifications)
-    {
-        NSDictionary* userInfo = @{ @"type": type, @"value": value };
-        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_FILTER object:self userInfo:userInfo];
-    }
 }
 
 #pragma mark - Table View

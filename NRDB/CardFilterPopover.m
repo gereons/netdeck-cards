@@ -233,13 +233,10 @@ static UIPopoverController* popover;
 
     if (anyCell)
     {
-        NSDictionary* userInfo = @{ @"type": [self.type lowercaseString], @"value": value };
-        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_FILTER object:self userInfo:userInfo];
-        
         NSString* title = [NSString stringWithFormat:@"%@: %@", l10n(self.type), l10n(value) ];
         [self.button setTitle:title forState:UIControlStateNormal];
         
-        [self.headerView filterCallback:self.button value:value];
+        [self.headerView filterCallback:self.button type:[self.type lowercaseString] value:value];
         
         [CardFilterPopover dismiss];
     }
@@ -259,7 +256,7 @@ static UIPopoverController* popover;
             [self.selectedValues addObject:value];
         }
         
-        [self notifyWithMultipleSelection];
+        [self filterWithMultipleSelection];
     }
 }
 
@@ -287,20 +284,16 @@ static UIPopoverController* popover;
     // NSLog(@"selected: %@", self.selectedValues);
     
     [self.tableView reloadData];
-    [self notifyWithMultipleSelection];
+    [self filterWithMultipleSelection];
 }
 
--(void) notifyWithMultipleSelection
+-(void) filterWithMultipleSelection
 {
     // NSLog(@"notify %@ %@", self.type, self.selectedValues);
-    
-    NSDictionary* userInfo = @{ @"type": [self.type lowercaseString], @"value": self.selectedValues };
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_FILTER object:self userInfo:userInfo];
-    
     NSString* selected = self.selectedValues.count == 0 ? l10n(kANY) : (self.selectedValues.count == 1 ? [[self.selectedValues allObjects] objectAtIndex:0] : @"⋯");
     NSString* title = [NSString stringWithFormat:@"%@: %@", l10n(self.type), selected];
     [self.button setTitle:title forState:UIControlStateNormal];
     
-    [self.headerView filterCallback:self.button value:self.selectedValues];
+    [self.headerView filterCallback:self.button type:[self.type lowercaseString] value:self.selectedValues];
 }
 @end

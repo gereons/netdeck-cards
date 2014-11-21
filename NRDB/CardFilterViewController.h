@@ -70,6 +70,6 @@
 -(id) initWithRole:(NRRole)role andFile:(NSString*) filename;
 -(id) initWithRole:(NRRole)role andDeck:(Deck*) deck;
 
--(void) filterCallback:(UIButton*)button value:(NSObject*)value;
+-(void) filterCallback:(UIButton*)button type:(NSString*)type value:(NSObject*)value;
 
 @end

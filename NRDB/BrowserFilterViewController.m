@@ -261,7 +261,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     
     if (selectedSets)
     {
-        [self filterCallback:self.setButton value:selectedSets];
+        [self filterCallback:self.setButton type:@"sets" value:selectedSets];
     }
     NSString* selected;
     if ([selectedSets isKindOfClass:[NSSet class]])
@@ -389,7 +389,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
     [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Faction" selected:selected];
 }
 
--(void) filterCallback:(UIButton *)button value:(NSObject *)object
+-(void) filterCallback:(UIButton *)button type:(NSString*)type value:(NSObject *)object
 {
     NSString* value = [object isKindOfClass:[NSString class]] ? (NSString*)object : nil;
     NSSet* values = [object isKindOfClass:[NSSet class]] ? (NSSet*)object : nil;
