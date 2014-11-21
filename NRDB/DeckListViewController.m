@@ -1091,9 +1091,12 @@
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray* arr = self.cards[indexPath.section];
-    CardCounter* cc = arr[indexPath.row];
-    
-    return !ISNULL(cc);
+    if (indexPath.row < arr.count)
+    {
+        CardCounter* cc = arr[indexPath.row];
+        return !ISNULL(cc);
+    }
+    return NO;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
