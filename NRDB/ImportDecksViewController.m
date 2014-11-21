@@ -103,8 +103,15 @@ static NSString* filterText;
 -(void) viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    [filesystem removeObserver:self];
+    
+    @try
+    {
+        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+        [filesystem removeObserver:self];
+    }
+    @catch (DBException* dbEx)
+    {}
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -227,43 +234,54 @@ static NSString* filterText;
         });
     });
     
-    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    DBPath* path = [DBPath root];
-    
-    [filesystem addObserver:self forPathAndChildren:path block:^() {
-        [self listDropboxFiles];
-        [self filterDecks];
-        [self.tableView reloadData];
-    }];
+    @try
+    {
+        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+        DBPath* path = [DBPath root];
+        
+        [filesystem addObserver:self forPathAndChildren:path block:^() {
+            [self listDropboxFiles];
+            [self filterDecks];
+            [self.tableView reloadData];
+        }];
+    }
+    @catch (DBException* dbEx)
+    {}
 }
 
 -(NSUInteger) listDropboxFiles
 {
     self.allDecks = @[ [NSMutableArray array], [NSMutableArray array] ];
     
-    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    DBPath* path = [DBPath root];
-    DBError* error;
-    
     NSUInteger totalDecks = 0;
-    for (DBFileInfo* fileInfo in [filesystem listFolder:path error:&error])
+    
+    @try
     {
-        NSString* name = fileInfo.path.name;
-        NSRange textRange = [name rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
+        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+        DBPath* path = [DBPath root];
+        DBError* error;
         
-        if (textRange.location == name.length-4)
+        for (DBFileInfo* fileInfo in [filesystem listFolder:path error:&error])
         {
-            // NSLog(@"%@", fileInfo.path);
-            Deck* deck = [self parseDeck:fileInfo.path.name];
-            if (deck && deck.role != NRRoleNone)
+            NSString* name = fileInfo.path.name;
+            NSRange textRange = [name rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
+            
+            if (textRange.location == name.length-4)
             {
-                NSMutableArray* decks = self.allDecks[deck.role];
+                // NSLog(@"%@", fileInfo.path);
+                Deck* deck = [self parseDeck:fileInfo.path.name];
+                if (deck && deck.role != NRRoleNone)
+                {
+                    NSMutableArray* decks = self.allDecks[deck.role];
 
-                [decks addObject:deck];
-                ++totalDecks;
+                    [decks addObject:deck];
+                    ++totalDecks;
+                }
             }
         }
     }
+    @catch (DBException* dbEx)
+    {}
     
     return totalDecks;
 }
@@ -444,35 +462,40 @@ static NSString* filterText;
 
 -(Deck*) parseDeck:(NSString*)fileName
 {
-    DBPath *path = [[DBPath root] childPath:fileName];
-    DBFile* file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
-    
-    if (file)
-    {
-        NSData* data = [file readData:nil];
-        NSDate* lastModified = file.info.modifiedTime;
-        [file close];
+    @try {
+        DBPath *path = [[DBPath root] childPath:fileName];
+        DBFile* file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
         
-        OctgnImport* importer = [[OctgnImport alloc] init];
-        Deck* deck = [importer parseOctgnDeckFromData:data];
-        
-        if (deck)
+        if (file)
         {
-            NSRange textRange = [fileName rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
+            NSData* data = [file readData:nil];
+            NSDate* lastModified = file.info.modifiedTime;
+            [file close];
             
-            if (textRange.location == fileName.length-4)
+            OctgnImport* importer = [[OctgnImport alloc] init];
+            Deck* deck = [importer parseOctgnDeckFromData:data];
+            
+            if (deck)
             {
-                deck.name = [fileName substringToIndex:textRange.location];
+                NSRange textRange = [fileName rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
+                
+                if (textRange.location == fileName.length-4)
+                {
+                    deck.name = [fileName substringToIndex:textRange.location];
+                }
+                else
+                {
+                    deck.name = fileName;
+                }
+                            
+                deck.lastModified = lastModified;
+                return deck;
             }
-            else
-            {
-                deck.name = fileName;
-            }
-                        
-            deck.lastModified = lastModified;
-            return deck;
         }
     }
+    @catch (DBException* dbEx)
+    {}
+    
     return nil;
 }
 

@@ -34,14 +34,20 @@ const NSString* const kANY = @"Any";
     
     [CardManager setupFromFiles];
     
-    DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"4mhw6piwd9wqti3" secret:@"5j8qxt2ywsrlk73"];
-	[DBAccountManager setSharedManager:accountManager];
-    
-    DBAccount* account = [DBAccountManager sharedManager].linkedAccount;
-    if (account)
+    @try
     {
-        DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
-        [DBFilesystem setSharedFilesystem:fileSystem];
+        DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"4mhw6piwd9wqti3" secret:@"5j8qxt2ywsrlk73"];
+        [DBAccountManager setSharedManager:accountManager];
+        
+        DBAccount* account = [DBAccountManager sharedManager].linkedAccount;
+        if (account)
+        {
+            DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
+            [DBFilesystem setSharedFilesystem:fileSystem];
+        }
+    }
+    @catch (DBException* dbEx)
+    {
     }
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
@@ -185,16 +191,20 @@ const NSString* const kANY = @"Any";
     }
     else
     {
-        DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
-        if (account)
-        {
-            [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
-            
-            TF_CHECKPOINT(@"dropbox linked");
-            DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
-            [DBFilesystem setSharedFilesystem:fileSystem];
+        @try {
+            DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
+            if (account)
+            {
+                [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
+                
+                TF_CHECKPOINT(@"dropbox linked");
+                DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
+                [DBFilesystem setSharedFilesystem:fileSystem];
+            }
+            [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
         }
-        [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
+        @catch (DBException* dbEx)
+        {}
     }
     
 	return YES;

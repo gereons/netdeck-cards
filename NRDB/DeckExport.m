@@ -275,21 +275,27 @@
 
 +(void) writeToDropbox:(NSString*)content fileName:(NSString*)filename deckType:(NSString*)deckType autoSave:(BOOL)autoSave
 {
-    NSError* error;
-    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    DBPath* path = [[DBPath root] childPath:filename];
-    
-    DBFile* textFile;
-    if ([filesystem fileInfoForPath:path error:&error] != nil)
+    BOOL writeOk = NO;
+    @try
     {
-        textFile = [filesystem openFile:path error:&error];
+        NSError* error;
+        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+        DBPath* path = [[DBPath root] childPath:filename];
+        
+        DBFile* textFile;
+        if ([filesystem fileInfoForPath:path error:&error] != nil)
+        {
+            textFile = [filesystem openFile:path error:&error];
+        }
+        else
+        {
+            textFile = [filesystem createFile:path error:&error];
+        }
+        writeOk = [textFile writeString:content error:&error];
+        [textFile close];
     }
-    else
-    {
-        textFile = [filesystem createFile:path error:&error];
-    }
-    BOOL writeOk = [textFile writeString:content error:&error];
-    [textFile close];
+    @catch (DBException* dbEx)
+    {}
     
     if (autoSave)
     {

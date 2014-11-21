@@ -85,28 +85,33 @@
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:USE_DROPBOX] boolValue];
         
-        DBAccountManager* accountManager = [DBAccountManager sharedManager];
-        DBAccount *account = accountManager.linkedAccount;
-        
-        if (useDropbox)
+        @try
         {
-            if (!account)
+            DBAccountManager* accountManager = [DBAccountManager sharedManager];
+            DBAccount *account = accountManager.linkedAccount;
+            
+            if (useDropbox)
             {
-                TF_CHECKPOINT(@"link dropbox");
-                UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-                [accountManager linkFromController:topMost];
+                if (!account)
+                {
+                    TF_CHECKPOINT(@"link dropbox");
+                    UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+                    [accountManager linkFromController:topMost];
+                }
             }
-        }
-        else
-        {
-            if (account)
+            else
             {
-                TF_CHECKPOINT(@"unlink dropbox");
-                [account unlink];
-                [DBFilesystem setSharedFilesystem:nil];
-            }
+                if (account)
+                {
+                    TF_CHECKPOINT(@"unlink dropbox");
+                    [account unlink];
+                    [DBFilesystem setSharedFilesystem:nil];
+                }
         }
-        
+        }
+        @catch (DBException* dbEx)
+        {}
+    
         [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_CHANGED object:self];
         [self refresh];
     }
