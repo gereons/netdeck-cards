@@ -762,8 +762,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) updateFilter:(NSString*)type value:(NSObject*)valueObject
 {
-    NSLog(@"update filter %@ %@", type, valueObject);
-    
+    // NSLog(@"update filter %@ %@", type, valueObject);
     NSString* value;
     NSSet* values;
     NSNumber* num;
