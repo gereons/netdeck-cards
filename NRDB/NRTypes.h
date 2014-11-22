@@ -131,4 +131,9 @@ typedef NS_ENUM(NSInteger, NRFilter) {
     NRFilterCorp
 };
 
+typedef NS_ENUM(NSInteger, NRDeckChange) {
+    NRDeckChangeAddCard,
+    NRDeckChangeRemoveCard,
+};
+
 #endif

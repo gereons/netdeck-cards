@@ -15,7 +15,7 @@
 @property (readonly) NSArray* cards;        // array of CardCounter, all cards except identity
 @property (readonly) NSArray* allCards;     // array of CardCounter, all cards including identity, id is first element
 
-@property (nonatomic) Card* identity;        // convenience accessor
+@property (nonatomic) Card* identity;       // convenience accessor
 
 @property NSString* name;
 @property NRRole role;
@@ -32,6 +32,8 @@
 
 @property NSArray* tags;    // array of strings
 @property NSString* notes;
+
+@property NSArray* revisions;   // array of DeckChangeSet, in reverse chronological order
 
 -(NSArray*) checkValidity;  // returns array of reasons, deck is ok if count==0
 
