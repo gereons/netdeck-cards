@@ -758,7 +758,7 @@ static NSInteger viewMode = VIEW_LIST;
     
 }
 
-#pragma mark notification
+#pragma mark filter update
 
 -(void) updateFilter:(NSString*)type value:(NSObject*)valueObject
 {
