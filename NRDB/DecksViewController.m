@@ -75,6 +75,13 @@ static NRFilter _filterType = NRFilterAll;
     return self;
 }
 
+-(void) dealloc
+{
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
+    self.searchBar.delegate = nil;
+}
+
 - (id) initWithCardFilter:(Card*)card
 {
     if ((self = [self init]))

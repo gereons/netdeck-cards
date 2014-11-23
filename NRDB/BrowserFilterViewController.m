@@ -53,6 +53,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
 -(void) dealloc
 {
+    self.textField.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

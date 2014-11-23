@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 -(void) dealloc
 {
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

@@ -89,6 +89,12 @@ static UIPopoverController* popover;
     popover = nil;
 }
 
+-(void) dealloc
+{
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

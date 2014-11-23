@@ -26,6 +26,12 @@
     return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 }
 
+-(void) dealloc
+{
+    self.webView.delegate = nil;
+    self.storeViewController.delegate = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -70,6 +70,10 @@
 
 - (void) dealloc
 {
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
+    self.collectionView.delegate = nil;
+    self.collectionView.dataSource = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
