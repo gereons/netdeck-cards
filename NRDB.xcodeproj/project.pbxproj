@@ -82,6 +82,8 @@
 		3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AF0E51899C12500227C25 /* NRNavigationController.m */; };
 		3A6C68501996BC0B00B29588 /* 727-more.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6C684E1996BC0B00B29588 /* 727-more.png */; };
 		3A6C68511996BC0B00B29588 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6C684F1996BC0B00B29588 /* 727-more@2x.png */; };
+		3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D51D31A2284540004951E /* DeckHistoryPopup.m */; };
+		3A6D51D61A2284540004951E /* DeckHistoryPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */; };
 		3A6E755918E3FF7400EF8DE1 /* cardstats_identity_link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755318E3FF7400EF8DE1 /* cardstats_identity_link@2x.png */; };
 		3A6E755A18E3FF7400EF8DE1 /* cardstats_identity_link.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755418E3FF7400EF8DE1 /* cardstats_identity_link.png */; };
 		3A6E755B18E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E755518E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png */; };
@@ -365,6 +367,9 @@
 		3A6AF0E51899C12500227C25 /* NRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRNavigationController.m; sourceTree = "<group>"; };
 		3A6C684E1996BC0B00B29588 /* 727-more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more.png"; sourceTree = "<group>"; };
 		3A6C684F1996BC0B00B29588 /* 727-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more@2x.png"; sourceTree = "<group>"; };
+		3A6D51D21A2284540004951E /* DeckHistoryPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckHistoryPopup.h; sourceTree = "<group>"; };
+		3A6D51D31A2284540004951E /* DeckHistoryPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckHistoryPopup.m; sourceTree = "<group>"; };
+		3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckHistoryPopup.xib; sourceTree = "<group>"; };
 		3A6E755318E3FF7400EF8DE1 /* cardstats_identity_link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_identity_link@2x.png"; sourceTree = "<group>"; };
 		3A6E755418E3FF7400EF8DE1 /* cardstats_identity_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardstats_identity_link.png; sourceTree = "<group>"; };
 		3A6E755518E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardstats_identity_influence@2x.png"; sourceTree = "<group>"; };
@@ -998,6 +1003,9 @@
 				3A4866E4193B85560045C927 /* DeckNotesPopup.h */,
 				3A4866E5193B85560045C927 /* DeckNotesPopup.m */,
 				3A4866E6193B85560045C927 /* DeckNotesPopup.xib */,
+				3A6D51D21A2284540004951E /* DeckHistoryPopup.h */,
+				3A6D51D31A2284540004951E /* DeckHistoryPopup.m */,
+				3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */,
 			);
 			name = "Deck List";
 			sourceTree = "<group>";
@@ -1376,6 +1384,7 @@
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3AD4FBB219D60929000BF9B4 /* red_placeholder.png in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
+				3A6D51D61A2284540004951E /* DeckHistoryPopup.xib in Resources */,
 				3A6E755918E3FF7400EF8DE1 /* cardstats_identity_link@2x.png in Resources */,
 				3A445F721998AEF9000AD1C4 /* trash_slider.png in Resources */,
 				3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */,
@@ -1579,6 +1588,7 @@
 				3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */,
 				3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,
+				3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */,
 				3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */,
 				3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */,
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,

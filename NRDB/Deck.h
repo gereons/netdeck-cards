@@ -46,6 +46,8 @@
 
 -(Deck*) duplicate;
 
+-(void) mergeRevisions;
+
 -(TableData*) dataForTableView:(NRDeckSort)sortType;
 
 @end

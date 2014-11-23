@@ -377,6 +377,20 @@
     }];
 }
 
+#pragma mark revisions
+
+-(void) mergeRevisions
+{
+    if (self.lastChanges.changes.count > 0)
+    {
+        [self.lastChanges coalesce];
+        [self->_revisions insertObject:self.lastChanges atIndex:0];
+        self.lastChanges = [[DeckChangeSet alloc] init];
+    }
+}
+
+#pragma mark table view data
+
 -(TableData*) dataForTableView:(NRDeckSort)sortType
 {
     self.sortType = sortType;

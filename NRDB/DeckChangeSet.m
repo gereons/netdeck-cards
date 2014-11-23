@@ -26,7 +26,6 @@
     DeckChange* dc = [DeckChange forCode:card.code copies:copies];
     
     [self.changes addObject:dc];
-    [self coalesce];
 }
 
 -(void) removeCard:(Card *)card copies:(int)copies
@@ -34,7 +33,6 @@
     DeckChange* dc = [DeckChange forCode:card.code copies:-copies];
     
     [self.changes addObject:dc];
-    [self coalesce];
 }
 
 -(void) dump
@@ -91,8 +89,9 @@
     }
     
     self.changes = combinedChanges;
+    self.timestamp = [NSDate date];
     
-    [self dump];
+    // [self dump];
 }
 
 #pragma mark nscoding

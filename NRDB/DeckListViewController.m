@@ -18,6 +18,7 @@
 #import "DeckAnalysisViewController.h"
 #import "DrawSimulatorViewController.h"
 #import "DeckNotesPopup.h"
+#import "DeckHistoryPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
 #import "Deck.h"
@@ -50,6 +51,7 @@
 @property UIBarButtonItem* exportButton;
 @property UIBarButtonItem* stateButton;
 @property UIBarButtonItem* nrdbButton;
+@property UIBarButtonItem* historyButton;
 
 @property NSString* filename;
 @property BOOL autoSave;
@@ -173,6 +175,7 @@
     UIBarButtonItem* dupButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)];
     UIBarButtonItem* nameButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)];
     UIBarButtonItem* sortButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Sort") style:UIBarButtonItemStylePlain target:self action:@selector(sortPopup:)];
+    self.historyButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"History") style:UIBarButtonItemStylePlain target:self action:@selector(historyButtonClicked:)];
     
     // add from right to left!
     NSMutableArray* rightButtons = [NSMutableArray array];
@@ -189,6 +192,7 @@
     }
     [rightButtons addObject:nameButton];
     [rightButtons addObject:self.stateButton];
+    [rightButtons addObject:self.historyButton];
     
     topItem.rightBarButtonItems = rightButtons;
 
@@ -460,6 +464,18 @@
         return;
     }
     [DeckNotesPopup showForDeck:self.deck inViewController:self];
+}
+
+-(void) historyButtonClicked:(id)sender
+{
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
+    
+    [self.deck mergeRevisions];
+    [DeckHistoryPopup showForDeck:self.deck inViewController:self];
 }
 
 #pragma mark duplicate deck
