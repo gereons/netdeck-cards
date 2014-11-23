@@ -7,9 +7,18 @@
 //
 
 #import "DeckChange.h"
-#import "card.h"
+#import "Card.h"
 
 @implementation DeckChange
+
++(DeckChange*) forCode:(NSString*)code copies:(NSInteger)copies
+{
+    DeckChange* dc = [[DeckChange alloc] init];
+    dc->_code = code;
+    dc->_count = ABS(copies);
+    dc->_op = copies < 0 ? NRDeckChangeRemoveCard : NRDeckChangeAddCard;
+    return dc;
+}
 
 -(Card*) card
 {
@@ -22,9 +31,9 @@
 {
     if ((self = [super init]))
     {
-        self.count = [decoder decodeIntegerForKey:@"count"];
-        self.code = [decoder decodeObjectForKey:@"code"];
-        self.op = [decoder decodeIntegerForKey:@"op"];
+        self->_count = [decoder decodeIntegerForKey:@"count"];
+        self->_code = [decoder decodeObjectForKey:@"code"];
+        self->_op = [decoder decodeIntegerForKey:@"op"];
     }
     return self;
 }

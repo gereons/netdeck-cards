@@ -63,7 +63,6 @@
     }
     else
     {
-        [self.lastChanges removeCard:self->_identityCc.card copies:1];
         self->_identityCc = nil;
     }
     self->_isDraft = [DRAFT_IDS containsObject:identity.code];

@@ -12,10 +12,12 @@
 
 @interface DeckChange : NSObject <NSCoding>
 
-@property NRDeckChange op;
-@property NSInteger count;
-@property NSString* code;
+@property (readonly) NRDeckChange op;
+@property (readonly) NSInteger count;
+@property (readonly) NSString* code;
 
 @property (readonly) Card* card;
+
++(DeckChange*) forCode:(NSString*)code copies:(NSInteger)copies;
 
 @end

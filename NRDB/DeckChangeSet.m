@@ -23,24 +23,18 @@
 
 -(void) addCard:(Card *)card copies:(int)copies
 {
-    DeckChange* dc = [[DeckChange alloc] init];
-    dc.count = copies;
-    dc.code = card.code;
-    dc.op = NRDeckChangeAddCard;
+    DeckChange* dc = [DeckChange forCode:card.code copies:copies];
     
     [self.changes addObject:dc];
-    [self dump];
+    [self coalesce];
 }
 
 -(void) removeCard:(Card *)card copies:(int)copies
 {
-    DeckChange* dc = [[DeckChange alloc] init];
-    dc.count = copies;
-    dc.code = card.code;
-    dc.op = NRDeckChangeRemoveCard;
+    DeckChange* dc = [DeckChange forCode:card.code copies:-copies];
     
     [self.changes addObject:dc];
-    [self dump];
+    [self coalesce];
 }
 
 -(void) dump
@@ -57,6 +51,48 @@
 
 -(void) coalesce
 {
+    // sort by card
+    NSArray* arr = [self.changes sortedArrayUsingComparator:^NSComparisonResult(DeckChange* dc1, DeckChange* dc2) {
+        return [dc1.code compare:dc2.code];
+    }];
+    
+    NSMutableArray* combinedChanges = [NSMutableArray array];
+    NSString* prevCode = nil;
+    NSInteger count = 0;
+    for (DeckChange* dc in arr)
+    {
+        if (prevCode && ![dc.code isEqualToString:prevCode])
+        {
+            if (count != 0)
+            {
+                DeckChange* newDc = [DeckChange forCode:prevCode copies:count];
+                
+                [combinedChanges addObject:newDc];
+            }
+            
+            count = 0;
+        }
+        
+        prevCode = dc.code;
+        if (dc.op == NRDeckChangeRemoveCard)
+        {
+            count -= dc.count;
+        }
+        else
+        {
+            count += dc.count;
+        }
+    }
+    if (prevCode && count != 0)
+    {
+        DeckChange* newDc = [DeckChange forCode:prevCode copies:count];
+        
+        [combinedChanges addObject:newDc];
+    }
+    
+    self.changes = combinedChanges;
+    
+    [self dump];
 }
 
 #pragma mark nscoding
