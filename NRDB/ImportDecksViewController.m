@@ -469,9 +469,14 @@ static NSString* filterText;
 
 -(Deck*) parseDeck:(NSString*)fileName
 {
-    @try {
+    @try
+    {
+        DBFile *file = nil;
         DBPath *path = [[DBPath root] childPath:fileName];
-        DBFile* file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
+        if (path)
+        {
+            file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
+        }
         
         if (file)
         {

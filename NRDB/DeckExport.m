@@ -283,16 +283,19 @@
         DBPath* path = [[DBPath root] childPath:filename];
         
         DBFile* textFile;
-        if ([filesystem fileInfoForPath:path error:&error] != nil)
+        if (path)
         {
-            textFile = [filesystem openFile:path error:&error];
+            if ([filesystem fileInfoForPath:path error:&error] != nil)
+            {
+                textFile = [filesystem openFile:path error:&error];
+            }
+            else
+            {
+                textFile = [filesystem createFile:path error:&error];
+            }
+            writeOk = [textFile writeString:content error:&error];
+            [textFile close];
         }
-        else
-        {
-            textFile = [filesystem createFile:path error:&error];
-        }
-        writeOk = [textFile writeString:content error:&error];
-        [textFile close];
     }
     @catch (DBException* dbEx)
     {}
