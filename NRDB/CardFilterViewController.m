@@ -999,7 +999,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (void) addCardToDeck:(UIButton*)sender
 {
-    NSIndexPath *indexPath;
+    NSIndexPath *indexPath = nil;
     
     if (sender.tag == ADD_BUTTON_TABLE)
     {
@@ -1010,6 +1010,11 @@ static NSInteger viewMode = VIEW_LIST;
     {
         CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
         indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
+    }
+    
+    if (indexPath == nil)
+    {
+        return;
     }
     
     NSArray* cards = self.cards[indexPath.section];
