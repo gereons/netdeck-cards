@@ -27,7 +27,7 @@
 
 static NSDictionary* roleCodes;
 static NSArray* max1InDeck;
-static NSArray* multiIce;
+static NSMutableArray* multiIce;
 static NSDictionary* coreTextOptions;
 static NSDictionary* factionColors;
 static NSDictionary* cropValues;
@@ -39,8 +39,7 @@ static NSDictionary* cropValues;
                     HADES_SHARD, HADES_FRAGMENT,
                     EDEN_SHARD, EDEN_FRAGMENT, GOVERNMENT_TAKEOVER ];
 
-#warning calculate at runtime!
-    multiIce = @[ RAINBOW, ORION ];
+    multiIce = [NSMutableArray array];
     
     roleCodes = @{ @"Runner": @(NRRoleRunner), @"Corp": @(NRRoleCorp) };
     
@@ -294,7 +293,6 @@ static NSDictionary* cropValues;
         }
     }
     
-    
     JSON_INT(maxPerDeck, @"maxperdeck");
     if (isNrdb)
     {
@@ -310,7 +308,19 @@ static NSDictionary* cropValues;
         c->_maxPerDeck = 1;
     }
     
+    if ([self isMultiIce:c])
+    {
+        [multiIce addObject:c.code];
+    }
+    
     return c;
+}
+
++(BOOL) isMultiIce:(Card*)card
+{
+    return [card.subtypes containsObject:@"Sentry"]
+        && [card.subtypes containsObject:@"Barrier"]
+        && [card.subtypes containsObject:@"Code Gate"];
 }
 
 -(BOOL) isValid
