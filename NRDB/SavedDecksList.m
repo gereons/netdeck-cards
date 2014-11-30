@@ -580,6 +580,9 @@
         [self.tableView beginUpdates];
         [self.tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationLeft];
         [self.tableView endUpdates];
+        
+        // need to force all infobutton tags to be reset
+        [self.tableView reloadData];
     }
 }
 
