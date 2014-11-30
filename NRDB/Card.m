@@ -37,9 +37,10 @@ static NSDictionary* cropValues;
     max1InDeck = @[ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
                     UTOPIA_SHARD, UTOPIA_FRAGMENT,
                     HADES_SHARD, HADES_FRAGMENT,
-                    EDEN_SHARD, EDEN_FRAGMENT ];
+                    EDEN_SHARD, EDEN_FRAGMENT, GOVERNMENT_TAKEOVER ];
 
-    multiIce = @[ RAINBOW ];
+#warning calculate at runtime!
+    multiIce = @[ RAINBOW, ORION ];
     
     roleCodes = @{ @"Runner": @(NRRoleRunner), @"Corp": @(NRRoleCorp) };
     

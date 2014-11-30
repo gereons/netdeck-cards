@@ -18,6 +18,7 @@
 #define EDEN_FRAGMENT           @"06030"    // max 1 per deck
 #define HADES_FRAGMENT          @"06071"    // max 1 per deck
 #define UTOPIA_FRAGMENT         @"06110"    // max 1 per deck
+#define GOVERNMENT_TAKEOVER     @"07006"    // max 1 per deck
 
 // draft ids
 #define THE_MASQUE              @"00006"
@@ -26,7 +27,7 @@
 
 // multitype ice
 #define RAINBOW                 @"05025"
-// #define ORION                @"0xxxx"    // not out yet
+#define ORION                   @"07015"
 
 // plugged-in and chronos protocol identities
 #define LARAMY_FISK             @"00002"
