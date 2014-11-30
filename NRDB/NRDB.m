@@ -281,6 +281,65 @@ static NRDB* instance;
     [self saveOrPublish:publishUrl parameters:parameters];
 }
 
+#pragma mark load deck
+
+-(void) loadDeck:(Deck *)deck completion:(LoadCompletionBlock)completionBlock
+{
+    NSString* token = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    if (!token)
+    {
+        completionBlock(NO, nil);
+        return;
+    }
+
+    NSAssert(deck.netrunnerDbId, @"no nrdb id");
+    NSString* loadUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/load_deck/%@", deck.netrunnerDbId];
+    
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    
+    NSError* error;
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
+                                                                                 URLString:loadUrl
+                                                                                parameters:parameters
+                                                                                     error:&error];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray* history = responseObject[@"history"];
+        
+        for (NSDictionary* dict in history)
+        {
+            NSString* datecreation = dict[@"datecreation"];
+            NSDictionary* variation = dict[@"variation"];
+        
+            NSLog(@"changeset created: %@", datecreation);
+            for (NSString* code in [variation allKeys])
+            {
+                NSNumber* qty = dict[code];
+                NSLog(@"%@: %d", code, qty.intValue);
+            }
+        }
+        
+        BOOL success = YES;
+        if (success)
+        {
+            completionBlock(YES, deck);
+        }
+        else
+        {
+            completionBlock(NO, nil);
+        }
+    }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // NSLog(@"save failed: %@", operation);
+        completionBlock(NO, nil);
+    }];
+    [operation start];
+}
+
 #pragma mark save deck
 
 -(void) saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock

@@ -449,8 +449,14 @@ static NSString* filterText;
                     break;
             }
             
-            [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-            [DeckManager saveDeck:deck];
+            if (self.source == NRImportSourceNetrunnerDb)
+            {
+                [[NRDB sharedInstance] loadDeck:deck completion:^(BOOL ok, Deck *deck) {
+                    NSLog(@"ok=%d", ok);
+                    [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
+                    [DeckManager saveDeck:deck];
+                }];
+            }
         };
     }
     else

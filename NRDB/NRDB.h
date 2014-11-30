@@ -16,13 +16,15 @@
 typedef void (^AuthCompletionBlock)(BOOL ok);
 typedef void (^DecklistCompletionBlock)(NSArray* decks);
 typedef void (^SaveCompletionBlock)(BOOL ok, NSString* deckId);
+typedef void (^LoadCompletionBlock)(BOOL ok, Deck* deck);
 
 -(void)authorizeWithCode:(NSString*)code completion:(AuthCompletionBlock)completionBlock;
 
 -(void)decklist:(DecklistCompletionBlock)completionBlock;
 
--(void)saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock;
+-(void)loadDeck:(Deck*)deck completion:(LoadCompletionBlock)completionBlock;
 
+-(void)saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock;
 -(void)publishDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock;
 
 -(void)refreshAuthentication;
