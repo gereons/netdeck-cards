@@ -40,7 +40,7 @@
     NSLog(@"---- changes -----");
     for (DeckChange* dc in self.changes)
     {
-        NSLog(@"%@ %d %@", dc.op == NRDeckChangeAddCard ? @"add" : @"rem",
+        NSLog(@"%@ %d %@", dc.count > 0 ? @"add" : @"rem",
               dc.count,
               dc.card.name);
     }
@@ -72,19 +72,11 @@
         }
         
         prevCode = dc.code;
-        if (dc.op == NRDeckChangeRemoveCard)
-        {
-            count -= dc.count;
-        }
-        else
-        {
-            count += dc.count;
-        }
+        count += dc.count;
     }
     if (prevCode && count != 0)
     {
         DeckChange* newDc = [DeckChange forCode:prevCode copies:count];
-        
         [combinedChanges addObject:newDc];
     }
     

@@ -12,9 +12,8 @@
 
 @interface DeckChange : NSObject <NSCoding>
 
-@property (readonly) NRDeckChange op;
-@property (readonly) NSInteger count;
 @property (readonly) NSString* code;
+@property (readonly) NSInteger count;
 
 @property (readonly) Card* card;
 

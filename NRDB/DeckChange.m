@@ -13,10 +13,10 @@
 
 +(DeckChange*) forCode:(NSString*)code copies:(NSInteger)copies
 {
+    NSAssert(copies != 0, @"copies can't be 0");
     DeckChange* dc = [[DeckChange alloc] init];
     dc->_code = code;
-    dc->_count = ABS(copies);
-    dc->_op = copies < 0 ? NRDeckChangeRemoveCard : NRDeckChangeAddCard;
+    dc->_count = copies;
     return dc;
 }
 
@@ -33,7 +33,6 @@
     {
         self->_count = [decoder decodeIntegerForKey:@"count"];
         self->_code = [decoder decodeObjectForKey:@"code"];
-        self->_op = [decoder decodeIntegerForKey:@"op"];
     }
     return self;
 }
@@ -41,7 +40,6 @@
 -(void) encodeWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:self.code forKey:@"code"];
-    [coder encodeInteger:self.op forKey:@"op"];
     [coder encodeInteger:self.count forKey:@"count"];
 }
 

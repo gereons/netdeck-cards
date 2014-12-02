@@ -10,10 +10,12 @@
 #import "Deck.h"
 #import "DeckChangeSet.h"
 #import "DeckChange.h"
+#import "DeckHistorySectionHeaderView.h"
 
 @interface DeckHistoryPopup ()
 
 @property Deck* deck;
+@property NSDateFormatter* dateFormatter;
 
 @end
 
@@ -32,6 +34,10 @@
     {
         self.deck = deck;
         self.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        self.dateFormatter = [[NSDateFormatter alloc] init];
+        [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     }
     return self;
 }
@@ -46,11 +52,20 @@
 {
     [super viewDidLoad];
     
+    self.titleLabel.text = l10n(@"Editing History");
+    [self.closeButton setTitle:l10n(@"Done") forState:UIControlStateNormal];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 -(void) closeButtonClicked:(id)sender
 {
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+-(void) revertTo:(UIButton*)sender
+{
+    NSLog(@"revert to %d", sender.tag);
+    
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
@@ -82,16 +97,22 @@
     DeckChangeSet* dcs = self.deck.revisions[indexPath.section];
     DeckChange* dc = dcs.changes[indexPath.row];
     
-    NSString* op = dc.op == NRDeckChangeAddCard ? @"+" : @"-";
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %d %@", op, dc.count, dc.card.name];
+    cell.textLabel.text = [NSString stringWithFormat:@"%+ld %@", (long)dc.count, dc.card.name];
     
     return cell;
 }
 
--(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+-(UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    NSArray* views = [[NSBundle mainBundle] loadNibNamed:@"DeckHistorySectionHeaderView" owner:self options:nil];
+    DeckHistorySectionHeaderView* header = views[0];
+    
     DeckChangeSet* dcs = self.deck.revisions[section];
-    return [dcs.timestamp description];
+    header.dateLabel.text = [self.dateFormatter stringFromDate:dcs.timestamp];
+    header.revertButton.tag = section;
+    [header.revertButton addTarget:self action:@selector(revertTo:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return header;
 }
 
 @end
