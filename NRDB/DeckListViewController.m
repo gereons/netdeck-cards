@@ -296,7 +296,7 @@
     
     if (sender != nil && self.autoSaveNRDB)
     {
-        [self saveDeckToNetrunnerdb];
+        [self saveDeckToNetrunnerDb];
     }
     
     self.saveButton.enabled = NO;
@@ -332,7 +332,7 @@
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             if (buttonIndex == 0)
             {
-                [self saveDeckToNetrunnerdb];
+                [self saveDeckToNetrunnerDb];
             }
         };
     }
@@ -341,7 +341,12 @@
         NSString* msg = [NSString stringWithFormat:l10n(@"This deck is linked to deck %@ on NetrunnerDB.com"), self.deck.netrunnerDbId ];
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:msg
-                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Open in Safari"), l10n(@"Publish deck"), l10n(@"Unlink"), l10n(@"Save") ]];
+                                                   buttons:@[ l10n(@"Cancel"),
+                                                              l10n(@"Open in Safari"),
+                                                              l10n(@"Publish deck"),
+                                                              l10n(@"Unlink"),
+                                                              l10n(@"Reimport"),
+                                                              l10n(@"Save") ]];
         
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             switch (buttonIndex)
@@ -377,16 +382,21 @@
                     }
                     [self refresh];
                     break;
+                    
+                case 4: // re-import
+                    [self reImportDeckFromNetrunnerDb];
+                    break;
+                    
             
-                case 4: // save/upload                    
-                    [self saveDeckToNetrunnerdb];
+                case 5: // save/upload
+                    [self saveDeckToNetrunnerDb];
                     break;
             }
         };
     }
 }
 
--(void) saveDeckToNetrunnerdb
+-(void) saveDeckToNetrunnerDb
 {
     if (!APP_ONLINE)
     {
@@ -405,6 +415,34 @@
         if (ok && deckId)
         {
             self.deck.netrunnerDbId = deckId;
+            [DeckManager saveDeck:self.deck];
+            [DeckManager resetModificationDate:self.deck];
+        }
+        
+        [SVProgressHUD dismiss];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }];
+}
+
+-(void) reImportDeckFromNetrunnerDb
+{
+    if (!APP_ONLINE)
+    {
+        [self showOfflineAlert];
+        return;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Loading Deck...") maskType:SVProgressHUDMaskTypeBlack];
+    
+    [[NRDB sharedInstance] loadDeck:self.deck completion:^(BOOL ok, Deck* deck) {
+        if (!ok)
+        {
+            [SDCAlertView alertWithTitle:nil message:l10n(@"Loading the deck from NetrunnerDB.com failed.") buttons:@[l10n(@"OK")]];
+        }
+        else
+        {
+            self.deck = deck;
             [DeckManager saveDeck:self.deck];
             [DeckManager resetModificationDate:self.deck];
         }
