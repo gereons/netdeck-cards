@@ -351,6 +351,9 @@ static BrowserResultViewController* instance;
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"New deck with this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[NSNotificationCenter defaultCenter] postNotificationName:BROWSER_NEW object:self userInfo:@{ @"code": card.code }];
     }]];
+    [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"ANCUR page for this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self openAncurPageFor:card];
+    }]];
     
     UIPopoverPresentationController* popover = sheet.popoverPresentationController;
     popover.sourceRect = rect;
@@ -359,6 +362,14 @@ static BrowserResultViewController* instance;
     
     NSAssert(instance != nil, @"oops");
     [instance presentViewController:sheet animated:NO completion:nil];
+}
+
++(void) openAncurPageFor:(Card*)card
+{
+    NSString* cardName = [card.name stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    cardName = [cardName stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
+    NSString* url = [NSString stringWithFormat:@"http://ancur.wikia.com/wiki/%@", cardName ];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
