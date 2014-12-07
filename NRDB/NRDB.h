@@ -23,6 +23,7 @@ typedef void (^LoadCompletionBlock)(BOOL ok, Deck* deck);
 -(void)decklist:(DecklistCompletionBlock)completionBlock;
 
 -(void)loadDeck:(Deck*)deck completion:(LoadCompletionBlock)completionBlock;
+-(Deck*)parseDeckFromJson:(NSDictionary*)json;
 
 -(void)saveDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock;
 -(void)publishDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock;
@@ -31,7 +32,7 @@ typedef void (^LoadCompletionBlock)(BOOL ok, Deck* deck);
 -(void)stopRefresh;
 
 -(void)updateDeckMap:(NSArray*) decks;
--(NSString*) filenameForId:(NSString*)deckId;
--(void) deleteDeck:(NSString*)filename;
+-(NSString*)filenameForId:(NSString*)deckId;
+-(void)deleteDeck:(NSString*)filename;
 
 @end

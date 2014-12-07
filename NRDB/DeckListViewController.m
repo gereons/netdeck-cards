@@ -442,9 +442,12 @@
         }
         else
         {
+            deck.filename = self.deck.filename;
             self.deck = deck;
+            
             [DeckManager saveDeck:self.deck];
             [DeckManager resetModificationDate:self.deck];
+            [self refresh];
         }
         
         [SVProgressHUD dismiss];

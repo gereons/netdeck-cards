@@ -42,6 +42,8 @@
 -(void) removeCard:(Card*) card;
 -(void) removeCard:(Card*) card copies:(int)copies;
 
+-(void) clearChanges;
+
 -(NSUInteger) influenceFor:(CardCounter*)cc;
 
 -(Deck*) duplicate;

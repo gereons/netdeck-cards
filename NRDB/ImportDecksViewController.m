@@ -169,33 +169,9 @@ static NSString* filterText;
         NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH':'mm':'ss"];
         
-        for (NSDictionary* d in decks)
+        for (NSDictionary* dict in decks)
         {
-            Deck* deck = [Deck new];
-            deck.name = d[@"name"];
-            deck.notes = d[@"description"];
-            deck.tags = d[@"tags"];
-            deck.netrunnerDbId = [NSString stringWithFormat:@"%ld", (long)[d[@"id"] integerValue]];
-            
-            // parse creation date, '2014-06-19 13:52:24'
-            deck.lastModified = [formatter dateFromString:d[@"creation"]];
-            
-            for (NSDictionary* c in d[@"cards"])
-            {
-                NSString* code = c[@"card_code"];
-                int qty = [c[@"qty"] intValue];
-                
-                Card* card = [Card cardByCode:code];
-                if (card.type == NRCardTypeIdentity)
-                {
-                    deck.identity = card;
-                }
-                else
-                {
-                    [deck addCard:card copies:qty];
-                }
-            }
-            
+            Deck* deck = [[NRDB sharedInstance] parseDeckFromJson:dict];
             if (deck.role != NRRoleNone)
             {
                 NSMutableArray* decks = self.allDecks[deck.role];

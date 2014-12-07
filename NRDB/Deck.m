@@ -296,6 +296,11 @@
     [self.lastChanges removeCard:cc.card copies:copies];
 }
 
+-(void) clearChanges
+{
+    self.lastChanges = [[DeckChangeSet alloc] init];
+}
+
 -(Deck*) duplicate
 {
     Deck* newDeck = [Deck new];

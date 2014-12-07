@@ -13,6 +13,8 @@
 #import "NRDBAuth.h"
 #import "SettingsKeys.h"
 #import "Deck.h"
+#import "DeckChange.h"
+#import "DeckChangeSet.h"
 
 @interface NRDB()
 @property (strong) DecklistCompletionBlock decklistCompletionBlock;
@@ -24,6 +26,7 @@
 @implementation NRDB
 
 static NRDB* instance;
+static NSDateFormatter* formatter;
 
 +(NRDB*) sharedInstance
 {
@@ -32,6 +35,13 @@ static NRDB* instance;
         instance = [[NRDB alloc] init];
     }
     return instance;
+}
+
++(void) initialize
+{
+    formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
 }
 
 +(void) clearSettings
@@ -308,36 +318,90 @@ static NRDB* instance;
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray* history = responseObject[@"history"];
-        
-        for (NSDictionary* dict in history)
-        {
-            NSString* datecreation = dict[@"datecreation"];
-            NSDictionary* variation = dict[@"variation"];
-        
-            NSLog(@"changeset created: %@", datecreation);
-            for (NSString* code in [variation allKeys])
-            {
-                NSNumber* qty = dict[code];
-                NSLog(@"%@: %d", code, qty.intValue);
-            }
-        }
-        
-        BOOL success = YES;
-        if (success)
-        {
-            completionBlock(YES, deck);
-        }
-        else
-        {
-            completionBlock(NO, nil);
-        }
+        Deck* deck = [self parseDeckFromJson:responseObject];
+        completionBlock(YES, deck);
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // NSLog(@"save failed: %@", operation);
         completionBlock(NO, nil);
     }];
     [operation start];
+}
+
+-(Deck*) parseDeckFromJson:(NSDictionary*)json
+{
+    Deck* deck = [Deck new];
+    
+    deck.name = json[@"name"];
+    deck.notes = json[@"description"];
+    deck.tags = json[@"tags"];
+    deck.netrunnerDbId = [NSString stringWithFormat:@"%ld", (long)[json[@"id"] integerValue]];
+    
+    // parse last update '2014-06-19T13:52:24Z'
+    deck.lastModified = [formatter dateFromString:json[@"dateupdate"]];
+    
+    for (NSDictionary* c in json[@"cards"])
+    {
+        NSString* code = c[@"card_code"];
+        NSNumber* qty = c[@"qty"];
+        
+        Card* card = [Card cardByCode:code];
+        if (card && qty)
+        {
+            if (card.type == NRCardTypeIdentity)
+            {
+                deck.identity = card;
+            }
+            else
+            {
+                [deck addCard:card copies:qty.intValue];
+            }
+        }
+    }
+    [deck clearChanges];
+    
+    NSArray* history = json[@"history"];
+    
+    NSMutableArray* revisions = [NSMutableArray array];
+
+    for (NSDictionary* dict in history)
+    {
+        NSString* datecreation = dict[@"datecreation"];
+        NSLog(@"changeset created: %@", datecreation);
+        
+        NSString* variation = dict[@"variation"];
+        
+        NSLog(@"variation: %@", variation);
+        ;
+        NSArray* variations = [NSJSONSerialization JSONObjectWithData:[variation dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+
+        
+        for (NSDictionary* dict in variations)
+        {
+            if (![dict isKindOfClass:[NSDictionary class]])
+            {
+                continue;
+            }
+            
+            DeckChangeSet* dcs = [[DeckChangeSet alloc] init];
+            dcs.timestamp = [formatter dateFromString:datecreation];
+            for (NSString* code in [dict allKeys])
+            {
+                NSNumber* qty = dict[code];
+                Card* card = [Card cardByCode:code];
+                
+                if (card && qty)
+                {
+                    [dcs addCard:card copies:qty.integerValue];
+                }
+            }
+            [revisions addObject:dcs];
+        }
+        
+    }
+    deck.revisions = revisions;
+    
+    return deck;
 }
 
 #pragma mark save deck
