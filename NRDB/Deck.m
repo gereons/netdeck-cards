@@ -18,6 +18,7 @@
     NSMutableArray* _cards;     // array of CardCounter
     NSMutableArray* _revisions; // array of DeckChangeSet
 }
+@property CardCounter* identityCc;
 @property NRDeckSort sortType;
 @property DeckChangeSet* lastChanges;
 
@@ -42,30 +43,6 @@
 -(Card*) identity
 {
     return self.identityCc.card;
-}
-
--(void) setIdentity:(Card *)identity
-{
-    if (self->_identityCc)
-    {
-        [self.lastChanges removeCard:self->_identityCc.card copies:1];
-    }
-    if (identity)
-    {
-        [self.lastChanges addCard:identity copies:1];
-        
-        self->_identityCc = [CardCounter initWithCard:identity andCount:1];
-        if (self.role != NRRoleNone)
-        {
-            NSAssert(self.role == identity.role, @"role mismatch");
-        }
-        self.role = identity.role;
-    }
-    else
-    {
-        self->_identityCc = nil;
-    }
-    self->_isDraft = [DRAFT_IDS containsObject:identity.code];
 }
 
 -(NSArray*) cards
@@ -240,61 +217,108 @@
 
 -(void) addCard:(Card *)card copies:(int)copies
 {
-    NSAssert(card.type != NRCardTypeIdentity, @"can't add identity");
+    [self addCard:card copies:copies history:YES];
+}
 
-    int index = [self indexOfCard:card];
+// add (copies>0) or remove (copies<0) a copy of a card from the deck
+// if copies==0, removes ALL copies of the card
+-(void) addCard:(Card *)card copies:(int)copies history:(BOOL)history
+{
+    NSLog(@"add %d copies of %@, hist=%d", copies, card.name, history);
+    
+    int cardIndex = [self indexOfCard:card];
     CardCounter* cc;
-    if (index == -1)
+    
+    if (card.type == NRCardTypeIdentity)
     {
-        cc = [CardCounter initWithCard:card andCount:copies];
-        [_cards addObject:cc];
+        [self setIdentity:card copies:copies history:history];
+        return;
     }
-    else
+
+    if (cardIndex != -1)
     {
-        cc = [_cards objectAtIndex:index];
-        if (self.isDraft)
+        cc = [_cards objectAtIndex:cardIndex];
+    }
+
+    if (copies < 1)
+    {
+        NSAssert(cc != nil, @"remove card that's not in the deck");
+        NSLog(@" remove %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
+        // remove card
+        if (copies == 0 || ABS(copies) >= cc.count)
         {
-            cc.count += copies;
+            [_cards removeObjectAtIndex:cardIndex];
+            copies = -cc.count;
         }
         else
         {
-            int max = cc.card.maxPerDeck;
-            if (cc.count < max)
+            cc.count -= ABS(copies);
+        }
+    }
+    else
+    {
+        NSLog(@" add %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
+        if (cc == nil)
+        {
+            cc = [CardCounter initWithCard:card andCount:copies];
+            [_cards addObject:cc];
+        }
+        else
+        {
+            if (self.isDraft)
             {
-                cc.count = MIN(max, cc.count + copies);
+                cc.count += copies;
+            }
+            else
+            {
+                int max = cc.card.maxPerDeck;
+                if (cc.count < max)
+                {
+                    cc.count = MIN(max, cc.count + copies);
+                }
             }
         }
     }
     
-    [self.lastChanges addCard:cc.card copies:copies];
+    if (history)
+    {
+        [self.lastChanges addCard:cc.card copies:copies];
+    }
     
     [self sort];
 }
 
--(void) removeCard:(Card *)card
+-(void) setIdentity:(Card *)identity copies:(int)copies history:(BOOL)history
 {
-    [self removeCard:card copies:-1];
-}
-
--(void) removeCard:(Card *)card copies:(int)copies
-{
-    NSAssert(card.type != NRCardTypeIdentity, @"can't remove identity");
-    int index = [self indexOfCard:card];
-    NSAssert(index != -1, @"removing card %@, not in deck", card.name);
-    
-    CardCounter* cc = [_cards objectAtIndex:index];
-    if (copies == -1 || copies >= cc.count)
+    if (self.identityCc && history)
     {
-        [_cards removeObjectAtIndex:index];
-        copies = cc.count;
+        NSLog(@" remove old identity %@, hist=%d", self.identityCc.card.name, history);
+        // record removal of existing identity
+        [self.lastChanges addCard:self.identityCc.card copies:-1];
+    }
+    if (identity && copies > 0)
+    {
+        NSLog(@" add new identity %@, hist=%d", identity.name, history);
+        if (history)
+        {
+            [self.lastChanges addCard:identity copies:1];
+        }
+        
+        self.identityCc = [CardCounter initWithCard:identity andCount:1];
+        if (self.role != NRRoleNone)
+        {
+            NSAssert(self.role == identity.role, @"role mismatch");
+        }
+        self.role = identity.role;
     }
     else
     {
-        cc.count -= copies;
+        NSLog(@" deck has no identity");
+        self.identityCc = nil;
     }
-    
-    [self.lastChanges removeCard:cc.card copies:copies];
+    self->_isDraft = [DRAFT_IDS containsObject:identity.code];
 }
+
 
 -(void) clearChanges
 {
@@ -430,7 +454,7 @@
     }
     for (Card* card in removals)
     {
-        [self removeCard:card];
+        [self addCard:card copies:0 history:NO];
     }
     
     NSString* prevSection = @"";

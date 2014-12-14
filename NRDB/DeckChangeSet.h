@@ -16,8 +16,6 @@
 @property NSMutableArray* changes;
 
 -(void) addCard:(Card*)card copies:(int)copies;
--(void) removeCard:(Card*)card copies:(int)copies;
-
 -(void) coalesce;
 
 @end

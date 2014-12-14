@@ -20,7 +20,7 @@
     int diff = ABS((int)self.cardCounter.count - copies);
     if (copies < self.cardCounter.count)
     {
-        [self.deck removeCard:self.cardCounter.card copies:diff];
+        [self.deck addCard:self.cardCounter.card copies:-diff];
     }
     else
     {

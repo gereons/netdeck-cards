@@ -223,7 +223,7 @@ static DeckImport* instance;
             {
                 if (c.type == NRCardTypeIdentity)
                 {
-                    deck.identity = c;
+                    [deck addCard:c copies:1];
                     // NSLog(@"found identity %@", c.name);
                 }
                 else
@@ -412,13 +412,9 @@ static DeckImport* instance;
         {
             if (card.type == NRCardTypeIdentity)
             {
-                deck.identity = card;
                 deck.role = card.role;
             }
-            else
-            {
-                [deck addCard:card copies:qty];
-            }
+            [deck addCard:card copies:qty];
         }
     }
     

@@ -698,7 +698,7 @@
     
     if (card && ![self.deck.identity isEqual:card])
     {
-        self.deck.identity = card;
+        [self.deck addCard:card copies:1];
         self.deckChanged = YES;
         [self refresh];
     
@@ -1163,13 +1163,9 @@
         NSArray* arr = self.cards[indexPath.section];
         CardCounter* cc = arr[indexPath.row];
         
-        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
+        if (!ISNULL(cc))
         {
-            self.deck.identity = nil;
-        }
-        else
-        {
-            [self.deck removeCard:cc.card];
+            [self.deck addCard:cc.card copies:0];
         }
         
         self.deckChanged = YES;
@@ -1296,7 +1292,7 @@
     
     if (cc && cc.card.type != NRCardTypeIdentity)
     {
-        CardImagePopup* cip = [CardImagePopup showForCard:cc draft:self.deck.isDraft fromRect:popupOrigin inView:self.collectionView direction:direction];
+        CardImagePopup* cip = [CardImagePopup showForCard:cc inDeck:self.deck fromRect:popupOrigin inView:self.collectionView direction:direction];
         cip.cell = cell;
     }
     else

@@ -66,6 +66,27 @@
 {
     NSLog(@"revert to %d", sender.tag);
     
+    for (int i=sender.tag; i>=0; --i)
+    {
+        NSLog(@"revert %d", i);
+        DeckChangeSet* dcs = self.deck.revisions[i];
+        
+        for (DeckChange* dc in dcs.changes)
+        {
+            NSInteger copies = -dc.count;
+            NSLog(@"change: %d %@", copies, dc.card.name);
+            
+            if (copies > 0)
+            {
+                [self.deck addCard:dc.card copies:copies];
+            }
+            else
+            {
+                [self.deck addCard:dc.card copies:-copies];
+            }
+        }
+    }
+    
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 

@@ -348,14 +348,7 @@ static NSDateFormatter* formatter;
         Card* card = [Card cardByCode:code];
         if (card && qty)
         {
-            if (card.type == NRCardTypeIdentity)
-            {
-                deck.identity = card;
-            }
-            else
-            {
-                [deck addCard:card copies:qty.intValue];
-            }
+            [deck addCard:card copies:qty.intValue];
         }
     }
     [deck clearChanges];

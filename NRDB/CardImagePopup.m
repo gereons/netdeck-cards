@@ -7,15 +7,16 @@
 //
 
 #import "CardImagePopup.h"
-#import "CardCounter.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"
 #import "CardImageCell.h"
+#import "Deck.h"
 
 @interface CardImagePopup ()
 
 @property CardCounter* cc;
-@property BOOL draft;
+@property Deck* deck;
+@property NSUInteger prevCount;
 
 @end
 
@@ -23,9 +24,9 @@
 
 static UIPopoverController* popover;
 
-+(CardImagePopup*) showForCard:(CardCounter *)cc draft:(BOOL)draft fromRect:(CGRect)rect inView:(UIView*)view direction:(UIPopoverArrowDirection)direction
++(CardImagePopup*) showForCard:(CardCounter *)cc inDeck:(Deck*)deck fromRect:(CGRect)rect inView:(UIView*)view direction:(UIPopoverArrowDirection)direction
 {
-    CardImagePopup* cip = [[CardImagePopup alloc] initWithCard:cc draft:(BOOL)draft];
+    CardImagePopup* cip = [[CardImagePopup alloc] initWithCard:cc andDeck:deck];
     
     popover = [[UIPopoverController alloc] initWithContentViewController:cip];
     popover.popoverContentSize = cip.view.frame.size;
@@ -44,13 +45,14 @@ static UIPopoverController* popover;
     }
 }
 
-- (id)initWithCard:(CardCounter*)cc draft:(BOOL)draft
+- (id)initWithCard:(CardCounter*)cc andDeck:(Deck*)deck
 {
     self = [super initWithNibName:@"CardImagePopup" bundle:nil];
     if (self)
     {
         self.cc = cc;
-        self.draft = draft;
+        self.prevCount = cc.count;
+        self.deck = deck;
         self.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     return self;
@@ -60,7 +62,7 @@ static UIPopoverController* popover;
 {
     [super viewDidLoad];
     
-    self.copiesStepper.maximumValue = self.draft ? 100 : self.cc.card.maxPerDeck;
+    self.copiesStepper.maximumValue = self.deck.isDraft ? 100 : self.cc.card.maxPerDeck;
     self.copiesStepper.value = self.cc.count;
     self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)self.cc.count];
     self.nameLabel.text = self.cc.card.name;
@@ -96,7 +98,10 @@ static UIPopoverController* popover;
     int count = self.copiesStepper.value;
     BOOL delete = count == 0;
     
-    self.cc.count = count;
+    NSInteger diff = count - self.prevCount;
+    [self.deck addCard:self.cc.card copies:diff];
+    self.prevCount = count;
+    
     if (delete)
     {
         [CardImagePopup dismiss];
@@ -109,13 +114,13 @@ static UIPopoverController* popover;
     }
     else
     {
-        self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)self.cc.count];
+        self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)count];
     }
     
     self.copiesLabel.textColor = [UIColor blackColor];
-    if (self.cc.card.isCore && !self.draft)
+    if (self.cc.card.isCore && !self.deck.isDraft)
     {
-        if (self.cc.card.owned < self.cc.count)
+        if (self.cc.card.owned < count)
         {
             self.copiesLabel.textColor = [UIColor redColor];
         }

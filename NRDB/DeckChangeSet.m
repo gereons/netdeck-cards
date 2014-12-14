@@ -23,14 +23,8 @@
 
 -(void) addCard:(Card *)card copies:(int)copies
 {
+    NSAssert(copies != 0, @"changing 0 copies?");
     DeckChange* dc = [DeckChange forCode:card.code copies:copies];
-    
-    [self.changes addObject:dc];
-}
-
--(void) removeCard:(Card *)card copies:(int)copies
-{
-    DeckChange* dc = [DeckChange forCode:card.code copies:-copies];
     
     [self.changes addObject:dc];
 }

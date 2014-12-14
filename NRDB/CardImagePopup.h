@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-@class CardCounter, CardImageCell;
+@class CardCounter, CardImageCell, Deck;
 
 @interface CardImagePopup : UIViewController
 
@@ -18,7 +18,7 @@
 
 -(IBAction) copiesChanged:(id)sender;
 
-+(CardImagePopup*) showForCard:(CardCounter*)card draft:(BOOL)draft fromRect:(CGRect)rect inView:(UIView*)vc direction:(UIPopoverArrowDirection)direction;
++(CardImagePopup*) showForCard:(CardCounter*)card inDeck:(Deck*)deck fromRect:(CGRect)rect inView:(UIView*)vc direction:(UIPopoverArrowDirection)direction;
 +(void) dismiss;
 
 @end
