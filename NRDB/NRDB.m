@@ -362,33 +362,41 @@ static NSDateFormatter* formatter;
     {
         NSString* datecreation = dict[@"datecreation"];
         // NSLog(@"changeset created: %@", datecreation);
+        DeckChangeSet* dcs = [[DeckChangeSet alloc] init];
+        dcs.timestamp = [formatter dateFromString:datecreation];
         
-        NSArray* variations = dict[@"variation"];
+        NSArray* variation = dict[@"variation"];
+        NSAssert(variation.count == 2, @"wrong variation count");
+        // 2-element array: variation[0] contains additions, variation[1] contains deletions
         
-        // NSLog(@"variation: %@", variations);
-
-        for (NSDictionary* dict in variations)
+        for (int i=0; i<variation.count; ++i)
         {
-            // skip over any non-dictionary entries
-            if (![dict isKindOfClass:[NSDictionary class]])
+            NSDictionary* dict = variation[i];
+            
+            // skip over empty and non-dictionary entries
+            if (dict.count == 0) // || ![dict isKindOfClass:[NSDictionary class]])
             {
                 continue;
             }
             
-            DeckChangeSet* dcs = [[DeckChangeSet alloc] init];
-            dcs.timestamp = [formatter dateFromString:datecreation];
             for (NSString* code in [dict allKeys])
             {
-                NSNumber* qty = dict[code];
+                NSNumber* quantity = dict[code];
+                int qty = quantity.integerValue;
+                if (i == 1)
+                {
+                    qty = -qty;
+                }
+                
                 Card* card = [Card cardByCode:code];
                 
                 if (card && qty)
                 {
-                    [dcs addCard:card copies:qty.integerValue];
+                    [dcs addCard:card copies:qty];
                 }
             }
-            [revisions addObject:dcs];
         }
+        [revisions addObject:dcs];
         
     }
     deck.revisions = revisions;
