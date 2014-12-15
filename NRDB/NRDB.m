@@ -313,6 +313,8 @@ static NSDateFormatter* formatter;
                                                                                  URLString:loadUrl
                                                                                 parameters:parameters
                                                                                      error:&error];
+    // bypass cache!
+    request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -348,10 +350,9 @@ static NSDateFormatter* formatter;
         Card* card = [Card cardByCode:code];
         if (card && qty)
         {
-            [deck addCard:card copies:qty.intValue];
+            [deck addCard:card copies:qty.intValue history:NO];
         }
     }
-    [deck clearChanges];
     
     NSArray* history = json[@"history"];
     
@@ -360,17 +361,15 @@ static NSDateFormatter* formatter;
     for (NSDictionary* dict in history)
     {
         NSString* datecreation = dict[@"datecreation"];
-        NSLog(@"changeset created: %@", datecreation);
+        // NSLog(@"changeset created: %@", datecreation);
         
-        NSString* variation = dict[@"variation"];
+        NSArray* variations = dict[@"variation"];
         
-        NSLog(@"variation: %@", variation);
-        ;
-        NSArray* variations = [NSJSONSerialization JSONObjectWithData:[variation dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+        // NSLog(@"variation: %@", variations);
 
-        
         for (NSDictionary* dict in variations)
         {
+            // skip over any non-dictionary entries
             if (![dict isKindOfClass:[NSDictionary class]])
             {
                 continue;

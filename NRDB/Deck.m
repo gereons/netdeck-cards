@@ -224,7 +224,7 @@
 // if copies==0, removes ALL copies of the card
 -(void) addCard:(Card *)card copies:(int)copies history:(BOOL)history
 {
-    NSLog(@"add %d copies of %@, hist=%d", copies, card.name, history);
+    // NSLog(@"add %d copies of %@, hist=%d", copies, card.name, history);
     
     int cardIndex = [self indexOfCard:card];
     CardCounter* cc;
@@ -243,7 +243,7 @@
     if (copies < 1)
     {
         NSAssert(cc != nil, @"remove card that's not in the deck");
-        NSLog(@" remove %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
+        // NSLog(@" remove %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
         // remove card
         if (copies == 0 || ABS(copies) >= cc.count)
         {
@@ -257,7 +257,7 @@
     }
     else
     {
-        NSLog(@" add %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
+        // NSLog(@" add %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
         if (cc == nil)
         {
             cc = [CardCounter initWithCard:card andCount:copies];
@@ -292,13 +292,13 @@
 {
     if (self.identityCc && history)
     {
-        NSLog(@" remove old identity %@, hist=%d", self.identityCc.card.name, history);
+        // NSLog(@" remove old identity %@, hist=%d", self.identityCc.card.name, history);
         // record removal of existing identity
         [self.lastChanges addCard:self.identityCc.card copies:-1];
     }
     if (identity && copies > 0)
     {
-        NSLog(@" add new identity %@, hist=%d", identity.name, history);
+        // NSLog(@" add new identity %@, hist=%d", identity.name, history);
         if (history)
         {
             [self.lastChanges addCard:identity copies:1];
@@ -313,16 +313,10 @@
     }
     else
     {
-        NSLog(@" deck has no identity");
+        // NSLog(@" deck has no identity");
         self.identityCc = nil;
     }
     self->_isDraft = [DRAFT_IDS containsObject:identity.code];
-}
-
-
--(void) clearChanges
-{
-    self.lastChanges = [[DeckChangeSet alloc] init];
 }
 
 -(Deck*) duplicate

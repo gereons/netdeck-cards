@@ -46,8 +46,6 @@
 // convenience method with history:YES
 -(void) addCard:(Card*)card copies:(int)copies;
 
--(void) clearChanges;
-
 -(NSUInteger) influenceFor:(CardCounter*)cc;
 
 -(Deck*) duplicate;

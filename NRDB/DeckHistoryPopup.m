@@ -78,11 +78,11 @@
             
             if (copies > 0)
             {
-                [self.deck addCard:dc.card copies:copies];
+                [self.deck addCard:dc.card copies:copies history:NO];
             }
             else
             {
-                [self.deck addCard:dc.card copies:-copies];
+                [self.deck addCard:dc.card copies:-copies history:NO];
             }
         }
     }
