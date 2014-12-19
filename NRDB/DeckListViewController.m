@@ -68,6 +68,10 @@
 
 @end
 
+#define HISTORY_SAVE_INTERVAL   60
+
+static NSTimer* historyTimer;
+
 @implementation DeckListViewController
 
 - (void) dealloc
@@ -207,7 +211,10 @@
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(notesChanged:) name:NOTES_CHANGED object:nil];
-
+    
+    [nc addObserver:self selector:@selector(stopHistoryTimer:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [nc addObserver:self selector:@selector(startHistoryTimer:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
     
@@ -237,6 +244,8 @@
     {
         [self selectIdentity:nil];
     }
+    
+    [self startHistoryTimer:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -246,6 +255,32 @@
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
     [settings setObject:@(self.sortType) forKey:DECK_VIEW_SORT];
+
+    [self stopHistoryTimer:nil];
+}
+
+#pragma mark history timer
+
+-(void) startHistoryTimer:(id)sender
+{
+    NSAssert(historyTimer == nil, @"timer still running?");
+    
+    historyTimer = [NSTimer scheduledTimerWithTimeInterval:HISTORY_SAVE_INTERVAL
+                                                    target:self
+                                                  selector:@selector(historySave:)
+                                                  userInfo:nil
+                                                   repeats:YES];
+}
+
+-(void) stopHistoryTimer:(id)sender
+{
+    [historyTimer invalidate];
+    historyTimer = nil;
+}
+
+-(void) historySave:(id)obj
+{
+    NSLog(@"timer tick");
 }
 
 #pragma mark keyboard show/hide
