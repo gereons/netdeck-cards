@@ -28,6 +28,7 @@
 @property (readonly) BOOL isDraft;
 
 @property NSString* filename;
+@property NSDate* dateCreated;
 @property NSDate* lastModified;
 
 @property NSArray* tags;    // array of strings
@@ -46,10 +47,14 @@
 // convenience method with history:YES
 -(void) addCard:(Card*)card copies:(int)copies;
 
+// revert to a given set of cards
+-(void) resetToCards:(NSDictionary*)cards;
+
 -(NSUInteger) influenceFor:(CardCounter*)cc;
 
 -(Deck*) duplicate;
 
+-(void) clearChanges;
 -(void) mergeRevisions;
 
 -(TableData*) dataForTableView:(NRDeckSort)sortType;

@@ -67,17 +67,10 @@
 {
     NSLog(@"revert to %d", sender.tag);
     
-    for (int i=sender.tag; i>=0; --i)
-    {
-        NSLog(@"revert %d", i);
-        DeckChangeSet* dcs = self.deck.revisions[i];
-        
-        for (DeckChange* dc in dcs.changes)
-        {
-            NSLog(@"change: %d %@", -dc.count, dc.card.name);
-            // [self.deck addCard:dc.card copies:-dc.count history:NO];
-        }
-    }
+    DeckChangeSet* dcs = self.deck.revisions[sender.tag];
+    NSLog(@"revert to %d %@", sender.tag, [self.dateFormatter stringFromDate:dcs.timestamp]);
+
+    [self.deck resetToCards:dcs.cards];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
     [self dismissViewControllerAnimated:NO completion:nil];
@@ -87,20 +80,13 @@
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.deck.revisions.count + 1;
+    return self.deck.revisions.count;
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section < self.deck.revisions.count)
-    {
-        DeckChangeSet* dcs = self.deck.revisions[section];
-        return dcs.changes.count;
-    }
-    else
-    {
-        return 1;
-    }
+    DeckChangeSet* dcs = self.deck.revisions[section];
+    return dcs.initial ? 1 : dcs.changes.count;
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,17 +100,18 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    if (indexPath.section < self.deck.revisions.count)
+    DeckChangeSet* dcs = self.deck.revisions[indexPath.section];
+    
+    if (dcs.initial)
     {
-        DeckChangeSet* dcs = self.deck.revisions[indexPath.section];
-        DeckChange* dc = dcs.changes[indexPath.row];
-        
-        cell.textLabel.text = [NSString stringWithFormat:@"%+ld %@", (long)dc.count, dc.card.name];
+        cell.textLabel.text = l10n(@"Initial Version");
     }
     else
     {
-        cell.textLabel.text = l10n(@"First Version");
+        DeckChange* dc = dcs.changes[indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%+ld %@", (long)dc.count, dc.card.name];
     }
+    
     return cell;
 }
 
@@ -133,16 +120,10 @@
     NSArray* views = [[NSBundle mainBundle] loadNibNamed:@"DeckHistorySectionHeaderView" owner:self options:nil];
     DeckHistorySectionHeaderView* header = views[0];
     
-    if (section < self.deck.revisions.count)
-    {
-        DeckChangeSet* dcs = self.deck.revisions[section];
-        header.dateLabel.text = [self.dateFormatter stringFromDate:dcs.timestamp];
-    }
-    else
-    {
-        header.dateLabel.text = [self.dateFormatter stringFromDate:self.deck.lastModified];
-    }
+    DeckChangeSet* dcs = self.deck.revisions[section];
+    header.dateLabel.text = [self.dateFormatter stringFromDate:dcs.timestamp];
     
+    [header.revertButton setTitle:l10n(@"Revert") forState:UIControlStateNormal];
     header.revertButton.tag = section;
     [header.revertButton addTarget:self action:@selector(revertTo:) forControlEvents:UIControlEventTouchUpInside];
     

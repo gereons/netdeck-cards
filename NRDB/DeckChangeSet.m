@@ -17,6 +17,8 @@
     if ((self = [super init]))
     {
         self.changes = [NSMutableArray array];
+        self.initial = NO;
+        self.cards = nil;
     }
     return self;
 }
@@ -43,6 +45,11 @@
 
 -(void) coalesce
 {
+    if (self.changes.count == 0)
+    {
+        return;
+    }
+    
     // sort by card
     NSArray* arr = [self.changes sortedArrayUsingComparator:^NSComparisonResult(DeckChange* dc1, DeckChange* dc2) {
         return [dc1.code compare:dc2.code];
@@ -88,6 +95,8 @@
     {
         self.timestamp = [decoder decodeObjectForKey:@"timestamp"];
         self.changes = [decoder decodeObjectForKey:@"changes"];
+        self.initial = [decoder decodeBoolForKey:@"initial"];
+        self.cards = [decoder decodeObjectForKey:@"cards"];
     }
     return self;
 }
@@ -96,6 +105,8 @@
 {
     [coder encodeObject:self.timestamp forKey:@"timestamp"];
     [coder encodeObject:self.changes forKey:@"changes"];
+    [coder encodeBool:self.initial forKey:@"initial"];
+    [coder encodeObject:self.cards forKey:@"cards"];
 }
 
 

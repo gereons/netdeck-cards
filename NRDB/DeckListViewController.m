@@ -65,12 +65,11 @@
 @property NRAlertView* nameAlert;
 
 @property BOOL initializing;
+@property NSTimer* historyTimer;
 
 @end
 
 #define HISTORY_SAVE_INTERVAL   60
-
-static NSTimer* historyTimer;
 
 @implementation DeckListViewController
 
@@ -181,6 +180,8 @@ static NSTimer* historyTimer;
     UIBarButtonItem* sortButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Sort") style:UIBarButtonItemStylePlain target:self action:@selector(sortPopup:)];
     self.historyButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"History") style:UIBarButtonItemStylePlain target:self action:@selector(historyButtonClicked:)];
     
+    self.historyButton.enabled = self.deck.filename != nil;
+    
     // add from right to left!
     NSMutableArray* rightButtons = [NSMutableArray array];
     [rightButtons addObject:self.exportButton];
@@ -263,24 +264,26 @@ static NSTimer* historyTimer;
 
 -(void) startHistoryTimer:(id)sender
 {
-    NSAssert(historyTimer == nil, @"timer still running?");
+    return;
+#warning enable me
+    NSAssert(self.historyTimer == nil, @"timer still running?");
     
-    historyTimer = [NSTimer scheduledTimerWithTimeInterval:HISTORY_SAVE_INTERVAL
-                                                    target:self
-                                                  selector:@selector(historySave:)
-                                                  userInfo:nil
-                                                   repeats:YES];
+    self.historyTimer = [NSTimer scheduledTimerWithTimeInterval:HISTORY_SAVE_INTERVAL
+                                                         target:self
+                                                       selector:@selector(historySave:)
+                                                       userInfo:nil
+                                                        repeats:YES];
 }
 
 -(void) stopHistoryTimer:(id)sender
 {
-    [historyTimer invalidate];
-    historyTimer = nil;
+    [self.historyTimer invalidate];
+    self.historyTimer = nil;
 }
 
 -(void) historySave:(id)obj
 {
-    NSLog(@"timer tick");
+    [self.deck mergeRevisions];
 }
 
 #pragma mark keyboard show/hide
@@ -327,6 +330,15 @@ static NSTimer* historyTimer;
     {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
     }
+    
+    // first save of a new deck? clear changes
+    BOOL firstSave = self.deck.filename == nil;
+    [self.deck mergeRevisions];
+    if (firstSave)
+    {
+        [self.deck clearChanges];
+    }
+    
     [DeckManager saveDeck:self.deck];
     
     if (sender != nil && self.autoSaveNRDB)
@@ -335,6 +347,7 @@ static NSTimer* historyTimer;
     }
     
     self.saveButton.enabled = NO;
+    self.historyButton.enabled = YES;
     
     if (self.autoSaveDropbox)
     {
@@ -479,9 +492,8 @@ static NSTimer* historyTimer;
         {
             deck.filename = self.deck.filename;
             self.deck = deck;
+            self.deckChanged = YES;
             
-            [DeckManager saveDeck:self.deck];
-            [DeckManager resetModificationDate:self.deck];
             [self refresh];
         }
         
@@ -550,7 +562,7 @@ static NSTimer* historyTimer;
         return;
     }
     
-    [self.deck mergeRevisions];
+    // [self.deck mergeRevisions];
     [DeckHistoryPopup showForDeck:self.deck inViewController:self];
 }
 

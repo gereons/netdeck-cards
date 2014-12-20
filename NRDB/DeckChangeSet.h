@@ -14,6 +14,8 @@
 
 @property NSDate* timestamp;
 @property NSMutableArray* changes;
+@property BOOL initial;
+@property NSMutableDictionary* cards;
 
 -(void) addCard:(Card*)card copies:(int)copies;
 -(void) coalesce;

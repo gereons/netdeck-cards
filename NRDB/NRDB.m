@@ -341,6 +341,7 @@ static NSDateFormatter* formatter;
     
     // parse last update '2014-06-19T13:52:24Z'
     deck.lastModified = [formatter dateFromString:json[@"dateupdate"]];
+    deck.dateCreated = [formatter dateFromString:json[@"datecreation"]];
     
     for (NSDictionary* c in json[@"cards"])
     {
@@ -399,7 +400,48 @@ static NSDateFormatter* formatter;
         [revisions addObject:dcs];
         
     }
+    
+    DeckChangeSet* initial = [[DeckChangeSet alloc] init];
+    initial.initial = YES;
+    initial.timestamp = deck.dateCreated;
+    [revisions addObject:initial];
+    
     deck.revisions = revisions;
+    
+    DeckChangeSet* newest = deck.revisions[0];
+    NSMutableDictionary* cards = [NSMutableDictionary dictionary];
+    for (CardCounter* cc in deck.allCards)
+    {
+        cards[cc.card.code] = @(cc.count);
+    }
+    newest.cards = [NSMutableDictionary dictionaryWithDictionary:cards];
+    
+    // walk through the deck's history and pre-compute a card list for every revision
+    for (int i = 0; i < deck.revisions.count-1; ++i)
+    {
+        DeckChangeSet* prev = deck.revisions[i];
+        for (DeckChange* dc in prev.changes)
+        {
+            NSNumber* qty = cards[dc.code];
+            qty = @(qty.integerValue - dc.count);
+            if (qty.integerValue == 0)
+            {
+                [cards removeObjectForKey:dc.code];
+            }
+            else
+            {
+                cards[dc.code] = qty;
+            }
+        }
+        DeckChangeSet* dcs = deck.revisions[i+1];
+        dcs.cards = [NSMutableDictionary dictionaryWithDictionary:cards];
+    }
+    
+    for (int i=0; i < deck.revisions.count; ++i)
+    {
+        DeckChangeSet* dcs = deck.revisions[i];
+        NSLog(@"%d %@", i, dcs.cards);
+    }
     
     return deck;
 }

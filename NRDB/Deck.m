@@ -319,6 +319,52 @@
     self->_isDraft = [DRAFT_IDS containsObject:identity.code];
 }
 
+-(void) resetToCards:(NSDictionary *)cards
+{
+    NSMutableArray* newCards = [NSMutableArray array];
+
+    Card* newIdentity;
+    for (NSString* code in cards.allKeys)
+    {
+        Card* card = [Card cardByCode:code];
+        
+        if (card.type != NRCardTypeIdentity)
+        {
+            NSNumber* qty = cards[code];
+            CardCounter* cc = [CardCounter initWithCard:card andCount:qty.intValue];
+            [newCards addObject:cc];
+        }
+        else
+        {
+            NSAssert(newIdentity == nil, @"newIdentity already set");
+            newIdentity = card;
+        }
+    }
+    
+    // figure out changes between present and new deck
+    self.lastChanges = [[DeckChangeSet alloc] init];
+    for (CardCounter* cc in self.cards)
+    {
+        NSNumber* newQty = cards[cc.card.code];
+        if (newQty == nil)
+        {
+            // not in new deck
+            [self.lastChanges addCard:cc.card copies:-cc.count];
+        }
+        else
+        {
+            int diff = cc.count - newQty.intValue;
+            if (diff != 0)
+            {
+                [self.lastChanges addCard:cc.card copies:diff];
+            }
+        }
+    }
+    [self setIdentity:newIdentity copies:1 history:YES];
+    
+    self->_cards = newCards;
+}
+
 -(Deck*) duplicate
 {
     Deck* newDeck = [Deck new];
@@ -331,6 +377,8 @@
     newDeck.filename = nil;
     newDeck.state = self.state;
     newDeck.notes = self.notes ? [NSString stringWithString:self.notes] : nil;
+    
+#warning dup lastChanges and revisions?
     
     return newDeck;
 }
@@ -402,11 +450,22 @@
 
 #pragma mark revisions
 
+-(void) clearChanges
+{
+    self.lastChanges = [[DeckChangeSet alloc] init];
+}
+
 -(void) mergeRevisions
 {
+    [self.lastChanges coalesce];
     if (self.lastChanges.changes.count > 0)
     {
-        [self.lastChanges coalesce];
+        self.lastChanges.cards = [NSMutableDictionary dictionary];
+        for (CardCounter* cc in self.allCards)
+        {
+            self.lastChanges.cards[cc.card.code] = @(cc.count);
+        }
+        
         [self->_revisions insertObject:self.lastChanges atIndex:0];
         self.lastChanges = [[DeckChangeSet alloc] init];
     }

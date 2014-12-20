@@ -21,6 +21,7 @@
     {
         deck.filename = [DeckManager pathForRole:deck.role];
     }
+        
     // NSLog(@"saving deck %@ (%@)", deck.name, deck.identity.name);
     
     // Set up the encoder and storage for the saved state data
@@ -36,6 +37,16 @@
     if (!saveOk)
     {
         [DeckManager removeFile:deck.filename];
+        return;
+    }
+    
+    if (deck.dateCreated)
+    {
+        NSDictionary *attrs = @{ NSFileCreationDate: deck.dateCreated };
+        NSError *error;
+        NSFileManager* fileMgr = [NSFileManager defaultManager];
+        
+        [fileMgr setAttributes:attrs ofItemAtPath:deck.filename error: &error];
     }
 }
 
@@ -61,8 +72,11 @@
     
     if (attrs != nil)
     {
-        NSDate *date = (NSDate*)[attrs objectForKey: NSFileModificationDate];
+        NSDate *date = (NSDate*)[attrs objectForKey:NSFileModificationDate];
         deck.lastModified = date;
+        
+        date = (NSDate*)[attrs objectForKey:NSFileCreationDate];
+        deck.dateCreated = date;
     }
     
     return deck;
@@ -188,7 +202,7 @@
 }
 
 // reset a deck's last modification timestamp
-+(void) resetModificationDate:(Deck *)deck
++(void) resetModificationDate:(Deck*)deck
 {
     if (deck.filename && deck.lastModified)
     {
