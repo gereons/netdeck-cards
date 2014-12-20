@@ -472,7 +472,6 @@
         
         header.titleLabel.text = self.factionNames[indexPath.section];
         NSArray* arr = self.identities[indexPath.section];
-#warning crashlytics #37?
         Card* card = arr[0];
         header.titleLabel.textColor = card.factionColor;
     }
