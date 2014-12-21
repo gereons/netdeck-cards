@@ -384,7 +384,7 @@ static NSDateFormatter* formatter;
             for (NSString* code in [dict allKeys])
             {
                 NSNumber* quantity = dict[code];
-                int qty = quantity.integerValue;
+                NSInteger qty = quantity.integerValue;
                 if (i == 1)
                 {
                     qty = -qty;
@@ -398,8 +398,8 @@ static NSDateFormatter* formatter;
                 }
             }
         }
+        [dcs sort];
         [revisions addObject:dcs];
-        
     }
     
     DeckChangeSet* initial = [[DeckChangeSet alloc] init];
@@ -438,11 +438,13 @@ static NSDateFormatter* formatter;
         dcs.cards = [NSMutableDictionary dictionaryWithDictionary:cards];
     }
     
+    /*
     for (int i=0; i < deck.revisions.count; ++i)
     {
         DeckChangeSet* dcs = deck.revisions[i];
         NSLog(@"%d %@", i, dcs.cards);
     }
+    */
     
     return deck;
 }

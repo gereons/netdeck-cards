@@ -17,8 +17,9 @@
 @property BOOL initial;
 @property NSMutableDictionary* cards;
 
--(void) addCardCode:(NSString*)code copies:(int)copies;
+-(void) addCardCode:(NSString*)code copies:(NSInteger)copies;
 -(void) coalesce;
+-(void) sort;
 -(void) dump;
 
 @end

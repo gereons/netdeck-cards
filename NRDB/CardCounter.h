@@ -12,10 +12,10 @@
 @interface CardCounter : NSObject <NSCoding>
 
 @property (readonly, nonatomic) Card* card;
-@property (nonatomic) NSUInteger count;
+@property (nonatomic) NSInteger count;
 @property BOOL showAltArt;
 
 +(CardCounter*) initWithCard:(Card*)card;
-+(CardCounter*) initWithCard:(Card*)card andCount:(int)count;
++(CardCounter*) initWithCard:(Card*)card andCount:(NSInteger)count;
 
 @end

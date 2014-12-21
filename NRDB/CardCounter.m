@@ -18,7 +18,7 @@
     return [self initWithCard:card andCount:1];
 }
 
-+(CardCounter*) initWithCard:(Card*)card andCount:(int)count
++(CardCounter*) initWithCard:(Card*)card andCount:(NSInteger)count
 {
     NSAssert(card != nil, @"card is nil");
     CardCounter* cc = [CardCounter new];

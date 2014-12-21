@@ -216,14 +216,14 @@
     return count * cc.card.influence;
 }
 
--(void) addCard:(Card *)card copies:(int)copies
+-(void) addCard:(Card *)card copies:(NSInteger)copies
 {
     [self addCard:card copies:copies history:YES];
 }
 
 // add (copies>0) or remove (copies<0) a copy of a card from the deck
 // if copies==0, removes ALL copies of the card
--(void) addCard:(Card *)card copies:(int)copies history:(BOOL)history
+-(void) addCard:(Card *)card copies:(NSInteger)copies history:(BOOL)history
 {
     // NSLog(@"add %d copies of %@, hist=%d", copies, card.name, history);
     
@@ -289,7 +289,7 @@
     [self sort];
 }
 
--(void) setIdentity:(Card *)identity copies:(int)copies history:(BOOL)history
+-(void) setIdentity:(Card *)identity copies:(NSInteger)copies history:(BOOL)history
 {
     if (self.identityCc && history)
     {
@@ -471,11 +471,6 @@
 }
 
 #pragma mark revisions
-
--(void) clearChanges
-{
-    self.lastChanges = [[DeckChangeSet alloc] init];
-}
 
 -(void) mergeRevisions
 {

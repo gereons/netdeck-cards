@@ -183,7 +183,7 @@
     UIBarButtonItem* sortButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Sort") style:UIBarButtonItemStylePlain target:self action:@selector(sortPopup:)];
     self.historyButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"History") style:UIBarButtonItemStylePlain target:self action:@selector(historyButtonClicked:)];
     
-    self.historyButton.enabled = self.deck.filename != nil;
+    self.historyButton.enabled = self.deck.filename != nil && self.deck.revisions.count > 0;
     
     // add from right to left!
     NSMutableArray* rightButtons = [NSMutableArray array];

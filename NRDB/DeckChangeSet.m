@@ -23,7 +23,7 @@
     return self;
 }
 
--(void) addCardCode:(NSString *)code copies:(int)copies
+-(void) addCardCode:(NSString *)code copies:(NSInteger)copies
 {
     NSAssert(copies != 0, @"changing 0 copies?");
     DeckChange* dc = [DeckChange forCode:code copies:copies];
@@ -36,8 +36,8 @@
     NSLog(@"---- changes -----");
     for (DeckChange* dc in self.changes)
     {
-        NSLog(@"%@ %d %@", dc.count > 0 ? @"add" : @"rem",
-              dc.count,
+        NSLog(@"%@ %ld %@", dc.count > 0 ? @"add" : @"rem",
+              (long)dc.count,
               dc.card.name);
     }
     NSLog(@"---end---");
@@ -82,9 +82,28 @@
     }
     
     self.changes = combinedChanges;
+    [self sort];
     self.timestamp = [NSDate date];
     
     // [self dump];
+}
+
+// sort changes: additions by name, then deletions by name
+-(void) sort
+{
+    [self.changes sortUsingComparator:^NSComparisonResult(DeckChange* dc1, DeckChange* dc2) {
+        // NSComparisonResult rs = NSOrderedSame;
+    
+        if (dc1.count > 0 && dc2.count < 0)
+        {
+            return NSOrderedAscending;
+        }
+        if (dc1.count < 0 && dc2.count > 0)
+        {
+            return NSOrderedDescending;
+        }
+        return [dc1.card.name compare:dc2.card.name];
+    }];
 }
 
 #pragma mark nscoding

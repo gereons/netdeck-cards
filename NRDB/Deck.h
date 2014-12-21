@@ -42,10 +42,10 @@
 
 // add (copies>0) or remove (copies<0) a copy of a card from the deck
 // if copies==0, removes ALL copies of the card
--(void) addCard:(Card*)card copies:(int)copies history:(BOOL)history;
+-(void) addCard:(Card*)card copies:(NSInteger)copies history:(BOOL)history;
 
 // convenience method with history:YES
--(void) addCard:(Card*)card copies:(int)copies;
+-(void) addCard:(Card*)card copies:(NSInteger)copies;
 
 // revert to a given set of cards
 -(void) resetToCards:(NSDictionary*)cards;
@@ -54,7 +54,6 @@
 
 -(Deck*) duplicate;
 
--(void) clearChanges;
 -(void) mergeRevisions;
 
 -(TableData*) dataForTableView:(NRDeckSort)sortType;
