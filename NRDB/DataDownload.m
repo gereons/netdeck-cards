@@ -9,6 +9,7 @@
 #import <EXTScope.h>
 #import <SDCAlertView.h>
 #import <UIView+SDCAutoLayout.h>
+#import <AFNetworking.h>
 
 #import "DataDownload.h"
 #import "CardManager.h"

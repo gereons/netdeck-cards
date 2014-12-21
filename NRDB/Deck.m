@@ -282,7 +282,7 @@
     
     if (history)
     {
-        [self.lastChanges addCard:cc.card copies:copies];
+        [self.lastChanges addCardCode:cc.card.code copies:copies];
     }
     
     [self sort];
@@ -294,14 +294,14 @@
     {
         // NSLog(@" remove old identity %@, hist=%d", self.identityCc.card.name, history);
         // record removal of existing identity
-        [self.lastChanges addCard:self.identityCc.card copies:-1];
+        [self.lastChanges addCardCode:self.identityCc.card.code copies:-1];
     }
     if (identity && copies > 0)
     {
         // NSLog(@" add new identity %@, hist=%d", identity.name, history);
         if (history)
         {
-            [self.lastChanges addCard:identity copies:1];
+            [self.lastChanges addCardCode:identity.code copies:1];
         }
         
         self.identityCc = [CardCounter initWithCard:identity andCount:1];
@@ -341,26 +341,46 @@
         }
     }
     
-    // figure out changes between present and new deck
-    self.lastChanges = [[DeckChangeSet alloc] init];
-    for (CardCounter* cc in self.cards)
+    // figure out changes between this and the last saved state
+    
+    if (self.revisions.count > 0)
     {
-        NSNumber* newQty = cards[cc.card.code];
-        if (newQty == nil)
+        DeckChangeSet* dcs = self.revisions[0];
+        NSDictionary* lastSavedCards = dcs.cards;
+        NSArray* lastSavedCodes = lastSavedCards.allKeys;
+        
+        // for cards in last saved deck, check what remains in new deck
+        for (NSString* code in lastSavedCodes)
         {
-            // not in new deck
-            [self.lastChanges addCard:cc.card copies:-cc.count];
-        }
-        else
-        {
-            int diff = cc.count - newQty.intValue;
-            if (diff != 0)
+            NSNumber* oldQty = lastSavedCards[code];
+            NSNumber* newQty = cards[code];
+            if (newQty == nil)
             {
-                [self.lastChanges addCard:cc.card copies:diff];
+                // not in new deck
+                [self.lastChanges addCardCode:code copies:-oldQty.intValue];
+            }
+            else
+            {
+                int diff = oldQty.intValue - newQty.intValue;
+                if (diff != 0)
+                {
+                    [self.lastChanges addCardCode:code copies:diff];
+                }
+            }
+        }
+        
+        // for cards in new deck: check what was in old deck
+        for (NSString* code in cards.allKeys)
+        {
+            if (![lastSavedCodes containsObject:code])
+            {
+                NSNumber* newQty = cards[code];
+                [self.lastChanges addCardCode:code copies:newQty.intValue];
             }
         }
     }
-    [self setIdentity:newIdentity copies:1 history:YES];
+    
+    [self setIdentity:newIdentity copies:1 history:NO];
     
     self->_cards = newCards;
 }
@@ -378,7 +398,8 @@
     newDeck.state = self.state;
     newDeck.notes = self.notes ? [NSString stringWithString:self.notes] : nil;
     
-#warning dup lastChanges and revisions?
+    newDeck.lastChanges = self.lastChanges;
+    newDeck->_revisions = [NSMutableArray arrayWithArray:self.revisions];
     
     return newDeck;
 }
@@ -458,6 +479,7 @@
 -(void) mergeRevisions
 {
     [self.lastChanges coalesce];
+    
     if (self.lastChanges.changes.count > 0)
     {
         self.lastChanges.cards = [NSMutableDictionary dictionary];
@@ -466,7 +488,13 @@
             self.lastChanges.cards[cc.card.code] = @(cc.count);
         }
         
+        if (self.revisions.count == 0)
+        {
+            // this is the first revision
+            self.lastChanges.initial = YES;
+        }
         [self->_revisions insertObject:self.lastChanges atIndex:0];
+        
         self.lastChanges = [[DeckChangeSet alloc] init];
     }
 }

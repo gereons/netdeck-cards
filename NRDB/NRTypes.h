@@ -15,6 +15,8 @@
 
 #define CHECKED_TITLE(str, cond)    [NSString stringWithFormat:@"%@%@", str, cond ? @" ✓" : @""]
 
+#define APP_ONLINE  [AFNetworkReachabilityManager sharedManager].reachable
+
 extern NSString* const kANY;
 
 typedef NS_ENUM(NSInteger, NRCardType)

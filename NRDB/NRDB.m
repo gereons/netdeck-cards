@@ -8,6 +8,7 @@
 
 #import <EXTScope.h>
 #import <SDCAlertView.h>
+#import <AFNetworking.h>
 
 #import "NRDB.h"
 #import "NRDBAuth.h"
@@ -393,7 +394,7 @@ static NSDateFormatter* formatter;
                 
                 if (card && qty)
                 {
-                    [dcs addCard:card copies:qty];
+                    [dcs addCardCode:card.code copies:qty];
                 }
             }
         }

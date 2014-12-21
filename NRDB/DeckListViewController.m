@@ -9,6 +9,8 @@
 #import <SVProgressHUD.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
+#import <AFNetworking.h>
+
 #import "UIAlertAction+NRDB.h"
 
 #import "NRAlertView.h"
@@ -331,13 +333,7 @@
         [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
     }
     
-    // first save of a new deck? clear changes
-    BOOL firstSave = self.deck.filename == nil;
     [self.deck mergeRevisions];
-    if (firstSave)
-    {
-        [self.deck clearChanges];
-    }
     
     [DeckManager saveDeck:self.deck];
     

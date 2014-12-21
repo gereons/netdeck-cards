@@ -23,10 +23,10 @@
     return self;
 }
 
--(void) addCard:(Card *)card copies:(int)copies
+-(void) addCardCode:(NSString *)code copies:(int)copies
 {
     NSAssert(copies != 0, @"changing 0 copies?");
-    DeckChange* dc = [DeckChange forCode:card.code copies:copies];
+    DeckChange* dc = [DeckChange forCode:code copies:copies];
     
     [self.changes addObject:dc];
 }
@@ -108,6 +108,5 @@
     [coder encodeBool:self.initial forKey:@"initial"];
     [coder encodeObject:self.cards forKey:@"cards"];
 }
-
 
 @end

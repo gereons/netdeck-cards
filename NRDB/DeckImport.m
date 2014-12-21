@@ -8,6 +8,7 @@
 
 #import <EXTScope.h>
 #import <SDCAlertView.h>
+#import <AFNetworking.h>
 
 #import "DeckImport.h"
 #import "Deck.h"

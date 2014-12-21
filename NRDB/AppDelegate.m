@@ -9,6 +9,7 @@
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
 #import <Crashlytics/Crashlytics.h>
+#import <AFNetworking.h>
 
 #import "AppDelegate.h"
 #import "CardManager.h"
