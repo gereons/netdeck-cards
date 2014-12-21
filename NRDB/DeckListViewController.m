@@ -54,6 +54,7 @@
 @property UIBarButtonItem* stateButton;
 @property UIBarButtonItem* nrdbButton;
 @property UIBarButtonItem* historyButton;
+@property UIProgressView* progressView;
 
 @property NSString* filename;
 @property BOOL autoSave;
@@ -247,6 +248,15 @@
     if (self.deck.identity == nil && self.filename == nil && self.deck.cards.count == 0)
     {
         [self selectIdentity:nil];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY])
+    {
+        int x = self.notesButton.frame.origin.x;
+        int width = self.analysisButton.frame.origin.x + self.analysisButton.frame.size.width - x;
+        self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(x, 38, width, 3)];
+        self.progressView.progress = 1.0;
+        [self.toolBar addSubview:self.progressView];
     }
     
     [self startHistoryTimer:nil];
