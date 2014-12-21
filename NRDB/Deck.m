@@ -36,6 +36,7 @@
         self.role = NRRoleNone;
         self.sortType = NRDeckSortType;
         self.lastChanges = [[DeckChangeSet alloc] init];
+        self.dateCreated = [NSDate date];
     }
     return self;
 }
@@ -387,7 +388,7 @@
 
 -(Deck*) duplicate
 {
-    Deck* newDeck = [Deck new];
+    Deck* newDeck = [[Deck alloc] init];
     
     newDeck.name = [NSString stringWithFormat:l10n(@"Copy of %@"), self.name];
     newDeck->_identityCc = [CardCounter initWithCard:self.identity];

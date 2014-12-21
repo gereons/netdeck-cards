@@ -98,6 +98,7 @@ const NSString* const kANY = @"Any";
         USE_DRAFT_IDS: @(YES),
         USE_UNPUBLISHED_IDS: @(NO),
         AUTO_SAVE: @(NO),
+        AUTO_HISTORY: @(YES),
         USE_DROPBOX: @(NO),
         AUTO_SAVE_DB: @(NO),
         USE_NRDB: @(NO),

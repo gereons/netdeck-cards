@@ -78,6 +78,7 @@
 - (void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self stopHistoryTimer:nil];
 }
 
 - (void)viewDidLoad
@@ -103,7 +104,7 @@
     
     if (self.deck == nil)
     {
-        self.deck = [Deck new];
+        self.deck = [[Deck alloc] init];
         self.deck.role = self.role;
     }
     
@@ -264,28 +265,30 @@
 
 #pragma mark history timer
 
--(void) startHistoryTimer:(id)sender
+-(void) startHistoryTimer:(id)notification
 {
-    return;
-#warning enable me
     NSAssert(self.historyTimer == nil, @"timer still running?");
-    
-    self.historyTimer = [NSTimer scheduledTimerWithTimeInterval:HISTORY_SAVE_INTERVAL
-                                                         target:self
-                                                       selector:@selector(historySave:)
-                                                       userInfo:nil
-                                                        repeats:YES];
+    BOOL autoHistory = [[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY];
+    if (autoHistory)
+    {
+        self.historyTimer = [NSTimer scheduledTimerWithTimeInterval:HISTORY_SAVE_INTERVAL
+                                                             target:self
+                                                           selector:@selector(historySave:)
+                                                           userInfo:nil
+                                                            repeats:YES];
+    }
 }
 
--(void) stopHistoryTimer:(id)sender
+-(void) stopHistoryTimer:(id)notification
 {
     [self.historyTimer invalidate];
     self.historyTimer = nil;
 }
 
--(void) historySave:(id)obj
+-(void) historySave:(id)timer
 {
     [self.deck mergeRevisions];
+    self.historyButton.enabled = YES;
 }
 
 #pragma mark keyboard show/hide
@@ -328,22 +331,25 @@
     }
     
     self.deckChanged = NO;
-    if (sender != nil)
-    {
-        [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
-    }
+    BOOL autoSaving = (sender == nil);
     
-    [self.deck mergeRevisions];
+    if (!autoSaving)
+    {
+        [self stopHistoryTimer:nil];
+        [self startHistoryTimer:nil];
+        [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
+        [self.deck mergeRevisions];
+        self.historyButton.enabled = YES;
+    }
     
     [DeckManager saveDeck:self.deck];
     
-    if (sender != nil && self.autoSaveNRDB)
+    if (!autoSaving && self.autoSaveNRDB)
     {
         [self saveDeckToNetrunnerDb];
     }
     
     self.saveButton.enabled = NO;
-    self.historyButton.enabled = YES;
     
     if (self.autoSaveDropbox)
     {

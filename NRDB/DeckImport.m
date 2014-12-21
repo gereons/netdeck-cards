@@ -392,7 +392,7 @@ static DeckImport* instance;
 
 -(BOOL) parseJsonDecklist:(NSDictionary*) decklist
 {
-    Deck* deck = [Deck new];
+    Deck* deck = [[Deck alloc] init];
     
     deck.name = [decklist objectForKey:@"name"];
     

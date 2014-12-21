@@ -33,6 +33,7 @@
 
 #define AUTO_SAVE           @"autoSave"
 #define AUTO_SAVE_DB        @"autoSaveDropbox"
+#define AUTO_HISTORY        @"autoHistory"
 
 #define CLIP_CHANGE_COUNT   @"clipChangeCount"
 

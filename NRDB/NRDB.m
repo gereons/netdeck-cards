@@ -333,7 +333,7 @@ static NSDateFormatter* formatter;
 
 -(Deck*) parseDeckFromJson:(NSDictionary*)json
 {
-    Deck* deck = [Deck new];
+    Deck* deck = [[Deck alloc] init];
     
     deck.name = json[@"name"];
     deck.notes = json[@"description"];
