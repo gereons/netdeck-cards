@@ -290,6 +290,11 @@ static NSDictionary* cropValues;
         }
     }
     
+    if (c->_imageSrc.length == 0)
+    {
+        c->_imageSrc = nil;
+    }
+    
     JSON_INT(maxPerDeck, @"maxperdeck");
     if (isNrdb)
     {
