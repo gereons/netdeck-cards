@@ -69,6 +69,7 @@
 
 @property BOOL initializing;
 @property NSTimer* historyTimer;
+@property NSInteger historyTicker;
 
 @end
 
@@ -252,10 +253,11 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY])
     {
-        int x = self.notesButton.frame.origin.x;
-        int width = self.analysisButton.frame.origin.x + self.analysisButton.frame.size.width - x;
-        self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(x, 38, width, 3)];
+        int x = self.view.center.x - HISTORY_SAVE_INTERVAL;
+        int width = 2 * HISTORY_SAVE_INTERVAL; // self.analysisButton.frame.origin.x + self.analysisButton.frame.size.width - x;
+        self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(x, 40, width, 3)];
         self.progressView.progress = 1.0;
+        self.progressView.progressTintColor = [UIColor darkGrayColor];
         [self.toolBar addSubview:self.progressView];
     }
     
@@ -281,11 +283,13 @@
     BOOL autoHistory = [[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY];
     if (autoHistory)
     {
-        self.historyTimer = [NSTimer scheduledTimerWithTimeInterval:HISTORY_SAVE_INTERVAL
+        self.historyTimer = [NSTimer scheduledTimerWithTimeInterval:1
                                                              target:self
                                                            selector:@selector(historySave:)
                                                            userInfo:nil
                                                             repeats:YES];
+        self.progressView.progress = 1.0;
+        self.historyTicker = HISTORY_SAVE_INTERVAL;
     }
 }
 
@@ -293,12 +297,21 @@
 {
     [self.historyTimer invalidate];
     self.historyTimer = nil;
+    self.historyTicker = 0;
 }
 
 -(void) historySave:(id)timer
 {
-    [self.deck mergeRevisions];
-    self.historyButton.enabled = YES;
+    --self.historyTicker;
+
+    float progress = (float)self.historyTicker / (float)HISTORY_SAVE_INTERVAL;
+    [self.progressView setProgress:progress animated:NO];
+    if (self.historyTicker <= 0)
+    {
+        [self.deck mergeRevisions];
+        self.historyButton.enabled = YES;
+        self.historyTicker = HISTORY_SAVE_INTERVAL+1;
+    }
 }
 
 #pragma mark keyboard show/hide
