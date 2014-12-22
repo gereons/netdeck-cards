@@ -12,7 +12,6 @@
 @interface OctgnImport()
 
 @property NSXMLParser* parser;
-@property BOOL setIdentity;
 @property Deck* deck;
 @property NSMutableString* notes;
 
@@ -54,13 +53,6 @@
 {
     self.notes = nil;
     
-    if ([elementName isEqualToString:@"section"])
-    {
-        NSString* name = attributeDict[@"name"];
-        self.setIdentity = [[name lowercaseString] isEqualToString:@"identity"];
-        // NSLog(@"start section: %@", name);
-    }
-    
     if ([elementName isEqualToString:@"card"])
     {
         NSString* qty = attributeDict[@"qty"];
@@ -72,14 +64,7 @@
         if (card)
         {
             // NSLog(@"card: %d %@", copies, card.name);
-            if (self.setIdentity)
-            {
-                self.deck.identity = card;
-            }
-            else
-            {
-                [self.deck addCard:card copies:copies];
-            }
+            [self.deck addCard:card copies:copies];
             self.deck.role = card.role;
         }
     }

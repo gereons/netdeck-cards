@@ -6,8 +6,8 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_5_0
-#warning "This project uses features only available in iOS SDK 5.0 and later."
+#ifndef __IPHONE_8_1
+#warning "This project uses features only available in iOS SDK 8.1 and later."
 #endif
 
 #ifdef __OBJC__
@@ -25,7 +25,3 @@
 #define l10n(str)   NSLocalizedString(str, nil)
 
 #import "NRTypes.h"
-#import <AFNetworking.h>
-
-#define APP_ONLINE  [AFNetworkReachabilityManager sharedManager].reachable
-

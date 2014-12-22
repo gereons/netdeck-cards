@@ -8,6 +8,7 @@
 
 #import "ImageCache.h"
 #import <EXTScope.h>
+#import <AFNetworking.h>
 
 #import "Card.h"
 #import "SettingsKeys.h"

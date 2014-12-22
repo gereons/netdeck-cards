@@ -12,8 +12,18 @@
 			<key>Key</key>
 			<string>autoSave</string>
 			<key>DefaultValue</key>
-			<true/>
+			<false/>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Auto-save history</string>
+            <key>Key</key>
+            <string>autoHistory</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
 		<dict>
 			<key>Title</key>
 			<string>Card Data</string>

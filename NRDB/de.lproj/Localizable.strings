@@ -238,7 +238,9 @@
 "This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Dieses Deck ist (noch) nicht mit einem Deck auf NetrunnerDB.com verknüpft";
 "This deck is linked to deck %@ on NetrunnerDB.com" = "Dieses Deck ist mit Deck %@ auf NetrunnerDB.com verknüpft";
 "Unlink" = "Trennen";
+"Reimport" = "Neu laden";
 "Saving Deck..." = "Deck speichern...";
+"Loading Deck..." = "Deck laden...";
 "Loading Decks..." = "Decks laden...";
 "Publishing Deck..." = "Deck veröffentlichen...";
 "Exporting Decks..." = "Decks exportieren...";
@@ -250,6 +252,7 @@
 "Publish deck" = "Deck veröffentlichen";
 "Only valid decks can be published." = "Nur valide Decks können veröffentlicht werden.";
 "Saving the deck at NetrunnerDB.com failed." = "Speichern bei NetrunnerDB.com fehlgeschlagen.";
+"Loading the deck from NetrunnerDB.com failed." = "Laden von NetrunnerDB.com fehlgeschlagen.";
 "Publishing the deck at NetrunnerDB.com failed." = "Veröffentlichen bei NetrunnerDB.com fehlgeschlagen.";
 "Deck published with ID %@" = "Deck veröffentlicht, ID: %@";
 "Import All" = "Alle importieren";
@@ -287,6 +290,7 @@
 "Alt Art" = "Promokarte";
 "Find decks using this card" = "Decks mit dieser Karte";
 "New deck with this card" = "Neues Deck mit dieser Karte";
+"ANCUR page for this card" = "ANCUR-Seite für diese Karte";
 "Faction/A-Z" = "Fraktion/A-Z";
 "Type/Faction" = "Typ/Fraktion";
 "Set/Faction" = "Set/Fraktion";
@@ -294,3 +298,9 @@
 "Trash: %@" = "Zerstörung: %@";
 "%lu matching card" = "%lu passende Karte";
 "%lu matching cards" = "%lu passende Karten";
+
+// editing history
+"Editing History" = "Bearbeitungs-Historie";
+"Revert" = "Wiederherstellen";
+"History" = "Historie";
+"Initial Version" = "Erste Version";

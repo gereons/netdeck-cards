@@ -10,6 +10,7 @@
 #import <Dropbox/Dropbox.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
+#import <AFNetworking.h>
 
 #import "NRSwitch.h"
 #import "SettingsViewController.h"

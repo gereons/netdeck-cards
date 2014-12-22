@@ -8,11 +8,14 @@
 
 #import <EXTScope.h>
 #import <SDCAlertView.h>
+#import <AFNetworking.h>
 
 #import "NRDB.h"
 #import "NRDBAuth.h"
 #import "SettingsKeys.h"
 #import "Deck.h"
+#import "DeckChange.h"
+#import "DeckChangeSet.h"
 
 @interface NRDB()
 @property (strong) DecklistCompletionBlock decklistCompletionBlock;
@@ -24,6 +27,7 @@
 @implementation NRDB
 
 static NRDB* instance;
+static NSDateFormatter* formatter;
 
 +(NRDB*) sharedInstance
 {
@@ -32,6 +36,13 @@ static NRDB* instance;
         instance = [[NRDB alloc] init];
     }
     return instance;
+}
+
++(void) initialize
+{
+    formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
 }
 
 +(void) clearSettings
@@ -279,6 +290,163 @@ static NRDB* instance;
     parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
     
     [self saveOrPublish:publishUrl parameters:parameters];
+}
+
+#pragma mark load deck
+
+-(void) loadDeck:(Deck *)deck completion:(LoadCompletionBlock)completionBlock
+{
+    NSString* token = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    if (!token)
+    {
+        completionBlock(NO, nil);
+        return;
+    }
+
+    NSAssert(deck.netrunnerDbId, @"no nrdb id");
+    NSString* loadUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/load_deck/%@", deck.netrunnerDbId];
+    
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    
+    NSError* error;
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
+                                                                                 URLString:loadUrl
+                                                                                parameters:parameters
+                                                                                     error:&error];
+    // bypass cache!
+    request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        Deck* deck = [self parseDeckFromJson:responseObject];
+        completionBlock(YES, deck);
+    }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // NSLog(@"save failed: %@", operation);
+        completionBlock(NO, nil);
+    }];
+    [operation start];
+}
+
+-(Deck*) parseDeckFromJson:(NSDictionary*)json
+{
+    Deck* deck = [[Deck alloc] init];
+    
+    deck.name = json[@"name"];
+    deck.notes = json[@"description"];
+    deck.tags = json[@"tags"];
+    deck.netrunnerDbId = [NSString stringWithFormat:@"%ld", (long)[json[@"id"] integerValue]];
+    
+    // parse last update '2014-06-19T13:52:24Z'
+    deck.lastModified = [formatter dateFromString:json[@"dateupdate"]];
+    deck.dateCreated = [formatter dateFromString:json[@"datecreation"]];
+    
+    for (NSDictionary* c in json[@"cards"])
+    {
+        NSString* code = c[@"card_code"];
+        NSNumber* qty = c[@"qty"];
+        
+        Card* card = [Card cardByCode:code];
+        if (card && qty)
+        {
+            [deck addCard:card copies:qty.intValue history:NO];
+        }
+    }
+    
+    NSArray* history = json[@"history"];
+    
+    NSMutableArray* revisions = [NSMutableArray array];
+
+    for (NSDictionary* dict in history)
+    {
+        NSString* datecreation = dict[@"datecreation"];
+        // NSLog(@"changeset created: %@", datecreation);
+        DeckChangeSet* dcs = [[DeckChangeSet alloc] init];
+        dcs.timestamp = [formatter dateFromString:datecreation];
+        
+        NSArray* variation = dict[@"variation"];
+        NSAssert(variation.count == 2, @"wrong variation count");
+        // 2-element array: variation[0] contains additions, variation[1] contains deletions
+        
+        for (int i=0; i<variation.count; ++i)
+        {
+            NSDictionary* dict = variation[i];
+            
+            // skip over empty and non-dictionary entries
+            if (dict.count == 0) // || ![dict isKindOfClass:[NSDictionary class]])
+            {
+                continue;
+            }
+            
+            for (NSString* code in [dict allKeys])
+            {
+                NSNumber* quantity = dict[code];
+                NSInteger qty = quantity.integerValue;
+                if (i == 1)
+                {
+                    qty = -qty;
+                }
+                
+                Card* card = [Card cardByCode:code];
+                
+                if (card && qty)
+                {
+                    [dcs addCardCode:card.code copies:qty];
+                }
+            }
+        }
+        [dcs sort];
+        [revisions addObject:dcs];
+    }
+    
+    DeckChangeSet* initial = [[DeckChangeSet alloc] init];
+    initial.initial = YES;
+    initial.timestamp = deck.dateCreated;
+    [revisions addObject:initial];
+    
+    deck.revisions = revisions;
+    
+    DeckChangeSet* newest = deck.revisions[0];
+    NSMutableDictionary* cards = [NSMutableDictionary dictionary];
+    for (CardCounter* cc in deck.allCards)
+    {
+        cards[cc.card.code] = @(cc.count);
+    }
+    newest.cards = [NSMutableDictionary dictionaryWithDictionary:cards];
+    
+    // walk through the deck's history and pre-compute a card list for every revision
+    for (int i = 0; i < deck.revisions.count-1; ++i)
+    {
+        DeckChangeSet* prev = deck.revisions[i];
+        for (DeckChange* dc in prev.changes)
+        {
+            NSNumber* qty = cards[dc.code];
+            qty = @(qty.integerValue - dc.count);
+            if (qty.integerValue == 0)
+            {
+                [cards removeObjectForKey:dc.code];
+            }
+            else
+            {
+                cards[dc.code] = qty;
+            }
+        }
+        DeckChangeSet* dcs = deck.revisions[i+1];
+        dcs.cards = [NSMutableDictionary dictionaryWithDictionary:cards];
+    }
+    
+    /*
+    for (int i=0; i < deck.revisions.count; ++i)
+    {
+        DeckChangeSet* dcs = deck.revisions[i];
+        NSLog(@"%d %@", i, dcs.cards);
+    }
+    */
+    
+    return deck;
 }
 
 #pragma mark save deck

@@ -7,6 +7,8 @@
 //
 
 #import <SDCAlertView.h>
+#import <AFNetworking.h>
+
 #import "NRAlertView.h"
 #import "AppDelegate.h"
 #import "ActionsTableViewController.h"
@@ -217,14 +219,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         Card* card = [Card cardByCode:[userInfo objectForKey:@"code"]];
         Deck* deck = [[Deck alloc] init];
         deck.role = card.role;
-        if (card.type == NRCardTypeIdentity)
-        {
-            deck.identity = card;
-        }
-        else
-        {
-            [deck addCard:card copies:1];
-        }
+        [deck addCard:card copies:1];
         
         filter = [[CardFilterViewController alloc] initWithRole:deck.role andDeck:deck];
         [nc popToRootViewControllerAnimated:NO];

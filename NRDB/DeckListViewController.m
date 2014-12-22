@@ -9,6 +9,8 @@
 #import <SVProgressHUD.h>
 #import <SDCAlertView.h>
 #import <EXTScope.h>
+#import <AFNetworking.h>
+
 #import "UIAlertAction+NRDB.h"
 
 #import "NRAlertView.h"
@@ -18,6 +20,7 @@
 #import "DeckAnalysisViewController.h"
 #import "DrawSimulatorViewController.h"
 #import "DeckNotesPopup.h"
+#import "DeckHistoryPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
 #import "Deck.h"
@@ -50,6 +53,8 @@
 @property UIBarButtonItem* exportButton;
 @property UIBarButtonItem* stateButton;
 @property UIBarButtonItem* nrdbButton;
+@property UIBarButtonItem* historyButton;
+@property UIProgressView* progressView;
 
 @property NSString* filename;
 @property BOOL autoSave;
@@ -63,8 +68,12 @@
 @property NRAlertView* nameAlert;
 
 @property BOOL initializing;
+@property NSTimer* historyTimer;
+@property NSInteger historyTicker;
 
 @end
+
+#define HISTORY_SAVE_INTERVAL   60
 
 @implementation DeckListViewController
 
@@ -75,6 +84,7 @@
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self stopHistoryTimer:nil];
 }
 
 - (void)viewDidLoad
@@ -100,7 +110,7 @@
     
     if (self.deck == nil)
     {
-        self.deck = [Deck new];
+        self.deck = [[Deck alloc] init];
         self.deck.role = self.role;
     }
     
@@ -177,6 +187,9 @@
     UIBarButtonItem* dupButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)];
     UIBarButtonItem* nameButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)];
     UIBarButtonItem* sortButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Sort") style:UIBarButtonItemStylePlain target:self action:@selector(sortPopup:)];
+    self.historyButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"History") style:UIBarButtonItemStylePlain target:self action:@selector(historyButtonClicked:)];
+    
+    self.historyButton.enabled = self.deck.filename != nil && self.deck.revisions.count > 0;
     
     // add from right to left!
     NSMutableArray* rightButtons = [NSMutableArray array];
@@ -193,6 +206,7 @@
     }
     [rightButtons addObject:nameButton];
     [rightButtons addObject:self.stateButton];
+    [rightButtons addObject:self.historyButton];
     
     topItem.rightBarButtonItems = rightButtons;
 
@@ -207,7 +221,10 @@
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(notesChanged:) name:NOTES_CHANGED object:nil];
-
+    
+    [nc addObserver:self selector:@selector(stopHistoryTimer:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [nc addObserver:self selector:@selector(startHistoryTimer:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
     
@@ -237,6 +254,18 @@
     {
         [self selectIdentity:nil];
     }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY])
+    {
+        int x = self.view.center.x - HISTORY_SAVE_INTERVAL;
+        int width = 2 * HISTORY_SAVE_INTERVAL; // self.analysisButton.frame.origin.x + self.analysisButton.frame.size.width - x;
+        self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(x, 40, width, 3)];
+        self.progressView.progress = 1.0;
+        self.progressView.progressTintColor = [UIColor darkGrayColor];
+        [self.toolBar addSubview:self.progressView];
+    }
+    
+    [self startHistoryTimer:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -246,6 +275,47 @@
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
     [settings setObject:@(self.sortType) forKey:DECK_VIEW_SORT];
+
+    [self stopHistoryTimer:nil];
+}
+
+#pragma mark history timer
+
+-(void) startHistoryTimer:(id)notification
+{
+    NSAssert(self.historyTimer == nil, @"timer still running?");
+    BOOL autoHistory = [[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY];
+    if (autoHistory)
+    {
+        self.historyTimer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                             target:self
+                                                           selector:@selector(historySave:)
+                                                           userInfo:nil
+                                                            repeats:YES];
+        self.progressView.progress = 1.0;
+        self.historyTicker = HISTORY_SAVE_INTERVAL;
+    }
+}
+
+-(void) stopHistoryTimer:(id)notification
+{
+    [self.historyTimer invalidate];
+    self.historyTimer = nil;
+    self.historyTicker = 0;
+}
+
+-(void) historySave:(id)timer
+{
+    --self.historyTicker;
+
+    float progress = (float)self.historyTicker / (float)HISTORY_SAVE_INTERVAL;
+    [self.progressView setProgress:progress animated:NO];
+    if (self.historyTicker <= 0)
+    {
+        [self.deck mergeRevisions];
+        self.historyButton.enabled = YES;
+        self.historyTicker = HISTORY_SAVE_INTERVAL+1;
+    }
 }
 
 #pragma mark keyboard show/hide
@@ -288,15 +358,22 @@
     }
     
     self.deckChanged = NO;
-    if (sender != nil)
+    BOOL autoSaving = (sender == nil);
+    
+    if (!autoSaving)
     {
+        [self stopHistoryTimer:nil];
+        [self startHistoryTimer:nil];
         [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
+        [self.deck mergeRevisions];
+        self.historyButton.enabled = YES;
     }
+    
     [DeckManager saveDeck:self.deck];
     
-    if (sender != nil && self.autoSaveNRDB)
+    if (!autoSaving && self.autoSaveNRDB)
     {
-        [self saveDeckToNetrunnerdb];
+        [self saveDeckToNetrunnerDb];
     }
     
     self.saveButton.enabled = NO;
@@ -332,7 +409,7 @@
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             if (buttonIndex == 0)
             {
-                [self saveDeckToNetrunnerdb];
+                [self saveDeckToNetrunnerDb];
             }
         };
     }
@@ -341,7 +418,12 @@
         NSString* msg = [NSString stringWithFormat:l10n(@"This deck is linked to deck %@ on NetrunnerDB.com"), self.deck.netrunnerDbId ];
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:msg
-                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Open in Safari"), l10n(@"Publish deck"), l10n(@"Unlink"), l10n(@"Save") ]];
+                                                   buttons:@[ l10n(@"Cancel"),
+                                                              l10n(@"Open in Safari"),
+                                                              l10n(@"Publish deck"),
+                                                              l10n(@"Unlink"),
+                                                              l10n(@"Reimport"),
+                                                              l10n(@"Save") ]];
         
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             switch (buttonIndex)
@@ -377,16 +459,21 @@
                     }
                     [self refresh];
                     break;
+                    
+                case 4: // re-import
+                    [self reImportDeckFromNetrunnerDb];
+                    break;
+                    
             
-                case 4: // save/upload                    
-                    [self saveDeckToNetrunnerdb];
+                case 5: // save/upload
+                    [self saveDeckToNetrunnerDb];
                     break;
             }
         };
     }
 }
 
--(void) saveDeckToNetrunnerdb
+-(void) saveDeckToNetrunnerDb
 {
     if (!APP_ONLINE)
     {
@@ -407,6 +494,36 @@
             self.deck.netrunnerDbId = deckId;
             [DeckManager saveDeck:self.deck];
             [DeckManager resetModificationDate:self.deck];
+        }
+        
+        [SVProgressHUD dismiss];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }];
+}
+
+-(void) reImportDeckFromNetrunnerDb
+{
+    if (!APP_ONLINE)
+    {
+        [self showOfflineAlert];
+        return;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Loading Deck...") maskType:SVProgressHUDMaskTypeBlack];
+    
+    [[NRDB sharedInstance] loadDeck:self.deck completion:^(BOOL ok, Deck* deck) {
+        if (!ok)
+        {
+            [SDCAlertView alertWithTitle:nil message:l10n(@"Loading the deck from NetrunnerDB.com failed.") buttons:@[l10n(@"OK")]];
+        }
+        else
+        {
+            deck.filename = self.deck.filename;
+            self.deck = deck;
+            self.deckChanged = YES;
+            
+            [self refresh];
         }
         
         [SVProgressHUD dismiss];
@@ -464,6 +581,18 @@
         return;
     }
     [DeckNotesPopup showForDeck:self.deck inViewController:self];
+}
+
+-(void) historyButtonClicked:(id)sender
+{
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
+    
+    // [self.deck mergeRevisions];
+    [DeckHistoryPopup showForDeck:self.deck inViewController:self];
 }
 
 #pragma mark duplicate deck
@@ -645,7 +774,7 @@
     
     if (card && ![self.deck.identity isEqual:card])
     {
-        self.deck.identity = card;
+        [self.deck addCard:card copies:1];
         self.deckChanged = YES;
         [self refresh];
     
@@ -1110,13 +1239,9 @@
         NSArray* arr = self.cards[indexPath.section];
         CardCounter* cc = arr[indexPath.row];
         
-        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
+        if (!ISNULL(cc))
         {
-            self.deck.identity = nil;
-        }
-        else
-        {
-            [self.deck removeCard:cc.card];
+            [self.deck addCard:cc.card copies:0];
         }
         
         self.deckChanged = YES;
@@ -1243,7 +1368,7 @@
     
     if (cc && cc.card.type != NRCardTypeIdentity)
     {
-        CardImagePopup* cip = [CardImagePopup showForCard:cc draft:self.deck.isDraft fromRect:popupOrigin inView:self.collectionView direction:direction];
+        CardImagePopup* cip = [CardImagePopup showForCard:cc inDeck:self.deck fromRect:popupOrigin inView:self.collectionView direction:direction];
         cip.cell = cell;
     }
     else

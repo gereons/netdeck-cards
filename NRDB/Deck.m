@@ -10,12 +10,17 @@
 
 #import "Card.h"
 #import "CardCounter.h"
+#import "DeckChange.h"
+#import "DeckChangeSet.h"
 
 @interface Deck()
 {
-    NSMutableArray* _cards; // array of CardCounter
+    NSMutableArray* _cards;     // array of CardCounter
+    NSMutableArray* _revisions; // array of DeckChangeSet
 }
+@property CardCounter* identityCc;
 @property NRDeckSort sortType;
+@property DeckChangeSet* lastChanges;
 
 @end
 
@@ -26,9 +31,12 @@
     if ((self = [super init]))
     {
         self->_cards = [NSMutableArray array];
+        self->_revisions = [NSMutableArray array];
         self.state = NRDeckStateTesting;
         self.role = NRRoleNone;
         self.sortType = NRDeckSortType;
+        self.lastChanges = [[DeckChangeSet alloc] init];
+        self.dateCreated = [NSDate date];
     }
     return self;
 }
@@ -36,24 +44,6 @@
 -(Card*) identity
 {
     return self.identityCc.card;
-}
-
--(void) setIdentity:(Card *)identity
-{
-    if (identity)
-    {
-        self->_identityCc = [CardCounter initWithCard:identity andCount:1];
-        if (self.role != NRRoleNone)
-        {
-            NSAssert(self.role == identity.role, @"role mismatch");
-        }
-        self.role = identity.role;
-    }
-    else
-    {
-        self->_identityCc = nil;
-    }
-    self->_isDraft = [DRAFT_IDS containsObject:identity.code];
 }
 
 -(NSArray*) cards
@@ -226,60 +216,179 @@
     return count * cc.card.influence;
 }
 
--(void) addCard:(Card *)card copies:(int)copies
+-(void) addCard:(Card *)card copies:(NSInteger)copies
 {
-    NSAssert(card.type != NRCardTypeIdentity, @"can't add identity");
+    [self addCard:card copies:copies history:YES];
+}
 
-    int index = [self indexOfCard:card];
-    if (index == -1)
+// add (copies>0) or remove (copies<0) a copy of a card from the deck
+// if copies==0, removes ALL copies of the card
+-(void) addCard:(Card *)card copies:(NSInteger)copies history:(BOOL)history
+{
+    // NSLog(@"add %d copies of %@, hist=%d", copies, card.name, history);
+    
+    int cardIndex = [self indexOfCard:card];
+    CardCounter* cc;
+    
+    if (card.type == NRCardTypeIdentity)
     {
-        CardCounter* cc = [CardCounter initWithCard:card andCount:copies];
-        [_cards addObject:cc];
+        [self setIdentity:card copies:copies history:history];
+        return;
     }
-    else
+
+    if (cardIndex != -1)
     {
-        CardCounter* cc = [_cards objectAtIndex:index];
-        if (self.isDraft)
+        cc = [_cards objectAtIndex:cardIndex];
+    }
+
+    if (copies < 1)
+    {
+        NSAssert(cc != nil, @"remove card that's not in the deck");
+        // NSLog(@" remove %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
+        // remove card
+        if (copies == 0 || ABS(copies) >= cc.count)
         {
-            cc.count += copies;
+            [_cards removeObjectAtIndex:cardIndex];
+            copies = -cc.count;
         }
         else
         {
-            int max = cc.card.maxPerDeck;
-            if (cc.count < max)
-            {
-                cc.count = MIN(max, cc.count + copies);
-            }
+            cc.count -= ABS(copies);
         }
-    }
-    [self sort];
-}
-
--(void) removeCard:(Card *)card
-{
-    [self removeCard:card copies:-1];
-}
-
--(void) removeCard:(Card *)card copies:(int)copies
-{
-    NSAssert(card.type != NRCardTypeIdentity, @"can't remove identity");
-    int index = [self indexOfCard:card];
-    NSAssert(index != -1, @"removing card %@, not in deck", card.name);
-    
-    CardCounter* c = [_cards objectAtIndex:index];
-    if (copies == -1 || copies >= c.count)
-    {
-        [_cards removeObjectAtIndex:index];
     }
     else
     {
-        c.count -= copies;
+        // NSLog(@" add %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
+        if (cc == nil)
+        {
+            cc = [CardCounter initWithCard:card andCount:copies];
+            [_cards addObject:cc];
+        }
+        else
+        {
+            if (self.isDraft)
+            {
+                cc.count += copies;
+            }
+            else
+            {
+                int max = cc.card.maxPerDeck;
+                if (cc.count < max)
+                {
+                    cc.count = MIN(max, cc.count + copies);
+                }
+            }
+        }
     }
+    
+    if (history)
+    {
+        [self.lastChanges addCardCode:cc.card.code copies:copies];
+    }
+    
+    [self sort];
+}
+
+-(void) setIdentity:(Card *)identity copies:(NSInteger)copies history:(BOOL)history
+{
+    if (self.identityCc && history)
+    {
+        // NSLog(@" remove old identity %@, hist=%d", self.identityCc.card.name, history);
+        // record removal of existing identity
+        [self.lastChanges addCardCode:self.identityCc.card.code copies:-1];
+    }
+    if (identity && copies > 0)
+    {
+        // NSLog(@" add new identity %@, hist=%d", identity.name, history);
+        if (history)
+        {
+            [self.lastChanges addCardCode:identity.code copies:1];
+        }
+        
+        self.identityCc = [CardCounter initWithCard:identity andCount:1];
+        if (self.role != NRRoleNone)
+        {
+            NSAssert(self.role == identity.role, @"role mismatch");
+        }
+        self.role = identity.role;
+    }
+    else
+    {
+        // NSLog(@" deck has no identity");
+        self.identityCc = nil;
+    }
+    self->_isDraft = [DRAFT_IDS containsObject:identity.code];
+}
+
+-(void) resetToCards:(NSDictionary *)cards
+{
+    NSMutableArray* newCards = [NSMutableArray array];
+
+    Card* newIdentity;
+    for (NSString* code in cards.allKeys)
+    {
+        Card* card = [Card cardByCode:code];
+        
+        if (card.type != NRCardTypeIdentity)
+        {
+            NSNumber* qty = cards[code];
+            CardCounter* cc = [CardCounter initWithCard:card andCount:qty.intValue];
+            [newCards addObject:cc];
+        }
+        else
+        {
+            NSAssert(newIdentity == nil, @"newIdentity already set");
+            newIdentity = card;
+        }
+    }
+    
+    // figure out changes between this and the last saved state
+    
+    if (self.revisions.count > 0)
+    {
+        DeckChangeSet* dcs = self.revisions[0];
+        NSDictionary* lastSavedCards = dcs.cards;
+        NSArray* lastSavedCodes = lastSavedCards.allKeys;
+        
+        // for cards in last saved deck, check what remains in new deck
+        for (NSString* code in lastSavedCodes)
+        {
+            NSNumber* oldQty = lastSavedCards[code];
+            NSNumber* newQty = cards[code];
+            if (newQty == nil)
+            {
+                // not in new deck
+                [self.lastChanges addCardCode:code copies:-oldQty.intValue];
+            }
+            else
+            {
+                int diff = oldQty.intValue - newQty.intValue;
+                if (diff != 0)
+                {
+                    [self.lastChanges addCardCode:code copies:diff];
+                }
+            }
+        }
+        
+        // for cards in new deck: check what was in old deck
+        for (NSString* code in cards.allKeys)
+        {
+            if (![lastSavedCodes containsObject:code])
+            {
+                NSNumber* newQty = cards[code];
+                [self.lastChanges addCardCode:code copies:newQty.intValue];
+            }
+        }
+    }
+    
+    [self setIdentity:newIdentity copies:1 history:NO];
+    
+    self->_cards = newCards;
 }
 
 -(Deck*) duplicate
 {
-    Deck* newDeck = [Deck new];
+    Deck* newDeck = [[Deck alloc] init];
     
     newDeck.name = [NSString stringWithFormat:l10n(@"Copy of %@"), self.name];
     newDeck->_identityCc = [CardCounter initWithCard:self.identity];
@@ -289,6 +398,9 @@
     newDeck.filename = nil;
     newDeck.state = self.state;
     newDeck.notes = self.notes ? [NSString stringWithString:self.notes] : nil;
+    
+    newDeck.lastChanges = self.lastChanges;
+    newDeck->_revisions = [NSMutableArray arrayWithArray:self.revisions];
     
     return newDeck;
 }
@@ -358,6 +470,33 @@
     }];
 }
 
+#pragma mark revisions
+
+-(void) mergeRevisions
+{
+    [self.lastChanges coalesce];
+    
+    if (self.lastChanges.changes.count > 0)
+    {
+        self.lastChanges.cards = [NSMutableDictionary dictionary];
+        for (CardCounter* cc in self.allCards)
+        {
+            self.lastChanges.cards[cc.card.code] = @(cc.count);
+        }
+        
+        if (self.revisions.count == 0)
+        {
+            // this is the first revision
+            self.lastChanges.initial = YES;
+        }
+        [self->_revisions insertObject:self.lastChanges atIndex:0];
+        
+        self.lastChanges = [[DeckChangeSet alloc] init];
+    }
+}
+
+#pragma mark table view data
+
 -(TableData*) dataForTableView:(NRDeckSort)sortType
 {
     self.sortType = sortType;
@@ -384,6 +523,7 @@
     NSMutableArray* removals = [NSMutableArray array];
     for (CardCounter* cc in self.cards)
     {
+        NSAssert(cc.count > 0, @"found card with 0 copies?");
         if (cc.count == 0)
         {
             [removals addObject:cc.card];
@@ -391,7 +531,7 @@
     }
     for (Card* card in removals)
     {
-        [self removeCard:card];
+        [self addCard:card copies:0 history:NO];
     }
     
     NSString* prevSection = @"";
@@ -479,6 +619,17 @@
         _notes = [decoder decodeObjectForKey:@"notes"];
         _tags = [decoder decodeObjectForKey:@"tags"];
         _sortType = NRDeckSortType;
+        
+        _lastChanges = [decoder decodeObjectForKey:@"lastChanges"];
+        if (!_lastChanges)
+        {
+            _lastChanges = [[DeckChangeSet alloc] init];
+        }
+        _revisions = [decoder decodeObjectForKey:@"revisions"];
+        if (!_revisions)
+        {
+            _revisions = [NSMutableArray array];
+        }
     }
     return self;
 }
@@ -495,6 +646,8 @@
     [coder encodeBool:self.identityCc.showAltArt forKey:@"identityAltArt"];
     [coder encodeObject:self.notes forKey:@"notes"];
     [coder encodeObject:self.tags forKey:@"tags"];
+    [coder encodeObject:self.lastChanges forKey:@"lastChanges"];
+    [coder encodeObject:self.revisions forKey:@"revisions"];
 }
 
 

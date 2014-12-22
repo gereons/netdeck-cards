@@ -8,6 +8,7 @@
 
 #import <EXTScope.h>
 #import <SDCAlertView.h>
+#import <AFNetworking.h>
 
 #import "DeckImport.h"
 #import "Deck.h"
@@ -223,7 +224,7 @@ static DeckImport* instance;
             {
                 if (c.type == NRCardTypeIdentity)
                 {
-                    deck.identity = c;
+                    [deck addCard:c copies:1];
                     // NSLog(@"found identity %@", c.name);
                 }
                 else
@@ -391,7 +392,7 @@ static DeckImport* instance;
 
 -(BOOL) parseJsonDecklist:(NSDictionary*) decklist
 {
-    Deck* deck = [Deck new];
+    Deck* deck = [[Deck alloc] init];
     
     deck.name = [decklist objectForKey:@"name"];
     
@@ -412,13 +413,9 @@ static DeckImport* instance;
         {
             if (card.type == NRCardTypeIdentity)
             {
-                deck.identity = card;
                 deck.role = card.role;
             }
-            else
-            {
-                [deck addCard:card copies:qty];
-            }
+            [deck addCard:card copies:qty];
         }
     }
     
