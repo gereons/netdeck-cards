@@ -53,7 +53,6 @@
 @property UIBarButtonItem* exportButton;
 @property UIBarButtonItem* stateButton;
 @property UIBarButtonItem* nrdbButton;
-@property UIBarButtonItem* historyButton;
 @property UIProgressView* progressView;
 
 @property NSString* filename;
@@ -187,9 +186,6 @@
     UIBarButtonItem* dupButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Duplicate") style:UIBarButtonItemStylePlain target:self action:@selector(duplicateDeck:)];
     UIBarButtonItem* nameButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Name") style:UIBarButtonItemStylePlain target:self action:@selector(enterName:)];
     UIBarButtonItem* sortButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Sort") style:UIBarButtonItemStylePlain target:self action:@selector(sortPopup:)];
-    self.historyButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"History") style:UIBarButtonItemStylePlain target:self action:@selector(historyButtonClicked:)];
-    
-    self.historyButton.enabled = self.deck.filename != nil && self.deck.revisions.count > 0;
     
     // add from right to left!
     NSMutableArray* rightButtons = [NSMutableArray array];
@@ -206,7 +202,6 @@
     }
     [rightButtons addObject:nameButton];
     [rightButtons addObject:self.stateButton];
-    [rightButtons addObject:self.historyButton];
     
     topItem.rightBarButtonItems = rightButtons;
 
@@ -214,6 +209,8 @@
     [self.drawButton setTitle:l10n(@"Draw") forState:UIControlStateNormal];
     [self.analysisButton setTitle:l10n(@"Analysis") forState:UIControlStateNormal];
     [self.notesButton setTitle:l10n(@"Notes") forState:UIControlStateNormal];
+    [self.historyButton setTitle:l10n(@"History") forState:UIControlStateNormal];
+    self.historyButton.enabled = self.deck.filename != nil && self.deck.revisions.count > 0;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
@@ -1045,7 +1042,7 @@
     
     if (self.role == NRRoleCorp)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.agendaPoints, l10n(@"Agenda Points")]];
+        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.agendaPoints, l10n(@"AP")]];
     }
     
     NSArray* reasons = [self.deck checkValidity];

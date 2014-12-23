@@ -10,7 +10,8 @@
                 <outlet property="collectionView" destination="Zk2-4C-1CS" id="r3d-KH-wIo"/>
                 <outlet property="deckNameLabel" destination="JY5-GK-UJa" id="exF-Si-N7U"/>
                 <outlet property="drawButton" destination="ptD-Cs-H63" id="ioY-Xx-ED2"/>
-                <outlet property="footerLabel" destination="Ocu-JS-mPn" id="o9l-Dc-bRh"/>
+                <outlet property="footerLabel" destination="GWd-jM-hnr" id="pvI-l7-f8z"/>
+                <outlet property="historyButton" destination="nDr-mi-Br2" id="yNf-SN-hhh"/>
                 <outlet property="lastSetLabel" destination="Gyb-FN-lQv" id="BSf-TL-qw8"/>
                 <outlet property="notesButton" destination="0IP-7H-enu" id="K2G-zc-SZU"/>
                 <outlet property="tableView" destination="TkI-yZ-OZS" id="gri-lb-5ag"/>
@@ -68,7 +69,32 @@
                 <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3wr-bR-riV">
                     <rect key="frame" x="0.0" y="724" width="703" height="44"/>
                     <items>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="pFX-bV-7AA"/>
+                        <barButtonItem style="plain" id="Lqj-2d-9Ad">
+                            <view key="customView" contentMode="scaleToFill" id="BYV-ac-1L1">
+                                <rect key="frame" x="20" y="6" width="380" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.70000000000000018" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWd-jM-hnr">
+                                        <rect key="frame" x="0.0" y="6" width="380" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </view>
+                        </barButtonItem>
+                        <barButtonItem style="plain" id="QMf-Yo-25G">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nDr-mi-Br2">
+                                <rect key="frame" x="404" y="7" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="History">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="historyButtonClicked:" destination="-1" eventType="touchUpInside" id="888-c8-eJH"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem style="plain" id="ZwH-Ij-eY0">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0IP-7H-enu">
                                 <rect key="frame" x="487" y="6" width="60" height="33"/>
@@ -107,12 +133,6 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ocu-JS-mPn">
-                    <rect key="frame" x="11" y="735" width="488" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>

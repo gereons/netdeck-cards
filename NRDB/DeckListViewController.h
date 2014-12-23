@@ -24,6 +24,7 @@
 @property IBOutlet UIButton* drawButton;
 @property IBOutlet UIButton* analysisButton;
 @property IBOutlet UIButton* notesButton;
+@property IBOutlet UIButton* historyButton;
 
 @property BOOL deckChanged;
 @property NRRole role;
@@ -37,5 +38,6 @@
 -(IBAction)analysisClicked:(id)sender;
 -(IBAction)drawSimulatorClicked:(id)sender;
 -(IBAction)notesButtonClicked:(id)sender;
+-(IBAction)historyButtonClicked:(id)sender;
 
 @end
