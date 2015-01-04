@@ -395,19 +395,27 @@ static BrowserResultViewController* instance;
 -(void) pinchGesture:(UIPinchGestureRecognizer*)gesture
 {
     static CGFloat scaleStart;
+    static NSIndexPath* startIndex;
     
     if (gesture.state == UIGestureRecognizerStateBegan)
     {
         scaleStart = self.scale;
+        CGPoint startPoint = [gesture locationInView:self.collectionView];
+        startIndex = [self.collectionView indexPathForItemAtPoint:startPoint];
     }
     else if (gesture.state == UIGestureRecognizerStateChanged)
     {
         self.scale = scaleStart * gesture.scale;
     }
+    
     self.scale = MAX(self.scale, 0.5);
     self.scale = MIN(self.scale, 1.0);
     
     [self.collectionView reloadData];
+    if (startIndex)
+    {
+        [self.collectionView scrollToItemAtIndexPath:startIndex atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+    }
 }
 
 #pragma mark keyboard show/hide
