@@ -169,7 +169,7 @@
     // right buttons
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
     
-    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeck:)];
+    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveDeckClicked:)];
     self.saveButton.enabled = NO;
     
     UIImage* img = [[UIImage imageNamed:@"netrunnerdb_com"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -262,7 +262,14 @@
         [self.toolBar addSubview:self.progressView];
     }
     
-    [self startHistoryTimer:nil];
+    if (self.deck.filename)
+    {
+        [self startHistoryTimer:nil];
+    }
+    else
+    {
+        self.progressView.hidden = YES;
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -346,7 +353,12 @@
     self.filename = filename;
 }
 
--(void) saveDeck:(id)sender
+-(void) saveDeckClicked:(id)sender
+{
+    [self saveDeckManually:YES withHud:YES];
+}
+
+-(void) saveDeckManually:(BOOL)manually withHud:(BOOL)hud
 {
     if (self.actionSheet)
     {
@@ -355,20 +367,24 @@
     }
     
     self.deckChanged = NO;
-    BOOL autoSaving = (sender == nil);
     
-    if (!autoSaving)
+    if (manually)
     {
         [self stopHistoryTimer:nil];
-        [self startHistoryTimer:nil];
-        [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
-        [self.deck mergeRevisions];
         self.historyButton.enabled = YES;
+        self.progressView.hidden = NO;
+        [self startHistoryTimer:nil];
+        
+        [self.deck mergeRevisions];
+    }
+    if (hud)
+    {
+        [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
     }
     
     [DeckManager saveDeck:self.deck];
     
-    if (!autoSaving && self.autoSaveNRDB)
+    if (manually && self.autoSaveNRDB)
     {
         [self saveDeckToNetrunnerDb];
     }
@@ -452,7 +468,7 @@
                     self.deckChanged = YES;
                     if (self.autoSave)
                     {
-                        [self saveDeck:nil];
+                        [self saveDeckManually:NO withHud:NO];
                     }
                     [self refresh];
                     break;
@@ -687,7 +703,7 @@
         self.deckChanged = YES;
         if (self.autoSave)
         {
-            [self saveDeck:nil];
+            [self saveDeckManually:NO withHud:NO];
             [DeckManager resetModificationDate:self.deck];
         }
         [self refresh];
@@ -731,7 +747,7 @@
             self.deckChanged = YES;
             if (self.autoSave)
             {
-                [self saveDeck:nil];
+                [self saveDeckManually:NO withHud:NO];
             }
             [self refresh];
         }
@@ -996,7 +1012,7 @@
     self.deckChanged = YES;
     if (self.autoSave)
     {
-        [self saveDeck:nil];
+        [self saveDeckManually:NO withHud:NO];
     }
     [self refresh];
 }
@@ -1012,7 +1028,7 @@
     
     if (self.autoSave && self.deckChanged)
     {
-        [self saveDeck:nil];
+        [self saveDeckManually:NO withHud:NO];
     }
 }
 
@@ -1120,7 +1136,7 @@
     
     if (self.autoSave)
     {
-        [self saveDeck:nil];
+        [self saveDeckManually:NO withHud:NO];
     }
 }
 

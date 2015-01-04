@@ -133,7 +133,7 @@
         
         if (buttonIndex == 2) // save
         {
-            [self.deckListViewController saveDeck:nil];
+            [self.deckListViewController saveDeckManually:YES withHud:NO];
         }
         self.alertViewClicked = YES;
         // NSLog(@"pop from alert");
