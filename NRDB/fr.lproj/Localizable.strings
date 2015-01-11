@@ -266,3 +266,9 @@
 "Trash: %@" = "Destruction: %@";
 "%lu matching card" = "%lu carte choisie";
 "%lu matching cards" = "%lu cartes choisies";
+
+// editing history
+"Editing History" = "Histoire édition";
+"Revert" = "Revenir";
+"History" = "Histoire";
+"Initial Version" = "Version initiale";

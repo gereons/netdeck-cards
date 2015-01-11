@@ -159,7 +159,6 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         [self.fullDiffRows addObject:[NSMutableArray array]];
         [self.intersectRows addObject:[NSMutableArray array]];
         [self.overlapRows addObject:[NSMutableArray array]];
-
     }
     
     // for each type, find cards in each deck
