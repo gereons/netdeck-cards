@@ -184,6 +184,7 @@ static NSInteger viewMode = VIEW_LIST;
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
     [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(nameAlertWillAppear:) name:NAME_ALERT object:nil];
     
     [self initFilters];
 }
@@ -382,6 +383,14 @@ static NSInteger viewMode = VIEW_LIST;
     [UIView animateWithDuration:animDuration animations:^{
         [self setResultFrames:nil];
     }];
+}
+
+-(void) nameAlertWillAppear:(id)notification
+{
+    if (self.searchField.isFirstResponder)
+    {
+        [self.searchField resignFirstResponder];
+    }
 }
 
 #pragma mark button callbacks

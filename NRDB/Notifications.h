@@ -20,5 +20,6 @@
 #define NOTES_CHANGED   @"notesChanged"     // notes for a deck changed, no userInfo
 #define BROWSER_NEW     @"browserNew"       // new deck with card, userInfo contains @"code"
 #define BROWSER_FIND    @"browserFind"      // find decks with card, userInfo contains @"code"
+#define NAME_ALERT      @"nameAlert"        // name alert is about to appear, no userInfo
 
 #endif

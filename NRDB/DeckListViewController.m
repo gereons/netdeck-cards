@@ -736,6 +736,8 @@
     textField.returnKeyType = UIReturnKeyDone;
     textField.delegate = self;
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:NAME_ALERT object:nil];
+    
     @weakify(self);
     [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
         @strongify(self);
