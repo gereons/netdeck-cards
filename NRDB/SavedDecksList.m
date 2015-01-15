@@ -419,6 +419,12 @@
                 textField.returnKeyType = UIReturnKeyDone;
                 textField.delegate = self;
                 
+                BOOL searchBarActive = self.searchBar.isFirstResponder;
+                if (searchBarActive)
+                {
+                    [self.searchBar resignFirstResponder];
+                }
+                
                 @weakify(self);
                 [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
                     @strongify(self);
@@ -429,6 +435,11 @@
                         [self updateDecks];
                     }
                     self.nameAlert = nil;
+                    
+                    if (searchBarActive)
+                    {
+                        [self.searchBar becomeFirstResponder];
+                    }
                 }];
                 self.popup = nil;
             }]];
