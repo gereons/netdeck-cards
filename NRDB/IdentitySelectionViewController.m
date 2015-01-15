@@ -480,8 +480,16 @@
         
         header.titleLabel.text = self.factionNames[indexPath.section];
         NSArray* arr = self.identities[indexPath.section];
-        Card* card = arr[0];
-        header.titleLabel.textColor = card.factionColor;
+        
+        if (arr.count > 0)
+        {
+            Card* card = arr[0];
+            header.titleLabel.textColor = card.factionColor;
+        }
+        else
+        {
+            header.titleLabel.textColor = [UIColor blackColor];
+        }
     }
     
     return header;
