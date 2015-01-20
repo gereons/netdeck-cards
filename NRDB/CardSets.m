@@ -72,7 +72,7 @@ static struct cardSetData {
     // sansan
     { 23, "val", "", NRCycleSanSan, NO },
     { 24, "bb", "", NRCycleSanSan, NO },
-    // { 25, "", "", NRCycleSanSan, NO },
+    { 25, "cc", "", NRCycleSanSan, NO },
     // { 26, "", "", NRCycleSanSan, NO },
     // { 27, "", "", NRCycleSanSan, NO },
     // { 28, "", "", NRCycleSanSan, NO },
@@ -112,7 +112,7 @@ static struct cardSetData {
         @[  @2,  @3,  @4,  @5,  @6,  @7 ],
         @[  @9, @10, @11, @12, @13, @14 ],
         @[ @16, @17, @18, @19, @20, @21 ],
-        @[ @23, @24, /* @25, @26, @27, @28 */ ]
+        @[ @23, @24, @25 /*, @26, @27, @28 */ ]
     ];
     
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
