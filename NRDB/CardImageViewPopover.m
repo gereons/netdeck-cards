@@ -116,16 +116,6 @@ static CGFloat popoverScale = 1.0;
     imgTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:imgTap];
     
-    if (self.card.altCard == nil)
-    {
-        self.toggleButton.hidden = YES;
-    }
-    
-    // rounded corners for toggle button
-    self.toggleButton.layer.masksToBounds = YES;
-    self.toggleButton.layer.cornerRadius = 3;
-    
-    [self.toggleButton setImage:[ImageCache altArtIcon:self.showAlt] forState:UIControlStateNormal];
     [self loadCardImage:self.card];
 }
 
@@ -134,19 +124,6 @@ static CGFloat popoverScale = 1.0;
     if (UIGestureRecognizerStateEnded == sender.state)
     {
         [CardImageViewPopover dismiss];
-    }
-}
-
--(void) toggleImage:(id)sender
-{
-    self.showAlt = !self.showAlt;
-    Card* altCard = self.card.altCard;
-    
-    if (altCard)
-    {
-        Card* card = self.showAlt ? altCard : self.card;
-        [self loadCardImage:card];
-        [self.toggleButton setImage:[ImageCache altArtIcon:self.showAlt] forState:UIControlStateNormal];
     }
 }
 

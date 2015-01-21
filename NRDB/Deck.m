@@ -614,7 +614,6 @@
         {
             _identityCc = [CardCounter initWithCard:identity andCount:1];
         }
-        _identityCc.showAltArt = [decoder decodeBoolForKey:@"identityAltArt"];
         _lastModified = nil;
         _notes = [decoder decodeObjectForKey:@"notes"];
         _tags = [decoder decodeObjectForKey:@"tags"];
@@ -643,7 +642,6 @@
     [coder encodeInt:self.state forKey:@"state"];
     [coder encodeBool:self.isDraft forKey:@"draft"];
     [coder encodeObject:self.identity.code forKey:@"identity"];
-    [coder encodeBool:self.identityCc.showAltArt forKey:@"identityAltArt"];
     [coder encodeObject:self.notes forKey:@"notes"];
     [coder encodeObject:self.tags forKey:@"tags"];
     [coder encodeObject:self.lastChanges forKey:@"lastChanges"];

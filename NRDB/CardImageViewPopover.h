@@ -15,7 +15,6 @@
 
 @property IBOutlet UIImageView* imageView;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
-@property IBOutlet UIButton* toggleButton;
 
 @property IBOutlet UIView* detailView;
 @property IBOutlet UILabel* cardName;
@@ -28,8 +27,6 @@
 @property IBOutlet UIImageView* icon1;
 @property IBOutlet UIImageView* icon2;
 @property IBOutlet UIImageView* icon3;
-
--(IBAction) toggleImage:(id)sender;
 
 +(void) monitorKeyboard;
 

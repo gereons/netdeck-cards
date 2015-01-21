@@ -13,7 +13,6 @@
 
 #define CORE_SET            @"core"
 #define DRAFT_SET           @"Draft"
-#define ALT_SET             @"alt"
 #define SPECIAL_SET         @"special"
 
 #define DRAFT_SET_CODE      @"000"

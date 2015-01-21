@@ -8,12 +8,11 @@
 
 #import "Card.h"
 
-// a Card in a Deck: the card itself, a counter and a "show alt art" toggle
+// a Card in a Deck: the card itself, and a count
 @interface CardCounter : NSObject <NSCoding>
 
 @property (readonly, nonatomic) Card* card;
 @property (nonatomic) NSInteger count;
-@property BOOL showAltArt;
 
 +(CardCounter*) initWithCard:(Card*)card;
 +(CardCounter*) initWithCard:(Card*)card andCount:(NSInteger)count;

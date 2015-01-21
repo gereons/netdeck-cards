@@ -72,8 +72,6 @@
 @property (readonly) int maxPerDeck;        // limited cards
 @property (readonly) NSString* imageSrc;
 
-@property (readonly) Card* altCard;
-
 @property (readonly) UIColor* factionColor;
 @property (readonly) NSUInteger factionHexColor;
 @property (nonatomic, readonly) NSAttributedString* attributedText;    // html rendered

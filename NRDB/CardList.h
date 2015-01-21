@@ -39,7 +39,6 @@
 -(void) filterByAgendaPoints:(int)ap;
 -(void) filterByUniqueness:(BOOL)unique;
 -(void) filterByLimited:(BOOL)limited;
--(void) filterByAltArt:(BOOL)altart;
 
 -(void) clearFilters;
 

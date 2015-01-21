@@ -40,8 +40,6 @@ static UIImage* muIcon;
 static UIImage* apIcon;
 static UIImage* trashIcon;
 static UIImage* strengthIcon;
-static UIImage* altArtIconOn;
-static UIImage* altArtIconOff;
 static UIImage* hexTile;
 
 static NSMutableSet* unavailableImages; // set of image keys
@@ -62,9 +60,6 @@ static NSCache* memCache;
     cardIcon = [UIImage imageNamed:@"cardstats_decksize"];
     difficultyIcon = [UIImage imageNamed:@"cardstats_difficulty"];
     influenceIcon = [UIImage imageNamed:@"cardstats_influence"];
-    
-    altArtIconOn = [UIImage imageNamed:@"altarttoggle_on"];
-    altArtIconOff = [UIImage imageNamed:@"altarttoggle_off"];
     
     hexTile = [UIImage imageNamed:@"hex_background"];
     
@@ -404,7 +399,6 @@ static NSCache* memCache;
 +(UIImage*) difficultyIcon { return difficultyIcon; }
 +(UIImage*) influenceIcon { return influenceIcon; }
 +(UIImage*) hexTile { return hexTile; }
-+(UIImage*) altArtIcon:(BOOL)on { return on ? altArtIconOn : altArtIconOff; }
 +(UIImage*) placeholderFor:(NRRole)role
 {
     return role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder;

@@ -75,11 +75,6 @@ static NSDictionary* cropValues;
     return [CardManager cardByCode:code];
 }
 
--(Card*) altCard
-{
-    return [CardManager altCardFor:self.code];
-}
-
 -(NSAttributedString*) attributedText
 {
     if (!self->_attributedText)
