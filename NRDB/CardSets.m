@@ -27,55 +27,53 @@ static NSMutableDictionary* setNames;
 static NSArray* setGroups;
 static NSArray* setsPerGroup;
 static NSMutableSet* newSetCodes;
-static NSMutableDictionary* cgdbToNrdbMap;
 static NSSet* disabledSets;
 
 static struct cardSetData {
     int setNum;
     char* nrdbCode;
-    char* cgdbCode;
     NRCycle cycle;
     BOOL released;
 } cardSetData[] = {
-    {  1, "core", "223", NRCycleCoreDeluxe, YES },
+    {  1, "core", NRCycleCoreDeluxe, YES },
     
     // genesis
-    { 2, "wla", "241", NRCycleGenesis, YES },
-    { 3, "ta", "242", NRCycleGenesis, YES },
-    { 4, "ce", "260", NRCycleGenesis, YES },
-    { 5, "asis", "264", NRCycleGenesis, YES },
-    { 6, "hs", "278", NRCycleGenesis, YES },
-    { 7, "fp", "279", NRCycleGenesis, YES },
+    { 2, "wla", NRCycleGenesis, YES },
+    { 3, "ta", NRCycleGenesis, YES },
+    { 4, "ce", NRCycleGenesis, YES },
+    { 5, "asis", NRCycleGenesis, YES },
+    { 6, "hs", NRCycleGenesis, YES },
+    { 7, "fp", NRCycleGenesis, YES },
     // c&c
-    { 8, "cac", "280", NRCycleCoreDeluxe, YES },
+    { 8, "cac", NRCycleCoreDeluxe, YES },
     
     // spin
-    {  9, "om", "307", NRCycleSpin, YES },
-    { 10, "st", "308", NRCycleSpin, YES},
-    { 11, "mt", "309", NRCycleSpin, YES },
-    { 12, "tc", "310", NRCycleSpin, YES },
-    { 13, "fal", "311", NRCycleSpin, YES },
-    { 14, "dt", "312", NRCycleSpin, YES },
+    {  9, "om", NRCycleSpin, YES },
+    { 10, "st", NRCycleSpin, YES},
+    { 11, "mt", NRCycleSpin, YES },
+    { 12, "tc", NRCycleSpin, YES },
+    { 13, "fal", NRCycleSpin, YES },
+    { 14, "dt", NRCycleSpin, YES },
     // h&p
-    { 15, "hap", "342", NRCycleCoreDeluxe, YES },
+    { 15, "hap", NRCycleCoreDeluxe, YES },
     
     // lunar
-    { 16, "up", "333", NRCycleLunar, YES },
-    { 17, "tsb", "358", NRCycleLunar, YES },
-    { 18, "fc", "359", NRCycleLunar, YES },
-    { 19, "uao", "360", NRCycleLunar, YES },
-    { 20, "atr", "361", NRCycleLunar, YES },
-    { 21, "ts", "362", NRCycleLunar, YES },
+    { 16, "up", NRCycleLunar, YES },
+    { 17, "tsb", NRCycleLunar, YES },
+    { 18, "fc", NRCycleLunar, YES },
+    { 19, "uao", NRCycleLunar, YES },
+    { 20, "atr", NRCycleLunar, YES },
+    { 21, "ts", NRCycleLunar, YES },
     // o&c
-    { 22, "oac", "", NRCycleCoreDeluxe, NO },
+    { 22, "oac", NRCycleCoreDeluxe, NO },
     
     // sansan
-    { 23, "val", "", NRCycleSanSan, NO },
-    { 24, "bb", "", NRCycleSanSan, NO },
-    { 25, "cc", "", NRCycleSanSan, NO },
-    // { 26, "", "", NRCycleSanSan, NO },
-    // { 27, "", "", NRCycleSanSan, NO },
-    // { 28, "", "", NRCycleSanSan, NO },
+    { 23, "val", NRCycleSanSan, NO },
+    { 24, "bb", NRCycleSanSan, NO },
+    { 25, "cc", NRCycleSanSan, NO },
+    // { 26, "", NRCycleSanSan, NO },
+    // { 27, "", NRCycleSanSan, NO },
+    // { 28, "", NRCycleSanSan, NO },
     
     { 0 }
 };
@@ -86,7 +84,6 @@ static struct cardSetData {
     releases = [NSMutableDictionary dictionary];
     setNames = [NSMutableDictionary dictionary];
     newSetCodes = [NSMutableSet set];
-    cgdbToNrdbMap = [NSMutableDictionary dictionary];
     
     struct cardSetData* c = cardSetData;
     while (c->setNum > 0)
@@ -98,7 +95,6 @@ static struct cardSetData {
         csd.settingsKey = [NSString stringWithFormat:@"use_%@", nrdbCode];
         csd.cycle = c->cycle;
         csd.released = c->released;
-        cgdbToNrdbMap[@(c->cgdbCode)] = csd.setCode;
         
         [releases setObject:@(csd.setNum) forKey:csd.setCode];
         [cardSets addObject:csd];
@@ -208,11 +204,6 @@ static struct cardSetData {
     [knownSets addObject:DRAFT_SET_CODE];
     
     return knownSets;
-}
-
-+(NSString*) setCodeForCgdbCode:(NSString*)setCode
-{
-    return cgdbToNrdbMap[setCode];
 }
 
 +(void) registerNrdbCode:(NSString *)setCode andName:(NSString *)setName

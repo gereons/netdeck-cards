@@ -30,7 +30,6 @@
 
 // all sets we know about
 +(NSSet*) knownSetCodes;
-+(NSString*) setCodeForCgdbCode:(NSString*)cgdbCode;
 +(void) registerNrdbCode:(NSString*)setCode andName:(NSString*)setName;
 
 +(NSDictionary*) settingsDefaults;

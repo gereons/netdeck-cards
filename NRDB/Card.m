@@ -160,8 +160,6 @@ static NSDictionary* cropValues;
 {
     Card* c = [Card new];
     
-    BOOL isNrdb = [json objectForKey:@"type_code"] != nil;
-    
     JSON_STR(code, @"code");
     JSON_STR(name, @"title");
     c->_name = [c->_name stringByReplacingHTMLEntities];
@@ -184,28 +182,20 @@ static NSDictionary* cropValues;
     c->_type = [CardType type:c.typeStr];
     NSAssert(c.type != NRCardTypeNone, @"no type for %@ (%@)", c.code, c.typeStr);
     
-    JSON_STR(setName, @"set");
-    if (isNrdb)
+    JSON_STR(setName, @"setname");
+    NSString* setCode = [json objectForKey:@"set_code"];
+    [CardSets registerNrdbCode:setCode andName:c->_setName];
+    c->_setCode = setCode;
+    if (c->_setCode == nil)
     {
-        JSON_STR(setName, @"setname");
-        NSString* setCode = [json objectForKey:@"set_code"];
-        [CardSets registerNrdbCode:setCode andName:c->_setName];
-        c->_setCode = setCode;
-        if (c->_setCode == nil)
-        {
-            c->_setCode = UNKNOWN_SET_CODE;
-        }
+        c->_setCode = UNKNOWN_SET_CODE;
+    }
 
-        if ([c->_setName isEqualToString:@"Core Set"])
-        {
-            c->_setName = @"Core";
-        }
-    }
-    else
+    if ([c->_setName isEqualToString:@"Core Set"])
     {
-        NSString* setCode = [json objectForKey:@"setcode"];
-        c->_setCode = [CardSets setCodeForCgdbCode:setCode];
+        c->_setName = @"Core";
     }
+
     c->_setNumber = [CardSets setNumForCode:c->_setCode];
         
     if ([DRAFT_IDS containsObject:c.code])
@@ -240,10 +230,7 @@ static NSDictionary* cropValues;
     {
         JSON_INT(influenceLimit, @"influencelimit");
         JSON_INT(minimumDecksize, @"mindecksize");
-        if (isNrdb)
-        {
-            JSON_INT(minimumDecksize, @"minimumdecksize");
-        }
+        JSON_INT(minimumDecksize, @"minimumdecksize");
         JSON_INT(baseLink, @"baselink");
     }
     else
@@ -269,7 +256,7 @@ static NSDictionary* cropValues;
     JSON_INT(trash, @"trash");
     
     JSON_STR(imageSrc, @"imagesrc");
-    if (isNrdb && c->_imageSrc.length > 0)
+    if (c->_imageSrc.length > 0)
     {
         NSString* host = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_HOST];
         c->_imageSrc = [NSString stringWithFormat:@"http://%@%@", host, c->_imageSrc];
@@ -291,15 +278,13 @@ static NSDictionary* cropValues;
     }
     
     JSON_INT(maxPerDeck, @"maxperdeck");
-    if (isNrdb)
+    c->_maxPerDeck = 3;
+    NSNumber* limited = [json objectForKey:@"limited"];
+    if (limited && limited.boolValue)
     {
-        c->_maxPerDeck = 3;
-        NSNumber* limited = [json objectForKey:@"limited"];
-        if (limited && limited.boolValue)
-        {
-            c->_maxPerDeck = 1;
-        }
+        c->_maxPerDeck = 1;
     }
+
     if ([max1InDeck containsObject:c.code] || c.type == NRCardTypeIdentity)
     {
         c->_maxPerDeck = 1;
