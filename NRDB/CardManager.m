@@ -267,11 +267,6 @@ static BOOL initializing;
 {
     NSAssert(initializing, @"oops");
     
-    if ([card.setCode caseInsensitiveCompare:@"alt"] == NSOrderedSame)
-    {
-        return;
-    }
-    
     // add to dictionaries/arrays
     [allCards setObject:card forKey:card.code];
     
