@@ -218,6 +218,7 @@ static NSDictionary* cropValues;
     }
     if (c.subtype)
     {
+        c->_subtype = [c.subtype stringByReplacingOccurrencesOfString:@"G-Mod" withString:@"G-mod"];
         c->_subtypes = [c.subtype componentsSeparatedByString:@" - "];
     }
     
