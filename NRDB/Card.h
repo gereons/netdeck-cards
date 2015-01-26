@@ -71,6 +71,7 @@
 @property (readonly) BOOL unique;
 @property (readonly) int maxPerDeck;        // limited cards
 @property (readonly) NSString* imageSrc;
+@property (readonly) NSString* ancurLink;
 
 @property (readonly) UIColor* factionColor;
 @property (readonly) NSUInteger factionHexColor;

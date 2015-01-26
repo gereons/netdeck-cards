@@ -372,8 +372,9 @@ static BrowserResultViewController* instance;
 {
     NSString* cardName = [card.name stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     cardName = [cardName stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
-    NSString* url = [NSString stringWithFormat:@"http://ancur.wikia.com/wiki/%@", cardName ];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    NSString* ancurPage = [NSString stringWithFormat:@"http://ancur.wikia.com/wiki/%@", cardName ];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:ancurPage]];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath

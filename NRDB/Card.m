@@ -296,6 +296,12 @@ static NSDictionary* cropValues;
         [multiIce addObject:c.code];
     }
     
+    JSON_STR(ancurLink, @"ancurLink");
+    if (c.ancurLink.length == 0)
+    {
+        c->_ancurLink = nil;
+    }
+    
     return c;
 }
 
