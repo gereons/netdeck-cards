@@ -969,8 +969,7 @@
     {
         [self dismissActionSheet];
     }
-    TF_CHECKPOINT(@"toggle deck view");
-    
+
     NSInteger viewMode = sender.selectedSegmentIndex;
     [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:DECK_VIEW_STYLE];
     [self doToggleView:viewMode];
@@ -1534,8 +1533,6 @@
 
 -(void) sendAsEmail
 {
-    TF_CHECKPOINT(@"Export Email");
-    
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     
     if (mailer)

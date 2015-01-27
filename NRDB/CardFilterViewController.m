@@ -397,8 +397,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) moreLessClicked:(id)sender
 {
-    TF_CHECKPOINT(@"more/less toggle");
-    
     showAllFilters = !showAllFilters;
     
     if (!showAllFilters)
@@ -442,8 +440,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) viewModeChanged:(UISegmentedControl*)sender
 {
-    TF_CHECKPOINT(@"view mode toggle");
-    
     NSIndexPath* scrollToPath;
     
     if (viewMode != VIEW_LIST)

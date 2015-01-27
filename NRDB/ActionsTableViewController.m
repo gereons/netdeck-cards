@@ -334,7 +334,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     {
         case NRMenuDecks:
         {
-            TF_CHECKPOINT(@"decks");
             SavedDecksList* decks;
             if (self.searchForCard == nil)
             {
@@ -352,7 +351,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             
         case NRMenuDeckDiff:
         {
-            TF_CHECKPOINT(@"deck diff");
             CompareDecksList* decks = [[CompareDecksList alloc] init];
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:decks];
             detailViewManager.detailViewController = self.snc;
@@ -361,8 +359,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             
         case NRMenuCardBrowser:
         {
-            TF_CHECKPOINT(@"card browser");
-            
             NRNavigationController* nc = (NRNavigationController*)self.navigationController;
             nc.deckListViewController = nil;
             
@@ -373,7 +369,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             
         case NRMenuSettings:
         {
-            TF_CHECKPOINT(@"settings");
             self.settings = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:self.settings];
             detailViewManager.detailViewController = self.snc;
@@ -382,7 +377,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             
         case NRMenuAbout:
         {
-            TF_CHECKPOINT(@"about");
             AboutViewController* about = [[AboutViewController alloc] initWithNibName:@"AboutView" bundle:nil];
             
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:about];

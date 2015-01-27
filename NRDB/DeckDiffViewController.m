@@ -52,8 +52,6 @@ typedef NS_ENUM(NSInteger, DiffMode) {
 
 - (id)initWithDecks:(Deck*)deck1 deck2:(Deck*)deck2
 {
-    TF_CHECKPOINT(@"deck diff");
-    
     self = [super initWithNibName:@"DeckDiffViewController" bundle:nil];
     if (self)
     {

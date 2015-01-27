@@ -126,8 +126,6 @@ static NSString* filterText;
 
 -(void) importAll:(id)sender
 {
-    TF_CHECKPOINT(@"import all");
-    
     NSString* msg;
     if (self.source == NRImportSourceDropbox)
     {
@@ -409,8 +407,6 @@ static NSString* filterText;
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TF_CHECKPOINT(@"import deck");
-    
     NSArray* decks = self.filteredDecks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     

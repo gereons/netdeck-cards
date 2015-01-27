@@ -95,7 +95,6 @@
             {
                 if (!account)
                 {
-                    TF_CHECKPOINT(@"link dropbox");
                     UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
                     [accountManager linkFromController:topMost];
                 }
@@ -104,7 +103,6 @@
             {
                 if (account)
                 {
-                    TF_CHECKPOINT(@"unlink dropbox");
                     [account unlink];
                     [DBFilesystem setSharedFilesystem:nil];
                 }
@@ -123,7 +121,6 @@
         if (useNrdb)
         {
             UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-            TF_CHECKPOINT(@"netrunnerdb.com login");
             if (APP_ONLINE)
             {
                 [NRDBAuthPopupViewController showInViewController:topMost];
@@ -136,7 +133,6 @@
         }
         else
         {
-            TF_CHECKPOINT(@"netrunnerdb.com logout");
             NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
             [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
             [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
@@ -150,7 +146,6 @@
 {
     if ([specifier.key isEqualToString:DOWNLOAD_DATA_NOW])
     {
-        TF_CHECKPOINT(@"download data");
         if (APP_ONLINE)
         {
             [DataDownload downloadCardData];
@@ -162,7 +157,6 @@
     }
     else if ([specifier.key isEqualToString:DOWNLOAD_IMG_NOW])
     {
-        TF_CHECKPOINT(@"download images");
         if (APP_ONLINE)
         {
             [DataDownload downloadAllImages];
@@ -174,7 +168,6 @@
     }
     else if ([specifier.key isEqualToString:DOWNLOAD_MISSING_IMG])
     {
-        TF_CHECKPOINT(@"download missing images");
         if (APP_ONLINE)
         {
             [DataDownload downloadMissingImages];
@@ -186,8 +179,6 @@
     }
     else if ([specifier.key isEqualToString:CLEAR_CACHE])
     {
-        TF_CHECKPOINT(@"clear cache");
-        
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:l10n(@"Clear Cache? You will need to re-download all data.")
                                                    buttons:@[l10n(@"No"), l10n(@"Yes") ]];
@@ -206,7 +197,6 @@
     }
     else if ([specifier.key isEqualToString:TEST_DATASUCKER])
     {
-        TF_CHECKPOINT(@"api settings test");
         if (APP_ONLINE)
         {
             [self testApiSettings];

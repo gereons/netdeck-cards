@@ -52,11 +52,7 @@ const NSString* const kANY = @"Any";
     }
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
-    
-#if ADHOC && !TARGET_IPHONE_SIMULATOR
-    [TestFlight takeOff:@"eb5e8194-c06f-46db-a1ce-42943ebaf902"];
-#endif
-    
+        
 #if !DEBUG
     [Crashlytics startWithAPIKey:@"fe0f0f5f919be6211c1de668d91332e311ddad9e"];
 #endif
@@ -198,8 +194,7 @@ const NSString* const kANY = @"Any";
             if (account)
             {
                 [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
-                
-                TF_CHECKPOINT(@"dropbox linked");
+
                 DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
                 [DBFilesystem setSharedFilesystem:fileSystem];
             }

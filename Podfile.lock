@@ -36,7 +36,7 @@ PODS:
     - DTFoundation/Core
   - GRMustache (7.3.0):
     - JRSwizzle (~> 1.0)
-  - InAppSettingsKit (2.3.4)
+  - InAppSettingsKit (2.4.1)
   - JRSwizzle (1.0)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT (= 0.4.1)
@@ -79,7 +79,6 @@ PODS:
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.2)
   - SVProgressHUD (1.1.2)
-  - TestFlightSDK (3.0.2)
   - YOLOKit (11.1):
     - YOLOKit/all (= 11.1)
     - YOLOKit/any (= 11.1)
@@ -253,7 +252,6 @@ DEPENDENCIES:
   - libextobjc
   - SDCAlertView
   - SVProgressHUD
-  - TestFlightSDK
   - YOLOKit
 
 SPEC CHECKSUMS:
@@ -264,14 +262,13 @@ SPEC CHECKSUMS:
   DTCoreText: 1fc0aadfa238d14c6cc56035af4e2b76b958e3b1
   DTFoundation: 721a63964fb9acd64cb8c9d3d1642ee60bac3d6a
   GRMustache: efecd3b603f0a7a99cf6bdf3998782ee0c465726
-  InAppSettingsKit: 578ef0eb1e64538ca92ad7b3874df32ec854ef1c
+  InAppSettingsKit: 5d036a89c57458480facabc132fc8a843f405595
   JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
   libextobjc: d6146fce3ebea986b7f75fcb4c967639200b88b0
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64
   SDCAlertView: 542179519acac38917e178013e663cdbf4591475
   SDCAutoLayout: 4a963629725ed2b7d665e789ca4d6cfcd7446822
   SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
-  TestFlightSDK: 0c24c533748d0d84bfe7a3cb6036fa79124d84ee
   YOLOKit: 8a770dfd512d50c731e7ec292e1e3a82ae5738dc
 
 COCOAPODS: 0.35.0

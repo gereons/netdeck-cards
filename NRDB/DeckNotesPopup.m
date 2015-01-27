@@ -30,8 +30,6 @@
 
 - (id)initWithDeck:(Deck*)deck
 {
-    TF_CHECKPOINT(@"deck notes");
-    
     self = [super initWithNibName:@"DeckNotesPopup" bundle:nil];
     if (self)
     {

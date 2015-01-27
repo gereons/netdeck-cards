@@ -32,8 +32,6 @@ static NSInteger viewMode;
 
 - (id)initWithDeck:(Deck*)deck
 {
-    TF_CHECKPOINT(@"draw simulator");
-    
     self = [super initWithNibName:@"DrawSimulatorViewController" bundle:nil];
     if (self)
     {
@@ -129,7 +127,6 @@ static NSInteger viewMode;
 
 -(void) viewModeChange:(UISegmentedControl*)sender
 {
-    TF_CHECKPOINT(@"draw view mode");
     viewMode = sender.selectedSegmentIndex;
     self.tableView.hidden = viewMode == 0;
     self.collectionView.hidden = viewMode == 1;
@@ -285,8 +282,6 @@ static NSInteger viewMode;
 {
     if (gesture.state == UIGestureRecognizerStateBegan)
     {
-        TF_CHECKPOINT(@"draw long press");
-        
         NSIndexPath* indexPath;
         if (self.tableView.hidden)
         {

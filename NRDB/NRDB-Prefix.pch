@@ -15,13 +15,6 @@
     @import Foundation;
 #endif
 
-#if ADHOC
-#import <TestFlight.h>
-#define TF_CHECKPOINT(chk)  [TestFlight passCheckpoint:chk]
-#else
-#define TF_CHECKPOINT(chk)  /* nop */
-#endif
-
 #define l10n(str)   NSLocalizedString(str, nil)
 
 #import "NRTypes.h"

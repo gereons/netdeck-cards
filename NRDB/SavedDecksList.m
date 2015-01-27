@@ -567,8 +567,6 @@
     }
     else
     {
-        TF_CHECKPOINT(@"load deck");
-        
         NSDictionary* userInfo = @{
                                    @"filename" : deck.filename,
                                    @"role" : @(deck.role)
@@ -618,8 +616,6 @@
 
 -(void) sendAsEmail:(Deck*)deck
 {
-    TF_CHECKPOINT(@"Send as Email");
-    
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     
     if (mailer)
