@@ -65,7 +65,7 @@ static struct cardSetData {
     { 20, "atr", NRCycleLunar, YES },
     { 21, "ts", NRCycleLunar, YES },
     // o&c
-    { 22, "oac", NRCycleCoreDeluxe, NO },
+    { 22, "oac", NRCycleCoreDeluxe, YES },
     
     // sansan
     { 23, "val", NRCycleSanSan, NO },
