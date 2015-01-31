@@ -80,7 +80,9 @@ static TableData* allTypes;
 
 +(NRCardType) type:(NSString*)type
 {
-    return [[code2type objectForKey:type.lowercaseString] intValue];
+    NSNumber* typeNum = [code2type objectForKey:type.lowercaseString];
+    NSAssert(typeNum != nil, @"no type for %@", type);
+    return typeNum.intValue;
 }
 
 +(NSString*) name:(NRCardType)type

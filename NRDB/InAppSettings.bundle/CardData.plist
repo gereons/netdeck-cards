@@ -10,6 +10,30 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSMultiValueSpecifier</string>
+            <key>Title</key>
+            <string>Language</string>
+            <key>Key</key>
+            <string>language</string>
+            <key>DefaultValue</key>
+            <string>en</string>
+            <key>Values</key>
+            <array>
+                <string>en</string>
+                <string>de</string>
+                <string>fr</string>
+                <string>es</string>
+            </array>
+            <key>Titles</key>
+            <array>
+                <string>English</string>
+                <string>German</string>
+                <string>French</string>
+                <string>Spanish</string>
+            </array>
+        </dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>

@@ -121,6 +121,12 @@ static DataDownload* instance;
         if (nrdbHost.length)
         {
             cardsUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
+            
+            NSString* language = [settings objectForKey:LANGUAGE];
+            if (language)
+            {
+                cardsUrl = [NSString stringWithFormat:@"%@?_locale=%@", cardsUrl, language];
+            }
         }
         [self showDownloadAlert];
         [self startDownloadCardData:cardsUrl];

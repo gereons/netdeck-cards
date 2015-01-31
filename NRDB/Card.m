@@ -38,7 +38,7 @@ static NSDictionary* cropValues;
 
     multiIce = [NSMutableArray array];
     
-    roleCodes = @{ @"Runner": @(NRRoleRunner), @"Corp": @(NRRoleCorp) };
+    roleCodes = @{ @"runner": @(NRRoleRunner), @"corp": @(NRRoleCorp) };
     
     coreTextOptions = @{
                      DTUseiOS6Attributes: @(YES),
@@ -169,17 +169,24 @@ static NSDictionary* cropValues;
     
     JSON_STR(flavor, @"flavor");
     JSON_STR(factionStr, @"faction");
-    c->_factionStr = [c->_factionStr stringByReplacingOccurrencesOfString:@" Consortium" withString:@""];
-    c->_faction = [Faction faction:c.factionStr];
+    NSString* factionCode = [json objectForKey:@"faction_code"];
+    c->_faction = [Faction faction:factionCode];
     NSAssert(c.faction != NRFactionNone, @"no faction for %@", c.code);
+    // remove the "consortium" from weyland's name
+    if (c.faction == NRFactionWeyland)
+    {
+        c->_factionStr = @"Weyland";
+    }
     
     JSON_STR(roleStr, @"side");
-    NSNumber* rc = [roleCodes objectForKey:c.roleStr];
+    NSString* roleCode = [json objectForKey:@"side_code"];
+    NSNumber* rc = [roleCodes objectForKey:roleCode.lowercaseString];
     c->_role = rc ? rc.integerValue : NRRoleNone;
     NSAssert(c.role != NRRoleNone, @"no role for %@", c.code);
 
     JSON_STR(typeStr, @"type");
-    c->_type = [CardType type:c.typeStr];
+    NSString* typeCode = [json objectForKey:@"type_code"];
+    c->_type = [CardType type:typeCode];
     NSAssert(c.type != NRCardTypeNone, @"no type for %@ (%@)", c.code, c.typeStr);
     
     JSON_STR(setName, @"setname");

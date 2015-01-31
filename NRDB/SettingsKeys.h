@@ -23,6 +23,7 @@
 #define DOWNLOAD_IMG_NOW        @"downloadImagesNow"
 #define DOWNLOAD_MISSING_IMG    @"downloadMissingImagesNow"
 #define CLEAR_CACHE         @"clearCache"
+#define LANGUAGE            @"language"
 
 #define NUM_CORES           @"number_coresets"
 #define IGNORE_UNKNOWN_SETS @"ignore_unknown_sets"

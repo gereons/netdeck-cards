@@ -85,7 +85,7 @@ static TableData* allFactions;
 +(NRFaction) faction:(NSString*)faction
 {
     unichar ch = [faction characterAtIndex:0];
-    switch (ch)
+    switch (toupper(ch))
     {
         case 'A': return NRFactionAnarch;
         case 'C': return NRFactionCriminal;
@@ -95,7 +95,7 @@ static TableData* allFactions;
         case 'W':
         case 'T': return NRFactionWeyland;  // catch both "W..." and "The W..."
         case 'N':
-            return [faction isEqualToString:@"Neutral"] ? NRFactionNeutral : NRFactionNBN;
+            return [faction isEqualToString:@"neutral"] ? NRFactionNeutral : NRFactionNBN;
     }
     return NRFactionNone;
 }
