@@ -35,7 +35,7 @@ static int maxCorpCost;
 static int maxInf;
 static int maxAgendaPoints;
 static int maxTrash;
-static NSString* iceBreakerType = @"Icebreaker";
+static NSString* iceBreakerType;
 
 static BOOL initializing;
 
@@ -52,6 +52,8 @@ static BOOL initializing;
     subtypes = @[ [NSMutableDictionary dictionary], [NSMutableDictionary dictionary] ];
     identitySubtypes = @[ [NSMutableSet set], [NSMutableSet set] ];
     sortedIdentities = [@[ [NSMutableArray array], [NSMutableArray array] ] mutableCopy];
+    
+    iceBreakerType = l10n(@"Icebreaker");
     
     initializing = NO;
 }

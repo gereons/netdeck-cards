@@ -226,6 +226,7 @@ static NSDictionary* cropValues;
     if (c.subtype)
     {
         c->_subtype = [c.subtype stringByReplacingOccurrencesOfString:@"G-Mod" withString:@"G-mod"];
+        c->_subtype = [c.subtype stringByReplacingOccurrencesOfString:@" – " withString:@" - "]; // fix dashes in german subtypes
         c->_subtypes = [c.subtype componentsSeparatedByString:@" - "];
     }
     
@@ -314,9 +315,13 @@ static NSDictionary* cropValues;
 
 +(BOOL) isMultiIce:(Card*)card
 {
-    return [card.subtypes containsObject:@"Sentry"]
-        && [card.subtypes containsObject:@"Barrier"]
-        && [card.subtypes containsObject:@"Code Gate"];
+    BOOL en = [card.subtypes containsObject:@"Sentry"]
+           && [card.subtypes containsObject:@"Barrier"]
+           && [card.subtypes containsObject:@"Code Gate"];
+    BOOL localized = [card.subtypes containsObject:l10n(@"Sentry")]
+                  && [card.subtypes containsObject:l10n(@"Barrier")]
+                  && [card.subtypes containsObject:l10n(@"Code Gate")];
+    return en || localized;
 }
 
 -(BOOL) isValid
@@ -333,7 +338,7 @@ static NSDictionary* cropValues;
     masque->_code = THE_MASQUE;
     masque->_name = @"Masque";
     masque->_type = NRCardTypeIdentity;
-    masque->_typeStr = @"Identity";
+    masque->_typeStr = l10n(@"Identity");
     masque->_faction = NRFactionNeutral;
     masque->_factionStr = @"Neutral";
     masque->_minimumDecksize = 30;
@@ -346,7 +351,7 @@ static NSDictionary* cropValues;
     shadow->_code = THE_SHADOW;
     shadow->_name = @"Shadow";
     shadow->_type = NRCardTypeIdentity;
-    shadow->_typeStr = @"Identity";
+    shadow->_typeStr = l10n(@"Identity");
     shadow->_faction = NRFactionNeutral;
     shadow->_factionStr = @"Neutral";
     shadow->_minimumDecksize = 30;

@@ -166,6 +166,9 @@
 "Upgrade" = "Extension";
 "Operation" = "Opération";
 "Icebreaker" = "Brise glace";
+"Sentry" = "Sentinelle";
+"Barrier" = "Barrière";
+"Code Gate" = "Verrou";
 
 // startup alert
 "No Card Data" = "Pas de données de cartes";

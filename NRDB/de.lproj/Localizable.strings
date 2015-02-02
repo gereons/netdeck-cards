@@ -185,6 +185,9 @@
 "Upgrade" = "Upgrade";
 "Operation" = "Operation";
 "Icebreaker" = "Ice-Brecher";
+"Sentry" = "Wächter";
+"Barrier" = "Barriere";
+"Code Gate" = "Code-Zugang";
 
 // startup alert
 "No Card Data" = "Keine Karten-Daten";

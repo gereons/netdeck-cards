@@ -106,12 +106,13 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     self.tableView.delegate = nil;
     self.tableView.dataSource = nil;
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
     self.searchField.delegate = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad
