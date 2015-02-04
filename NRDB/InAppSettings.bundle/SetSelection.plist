@@ -342,6 +342,16 @@
             <key>DefaultValue</key>
             <true/>
         </dict>
+        <dict>
+            <key>Type</key>
+            <string>IASKCustomViewSpecifier</string>
+            <key>Title</key>
+            <string>Data Pack #4</string>
+            <key>Key</key>
+            <string>use_tu</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
 	</array>
 	<key>StringsTable</key>
 	<string>SetSelection</string>
