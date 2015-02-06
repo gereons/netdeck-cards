@@ -243,17 +243,21 @@
 
     if (copies < 1)
     {
-        NSAssert(cc != nil, @"remove card that's not in the deck");
         // NSLog(@" remove %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
         // remove card
-        if (copies == 0 || ABS(copies) >= cc.count)
+        NSAssert(cc != nil, @"remove card that's not in the deck");
+        
+        if (cc != nil)
         {
-            [_cards removeObjectAtIndex:cardIndex];
-            copies = -cc.count;
-        }
-        else
-        {
-            cc.count -= ABS(copies);
+            if (copies == 0 || ABS(copies) >= cc.count)
+            {
+                [_cards removeObjectAtIndex:cardIndex];
+                copies = -cc.count;
+            }
+            else
+            {
+                cc.count -= ABS(copies);
+            }
         }
     }
     else
@@ -281,7 +285,7 @@
         }
     }
     
-    if (history)
+    if (history && cc != nil)
     {
         [self.lastChanges addCardCode:cc.card.code copies:copies];
     }
