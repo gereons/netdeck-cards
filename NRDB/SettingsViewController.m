@@ -195,7 +195,7 @@
             }
         };
     }
-    else if ([specifier.key isEqualToString:TEST_DATASUCKER])
+    else if ([specifier.key isEqualToString:TEST_API])
     {
         if (APP_ONLINE)
         {
@@ -249,23 +249,20 @@
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSString* nrdbHost = [settings objectForKey:NRDB_HOST];
-    NSString* cardsUrl = [settings objectForKey:CARDS_ENDPOINT];
-    NSString* lockpickCode = [settings objectForKey:LOCKPICK_CODE];
     
-    if (nrdbHost.length == 0 && cardsUrl.length == 0 && lockpickCode.length == 0)
+    if (nrdbHost.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Server Name, Cards Endpoint URL, and/or a Lockpick code") buttons:@[l10n(@"OK")]];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Server Name") buttons:@[l10n(@"OK")]];
         return;
     }
 
     [SVProgressHUD showWithStatus:l10n(@"Testing...")];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
-    if (nrdbHost.length)
-    {
-        NSString* nrdbUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager GET:nrdbUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString* nrdbUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:nrdbUrl parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             BOOL ok = YES;
             if ([responseObject isKindOfClass:[NSArray class]])
             {
@@ -276,124 +273,20 @@
                     ok = NO;
                 }
             }
-            
-            [self testDatasucker:@{ @"nrdb": @(ok) }];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self testDatasucker:@{ @"nrdb": @NO }];
-        }];
-    }
-    else
-    {
-        [self testDatasucker:@{}];
-    }
+             [self finishApiTests:ok];
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self finishApiTests:NO];
+        }
+    ];
 }
 
--(void) testDatasucker:(NSDictionary*)previousResults;
-{
-    NSMutableDictionary* results = previousResults.mutableCopy;
-    
-    NSString* cardsUrl = [[NSUserDefaults standardUserDefaults] objectForKey:CARDS_ENDPOINT];
-    if (cardsUrl.length)
-    {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager GET:cardsUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            BOOL ok = YES;
-            if ([responseObject isKindOfClass:[NSArray class]])
-            {
-                NSArray* arr = responseObject;
-                NSDictionary* dict = arr[0];
-                if (dict[@"code"] == nil)
-                {
-                    ok = NO;
-                }
-            }
-            
-            results[@"datasucker"] = @(ok);
-            [self testLockpick:results];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            results[@"datasucker"] = @NO;
-            [self testLockpick:results];
-        }];
-    }
-    else
-    {
-        [self testLockpick:results];
-    }
-}
-
--(void) testLockpick:(NSMutableDictionary*)results
-{
-    NSString* lockpickCode = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKPICK_CODE];
-
-    if (lockpickCode.length)
-    {
-        NSString* code = [lockpickCode stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
-        NSString* lockpickUrl =[NSString stringWithFormat:@"https://lockpick.parseapp.com/datasucker/%@", code];
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager GET:lockpickUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            BOOL ok = YES;
-            if ([responseObject isKindOfClass:[NSDictionary class]])
-            {
-                NSDictionary* dict = responseObject;
-                if (dict[@"url"] == nil)
-                {
-                    ok = NO;
-                }
-            }
-            
-            results[@"lockpick"] = @(ok);
-            [self finishApiTests:results];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            results[@"lockpick"] = @NO;
-            [self finishApiTests:results];
-        }];
-    }
-    else
-    {
-        [self finishApiTests:results];
-    }
-}
-
--(void) finishApiTests:(NSDictionary*)results
+-(void) finishApiTests:(BOOL)nrdbOk
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];
-    NSNumber* nrdbOk = results[@"nrdb"];
-    NSNumber* cardsOk = results[@"datasucker"];
-    NSNumber* lockpickOk = results[@"lockpick"];
     
-    NSString* nrdbMsg;
-    if (nrdbOk)
-    {
-        nrdbMsg = nrdbOk.intValue ? l10n(@"NetrunnerDB is OK") : l10n(@"NetrunnerDB is invalid");
-    }
-    else
-    {
-        nrdbMsg = l10n(@"NetrunnerDB not tested");
-    }
-    
-    NSString* cardsMsg;
-    if (cardsOk)
-    {
-        cardsMsg = cardsOk.intValue ? l10n(@"Cards Endpoint URL is OK") : l10n(@"Cards Endpoint URL is invalid");
-    }
-    else
-    {
-        cardsMsg = l10n(@"Cards Endpoint URL not tested");
-    }
-    
-    NSString* lockpickMsg;
-    if (lockpickOk)
-    {
-        lockpickMsg = lockpickOk.intValue ? l10n(@"Lockpick code is OK") : l10n(@"Lockpick code is invalid");
-    }
-    else
-    {
-        lockpickMsg = l10n(@"Lockpick code not tested");
-    }
-    
-    NSString* message = [NSString stringWithFormat:@"%@\n%@\n%@", nrdbMsg, cardsMsg, lockpickMsg];
+    NSString* message = nrdbOk ? l10n(@"NetrunnerDB is OK") : l10n(@"NetrunnerDB is invalid");
     [SDCAlertView alertWithTitle:nil message:message buttons:@[ l10n(@"OK") ]];
 }
 

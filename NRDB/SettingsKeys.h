@@ -54,9 +54,7 @@
 #define BROWSER_SORT_TYPE   @"browserSortType"
 
 #define NRDB_HOST           @"nrdb_host"
-#define LOCKPICK_CODE       @"lockpick_code"
-#define CARDS_ENDPOINT      @"cards_endpoint"
-#define TEST_DATASUCKER     @"test_datasucker"
+#define TEST_API            @"test_api"
 
 #define USE_NRDB            @"useNrdb"
 #define NRDB_ACCESS_TOKEN   @"nrdbAccessToken"

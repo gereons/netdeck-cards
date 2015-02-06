@@ -35,6 +35,6 @@
 
 +(BOOL) setupFromFiles;
 +(void) removeFiles;
-+(BOOL) setupFromDatasuckerApi:(NSArray*)json;
++(BOOL) setupFromNrdbApi:(NSArray*)json;
 
 @end

@@ -99,16 +99,10 @@
 "An Internet connection is required." = "Internet-Verbindung wird benötigt.";
 "Cards Endpoint URL is not set" = "Cards-URL ist leer";
 "Testing..." = "Test läuft...";
-"Lockpick code is OK" = "Lockpick-Code ist OK";
-"Lockpick code is invalid" = "Lockpick-Code ist nicht OK";
-"Lockpick code not tested" = "Lockpick-Code nicht getestet";
-"Cards Endpoint URL is OK" = "Cards-URL ist OK";
-"Cards Endpoint URL is invalid" = "Cards-URL ist nicht OK";
-"Cards Endpoint URL not tested" = "Cards-URL nicht getestest";
 "NetrunnerDB is OK" = "NetrunnerDB ist OK";
 "NetrunnerDB is invalid" = "NetrunnerDB ist nicht OK";
 "NetrunnerDB not tested" = "NetrunnerDB nicht getestet";
-"Please enter a Server Name, Cards Endpoint URL, and/or a Lockpick code" = "Bitte gibt einen Servernamen, Cards-URL und/oder einen Lockpick-Code ein";
+"Please enter a Server Name" = "Bitte gibt einen Servernamen ein";
 
 // identity selection
 "Choose Identity" = "Identität wählen";

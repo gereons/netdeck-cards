@@ -189,7 +189,7 @@ static BOOL initializing;
     return NO;
 }
 
-+(BOOL) setupFromDatasuckerApi:(NSArray*)json
++(BOOL) setupFromNrdbApi:(NSArray*)json
 {
     NSString* cardsFile = [CardManager filename];
     [json writeToFile:cardsFile atomically:YES];

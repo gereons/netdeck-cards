@@ -71,12 +71,18 @@ static struct cardSetData {
     { 23, "val", NRCycleSanSan, NO },
     { 24, "bb", NRCycleSanSan, NO },
     { 25, "cc", NRCycleSanSan, NO },
-    { 26, "tu", NRCycleSanSan, NO },
+    { 26, "uw", NRCycleSanSan, NO },
     // { 27, "", NRCycleSanSan, NO },
     // { 28, "", NRCycleSanSan, NO },
     
     { 0 }
 };
+
++(BOOL) setupFromNrdbApi:(NSArray *)json
+{
+    NSLog(@"%@", json);
+    return YES;
+}
 
 +(void) initialize
 {

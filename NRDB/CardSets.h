@@ -39,4 +39,6 @@
 +(NSString*) nameForKey:(NSString*) key;
 +(int) setNumForCode:(NSString*)code;
 
++(BOOL) setupFromNrdbApi:(NSArray*)json;
+
 @end

@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, DownloadScope)
     
 +(void) downloadCardData
 {
-    [[DataDownload sharedInstance] downloadCardData];
+    [[DataDownload sharedInstance] downloadCardAndSetsData];
 }
 
 +(void) downloadAllImages
@@ -66,76 +66,29 @@ static DataDownload* instance;
 
 #pragma mark card data download
 
--(void) downloadCardData
+-(void) downloadCardAndSetsData
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     NSString* nrdbHost = [settings objectForKey:NRDB_HOST];
-    NSString* cardsUrl = [settings objectForKey:CARDS_ENDPOINT];
-    NSString* lockpickCode = [settings objectForKey:LOCKPICK_CODE];
     
-    if (nrdbHost.length == 0 && cardsUrl.length == 0 && lockpickCode.length == 0)
+    if (nrdbHost.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Server Name, Cards Endpoint URL, and/or a Lockpick code") buttons:@[l10n(@"OK")]];
+        [SDCAlertView alertWithTitle:nil message:l10n(@"No known NetrunnerDB server") buttons:@[l10n(@"OK")]];
         return;
     }
 
-    if (cardsUrl.length == 0 && nrdbHost.length == 0)
+    NSString* cardsUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
+    NSString* setsUrl = [NSString stringWithFormat:@"http://%@/api/sets/", nrdbHost];
+    
+    NSString* language = [settings objectForKey:LANGUAGE];
+    if (language)
     {
-        // fetch a datasucker url from lockpic
-        [self showDownloadAlert];
-        NSString* code = [lockpickCode stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
-        NSString* lockpickUrl =[NSString stringWithFormat:@"https://lockpick.parseapp.com/datasucker/%@", code];
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager GET:lockpickUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSString* url;
-            if ([responseObject isKindOfClass:[NSDictionary class]])
-            {
-                NSDictionary* dict = responseObject;
-                url = dict[@"url"];
-            }
-            if (url.length > 0)
-            {
-                BOOL http = [url hasPrefix:@"http://"] || [url hasPrefix:@"https://"];
-                if (!http)
-                {
-                    url = [NSString stringWithFormat:@"http://%@", url];
-                }
-                url = [NSString stringWithFormat:@"%@/cards", url];
-                
-                if (!self.downloadStopped)
-                {
-                    [self startDownloadCardData:url];
-                }
-            }
-            else
-            {
-                [self showLockpickError];
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self showLockpickError];
-        }];
+        cardsUrl = [NSString stringWithFormat:@"%@?_locale=%@", cardsUrl, language];
+        setsUrl = [NSString stringWithFormat:@"%@?_locale=%@", setsUrl, language];
     }
-    else
-    {
-        if (nrdbHost.length)
-        {
-            cardsUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
-            
-            NSString* language = [settings objectForKey:LANGUAGE];
-            if (language)
-            {
-                cardsUrl = [NSString stringWithFormat:@"%@?_locale=%@", cardsUrl, language];
-            }
-        }
-        [self showDownloadAlert];
-        [self startDownloadCardData:cardsUrl];
-    }
-}
 
--(void) showLockpickError
-{
-    [SDCAlertView alertWithTitle:nil message:l10n(@"Lockpick request failed") buttons:@[l10n(@"OK")]];
+    [self showDownloadAlert];
+    [self startDownloadCardData:cardsUrl setsUrl:setsUrl];
 }
 
 -(void) showDownloadAlert
@@ -165,12 +118,12 @@ static DataDownload* instance;
     }];
 }
 
--(void) startDownloadCardData:(NSString*)url
+-(void) startDownloadCardData:(NSString*)cardsUrl setsUrl:(NSString*)setsUrl
 {
-    [self performSelector:@selector(doDownloadCardData:) withObject:url afterDelay:0.001];
+    [self performSelector:@selector(doDownloadCardData:) withObject:@{ @"cards": cardsUrl, @"sets": setsUrl } afterDelay:0.001];
 }
     
--(void) doDownloadCardData:(NSString*)cardsUrl
+-(void) doDownloadCardData:(NSDictionary*)urls
 {
     BOOL __block ok = NO;
     self.downloadStopped = NO;
@@ -178,6 +131,7 @@ static DataDownload* instance;
     self.manager = [AFHTTPRequestOperationManager manager];
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
+    NSString* cardsUrl = urls[@"cards"];
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
                                                                                  URLString:cardsUrl
                                                                                 parameters:nil
@@ -191,20 +145,67 @@ static DataDownload* instance;
           @strongify(self);
           if (!self.downloadStopped)
           {
-              ok = [CardManager setupFromDatasuckerApi:responseObject];
+              ok = [CardManager setupFromNrdbApi:responseObject];
           }
-          [self downloadFinished:ok];
+          [self downloadCardsFinished:ok urls:urls];
       } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
           @strongify(self);
           // NSLog(@"download failed %@", operation);
-          [self downloadFinished:NO];
+          [self downloadCardsFinished:NO urls:urls];
       }];
     
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     [operation start];
 }
 
--(void) downloadFinished:(BOOL)ok
+-(void) downloadCardsFinished:(BOOL)ok urls:(NSDictionary*)urls
+{
+    if (ok)
+    {
+        NSString* setsUrl = urls[@"sets"];
+        [self doDownloadSetsData:setsUrl];
+    }
+    else
+    {
+        [self downloadsFinished:ok];
+    }
+}
+
+-(void) doDownloadSetsData:(NSString*)setsUrl
+{
+    BOOL __block ok = NO;
+    self.downloadStopped = NO;
+    
+    self.manager = [AFHTTPRequestOperationManager manager];
+    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
+                                                                                 URLString:setsUrl
+                                                                                parameters:nil
+                                                                                     error:nil];
+    // bypass cache!
+    request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    
+    @weakify(self);
+    AFHTTPRequestOperation *operation = [self.manager HTTPRequestOperationWithRequest:request
+        success:^(AFHTTPRequestOperation* operation, id responseObject) {
+            @strongify(self);
+            if (!self.downloadStopped)
+            {
+                ok = [CardSets setupFromNrdbApi:responseObject];
+            }
+            [self downloadsFinished:ok];
+        } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
+            @strongify(self);
+            // NSLog(@"download failed %@", operation);
+            [self downloadsFinished:NO];
+    }];
+    
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation start];
+}
+
+-(void) downloadsFinished:(BOOL)ok
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.alert dismissWithClickedButtonIndex:-1 animated:NO];
@@ -218,6 +219,7 @@ static DataDownload* instance;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
 }
+
 
 #pragma mark image download
 
