@@ -527,8 +527,25 @@ static NSDateFormatter* formatter;
         BOOL success = [responseObject[@"success"] boolValue];
         if (success)
         {
-            NSString* deckId = responseObject[@"message"][@"id"];
-            self.saveCompletionBlock(YES, deckId);
+            id idFromJson = responseObject[@"message"][@"id"];
+            
+            NSString* deckId;
+            if ([idFromJson isKindOfClass:[NSString class]])
+            {
+                deckId = idFromJson;
+            }
+            else if ([idFromJson isKindOfClass:[NSNumber class]])
+            {
+                deckId = ((NSNumber*)idFromJson).stringValue;
+            }
+            if (deckId)
+            {
+                self.saveCompletionBlock(YES, deckId);
+            }
+            else
+            {
+                self.saveCompletionBlock(NO, nil);
+            }
         }
         else
         {

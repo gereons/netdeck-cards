@@ -608,6 +608,13 @@
         }
         
         _netrunnerDbId = [decoder decodeObjectForKey:@"netrunnerDbId"];
+        // fix NSNumber/NSString confusion
+        if ([_netrunnerDbId isKindOfClass:[NSNumber class]])
+        {
+            NSNumber*n = (NSNumber*) self.netrunnerDbId;
+            _netrunnerDbId = n.stringValue;
+        }
+        
         _name = [decoder decodeObjectForKey:@"name"];
         _role = [decoder decodeIntForKey:@"role"];
         _state = [decoder decodeIntForKey:@"state"];
@@ -639,8 +646,15 @@
 
 -(void) encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:self.cards forKey:@"cards"];
+    // fix NSNumber/NSString confusion
+    if ([_netrunnerDbId isKindOfClass:[NSNumber class]])
+    {
+        NSNumber*n = (NSNumber*) self.netrunnerDbId;
+        _netrunnerDbId = n.stringValue;
+    }
     [coder encodeObject:self.netrunnerDbId forKey:@"netrunnerDbId"];
+    
+    [coder encodeObject:self.cards forKey:@"cards"];
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeInt:self.role forKey:@"role"];
     [coder encodeInt:self.state forKey:@"state"];
@@ -651,6 +665,5 @@
     [coder encodeObject:self.lastChanges forKey:@"lastChanges"];
     [coder encodeObject:self.revisions forKey:@"revisions"];
 }
-
 
 @end
