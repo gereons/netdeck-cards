@@ -33,6 +33,7 @@ const NSString* const kANY = @"Any";
     
     [self removeOldNrdbData];
     
+    [CardSets setupFromFiles];
     [CardManager setupFromFiles];
     
     @try

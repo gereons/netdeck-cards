@@ -40,5 +40,7 @@
 +(int) setNumForCode:(NSString*)code;
 
 +(BOOL) setupFromNrdbApi:(NSArray*)json;
++(BOOL) setupFromFiles;
++(void) removeFiles;
 
 @end

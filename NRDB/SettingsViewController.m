@@ -187,6 +187,7 @@
             {
                 [[ImageCache sharedInstance] clearCache];
                 [CardManager removeFiles];
+                [CardSets removeFiles];
                 [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:LAST_DOWNLOAD];
                 [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:NEXT_DOWNLOAD];
                 [self refresh];

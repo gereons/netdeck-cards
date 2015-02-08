@@ -12,6 +12,7 @@
 #import "SettingsKeys.h"
 
 @interface CardSets()
+@property NSString* name;
 @property int setNum;
 @property NSString* setCode;
 @property NSString* settingsKey;
@@ -78,12 +79,6 @@ static struct cardSetData {
     { 0 }
 };
 
-+(BOOL) setupFromNrdbApi:(NSArray *)json
-{
-    NSLog(@"%@", json);
-    return YES;
-}
-
 +(void) initialize
 {
     cardSets = [NSMutableArray array];
@@ -118,6 +113,97 @@ static struct cardSetData {
     ];
     
     NSAssert(setGroups.count == setsPerGroup.count, @"set group mismatch");
+}
+
++(NSString*) filename
+{
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
+    return [documentsDirectory stringByAppendingPathComponent:@"nrsets.json"];
+}
+
++(void) removeFiles
+{
+    NSFileManager* fileMgr = [NSFileManager defaultManager];
+    [fileMgr removeItemAtPath:[CardSets filename] error:nil];
+    
+    [CardManager initialize];
+}
+
++(BOOL) setupFromFiles
+{
+    NSString* setsFile = [CardSets filename];
+    
+    NSFileManager* fileMgr = [NSFileManager defaultManager];
+    if ([fileMgr fileExistsAtPath:setsFile])
+    {
+        NSArray* data = [NSArray arrayWithContentsOfFile:setsFile];
+        BOOL ok = NO;
+        if (data)
+        {
+            ok = [self setupFromJsonData:data];
+        }
+        
+        return ok;
+    }
+    return NO;
+}
+
++(BOOL) setupFromNrdbApi:(NSArray *)json
+{
+    NSString* cardsFile = [CardSets filename];
+    [json writeToFile:cardsFile atomically:YES];
+    
+    return [self setupFromJsonData:json];
+    
+    return YES;
+}
+
++(BOOL) setupFromJsonData:(NSArray*)json
+{
+    for (NSDictionary* set in json)
+    {
+        CardSets* csd = [CardSets new];
+        
+        csd.setCode = set[@"code"];
+        if ([csd.setCode isEqualToString:SPECIAL_SET])
+        {
+            continue;
+        }
+        csd.name = set[@"name"];
+        csd.settingsKey = [NSString stringWithFormat:@"use_%@", csd.setCode];
+
+        NSNumber* cycleNumber = set[@"cyclenumber"];
+        int cycle = cycleNumber.intValue;
+        
+        if ((cycle % 2) == 0)
+        {
+            csd.cycle = cycle / 2;
+            NSNumber* number = set[@"number"];
+            csd.setNum = (cycle-2) / 2 * 7 + 1 + number.intValue;
+        }
+        else
+        {
+            csd.cycle = NRCycleCoreDeluxe;
+            csd.setNum = (cycle-1) / 2 * 7 + 1;
+        }
+        NSString* available = set[@"available"];
+        csd.released = available.length > 0;
+        
+        NSLog(@"%@ %d %d %@ %d", csd.name, csd.setNum, csd.cycle, csd.settingsKey, csd.released);
+        
+        /*
+        csd.setNum = c->setNum;
+        NSString* nrdbCode = [NSString stringWithUTF8String:c->nrdbCode];
+        csd.setCode = nrdbCode;
+        csd.settingsKey = [NSString stringWithFormat:@"use_%@", nrdbCode];
+        csd.cycle = c->cycle;
+        csd.released = c->released;
+        */
+    }
+    
+    return YES;
 }
 
 +(void) setupSetNames
