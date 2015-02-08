@@ -11,13 +11,15 @@
 #import "Deck.h"
 #import "SettingsKeys.h"
 
-@interface CardSets()
+@interface CardSet : NSObject
 @property NSString* name;
 @property int setNum;
 @property NSString* setCode;
 @property NSString* settingsKey;
 @property NRCycle cycle;
 @property BOOL released;
+@end
+@implementation CardSet
 @end
 
 @implementation CardSets
@@ -89,16 +91,16 @@ static struct cardSetData {
     struct cardSetData* c = cardSetData;
     while (c->setNum > 0)
     {
-        CardSets* csd = [CardSets new];
-        csd.setNum = c->setNum;
+        CardSet* cs = [CardSet new];
+        cs.setNum = c->setNum;
         NSString* nrdbCode = [NSString stringWithUTF8String:c->nrdbCode];
-        csd.setCode = nrdbCode;
-        csd.settingsKey = [NSString stringWithFormat:@"use_%@", nrdbCode];
-        csd.cycle = c->cycle;
-        csd.released = c->released;
+        cs.setCode = nrdbCode;
+        cs.settingsKey = [NSString stringWithFormat:@"use_%@", nrdbCode];
+        cs.cycle = c->cycle;
+        cs.released = c->released;
         
-        [releases setObject:@(csd.setNum) forKey:csd.setCode];
-        [cardSets addObject:csd];
+        [releases setObject:@(cs.setNum) forKey:cs.setCode];
+        [cardSets addObject:cs];
         ++c;
     }
     
@@ -156,53 +158,89 @@ static struct cardSetData {
     [json writeToFile:cardsFile atomically:YES];
     
     return [self setupFromJsonData:json];
-    
-    return YES;
 }
 
 +(BOOL) setupFromJsonData:(NSArray*)json
 {
+    int maxCycle = 0;
+    NSMutableArray* cardSets = [NSMutableArray array];
     for (NSDictionary* set in json)
     {
-        CardSets* csd = [CardSets new];
+        CardSet* cs = [CardSet new];
         
-        csd.setCode = set[@"code"];
-        if ([csd.setCode isEqualToString:SPECIAL_SET])
+        cs.setCode = set[@"code"];
+        if ([cs.setCode isEqualToString:SPECIAL_SET])
         {
             continue;
         }
-        csd.name = set[@"name"];
-        csd.settingsKey = [NSString stringWithFormat:@"use_%@", csd.setCode];
+        cs.name = set[@"name"];
+        cs.settingsKey = [NSString stringWithFormat:@"use_%@", cs.setCode];
 
         NSNumber* cycleNumber = set[@"cyclenumber"];
         int cycle = cycleNumber.intValue;
         
         if ((cycle % 2) == 0)
         {
-            csd.cycle = cycle / 2;
+            cs.cycle = cycle / 2;
+            maxCycle = MAX(cs.cycle, maxCycle);
             NSNumber* number = set[@"number"];
-            csd.setNum = (cycle-2) / 2 * 7 + 1 + number.intValue;
+            cs.setNum = (cycle-2) / 2 * 7 + 1 + number.intValue;
         }
         else
         {
-            csd.cycle = NRCycleCoreDeluxe;
-            csd.setNum = (cycle-1) / 2 * 7 + 1;
+            cs.cycle = NRCycleCoreDeluxe;
+            cs.setNum = (cycle-1) / 2 * 7 + 1;
         }
         NSString* available = set[@"available"];
-        csd.released = available.length > 0;
-        
-        NSLog(@"%@ %d %d %@ %d", csd.name, csd.setNum, csd.cycle, csd.settingsKey, csd.released);
-        
-        /*
-        csd.setNum = c->setNum;
-        NSString* nrdbCode = [NSString stringWithUTF8String:c->nrdbCode];
-        csd.setCode = nrdbCode;
-        csd.settingsKey = [NSString stringWithFormat:@"use_%@", nrdbCode];
-        csd.cycle = c->cycle;
-        csd.released = c->released;
-        */
+        cs.released = available.length > 0;
+    
+        [cardSets addObject:cs];
     }
     
+    [cardSets sortUsingComparator:^NSComparisonResult(CardSet* cs1, CardSet* cs2) {
+        return [@(cs1.setNum) compare:@(cs2.setNum)];
+    }];
+    
+    for (CardSet* cs in cardSets)
+    {
+        NSLog(@"%@ %d %d %@ %d", cs.name, cs.setNum, cs.cycle, cs.settingsKey, cs.released);
+    }
+    
+    /*
+     setGroups = @[ @"", l10n(@"Core / Deluxe"), l10n(@"Cycle #1"), l10n(@"Cycle #2"), l10n(@"Cycle #3"), l10n(@"Cycle #4") ];
+    setsPerGroup = @[
+                     @[  @0 ],
+                     @[  @1,  @8, @15, @22 ],
+                     @[  @2,  @3,  @4,  @5,  @6,  @7 ],
+                     @[  @9, @10, @11, @12, @13, @14 ],
+                     @[ @16, @17, @18, @19, @20, @21 ],
+                     @[ @23, @24, @25, @26
+                     ];
+    */
+    
+    NSMutableArray* setGroups = [NSMutableArray array];
+    NSMutableArray* setsPerGroup = [NSMutableArray array];
+    [setsPerGroup addObject:@[ @0 ]];
+    for (int i=0; i<=maxCycle; ++i)
+    {
+        [setsPerGroup addObject:[NSMutableArray array]];
+    }
+    
+    for (CardSet* cs in cardSets)
+    {
+        NSMutableArray* arr = setsPerGroup[cs.cycle+1];
+        [arr addObject:@(cs.setNum)];
+        
+        if (cs.cycle > setGroups.count)
+        {
+            NSString* cycle = [NSString stringWithFormat:@"Cycle #%d", cs.cycle];
+            [setGroups addObject:l10n(cycle)];
+        }
+    }
+    [setGroups insertObject:@"" atIndex:0];
+    [setGroups insertObject:l10n(@"Core / Deluxe") atIndex:1];
+    
+    NSAssert(setGroups.count == setsPerGroup.count, @"count mismatch");
     return YES;
 }
 
@@ -223,7 +261,7 @@ static struct cardSetData {
 
 +(NSString*) nameForKey:(NSString *)key
 {
-    for (CardSets* cs in cardSets)
+    for (CardSet* cs in cardSets)
     {
         if ([cs.settingsKey isEqualToString:key])
         {
@@ -236,7 +274,7 @@ static struct cardSetData {
 +(NSDictionary*) settingsDefaults
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-    for (CardSets* cs in cardSets)
+    for (CardSet* cs in cardSets)
     {
         [dict setObject:@(cs.released) forKey:cs.settingsKey];
     }
@@ -255,7 +293,7 @@ static struct cardSetData {
     {
         NSMutableSet* sets = [NSMutableSet set];
         NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-        for (CardSets* cs in cardSets)
+        for (CardSet* cs in cardSets)
         {
             if (![settings boolForKey:cs.settingsKey])
             {
@@ -289,7 +327,7 @@ static struct cardSetData {
 +(NSSet*) knownSetCodes
 {
     NSMutableSet* knownSets = [NSMutableSet set];
-    for (CardSets* cs in cardSets)
+    for (CardSet* cs in cardSets)
     {
         [knownSets addObject:cs.setCode];
     }
@@ -322,7 +360,7 @@ static struct cardSetData {
             }
             else if (setNum <= cardSets.count)
             {
-                CardSets* cs = [cardSets objectAtIndex:setNum-1];
+                CardSet* cs = [cardSets objectAtIndex:setNum-1];
                 NSString* setName = [setNames objectForKey:cs.setCode];
                 if (setName && ![disabledSetCodes containsObject:cs.setCode])
                 {
@@ -417,7 +455,7 @@ static struct cardSetData {
         maxRelease = MAX(maxRelease, rel);
     }
 
-    for (CardSets* cs in cardSets)
+    for (CardSet* cs in cardSets)
     {
         if (cs.setNum == maxRelease)
         {
