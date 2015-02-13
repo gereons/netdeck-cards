@@ -227,7 +227,11 @@
 "Cycle #2" = "Spin-Zyklus";
 "Cycle #3" = "Lunar-Zyklus";
 "Cycle #4" = "SanSan-Zyklus";
-"-Unreleased-" = "-Unveröffentlicht-";
+"Core Set and Deluxe Expansions" = "Grundspiel und Deluxe-Erweiterungen";
+"Number of Core Sets" = "Anzahl Grundspiele";
+"Special Identities" = "Besondere Identitäten";
+"Include Draft Identities" = "Draft-Identitäten benutzen";
+"Include Unpublished Identities" = "Unveröffentlichte Identitäten benutzen";
 
 // netrunnerdb.com
 "Import from Dropbox" = "Von Dropbox importieren";

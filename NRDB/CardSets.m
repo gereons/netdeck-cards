@@ -7,20 +7,10 @@
 //
 
 #import "CardSets.h"
+#import "CardSet.h"
 #import "CardManager.h"
 #import "Deck.h"
 #import "SettingsKeys.h"
-
-@interface CardSet : NSObject
-@property NSString* name;
-@property int setNum;
-@property NSString* setCode;
-@property NSString* settingsKey;
-@property NRCycle cycle;
-@property BOOL released;
-@end
-@implementation CardSet
-@end
 
 @implementation CardSets
 
@@ -124,13 +114,6 @@ static NSSet* disabledSets;
     [cardSets sortUsingComparator:^NSComparisonResult(CardSet* cs1, CardSet* cs2) {
         return [@(cs1.setNum) compare:@(cs2.setNum)];
     }];
-
-    /*
-    for (CardSet* cs in cardSets)
-    {
-        NSLog(@"%@ %d %ld %@ %d", cs.name, cs.setNum, (long)cs.cycle, cs.settingsKey, cs.released);
-    }
-    */
     
     setGroups = [NSMutableArray array];
     setsPerGroup = [NSMutableArray array];
@@ -231,7 +214,7 @@ static NSSet* disabledSets;
     return knownSets;
 }
 
-+(TableData*) allSetsForTableview
++(TableData*) allEnabledSetsForTableview
 {
     NSSet* disabledSetCodes = [CardSets disabledSetCodes];
     NSMutableArray* sections = [setGroups mutableCopy];
@@ -274,6 +257,41 @@ static NSSet* disabledSets;
             ++i;
         }
     }
+    
+    return [[TableData alloc] initWithSections:sections andValues:sets];
+}
+
++(TableData*) allKnownSetsForTableview
+{
+    NSMutableArray* sections = [setGroups mutableCopy];
+    [sections removeObjectAtIndex:0];
+    
+    NSMutableArray* sets = [NSMutableArray array];
+    for (NSArray* arr in setsPerGroup)
+    {
+        NSMutableArray* packs = [NSMutableArray array];
+        for (NSNumber* setNumber in arr)
+        {
+            NSInteger setNum = setNumber.intValue;
+            if (setNum == 0)
+            {
+                continue;
+            }
+            
+            CardSet* cs = [cardSets objectAtIndex:setNum-1];
+            NSString* setName = cs.name;
+            if (setName)
+            {
+                [packs addObject:cs];
+            }
+        }
+        if (packs.count > 0)
+        {
+            [sets addObject:packs];
+        }
+    }
+    
+    NSAssert(sections.count == sets.count, @"count mismatch");
     
     return [[TableData alloc] initWithSections:sections andValues:sets];
 }

@@ -210,6 +210,16 @@
 
 // cycles
 "Core / Deluxe" = "Boite de base / Deluxe";
+"Core Set and Deluxe Expansions" = "Boîte de base et Extension Deluxe";
+"Special Identities" = "Identités Spéciales";
+"Include Draft Identities" = "Identités Draft";
+"Include Unpublished Identities" = "Identités inédites";
+"Core Set" = "Boîte de base";
+"Number of Core Sets" = "Nombre de boîtes de base";
+"Cycle #1" = "Cycle de la Genèse";
+"Cycle #2" = "Cycle des Distorsions";
+"Cycle #3" = "Cycle Lunaire";
+"Cycle #4" = "Cycle San San";
 
 // netrunnerdb.com
 "Import from Dropbox" = "Importer de Dropbox";

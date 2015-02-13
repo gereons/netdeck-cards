@@ -51,8 +51,10 @@
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
 			<string>Set/Datapack Selection</string>
-			<key>File</key>
-			<string>SetSelection</string>
+            <key>IASKViewControllerClass</key>
+            <string>SetSelectionViewController</string>
+            <key>IASKViewControllerSelector</key>
+            <string>init</string>
             <key>Key</key>
             <string>sets_hide_2</string>
 		</dict>

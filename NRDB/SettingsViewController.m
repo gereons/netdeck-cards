@@ -12,7 +12,6 @@
 #import <EXTScope.h>
 #import <AFNetworking.h>
 
-#import "NRSwitch.h"
 #import "SettingsViewController.h"
 #import "CardSets.h"
 #import "IASKAppSettingsViewController.h"
@@ -80,8 +79,6 @@
 
 - (void) settingsChanged:(NSNotification*)notification
 {
-    [CardSets clearDisabledSets];
-    
     if ([notification.object isEqualToString:USE_DROPBOX])
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:USE_DROPBOX] boolValue];
@@ -207,43 +204,6 @@
             [self showOfflineAlert];
         }
     }
-}
-
-- (CGFloat)tableView:(UITableView*)tableView heightForSpecifier:(IASKSpecifier*)specifier
-{
-    return 44;
-}
-
-- (UITableViewCell*)tableView:(UITableView*)tableView cellForSpecifier:(IASKSpecifier*)specifier
-{
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"toggleCell"];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"toggleCell"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
-    NRSwitch* setSwitch = [[NRSwitch alloc] initWithHandler:^(BOOL on) {
-        [CardSets clearDisabledSets];
-        [[NSUserDefaults standardUserDefaults] setBool:on forKey:specifier.key];
-    }];
-    
-    setSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:specifier.key];
-    cell.accessoryView = setSwitch;
-    cell.textLabel.textColor = [UIColor blackColor];
-    NSString* setName = [CardSets nameForKey:specifier.key];
-    if (setName)
-    {
-        cell.textLabel.text = setName;
-    }
-    else
-    {
-        // setName = l10n(@"-Unreleased-");
-        cell.textLabel.text = specifier.title;
-        cell.textLabel.textColor = [UIColor lightGrayColor];
-    }
-    
-    return cell;
 }
 
 -(void) testApiSettings

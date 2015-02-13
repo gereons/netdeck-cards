@@ -22,7 +22,9 @@
 #define UNKNOWN_SET         @"unknown"
 
 // all sets that the user has enabled
-+(TableData*) allSetsForTableview;
++(TableData*) allEnabledSetsForTableview;
+// all sets that we know about
++(TableData*) allKnownSetsForTableview;
 
 // all sets that the user wants to ignore
 +(NSSet*) disabledSetCodes;

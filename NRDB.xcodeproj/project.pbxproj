@@ -23,6 +23,11 @@
 		3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EAC0185DBC4700DB7FFC /* CardType.m */; };
 		3A1777DF1967EA0B0066E095 /* NRDBAuthPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1777DD1967EA0B0066E095 /* NRDBAuthPopupViewController.m */; };
 		3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */; };
+		3A1855F31A8E27EF00A1852D /* SetSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1855F11A8E27EF00A1852D /* SetSelectionViewController.m */; };
+		3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */; };
+		3A1855F81A8E3CFD00A1852D /* SetSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1855F61A8E3CFD00A1852D /* SetSelectionCell.m */; };
+		3A1855F91A8E3CFD00A1852D /* SetSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1855F71A8E3CFD00A1852D /* SetSelectionCell.xib */; };
+		3A1855FC1A8E4FE700A1852D /* CardSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1855FB1A8E4FE700A1852D /* CardSet.m */; };
 		3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */; };
 		3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ECC901879A1CC003400A9 /* DeckExport.m */; };
 		3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 3A1ECC921879A383003400A9 /* OCTGN.mustache */; };
@@ -285,6 +290,14 @@
 		3A1777DD1967EA0B0066E095 /* NRDBAuthPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRDBAuthPopupViewController.m; sourceTree = "<group>"; };
 		3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NRDBAuthPopupViewController.xib; sourceTree = "<group>"; };
 		3A1777E11967F7E50066E095 /* NRDBAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NRDBAuth.h; sourceTree = "<group>"; };
+		3A1855F01A8E27EF00A1852D /* SetSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectionViewController.h; sourceTree = "<group>"; };
+		3A1855F11A8E27EF00A1852D /* SetSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectionViewController.m; sourceTree = "<group>"; };
+		3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionViewController.xib; sourceTree = "<group>"; };
+		3A1855F51A8E3CFD00A1852D /* SetSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectionCell.h; sourceTree = "<group>"; };
+		3A1855F61A8E3CFD00A1852D /* SetSelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectionCell.m; sourceTree = "<group>"; };
+		3A1855F71A8E3CFD00A1852D /* SetSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionCell.xib; sourceTree = "<group>"; };
+		3A1855FA1A8E4FE700A1852D /* CardSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardSet.h; sourceTree = "<group>"; };
+		3A1855FB1A8E4FE700A1852D /* CardSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardSet.m; sourceTree = "<group>"; };
 		3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSmallThumbView.xib; sourceTree = "<group>"; };
 		3A1ECC8F1879A1CC003400A9 /* DeckExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckExport.h; sourceTree = "<group>"; };
 		3A1ECC901879A1CC003400A9 /* DeckExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckExport.m; sourceTree = "<group>"; };
@@ -1023,6 +1036,12 @@
 			children = (
 				3A461A6F18BBF39500302A4D /* DataDownload.h */,
 				3A461A7018BBF39500302A4D /* DataDownload.m */,
+				3A1855F51A8E3CFD00A1852D /* SetSelectionCell.h */,
+				3A1855F61A8E3CFD00A1852D /* SetSelectionCell.m */,
+				3A1855F71A8E3CFD00A1852D /* SetSelectionCell.xib */,
+				3A1855F01A8E27EF00A1852D /* SetSelectionViewController.h */,
+				3A1855F11A8E27EF00A1852D /* SetSelectionViewController.m */,
+				3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */,
 				3A85327A185509B000507B9A /* SettingsViewController.h */,
 				3A85327B185509B000507B9A /* SettingsViewController.m */,
 				3A85327C185509B000507B9A /* SettingsViewController.xib */,
@@ -1090,6 +1109,8 @@
 				3A5BC3E81849326B00E792F7 /* CardCounter.m */,
 				3A71C9C6185CC4E200D66A27 /* CardSets.h */,
 				3A71C9C7185CC4E200D66A27 /* CardSets.m */,
+				3A1855FA1A8E4FE700A1852D /* CardSet.h */,
+				3A1855FB1A8E4FE700A1852D /* CardSet.m */,
 				3A5BC3E91849326B00E792F7 /* CardList.h */,
 				3A5BC3EA1849326B00E792F7 /* CardList.m */,
 				3A5BC3EB1849326B00E792F7 /* Deck.h */,
@@ -1337,6 +1358,7 @@
 				3A6E755A18E3FF7400EF8DE1 /* cardstats_identity_link.png in Resources */,
 				3A82624218E05EC70038B4AC /* cardstats_difficulty.png in Resources */,
 				3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */,
+				3A1855F91A8E3CFD00A1852D /* SetSelectionCell.xib in Resources */,
 				3A52E1921917F9EF00264C2A /* 763-arrow-up@2x.png in Resources */,
 				3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */,
 				3A82625818E05EC70038B4AC /* deckview_card@2x.png in Resources */,
@@ -1379,6 +1401,7 @@
 				3A6C68501996BC0B00B29588 /* 727-more.png in Resources */,
 				3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */,
 				3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */,
+				3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */,
 				3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
 				3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */,
@@ -1583,12 +1606,14 @@
 				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
 				3A058B1919D334660090F53A /* NRSwitch.m in Sources */,
+				3A1855F31A8E27EF00A1852D /* SetSelectionViewController.m in Sources */,
 				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
 				3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,
 				3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */,
 				3A71FFCB1930BAE800C71C54 /* CardThumbView.m in Sources */,
 				3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */,
+				3A1855F81A8E3CFD00A1852D /* SetSelectionCell.m in Sources */,
 				3AD066791896CD2100FF1666 /* CardCell.m in Sources */,
 				3A5BC3F11849326B00E792F7 /* CardList.m in Sources */,
 				3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */,
@@ -1609,6 +1634,7 @@
 				3A85327D185509B000507B9A /* SettingsViewController.m in Sources */,
 				3A61D69D18CA458100E091DD /* Hypergeometric.m in Sources */,
 				3AF8313A1A20B59000143FF6 /* DeckChangeSet.m in Sources */,
+				3A1855FC1A8E4FE700A1852D /* CardSet.m in Sources */,
 				3A563717199552BA006AD431 /* BrowserCell.m in Sources */,
 				3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */,
 				3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */,

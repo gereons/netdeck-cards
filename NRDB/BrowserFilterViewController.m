@@ -315,7 +315,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 -(void) setClicked:(UIButton*)sender
 {
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
-    [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allSetsForTableview] type:@"Set" selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allEnabledSetsForTableview] type:@"Set" selected:selected];
 }
 
 -(void) subtypeClicked:(UIButton*)sender
