@@ -33,6 +33,8 @@
 // all sets we know about
 +(NSSet*) knownSetCodes;
 
++(BOOL) setsAvailable;
+
 +(NSDictionary*) settingsDefaults;
 
 +(NSString*) mostRecentSetUsedInDeck:(Deck*)deck;

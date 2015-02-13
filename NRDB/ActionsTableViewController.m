@@ -22,6 +22,7 @@
 #import "CompareDecksList.h"
 #import "Notifications.h"
 #import "CardManager.h"
+#import "CardSets.h"
 #import "SettingsKeys.h"
 #import "Deck.h"
 #import "NRNavigationController.h"
@@ -79,21 +80,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     footerLabel.font = [UIFont systemFontOfSize:14];
     [footer addSubview:footerLabel];
     
-    // check if card data is available
-    if (![CardManager cardsAvailable])
-    {
-        SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"No Card Data")
-                                                   message:l10n(@"To use this app, you must first download card data.")
-                                                   buttons:@[l10n(@"Not now"), l10n(@"Download")]];
-        
-        alert.didDismissHandler = ^(NSInteger buttonIndex) {
-            if (buttonIndex == 1)
-            {
-                [DataDownload downloadCardData];
-            }
-        };
-
-    }
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
@@ -108,6 +94,21 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 -(void) viewDidAppear:(BOOL)animated
 {
     [self checkCardUpdate];
+    
+    // check if card data is available
+    if (![CardManager cardsAvailable] || ![CardSets setsAvailable])
+    {
+        SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"No Card Data")
+                                                   message:l10n(@"To use this app, you must first download card data.")
+                                                   buttons:@[l10n(@"Not now"), l10n(@"Download")]];
+        
+        alert.didDismissHandler = ^(NSInteger buttonIndex) {
+            if (buttonIndex == 1)
+            {
+                [DataDownload downloadCardData];
+            }
+        };
+    }
     
     [super viewDidAppear:animated];
 
@@ -129,7 +130,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     }
 #endif
     
-    if (![CardManager cardsAvailable])
+    if (![CardManager cardsAvailable] || ![CardSets setsAvailable])
     {
         [self resetDetailView];
         return;
@@ -281,6 +282,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
     // Set appropriate labels for the cells.
     switch (indexPath.row)
     {
@@ -292,15 +294,15 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             break;
         case NRMenuDeckDiff:
             cell.textLabel.text = l10n(@"Compare Decks");
-            cell.textLabel.enabled = [CardManager cardsAvailable];
+            cell.textLabel.enabled = cardsAvailable;
             break;
         case NRMenuDecks:
             cell.textLabel.text = l10n(@"Decks");
-            cell.textLabel.enabled = [CardManager cardsAvailable];
+            cell.textLabel.enabled = cardsAvailable;
             break;
         case NRMenuCardBrowser:
             cell.textLabel.text = l10n(@"Card Browser");
-            cell.textLabel.enabled = [CardManager cardsAvailable];
+            cell.textLabel.enabled = cardsAvailable;
             break;
     }
     

@@ -56,7 +56,7 @@
 -(void) refresh
 {
     NSMutableSet* hiddenKeys = [NSMutableSet set];
-    if (![CardManager cardsAvailable])
+    if (![CardManager cardsAvailable] || ![CardSets setsAvailable])
     {
         [hiddenKeys addObjectsFromArray:@[ @"sets_hide_1", @"sets_hide_2" ]];
     }

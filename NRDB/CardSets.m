@@ -138,7 +138,14 @@ static NSSet* disabledSets;
     [setGroups insertObject:l10n(@"Core / Deluxe") atIndex:1];
     
     NSAssert(setGroups.count == setsPerGroup.count, @"count mismatch");
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:[CardSets settingsDefaults]];
     return YES;
+}
+
++(BOOL) setsAvailable
+{
+    return cardSets.count > 0;
 }
 
 +(NSString*) nameForKey:(NSString *)key
