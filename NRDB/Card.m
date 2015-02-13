@@ -190,17 +190,11 @@ static NSDictionary* cropValues;
     NSAssert(c.type != NRCardTypeNone, @"no type for %@ (%@)", c.code, c.typeStr);
     
     JSON_STR(setName, @"setname");
-    NSString* setCode = [json objectForKey:@"set_code"];
-    [CardSets registerNrdbCode:setCode andName:c->_setName];
-    c->_setCode = setCode;
+    JSON_STR(setCode, @"set_code");
     if (c->_setCode == nil)
     {
-        c->_setCode = UNKNOWN_SET_CODE;
-    }
-
-    if ([c->_setName isEqualToString:@"Core Set"])
-    {
-        c->_setName = @"Core";
+        c->_setCode = UNKNOWN_SET;
+        c->_setName = UNKNOWN_SET;
     }
 
     c->_setNumber = [CardSets setNumForCode:c->_setCode];
@@ -208,15 +202,15 @@ static NSDictionary* cropValues;
     if ([DRAFT_IDS containsObject:c.code])
     {
         c->_setCode = DRAFT_SET_CODE;
-        c->_setName = DRAFT_SET;
+        c->_setName = DRAFT_SET_NAME;
     }
     if ([SPECIAL_IDS containsObject:c.code])
     {
         c->_setCode = SPECIAL_SET_CODE;
-        c->_setName = SPECIAL_SET;
+        c->_setName = SPECIAL_SET_NAME;
     }
     
-    c->_isCore = [c.setName caseInsensitiveCompare:CORE_SET] == NSOrderedSame;
+    c->_isCore = [c.setName caseInsensitiveCompare:CORE_SET_CODE] == NSOrderedSame;
     
     JSON_STR(subtype, @"subtype");
     if (c.subtype.length == 0)
@@ -344,7 +338,7 @@ static NSDictionary* cropValues;
     masque->_minimumDecksize = 30;
     masque->_influenceLimit = -1;
     masque->_setCode = DRAFT_SET_CODE;
-    masque->_setName = DRAFT_SET;
+    masque->_setName = DRAFT_SET_NAME;
     
     Card* shadow = [Card new];
     shadow->_role = NRRoleCorp;
@@ -357,7 +351,7 @@ static NSDictionary* cropValues;
     shadow->_minimumDecksize = 30;
     shadow->_influenceLimit = -1;
     shadow->_setCode = DRAFT_SET_CODE;
-    shadow->_setName = DRAFT_SET;
+    shadow->_setName = DRAFT_SET_NAME;
     
     return @[masque, shadow];
 }

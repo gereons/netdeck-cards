@@ -11,15 +11,15 @@
 @class Deck;
 @interface CardSets : NSObject
 
-#define CORE_SET            @"core"
-#define DRAFT_SET           @"Draft"
-#define SPECIAL_SET         @"special"
+#define CORE_SET_CODE       @"core"
+#define DRAFT_SET_CODE      @"draft"
+#define SPECIAL_SET_CODE    @"special"
 
-#define DRAFT_SET_CODE      @"000"
-#define SPECIAL_SET_CODE    @"001"
-#define UNKNOWN_SET_CODE    @"002"
+#define DRAFT_SET_NAME      @"Draft"
+#define SPECIAL_SET_NAME    @"Special"
+#define CORE_SET_NAME       @"Core"
 
-+(void) setupSetNames;
+#define UNKNOWN_SET         @"unknown"
 
 // all sets that the user has enabled
 +(TableData*) allSetsForTableview;
@@ -30,7 +30,6 @@
 
 // all sets we know about
 +(NSSet*) knownSetCodes;
-+(void) registerNrdbCode:(NSString*)setCode andName:(NSString*)setName;
 
 +(NSDictionary*) settingsDefaults;
 

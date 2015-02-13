@@ -27,14 +27,14 @@ const NSString* const kANY = @"Any";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setUserDefaults];
-    
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     [self removeOldNrdbData];
     
     [CardSets setupFromFiles];
     [CardManager setupFromFiles];
+    
+    [self setUserDefaults];
     
     @try
     {
@@ -91,7 +91,6 @@ const NSString* const kANY = @"Any";
         LAST_DOWNLOAD: l10n(@"never"),
         NEXT_DOWNLOAD: l10n(@"never"),
         
-        IGNORE_UNKNOWN_SETS: @(YES),
         USE_DRAFT_IDS: @(YES),
         USE_UNPUBLISHED_IDS: @(NO),
         AUTO_SAVE: @(NO),

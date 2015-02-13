@@ -5,16 +5,6 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Ignore unknown Sets</string>
-			<key>Key</key>
-			<string>ignore_unknown_sets</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
-		<dict>
 			<key>Title</key>
 			<string>Core Set and Deluxe Expansions</string>
 			<key>Type</key>
@@ -322,36 +312,36 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>IASKCustomViewSpecifier</string>
-            <key>Title</key>
-            <string>Data Pack #2</string>
-            <key>Key</key>
-            <string>use_bb</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>IASKCustomViewSpecifier</string>
-            <key>Title</key>
-            <string>Data Pack #3</string>
-            <key>Key</key>
-            <string>use_cc</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>IASKCustomViewSpecifier</string>
-            <key>Title</key>
-            <string>Data Pack #4</string>
-            <key>Key</key>
-            <string>use_tu</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKCustomViewSpecifier</string>
+			<key>Title</key>
+			<string>Data Pack #2</string>
+			<key>Key</key>
+			<string>use_bb</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKCustomViewSpecifier</string>
+			<key>Title</key>
+			<string>Data Pack #3</string>
+			<key>Key</key>
+			<string>use_cc</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKCustomViewSpecifier</string>
+			<key>Title</key>
+			<string>Data Pack #4</string>
+			<key>Key</key>
+			<string>use_uw</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>SetSelection</string>
