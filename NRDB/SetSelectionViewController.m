@@ -54,6 +54,12 @@
     return self;
 }
 
+-(void) dealloc
+{
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
+}
+
 -(void) coresAlert:(UIButton*) sender
 {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Number of Core Sets") message:nil preferredStyle:UIAlertControllerStyleAlert];
