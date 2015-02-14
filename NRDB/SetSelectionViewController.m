@@ -6,14 +6,12 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
-
 #import "SetSelectionViewController.h"
-#import "SetSelectionCell.h"
 #import "SettingsKeys.h"
 #import "CardSets.h"
 #import "CardSet.h"
 #import "UIAlertAction+NRDB.h"
+#import "NRSwitch.h"
 
 @interface SetSelectionViewController ()
 
@@ -51,30 +49,9 @@
         unpub.name = l10n(@"Include Unpublished Identities");
         unpub.settingsKey = USE_UNPUBLISHED_IDS;
         
-        [self.values insertObject:@[ draft, unpub] atIndex:1];
+        [self.values insertObject:@[ draft, unpub ] atIndex:1];
     }
     return self;
-}
-
--(void) viewDidLoad
-{
-    [super viewDidLoad];
-    [self.tableView registerNib:[UINib nibWithNibName:@"SetSelectionCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-}
-
--(void) toggleSwitch:(UISwitch*)sender
-{
-    NSInteger section = sender.tag / 1000;
-    NSInteger row = sender.tag - (section * 1000);
-    
-    NSArray* arr = self.values[section];
-    
-    CardSet* cs = arr[row];
-    // NSLog(@"toggle %d %@ %@", sender.tag, cs.name, cs.settingsKey);
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setBool:sender.on forKey:cs.settingsKey];
-    
-    [CardSets clearDisabledSets];
 }
 
 -(void) coresAlert:(UIButton*) sender
@@ -127,36 +104,41 @@
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SetSelectionCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryType = UITableViewCellAccessoryNone;
+    static NSString* cellIdentifier = @"setCell";
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     NSArray* arr = self.values[indexPath.section];
     
     CardSet* cs = arr[indexPath.row];
-    cell.setName.text = cs.name;
-    
-    [cell.setSwitch removeTarget:nil action:nil forControlEvents:UIControlEventValueChanged];
-    [cell.button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    cell.textLabel.text = cs.name;
+    cell.accessoryView = nil;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
     if ([cs.settingsKey isEqualToString:NUM_CORES])
     {
-        cell.setSwitch.hidden = YES;
-        cell.button.hidden = NO;
         NSNumber* numCores = [settings objectForKey:NUM_CORES];
-        [cell.button setTitle:numCores.stringValue forState:UIControlStateNormal];
-        [cell.button addTarget:self action:@selector(coresAlert:) forControlEvents:UIControlEventTouchUpInside];
+        UIButton* button = [UIButton buttonWithType:UIButtonTypeSystem];
+        button.frame = CGRectMake(0, 0, 40, 30);
+        [button setTitle:numCores.stringValue forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        [button addTarget:self action:@selector(coresAlert:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = button;
     }
     else
     {
-        cell.setSwitch.hidden = NO;
-        cell.button.hidden = YES;
-        cell.setSwitch.on = [settings boolForKey:cs.settingsKey];
-        [cell.setSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
-        
-        cell.setSwitch.tag = indexPath.section * 1000 + indexPath.row;
+        NRSwitch* setSwitch = [[NRSwitch alloc] initWithHandler:^(BOOL on) {
+            [settings setBool:on forKey:cs.settingsKey];
+            [CardSets clearDisabledSets];
+        }];
+        setSwitch.on = [settings boolForKey:cs.settingsKey];
+        cell.accessoryView = setSwitch;
     }
     
     return cell;
