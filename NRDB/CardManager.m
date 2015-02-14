@@ -226,17 +226,7 @@ static BOOL initializing;
                 [CardManager addCard:card];
             }
         }
-        
-        // add built-in draft IDs if not already present
-        for (Card* c in [Card draftIds])
-        {
-            Card* c2 = [Card cardByCode:c.code];
-            if (c2 == nil)
-            {
-                [CardManager addCard:c];
-            }
-        }
-        
+                
         NSArray* cards = [allCards allValues];
         [Faction initializeFactionNames:cards];
         [CardType initializeCardTypes:cards];

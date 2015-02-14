@@ -86,6 +86,4 @@
 
 +(Card*) cardFromJson:(NSDictionary*) json;
 
-+(NSArray*) draftIds;
-
 @end

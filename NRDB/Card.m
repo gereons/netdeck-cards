@@ -323,39 +323,6 @@ static NSDictionary* cropValues;
     return self.code.length > 0 && self.name.length > 0 && self.faction != NRFactionNone && self.role != NRRoleNone;
 }
 
-#pragma mark draft ids
-
-+(NSArray*) draftIds
-{
-    Card* masque = [Card new];
-    masque->_role = NRRoleRunner;
-    masque->_code = THE_MASQUE;
-    masque->_name = @"Masque";
-    masque->_type = NRCardTypeIdentity;
-    masque->_typeStr = l10n(@"Identity");
-    masque->_faction = NRFactionNeutral;
-    masque->_factionStr = @"Neutral";
-    masque->_minimumDecksize = 30;
-    masque->_influenceLimit = -1;
-    masque->_setCode = DRAFT_SET_CODE;
-    masque->_setName = DRAFT_SET_NAME;
-    
-    Card* shadow = [Card new];
-    shadow->_role = NRRoleCorp;
-    shadow->_code = THE_SHADOW;
-    shadow->_name = @"Shadow";
-    shadow->_type = NRCardTypeIdentity;
-    shadow->_typeStr = l10n(@"Identity");
-    shadow->_faction = NRFactionNeutral;
-    shadow->_factionStr = @"Neutral";
-    shadow->_minimumDecksize = 30;
-    shadow->_influenceLimit = -1;
-    shadow->_setCode = DRAFT_SET_CODE;
-    shadow->_setName = DRAFT_SET_NAME;
-    
-    return @[masque, shadow];
-}
-
 #pragma mark nsobject
 
 -(BOOL) isEqual:(id)object
