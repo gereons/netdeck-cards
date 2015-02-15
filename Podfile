@@ -9,9 +9,11 @@ pod 'GRMustache'
 pod 'CorePlot'
 pod 'libextobjc'
 pod 'CSStickyHeaderFlowLayout'
-pod 'SDCAlertView'
+pod 'SDCAlertView', '2.1.1'
 pod 'YOLOKit'
 pod 'InAppSettingsKit'
+pod 'PromiseKit'
+pod 'PromiseKit-AFNetworking'
 
 post_install do | installer |
   require 'fileutils'

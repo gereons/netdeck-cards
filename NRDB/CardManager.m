@@ -12,6 +12,7 @@
 #import "CardSets.h"
 #import "CardType.h"
 #import "ImageCache.h"
+#import <DTCoreText.h>
 
 @implementation CardManager
 
@@ -37,8 +38,6 @@ static int maxAgendaPoints;
 static int maxTrash;
 static NSString* iceBreakerType;
 
-static BOOL initializing;
-
 +(void) initialize
 {
     allCards = [NSMutableDictionary dictionary];
@@ -54,8 +53,6 @@ static BOOL initializing;
     sortedIdentities = [@[ [NSMutableArray array], [NSMutableArray array] ] mutableCopy];
     
     iceBreakerType = l10n(@"Icebreaker");
-    
-    initializing = NO;
 }
 
 +(Card*) cardByCode:(NSString*)code
@@ -160,10 +157,19 @@ static BOOL initializing;
     return [documentsDirectory stringByAppendingPathComponent:@"nrcards.json"];
 }
 
++(NSString*) filenameEn
+{
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
+    return [documentsDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
+}
+
 +(void) removeFiles
 {
     NSFileManager* fileMgr = [NSFileManager defaultManager];
     [fileMgr removeItemAtPath:[CardManager filename] error:nil];
+    [fileMgr removeItemAtPath:[CardManager filenameEn] error:nil];
     
     [CardManager initialize];
 }
@@ -171,22 +177,29 @@ static BOOL initializing;
 +(BOOL) setupFromFiles
 {
     NSString* cardsFile = [CardManager filename];
+    NSString* cardsEnFile = [CardManager filenameEn];
+    BOOL ok = NO;
     
     NSFileManager* fileMgr = [NSFileManager defaultManager];
     if ([fileMgr fileExistsAtPath:cardsFile])
     {
         NSArray* data = [NSArray arrayWithContentsOfFile:cardsFile];
+        if (data)
+        {
+            ok = [self setupFromJsonData:data];
+        }
+    }
+    
+    if (ok && [fileMgr fileExistsAtPath:cardsEnFile])
+    {
+        NSArray* data = [NSArray arrayWithContentsOfFile:cardsEnFile];
         BOOL ok = NO;
         if (data)
         {
-            initializing = YES;
-            ok = [self setupFromJsonData:data];
-            initializing = NO;
+            ok = [self addEnglishNames:data saveFile:NO];
         }
-        
-        return ok;
     }
-    return NO;
+    return ok;
 }
 
 +(BOOL) setupFromNrdbApi:(NSArray*)json
@@ -204,16 +217,31 @@ static BOOL initializing;
     [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
     
     [CardManager initialize];
-    initializing = YES;
-    BOOL ok = [self setupFromJsonData:json];
-    initializing = NO;
-    return ok;
+    return [self setupFromJsonData:json];
+}
+
++(BOOL) addEnglishNames:(NSArray *)json saveFile:(BOOL)saveFile
+{
+    if (saveFile)
+    {
+        NSString* cardsFile = [CardManager filenameEn];
+        [json writeToFile:cardsFile atomically:YES];
+    }
+    
+    for (NSDictionary* obj in json)
+    {
+        NSString* code = obj[@"code"];
+        NSString* name_en = obj[@"title"];
+        
+        Card* card = [Card cardByCode:code];
+        NSAssert(card != nil, @"card %@ not found", code);
+        card.name_en = [name_en stringByReplacingHTMLEntities];
+    }
+    return YES;
 }
 
 +(BOOL) setupFromJsonData:(NSArray*)json
 {
-    NSAssert(initializing, @"oops");
-    
     if (json)
     {
         for (NSDictionary* obj in json)
@@ -256,8 +284,6 @@ static BOOL initializing;
 
 +(void) addCard:(Card*)card
 {
-    NSAssert(initializing, @"oops");
-    
     // add to dictionaries/arrays
     [allCards setObject:card forKey:card.code];
     

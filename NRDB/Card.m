@@ -12,7 +12,6 @@
 #import "CardType.h"
 #import "Faction.h"
 #import "SettingsKeys.h"
-#import "NSString+stripHTML.h"
 #import <DTCoreText.h>
 
 @interface Card()
@@ -163,6 +162,7 @@ static NSDictionary* cropValues;
     JSON_STR(code, @"code");
     JSON_STR(name, @"title");
     c->_name = [c->_name stringByReplacingHTMLEntities];
+    c->_name_en = c->_name;
     
     JSON_STR(text, @"text");
     c->_text = [c->_text stringByReplacingHTMLEntities];

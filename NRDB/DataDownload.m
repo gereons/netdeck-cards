@@ -10,6 +10,8 @@
 #import <SDCAlertView.h>
 #import <UIView+SDCAutoLayout.h>
 #import <AFNetworking.h>
+#import <PromiseKit.h>
+#import <PromiseKit-AFNetworking/AFNetworking+PromiseKit.h>
 
 #import "DataDownload.h"
 #import "CardManager.h"
@@ -28,7 +30,12 @@
 
 @property SDCAlertView* alert;
 @property UIProgressView* progressView;
-@property NSMutableArray* cards;
+@property NSArray* cards;
+
+@property NSArray* localizedCards;
+@property NSArray* englishCards;
+@property NSArray* localizedSets;
+
 @end
 
 typedef NS_ENUM(NSInteger, DownloadScope)
@@ -77,18 +84,8 @@ static DataDownload* instance;
         return;
     }
 
-    NSString* cardsUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
-    NSString* setsUrl = [NSString stringWithFormat:@"http://%@/api/sets/", nrdbHost];
-    
-    NSString* language = [settings objectForKey:LANGUAGE];
-    if (language)
-    {
-        cardsUrl = [NSString stringWithFormat:@"%@?_locale=%@", cardsUrl, language];
-        setsUrl = [NSString stringWithFormat:@"%@?_locale=%@", setsUrl, language];
-    }
-
     [self showDownloadAlert];
-    [self startDownloadCardData:cardsUrl setsUrl:setsUrl];
+    [self performSelector:@selector(doDownloadCardData:) withObject:nil afterDelay:0.01];
 }
 
 -(void) showDownloadAlert
@@ -111,111 +108,91 @@ static DataDownload* instance;
     self.downloadErrors = 0;
     
     [act sdc_centerInSuperview];
-    @weakify(self);
     [self.alert showWithDismissHandler:^(NSInteger buttonIndex) {
-        @strongify(self);
-        [self stopDownload];
+        if (buttonIndex != -1)
+        {
+            [self stopDownload];
+        }
     }];
 }
-
--(void) startDownloadCardData:(NSString*)cardsUrl setsUrl:(NSString*)setsUrl
+    
+-(void) doDownloadCardData:(id)dummy
 {
-    [self performSelector:@selector(doDownloadCardData:) withObject:@{ @"cards": cardsUrl, @"sets": setsUrl } afterDelay:0.001];
-}
-    
--(void) doDownloadCardData:(NSDictionary*)urls
-{
-    BOOL __block ok = NO;
-    self.downloadStopped = NO;
-    
-    self.manager = [AFHTTPRequestOperationManager manager];
-    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
-
-    NSString* cardsUrl = urls[@"cards"];
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
-                                                                                 URLString:cardsUrl
-                                                                                parameters:nil
-                                                                                     error:nil];
-    // bypass cache!
-    request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-    
-    @weakify(self);
-    AFHTTPRequestOperation *operation = [self.manager HTTPRequestOperationWithRequest:request
-      success:^(AFHTTPRequestOperation* operation, id responseObject) {
-          @strongify(self);
-          if (!self.downloadStopped)
-          {
-              ok = [CardManager setupFromNrdbApi:responseObject];
-          }
-          [self downloadCardsFinished:ok urls:urls];
-      } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
-          @strongify(self);
-          // NSLog(@"download failed %@", operation);
-          [self downloadCardsFinished:NO urls:urls];
-      }];
-    
-    operation.responseSerializer = [AFJSONResponseSerializer serializer];
-    [operation start];
-}
-
--(void) downloadCardsFinished:(BOOL)ok urls:(NSDictionary*)urls
-{
-    if (ok)
-    {
-        NSString* setsUrl = urls[@"sets"];
-        [self doDownloadSetsData:setsUrl];
-    }
-    else
-    {
-        [self downloadsFinished:ok];
-    }
-}
-
--(void) doDownloadSetsData:(NSString*)setsUrl
-{
-    BOOL __block ok = NO;
-    self.downloadStopped = NO;
-    
-    self.manager = [AFHTTPRequestOperationManager manager];
+    self.manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:nil];
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
-                                                                                 URLString:setsUrl
-                                                                                parameters:nil
-                                                                                     error:nil];
-    // bypass cache!
-    request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    NSString* nrdbHost = [settings objectForKey:NRDB_HOST];
+    NSString* language = [settings objectForKey:LANGUAGE];
     
-    @weakify(self);
-    AFHTTPRequestOperation *operation = [self.manager HTTPRequestOperationWithRequest:request
-        success:^(AFHTTPRequestOperation* operation, id responseObject) {
-            @strongify(self);
-            if (!self.downloadStopped)
-            {
-                ok = [CardSets setupFromNrdbApi:responseObject];
-            }
-            [self downloadsFinished:ok];
-        } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
-            @strongify(self);
-            // NSLog(@"download failed %@", operation);
-            [self downloadsFinished:NO];
-    }];
+    NSString* cardsUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
+    NSString* setsUrl = [NSString stringWithFormat:@"http://%@/api/sets/", nrdbHost];
     
-    operation.responseSerializer = [AFJSONResponseSerializer serializer];
-    [operation start];
+    NSDictionary* userLocale = @{ @"_locale" : language};
+    NSDictionary* englishLocale = @{ @"_locale" : @"en" };
+    
+    self.localizedCards = nil;
+    self.englishCards = nil;
+    self.localizedSets = nil;
+    
+    [self.manager GET:cardsUrl parameters:userLocale]
+    .then(^(id responseObject, AFHTTPRequestOperation *operation){
+        // NSLog(@"1st request completed for operation: %@", operation.request.description);
+        // NSLog(@"1st result %d elements", [responseObject count]);
+        self.localizedCards = responseObject;
+        if (self.downloadStopped)
+        {
+            @throw @"stopped 1";
+        }
+        return [self.manager GET:cardsUrl parameters:englishLocale];
+    }).then(^(id responseObject, AFHTTPRequestOperation *operation){
+        // NSLog(@"2nd request completed for operation: %@", operation.request.description);
+        // NSLog(@"2nd result %d elements", [responseObject count]);
+        self.englishCards = responseObject;
+        if (self.downloadStopped)
+        {
+            @throw @"stopped 2";
+        }
+        return [self.manager GET:setsUrl parameters:userLocale];
+    }).then(^(id responseObject, AFHTTPRequestOperation *operation){
+        // NSLog(@"3rd request completed for operation: %@", operation.request.description);
+        // NSLog(@"3rd result %d elements", [responseObject count]);
+        self.localizedSets = responseObject;
+        if (self.downloadStopped)
+        {
+            @throw @"stopped 3";
+        }
+    }).catch(^(NSError *error){
+        // NSLog(@"error happened: %@", error.localizedDescription);
+        // NSLog(@"original operation: %@", error.userInfo[AFHTTPRequestOperationErrorKey]);
+        ++self.downloadErrors;
+    }).finally(^{
+        // NSLog(@"downloads finished 1, stopped = %d", self.downloadStopped);
+        [self finishDownloads];
+    });
 }
 
--(void) downloadsFinished:(BOOL)ok
+-(void) finishDownloads
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.alert dismissWithClickedButtonIndex:-1 animated:NO];
+    
+    BOOL ok = self.localizedCards != nil
+            && self.englishCards != nil
+            && self.localizedSets != nil
+            && self.downloadErrors == 0;
     
     if (!ok && !self.downloadStopped)
     {
         [SDCAlertView alertWithTitle:nil
                              message:l10n(@"Unable to download cards at this time. Please try again later.")
                              buttons:@[l10n(@"OK")]];
+        return;
     }
+    
+    [CardManager setupFromNrdbApi:self.localizedCards];
+    [CardManager addEnglishNames:self.englishCards saveFile:YES];
+    [CardSets setupFromNrdbApi:self.localizedSets];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
 }
