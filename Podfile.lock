@@ -118,7 +118,7 @@ PODS:
   - PromiseKit/When (1.2.4):
     - PromiseKit/Promise
   - RBBAnimation (0.3.0)
-  - SDCAlertView (2.1.1):
+  - SDCAlertView (2.2):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.2)
@@ -296,7 +296,7 @@ DEPENDENCIES:
   - libextobjc
   - PromiseKit
   - PromiseKit-AFNetworking
-  - SDCAlertView (= 2.1.1)
+  - SDCAlertView
   - SVProgressHUD
   - YOLOKit
 
@@ -315,7 +315,7 @@ SPEC CHECKSUMS:
   PromiseKit: 9bc78045d01a5ec119a2f8ebbfbc415ad26b674d
   PromiseKit-AFNetworking: 16db750b394dcd12aa8527eb1bb9f209a36a49f7
   RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64
-  SDCAlertView: 542179519acac38917e178013e663cdbf4591475
+  SDCAlertView: 8a06ba35a11aeb07915ce186f29b3d42b4a10176
   SDCAutoLayout: 4a963629725ed2b7d665e789ca4d6cfcd7446822
   SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
   YOLOKit: 8ed261368133b5e948e438aabdff5b145675ea61
