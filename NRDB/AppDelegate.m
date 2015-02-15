@@ -13,10 +13,9 @@
 
 #import "AppDelegate.h"
 #import "CardManager.h"
-#import "SettingsKeys.h"
 #import "CardSets.h"
+#import "SettingsKeys.h"
 #import "DeckImport.h"
-#import "Card.h"
 #import "CardImageViewPopover.h"
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"
@@ -28,8 +27,6 @@ const NSString* const kANY = @"Any";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-    
-    [self removeOldNrdbData];
     
     [CardSets setupFromFiles];
     [CardManager setupFromFiles];
@@ -121,31 +118,6 @@ const NSString* const kANY = @"Any";
     }];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];    
-}
-
--(void) removeOldNrdbData
-{
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    if ([settings boolForKey:@"_nrdb_removed_"])
-    {
-        return;
-    }
-    
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* cachesDirectory = [paths objectAtIndex:0];
-    NSString* oldImages = [cachesDirectory stringByAppendingPathComponent:@"images"];
-    
-    NSFileManager* mgr = [NSFileManager defaultManager];
-    BOOL ok = [mgr removeItemAtPath:oldImages error:nil];
-
-    paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString* documentDirectory = paths[0];
-    NSString* oldJson = [documentDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
-    NSString* newJson = [cachesDirectory stringByAppendingPathComponent:@"nrcards.json"];
-    ok = [mgr moveItemAtPath:oldJson toPath:newJson error:nil];
-    
-    [settings setBool:YES forKey:@"_nrdb_removed_"];
-    [settings synchronize];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
