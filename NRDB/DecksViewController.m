@@ -345,8 +345,9 @@ static NRFilter _filterType = NRFilterAll;
     if (self.filterText.length > 0)
     {
         NSPredicate* namePredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", self.filterText];
-        NSPredicate* identityPredicate = [NSPredicate predicateWithFormat:@"identity.name CONTAINS[cd] %@", self.filterText];
-        NSPredicate* cardPredicate = [NSPredicate predicateWithFormat:@"ANY cards.card.name CONTAINS[cd] %@", self.filterText];
+        NSPredicate* identityPredicate = [NSPredicate predicateWithFormat:@"(identity.name CONTAINS[cd] %@) or (identity.name_en CONTAINS[cd] %@)",
+                                          self.filterText, self.filterText];
+        NSPredicate* cardPredicate = [NSPredicate predicateWithFormat:@"(ANY cards.card.name CONTAINS[cd] %@) OR (ANY cards.card.name_en CONTAINS[cd] %@)", self.filterText, self.filterText];
         
         NSPredicate* predicate;
         switch (self.searchScope)
