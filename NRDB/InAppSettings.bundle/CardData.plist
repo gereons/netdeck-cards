@@ -33,6 +33,8 @@
                 <string>French</string>
                 <string>Spanish</string>
             </array>
+            <key>FooterText</key>
+            <string>LanguageFooterText</string>
         </dict>
 		<dict>
 			<key>Type</key>

@@ -14,3 +14,5 @@
 "German" = "Allemand";
 "French" = "Français";
 "Spanish" = "Espagnol";
+
+"LanguageFooterText" = "NetrunnerDB.com's support for languages other than English is not 100% complete.\nIf you change this setting, you should update card data as well.";

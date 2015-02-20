@@ -17,3 +17,5 @@
 "German" = "Deutsch";
 "French" = "Französisch";
 "Spanish" = "Spanisch";
+
+"LanguageFooterText" = "NetrunnerDB.com unterstützt andere Sprachen als Englisch nicht immer zu 100%.\nWenn du diese Einstellung änderst, solltest du die Karten-Daten neu laden.";
