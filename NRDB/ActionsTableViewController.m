@@ -116,7 +116,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     // first start with this version?
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     // [defaults setObject:@"" forKey:LAST_START_VERSION];
-    NSString* lastVersion = [defaults objectForKey:LAST_START_VERSION];
+    NSString* lastVersion = [defaults stringForKey:LAST_START_VERSION];
     NSString* thisVersion = [AppDelegate appVersion];
     if ([thisVersion isEqualToString:lastVersion])
     {
@@ -156,7 +156,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 -(void) checkCardUpdate
 {
-    NSString* next = [[NSUserDefaults standardUserDefaults] objectForKey:NEXT_DOWNLOAD];
+    NSString* next = [[NSUserDefaults standardUserDefaults] stringForKey:NEXT_DOWNLOAD];
     
     NSDateFormatter *fmt = [NSDateFormatter new];
     [fmt setDateStyle:NSDateFormatterShortStyle]; // z.B. 08.10.2008
@@ -327,6 +327,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     {
         return;
     }
+    
+    self.settings = nil;
     
     // Get a reference to the DetailViewManager.
     // DetailViewManager is the delegate of our split view.

@@ -17,6 +17,7 @@ typedef void (^UpdateCompletionBlock)(BOOL ok);
 
 +(ImageCache*) sharedInstance;
 
+-(void) clearLastModifiedInfo;
 -(void) clearCache;
 -(void) getImageFor:(Card *)card completion:(CompletionBlock)completionBlock;
 -(void) updateMissingImageFor:(Card*)card completion:(UpdateCompletionBlock)completionBlock;

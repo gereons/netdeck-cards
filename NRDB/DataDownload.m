@@ -76,7 +76,7 @@ static DataDownload* instance;
 -(void) downloadCardAndSetsData
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSString* nrdbHost = [settings objectForKey:NRDB_HOST];
+    NSString* nrdbHost = [settings stringForKey:NRDB_HOST];
     
     if (nrdbHost.length == 0)
     {
@@ -122,8 +122,8 @@ static DataDownload* instance;
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSString* nrdbHost = [settings objectForKey:NRDB_HOST];
-    NSString* language = [settings objectForKey:LANGUAGE];
+    NSString* nrdbHost = [settings stringForKey:NRDB_HOST];
+    NSString* language = [settings stringForKey:LANGUAGE];
     
     NSString* cardsUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
     NSString* setsUrl = [NSString stringWithFormat:@"http://%@/api/sets/", nrdbHost];

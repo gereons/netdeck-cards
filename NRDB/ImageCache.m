@@ -108,12 +108,17 @@ static NSCache* memCache;
     return instance;
 }
 
--(void) clearCache
+-(void) clearLastModifiedInfo
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@{} forKey:LAST_MOD_CACHE];
     [settings setObject:@{} forKey:NEXT_CHECK];
     [settings synchronize];
+}
+
+-(void) clearCache
+{
+    [self clearLastModifiedInfo];
     
     [memCache removeAllObjects];
     unavailableImages = [NSMutableSet set];

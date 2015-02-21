@@ -81,7 +81,7 @@ static NSDateFormatter* formatter;
     // NSLog(@"refresh token");
     // ?client_id=" CLIENT_ID "&client_secret=" CLIENT_SECRET "&grant_type=refresh_token&redirect_uri=" CLIENT_HOST "&refresh_token="
 
-    NSString* token = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_REFRESH_TOKEN];
+    NSString* token = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_REFRESH_TOKEN];
     
     if (token == nil)
     {
@@ -238,7 +238,7 @@ static NSDateFormatter* formatter;
     
     NSError* error;
     NSDictionary* params = @{
-        @"access_token" : [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN]
+        @"access_token" : [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN]
     };
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
                                                                                  URLString:decksUrl
@@ -287,7 +287,7 @@ static NSDateFormatter* formatter;
     NSString* publishUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/publish_deck/%@", deck.netrunnerDbId];
     
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
-    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
     
     [self saveOrPublish:publishUrl parameters:parameters];
 }
@@ -296,7 +296,7 @@ static NSDateFormatter* formatter;
 
 -(void) loadDeck:(Deck *)deck completion:(LoadCompletionBlock)completionBlock
 {
-    NSString* token = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    NSString* token = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
     if (!token)
     {
         completionBlock(NO, nil);
@@ -307,7 +307,7 @@ static NSDateFormatter* formatter;
     NSString* loadUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/load_deck/%@", deck.netrunnerDbId];
     
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
-    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
     
     NSError* error;
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
@@ -455,7 +455,7 @@ static NSDateFormatter* formatter;
 {
     self.saveCompletionBlock = completionBlock;
     
-    NSString* token = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    NSString* token = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
     if (token)
     {
         [self saveDeck:deck];
@@ -488,7 +488,7 @@ static NSDateFormatter* formatter;
     NSString* saveUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/save_deck/%@", deckId];
     
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
-    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_ACCESS_TOKEN];
+    parameters[@"access_token"] = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
     parameters[@"content"] = jsonStr;
     if (deck.name)
     {

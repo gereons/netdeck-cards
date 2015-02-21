@@ -23,9 +23,33 @@
 #import "Notifications.h"
 #import "NRDBAuthPopupViewController.h"
 
+@interface MyIASKAppSettingsViewController: IASKAppSettingsViewController
+@property NSString* initialLanguage;
+@end
+
+@implementation MyIASKAppSettingsViewController
+
+-(void) viewDidLoad
+{
+    [super viewDidLoad];
+    self.initialLanguage = [[NSUserDefaults standardUserDefaults] stringForKey:LANGUAGE];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    NSString* newLanguage = [[NSUserDefaults standardUserDefaults] stringForKey:LANGUAGE];
+    if (![newLanguage isEqualToString:self.initialLanguage])
+    {
+        [[ImageCache sharedInstance] clearLastModifiedInfo];
+    }
+}
+
+@end
+
 @interface SettingsViewController ()
 
-@property IASKAppSettingsViewController* iask;
+@property MyIASKAppSettingsViewController* iask;
 
 @end
 
@@ -33,6 +57,8 @@
 
 -(void) dealloc
 {
+    self.iask.delegate = nil;
+    self.iask = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -40,10 +66,10 @@
 {
     [super viewDidLoad];
     
-    self.iask = [[IASKAppSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    self.iask = [[MyIASKAppSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
     self.iask.showDoneButton = NO;
     self.iask.delegate = self;
-    
+
     self.navigationController.navigationBar.topItem.title = l10n(@"Settings");
     [self.navigationController setViewControllers:@[ self.iask ]];
     
@@ -79,6 +105,8 @@
 
 - (void) settingsChanged:(NSNotification*)notification
 {
+    // NSLog(@"changing %@", notification.object);
+    
     if ([notification.object isEqualToString:USE_DROPBOX])
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:USE_DROPBOX] boolValue];
@@ -209,7 +237,7 @@
 -(void) testApiSettings
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSString* nrdbHost = [settings objectForKey:NRDB_HOST];
+    NSString* nrdbHost = [settings stringForKey:NRDB_HOST];
     
     if (nrdbHost.length == 0)
     {
