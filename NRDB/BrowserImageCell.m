@@ -118,9 +118,9 @@
     [self.activityIndicator startAnimating];
     [[ImageCache sharedInstance] getImageFor:card
                                   completion:^(Card* card, UIImage* img, BOOL placeholder) {
-                                      [self.activityIndicator stopAnimating];
                                       if ([self.card.name isEqual:card.name])
                                       {
+                                          [self.activityIndicator stopAnimating];
                                           self.image.image = img;
                                           
                                           self.detailView.hidden = !placeholder;
