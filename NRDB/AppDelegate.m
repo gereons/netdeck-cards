@@ -28,10 +28,12 @@ const NSString* const kANY = @"Any";
 {
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
+    [self setBuiltinUserDefaults];
+    
     [CardSets setupFromFiles];
     [CardManager setupFromFiles];
     
-    [self setUserDefaults];
+    [self setAdditionalUserDefaults];
     
     @try
     {
@@ -80,11 +82,9 @@ const NSString* const kANY = @"Any";
     return YES;
 }
 
--(void) setUserDefaults
+-(void) setBuiltinUserDefaults
 {
-    NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:[CardSets settingsDefaults]];
-    
-    [dict addEntriesFromDictionary:@{
+    NSDictionary* dict = @{
         LAST_DOWNLOAD: l10n(@"never"),
         NEXT_DOWNLOAD: l10n(@"never"),
         
@@ -115,9 +115,18 @@ const NSString* const kANY = @"Any";
         
         SHOW_ALL_FILTERS: @(YES),
         IDENTITY_TABLE: @(YES),
-    }];
+    };
     
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dict];    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
+}
+
+-(void) setAdditionalUserDefaults
+{
+    NSDictionary* dict = [CardSets settingsDefaults];
+    if (dict.count > 0)
+    {
+        [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

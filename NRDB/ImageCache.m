@@ -114,13 +114,14 @@ static NSCache* memCache;
     [settings setObject:@{} forKey:LAST_MOD_CACHE];
     [settings setObject:@{} forKey:NEXT_CHECK];
     [settings synchronize];
+    
+    [memCache removeAllObjects];
 }
 
 -(void) clearCache
 {
     [self clearLastModifiedInfo];
     
-    [memCache removeAllObjects];
     unavailableImages = [NSMutableSet set];
     
     [ImageCache removeCacheDirectory];
