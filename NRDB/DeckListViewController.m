@@ -13,7 +13,6 @@
 
 #import "UIAlertAction+NRDB.h"
 
-#import "NRAlertView.h"
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"
@@ -64,7 +63,7 @@
 @property NRDeckSort sortType;
 @property CGFloat scale;
 @property BOOL largeCells;
-@property NRAlertView* nameAlert;
+@property SDCAlertView* nameAlert;
 
 @property BOOL initializing;
 @property NSTimer* historyTimer;
@@ -725,7 +724,7 @@
         return;
     }
     
-    self.nameAlert = [[NRAlertView alloc] initWithTitle:l10n(@"Enter Name")
+    self.nameAlert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name")
                                                  message:nil
                                                 delegate:nil
                                        cancelButtonTitle:l10n(@"Cancel") otherButtonTitles:l10n(@"OK"), nil];

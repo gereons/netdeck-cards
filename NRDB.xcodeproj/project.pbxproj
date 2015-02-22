@@ -241,7 +241,6 @@
 		3AFA3B6C18DF862900F59331 /* altarttoggle_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */; };
 		3AFB25401987789E0051C894 /* netrunnerdb_com-bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */; };
 		3AFB25411987789E0051C894 /* netrunnerdb_com-bw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */; };
-		3AFEC40719B73E76000D025C /* NRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEC40619B73E76000D025C /* NRAlertView.m */; };
 		3AFEC40A19B74359000D025C /* Crashlytics.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3AFEC40C19B74359000D025C /* Crashlytics.strings */; };
 		ED15EBD876484EC4BAF34F26 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69129A4A2D3A4A50B7C75895 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -591,8 +590,6 @@
 		3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altarttoggle_off@2x.png"; sourceTree = "<group>"; };
 		3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw.png"; sourceTree = "<group>"; };
 		3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw@2x.png"; sourceTree = "<group>"; };
-		3AFEC40519B73E76000D025C /* NRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRAlertView.h; sourceTree = "<group>"; };
-		3AFEC40619B73E76000D025C /* NRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRAlertView.m; sourceTree = "<group>"; };
 		3AFEC40B19B74359000D025C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Crashlytics.strings; sourceTree = "<group>"; };
 		53700086EE846BB882A399B8 /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
 		69129A4A2D3A4A50B7C75895 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -782,8 +779,6 @@
 				3A6AF0E51899C12500227C25 /* NRNavigationController.m */,
 				3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */,
 				3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */,
-				3AFEC40519B73E76000D025C /* NRAlertView.h */,
-				3AFEC40619B73E76000D025C /* NRAlertView.m */,
 				3A058B1719D334660090F53A /* NRSwitch.h */,
 				3A058B1819D334660090F53A /* NRSwitch.m */,
 				3AC6BC7219D3F37E002C7759 /* NSString+stripHTML.h */,
@@ -1578,7 +1573,6 @@
 				3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */,
 				3A8061E71972990E003ACF44 /* DeckDiffCell.m in Sources */,
 				3A85328218550ACE00507B9A /* AboutViewController.m in Sources */,
-				3AFEC40719B73E76000D025C /* NRAlertView.m in Sources */,
 				3AF831371A20B42100143FF6 /* DeckChange.m in Sources */,
 				3A5794DA19157A2D005DA4B2 /* CardDetailView.m in Sources */,
 				3AE0E62D1957222600633A71 /* CardManager.m in Sources */,

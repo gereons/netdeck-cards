@@ -9,8 +9,8 @@
 #import <SDCAlertView.h>
 #import <SVProgressHud.h>
 #import <EXTScope.h>
+
 #import "UIAlertAction+NRDB.h"
-#import "NRAlertView.h"
 #import "SavedDecksList.h"
 #import "Deck.h"
 #import "ImportDecksViewController.h"
@@ -34,7 +34,7 @@
 @property NSArray* normalRightButtons;
 @property NSArray* diffRightButtons;
 
-@property NRAlertView* nameAlert;
+@property SDCAlertView* nameAlert;
 
 @property BOOL diffSelection;
 @property NSString* diffDeck;
@@ -403,7 +403,7 @@
                 self.popup = nil;
             }]];
             [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Rename") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                self.nameAlert = [[NRAlertView alloc] initWithTitle:l10n(@"Enter Name")
+                self.nameAlert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name")
                                                             message:nil
                                                            delegate:nil
                                                   cancelButtonTitle:l10n(@"Cancel")

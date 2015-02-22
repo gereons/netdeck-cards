@@ -9,7 +9,6 @@
 #import <SDCAlertView.h>
 #import <AFNetworking.h>
 
-#import "NRAlertView.h"
 #import "AppDelegate.h"
 #import "ActionsTableViewController.h"
 #import "EmptyDetailViewController.h"
