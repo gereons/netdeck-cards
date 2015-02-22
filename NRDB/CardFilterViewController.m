@@ -110,9 +110,14 @@ static NSInteger viewMode = VIEW_LIST;
     
     self.tableView.delegate = nil;
     self.tableView.dataSource = nil;
+    self.tableView = nil;
+    
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
+    self.collectionView = nil;
+    
     self.searchField.delegate = nil;
+    self.searchField = nil;
 }
 
 - (void)viewDidLoad

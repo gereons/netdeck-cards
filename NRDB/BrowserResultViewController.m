@@ -64,8 +64,11 @@ static BrowserResultViewController* instance;
     
     self.tableView.delegate = nil;
     self.tableView.dataSource = nil;
+    self.tableView = nil;
+    
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
+    self.collectionView = nil;
 }
 
 - (void)viewDidLoad
