@@ -383,6 +383,7 @@ static BrowserResultViewController* instance;
         header.header.text = [NSString stringWithFormat:@"%@ (%lu)", self.sections[indexPath.section], (unsigned long)arr.count ];
     }
     
+    NSAssert(header != nil, @"no header?");
     return header;
 }
 

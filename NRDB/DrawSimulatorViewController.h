@@ -8,7 +8,7 @@
 
 @class Deck;
 
-@interface DrawSimulatorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface DrawSimulatorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property IBOutlet UISegmentedControl* viewModeControl;
 @property IBOutlet UILabel* titleLabel;

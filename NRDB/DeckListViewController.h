@@ -11,7 +11,7 @@
 
 @class Card, Deck;
 
-@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIPrintInteractionControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate>
+@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UICollectionView* collectionView;

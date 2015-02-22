@@ -8,7 +8,7 @@
 
 @class Card;
 
-@interface IdentitySelectionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface IdentitySelectionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 +(void) showForRole:(NRRole)role inViewController:(UIViewController*)vc withIdentity:(Card*)card;
 

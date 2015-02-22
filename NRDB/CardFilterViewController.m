@@ -1110,6 +1110,7 @@ static NSInteger viewMode = VIEW_LIST;
         header.titleLabel.text = self.sections[indexPath.section];
     }
     
+    NSAssert(header != nil, @"no header?");
     return header;
 }
 

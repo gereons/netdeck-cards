@@ -493,6 +493,7 @@
         }
     }
     
+    NSAssert(header != nil, @"no header?");
     return header;
 }
 
