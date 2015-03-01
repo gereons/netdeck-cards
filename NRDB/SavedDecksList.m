@@ -409,7 +409,7 @@
                                                   cancelButtonTitle:l10n(@"Cancel")
                                                   otherButtonTitles:l10n(@"OK"), nil];
                 
-                self.nameAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+                self.nameAlert.alertViewStyle = SDCAlertViewStylePlainTextInput;
                 
                 UITextField* textField = [self.nameAlert textFieldAtIndex:0];
                 textField.placeholder = l10n(@"Deck Name");

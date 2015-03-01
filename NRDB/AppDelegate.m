@@ -168,8 +168,9 @@ const NSString* const kANY = @"Any";
     if ([scheme isEqualToString:@"netdeck"])
     {
         [NRDBAuthPopupViewController handleOpenURL:url];
+        return YES;
     }
-    else
+    else if ([scheme hasPrefix:@"db-"])
     {
         @try {
             DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
@@ -184,9 +185,11 @@ const NSString* const kANY = @"Any";
         }
         @catch (DBException* dbEx)
         {}
+        
+        return YES;
     }
     
-	return YES;
+	return NO;
 }
 
 +(NSString*) appVersion
