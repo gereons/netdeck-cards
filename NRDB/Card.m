@@ -98,7 +98,7 @@ static NSDictionary* cropValues;
 
 -(NSUInteger) factionHexColor
 {
-    NSNumber*n = factionColors[@(self.faction)];
+    NSNumber* n = factionColors[@(self.faction)];
     return [n unsignedIntegerValue];
 }
 
@@ -110,7 +110,7 @@ static NSDictionary* cropValues;
 
 -(int) cropY
 {
-    NSNumber*n = cropValues[@(self.type)];
+    NSNumber* n = cropValues[@(self.type)];
     return [n intValue];
 }
 
@@ -210,7 +210,7 @@ static NSDictionary* cropValues;
         c->_setName = SPECIAL_SET_NAME;
     }
     
-    c->_isCore = [c.setName caseInsensitiveCompare:CORE_SET_CODE] == NSOrderedSame;
+    c->_isCore = [c.setCode caseInsensitiveCompare:CORE_SET_CODE] == NSOrderedSame;
     
     JSON_STR(subtype, @"subtype");
     if (c.subtype.length == 0)
