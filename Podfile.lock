@@ -21,7 +21,7 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CorePlot (1.5.1)
-  - CSStickyHeaderFlowLayout (0.2.3)
+  - CSStickyHeaderFlowLayout (0.2.4)
   - Dropbox-Sync-API-SDK (3.1.2)
   - DTCoreText (1.6.15):
     - DTFoundation/Core (~> 1.7.5)
@@ -123,167 +123,6 @@ PODS:
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.2)
   - SVProgressHUD (1.1.2)
-  - YOLOKit (11.1.2):
-    - YOLOKit/all (= 11.1.2)
-    - YOLOKit/any (= 11.1.2)
-    - YOLOKit/array (= 11.1.2)
-    - YOLOKit/base (= 11.1.2)
-    - YOLOKit/chunk (= 11.1.2)
-    - YOLOKit/concat (= 11.1.2)
-    - YOLOKit/dict (= 11.1.2)
-    - YOLOKit/each (= 11.1.2)
-    - YOLOKit/extend (= 11.1.2)
-    - YOLOKit/find (= 11.1.2)
-    - YOLOKit/first (= 11.1.2)
-    - YOLOKit/flatMap (= 11.1.2)
-    - YOLOKit/flatten (= 11.1.2)
-    - YOLOKit/fmap (= 11.1.2)
-    - YOLOKit/get (= 11.1.2)
-    - YOLOKit/groupBy (= 11.1.2)
-    - YOLOKit/has (= 11.1.2)
-    - YOLOKit/indexOf (= 11.1.2)
-    - YOLOKit/inject (= 11.1.2)
-    - YOLOKit/join (= 11.1.2)
-    - YOLOKit/last (= 11.1.2)
-    - YOLOKit/map (= 11.1.2)
-    - YOLOKit/max (= 11.1.2)
-    - YOLOKit/min (= 11.1.2)
-    - YOLOKit/none (= 11.1.2)
-    - YOLOKit/partition (= 11.1.2)
-    - YOLOKit/pick (= 11.1.2)
-    - YOLOKit/pluck (= 11.1.2)
-    - YOLOKit/pmap (= 11.1.2)
-    - YOLOKit/pop (= 11.1.2)
-    - YOLOKit/push (= 11.1.2)
-    - YOLOKit/reduce (= 11.1.2)
-    - YOLOKit/reverse (= 11.1.2)
-    - YOLOKit/rotate (= 11.1.2)
-    - YOLOKit/sample (= 11.1.2)
-    - YOLOKit/select (= 11.1.2)
-    - YOLOKit/shift (= 11.1.2)
-    - YOLOKit/shuffle (= 11.1.2)
-    - YOLOKit/skip (= 11.1.2)
-    - YOLOKit/slice (= 11.1.2)
-    - YOLOKit/snip (= 11.1.2)
-    - YOLOKit/sort (= 11.1.2)
-    - YOLOKit/split (= 11.1.2)
-    - YOLOKit/transpose (= 11.1.2)
-    - YOLOKit/uniq (= 11.1.2)
-    - YOLOKit/unshift (= 11.1.2)
-    - YOLOKit/upTo (= 11.1.2)
-    - YOLOKit/without (= 11.1.2)
-  - YOLOKit/all (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/any (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/array (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/base (11.1.2)
-  - YOLOKit/chunk (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/slice
-  - YOLOKit/concat (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/dict (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/transpose
-  - YOLOKit/each (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/extend (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/find (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/first (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/slice
-  - YOLOKit/flatMap (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/flatten (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/fmap (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/map
-  - YOLOKit/get (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/groupBy (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/has (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/indexOf (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/inject (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/join (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/pluck
-  - YOLOKit/last (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/slice
-  - YOLOKit/map (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/max (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/min (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/none (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/partition (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/pick (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/pluck (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/pmap (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/pop (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/push (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/reduce (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/last
-  - YOLOKit/reverse (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/rotate (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/concat
-    - YOLOKit/skip
-    - YOLOKit/snip
-  - YOLOKit/sample (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/select (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/shift (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/shuffle (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/skip (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/last
-  - YOLOKit/slice (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/snip (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/slice
-  - YOLOKit/sort (11.1.2):
-    - YOLOKit/all
-    - YOLOKit/base
-    - YOLOKit/transpose
-  - YOLOKit/split (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/transpose (11.1.2):
-    - YOLOKit/base
-    - YOLOKit/each
-    - YOLOKit/max
-    - YOLOKit/select
-  - YOLOKit/uniq (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/unshift (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/upTo (11.1.2):
-    - YOLOKit/base
-  - YOLOKit/without (11.1.2):
-    - YOLOKit/base
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
@@ -298,12 +137,11 @@ DEPENDENCIES:
   - PromiseKit-AFNetworking
   - SDCAlertView
   - SVProgressHUD
-  - YOLOKit
 
 SPEC CHECKSUMS:
   AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
   CorePlot: b15cb1a9a687b9576545104248d6e22033e678bb
-  CSStickyHeaderFlowLayout: c5595da1cf91cce22aca70c44ab80b59247c723c
+  CSStickyHeaderFlowLayout: 739e87ee20cfe0c67b49d606ce47bd1f2b6efc9c
   Dropbox-Sync-API-SDK: 16aef545267acf60efdbecbfd1fbdf04d3ee5a7c
   DTCoreText: d446600133d01214758ff45004b1b8109e5b8c9f
   DTFoundation: bea4e07459f0f88a5aa3b8258fab1576bbe2e58c
@@ -318,6 +156,5 @@ SPEC CHECKSUMS:
   SDCAlertView: 87219789a6159e7005711754722a3c9b34f445d7
   SDCAutoLayout: 4a963629725ed2b7d665e789ca4d6cfcd7446822
   SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
-  YOLOKit: 8ed261368133b5e948e438aabdff5b145675ea61
 
 COCOAPODS: 0.35.0
