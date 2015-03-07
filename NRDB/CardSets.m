@@ -48,26 +48,35 @@ static NSSet* disabledSets;
 +(BOOL) setupFromFiles
 {
     NSString* setsFile = [CardSets filename];
+    BOOL ok = NO;
     
     NSFileManager* fileMgr = [NSFileManager defaultManager];
     if ([fileMgr fileExistsAtPath:setsFile])
     {
         NSArray* data = [NSArray arrayWithContentsOfFile:setsFile];
-        BOOL ok = NO;
         if (data)
         {
             ok = [self setupFromJsonData:data];
         }
-        
-        return ok;
     }
-    return NO;
+    else
+    {
+        // use built-in fallback file
+        NSString* fallbackFile = [[NSBundle mainBundle] pathForResource:@"builtin-sets" ofType:@"plist"];
+        NSArray* data = [NSArray arrayWithContentsOfFile:fallbackFile];
+        if (data)
+        {
+            ok = [self setupFromJsonData:data];
+        }
+    }
+    
+    return ok;
 }
 
 +(BOOL) setupFromNrdbApi:(NSArray *)json
 {
-    NSString* cardsFile = [CardSets filename];
-    [json writeToFile:cardsFile atomically:YES];
+    NSString* setsFile = [CardSets filename];
+    [json writeToFile:setsFile atomically:YES];
     
     return [self setupFromJsonData:json];
 }

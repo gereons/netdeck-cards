@@ -212,6 +212,7 @@
 		3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */; };
 		3AD4FBB219D60929000BF9B4 /* red_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD4FBB019D60929000BF9B4 /* red_placeholder.png */; };
 		3AD4FBB319D60929000BF9B4 /* blue_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD4FBB119D60929000BF9B4 /* blue_placeholder.png */; };
+		3ADC4DD01AAB035E002B7210 /* builtin-sets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADC4DCF1AAB035E002B7210 /* builtin-sets.plist */; };
 		3ADE90921877317F006E187F /* DeckManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE90911877317F006E187F /* DeckManager.m */; };
 		3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE909D18775A77006E187F /* CardImageViewPopover.m */; };
 		3ADE90A118775A77006E187F /* CardImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageView.xib */; };
@@ -551,6 +552,7 @@
 		3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckAnalysisViewController.xib; sourceTree = "<group>"; };
 		3AD4FBB019D60929000BF9B4 /* red_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_placeholder.png; sourceTree = "<group>"; };
 		3AD4FBB119D60929000BF9B4 /* blue_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_placeholder.png; sourceTree = "<group>"; };
+		3ADC4DCF1AAB035E002B7210 /* builtin-sets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "builtin-sets.plist"; sourceTree = "<group>"; };
 		3ADE90901877317F006E187F /* DeckManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3ADE90911877317F006E187F /* DeckManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ADE9093187734B5006E187F /* SettingsKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsKeys.h; sourceTree = "<group>"; };
@@ -716,6 +718,7 @@
 				3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */,
 				3A095E8D18BBC49C00C99FED /* Localizable.strings */,
 				3A3622691849320C007F2854 /* NRDB-Info.plist */,
+				3ADC4DCF1AAB035E002B7210 /* builtin-sets.plist */,
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
 				3A36226D1849320C007F2854 /* main.m */,
 				3A36226F1849320C007F2854 /* NRDB-Prefix.pch */,
@@ -1357,6 +1360,7 @@
 				3A6E756D18E401D400EF8DE1 /* Icon-Small-40.png in Resources */,
 				3A441C8D18E60A5300F46C92 /* hex_background.png in Resources */,
 				3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */,
+				3ADC4DD01AAB035E002B7210 /* builtin-sets.plist in Resources */,
 				3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */,
 				3A689FA4195D3EB8004EBC41 /* retired@2x.png in Resources */,
 				3A40EA4E19FD2CBE00B9CFDA /* 890-sort-ascending.png in Resources */,
