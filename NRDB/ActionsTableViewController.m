@@ -222,12 +222,16 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         [deck addCard:card copies:1];
         
         filter = [[CardFilterViewController alloc] initWithRole:deck.role andDeck:deck];
-        [nc popToRootViewControllerAnimated:NO];
     }
     else
     {
         NRRole role = [[userInfo objectForKey:@"role"] intValue];
         filter = [[CardFilterViewController alloc] initWithRole:role];
+    }
+    
+    if (nc.viewControllers.count > 1)
+    {
+        [nc popToRootViewControllerAnimated:NO];
     }
     
     nc.deckListViewController = filter.deckListViewController;
@@ -243,12 +247,15 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [DeckManager saveDeck:deck];
     
     CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andDeck:deck];
-    NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
+    NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
     nc.deckListViewController = filter.deckListViewController;
     
-    [nc popToRootViewControllerAnimated:NO];
+    if (nc.viewControllers.count > 1)
+    {
+        [nc popToRootViewControllerAnimated:NO];
+    }
     [nc pushViewController:filter animated:NO];
 }
 
