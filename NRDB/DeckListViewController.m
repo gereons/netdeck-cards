@@ -10,6 +10,7 @@
 #import <SDCAlertView.h>
 #import <EXTScope.h>
 #import <AFNetworking.h>
+#import <Crashlytics/Crashlytics.h>
 
 #import "UIAlertAction+NRDB.h"
 

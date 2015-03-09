@@ -7,6 +7,7 @@
 //
 
 #import <CSStickyHeaderFlowLayout.h>
+#import <Crashlytics/Crashlytics.h>
 
 #import "IdentitySelectionViewController.h"
 #import "IdentityViewCell.h"
@@ -78,6 +79,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [Crashlytics setObjectValue:@"identity" forKey:@"collectionView"];
     
     self.titleLabel.text = l10n(@"Choose Identity");
     [self.okButton setTitle:l10n(@"Done") forState:UIControlStateNormal];

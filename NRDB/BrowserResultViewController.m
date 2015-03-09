@@ -8,6 +8,7 @@
 
 #import <CSStickyHeaderFlowLayout.h>
 #import <EXTScope.h>
+#import <Crashlytics/Crashlytics.h>
 
 #import "UIAlertAction+NRDB.h"
 #import "BrowserResultViewController.h"
@@ -75,6 +76,8 @@ static BrowserResultViewController* instance;
 {
     [super viewDidLoad];
     instance = self;
+    
+    [Crashlytics setObjectValue:@"browser" forKey:@"collectionView"];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     CGFloat scale = [settings floatForKey:BROWSER_VIEW_SCALE];

@@ -7,6 +7,7 @@
 //
 
 #import <CSStickyHeaderFlowLayout.h>
+#import <Crashlytics/Crashlytics.h>
 
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
@@ -123,6 +124,8 @@ static NSInteger viewMode = VIEW_LIST;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [Crashlytics setObjectValue:@"filter" forKey:@"collectionView"];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     showAllFilters = [settings boolForKey:SHOW_ALL_FILTERS];
