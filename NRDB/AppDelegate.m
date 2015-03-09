@@ -54,9 +54,9 @@ const NSString* const kANY = @"Any";
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
         
-    // #if !DEBUG
+#if !DEBUG
     [Crashlytics startWithAPIKey:@"fe0f0f5f919be6211c1de668d91332e311ddad9e" delegate:self];
-    // #endif
+#endif
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.splitViewController;
@@ -210,13 +210,15 @@ const NSString* const kANY = @"Any";
 #pragma mark - crashlytics delegate
 -(void) crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics
 {
-    SDCAlertView* alert = [SDCAlertView alertWithTitle:@"Oops, we crashed :("
-                                               message:@"Sorry, that shouldn't have happened.\nIf it's a reproducible error, please tell the developers about it."
+    SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Oops, we crashed :(")
+                                               message:l10n(@"Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.")
                                                buttons:@[l10n(@"Not now"), l10n(@"OK")]];
     alert.didDismissHandler = ^(NSInteger buttonIndex) {
         if (buttonIndex == 1)
         {
-            NSLog(@"write email");
+            NSString* url = [NSString stringWithFormat:@"mailto:netdeck@steffens.org?subject=Bug in Net Deck %@", [AppDelegate appVersion]];
+            url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
         }
     };
 

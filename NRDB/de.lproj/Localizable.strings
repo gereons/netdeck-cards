@@ -305,3 +305,7 @@
 "Revert" = "Wiederherstellen";
 "History" = "Historie";
 "Initial Version" = "Erste Version";
+
+// crash
+"Oops, we crashed :(" = "Mist, ein Crash :(";
+"Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it." = "Sorry, das sollte nicht passieren.\nWenn du den Bug reproduzieren kannst, melde ihn doch bitte den Entwicklern.";
