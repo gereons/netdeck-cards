@@ -103,15 +103,21 @@
     [self.initialCards filterUsingPredicate:predicate];
 }
 
--(void) filterAgendas:(Card *)identity
+-(void) preFilterForCorp:(Card *)identity
 {
     [self resetInitialCards];
     
-    if (identity && identity.faction != NRFactionNeutral)
+    if (identity.faction != NRFactionNeutral)
     {
         NSArray* factions = @[ @(NRFactionNeutral), @(identity.faction) ];
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"type != %d OR (type = %d AND faction in %@)", NRCardTypeAgenda, NRCardTypeAgenda, factions];
         
+        [self.initialCards filterUsingPredicate:predicate];
+    }
+    
+    if ([identity.code isEqualToString:CUSTOM_BIOTICS])
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"faction != %d", NRFactionJinteki];
         [self.initialCards filterUsingPredicate:predicate];
     }
     
