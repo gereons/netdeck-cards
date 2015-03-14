@@ -129,7 +129,7 @@
             if (noJintekiAllowed && card.faction == NRFactionJinteki && !jintekiError)
             {
                 jintekiError = YES;
-                [reasons addObject:l10n(@"Faction no allowed")];
+                [reasons addObject:l10n(@"Faction not allowed")];
             }
             
             if (!self.isDraft && card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction && !agendaError)
