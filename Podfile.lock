@@ -20,7 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.5.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - CorePlot (1.5.1)
+  - CorePlot (HEAD based on 1.5.1)
   - CSStickyHeaderFlowLayout (0.2.4)
   - Dropbox-Sync-API-SDK (3.1.2)
   - DTCoreText (1.6.15):
@@ -126,7 +126,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - CorePlot
+  - CorePlot (HEAD)
   - CSStickyHeaderFlowLayout
   - Dropbox-Sync-API-SDK
   - DTCoreText
@@ -157,4 +157,4 @@ SPEC CHECKSUMS:
   SDCAutoLayout: 4a963629725ed2b7d665e789ca4d6cfcd7446822
   SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.36.0

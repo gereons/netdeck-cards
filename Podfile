@@ -6,7 +6,7 @@ pod 'AFNetworking', '~> 2.0'
 pod 'SVProgressHUD'
 pod 'Dropbox-Sync-API-SDK'
 pod 'GRMustache'
-pod 'CorePlot'
+pod 'CorePlot', :head
 pod 'libextobjc'
 pod 'CSStickyHeaderFlowLayout'
 pod 'SDCAlertView'
