@@ -292,7 +292,9 @@
 
 -(void) startHistoryTimer:(id)notification
 {
-    NSAssert(self.historyTimer == nil, @"timer still running?");
+    // stop existing timer, if any
+    [self stopHistoryTimer:notification];
+
     BOOL autoHistory = [[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY];
     if (autoHistory)
     {
@@ -417,6 +419,12 @@
 
 -(void) nrdbButtonClicked:(id)sender
 {
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+        return;
+    }
+    
     if (self.deck.netrunnerDbId.length == 0)
     {
         NSString* msg = l10n(@"This deck is not (yet) linked to a deck on NetrunnerDB.com");

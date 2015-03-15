@@ -66,11 +66,7 @@ static NRFilter _filterType = NRFilterAll;
         [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
         
-        NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
         
-        self.filterType = [settings integerForKey:DECK_FILTER_TYPE];
-        self.filterState = [settings integerForKey:DECK_FILTER_STATE];
-        self.sortType = [settings integerForKey:DECK_FILTER_SORT];
     }
     return self;
 }
@@ -160,6 +156,22 @@ static NRFilter _filterType = NRFilterAll;
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
     
     [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    self.filterType = [settings integerForKey:DECK_FILTER_TYPE];
+    [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(self.filterType)]]];
+    
+    self.filterState = [settings integerForKey:DECK_FILTER_STATE];
+    [self.stateFilterButton setTitle:[DeckState buttonLabelFor:self.filterState]];
+    
+    self.sortType = [settings integerForKey:DECK_FILTER_SORT];
+    [self.sortButton setTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]]];
 }
 
 - (void) viewDidAppear:(BOOL)animated
