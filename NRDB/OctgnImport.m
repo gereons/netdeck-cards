@@ -58,14 +58,17 @@
         NSString* qty = attributeDict[@"qty"];
         NSString* code = attributeDict[@"id"];
         
-        Card* card = [Card cardByCode:[code substringFromIndex:31]];
-        int copies = [qty intValue];
-        
-        if (card)
+        if ([code hasPrefix:OCTGN_CODE_PREFIX] && code.length > 32)
         {
-            // NSLog(@"card: %d %@", copies, card.name);
-            [self.deck addCard:card copies:copies];
-            self.deck.role = card.role;
+            Card* card = [Card cardByCode:[code substringFromIndex:31]];
+            int copies = [qty intValue];
+        
+            if (card)
+            {
+                // NSLog(@"card: %d %@", copies, card.name);
+                [self.deck addCard:card copies:copies];
+                self.deck.role = card.role;
+            }
         }
     }
     

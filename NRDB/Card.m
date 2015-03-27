@@ -93,7 +93,7 @@ static NSDictionary* cropValues;
 
 -(NSString*) octgnCode
 {
-    return [NSString stringWithFormat:@"bc0f047c-01b1-427f-a439-d451eda%@", self.code];
+    return [NSString stringWithFormat:@"%@%@", OCTGN_CODE_PREFIX, self.code];
 }
 
 -(NSUInteger) factionHexColor

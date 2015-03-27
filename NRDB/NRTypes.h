@@ -17,6 +17,8 @@
 
 #define APP_ONLINE  [AFNetworkReachabilityManager sharedManager].reachable
 
+#define OCTGN_CODE_PREFIX   @"bc0f047c-01b1-427f-a439-d451eda"
+
 extern NSString* const kANY;
 
 typedef NS_ENUM(NSInteger, NRCardType)
