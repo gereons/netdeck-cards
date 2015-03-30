@@ -98,6 +98,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    cell.textLabel.text = @"";
     
     DeckChangeSet* dcs = self.deck.revisions[indexPath.section];
     
@@ -107,8 +108,11 @@
     }
     else
     {
-        DeckChange* dc = dcs.changes[indexPath.row];
-        cell.textLabel.text = [NSString stringWithFormat:@"%+ld %@", (long)dc.count, dc.card.name];
+        if (indexPath.row < dcs.changes.count)
+        {
+            DeckChange* dc = dcs.changes[indexPath.row];
+            cell.textLabel.text = [NSString stringWithFormat:@"%+ld %@", (long)dc.count, dc.card.name];
+        }
     }
     
     return cell;
