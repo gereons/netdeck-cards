@@ -70,6 +70,8 @@ static BrowserResultViewController* instance;
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
+    
+    [Crashlytics setObjectValue:@"browser-dealloc" forKey:@"collectionView"];
 }
 
 - (void)viewDidLoad
@@ -134,6 +136,9 @@ static BrowserResultViewController* instance;
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
     self.collectionView.alwaysBounceVertical = YES;
+    
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(703, 22);

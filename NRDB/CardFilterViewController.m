@@ -119,6 +119,8 @@ static NSInteger viewMode = VIEW_LIST;
     
     self.searchField.delegate = nil;
     self.searchField = nil;
+    
+    [Crashlytics setObjectValue:@"filter-dealloc" forKey:@"collectionView"];
 }
 
 - (void)viewDidLoad
@@ -143,6 +145,9 @@ static NSInteger viewMode = VIEW_LIST;
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSmallThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardSmallThumb"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     self.collectionView.alwaysBounceVertical = YES;
+    
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(320, 22);

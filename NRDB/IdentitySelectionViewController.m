@@ -74,6 +74,8 @@
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
+    
+    [Crashlytics setObjectValue:@"identity-dealloc" forKey:@"collectionView"];
 }
 
 - (void)viewDidLoad
@@ -104,6 +106,9 @@
     collectionTap.numberOfTapsRequired = 2;
     [self.collectionView addGestureRecognizer:collectionTap];
     self.collectionView.alwaysBounceVertical = YES;
+    
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
     
     CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(500, 22);

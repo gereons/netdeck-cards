@@ -75,6 +75,9 @@ static NSInteger viewMode;
     // each view needs its own long press recognizer
     [self.tableView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     [self.collectionView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
 }
 
 -(void) initCards:(BOOL)drawInitialHand

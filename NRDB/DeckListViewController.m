@@ -139,6 +139,9 @@
     self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0); // top == 0 because this is the first view in the .xib. wtf?
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 44, 0);
     
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.alwaysBounceVertical = YES;
     
