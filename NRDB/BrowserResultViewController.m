@@ -340,7 +340,7 @@ static BrowserResultViewController* instance;
     
     NSArray* arr = self.values[indexPath.section];
     Card* card = arr[indexPath.row];
-
+    
     cell.card = card;
     
     return cell;

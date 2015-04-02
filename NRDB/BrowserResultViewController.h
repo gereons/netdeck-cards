@@ -7,13 +7,14 @@
 //
 
 #import "DetailViewManager.h"
+#import "BrowserCollectionView.h"
 
 @class Card, CardList;
 
 @interface BrowserResultViewController : UIViewController <SubstitutableDetailViewController, UITabBarControllerDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property IBOutlet UITableView* tableView;
-@property IBOutlet UICollectionView* collectionView;
+@property IBOutlet BrowserCollectionView* collectionView;
 
 -(void)updateDisplay:(CardList*)cardList;
 

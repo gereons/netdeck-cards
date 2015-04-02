@@ -8,13 +8,14 @@
 
 #import <MessageUI/MessageUI.h>
 #import "DetailViewManager.h"
+#import "DecklistCollectionView.h"
 
 @class Card, Deck;
 
 @interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 
 @property IBOutlet UITableView* tableView;
-@property IBOutlet UICollectionView* collectionView;
+@property IBOutlet DecklistCollectionView* collectionView;
 
 @property IBOutlet UILabel* footerLabel;
 @property IBOutlet UILabel* deckNameLabel;

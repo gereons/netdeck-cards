@@ -26,6 +26,9 @@
 		3A1855F31A8E27EF00A1852D /* SetSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1855F11A8E27EF00A1852D /* SetSelectionViewController.m */; };
 		3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */; };
 		3A1855FC1A8E4FE700A1852D /* CardSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1855FB1A8E4FE700A1852D /* CardSet.m */; };
+		3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B78F1ACD81BC0039A18A /* BrowserCollectionView.m */; };
+		3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7921ACD83DF0039A18A /* DecklistCollectionView.m */; };
+		3A19B7961ACD841E0039A18A /* IdentityCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */; };
 		3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */; };
 		3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ECC901879A1CC003400A9 /* DeckExport.m */; };
 		3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 3A1ECC921879A383003400A9 /* OCTGN.mustache */; };
@@ -293,6 +296,12 @@
 		3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionViewController.xib; sourceTree = "<group>"; };
 		3A1855FA1A8E4FE700A1852D /* CardSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardSet.h; sourceTree = "<group>"; };
 		3A1855FB1A8E4FE700A1852D /* CardSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardSet.m; sourceTree = "<group>"; };
+		3A19B78E1ACD81BC0039A18A /* BrowserCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserCollectionView.h; sourceTree = "<group>"; };
+		3A19B78F1ACD81BC0039A18A /* BrowserCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserCollectionView.m; sourceTree = "<group>"; };
+		3A19B7911ACD83DF0039A18A /* DecklistCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecklistCollectionView.h; sourceTree = "<group>"; };
+		3A19B7921ACD83DF0039A18A /* DecklistCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DecklistCollectionView.m; sourceTree = "<group>"; };
+		3A19B7941ACD841E0039A18A /* IdentityCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityCollectionView.h; sourceTree = "<group>"; };
+		3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityCollectionView.m; sourceTree = "<group>"; };
 		3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSmallThumbView.xib; sourceTree = "<group>"; };
 		3A1ECC8F1879A1CC003400A9 /* DeckExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckExport.h; sourceTree = "<group>"; };
 		3A1ECC901879A1CC003400A9 /* DeckExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckExport.m; sourceTree = "<group>"; };
@@ -829,6 +838,8 @@
 				3A11C5F819715BE8003F2093 /* IdentitySectionHeaderView.h */,
 				3A11C5F919715BE8003F2093 /* IdentitySectionHeaderView.m */,
 				3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */,
+				3A19B7941ACD841E0039A18A /* IdentityCollectionView.h */,
+				3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */,
 			);
 			name = "Identity Selection Form";
 			sourceTree = "<group>";
@@ -1020,6 +1031,8 @@
 				3A531B281A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.h */,
 				3A531B291A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.m */,
 				3A531B261A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib */,
+				3A19B7911ACD83DF0039A18A /* DecklistCollectionView.h */,
+				3A19B7921ACD83DF0039A18A /* DecklistCollectionView.m */,
 			);
 			name = "Deck List";
 			sourceTree = "<group>";
@@ -1199,6 +1212,8 @@
 				3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */,
 				3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */,
 				3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */,
+				3A19B78E1ACD81BC0039A18A /* BrowserCollectionView.h */,
+				3A19B78F1ACD81BC0039A18A /* BrowserCollectionView.m */,
 			);
 			name = "Card Browser";
 			sourceTree = "<group>";
@@ -1556,6 +1571,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */,
 				3A461A7118BBF39500302A4D /* DataDownload.m in Sources */,
 				3A3622721849320C007F2854 /* AppDelegate.m in Sources */,
 				3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */,
@@ -1569,6 +1585,7 @@
 				3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */,
 				3AB357DA186DC1E50027D5FC /* IdentityViewCell.m in Sources */,
 				3AB357D6186CC2010027D5FC /* IdentitySelectionViewController.m in Sources */,
+				3A19B7961ACD841E0039A18A /* IdentityCollectionView.m in Sources */,
 				3A1777DF1967EA0B0066E095 /* NRDBAuthPopupViewController.m in Sources */,
 				3AA440EF1854DA630051D4B0 /* DetailViewManager.m in Sources */,
 				3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */,
@@ -1617,6 +1634,7 @@
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,
 				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,
 				3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */,
+				3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */,
 				3A9204C618B16B9B00AF5285 /* Stats.m in Sources */,
 				3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */,
 				3A85327D185509B000507B9A /* SettingsViewController.m in Sources */,
