@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (2.5.1):
-    - AFNetworking/NSURLConnection (= 2.5.1)
-    - AFNetworking/NSURLSession (= 2.5.1)
-    - AFNetworking/Reachability (= 2.5.1)
-    - AFNetworking/Security (= 2.5.1)
-    - AFNetworking/Serialization (= 2.5.1)
-    - AFNetworking/UIKit (= 2.5.1)
-  - AFNetworking/NSURLConnection (2.5.1):
+  - AFNetworking (2.5.2):
+    - AFNetworking/NSURLConnection (= 2.5.2)
+    - AFNetworking/NSURLSession (= 2.5.2)
+    - AFNetworking/Reachability (= 2.5.2)
+    - AFNetworking/Security (= 2.5.2)
+    - AFNetworking/Serialization (= 2.5.2)
+    - AFNetworking/UIKit (= 2.5.2)
+  - AFNetworking/NSURLConnection (2.5.2):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.1):
+  - AFNetworking/NSURLSession (2.5.2):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.1)
-  - AFNetworking/Security (2.5.1)
-  - AFNetworking/Serialization (2.5.1)
-  - AFNetworking/UIKit (2.5.1):
+  - AFNetworking/Reachability (2.5.2)
+  - AFNetworking/Security (2.5.2)
+  - AFNetworking/Serialization (2.5.2)
+  - AFNetworking/UIKit (2.5.2):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CorePlot (99.99.99)
@@ -34,7 +34,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.5):
     - DTFoundation/Core
-  - GRMustache (7.3.0):
+  - GRMustache (7.3.1):
     - JRSwizzle (~> 1.0)
   - InAppSettingsKit (2.4.4)
   - JRSwizzle (1.0)
@@ -80,49 +80,50 @@ PODS:
     - OMGHTTPURLRQ/FormURLEncode
     - OMGHTTPURLRQ/UserAgent
   - OMGHTTPURLRQ/UserAgent (2.1)
-  - PromiseKit (1.3.0):
-    - PromiseKit/CALayer (= 1.3.0)
-    - PromiseKit/NSNotificationCenter (= 1.3.0)
-    - PromiseKit/NSURLConnection (= 1.3.0)
-    - PromiseKit/Pause (= 1.3.0)
-    - PromiseKit/UIActionSheet (= 1.3.0)
-    - PromiseKit/UIAlertView (= 1.3.0)
-    - PromiseKit/UIView (= 1.3.0)
-    - PromiseKit/UIViewController (= 1.3.0)
-    - PromiseKit/Until (= 1.3.0)
-    - PromiseKit/When (= 1.3.0)
-  - PromiseKit-AFNetworking (0.1.5):
+  - PromiseKit (1.4.2):
+    - PromiseKit/CALayer (= 1.4.2)
+    - PromiseKit/NSNotificationCenter (= 1.4.2)
+    - PromiseKit/NSURLConnection (= 1.4.2)
+    - PromiseKit/Pause (= 1.4.2)
+    - PromiseKit/UIActionSheet (= 1.4.2)
+    - PromiseKit/UIAlertView (= 1.4.2)
+    - PromiseKit/UIView (= 1.4.2)
+    - PromiseKit/UIViewController (= 1.4.2)
+    - PromiseKit/Until (= 1.4.2)
+    - PromiseKit/When (= 1.4.2)
+  - PromiseKit-AFNetworking (0.1.6):
     - AFNetworking (~> 2.0)
     - PromiseKit/Promise
-  - PromiseKit/CALayer (1.3.0):
+    - PromiseKit/When
+  - PromiseKit/CALayer (1.4.2):
     - PromiseKit/Promise
-  - PromiseKit/NSNotificationCenter (1.3.0):
+  - PromiseKit/NSNotificationCenter (1.4.2):
     - PromiseKit/Promise
-  - PromiseKit/NSURLConnection (1.3.0):
+  - PromiseKit/NSURLConnection (1.4.2):
     - OMGHTTPURLRQ
     - PromiseKit/Promise
-  - PromiseKit/Pause (1.3.0):
+  - PromiseKit/Pause (1.4.2):
     - PromiseKit/Promise
-  - PromiseKit/Promise (1.3.0)
-  - PromiseKit/UIActionSheet (1.3.0):
+  - PromiseKit/Promise (1.4.2)
+  - PromiseKit/UIActionSheet (1.4.2):
     - PromiseKit/Promise
-  - PromiseKit/UIAlertView (1.3.0):
+  - PromiseKit/UIAlertView (1.4.2):
     - PromiseKit/Promise
-  - PromiseKit/UIView (1.3.0):
+  - PromiseKit/UIView (1.4.2):
     - PromiseKit/Promise
-  - PromiseKit/UIViewController (1.3.0):
+  - PromiseKit/UIViewController (1.4.2):
     - PromiseKit/Promise
-  - PromiseKit/Until (1.3.0):
+  - PromiseKit/Until (1.4.2):
     - PromiseKit/Promise
     - PromiseKit/When
-  - PromiseKit/When (1.3.0):
+  - PromiseKit/When (1.4.2):
     - PromiseKit/Promise
   - RBBAnimation (0.3.0)
-  - SDCAlertView (2.3):
+  - SDCAlertView (2.4.1):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
-  - SDCAutoLayout (2.0.2)
-  - SVProgressHUD (1.1.2)
+  - SDCAutoLayout (2.0.3)
+  - SVProgressHUD (1.1.3)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
@@ -144,26 +145,26 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 8f4b2ee7b99d3fbe3bbae51ebe7dcc1106bd1d13
+    :commit: 0d8888aec7e14eb785321be57df2cddfd3bf98a0
     :git: https://github.com/core-plot/core-plot.git
 
 SPEC CHECKSUMS:
-  AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
-  CorePlot: 80c046fdb3f9f44c73a5ca5887c54ded52510105
-  CSStickyHeaderFlowLayout: 739e87ee20cfe0c67b49d606ce47bd1f2b6efc9c
-  Dropbox-Sync-API-SDK: 16aef545267acf60efdbecbfd1fbdf04d3ee5a7c
-  DTCoreText: d446600133d01214758ff45004b1b8109e5b8c9f
-  DTFoundation: bea4e07459f0f88a5aa3b8258fab1576bbe2e58c
-  GRMustache: efecd3b603f0a7a99cf6bdf3998782ee0c465726
-  InAppSettingsKit: e78aee9fc41b44bcc5c70d7abd79cff730a0a0d3
-  JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
-  libextobjc: d6146fce3ebea986b7f75fcb4c967639200b88b0
+  AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
+  CorePlot: 2f3dfef8f41426fb15b07bef83e7a1c23a9e004a
+  CSStickyHeaderFlowLayout: a04d4bc7d6f6668073d19d22d42c27a682dd71da
+  Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
+  DTCoreText: 13ce06e63204a3b47c9db974e3d9be982bb0b1ed
+  DTFoundation: 1d28080c20c3da041706545363f8238ab53a6204
+  GRMustache: 9a272c3231844aa7071008d5493d7d80067c2fdd
+  InAppSettingsKit: df2c0b0cafd5c6f375f4d792eef8cbcdf63ae5ed
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   OMGHTTPURLRQ: f8c515dfd2f57a5d74c710978f600231f52afec5
-  PromiseKit: 4844db4448b4e387845e702b738cd87433fc02fd
-  PromiseKit-AFNetworking: 16db750b394dcd12aa8527eb1bb9f209a36a49f7
-  RBBAnimation: 243d73be1a526f1b51d266b182e4aa0cfe9cbf64
-  SDCAlertView: 87219789a6159e7005711754722a3c9b34f445d7
-  SDCAutoLayout: 4a963629725ed2b7d665e789ca4d6cfcd7446822
-  SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
+  PromiseKit: ea36001b558f42aa104a1422f305b46f8c343f2e
+  PromiseKit-AFNetworking: fbdd97205d6a78bb94d96d0d56311d1733569aae
+  RBBAnimation: cb6cb419f511434ce932f7d0fabf369612fafb4e
+  SDCAlertView: ff4c6c76ccdfcd0fa20e0ee5e044630f93fb3d12
+  SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
-COCOAPODS: 0.36.0
+COCOAPODS: 0.36.3
