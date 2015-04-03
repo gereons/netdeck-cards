@@ -18,6 +18,8 @@
 @property BOOL swipePop;
 @property BOOL popToRoot;
 
+@property BOOL alertShowing;
+
 @end
 
 @implementation NRNavigationController
@@ -62,7 +64,7 @@
 {
     if (gestureRecognizer == self.interactivePopGestureRecognizer)
     {
-        if (self.deckListViewController.deckChanged)
+        if (self.deckListViewController.deckChanged && !self.alertShowing)
         {
             [self showAlert];
             self.swipePop = NO;
@@ -78,6 +80,8 @@
 
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
+    // NSLog(@"should pop: %d %d %d %d", self.popToRoot, self.swipePop, self.regularPop, self.alertViewClicked);
+    
     if (self.popToRoot)
     {
         // NSLog(@"pop to root");
@@ -107,7 +111,9 @@
     if (self.deckListViewController.deckChanged)
     {
         // NSLog(@"should pop4: NO");
-        [self showAlert];
+        if (!self.alertShowing) {
+            [self showAlert];
+        }
         return NO;
     }
     else
@@ -121,11 +127,14 @@
 
 -(void) showAlert
 {
+    self.alertShowing = YES;
     SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                message:l10n(@"There are unsaved changes")
                                                buttons:@[l10n(@"Cancel"), l10n(@"Discard"), l10n(@"Save")]];
     
     alert.didDismissHandler = ^(NSInteger buttonIndex) {
+        self.alertShowing = NO;
+        
         if (buttonIndex == 0) // cancel
         {
             return;
