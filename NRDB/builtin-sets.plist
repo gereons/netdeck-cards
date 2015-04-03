@@ -94,6 +94,24 @@
 	</dict>
 	<dict>
 		<key>available</key>
+		<string></string>
+		<key>code</key>
+		<string>oh</string>
+		<key>cyclenumber</key>
+		<integer>8</integer>
+		<key>known</key>
+		<integer>4</integer>
+		<key>name</key>
+		<string>Old Hollywood</string>
+		<key>number</key>
+		<integer>5</integer>
+		<key>total</key>
+		<integer>20</integer>
+		<key>url</key>
+		<string>http://netrunnerdb.com/en/set/oh</string>
+	</dict>
+	<dict>
+		<key>available</key>
 		<string>2012-09-06</string>
 		<key>code</key>
 		<string>core</string>
