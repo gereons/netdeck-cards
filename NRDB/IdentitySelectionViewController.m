@@ -67,6 +67,8 @@
 
 -(void) dealloc
 {
+    NSAssert(self.collectionView.window == nil, @"collectionView.window still set");
+    
     self.tableView.delegate = nil;
     self.tableView.dataSource = nil;
     self.tableView = nil;

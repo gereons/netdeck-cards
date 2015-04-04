@@ -61,6 +61,8 @@ static BrowserResultViewController* instance;
 
 - (void) dealloc
 {
+    NSAssert(self.collectionView.window == nil, @"collectionView.window still set");
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     self.tableView.delegate = nil;
