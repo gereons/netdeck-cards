@@ -21,6 +21,7 @@
 @property UIViewController<FilterCallback>* headerView;
 @property NSMutableSet* selectedValues;
 @property NSMutableArray* sectionToggles;
+@property NSMutableArray* collapsedSections;
 
 @property int sectionCount; // number of non-empty section headers
 @property NSUInteger totalEntries; // total number of selectable entries
@@ -36,6 +37,7 @@ static UIPopoverController* popover;
     CardFilterPopover* filter = [[CardFilterPopover alloc] initWithNibName:@"CardFilterPopover" bundle:nil];
     filter.sections = entries.sections;
     filter.values = entries.values;
+    filter.collapsedSections = entries.collapsedSections;
     filter.button = button;
     filter.type = type;
     filter.headerView = vc;
@@ -58,6 +60,7 @@ static UIPopoverController* popover;
     for (NSString* s in entries.sections)
     {
         [filter.sectionToggles addObject:@(NO)];
+        [filter.collapsedSections addObject:@(NO)];
         if (s.length > 0)
         {
             ++filter.sectionCount;
@@ -149,7 +152,8 @@ static UIPopoverController* popover;
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSArray* arr = self.values[section];
-    return arr.count;
+    BOOL collapsed = [self.collapsedSections[section] boolValue];
+    return collapsed ? 0 : arr.count;
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -171,12 +175,13 @@ static UIPopoverController* popover;
 
 -(UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0,0, 200, HEADER_HEIGHT)];
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, HEADER_HEIGHT)];
     view.backgroundColor = [UIColor colorWithWhite:.9 alpha:1];
     view.tag = section;
     view.userInteractionEnabled = YES;
     
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 200, HEADER_HEIGHT)];
+    CGFloat xOffset = self.collapsedSections == nil ? 15 : 25;
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(xOffset, 0, 200, HEADER_HEIGHT)];
     label.font = [UIFont boldSystemFontOfSize:15];
     label.text = self.sections[section];
     
@@ -184,6 +189,22 @@ static UIPopoverController* popover;
 
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelectSection:)];
     [view addGestureRecognizer:tap];
+    
+    UIButton* collapseButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    collapseButton.frame = CGRectMake(0, 0, 30, HEADER_HEIGHT);
+    collapseButton.tag = section;
+    collapseButton.titleLabel.font = [UIFont boldSystemFontOfSize:19];
+    [collapseButton addTarget:self action:@selector(collapseSection:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (self.collapsedSections)
+    {
+        BOOL collapsed = [self.collapsedSections[section] boolValue];
+        [UIView performWithoutAnimation:^{
+            [collapseButton setTitle:collapsed ? @"▹" : @"▿" forState:UIControlStateNormal];
+        }];
+    }
+    
+    [view addSubview:collapseButton];
     
     return view;
 }
@@ -266,9 +287,30 @@ static UIPopoverController* popover;
     }
 }
 
+-(void) collapseSection:(UIButton*) sender
+{
+    NSAssert(self.collapsedSections != nil, @"collapsedSections is nil");
+    
+    BOOL collapsed = [self.collapsedSections[sender.tag] boolValue];
+    // NSLog(@"collapse section %d = %d", sender.tag, collapsed);
+    
+    [UIView performWithoutAnimation:^{
+        [sender setTitle:collapsed ? @"▹" : @"▿" forState:UIControlStateNormal];
+    }];
+    
+    self.collapsedSections[sender.tag] = @(!collapsed);
+    
+    [self.tableView reloadData];
+}
+
 -(void) didSelectSection:(UIGestureRecognizer*)gesture
 {
     NSInteger section = gesture.view.tag;
+    BOOL collapsed = [self.collapsedSections[section] boolValue];
+    if (collapsed)
+    {
+        return;
+    }
     
     BOOL on = [[self.sectionToggles objectAtIndex:section] boolValue];
     // NSString* s = self.sections[section];

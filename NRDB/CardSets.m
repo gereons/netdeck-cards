@@ -21,6 +21,7 @@ static NSMutableArray* setGroups;
 static NSMutableArray* setsPerGroup;
 
 static NSSet* disabledSets;
+static TableData* enabledSets;
 
 +(void) initialize
 {
@@ -216,6 +217,7 @@ static NSSet* disabledSets;
 +(void) clearDisabledSets
 {
     disabledSets = nil;
+    enabledSets = nil;
 }
 
 +(NSSet*) knownSetCodes
@@ -232,49 +234,59 @@ static NSSet* disabledSets;
 
 +(TableData*) allEnabledSetsForTableview
 {
-    NSSet* disabledSetCodes = [CardSets disabledSetCodes];
-    NSMutableArray* sections = [setGroups mutableCopy];
-    NSMutableArray* sets = [NSMutableArray array];
-    
-    for (NSArray* arr in setsPerGroup)
+    if (enabledSets == nil)
     {
-        NSMutableArray* names = [NSMutableArray array];
-        for (NSNumber* setNumber in arr)
+        NSSet* disabledSetCodes = [CardSets disabledSetCodes];
+        NSMutableArray* sections = [setGroups mutableCopy];
+        NSMutableArray* sets = [NSMutableArray array];
+        
+        for (NSArray* arr in setsPerGroup)
         {
-            NSInteger setNum = setNumber.intValue;
-            
-            if (setNum == 0)
+            NSMutableArray* names = [NSMutableArray array];
+            for (NSNumber* setNumber in arr)
             {
-                [names addObject:kANY];
-            }
-            else if (setNum <= cardSets.count)
-            {
-                CardSet* cs = [cardSets objectAtIndex:setNum-1];
-                NSString* setName = cs.name;
-                if (setName && ![disabledSetCodes containsObject:cs.setCode])
+                NSInteger setNum = setNumber.intValue;
+                
+                if (setNum == 0)
                 {
-                    [names addObject:setName];
+                    [names addObject:kANY];
+                }
+                else if (setNum <= cardSets.count)
+                {
+                    CardSet* cs = [cardSets objectAtIndex:setNum-1];
+                    NSString* setName = cs.name;
+                    if (setName && ![disabledSetCodes containsObject:cs.setCode])
+                    {
+                        [names addObject:setName];
+                    }
                 }
             }
+            [sets addObject:names];
         }
-        [sets addObject:names];
+        
+        for (int i=0; i<sets.count; )
+        {
+            NSArray* arr = [sets objectAtIndex:i];
+            if (arr.count == 0)
+            {
+                [sets removeObjectAtIndex:i];
+                [sections removeObjectAtIndex:i];
+            }
+            else
+            {
+                ++i;
+            }
+        }
+        enabledSets = [[TableData alloc] initWithSections:sections andValues:sets];
+        
+        enabledSets.collapsedSections = [NSMutableArray array];
+        for (int i=0; i<enabledSets.sections.count; ++i)
+        {
+            [enabledSets.collapsedSections addObject:@(NO)];
+        }
     }
     
-    for (int i=0; i<sets.count; )
-    {
-        NSArray* arr = [sets objectAtIndex:i];
-        if (arr.count == 0)
-        {
-            [sets removeObjectAtIndex:i];
-            [sections removeObjectAtIndex:i];
-        }
-        else
-        {
-            ++i;
-        }
-    }
-    
-    return [[TableData alloc] initWithSections:sections andValues:sets];
+    return enabledSets;
 }
 
 +(TableData*) allKnownSetsForTableview

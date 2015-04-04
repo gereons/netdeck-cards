@@ -10,6 +10,7 @@
 
 @property NSArray* sections;
 @property NSArray* values;
+@property NSMutableArray* collapsedSections;
 
 -(id) initWithValues:(NSArray*)values;
 -(id) initWithSections:(NSArray*)sections andValues:(NSArray*)values;
