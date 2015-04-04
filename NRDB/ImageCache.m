@@ -138,7 +138,15 @@ static NSCache* memCache;
         return;
     }
     
+    // if we know we don't (or can't) have an image, return a placeholder immediately
+    if (card.imageSrc == nil || [unavailableImages containsObject:key])
+    {
+        completionBlock(card, [ImageCache placeholderFor:card.role], YES);
+        return;
+    }
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        // get image from our on-disk cache
         UIImage* img = [ImageCache getDecodedImageFor:key];
         
         if (img)
@@ -155,14 +163,8 @@ static NSCache* memCache;
         }
         else
         {
-            // return a placeholder if we're offline or already know that the img is unavailable
-            if (!APP_ONLINE || [unavailableImages containsObject:key])
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completionBlock(card, [ImageCache placeholderFor:card.role], YES);
-                });
-            }
-            else
+            // image is not in on-disk cache
+            if (APP_ONLINE)
             {
                 [self downloadImageFor:card withKey:key completion:^(Card *card, UIImage *image, BOOL placeholder) {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -170,7 +172,12 @@ static NSCache* memCache;
                     });
                 }];
             }
-
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionBlock(card, [ImageCache placeholderFor:card.role], YES);
+                });
+            }
         }
     });
 }
