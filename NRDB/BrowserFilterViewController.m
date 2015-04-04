@@ -38,6 +38,13 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
 @implementation BrowserFilterViewController
 
+static NSMutableArray* subtypeCollapsedSections;
+
++(void) initialize
+{
+    subtypeCollapsedSections = [NSMutableArray arrayWithArray:@[ @NO, @NO, @NO ]];
+}
+
 - (id) init
 {
     if ((self = [super initWithNibName:@"BrowserFilterViewController" bundle:nil]))
@@ -351,6 +358,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
         }
         
         data = [[TableData alloc] initWithSections:sections andValues:values];
+        data.collapsedSections = subtypeCollapsedSections;
     }
     else
     {
