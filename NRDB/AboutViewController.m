@@ -102,12 +102,15 @@
 {
     self.mailer = [[MFMailComposeViewController alloc] init];
     
-    self.mailer.mailComposeDelegate = self;
-    [self.mailer setToRecipients:@[ @"netdeck@steffens.org" ]];
-    NSMutableString* subject = [NSMutableString stringWithString:l10n(@"Net Deck Feedback ")];
-    [subject appendString:[AppDelegate appVersion]];
-    [self.mailer setSubject:subject];
-    [self presentViewController:self.mailer animated:NO completion:nil];
+    if (self.mailer) // see crashlytics #57
+    {
+        self.mailer.mailComposeDelegate = self;
+        [self.mailer setToRecipients:@[ @"netdeck@steffens.org" ]];
+        NSMutableString* subject = [NSMutableString stringWithString:l10n(@"Net Deck Feedback ")];
+        [subject appendString:[AppDelegate appVersion]];
+        [self.mailer setSubject:subject];
+        [self presentViewController:self.mailer animated:NO completion:nil];
+    }
 }
 
 #pragma mark store kit
