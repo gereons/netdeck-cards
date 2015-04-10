@@ -414,6 +414,10 @@ static BrowserResultViewController* instance;
     {
         self.scale = scaleStart * gesture.scale;
     }
+    else if (gesture.state == UIGestureRecognizerStateEnded)
+    {
+        startIndex = nil;
+    }
     
     self.scale = MAX(self.scale, 0.5);
     self.scale = MIN(self.scale, 1.0);
