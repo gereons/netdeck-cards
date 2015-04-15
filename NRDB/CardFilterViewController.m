@@ -232,6 +232,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) deckChanged:(NSNotification*)notification
 {
+    [Crashlytics setObjectValue:@"deckChanged" forKey:@"notification"];
     Card* identity = self.deckListViewController.deck.identity;
     if (self.role == NRRoleCorp && identity != nil)
     {
@@ -251,8 +252,8 @@ static NSInteger viewMode = VIEW_LIST;
         [self initCards];
     }
     
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    [self reloadData];
+    [Crashlytics setObjectValue:@"n/a" forKey:@"notification"];
 }
 
 -(void) initFilters
@@ -297,6 +298,18 @@ static NSInteger viewMode = VIEW_LIST;
     self.apSlider.hidden = role == NRRoleRunner;
 }
 
+-(void) reloadData
+{
+    if (viewMode == VIEW_LIST)
+    {
+        [self.tableView reloadData];
+    }
+    else
+    {
+        [self.collectionView reloadData];
+    }
+}
+
 #pragma mark clear filters
 
 -(void) clearFiltersClicked:(id)sender
@@ -305,8 +318,7 @@ static NSInteger viewMode = VIEW_LIST;
     [self clearFilters];
     
     [self initCards];
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    [self reloadData];
 }
 
 -(void) clearFilters
@@ -345,8 +357,9 @@ static NSInteger viewMode = VIEW_LIST;
     self.sendNotifications = YES;
 }
 
--(void) addTopCard:(id)sender
+-(void) addTopCard:(NSNotification*)sender
 {
+    [Crashlytics setObjectValue:@"addTopCard" forKey:@"notification"];
     if (self.cards.count > 0)
     {
         NSArray* arr = self.cards[0];
@@ -354,9 +367,10 @@ static NSInteger viewMode = VIEW_LIST;
         {
             Card* card = arr[0];
             [self.deckListViewController addCard:card];
-            [self.tableView reloadData];
+            [self reloadData];
         }
     }
+    [Crashlytics setObjectValue:@"n/a" forKey:@"notification"];
 }
 
 #pragma mark keyboard show/hide
@@ -368,6 +382,7 @@ static NSInteger viewMode = VIEW_LIST;
         return;
     }
     
+    [Crashlytics setObjectValue:@"showKeyboard" forKey:@"notification"];
     CGFloat topY = self.searchSeparator.frame.origin.y;
     
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -383,6 +398,7 @@ static NSInteger viewMode = VIEW_LIST;
         self.tableView.frame = newFrame;
         self.collectionView.frame = newFrame;
     }];
+    [Crashlytics setObjectValue:@"n/a" forKey:@"notification"];
 }
 
 -(void) willHideKeyboard:(NSNotification*)sender
@@ -391,7 +407,7 @@ static NSInteger viewMode = VIEW_LIST;
     {
         return;
     }
-    
+    [Crashlytics setObjectValue:@"hideKeyboard" forKey:@"notification"];
     // explicitly resignFirstResponser, since the kb may have been auto-dismissed by the identity selection form
     [self.searchField resignFirstResponder];
     NSTimeInterval animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
@@ -399,6 +415,7 @@ static NSInteger viewMode = VIEW_LIST;
     [UIView animateWithDuration:animDuration animations:^{
         [self setResultFrames:nil];
     }];
+    [Crashlytics setObjectValue:@"n/a" forKey:@"notification"];
 }
 
 -(void) nameAlertWillAppear:(id)notification
@@ -502,8 +519,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.collectionView.hidden = viewMode == VIEW_LIST;
     self.tableView.hidden = viewMode != VIEW_LIST;
     
-    [self.collectionView reloadData];
-    [self.tableView reloadData];
+    [self reloadData];
     [self setResultFrames:nil];
     
     if (scrollToPath)
@@ -908,8 +924,7 @@ static NSInteger viewMode = VIEW_LIST;
     }
     
     [self initCards];
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    [self reloadData];
 }
 
 #pragma mark - Table View
@@ -1050,10 +1065,17 @@ static NSInteger viewMode = VIEW_LIST;
     [self.deckListViewController addCard:card];
     
     NSArray* paths = @[indexPath];
-    [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
-    [UIView setAnimationsEnabled:NO];
-    [self.collectionView reloadItemsAtIndexPaths:paths];
-    [UIView setAnimationsEnabled:YES];
+    
+    if (viewMode == VIEW_LIST)
+    {
+        [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+    }
+    else
+    {
+        [UIView setAnimationsEnabled:NO];
+        [self.collectionView reloadItemsAtIndexPaths:paths];
+        [UIView setAnimationsEnabled:YES];
+    }
 }
 
 #pragma mark collectionview
