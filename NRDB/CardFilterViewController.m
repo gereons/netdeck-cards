@@ -151,7 +151,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
-    CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    CSStickyHeaderFlowLayout *layout = (CSStickyHeaderFlowLayout*)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(320, 22);
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
     layout.minimumInteritemSpacing = 3;

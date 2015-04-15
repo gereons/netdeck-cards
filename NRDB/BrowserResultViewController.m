@@ -142,7 +142,7 @@ static BrowserResultViewController* instance;
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
-    CSStickyHeaderFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    CSStickyHeaderFlowLayout *layout = (CSStickyHeaderFlowLayout*)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(703, 22);
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 2, 2);
     layout.minimumInteritemSpacing = 3;
