@@ -21,7 +21,7 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CorePlot (99.99.99)
-  - CSStickyHeaderFlowLayout (0.2.4)
+  - CSStickyHeaderFlowLayout (0.2.5)
   - Dropbox-Sync-API-SDK (3.1.2)
   - DTCoreText (1.6.15):
     - DTFoundation/Core (~> 1.7.5)
@@ -36,7 +36,7 @@ PODS:
     - DTFoundation/Core
   - GRMustache (7.3.1):
     - JRSwizzle (~> 1.0)
-  - InAppSettingsKit (2.4.4)
+  - InAppSettingsKit (2.5.2)
   - JRSwizzle (1.0)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT (= 0.4.1)
@@ -80,43 +80,43 @@ PODS:
     - OMGHTTPURLRQ/FormURLEncode
     - OMGHTTPURLRQ/UserAgent
   - OMGHTTPURLRQ/UserAgent (2.1)
-  - PromiseKit (1.4.2):
-    - PromiseKit/CALayer (= 1.4.2)
-    - PromiseKit/NSNotificationCenter (= 1.4.2)
-    - PromiseKit/NSURLConnection (= 1.4.2)
-    - PromiseKit/Pause (= 1.4.2)
-    - PromiseKit/UIActionSheet (= 1.4.2)
-    - PromiseKit/UIAlertView (= 1.4.2)
-    - PromiseKit/UIView (= 1.4.2)
-    - PromiseKit/UIViewController (= 1.4.2)
-    - PromiseKit/Until (= 1.4.2)
-    - PromiseKit/When (= 1.4.2)
+  - PromiseKit (1.5.0):
+    - PromiseKit/CALayer (= 1.5.0)
+    - PromiseKit/NSNotificationCenter (= 1.5.0)
+    - PromiseKit/NSURLConnection (= 1.5.0)
+    - PromiseKit/Pause (= 1.5.0)
+    - PromiseKit/UIActionSheet (= 1.5.0)
+    - PromiseKit/UIAlertView (= 1.5.0)
+    - PromiseKit/UIView (= 1.5.0)
+    - PromiseKit/UIViewController (= 1.5.0)
+    - PromiseKit/Until (= 1.5.0)
+    - PromiseKit/When (= 1.5.0)
   - PromiseKit-AFNetworking (0.1.6):
     - AFNetworking (~> 2.0)
     - PromiseKit/Promise
     - PromiseKit/When
-  - PromiseKit/CALayer (1.4.2):
+  - PromiseKit/CALayer (1.5.0):
     - PromiseKit/Promise
-  - PromiseKit/NSNotificationCenter (1.4.2):
+  - PromiseKit/NSNotificationCenter (1.5.0):
     - PromiseKit/Promise
-  - PromiseKit/NSURLConnection (1.4.2):
+  - PromiseKit/NSURLConnection (1.5.0):
     - OMGHTTPURLRQ
     - PromiseKit/Promise
-  - PromiseKit/Pause (1.4.2):
+  - PromiseKit/Pause (1.5.0):
     - PromiseKit/Promise
-  - PromiseKit/Promise (1.4.2)
-  - PromiseKit/UIActionSheet (1.4.2):
+  - PromiseKit/Promise (1.5.0)
+  - PromiseKit/UIActionSheet (1.5.0):
     - PromiseKit/Promise
-  - PromiseKit/UIAlertView (1.4.2):
+  - PromiseKit/UIAlertView (1.5.0):
     - PromiseKit/Promise
-  - PromiseKit/UIView (1.4.2):
+  - PromiseKit/UIView (1.5.0):
     - PromiseKit/Promise
-  - PromiseKit/UIViewController (1.4.2):
+  - PromiseKit/UIViewController (1.5.0):
     - PromiseKit/Promise
-  - PromiseKit/Until (1.4.2):
+  - PromiseKit/Until (1.5.0):
     - PromiseKit/Promise
     - PromiseKit/When
-  - PromiseKit/When (1.4.2):
+  - PromiseKit/When (1.5.0):
     - PromiseKit/Promise
   - RBBAnimation (0.3.0)
   - SDCAlertView (2.4.1):
@@ -145,22 +145,22 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 0d8888aec7e14eb785321be57df2cddfd3bf98a0
+    :commit: 246de17e9c5e9e311255f3c6fe664a8e175fa75f
     :git: https://github.com/core-plot/core-plot.git
 
 SPEC CHECKSUMS:
   AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
   CorePlot: 2f3dfef8f41426fb15b07bef83e7a1c23a9e004a
-  CSStickyHeaderFlowLayout: a04d4bc7d6f6668073d19d22d42c27a682dd71da
+  CSStickyHeaderFlowLayout: 75e439a59c23f609091d9a784c7b5db7de583f1f
   Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 13ce06e63204a3b47c9db974e3d9be982bb0b1ed
   DTFoundation: 1d28080c20c3da041706545363f8238ab53a6204
   GRMustache: 9a272c3231844aa7071008d5493d7d80067c2fdd
-  InAppSettingsKit: df2c0b0cafd5c6f375f4d792eef8cbcdf63ae5ed
+  InAppSettingsKit: 90b3f9b99d857f95fd1422467d857de143cac099
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   OMGHTTPURLRQ: f8c515dfd2f57a5d74c710978f600231f52afec5
-  PromiseKit: ea36001b558f42aa104a1422f305b46f8c343f2e
+  PromiseKit: 66308afa36e1f7dba6d53721c359e4d074a895b4
   PromiseKit-AFNetworking: fbdd97205d6a78bb94d96d0d56311d1733569aae
   RBBAnimation: cb6cb419f511434ce932f7d0fabf369612fafb4e
   SDCAlertView: ff4c6c76ccdfcd0fa20e0ee5e044630f93fb3d12

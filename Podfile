@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.1'
+platform :ios, '8.3'
 inhibit_all_warnings!
 pod 'DTCoreText'
 pod 'AFNetworking', '~> 2.0'
