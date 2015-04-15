@@ -107,6 +107,8 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) dealloc
 {
+    NSAssert(self.collectionView.window == nil, @"collectionView.window still set");
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     self.tableView.delegate = nil;

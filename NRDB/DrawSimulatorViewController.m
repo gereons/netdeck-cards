@@ -12,6 +12,8 @@
 #import "Hypergeometric.h"
 #import "CardThumbView.h"
 
+#import <Crashlytics/Crashlytics.h>
+
 @interface DrawSimulatorViewController ()
 @property Deck* deck;
 @property NSMutableArray* cards;    // cards in deck
@@ -43,6 +45,8 @@ static NSInteger viewMode;
 
 -(void) dealloc
 {
+    NSAssert(self.collectionView.window == nil, @"collectionView.window still set");
+    
     self.tableView.delegate = nil;
     self.tableView.dataSource = nil;
     self.tableView = nil;
@@ -50,12 +54,16 @@ static NSInteger viewMode;
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
+    
+    [Crashlytics setObjectValue:@"drawsim-dealloc" forKey:@"collectionView"];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self initCards:YES];
+    
+    [Crashlytics setObjectValue:@"drawsim" forKey:@"collectionView"];
     
     self.titleLabel.text = l10n(@"Draw Simulator");
     [self.clearButton setTitle:l10n(@"Clear") forState:UIControlStateNormal];

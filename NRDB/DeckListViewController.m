@@ -90,12 +90,17 @@
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
     
+    [Crashlytics setObjectValue:@"decklist-dealloc" forKey:@"collectionView"];
+    
     [self stopHistoryTimer:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [Crashlytics setObjectValue:@"decklist" forKey:@"collectionView"];
+    
     self.initializing = YES;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];

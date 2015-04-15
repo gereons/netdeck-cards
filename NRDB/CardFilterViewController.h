@@ -7,6 +7,7 @@
 //
 
 #import "FilterCallback.h"
+#import "CardFilterCollectionView.h"
 
 @class Deck, DeckListViewController;
 
@@ -49,7 +50,7 @@
 @property IBOutlet UIView* bottomSeparator; // the 1px "line" view between the filters and the results table
 
 @property IBOutlet UITableView* tableView;
-@property IBOutlet UICollectionView* collectionView;
+@property IBOutlet CardFilterCollectionView* collectionView;
 
 -(IBAction)strengthValueChanged:(id)sender;
 -(IBAction)costValueChanged:(id)sender;
