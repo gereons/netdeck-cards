@@ -145,9 +145,10 @@ static NSInteger viewMode = VIEW_LIST;
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSmallThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardSmallThumb"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSectionHeaderView" bundle:nil]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     self.collectionView.alwaysBounceVertical = YES;
-    
+   
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
@@ -167,8 +168,6 @@ static NSInteger viewMode = VIEW_LIST;
     NSString* moreLess = showAllFilters ? l10n(@"Less △") : l10n(@"More ▽");
     [self.moreLessButton setTitle:moreLess forState:UIControlStateNormal];
     self.influenceSeparator.hidden = showAllFilters;
-    
-    [self performSelector:@selector(setResultFrames:) withObject:nil afterDelay:0.01];
     
     self.viewMode.selectedSegmentIndex = viewMode;
     self.collectionView.hidden = viewMode == VIEW_LIST;
@@ -191,9 +190,14 @@ static NSInteger viewMode = VIEW_LIST;
 {
     [super viewDidAppear:animated];
     
+    [self setResultFrames];
+    
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = l10n(@"Filter");
-    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFiltersClicked:)];
+    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear")
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(clearFiltersClicked:)];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
@@ -217,10 +221,16 @@ static NSInteger viewMode = VIEW_LIST;
     [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
 }
 
--(void) setResultFrames:(id)sender
+-(void) setResultFrames
 {
-    self.tableView.frame = showAllFilters ? self.smallResultFrame : self.largeResultFrame;
-    self.collectionView.frame = showAllFilters ? self.smallResultFrame : self.largeResultFrame;
+    if (viewMode == VIEW_LIST)
+    {
+        self.tableView.frame = showAllFilters ? self.smallResultFrame : self.largeResultFrame;
+    }
+    else
+    {
+        self.collectionView.frame = showAllFilters ? self.smallResultFrame : self.largeResultFrame;
+    }
 }
 
 - (void) initCards
@@ -413,7 +423,7 @@ static NSInteger viewMode = VIEW_LIST;
     NSTimeInterval animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
     [UIView animateWithDuration:animDuration animations:^{
-        [self setResultFrames:nil];
+        [self setResultFrames];
     }];
     [Crashlytics setObjectValue:@"n/a" forKey:@"notification"];
 }
@@ -461,10 +471,10 @@ static NSInteger viewMode = VIEW_LIST;
         self.influenceSeparator.hidden = YES;
     }
     
-    NSTimeInterval animDuration = 0.15;
+    NSTimeInterval animDuration = 0.10;
     [UIView animateWithDuration:animDuration
         animations:^{
-            [self setResultFrames:nil];
+            [self setResultFrames];
         }
         completion:^(BOOL finished){
             self.influenceSeparator.hidden = showAllFilters;
@@ -520,7 +530,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.tableView.hidden = viewMode != VIEW_LIST;
     
     [self reloadData];
-    [self setResultFrames:nil];
+    [self setResultFrames];
     
     if (scrollToPath)
     {
@@ -924,7 +934,11 @@ static NSInteger viewMode = VIEW_LIST;
     }
     
     [self initCards];
-    [self reloadData];
+    
+    if (self.sendNotifications)
+    {
+        [self reloadData];
+    }
 }
 
 #pragma mark - Table View
