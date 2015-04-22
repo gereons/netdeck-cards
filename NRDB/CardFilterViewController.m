@@ -946,7 +946,8 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.sections[section];
+    NSArray* cards = self.cards[section];
+    return [NSString stringWithFormat:@"%@ (%ld)", self.sections[section], (long)cards.count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -1139,7 +1140,8 @@ static NSInteger viewMode = VIEW_LIST;
     {
         header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
         
-        header.titleLabel.text = self.sections[indexPath.section];
+        NSArray* cards = self.cards[indexPath.section];
+        header.titleLabel.text = [NSString stringWithFormat:@"%@ (%ld)", self.sections[indexPath.section], (long)cards.count];
     }
     
     NSAssert(header != nil, @"no header?");

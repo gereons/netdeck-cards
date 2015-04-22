@@ -103,13 +103,11 @@ static NSInteger viewMode;
     }
     NSAssert(self.cards.count == self.deck.size, @"size mismatch");
     
-    // shuffle the cards using Fisher-Yates
-    u_int32_t count = (u_int32_t)self.cards.count;
-    for (int i = 0; i < count; ++i)
+    // shuffle using Knuth-Fisher-Yates
+    for (NSUInteger i = self.cards.count - 1; i; --i)
     {
-        // Select a random element between i and end of array to swap with.
-        u_int32_t n = arc4random_uniform(count - i) + i;
-        [self.cards exchangeObjectAtIndex:i withObjectAtIndex:n];
+        NSUInteger n = arc4random_uniform(i + 1);
+        [self.cards exchangeObjectAtIndex:n withObjectAtIndex:i];
     }
     
     self.oddsLabel.text = @"";

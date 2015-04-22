@@ -38,7 +38,15 @@
 -(void) setCard:(Card*)card
 {
     [super setCard:card];
-    self.name.text = card.name;
+
+    if (card.unique)
+    {
+        self.name.text = [NSString stringWithFormat:@"%@ •", card.name];
+    }
+    else
+    {
+        self.name.text = card.name;
+    }
     
     self.name.textColor = [UIColor blackColor];
     
