@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (2.5.2):
-    - AFNetworking/NSURLConnection (= 2.5.2)
-    - AFNetworking/NSURLSession (= 2.5.2)
-    - AFNetworking/Reachability (= 2.5.2)
-    - AFNetworking/Security (= 2.5.2)
-    - AFNetworking/Serialization (= 2.5.2)
-    - AFNetworking/UIKit (= 2.5.2)
-  - AFNetworking/NSURLConnection (2.5.2):
+  - AFNetworking (2.5.3):
+    - AFNetworking/NSURLConnection (= 2.5.3)
+    - AFNetworking/NSURLSession (= 2.5.3)
+    - AFNetworking/Reachability (= 2.5.3)
+    - AFNetworking/Security (= 2.5.3)
+    - AFNetworking/Serialization (= 2.5.3)
+    - AFNetworking/UIKit (= 2.5.3)
+  - AFNetworking/NSURLConnection (2.5.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.2):
+  - AFNetworking/NSURLSession (2.5.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.2)
-  - AFNetworking/Security (2.5.2)
-  - AFNetworking/Serialization (2.5.2)
-  - AFNetworking/UIKit (2.5.2):
+  - AFNetworking/Reachability (2.5.3)
+  - AFNetworking/Security (2.5.3)
+  - AFNetworking/Serialization (2.5.3)
+  - AFNetworking/UIKit (2.5.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CorePlot (99.99.99)
@@ -34,7 +34,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.5):
     - DTFoundation/Core
-  - GRMustache (7.3.1):
+  - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
   - InAppSettingsKit (2.5.2)
   - JRSwizzle (1.0)
@@ -80,45 +80,45 @@ PODS:
     - OMGHTTPURLRQ/FormURLEncode
     - OMGHTTPURLRQ/UserAgent
   - OMGHTTPURLRQ/UserAgent (2.1)
-  - PromiseKit (1.5.0):
-    - PromiseKit/CALayer (= 1.5.0)
-    - PromiseKit/NSNotificationCenter (= 1.5.0)
-    - PromiseKit/NSURLConnection (= 1.5.0)
-    - PromiseKit/Pause (= 1.5.0)
-    - PromiseKit/UIActionSheet (= 1.5.0)
-    - PromiseKit/UIAlertView (= 1.5.0)
-    - PromiseKit/UIView (= 1.5.0)
-    - PromiseKit/UIViewController (= 1.5.0)
-    - PromiseKit/Until (= 1.5.0)
-    - PromiseKit/When (= 1.5.0)
+  - PromiseKit (1.5.1):
+    - PromiseKit/CALayer (= 1.5.1)
+    - PromiseKit/NSNotificationCenter (= 1.5.1)
+    - PromiseKit/NSURLConnection (= 1.5.1)
+    - PromiseKit/Pause (= 1.5.1)
+    - PromiseKit/UIActionSheet (= 1.5.1)
+    - PromiseKit/UIAlertView (= 1.5.1)
+    - PromiseKit/UIView (= 1.5.1)
+    - PromiseKit/UIViewController (= 1.5.1)
+    - PromiseKit/Until (= 1.5.1)
+    - PromiseKit/When (= 1.5.1)
   - PromiseKit-AFNetworking (0.1.6):
     - AFNetworking (~> 2.0)
     - PromiseKit/Promise
     - PromiseKit/When
-  - PromiseKit/CALayer (1.5.0):
+  - PromiseKit/CALayer (1.5.1):
     - PromiseKit/Promise
-  - PromiseKit/NSNotificationCenter (1.5.0):
+  - PromiseKit/NSNotificationCenter (1.5.1):
     - PromiseKit/Promise
-  - PromiseKit/NSURLConnection (1.5.0):
+  - PromiseKit/NSURLConnection (1.5.1):
     - OMGHTTPURLRQ
     - PromiseKit/Promise
-  - PromiseKit/Pause (1.5.0):
+  - PromiseKit/Pause (1.5.1):
     - PromiseKit/Promise
-  - PromiseKit/Promise (1.5.0)
-  - PromiseKit/UIActionSheet (1.5.0):
+  - PromiseKit/Promise (1.5.1)
+  - PromiseKit/UIActionSheet (1.5.1):
     - PromiseKit/Promise
-  - PromiseKit/UIAlertView (1.5.0):
+  - PromiseKit/UIAlertView (1.5.1):
     - PromiseKit/Promise
-  - PromiseKit/UIView (1.5.0):
+  - PromiseKit/UIView (1.5.1):
     - PromiseKit/Promise
-  - PromiseKit/UIViewController (1.5.0):
+  - PromiseKit/UIViewController (1.5.1):
     - PromiseKit/Promise
-  - PromiseKit/Until (1.5.0):
+  - PromiseKit/Until (1.5.1):
     - PromiseKit/Promise
     - PromiseKit/When
-  - PromiseKit/When (1.5.0):
+  - PromiseKit/When (1.5.1):
     - PromiseKit/Promise
-  - RBBAnimation (0.3.0)
+  - RBBAnimation (0.4.0)
   - SDCAlertView (2.4.1):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
@@ -145,24 +145,24 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 246de17e9c5e9e311255f3c6fe664a8e175fa75f
+    :commit: 7be212fdc9c40629d1c893ab0e83b82429fea2df
     :git: https://github.com/core-plot/core-plot.git
 
 SPEC CHECKSUMS:
-  AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
+  AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
   CorePlot: 2f3dfef8f41426fb15b07bef83e7a1c23a9e004a
   CSStickyHeaderFlowLayout: 75e439a59c23f609091d9a784c7b5db7de583f1f
   Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 13ce06e63204a3b47c9db974e3d9be982bb0b1ed
   DTFoundation: 1d28080c20c3da041706545363f8238ab53a6204
-  GRMustache: 9a272c3231844aa7071008d5493d7d80067c2fdd
+  GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   InAppSettingsKit: 90b3f9b99d857f95fd1422467d857de143cac099
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   OMGHTTPURLRQ: f8c515dfd2f57a5d74c710978f600231f52afec5
-  PromiseKit: 66308afa36e1f7dba6d53721c359e4d074a895b4
+  PromiseKit: b1145ebb1dd0780566952689191ea31466198ee8
   PromiseKit-AFNetworking: fbdd97205d6a78bb94d96d0d56311d1733569aae
-  RBBAnimation: cb6cb419f511434ce932f7d0fabf369612fafb4e
+  RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
   SDCAlertView: ff4c6c76ccdfcd0fa20e0ee5e044630f93fb3d12
   SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
