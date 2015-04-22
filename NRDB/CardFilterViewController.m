@@ -123,6 +123,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.searchField = nil;
     
     [Crashlytics setObjectValue:@"filter-dealloc" forKey:@"collectionView"];
+    [Crashlytics setIntValue:(int)viewMode forKey:@"viewMode"];
 }
 
 - (void)viewDidLoad
@@ -134,6 +135,7 @@ static NSInteger viewMode = VIEW_LIST;
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     showAllFilters = [settings boolForKey:SHOW_ALL_FILTERS];
     viewMode = [settings integerForKey:FILTER_VIEW_MODE];
+    [Crashlytics setIntValue:(int)viewMode forKey:@"viewMode"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
@@ -525,6 +527,7 @@ static NSInteger viewMode = VIEW_LIST;
     }
     
     viewMode = sender.selectedSegmentIndex;
+    [Crashlytics setIntValue:(int)viewMode forKey:@"viewMode"];
     
     self.collectionView.hidden = viewMode == VIEW_LIST;
     self.tableView.hidden = viewMode != VIEW_LIST;
