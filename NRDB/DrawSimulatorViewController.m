@@ -106,7 +106,7 @@ static NSInteger viewMode;
     // shuffle using Knuth-Fisher-Yates
     for (NSUInteger i = self.cards.count - 1; i; --i)
     {
-        NSUInteger n = arc4random_uniform(i + 1);
+        NSUInteger n = arc4random_uniform((u_int32_t)(i + 1));
         [self.cards exchangeObjectAtIndex:n withObjectAtIndex:i];
     }
     
