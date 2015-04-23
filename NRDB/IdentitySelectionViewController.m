@@ -7,8 +7,6 @@
 //
 
 #import <CSStickyHeaderFlowLayout.h>
-#import <Crashlytics/Crashlytics.h>
-
 #import "IdentitySelectionViewController.h"
 #import "IdentityViewCell.h"
 #import "CardImageViewPopover.h"
@@ -23,6 +21,7 @@
 #import "IdentityCardView.h"
 #import "IdentitySectionHeaderView.h"
 #import "SettingsKeys.h"
+#import "NRCrashlytics.h"
 
 @interface IdentitySelectionViewController ()
 
@@ -77,14 +76,14 @@
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
     
-    [Crashlytics setObjectValue:@"identity-dealloc" forKey:@"collectionView"];
+    CRASH_OBJ_VALUE(@"identity-dealloc", @"collectionView");
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [Crashlytics setObjectValue:@"identity" forKey:@"collectionView"];
+    CRASH_OBJ_VALUE(@"identity", @"collectionView");
     
     self.titleLabel.text = l10n(@"Choose Identity");
     [self.okButton setTitle:l10n(@"Done") forState:UIControlStateNormal];

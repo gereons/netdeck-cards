@@ -11,8 +11,7 @@
 #import "CardImageViewPopover.h"
 #import "Hypergeometric.h"
 #import "CardThumbView.h"
-
-#import <Crashlytics/Crashlytics.h>
+#import "NRCrashlytics.h"
 
 @interface DrawSimulatorViewController ()
 @property Deck* deck;
@@ -55,7 +54,7 @@ static NSInteger viewMode;
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
     
-    [Crashlytics setObjectValue:@"drawsim-dealloc" forKey:@"collectionView"];
+    CRASH_OBJ_VALUE(@"drawsim-dealloc", @"collectionView");
 }
 
 - (void)viewDidLoad
@@ -63,7 +62,7 @@ static NSInteger viewMode;
     [super viewDidLoad];
     [self initCards:YES];
     
-    [Crashlytics setObjectValue:@"drawsim" forKey:@"collectionView"];
+    CRASH_OBJ_VALUE(@"drawsim", @"collectionView");
     
     self.titleLabel.text = l10n(@"Draw Simulator");
     [self.clearButton setTitle:l10n(@"Clear") forState:UIControlStateNormal];

@@ -8,7 +8,6 @@
 
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
-#import <Crashlytics/Crashlytics.h>
 #import <AFNetworking.h>
 #import <SDCAlertView.h>
 
@@ -208,6 +207,8 @@ const NSString* const kANY = @"Any";
 }
 
 #pragma mark - crashlytics delegate
+
+#if !DEBUG
 -(void) crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics
 {
     SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Oops, we crashed :(")
@@ -221,7 +222,7 @@ const NSString* const kANY = @"Any";
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
         }
     };
-
 }
+#endif
 
 @end

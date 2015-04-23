@@ -8,7 +8,6 @@
 
 #import <CSStickyHeaderFlowLayout.h>
 #import <EXTScope.h>
-#import <Crashlytics/Crashlytics.h>
 
 #import "UIAlertAction+NRDB.h"
 #import "BrowserResultViewController.h"
@@ -23,6 +22,7 @@
 #import "BrowserImageCell.h"
 #import "BrowserSectionHeaderView.h"
 #import "Notifications.h"
+#import "NRCrashlytics.h"
 
 @interface BrowserResultViewController ()
 
@@ -73,7 +73,7 @@ static BrowserResultViewController* instance;
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
     
-    [Crashlytics setObjectValue:@"browser-dealloc" forKey:@"collectionView"];
+    CRASH_OBJ_VALUE(@"browser-dealloc", @"collectionView");
 }
 
 - (void)viewDidLoad
@@ -81,7 +81,7 @@ static BrowserResultViewController* instance;
     [super viewDidLoad];
     instance = self;
     
-    [Crashlytics setObjectValue:@"browser" forKey:@"collectionView"];
+    CRASH_OBJ_VALUE(@"browser", @"collectionView");
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     CGFloat scale = [settings floatForKey:BROWSER_VIEW_SCALE];

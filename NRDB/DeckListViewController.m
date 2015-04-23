@@ -10,7 +10,6 @@
 #import <SDCAlertView.h>
 #import <EXTScope.h>
 #import <AFNetworking.h>
-#import <Crashlytics/Crashlytics.h>
 
 #import "UIAlertAction+NRDB.h"
 
@@ -40,6 +39,7 @@
 #import "SettingsKeys.h"
 #import "DeckState.h"
 #import "NRDB.h"
+#import "NRCrashlytics.h"
 
 @interface DeckListViewController ()
 
@@ -90,7 +90,7 @@
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
     
-    [Crashlytics setObjectValue:@"decklist-dealloc" forKey:@"collectionView"];
+    CRASH_OBJ_VALUE(@"decklist-dealloc", @"collectionView");
     
     [self stopHistoryTimer:nil];
 }
@@ -99,7 +99,7 @@
 {
     [super viewDidLoad];
     
-    [Crashlytics setObjectValue:@"decklist" forKey:@"collectionView"];
+    CRASH_OBJ_VALUE(@"decklist", @"collectionView");
     
     self.initializing = YES;
     

@@ -463,6 +463,7 @@
 		3A82623F18E05EC70038B4AC /* deckview_table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deckview_table.png; sourceTree = "<group>"; };
 		3A82624018E05EC70038B4AC /* deckview_card@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deckview_card@2x.png"; sourceTree = "<group>"; };
 		3A82624118E05EC70038B4AC /* deckview_card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deckview_card.png; sourceTree = "<group>"; };
+		3A8309861AE8C22D00FED08A /* NRCrashlytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRCrashlytics.h; sourceTree = "<group>"; };
 		3A85323D1855050900507B9A /* NRSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NRSplitViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A85323E1855050900507B9A /* NRSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NRSplitViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A8532781855084900507B9A /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
@@ -805,6 +806,7 @@
 				3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */,
 				3A3E26E61A004FD7000C6D32 /* UIAlertAction+NRDB.h */,
 				3A3E26E71A005042000C6D32 /* UIAlertAction+NRDB.m */,
+				3A8309861AE8C22D00FED08A /* NRCrashlytics.h */,
 			);
 			name = "Utility Classes / Headers";
 			sourceTree = "<group>";
