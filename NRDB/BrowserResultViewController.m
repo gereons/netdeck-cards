@@ -132,9 +132,11 @@ static BrowserResultViewController* instance;
     [self.tableView registerNib:[UINib nibWithNibName:@"LargeBrowserCell" bundle:nil] forCellReuseIdentifier:@"largeBrowserCell"];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"BrowserImageCell" bundle:nil] forCellWithReuseIdentifier:@"browserImageCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"BrowserSectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"BrowserSectionHeaderView" bundle:nil]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
     self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 0, 0);
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
     self.collectionView.alwaysBounceVertical = YES;
@@ -249,8 +251,16 @@ static BrowserResultViewController* instance;
 
 -(void) reloadViews
 {
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    if (!self.tableView.hidden)
+    {
+        [self.tableView reloadData];
+    }
+    
+    if (!self.collectionView.hidden)
+    {
+        [self.collectionView.collectionViewLayout invalidateLayout];
+        [self.collectionView reloadData];
+    }
 }
 
 #pragma mark tableview

@@ -318,6 +318,7 @@ static NSInteger viewMode = VIEW_LIST;
     }
     else
     {
+        [self.collectionView.collectionViewLayout invalidateLayout];
         [self.collectionView reloadData];
     }
 }
