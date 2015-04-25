@@ -208,12 +208,12 @@ const NSString* const kANY = @"Any";
 
 #pragma mark - crashlytics delegate
 
-#if !DEBUG
--(void) crashlyticsDidDetectCrashDuringPreviousExecution:(Crashlytics *)crashlytics
+-(void) crashlyticsDidDetectCrashDuringPreviousExecution:(id)crashlytics
 {
     SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Oops, we crashed :(")
                                                message:l10n(@"Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.")
                                                buttons:@[l10n(@"Not now"), l10n(@"OK")]];
+    
     alert.didDismissHandler = ^(NSInteger buttonIndex) {
         if (buttonIndex == 1)
         {
@@ -223,6 +223,5 @@ const NSString* const kANY = @"Any";
         }
     };
 }
-#endif
 
 @end

@@ -8,9 +8,9 @@
 
 #import "DetailViewManager.h"
 #import "NRSplitViewController.h"
-#import <Crashlytics/Crashlytics.h>
+#import "NRCrashlytics.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, CrashlyticsDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate CRASHLYTICS_DELEGATE>
 
 @property (strong, nonatomic) UIWindow *window;
 

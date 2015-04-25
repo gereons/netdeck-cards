@@ -15,11 +15,13 @@
 
 #define CRASH_OBJ_VALUE(value, key) [Crashlytics setObjectValue:value forKey:key]
 #define CRASH_INT_VALUE(value, key) [Crashlytics setIntValue:value forKey:key];
+#define CRASHLYTICS_DELEGATE    , CrashlyticsDelegate
 
 #else
 
 #define CRASH_OBJ_VALUE(value, key) /* nop */
 #define CRASH_INT_VALUE(value, key) /* nop */
+#define CRASHLYTICS_DELEGATE        /* nop */
 
 #endif // DEBUG
 #endif // NR_CRASHLYTICS_H
