@@ -378,8 +378,6 @@
         
         if (indexPath)
         {
-            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            
             NSArray* decks = self.decks[indexPath.section];
             Deck* deck = decks[indexPath.row];
             
@@ -462,6 +460,7 @@
                 self.popup = nil;
             }]];
             
+            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
             UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
             popover.sourceRect = cell.frame;
             popover.sourceView = self.tableView;

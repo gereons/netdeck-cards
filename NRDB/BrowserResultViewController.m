@@ -137,9 +137,13 @@ static BrowserResultViewController* instance;
     
     self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 0, 0);
-    UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
-    [self.collectionView addGestureRecognizer:pinch];
     self.collectionView.alwaysBounceVertical = YES;
+    
+    UIGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
+    [self.collectionView addGestureRecognizer:pinch];
+    
+    UIGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGesture:)];
+    [self.collectionView addGestureRecognizer:longPress];
     
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -405,6 +409,26 @@ static BrowserResultViewController* instance;
     
     NSAssert(header != nil, @"no header?");
     return header;
+}
+
+#pragma mark long press gesture
+
+-(void) longPressGesture:(UIGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
+        CGPoint point = [gesture locationInView:self.collectionView];
+        NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:point];
+        if (indexPath)
+        {
+            UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+            
+            NSArray* arr = self.values[indexPath.section];
+            Card* card = arr[indexPath.row];
+            
+            [CardImageViewPopover showForCard:card fromRect:cell.frame inView:self.collectionView];
+        }
+    }
 }
 
 #pragma mark pinch gesture
