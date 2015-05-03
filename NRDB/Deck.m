@@ -510,16 +510,14 @@
     
     [self sort];
     
+    [sections addObject:l10n(@"Identity")];
     if (self.identityCc)
     {
-        [sections addObject:self.identityCc.card.typeStr];
         [cards addObject:@[ self.identityCc ]];
     }
     else
     {
-        // if there is no identity, get the typeStr of a known one and return a NSNull instance in its place
-        Card* dummyId = [Card cardByCode:ANDROMEDA];
-        [sections addObject:dummyId.typeStr];
+        // if there is no identity, return a NSNull instance in its place
         [cards addObject:@[ [NSNull null] ]];
     }
     
