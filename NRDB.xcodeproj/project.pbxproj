@@ -49,7 +49,6 @@
 		3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */; };
 		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
-		3A3D841519F1A24F00642CE7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3D841419F1A24F00642CE7 /* StoreKit.framework */; };
 		3A3E26E81A005042000C6D32 /* UIAlertAction+NRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlertAction+NRDB.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
 		3A40EA4E19FD2CBE00B9CFDA /* 890-sort-ascending.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */; };
@@ -619,7 +618,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A3D841519F1A24F00642CE7 /* StoreKit.framework in Frameworks */,
 				3A9CE56718E0CA2A007A26CD /* MessageUI.framework in Frameworks */,
 				3A994275184B8CBB004B6E05 /* MobileCoreServices.framework in Frameworks */,
 				3A994273184B8CB4004B6E05 /* CoreText.framework in Frameworks */,

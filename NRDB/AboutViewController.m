@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <StoreKit/StoreKit.h>
 #import <MessageUI/MessageUI.h>
 #import <SDCAlertView.h>
 
@@ -14,7 +13,6 @@
 #import "AppDelegate.h"
 
 @interface AboutViewController ()
-@property SKStoreProductViewController* storeViewController;
 @property MFMailComposeViewController *mailer;
 @property UIBarButtonItem* backButton;
 @end
@@ -29,7 +27,6 @@
 -(void) dealloc
 {
     self.webView.delegate = nil;
-    self.storeViewController.delegate = nil;
 }
 
 - (void)viewDidLoad
@@ -88,14 +85,11 @@
 
 -(void) rateApp
 {
-    self.storeViewController = [[SKStoreProductViewController alloc] init];
+    NSString* appURL = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/%@/app/id%@",
+                        [[NSLocale preferredLanguages] objectAtIndex:0],
+                        @"865963530"];
     
-    NSNumber *appId = @(865963530);
-    
-    [self.storeViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:appId} completionBlock:nil];
-    self.storeViewController.delegate = self;
-    
-    [self presentViewController:self.storeViewController animated:NO completion:nil];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appURL]];
 }
 
 -(void) sendEmail
@@ -111,14 +105,6 @@
         [self.mailer setSubject:subject];
         [self presentViewController:self.mailer animated:NO completion:nil];
     }
-}
-
-#pragma mark store kit
-
-- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController
-{
-    [self.storeViewController dismissViewControllerAnimated:NO completion:nil];
-    self.storeViewController = nil;
 }
 
 #pragma mark mail compose
