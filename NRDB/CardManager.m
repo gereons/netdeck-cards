@@ -38,6 +38,8 @@ static int maxAgendaPoints;
 static int maxTrash;
 static NSString* iceBreakerType;
 
+static NSDictionary* cardAliases;   // code -> alias
+
 +(void) initialize
 {
     allCards = [NSMutableDictionary dictionary];
@@ -53,6 +55,20 @@ static NSString* iceBreakerType;
     sortedIdentities = [@[ [NSMutableArray array], [NSMutableArray array] ] mutableCopy];
     
     iceBreakerType = l10n(@"Icebreaker");
+    
+    cardAliases = @{
+        @"08034": @"Franklin",  // crick
+        @"02085": @"HQI",
+        @"02107": @"RDI",
+        @"03046": @"SMC",
+        @"06033": @"David",
+        @"05039": @"SW35",      // unreg. s&w '35
+        @"07032": @"IHW",       // I've had worse
+        @"06005": @"NEH",
+        @"01054": @"EtF",
+        @"02109": @"NACH",
+        @"03035": @"LARLA",
+    };
 }
 
 +(Card*) cardByCode:(NSString*)code
@@ -196,7 +212,7 @@ static NSString* iceBreakerType;
         BOOL ok = NO;
         if (data)
         {
-            ok = [self addEnglishNames:data saveFile:NO];
+            ok = [self addAdditionalNames:data saveFile:NO];
         }
     }
     return ok;
@@ -220,8 +236,9 @@ static NSString* iceBreakerType;
     return [self setupFromJsonData:json];
 }
 
-+(BOOL) addEnglishNames:(NSArray *)json saveFile:(BOOL)saveFile
++(BOOL) addAdditionalNames:(NSArray *)json saveFile:(BOOL)saveFile
 {
+    // add english names from json
     if (saveFile)
     {
         NSString* cardsFile = [CardManager filenameEn];
@@ -237,6 +254,14 @@ static NSString* iceBreakerType;
         NSAssert(card != nil, @"card %@ not found", code);
         card.name_en = [name_en stringByReplacingHTMLEntities];
     }
+    
+    // add hard-coded aliases
+    for (NSString* code in cardAliases.allKeys)
+    {
+        Card* card = [Card cardByCode:code];
+        card.alias = [cardAliases objectForKey:code];
+    }
+    
     return YES;
 }
 

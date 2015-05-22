@@ -36,6 +36,6 @@
 +(BOOL) setupFromFiles;
 +(void) removeFiles;
 +(BOOL) setupFromNrdbApi:(NSArray*)json;
-+(BOOL) addEnglishNames:(NSArray*)json saveFile:(BOOL)saveFile;
++(BOOL) addAdditionalNames:(NSArray*)json saveFile:(BOOL)saveFile;
 
 @end

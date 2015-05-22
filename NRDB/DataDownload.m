@@ -191,7 +191,7 @@ static DataDownload* instance;
     }
     
     [CardManager setupFromNrdbApi:self.localizedCards];
-    [CardManager addEnglishNames:self.englishCards saveFile:YES];
+    [CardManager addAdditionalNames:self.englishCards saveFile:YES];
     [CardSets setupFromNrdbApi:self.localizedSets];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
