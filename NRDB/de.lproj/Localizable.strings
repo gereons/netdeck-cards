@@ -70,6 +70,7 @@
 "Deck needs cards." = "Das Deck hat keine Karten";
 "Cards up to %@" = "Karten bis zu %@";
 "Copy of %@" = "Kopie von %@";
+"(Copy)" = "(Kopie)";
 "Sort" = "Sortierung";
 "by Type" = "nach Typ";
 "by Faction" = "nach Fraktion";

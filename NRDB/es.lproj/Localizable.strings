@@ -66,6 +66,7 @@
 "Deck needs cards." = "El mazo necesita cartas";
 "Cards up to %@" = "Cartas hasta %@";
 "Copy of %@" = "Copia de %@";
+"(Copy)" = "(Copia)";
 
 // deck invalidity reasons
 "No Identity" = "Sin Identidad";

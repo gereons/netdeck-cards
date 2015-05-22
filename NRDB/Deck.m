@@ -394,8 +394,29 @@
 {
     Deck* newDeck = [[Deck alloc] init];
     
-    newDeck.name = [NSString stringWithFormat:l10n(@"Copy of %@"), self.name];
-    newDeck->_identityCc = [CardCounter initWithCard:self.identity];
+    NSString* oldName = self.name;
+    NSString* newName = [NSString stringWithFormat:@"%@ %@", oldName, l10n(@"(Copy)")];
+                         
+    NSString* regexPattern = @"\\d+$";
+    NSRegularExpression* regex = [[NSRegularExpression alloc] initWithPattern:regexPattern options:0 error:nil];
+    
+    NSArray* matches = [regex matchesInString:oldName options:0 range:NSMakeRange(0, oldName.length)];
+    if (matches.count > 0)
+    {
+        NSTextCheckingResult* match = [matches firstObject];
+        NSString* numberStr = [oldName substringWithRange:match.range];
+        int number = numberStr.intValue;
+        ++number;
+        
+        newName = [oldName substringToIndex:match.range.location];
+        newName = [newName stringByAppendingString:[NSString stringWithFormat:@"%d", number]];
+    }
+    
+    newDeck.name = newName;
+    if (self.identity != nil)
+    {
+        newDeck->_identityCc = [CardCounter initWithCard:self.identity];
+    }
     newDeck->_isDraft = self.isDraft;
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
     newDeck->_role = self.role;

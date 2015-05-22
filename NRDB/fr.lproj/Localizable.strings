@@ -66,6 +66,7 @@
 "Deck needs cards." = "Ce deck a besoin dd cartes";
 "Cards up to %@" = "Cartes jusqu'à %@";
 "Copy of %@" = "Copie de %@";
+"(Copy)" = "(Copie)";
 
 // raisons d'invalidité du deck
 "No Identity" = "Aucune identité";

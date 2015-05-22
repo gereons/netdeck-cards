@@ -20,6 +20,8 @@
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"
 
+#warning TODO: add card name aliases (rdi, hqi, smc, david, franklin=crick)
+
 const NSString* const kANY = @"Any";
 
 @implementation AppDelegate
