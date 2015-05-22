@@ -208,8 +208,16 @@ const NSString* const kANY = @"Any";
 
 #pragma mark - crashlytics delegate
 
--(void) crashlyticsDidDetectCrashDuringPreviousExecution:(id)crashlytics
+@class CLSReport;
+- (void)crashlyticsDidDetectReportForLastExecution:(CLSReport *)report completionHandler:(void (^)(BOOL submit))completionHandler
 {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (completionHandler)
+        {
+            completionHandler(YES);
+        }
+    });
+    
     SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Oops, we crashed :(")
                                                message:l10n(@"Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.")
                                                buttons:@[l10n(@"Not now"), l10n(@"OK")]];

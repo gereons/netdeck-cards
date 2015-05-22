@@ -48,6 +48,8 @@
 		3A3622901849320C007F2854 /* NRDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36228F1849320C007F2854 /* NRDBTests.m */; };
 		3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */; };
 		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
+		3A38091B1B0F8ACE00042A67 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A38091A1B0F8ACE00042A67 /* Fabric.framework */; };
+		3A38091D1B0F8AE300042A67 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A38091C1B0F8AE300042A67 /* libz.dylib */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
 		3A3E26E81A005042000C6D32 /* UIAlertAction+NRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlertAction+NRDB.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
@@ -330,6 +332,8 @@
 		3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPipsView.xib; sourceTree = "<group>"; };
 		3A36A0FC1974F79300D8D26A /* SmallPipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallPipsView.h; sourceTree = "<group>"; };
 		3A36A0FD1974F79300D8D26A /* SmallPipsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallPipsView.m; sourceTree = "<group>"; };
+		3A38091A1B0F8ACE00042A67 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		3A38091C1B0F8AE300042A67 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NROutlineLabel.h; sourceTree = "<group>"; };
 		3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NROutlineLabel.m; sourceTree = "<group>"; };
 		3A3D841419F1A24F00642CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -618,6 +622,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A38091D1B0F8AE300042A67 /* libz.dylib in Frameworks */,
 				3A9CE56718E0CA2A007A26CD /* MessageUI.framework in Frameworks */,
 				3A994275184B8CBB004B6E05 /* MobileCoreServices.framework in Frameworks */,
 				3A994273184B8CB4004B6E05 /* CoreText.framework in Frameworks */,
@@ -628,6 +633,7 @@
 				3A3622661849320C007F2854 /* UIKit.framework in Frameworks */,
 				3A3622621849320C007F2854 /* Foundation.framework in Frameworks */,
 				3A814EC719ADBF1C008C3285 /* Crashlytics.framework in Frameworks */,
+				3A38091B1B0F8ACE00042A67 /* Fabric.framework in Frameworks */,
 				ED15EBD876484EC4BAF34F26 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -678,6 +684,8 @@
 		3A3622601849320C007F2854 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A38091C1B0F8AE300042A67 /* libz.dylib */,
+				3A38091A1B0F8ACE00042A67 /* Fabric.framework */,
 				3A3D841419F1A24F00642CE7 /* StoreKit.framework */,
 				3A814EC619ADBF1C008C3285 /* Crashlytics.framework */,
 				3A9CE56618E0CA2A007A26CD /* MessageUI.framework */,
@@ -1924,7 +1932,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1937,7 +1945,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				OTHER_LDFLAGS = "-ObjC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "34ac3517-d0ba-46ab-b16f-e6ceb1c42d44";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Externals/**";
@@ -1952,7 +1960,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1964,7 +1972,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "34ac3517-d0ba-46ab-b16f-e6ceb1c42d44";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Core/Externals/DTFoundation/**";
 				WRAPPER_EXTENSION = app;
 			};

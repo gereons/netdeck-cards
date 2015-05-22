@@ -13,8 +13,8 @@
 
 #import <Crashlytics/Crashlytics.h>
 
-#define CRASH_OBJ_VALUE(value, key) [Crashlytics setObjectValue:value forKey:key]
-#define CRASH_INT_VALUE(value, key) [Crashlytics setIntValue:value forKey:key];
+#define CRASH_OBJ_VALUE(value, key) [[Crashlytics sharedInstance] setObjectValue:value forKey:key]
+#define CRASH_INT_VALUE(value, key) [[Crashlytics sharedInstance] setIntValue:value forKey:key]
 #define CRASHLYTICS_DELEGATE    , CrashlyticsDelegate
 
 #else
