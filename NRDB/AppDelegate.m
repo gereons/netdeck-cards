@@ -20,8 +20,6 @@
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"
 
-#warning TODO: add card name aliases (rdi, hqi, smc, david, franklin=crick)
-
 const NSString* const kANY = @"Any";
 
 @implementation AppDelegate
@@ -55,7 +53,7 @@ const NSString* const kANY = @"Any";
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
         
-#if !DEBUG
+#if USE_CRASHLYTICS
     [Crashlytics startWithAPIKey:@"fe0f0f5f919be6211c1de668d91332e311ddad9e" delegate:self];
 #endif
     
@@ -210,7 +208,7 @@ const NSString* const kANY = @"Any";
 
 #pragma mark - crashlytics delegate
 
-@class CLSReport;
+#if USE_CRASHLYTICS
 - (void)crashlyticsDidDetectReportForLastExecution:(CLSReport *)report completionHandler:(void (^)(BOOL submit))completionHandler
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -233,5 +231,6 @@ const NSString* const kANY = @"Any";
         }
     };
 }
+#endif
 
 @end
