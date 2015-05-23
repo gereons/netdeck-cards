@@ -58,16 +58,11 @@ static NSDictionary* cardAliases;   // code -> alias
     
     cardAliases = @{
         @"08034": @"Franklin",  // crick
-        @"02085": @"HQI",
-        @"02107": @"RDI",
-        @"03046": @"SMC",
-        @"06033": @"David",
+        @"02085": @"HQI",       // hq interface
+        @"02107": @"RDI",       // r&d interface
+        @"06033": @"David",     // d4v1d
         @"05039": @"SW35",      // unreg. s&w '35
-        @"07032": @"IHW",       // I've had worse
-        @"06005": @"NEH",
-        @"01054": @"EtF",
-        @"02109": @"NACH",
-        @"03035": @"LARLA",
+        @"03035": @"LARLA",     // levy ar lab access
     };
 }
 
@@ -253,6 +248,34 @@ static NSDictionary* cardAliases;   // code -> alias
         Card* card = [Card cardByCode:code];
         NSAssert(card != nil, @"card %@ not found", code);
         card.name_en = [name_en stringByReplacingHTMLEntities];
+    }
+    
+    // add automatic aliases like "Self Modifying Code" -> "SMC"
+    for (Card* card in allCards.allValues)
+    {
+        NSString* regexPattern = @"^|[- ]\\w";
+        NSRegularExpression* regex = [[NSRegularExpression alloc] initWithPattern:regexPattern options:0 error:nil];
+        
+        NSMutableString* alias = [NSMutableString string];
+        NSArray* matches = [regex matchesInString:card.name options:0 range:NSMakeRange(0, card.name.length)];
+        for (NSTextCheckingResult* match in matches)
+        {
+            NSRange range = match.range;
+            range.length = 1;
+            if (range.location > 0)
+            {
+                range.location++;
+            }
+            NSString* ch = [card.name substringWithRange:range];
+            [alias appendString:ch];
+        }
+        
+        if (card.name.length > 2 && alias.length > 1)
+        {
+            card.alias = alias;
+        }
+        
+        // NSLog(@"%@ -> %@", card.name, alias);
     }
     
     // add hard-coded aliases

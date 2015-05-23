@@ -359,12 +359,12 @@
         switch (self.searchScope)
         {
             case NRSearchAll:
-                predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@) OR (name_en CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (alias BEGINSWITH[cd] %@)",
+                predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@) OR (name_en CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (alias CONTAINS[cd] %@)",
                              self.text, self.text, self.text, self.text];
                 break;
             case NRSearchName:
             {
-                predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@) OR (name_en CONTAINS[cd] %@) OR (alias BEGINSWITH[cd] %@)", self.text, self.text, self.text];
+                predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@) OR (name_en CONTAINS[cd] %@) OR (alias CONTAINS[cd] %@)", self.text, self.text, self.text];
                 unichar ch = [self.text characterAtIndex:0];
                 if (isdigit(ch))
                 {
