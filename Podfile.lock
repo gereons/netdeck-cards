@@ -1,26 +1,26 @@
 PODS:
-  - AFNetworking (2.5.3):
-    - AFNetworking/NSURLConnection (= 2.5.3)
-    - AFNetworking/NSURLSession (= 2.5.3)
-    - AFNetworking/Reachability (= 2.5.3)
-    - AFNetworking/Security (= 2.5.3)
-    - AFNetworking/Serialization (= 2.5.3)
-    - AFNetworking/UIKit (= 2.5.3)
-  - AFNetworking/NSURLConnection (2.5.3):
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.3):
+  - AFNetworking/NSURLSession (2.5.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.3)
-  - AFNetworking/Security (2.5.3)
-  - AFNetworking/Serialization (2.5.3)
-  - AFNetworking/UIKit (2.5.3):
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - CorePlot (99.99.99)
+  - CorePlot (1.6)
   - CSStickyHeaderFlowLayout (0.2.5)
   - Dropbox-Sync-API-SDK (3.1.2)
   - DTCoreText (1.6.15):
@@ -36,7 +36,7 @@ PODS:
     - DTFoundation/Core
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
-  - InAppSettingsKit (2.5.2)
+  - InAppSettingsKit (2.6)
   - JRSwizzle (1.0)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT (= 0.4.1)
@@ -91,9 +91,9 @@ PODS:
     - PromiseKit/UIViewController (= 1.5.3)
     - PromiseKit/Until (= 1.5.3)
     - PromiseKit/When (= 1.5.3)
-  - PromiseKit-AFNetworking (0.1.6):
+  - PromiseKit-AFNetworking (0.1.7):
     - AFNetworking (~> 2.0)
-    - PromiseKit/Promise
+    - PromiseKit/Promise (~> 1.5)
     - PromiseKit/When
   - PromiseKit/CALayer (1.5.3):
     - PromiseKit/Promise
@@ -119,7 +119,7 @@ PODS:
   - PromiseKit/When (1.5.3):
     - PromiseKit/Promise
   - RBBAnimation (0.4.0)
-  - SDCAlertView (2.4.1):
+  - SDCAlertView (2.5):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.3)
@@ -145,26 +145,26 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 717632bbc982287400e6ab0bd7747559b2431100
+    :commit: 436774da2ac6981dbaa5aa7cb4293f4a94a43c96
     :git: https://github.com/core-plot/core-plot.git
 
 SPEC CHECKSUMS:
-  AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
-  CorePlot: 2f3dfef8f41426fb15b07bef83e7a1c23a9e004a
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  CorePlot: 820901f6c147f2d84549ffa1f0902869f980d74d
   CSStickyHeaderFlowLayout: 75e439a59c23f609091d9a784c7b5db7de583f1f
   Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 13ce06e63204a3b47c9db974e3d9be982bb0b1ed
   DTFoundation: 1d28080c20c3da041706545363f8238ab53a6204
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
-  InAppSettingsKit: 90b3f9b99d857f95fd1422467d857de143cac099
+  InAppSettingsKit: cc56d3ec45f11352a16d5b210da8a3fa1b9d05ed
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   OMGHTTPURLRQ: f8c515dfd2f57a5d74c710978f600231f52afec5
   PromiseKit: 7ecae7c190ab92ae00aae6ba7f88942107532b8f
-  PromiseKit-AFNetworking: fbdd97205d6a78bb94d96d0d56311d1733569aae
+  PromiseKit-AFNetworking: 364d4cb942a7278f5219c62dc822867655954a8f
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
-  SDCAlertView: ff4c6c76ccdfcd0fa20e0ee5e044630f93fb3d12
+  SDCAlertView: 8d7d952033c36487bcb20709341ef5aa48a02e79
   SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
-COCOAPODS: 0.37.0
+COCOAPODS: 0.37.2
