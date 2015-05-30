@@ -627,6 +627,7 @@
         return;
     }
     
+    [self.deck mergeRevisions];
     [DeckHistoryPopup showForDeck:self.deck inViewController:self];
 }
 
