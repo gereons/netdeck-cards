@@ -105,8 +105,8 @@
                                                                multiplier:1.f constant:8.f]];
     
     // add parallax effect to cell
-    [self addMotionEffect:[self effectX:10]];
-    [self addMotionEffect:[self effectY:10]];
+    // [self addMotionEffect:[self effectX:10]];
+    // [self addMotionEffect:[self effectY:10]];
     
     // rounded corners for images
     self.image1.layer.masksToBounds = YES;
@@ -115,6 +115,14 @@
     self.image2.layer.cornerRadius = 10;
     self.image3.layer.masksToBounds = YES;
     self.image3.layer.cornerRadius = 10;
+}
+
+-(void) prepareForReuse
+{
+    self.image1.image = nil;
+    self.image2.image = nil;
+    self.image3.image = nil;
+    self.detailView.hidden = YES;
 }
 
 -(void) setCc:(CardCounter *)cc

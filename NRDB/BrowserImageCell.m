@@ -100,6 +100,7 @@
 -(void) prepareForReuse
 {
     self.image.image = nil;
+    self.detailView.hidden = YES;
 }
 
 -(void) setCard:(Card *)card

@@ -412,6 +412,7 @@ static NSCache* memCache;
 +(UIImage*) difficultyIcon { return difficultyIcon; }
 +(UIImage*) influenceIcon { return influenceIcon; }
 +(UIImage*) hexTile { return hexTile; }
+
 +(UIImage*) placeholderFor:(NRRole)role
 {
     return role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder;
