@@ -70,6 +70,7 @@
     self.iask.showDoneButton = NO;
     self.iask.delegate = self;
 
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.topItem.title = l10n(@"Settings");
     [self.navigationController setViewControllers:@[ self.iask ]];
     

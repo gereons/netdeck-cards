@@ -62,6 +62,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
     self.tableView.scrollEnabled = NO;
     
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    
     self.title = @"Net Deck";
     
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];

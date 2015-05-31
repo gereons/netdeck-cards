@@ -94,6 +94,7 @@ static NRFilter _filterType = NRFilterAll;
     
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Decks")
                                       style:UIBarButtonItemStylePlain

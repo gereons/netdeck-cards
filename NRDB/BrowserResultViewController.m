@@ -101,6 +101,7 @@ static BrowserResultViewController* instance;
     self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
     [self doToggleView:viewSelector.selectedSegmentIndex];
     
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.leftBarButtonItems = @[
                                    self.toggleViewButton,

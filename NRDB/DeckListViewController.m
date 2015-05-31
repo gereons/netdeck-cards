@@ -160,6 +160,7 @@
     UIView* footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
     
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     
     // left buttons

@@ -100,6 +100,7 @@ static NSString* filterText;
 {
     [super viewDidAppear:animated];
     
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.topItem.title = l10n(@"Import Deck");
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
