@@ -295,6 +295,7 @@ static NSInteger viewMode = VIEW_LIST;
     [self.apSlider setThumbImage:[UIImage imageNamed:@"point_slider"] forState:UIControlStateNormal];
     
     self.searchField.placeholder = l10n(@"Search Cards");
+    self.searchField.clearButtonMode = UITextFieldViewModeAlways;
     
     [self clearFilters];
 }

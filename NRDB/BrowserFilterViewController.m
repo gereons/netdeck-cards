@@ -90,6 +90,7 @@ static NSMutableArray* subtypeCollapsedSections;
     self.scope = NRSearchAll;
     self.textField.delegate = self;
     self.textField.placeholder = l10n(@"Search Cards");
+    self.textField.clearButtonMode = UITextFieldViewModeAlways;
     
     // sliders
     int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
