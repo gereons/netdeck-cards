@@ -204,10 +204,9 @@ static NSDictionary* cardAliases;   // code -> alias
     if (ok && [fileMgr fileExistsAtPath:cardsEnFile])
     {
         NSArray* data = [NSArray arrayWithContentsOfFile:cardsEnFile];
-        BOOL ok = NO;
         if (data)
         {
-            ok = [self addAdditionalNames:data saveFile:NO];
+            [self addAdditionalNames:data saveFile:NO];
         }
     }
     return ok;
@@ -231,7 +230,7 @@ static NSDictionary* cardAliases;   // code -> alias
     return [self setupFromJsonData:json];
 }
 
-+(BOOL) addAdditionalNames:(NSArray *)json saveFile:(BOOL)saveFile
++(void) addAdditionalNames:(NSArray *)json saveFile:(BOOL)saveFile
 {
     // add english names from json
     if (saveFile)
@@ -284,8 +283,6 @@ static NSDictionary* cardAliases;   // code -> alias
         Card* card = [Card cardByCode:code];
         card.alias = [cardAliases objectForKey:code];
     }
-    
-    return YES;
 }
 
 +(BOOL) setupFromJsonData:(NSArray*)json

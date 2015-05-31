@@ -52,7 +52,6 @@ static TableData* allFactions;
 
     NSArray* factionSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
     NSMutableArray* factions = [NSMutableArray array];
-    factions = [NSMutableArray array];
     [factions addObject:common];
     [factions addObject:runnerFactions];
     [factions addObject:corpFactions];

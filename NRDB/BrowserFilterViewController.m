@@ -422,7 +422,7 @@ static NSMutableArray* subtypeCollapsedSections;
     // NSLog(@"button: %d", button.tag);
     // NSLog(@"value: %@", value ? value : values);
     
-    SEL selector;
+    SEL selector = nil;
     switch (button.tag)
     {
         case TYPE_BUTTON:
