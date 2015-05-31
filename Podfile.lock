@@ -119,7 +119,7 @@ PODS:
   - PromiseKit/When (1.5.3):
     - PromiseKit/Promise
   - RBBAnimation (0.4.0)
-  - SDCAlertView (2.5):
+  - SDCAlertView (2.5.1):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.3)
@@ -127,7 +127,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - CorePlot (from `https://github.com/core-plot/core-plot.git`)
+  - CorePlot
   - CSStickyHeaderFlowLayout
   - Dropbox-Sync-API-SDK
   - DTCoreText
@@ -138,15 +138,6 @@ DEPENDENCIES:
   - PromiseKit-AFNetworking
   - SDCAlertView
   - SVProgressHUD
-
-EXTERNAL SOURCES:
-  CorePlot:
-    :git: https://github.com/core-plot/core-plot.git
-
-CHECKOUT OPTIONS:
-  CorePlot:
-    :commit: 436774da2ac6981dbaa5aa7cb4293f4a94a43c96
-    :git: https://github.com/core-plot/core-plot.git
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
@@ -163,7 +154,7 @@ SPEC CHECKSUMS:
   PromiseKit: 7ecae7c190ab92ae00aae6ba7f88942107532b8f
   PromiseKit-AFNetworking: 364d4cb942a7278f5219c62dc822867655954a8f
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
-  SDCAlertView: 8d7d952033c36487bcb20709341ef5aa48a02e79
+  SDCAlertView: afdedd7ff3edef6117abbcf3ff201f0f0b960b93
   SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 

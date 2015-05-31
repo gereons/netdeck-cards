@@ -19,7 +19,7 @@
 #import "CardImageViewPopover.h"
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"
-
+			
 const NSString* const kANY = @"Any";
 
 @implementation AppDelegate
