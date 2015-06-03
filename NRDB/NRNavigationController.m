@@ -42,8 +42,12 @@
 
 - (void)handlePopGesture:(UIGestureRecognizer *)gesture
 {
-    // NSLog(@"handle gesture, state=%d", gesture.state);
-    if (gesture.state == UIGestureRecognizerStateEnded)
+    CGPoint point = [gesture locationInView:self.view];
+    CGRect frame = self.view.frame;
+    // NSLog(@"handle gesture, state=%ld, %@", (long)gesture.state, NSStringFromCGPoint(point));
+    
+    // pop if the gesture ended AND the location of the touch release was on the right hand side of the master view
+    if (gesture.state == UIGestureRecognizerStateEnded && point.x > frame.size.width/2)
     {
         // NSLog(@"end swipe, pop");
         [self popViewControllerAnimated:NO];
