@@ -90,16 +90,12 @@
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
     
-    CRASH_OBJ_VALUE(@"decklist-dealloc", @"collectionView");
-    
     [self stopHistoryTimer:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    CRASH_OBJ_VALUE(@"decklist", @"collectionView");
     
     self.initializing = YES;
     

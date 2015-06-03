@@ -121,21 +121,15 @@ static NSInteger viewMode = VIEW_LIST;
     
     self.searchField.delegate = nil;
     self.searchField = nil;
-    
-    CRASH_OBJ_VALUE(@"filter-dealloc", @"collectionView");
-    CRASH_INT_VALUE((int)viewMode, @"viewMode");
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    CRASH_OBJ_VALUE(@"filter", @"collectionView");
-    
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     showAllFilters = [settings boolForKey:SHOW_ALL_FILTERS];
     viewMode = [settings integerForKey:FILTER_VIEW_MODE];
-    CRASH_INT_VALUE((int)viewMode, @"viewMode");
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
@@ -244,7 +238,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) deckChanged:(NSNotification*)notification
 {
-    CRASH_OBJ_VALUE(@"deckChanged", @"notification");
     Card* identity = self.deckListViewController.deck.identity;
     if (self.role == NRRoleCorp && identity != nil)
     {
@@ -265,7 +258,6 @@ static NSInteger viewMode = VIEW_LIST;
     }
     
     [self reloadData];
-    CRASH_OBJ_VALUE(@"n/a", @"notification");
 }
 
 -(void) initFilters
@@ -373,7 +365,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) addTopCard:(NSNotification*)sender
 {
-    CRASH_OBJ_VALUE(@"addTopCard", @"notification");
     if (self.cards.count > 0)
     {
         NSArray* arr = self.cards[0];
@@ -384,7 +375,6 @@ static NSInteger viewMode = VIEW_LIST;
             [self reloadData];
         }
     }
-    CRASH_OBJ_VALUE(@"n/a", @"notification");
 }
 
 #pragma mark keyboard show/hide
@@ -396,7 +386,6 @@ static NSInteger viewMode = VIEW_LIST;
         return;
     }
     
-    CRASH_OBJ_VALUE(@"showKeyboard", @"notification");
     CGFloat topY = self.searchSeparator.frame.origin.y;
     
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -412,7 +401,6 @@ static NSInteger viewMode = VIEW_LIST;
         self.tableView.frame = newFrame;
         self.collectionView.frame = newFrame;
     }];
-    CRASH_OBJ_VALUE(@"n/a", @"notification");
 }
 
 -(void) willHideKeyboard:(NSNotification*)sender
@@ -421,7 +409,7 @@ static NSInteger viewMode = VIEW_LIST;
     {
         return;
     }
-    CRASH_OBJ_VALUE(@"hideKeyboard", @"notification");
+
     // explicitly resignFirstResponser, since the kb may have been auto-dismissed by the identity selection form
     [self.searchField resignFirstResponder];
     NSTimeInterval animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
@@ -429,7 +417,6 @@ static NSInteger viewMode = VIEW_LIST;
     [UIView animateWithDuration:animDuration animations:^{
         [self setResultFrames];
     }];
-    CRASH_OBJ_VALUE(@"n/a", @"notification");
 }
 
 -(void) nameAlertWillAppear:(id)notification
@@ -529,8 +516,6 @@ static NSInteger viewMode = VIEW_LIST;
     }
     
     viewMode = sender.selectedSegmentIndex;
-    CRASH_INT_VALUE((int)viewMode, @"viewMode");
-    
     self.collectionView.hidden = viewMode == VIEW_LIST;
     self.tableView.hidden = viewMode != VIEW_LIST;
     

@@ -53,16 +53,12 @@ static NSInteger viewMode;
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
-    
-    CRASH_OBJ_VALUE(@"drawsim-dealloc", @"collectionView");
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self initCards:YES];
-    
-    CRASH_OBJ_VALUE(@"drawsim", @"collectionView");
     
     self.titleLabel.text = l10n(@"Draw Simulator");
     [self.clearButton setTitle:l10n(@"Clear") forState:UIControlStateNormal];

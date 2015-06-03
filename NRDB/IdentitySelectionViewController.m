@@ -74,16 +74,12 @@
     
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
-    self.collectionView = nil;
-    
-    CRASH_OBJ_VALUE(@"identity-dealloc", @"collectionView");
+    self.collectionView = nil;    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    CRASH_OBJ_VALUE(@"identity", @"collectionView");
     
     self.titleLabel.text = l10n(@"Choose Identity");
     [self.okButton setTitle:l10n(@"Done") forState:UIControlStateNormal];

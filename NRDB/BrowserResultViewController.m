@@ -72,16 +72,12 @@ static BrowserResultViewController* instance;
     self.collectionView.delegate = nil;
     self.collectionView.dataSource = nil;
     self.collectionView = nil;
-    
-    CRASH_OBJ_VALUE(@"browser-dealloc", @"collectionView");
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     instance = self;
-    
-    CRASH_OBJ_VALUE(@"browser", @"collectionView");
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     CGFloat scale = [settings floatForKey:BROWSER_VIEW_SCALE];
