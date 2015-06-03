@@ -141,6 +141,12 @@
         {
             [self.factionSelector removeSegmentAtIndex:4 animated:NO];
         }
+        
+        [self.factionSelector insertSegmentWithTitle:[Faction name:NRFactionAdam] atIndex:4 animated:NO];
+        [self.factionSelector insertSegmentWithTitle:[Faction name:NRFactionApex] atIndex:5 animated:NO];
+        [self.factionSelector insertSegmentWithTitle:[Faction shortName:NRFactionSunnyLebeau] atIndex:6 animated:NO];
+
+        self.factionSelectorWidth.constant += 100;
     }
     else
     {
@@ -149,6 +155,7 @@
         [self.factionSelector setTitle:[Faction shortName:NRFactionNBN] forSegmentAtIndex:2];
         [self.factionSelector setTitle:[Faction shortName:NRFactionJinteki] forSegmentAtIndex:3];
         [self.factionSelector setTitle:[Faction shortName:NRFactionWeyland] forSegmentAtIndex:4];
+
         if (includeDraft)
         {
             [self.factionSelector setTitle:[Faction name:NRFactionNeutral] forSegmentAtIndex:5];
@@ -305,10 +312,17 @@
             self.selectedFaction = self.role == NRRoleRunner ? NRFactionShaper : NRFactionJinteki;
             break;
         case 4:
-            self.selectedFaction = self.role == NRRoleRunner ? NRFactionNeutral : NRFactionWeyland;
+            self.selectedFaction = self.role == NRRoleRunner ? NRFactionAdam : NRFactionWeyland;
             break;
         case 5:
-            NSAssert(self.role == NRRoleCorp, @"role mismatch");
+            self.selectedFaction = self.role == NRRoleRunner ? NRFactionApex : NRFactionNeutral;
+            break;
+        case 6:
+            NSAssert(self.role == NRRoleRunner, @"role mismatch");
+            self.selectedFaction = NRFactionSunnyLebeau;
+            break;
+        case 7:
+            NSAssert(self.role == NRRoleRunner, @"role mismatch");
             self.selectedFaction = NRFactionNeutral;
             break;
     }

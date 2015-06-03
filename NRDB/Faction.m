@@ -16,12 +16,27 @@ static NSMutableDictionary* faction2name;
 
 static NSMutableArray* runnerFactions;
 static NSMutableArray* corpFactions;
+static NSDictionary* code2faction;
 static TableData* allFactions;
 
 +(void) initialize
 {
     faction2name = [NSMutableDictionary dictionary];
-    faction2name[@(NRFactionNone)] = kANY;    
+    faction2name[@(NRFactionNone)] = kANY;
+    
+    code2faction = @{
+                     @"anarch": @(NRFactionAnarch),
+                     @"shaper": @(NRFactionShaper),
+                     @"criminal": @(NRFactionCriminal),
+                     @"weyland-consortium": @(NRFactionWeyland),
+                     @"haas-bioroid": @(NRFactionHaasBioroid),
+                     @"nbn": @(NRFactionNBN),
+                     @"jinteki": @(NRFactionJinteki),
+                     @"adam": @(NRFactionAdam),
+                     @"apex": @(NRFactionApex),
+                     @"sunny-lebeau": @(NRFactionSunnyLebeau),
+                     @"neutral": @(NRFactionNeutral)
+                     };
 }
 
 +(void) initializeFactionNames:(NSArray*)cards
@@ -33,8 +48,11 @@ static TableData* allFactions;
     {
         [faction2name setObject:c.factionStr forKey:@(c.faction)];
     }
+    [faction2name setObject:@"Adam" forKey:@(NRFactionAdam)];
+    [faction2name setObject:@"Apex" forKey:@(NRFactionApex)];
+    [faction2name setObject:@"Sunny Lebeau" forKey:@(NRFactionSunnyLebeau)];
     
-    NRFaction rf[] = { NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
+    NRFaction rf[] = { NRFactionAnarch, NRFactionCriminal, NRFactionShaper, NRFactionAdam, NRFactionApex, NRFactionSunnyLebeau };
     NRFaction cf[] = { NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
     NSArray* common = @[ [Faction name:NRFactionNone ], [Faction name:NRFactionNeutral ]];
     
@@ -51,10 +69,8 @@ static TableData* allFactions;
     }
 
     NSArray* factionSections = @[ @"", l10n(@"Runner"), l10n(@"Corp") ];
-    NSMutableArray* factions = [NSMutableArray array];
-    [factions addObject:common];
-    [factions addObject:runnerFactions];
-    [factions addObject:corpFactions];
+    // NB copy is important, both faction arrays are modified below
+    NSArray* factions = @[ common, runnerFactions.copy, corpFactions.copy ];
     allFactions = [[TableData alloc] initWithSections:factionSections andValues:factions];
     
     NSMutableIndexSet* indexes = [NSMutableIndexSet indexSetWithIndex:0];
@@ -71,6 +87,8 @@ static TableData* allFactions;
             return @"H-B";
         case NRFactionWeyland:
             return @"Weyland";
+        case NRFactionSunnyLebeau:
+            return @"Sunny";
         default:
             return [Faction name:faction];
     }
@@ -83,20 +101,8 @@ static TableData* allFactions;
 
 +(NRFaction) faction:(NSString*)faction
 {
-    unichar ch = [faction characterAtIndex:0];
-    switch (toupper(ch))
-    {
-        case 'A': return NRFactionAnarch;
-        case 'C': return NRFactionCriminal;
-        case 'S': return NRFactionShaper;
-        case 'H': return NRFactionHaasBioroid;
-        case 'J': return NRFactionJinteki;
-        case 'W':
-        case 'T': return NRFactionWeyland;  // catch both "W..." and "The W..."
-        case 'N':
-            return [faction isEqualToString:@"neutral"] ? NRFactionNeutral : NRFactionNBN;
-    }
-    return NRFactionNone;
+    NSNumber* f = [code2faction objectForKey:[faction lowercaseString]];
+    return f == nil ? NRFactionNone : (NRFaction)f.integerValue;
 }
 
 +(NSArray*) factionsForRole:(NRRole)role

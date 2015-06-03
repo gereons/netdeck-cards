@@ -58,7 +58,11 @@ typedef NS_ENUM(NSInteger, NRFaction)
     
     NRFactionAnarch,
     NRFactionShaper,
-    NRFactionCriminal
+    NRFactionCriminal,
+    
+    NRFactionAdam,
+    NRFactionApex,
+    NRFactionSunnyLebeau
 };
 
 typedef NS_ENUM(NSInteger, NRDeckState)

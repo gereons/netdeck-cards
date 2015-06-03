@@ -23,6 +23,8 @@
 @property IBOutlet UISegmentedControl* modeSelector;
 @property IBOutlet UISegmentedControl* factionSelector;
 
+@property IBOutlet NSLayoutConstraint* factionSelectorWidth;
+
 -(IBAction)okClicked:(id)sender;
 -(IBAction)cancelClicked:(id)sender;
 -(IBAction)viewModeChange:(id)sender;
