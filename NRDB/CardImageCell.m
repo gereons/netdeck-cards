@@ -111,10 +111,13 @@
     // rounded corners for images
     self.image1.layer.masksToBounds = YES;
     self.image1.layer.cornerRadius = 10;
+    self.image1.contentMode = UIViewContentModeScaleAspectFill;
     self.image2.layer.masksToBounds = YES;
     self.image2.layer.cornerRadius = 10;
+    self.image2.contentMode = UIViewContentModeScaleAspectFill;
     self.image3.layer.masksToBounds = YES;
     self.image3.layer.cornerRadius = 10;
+    self.image3.contentMode = UIViewContentModeScaleAspectFill;
 }
 
 -(void) prepareForReuse

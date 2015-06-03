@@ -18,6 +18,7 @@
     // rounded corners for images
     self.image.layer.masksToBounds = YES;
     self.image.layer.cornerRadius = 10;
+    self.image.contentMode = UIViewContentModeScaleAspectFill;
     
     // remove all constraints IB has generated
     self.translatesAutoresizingMaskIntoConstraints = NO;
