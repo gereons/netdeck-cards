@@ -40,32 +40,35 @@ static NSDictionary* cropValues;
     roleCodes = @{ @"runner": @(NRRoleRunner), @"corp": @(NRRoleCorp) };
     
     coreTextOptions = @{
-                     DTUseiOS6Attributes: @(YES),
-                     DTDefaultFontFamily: @"Helvetica",
-                     DTDefaultFontSize: @(13)
+        DTUseiOS6Attributes: @(YES),
+        DTDefaultFontFamily: @"Helvetica",
+        DTDefaultFontSize: @(13)
     };
     
     factionColors = @{
-                      @(NRFactionJinteki):      @(0x940c00),
-                      @(NRFactionNBN):          @(0xd7a32d),
-                      @(NRFactionWeyland):      @(0x2d7868),
-                      @(NRFactionHaasBioroid):  @(0x6b2b8a),
-                      @(NRFactionShaper):       @(0x6ab545),
-                      @(NRFactionCriminal):     @(0x4f67b0),
-                      @(NRFactionAnarch):       @(0xf47c28)
+        @(NRFactionJinteki):      @(0x940c00),
+        @(NRFactionNBN):          @(0xd7a32d),
+        @(NRFactionWeyland):      @(0x2d7868),
+        @(NRFactionHaasBioroid):  @(0x6b2b8a),
+        @(NRFactionShaper):       @(0x6ab545),
+        @(NRFactionCriminal):     @(0x4f67b0),
+        @(NRFactionAnarch):       @(0xf47c28),
+        @(NRFactionAdam):         @(0x8d6f4a),
+        @(NRFactionApex):         @(0xe85b54),
+        @(NRFactionSunnyLebeau):  @(0x911ea8),
     };
     
     cropValues = @{
-                   @(NRCardTypeAgenda): @15,
-                   @(NRCardTypeAsset): @20,
-                   @(NRCardTypeEvent): @10,
-                   @(NRCardTypeIdentity): @12,
-                   @(NRCardTypeOperation): @10,
-                   @(NRCardTypeHardware): @18,
-                   @(NRCardTypeIce): @209,
-                   @(NRCardTypeProgram): @8,
-                   @(NRCardTypeResource): @11,
-                   @(NRCardTypeUpgrade): @22,
+        @(NRCardTypeAgenda): @15,
+        @(NRCardTypeAsset): @20,
+        @(NRCardTypeEvent): @10,
+        @(NRCardTypeIdentity): @12,
+        @(NRCardTypeOperation): @10,
+        @(NRCardTypeHardware): @18,
+        @(NRCardTypeIce): @209,
+        @(NRCardTypeProgram): @8,
+        @(NRCardTypeResource): @11,
+        @(NRCardTypeUpgrade): @22,
     };
 }
 
