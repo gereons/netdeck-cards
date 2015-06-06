@@ -12,6 +12,7 @@
 #import "DeckChange.h"
 #import "DeckHistorySectionHeaderView.h"
 #import "Notifications.h"
+#import "CardImageViewPopover.h"
 
 @interface DeckHistoryPopup ()
 
@@ -131,6 +132,22 @@
     [header.revertButton addTarget:self action:@selector(revertTo:) forControlEvents:UIControlEventTouchUpInside];
     
     return header;
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DeckChangeSet* dcs = self.deck.revisions[indexPath.section];
+    
+    if (!dcs.initial)
+    {
+        if (indexPath.row < dcs.changes.count)
+        {
+            DeckChange* dc = dcs.changes[indexPath.row];
+            
+            CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
+            [CardImageViewPopover showForCard:dc.card fromRect:rect inView:self.tableView];
+        }
+    }
 }
 
 @end
