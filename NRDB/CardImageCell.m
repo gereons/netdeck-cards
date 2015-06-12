@@ -154,14 +154,14 @@
 {
     Card* card = self.cc.card;
     [self loadImage:card];
+    [self.activityIndicator startAnimating];
 }
 
 -(void) loadImage:(Card*)card
 {
-    [self.activityIndicator startAnimating];
     [[ImageCache sharedInstance] getImageFor:card
                                   completion:^(Card* card, UIImage* img, BOOL placeholder) {
-                                      if ([self.cc.card.name isEqual:card.name])
+                                      if ([self.cc.card.code isEqual:card.code])
                                       {
                                           [self.activityIndicator stopAnimating];
                                           [self setImageStack:img];
@@ -171,6 +171,10 @@
                                           {
                                               [CardDetailView setupDetailViewFromCell:self card:self.cc.card];
                                           }
+                                      }
+                                      else
+                                      {
+                                          [self loadImage:self.cc.card];
                                       }
                                   }];
 }

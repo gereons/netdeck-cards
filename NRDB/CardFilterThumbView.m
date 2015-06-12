@@ -9,7 +9,6 @@
 #import "CardFilterThumbView.h"
 #import "Card.h"
 #import "ImageCache.h"
-#import <EXTScope.h>
 
 @implementation CardFilterThumbView
 
@@ -27,16 +26,24 @@
     self->_card = card;
     
     [self.activityIndicator startAnimating];
-    @weakify(self);
+    
+    [self loadImageFor:card];
+}
+
+-(void) loadImageFor:(Card*)card
+{
     [[ImageCache sharedInstance] getImageFor:card completion:^(Card* card, UIImage* img, BOOL placeholder)
      {
-         @strongify(self);
          if ([self.card.code isEqual:card.code])
          {
              [self.activityIndicator stopAnimating];
              
              self.imageView.image = [ImageCache croppedImage:img forCard:card];
              self.nameLabel.text = placeholder ? card.name : nil;
+         }
+         else
+         {
+             [self loadImageFor:self.card];
          }
      }];
 }

@@ -10,7 +10,6 @@
 #import "Card.h"
 #import "ImageCache.h"
 #import "CardDetailView.h"
-#import <EXTScope.h>
 
 #define POPOVER_MARGIN  40 // 20px status bar + 10px top + 10px bottom
 #define SCREEN_HEIGHT   768
@@ -130,10 +129,8 @@ static CGFloat popoverScale = 1.0;
 -(void) loadCardImage:(Card*)card
 {
     [self.activityIndicator startAnimating];
-    @weakify(self);
     [[ImageCache sharedInstance] getImageFor:card
                                      completion:^(Card* card, UIImage* image, BOOL placeholder) {
-                                         @strongify(self);
                                          [self.activityIndicator stopAnimating];
                                          self.imageView.image = image;
                                          

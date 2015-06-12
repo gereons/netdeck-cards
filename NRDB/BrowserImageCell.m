@@ -108,19 +108,14 @@
 {
     self->_card = card;
     [self loadImageFor:card];
+    [self.activityIndicator startAnimating];
 }
 
 -(void) loadImageFor:(Card *)card
 {
-    if (self.card != card)
-    {
-        self.image.image = nil;
-    }
-    
-    [self.activityIndicator startAnimating];
     [[ImageCache sharedInstance] getImageFor:card
                                   completion:^(Card* card, UIImage* img, BOOL placeholder) {
-                                      if ([self.card.name isEqual:card.name])
+                                      if ([self.card.code isEqual:card.code])
                                       {
                                           [self.activityIndicator stopAnimating];
                                           self.image.image = img;
@@ -130,6 +125,10 @@
                                           {
                                               [CardDetailView setupDetailViewFromBrowser:self card:card];
                                           }
+                                      }
+                                      else
+                                      {
+                                          [self loadImageFor:self.card];
                                       }
                                   }];
 }
