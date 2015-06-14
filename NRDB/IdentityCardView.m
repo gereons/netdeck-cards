@@ -26,7 +26,6 @@
     self->_card = card;
     
     [self.activityIndicator startAnimating];
-    
     [self loadImageFor:card];
 }
 

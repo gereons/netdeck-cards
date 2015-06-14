@@ -101,14 +101,16 @@
 -(void) prepareForReuse
 {
     self.image.image = nil;
+    self->_card = nil;
     self.detailView.hidden = YES;
 }
 
 -(void) setCard:(Card *)card
 {
     self->_card = card;
-    [self loadImageFor:card];
     [self.activityIndicator startAnimating];
+    
+    [self loadImageFor:card];
 }
 
 -(void) loadImageFor:(Card *)card

@@ -153,8 +153,9 @@
 -(void) loadImage
 {
     Card* card = self.cc.card;
-    [self loadImage:card];
     [self.activityIndicator startAnimating];
+    
+    [self loadImage:card];
 }
 
 -(void) loadImage:(Card*)card

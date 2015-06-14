@@ -115,7 +115,7 @@ static CGFloat popoverScale = 1.0;
     imgTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:imgTap];
     
-    [self loadCardImage:self.card];
+    [self loadCardImage];
 }
 
 -(void) imgTap:(UITapGestureRecognizer*)sender
@@ -126,18 +126,30 @@ static CGFloat popoverScale = 1.0;
     }
 }
 
--(void) loadCardImage:(Card*)card
+-(void) loadCardImage
 {
     [self.activityIndicator startAnimating];
+    [self loadCardImage:self.card];
+}
+
+-(void) loadCardImage:(Card*)card
+{
     [[ImageCache sharedInstance] getImageFor:card
                                      completion:^(Card* card, UIImage* image, BOOL placeholder) {
-                                         [self.activityIndicator stopAnimating];
-                                         self.imageView.image = image;
-                                         
-                                         self.detailView.hidden = !placeholder;
-                                         if (placeholder)
+                                         if ([card.code isEqualToString:self.card.code])
                                          {
-                                             [CardDetailView setupDetailViewFromPopover:self card:self.card];
+                                             [self.activityIndicator stopAnimating];
+                                             self.imageView.image = image;
+                                             
+                                             self.detailView.hidden = !placeholder;
+                                             if (placeholder)
+                                             {
+                                                 [CardDetailView setupDetailViewFromPopover:self card:self.card];
+                                             }
+                                         }
+                                         else
+                                         {
+                                             [self loadCardImage:self.card];
                                          }
                                      }];
 

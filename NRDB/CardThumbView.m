@@ -26,8 +26,8 @@
     self.imageView.image = nil;
     self->_card = card;
     
-    [self loadImageFor:card];
     [self.activityIndicator startAnimating];
+    [self loadImageFor:card];
 }
 
 -(void) loadImageFor:(Card*)card
