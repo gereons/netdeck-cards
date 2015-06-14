@@ -84,6 +84,13 @@ static NSCache* memCache;
     }
     NSTimeInterval today = [NSDate date].timeIntervalSinceReferenceDate / (48*60*60);
     NSTimeInterval lastCheck = [settings doubleForKey:UNAVAIL_IMG_DATE];
+    
+    // repair busted settings
+    if (lastCheck > today)
+    {
+        lastCheck = today - 1;
+    }
+    
     if (floor(lastCheck) < floor(today))
     {
         unavailableImages = [NSMutableSet set];
