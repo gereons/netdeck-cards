@@ -63,6 +63,7 @@ static NSDictionary* cardAliases;   // code -> alias
         @"06033": @"David",     // d4v1d
         @"05039": @"SW35",      // unreg. s&w '35
         @"03035": @"LARLA",     // levy ar lab access
+        @"04029": @"PPVP",      // prepaid voicepad
     };
 }
 
