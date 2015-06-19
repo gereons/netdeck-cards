@@ -19,6 +19,14 @@
 #import "CardImageViewPopover.h"
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"
+
+/* IOS9 ToDos:
+ * (as of beta1)
+ *
+ * App Transport Security: mark netrunnerdb.com as "http allowed"
+ * Load missing images: text flicker
+ * Prepare/test slide over/PiP
+ */
 			
 const NSString* const kANY = @"Any";
 

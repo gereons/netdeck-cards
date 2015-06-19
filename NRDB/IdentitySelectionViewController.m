@@ -120,6 +120,7 @@
     CGPoint oldCenter = self.factionSelector.center;
     
     BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
+    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
     
     if (self.role == NRRoleRunner)
     {
@@ -138,11 +139,14 @@
             [self.factionSelector removeSegmentAtIndex:4 animated:NO];
         }
         
-        [self.factionSelector insertSegmentWithTitle:[Faction name:NRFactionAdam] atIndex:4 animated:NO];
-        [self.factionSelector insertSegmentWithTitle:[Faction name:NRFactionApex] atIndex:5 animated:NO];
-        [self.factionSelector insertSegmentWithTitle:[Faction shortName:NRFactionSunnyLebeau] atIndex:6 animated:NO];
+        if (dataDestinyAllowed)
+        {
+            [self.factionSelector insertSegmentWithTitle:[Faction name:NRFactionAdam] atIndex:4 animated:NO];
+            [self.factionSelector insertSegmentWithTitle:[Faction name:NRFactionApex] atIndex:5 animated:NO];
+            [self.factionSelector insertSegmentWithTitle:[Faction shortName:NRFactionSunnyLebeau] atIndex:6 animated:NO];
 
-        self.factionSelectorWidth.constant += 100;
+            self.factionSelectorWidth.constant += 100;
+        }
     }
     else
     {
@@ -292,7 +296,10 @@
 }
 
 -(void) factionChange:(UISegmentedControl*)sender
-{    
+{
+    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
+    NRFaction faction4 = dataDestinyAllowed ? NRFactionAdam : NRFactionNeutral;
+
     switch (sender.selectedSegmentIndex)
     {
         case 0:
@@ -308,7 +315,7 @@
             self.selectedFaction = self.role == NRRoleRunner ? NRFactionShaper : NRFactionJinteki;
             break;
         case 4:
-            self.selectedFaction = self.role == NRRoleRunner ? NRFactionAdam : NRFactionWeyland;
+            self.selectedFaction = self.role == NRRoleRunner ? faction4 : NRFactionWeyland;
             break;
         case 5:
             self.selectedFaction = self.role == NRRoleRunner ? NRFactionApex : NRFactionNeutral;
