@@ -94,9 +94,9 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    [self checkCardUpdate];
+    [super viewDidAppear:animated];
     
-    // check if card data is available
+    // check if card data is available at all, and if so, if it maybe needs an update
     if (![CardManager cardsAvailable] || ![CardSets setsAvailable])
     {
         SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"No Card Data")
@@ -110,9 +110,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             }
         };
     }
+    else
+    {
+        [self checkCardUpdate];
+    }
     
-    [super viewDidAppear:animated];
-
 #if !DEBUG
     // first start with this version?
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
@@ -160,7 +162,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSString* next = [[NSUserDefaults standardUserDefaults] stringForKey:NEXT_DOWNLOAD];
     
     NSDateFormatter *fmt = [NSDateFormatter new];
-    [fmt setDateStyle:NSDateFormatterShortStyle]; // z.B. 08.10.2008
+    [fmt setDateStyle:NSDateFormatterShortStyle];
     [fmt setTimeStyle:NSDateFormatterNoStyle];
     
     NSDate* scheduled = [fmt dateFromString:next];
@@ -174,9 +176,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             if (buttonIndex == 0) // later
             {
-                NSDateFormatter *fmt = [NSDateFormatter new];
-                [fmt setDateStyle:NSDateFormatterShortStyle]; // dd.mm.yyyy
-                [fmt setTimeStyle:NSDateFormatterNoStyle];
                 // ask again tomorrow
                 NSDate* next = [NSDate dateWithTimeIntervalSinceNow:24*60*60];
                 
