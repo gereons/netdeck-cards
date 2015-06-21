@@ -1060,14 +1060,14 @@
 		3A8532771855079100507B9A /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				3A85327A185509B000507B9A /* SettingsViewController.h */,
+				3A85327B185509B000507B9A /* SettingsViewController.m */,
+				3A85327C185509B000507B9A /* SettingsViewController.xib */,
 				3A461A6F18BBF39500302A4D /* DataDownload.h */,
 				3A461A7018BBF39500302A4D /* DataDownload.m */,
 				3A1855F01A8E27EF00A1852D /* SetSelectionViewController.h */,
 				3A1855F11A8E27EF00A1852D /* SetSelectionViewController.m */,
 				3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */,
-				3A85327A185509B000507B9A /* SettingsViewController.h */,
-				3A85327B185509B000507B9A /* SettingsViewController.m */,
-				3A85327C185509B000507B9A /* SettingsViewController.xib */,
 				3A8532781855084900507B9A /* InAppSettings.bundle */,
 			);
 			name = Settings;

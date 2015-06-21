@@ -40,8 +40,8 @@
 
 typedef NS_ENUM(NSInteger, DownloadScope)
 {
-    ALL,
-    MISSING
+    DownloadAll,
+    DownloadMissing
 };
 
 @implementation DataDownload
@@ -53,12 +53,12 @@ typedef NS_ENUM(NSInteger, DownloadScope)
 
 +(void) downloadAllImages
 {
-    [[DataDownload sharedInstance] downloadImages:ALL];
+    [[DataDownload sharedInstance] downloadImages:DownloadAll];
 }
 
 +(void) downloadMissingImages
 {
-    [[DataDownload sharedInstance] downloadImages:MISSING];
+    [[DataDownload sharedInstance] downloadImages:DownloadMissing];
 }
 
 static DataDownload* instance;
@@ -202,13 +202,34 @@ static DataDownload* instance;
 
 -(void) downloadImages:(DownloadScope)scope
 {
-    self.cards = [[CardManager allCards] mutableCopy];
+    self.cards = [CardManager allCards];
+    if (scope == DownloadMissing)
+    {
+        NSMutableArray* missing = [NSMutableArray array];
+        for (Card* card in self.cards)
+        {
+            if (![[ImageCache sharedInstance] imageAvailableFor:card])
+            {
+                [missing addObject:card];
+            }
+        }
+        self.cards = missing;
+    }
     
     if (self.cards.count == 0)
     {
-        [SDCAlertView alertWithTitle:l10n(@"No Card Data")
-                             message:l10n(@"Please download card data first")
-                             buttons:@[l10n(@"OK")]];
+        if (scope == DownloadAll)
+        {
+            [SDCAlertView alertWithTitle:l10n(@"No Card Data")
+                                 message:l10n(@"Please download card data first")
+                                 buttons:@[l10n(@"OK")]];
+        }
+        else
+        {
+            [SDCAlertView alertWithTitle:nil
+                                 message:l10n(@"No missing card images")
+                                 buttons:@[l10n(@"OK")]];
+        }
         
         return;
     }
@@ -266,7 +287,7 @@ static DataDownload* instance;
             [self downloadNextImage:@{ @"index": @(index+1), @"scope": @(scope)}];
         };
         
-        if (scope == ALL)
+        if (scope == DownloadAll)
         {
             [[ImageCache sharedInstance] updateImageFor:card completion:downloadNext];
         }

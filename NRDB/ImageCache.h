@@ -22,6 +22,7 @@ typedef void (^UpdateCompletionBlock)(BOOL ok);
 -(void) getImageFor:(Card *)card completion:(CompletionBlock)completionBlock;
 -(void) updateMissingImageFor:(Card*)card completion:(UpdateCompletionBlock)completionBlock;
 -(void) updateImageFor:(Card*)card completion:(UpdateCompletionBlock)completionBlock;
+-(BOOL) imageAvailableFor:(Card*)card;
 
 +(UIImage*) trashIcon;
 +(UIImage*) strengthIcon;

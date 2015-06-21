@@ -106,6 +106,7 @@ const NSString* const kANY = @"Any";
         NRDB_AUTOSAVE: @(NO),
         NRDB_HOST: @"netrunnerdb.com",
         LANGUAGE: @"en",
+        UPDATE_INTERVAL: @(7),
         
         DECK_FILTER_STATE: @(NRDeckStateNone),
         DECK_VIEW_STYLE: @(NRCardViewLargeTable),

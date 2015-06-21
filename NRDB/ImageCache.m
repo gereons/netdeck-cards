@@ -224,6 +224,12 @@ static NSCache* memCache;
              {
                  [self storeInCache:responseObject lastModified:lastModified forKey:key];
              }
+             
+             if ([unavailableImages containsObject:key])
+             {
+                 [unavailableImages removeObject:key];
+                 [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:UNAVAILABLE_IMG];
+             }
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // download failed
@@ -447,6 +453,28 @@ static NSCache* memCache;
         }
     }
     // NSLog(@"end initMemCache");
+}
+
+-(BOOL) imageAvailableFor:(Card*)card
+{
+    NSString* key = card.code;
+    
+    UIImage* img = [memCache objectForKey:key];
+    if (img)
+    {
+        return YES;
+    }
+    
+    // if we know we don't (or can't) have an image, return a placeholder immediately
+    if (card.imageSrc == nil || [unavailableImages containsObject:key])
+    {
+        return NO;
+    }
+    
+    NSString* dir = [ImageCache directoryForImages];
+    NSString* file = [dir stringByAppendingPathComponent:key];
+    
+    return [[NSFileManager defaultManager] fileExistsAtPath:file];
 }
 
 +(NSString*) directoryForImages

@@ -166,6 +166,10 @@
             [settings removeObjectForKey:NRDB_TOKEN_TTL];
         }
     }
+    else if ([notification.object isEqualToString:UPDATE_INTERVAL])
+    {
+        [CardManager setNextDownloadDate];
+    }
 }
 
 - (void)settingsViewController:(id)sender buttonTappedForSpecifier:(IASKSpecifier *)specifier

@@ -166,6 +166,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [fmt setTimeStyle:NSDateFormatterNoStyle];
     
     NSDate* scheduled = [fmt dateFromString:next];
+    if (scheduled == nil)
+    {
+        return;
+    }
+    
     NSDate* now = [NSDate date];
     
     if (APP_ONLINE && [scheduled compare:now] == NSOrderedAscending)

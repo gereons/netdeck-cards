@@ -93,6 +93,7 @@
 "Downloading Card Data" = "Lade Karten-Daten";
 "Downloading Images" = "Lade Karten-Bilder";
 "Please download card data first" = "Bitte zuerst Karten-Daten laden";
+"No missing card images" = "Alle Karten-Bilder vorhanden";
 "Image %d of %d" = "Bild %d von %d";
 "Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche es später nochmal.";
 "%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";

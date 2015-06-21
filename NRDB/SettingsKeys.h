@@ -22,6 +22,7 @@
 #define DOWNLOAD_DATA_NOW       @"downloadDataNow"
 #define DOWNLOAD_IMG_NOW        @"downloadImagesNow"
 #define DOWNLOAD_MISSING_IMG    @"downloadMissingImagesNow"
+#define UPDATE_INTERVAL     @"updateInterval"
 #define CLEAR_CACHE         @"clearCache"
 #define LANGUAGE            @"language"
 

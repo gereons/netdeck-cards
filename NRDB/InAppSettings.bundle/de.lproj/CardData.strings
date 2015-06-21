@@ -18,4 +18,10 @@
 "French" = "Französisch";
 "Spanish" = "Spanisch";
 
+"Update Interval" = "Update-Intervall";
+"Weekly" = "Jede Woche";
+"Bi-Weekly" = "Alle 2 Wochen";
+"Monthly" = "Monatlich";
+"Manual" = "Manuell";
+
 "LanguageFooterText" = "NetrunnerDB.com unterstützt andere Sprachen als Englisch nicht immer zu 100%.\nWenn du diese Einstellung änderst, solltest du die Karten-Daten neu laden.";

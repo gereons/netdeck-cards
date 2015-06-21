@@ -215,20 +215,47 @@ static NSDictionary* cardAliases;   // code -> alias
 
 +(BOOL) setupFromNrdbApi:(NSArray*)json
 {
+    [CardManager setNextDownloadDate];
+    
     NSString* cardsFile = [CardManager filename];
     [json writeToFile:cardsFile atomically:YES];
     
+    [CardManager initialize];
+    return [self setupFromJsonData:json];
+}
+
++(void) setNextDownloadDate
+{
     NSDateFormatter *fmt = [NSDateFormatter new];
     [fmt setDateStyle:NSDateFormatterShortStyle]; // e.g. 08.10.2008 for locale=de
     [fmt setTimeStyle:NSDateFormatterNoStyle];
     NSDate* now = [NSDate date];
-    [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:now] forKey:LAST_DOWNLOAD];
     
-    NSDate* next = [NSDate dateWithTimeIntervalSinceNow:7*24*60*60];
-    [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    [settings setObject:[fmt stringFromDate:now] forKey:LAST_DOWNLOAD];
     
-    [CardManager initialize];
-    return [self setupFromJsonData:json];
+    NSInteger interval = [settings integerForKey:UPDATE_INTERVAL];
+
+    NSString* nextDownload;
+    switch (interval)
+    {
+        case 30: {
+            NSCalendar *cal = [NSCalendar currentCalendar];
+            NSDate *next = [cal dateByAddingUnit:NSCalendarUnitMonth value:1 toDate:[NSDate date] options:0];
+            nextDownload = [fmt stringFromDate:next];
+            break;
+        }
+        case 0:
+            nextDownload = l10n(@"never");
+            break;
+        default: {
+            NSDate* next = [NSDate dateWithTimeIntervalSinceNow:interval*24*60*60];
+            nextDownload = [fmt stringFromDate:next];
+            break;
+        }
+    }
+    
+    [settings setObject:nextDownload forKey:NEXT_DOWNLOAD];
 }
 
 +(void) addAdditionalNames:(NSArray *)json saveFile:(BOOL)saveFile

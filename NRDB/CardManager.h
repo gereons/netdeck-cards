@@ -38,4 +38,6 @@
 +(BOOL) setupFromNrdbApi:(NSArray*)json;
 +(void) addAdditionalNames:(NSArray*)json saveFile:(BOOL)saveFile;
 
++(void) setNextDownloadDate;
+
 @end
