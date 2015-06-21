@@ -37,6 +37,8 @@
 #define AUTO_SAVE_DB        @"autoSaveDropbox"
 #define AUTO_HISTORY        @"autoHistory"
 
+#define CREATE_DECK_ACTIVE  @"createDeckActive"
+
 #define CLIP_CHANGE_COUNT   @"clipChangeCount"
 
 #define SHOW_ALL_FILTERS    @"showAllFilters"

@@ -13,6 +13,8 @@
 #import "DeckChange.h"
 #import "DeckChangeSet.h"
 
+#import "SettingsKeys.h"
+
 @interface Deck()
 {
     NSMutableArray* _cards;     // array of CardCounter
@@ -32,7 +34,7 @@
     {
         self->_cards = [NSMutableArray array];
         self->_revisions = [NSMutableArray array];
-        self.state = NRDeckStateTesting;
+        self.state = [[NSUserDefaults standardUserDefaults] boolForKey:CREATE_DECK_ACTIVE] ? NRDeckStateActive : NRDeckStateTesting;
         self.role = NRRoleNone;
         self.sortType = NRDeckSortType;
         self.lastChanges = [[DeckChangeSet alloc] init];
