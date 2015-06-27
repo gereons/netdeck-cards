@@ -1257,11 +1257,14 @@
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* arr = self.cards[indexPath.section];
-    if (indexPath.row < arr.count)
+    if (indexPath.section < self.cards.count)
     {
-        CardCounter* cc = arr[indexPath.row];
-        return !ISNULL(cc);
+        NSArray* arr = self.cards[indexPath.section];
+        if (indexPath.row < arr.count)
+        {
+            CardCounter* cc = arr[indexPath.row];
+            return !ISNULL(cc);
+        }
     }
     return NO;
 }
