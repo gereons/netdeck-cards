@@ -21,7 +21,7 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CorePlot (1.6)
-  - CSStickyHeaderFlowLayout (0.2.5)
+  - CSStickyHeaderFlowLayout (0.2.7)
   - Dropbox-Sync-API-SDK (3.1.2)
   - DTCoreText (1.6.15):
     - DTFoundation/Core (~> 1.7.5)
@@ -73,13 +73,13 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4.1)
   - libextobjc/UmbrellaHeader (0.4.1)
-  - OMGHTTPURLRQ (2.1):
-    - OMGHTTPURLRQ/RQ (= 2.1)
-  - OMGHTTPURLRQ/FormURLEncode (2.1)
-  - OMGHTTPURLRQ/RQ (2.1):
+  - OMGHTTPURLRQ (2.1.3):
+    - OMGHTTPURLRQ/RQ (= 2.1.3)
+  - OMGHTTPURLRQ/FormURLEncode (2.1.3)
+  - OMGHTTPURLRQ/RQ (2.1.3):
     - OMGHTTPURLRQ/FormURLEncode
     - OMGHTTPURLRQ/UserAgent
-  - OMGHTTPURLRQ/UserAgent (2.1)
+  - OMGHTTPURLRQ/UserAgent (2.1.3)
   - PromiseKit (1.5.3):
     - PromiseKit/CALayer (= 1.5.3)
     - PromiseKit/NSNotificationCenter (= 1.5.3)
@@ -119,7 +119,7 @@ PODS:
   - PromiseKit/When (1.5.3):
     - PromiseKit/Promise
   - RBBAnimation (0.4.0)
-  - SDCAlertView (2.5.1):
+  - SDCAlertView (2.5.2):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.3)
@@ -142,7 +142,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   CorePlot: 820901f6c147f2d84549ffa1f0902869f980d74d
-  CSStickyHeaderFlowLayout: 75e439a59c23f609091d9a784c7b5db7de583f1f
+  CSStickyHeaderFlowLayout: 739445e36fd96ab2cee9b9826a902396567fb6a5
   Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 13ce06e63204a3b47c9db974e3d9be982bb0b1ed
   DTFoundation: 1d28080c20c3da041706545363f8238ab53a6204
@@ -150,11 +150,11 @@ SPEC CHECKSUMS:
   InAppSettingsKit: cc56d3ec45f11352a16d5b210da8a3fa1b9d05ed
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
-  OMGHTTPURLRQ: f8c515dfd2f57a5d74c710978f600231f52afec5
+  OMGHTTPURLRQ: c4268dea4295b585d711055dbcd87bfa82badd5f
   PromiseKit: 7ecae7c190ab92ae00aae6ba7f88942107532b8f
   PromiseKit-AFNetworking: 364d4cb942a7278f5219c62dc822867655954a8f
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
-  SDCAlertView: afdedd7ff3edef6117abbcf3ff201f0f0b960b93
+  SDCAlertView: f9706c18f456ea87909f8f199704cd28e582ff27
   SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
