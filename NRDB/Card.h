@@ -20,6 +20,11 @@
 #define UTOPIA_FRAGMENT         @"06110"    // max 1 per deck
 #define GOVERNMENT_TAKEOVER     @"07006"    // max 1 per deck
 
+#define PAD_CAMPAIGN            @"01109"    // for pad factory
+#define PAD_FACTORY             @"00000"    // tbd
+#define MUMBAD_TEMPLE           @"00000"
+#define MUMBAD_VIRTUAL_TOUR     @"00000"
+
 #define MAX_1_PER_DECK          @[ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT, UTOPIA_SHARD, UTOPIA_FRAGMENT, HADES_SHARD, \
                                    HADES_FRAGMENT, EDEN_SHARD, EDEN_FRAGMENT, GOVERNMENT_TAKEOVER ]
 

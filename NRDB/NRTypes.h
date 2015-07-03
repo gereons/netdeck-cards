@@ -123,7 +123,8 @@ typedef NS_ENUM(NSInteger, NRCycle)
     NRCycleGenesis,
     NRCycleSpin,
     NRCycleLunar,
-    NRCycleSanSan
+    NRCycleSanSan,
+    NRCycleMumbad
 };
 
 typedef NS_ENUM(NSInteger, NRImportSource)

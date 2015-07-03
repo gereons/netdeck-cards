@@ -130,6 +130,7 @@ static NSCache* memCache;
     [self clearLastModifiedInfo];
     
     unavailableImages = [NSMutableSet set];
+    [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:UNAVAILABLE_IMG];
     
     [ImageCache removeCacheDirectory];
 }

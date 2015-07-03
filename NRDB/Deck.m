@@ -180,23 +180,17 @@
     return ap;
 }
 
+#pragma mark influence calculation
+
 -(int) influence
 {
     int inf = 0;
-    BOOL isProfessor = [self.identity.code isEqualToString:THE_PROFESSOR];
     
     for (CardCounter* cc in _cards)
     {
         if (cc.card.faction != self.identity.faction && cc.card.influence != -1)
         {
-            NSUInteger count = cc.count;
-            
-            if (isProfessor && cc.card.type == NRCardTypeProgram)
-            {
-                --count;
-            }
-            
-            inf += cc.card.influence * count;
+            inf += [self influenceFor:cc];
         }
     }
     return inf;
@@ -215,8 +209,60 @@
         --count;
     }
     
+    // mumbad temple: 0 inf if 15 or fewer ICE
+    if ([cc.card.code isEqualToString:MUMBAD_TEMPLE] && [self iceCount] <= 15)
+    {
+        return 0;
+    }
+    // pad factory: 0 inf if 3 PAD Campaigns in deck
+    if ([cc.card.code isEqualToString:PAD_FACTORY] && [self padCampaignCount] == 3)
+    {
+        return 0;
+    }
+    // mumbad virtual tour: 0 inf if 7 or more assets
+    if ([cc.card.code isEqualToString:MUMBAD_VIRTUAL_TOUR] && [self assetCount] >= 7)
+    {
+        return 0;
+    }
+    
     return count * cc.card.influence;
 }
+
+-(NSInteger) padCampaignCount
+{
+    NSInteger padIndex = [self indexOfCardCode:PAD_CAMPAIGN];
+    if (padIndex != -1)
+    {
+        CardCounter* pad = _cards[padIndex];
+        return pad.count;
+    }
+    return 0;
+}
+
+-(NSInteger) iceCount
+{
+    return [self typeCount:NRCardTypeIce];
+}
+
+-(NSInteger) assetCount
+{
+    return [self typeCount:NRCardTypeAsset];
+}
+
+-(NSInteger) typeCount:(NRCardType)type
+{
+    NSInteger count = 0;
+    for (CardCounter* cc in self.cards)
+    {
+        if (cc.card.type == type)
+        {
+            count += cc.count;
+        }
+    }
+    return count;
+}
+
+#pragma mark -
 
 -(void) addCard:(Card *)card copies:(NSInteger)copies
 {
@@ -229,7 +275,7 @@
 {
     // NSLog(@"add %d copies of %@, hist=%d", copies, card.name, history);
     
-    int cardIndex = [self indexOfCard:card];
+    NSInteger cardIndex = [self indexOfCardCode:card.code];
     CardCounter* cc;
     
     if (card.type == NRCardTypeIdentity)
@@ -432,12 +478,12 @@
     return newDeck;
 }
 
--(int) indexOfCard:(Card*) card
+-(NSInteger) indexOfCardCode:(NSString*) code
 {
     for (int i=0; i<_cards.count; ++i)
     {
         CardCounter* cc = _cards[i];
-        if (cc.card.code == card.code)
+        if ([cc.card.code isEqualToString:code])
         {
             return i;
         }
@@ -447,15 +493,8 @@
 
 -(CardCounter*) findCard:(Card*) card
 {
-    for (int i=0; i<_cards.count; ++i)
-    {
-        CardCounter* cc = _cards[i];
-        if (cc.card.code == card.code)
-        {
-            return cc;
-        }
-    }
-    return nil;
+    NSInteger index = [self indexOfCardCode:card.code];
+    return index == -1 ? nil : _cards[index];
 }
 
 -(void) sort

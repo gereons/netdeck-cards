@@ -24,8 +24,10 @@
  * (as of beta1)
  *
  * App Transport Security: mark netrunnerdb.com as "http allowed"
- * Load missing images: text flicker
- * Prepare/test slide over/PiP
+ * Load missing images: text flicker (font width issue)
+ * check label widths
+ * set BITCODE_ENABLED=NO
+ * set "requires full screen"
  */
 			
 const NSString* const kANY = @"Any";
