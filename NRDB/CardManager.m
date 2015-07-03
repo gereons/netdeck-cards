@@ -64,6 +64,9 @@ static NSDictionary* cardAliases;   // code -> alias
         @"05039": @"SW35",      // unreg. s&w '35
         @"03035": @"LARLA",     // levy ar lab access
         @"04029": @"PPVP",      // prepaid voicepad
+        @"01092": @"SSCG",      // sansan city grid
+        @"04034": @"SFSS",      // shipment from sansan
+        @"03049": @"ProCo",     // professional contacts
     };
 }
 
