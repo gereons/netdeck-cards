@@ -305,11 +305,14 @@
     BOOL autoHistory = [[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY];
     if (autoHistory)
     {
-        self.historyTimer = [NSTimer scheduledTimerWithTimeInterval:1
-                                                             target:self
-                                                           selector:@selector(historySave:)
-                                                           userInfo:nil
-                                                            repeats:YES];
+        self.historyTimer = [NSTimer timerWithTimeInterval:1
+                                                    target:self
+                                                  selector:@selector(historySave:)
+                                                  userInfo:nil
+                                                   repeats:YES];
+        
+        [[NSRunLoop mainRunLoop] addTimer:self.historyTimer forMode:NSRunLoopCommonModes];
+        
         self.progressView.progress = 1.0;
         self.historyTicker = HISTORY_SAVE_INTERVAL;
     }
