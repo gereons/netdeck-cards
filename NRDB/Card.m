@@ -144,12 +144,16 @@ static NSDictionary* cropValues;
 {
     NSAssert(self.type == NRCardTypeProgram, @"not a program");
     
-    NSString* type = [self.subtypes objectAtIndex:0];
-    if ([type isEqualToString:[CardManager iceBreakerType]])
+    if (self.strength != -1)
     {
+        // only icebreakers have strength
+        NSString* type = [self.subtypes objectAtIndex:0];
         return type;
     }
-    return self.typeStr;
+    else
+    {
+        return self.typeStr;
+    }
 }
 
 #pragma mark from json

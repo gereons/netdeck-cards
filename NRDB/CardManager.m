@@ -36,7 +36,6 @@ static int maxCorpCost;
 static int maxInf;
 static int maxAgendaPoints;
 static int maxTrash;
-static NSString* iceBreakerType;
 
 static NSDictionary* cardAliases;   // code -> alias
 
@@ -53,8 +52,6 @@ static NSDictionary* cardAliases;   // code -> alias
     subtypes = @[ [NSMutableDictionary dictionary], [NSMutableDictionary dictionary] ];
     identitySubtypes = @[ [NSMutableSet set], [NSMutableSet set] ];
     sortedIdentities = [@[ [NSMutableArray array], [NSMutableArray array] ] mutableCopy];
-    
-    iceBreakerType = l10n(@"Icebreaker");
     
     cardAliases = @{
         @"08034": @"Franklin",  // crick
@@ -438,7 +435,5 @@ static NSDictionary* cardAliases;   // code -> alias
 +(int) maxCorpCost { return maxCorpCost; }
 +(int) maxAgendaPoints { return maxAgendaPoints; }
 +(int) maxTrash { return maxTrash; }
-
-+(NSString*) iceBreakerType { return iceBreakerType; }
 
 @end

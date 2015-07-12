@@ -20,14 +20,14 @@ typedef NS_ENUM(NSInteger, DiffMode) {
 @property Deck* deck1;
 @property Deck* deck2;
 
-@property NSMutableArray* fullDiffSections;
+@property NSMutableArray* fullDiffSections;         // all cards from both decks
 @property NSMutableArray* fullDiffRows;
-@property NSMutableArray* smallDiffSections;
+@property NSMutableArray* smallDiffSections;        // differing cards
 @property NSMutableArray* smallDiffRows;
-@property NSMutableArray* intersectSections;
-@property NSMutableArray* intersectRows;
-@property NSMutableArray* overlapSections;
+@property NSMutableArray* overlapSections;          // cards that are in both decks
 @property NSMutableArray* overlapRows;
+@property NSMutableArray* intersectSections;        // cards that are in both decks, and total count is more than owned
+@property NSMutableArray* intersectRows;
 
 @property DiffMode diffMode;
 @end

@@ -28,8 +28,6 @@
 +(int) maxAgendaPoints;
 +(int) maxTrash;
 
-+(NSString*) iceBreakerType;
-
 // initialization
 +(BOOL) cardsAvailable;
 
