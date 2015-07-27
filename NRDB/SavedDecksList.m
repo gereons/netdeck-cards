@@ -300,12 +300,12 @@
     frame.origin.y -= 990;
     frame.size.height = 2000;
     frame.size.width = 500;
-    
+
     UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
     popover.sourceView = self.view;
     popover.sourceRect = frame;
     popover.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
-    
+
     [self presentViewController:self.popup animated:NO completion:nil];
 }
 

@@ -211,11 +211,6 @@ static NSDictionary* cropValues;
         c->_setCode = DRAFT_SET_CODE;
         c->_setName = DRAFT_SET_NAME;
     }
-    if ([SPECIAL_IDS containsObject:c.code])
-    {
-        c->_setCode = SPECIAL_SET_CODE;
-        c->_setName = SPECIAL_SET_NAME;
-    }
     
     c->_isCore = [c.setCode caseInsensitiveCompare:CORE_SET_CODE] == NSOrderedSame;
     

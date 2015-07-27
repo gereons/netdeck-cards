@@ -99,7 +99,6 @@ const NSString* const kANY = @"Any";
         NEXT_DOWNLOAD: l10n(@"never"),
         
         USE_DRAFT_IDS: @(YES),
-        USE_UNPUBLISHED_IDS: @(NO),
         AUTO_SAVE: @(NO),
         AUTO_HISTORY: @(YES),
         USE_DROPBOX: @(NO),

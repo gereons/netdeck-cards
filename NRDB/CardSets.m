@@ -204,10 +204,7 @@ static TableData* enabledSets;
         {
             [sets addObject:DRAFT_SET_CODE];
         }
-        if (![settings boolForKey:USE_UNPUBLISHED_IDS])
-        {
-            [sets addObject:SPECIAL_SET_CODE];
-        }
+        
         disabledSets = sets;
     }
     

@@ -38,6 +38,11 @@
 
 -(NSArray*) checkValidity;  // returns array of reasons, deck is ok if count==0
 
+/**
+ * find a card in this deck
+ * @param card the card to search for
+ * @return the CardCounter for this card, or null if not found
+ */
 -(CardCounter*) findCard:(Card*)card;
 
 // add (copies>0) or remove (copies<0) a copy of a card from the deck

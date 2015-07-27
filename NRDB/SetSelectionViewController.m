@@ -41,15 +41,12 @@
         [arr insertObject:numCores atIndex:1];
         
         // add section for draft/unpublished ids
-        [self.sections insertObject:l10n(@"Special Identities") atIndex:1];
+        [self.sections insertObject:l10n(@"Draft Identities") atIndex:1];
         CardSet* draft = [[CardSet alloc] init];
         draft.name = l10n(@"Include Draft Identities");
         draft.settingsKey = USE_DRAFT_IDS;
-        CardSet* unpub = [[CardSet alloc] init];
-        unpub.name = l10n(@"Include Unpublished Identities");
-        unpub.settingsKey = USE_UNPUBLISHED_IDS;
         
-        [self.values insertObject:@[ draft, unpub ] atIndex:1];
+        [self.values insertObject:@[ draft ] atIndex:1];
     }
     return self;
 }

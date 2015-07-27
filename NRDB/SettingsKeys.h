@@ -28,7 +28,6 @@
 
 #define NUM_CORES           @"number_coresets"
 #define USE_DRAFT_IDS       @"use_draft_identities"
-#define USE_UNPUBLISHED_IDS @"use_unpublished_identities"
 #define USE_DATA_DESTINY    @"use_dad"
 
 #define USE_DROPBOX         @"useDropbox"
