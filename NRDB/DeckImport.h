@@ -13,4 +13,6 @@
 +(void) updateCount;
 +(void) checkClipboardForDeck;
 
++(void) importDeckFromLocalUrl:(NSURL*)url;
+
 @end

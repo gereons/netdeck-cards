@@ -203,6 +203,7 @@
 		3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABC2EE51975A647007BBE3A /* CompareDecksList.m */; };
 		3ABDE5A418AFC52C00AFEA88 /* DrawSimulatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */; };
 		3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */; };
+		3AC32DDA1B67F63300DFD98D /* GZip.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC32DD91B67F63300DFD98D /* GZip.m */; };
 		3AC6BC7419D3F37E002C7759 /* NSString+stripHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
 		3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACCEE221869A25500CC3537 /* LargeCardCell.m */; };
@@ -550,6 +551,8 @@
 		3ABDE5A118AFC52C00AFEA88 /* DrawSimulatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSimulatorViewController.h; sourceTree = "<group>"; };
 		3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSimulatorViewController.m; sourceTree = "<group>"; };
 		3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawSimulatorViewController.xib; sourceTree = "<group>"; };
+		3AC32DD81B67F63300DFD98D /* GZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZip.h; sourceTree = "<group>"; };
+		3AC32DD91B67F63300DFD98D /* GZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZip.m; sourceTree = "<group>"; };
 		3AC6BC7219D3F37E002C7759 /* NSString+stripHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+stripHTML.h"; sourceTree = "<group>"; };
 		3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+stripHTML.m"; sourceTree = "<group>"; };
 		3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargeCardCell.xib; sourceTree = "<group>"; };
@@ -817,6 +820,8 @@
 				3A3E26E61A004FD7000C6D32 /* UIAlertAction+NRDB.h */,
 				3A3E26E71A005042000C6D32 /* UIAlertAction+NRDB.m */,
 				3A8309861AE8C22D00FED08A /* NRCrashlytics.h */,
+				3AC32DD81B67F63300DFD98D /* GZip.h */,
+				3AC32DD91B67F63300DFD98D /* GZip.m */,
 			);
 			name = "Utility Classes / Headers";
 			sourceTree = "<group>";
@@ -1638,6 +1643,7 @@
 				3A058B1919D334660090F53A /* NRSwitch.m in Sources */,
 				3A1855F31A8E27EF00A1852D /* SetSelectionViewController.m in Sources */,
 				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
+				3AC32DDA1B67F63300DFD98D /* GZip.m in Sources */,
 				3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */,
 				3AA440EC1854DA580051D4B0 /* EmptyDetailViewController.m in Sources */,
 				3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */,

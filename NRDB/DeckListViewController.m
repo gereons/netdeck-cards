@@ -123,9 +123,9 @@
     
     if (self.deck.filename == nil)
     {
-        NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
         if (self.deck.name == nil)
         {
+            NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
             self.deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
         }
         self.deckNameLabel.text = self.deck.name;

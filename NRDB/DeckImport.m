@@ -16,6 +16,7 @@
 #import "SettingsKeys.h"
 #import "Notifications.h"
 #import "OctgnImport.h"
+#import "GZip.h"
 
 #define IMPORT_ALWAYS   NO  // set to yes for easier debugging
 
@@ -443,6 +444,38 @@ static DeckImport* instance;
         return YES;
     }
     return NO;
+}
+
++(void) importDeckFromLocalUrl:(NSURL*)url
+{
+    NSString* b64 = [url.path substringFromIndex:1]; // strip off the leading "/" character
+    NSData* data = [[NSData alloc] initWithBase64EncodedString:b64 options:0];
+    NSData* uncompressed = [GZip gzipInflate:data];
+    NSString* deckStr = [[NSString alloc] initWithData:uncompressed encoding:NSUTF8StringEncoding];
+    
+    NSArray* parts = [deckStr componentsSeparatedByString:@"&"];
+    Deck* deck = [[Deck alloc] init];
+    for (NSString* card in parts)
+    {
+        NSArray* cq = [card componentsSeparatedByString:@"="];
+        NSString* code = cq[0];
+        NSString* qty = cq[1];
+        
+        if ([code isEqualToString:@"name"])
+        {
+            deck.name = [qty stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        }
+        else
+        {
+            Card* card = [Card cardByCode:code];
+            if (card && qty.integerValue > 0)
+            {
+                [deck addCard:card copies:qty.integerValue];
+            }
+        }
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
 }
 
 @end

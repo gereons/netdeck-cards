@@ -13,6 +13,7 @@
 #import "DeckExport.h"
 #import "Deck.h"
 #import "CardSets.h"
+#import "GZip.h"
 
 #define APP_NAME    "Net Deck"
 #define APP_URL     "http://appstore.com/netdeck"
@@ -103,8 +104,48 @@
         [s appendString:@"\n"];
     }
     
+    [s appendFormat:@"\n%@\n", [DeckExport localUrlForDeck:deck]];
+    
     return s;
 }
+
++(NSString*) localUrlForDeck:(Deck*)deck
+{
+    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+    for (CardCounter* cc in deck.cards)
+    {
+        dict[cc.card.code] = @(cc.count);
+    }
+    if (deck.identity)
+    {
+        dict[deck.identity.code] = @(1);
+    }
+    if (deck.name.length > 0)
+    {
+        dict[@"name"] = [deck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    NSMutableArray* keys = [dict allKeys].mutableCopy;
+    [keys sortUsingComparator:^NSComparisonResult(NSString* c1, NSString* c2) {
+        return [c1 compare:c2];
+    }];
+    
+    NSMutableString* url = [[NSMutableString alloc] init];
+    NSString* sep = @"";
+    for (NSString* code in keys)
+    {
+        id qty = dict[code];
+        [url appendFormat:@"%@%@=%@", sep, code, qty];
+        sep = @"&";
+    }
+    
+    NSData* compressed = [GZip gzipDeflate:[url dataUsingEncoding:NSUTF8StringEncoding]];
+    NSString* base64url = [compressed base64EncodedStringWithOptions:0];
+    NSCharacterSet* pathCharset = NSCharacterSet.URLPathAllowedCharacterSet;
+    
+    return [NSString stringWithFormat:@"netdeck://load/%@", [base64url stringByAddingPercentEncodingWithAllowedCharacters:pathCharset]];
+}
+
 
 +(void) asPlaintext:(Deck*)deck
 {

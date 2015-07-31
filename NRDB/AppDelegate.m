@@ -18,6 +18,7 @@
 #import "DeckImport.h"
 #import "CardImageViewPopover.h"
 #import "NRDBAuthPopupViewController.h"
+#import "NRDBAuth.h"
 #import "NRDB.h"
 
 /* IOS9 ToDos:
@@ -178,7 +179,14 @@ const NSString* const kANY = @"Any";
     
     if ([scheme isEqualToString:@"netdeck"])
     {
-        [NRDBAuthPopupViewController handleOpenURL:url];
+        if ([url.host isEqualToString:@"oauth2"])
+        {
+            [NRDBAuthPopupViewController handleOpenURL:url];
+        }
+        if ([url.host isEqualToString:@"load"])
+        {
+            [DeckImport importDeckFromLocalUrl:url];
+        }
         return YES;
     }
     else if ([scheme hasPrefix:@"db-"])
