@@ -53,9 +53,9 @@ static NSDictionary* cropValues;
         @(NRFactionShaper):       @(0x6ab545),
         @(NRFactionCriminal):     @(0x4f67b0),
         @(NRFactionAnarch):       @(0xf47c28),
-        @(NRFactionAdam):         @(0x8d6f4a),
-        @(NRFactionApex):         @(0xe85b54),
-        @(NRFactionSunnyLebeau):  @(0x911ea8),
+        @(NRFactionAdam):         @(0xae9543),
+        @(NRFactionApex):         @(0xa8403d),
+        @(NRFactionSunnyLebeau):  @(0x776e6f),
     };
     
     cropValues = @{
