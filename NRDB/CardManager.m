@@ -65,6 +65,7 @@ static NSDictionary* cardAliases;   // code -> alias
         @"04034": @"SFSS",      // shipment from sansan
         @"03049": @"ProCo",     // professional contacts
         @"02079": @"OAI",       // oversight AI
+        @"08009": @"Baby",      // symmetrical visage
     };
 }
 
