@@ -11,7 +11,10 @@
 #import "Deck.h"
 #import "ImageCache.h"
 #import "NRDB.h"
-
+#import "CardUpdateCheck.h"
+#import "Notifications.h"
+#import "CardManager.h"
+#import "CardSets.h"
 #import "EditDeckViewController.h"
 
 @interface IphoneStartViewController ()
@@ -27,6 +30,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [CardUpdateCheck checkCardsAvailable];
+    
+    if ([CardManager cardsAvailable] && [CardSets setsAvailable])
+    {
+        [self initializeDecks];
+    }
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.backgroundColor = [UIColor clearColor];
+}
+
+-(void) initializeDecks
+{
     self.runnerDecks = [DeckManager decksForRole:NRRoleRunner];
     self.corpDecks = [DeckManager decksForRole:NRRoleCorp];
     self.decks = @[ self.runnerDecks, self.corpDecks ];
@@ -34,12 +54,13 @@
     NSMutableArray* allDecks = [NSMutableArray arrayWithArray:self.runnerDecks];
     [allDecks addObjectsFromArray:self.corpDecks];
     [[NRDB sharedInstance] updateDeckMap:allDecks];
-    
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.backgroundColor = [UIColor clearColor];
 }
 
+-(void) loadCards:(id)notification
+{
+    [self initializeDecks];
+    [self.tableView reloadData];
+}
 
 #pragma mark - add new deck
 
@@ -56,7 +77,7 @@
         [self addNewDeck:NRRoleCorp];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self addNewDeck:NRRoleCorp];
+        // nop
     }]];
     
     [self presentViewController:alert animated:YES completion:nil];

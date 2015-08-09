@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditDeckViewController">
             <connections>
+                <outlet property="statusLabel" destination="cNa-Vc-9G8" id="AUy-dX-BkU"/>
                 <outlet property="tableView" destination="XoR-lC-cbz" id="hKE-VP-Yzy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -16,20 +17,38 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XoR-lC-cbz">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="JCf-Ob-ceB"/>
                         <outlet property="delegate" destination="-1" id="ePt-ru-4rP"/>
                     </connections>
                 </tableView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="69X-dg-40v">
+                    <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                    <items/>
+                </toolbar>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNa-Vc-9G8">
+                    <rect key="frame" x="18" y="562.5" width="564" height="31.5"/>
+                    <string key="text">X Cards - X/Y Influence
+Not enough Cards</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="XoR-lC-cbz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GhP-Fg-TlV"/>
-                <constraint firstAttribute="bottom" secondItem="XoR-lC-cbz" secondAttribute="bottom" id="mPG-nY-On8"/>
+                <constraint firstItem="69X-dg-40v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VVg-bv-oy1"/>
+                <constraint firstItem="cNa-Vc-9G8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="18" id="hRk-mn-Eew"/>
+                <constraint firstAttribute="trailing" secondItem="69X-dg-40v" secondAttribute="trailing" id="kS0-IB-w2t"/>
+                <constraint firstItem="69X-dg-40v" firstAttribute="top" secondItem="XoR-lC-cbz" secondAttribute="bottom" id="mPt-vD-QMV"/>
                 <constraint firstItem="XoR-lC-cbz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="paG-fx-BMz"/>
+                <constraint firstAttribute="bottom" secondItem="69X-dg-40v" secondAttribute="bottom" id="sqO-9l-Yu6"/>
                 <constraint firstAttribute="trailing" secondItem="XoR-lC-cbz" secondAttribute="trailing" id="t7r-Xq-dHh"/>
+                <constraint firstAttribute="trailing" secondItem="cNa-Vc-9G8" secondAttribute="trailing" constant="18" id="wZn-Sp-9fw"/>
+                <constraint firstItem="69X-dg-40v" firstAttribute="top" secondItem="cNa-Vc-9G8" secondAttribute="bottom" constant="-38" id="xIT-lf-tzW"/>
             </constraints>
         </view>
     </objects>

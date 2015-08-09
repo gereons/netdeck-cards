@@ -11,6 +11,7 @@
 @interface EditDeckViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property IBOutlet UITableView* tableView;
+@property IBOutlet UILabel* statusLabel;
 
 @property Deck* deck;
 

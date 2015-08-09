@@ -54,6 +54,7 @@
 		3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */; };
 		3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845001B77BA89007C76F2 /* EditDeckViewController.m */; };
 		3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */; };
+		3A3845071B77CB5D007C76F2 /* CardUpdateCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845061B77CB5D007C76F2 /* CardUpdateCheck.m */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
 		3A3E26E81A005042000C6D32 /* UIAlertAction+NRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlertAction+NRDB.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
@@ -346,6 +347,8 @@
 		3A3844FF1B77BA89007C76F2 /* EditDeckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDeckViewController.h; sourceTree = "<group>"; };
 		3A3845001B77BA89007C76F2 /* EditDeckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDeckViewController.m; sourceTree = "<group>"; };
 		3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDeckViewController.xib; sourceTree = "<group>"; };
+		3A3845051B77CB5D007C76F2 /* CardUpdateCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardUpdateCheck.h; sourceTree = "<group>"; };
+		3A3845061B77CB5D007C76F2 /* CardUpdateCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardUpdateCheck.m; sourceTree = "<group>"; };
 		3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NROutlineLabel.h; sourceTree = "<group>"; };
 		3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NROutlineLabel.m; sourceTree = "<group>"; };
 		3A3D841419F1A24F00642CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -732,6 +735,7 @@
 				3A6AF0D71899BB3B00227C25 /* Icons */,
 				3A76EEBC18B5DA68004DB586 /* Images */,
 				3AA440DF1854DA0D0051D4B0 /* Data / Models */,
+				3A3845041B77CB34007C76F2 /* Common UI */,
 				3A9742AD18AF7DAE00F83520 /* Stats */,
 				3A71628C197289BA001755BF /* Deck Diff */,
 				3AD3248E18A93F8000D7AE5D /* Deck Analysis */,
@@ -795,6 +799,15 @@
 				3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */,
 			);
 			name = iPhone;
+			sourceTree = "<group>";
+		};
+		3A3845041B77CB34007C76F2 /* Common UI */ = {
+			isa = PBXGroup;
+			children = (
+				3A3845051B77CB5D007C76F2 /* CardUpdateCheck.h */,
+				3A3845061B77CB5D007C76F2 /* CardUpdateCheck.m */,
+			);
+			name = "Common UI";
 			sourceTree = "<group>";
 		};
 		3A3850CE1938826C00EB2EB0 /* Filtered Cards */ = {
@@ -1679,6 +1692,7 @@
 				3A5BC3F11849326B00E792F7 /* CardList.m in Sources */,
 				3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */,
 				3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */,
+				3A3845071B77CB5D007C76F2 /* CardUpdateCheck.m in Sources */,
 				3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */,
 				3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */,
 				3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */,
