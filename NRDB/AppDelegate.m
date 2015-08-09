@@ -69,7 +69,15 @@ const NSString* const kANY = @"Any";
 #endif
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = self.splitViewController;
+    
+    if (IS_IPHONE)
+    {
+        self.window.rootViewController = self.navigationController;
+    }
+    else
+    {
+        self.window.rootViewController = self.splitViewController;
+    }
     [self.window makeKeyAndVisible];
     
     [DeckImport checkClipboardForDeck];

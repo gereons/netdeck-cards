@@ -19,6 +19,9 @@
 
 #define OCTGN_CODE_PREFIX   @"bc0f047c-01b1-427f-a439-d451eda"
 
+#define IS_IPAD         ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+#define IS_IPHONE       ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
+
 extern NSString* const kANY;
 
 typedef NS_ENUM(NSInteger, NRCardType)
