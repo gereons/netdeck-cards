@@ -12,6 +12,8 @@
 #import "ImageCache.h"
 #import "NRDB.h"
 
+#import "EditDeckViewController.h"
+
 @interface IphoneStartViewController ()
 
 @property NSMutableArray* runnerDecks;
@@ -98,7 +100,9 @@
     NSArray* decks = self.decks[indexPath.section];
     Deck* deck = decks[indexPath.row];
     
-    NSLog(@"stub - open deck %@", deck.name);
+    EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
+    edit.deck = deck;
+    [self pushViewController:edit animated:YES];
 }
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

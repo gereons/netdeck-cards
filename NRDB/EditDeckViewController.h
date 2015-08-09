@@ -1,15 +1,17 @@
 //
-//  IphoneStartViewController.h
+//  EditDeckViewController.h
 //  NRDB
 //
 //  Created by Gereon Steffens on 09.08.15.
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@interface IphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate>
+@class Deck;
+
+@interface EditDeckViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property IBOutlet UITableView* tableView;
 
--(IBAction)createNewDeck:(id)sender;
+@property Deck* deck;
 
 @end

@@ -52,6 +52,8 @@
 		3A38091D1B0F8AE300042A67 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A38091C1B0F8AE300042A67 /* libz.dylib */; };
 		3A3844FB1B77859E007C76F2 /* MainWindow~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */; };
 		3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */; };
+		3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845001B77BA89007C76F2 /* EditDeckViewController.m */; };
+		3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
 		3A3E26E81A005042000C6D32 /* UIAlertAction+NRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlertAction+NRDB.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
@@ -341,6 +343,9 @@
 		3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow~iPhone.xib"; sourceTree = "<group>"; };
 		3A3844FC1B77879B007C76F2 /* IphoneStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IphoneStartViewController.h; sourceTree = "<group>"; };
 		3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IphoneStartViewController.m; sourceTree = "<group>"; };
+		3A3844FF1B77BA89007C76F2 /* EditDeckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDeckViewController.h; sourceTree = "<group>"; };
+		3A3845001B77BA89007C76F2 /* EditDeckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDeckViewController.m; sourceTree = "<group>"; };
+		3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDeckViewController.xib; sourceTree = "<group>"; };
 		3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NROutlineLabel.h; sourceTree = "<group>"; };
 		3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NROutlineLabel.m; sourceTree = "<group>"; };
 		3A3D841419F1A24F00642CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -785,6 +790,9 @@
 				3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */,
 				3A3844FC1B77879B007C76F2 /* IphoneStartViewController.h */,
 				3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */,
+				3A3844FF1B77BA89007C76F2 /* EditDeckViewController.h */,
+				3A3845001B77BA89007C76F2 /* EditDeckViewController.m */,
+				3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -1496,6 +1504,7 @@
 				3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */,
 				3A6E756E18E401D400EF8DE1 /* Icon-76@2x.png in Resources */,
 				3AB9BD6318FB0E49004EAF10 /* 702-import.png in Resources */,
+				3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */,
 				3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */,
 				3A82625018E05EC70038B4AC /* cardstats_decksize@2x.png in Resources */,
 				3AFEC40A19B74359000D025C /* Crashlytics.strings in Resources */,
@@ -1680,6 +1689,7 @@
 				3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */,
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,
 				3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */,
+				3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */,
 				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,
 				3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */,
 				3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */,
