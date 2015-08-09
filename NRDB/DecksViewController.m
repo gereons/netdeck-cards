@@ -65,8 +65,6 @@ static NRFilter _filterType = NRFilterAll;
         self.dateFormatter = [[NSDateFormatter alloc] init];
         [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-        
-        
     }
     return self;
 }
@@ -336,16 +334,14 @@ static NRFilter _filterType = NRFilterAll;
     [allDecks addObjectsFromArray:corpDecks];
     [[NRDB sharedInstance] updateDeckMap:allDecks];
 
-    
-#if DEBUG
-    [self checkDecks:self.runnerDecks];
-    [self checkDecks:self.corpDecks];
-#endif
-    
     if (self.sortType != NRDeckListSortDate)
     {
         self.runnerDecks = [self sortDecks:runnerDecks];
         self.corpDecks = [self sortDecks:corpDecks];
+        #if DEBUG
+        [self checkDecks:self.runnerDecks];
+        [self checkDecks:self.corpDecks];
+        #endif
     }
     else
     {

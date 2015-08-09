@@ -7,8 +7,16 @@
 //
 
 #import "IphoneStartViewController.h"
+#import "DeckManager.h"
+#import "Deck.h"
+#import "ImageCache.h"
+#import "NRDB.h"
 
 @interface IphoneStartViewController ()
+
+@property NSMutableArray* runnerDecks;
+@property NSMutableArray* corpDecks;
+@property NSArray* decks;
 
 @end
 
@@ -17,84 +25,102 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.runnerDecks = [DeckManager decksForRole:NRRoleRunner];
+    self.corpDecks = [DeckManager decksForRole:NRRoleCorp];
+    self.decks = @[ self.runnerDecks, self.corpDecks ];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSMutableArray* allDecks = [NSMutableArray arrayWithArray:self.runnerDecks];
+    [allDecks addObjectsFromArray:self.corpDecks];
+    [[NRDB sharedInstance] updateDeckMap:allDecks];
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.backgroundColor = [UIColor clearColor];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+#pragma mark - add new deck
+
+-(void) createNewDeck:(id)sender
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"New Deck")
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"New Runner Deck" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self addNewDeck:NRRoleRunner];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"New Corp Deck" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self addNewDeck:NRRoleCorp];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self addNewDeck:NRRoleCorp];
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void) addNewDeck:(NRRole)role
+{
+    NSLog(@"stub - addNewDeck");
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return section == 0 ? self.runnerDecks.count : self.corpDecks.count;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString* cellIdentifier = @"deckCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
     
-    // Configure the cell...
+    NSArray* decks = self.decks[indexPath.section];
+    Deck* deck = decks[indexPath.row];
+    
+    cell.textLabel.text = deck.name;
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray* decks = self.decks[indexPath.section];
+    Deck* deck = decks[indexPath.row];
+    
+    NSLog(@"stub - open deck %@", deck.name);
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+-(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return section == 0 ? l10n(@"Runner") : l10n(@"Corp");
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        NSMutableArray* decks = self.decks[indexPath.section];
+        Deck* deck = decks[indexPath.row];
+        
+        [decks removeObjectAtIndex:indexPath.row];
+        [[NRDB sharedInstance] deleteDeck:deck.netrunnerDbId];
+        [DeckManager removeFile:deck.filename];
+        
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationLeft];
+        [self.tableView endUpdates];
+    }
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

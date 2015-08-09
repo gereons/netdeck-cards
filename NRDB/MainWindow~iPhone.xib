@@ -15,7 +15,7 @@
                 <outlet property="navigationController" destination="h1F-hJ-4M0" id="oug-xS-u43"/>
             </connections>
         </customObject>
-        <navigationController id="h1F-hJ-4M0">
+        <navigationController id="h1F-hJ-4M0" customClass="IphoneStartViewController">
             <navigationBar key="navigationBar" contentMode="scaleToFill" id="OZo-nO-ixK">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -26,10 +26,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="h1F-hJ-4M0" id="qdB-QQ-GWs"/>
+                            <outlet property="delegate" destination="h1F-hJ-4M0" id="6zh-3o-khn"/>
+                        </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Net Deck" id="0zN-BK-DHK"/>
+                    <navigationItem key="navigationItem" title="Net Deck" id="0zN-BK-DHK">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="MVw-OT-XDQ">
+                            <connections>
+                                <action selector="createNewDeck:" destination="h1F-hJ-4M0" id="RwD-7v-bfl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
             </viewControllers>
+            <connections>
+                <outlet property="tableView" destination="Tqh-6R-5NU" id="Jvg-3Y-Iuf"/>
+            </connections>
         </navigationController>
     </objects>
 </document>

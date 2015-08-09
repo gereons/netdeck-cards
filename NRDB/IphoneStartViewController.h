@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IphoneStartViewController : UITableViewController
+@interface IphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate>
+
+@property IBOutlet UITableView* tableView;
+
+-(IBAction)createNewDeck:(id)sender;
 
 @end
