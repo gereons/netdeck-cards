@@ -60,9 +60,10 @@ static TableData* enabledSets;
             ok = [self setupFromJsonData:data];
         }
     }
-    else
+    
+    if (!ok)
     {
-        // use built-in fallback file
+        // no file or botched data: use built-in fallback file
         NSString* fallbackFile = [[NSBundle mainBundle] pathForResource:@"builtin-sets" ofType:@"plist"];
         NSArray* data = [NSArray arrayWithContentsOfFile:fallbackFile];
         if (data)
