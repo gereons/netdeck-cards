@@ -11,7 +11,7 @@ pod 'libextobjc'
 pod 'CSStickyHeaderFlowLayout'
 pod 'SDCAlertView'
 pod 'InAppSettingsKit'
-pod 'PromiseKit'
+pod 'PromiseKit', '1.5.3'
 pod 'PromiseKit-AFNetworking'
 
 post_install do | installer |
