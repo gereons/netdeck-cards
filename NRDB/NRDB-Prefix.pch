@@ -6,8 +6,8 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_8_1
-#warning "This project uses features only available in iOS SDK 8.1 and later."
+#ifndef __IPHONE_8_4
+#warning "This project uses features only available in iOS SDK 8.4 and later."
 #endif
 
 #ifdef __OBJC__
@@ -18,3 +18,4 @@
 #define l10n(str)   NSLocalizedString(str, nil)
 
 #import "NRTypes.h"
+#import "NSArray+Checked.h"

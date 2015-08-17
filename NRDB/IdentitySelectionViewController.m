@@ -271,9 +271,13 @@
     if (!self.viewTable)
     {
         NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:[sender locationInView:self.collectionView]];
-        NSArray* arr = self.identities[indexPath.section];
-        self.selectedIdentity = arr[indexPath.row];
-        self.selectedIndexPath = indexPath;
+        
+        Card* card = [self.identities get2d:indexPath];
+        if (card != nil)
+        {
+            self.selectedIdentity = card;
+            self.selectedIndexPath = indexPath;
+        }
     }
     [self okClicked:nil];
 }
@@ -340,8 +344,11 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    NSArray* arr = self.identities[indexPath.section];
-    Card* card = arr[indexPath.row];
+    Card* card = [self.identities get2d:indexPath];
+    if (card == nil)
+    {
+        return;
+    }
     
     CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
     rect.origin.x = sender.frame.origin.x;
