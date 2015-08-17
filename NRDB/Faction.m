@@ -9,12 +9,14 @@
 #import "Faction.h"
 #import "CardManager.h"
 #import "TableData.h"
+#import "SettingsKeys.h"
 
 @implementation Faction
 
 static NSMutableDictionary* faction2name;
 
 static NSMutableArray* runnerFactions;
+static NSMutableArray* runnerFactionsPreDAD;
 static NSMutableArray* corpFactions;
 static NSDictionary* code2faction;
 static TableData* allFactions;
@@ -52,14 +54,21 @@ static TableData* allFactions;
     [faction2name setObject:@"Apex" forKey:@(NRFactionApex)];
     [faction2name setObject:@"Sunny Lebeau" forKey:@(NRFactionSunnyLebeau)];
     
-    NRFaction rf[] = { NRFactionAnarch, NRFactionCriminal, NRFactionShaper, NRFactionAdam, NRFactionApex, NRFactionSunnyLebeau };
+    NRFaction rf_all[] = { NRFactionAnarch, NRFactionCriminal, NRFactionShaper, NRFactionAdam, NRFactionApex, NRFactionSunnyLebeau };
+    NRFaction rf_preDaD[] = { NRFactionAnarch, NRFactionCriminal, NRFactionShaper };
     NRFaction cf[] = { NRFactionHaasBioroid, NRFactionJinteki, NRFactionNBN, NRFactionWeyland };
     NSArray* common = @[ [Faction name:NRFactionNone ], [Faction name:NRFactionNeutral ]];
     
     runnerFactions = [NSMutableArray array];
-    for (int i=0; i<DIM(rf); ++i)
+    for (int i=0; i<DIM(rf_all); ++i)
     {
-        [runnerFactions addObject:[Faction name:rf[i]]];
+        [runnerFactions addObject:[Faction name:rf_all[i]]];
+    }
+    
+    runnerFactionsPreDAD = [NSMutableArray array];
+    for (int i=0; i<DIM(rf_preDaD); ++i)
+    {
+        [runnerFactionsPreDAD addObject:[Faction name:rf_preDaD[i]]];
     }
     
     corpFactions = [NSMutableArray array];
@@ -108,7 +117,13 @@ static TableData* allFactions;
 +(NSArray*) factionsForRole:(NRRole)role
 {
     NSAssert(role != NRRoleNone, @"no role");
-    return role == NRRoleRunner ? runnerFactions : corpFactions;
+    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
+    
+    if (role == NRRoleRunner)
+    {
+        return dataDestinyAllowed ? runnerFactions : runnerFactionsPreDAD;
+    }
+    return corpFactions;
 }
 
 +(TableData*) allFactions
