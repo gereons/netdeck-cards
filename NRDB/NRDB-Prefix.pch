@@ -18,4 +18,4 @@
 #define l10n(str)   NSLocalizedString(str, nil)
 
 #import "NRTypes.h"
-#import "NSArray+Checked.h"
+#import "NSArray+TwoD.h"

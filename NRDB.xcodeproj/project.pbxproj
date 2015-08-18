@@ -199,7 +199,7 @@
 		3AB9BD6218FB0E49004EAF10 /* 702-import@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD6018FB0E49004EAF10 /* 702-import@2x.png */; };
 		3AB9BD6318FB0E49004EAF10 /* 702-import.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD6118FB0E49004EAF10 /* 702-import.png */; };
 		3ABA7AAD1B1B253E00E8E892 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABA7AAC1B1B253E00E8E892 /* Accelerate.framework */; };
-		3ABAD2F91B8275F8009E81F3 /* NSArray+Checked.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABAD2F81B8275F8009E81F3 /* NSArray+Checked.m */; };
+		3ABAD2F91B8275F8009E81F3 /* NSArray+TwoD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */; };
 		3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */; };
 		3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABC2EE51975A647007BBE3A /* CompareDecksList.m */; };
 		3ABDE5A418AFC52C00AFEA88 /* DrawSimulatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */; };
@@ -545,8 +545,8 @@
 		3AB9BD6018FB0E49004EAF10 /* 702-import@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-import@2x.png"; sourceTree = "<group>"; };
 		3AB9BD6118FB0E49004EAF10 /* 702-import.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-import.png"; sourceTree = "<group>"; };
 		3ABA7AAC1B1B253E00E8E892 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		3ABAD2F71B8275F8009E81F3 /* NSArray+Checked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Checked.h"; sourceTree = "<group>"; };
-		3ABAD2F81B8275F8009E81F3 /* NSArray+Checked.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Checked.m"; sourceTree = "<group>"; };
+		3ABAD2F71B8275F8009E81F3 /* NSArray+TwoD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+TwoD.h"; sourceTree = "<group>"; };
+		3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+TwoD.m"; sourceTree = "<group>"; };
 		3ABC2EE0197598E9007BBE3A /* SavedDecksList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedDecksList.h; sourceTree = "<group>"; };
 		3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedDecksList.m; sourceTree = "<group>"; };
 		3ABC2EE41975A647007BBE3A /* CompareDecksList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompareDecksList.h; sourceTree = "<group>"; };
@@ -805,8 +805,8 @@
 		3A3BDD9E1930F36E00DEFD57 /* Utility Classes / Headers */ = {
 			isa = PBXGroup;
 			children = (
-				3ABAD2F71B8275F8009E81F3 /* NSArray+Checked.h */,
-				3ABAD2F81B8275F8009E81F3 /* NSArray+Checked.m */,
+				3ABAD2F71B8275F8009E81F3 /* NSArray+TwoD.h */,
+				3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */,
 				3ADE9093187734B5006E187F /* SettingsKeys.h */,
 				3A9283DD187429DF00EA0B21 /* Notifications.h */,
 				3A595423186ED61C0074B3B1 /* CGRectUtils.h */,
@@ -1641,7 +1641,7 @@
 				3A11342219AC5C580012494E /* IdentityCardView.m in Sources */,
 				3A11B1151ADE364300E5A410 /* CardFilterCollectionView.m in Sources */,
 				3A4C7BFA18FEE9C0009B4A4B /* OctgnImport.m in Sources */,
-				3ABAD2F91B8275F8009E81F3 /* NSArray+Checked.m in Sources */,
+				3ABAD2F91B8275F8009E81F3 /* NSArray+TwoD.m in Sources */,
 				3AB9BD5E18FADC01004EAF10 /* DeckCell.m in Sources */,
 				3ADE90921877317F006E187F /* DeckManager.m in Sources */,
 				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,

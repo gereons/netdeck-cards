@@ -372,8 +372,7 @@ static NSString* filterText;
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.infoButton.hidden = YES;
     
-    NSArray* decks = self.filteredDecks[indexPath.section];
-    Deck* deck = decks[indexPath.row];
+    Deck* deck = [self.filteredDecks objectAtIndexPath:indexPath];
     
     cell.nameLabel.text = deck.name;
     
@@ -409,8 +408,7 @@ static NSString* filterText;
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* decks = self.filteredDecks[indexPath.section];
-    Deck* deck = decks[indexPath.row];
+    Deck* deck = [self.filteredDecks objectAtIndexPath:indexPath];
     
     NSString* filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];    
     if (filename)

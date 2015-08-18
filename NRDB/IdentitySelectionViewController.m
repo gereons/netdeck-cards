@@ -272,7 +272,7 @@
     {
         NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:[sender locationInView:self.collectionView]];
         
-        Card* card = [self.identities get2d:indexPath];
+        Card* card = [self.identities objectAtIndexPath:indexPath];
         if (card != nil)
         {
             self.selectedIdentity = card;
@@ -344,7 +344,7 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    Card* card = [self.identities get2d:indexPath];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     if (card == nil)
     {
         return;
@@ -382,7 +382,7 @@
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    Card* card = [self.identities get2d:indexPath];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     
     if ([card isEqual:self.selectedIdentity])
     {
@@ -427,7 +427,7 @@
         prevCell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    Card* card = [self.identities get2d:indexPath];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     
     self.selectedIdentity = card;
     self.selectedIndexPath = indexPath;
@@ -446,7 +446,7 @@
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* cellIdentifier = @"cardThumb";
-    Card* card = [self.identities get2d:indexPath];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     
     IdentityCardView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.card = card;
@@ -471,7 +471,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Card* card = [self.identities get2d:indexPath];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
 
     // convert to on-screen coordinates
@@ -507,13 +507,11 @@
     if (kind == UICollectionElementKindSectionHeader)
     {
         header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
-        
         header.titleLabel.text = self.factionNames[indexPath.section];
-        NSArray* arr = self.identities[indexPath.section];
         
-        if (arr.count > 0)
+        Card* card = [self.identities objectAtIndexPath:indexPath];
+        if (card != nil)
         {
-            Card* card = arr[0];
             header.titleLabel.textColor = card.factionColor;
         }
         else
@@ -535,7 +533,7 @@
     NSInteger item = sender.tag - (1000 * section);
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:item inSection:section];
     
-    Card* card = [self.identities get2d:indexPath];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     if (card != nil)
     {
         self.selectedIdentity = card;

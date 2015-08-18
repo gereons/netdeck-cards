@@ -221,8 +221,7 @@ static UIPopoverController* popover;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    NSArray* arr = self.values[indexPath.section];
-    NSString* value = arr[indexPath.row];
+    NSString* value = [self.values objectAtIndexPath:indexPath];
     
     if ([value isEqualToString:kANY])
     {
@@ -245,8 +244,7 @@ static UIPopoverController* popover;
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* arr = self.values[indexPath.section];
-    NSString* value = arr[indexPath.row];
+    NSString* value = [self.values objectAtIndexPath:indexPath];
     
     // first ("Any") cell tapped?
     BOOL anyCell = indexPath.row == 0 && indexPath.section == 0;

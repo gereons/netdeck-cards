@@ -493,8 +493,7 @@ static NRFilter _filterType = NRFilterAll;
 {
     DeckCell* cell = [tableView dequeueReusableCellWithIdentifier:@"deckCell" forIndexPath:indexPath];
     
-    NSArray* decks = self.decks[indexPath.section];
-    Deck* deck = decks[indexPath.row];
+    Deck* deck = [self.decks objectAtIndexPath:indexPath];
     cell.nameLabel.text = deck.name;
     
     if (deck.identity)

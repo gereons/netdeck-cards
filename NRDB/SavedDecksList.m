@@ -274,9 +274,8 @@
     NSInteger row = sender.tag / 10;
     NSInteger section = sender.tag & 1;
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-    NSArray* decks = self.decks[indexPath.section];
 
-    Deck* deck = decks[indexPath.row];
+    Deck* deck = [self.decks objectAtIndexPath:indexPath];
     
     UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
     CGRect frame = [cell.contentView convertRect:sender.frame toView:self.view];
@@ -378,9 +377,8 @@
         
         if (indexPath)
         {
-            NSArray* decks = self.decks[indexPath.section];
-            Deck* deck = decks[indexPath.row];
-            
+            Deck* deck = [self.decks objectAtIndexPath:indexPath];
+
             self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Duplicate") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 Deck* newDeck = [deck duplicate];
@@ -519,9 +517,8 @@
     cell.infoButton.tag = indexPath.row * 10 + indexPath.section;
     [cell.infoButton addTarget:self action:@selector(statePopup:) forControlEvents:UIControlEventTouchUpInside];
     
-    NSArray* decks = self.decks[indexPath.section];
-    Deck* deck = decks[indexPath.row];
-    
+    Deck* deck = [self.decks objectAtIndexPath:indexPath];
+
     NSString* icon;
     switch (deck.state)
     {
@@ -549,8 +546,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* decks = self.decks[indexPath.section];
-    Deck* deck = [decks objectAtIndex:indexPath.row];
+    Deck* deck = [self.decks objectAtIndexPath:indexPath];
     
     if (self.diffSelection)
     {
@@ -578,10 +574,11 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        NSMutableArray* decks = self.decks[indexPath.section];
-        Deck* deck = [decks objectAtIndex:indexPath.row];
+        Deck* deck = [self.decks objectAtIndexPath:indexPath];
         
+        NSMutableArray* decks = self.decks[indexPath.section];
         [decks removeObjectAtIndex:indexPath.row];
+        
         [[NRDB sharedInstance] deleteDeck:deck.netrunnerDbId];
         [DeckManager removeFile:deck.filename];
         

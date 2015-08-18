@@ -116,9 +116,8 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    NSArray* arr = self.values[indexPath.section];
-    
-    CardSet* cs = arr[indexPath.row];
+    CardSet* cs = [self.values objectAtIndexPath:indexPath];
+
     cell.textLabel.text = cs.name;
     cell.accessoryView = nil;
     

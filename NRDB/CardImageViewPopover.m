@@ -62,6 +62,10 @@ static CGFloat popoverScale = 1.0;
 
 +(void)showForCard:(Card *)card fromRect:(CGRect)rect inView:(UIView*)view
 {
+    if (card == nil || view == nil)
+    {
+        return;
+    }
     CardImageViewPopover* cardImageView = [[CardImageViewPopover alloc] initWithCard:card];
     
     NSAssert(popover == nil, @"previous popover still visible?");
