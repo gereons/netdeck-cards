@@ -271,9 +271,13 @@
     if (!self.viewTable)
     {
         NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:[sender locationInView:self.collectionView]];
-        NSArray* arr = self.identities[indexPath.section];
-        self.selectedIdentity = arr[indexPath.row];
-        self.selectedIndexPath = indexPath;
+        
+        Card* card = [self.identities objectAtIndexPath:indexPath];
+        if (card != nil)
+        {
+            self.selectedIdentity = card;
+            self.selectedIndexPath = indexPath;
+        }
     }
     [self okClicked:nil];
 }
@@ -340,8 +344,11 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    NSArray* arr = self.identities[indexPath.section];
-    Card* card = arr[indexPath.row];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
+    if (card == nil)
+    {
+        return;
+    }
     
     CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
     rect.origin.x = sender.frame.origin.x;
@@ -375,33 +382,32 @@
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    NSArray* arr = self.identities[indexPath.section];
-    Card* c = arr[indexPath.row];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     
-    if ([c isEqual:self.selectedIdentity])
+    if ([card isEqual:self.selectedIdentity])
     {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         cell.selected = YES;
         self.selectedIndexPath = indexPath;
     }
     
-    cell.titleLabel.text = c.name;
-    cell.titleLabel.textColor = c.factionColor;
+    cell.titleLabel.text = card.name;
+    cell.titleLabel.textColor = card.factionColor;
     
-    cell.deckSizeLabel.text = [@(c.minimumDecksize) stringValue];
+    cell.deckSizeLabel.text = [@(card.minimumDecksize) stringValue];
     
-    if (c.influenceLimit == -1)
+    if (card.influenceLimit == -1)
     {
         cell.influenceLimitLabel.text = @"∞";
     }
     else
     {
-        cell.influenceLimitLabel.text = [@(c.influenceLimit) stringValue];
+        cell.influenceLimitLabel.text = [@(card.influenceLimit) stringValue];
     }
     
     if (self.role == NRRoleRunner)
     {
-        cell.linkLabel.text = [NSString stringWithFormat:@"%d", c.baseLink];
+        cell.linkLabel.text = [NSString stringWithFormat:@"%d", card.baseLink];
         cell.linkIcon.hidden = NO;
     }
     else
@@ -421,10 +427,9 @@
         prevCell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    NSMutableArray* arr = self.identities[indexPath.section];
-    Card* c = arr[indexPath.row];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     
-    self.selectedIdentity = c;
+    self.selectedIdentity = card;
     self.selectedIndexPath = indexPath;
     
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -441,8 +446,7 @@
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* cellIdentifier = @"cardThumb";
-    NSArray* arr = self.identities[indexPath.section];
-    Card* card = arr[indexPath.row];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     
     IdentityCardView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.card = card;
@@ -467,8 +471,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* arr = self.identities[indexPath.section];
-    Card* card = arr[indexPath.row];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
 
     // convert to on-screen coordinates
@@ -504,13 +507,11 @@
     if (kind == UICollectionElementKindSectionHeader)
     {
         header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
-        
         header.titleLabel.text = self.factionNames[indexPath.section];
-        NSArray* arr = self.identities[indexPath.section];
         
-        if (arr.count > 0)
+        Card* card = [self.identities objectAtIndexPath:indexPath];
+        if (card != nil)
         {
-            Card* card = arr[0];
             header.titleLabel.textColor = card.factionColor;
         }
         else
@@ -532,9 +533,12 @@
     NSInteger item = sender.tag - (1000 * section);
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:item inSection:section];
     
-    NSArray* arr = self.identities[indexPath.section];
-    self.selectedIdentity = arr[indexPath.row];
-    self.selectedIndexPath = indexPath;
+    Card* card = [self.identities objectAtIndexPath:indexPath];
+    if (card != nil)
+    {
+        self.selectedIdentity = card;
+        self.selectedIndexPath = indexPath;
+    }
     
     [self.collectionView reloadData];
 }

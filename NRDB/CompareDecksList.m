@@ -90,8 +90,7 @@
 {
     DeckCell* cell = (DeckCell*)[super tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    NSArray* decks = self.decks[indexPath.section];
-    Deck* deck = decks[indexPath.row];
+    Deck* deck = [self.decks objectAtIndexPath:indexPath];
     
     cell.infoButton.hidden = YES;
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -108,8 +107,7 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* decks = self.decks[indexPath.section];
-    Deck* deck = decks[indexPath.row];
+    Deck* deck = [self.decks objectAtIndexPath:indexPath];
     
     if (self.selectedRole != deck.role)
     {

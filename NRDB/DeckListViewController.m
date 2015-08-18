@@ -1117,6 +1117,7 @@
 
 -(void) addCard:(Card *)card
 {
+    NSAssert(card != nil, @"add nil card?!?");
     [self.deck addCard:card copies:1];
     self.deckChanged = YES;
     [self refresh];
@@ -1245,8 +1246,7 @@
     cell.delegate = self;
     cell.separatorInset = UIEdgeInsetsZero;
     
-    NSArray* arr = self.cards[indexPath.section];
-    CardCounter* cc = arr[indexPath.row];
+    CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     if (ISNULL(cc))
     {
         cc = nil;
@@ -1260,14 +1260,11 @@
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section < self.cards.count)
+    CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
+    
+    if (cc != nil)
     {
-        NSArray* arr = self.cards[indexPath.section];
-        if (indexPath.row < arr.count)
-        {
-            CardCounter* cc = arr[indexPath.row];
-            return !ISNULL(cc);
-        }
+        return !ISNULL(cc);
     }
     return NO;
 }
@@ -1276,8 +1273,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        NSArray* arr = self.cards[indexPath.section];
-        CardCounter* cc = arr[indexPath.row];
+        CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
         
         if (!ISNULL(cc))
         {
@@ -1291,8 +1287,7 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* arr = self.cards[indexPath.section];
-    CardCounter* cc = arr[indexPath.row];
+    CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     
     if (!ISNULL(cc))
     {

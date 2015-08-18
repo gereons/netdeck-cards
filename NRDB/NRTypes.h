@@ -9,7 +9,7 @@
 #ifndef NRTypes_h
 #define NRTypes_h
 
-#define DIM(x)  (sizeof(x) / sizeof(x[0]))
+#define DIM(x)      (sizeof(x) / sizeof(x[0]))
 #define ISNULL(x)   [x isKindOfClass:[NSNull class]]
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 

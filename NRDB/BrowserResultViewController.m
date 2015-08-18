@@ -300,8 +300,7 @@ static BrowserResultViewController* instance;
     BrowserCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    NSArray* arr = [self.values objectAtIndex:indexPath.section];
-    Card* card = [arr objectAtIndex:indexPath.row];
+    Card* card = [self.values objectAtIndexPath:indexPath];
     
     cell.card = card;
     
@@ -310,8 +309,7 @@ static BrowserResultViewController* instance;
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* arr = self.values[indexPath.section];
-    Card* card = arr[indexPath.row];
+    Card* card = [self.values objectAtIndexPath:indexPath];
     
     CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
     [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
@@ -353,8 +351,7 @@ static BrowserResultViewController* instance;
 
     BrowserImageCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    NSArray* arr = self.values[indexPath.section];
-    Card* card = arr[indexPath.row];
+    Card* card = [self.values objectAtIndexPath:indexPath];
     
     cell.card = card;
     
@@ -366,8 +363,7 @@ static BrowserResultViewController* instance;
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
     CGRect rect = cell.frame;
     
-    NSArray* arr = self.values[indexPath.section];
-    Card* card = arr[indexPath.row];
+    Card* card = [self.values objectAtIndexPath:indexPath];
 
     [BrowserResultViewController showPopupForCard:card inView:collectionView fromRect:rect];
 }
@@ -422,8 +418,7 @@ static BrowserResultViewController* instance;
         {
             UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
             
-            NSArray* arr = self.values[indexPath.section];
-            Card* card = arr[indexPath.row];
+            Card* card = [self.values objectAtIndexPath:indexPath];
             
             [CardImageViewPopover showForCard:card fromRect:cell.frame inView:self.collectionView];
         }

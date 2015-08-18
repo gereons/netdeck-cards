@@ -969,8 +969,7 @@ static NSInteger viewMode = VIEW_LIST;
 {
     static NSString* cellIdentifier = @"cardCell";
     
-    NSArray* cards = self.cards[indexPath.section];
-    Card *card = cards[indexPath.row];
+    Card *card = [self.cards objectAtIndexPath:indexPath];
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil)
@@ -1026,14 +1025,8 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section > self.cards.count)
-    {
-        return;
-    }
-    
-    NSArray* cards = self.cards[indexPath.section];
-    Card *card = cards[indexPath.row];
-    
+    Card *card = [self.cards objectAtIndexPath:indexPath];
+
     CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
     [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
 }
@@ -1058,28 +1051,29 @@ static NSInteger viewMode = VIEW_LIST;
         return;
     }
     
-    NSArray* cards = self.cards[indexPath.section];
-    Card *card = cards[indexPath.row];
-    
     UITextField* textField = self.searchField;
     if (textField.isFirstResponder && textField.text.length > 0)
     {
         [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
     }
     
-    [self.deckListViewController addCard:card];
-    
-    NSArray* paths = @[indexPath];
-    
-    if (viewMode == VIEW_LIST)
+    Card *card = [self.cards objectAtIndexPath:indexPath];
+    if (card)
     {
-        [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
-    }
-    else
-    {
-        [UIView setAnimationsEnabled:NO];
-        [self.collectionView reloadItemsAtIndexPaths:paths];
-        [UIView setAnimationsEnabled:YES];
+        [self.deckListViewController addCard:card];
+        
+        NSArray* paths = @[indexPath];
+        
+        if (viewMode == VIEW_LIST)
+        {
+            [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+        }
+        else
+        {
+            [UIView setAnimationsEnabled:NO];
+            [self.collectionView reloadItemsAtIndexPaths:paths];
+            [UIView setAnimationsEnabled:YES];
+        }
     }
 }
 
@@ -1089,8 +1083,7 @@ static NSInteger viewMode = VIEW_LIST;
 {
     NSString* cellIdentifier = viewMode == VIEW_IMG_3 ? @"cardSmallThumb" : @"cardThumb";
     
-    NSArray* cards = self.cards[indexPath.section];
-    Card *card = cards[indexPath.row];
+    Card *card = [self.cards objectAtIndexPath:indexPath];
     CardCounter* cc = [self.deckListViewController.deck findCard:card];
     
     CardFilterThumbView* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
@@ -1106,8 +1099,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* cards = self.cards[indexPath.section];
-    Card *card = cards[indexPath.row];
+    Card *card = [self.cards objectAtIndexPath:indexPath];
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
     
     // convert to on-screen coordinates
