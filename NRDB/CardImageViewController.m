@@ -30,6 +30,23 @@
     self.collectionView.backgroundColor = [UIColor clearColor];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardImageViewCell" bundle:nil] forCellWithReuseIdentifier:@"cardCell"];
+    
+    if (self.parentViewController.view.frame.size.height == 480)
+    {
+        // iphone 4s
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
+        
+        UISwipeGestureRecognizer* swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(popNavigation:)];
+        swipe.direction = UISwipeGestureRecognizerDirectionUp;
+        
+        [self.collectionView addGestureRecognizer:swipe];
+    }
+}
+
+-(void)popNavigation:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 - (void)viewDidLayoutSubviews

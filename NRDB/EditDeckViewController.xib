@@ -26,10 +26,30 @@
                 </tableView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="69X-dg-40v">
                     <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                    <items/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="f8a-VO-JCO"/>
+                        <barButtonItem style="plain" id="TOI-tu-UO1">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6ht-wD-c2B">
+                                <rect key="frame" x="506" y="7" width="36" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Draw">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem style="plain" id="lGr-jz-FVN">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="25c-4Y-lbf">
+                                <rect key="frame" x="538" y="7" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                    </items>
                 </toolbar>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNa-Vc-9G8">
-                    <rect key="frame" x="18" y="562.5" width="564" height="31.5"/>
+                    <rect key="frame" x="18" y="562.5" width="482" height="31.5"/>
                     <string key="text">X Cards - X/Y Influence
 Not enough Cards</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -40,6 +60,7 @@ Not enough Cards</string>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="XoR-lC-cbz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GhP-Fg-TlV"/>
+                <constraint firstItem="69X-dg-40v" firstAttribute="trailing" secondItem="cNa-Vc-9G8" secondAttribute="trailing" constant="100" id="JVw-ia-OkB"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VVg-bv-oy1"/>
                 <constraint firstItem="cNa-Vc-9G8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="18" id="hRk-mn-Eew"/>
                 <constraint firstAttribute="trailing" secondItem="69X-dg-40v" secondAttribute="trailing" id="kS0-IB-w2t"/>
@@ -47,7 +68,6 @@ Not enough Cards</string>
                 <constraint firstItem="XoR-lC-cbz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="paG-fx-BMz"/>
                 <constraint firstAttribute="bottom" secondItem="69X-dg-40v" secondAttribute="bottom" id="sqO-9l-Yu6"/>
                 <constraint firstAttribute="trailing" secondItem="XoR-lC-cbz" secondAttribute="trailing" id="t7r-Xq-dHh"/>
-                <constraint firstAttribute="trailing" secondItem="cNa-Vc-9G8" secondAttribute="trailing" constant="18" id="wZn-Sp-9fw"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="top" secondItem="cNa-Vc-9G8" secondAttribute="bottom" constant="-38" id="xIT-lf-tzW"/>
             </constraints>
             <point key="canvasLocation" x="558" y="233"/>
