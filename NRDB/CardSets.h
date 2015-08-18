@@ -16,7 +16,6 @@
 #define SPECIAL_SET_CODE    @"special"
 
 #define DRAFT_SET_NAME      @"Draft"
-#define SPECIAL_SET_NAME    @"Special"
 #define CORE_SET_NAME       @"Core"
 
 #define UNKNOWN_SET         @"unknown"
