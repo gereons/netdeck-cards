@@ -275,8 +275,10 @@ static NSDictionary* cardAliases;   // code -> alias
         NSString* name_en = obj[@"title"];
         
         Card* card = [Card cardByCode:code];
-        NSAssert(card != nil, @"card %@ not found", code);
-        card.name_en = [name_en stringByReplacingHTMLEntities];
+        if (card)
+        {
+            card.name_en = [name_en stringByReplacingHTMLEntities];
+        }
     }
     
     // add automatic aliases like "Self Modifying Code" -> "SMC"
