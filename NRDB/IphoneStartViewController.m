@@ -16,6 +16,7 @@
 #import "CardManager.h"
 #import "CardSets.h"
 #import "EditDeckViewController.h"
+#import "IphoneIdentityViewController.h"
 
 @interface IphoneStartViewController ()
 
@@ -85,16 +86,20 @@
 
 -(void) addNewDeck:(NRRole)role
 {
-    NSLog(@"stub - addNewDeck");
+    IphoneIdentityViewController* idvc = [[IphoneIdentityViewController alloc] initWithNibName:@"IphoneIdentityViewController" bundle:nil];
+    idvc.role = role;
+    [self pushViewController:idvc animated:YES];
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 2;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return section == 0 ? self.runnerDecks.count : self.corpDecks.count;
 }
 
@@ -118,8 +123,7 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* decks = self.decks[indexPath.section];
-    Deck* deck = decks[indexPath.row];
+    Deck* deck = [self.decks objectAtIndexPath:indexPath];
     
     EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
     edit.deck = deck;

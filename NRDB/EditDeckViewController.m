@@ -9,6 +9,7 @@
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
 #import "CardImageViewController.h"
+#import "IphoneIdentityViewController.h"
 #import "Deck.h"
 #import "TableData.h"
 #import "ImageCache.h"
@@ -128,6 +129,14 @@
     [self refreshDeck:@(YES)];
 }
 
+-(void) selectIdentity:(id)sender
+{
+    IphoneIdentityViewController* idvc = [[IphoneIdentityViewController alloc] initWithNibName:@"IphoneIdentityViewController" bundle:nil];
+    idvc.role = self.deck.role;
+    idvc.deck = self.deck;  
+    [self.navigationController pushViewController:idvc animated:YES];
+}
+
 #pragma mark - table view
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -153,14 +162,27 @@
     cell.stepper.tag = indexPath.section * 1000 + indexPath.row;
     [cell.stepper addTarget:self action:@selector(changeCount:) forControlEvents:UIControlEventValueChanged];
 
-    NSArray* arr = self.cards[indexPath.section];
-    CardCounter* cc = arr[indexPath.row];
+    CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
+    
+    if (ISNULL(cc))
+    {
+        // empty identity
+        cell.nameLabel.textColor = [UIColor blackColor];
+        cell.nameLabel.text = @"";
+        cell.typeLabel.text = @"";
+        cell.stepper.hidden = YES;
+        cell.idButton.hidden = NO;
+        return cell;
+    }
     
     Card* card = cc.card;
     cell.stepper.minimumValue = 0;
     cell.stepper.maximumValue = card.maxPerDeck;
     cell.stepper.value = cc.count;
-    cell.stepper.hidden = NO;
+    cell.stepper.hidden = card.type == NRCardTypeIdentity;
+    cell.idButton.hidden = card.type != NRCardTypeIdentity;
+    
+    [cell.idButton addTarget:self action:@selector(selectIdentity:) forControlEvents:UIControlEventTouchUpInside];
     
     if (card.unique)
     {
@@ -203,10 +225,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray* arr = self.cards[indexPath.section];
-    CardCounter* cc = arr[indexPath.row];
+    CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     
-    [self.tableView reloadData];
+    if (ISNULL(cc))
+    {
+        return;
+    }
     
     CardImageViewController* img = [[CardImageViewController alloc] initWithNibName:@"CardImageViewController" bundle:nil];
     img.deck = self.deck;
@@ -219,8 +243,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        NSArray* arr = self.cards[indexPath.section];
-        CardCounter* cc = arr[indexPath.row];
+        CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
         
         if (!ISNULL(cc))
         {

@@ -13,5 +13,6 @@
 @property IBOutlet UILabel* nameLabel;
 @property IBOutlet UILabel* typeLabel;
 @property IBOutlet UIStepper* stepper;
+@property IBOutlet UIButton* idButton;
 
 @end

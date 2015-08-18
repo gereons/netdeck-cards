@@ -110,6 +110,8 @@
     cell.stepper.minimumValue = 0;
     cell.stepper.maximumValue = card.maxPerDeck;
     cell.stepper.value = cc.count;
+    cell.stepper.hidden = NO;
+    cell.idButton.hidden = YES;
     
     if (cc)
     {
