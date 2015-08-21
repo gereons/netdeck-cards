@@ -96,6 +96,19 @@
     return self.sections[section];
 }
 
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.backgroundColor = [UIColor whiteColor];
+    
+    Card* card = [self.cards objectAtIndexPath:indexPath];
+    CardCounter* cc = [self.deck findCard:card];
+    
+    if (cc.count > 0)
+    {
+        cell.backgroundColor = [UIColor colorWithWhite:.97 alpha:1];
+    }
+}
+
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     EditDeckCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cardCell" forIndexPath:indexPath];
@@ -103,8 +116,7 @@
     cell.stepper.tag = indexPath.section * 1000 + indexPath.row;
     [cell.stepper addTarget:self action:@selector(countChanged:) forControlEvents:UIControlEventValueChanged];
     
-    NSArray* arr = self.cards[indexPath.section];
-    Card* card = arr[indexPath.row];
+    Card* card = [self.cards objectAtIndexPath:indexPath];
     CardCounter* cc = [self.deck findCard:card];
     
     cell.stepper.minimumValue = 0;

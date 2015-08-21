@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@interface IphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate>
+@interface IphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
 
+@property IBOutlet UITableViewController* tableViewController;
 @property IBOutlet UITableView* tableView;
 
 -(IBAction)createNewDeck:(id)sender;

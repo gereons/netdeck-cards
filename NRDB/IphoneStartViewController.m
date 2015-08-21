@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.delegate = self;
     
     [CardUpdateCheck checkCardsAvailable];
     
@@ -44,6 +45,24 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
+}
+
+// this is a poor man's replacement for viewWillAppear - I can't figure out why this isn't called when this view is
+// back on top :(
+-(void) navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (viewController != self.tableViewController)
+    {
+        return;
+    }
+    
+    
+    if ([CardManager cardsAvailable] && [CardSets setsAvailable])
+    {
+        [self initializeDecks];
+    }
+    
+    [self.tableView reloadData];
 }
 
 -(void) initializeDecks
@@ -108,7 +127,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -117,6 +136,17 @@
     Deck* deck = decks[indexPath.row];
     
     cell.textLabel.text = deck.name;
+    
+    if (deck.identity)
+    {
+        cell.detailTextLabel.text = deck.identity.name;
+        cell.detailTextLabel.textColor = deck.identity.factionColor;
+    }
+    else
+    {
+        cell.detailTextLabel.text = @"no Identity";
+        cell.detailTextLabel.textColor = [UIColor blackColor];
+    }
     
     return cell;
 }
