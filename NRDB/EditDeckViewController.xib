@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditDeckViewController">
             <connections>
+                <outlet property="drawButton" destination="TOI-tu-UO1" id="n2j-6m-Oq1"/>
+                <outlet property="saveButton" destination="lGr-jz-FVN" id="F3O-LN-8gr"/>
                 <outlet property="statusLabel" destination="cNa-Vc-9G8" id="AUy-dX-BkU"/>
                 <outlet property="tableView" destination="XoR-lC-cbz" id="hKE-VP-Yzy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -35,6 +37,9 @@
                                 <state key="normal" title="Draw">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="drawClicked:" destination="-1" eventType="touchUpInside" id="x04-za-DMs"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                         <barButtonItem style="plain" id="lGr-jz-FVN">
@@ -44,6 +49,9 @@
                                 <state key="normal" title="Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveClicked:" destination="-1" eventType="touchUpInside" id="ajK-9N-jvd"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </items>

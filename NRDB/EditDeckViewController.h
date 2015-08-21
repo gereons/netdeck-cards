@@ -12,7 +12,12 @@
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UILabel* statusLabel;
+@property IBOutlet UIBarButtonItem* drawButton;
+@property IBOutlet UIBarButtonItem* saveButton;
 
 @property Deck* deck;
+
+-(IBAction)drawClicked:(id)sender;
+-(IBAction)saveClicked:(id)sender;
 
 @end

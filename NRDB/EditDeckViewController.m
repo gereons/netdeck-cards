@@ -16,6 +16,7 @@
 #import "Faction.h"
 #import "CardType.h"
 #import "EditDeckCell.h"
+#import "DeckManager.h"
 
 @interface EditDeckViewController ()
 
@@ -37,6 +38,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"EditDeckCell" bundle:nil] forCellReuseIdentifier:@"cardCell"];
     
     self.title = self.deck.name;
+    self.drawButton.enabled = NO;
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -59,6 +61,16 @@
 -(void) exportDeck:(id)sender
 {
     NSLog(@"stub - export deck");
+}
+
+-(void) drawClicked:(id)sender
+{
+    NSLog(@"stub - draw simulator");
+}
+
+-(void) saveClicked:(id)sender
+{
+    [DeckManager saveDeck:self.deck];
 }
 
 -(void) addCard:(id)sender

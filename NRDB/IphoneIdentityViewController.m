@@ -132,6 +132,9 @@
         {
             [deck addCard:self.selectedIdentity copies:1];
         }
+        
+        NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
+        deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
 
         EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
         edit.deck = deck;
