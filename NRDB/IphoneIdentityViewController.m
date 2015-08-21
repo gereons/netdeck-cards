@@ -11,11 +11,16 @@
 #import "ImageCache.h"
 #import "CardManager.h"
 #import "Deck.h"
+#import "Faction.h"
+#import "SettingsKeys.h"
+#import "CardSets.h"
 
 @interface IphoneIdentityViewController ()
 
 @property Card* selectedIdentity;
-@property NSArray* identities;
+@property NSIndexPath* selectedIndexPath;
+@property NSMutableArray* identities;
+@property NSArray* factionNames;
 
 @end
 
@@ -29,14 +34,87 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
     
+    UITapGestureRecognizer* tableTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+    tableTap.numberOfTapsRequired = 2;
+    [self.tableView addGestureRecognizer:tableTap];
+    
     self.title = l10n(@"Choose Identity");
     
-    self.identities = [CardManager identitiesForRole:self.role];
+    self.okButton.enabled = self.deck != nil;
+    
+    self.selectedIdentity = self.deck.identity;
+    
+    [self initIdentities];
 }
 
--(void) cancelClicked:(id)sender
+- (void)initIdentities
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    NSMutableArray* factions = [[Faction factionsForRole:self.role] mutableCopy];
+    // remove entries for "none" and "neutral"
+    [factions removeObject:[Faction name:NRFactionNone]];
+    
+    // move 'neutral' to the end
+    NSString* neutral = [Faction name:NRFactionNeutral];
+    [factions removeObject:neutral];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
+    {
+        [factions addObject:neutral];
+    }
+
+    self.identities = [NSMutableArray array];
+    self.factionNames = [NSArray arrayWithArray:factions];
+    
+    self.selectedIndexPath = nil;
+    NSSet* disabledSetCodes = [CardSets disabledSetCodes];
+    
+    NSArray* identities = [CardManager identitiesForRole:self.role];
+    for (int i=0; i<factions.count; ++i)
+    {
+        [self.identities addObject:[NSMutableArray array]];
+        
+        for (int j=0; j<identities.count; ++j)
+        {
+            Card* card = identities[j];
+            if ([disabledSetCodes containsObject:card.setCode])
+            {
+                continue;
+            }
+            
+            if ([[factions objectAtIndex:i] isEqualToString:card.factionStr])
+            {
+                NSMutableArray* arr = self.identities[i];
+                [arr addObject:card];
+                
+                if ([self.selectedIdentity isEqual:card])
+                {
+                    self.selectedIndexPath = [NSIndexPath indexPathForRow:arr.count-1 inSection:i];
+                }
+            }
+        }
+    }
+    
+    NSAssert(self.identities.count == self.factionNames.count, @"count mismatch");
+    
+    
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (self.selectedIndexPath)
+    {
+        [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+    }
+}
+
+-(void) doubleTap:(UITapGestureRecognizer*)gesture
+{
+    if (UIGestureRecognizerStateEnded != gesture.state)
+    {
+        return;
+    }
+    [self okClicked:nil];
 }
 
 -(void) okClicked:(id)sender
@@ -69,7 +147,29 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSArray* arr = self.identities[section];
+    return arr.count;
+}
+
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+{
     return self.identities.count;
+}
+
+-(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return self.factionNames[section];
+}
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.textLabel.font = [UIFont systemFontOfSize:17];
+    cell.backgroundColor = [UIColor whiteColor];
+    if ([indexPath compare:self.selectedIndexPath] == NSOrderedSame)
+    {
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
+        cell.backgroundColor = [UIColor colorWithWhite:.97 alpha:1];
+    }
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -80,12 +180,13 @@
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    Card* card = self.identities[indexPath.row];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     cell.textLabel.text = card.name;
     cell.textLabel.textColor = card.factionColor;
-    
+ 
     if (self.role == NRRoleRunner)
     {
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%d/%d - %d Link", card.minimumDecksize, card.influenceLimit, card.baseLink];
@@ -100,8 +201,19 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Card* card = self.identities[indexPath.row];
+    Card* card = [self.identities objectAtIndexPath:indexPath];
     self.selectedIdentity = card;
+    
+    NSMutableArray* reload = [NSMutableArray array];
+    [reload addObject:indexPath];
+    if (self.selectedIndexPath)
+    {
+        [reload addObject:self.selectedIndexPath];
+    }
+    self.selectedIndexPath = indexPath;
+    [self.tableView reloadRowsAtIndexPaths:reload withRowAnimation:UITableViewRowAnimationNone];
+    
+    self.okButton.enabled = YES;
 }
 
 

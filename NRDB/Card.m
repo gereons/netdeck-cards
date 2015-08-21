@@ -171,26 +171,32 @@ static NSDictionary* cropValues;
     c->_name = [c->_name stringByReplacingHTMLEntities];
     c->_name_en = c->_name;
     
-    JSON_STR(text, @"text");
-    c->_text = [c->_text stringByReplacingHTMLEntities];
-    
-    JSON_STR(flavor, @"flavor");
     JSON_STR(factionStr, @"faction");
     NSString* factionCode = [json objectForKey:@"faction_code"];
     c->_faction = [Faction faction:factionCode];
     NSAssert(c.faction != NRFactionNone, @"no faction for %@", c.code);
-    // remove the "consortium" from weyland's name
-    if (c.faction == NRFactionWeyland)
-    {
-        c->_factionStr = @"Weyland";
-    }
     
     JSON_STR(roleStr, @"side");
     NSString* roleCode = [json objectForKey:@"side_code"];
     NSNumber* rc = [roleCodes objectForKey:roleCode.lowercaseString];
     c->_role = rc ? rc.integerValue : NRRoleNone;
     NSAssert(c.role != NRRoleNone, @"no role for %@", c.code);
+    
+    if (IS_IPHONE && c.type == NRCardTypeIdentity)
+    {
+        c->_name = [Card shortIdentityName:c.name forRole:c.role andFaction:c.factionStr];
+    }
+    // remove the "consortium" from weyland's name
+    if (c.faction == NRFactionWeyland)
+    {
+        c->_factionStr = @"Weyland";
+    }
 
+    JSON_STR(text, @"text");
+    c->_text = [c->_text stringByReplacingHTMLEntities];
+    
+    JSON_STR(flavor, @"flavor");
+    
     JSON_STR(typeStr, @"type");
     NSString* typeCode = [json objectForKey:@"type_code"];
     c->_type = [CardType type:typeCode];
@@ -311,6 +317,35 @@ static NSDictionary* cropValues;
     }
     
     return c;
+}
+
++(NSString*) shortIdentityName:(NSString*)name forRole:(NRRole)role andFaction:(NSString*)faction
+{
+    // manipulate identity name
+    NSRange colon = [name rangeOfString:@": "];
+    
+    // runner: remove stuff after the colon ("Andromeda: Disposessed Ristie" becomes "Andromeda")
+    if (role == NRRoleRunner && colon.location != NSNotFound)
+    {
+        name = [name substringToIndex:colon.location];
+    }
+    
+    // corp: if faction name is part of the title, remove it ("NBN: The World is Yours*" becomes "The World is Yours*")
+    // otherwise, remove stuff after the colon ("Harmony Medtech: Biomedical Pioneer" becomes "Harmony Medtech")
+    if (role == NRRoleCorp && colon.location != NSNotFound)
+    {
+        NSString* f = [faction stringByAppendingString:@": "];
+        NSRange range = [name rangeOfString:f];
+        if (range.location == NSNotFound)
+        {
+            name = [name substringToIndex:colon.location];
+        }
+        else
+        {
+            name = [name substringFromIndex:f.length];
+        }
+    }
+    return name;
 }
 
 +(BOOL) isMultiIce:(Card*)card
