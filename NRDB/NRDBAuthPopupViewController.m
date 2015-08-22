@@ -13,6 +13,8 @@
 
 @interface NRDBAuthPopupViewController ()
 
+@property UINavigationController* navController;
+
 @end
 
 @implementation NRDBAuthPopupViewController
@@ -25,6 +27,14 @@ static NRDBAuthPopupViewController* popup;
     
     [vc presentViewController:popup animated:NO completion:nil];
     popup.preferredContentSize = CGSizeMake(850, 466);
+}
+
++(void) pushOn:(UINavigationController *)navController
+{
+    popup = [[NRDBAuthPopupViewController alloc] initWithNibName:@"NRDBAuthPopupViewController" bundle:nil];
+    popup.navController = navController;
+    
+    [navController pushViewController:popup animated:YES];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -62,7 +72,16 @@ static NRDBAuthPopupViewController* popup;
 
 -(void) dismiss
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    if (self.navController)
+    {
+        [self.navController popViewControllerAnimated:YES];
+        self.navController = nil;
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     popup = nil;
 }

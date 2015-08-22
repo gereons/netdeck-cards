@@ -23,70 +23,30 @@
 #import "Notifications.h"
 #import "NRDBAuthPopupViewController.h"
 
-@interface MyIASKAppSettingsViewController: IASKAppSettingsViewController
-@end
-
-@implementation MyIASKAppSettingsViewController
-
--(void) viewDidLoad
-{
-    [super viewDidLoad];
-    
-}
-
-
-@end
-
-@interface SettingsViewController ()
-@property NSString* initialLanguage;
-
-@end
 
 @implementation SettingsViewController
 
+-(id) init
+{
+    if ((self = [super init]))
+    {
+        self->_iask = [[IASKAppSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        self.iask.delegate = self;
+        self.iask.showDoneButton = NO;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:kIASKAppSettingChanged object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:LOAD_CARDS object:nil];
+        
+        [self refresh];
+    }
+    return self;
+}
+
 -(void) dealloc
 {
-    self.delegate = nil;
+    self->_iask.delegate = nil;
+    self->_iask = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.initialLanguage = [[NSUserDefaults standardUserDefaults] stringForKey:LANGUAGE];
-    
-    self.showDoneButton = NO;
-    self.delegate = self;
-
-    if (IS_IPAD)
-    {
-        self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-        self.navigationController.navigationBar.topItem.title = l10n(@"Settings");
-        [self.navigationController setViewControllers:@[ self ]];
-    }
-    else
-    {
-        NSMutableArray* viewControllers = self.navigationController.viewControllers.mutableCopy;
-        [viewControllers removeLastObject];
-        [viewControllers addObject:self];
-        [self.navigationController setViewControllers:viewControllers];
-    }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:kIASKAppSettingChanged object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:LOAD_CARDS object:nil];
-    
-    [self refresh];
-}
-
--(void) viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    NSString* newLanguage = [[NSUserDefaults standardUserDefaults] stringForKey:LANGUAGE];
-    if (![newLanguage isEqualToString:self.initialLanguage])
-    {
-        [[ImageCache sharedInstance] clearLastModifiedInfo];
-    }
 }
 
 -(void) refresh
@@ -106,7 +66,7 @@
     {
         [hiddenKeys addObject:AUTO_SAVE_DB];
     }
-    [self setHiddenKeys:hiddenKeys];
+    [self.iask setHiddenKeys:hiddenKeys];
 }
 
 - (void) cardsLoaded:(NSNotification*) notification
@@ -119,7 +79,7 @@
 
 - (void) settingsChanged:(NSNotification*)notification
 {
-    // NSLog(@"changing %@", notification.object);
+    // NSLog(@"changing %@ to %@", notification.object, notification.userInfo);
     
     if ([notification.object isEqualToString:USE_DROPBOX])
     {
@@ -159,10 +119,17 @@
         
         if (useNrdb)
         {
-            UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
             if (APP_ONLINE)
             {
-                [NRDBAuthPopupViewController showInViewController:topMost];
+                if (IS_IPAD)
+                {
+                    UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+                    [NRDBAuthPopupViewController showInViewController:topMost];
+                }
+                else
+                {
+                    [NRDBAuthPopupViewController pushOn:self.iask.navigationController];
+                }
             }
             else
             {
@@ -182,6 +149,10 @@
     else if ([notification.object isEqualToString:UPDATE_INTERVAL])
     {
         [CardManager setNextDownloadDate];
+    }
+    else if ([notification.object isEqualToString:LANGUAGE])
+    {
+        [[ImageCache sharedInstance] clearLastModifiedInfo];
     }
 }
 

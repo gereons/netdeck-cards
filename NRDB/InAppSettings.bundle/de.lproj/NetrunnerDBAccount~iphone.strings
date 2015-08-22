@@ -1,0 +1,7 @@
+/* NetrunnerDBAccount.strings - de */
+
+"Account" = "Konto";
+"Saving" = "Speichern";
+
+"Manually saving also uploads to NetrunnerDB.com" = "Beim Speichern auch hochladen";
+"Connect to NetrunnerDB.com Account" = "App mit NetrunnerDB.com verbinden";

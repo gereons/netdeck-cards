@@ -24,6 +24,7 @@
 @property NSMutableArray* runnerDecks;
 @property NSMutableArray* corpDecks;
 @property NSArray* decks;
+@property SettingsViewController* settings;
 
 @end
 
@@ -115,8 +116,8 @@
 
 -(void) openSettings:(id)sender
 {
-    SettingsViewController* settings = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    [self pushViewController:settings animated:YES];
+    self.settings = [[SettingsViewController alloc] init];
+    [self pushViewController:self.settings.iask animated:YES];
 }
 
 #pragma mark - Table view data source

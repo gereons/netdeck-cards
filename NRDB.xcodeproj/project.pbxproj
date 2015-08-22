@@ -255,6 +255,7 @@
 		3AF0622C1B886DFD00575984 /* 740-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF062291B886DFD00575984 /* 740-gear.png */; };
 		3AF0622D1B886DFD00575984 /* 740-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF0622A1B886DFD00575984 /* 740-gear@2x.png */; };
 		3AF0622E1B886DFD00575984 /* 740-gear@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF0622B1B886DFD00575984 /* 740-gear@3x.png */; };
+		3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */; };
 		3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */; };
 		3AF2235E194364A80072FD9F /* CardFilterSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */; };
 		3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BA1883075500F6306B /* CardFilterPopover.m */; };
@@ -644,6 +645,7 @@
 		3AF062291B886DFD00575984 /* 740-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear.png"; sourceTree = "<group>"; };
 		3AF0622A1B886DFD00575984 /* 740-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear@2x.png"; sourceTree = "<group>"; };
 		3AF0622B1B886DFD00575984 /* 740-gear@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear@3x.png"; sourceTree = "<group>"; };
+		3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "NRDBAuthPopupViewController~iphone.xib"; sourceTree = "<group>"; };
 		3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSectionHeaderView.xib; sourceTree = "<group>"; };
 		3AF2235C194364A80072FD9F /* CardFilterSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterSectionHeaderView.h; sourceTree = "<group>"; };
 		3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterSectionHeaderView.m; sourceTree = "<group>"; };
@@ -1186,6 +1188,7 @@
 				3A1777DC1967EA0B0066E095 /* NRDBAuthPopupViewController.h */,
 				3A1777DD1967EA0B0066E095 /* NRDBAuthPopupViewController.m */,
 				3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */,
+				3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */,
 			);
 			name = Netrunnerdb.com;
 			sourceTree = "<group>";
@@ -1567,6 +1570,7 @@
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
 				3A82625218E05EC70038B4AC /* cardstats_credit@2x.png in Resources */,
 				3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */,
+				3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */,
 				3AD860E11B79383500EEF8AC /* CardImageViewController.xib in Resources */,
 				3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */,
 				3AE0D50B18F7B4A0007868A7 /* mem_slider@2x.png in Resources */,

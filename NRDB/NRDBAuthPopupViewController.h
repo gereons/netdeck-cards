@@ -15,6 +15,7 @@
 -(IBAction)cancel:(id)sender;
 
 +(void) showInViewController:(UIViewController*)vc;
++(void) pushOn:(UINavigationController*)navController;
 +(void) handleOpenURL:(NSURL*)url;
 
 @end
