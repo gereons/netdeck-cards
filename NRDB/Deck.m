@@ -12,6 +12,7 @@
 #import "CardCounter.h"
 #import "DeckChange.h"
 #import "DeckChangeSet.h"
+#import "DeckManager.h"
 
 #import "SettingsKeys.h"
 
@@ -34,13 +35,45 @@
     {
         self->_cards = [NSMutableArray array];
         self->_revisions = [NSMutableArray array];
-        self.state = [[NSUserDefaults standardUserDefaults] boolForKey:CREATE_DECK_ACTIVE] ? NRDeckStateActive : NRDeckStateTesting;
-        self.role = NRRoleNone;
-        self.sortType = NRDeckSortType;
-        self.lastChanges = [[DeckChangeSet alloc] init];
-        self.dateCreated = [NSDate date];
+        self->_state = [[NSUserDefaults standardUserDefaults] boolForKey:CREATE_DECK_ACTIVE] ? NRDeckStateActive : NRDeckStateTesting;
+        self->_role = NRRoleNone;
+        self->_sortType = NRDeckSortType;
+        self->_lastChanges = [[DeckChangeSet alloc] init];
+        self->_dateCreated = [NSDate date];
+        self->_modified = NO;
     }
     return self;
+}
+
+-(void) setName:(NSString *)name
+{
+    self->_name = name;
+    self->_modified = YES;
+}
+-(void) setRole:(NRRole)role
+{
+    self->_role = role;
+    self->_modified = YES;
+}
+-(void) setState:(NRDeckState)state
+{
+    self->_state = state;
+    self->_modified = YES;
+}
+-(void) setNetrunnerDbId:(NSString *)netrunnerDbId
+{
+    self->_netrunnerDbId = netrunnerDbId;
+    self->_modified = YES;
+}
+-(void) setNotes:(NSString *)notes
+{
+    self->_notes = notes;
+    self->_modified = YES;
+}
+-(void) saveToDisk
+{
+    [DeckManager saveDeck:self];
+    self->_modified = NO;
 }
 
 -(Card*) identity
@@ -274,7 +307,7 @@
 -(void) addCard:(Card *)card copies:(NSInteger)copies history:(BOOL)history
 {
     // NSLog(@"add %d copies of %@, hist=%d", copies, card.name, history);
-    
+    self->_modified = YES;
     NSInteger cardIndex = [self indexOfCardCode:card.code];
     CardCounter* cc;
     
@@ -436,6 +469,7 @@
     [self setIdentity:newIdentity copies:1 history:NO];
     
     self->_cards = newCards;
+    self->_modified = YES;
 }
 
 -(Deck*) duplicate
@@ -468,12 +502,13 @@
     newDeck->_isDraft = self.isDraft;
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
     newDeck->_role = self.role;
-    newDeck.filename = nil;
-    newDeck.state = self.state;
-    newDeck.notes = self.notes ? [NSString stringWithString:self.notes] : nil;
+    newDeck->_filename = nil;
+    newDeck->_state = self.state;
+    newDeck->_notes = self.notes ? [NSString stringWithString:self.notes] : nil;
     
-    newDeck.lastChanges = self.lastChanges;
+    newDeck->_lastChanges = self.lastChanges;
     newDeck->_revisions = [NSMutableArray arrayWithArray:self.revisions];
+    newDeck->_modified = YES;
     
     return newDeck;
 }
@@ -700,6 +735,7 @@
         {
             _revisions = [NSMutableArray array];
         }
+        _modified = NO;
     }
     return self;
 }

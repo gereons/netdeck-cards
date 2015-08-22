@@ -237,8 +237,6 @@
     [self.deckNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterName:)]];
     self.deckNameLabel.userInteractionEnabled = YES;
     
-    self.deckChanged = NO;
-    
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardImageCell" bundle:nil] forCellWithReuseIdentifier:@"cardImageCell"];
     
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
@@ -255,7 +253,6 @@
     {
         // so that CardFilterViewController gets a chance to reload
         [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
-        self.deckChanged = NO;
     }
     self.initializing = NO;
     
@@ -383,8 +380,6 @@
         return;
     }
     
-    self.deckChanged = NO;
-    
     if (manually)
     {
         [self stopHistoryTimer:nil];
@@ -399,7 +394,7 @@
         [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
     }
     
-    [DeckManager saveDeck:self.deck];
+    [self.deck saveToDisk];
     
     if (manually && self.autoSaveNRDB)
     {
@@ -488,7 +483,6 @@
                     
                 case 3: // disconnect
                     self.deck.netrunnerDbId = nil;
-                    self.deckChanged = YES;
                     if (self.autoSave)
                     {
                         [self saveDeckManually:NO withHud:NO];
@@ -528,7 +522,7 @@
         if (ok && deckId)
         {
             self.deck.netrunnerDbId = deckId;
-            [DeckManager saveDeck:self.deck];
+            [self.deck saveToDisk];
             [DeckManager resetModificationDate:self.deck];
         }
         
@@ -557,7 +551,7 @@
         {
             deck.filename = self.deck.filename;
             self.deck = deck;
-            self.deckChanged = YES;
+            self.deck.state = self.deck.state; // force .modified=YES
             
             [self refresh];
         }
@@ -656,17 +650,17 @@
                 self.deck = newDeck;
                 if (self.autoSave)
                 {
-                    [DeckManager saveDeck:self.deck];
+                    [self.deck saveToDisk];
                 }
                 else
                 {
-                    self.deckChanged = YES;
+                    self.deck.state = self.deck.state; // force .modified=YES
                 }
                 [self refresh];
                 break;
                 
             case 2: // dup, stay here
-                [DeckManager saveDeck:newDeck];
+                [newDeck saveToDisk];
                 if (self.autoSaveDropbox)
                 {
                     if (newDeck.identity && newDeck.cards.count > 0)
@@ -723,7 +717,6 @@
     [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];
     if (self.deck.state != oldState)
     {
-        self.deckChanged = YES;
         if (self.autoSave)
         {
             [self saveDeckManually:NO withHud:NO];
@@ -769,7 +762,6 @@
         {
             self.deck.name = [self.nameAlert textFieldAtIndex:0].text;
             self.deckNameLabel.text = self.deck.name;
-            self.deckChanged = YES;
             if (self.autoSave)
             {
                 [self saveDeckManually:NO withHud:NO];
@@ -813,7 +805,6 @@
     if (card && ![self.deck.identity isEqual:card])
     {
         [self.deck addCard:card copies:1];
-        self.deckChanged = YES;
         [self refresh];
     
         [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
@@ -1033,7 +1024,6 @@
 
 -(void) notesChanged:(id)sender
 {
-    self.deckChanged = YES;
     if (self.autoSave)
     {
         [self saveDeckManually:NO withHud:NO];
@@ -1046,11 +1036,10 @@
     BOOL initialLoad = [[sender.userInfo objectForKey:@"initialLoad"] boolValue];
     if (!initialLoad)
     {
-        self.deckChanged = YES;
         [self refresh];
     }
     
-    if (self.autoSave && self.deckChanged)
+    if (self.autoSave && self.deck.modified)
     {
         [self saveDeckManually:NO withHud:NO];
     }
@@ -1061,7 +1050,7 @@
     [self initCards];
     [self reloadViews];
     
-    if (self.deckChanged)
+    if (self.deck.modified)
     {
         self.saveButton.enabled = YES;
     }
@@ -1119,7 +1108,6 @@
 {
     NSAssert(card != nil, @"add nil card?!?");
     [self.deck addCard:card copies:1];
-    self.deckChanged = YES;
     [self refresh];
 
     NSIndexPath* indexPath;
@@ -1280,7 +1268,6 @@
             [self.deck addCard:cc.card copies:0];
         }
         
-        self.deckChanged = YES;
         [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
     }
 }
@@ -1574,5 +1561,16 @@
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
+#pragma mark - DeckEditor protocol
+
+-(BOOL) deckModified
+{
+    return self.deck.modified;
+}
+
+-(void) saveDeck
+{
+    [self saveDeckManually:YES withHud:NO];
+}
 
 @end

@@ -152,7 +152,7 @@ static NSString* filterText;
                     {
                         deck.filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
                     }
-                    [DeckManager saveDeck:deck];
+                    [deck saveToDisk];
                 }
             }
         }
@@ -433,7 +433,7 @@ static NSString* filterText;
                 [[NRDB sharedInstance] loadDeck:deck completion:^(BOOL ok, Deck *deck) {
                     NSLog(@"ok=%d", ok);
                     [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-                    [DeckManager saveDeck:deck];
+                    [deck saveToDisk];
                 }];
             }
         };
@@ -441,7 +441,7 @@ static NSString* filterText;
     else
     {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-        [DeckManager saveDeck:deck];
+        [deck saveToDisk];
     }
 }
 

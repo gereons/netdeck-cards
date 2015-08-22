@@ -100,7 +100,6 @@ static NSInteger viewMode = VIEW_LIST;
     if ((self = [self initWithRole:role]))
     {
         self.deckListViewController.deck = deck;
-        self.deckListViewController.deckChanged = YES;
     }
     return self;
 }
