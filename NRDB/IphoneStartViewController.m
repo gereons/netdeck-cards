@@ -47,6 +47,11 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
+    
+    UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewDeck:)];
+    UIBarButtonItem* importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
+    
+    self.navigationBar.topItem.rightBarButtonItems = @[ addButton, importButton ];
 }
 
 // this is a poor man's replacement for viewWillAppear - I can't figure out why this isn't called when this view is
@@ -91,13 +96,13 @@
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"New Runner Deck" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self addNewDeck:NRRoleRunner];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"New Corp Deck" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"New Corp Deck") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self addNewDeck:NRRoleCorp];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         // nop
     }]];
     
@@ -109,6 +114,13 @@
     IphoneIdentityViewController* idvc = [[IphoneIdentityViewController alloc] initWithNibName:@"IphoneIdentityViewController" bundle:nil];
     idvc.role = role;
     [self pushViewController:idvc animated:YES];
+}
+
+#pragma mark - import
+
+-(void) importDecks:(id)sender
+{
+    NSLog(@"stub - import decks");
 }
 
 #pragma mark - settings

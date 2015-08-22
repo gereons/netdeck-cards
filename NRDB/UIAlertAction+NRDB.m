@@ -12,7 +12,8 @@
 
 +(UIAlertAction*) cancelAction:(void (^)(UIAlertAction *action))handler
 {
-    return [UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:handler];
+    NSString* title = IS_IPAD ? @"" : l10n(@"Cancel");
+    return [UIAlertAction actionWithTitle:title style:UIAlertActionStyleCancel handler:handler];
 }
 
 +(UIAlertAction*) actionWithTitle:(NSString *)title handler:(void (^)(UIAlertAction *))handler

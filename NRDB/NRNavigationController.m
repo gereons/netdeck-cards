@@ -85,7 +85,7 @@
 
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
-    NSLog(@"should pop: %d %d %d %d", self.popToRoot, self.swipePop, self.regularPop, self.alertViewClicked);
+    // NSLog(@"should pop: %d %d %d %d", self.popToRoot, self.swipePop, self.regularPop, self.alertViewClicked);
     
     if (self.popToRoot)
     {

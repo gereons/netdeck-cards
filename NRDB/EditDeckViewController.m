@@ -16,6 +16,9 @@
 #import "Faction.h"
 #import "CardType.h"
 #import "EditDeckCell.h"
+#import "DeckExport.h"
+#import "UIAlertAction+NRDB.h"
+#import "SettingsKeys.h"
 
 @interface EditDeckViewController ()
 
@@ -59,7 +62,36 @@
 
 -(void) exportDeck:(id)sender
 {
-    NSLog(@"stub - export deck");
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Export") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    if ([settings boolForKey:USE_DROPBOX])
+    {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To Dropbox") handler:^(UIAlertAction *action) {
+            [DeckExport asOctgn:self.deck autoSave:NO];
+        }]];
+    }
+    
+    if ([settings boolForKey:USE_NRDB])
+    {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction *action) {
+            NSLog(@"stub - save to nrdb");
+        }]];
+    }
+    
+    if ([MFMailComposeViewController canSendMail])
+    {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"As Email") handler:^(UIAlertAction *action) {
+            [self sendAsEmail];
+        }]];
+    }
+    
+    [alert addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+        // cancel
+    }]];
+    
+    [self presentViewController:alert animated:NO completion:nil];
 }
 
 -(void) drawClicked:(id)sender
@@ -272,6 +304,29 @@
         
         [self performSelector:@selector(refreshDeck:) withObject:@(YES) afterDelay:0.001];
     }
+}
+
+#pragma mark email
+
+-(void) sendAsEmail
+{
+    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+    
+    if (mailer)
+    {
+        mailer.mailComposeDelegate = self;
+        NSString *emailBody = [DeckExport asPlaintextString:self.deck];
+        [mailer setMessageBody:emailBody isHTML:NO];
+        
+        [mailer setSubject:self.deck.name];
+        
+        [self presentViewController:mailer animated:NO completion:nil];
+    }
+}
+
+-(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 #pragma mark - Deck Editor
