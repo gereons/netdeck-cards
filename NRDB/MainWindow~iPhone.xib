@@ -32,6 +32,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Net Deck" id="0zN-BK-DHK">
+                        <barButtonItem key="leftBarButtonItem" image="740-gear.png" id="YwH-Ql-xeP">
+                            <connections>
+                                <action selector="openSettings:" destination="h1F-hJ-4M0" id="Yvy-OK-eGT"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="MVw-OT-XDQ">
                             <connections>
                                 <action selector="createNewDeck:" destination="h1F-hJ-4M0" id="RwD-7v-bfl"/>
@@ -46,4 +51,7 @@
             </connections>
         </navigationController>
     </objects>
+    <resources>
+        <image name="740-gear.png" width="28" height="28"/>
+    </resources>
 </document>

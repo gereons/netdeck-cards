@@ -12,5 +12,6 @@
 @property IBOutlet UITableView* tableView;
 
 -(IBAction)createNewDeck:(id)sender;
+-(IBAction)openSettings:(id)sender;
 
 @end

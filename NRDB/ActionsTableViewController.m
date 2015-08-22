@@ -330,7 +330,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             
         case NRMenuSettings:
         {
-            self.settings = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+            self.settings = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:self.settings];
             detailViewManager.detailViewController = self.snc;
             break;

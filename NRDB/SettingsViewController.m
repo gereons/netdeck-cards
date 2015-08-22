@@ -24,7 +24,6 @@
 #import "NRDBAuthPopupViewController.h"
 
 @interface MyIASKAppSettingsViewController: IASKAppSettingsViewController
-@property NSString* initialLanguage;
 @end
 
 @implementation MyIASKAppSettingsViewController
@@ -32,7 +31,52 @@
 -(void) viewDidLoad
 {
     [super viewDidLoad];
+    
+}
+
+
+@end
+
+@interface SettingsViewController ()
+@property NSString* initialLanguage;
+
+@end
+
+@implementation SettingsViewController
+
+-(void) dealloc
+{
+    self.delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
     self.initialLanguage = [[NSUserDefaults standardUserDefaults] stringForKey:LANGUAGE];
+    
+    self.showDoneButton = NO;
+    self.delegate = self;
+
+    if (IS_IPAD)
+    {
+        self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+        self.navigationController.navigationBar.topItem.title = l10n(@"Settings");
+        [self.navigationController setViewControllers:@[ self ]];
+    }
+    else
+    {
+        NSMutableArray* viewControllers = self.navigationController.viewControllers.mutableCopy;
+        [viewControllers removeLastObject];
+        [viewControllers addObject:self];
+        [self.navigationController setViewControllers:viewControllers];
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:kIASKAppSettingChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:LOAD_CARDS object:nil];
+    
+    [self refresh];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
@@ -45,41 +89,6 @@
     }
 }
 
-@end
-
-@interface SettingsViewController ()
-
-@property MyIASKAppSettingsViewController* iask;
-
-@end
-
-@implementation SettingsViewController
-
--(void) dealloc
-{
-    self.iask.delegate = nil;
-    self.iask = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.iask = [[MyIASKAppSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    self.iask.showDoneButton = NO;
-    self.iask.delegate = self;
-
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.topItem.title = l10n(@"Settings");
-    [self.navigationController setViewControllers:@[ self.iask ]];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:kIASKAppSettingChanged object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:LOAD_CARDS object:nil];
-    
-    [self refresh];
-}
-
 -(void) refresh
 {
     NSMutableSet* hiddenKeys = [NSMutableSet set];
@@ -87,13 +96,17 @@
     {
         [hiddenKeys addObjectsFromArray:@[ @"sets_hide_1", @"sets_hide_2" ]];
     }
+    if (IS_IPHONE)
+    {
+        [hiddenKeys addObjectsFromArray:@[ AUTO_HISTORY, CREATE_DECK_ACTIVE ]];
+    }
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     if (![settings boolForKey:USE_DROPBOX])
     {
         [hiddenKeys addObject:AUTO_SAVE_DB];
     }
-    [self.iask setHiddenKeys:hiddenKeys];
+    [self setHiddenKeys:hiddenKeys];
 }
 
 - (void) cardsLoaded:(NSNotification*) notification

@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "DetailViewManager.h"
 #import "IASKAppSettingsViewController.h"
 
-@interface SettingsViewController : UIViewController<IASKSettingsDelegate, SubstitutableDetailViewController>
+@interface SettingsViewController : IASKAppSettingsViewController
 
 @end

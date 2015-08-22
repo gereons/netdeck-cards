@@ -17,6 +17,7 @@
 #import "CardSets.h"
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
+#import "SettingsViewController.h"
 
 @interface IphoneStartViewController ()
 
@@ -108,6 +109,14 @@
     IphoneIdentityViewController* idvc = [[IphoneIdentityViewController alloc] initWithNibName:@"IphoneIdentityViewController" bundle:nil];
     idvc.role = role;
     [self pushViewController:idvc animated:YES];
+}
+
+#pragma mark - settings
+
+-(void) openSettings:(id)sender
+{
+    SettingsViewController* settings = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self pushViewController:settings animated:YES];
 }
 
 #pragma mark - Table view data source

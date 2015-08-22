@@ -25,8 +25,8 @@
     [super viewDidLoad];
     
     self.cards = [self.deck allCards];
-    
-    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.collectionView.backgroundColor = [UIColor clearColor];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardImageViewCell" bundle:nil] forCellWithReuseIdentifier:@"cardCell"];
