@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-@class DeckListViewController;
+#import "NRDeckEditor.h"
 
 @interface NRNavigationController : UINavigationController <UINavigationBarDelegate, UIGestureRecognizerDelegate>
 
-@property (weak) DeckListViewController* deckListViewController;
+@property (weak) id<NRDeckEditor> deckEditor;
 
 @end

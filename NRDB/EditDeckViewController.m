@@ -16,7 +16,6 @@
 #import "Faction.h"
 #import "CardType.h"
 #import "EditDeckCell.h"
-#import "DeckManager.h"
 
 @interface EditDeckViewController ()
 
@@ -70,7 +69,8 @@
 
 -(void) saveClicked:(id)sender
 {
-    [DeckManager saveDeck:self.deck];
+    [self.deck saveToDisk];
+    self.saveButton.enabled = NO;
 }
 
 -(void) addCard:(id)sender
@@ -117,6 +117,8 @@
 
     self.statusLabel.text = footer;
     self.statusLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
+    
+    self.saveButton.enabled = self.deck.modified;
 }
 
 -(void) changeCount:(UIStepper*)stepper
@@ -270,6 +272,24 @@
         
         [self performSelector:@selector(refreshDeck:) withObject:@(YES) afterDelay:0.001];
     }
+}
+
+#pragma mark - Deck Editor
+
+-(BOOL) deckModified
+{
+    // only answer truthfully if we're the current top viewcontroller
+    UIViewController* topVC = self.navigationController.viewControllers.lastObject;
+    if (topVC == self)
+    {
+        return self.deck.modified;
+    }
+    return NO;
+}
+
+-(void) saveDeck
+{
+    [self.deck saveToDisk];
 }
 
 @end

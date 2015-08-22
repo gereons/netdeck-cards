@@ -8,6 +8,7 @@
 
 #import <SDCAlertView.h>
 
+#import "Deck.h"
 #import "NRNavigationController.h"
 #import "DeckListViewController.h"
 
@@ -56,7 +57,7 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if ([touch.view isKindOfClass:[UISlider class]])
+    if (IS_IPAD && [touch.view isKindOfClass:[UISlider class]])
     {
         // prevent recognizing touches on the filter sliders
         return NO;
@@ -68,7 +69,7 @@
 {
     if (gestureRecognizer == self.interactivePopGestureRecognizer)
     {
-        if (self.deckListViewController.deckChanged && !self.alertShowing)
+        if (self.deckEditor.deckModified && !self.alertShowing)
         {
             [self showAlert];
             self.swipePop = NO;
@@ -84,7 +85,7 @@
 
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
-    // NSLog(@"should pop: %d %d %d %d", self.popToRoot, self.swipePop, self.regularPop, self.alertViewClicked);
+    NSLog(@"should pop: %d %d %d %d", self.popToRoot, self.swipePop, self.regularPop, self.alertViewClicked);
     
     if (self.popToRoot)
     {
@@ -112,10 +113,11 @@
         return YES;
     }
     
-    if (self.deckListViewController.deckChanged)
+    if (self.deckEditor.deckModified)
     {
         // NSLog(@"should pop4: NO");
-        if (!self.alertShowing) {
+        if (!self.alertShowing)
+        {
             [self showAlert];
         }
         return NO;
@@ -146,7 +148,7 @@
         
         if (buttonIndex == 2) // save
         {
-            [self.deckListViewController saveDeckManually:YES withHud:NO];
+            [self.deckEditor saveDeck];
         }
         self.alertViewClicked = YES;
         // NSLog(@"pop from alert");

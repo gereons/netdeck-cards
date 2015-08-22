@@ -58,7 +58,6 @@
         return;
     }
     
-    
     if ([CardManager cardsAvailable] && [CardSets setsAvailable])
     {
         [self initializeDecks];
@@ -167,6 +166,8 @@
     
     EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
     edit.deck = deck;
+    
+    self.deckEditor = edit;
     [self pushViewController:edit animated:YES];
 }
 

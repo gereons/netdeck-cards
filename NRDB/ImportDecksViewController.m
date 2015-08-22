@@ -14,7 +14,6 @@
 #import <SDCAlertView.h>
 
 #import "Deck.h"
-#import "DeckManager.h"
 #import "ImageCache.h"
 #import "DeckCell.h"
 #import "OctgnImport.h"
@@ -152,7 +151,7 @@ static NSString* filterText;
                     {
                         deck.filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
                     }
-                    [DeckManager saveDeck:deck];
+                    [deck saveToDisk];
                 }
             }
         }
@@ -433,7 +432,7 @@ static NSString* filterText;
                 [[NRDB sharedInstance] loadDeck:deck completion:^(BOOL ok, Deck *deck) {
                     NSLog(@"ok=%d", ok);
                     [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-                    [DeckManager saveDeck:deck];
+                    [deck saveToDisk];
                 }];
             }
         };
@@ -441,7 +440,7 @@ static NSString* filterText;
     else
     {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-        [DeckManager saveDeck:deck];
+        [deck saveToDisk];
     }
 }
 

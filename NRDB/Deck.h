@@ -17,10 +17,17 @@
 @property (readonly) CardCounter* identityCc;   // a CardCounter with the deck's identity
 @property (readonly) Card* identity;            // convenience accessor
 
-@property NSString* name;
-@property NRRole role;
-@property NRDeckState state;
-@property NSString* netrunnerDbId;
+@property (readonly) BOOL modified;  // has this deck been modified since we last saved it?
+
+// calling any of the -addCard: methods sets modified=YES
+// assigning to any of these 5 properties also sets modified=YES
+@property (nonatomic) NSString* name;
+@property (nonatomic) NRRole role;
+@property (nonatomic) NRDeckState state;
+@property (nonatomic) NSString* netrunnerDbId;
+@property (nonatomic) NSString* notes;
+
+// calling -(void)saveToDisk set modified=NO
 
 @property (readonly) int size;
 @property (readonly) int influence;
@@ -31,9 +38,7 @@
 @property NSDate* dateCreated;
 @property NSDate* lastModified;
 
-@property NSArray* tags;    // array of strings
-@property NSString* notes;
-
+@property NSArray* tags;        // array of strings
 @property NSArray* revisions;   // array of DeckChangeSet, in reverse chronological order
 
 -(NSArray*) checkValidity;  // returns array of reasons, deck is ok if count==0
@@ -60,6 +65,8 @@
 -(Deck*) duplicate;
 
 -(void) mergeRevisions;
+
+-(void) saveToDisk;
 
 -(TableData*) dataForTableView:(NRDeckSort)sortType;
 

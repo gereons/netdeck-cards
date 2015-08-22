@@ -8,8 +8,9 @@
 
 #import "FilterCallback.h"
 #import "CardFilterCollectionView.h"
+#import "DeckListViewController.h"
 
-@class Deck, DeckListViewController;
+@class Deck;
 
 @interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilterCallback>
 

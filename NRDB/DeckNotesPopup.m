@@ -9,7 +9,6 @@
 #import "DeckNotesPopup.h"
 #import "Deck.h"
 #import "SettingsKeys.h"
-#import "DeckManager.h"
 #import "Notifications.h"
 
 @interface DeckNotesPopup ()

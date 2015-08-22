@@ -26,7 +26,6 @@
 #import "Deck.h"
 #import "NRNavigationController.h"
 #import "DataDownload.h"
-#import "DeckManager.h"
 #import "CardUpdateCheck.h"
 
 typedef NS_ENUM(NSInteger, NRMenuItem)
@@ -152,7 +151,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-    nc.deckListViewController = filter.deckListViewController;
+    nc.deckEditor = filter.deckListViewController;
     
     [nc pushViewController:filter animated:NO];
 }
@@ -185,7 +184,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         [nc popToRootViewControllerAnimated:NO];
     }
     
-    nc.deckListViewController = filter.deckListViewController;
+    nc.deckEditor = filter.deckListViewController;
     [nc pushViewController:filter animated:NO];
 }
 
@@ -195,13 +194,13 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     Deck* deck = [userInfo objectForKey:@"deck"];
     NRRole role = deck.identity.role;
     
-    [DeckManager saveDeck:deck];
+    [deck saveToDisk];
     
     CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andDeck:deck];
     
     NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-    nc.deckListViewController = filter.deckListViewController;
+    nc.deckEditor = filter.deckListViewController;
     
     if (nc.viewControllers.count > 1)
     {
@@ -321,7 +320,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         case NRMenuCardBrowser:
         {
             NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-            nc.deckListViewController = nil;
+            nc.deckEditor = nil;
             
             BrowserFilterViewController* browser = [[BrowserFilterViewController alloc] init];
             [nc pushViewController:browser animated:NO];

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+#import "NRNavigationController.h"
 #import "IphoneIdentityViewController.h"
 #import "EditDeckViewController.h"
 #import "ImageCache.h"
@@ -94,8 +95,6 @@
     }
     
     NSAssert(self.identities.count == self.factionNames.count, @"count mismatch");
-    
-    
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -137,6 +136,8 @@
         deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
 
         EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
+        NRNavigationController* nc = (NRNavigationController*)self.navigationController;
+        nc.deckEditor = edit;
         edit.deck = deck;
         
         NSMutableArray* vcs = self.navigationController.viewControllers.mutableCopy;
