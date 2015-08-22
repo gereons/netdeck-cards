@@ -21,6 +21,7 @@
 @property NSArray* sections;
 
 @property CardList* cardList;
+@property NSString* filterText;
 
 @end
 
@@ -76,6 +77,59 @@
     }
     
     [self.tableView reloadData];
+}
+
+-(void) updateCards
+{
+    [self.cardList filterByName:self.filterText];
+    TableData* data = [self.cardList dataForTableView];
+    
+    self.cards = data.values;
+    self.sections = data.sections;
+    [self.tableView reloadData];
+}
+
+#pragma mark search bar
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    self.filterText = searchText;
+    [self updateCards];
+}
+
+-(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = NO;
+    self.tableView.tableHeaderView = self.searchBar;
+}
+
+-(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = YES;
+    self.tableView.tableHeaderView = self.searchBar;
+}
+
+-(void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
+-(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    UITextField* textField = [self.searchBar valueForKey:@"searchField"];
+    if (textField == nil || ![textField isKindOfClass:[UITextField class]])
+    {
+        return;
+    }
+    
+    [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
+
+    Card* card = [self.cards objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    if (card)
+    {
+        [self.deck addCard:card copies:1];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - tableview

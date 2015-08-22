@@ -23,6 +23,7 @@ static NRDBAuthPopupViewController* popup;
 
 +(void) showInViewController:(UIViewController*)vc
 {
+    NSAssert(IS_IPAD, @"ipad only");
     popup = [[NRDBAuthPopupViewController alloc] initWithNibName:@"NRDBAuthPopupViewController" bundle:nil];
     
     [vc presentViewController:popup animated:NO completion:nil];
@@ -31,6 +32,7 @@ static NRDBAuthPopupViewController* popup;
 
 +(void) pushOn:(UINavigationController *)navController
 {
+    NSAssert(IS_IPHONE, @"iphone only");
     popup = [[NRDBAuthPopupViewController alloc] initWithNibName:@"NRDBAuthPopupViewController" bundle:nil];
     popup.navController = navController;
     
