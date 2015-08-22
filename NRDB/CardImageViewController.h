@@ -12,7 +12,7 @@
 
 @property IBOutlet UICollectionView* collectionView;
 
-@property Deck* deck;
+@property NSArray* cards;
 @property Card* selectedCard;
 
 @end

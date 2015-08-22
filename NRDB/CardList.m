@@ -455,6 +455,13 @@
     return arr.count;
 }
 
+-(NSArray*) allCards
+{
+    NSMutableArray* filteredCards = [self applyFilters];
+    [self sort:filteredCards];
+    return filteredCards;
+}
+
 -(TableData*) dataForTableView
 {
     NSMutableArray* sections = [NSMutableArray array];

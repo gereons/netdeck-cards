@@ -7,6 +7,7 @@
 //
 
 #import "ListCardsViewController.h"
+#import "CardImageViewController.h"
 #import "ImageCache.h"
 #import "EditDeckCell.h"
 #import "Deck.h"
@@ -217,6 +218,17 @@
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Card* card = [self.cards objectAtIndexPath:indexPath];
+    
+    CardImageViewController* img = [[CardImageViewController alloc] initWithNibName:@"CardImageViewController" bundle:nil];
+    img.cards = [self.cardList allCards];
+    img.selectedCard = card;
+    
+    [self.navigationController pushViewController:img animated:YES];
 }
 
 @end

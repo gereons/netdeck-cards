@@ -13,7 +13,6 @@
 
 @interface CardImageViewController ()
 
-@property NSArray* cards;
 @property BOOL initialScrollDone;
 
 @end
@@ -24,8 +23,6 @@
 {
     [super viewDidLoad];
     
-    self.cards = [self.deck allCards];
-
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.collectionView.backgroundColor = [UIColor clearColor];
     
@@ -59,8 +56,8 @@
         NSInteger row;
         for (row = 0; row<self.cards.count; ++row)
         {
-            CardCounter* cc = self.cards[row];
-            if ([cc.card isEqual:self.selectedCard])
+            Card* card = self.cards[row];
+            if ([card.code isEqual:self.selectedCard.code])
             {
                 break;
             }
@@ -88,9 +85,9 @@
 {
     CardImageViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cardCell" forIndexPath:indexPath];
     
-    CardCounter* cc = self.cards[indexPath.row];
+    Card* card = self.cards[indexPath.row];
     
-    cell.card = cc.card;
+    cell.card = card;
     return cell;
 }
 

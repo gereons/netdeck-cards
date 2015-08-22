@@ -245,7 +245,13 @@
     }
     
     CardImageViewController* img = [[CardImageViewController alloc] initWithNibName:@"CardImageViewController" bundle:nil];
-    img.deck = self.deck;
+    NSMutableArray* cards = [NSMutableArray array];
+    
+    for (CardCounter* cc in [self.deck allCards])
+    {
+        [cards addObject:cc.card];
+    }
+    img.cards = cards;
     img.selectedCard = cc.card;
     
     [self.navigationController pushViewController:img animated:YES];
