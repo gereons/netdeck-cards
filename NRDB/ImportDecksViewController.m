@@ -40,8 +40,16 @@ static NSString* filterText;
     if (self)
     {
         self.dateFormatter = [[NSDateFormatter alloc] init];
-        [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        if (IS_IPAD)
+        {
+            [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+            [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        }
+        else
+        {
+            [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+            [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        }
     }
     return self;
 }

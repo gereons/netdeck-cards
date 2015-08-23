@@ -17,6 +17,8 @@
 
 @end
 
+#warning iphone: on success, pops one too many vcs?!?
+
 @implementation NRDBAuthPopupViewController
 
 static NRDBAuthPopupViewController* popup;

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#warning handle autosave stuff
+#warning handle nrdb autosave
 
 #import "UIAlertAction+NRDB.h"
 #import "EditDeckViewController.h"
@@ -26,10 +26,14 @@
 
 @interface EditDeckViewController ()
 
+@property BOOL autoSave;
+@property BOOL autoSaveDropbox;
+
 @property NSArray* cards;
 @property NSArray* sections;
 
 @property UILabel* titleLabel;  // used as the titleView in out navigation bar
+
 @end
 
 @implementation EditDeckViewController
@@ -45,6 +49,10 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"EditDeckCell" bundle:nil] forCellReuseIdentifier:@"cardCell"];
     
     self.statusLabel.text = @"";
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    self.autoSave = [settings boolForKey:AUTO_SAVE];
+    self.autoSaveDropbox = self.autoSave && [settings boolForKey:AUTO_SAVE_DB];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -52,11 +60,15 @@
     [super viewDidAppear:animated];
     
     // right buttons
-    UIBarButtonItem* exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
-    UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addCard:)];
-    
+    UIBarButtonItem* exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"]
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(exportDeck:)];
+    UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                               target:self
+                                                                               action:@selector(addCard:)];
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.rightBarButtonItems = @[ addButton, exportButton];
+    topItem.rightBarButtonItems = @[ addButton, exportButton ];
 
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.titleLabel.textColor = self.view.tintColor;
@@ -71,6 +83,13 @@
     self.titleLabel.userInteractionEnabled = YES;
     [self.titleLabel addGestureRecognizer:titleTap];
     
+    if (self.autoSave)
+    {
+        // make save button disappear
+        self.saveButton.customView = [[UIView alloc] initWithFrame:CGRectZero];
+        self.saveButton.enabled = NO;
+    }
+    
     [self refreshDeck:@(YES)];
 }
 
@@ -83,6 +102,8 @@
     self.titleLabel.frame = CGRectMake(0,0, maxSize.width, 500);
     
     self.title = self.deck.name;
+    
+    [self doAutoSave];
 }
 
 -(void) titleTapped:(id)sender
@@ -145,10 +166,34 @@
     [self.navigationController pushViewController:draw animated:YES];
 }
 
+#pragma mark - save
+
 -(void) saveClicked:(id)sender
 {
     [self.deck saveToDisk];
     self.saveButton.enabled = NO;
+    if (self.autoSaveDropbox)
+    {
+        if (self.deck.identity && self.deck.cards.count > 0)
+        {
+            [DeckExport asOctgn:self.deck autoSave:YES];
+        }
+    }
+}
+
+-(void) doAutoSave
+{
+    if (self.autoSave)
+    {
+        [self.deck saveToDisk];
+    }
+    if (self.autoSaveDropbox)
+    {
+        if (self.deck.identity && self.deck.cards.count > 0)
+        {
+            [DeckExport asOctgn:self.deck autoSave:YES];
+        }
+    }
 }
 
 -(void) addCard:(id)sender
@@ -197,6 +242,7 @@
     self.statusLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
     
     self.saveButton.enabled = self.deck.modified;
+    [self doAutoSave];
 }
 
 -(void) changeCount:(UIStepper*)stepper
@@ -218,6 +264,7 @@
         [self.deck addCard:cc.card copies:diff];
     }
     
+    [self doAutoSave];
     [self refreshDeck:@(YES)];
 }
 

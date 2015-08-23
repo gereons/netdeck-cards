@@ -225,6 +225,8 @@
 // netrunnerdb.com
 "Import from Dropbox" = "Importer de Dropbox";
 "Import from NetrunnerDB.com" = "Importer de NetrunnerDB.com";
+"From Dropbox" = "De Dropbox";
+"From NetrunnerDB.com" = "De NetrunnerDB.com";
 "This deck is not (yet) linked to a deck on NetrunnerDB.com" = "Ce Deck n'est pas encore attaché à un deck de NetrunnerDB.com";
 "This deck is linked to deck %@ on NetrunnerDB.com" = "Ce Deck est attaché au Deck %@ de NetrunnerDB.com";
 "Unlink" = "Séparer";

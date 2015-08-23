@@ -160,6 +160,7 @@
 		3A82625918E05EC70038B4AC /* deckview_card.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82624118E05EC70038B4AC /* deckview_card.png */; };
 		3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */; };
 		3A843A911B89D97F000CC60D /* IphoneDrawSimulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */; };
+		3A843A931B8A0114000CC60D /* DeckCell~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */; };
 		3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85323E1855050900507B9A /* NRSplitViewController.m */; };
 		3A8532791855084900507B9A /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3A8532781855084900507B9A /* InAppSettings.bundle */; };
 		3A85327D185509B000507B9A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85327B185509B000507B9A /* SettingsViewController.m */; };
@@ -510,6 +511,7 @@
 		3A843A8D1B89D97F000CC60D /* IphoneDrawSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IphoneDrawSimulator.h; sourceTree = "<group>"; };
 		3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IphoneDrawSimulator.m; sourceTree = "<group>"; };
 		3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IphoneDrawSimulator.xib; sourceTree = "<group>"; };
+		3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DeckCell~iphone.xib"; sourceTree = "<group>"; };
 		3A85323D1855050900507B9A /* NRSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NRSplitViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A85323E1855050900507B9A /* NRSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NRSplitViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A8532781855084900507B9A /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
@@ -1323,6 +1325,7 @@
 				3AB9BD5B18FADC01004EAF10 /* DeckCell.h */,
 				3AB9BD5C18FADC01004EAF10 /* DeckCell.m */,
 				3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */,
+				3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */,
 			);
 			name = "Saved Decks";
 			sourceTree = "<group>";
@@ -1536,6 +1539,7 @@
 				3A689FA4195D3EB8004EBC41 /* retired@2x.png in Resources */,
 				3A40EA4E19FD2CBE00B9CFDA /* 890-sort-ascending.png in Resources */,
 				3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */,
+				3A843A931B8A0114000CC60D /* DeckCell~iphone.xib in Resources */,
 				3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */,
 				3A441C8C18E60A5300F46C92 /* hex_background@2x.png in Resources */,
 				3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */,

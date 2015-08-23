@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+#import "UIAlertAction+NRDB.h"
 #import "IphoneStartViewController.h"
 #import "DeckManager.h"
 #import "Deck.h"
@@ -18,6 +19,8 @@
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "SettingsViewController.h"
+#import "SettingsKeys.h"
+#import "ImportDecksViewController.h"
 
 @interface IphoneStartViewController ()
 
@@ -133,7 +136,51 @@
 
 -(void) importDecks:(id)sender
 {
-    NSLog(@"stub - import decks");
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    BOOL useNrdb = [settings boolForKey:USE_NRDB];
+    BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
+    
+    if (useNrdb && useDropbox)
+    {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Import Decks")
+                                                                       message:nil
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"From Dropbox") handler:^(UIAlertAction *action) {
+            [self importDecksFrom:NRImportSourceDropbox];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"From NetrunnerDB.com") handler:^(UIAlertAction *action) {
+            [self importDecksFrom:NRImportSourceNetrunnerDb];
+        }]];
+        [alert addAction:[UIAlertAction cancelAction:nil]];
+        
+        [self presentViewController:alert animated:NO completion:nil];
+    }
+    else if (useNrdb)
+    {
+        [self importDecksFrom:NRImportSourceNetrunnerDb];
+    }
+    else if (useDropbox)
+    {
+        [self importDecksFrom:NRImportSourceDropbox];
+    }
+    else
+    {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Import Decks")
+                                                                       message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:nil]];
+        
+        [self presentViewController:alert animated:NO completion:nil];
+    }
+}
+
+-(void) importDecksFrom:(NRImportSource)importSource
+{
+    ImportDecksViewController* import = [[ImportDecksViewController alloc] init];
+    import.source = importSource;
+    [self pushViewController:import animated:YES];
 }
 
 #pragma mark - settings
