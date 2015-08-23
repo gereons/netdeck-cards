@@ -161,6 +161,7 @@
 		3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */; };
 		3A843A911B89D97F000CC60D /* IphoneDrawSimulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */; };
 		3A843A931B8A0114000CC60D /* DeckCell~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */; };
+		3A843A961B8A156B000CC60D /* DeckEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A843A951B8A156B000CC60D /* DeckEmail.m */; };
 		3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85323E1855050900507B9A /* NRSplitViewController.m */; };
 		3A8532791855084900507B9A /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3A8532781855084900507B9A /* InAppSettings.bundle */; };
 		3A85327D185509B000507B9A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85327B185509B000507B9A /* SettingsViewController.m */; };
@@ -512,6 +513,8 @@
 		3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IphoneDrawSimulator.m; sourceTree = "<group>"; };
 		3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IphoneDrawSimulator.xib; sourceTree = "<group>"; };
 		3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DeckCell~iphone.xib"; sourceTree = "<group>"; };
+		3A843A941B8A156B000CC60D /* DeckEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckEmail.h; sourceTree = "<group>"; };
+		3A843A951B8A156B000CC60D /* DeckEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckEmail.m; sourceTree = "<group>"; };
 		3A85323D1855050900507B9A /* NRSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NRSplitViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A85323E1855050900507B9A /* NRSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NRSplitViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A8532781855084900507B9A /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
@@ -736,6 +739,8 @@
 				3A1ECC8F1879A1CC003400A9 /* DeckExport.h */,
 				3A1ECC901879A1CC003400A9 /* DeckExport.m */,
 				3A1ECC921879A383003400A9 /* OCTGN.mustache */,
+				3A843A941B8A156B000CC60D /* DeckEmail.h */,
+				3A843A951B8A156B000CC60D /* DeckEmail.m */,
 			);
 			name = "Deck Export";
 			sourceTree = "<group>";
@@ -1787,6 +1792,7 @@
 				3A54C3E01935B0810064C1F0 /* DeckState.m in Sources */,
 				3A11B1121ADE35F600E5A410 /* DrawSimulatorCollectionView.m in Sources */,
 				3A11342219AC5C580012494E /* IdentityCardView.m in Sources */,
+				3A843A961B8A156B000CC60D /* DeckEmail.m in Sources */,
 				3A11B1151ADE364300E5A410 /* CardFilterCollectionView.m in Sources */,
 				3A4C7BFA18FEE9C0009B4A4B /* OctgnImport.m in Sources */,
 				3ABAD2F91B8275F8009E81F3 /* NSArray+TwoD.m in Sources */,

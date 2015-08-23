@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <MessageUI/MessageUI.h>
 #import <SDCAlertView.h>
 
 #import "AboutViewController.h"

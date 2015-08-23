@@ -31,6 +31,7 @@
 #import "DeckExport.h"
 #import "DeckImport.h"
 #import "CardSets.h"
+#import "DeckEmail.h"
 
 #import "CardCell.h"
 #import "CardImageCell.h"
@@ -926,11 +927,11 @@
                                                            self.actionSheet = nil;
                                                        }]];
     
-    if ([MFMailComposeViewController canSendMail])
+    if ([DeckEmail canSendMail])
     {
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"As Email")
                                                        handler:^(UIAlertAction *action) {
-                                                           [self sendAsEmail];
+                                                           [DeckEmail emailDeck:self.deck fromViewController:self];
                                                            self.actionSheet = nil;
                                                        }]];
     }
@@ -1536,29 +1537,6 @@
 -(void)printInteractionControllerDidDismissPrinterOptions:(UIPrintInteractionController *)printInteractionController
 {
     self.printController = nil;
-}
-
-#pragma mark email
-
--(void) sendAsEmail
-{
-    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-    
-    if (mailer)
-    {
-        mailer.mailComposeDelegate = self;
-        NSString *emailBody = [DeckExport asPlaintextString:self.deck];
-        [mailer setMessageBody:emailBody isHTML:NO];
-        
-        [mailer setSubject:self.deck.name];
-        
-        [self presentViewController:mailer animated:NO completion:nil];
-    }
-}
-
--(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
-{
-    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 #pragma mark - DeckEditor protocol

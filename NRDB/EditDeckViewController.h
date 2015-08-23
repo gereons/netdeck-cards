@@ -7,11 +7,10 @@
 //
 
 #import "NRDeckEditor.h"
-#import <MessageUI/MessageUI.h>
 
 @class Deck;
 
-@interface EditDeckViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, NRDeckEditor, MFMailComposeViewControllerDelegate>
+@interface EditDeckViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, NRDeckEditor>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UILabel* statusLabel;

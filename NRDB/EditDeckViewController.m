@@ -23,6 +23,8 @@
 #import "DeckExport.h"
 #import "UIAlertAction+NRDB.h"
 #import "SettingsKeys.h"
+#import "NRDB.h"
+#import "DeckEmail.h"
 
 @interface EditDeckViewController ()
 
@@ -143,14 +145,21 @@
     if ([settings boolForKey:USE_NRDB])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction *action) {
-            NSLog(@"stub - save to nrdb");
+            [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
+                // NSLog(@"saved %d, ok=%d id=%@", index, ok, deckId);
+                if (ok && deckId)
+                {
+                    self.deck.netrunnerDbId = deckId;
+                    [self.deck saveToDisk];
+                }
+            }];
         }]];
     }
     
     if ([MFMailComposeViewController canSendMail])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"As Email") handler:^(UIAlertAction *action) {
-            [self sendAsEmail];
+            [DeckEmail emailDeck:self.deck fromViewController:self];
         }]];
     }
     
@@ -397,29 +406,6 @@
         
         [self performSelector:@selector(refreshDeck:) withObject:@(YES) afterDelay:0.001];
     }
-}
-
-#pragma mark email
-
--(void) sendAsEmail
-{
-    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-    
-    if (mailer)
-    {
-        mailer.mailComposeDelegate = self;
-        NSString *emailBody = [DeckExport asPlaintextString:self.deck];
-        [mailer setMessageBody:emailBody isHTML:NO];
-        
-        [mailer setSubject:self.deck.name];
-        
-        [self presentViewController:mailer animated:NO completion:nil];
-    }
-}
-
--(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
-{
-    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 #pragma mark - Deck Editor

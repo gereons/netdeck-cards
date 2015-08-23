@@ -21,6 +21,7 @@
 #import "Notifications.h"
 #import "DeckDiffViewController.h"
 #import "DeckCell.h"
+#import "DeckEmail.h"
 
 @interface SavedDecksList ()
 
@@ -441,7 +442,7 @@
             if ([MFMailComposeViewController canSendMail])
             {
                 [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Send via Email") handler:^(UIAlertAction *action) {
-                    [self sendAsEmail:deck];
+                    [DeckEmail emailDeck:deck fromViewController:self];
                     self.popup = nil;
                 }]];
             }
@@ -605,29 +606,6 @@
     [self.nameAlert dismissWithClickedButtonIndex:1 animated:NO];
     [textField resignFirstResponder];
     return NO;
-}
-
-#pragma mark email
-
--(void) sendAsEmail:(Deck*)deck
-{
-    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-    
-    if (mailer)
-    {
-        mailer.mailComposeDelegate = self;
-        NSString *emailBody = [DeckExport asPlaintextString:deck];
-        [mailer setMessageBody:emailBody isHTML:NO];
-        
-        [mailer setSubject:deck.name];
-        
-        [self presentViewController:mailer animated:NO completion:nil];
-    }
-}
-
--(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
-{
-    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 @end

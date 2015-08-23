@@ -6,11 +6,9 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <MessageUI/MessageUI.h>
-
 @class Card, Deck;
 
-@interface DecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate>
+@interface DecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UISearchBar* searchBar;

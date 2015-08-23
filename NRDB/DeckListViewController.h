@@ -6,14 +6,13 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import <MessageUI/MessageUI.h>
 #import "DetailViewManager.h"
 #import "DecklistCollectionView.h"
 #import "NRDeckEditor.h"
 
 @class Card, Deck;
 
-@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate, NRDeckEditor>
+@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, UITextFieldDelegate, NRDeckEditor>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet DecklistCollectionView* collectionView;
