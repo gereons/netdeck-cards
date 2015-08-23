@@ -121,7 +121,9 @@
     if (self.deck)
     {
         [self.deck addCard:self.selectedIdentity copies:1];
-        [self.navigationController popViewControllerAnimated:YES];
+        // don't call [self.navController popViewControllerAnimated:YES] here - this will pop two VCs
+        // instead, call the nav bar delegate from NRNavigationController to do
+        [self.navigationController.navigationBar.delegate navigationBar:nil shouldPopItem:nil];
     }
     else
     {
