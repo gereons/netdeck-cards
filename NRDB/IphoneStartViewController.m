@@ -42,6 +42,7 @@
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -104,6 +105,27 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - import deck
+
+-(void)importDeckFromClipboard:(NSNotification*) notification
+{
+    NSDictionary* userInfo = notification.userInfo;
+    Deck* deck = [userInfo objectForKey:@"deck"];
+    
+    [deck saveToDisk];
+    
+    EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
+    edit.deck = deck;
+    
+    self.deckEditor = edit;
+    
+    if (self.viewControllers.count > 1)
+    {
+        [self popToRootViewControllerAnimated:NO];
+    }
+    [self pushViewController:edit animated:YES];
+}
+
 #pragma mark - add new deck
 
 -(void) createNewDeck:(id)sender
@@ -112,15 +134,13 @@
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") handler:^(UIAlertAction *action) {
         [self addNewDeck:NRRoleRunner];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"New Corp Deck") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"New Corp Deck") handler:^(UIAlertAction *action) {
         [self addNewDeck:NRRoleCorp];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        // nop
-    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Cancel") handler:nil]];
     
     [self presentViewController:alert animated:YES completion:nil];
 }
