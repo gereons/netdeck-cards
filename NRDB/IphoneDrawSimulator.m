@@ -15,6 +15,7 @@
 
 @property NSMutableArray* draw;
 @property NSMutableArray* cards;
+@property NSMutableArray* played;
 
 @end
 
@@ -64,6 +65,7 @@
 {
     self.draw = [NSMutableArray array];
     self.cards = [NSMutableArray array];
+    self.played = [NSMutableArray array];
     
     for (CardCounter* cc in self.deck.cards)
     {
@@ -103,9 +105,11 @@
             Card* card = [self.cards objectAtIndex:0];
             [self.cards removeObjectAtIndex:0];
             [self.draw addObject:card];
+            [self.played addObject:@(NO)];
         }
     }
     
+    NSAssert(self.draw.count == self.played.count, @"size mismatch");
     [self.tableView reloadData];
     
     // scroll down if not all cards were drawn
@@ -133,6 +137,14 @@
     return self.draw.count;
 }
 
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSNumber* n = self.played[indexPath.row];
+    self.played[indexPath.row] = @(!n.boolValue);
+    
+    [tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
+}
+
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* cellIdentifier = @"drawCell";
@@ -141,10 +153,12 @@
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     Card* card = self.draw[indexPath.row];
     cell.textLabel.text = card.name;
+    cell.textLabel.textColor = [self.played[indexPath.row] boolValue] ? [UIColor lightGrayColor] : [UIColor blackColor];
     
     return cell;
 }
