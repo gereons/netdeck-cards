@@ -51,7 +51,7 @@
     if (gesture.state == UIGestureRecognizerStateEnded && point.x > frame.size.width/2)
     {
         // NSLog(@"end swipe, pop");
-        [self popViewControllerAnimated:NO];
+        [self popViewControllerAnimated:IS_IPHONE];
     }
 }
 
@@ -126,7 +126,7 @@
     {
         // NSLog(@"should pop5: NO, pop self");
         self.regularPop = YES;
-        [self popViewControllerAnimated:NO];
+        [self popViewControllerAnimated:IS_IPHONE];
         return NO;
     }
 }
@@ -152,7 +152,7 @@
         }
         self.alertViewClicked = YES;
         // NSLog(@"pop from alert");
-        [self popViewControllerAnimated:NO];
+        [self popViewControllerAnimated:IS_IPHONE];
     };
 }
 

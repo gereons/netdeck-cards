@@ -13,6 +13,7 @@
 #import "ListCardsViewController.h"
 #import "CardImageViewController.h"
 #import "IphoneIdentityViewController.h"
+#import "IphoneDrawSimulator.h"
 #import "Deck.h"
 #import "TableData.h"
 #import "ImageCache.h"
@@ -42,6 +43,8 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"EditDeckCell" bundle:nil] forCellReuseIdentifier:@"cardCell"];
+    
+    self.statusLabel.text = @"";
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -78,6 +81,8 @@
     self.titleLabel.text = self.deck.name;
     CGSize maxSize = [self.titleLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
     self.titleLabel.frame = CGRectMake(0,0, maxSize.width, 500);
+    
+    self.title = self.deck.name;
 }
 
 -(void) titleTapped:(id)sender
@@ -135,7 +140,9 @@
 
 -(void) drawClicked:(id)sender
 {
-    NSLog(@"stub - draw simulator");
+    IphoneDrawSimulator* draw = [[IphoneDrawSimulator alloc] initWithNibName:@"IphoneDrawSimulator" bundle:nil];
+    draw.deck = self.deck;
+    [self.navigationController pushViewController:draw animated:YES];
 }
 
 -(void) saveClicked:(id)sender

@@ -116,6 +116,7 @@
 "%ld %@ drawn" = "%ld %@ gezogen";
 "Clear" = "Leeren";
 "Odds to draw a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Chance für eine Karte: 1×%.1f%%  2×%.1f%%  3×%.1f%%";
+"Odds for a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Chance für 1 Karte: 1×%.1f%% 2×%.1f%% 3×%.1f%%";
 
 // deck view
 "Draw" = "Karten";

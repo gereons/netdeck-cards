@@ -104,6 +104,7 @@
 "%ld %@ drawn" = "%ld %@ piochées";
 "Clear" = "Annuler";
 "Odds to draw a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Probabilité de tirer une carte : 1×%.1f%%  2×%.1f%%  3×%.1f%%";
+"Odds for a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Probabilité de 1 carte : 1×%.1f%% 2×%.1f%% 3×%.1f%%";
 
 // deck view
 "Draw" = "Cartes";

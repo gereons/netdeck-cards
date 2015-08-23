@@ -158,6 +158,8 @@
 		3A82625718E05EC70038B4AC /* deckview_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82623F18E05EC70038B4AC /* deckview_table.png */; };
 		3A82625818E05EC70038B4AC /* deckview_card@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82624018E05EC70038B4AC /* deckview_card@2x.png */; };
 		3A82625918E05EC70038B4AC /* deckview_card.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82624118E05EC70038B4AC /* deckview_card.png */; };
+		3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */; };
+		3A843A911B89D97F000CC60D /* IphoneDrawSimulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */; };
 		3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85323E1855050900507B9A /* NRSplitViewController.m */; };
 		3A8532791855084900507B9A /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3A8532781855084900507B9A /* InAppSettings.bundle */; };
 		3A85327D185509B000507B9A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85327B185509B000507B9A /* SettingsViewController.m */; };
@@ -505,6 +507,9 @@
 		3A82624018E05EC70038B4AC /* deckview_card@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deckview_card@2x.png"; sourceTree = "<group>"; };
 		3A82624118E05EC70038B4AC /* deckview_card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deckview_card.png; sourceTree = "<group>"; };
 		3A8309861AE8C22D00FED08A /* NRCrashlytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRCrashlytics.h; sourceTree = "<group>"; };
+		3A843A8D1B89D97F000CC60D /* IphoneDrawSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IphoneDrawSimulator.h; sourceTree = "<group>"; };
+		3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IphoneDrawSimulator.m; sourceTree = "<group>"; };
+		3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IphoneDrawSimulator.xib; sourceTree = "<group>"; };
 		3A85323D1855050900507B9A /* NRSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NRSplitViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A85323E1855050900507B9A /* NRSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NRSplitViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A8532781855084900507B9A /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
@@ -865,6 +870,9 @@
 				3AD860E21B7939E500EEF8AC /* CardImageViewCell.h */,
 				3AD860E31B7939E500EEF8AC /* CardImageViewCell.m */,
 				3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */,
+				3A843A8D1B89D97F000CC60D /* IphoneDrawSimulator.h */,
+				3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */,
+				3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -1536,6 +1544,7 @@
 				3ABE8A521B890B1100EC2C03 /* 785-floppy-disk-toolbar@3x.png in Resources */,
 				3AB34E611939AA8D000A43BB /* CardFilterThumbView.xib in Resources */,
 				3ABE8A511B890B1100EC2C03 /* 785-floppy-disk-toolbar@2x.png in Resources */,
+				3A843A911B89D97F000CC60D /* IphoneDrawSimulator.xib in Resources */,
 				3A82625118E05EC70038B4AC /* cardstats_decksize.png in Resources */,
 				3AF0622E1B886DFD00575984 /* 740-gear@3x.png in Resources */,
 				3A82625918E05EC70038B4AC /* deckview_card.png in Resources */,
@@ -1807,6 +1816,7 @@
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,
 				3AD860E51B7939E500EEF8AC /* CardImageViewCell.m in Sources */,
 				3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */,
+				3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */,
 				3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */,
 				3AD860DB1B792B6700EEF8AC /* ListCardsViewController.m in Sources */,
 				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,
