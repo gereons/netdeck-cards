@@ -18,6 +18,11 @@
 
 @implementation AboutViewController
 
+- (id)init
+{
+    return [self initWithNibName:@"AboutView" bundle:nil];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -49,6 +54,10 @@
     [super viewDidAppear:animated];
     
     NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck %@"), [AppDelegate appVersion]];
+    if (IS_IPHONE)
+    {
+        title = [NSString stringWithFormat:l10n(@"Net Deck %@"), [AppDelegate appVersion]];
+    }
     self.navigationController.navigationBar.topItem.title = title;
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;

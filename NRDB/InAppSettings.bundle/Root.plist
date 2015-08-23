@@ -114,6 +114,26 @@
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
+        <dict>
+            <key>Title</key>
+            <string>About Net Deck</string>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+            <key>Key</key>
+            <string>about_hide_1</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSChildPaneSpecifier</string>
+            <key>Title</key>
+            <string>About Net Deck</string>
+            <key>IASKViewControllerClass</key>
+            <string>AboutViewController</string>
+            <key>IASKViewControllerSelector</key>
+            <string>init</string>
+            <key>Key</key>
+            <string>about_hide_2</string>
+        </dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

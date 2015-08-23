@@ -60,6 +60,10 @@
     {
         [hiddenKeys addObjectsFromArray:@[ AUTO_HISTORY, CREATE_DECK_ACTIVE ]];
     }
+    if (IS_IPAD)
+    {
+        [hiddenKeys addObjectsFromArray:@[ @"about_hide_1", @"about_hide_2" ]];
+    }
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     if (![settings boolForKey:USE_DROPBOX])
