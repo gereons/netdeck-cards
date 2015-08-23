@@ -18,10 +18,12 @@
 
 @property IBOutlet UIBarButtonItem* drawButton;
 @property IBOutlet UIBarButtonItem* saveButton;
+@property IBOutlet UIBarButtonItem* nrdbButton;
 
 @property Deck* deck;
 
 -(IBAction)drawClicked:(id)sender;
 -(IBAction)saveClicked:(id)sender;
+-(IBAction)nrdbButtonClicked:(id)sender;
 
 @end

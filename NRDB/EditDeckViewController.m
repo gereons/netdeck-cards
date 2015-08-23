@@ -6,7 +6,8 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#warning handle nrdb autosave
+#import <SDCAlertView.h>
+#import <AFNetworkReachabilityManager.h>
 
 #import "UIAlertAction+NRDB.h"
 #import "EditDeckViewController.h"
@@ -25,11 +26,13 @@
 #import "SettingsKeys.h"
 #import "NRDB.h"
 #import "DeckEmail.h"
+#import "SVProgressHud.h"
 
 @interface EditDeckViewController ()
 
 @property BOOL autoSave;
 @property BOOL autoSaveDropbox;
+@property BOOL autoSaveNrdb;
 
 @property NSArray* cards;
 @property NSArray* sections;
@@ -55,6 +58,7 @@
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     self.autoSave = [settings boolForKey:AUTO_SAVE];
     self.autoSaveDropbox = self.autoSave && [settings boolForKey:AUTO_SAVE_DB];
+    self.autoSaveNrdb = [settings boolForKey:NRDB_AUTOSAVE];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -69,6 +73,7 @@
     UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                                target:self
                                                                                action:@selector(addCard:)];
+    
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.rightBarButtonItems = @[ addButton, exportButton ];
 
@@ -93,7 +98,13 @@
         self.saveButton.enabled = NO;
     }
     
-    [self refreshDeck:@(YES)];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB])
+    {
+        self.nrdbButton.customView = [[UIView alloc] initWithFrame:CGRectZero];
+        self.nrdbButton.enabled = NO;
+    }
+    
+    [self refreshDeck];
 }
 
 #pragma mark - deck name
@@ -153,14 +164,7 @@
     if ([settings boolForKey:USE_NRDB])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction *action) {
-            [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
-                // NSLog(@"saved %d, ok=%d id=%@", index, ok, deckId);
-                if (ok && deckId)
-                {
-                    self.deck.netrunnerDbId = deckId;
-                    [self.deck saveToDisk];
-                }
-            }];
+            [self saveToNrdb];
         }]];
     }
     
@@ -183,6 +187,40 @@
     [self.navigationController pushViewController:draw animated:YES];
 }
 
+#pragma mark - netrunnerdb.com
+
+-(void) nrdbButtonClicked:(id)sender
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"NetrunnerDB.com" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    if (self.deck.netrunnerDbId.length)
+    {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Save") handler:^(UIAlertAction *action) {
+            [self saveToNrdb];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Reimport") handler:^(UIAlertAction *action) {
+            [self reImportDeckFromNetrunnerDb];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Publish deck") handler:^(UIAlertAction *action) {
+            [self publishDeck];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Unlink") handler:^(UIAlertAction *action) {
+            self.deck.netrunnerDbId = nil;
+            [self doAutoSave];
+        }]];
+    }
+    else
+    {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Save") handler:^(UIAlertAction *action) {
+            [self saveToNrdb];
+        }]];
+    }
+    
+    [alert addAction:[UIAlertAction cancelAction:nil]];
+    
+    [self presentViewController:alert animated:NO completion:nil];
+}
+
 #pragma mark - save
 
 -(void) saveClicked:(id)sender
@@ -196,21 +234,121 @@
             [DeckExport asOctgn:self.deck autoSave:YES];
         }
     }
+    if (self.autoSaveNrdb && self.deck.netrunnerDbId && APP_ONLINE)
+    {
+        [self saveToNrdb];
+    }
 }
 
 -(void) doAutoSave
 {
-    if (self.autoSave)
+    BOOL modified = self.deck.modified;
+    if (modified && self.autoSave)
     {
         [self.deck saveToDisk];
     }
-    if (self.autoSaveDropbox)
+    if (modified && self.autoSaveDropbox)
     {
         if (self.deck.identity && self.deck.cards.count > 0)
         {
             [DeckExport asOctgn:self.deck autoSave:YES];
         }
     }
+}
+
+-(void) saveToNrdb
+{
+    if (!APP_ONLINE)
+    {
+        [self showOfflineAlert];
+        return;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...") maskType:SVProgressHUDMaskTypeBlack];
+    
+    [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
+        // NSLog(@"saved ok=%d id=%@", ok, deckId);
+        if (ok && deckId)
+        {
+            self.deck.netrunnerDbId = deckId;
+            [self.deck saveToDisk];
+        }
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [SVProgressHUD dismiss];
+    }];
+}
+
+-(void) reImportDeckFromNetrunnerDb
+{
+    if (!APP_ONLINE)
+    {
+        [self showOfflineAlert];
+        return;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [SVProgressHUD showWithStatus:l10n(@"Loading Deck...") maskType:SVProgressHUDMaskTypeBlack];
+    
+    [[NRDB sharedInstance] loadDeck:self.deck completion:^(BOOL ok, Deck* deck) {
+        if (!ok)
+        {
+            [SDCAlertView alertWithTitle:nil message:l10n(@"Loading the deck from NetrunnerDB.com failed.") buttons:@[l10n(@"OK")]];
+        }
+        else
+        {
+            deck.filename = self.deck.filename;
+            self.deck = deck;
+            self.deck.state = self.deck.state; // force .modified=YES
+            
+            [self refreshDeck];
+        }
+        
+        [SVProgressHUD dismiss];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }];
+}
+
+-(void) publishDeck
+{
+    if (!APP_ONLINE)
+    {
+        [self showOfflineAlert];
+        return;
+    }
+    
+    NSArray* errors = [self.deck checkValidity];
+    if (errors.count == 0)
+    {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...") maskType:SVProgressHUDMaskTypeBlack];
+        
+        [[NRDB sharedInstance] publishDeck:self.deck completion:^(BOOL ok, NSString *deckId) {
+            if (!ok)
+            {
+                [SDCAlertView alertWithTitle:nil message:l10n(@"Publishing the deck at NetrunnerDB.com failed.") buttons:@[l10n(@"OK")]];
+            }
+            if (ok && deckId)
+            {
+                NSString* msg = [NSString stringWithFormat:l10n(@"Deck published with ID %@"), deckId];
+                [SDCAlertView alertWithTitle:nil message:msg buttons:@[l10n(@"OK")]];
+            }
+            
+            [SVProgressHUD dismiss];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        }];
+    }
+    else
+    {
+        [SDCAlertView alertWithTitle:nil message:l10n(@"Only valid decks can be published.") buttons:@[ l10n(@"OK") ]];
+    }
+}
+
+-(void) showOfflineAlert
+{
+    [SDCAlertView alertWithTitle:nil
+                         message:l10n(@"An Internet connection is required.")
+                         buttons:@[l10n(@"OK")]];
 }
 
 -(void) addCard:(id)sender
@@ -220,17 +358,14 @@
     [self.navigationController pushViewController:listCards animated:YES];
 }
 
--(void) refreshDeck:(NSNumber*)reload
+-(void) refreshDeck
 {
     TableData* data = [self.deck dataForTableView:NRDeckSortType];
     self.cards = data.values;
     self.sections = data.sections;
     
-    if (reload.boolValue)
-    {
-        [self.tableView reloadData];
-    }
-    
+    [self.tableView reloadData];
+
     NSMutableString* footer = [NSMutableString string];
     [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
     if (self.deck.identity && !self.deck.isDraft)
@@ -259,6 +394,7 @@
     self.statusLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
     
     self.saveButton.enabled = self.deck.modified;
+    
     [self doAutoSave];
 }
 
@@ -282,7 +418,7 @@
     }
     
     [self doAutoSave];
-    [self refreshDeck:@(YES)];
+    [self refreshDeck];
 }
 
 -(void) selectIdentity:(id)sender
@@ -412,7 +548,7 @@
             [self.deck addCard:cc.card copies:0];
         }
         
-        [self performSelector:@selector(refreshDeck:) withObject:@(YES) afterDelay:0.001];
+        [self performSelector:@selector(refreshDeck) withObject:nil afterDelay:0.001];
     }
 }
 
