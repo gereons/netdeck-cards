@@ -210,6 +210,15 @@
 		3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABC2EE51975A647007BBE3A /* CompareDecksList.m */; };
 		3ABDE5A418AFC52C00AFEA88 /* DrawSimulatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */; };
 		3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */; };
+		3ABE8A4A1B890A9700EC2C03 /* 785-floppy-disk.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A471B890A9700EC2C03 /* 785-floppy-disk.png */; };
+		3ABE8A4B1B890A9700EC2C03 /* 785-floppy-disk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A481B890A9700EC2C03 /* 785-floppy-disk@2x.png */; };
+		3ABE8A4C1B890A9700EC2C03 /* 785-floppy-disk@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A491B890A9700EC2C03 /* 785-floppy-disk@3x.png */; };
+		3ABE8A501B890B1100EC2C03 /* 785-floppy-disk-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A4D1B890B1100EC2C03 /* 785-floppy-disk-toolbar.png */; };
+		3ABE8A511B890B1100EC2C03 /* 785-floppy-disk-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A4E1B890B1100EC2C03 /* 785-floppy-disk-toolbar@2x.png */; };
+		3ABE8A521B890B1100EC2C03 /* 785-floppy-disk-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A4F1B890B1100EC2C03 /* 785-floppy-disk-toolbar@3x.png */; };
+		3ABE8A561B890C0200EC2C03 /* 831-stack-2-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A531B890C0200EC2C03 /* 831-stack-2-toolbar.png */; };
+		3ABE8A571B890C0200EC2C03 /* 831-stack-2-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A541B890C0200EC2C03 /* 831-stack-2-toolbar@2x.png */; };
+		3ABE8A581B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A551B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png */; };
 		3AC32DDA1B67F63300DFD98D /* GZip.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC32DD91B67F63300DFD98D /* GZip.m */; };
 		3AC6BC7419D3F37E002C7759 /* NSString+stripHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
@@ -582,6 +591,15 @@
 		3ABDE5A118AFC52C00AFEA88 /* DrawSimulatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSimulatorViewController.h; sourceTree = "<group>"; };
 		3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSimulatorViewController.m; sourceTree = "<group>"; };
 		3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawSimulatorViewController.xib; sourceTree = "<group>"; };
+		3ABE8A471B890A9700EC2C03 /* 785-floppy-disk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "785-floppy-disk.png"; sourceTree = "<group>"; };
+		3ABE8A481B890A9700EC2C03 /* 785-floppy-disk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "785-floppy-disk@2x.png"; sourceTree = "<group>"; };
+		3ABE8A491B890A9700EC2C03 /* 785-floppy-disk@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "785-floppy-disk@3x.png"; sourceTree = "<group>"; };
+		3ABE8A4D1B890B1100EC2C03 /* 785-floppy-disk-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "785-floppy-disk-toolbar.png"; sourceTree = "<group>"; };
+		3ABE8A4E1B890B1100EC2C03 /* 785-floppy-disk-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "785-floppy-disk-toolbar@2x.png"; sourceTree = "<group>"; };
+		3ABE8A4F1B890B1100EC2C03 /* 785-floppy-disk-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "785-floppy-disk-toolbar@3x.png"; sourceTree = "<group>"; };
+		3ABE8A531B890C0200EC2C03 /* 831-stack-2-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "831-stack-2-toolbar.png"; sourceTree = "<group>"; };
+		3ABE8A541B890C0200EC2C03 /* 831-stack-2-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "831-stack-2-toolbar@2x.png"; sourceTree = "<group>"; };
+		3ABE8A551B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "831-stack-2-toolbar@3x.png"; sourceTree = "<group>"; };
 		3AC32DD81B67F63300DFD98D /* GZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZip.h; sourceTree = "<group>"; };
 		3AC32DD91B67F63300DFD98D /* GZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZip.m; sourceTree = "<group>"; };
 		3AC6BC7219D3F37E002C7759 /* NSString+stripHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+stripHTML.h"; sourceTree = "<group>"; };
@@ -932,6 +950,15 @@
 				3A52E18E1917F9EF00264C2A /* 763-arrow-up@2x.png */,
 				3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */,
 				3A52E1901917F9EF00264C2A /* 764-arrow-down@2x.png */,
+				3ABE8A471B890A9700EC2C03 /* 785-floppy-disk.png */,
+				3ABE8A481B890A9700EC2C03 /* 785-floppy-disk@2x.png */,
+				3ABE8A491B890A9700EC2C03 /* 785-floppy-disk@3x.png */,
+				3ABE8A4D1B890B1100EC2C03 /* 785-floppy-disk-toolbar.png */,
+				3ABE8A4E1B890B1100EC2C03 /* 785-floppy-disk-toolbar@2x.png */,
+				3ABE8A4F1B890B1100EC2C03 /* 785-floppy-disk-toolbar@3x.png */,
+				3ABE8A531B890C0200EC2C03 /* 831-stack-2-toolbar.png */,
+				3ABE8A541B890C0200EC2C03 /* 831-stack-2-toolbar@2x.png */,
+				3ABE8A551B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png */,
 				3AD2DF7D199E47C20054B470 /* 888-checkmark-selected.png */,
 				3AD2DF7E199E47C20054B470 /* 888-checkmark-selected@2x.png */,
 				3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */,
@@ -1474,6 +1501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A8FBCA119548933009ED6E3 /* netrunnerdb_com@2x.png in Resources */,
+				3ABE8A4A1B890A9700EC2C03 /* 785-floppy-disk.png in Resources */,
 				3A9CE56518E0B6C0007A26CD /* IdentityViewCellSubtitle.xib in Resources */,
 				3AFA3B6918DF862900F59331 /* altarttoggle_off.png in Resources */,
 				3A82624A18E05EC70038B4AC /* cardstats_mem.png in Resources */,
@@ -1505,7 +1533,9 @@
 				3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */,
 				3A689FA6195D3EB8004EBC41 /* testing@2x.png in Resources */,
 				3AE0D50A18F7B4A0007868A7 /* point_slider.png in Resources */,
+				3ABE8A521B890B1100EC2C03 /* 785-floppy-disk-toolbar@3x.png in Resources */,
 				3AB34E611939AA8D000A43BB /* CardFilterThumbView.xib in Resources */,
+				3ABE8A511B890B1100EC2C03 /* 785-floppy-disk-toolbar@2x.png in Resources */,
 				3A82625118E05EC70038B4AC /* cardstats_decksize.png in Resources */,
 				3AF0622E1B886DFD00575984 /* 740-gear@3x.png in Resources */,
 				3A82625918E05EC70038B4AC /* deckview_card.png in Resources */,
@@ -1541,6 +1571,7 @@
 				3AE0D50918F7B4A0007868A7 /* point_slider@2x.png in Resources */,
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
 				3ABAD2FE1B83A6D7009E81F3 /* IphoneIdentityViewController.xib in Resources */,
+				3ABE8A571B890C0200EC2C03 /* 831-stack-2-toolbar@2x.png in Resources */,
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3AD4FBB219D60929000BF9B4 /* red_placeholder.png in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
@@ -1555,6 +1586,7 @@
 				3A7F775A195425B400100F79 /* deckview_3col@2x.png in Resources */,
 				3AF0622D1B886DFD00575984 /* 740-gear@2x.png in Resources */,
 				3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */,
+				3ABE8A581B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png in Resources */,
 				3AD860D71B79154100EEF8AC /* EditDeckCell.xib in Resources */,
 				3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */,
 				3A52E1911917F9EF00264C2A /* 763-arrow-up.png in Resources */,
@@ -1571,6 +1603,7 @@
 				3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
 				3A82625218E05EC70038B4AC /* cardstats_credit@2x.png in Resources */,
+				3ABE8A4C1B890A9700EC2C03 /* 785-floppy-disk@3x.png in Resources */,
 				3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */,
 				3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */,
 				3AD860E11B79383500EEF8AC /* CardImageViewController.xib in Resources */,
@@ -1589,6 +1622,7 @@
 				3A7F7759195425B400100F79 /* deckview_2col@2x.png in Resources */,
 				3AFA3B6B18DF862900F59331 /* altarttoggle_on@2x.png in Resources */,
 				3AD860DC1B792B6700EEF8AC /* ListCardsViewController.xib in Resources */,
+				3ABE8A561B890C0200EC2C03 /* 831-stack-2-toolbar.png in Resources */,
 				3AB9BD6218FB0E49004EAF10 /* 702-import@2x.png in Resources */,
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
 				3AD4FBB319D60929000BF9B4 /* blue_placeholder.png in Resources */,
@@ -1599,6 +1633,7 @@
 				3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */,
 				3A82624418E05EC70038B4AC /* cardstats_trash@2x.png in Resources */,
 				3A82624518E05EC70038B4AC /* cardstats_trash.png in Resources */,
+				3ABE8A501B890B1100EC2C03 /* 785-floppy-disk-toolbar.png in Resources */,
 				3A6E755E18E3FF7400EF8DE1 /* cardstats_identity_decksize.png in Resources */,
 				3A689FA7195D3EB8004EBC41 /* retired.png in Resources */,
 				3AB2CF5A1938952600CCBE64 /* CardFilterViewController.xib in Resources */,
@@ -1610,6 +1645,7 @@
 				3A82624918E05EC70038B4AC /* cardstats_mem@2x.png in Resources */,
 				3AD2DF7F199E47C20054B470 /* 888-checkmark-selected.png in Resources */,
 				3A52E1941917F9EF00264C2A /* 764-arrow-down@2x.png in Resources */,
+				3ABE8A4B1B890A9700EC2C03 /* 785-floppy-disk@2x.png in Resources */,
 				3AE0D50818F7B4A0007868A7 /* influence_slider.png in Resources */,
 				3A445F711998AEF9000AD1C4 /* trash_slider@2x.png in Resources */,
 				3A82625618E05EC70038B4AC /* deckview_table@2x.png in Resources */,

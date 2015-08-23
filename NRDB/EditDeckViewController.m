@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+#warning handle autosave stuff
+
+#import "UIAlertAction+NRDB.h"
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
 #import "CardImageViewController.h"
@@ -25,6 +28,7 @@
 @property NSArray* cards;
 @property NSArray* sections;
 
+@property UILabel* titleLabel;  // used as the titleView in out navigation bar
 @end
 
 @implementation EditDeckViewController
@@ -38,27 +42,64 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"EditDeckCell" bundle:nil] forCellReuseIdentifier:@"cardCell"];
-    
-    self.title = self.deck.name;
-    self.drawButton.enabled = NO;
-}
-
--(void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self refreshDeck:@(YES)];
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     // right buttons
     UIBarButtonItem* exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
     UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addCard:)];
     
-    self.navigationController.navigationBar.topItem.rightBarButtonItems = @[ addButton, exportButton];
+    UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    topItem.rightBarButtonItems = @[ addButton, exportButton];
+
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.titleLabel.textColor = self.view.tintColor;
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    self.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.titleLabel.minimumScaleFactor = 0.5;
+    [self setDeckName];
+    topItem.titleView = self.titleLabel;
+    
+    UITapGestureRecognizer* titleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleTapped:)];
+    titleTap.numberOfTapsRequired = 1;
+    self.titleLabel.userInteractionEnabled = YES;
+    [self.titleLabel addGestureRecognizer:titleTap];
+    
+    [self refreshDeck:@(YES)];
 }
+
+#pragma mark - deck name
+
+-(void) setDeckName
+{
+    self.titleLabel.text = self.deck.name;
+    CGSize maxSize = [self.titleLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+    self.titleLabel.frame = CGRectMake(0,0, maxSize.width, 500);
+}
+
+-(void) titleTapped:(id)sender
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Enter Name") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = self.deck.name;
+    }];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction *action) {
+        UITextField* textField = alert.textFields.firstObject;
+        self.deck.name = textField.text;
+        [self setDeckName];
+        self.saveButton.enabled = YES;
+    }]];
+    [alert addAction:[UIAlertAction cancelAction:nil]];
+    
+    [self presentViewController:alert animated:NO completion:nil];
+}
+
+#pragma mark - export 
 
 -(void) exportDeck:(id)sender
 {
@@ -87,9 +128,7 @@
         }]];
     }
     
-    [alert addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
-        // cancel
-    }]];
+    [alert addAction:[UIAlertAction cancelAction:nil]];
     
     [self presentViewController:alert animated:NO completion:nil];
 }

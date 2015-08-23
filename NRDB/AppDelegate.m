@@ -30,6 +30,8 @@
  * set BITCODE_ENABLED=NO
  * set "requires full screen"
  */
+
+#warning iphone: handle clipboard import, test deck-url open
 			
 const NSString* const kANY = @"Any";
 

@@ -6,10 +6,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditDeckViewController">
             <connections>
-                <outlet property="drawButton" destination="TOI-tu-UO1" id="n2j-6m-Oq1"/>
-                <outlet property="saveButton" destination="lGr-jz-FVN" id="F3O-LN-8gr"/>
+                <outlet property="drawButton" destination="Mfs-Fy-ONa" id="ZTe-ng-bvD"/>
+                <outlet property="saveButton" destination="wRG-PO-2LQ" id="xaF-jp-lXt"/>
                 <outlet property="statusLabel" destination="cNa-Vc-9G8" id="AUy-dX-BkU"/>
                 <outlet property="tableView" destination="XoR-lC-cbz" id="hKE-VP-Yzy"/>
+                <outlet property="toolBar" destination="69X-dg-40v" id="SHb-Hp-NvE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -29,30 +30,16 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="69X-dg-40v">
                     <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                     <items>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="f8a-VO-JCO"/>
-                        <barButtonItem style="plain" id="TOI-tu-UO1">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6ht-wD-c2B">
-                                <rect key="frame" x="506" y="7" width="36" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Draw">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="drawClicked:" destination="-1" eventType="touchUpInside" id="x04-za-DMs"/>
-                                </connections>
-                            </button>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="FO0-Tz-4CO"/>
+                        <barButtonItem image="831-stack-2-toolbar.png" id="Mfs-Fy-ONa">
+                            <connections>
+                                <action selector="drawClicked:" destination="-1" id="fp8-q1-LNn"/>
+                            </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" id="lGr-jz-FVN">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="25c-4Y-lbf">
-                                <rect key="frame" x="538" y="7" width="34" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveClicked:" destination="-1" eventType="touchUpInside" id="ajK-9N-jvd"/>
-                                </connections>
-                            </button>
+                        <barButtonItem image="785-floppy-disk-toolbar.png" id="wRG-PO-2LQ">
+                            <connections>
+                                <action selector="saveClicked:" destination="-1" id="vgf-Op-PYC"/>
+                            </connections>
                         </barButtonItem>
                     </items>
                 </toolbar>
@@ -81,4 +68,8 @@ Not enough Cards</string>
             <point key="canvasLocation" x="558" y="233"/>
         </view>
     </objects>
+    <resources>
+        <image name="785-floppy-disk-toolbar.png" width="20" height="20"/>
+        <image name="831-stack-2-toolbar.png" width="22" height="10"/>
+    </resources>
 </document>

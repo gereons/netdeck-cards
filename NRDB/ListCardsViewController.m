@@ -49,6 +49,15 @@
     
     self.cards = data.values;
     self.sections = data.sections;
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(showKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(hideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void) countChanged:(UIStepper*)stepper
@@ -151,7 +160,7 @@
     return self.sections[section];
 }
 
--(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void) tableView:(UITableView *)tableView willDisplayCell:(EditDeckCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     cell.backgroundColor = [UIColor whiteColor];
     
@@ -160,7 +169,11 @@
     
     if (cc.count > 0)
     {
-        cell.backgroundColor = [UIColor colorWithWhite:.97 alpha:1];
+        cell.nameLabel.font = [UIFont boldSystemFontOfSize:17];
+    }
+    else
+    {
+        cell.nameLabel.font = [UIFont systemFontOfSize:17];
     }
 }
 
@@ -229,6 +242,25 @@
     img.selectedCard = card;
     
     [self.navigationController pushViewController:img animated:YES];
+}
+
+#pragma mark - keyboard
+
+-(void) showKeyboard:(NSNotification*)notification
+{
+    CGRect kbRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    float kbHeight = kbRect.size.height;
+    
+    UIEdgeInsets inset = self.tableView.contentInset;
+    inset.bottom = kbHeight;
+    self.tableView.contentInset = inset;
+}
+
+-(void) hideKeyboard:(id)notification
+{
+    UIEdgeInsets inset = self.tableView.contentInset;
+    inset.bottom = 0;
+    self.tableView.contentInset = inset;
 }
 
 @end

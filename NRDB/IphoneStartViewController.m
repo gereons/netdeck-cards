@@ -26,6 +26,9 @@
 @property NSArray* decks;
 @property SettingsViewController* settings;
 
+@property UIBarButtonItem* addButton;
+@property UIBarButtonItem* importButton;
+
 @end
 
 @implementation IphoneStartViewController
@@ -34,13 +37,6 @@
     [super viewDidLoad];
     self.delegate = self;
     
-    [CardUpdateCheck checkCardsAvailable];
-    
-    if ([CardManager cardsAvailable] && [CardSets setsAvailable])
-    {
-        [self initializeDecks];
-    }
-    
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
     
@@ -48,10 +44,24 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
     
-    UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewDeck:)];
-    UIBarButtonItem* importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
+    self.addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewDeck:)];
+    self.addButton.enabled = NO;
+    self.importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
+    self.importButton.enabled = NO;
     
-    self.navigationBar.topItem.rightBarButtonItems = @[ addButton, importButton ];
+    self.navigationBar.topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
+    
+    [CardUpdateCheck checkCardsAvailable];
+    
+    if ([CardManager cardsAvailable] && [CardSets setsAvailable])
+    {
+        [self initializeDecks];
+    }
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 // this is a poor man's replacement for viewWillAppear - I can't figure out why this isn't called when this view is
@@ -76,6 +86,9 @@
     self.runnerDecks = [DeckManager decksForRole:NRRoleRunner];
     self.corpDecks = [DeckManager decksForRole:NRRoleCorp];
     self.decks = @[ self.runnerDecks, self.corpDecks ];
+    
+    self.addButton.enabled = YES;
+    self.importButton.enabled = YES;
     
     NSMutableArray* allDecks = [NSMutableArray arrayWithArray:self.runnerDecks];
     [allDecks addObjectsFromArray:self.corpDecks];

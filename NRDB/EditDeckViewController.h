@@ -15,6 +15,8 @@
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UILabel* statusLabel;
+@property IBOutlet UIToolbar* toolBar;
+
 @property IBOutlet UIBarButtonItem* drawButton;
 @property IBOutlet UIBarButtonItem* saveButton;
 
