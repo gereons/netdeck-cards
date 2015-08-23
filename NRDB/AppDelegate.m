@@ -32,6 +32,7 @@
  */
 
 #warning iphone: handle clipboard import, test deck-url open
+#warning iphone: add feedback / rate app
 			
 const NSString* const kANY = @"Any";
 

@@ -77,6 +77,7 @@
     self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
     self.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.titleLabel.minimumScaleFactor = 0.5;
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self setDeckName];
     topItem.titleView = self.titleLabel;
     
@@ -100,8 +101,15 @@
 -(void) setDeckName
 {
     self.titleLabel.text = self.deck.name;
-    CGSize maxSize = [self.titleLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-    self.titleLabel.frame = CGRectMake(0,0, maxSize.width, 500);
+
+    CGSize maxSize = [self.titleLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, 44)];
+    CGRect frame = self.titleLabel.frame;
+    frame.size = maxSize;
+    self.titleLabel.frame = frame;
+    
+    CGPoint center = self.titleLabel.center;
+    center.x = self.view.frame.size.width / 2;
+    self.titleLabel.center = center;
     
     self.title = self.deck.name;
     
