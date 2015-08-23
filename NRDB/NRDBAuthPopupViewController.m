@@ -17,8 +17,6 @@
 
 @end
 
-#warning iphone: on success, pops one too many vcs?!?
-
 @implementation NRDBAuthPopupViewController
 
 static NRDBAuthPopupViewController* popup;
@@ -44,7 +42,7 @@ static NRDBAuthPopupViewController* popup;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
+    if (self && IS_IPAD)
     {
         self.modalPresentationStyle = UIModalPresentationFormSheet;
     }
@@ -76,9 +74,12 @@ static NRDBAuthPopupViewController* popup;
 
 -(void) dismiss
 {
+    // NSLog(@"nrdb popup dismiss");
     if (self.navController)
     {
-        [self.navController popViewControllerAnimated:YES];
+        // don't call [self.navController popViewControllerAnimated:YES] here - this will pop two VCs
+        // instead, call the nav bar delegate from NRNavigationController to do
+        [self.navController.navigationBar.delegate navigationBar:nil shouldPopItem:nil];
         self.navController = nil;
     }
     else
