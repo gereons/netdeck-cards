@@ -86,6 +86,7 @@
         self.filterViewController = [[FilterViewController alloc] initWithNibName:@"FilterViewController" bundle:nil];
     }
     self.filterViewController.role = self.deck.role;
+    self.filterViewController.identity = self.deck.identity;
     self.filterViewController.cardList = self.cardList;
     [self.navigationController pushViewController:self.filterViewController animated:YES];
 }

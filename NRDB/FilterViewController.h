@@ -8,7 +8,7 @@
 
 #import "MultiSelectSegmentedControl.h"
 
-@class CardList;
+@class Card, CardList;
 
 @interface FilterViewController : UIViewController<MultiSelectSegmentedControlDelegate>
 
@@ -18,7 +18,25 @@
 @property IBOutlet UILabel* typeLabel;
 @property IBOutlet MultiSelectSegmentedControl* typeControl;
 
+@property IBOutlet UILabel* influenceLabel;
+@property IBOutlet UISlider* influenceSlider;
+
+@property IBOutlet UILabel* strengthLabel;
+@property IBOutlet UISlider* strengthSlider;
+
+@property IBOutlet UILabel* muApLabel;
+@property IBOutlet UISlider* muApSlider;
+
+@property IBOutlet UILabel* costLabel;
+@property IBOutlet UISlider* costSlider;
+
 @property NRRole role;
+@property Card* identity;
 @property CardList* cardList;
+
+-(IBAction)influenceChanged:(id)sender;
+-(IBAction)strengthChanged:(id)sender;
+-(IBAction)muApChanged:(id)sender;
+-(IBAction)costChanged:(id)sender;
 
 @end

@@ -12,6 +12,7 @@
 #import "CardType.h"
 #import "CardList.h"
 #import "SettingsKeys.h"
+#import "CardManager.h"
 
 @interface FilterViewController ()
 
@@ -74,6 +75,18 @@ enum { TAG_FACTION, TAG_TYPE };
         [self.typeControl insertSegmentWithTitle:self.typeNames[i] atIndex:i animated:NO];
     }
     [self.typeControl selectAllSegments:YES];
+    
+    self.costSlider.maximumValue = 1+(self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost]);
+    self.muApSlider.maximumValue = self.role == NRRoleRunner ? 1+[CardManager maxMU] : 1+[CardManager maxAgendaPoints];
+    self.strengthSlider.maximumValue = 1+[CardManager maxStrength];
+    self.influenceSlider.maximumValue = 1+[CardManager maxInfluence];
+    
+    [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
+    [self.muApSlider setThumbImage:[UIImage imageNamed:self.role == NRRoleRunner ? @"mem_slider" : @"point_slider" ] forState:UIControlStateNormal];
+    [self.strengthSlider setThumbImage:[UIImage imageNamed:@"strength_slider"] forState:UIControlStateNormal];
+    [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
+    
+    [self clearFilters:nil];    
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -89,6 +102,68 @@ enum { TAG_FACTION, TAG_TYPE };
     
     [self.factionControl selectAllSegments:YES];
     [self.typeControl selectAllSegments:YES];
+    
+    self.influenceSlider.value = 0;
+    self.strengthSlider.value = 0;
+    self.muApSlider.value = 0;
+    self.costSlider.value = 0;
+    
+    [self influenceChanged:nil];
+    [self strengthChanged:nil];
+    [self muApChanged:nil];
+    [self costChanged:nil];
+}
+
+-(void) strengthChanged:(UISlider*)sender
+{
+    int value = round(sender.value);
+    // NSLog(@"str: %f %d", sender.value, value);
+    sender.value = value--;
+    self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+    [self.cardList filterByStrength:value];
+}
+
+-(void) muApChanged:(UISlider*)sender
+{
+    int value = round(sender.value);
+    // NSLog(@"mu: %f %d", sender.value, value);
+    sender.value = value--;
+    self.muApLabel.text = [NSString stringWithFormat:self.role == NRRoleRunner ? l10n(@"MU: %@") : l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+    
+    if (self.role == NRRoleRunner)
+    {
+        [self.cardList filterByMU:value];
+    }
+    else
+    {
+        [self.cardList filterByAgendaPoints:value];
+    }
+}
+
+-(void) costChanged:(UISlider*)sender
+{
+    int value = round(sender.value);
+    // NSLog(@"cost: %f %d", sender.value, value);
+    sender.value = value--;
+    self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+    [self.cardList filterByCost:value];
+}
+
+-(void) influenceChanged:(UISlider*)sender
+{
+    int value = round(sender.value);
+    // NSLog(@"inf: %f %d", sender.value, value);
+    sender.value = value--;
+    self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+    
+    if (self.identity)
+    {
+        [self.cardList filterByInfluence:value forFaction:self.identity.faction];
+    }
+    else
+    {
+        [self.cardList filterByInfluence:value];
+    }
 }
 
 #pragma mark - multi select delegate
