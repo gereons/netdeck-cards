@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @class Deck;
 
 @interface IphoneDrawSimulator : UIViewController<UITableViewDataSource, UITableViewDelegate>

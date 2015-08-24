@@ -28,6 +28,11 @@
 		3A1855F31A8E27EF00A1852D /* SetSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1855F11A8E27EF00A1852D /* SetSelectionViewController.m */; };
 		3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */; };
 		3A1855FC1A8E4FE700A1852D /* CardSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1855FB1A8E4FE700A1852D /* CardSet.m */; };
+		3A18B2561B8B7C650065EC4A /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A18B2541B8B7C650065EC4A /* FilterViewController.m */; };
+		3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A18B2551B8B7C650065EC4A /* FilterViewController.xib */; };
+		3A18B25B1B8B9C520065EC4A /* 798-filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A18B2581B8B9C520065EC4A /* 798-filter.png */; };
+		3A18B25C1B8B9C520065EC4A /* 798-filter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A18B2591B8B9C520065EC4A /* 798-filter@2x.png */; };
+		3A18B25D1B8B9C520065EC4A /* 798-filter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A18B25A1B8B9C520065EC4A /* 798-filter@3x.png */; };
 		3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B78F1ACD81BC0039A18A /* BrowserCollectionView.m */; };
 		3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7921ACD83DF0039A18A /* DecklistCollectionView.m */; };
 		3A19B7961ACD841E0039A18A /* IdentityCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */; };
@@ -337,6 +342,12 @@
 		3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionViewController.xib; sourceTree = "<group>"; };
 		3A1855FA1A8E4FE700A1852D /* CardSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardSet.h; sourceTree = "<group>"; };
 		3A1855FB1A8E4FE700A1852D /* CardSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardSet.m; sourceTree = "<group>"; };
+		3A18B2531B8B7C650065EC4A /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		3A18B2541B8B7C650065EC4A /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
+		3A18B2551B8B7C650065EC4A /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
+		3A18B2581B8B9C520065EC4A /* 798-filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter.png"; sourceTree = "<group>"; };
+		3A18B2591B8B9C520065EC4A /* 798-filter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter@2x.png"; sourceTree = "<group>"; };
+		3A18B25A1B8B9C520065EC4A /* 798-filter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter@3x.png"; sourceTree = "<group>"; };
 		3A19B78E1ACD81BC0039A18A /* BrowserCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserCollectionView.h; sourceTree = "<group>"; };
 		3A19B78F1ACD81BC0039A18A /* BrowserCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserCollectionView.m; sourceTree = "<group>"; };
 		3A19B7911ACD83DF0039A18A /* DecklistCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecklistCollectionView.h; sourceTree = "<group>"; };
@@ -880,6 +891,9 @@
 				3A843A8D1B89D97F000CC60D /* IphoneDrawSimulator.h */,
 				3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */,
 				3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */,
+				3A18B2531B8B7C650065EC4A /* FilterViewController.h */,
+				3A18B2541B8B7C650065EC4A /* FilterViewController.m */,
+				3A18B2551B8B7C650065EC4A /* FilterViewController.xib */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -971,6 +985,9 @@
 				3ABE8A4D1B890B1100EC2C03 /* 785-floppy-disk-toolbar.png */,
 				3ABE8A4E1B890B1100EC2C03 /* 785-floppy-disk-toolbar@2x.png */,
 				3ABE8A4F1B890B1100EC2C03 /* 785-floppy-disk-toolbar@3x.png */,
+				3A18B2581B8B9C520065EC4A /* 798-filter.png */,
+				3A18B2591B8B9C520065EC4A /* 798-filter@2x.png */,
+				3A18B25A1B8B9C520065EC4A /* 798-filter@3x.png */,
 				3ABE8A531B890C0200EC2C03 /* 831-stack-2-toolbar.png */,
 				3ABE8A541B890C0200EC2C03 /* 831-stack-2-toolbar@2x.png */,
 				3ABE8A551B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png */,
@@ -1534,6 +1551,7 @@
 				3AE0D50D18F7B4A0007868A7 /* strength_slider@2x.png in Resources */,
 				3A6C68511996BC0B00B29588 /* 727-more@2x.png in Resources */,
 				3A82624318E05EC70038B4AC /* cardstats_strength@2x.png in Resources */,
+				3A18B25D1B8B9C520065EC4A /* 798-filter@3x.png in Resources */,
 				3A6E757318E402A300EF8DE1 /* Icon-Small-29.png in Resources */,
 				3A6E756B18E401D400EF8DE1 /* iTunesArtwork.png in Resources */,
 				3A6E756D18E401D400EF8DE1 /* Icon-Small-40.png in Resources */,
@@ -1580,6 +1598,7 @@
 				3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
 				3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */,
+				3A18B25B1B8B9C520065EC4A /* 798-filter.png in Resources */,
 				3A82625318E05EC70038B4AC /* cardstats_credit.png in Resources */,
 				3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */,
 				3A82624C18E05EC70038B4AC /* cardstats_link.png in Resources */,
@@ -1645,6 +1664,7 @@
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
 				3AD4FBB319D60929000BF9B4 /* blue_placeholder.png in Resources */,
 				3A82625518E05EC70038B4AC /* deckview_list.png in Resources */,
+				3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */,
 				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
 				3A6E757218E402A300EF8DE1 /* Icon-Small-29@2x.png in Resources */,
 				3A76EEC018B5DA68004DB586 /* RunnerPlaceholder.png in Resources */,
@@ -1678,6 +1698,7 @@
 				3A82624F18E05EC70038B4AC /* cardstats_difficulty@2x.png in Resources */,
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
 				3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */,
+				3A18B25C1B8B9C520065EC4A /* 798-filter@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1758,6 +1779,7 @@
 				3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */,
 				3A461A7118BBF39500302A4D /* DataDownload.m in Sources */,
 				3A3622721849320C007F2854 /* AppDelegate.m in Sources */,
+				3A18B2561B8B7C650065EC4A /* FilterViewController.m in Sources */,
 				3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */,
 				3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,

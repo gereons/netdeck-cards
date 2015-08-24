@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface EditDeckCell : UITableViewCell
 
 @property IBOutlet UILabel* nameLabel;

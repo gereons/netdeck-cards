@@ -8,6 +8,7 @@
 
 #import "ListCardsViewController.h"
 #import "CardImageViewController.h"
+#import "FilterViewController.h"
 #import "ImageCache.h"
 #import "EditDeckCell.h"
 #import "Deck.h"
@@ -24,6 +25,8 @@
 @property CardList* cardList;
 @property NSString* filterText;
 
+@property FilterViewController* filterViewController;
+
 @end
 
 @implementation ListCardsViewController
@@ -31,6 +34,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = l10n(@"Cards");
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -46,7 +51,6 @@
     }
     
     TableData* data = [self.cardList dataForTableView];
-    
     self.cards = data.values;
     self.sections = data.sections;
     
@@ -55,9 +59,35 @@
     [nc addObserver:self selector:@selector(hideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
 }
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    
+    UIBarButtonItem* filterButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"798-filter"] style:UIBarButtonItemStylePlain target:self action:@selector(showFilters:)];
+    topItem.rightBarButtonItem = filterButton;
+
+    TableData* data = [self.cardList dataForTableView];
+    
+    self.cards = data.values;
+    self.sections = data.sections;
+    [self.tableView reloadData];
+}
+
+
 -(void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void) showFilters:(id)sender
+{
+    if (!self.filterViewController)
+    {
+        self.filterViewController = [[FilterViewController alloc] initWithNibName:@"FilterViewController" bundle:nil];
+    }
+    self.filterViewController.role = self.deck.role;
+    self.filterViewController.cardList = self.cardList;
+    [self.navigationController pushViewController:self.filterViewController animated:YES];
 }
 
 -(void) countChanged:(UIStepper*)stepper

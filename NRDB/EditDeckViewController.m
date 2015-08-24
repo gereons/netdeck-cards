@@ -39,6 +39,8 @@
 
 @property UILabel* titleLabel;  // used as the titleView in out navigation bar
 
+@property ListCardsViewController* listCards;
+
 @end
 
 @implementation EditDeckViewController
@@ -357,9 +359,12 @@
 
 -(void) addCard:(id)sender
 {
-    ListCardsViewController* listCards = [[ListCardsViewController alloc] initWithNibName:@"ListCardsViewController" bundle:nil];
-    listCards.deck = self.deck;
-    [self.navigationController pushViewController:listCards animated:YES];
+    if (!self.listCards)
+    {
+        self.listCards = [[ListCardsViewController alloc] initWithNibName:@"ListCardsViewController" bundle:nil];
+    }
+    self.listCards.deck = self.deck;
+    [self.navigationController pushViewController:self.listCards animated:YES];
 }
 
 -(void) refreshDeck

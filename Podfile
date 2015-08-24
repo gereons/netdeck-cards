@@ -13,6 +13,7 @@ pod 'SDCAlertView'
 pod 'InAppSettingsKit'
 pod 'PromiseKit', '1.5.3'
 pod 'PromiseKit-AFNetworking'
+pod 'MultiSelectSegmentedControl'
 
 post_install do | installer |
   require 'fileutils'
