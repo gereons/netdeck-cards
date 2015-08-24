@@ -254,6 +254,7 @@
     UIEdgeInsets inset = self.tableView.contentInset;
     inset.bottom = kbHeight;
     self.tableView.contentInset = inset;
+    self.tableView.scrollIndicatorInsets = inset;
 }
 
 -(void) hideKeyboard:(id)notification
@@ -261,6 +262,7 @@
     UIEdgeInsets inset = self.tableView.contentInset;
     inset.bottom = 0;
     self.tableView.contentInset = inset;
+    self.tableView.scrollIndicatorInsets = inset;
 }
 
 @end

@@ -133,6 +133,10 @@
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.text = self.deck.name;
+        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+        textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        textField.returnKeyType = UIReturnKeyDone;
+        textField.clearButtonMode = UITextFieldViewModeAlways;
     }];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction *action) {
