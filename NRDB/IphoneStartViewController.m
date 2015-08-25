@@ -38,6 +38,7 @@
 @property UIBarButtonItem* sortButton;
 
 @property NRDeckListSort deckListSort;
+@property NSString* filterText;
 
 @end
 
@@ -54,6 +55,9 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
+    
+    self.searchBar.delegate = self;
+    [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
     
     self.addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewDeck:)];
     self.addButton.enabled = NO;
@@ -118,6 +122,14 @@
         self.runnerDecks = [self sortDecks:arr];
         self.corpDecks = [NSMutableArray array];
         self.decks = @[ self.runnerDecks ];
+    }
+    
+    if (self.filterText.length > 0)
+    {
+        NSPredicate* namePredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", self.filterText];
+        
+        [self.runnerDecks filterUsingPredicate:namePredicate];
+        [self.corpDecks filterUsingPredicate:namePredicate];
     }
     
     self.addButton.enabled = YES;
@@ -387,6 +399,32 @@
         [self.tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationLeft];
         [self.tableView endUpdates];
     }
+}
+
+#pragma mark search bar
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    self.filterText = searchText;
+    [self initializeDecks];
+    [self.tableView reloadData];
+}
+
+-(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = NO;
+    self.tableView.tableHeaderView = self.searchBar;
+}
+
+-(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = YES;
+    self.tableView.tableHeaderView = self.searchBar;
+}
+
+-(void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
 }
 
 @end

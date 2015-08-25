@@ -26,6 +26,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" backgroundImage="searchbar-bg.png" scopeBarBackgroundImage="searchbar-bg.png" id="4Lv-UM-pNb">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="t4O-1A-mn6"/>
+                            </connections>
+                        </searchBar>
                         <connections>
                             <outlet property="dataSource" destination="h1F-hJ-4M0" id="qdB-QQ-GWs"/>
                             <outlet property="delegate" destination="h1F-hJ-4M0" id="6zh-3o-khn"/>
@@ -46,6 +54,7 @@
                 </tableViewController>
             </viewControllers>
             <connections>
+                <outlet property="searchBar" destination="4Lv-UM-pNb" id="AlJ-eG-TLS"/>
                 <outlet property="tableView" destination="Tqh-6R-5NU" id="Jvg-3Y-Iuf"/>
                 <outlet property="tableViewController" destination="SRF-LE-fIS" id="mHC-bL-eQ9"/>
             </connections>
@@ -53,5 +62,6 @@
     </objects>
     <resources>
         <image name="740-gear.png" width="28" height="28"/>
+        <image name="searchbar-bg.png" width="1" height="1"/>
     </resources>
 </document>

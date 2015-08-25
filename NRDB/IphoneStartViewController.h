@@ -8,10 +8,12 @@
 
 #import "NRNavigationController.h"
 
-@interface IphoneStartViewController : NRNavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
+@interface IphoneStartViewController : NRNavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate>
 
 @property IBOutlet UITableViewController* tableViewController;
 @property IBOutlet UITableView* tableView;
+
+@property IBOutlet UISearchBar* searchBar;
 
 -(IBAction)createNewDeck:(id)sender;
 -(IBAction)openSettings:(id)sender;
