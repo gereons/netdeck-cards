@@ -462,7 +462,10 @@
     EditDeckCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.stepper.tag = indexPath.section * 1000 + indexPath.row;
     [cell.stepper addTarget:self action:@selector(changeCount:) forControlEvents:UIControlEventValueChanged];
-
+    
+    [cell.idButton setTitle:l10n(@"Identity") forState:UIControlStateNormal];
+    [cell.idButton addTarget:self action:@selector(selectIdentity:) forControlEvents:UIControlEventTouchUpInside];
+    
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     
     if (ISNULL(cc))
@@ -482,8 +485,6 @@
     cell.stepper.value = cc.count;
     cell.stepper.hidden = card.type == NRCardTypeIdentity;
     cell.idButton.hidden = card.type != NRCardTypeIdentity;
-    
-    [cell.idButton addTarget:self action:@selector(selectIdentity:) forControlEvents:UIControlEventTouchUpInside];
     
     if (card.unique)
     {
