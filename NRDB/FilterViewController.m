@@ -86,7 +86,7 @@ enum { TAG_FACTION, TAG_TYPE };
     [self.strengthSlider setThumbImage:[UIImage imageNamed:@"strength_slider"] forState:UIControlStateNormal];
     [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
     
-    [self clearFilters:nil];    
+    [self clearFilters:nil];
 }
 
 -(void) viewDidAppear:(BOOL)animated

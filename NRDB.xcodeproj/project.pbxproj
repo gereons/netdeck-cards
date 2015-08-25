@@ -36,6 +36,7 @@
 		3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B78F1ACD81BC0039A18A /* BrowserCollectionView.m */; };
 		3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7921ACD83DF0039A18A /* DecklistCollectionView.m */; };
 		3A19B7961ACD841E0039A18A /* IdentityCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */; };
+		3A1D86D51B8CCD9600FA30AB /* 890-sort-ascending@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1D86D41B8CCD9600FA30AB /* 890-sort-ascending@3x.png */; };
 		3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */; };
 		3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ECC901879A1CC003400A9 /* DeckExport.m */; };
 		3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 3A1ECC921879A383003400A9 /* OCTGN.mustache */; };
@@ -354,6 +355,7 @@
 		3A19B7921ACD83DF0039A18A /* DecklistCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DecklistCollectionView.m; sourceTree = "<group>"; };
 		3A19B7941ACD841E0039A18A /* IdentityCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityCollectionView.h; sourceTree = "<group>"; };
 		3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityCollectionView.m; sourceTree = "<group>"; };
+		3A1D86D41B8CCD9600FA30AB /* 890-sort-ascending@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending@3x.png"; sourceTree = "<group>"; };
 		3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSmallThumbView.xib; sourceTree = "<group>"; };
 		3A1ECC8F1879A1CC003400A9 /* DeckExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckExport.h; sourceTree = "<group>"; };
 		3A1ECC901879A1CC003400A9 /* DeckExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckExport.m; sourceTree = "<group>"; };
@@ -994,6 +996,7 @@
 				3AD2DF7D199E47C20054B470 /* 888-checkmark-selected.png */,
 				3AD2DF7E199E47C20054B470 /* 888-checkmark-selected@2x.png */,
 				3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */,
+				3A1D86D41B8CCD9600FA30AB /* 890-sort-ascending@3x.png */,
 				3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */,
 			);
 			name = Glyphicons;
@@ -1636,6 +1639,7 @@
 				3A3844FB1B77859E007C76F2 /* MainWindow~iPhone.xib in Resources */,
 				3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */,
 				3AFA3B6A18DF862900F59331 /* altarttoggle_on.png in Resources */,
+				3A1D86D51B8CCD9600FA30AB /* 890-sort-ascending@3x.png in Resources */,
 				3AE0D50C18F7B4A0007868A7 /* mem_slider.png in Resources */,
 				3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,

@@ -140,6 +140,7 @@
 "%@ · %d Cards · %d Influence" = "%@ · %d Karten · %d Einfluss";
 "%d Cards · %d Influence" = "%d Karten · %d Einfluss";
 "%d Cards · %d Influence · %d AP" = "%d Karten · %d Einfluss · %d AP";
+"Sort by" = "Sortieren nach";
 "Date" = "Datum";
 "A-Z" = "A-Z";
 "Copy to Clipboard" = "Ins Clipboard kopieren";
