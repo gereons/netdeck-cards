@@ -12,9 +12,12 @@
 
 @interface FilterViewController : UIViewController<MultiSelectSegmentedControlDelegate>
 
+
 @property IBOutlet UILabel* factionLabel;
 @property IBOutlet MultiSelectSegmentedControl* factionControl;
+@property IBOutlet MultiSelectSegmentedControl* miniFactionControl;
 
+@property IBOutlet NSLayoutConstraint* typeVerticalDistance;
 @property IBOutlet UILabel* typeLabel;
 @property IBOutlet MultiSelectSegmentedControl* typeControl;
 

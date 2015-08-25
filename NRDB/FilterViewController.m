@@ -18,12 +18,13 @@
 
 @property NSArray* factionNames;
 @property NSArray* typeNames;
+@property BOOL dataDestinyAllowed;
 
 @end
 
 @implementation FilterViewController 
 
-enum { TAG_FACTION, TAG_TYPE };
+enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
 
 - (void)viewDidLoad
 {
@@ -31,28 +32,37 @@ enum { TAG_FACTION, TAG_TYPE };
     
     self.title = @"Filter";
     
+    self.dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
     self.factionLabel.text = l10n(@"Faction");
     self.typeLabel.text = l10n(@"Type");
     
+    self.typeVerticalDistance.constant = 18;
+    self.miniFactionControl.hidden = YES;
+    self.miniFactionControl.tag = TAG_MINI_FACTION;
+    self.miniFactionControl.delegate = self;
+    [self.miniFactionControl selectAllSegments:self.dataDestinyAllowed];
+    
+    NSInteger factionLimit;
     if (self.role == NRRoleRunner)
     {
-        BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
-        
-        if (dataDestinyAllowed)
-        {
-            self.factionNames = @[ [Faction name:NRFactionAnarch], [Faction name:NRFactionCriminal], [Faction name:NRFactionShaper], [Faction name:NRFactionAdam], [Faction name:NRFactionApex], [Faction name:NRFactionSunnyLebeau], [Faction name:NRFactionNeutral]];
-        }
-        else
-        {
-            self.factionNames = @[ [Faction name:NRFactionAnarch], [Faction name:NRFactionCriminal], [Faction name:NRFactionShaper], [Faction name:NRFactionNeutral]];
-        }
-        
+        self.factionNames = @[ [Faction name:NRFactionAnarch], [Faction name:NRFactionCriminal], [Faction name:NRFactionShaper], [Faction name:NRFactionNeutral]];
         self.typeNames = @[ [CardType name:NRCardTypeEvent], [CardType name:NRCardTypeHardware], [CardType name:NRCardTypeResource], [CardType name:NRCardTypeProgram] ];
+        factionLimit = self.factionNames.count;
+        
+        if (self.dataDestinyAllowed)
+        {
+            self.factionNames = @[ [Faction name:NRFactionAnarch], [Faction name:NRFactionCriminal], [Faction name:NRFactionShaper], [Faction name:NRFactionNeutral],
+                                   [Faction name:NRFactionAdam], [Faction name:NRFactionApex], [Faction name:NRFactionSunnyLebeau] ];
+            
+            self.miniFactionControl.hidden = NO;
+            self.typeVerticalDistance.constant = 50;
+        }
     }
     else
     {
         self.factionNames = @[ [Faction name:NRFactionHaasBioroid], [Faction name:NRFactionNBN], [Faction name:NRFactionJinteki], [Faction name:NRFactionWeyland], [Faction name:NRFactionNeutral]];
-
+        factionLimit = self.factionNames.count;
+        
         self.typeNames = @[ [CardType name:NRCardTypeAgenda], [CardType name:NRCardTypeAsset], [CardType name:NRCardTypeUpgrade], [CardType name:NRCardTypeOperation], [CardType name:NRCardTypeIce]];
     }
     
@@ -60,7 +70,7 @@ enum { TAG_FACTION, TAG_TYPE };
     self.factionControl.tag = TAG_FACTION;
     [self.factionControl removeAllSegments];
     
-    for (NSInteger i = 0; i<self.factionNames.count; ++i)
+    for (NSInteger i = 0; i<factionLimit; ++i)
     {
         [self.factionControl insertSegmentWithTitle:self.factionNames[i] atIndex:i animated:NO];
     }
@@ -101,6 +111,7 @@ enum { TAG_FACTION, TAG_TYPE };
     [self.cardList clearFilters];
     
     [self.factionControl selectAllSegments:YES];
+    [self.miniFactionControl selectAllSegments:self.dataDestinyAllowed];
     [self.typeControl selectAllSegments:YES];
     
     self.influenceSlider.value = 0;
@@ -170,20 +181,27 @@ enum { TAG_FACTION, TAG_TYPE };
 
 -(void)multiSelect:(MultiSelectSegmentedControl *)control didChangeValue:(BOOL)value atIndex:(NSUInteger)index
 {
-    NSArray* values = control.tag == TAG_FACTION ? self.factionNames : self.typeNames;
+    NSArray* values = control.tag == TAG_TYPE ? self.typeNames : self.factionNames;
     
     NSMutableSet* set = [NSMutableSet set];
-    [control.selectedSegmentIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [set addObject:values[idx]];
-    }];
-    
-    if (control.tag == TAG_FACTION)
+
+    if (control.tag == TAG_TYPE)
     {
-        [self.cardList filterByFactions:set];
+        [control.selectedSegmentIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+            [set addObject:values[idx]];
+        }];
+        [self.cardList filterByTypes:set];
     }
     else
     {
-        [self.cardList filterByTypes:set];
+        [self.factionControl.selectedSegmentIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+            [set addObject:values[idx]];
+        }];
+        [self.miniFactionControl.selectedSegmentIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+            [set addObject:values[idx+4]];
+        }];
+        
+        [self.cardList filterByFactions:set];
     }
 }
 

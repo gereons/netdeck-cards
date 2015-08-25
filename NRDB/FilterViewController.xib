@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterViewController">
@@ -12,12 +13,14 @@
                 <outlet property="factionLabel" destination="rvs-Au-reC" id="sdC-Aq-CDU"/>
                 <outlet property="influenceLabel" destination="mJu-wk-ICe" id="GjC-nI-nrc"/>
                 <outlet property="influenceSlider" destination="Y3P-ru-JeF" id="0uX-S5-ohO"/>
+                <outlet property="miniFactionControl" destination="KAs-bn-k3H" id="Rxv-9Y-z4y"/>
                 <outlet property="muApLabel" destination="aFu-UA-OF1" id="hJS-ps-35r"/>
                 <outlet property="muApSlider" destination="MCe-42-MiL" id="UBf-bZ-Fw9"/>
                 <outlet property="strengthLabel" destination="5UZ-p6-xQh" id="L18-if-5N8"/>
                 <outlet property="strengthSlider" destination="eFJ-7Q-ATE" id="sHW-8F-Q8K"/>
                 <outlet property="typeControl" destination="uug-sU-t5X" id="uQ3-Ba-tEl"/>
                 <outlet property="typeLabel" destination="kiB-hy-NZA" id="RgX-QL-sHo"/>
+                <outlet property="typeVerticalDistance" destination="tNt-q8-5ak" id="bbR-zX-TFd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -37,7 +40,7 @@
                     </segments>
                 </segmentedControl>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uug-sU-t5X" customClass="MultiSelectSegmentedControl">
-                    <rect key="frame" x="8" y="183" width="304" height="29"/>
+                    <rect key="frame" x="8" y="215" width="304" height="29"/>
                     <segments>
                         <segment title="Agenda"/>
                         <segment title="Asset"/>
@@ -47,7 +50,7 @@
                     </segments>
                 </segmentedControl>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Einfluss" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mJu-wk-ICe">
-                    <rect key="frame" x="8" y="249" width="100" height="18"/>
+                    <rect key="frame" x="8" y="281" width="100" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="pfl-gj-2Jo"/>
                     </constraints>
@@ -56,13 +59,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="eFJ-7Q-ATE">
-                    <rect key="frame" x="114" y="281" width="200" height="31"/>
+                    <rect key="frame" x="114" y="313" width="200" height="31"/>
                     <connections>
                         <action selector="strengthChanged:" destination="-1" eventType="valueChanged" id="YZW-J7-P2K"/>
                     </connections>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stärke" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5UZ-p6-xQh">
-                    <rect key="frame" x="8" y="287" width="100" height="18"/>
+                    <rect key="frame" x="8" y="319" width="100" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="FO3-JF-Xkn"/>
                     </constraints>
@@ -71,13 +74,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="MCe-42-MiL">
-                    <rect key="frame" x="114" y="319" width="200" height="31"/>
+                    <rect key="frame" x="114" y="351" width="200" height="31"/>
                     <connections>
                         <action selector="muApChanged:" destination="-1" eventType="valueChanged" id="bfq-7Y-Rrk"/>
                     </connections>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MU/AP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFu-UA-OF1">
-                    <rect key="frame" x="8" y="325" width="100" height="18"/>
+                    <rect key="frame" x="8" y="357" width="100" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="8fV-Xg-j8b"/>
                     </constraints>
@@ -86,13 +89,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="LH6-VQ-4lb">
-                    <rect key="frame" x="114" y="357" width="200" height="31"/>
+                    <rect key="frame" x="114" y="389" width="200" height="31"/>
                     <connections>
                         <action selector="costChanged:" destination="-1" eventType="valueChanged" id="fTo-ht-myM"/>
                     </connections>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kosten" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bse-g8-64T">
-                    <rect key="frame" x="8" y="363" width="100" height="18"/>
+                    <rect key="frame" x="8" y="395" width="100" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="hWg-Zp-kdU"/>
                     </constraints>
@@ -107,24 +110,32 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Typ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiB-hy-NZA">
-                    <rect key="frame" x="8" y="154" width="304" height="20.5"/>
+                    <rect key="frame" x="8" y="186" width="304" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fj9-WE-DoF">
-                    <rect key="frame" x="0.0" y="231" width="320" height="1"/>
+                    <rect key="frame" x="0.0" y="263" width="320" height="1"/>
                     <color key="backgroundColor" red="0.65490196078431373" green="0.65490196078431373" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="FJz-7B-27Q"/>
                     </constraints>
                 </view>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y3P-ru-JeF">
-                    <rect key="frame" x="114" y="243" width="200" height="31"/>
+                    <rect key="frame" x="114" y="275" width="200" height="31"/>
                     <connections>
                         <action selector="influenceChanged:" destination="-1" eventType="valueChanged" id="DNp-Ue-Rd6"/>
                     </connections>
                 </slider>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KAs-bn-k3H" customClass="MultiSelectSegmentedControl">
+                    <rect key="frame" x="8" y="144" width="152" height="29"/>
+                    <segments>
+                        <segment title="Adam"/>
+                        <segment title="Apex"/>
+                        <segment title="Sunny"/>
+                    </segments>
+                </segmentedControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -156,15 +167,18 @@
                 <constraint firstItem="MCe-42-MiL" firstAttribute="leading" secondItem="aFu-UA-OF1" secondAttribute="trailing" constant="8" id="Up3-AB-VLB"/>
                 <constraint firstItem="mJu-wk-ICe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="WP5-wy-c4M"/>
                 <constraint firstItem="MCe-42-MiL" firstAttribute="top" secondItem="eFJ-7Q-ATE" secondAttribute="bottom" constant="8" id="YBC-c0-MNJ"/>
+                <constraint firstItem="KAs-bn-k3H" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="ZXc-VD-5r0"/>
                 <constraint firstItem="uug-sU-t5X" firstAttribute="top" secondItem="kiB-hy-NZA" secondAttribute="bottom" constant="8" id="am4-7b-jMh"/>
+                <constraint firstItem="KAs-bn-k3H" firstAttribute="top" secondItem="LaJ-nX-B9U" secondAttribute="bottom" constant="8" id="b0e-su-DVg"/>
                 <constraint firstItem="MCe-42-MiL" firstAttribute="trailing" secondItem="eFJ-7Q-ATE" secondAttribute="trailing" id="cDk-Hw-ETS"/>
                 <constraint firstItem="fj9-WE-DoF" firstAttribute="top" secondItem="uug-sU-t5X" secondAttribute="bottom" constant="20" id="eRF-Cq-knM"/>
+                <constraint firstItem="LaJ-nX-B9U" firstAttribute="width" secondItem="KAs-bn-k3H" secondAttribute="width" multiplier="2" id="fXG-MJ-d40"/>
                 <constraint firstItem="LH6-VQ-4lb" firstAttribute="top" secondItem="MCe-42-MiL" secondAttribute="bottom" constant="8" id="gIg-Fb-ns9"/>
                 <constraint firstItem="Bse-g8-64T" firstAttribute="centerY" secondItem="LH6-VQ-4lb" secondAttribute="centerY" id="j77-QS-5Xq"/>
                 <constraint firstItem="LH6-VQ-4lb" firstAttribute="leading" secondItem="Bse-g8-64T" secondAttribute="trailing" constant="8" id="mq5-9y-OkM"/>
                 <constraint firstItem="MCe-42-MiL" firstAttribute="trailing" secondItem="Y3P-ru-JeF" secondAttribute="trailing" id="oaE-Cz-pEv"/>
                 <constraint firstAttribute="trailing" secondItem="kiB-hy-NZA" secondAttribute="trailing" constant="8" id="rPr-5u-Z1N"/>
-                <constraint firstItem="kiB-hy-NZA" firstAttribute="top" secondItem="LaJ-nX-B9U" secondAttribute="bottom" constant="18" id="tNt-q8-5ak"/>
+                <constraint firstItem="kiB-hy-NZA" firstAttribute="top" secondItem="LaJ-nX-B9U" secondAttribute="bottom" constant="50" id="tNt-q8-5ak"/>
                 <constraint firstAttribute="trailing" secondItem="LaJ-nX-B9U" secondAttribute="trailing" constant="8" id="wTy-mr-fVi"/>
                 <constraint firstItem="MCe-42-MiL" firstAttribute="trailing" secondItem="LH6-VQ-4lb" secondAttribute="trailing" id="x0C-b4-Wi3"/>
             </constraints>
