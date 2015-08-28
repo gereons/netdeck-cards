@@ -61,9 +61,11 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    NSAssert(self.navigationController.viewControllers.count == 3, @"nav oops");
+    
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     
-    UIBarButtonItem* filterButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"798-filter"] style:UIBarButtonItemStylePlain target:self action:@selector(showFilters:)];
+    UIBarButtonItem* filterButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"798-filter-toolbar"] style:UIBarButtonItemStylePlain target:self action:@selector(showFilters:)];
     topItem.rightBarButtonItem = filterButton;
 
     TableData* data = [self.cardList dataForTableView];

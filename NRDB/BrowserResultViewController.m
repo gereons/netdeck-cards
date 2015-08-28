@@ -56,7 +56,7 @@ static BrowserResultViewController* instance;
                 @(NRBrowserSortSet): l10n(@"Set"),
                 @(NRBrowserSortSetFaction): l10n(@"Set/Faction"),
                 @(NRBrowserSortSetType): l10n(@"Set/Type"),
-                @(NRBrowserSortSetNumber): l10n(@"Set/Number");
+                @(NRBrowserSortSetNumber): l10n(@"Set/Number")
     };
 }
 
