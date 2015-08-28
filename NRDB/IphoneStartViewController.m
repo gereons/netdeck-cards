@@ -23,6 +23,8 @@
 #import "SettingsKeys.h"
 #import "ImportDecksViewController.h"
 
+#warning debug navigation confusion bug (nsassert?)
+
 @interface IphoneStartViewController ()
 
 @property NSMutableArray* runnerDecks;
@@ -67,7 +69,7 @@
     self.navigationBar.topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
     
     self.settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"740-gear"] style:UIBarButtonItemStylePlain target:self action:@selector(openSettings:)];
-    self.sortButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"890-sort-ascending"] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
+    self.sortButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"890-sort-ascending-toolbar"] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
     
     self.navigationBar.topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
     self.navigationBar.topItem.leftBarButtonItems = @[ self.settingsButton, self.sortButton ];
@@ -96,6 +98,7 @@
         return;
     }
     
+    NSAssert(navigationController.viewControllers.count == 1, @"nav oops");
     if ([CardManager cardsAvailable] && [CardSets setsAvailable])
     {
         [self initializeDecks];

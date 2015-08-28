@@ -36,6 +36,10 @@
     self.imageView.image = nil;
     self->_card = card;
     self->_count = count;
+    if (card.type == NRCardTypeIdentity)
+    {
+        self->_count = 0;
+    }
     
     [self.activityIndicator startAnimating];
     

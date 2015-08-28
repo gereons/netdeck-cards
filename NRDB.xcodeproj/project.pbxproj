@@ -43,6 +43,9 @@
 		3A2310421B90C77600487119 /* 798-filter-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A23103F1B90C77600487119 /* 798-filter-toolbar.png */; };
 		3A2310431B90C77600487119 /* 798-filter-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2310401B90C77600487119 /* 798-filter-toolbar@2x.png */; };
 		3A2310441B90C77600487119 /* 798-filter-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2310411B90C77600487119 /* 798-filter-toolbar@3x.png */; };
+		3A2310481B90D0F700487119 /* 890-sort-ascending-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2310451B90D0F700487119 /* 890-sort-ascending-toolbar.png */; };
+		3A2310491B90D0F700487119 /* 890-sort-ascending-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2310461B90D0F700487119 /* 890-sort-ascending-toolbar@2x.png */; };
+		3A23104A1B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2310471B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png */; };
 		3A3622621849320C007F2854 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622611849320C007F2854 /* Foundation.framework */; };
 		3A3622641849320C007F2854 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622631849320C007F2854 /* CoreGraphics.framework */; };
 		3A3622661849320C007F2854 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622651849320C007F2854 /* UIKit.framework */; };
@@ -366,6 +369,9 @@
 		3A23103F1B90C77600487119 /* 798-filter-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter-toolbar.png"; sourceTree = "<group>"; };
 		3A2310401B90C77600487119 /* 798-filter-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter-toolbar@2x.png"; sourceTree = "<group>"; };
 		3A2310411B90C77600487119 /* 798-filter-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter-toolbar@3x.png"; sourceTree = "<group>"; };
+		3A2310451B90D0F700487119 /* 890-sort-ascending-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar.png"; sourceTree = "<group>"; };
+		3A2310461B90D0F700487119 /* 890-sort-ascending-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar@2x.png"; sourceTree = "<group>"; };
+		3A2310471B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar@3x.png"; sourceTree = "<group>"; };
 		3A36225E1849320C007F2854 /* NRDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NRDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3622611849320C007F2854 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3A3622631849320C007F2854 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -974,9 +980,6 @@
 		3A40EA4F19FD2CE800B9CFDA /* Glyphicons */ = {
 			isa = PBXGroup;
 			children = (
-				3A23103F1B90C77600487119 /* 798-filter-toolbar.png */,
-				3A2310401B90C77600487119 /* 798-filter-toolbar@2x.png */,
-				3A2310411B90C77600487119 /* 798-filter-toolbar@3x.png */,
 				3A594E2D18E1F56D00832901 /* 702-share.png */,
 				3A594E2E18E1F56D00832901 /* 702-share@2x.png */,
 				3AB9BD6018FB0E49004EAF10 /* 702-import@2x.png */,
@@ -999,11 +1002,17 @@
 				3A18B2581B8B9C520065EC4A /* 798-filter.png */,
 				3A18B2591B8B9C520065EC4A /* 798-filter@2x.png */,
 				3A18B25A1B8B9C520065EC4A /* 798-filter@3x.png */,
+				3A23103F1B90C77600487119 /* 798-filter-toolbar.png */,
+				3A2310401B90C77600487119 /* 798-filter-toolbar@2x.png */,
+				3A2310411B90C77600487119 /* 798-filter-toolbar@3x.png */,
 				3ABE8A531B890C0200EC2C03 /* 831-stack-2-toolbar.png */,
 				3ABE8A541B890C0200EC2C03 /* 831-stack-2-toolbar@2x.png */,
 				3ABE8A551B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png */,
 				3AD2DF7D199E47C20054B470 /* 888-checkmark-selected.png */,
 				3AD2DF7E199E47C20054B470 /* 888-checkmark-selected@2x.png */,
+				3A2310451B90D0F700487119 /* 890-sort-ascending-toolbar.png */,
+				3A2310461B90D0F700487119 /* 890-sort-ascending-toolbar@2x.png */,
+				3A2310471B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png */,
 				3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */,
 				3A1D86D41B8CCD9600FA30AB /* 890-sort-ascending@3x.png */,
 				3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */,
@@ -1648,6 +1657,7 @@
 				3A6E756F18E401D400EF8DE1 /* Icon-76.png in Resources */,
 				3A6E755C18E3FF7400EF8DE1 /* cardstats_identity_influence.png in Resources */,
 				3A2310441B90C77600487119 /* 798-filter-toolbar@3x.png in Resources */,
+				3A2310491B90D0F700487119 /* 890-sort-ascending-toolbar@2x.png in Resources */,
 				3A3844FB1B77859E007C76F2 /* MainWindow~iPhone.xib in Resources */,
 				3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */,
 				3AFA3B6A18DF862900F59331 /* altarttoggle_on.png in Resources */,
@@ -1702,6 +1712,7 @@
 				3ABE8A4B1B890A9700EC2C03 /* 785-floppy-disk@2x.png in Resources */,
 				3AE0D50818F7B4A0007868A7 /* influence_slider.png in Resources */,
 				3A445F711998AEF9000AD1C4 /* trash_slider@2x.png in Resources */,
+				3A23104A1B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png in Resources */,
 				3A82625618E05EC70038B4AC /* deckview_table@2x.png in Resources */,
 				3AF0622C1B886DFD00575984 /* 740-gear.png in Resources */,
 				3A82624818E05EC70038B4AC /* cardstats_strength.png in Resources */,
@@ -1709,6 +1720,7 @@
 				3A82624E18E05EC70038B4AC /* cardstats_influence.png in Resources */,
 				3A76EEBF18B5DA68004DB586 /* CorpPlaceholder.png in Resources */,
 				3A6E755B18E3FF7400EF8DE1 /* cardstats_identity_influence@2x.png in Resources */,
+				3A2310481B90D0F700487119 /* 890-sort-ascending-toolbar.png in Resources */,
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
 				3A689FA9195D3EB8004EBC41 /* active@2x.png in Resources */,
 				3A82624F18E05EC70038B4AC /* cardstats_difficulty@2x.png in Resources */,

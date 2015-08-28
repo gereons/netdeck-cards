@@ -7,7 +7,7 @@
 //
 
 #import "ImportDecksViewController.h"
-
+#import "UIAlertAction+NRDB.h"
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
 #import <EXTScope.h>
@@ -18,6 +18,7 @@
 #import "DeckCell.h"
 #import "OctgnImport.h"
 #import "SettingsKeys.h"
+#import "Faction.h"
 #import "NRDB.h"
 
 static NRDeckSearchScope searchScope = NRDeckSearchAll;
@@ -25,10 +26,18 @@ static NSString* filterText;
 
 @interface ImportDecksViewController ()
 
-@property NSArray* allDecks;
+@property NSMutableArray* runnerDecks;
+@property NSMutableArray* corpDecks;
+
 @property NSArray* filteredDecks;
+
 @property UIBarButtonItem* importButton;
+@property UIBarButtonItem* spacer;
+@property UIBarButtonItem* sortButton;
+@property NSArray* barButtons;
+
 @property NSDateFormatter* dateFormatter;
+@property NRDeckListSort deckListSort;
 
 @end
 
@@ -59,14 +68,18 @@ static NSString* filterText;
     self.tableView.delegate = nil;
     self.tableView.dataSource = nil;
     self.searchBar.delegate = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-        
-    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    
+    self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_FILTER_SORT];
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     
     self.searchBar.placeholder = l10n(@"Search for decks, identities or cards");
     if (filterText.length > 0)
@@ -100,7 +113,19 @@ static NSString* filterText;
         [self getNetrunnerdbDecks];
     }
 
-    self.importButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Import All") style:UIBarButtonItemStylePlain target:self action:@selector(importAll:)];
+    NSString* title = IS_IPHONE ? l10n(@"All") : l10n(@"Import All");
+    self.importButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:self action:@selector(importAll:)];
+    
+    if (IS_IPHONE)
+    {
+        self.sortButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"890-sort-ascending-toolbar"] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
+    }
+    else
+    {
+        self.sortButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Sort") style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
+    }
+    self.spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    self.barButtons = IS_IPHONE ? @[ self.importButton, self.sortButton ] : @[ self.importButton, self.spacer, self.sortButton ];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -108,7 +133,7 @@ static NSString* filterText;
     [super viewDidAppear:animated];
     
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.topItem.title = l10n(@"Import Deck");
+    self.navigationController.navigationBar.topItem.title = IS_IPHONE ? l10n(@"Import") : l10n(@"Import Deck");
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
@@ -128,6 +153,35 @@ static NSString* filterText;
     {}
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark sorting
+
+-(void)changeSort:(id)sender
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Sort by") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRDeckListSortDate];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRDeckListSortFaction];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRDeckListSortA_Z];
+    }]];
+    [alert addAction:[UIAlertAction cancelAction:nil]];
+    
+    [self presentViewController:alert animated:NO completion:nil];
+}
+
+-(void) changeSortType:(NRDeckListSort)sort
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:sort forKey:DECK_FILTER_SORT];
+    self.deckListSort = sort;
+    
+    [self filterDecks];
+    [self.tableView reloadData];
 }
 
 #pragma mark import all
@@ -170,7 +224,8 @@ static NSString* filterText;
 
 -(void) getNetrunnerdbDecks
 {
-    self.allDecks = @[ [NSMutableArray array], [NSMutableArray array] ];
+    self.runnerDecks = [NSMutableArray array];
+    self.corpDecks = [NSMutableArray array];
     
     [SVProgressHUD showWithStatus:l10n(@"Loading Decks...") maskType:SVProgressHUDMaskTypeBlack];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -187,14 +242,14 @@ static NSString* filterText;
             Deck* deck = [[NRDB sharedInstance] parseDeckFromJson:dict];
             if (deck.role != NRRoleNone)
             {
-                NSMutableArray* decks = self.allDecks[deck.role];
+                NSMutableArray* decks = deck.role == NRRoleRunner ? self.runnerDecks : self.corpDecks;
                 [decks addObject:deck];
             }
         }
         
         [self filterDecks];
         [self.tableView reloadData];
-        self.navigationController.navigationBar.topItem.rightBarButtonItem = self.importButton;
+        self.navigationController.navigationBar.topItem.rightBarButtonItems = self.barButtons;
     }];
 }
 
@@ -219,7 +274,7 @@ static NSString* filterText;
             }
             [self filterDecks];
             [self.tableView reloadData];
-            self.navigationController.navigationBar.topItem.rightBarButtonItem = self.importButton;
+            self.navigationController.navigationBar.topItem.rightBarButtonItems = self.barButtons;
         });
     });
     
@@ -240,7 +295,8 @@ static NSString* filterText;
 
 -(NSUInteger) listDropboxFiles
 {
-    self.allDecks = @[ [NSMutableArray array], [NSMutableArray array] ];
+    self.runnerDecks = [NSMutableArray array];
+    self.corpDecks = [NSMutableArray array];
     
     NSUInteger totalDecks = 0;
     
@@ -261,7 +317,7 @@ static NSString* filterText;
                 Deck* deck = [self parseDeck:fileInfo.path.name];
                 if (deck && deck.role != NRRoleNone)
                 {
-                    NSMutableArray* decks = self.allDecks[deck.role];
+                    NSMutableArray* decks = deck.role == NRRoleRunner ? self.runnerDecks : self.corpDecks;
 
                     [decks addObject:deck];
                     ++totalDecks;
@@ -277,8 +333,64 @@ static NSString* filterText;
 
 #pragma mark filter
 
+-(NSMutableArray*) sortDecks:(NSArray*)decksToSort
+{
+    NSArray* decks;
+    
+    switch (self.deckListSort)
+    {
+        case NRDeckListSortA_Z:
+            decks = [decksToSort sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
+                return [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
+            }];
+            break;
+        case NRDeckListSortDate:
+            decks = [decksToSort sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
+                NSComparisonResult cmp = [d2.lastModified compare:d1.lastModified];
+                if (cmp == NSOrderedSame)
+                {
+                    return [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
+                }
+                return cmp;
+            }];
+            break;
+        case NRDeckListSortFaction:
+            decks = [decksToSort sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
+                NSString* faction1 = [Faction name:d1.identity.faction];
+                NSString* faction2 = [Faction name:d2.identity.faction];
+                NSComparisonResult cmp = [faction1 compare:faction2];
+                if (cmp == NSOrderedSame)
+                {
+                    cmp = [[d1.identity.name lowercaseString] compare:[d2.identity.name lowercaseString]];
+                    if (cmp == NSOrderedSame)
+                    {
+                        return [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
+                    }
+                    return cmp;
+                }
+                return cmp;
+            }];
+            break;
+    }
+    
+    return decks.mutableCopy;
+}
+
 -(void) filterDecks
 {
+    NSMutableArray* allDecks = nil;
+    if (self.deckListSort == NRDeckListSortDate)
+    {
+        allDecks = [NSMutableArray arrayWithArray:self.runnerDecks];
+        [allDecks addObjectsFromArray:self.corpDecks];
+        allDecks = [self sortDecks:allDecks];
+    }
+    else
+    {
+        self.runnerDecks = [self sortDecks:self.runnerDecks];
+        self.corpDecks = [self sortDecks:self.corpDecks];
+    }
+    
     if (filterText.length > 0)
     {
         // NSLog(@"filter %@ %d", filterText, searchScope);
@@ -305,14 +417,29 @@ static NSString* filterText;
                 break;
         }
         
-        self.filteredDecks = @[
-                               [self.allDecks[NRRoleRunner] filteredArrayUsingPredicate:predicate],
-                               [self.allDecks[NRRoleCorp] filteredArrayUsingPredicate:predicate]
-                               ];
+        
+        if (allDecks)
+        {
+            self.filteredDecks = @[ [allDecks filteredArrayUsingPredicate:predicate] ];
+        }
+        else
+        {
+            self.filteredDecks = @[
+               [self.runnerDecks filteredArrayUsingPredicate:predicate],
+               [self.corpDecks filteredArrayUsingPredicate:predicate]
+            ];
+        }
     }
     else
     {
-        self.filteredDecks = self.allDecks;
+        if (allDecks)
+        {
+            self.filteredDecks = @[ allDecks ];
+        }
+        else
+        {
+            self.filteredDecks = @[ self.runnerDecks, self.corpDecks ];
+        }
     }
 }
 
@@ -357,7 +484,7 @@ static NSString* filterText;
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return self.filteredDecks.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -368,7 +495,7 @@ static NSString* filterText;
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return section == NRRoleRunner ? l10n(@"Runner") : l10n(@"Corp");
+    return self.deckListSort == NRDeckListSortDate ? 0 : section == NRRoleRunner ? l10n(@"Runner") : l10n(@"Corp");
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

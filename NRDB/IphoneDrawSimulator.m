@@ -25,6 +25,8 @@
 {
     [super viewDidLoad];
     
+    NSAssert(self.navigationController.viewControllers.count == 3, @"nav oops");
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
