@@ -56,6 +56,7 @@ static BrowserResultViewController* instance;
                 @(NRBrowserSortSet): l10n(@"Set"),
                 @(NRBrowserSortSetFaction): l10n(@"Set/Faction"),
                 @(NRBrowserSortSetType): l10n(@"Set/Type"),
+                @(NRBrowserSortSetNumber): l10n(@"Set/Number");
     };
 }
 
@@ -213,6 +214,9 @@ static BrowserResultViewController* instance;
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Set/Type") handler:^(UIAlertAction *action) {
         [self changeSortType:NRBrowserSortSetType];
+    }]];
+    [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Set/Number") handler:^(UIAlertAction *action) {
+        [self changeSortType:NRBrowserSortSetNumber];
     }]];
     
     [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {

@@ -302,6 +302,7 @@
 "Type/Faction" = "Typ/Fraktion";
 "Set/Faction" = "Set/Fraktion";
 "Set/Type" = "Set/Typ";
+"Set/Number" = "Set/Nummer";
 "Trash: %@" = "Zerstörung: %@";
 "%lu matching card" = "%lu passende Karte";
 "%lu matching cards" = "%lu passende Karten";

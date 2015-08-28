@@ -116,7 +116,8 @@ typedef NS_ENUM(NSInteger, NRBrowserSort) {
     NRBrowserSortTypeFaction,
     NRBrowserSortSet,
     NRBrowserSortSetFaction,
-    NRBrowserSortSetType
+    NRBrowserSortSetType,
+    NRBrowserSortSetNumber
 };
 
 typedef NS_ENUM(NSInteger, NRCycle)

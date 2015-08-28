@@ -420,6 +420,10 @@
             case NRBrowserSortSetFaction:
                 cmp = [@(c1.setNumber) compare:@(c2.setNumber)];
                 break;
+                
+            case NRBrowserSortSetNumber:
+                cmp = [c1.code compare:c2.code];
+                break;
         }
         
         if (cmp == NSOrderedSame)
@@ -487,6 +491,7 @@
             case NRBrowserSortSet:
             case NRBrowserSortSetType:
             case NRBrowserSortSetFaction:
+            case NRBrowserSortSetNumber:
                 section = card.setName;
                 break;
         }
