@@ -28,6 +28,8 @@
 #import "DeckEmail.h"
 #import "SVProgressHud.h"
 
+#warning fix layout bug after aborted swipe-to-delete
+
 @interface EditDeckViewController ()
 
 @property BOOL autoSave;
@@ -403,6 +405,7 @@
     self.statusLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
     
     self.saveButton.enabled = self.deck.modified;
+    self.drawButton.enabled = self.deck.size > 0;
     
     [self doAutoSave];
 }
