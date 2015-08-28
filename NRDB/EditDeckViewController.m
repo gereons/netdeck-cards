@@ -69,6 +69,8 @@
 {
     [super viewDidAppear:animated];
     
+    NSAssert(self.navigationController.viewControllers.count == 2, @"nav oops");
+    
     // right buttons
     UIBarButtonItem* exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"]
                                                                      style:UIBarButtonItemStylePlain
@@ -538,13 +540,7 @@
     }
     
     CardImageViewController* img = [[CardImageViewController alloc] initWithNibName:@"CardImageViewController" bundle:nil];
-    NSMutableArray* cards = [NSMutableArray array];
-    
-    for (CardCounter* cc in [self.deck allCards])
-    {
-        [cards addObject:cc.card];
-    }
-    img.cards = cards;
+    img.cardCounters = [self.deck allCards];
     img.selectedCard = cc.card;
     
     [self.navigationController pushViewController:img animated:YES];

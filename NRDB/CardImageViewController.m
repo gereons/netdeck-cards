@@ -13,6 +13,9 @@
 
 @interface CardImageViewController ()
 
+@property NSMutableArray* cardsArray;
+@property NSMutableArray* countsArray;
+
 @property BOOL initialScrollDone;
 
 @end
@@ -46,6 +49,24 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
+-(void) setCards:(NSArray *)cards
+{
+    self.cardsArray = [NSMutableArray arrayWithArray:cards];
+    self.countsArray = nil;
+}
+
+-(void) setCardCounters:(NSArray *)cardCounters
+{
+    self.cardsArray = [NSMutableArray array];
+    self.countsArray = [NSMutableArray array];
+    
+    for (CardCounter* cc in cardCounters)
+    {
+        [self.cardsArray addObject:cc.card];
+        [self.countsArray addObject:@(cc.count)];
+    }
+}
+
 - (void)viewDidLayoutSubviews
 {
     // If we haven't done the initial scroll, do it once.
@@ -54,9 +75,9 @@
         self.initialScrollDone = YES;
         
         NSInteger row;
-        for (row = 0; row<self.cards.count; ++row)
+        for (row = 0; row<self.cardsArray.count; ++row)
         {
-            Card* card = self.cards[row];
+            Card* card = self.cardsArray[row];
             if ([card.code isEqual:self.selectedCard.code])
             {
                 break;
@@ -78,16 +99,24 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.cards.count;
+    return self.cardsArray.count;
 }
 
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CardImageViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cardCell" forIndexPath:indexPath];
     
-    Card* card = self.cards[indexPath.row];
+    Card* card = self.cardsArray[indexPath.row];
     
-    cell.card = card;
+    if (self.countsArray == nil)
+    {
+        [cell setCard:card];
+    }
+    else
+    {
+        NSNumber* count = self.countsArray[indexPath.row];
+        [cell setCard:card andCount:count.integerValue];
+    }
     return cell;
 }
 

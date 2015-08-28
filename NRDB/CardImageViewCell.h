@@ -12,7 +12,9 @@
 
 @property IBOutlet UIImageView* imageView;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
+@property IBOutlet UILabel* countLabel;
 
-@property (nonatomic) Card* card;
+-(void) setCard:(Card*)card;
+-(void) setCard:(Card*)card andCount:(NSInteger)count;
 
 @end

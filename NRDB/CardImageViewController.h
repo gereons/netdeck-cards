@@ -12,7 +12,9 @@
 
 @property IBOutlet UICollectionView* collectionView;
 
-@property NSArray* cards;
 @property Card* selectedCard;
+
+-(void) setCards:(NSArray*)cards;
+-(void) setCardCounters:(NSArray*)cardCounters;
 
 @end
