@@ -28,8 +28,6 @@
 #import "DeckEmail.h"
 #import "SVProgressHud.h"
 
-#warning fix layout bug after aborted swipe-to-delete
-
 @interface EditDeckViewController ()
 
 @property BOOL autoSave;

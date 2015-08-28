@@ -10,4 +10,9 @@
 
 @implementation EditDeckCell
 
+-(void) awakeFromNib
+{
+    self.accessoryView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
 @end
