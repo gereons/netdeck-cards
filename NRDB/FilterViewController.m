@@ -91,12 +91,22 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     self.strengthSlider.maximumValue = 1+[CardManager maxStrength];
     self.influenceSlider.maximumValue = 1+[CardManager maxInfluence];
     
-    [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
+    // [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
+    [self.costSlider setThumbImage:[UIImage imageNamed:@"Slice 1"] forState:UIControlStateNormal];
     [self.muApSlider setThumbImage:[UIImage imageNamed:self.role == NRRoleRunner ? @"mem_slider" : @"point_slider" ] forState:UIControlStateNormal];
     [self.strengthSlider setThumbImage:[UIImage imageNamed:@"strength_slider"] forState:UIControlStateNormal];
     [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
     
     [self clearFilters:nil];
+    
+    self.previewTable.rowHeight = 30;
+    self.previewTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    if (self.parentViewController.view.frame.size.height == 480)
+    {
+        // iphone 4s
+        self.previewTable.scrollEnabled = NO;
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -134,6 +144,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     sender.value = value--;
     self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByStrength:value];
+    [self updatePreview];
 }
 
 -(void) muApChanged:(UISlider*)sender
@@ -151,6 +162,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     {
         [self.cardList filterByAgendaPoints:value];
     }
+    [self updatePreview];
 }
 
 -(void) costChanged:(UISlider*)sender
@@ -160,6 +172,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     sender.value = value--;
     self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
     [self.cardList filterByCost:value];
+    [self updatePreview];
 }
 
 -(void) influenceChanged:(UISlider*)sender
@@ -177,6 +190,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     {
         [self.cardList filterByInfluence:value];
     }
+    [self updatePreview];
 }
 
 #pragma mark - multi select delegate
@@ -205,6 +219,37 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
         
         [self.cardList filterByFactions:set];
     }
+    [self updatePreview];
+}
+
+#pragma mark - table view
+
+-(void) updatePreview
+{
+    self.previewHeader.text = [NSString stringWithFormat:l10n(@"  Matching cards: %ld"), self.cardList.count];
+    [self.previewTable reloadData];
+}
+
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.cardList.count;
+}
+
+-(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString* cellIdentifier = @"previewCell";
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont systemFontOfSize:13];
+    }
+    
+    Card* card = self.cardList.allCards[indexPath.row];
+    cell.textLabel.text = card.name;
+    
+    return cell;
 }
 
 @end

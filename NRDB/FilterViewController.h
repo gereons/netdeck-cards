@@ -10,7 +10,7 @@
 
 @class Card, CardList;
 
-@interface FilterViewController : UIViewController<MultiSelectSegmentedControlDelegate>
+@interface FilterViewController : UIViewController<MultiSelectSegmentedControlDelegate, UITableViewDataSource, UITableViewDelegate>
 
 
 @property IBOutlet UILabel* factionLabel;
@@ -32,6 +32,9 @@
 
 @property IBOutlet UILabel* costLabel;
 @property IBOutlet UISlider* costSlider;
+
+@property IBOutlet UITableView* previewTable;
+@property IBOutlet UILabel* previewHeader;
 
 @property NRRole role;
 @property Card* identity;

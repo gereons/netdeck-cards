@@ -142,6 +142,9 @@
 		3A7C48121B91AABD00D31B6D /* 702-import@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48111B91AABD00D31B6D /* 702-import@3x.png */; };
 		3A7C48151B91AC9700D31B6D /* netrunnerdb_com-bw@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48131B91AC9700D31B6D /* netrunnerdb_com-bw@3x.png */; };
 		3A7C48161B91AC9700D31B6D /* netrunnerdb_com@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48141B91AC9700D31B6D /* netrunnerdb_com@3x.png */; };
+		3A7C48191B91C27400D31B6D /* Slice 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48171B91C27400D31B6D /* Slice 1@2x.png */; };
+		3A7C481A1B91C27400D31B6D /* Slice 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48181B91C27400D31B6D /* Slice 1.png */; };
+		3A7C481C1B91C6BA00D31B6D /* Slice 1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C481B1B91C6BA00D31B6D /* Slice 1@3x.png */; };
 		3A7F7759195425B400100F79 /* deckview_2col@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7755195425B400100F79 /* deckview_2col@2x.png */; };
 		3A7F775A195425B400100F79 /* deckview_3col@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7756195425B400100F79 /* deckview_3col@2x.png */; };
 		3A7F775B195425B400100F79 /* deckview_3col.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7757195425B400100F79 /* deckview_3col.png */; };
@@ -510,6 +513,9 @@
 		3A7C48111B91AABD00D31B6D /* 702-import@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-import@3x.png"; sourceTree = "<group>"; };
 		3A7C48131B91AC9700D31B6D /* netrunnerdb_com-bw@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw@3x.png"; sourceTree = "<group>"; };
 		3A7C48141B91AC9700D31B6D /* netrunnerdb_com@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com@3x.png"; sourceTree = "<group>"; };
+		3A7C48171B91C27400D31B6D /* Slice 1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Slice 1@2x.png"; sourceTree = "<group>"; };
+		3A7C48181B91C27400D31B6D /* Slice 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Slice 1.png"; sourceTree = "<group>"; };
+		3A7C481B1B91C6BA00D31B6D /* Slice 1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Slice 1@3x.png"; sourceTree = "<group>"; };
 		3A7F7755195425B400100F79 /* deckview_2col@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deckview_2col@2x.png"; sourceTree = "<group>"; };
 		3A7F7756195425B400100F79 /* deckview_3col@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deckview_3col@2x.png"; sourceTree = "<group>"; };
 		3A7F7757195425B400100F79 /* deckview_3col.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deckview_3col.png; sourceTree = "<group>"; };
@@ -1466,6 +1472,9 @@
 		3AE0D4FC18F7B48B007868A7 /* Sliders */ = {
 			isa = PBXGroup;
 			children = (
+				3A7C481B1B91C6BA00D31B6D /* Slice 1@3x.png */,
+				3A7C48171B91C27400D31B6D /* Slice 1@2x.png */,
+				3A7C48181B91C27400D31B6D /* Slice 1.png */,
 				3AE0D4FD18F7B4A0007868A7 /* influence_slider@2x.png */,
 				3AE0D4FE18F7B4A0007868A7 /* influence_slider.png */,
 				3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */,
@@ -1735,6 +1744,8 @@
 				3AB2CF5A1938952600CCBE64 /* CardFilterViewController.xib in Resources */,
 				3AE0D51018F7B4A0007868A7 /* credit_slider.png in Resources */,
 				3A82625418E05EC70038B4AC /* deckview_list@2x.png in Resources */,
+				3A7C481C1B91C6BA00D31B6D /* Slice 1@3x.png in Resources */,
+				3A7C481A1B91C27400D31B6D /* Slice 1.png in Resources */,
 				3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */,
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
 				3A6E756A18E401D400EF8DE1 /* iTunesArtwork@2x.png in Resources */,
@@ -1756,6 +1767,7 @@
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
 				3A689FA9195D3EB8004EBC41 /* active@2x.png in Resources */,
 				3A82624F18E05EC70038B4AC /* cardstats_difficulty@2x.png in Resources */,
+				3A7C48191B91C27400D31B6D /* Slice 1@2x.png in Resources */,
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
 				3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */,
 				3A18B25C1B8B9C520065EC4A /* 798-filter@2x.png in Resources */,
