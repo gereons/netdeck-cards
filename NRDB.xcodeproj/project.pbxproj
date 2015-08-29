@@ -142,9 +142,12 @@
 		3A7C48121B91AABD00D31B6D /* 702-import@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48111B91AABD00D31B6D /* 702-import@3x.png */; };
 		3A7C48151B91AC9700D31B6D /* netrunnerdb_com-bw@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48131B91AC9700D31B6D /* netrunnerdb_com-bw@3x.png */; };
 		3A7C48161B91AC9700D31B6D /* netrunnerdb_com@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48141B91AC9700D31B6D /* netrunnerdb_com@3x.png */; };
-		3A7C48191B91C27400D31B6D /* Slice 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48171B91C27400D31B6D /* Slice 1@2x.png */; };
-		3A7C481A1B91C27400D31B6D /* Slice 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48181B91C27400D31B6D /* Slice 1.png */; };
-		3A7C481C1B91C6BA00D31B6D /* Slice 1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C481B1B91C6BA00D31B6D /* Slice 1@3x.png */; };
+		3A7C48211B91F07300D31B6D /* credit_slider@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C481D1B91F07300D31B6D /* credit_slider@3x.png */; };
+		3A7C48221B91F07300D31B6D /* influence_slider@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C481E1B91F07300D31B6D /* influence_slider@3x.png */; };
+		3A7C48231B91F07300D31B6D /* mem_slider@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C481F1B91F07300D31B6D /* mem_slider@3x.png */; };
+		3A7C48241B91F07300D31B6D /* strength_slider@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48201B91F07300D31B6D /* strength_slider@3x.png */; };
+		3A7C48261B91F36C00D31B6D /* trash_slider@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48251B91F36C00D31B6D /* trash_slider@3x.png */; };
+		3A7C48281B91F68E00D31B6D /* point_slider@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C48271B91F68E00D31B6D /* point_slider@3x.png */; };
 		3A7F7759195425B400100F79 /* deckview_2col@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7755195425B400100F79 /* deckview_2col@2x.png */; };
 		3A7F775A195425B400100F79 /* deckview_3col@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7756195425B400100F79 /* deckview_3col@2x.png */; };
 		3A7F775B195425B400100F79 /* deckview_3col.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F7757195425B400100F79 /* deckview_3col.png */; };
@@ -513,9 +516,12 @@
 		3A7C48111B91AABD00D31B6D /* 702-import@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-import@3x.png"; sourceTree = "<group>"; };
 		3A7C48131B91AC9700D31B6D /* netrunnerdb_com-bw@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw@3x.png"; sourceTree = "<group>"; };
 		3A7C48141B91AC9700D31B6D /* netrunnerdb_com@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com@3x.png"; sourceTree = "<group>"; };
-		3A7C48171B91C27400D31B6D /* Slice 1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Slice 1@2x.png"; sourceTree = "<group>"; };
-		3A7C48181B91C27400D31B6D /* Slice 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Slice 1.png"; sourceTree = "<group>"; };
-		3A7C481B1B91C6BA00D31B6D /* Slice 1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Slice 1@3x.png"; sourceTree = "<group>"; };
+		3A7C481D1B91F07300D31B6D /* credit_slider@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "credit_slider@3x.png"; sourceTree = "<group>"; };
+		3A7C481E1B91F07300D31B6D /* influence_slider@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "influence_slider@3x.png"; sourceTree = "<group>"; };
+		3A7C481F1B91F07300D31B6D /* mem_slider@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mem_slider@3x.png"; sourceTree = "<group>"; };
+		3A7C48201B91F07300D31B6D /* strength_slider@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "strength_slider@3x.png"; sourceTree = "<group>"; };
+		3A7C48251B91F36C00D31B6D /* trash_slider@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash_slider@3x.png"; sourceTree = "<group>"; };
+		3A7C48271B91F68E00D31B6D /* point_slider@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "point_slider@3x.png"; sourceTree = "<group>"; };
 		3A7F7755195425B400100F79 /* deckview_2col@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deckview_2col@2x.png"; sourceTree = "<group>"; };
 		3A7F7756195425B400100F79 /* deckview_3col@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deckview_3col@2x.png"; sourceTree = "<group>"; };
 		3A7F7757195425B400100F79 /* deckview_3col.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deckview_3col.png; sourceTree = "<group>"; };
@@ -1472,21 +1478,24 @@
 		3AE0D4FC18F7B48B007868A7 /* Sliders */ = {
 			isa = PBXGroup;
 			children = (
-				3A7C481B1B91C6BA00D31B6D /* Slice 1@3x.png */,
-				3A7C48171B91C27400D31B6D /* Slice 1@2x.png */,
-				3A7C48181B91C27400D31B6D /* Slice 1.png */,
-				3AE0D4FD18F7B4A0007868A7 /* influence_slider@2x.png */,
 				3AE0D4FE18F7B4A0007868A7 /* influence_slider.png */,
-				3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */,
-				3A445F701998AEF9000AD1C4 /* trash_slider.png */,
-				3AE0D4FF18F7B4A0007868A7 /* point_slider@2x.png */,
-				3AE0D50018F7B4A0007868A7 /* point_slider.png */,
-				3AE0D50118F7B4A0007868A7 /* mem_slider@2x.png */,
+				3AE0D4FD18F7B4A0007868A7 /* influence_slider@2x.png */,
+				3A7C481E1B91F07300D31B6D /* influence_slider@3x.png */,
 				3AE0D50218F7B4A0007868A7 /* mem_slider.png */,
-				3AE0D50318F7B4A0007868A7 /* strength_slider@2x.png */,
+				3AE0D50118F7B4A0007868A7 /* mem_slider@2x.png */,
+				3A7C481F1B91F07300D31B6D /* mem_slider@3x.png */,
+				3A445F701998AEF9000AD1C4 /* trash_slider.png */,
+				3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */,
+				3A7C48251B91F36C00D31B6D /* trash_slider@3x.png */,
+				3AE0D50018F7B4A0007868A7 /* point_slider.png */,
+				3AE0D4FF18F7B4A0007868A7 /* point_slider@2x.png */,
+				3A7C48271B91F68E00D31B6D /* point_slider@3x.png */,
 				3AE0D50418F7B4A0007868A7 /* strength_slider.png */,
-				3AE0D50518F7B4A0007868A7 /* credit_slider@2x.png */,
+				3AE0D50318F7B4A0007868A7 /* strength_slider@2x.png */,
+				3A7C48201B91F07300D31B6D /* strength_slider@3x.png */,
 				3AE0D50618F7B4A0007868A7 /* credit_slider.png */,
+				3AE0D50518F7B4A0007868A7 /* credit_slider@2x.png */,
+				3A7C481D1B91F07300D31B6D /* credit_slider@3x.png */,
 			);
 			name = Sliders;
 			sourceTree = "<group>";
@@ -1691,6 +1700,7 @@
 				3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */,
 				3A82624B18E05EC70038B4AC /* cardstats_link@2x.png in Resources */,
 				3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */,
+				3A7C48231B91F07300D31B6D /* mem_slider@3x.png in Resources */,
 				3A663979193B4CBF00635447 /* card_backs.png in Resources */,
 				3A6E756F18E401D400EF8DE1 /* Icon-76.png in Resources */,
 				3A6E755C18E3FF7400EF8DE1 /* cardstats_identity_influence.png in Resources */,
@@ -1705,9 +1715,11 @@
 				3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
 				3A82625218E05EC70038B4AC /* cardstats_credit@2x.png in Resources */,
+				3A7C48221B91F07300D31B6D /* influence_slider@3x.png in Resources */,
 				3ABE8A4C1B890A9700EC2C03 /* 785-floppy-disk@3x.png in Resources */,
 				3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */,
 				3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */,
+				3A7C48261B91F36C00D31B6D /* trash_slider@3x.png in Resources */,
 				3AD860E11B79383500EEF8AC /* CardImageViewController.xib in Resources */,
 				3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */,
 				3AE0D50B18F7B4A0007868A7 /* mem_slider@2x.png in Resources */,
@@ -1727,7 +1739,9 @@
 				3AD860DC1B792B6700EEF8AC /* ListCardsViewController.xib in Resources */,
 				3ABE8A561B890C0200EC2C03 /* 831-stack-2-toolbar.png in Resources */,
 				3AB9BD6218FB0E49004EAF10 /* 702-import@2x.png in Resources */,
+				3A7C48281B91F68E00D31B6D /* point_slider@3x.png in Resources */,
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
+				3A7C48211B91F07300D31B6D /* credit_slider@3x.png in Resources */,
 				3AD4FBB319D60929000BF9B4 /* blue_placeholder.png in Resources */,
 				3A82625518E05EC70038B4AC /* deckview_list.png in Resources */,
 				3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */,
@@ -1744,8 +1758,6 @@
 				3AB2CF5A1938952600CCBE64 /* CardFilterViewController.xib in Resources */,
 				3AE0D51018F7B4A0007868A7 /* credit_slider.png in Resources */,
 				3A82625418E05EC70038B4AC /* deckview_list@2x.png in Resources */,
-				3A7C481C1B91C6BA00D31B6D /* Slice 1@3x.png in Resources */,
-				3A7C481A1B91C27400D31B6D /* Slice 1.png in Resources */,
 				3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */,
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
 				3A6E756A18E401D400EF8DE1 /* iTunesArtwork@2x.png in Resources */,
@@ -1767,9 +1779,9 @@
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
 				3A689FA9195D3EB8004EBC41 /* active@2x.png in Resources */,
 				3A82624F18E05EC70038B4AC /* cardstats_difficulty@2x.png in Resources */,
-				3A7C48191B91C27400D31B6D /* Slice 1@2x.png in Resources */,
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
 				3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */,
+				3A7C48241B91F07300D31B6D /* strength_slider@3x.png in Resources */,
 				3A18B25C1B8B9C520065EC4A /* 798-filter@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
