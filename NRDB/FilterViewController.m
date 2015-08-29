@@ -91,8 +91,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     self.strengthSlider.maximumValue = 1+[CardManager maxStrength];
     self.influenceSlider.maximumValue = 1+[CardManager maxInfluence];
     
-    // [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
-    [self.costSlider setThumbImage:[UIImage imageNamed:@"Slice 1"] forState:UIControlStateNormal];
+    [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
     [self.muApSlider setThumbImage:[UIImage imageNamed:self.role == NRRoleRunner ? @"mem_slider" : @"point_slider" ] forState:UIControlStateNormal];
     [self.strengthSlider setThumbImage:[UIImage imageNamed:@"strength_slider"] forState:UIControlStateNormal];
     [self.influenceSlider setThumbImage:[UIImage imageNamed:@"influence_slider"] forState:UIControlStateNormal];
