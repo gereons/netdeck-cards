@@ -801,7 +801,7 @@
 		3A3622551849320C007F2854 = {
 			isa = PBXGroup;
 			children = (
-				3A3622671849320C007F2854 /* NRDB */,
+				3A3622671849320C007F2854 /* NetDeck */,
 				3A3622891849320C007F2854 /* NRDBTests */,
 				3A3622601849320C007F2854 /* Frameworks */,
 				3A36225F1849320C007F2854 /* Products */,
@@ -841,7 +841,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3A3622671849320C007F2854 /* NRDB */ = {
+		3A3622671849320C007F2854 /* NetDeck */ = {
 			isa = PBXGroup;
 			children = (
 				3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */,
@@ -869,6 +869,7 @@
 				3A3844F91B77858B007C76F2 /* iPhone */,
 				3A3622681849320C007F2854 /* Supporting Files */,
 			);
+			name = NetDeck;
 			path = NRDB;
 			sourceTree = "<group>";
 		};
@@ -1513,9 +1514,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3A36225D1849320C007F2854 /* NRDB */ = {
+		3A36225D1849320C007F2854 /* Net Deck */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "NRDB" */;
+			buildConfigurationList = 3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "Net Deck" */;
 			buildPhases = (
 				725041DF7F0E4BE9AF0B94A3 /* Check Pods Manifest.lock */,
 				3A36225A1849320C007F2854 /* Sources */,
@@ -1529,14 +1530,14 @@
 			);
 			dependencies = (
 			);
-			name = NRDB;
+			name = "Net Deck";
 			productName = NRDB;
 			productReference = 3A36225E1849320C007F2854 /* NRDB.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3A3622811849320C007F2854 /* NRDBTests */ = {
+		3A3622811849320C007F2854 /* Net Deck Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3A3622961849320C007F2854 /* Build configuration list for PBXNativeTarget "NRDBTests" */;
+			buildConfigurationList = 3A3622961849320C007F2854 /* Build configuration list for PBXNativeTarget "Net Deck Tests" */;
 			buildPhases = (
 				3A36227E1849320C007F2854 /* Sources */,
 				3A36227F1849320C007F2854 /* Frameworks */,
@@ -1547,7 +1548,7 @@
 			dependencies = (
 				3A3622881849320C007F2854 /* PBXTargetDependency */,
 			);
-			name = NRDBTests;
+			name = "Net Deck Tests";
 			productName = NRDBTests;
 			productReference = 3A3622821849320C007F2854 /* NRDBTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1585,8 +1586,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3A36225D1849320C007F2854 /* NRDB */,
-				3A3622811849320C007F2854 /* NRDBTests */,
+				3A36225D1849320C007F2854 /* Net Deck */,
+				3A3622811849320C007F2854 /* Net Deck Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1973,7 +1974,7 @@
 /* Begin PBXTargetDependency section */
 		3A3622881849320C007F2854 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3A36225D1849320C007F2854 /* NRDB */;
+			target = 3A36225D1849320C007F2854 /* Net Deck */;
 			targetProxy = 3A3622871849320C007F2854 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2296,7 +2297,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "NRDB" */ = {
+		3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "Net Deck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3A3622941849320C007F2854 /* Debug */,
@@ -2306,7 +2307,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3A3622961849320C007F2854 /* Build configuration list for PBXNativeTarget "NRDBTests" */ = {
+		3A3622961849320C007F2854 /* Build configuration list for PBXNativeTarget "Net Deck Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3A3622971849320C007F2854 /* Debug */,
