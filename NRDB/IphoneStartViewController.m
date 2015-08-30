@@ -23,8 +23,6 @@
 #import "SettingsKeys.h"
 #import "ImportDecksViewController.h"
 
-#warning debug navigation confusion bug (nsassert?) swipe nav on main screen?
-
 @interface IphoneStartViewController ()
 
 @property NSMutableArray* runnerDecks;

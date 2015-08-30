@@ -35,8 +35,19 @@
 
 -(NSArray*) popToRootViewControllerAnimated:(BOOL)animated
 {
+    // NSLog(@"do popToRoot");
     self.popToRoot = YES;
     return [super popToRootViewControllerAnimated:animated];
+}
+
+-(UIViewController*) popViewControllerAnimated:(BOOL)animated
+{
+    // NSInteger before = self.viewControllers.count;
+    UIViewController* popped = [super popViewControllerAnimated:animated];
+    // NSInteger after = self.viewControllers.count;
+    // UIViewController* newTop = self.viewControllers.lastObject;
+    // NSLog(@"doPop: before=%ld, after=%ld, popped off=%@, new top=%@", (long)before, (long)after, popped, newTop);
+    return popped;
 }
 
 #pragma mark gesture recognizer
@@ -45,19 +56,23 @@
 {
     CGPoint point = [gesture locationInView:self.view];
     CGRect frame = self.view.frame;
-    // NSLog(@"handle gesture, state=%ld, %@", (long)gesture.state, NSStringFromCGPoint(point));
     
     // pop if the gesture ended AND the location of the touch release was on the right hand side of the master view
-    if (gesture.state == UIGestureRecognizerStateEnded && point.x > frame.size.width/2)
+    if (gesture.state == UIGestureRecognizerStateEnded)
     {
-        // NSLog(@"end swipe, pop");
-        [self popViewControllerAnimated:IS_IPHONE];
+        // NSInteger count = self.viewControllers.count;
+        // NSString* title = [self.viewControllers.lastObject title];
+        // NSLog(@"handle gesture, state=%ld, count=%ld, top=%@, %@", (long)gesture.state, (long)count, title, NSStringFromCGPoint(point));
+        if (point.x > frame.size.width/2)
+        {
+            [self popViewControllerAnimated:IS_IPHONE];
+        }
     }
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if (IS_IPAD && [touch.view isKindOfClass:[UISlider class]])
+    if ([touch.view isKindOfClass:[UISlider class]])
     {
         // prevent recognizing touches on the filter sliders
         return NO;
@@ -69,10 +84,17 @@
 {
     if (gestureRecognizer == self.interactivePopGestureRecognizer)
     {
+        if (self.viewControllers.count < 2)
+        {
+            // NSLog(@"swipe: nothing to pop");
+            return NO;
+        }
+        
         if (self.deckEditor.deckModified && !self.alertShowing)
         {
             [self showAlert];
             self.swipePop = NO;
+            // NSLog(@"swipe start aborted");
             return NO;
         }
     }
@@ -85,7 +107,7 @@
 
 -(BOOL) navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {
-    // NSLog(@"should pop: %d %d %d %d", self.popToRoot, self.swipePop, self.regularPop, self.alertViewClicked);
+    // NSLog(@"should pop: toRoot=%d swipe=%d regular=%d alert=%d modified=%d", self.popToRoot, self.swipePop, self.regularPop, self.alertViewClicked, self.deckEditor.deckModified);
     
     if (self.popToRoot)
     {
@@ -130,6 +152,8 @@
         return NO;
     }
 }
+
+
 
 -(void) showAlert
 {
