@@ -1,6 +1,6 @@
 //
 //  CardImageViewPopover.h
-//  NRDB
+//  Net Deck
 //
 //  Created by Gereon Steffens on 28.12.13.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.

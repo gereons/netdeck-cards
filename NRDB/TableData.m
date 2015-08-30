@@ -1,6 +1,6 @@
 //
 //  TableData.m
-//  NRDB
+//  Net Deck
 //
 //  Created by Gereon Steffens on 13.01.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.

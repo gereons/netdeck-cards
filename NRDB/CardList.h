@@ -1,6 +1,6 @@
 //
 //  CardList.h
-//  NRDB
+//  Net Deck
 //
 //  Created by Gereon Steffens on 29.11.13.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.

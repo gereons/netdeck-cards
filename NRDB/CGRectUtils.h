@@ -1,13 +1,13 @@
 //
 //  CGRectUtils.h
-//  NRDB
+//  Net Deck
 //
 //  Created by Gereon Steffens on 28.04.12.
 //  Copyright (c) 2012 Gereon Steffens. All rights reserved.
 //
 
-#ifndef NRDB_CGRectUtils_h
-#define NRDB_CGRectUtils_h
+#ifndef NETDECK_CGRectUtils_h
+#define NETDECK_CGRectUtils_h
 
 #define CGRectSetPos(r, X, Y)   CGRectMake( X, Y, r.size.width, r.size.height )
 #define CGRectSetX(r, X)        CGRectMake( X, r.origin.y, r.size.width, r.size.height )

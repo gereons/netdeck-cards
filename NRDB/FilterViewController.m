@@ -1,6 +1,6 @@
 //
 //  FilterViewController.m
-//  NRDB
+//  Net Deck
 //
 //  Created by Gereon Steffens on 24.08.15.
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
