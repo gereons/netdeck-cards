@@ -26,6 +26,8 @@
 {
     [super viewDidLoad];
     
+    self.title = l10n(@"Cards");
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.collectionView.backgroundColor = [UIColor clearColor];
     

@@ -23,7 +23,7 @@
 #import "SettingsKeys.h"
 #import "ImportDecksViewController.h"
 
-#warning debug navigation confusion bug (nsassert?)
+#warning debug navigation confusion bug (nsassert?) swipe nav on main screen?
 
 @interface IphoneStartViewController ()
 
@@ -49,6 +49,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.delegate = self;
+    self.title = @"Net Deck";
+    self.tableViewController.title = @"Net Deck";
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];

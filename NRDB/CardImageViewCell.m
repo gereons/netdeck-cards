@@ -33,13 +33,14 @@
 
 -(void) setCard:(Card *)card andCount:(NSInteger)count
 {
+    if (card.type == NRCardTypeIdentity)
+    {
+        count = 0;
+    }
+
     self.imageView.image = nil;
     self->_card = card;
     self->_count = count;
-    if (card.type == NRCardTypeIdentity)
-    {
-        self->_count = 0;
-    }
     
     [self.activityIndicator startAnimating];
     
