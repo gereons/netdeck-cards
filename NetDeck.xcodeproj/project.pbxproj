@@ -386,20 +386,20 @@
 		3A2310451B90D0F700487119 /* 890-sort-ascending-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar.png"; sourceTree = "<group>"; };
 		3A2310461B90D0F700487119 /* 890-sort-ascending-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar@2x.png"; sourceTree = "<group>"; };
 		3A2310471B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar@3x.png"; sourceTree = "<group>"; };
-		3A36225E1849320C007F2854 /* NRDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NRDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A36225E1849320C007F2854 /* NetDeck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetDeck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3622611849320C007F2854 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3A3622631849320C007F2854 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3A3622651849320C007F2854 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		3A3622691849320C007F2854 /* NRDB-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NRDB-Info.plist"; sourceTree = "<group>"; };
+		3A3622691849320C007F2854 /* NetDeck-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetDeck-Info.plist"; sourceTree = "<group>"; };
 		3A36226B1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A36226D1849320C007F2854 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3A36226F1849320C007F2854 /* NRDB-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NRDB-Prefix.pch"; sourceTree = "<group>"; };
+		3A36226F1849320C007F2854 /* NetDeck-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NetDeck-Prefix.pch"; sourceTree = "<group>"; };
 		3A3622701849320C007F2854 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A3622711849320C007F2854 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A36227C1849320C007F2854 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		3A3622821849320C007F2854 /* NRDBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NRDBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A3622821849320C007F2854 /* NetDeck Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NetDeck Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3622831849320C007F2854 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		3A36228B1849320C007F2854 /* NRDBTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NRDBTests-Info.plist"; sourceTree = "<group>"; };
+		3A36228B1849320C007F2854 /* NetDeckTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetDeckTests-Info.plist"; sourceTree = "<group>"; };
 		3A36228D1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A36228F1849320C007F2854 /* NRDBTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NRDBTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPipsView.xib; sourceTree = "<group>"; };
@@ -812,8 +812,8 @@
 		3A36225F1849320C007F2854 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3A36225E1849320C007F2854 /* NRDB.app */,
-				3A3622821849320C007F2854 /* NRDBTests.xctest */,
+				3A36225E1849320C007F2854 /* NetDeck.app */,
+				3A3622821849320C007F2854 /* NetDeck Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -880,11 +880,11 @@
 				3AFEC40C19B74359000D025C /* Crashlytics.strings */,
 				3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */,
 				3A095E8D18BBC49C00C99FED /* Localizable.strings */,
-				3A3622691849320C007F2854 /* NRDB-Info.plist */,
+				3A3622691849320C007F2854 /* NetDeck-Info.plist */,
 				3ADC4DCF1AAB035E002B7210 /* builtin-sets.plist */,
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
 				3A36226D1849320C007F2854 /* main.m */,
-				3A36226F1849320C007F2854 /* NRDB-Prefix.pch */,
+				3A36226F1849320C007F2854 /* NetDeck-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -901,7 +901,7 @@
 		3A36228A1849320C007F2854 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				3A36228B1849320C007F2854 /* NRDBTests-Info.plist */,
+				3A36228B1849320C007F2854 /* NetDeckTests-Info.plist */,
 				3A36228C1849320C007F2854 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -1514,9 +1514,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3A36225D1849320C007F2854 /* Net Deck */ = {
+		3A36225D1849320C007F2854 /* NetDeck */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "Net Deck" */;
+			buildConfigurationList = 3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "NetDeck" */;
 			buildPhases = (
 				725041DF7F0E4BE9AF0B94A3 /* Check Pods Manifest.lock */,
 				3A36225A1849320C007F2854 /* Sources */,
@@ -1530,14 +1530,14 @@
 			);
 			dependencies = (
 			);
-			name = "Net Deck";
+			name = NetDeck;
 			productName = NRDB;
-			productReference = 3A36225E1849320C007F2854 /* NRDB.app */;
+			productReference = 3A36225E1849320C007F2854 /* NetDeck.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3A3622811849320C007F2854 /* Net Deck Tests */ = {
+		3A3622811849320C007F2854 /* NetDeck Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3A3622961849320C007F2854 /* Build configuration list for PBXNativeTarget "Net Deck Tests" */;
+			buildConfigurationList = 3A3622961849320C007F2854 /* Build configuration list for PBXNativeTarget "NetDeck Tests" */;
 			buildPhases = (
 				3A36227E1849320C007F2854 /* Sources */,
 				3A36227F1849320C007F2854 /* Frameworks */,
@@ -1548,9 +1548,9 @@
 			dependencies = (
 				3A3622881849320C007F2854 /* PBXTargetDependency */,
 			);
-			name = "Net Deck Tests";
+			name = "NetDeck Tests";
 			productName = NRDBTests;
-			productReference = 3A3622821849320C007F2854 /* NRDBTests.xctest */;
+			productReference = 3A3622821849320C007F2854 /* NetDeck Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1570,7 +1570,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3A3622591849320C007F2854 /* Build configuration list for PBXProject "NRDB" */;
+			buildConfigurationList = 3A3622591849320C007F2854 /* Build configuration list for PBXProject "NetDeck" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1586,8 +1586,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3A36225D1849320C007F2854 /* Net Deck */,
-				3A3622811849320C007F2854 /* Net Deck Tests */,
+				3A36225D1849320C007F2854 /* NetDeck */,
+				3A3622811849320C007F2854 /* NetDeck Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1974,7 +1974,7 @@
 /* Begin PBXTargetDependency section */
 		3A3622881849320C007F2854 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3A36225D1849320C007F2854 /* Net Deck */;
+			target = 3A36225D1849320C007F2854 /* NetDeck */;
 			targetProxy = 3A3622871849320C007F2854 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2127,10 +2127,10 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NRDB-Prefix.pch";
-				INFOPLIST_FILE = "NRDB/NRDB-Info.plist";
+				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
+				INFOPLIST_FILE = "NRDB/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Core/Externals/DTFoundation/**";
@@ -2152,10 +2152,10 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NRDB-Prefix.pch";
-				INFOPLIST_FILE = "NRDB/NRDB-Info.plist";
+				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
+				INFOPLIST_FILE = "NRDB/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Core/Externals/DTFoundation/**";
@@ -2178,8 +2178,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "NRDBTests/NRDBTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "NRDBTests/NetDeckTests-Info.plist";
+				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -2196,8 +2196,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NRDB/NRDB-Prefix.pch";
-				INFOPLIST_FILE = "NRDBTests/NRDBTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "NRDBTests/NetDeckTests-Info.plist";
+				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -2254,10 +2254,10 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NRDB-Prefix.pch";
-				INFOPLIST_FILE = "NRDB/NRDB-Info.plist";
+				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
+				INFOPLIST_FILE = "NRDB/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2277,8 +2277,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NRDB/NRDB-Prefix.pch";
-				INFOPLIST_FILE = "NRDBTests/NRDBTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "NRDBTests/NetDeckTests-Info.plist";
+				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -2287,7 +2287,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3A3622591849320C007F2854 /* Build configuration list for PBXProject "NRDB" */ = {
+		3A3622591849320C007F2854 /* Build configuration list for PBXProject "NetDeck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3A3622911849320C007F2854 /* Debug */,
@@ -2297,7 +2297,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "Net Deck" */ = {
+		3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "NetDeck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3A3622941849320C007F2854 /* Debug */,
@@ -2307,7 +2307,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3A3622961849320C007F2854 /* Build configuration list for PBXNativeTarget "Net Deck Tests" */ = {
+		3A3622961849320C007F2854 /* Build configuration list for PBXNativeTarget "NetDeck Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3A3622971849320C007F2854 /* Debug */,
