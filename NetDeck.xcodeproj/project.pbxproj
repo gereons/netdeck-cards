@@ -2166,7 +2166,7 @@
 		3A3622971849320C007F2854 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NRDB.app/NRDB";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2188,7 +2188,7 @@
 		3A3622981849320C007F2854 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NRDB.app/NRDB";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2269,7 +2269,7 @@
 		3A6322A318617AEC0095330F /* Adhoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NRDB.app/NRDB";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
