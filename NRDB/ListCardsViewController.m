@@ -61,6 +61,7 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     NSAssert(self.navigationController.viewControllers.count == 3, @"nav oops");
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;

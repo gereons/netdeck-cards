@@ -2173,7 +2173,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NRDB-Prefix.pch";
+				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2195,7 +2195,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NRDB-Prefix.pch";
+				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NRDBTests/NetDeckTests-Info.plist";
 				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -2276,7 +2276,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NRDB-Prefix.pch";
+				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NRDBTests/NetDeckTests-Info.plist";
 				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";

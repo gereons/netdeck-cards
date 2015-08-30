@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#ifndef NRDB_SettingsKeys_h
-#define NRDB_SettingsKeys_h
+#ifndef NETDECK_SettingsKeys_h
+#define NETDECK_SettingsKeys_h
 
 #define LAST_MOD_CACHE      @"lastModified"
 #define NEXT_CHECK          @"nextCheck"

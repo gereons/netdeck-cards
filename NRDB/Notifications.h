@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#ifndef NRDB_Notifications_h
-#define NRDB_Notifications_h
+#ifndef NETDECK_Notifications_h
+#define NETDECK_Notifications_h
 
 #define ADD_TOP_CARD    @"addTopCard"       // card filter: return pressed, add top card, no userInfo
 #define SELECT_IDENTITY @"selectIdentity"   // identity selection, userInfo contains @"code"

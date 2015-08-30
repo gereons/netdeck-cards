@@ -115,6 +115,8 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     UIBarButtonItem* clearButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(clearFilters:)];
     topItem.rightBarButtonItem = clearButton;
+    
+    [super viewDidAppear:animated];
 }
 
 -(void) clearFilters:(id)sender
