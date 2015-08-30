@@ -225,7 +225,11 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
 
 -(void) updatePreview
 {
-    self.previewHeader.text = [NSString stringWithFormat:l10n(@"  Matching cards: %ld"), self.cardList.count];
+    NSInteger count = self.cardList.count;
+    NSString* fmt = count == 1 ? l10n(@"%lu matching card") : l10n(@"%lu matching cards");
+    NSString* text = @"  ";
+    text = [text stringByAppendingString:[NSString stringWithFormat:fmt, count]];
+    self.previewHeader.text = text;
     [self.previewTable reloadData];
 }
 
