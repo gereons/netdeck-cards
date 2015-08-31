@@ -7,7 +7,7 @@
 //
 
 #import "ImportDecksViewController.h"
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
 #import <EXTScope.h>

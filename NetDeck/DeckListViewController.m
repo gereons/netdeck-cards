@@ -11,7 +11,7 @@
 #import <EXTScope.h>
 #import <AFNetworking.h>
 
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"

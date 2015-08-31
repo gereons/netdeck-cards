@@ -9,7 +9,7 @@
 #import <SDCAlertView.h>
 
 #import "DecksViewController.h"
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 #import "DeckCell.h"
 #import "DeckManager.h"
 #import "Deck.h"

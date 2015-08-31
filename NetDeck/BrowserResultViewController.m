@@ -9,7 +9,7 @@
 #import <CSStickyHeaderFlowLayout.h>
 #import <EXTScope.h>
 
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 #import "BrowserResultViewController.h"
 #import "CardList.h"
 #import "Card.h"

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 #import "IphoneStartViewController.h"
 #import "DeckManager.h"
 #import "Deck.h"

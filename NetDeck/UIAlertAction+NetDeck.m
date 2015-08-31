@@ -1,14 +1,14 @@
 //
-//  UIAlertAction+NRDB.m
+//  UIAlertAction+NetDeck.m
 //  Net Deck
 //
 //  Created by Gereon Steffens on 28.10.14.
 //  Copyright (c) 2014 Gereon Steffens. All rights reserved.
 //
 
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 
-@implementation UIAlertAction (NRDB)
+@implementation UIAlertAction (NetDeck)
 
 +(UIAlertAction*) cancelAction:(void (^)(UIAlertAction *action))handler
 {

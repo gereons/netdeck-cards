@@ -1,5 +1,5 @@
 //
-//  NRDBTests.m
+//  NetDeckTests.m
 //  NetDeckTests
 //
 //  Created by Gereon Steffens on 29.11.13.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface NRDBTests : XCTestCase
+@interface NetDeckTests : XCTestCase
 
 @end
 
-@implementation NRDBTests
+@implementation NetDeckTests
 
 - (void)setUp
 {

@@ -10,7 +10,7 @@
 #import <SVProgressHud.h>
 #import <EXTScope.h>
 
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 #import "SavedDecksList.h"
 #import "Deck.h"
 #import "ImportDecksViewController.h"

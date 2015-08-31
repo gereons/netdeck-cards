@@ -9,7 +9,7 @@
 #import <SDCAlertView.h>
 #import <AFNetworkReachabilityManager.h>
 
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
 #import "CardImageViewController.h"
@@ -22,7 +22,7 @@
 #import "CardType.h"
 #import "EditDeckCell.h"
 #import "DeckExport.h"
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 #import "SettingsKeys.h"
 #import "NRDB.h"
 #import "DeckEmail.h"

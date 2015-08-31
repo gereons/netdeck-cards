@@ -10,7 +10,7 @@
 #import "SettingsKeys.h"
 #import "CardSets.h"
 #import "CardSet.h"
-#import "UIAlertAction+NRDB.h"
+#import "UIAlertAction+NetDeck.h"
 #import "NRSwitch.h"
 
 @interface SetSelectionViewController ()
