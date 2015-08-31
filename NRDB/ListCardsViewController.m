@@ -168,11 +168,14 @@
     
     [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
 
-    Card* card = [self.cards objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    if (card)
+    if (self.cards.count > 0)
     {
-        [self.deck addCard:card copies:1];
-        [self.tableView reloadData];
+        Card* card = [self.cards objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        if (card)
+        {
+            [self.deck addCard:card copies:1];
+            [self.tableView reloadData];
+        }
     }
 }
 
