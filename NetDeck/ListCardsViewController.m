@@ -29,6 +29,8 @@
 
 @end
 
+static NSString* kSearchFieldValue = @"searchField";
+
 @implementation ListCardsViewController
 
 - (void)viewDidLoad
@@ -57,6 +59,12 @@
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(showKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(hideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    
+    UITextField* textField = [self.searchBar valueForKey:kSearchFieldValue];
+    if (textField != nil && [textField isKindOfClass:[UITextField class]])
+    {
+        textField.returnKeyType = UIReturnKeyDone;
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -160,7 +168,7 @@
 
 -(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    UITextField* textField = [self.searchBar valueForKey:@"searchField"];
+    UITextField* textField = [self.searchBar valueForKey:kSearchFieldValue];
     if (textField == nil || ![textField isKindOfClass:[UITextField class]])
     {
         return;

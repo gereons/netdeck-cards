@@ -57,7 +57,7 @@
 		3A3622851849320C007F2854 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622611849320C007F2854 /* Foundation.framework */; };
 		3A3622861849320C007F2854 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622651849320C007F2854 /* UIKit.framework */; };
 		3A36228E1849320C007F2854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A36228C1849320C007F2854 /* InfoPlist.strings */; };
-		3A3622901849320C007F2854 /* NRDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36228F1849320C007F2854 /* NRDBTests.m */; };
+		3A3622901849320C007F2854 /* NetDeckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36228F1849320C007F2854 /* NetDeckTests.m */; };
 		3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */; };
 		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
 		3A38091B1B0F8ACE00042A67 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A38091A1B0F8ACE00042A67 /* Fabric.framework */; };
@@ -401,7 +401,7 @@
 		3A3622831849320C007F2854 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3A36228B1849320C007F2854 /* NetDeckTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetDeckTests-Info.plist"; sourceTree = "<group>"; };
 		3A36228D1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A36228F1849320C007F2854 /* NRDBTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NRDBTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3A36228F1849320C007F2854 /* NetDeckTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NetDeckTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPipsView.xib; sourceTree = "<group>"; };
 		3A36A0FC1974F79300D8D26A /* SmallPipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallPipsView.h; sourceTree = "<group>"; };
 		3A36A0FD1974F79300D8D26A /* SmallPipsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallPipsView.m; sourceTree = "<group>"; };
@@ -802,7 +802,7 @@
 			isa = PBXGroup;
 			children = (
 				3A3622671849320C007F2854 /* NetDeck */,
-				3A3622891849320C007F2854 /* NRDBTests */,
+				3A3622891849320C007F2854 /* NetDeckTests */,
 				3A3622601849320C007F2854 /* Frameworks */,
 				3A36225F1849320C007F2854 /* Products */,
 				6E0C1DE33116E426077EF555 /* Pods */,
@@ -869,8 +869,7 @@
 				3A3844F91B77858B007C76F2 /* iPhone */,
 				3A3622681849320C007F2854 /* Supporting Files */,
 			);
-			name = NetDeck;
-			path = NRDB;
+			path = NetDeck;
 			sourceTree = "<group>";
 		};
 		3A3622681849320C007F2854 /* Supporting Files */ = {
@@ -889,12 +888,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3A3622891849320C007F2854 /* NRDBTests */ = {
+		3A3622891849320C007F2854 /* NetDeckTests */ = {
 			isa = PBXGroup;
 			children = (
-				3A36228F1849320C007F2854 /* NRDBTests.m */,
+				3A36228F1849320C007F2854 /* NetDeckTests.m */,
 				3A36228A1849320C007F2854 /* Supporting Files */,
 			);
+			name = NetDeckTests;
 			path = NRDBTests;
 			sourceTree = "<group>";
 		};
@@ -1965,7 +1965,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A3622901849320C007F2854 /* NRDBTests.m in Sources */,
+				3A3622901849320C007F2854 /* NetDeckTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2127,8 +2127,8 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
-				INFOPLIST_FILE = "NRDB/NetDeck-Info.plist";
+				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
+				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
@@ -2152,8 +2152,8 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
-				INFOPLIST_FILE = "NRDB/NetDeck-Info.plist";
+				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
+				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
@@ -2173,7 +2173,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
+				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2195,7 +2195,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
+				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NRDBTests/NetDeckTests-Info.plist";
 				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -2254,8 +2254,8 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
-				INFOPLIST_FILE = "NRDB/NetDeck-Info.plist";
+				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
+				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
@@ -2276,7 +2276,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NRDB/NetDeck-Prefix.pch";
+				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NRDBTests/NetDeckTests-Info.plist";
 				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
