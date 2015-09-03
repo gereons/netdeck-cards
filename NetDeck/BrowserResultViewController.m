@@ -445,19 +445,29 @@ static BrowserResultViewController* instance;
     else if (gesture.state == UIGestureRecognizerStateChanged)
     {
         self.scale = scaleStart * gesture.scale;
+        
+        self.scale = MAX(self.scale, 0.5);
+        self.scale = MIN(self.scale, 1.0);
+        
+        [self.collectionView reloadData];
+        if (startIndex)
+        {
+            BOOL ok = startIndex.section < self.values.count;
+            if (ok)
+            {
+                NSArray* arr = self.values[startIndex.section];
+                ok = startIndex.row < arr.count;
+            }
+            
+            if (ok)
+            {
+                    [self.collectionView scrollToItemAtIndexPath:startIndex atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+            }
+        }
     }
     else if (gesture.state == UIGestureRecognizerStateEnded)
     {
         startIndex = nil;
-    }
-    
-    self.scale = MAX(self.scale, 0.5);
-    self.scale = MIN(self.scale, 1.0);
-    
-    [self.collectionView reloadData];
-    if (startIndex)
-    {
-        [self.collectionView scrollToItemAtIndexPath:startIndex atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
     }
 }
 

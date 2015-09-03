@@ -1477,6 +1477,8 @@
     static CGFloat scaleStart;
     static NSIndexPath* startIndex;
     
+    NSLog(@"state = %d", (int)gesture.state);
+    
     if (gesture.state == UIGestureRecognizerStateBegan)
     {
         scaleStart = self.scale;
@@ -1486,14 +1488,20 @@
     else if (gesture.state == UIGestureRecognizerStateChanged)
     {
         self.scale = scaleStart * gesture.scale;
-    }
-    self.scale = MAX(self.scale, 0.5);
-    self.scale = MIN(self.scale, 1.0);
     
-    [self.collectionView reloadData];
-    if (startIndex)
+        self.scale = MAX(self.scale, 0.5);
+        self.scale = MIN(self.scale, 1.0);
+    
+        [self.collectionView reloadData];
+
+        if (startIndex && startIndex.row < self.deck.cards.count)
+        {
+            [self.collectionView scrollToItemAtIndexPath:startIndex atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+        }
+    }
+    else if (gesture.state == UIGestureRecognizerStateEnded)
     {
-        [self.collectionView scrollToItemAtIndexPath:startIndex atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+        startIndex = nil;
     }
 }
 
