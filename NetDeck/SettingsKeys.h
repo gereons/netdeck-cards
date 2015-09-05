@@ -67,4 +67,6 @@
 
 #define IDENTITY_TABLE      @"identityTable"
 
+#define IPHONE4_SWIPE_HINT  @"iphone4SwipeHint"
+
 #endif

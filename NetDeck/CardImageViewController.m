@@ -6,10 +6,13 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+#import <SVProgressHUD.h>
+
 #import "CardImageViewController.h"
 #import "CardImageViewCell.h"
 #import "Deck.h"
 #import "ImageCache.h"
+#import "SettingsKeys.h"
 
 @interface CardImageViewController ()
 
@@ -42,6 +45,14 @@
         swipe.direction = UISwipeGestureRecognizerDirectionUp;
         
         [self.collectionView addGestureRecognizer:swipe];
+        
+        NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+        NSInteger hints = [settings integerForKey:IPHONE4_SWIPE_HINT];
+        if (hints < 2)
+        {
+            [SVProgressHUD showInfoWithStatus:l10n(@"Swipe up to go back") maskType:SVProgressHUDMaskTypeBlack];
+            [settings setInteger:hints+1 forKey:IPHONE4_SWIPE_HINT];
+        }
     }
 }
 
