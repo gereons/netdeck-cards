@@ -69,7 +69,7 @@ static NSString* filterText;
     self.tableView.dataSource = nil;
     self.searchBar.delegate = nil;
     
-    [[NSNotificationCenter defaultCenter] removeObserver:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad

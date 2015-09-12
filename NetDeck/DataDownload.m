@@ -240,8 +240,8 @@ static DataDownload* instance;
     self.progressView.progress = 0;
     
     [self.progressView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    self.alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Downloading Images")
-                                             message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count]
+    self.alert = [[SDCAlertView alloc] initWithTitle:nil
+                                             message:[NSString stringWithFormat:l10n(@"Downloading %ld Images"), self.cards.count]
                                             delegate:nil
                                    cancelButtonTitle:l10n(@"Stop")
                                    otherButtonTitles: nil];
@@ -307,9 +307,7 @@ static DataDownload* instance;
         // NSLog(@"%@ - progress %.1f", card.name, progress);
         
         self.progressView.progress = progress/100.0;
-        
-        self.alert.message = [NSString stringWithFormat:l10n(@"Image %d of %d"), index+1, self.cards.count ];
-        
+    
         // use -performSelector: so the UI can refresh
         [self performSelector:@selector(downloadImageForCard:) withObject:dict afterDelay:.001];
     }

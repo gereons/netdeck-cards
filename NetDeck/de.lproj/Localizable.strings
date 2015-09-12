@@ -91,7 +91,7 @@
 
 // card downloading
 "Downloading Card Data" = "Lade Karten-Daten";
-"Downloading Images" = "Lade Karten-Bilder";
+"Downloading %ld Images" = "Lade %ld Karten-Bilder";
 "Please download card data first" = "Bitte zuerst Karten-Daten laden";
 "No missing card images" = "Alle Karten-Bilder vorhanden";
 "Image %d of %d" = "Bild %d von %d";

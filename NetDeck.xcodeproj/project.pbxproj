@@ -1558,7 +1558,7 @@
 		3A3622561849320C007F2854 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Gereon Steffens";
 				TargetAttributes = {
 					3A36225D1849320C007F2854 = {
@@ -2052,6 +2052,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2129,6 +2130,7 @@
 				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2154,6 +2156,7 @@
 				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2167,7 +2170,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
@@ -2178,6 +2180,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "NetDeckTests/NetDeckTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.steffens.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -2189,13 +2192,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NetDeckTests/NetDeckTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.steffens.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -2256,6 +2259,7 @@
 				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2270,13 +2274,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NetDeckTests/NetDeckTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.steffens.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

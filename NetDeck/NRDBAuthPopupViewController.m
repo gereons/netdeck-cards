@@ -79,7 +79,9 @@ static NRDBAuthPopupViewController* popup;
     {
         // don't call [self.navController popViewControllerAnimated:YES] here - this will pop two VCs
         // instead, call the nav bar delegate from NRNavigationController to do
-        [self.navController.navigationBar.delegate navigationBar:nil shouldPopItem:nil];
+        UINavigationBar* navBar = self.navController.navigationBar;
+        UINavigationItem* navItem = self.navController.navigationItem;
+        [navBar.delegate navigationBar:navBar shouldPopItem:navItem];
         self.navController = nil;
     }
     else

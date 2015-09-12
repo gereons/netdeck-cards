@@ -86,7 +86,7 @@
 
 // téléchargement de cartes
 "Downloading Card Data" = "Téléchargement de données en cours";
-"Downloading Images" = "Téléchargement des images en cours";
+"Downloading %ld Images" = "Téléchargement des %ld images en cours";
 "Please download card data first" = "Télécharger les données d'abord";
 "Image %d of %d" = "Image %d de %d";
 "Unable to download cards at this time. Please try again later." = "Le téléchargement a échoué. Merci de réessayer ultérieurement.";

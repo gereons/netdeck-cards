@@ -86,7 +86,7 @@
 
 // card downloading
 "Downloading Card Data" = "Descargando datos de las cartas";
-"Downloading Images" = "Descargando imágenes";
+"Downloading %ld Images" = "Descargando %ld imágenes";
 "Please download card data first" = "Por favor, dercarga los datos de las cartas primero"; // en
 "Image %d of %d" = "%d imágenes de %d";
 "Unable to download cards at this time. Please try again later." = "Imposible descargar las cartas en este momento. Por favor, vuelve a intentarlo más tarde.";

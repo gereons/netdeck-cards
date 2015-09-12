@@ -29,6 +29,7 @@
  * check label widths
  * set BITCODE_ENABLED=NO
  * set "requires full screen"
+ * font size in identity selection
  */
 
 const NSString* const kANY = @"Any";
