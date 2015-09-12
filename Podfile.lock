@@ -120,7 +120,7 @@ PODS:
   - PromiseKit/When (1.5.3):
     - PromiseKit/Promise
   - RBBAnimation (0.4.0)
-  - SDCAlertView (2.5.2):
+  - SDCAlertView (2.5.3):
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.3)
@@ -157,7 +157,7 @@ SPEC CHECKSUMS:
   PromiseKit: ecdccab1791b95b4752a9fac57223044f5a6c105
   PromiseKit-AFNetworking: 364d4cb942a7278f5219c62dc822867655954a8f
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
-  SDCAlertView: f9706c18f456ea87909f8f199704cd28e582ff27
+  SDCAlertView: 7554e4e7ce1adbefbcc7374e7bae237dad32a8d8
   SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
