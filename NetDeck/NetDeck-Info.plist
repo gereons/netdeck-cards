@@ -64,6 +64,8 @@
 				<true/>
 			</dict>
 		</dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
 	</dict>
 	<key>NSMainNibFile</key>
 	<string>MainWindow~iPhone</string>
@@ -98,5 +100,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>dbapi-2</string>
+    </array>
 </dict>
 </plist>
