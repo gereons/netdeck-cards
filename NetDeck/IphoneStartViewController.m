@@ -59,7 +59,6 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     
     self.searchBar.delegate = self;
-    [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
     
     self.addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewDeck:)];
     self.addButton.enabled = NO;
@@ -82,6 +81,10 @@
     {
         [self initializeDecks];
     }
+    
+    self.tableView.contentInset = UIEdgeInsetsZero; // wtf is this needed since iOS9?
+    
+    [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
 }
 
 -(void) dealloc
@@ -89,7 +92,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-// this is a poor man's replacement for viewWillAppear - I can't figure out why this isn't called when this view is
+// this is my poor man's replacement for viewWillAppear - I can't figure out why this isn't called when this view is
 // back on top :(
 -(void) navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
