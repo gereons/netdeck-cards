@@ -157,7 +157,7 @@ static NSString* filterText;
 
 #pragma mark sorting
 
--(void)changeSort:(id)sender
+-(void)changeSort:(UIBarButtonItem*)sender
 {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Sort by") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -171,6 +171,11 @@ static NSString* filterText;
         [self changeSortType:NRDeckListSortA_Z];
     }]];
     [alert addAction:[UIAlertAction cancelAction:nil]];
+    
+    if (IS_IPAD)
+    {
+        alert.popoverPresentationController.barButtonItem = sender;
+    }
     
     [self presentViewController:alert animated:NO completion:nil];
 }
