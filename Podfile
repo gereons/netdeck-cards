@@ -13,8 +13,9 @@ pod 'SDCAlertView'
 pod 'InAppSettingsKit'
 pod 'PromiseKit', '1.5.3'
 pod 'PromiseKit-AFNetworking'
+pod 'MultiSelectSegmentedControl'
 
 post_install do | installer |
   require 'fileutils'
-  system("awk -f ackhtml.awk <'Pods/Target Support Files/Pods/Pods-acknowledgements.markdown' >NRDB/Acknowledgements.html")
+  system("awk -f ackhtml.awk <'Pods/Target Support Files/Pods/Pods-acknowledgements.markdown' >NetDeck/Acknowledgements.html")
 end
