@@ -67,6 +67,13 @@ static NSString* kSearchFieldValue = @"searchField";
     }
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.searchBar.text = @"";
+}
+
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -76,14 +83,13 @@ static NSString* kSearchFieldValue = @"searchField";
     
     UIBarButtonItem* filterButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"798-filter-toolbar"] style:UIBarButtonItemStylePlain target:self action:@selector(showFilters:)];
     topItem.rightBarButtonItem = filterButton;
-
+    
     TableData* data = [self.cardList dataForTableView];
     
     self.cards = data.values;
     self.sections = data.sections;
     [self.tableView reloadData];
 }
-
 
 -(void) dealloc
 {
@@ -128,6 +134,7 @@ static NSString* kSearchFieldValue = @"searchField";
         [self.deck addCard:card copies:diff];
     }
     
+    [self selectTextInSearchBar];
     [self.tableView reloadData];
 }
 
@@ -168,14 +175,8 @@ static NSString* kSearchFieldValue = @"searchField";
 
 -(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    UITextField* textField = [self.searchBar valueForKey:kSearchFieldValue];
-    if (textField == nil || ![textField isKindOfClass:[UITextField class]])
-    {
-        return;
-    }
+    [self selectTextInSearchBar];
     
-    [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
-
     if (self.cards.count > 0)
     {
         Card* card = [self.cards objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
@@ -185,6 +186,17 @@ static NSString* kSearchFieldValue = @"searchField";
             [self.tableView reloadData];
         }
     }
+}
+
+-(void) selectTextInSearchBar
+{
+    UITextField* textField = [self.searchBar valueForKey:kSearchFieldValue];
+    if (textField == nil || ![textField isKindOfClass:[UITextField class]])
+    {
+        return;
+    }
+    
+    [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
 }
 
 #pragma mark - tableview
