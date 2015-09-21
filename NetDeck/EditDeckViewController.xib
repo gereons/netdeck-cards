@@ -18,11 +18,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XoR-lC-cbz">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="JCf-Ob-ceB"/>
@@ -30,7 +30,7 @@
                     </connections>
                 </tableView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="69X-dg-40v">
-                    <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                    <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                     <items>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="FO0-Tz-4CO"/>
                         <barButtonItem image="netrunnerdb_com-bw.png" id="sUy-hZ-UQ3">
@@ -51,8 +51,8 @@
                     </items>
                 </toolbar>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNa-Vc-9G8">
-                    <rect key="frame" x="18" y="562.5" width="472" height="31.5"/>
-                    <string key="text">X Cards - X/Y Influence
+                    <rect key="frame" x="10" y="442" width="200" height="31.5"/>
+                    <string key="text">49 Cards - 15/15 Inf - 22 AP
 Not enough Cards</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -64,7 +64,7 @@ Not enough Cards</string>
                 <constraint firstItem="XoR-lC-cbz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GhP-Fg-TlV"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="trailing" secondItem="cNa-Vc-9G8" secondAttribute="trailing" constant="110" id="JVw-ia-OkB"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VVg-bv-oy1"/>
-                <constraint firstItem="cNa-Vc-9G8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="18" id="hRk-mn-Eew"/>
+                <constraint firstItem="cNa-Vc-9G8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="hRk-mn-Eew"/>
                 <constraint firstAttribute="trailing" secondItem="69X-dg-40v" secondAttribute="trailing" id="kS0-IB-w2t"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="top" secondItem="XoR-lC-cbz" secondAttribute="bottom" id="mPt-vD-QMV"/>
                 <constraint firstItem="XoR-lC-cbz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="paG-fx-BMz"/>
@@ -72,6 +72,7 @@ Not enough Cards</string>
                 <constraint firstAttribute="trailing" secondItem="XoR-lC-cbz" secondAttribute="trailing" id="t7r-Xq-dHh"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="top" secondItem="cNa-Vc-9G8" secondAttribute="bottom" constant="-38" id="xIT-lf-tzW"/>
             </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="558" y="233"/>
         </view>
     </objects>
