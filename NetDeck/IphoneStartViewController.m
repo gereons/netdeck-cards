@@ -60,15 +60,18 @@
     
     self.searchBar.delegate = self;
     
+    BOOL cardsAvailable = [CardManager cardsAvailable];
     self.addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewDeck:)];
-    self.addButton.enabled = NO;
+    self.addButton.enabled = cardsAvailable;
     self.importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
-    self.importButton.enabled = NO;
+    self.importButton.enabled = cardsAvailable;
+
     
     self.navigationBar.topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
     
     self.settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"740-gear"] style:UIBarButtonItemStylePlain target:self action:@selector(openSettings:)];
     self.sortButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"890-sort-ascending-toolbar"] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
+    self.sortButton.enabled = cardsAvailable;
     
     self.navigationBar.topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
     self.navigationBar.topItem.leftBarButtonItems = @[ self.settingsButton, self.sortButton ];
@@ -138,8 +141,10 @@
         [self.corpDecks filterUsingPredicate:namePredicate];
     }
     
-    self.addButton.enabled = YES;
-    self.importButton.enabled = YES;
+    BOOL cardsAvailable = [CardManager cardsAvailable];
+    self.addButton.enabled = cardsAvailable;
+    self.importButton.enabled = cardsAvailable;
+    self.sortButton.enabled = cardsAvailable;
     
     NSMutableArray* allDecks = [NSMutableArray arrayWithArray:self.runnerDecks];
     [allDecks addObjectsFromArray:self.corpDecks];
