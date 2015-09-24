@@ -457,7 +457,8 @@
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.sections[section];
+    NSArray* arr = self.cards[section];
+    return [NSString stringWithFormat:@"%@ (%ld)", self.sections[section], (long)arr.count];
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
