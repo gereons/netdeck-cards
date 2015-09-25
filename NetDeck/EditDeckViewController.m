@@ -457,6 +457,11 @@
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if (section == 0) // no count for identities
+    {
+        return self.sections[section];
+    }
+    
     NSArray* arr = self.cards[section];
     return [NSString stringWithFormat:@"%@ (%ld)", self.sections[section], (long)arr.count];
 }
@@ -515,16 +520,29 @@
     }
     
     NSString* factionName = [Faction name:card.faction];
-    NSString* typeName = [CardType name:card.type];
+    NSString* type = factionName;
+    
+    // NSString* typeName = [CardType name:card.type];
+    NSString* influenceStr = @"";
+    
+    NSInteger influence = [self.deck influenceFor:cc];
+    if (influence > 0)
+    {
+        influenceStr = [NSString stringWithFormat:@" · %ld %@", (long)influence, l10n(@"Influence")     ];
+    }
     
     NSString* subtype = card.subtype;
     if (subtype)
     {
-        cell.typeLabel.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];
+        type = [type stringByAppendingString:influenceStr];
+        type = [type stringByAppendingString:@" · "];
+        type = [type stringByAppendingString:card.subtype];
+        cell.typeLabel.text = type;
     }
     else
     {
-        cell.typeLabel.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
+        type = [type stringByAppendingString:influenceStr];
+        cell.typeLabel.text = type;
     }
     
     return cell;
