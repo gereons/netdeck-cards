@@ -496,6 +496,10 @@
     cell.stepper.hidden = card.type == NRCardTypeIdentity;
     cell.idButton.hidden = card.type != NRCardTypeIdentity;
     
+//    cell.nameLabel.backgroundColor = [UIColor redColor];
+//    cell.typeLabel.backgroundColor = [UIColor greenColor];
+//    cell.influenceLabel.backgroundColor = [UIColor blueColor];
+
     if (card.unique)
     {
         cell.nameLabel.text = [NSString stringWithFormat:@"%lu× %@ •", (unsigned long)cc.count, card.name];
@@ -519,29 +523,33 @@
         }
     }
     
-    NSString* factionName = [Faction name:card.faction];
-    NSString* type = factionName;
-    
-    // NSString* typeName = [CardType name:card.type];
+    NSString* type = [Faction name:card.faction];;
     NSString* influenceStr = @"";
     
     NSInteger influence = [self.deck influenceFor:cc];
     if (influence > 0)
     {
-        influenceStr = [NSString stringWithFormat:@" · %ld %@", (long)influence, l10n(@"Influence")     ];
+        influenceStr = [NSString stringWithFormat:@" · %ld %@", (long)influence, l10n(@"Influence")];
+        
+        cell.influenceLabel.text = [NSString stringWithFormat:@"%ld", (long)influence];
+        cell.influenceLabel.textColor = card.factionColor;
+    }
+    else
+    {
+        cell.influenceLabel.text = @"";
     }
     
     NSString* subtype = card.subtype;
     if (subtype)
     {
-        type = [type stringByAppendingString:influenceStr];
+        // type = [type stringByAppendingString:influenceStr];
         type = [type stringByAppendingString:@" · "];
         type = [type stringByAppendingString:card.subtype];
         cell.typeLabel.text = type;
     }
     else
     {
-        type = [type stringByAppendingString:influenceStr];
+        // type = [type stringByAppendingString:influenceStr];
         cell.typeLabel.text = type;
     }
     

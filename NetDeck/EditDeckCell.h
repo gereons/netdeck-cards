@@ -12,5 +12,6 @@
 @property IBOutlet UILabel* typeLabel;
 @property IBOutlet UIStepper* stepper;
 @property IBOutlet UIButton* idButton;
+@property IBOutlet UILabel* influenceLabel;
 
 @end

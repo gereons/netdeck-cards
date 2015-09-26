@@ -275,18 +275,41 @@ static NSString* kSearchFieldValue = @"searchField";
     }
     
     
-    NSString* factionName = [Faction name:card.faction];
-    NSString* typeName = [CardType name:card.type];
+    NSString* type = [Faction name:card.faction];;
+    NSString* influenceStr = @"";
+    
+    NSInteger influence = [self.deck influenceFor:cc];
+    if (cc.count == 0 && self.deck.identity.faction != card.faction)
+    {
+        influence = card.influence;
+    }
+    
+    if (influence > 0)
+    {
+        influenceStr = [NSString stringWithFormat:@" · %ld %@", (long)influence, l10n(@"Influence")];
+        
+        cell.influenceLabel.text = [NSString stringWithFormat:@"%ld", (long)influence];
+        cell.influenceLabel.textColor = card.factionColor;
+    }
+    else
+    {
+        cell.influenceLabel.text = @"";
+    }
     
     NSString* subtype = card.subtype;
     if (subtype)
     {
-        cell.typeLabel.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];
+        // type = [type stringByAppendingString:influenceStr];
+        type = [type stringByAppendingString:@" · "];
+        type = [type stringByAppendingString:card.subtype];
+        cell.typeLabel.text = type;
     }
     else
     {
-        cell.typeLabel.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
+        // type = [type stringByAppendingString:influenceStr];
+        cell.typeLabel.text = type;
     }
+
     
     return cell;
 }
