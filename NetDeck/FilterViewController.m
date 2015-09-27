@@ -214,9 +214,12 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
         [self.factionControl.selectedSegmentIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
             [set addObject:values[idx]];
         }];
-        [self.miniFactionControl.selectedSegmentIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-            [set addObject:values[idx+4]];
-        }];
+        if (self.role == NRRoleRunner)
+        {
+            [self.miniFactionControl.selectedSegmentIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+                [set addObject:values[idx+4]];
+            }];
+        }
         
         [self.cardList filterByFactions:set];
     }
