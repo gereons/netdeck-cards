@@ -76,7 +76,7 @@
                                                                     action:@selector(exportDeck:)];
     UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                                target:self
-                                                                               action:@selector(addCard:)];
+                                                                               action:@selector(showCardList:)];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.rightBarButtonItems = @[ addButton, exportButton ];
@@ -362,14 +362,19 @@
                          buttons:@[l10n(@"OK")]];
 }
 
--(void) addCard:(id)sender
+-(void) showCardList:(id)sender
 {
     if (!self.listCards)
     {
         self.listCards = [[ListCardsViewController alloc] initWithNibName:@"ListCardsViewController" bundle:nil];
     }
     self.listCards.deck = self.deck;
-    [self.navigationController pushViewController:self.listCards animated:YES];
+    
+    // protect against pushing the same controller twice (crashlytics #101)
+    if (self.navigationController.topViewController != self.listCards)
+    {
+        [self.navigationController pushViewController:self.listCards animated:YES];
+    }
 }
 
 -(void) refreshDeck
