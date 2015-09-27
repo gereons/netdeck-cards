@@ -8,7 +8,7 @@
 
 #import <SDCAlertView.h>
 #import <AFNetworkReachabilityManager.h>
-
+#import <EXTScope.h>
 #import "UIAlertAction+NetDeck.h"
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
@@ -134,8 +134,10 @@
 -(void) titleTapped:(id)sender
 {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Enter Name") message:nil preferredStyle:UIAlertControllerStyleAlert];
-    
+
+    @weakify(self);
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        @strongify(self);
         textField.text = self.deck.name;
         textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -144,6 +146,7 @@
     }];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction *action) {
+        @strongify(self);
         UITextField* textField = alert.textFields.firstObject;
         self.deck.name = textField.text;
         [self setDeckName];
