@@ -105,7 +105,12 @@ static NSString* kSearchFieldValue = @"searchField";
     self.filterViewController.role = self.deck.role;
     self.filterViewController.identity = self.deck.identity;
     self.filterViewController.cardList = self.cardList;
-    [self.navigationController pushViewController:self.filterViewController animated:YES];
+    
+    // protect against pushing the same controller twice (crashlytics #103)
+    if (self.navigationController.topViewController != self.filterViewController)
+    {
+        [self.navigationController pushViewController:self.filterViewController animated:YES];
+    }
 }
 
 -(void) countChanged:(UIStepper*)stepper
