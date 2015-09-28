@@ -30,6 +30,12 @@
         self.sections = td.sections.mutableCopy;
         self.values = td.values.mutableCopy;
         
+        // no idea why/how this should be necessary, but we do get rare crashes otherwise (crashlytics #102)
+        if (self.values.count == 0)
+        {
+            [self.values addObject:[NSMutableArray array]];
+        }
+        
         // set title for core / deluxe section
         self.sections[0] = l10n(@"Core Set and Deluxe Expansions");
         
