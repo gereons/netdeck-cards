@@ -85,6 +85,7 @@ static TableData* allFactions;
     NSMutableIndexSet* indexes = [NSMutableIndexSet indexSetWithIndex:0];
     [indexes addIndex:1];
     [runnerFactions insertObjects:common atIndexes:indexes];
+    [runnerFactionsPreDAD insertObjects:common atIndexes:indexes];
     [corpFactions insertObjects:common atIndexes:indexes];
 }
 
