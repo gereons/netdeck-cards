@@ -13,6 +13,14 @@
 
 @implementation SmallCardCell
 
+-(void) awakeFromNib
+{
+    if ([[UIFont class] respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
+    {
+        self.name.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightBold];
+    }
+}
+
 -(void) setCardCounter:(CardCounter *)cc
 {
     [super setCardCounter:cc];

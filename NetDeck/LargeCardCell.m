@@ -33,6 +33,11 @@
         pip.frame = CGRectSetSize(pip.frame, diameter, diameter);
         pip.layer.cornerRadius = diameter/2;
     }
+    
+    if ([[UIFont class] respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
+    {
+        self.name.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightBold];
+    }
 }
 
 -(void) setCardCounter:(CardCounter *)cc

@@ -106,6 +106,11 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
         // iphone 4s
         self.previewTable.scrollEnabled = NO;
     }
+    
+    if ([[UIFont class] respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
+    {
+        self.previewHeader.font = [UIFont monospacedDigitSystemFontOfSize:15 weight:UIFontWeightRegular];
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
