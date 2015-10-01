@@ -20,6 +20,9 @@
 @property NSArray* typeNames;
 @property BOOL dataDestinyAllowed;
 
+@property NSArray* cards;
+@property BOOL showPreviewTable;
+
 @end
 
 @implementation FilterViewController 
@@ -100,11 +103,13 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     
     self.previewTable.rowHeight = 30;
     self.previewTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.showPreviewTable = YES;
     
     if (self.parentViewController.view.frame.size.height == 480)
     {
         // iphone 4s
         self.previewTable.scrollEnabled = NO;
+        self.showPreviewTable = NO;
     }
     
     if ([[UIFont class] respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
@@ -235,17 +240,20 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
 
 -(void) updatePreview
 {
-    NSInteger count = self.cardList.count;
+    self.cards = self.cardList.allCards;
+    
+    NSInteger count = self.cards.count;
     NSString* fmt = count == 1 ? l10n(@"%lu matching card") : l10n(@"%lu matching cards");
     NSString* text = @"  ";
     text = [text stringByAppendingString:[NSString stringWithFormat:fmt, count]];
     self.previewHeader.text = text;
+    
     [self.previewTable reloadData];
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.cardList.count;
+    return self.showPreviewTable ? self.cards.count : 0;
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -259,7 +267,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
         cell.textLabel.font = [UIFont systemFontOfSize:13];
     }
     
-    Card* card = self.cardList.allCards[indexPath.row];
+    Card* card = self.cards[indexPath.row];
     cell.textLabel.text = card.name;
     
     return cell;
