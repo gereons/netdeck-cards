@@ -6,8 +6,8 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_8_4
-#warning "This project uses features only available in iOS SDK 8.4 and later."
+#ifndef __IPHONE_8_3
+#warning "This project uses features only available in iOS SDK 8.3 and later."
 #endif
 
 #ifdef __OBJC__

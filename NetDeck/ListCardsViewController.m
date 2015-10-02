@@ -232,7 +232,7 @@ static NSString* kSearchFieldValue = @"searchField";
     
     if (cc.count > 0)
     {
-        cell.nameLabel.font = [UIFont md_boldSystemFontOfSize:16];
+        cell.nameLabel.font = [UIFont md_mediumSystemFontOfSize:16];
     }
     else
     {
