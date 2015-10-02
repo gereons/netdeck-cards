@@ -15,10 +15,7 @@
 
 -(void) awakeFromNib
 {
-    if ([[UIFont class] respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
-    {
-        self.name.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightBold];
-    }
+    self.name.font = [UIFont md_mediumSystemFontOfSize:17];
 }
 
 -(void) setCardCounter:(CardCounter *)cc

@@ -246,11 +246,7 @@ static DataDownload* instance;
                                             delegate:nil
                                    cancelButtonTitle:l10n(@"Stop")
                                    otherButtonTitles: nil];
-
-    if ([[UIFont class] respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
-    {
-        self.alert.messageLabelFont = [UIFont monospacedDigitSystemFontOfSize:12 weight:UIFontWeightRegular];
-    }
+    self.alert.messageLabelFont = [UIFont md_systemFontOfSize:12];
     
     [self.alert.contentView addSubview:self.progressView];
     

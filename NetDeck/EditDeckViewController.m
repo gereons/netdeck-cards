@@ -531,10 +531,7 @@
         }
     }
     
-    if ([[UIFont class] respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
-    {
-        cell.nameLabel.font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
-    }
+    cell.nameLabel.font = [UIFont md_systemFontOfSize:16];
     
     NSString* type = [Faction name:card.faction];;
     NSString* influenceStr = @"";

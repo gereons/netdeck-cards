@@ -230,14 +230,13 @@ static NSString* kSearchFieldValue = @"searchField";
     Card* card = [self.cards objectAtIndexPath:indexPath];
     CardCounter* cc = [self.deck findCard:card];
     
-    CGFloat weight = cc.count > 0 ? UIFontWeightBold : UIFontWeightRegular;
-    if ([[UIFont class] respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
+    if (cc.count > 0)
     {
-        cell.nameLabel.font = [UIFont monospacedDigitSystemFontOfSize:16 weight:weight];
+        cell.nameLabel.font = [UIFont md_boldSystemFontOfSize:16];
     }
     else
     {
-        cell.nameLabel.font = [UIFont systemFontOfSize:16 weight:weight];
+        cell.nameLabel.font = [UIFont md_systemFontOfSize:16];
     }
 }
 

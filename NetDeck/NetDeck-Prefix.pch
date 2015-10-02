@@ -19,3 +19,4 @@
 
 #import "NRTypes.h"
 #import "NSArray+TwoD.h"
+#import "UIFont+monospacedDigits.h"

@@ -139,6 +139,8 @@ static NSMutableArray* subtypeCollapsedSections;
     self.factionButton.tag = FACTION_BUTTON;
     self.subtypeButton.tag = SUBTYPE_BUTTON;
     
+    self.summaryLabel.font = [UIFont md_systemFontOfSize:15];
+    
     [self resetAllButtons];
 }
 

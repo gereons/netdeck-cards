@@ -10,5 +10,6 @@
 
 +(UIFont*) md_systemFontOfSize:(CGFloat)fontSize;
 +(UIFont*) md_boldSystemFontOfSize:(CGFloat)fontSize;
++(UIFont*) md_mediumSystemFontOfSize:(CGFloat)fontSize;
 
 @end

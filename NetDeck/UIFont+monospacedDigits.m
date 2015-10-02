@@ -41,4 +41,16 @@ static BOOL ios9;
     }
 }
 
++(UIFont*) md_mediumSystemFontOfSize:(CGFloat)fontSize
+{
+    if (ios9)
+    {
+        return [UIFont monospacedDigitSystemFontOfSize:fontSize weight:UIFontWeightMedium];
+    }
+    else
+    {
+        return [UIFont boldSystemFontOfSize:fontSize];
+    }
+}
+
 @end
