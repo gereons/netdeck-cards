@@ -69,6 +69,7 @@
 		3A3845071B77CB5D007C76F2 /* CardUpdateCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845061B77CB5D007C76F2 /* CardUpdateCheck.m */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
 		3A3E26E81A005042000C6D32 /* UIAlertAction+NetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */; };
+		3A3FA6911BBF07C100994A11 /* UIFont+monospacedDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */; settings = {ASSET_TAGS = (); }; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
 		3A40EA4E19FD2CBE00B9CFDA /* 890-sort-ascending.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */; };
 		3A441C8C18E60A5300F46C92 /* hex_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8A18E60A5300F46C92 /* hex_background@2x.png */; };
@@ -420,6 +421,8 @@
 		3A3D841419F1A24F00642CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3A3E26E61A004FD7000C6D32 /* UIAlertAction+NetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertAction+NetDeck.h"; sourceTree = "<group>"; };
 		3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertAction+NetDeck.m"; sourceTree = "<group>"; };
+		3A3FA68F1BBF07C100994A11 /* UIFont+monospacedDigits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+monospacedDigits.h"; sourceTree = "<group>"; };
+		3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+monospacedDigits.m"; sourceTree = "<group>"; };
 		3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending@2x.png"; sourceTree = "<group>"; };
 		3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending.png"; sourceTree = "<group>"; };
 		3A441C8A18E60A5300F46C92 /* hex_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex_background@2x.png"; sourceTree = "<group>"; };
@@ -1001,6 +1004,8 @@
 				3A8309861AE8C22D00FED08A /* NRCrashlytics.h */,
 				3AC32DD81B67F63300DFD98D /* GZip.h */,
 				3AC32DD91B67F63300DFD98D /* GZip.m */,
+				3A3FA68F1BBF07C100994A11 /* UIFont+monospacedDigits.h */,
+				3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */,
 			);
 			name = "Utility Classes / Headers";
 			sourceTree = "<group>";
@@ -1946,6 +1951,7 @@
 				3A1855FC1A8E4FE700A1852D /* CardSet.m in Sources */,
 				3A563717199552BA006AD431 /* BrowserCell.m in Sources */,
 				3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */,
+				3A3FA6911BBF07C100994A11 /* UIFont+monospacedDigits.m in Sources */,
 				3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */,
 				3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */,
 				3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */,
