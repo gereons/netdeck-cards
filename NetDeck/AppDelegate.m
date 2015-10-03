@@ -21,17 +21,6 @@
 #import "NRDBAuth.h"
 #import "NRDB.h"
 
-/* IOS9 ToDos:
- * (as of beta1)
- *
- * App Transport Security: mark netrunnerdb.com as "http allowed"
- * Load missing images: text flicker (font width issue)
- * check label widths
- * set BITCODE_ENABLED=NO
- * set "requires full screen"
- * font size in identity selection
- */
-
 const NSString* const kANY = @"Any";
 
 @implementation AppDelegate
@@ -253,9 +242,15 @@ const NSString* const kANY = @"Any";
     alert.didDismissHandler = ^(NSInteger buttonIndex) {
         if (buttonIndex == 1)
         {
-            NSString* url = [NSString stringWithFormat:@"mailto:netdeck@steffens.org?subject=Bug in Net Deck %@", [AppDelegate appVersion]];
-            url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            NSString* subject = [NSString stringWithFormat:@"Bug in Net Deck %@", [AppDelegate appVersion]];
+            NSString* body = @"If possible, please describe what caused the crash. Thanks!";
+            
+            NSMutableString* mailto = @"mailto:netdeck@steffens.org?subject=".mutableCopy;
+            [mailto appendString:[subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            [mailto appendString:@"&body="];
+            [mailto appendString:[body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailto]];
         }
     };
 }
