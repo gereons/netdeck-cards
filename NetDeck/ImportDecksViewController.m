@@ -20,6 +20,7 @@
 #import "SettingsKeys.h"
 #import "Faction.h"
 #import "NRDB.h"
+#import "DeckManager.h"
 
 static NRDeckSearchScope searchScope = NRDeckSearchAll;
 static NSString* filterText;
@@ -210,19 +211,25 @@ static NSString* filterText;
         if (buttonIndex == 1) // ok, import
         {
             [SVProgressHUD showSuccessWithStatus:l10n(@"Imported decks")];
-            for (NSArray* arr in self.filteredDecks)
-            {
-                for (Deck* deck in arr)
-                {
-                    if (self.source == NRImportSourceNetrunnerDb)
-                    {
-                        deck.filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
-                    }
-                    [deck saveToDisk];
-                }
-            }
+            [self performSelector:@selector(doImportAll) withObject:nil afterDelay:0.001];
         }
     };
+}
+
+-(void) doImportAll
+{
+    for (NSArray* arr in self.filteredDecks)
+    {
+        for (Deck* deck in arr)
+        {
+            if (self.source == NRImportSourceNetrunnerDb)
+            {
+                deck.filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
+            }
+            [deck saveToDisk];
+            [DeckManager resetModificationDate:deck];
+        }
+    }
 }
 
 #pragma mark netrunnerdb.com import
@@ -422,7 +429,6 @@ static NSString* filterText;
                 break;
         }
         
-        
         if (allDecks)
         {
             self.filteredDecks = @[ [allDecks filteredArrayUsingPredicate:predicate] ];
@@ -570,9 +576,9 @@ static NSString* filterText;
             if (self.source == NRImportSourceNetrunnerDb)
             {
                 [[NRDB sharedInstance] loadDeck:deck completion:^(BOOL ok, Deck *deck) {
-                    NSLog(@"ok=%d", ok);
                     [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
                     [deck saveToDisk];
+                    [DeckManager resetModificationDate:deck];
                 }];
             }
         };
@@ -581,6 +587,7 @@ static NSString* filterText;
     {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
         [deck saveToDisk];
+        [DeckManager resetModificationDate:deck];
     }
 }
 
