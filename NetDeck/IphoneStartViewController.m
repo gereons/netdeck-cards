@@ -22,6 +22,7 @@
 #import "SettingsViewController.h"
 #import "SettingsKeys.h"
 #import "ImportDecksViewController.h"
+#import "BrowserViewController.h"
 
 @interface IphoneStartViewController ()
 
@@ -66,15 +67,15 @@
     self.importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
     self.importButton.enabled = cardsAvailable;
 
-    
-    self.navigationBar.topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
+    UINavigationItem* topItem = self.navigationBar.topItem;
+    topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
     
     self.settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"740-gear"] style:UIBarButtonItemStylePlain target:self action:@selector(openSettings:)];
     self.sortButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"890-sort-ascending-toolbar"] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
     self.sortButton.enabled = cardsAvailable;
     
-    self.navigationBar.topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
-    self.navigationBar.topItem.leftBarButtonItems = @[ self.settingsButton, self.sortButton ];
+    topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
+    topItem.leftBarButtonItems = @[ self.settingsButton, self.sortButton ];
     
     self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_FILTER_SORT];
     
@@ -331,6 +332,14 @@
 {
     self.settings = [[SettingsViewController alloc] init];
     [self pushViewController:self.settings.iask animated:YES];
+}
+
+#pragma mark - browser
+
+-(void) titleButtonTapped:(id)sender
+{
+    BrowserViewController* browser = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil];
+    [self pushViewController:browser animated:YES];
 }
 
 #pragma mark - Table view data source
