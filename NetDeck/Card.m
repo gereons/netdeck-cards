@@ -122,9 +122,14 @@ static NSDictionary* cropValues;
     if (self.isCore)
     {
         NSInteger cores = [[NSUserDefaults standardUserDefaults] integerForKey:NUM_CORES];
-        return MIN(3, cores * self.quantity);
+        return cores * self.quantity;
     }
-    return 3;
+    NSSet* disabledSets = [CardSets disabledSetCodes];
+    if ([disabledSets containsObject:self.setCode])
+    {
+        return 0;
+    }
+    return self.quantity;
 }
 
 -(NSString*) iceType
@@ -238,7 +243,7 @@ static NSDictionary* cropValues;
     
     JSON_INT(number, @"number");
     JSON_INT(quantity, @"quantity");
-    c->_quantity = MIN(3, c->_quantity);
+    
     JSON_BOOL(unique, @"uniqueness");
     
     if (c.type == NRCardTypeIdentity)

@@ -511,12 +511,9 @@
     }
     
     cell.nameLabel.textColor = [UIColor blackColor];
-    if (card.isCore && !self.deck.isDraft)
+    if (!self.deck.isDraft && card.owned < cc.count)
     {
-        if (card.owned < cc.count)
-        {
-            cell.nameLabel.textColor = [UIColor redColor];
-        }
+        cell.nameLabel.textColor = [UIColor redColor];
     }
     
     cell.nameLabel.font = [UIFont md_systemFontOfSize:16];

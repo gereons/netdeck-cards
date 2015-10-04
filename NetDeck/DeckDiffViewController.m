@@ -440,7 +440,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     {
         cell.deck1Card.text = [NSString stringWithFormat:@"%lu× %@", (unsigned long)cd.count1, cd.card.name];
         cell.card1 = cd.card;
-        if (cd.card.isCore && cd.count1 > cd.card.owned)
+        if (cd.count1 > cd.card.owned)
         {
             cell.deck1Card.textColor = [UIColor redColor];
         }
@@ -454,7 +454,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     {
         cell.deck2Card.text = [NSString stringWithFormat:@"%lu× %@", (unsigned long)cd.count2, cd.card.name];
         cell.card2 = cd.card;
-        if (cd.card.isCore && cd.count2 > cd.card.owned)
+        if (cd.count2 > cd.card.owned)
         {
             cell.deck2Card.textColor = [UIColor redColor];
         }
@@ -468,10 +468,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     {
         NSInteger owned = cd.card.owned;
         NSInteger diff = cd.count1 + cd.count2 - owned;
-        if (owned != 3)
-        {
-            diff = MIN(MIN(cd.count1,cd.count2), diff);
-        }
+
         cell.diff.text = [NSString stringWithFormat:@"%ld", (long)diff];
         cell.diff.textColor = [UIColor blackColor];
     }

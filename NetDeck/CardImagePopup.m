@@ -118,12 +118,9 @@ static UIPopoverController* popover;
     }
     
     self.copiesLabel.textColor = [UIColor blackColor];
-    if (self.cc.card.isCore && !self.deck.isDraft)
+    if (!self.deck.isDraft && self.cc.card.owned < count)
     {
-        if (self.cc.card.owned < count)
-        {
-            self.copiesLabel.textColor = [UIColor redColor];
-        }
+        self.copiesLabel.textColor = [UIColor redColor];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];

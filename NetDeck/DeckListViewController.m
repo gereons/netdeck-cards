@@ -1445,12 +1445,9 @@
         }
         
         cell.copiesLabel.textColor = [UIColor blackColor];
-        if (cc.card.isCore && !self.deck.isDraft)
+        if (!self.deck.isDraft && cc.card.owned < cc.count)
         {
-            if (cc.card.owned < cc.count)
-            {
-                cell.copiesLabel.textColor = [UIColor redColor];
-            }
+            cell.copiesLabel.textColor = [UIColor redColor];
         }
     }
     

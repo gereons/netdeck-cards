@@ -329,7 +329,7 @@ static TableData* enabledSets;
     
     for (CardCounter* cc in deck.allCards)
     {
-        NSNumber*n = [sets objectForKey:cc.card.setName];
+        NSNumber* n = [sets objectForKey:cc.card.setName];
         BOOL isCore = cc.card.isCore;
         
         if (n == nil)

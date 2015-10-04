@@ -925,9 +925,6 @@
 				3AA463CD1BC003CC00591647 /* Image Display */,
 				3AA463CE1BC003D700591647 /* Draw Simulator */,
 				3AA463D61BC0045700591647 /* Edit Deck */,
-				3AD860D81B792B6700EEF8AC /* ListCardsViewController.h */,
-				3AD860D91B792B6700EEF8AC /* ListCardsViewController.m */,
-				3AD860DA1B792B6700EEF8AC /* ListCardsViewController.xib */,
 				3AA463D71BC0047100591647 /* Card Filter */,
 			);
 			name = iPhone;
@@ -1437,6 +1434,9 @@
 				3AD860D31B79154100EEF8AC /* EditDeckCell.h */,
 				3AD860D41B79154100EEF8AC /* EditDeckCell.m */,
 				3AD860D51B79154100EEF8AC /* EditDeckCell.xib */,
+				3AD860D81B792B6700EEF8AC /* ListCardsViewController.h */,
+				3AD860D91B792B6700EEF8AC /* ListCardsViewController.m */,
+				3AD860DA1B792B6700EEF8AC /* ListCardsViewController.xib */,
 			);
 			name = "Edit Deck";
 			sourceTree = "<group>";
