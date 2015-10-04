@@ -37,7 +37,7 @@
 @property NSArray* cards;
 @property NSArray* sections;
 
-@property UILabel* titleLabel;  // used as the titleView in out navigation bar
+@property UIButton* titleButton;  // used as the titleView in our navigation bar
 
 @property ListCardsViewController* listCards;
 
@@ -55,6 +55,7 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"EditDeckCell" bundle:nil] forCellReuseIdentifier:@"cardCell"];
     
+    self.statusLabel.font = [UIFont md_systemFontOfSize:13];
     self.statusLabel.text = @"";
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -81,20 +82,15 @@
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.rightBarButtonItems = @[ addButton, exportButton ];
 
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.titleLabel.textColor = self.view.tintColor;
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    self.titleLabel.adjustsFontSizeToFitWidth = YES;
-    self.titleLabel.minimumScaleFactor = 0.5;
-    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.titleButton addTarget:self action:@selector(titleTapped:) forControlEvents:UIControlEventTouchUpInside];
+    self.titleButton.titleLabel.font = [UIFont md_mediumSystemFontOfSize:17];
+    self.titleButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.titleButton.titleLabel.minimumScaleFactor = 0.5;
+    
     [self setDeckName];
-    topItem.titleView = self.titleLabel;
-    
-    UITapGestureRecognizer* titleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleTapped:)];
-    titleTap.numberOfTapsRequired = 1;
-    self.titleLabel.userInteractionEnabled = YES;
-    [self.titleLabel addGestureRecognizer:titleTap];
-    
+    topItem.titleView = self.titleButton;
+
     if (self.autoSave)
     {
         // make save button disappear
@@ -115,16 +111,8 @@
 
 -(void) setDeckName
 {
-    self.titleLabel.text = self.deck.name;
-
-    CGSize maxSize = [self.titleLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, 44)];
-    CGRect frame = self.titleLabel.frame;
-    frame.size = maxSize;
-    self.titleLabel.frame = frame;
-    
-    CGPoint center = self.titleLabel.center;
-    center.x = self.view.frame.size.width / 2;
-    self.titleLabel.center = center;
+    [self.titleButton setTitle:self.deck.name forState:UIControlStateNormal];
+    [self.titleButton sizeToFit];
     
     self.title = self.deck.name;
     
