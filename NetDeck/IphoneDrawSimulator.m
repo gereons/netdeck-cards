@@ -12,7 +12,7 @@
 #import "Hypergeometric.h"
 
 @interface DrawTableCell : UITableViewCell
-@property NSString* code;
+@property Card* card;
 @property UIImageView* imgView;
 @end
 
@@ -176,7 +176,7 @@
     Card* card = self.draw[indexPath.row];
     cell.textLabel.text = card.name;
     cell.textLabel.textColor = [self.played[indexPath.row] boolValue] ? [UIColor lightGrayColor] : [UIColor blackColor];
-    cell.code = card.code;
+    cell.card = card;
     
     [self loadImageForCell:cell card:card];
     
@@ -186,14 +186,13 @@
 -(void) loadImageForCell:(DrawTableCell*)cell card:(Card*)card
 {
     [[ImageCache sharedInstance] getImageFor:card completion:^(Card *card, UIImage *image, BOOL placeholder) {
-        if ([cell.code isEqualToString:card.code])
+        if ([cell.card.code isEqualToString:card.code])
         {
             cell.imgView.image = [ImageCache croppedImage:image forCard:card];
         }
         else
         {
-            Card* cellCard = [Card cardByCode:cell.code];
-            [self loadImageForCell:cell card:cellCard];
+            [self loadImageForCell:cell card:cell.card];
         }
     }];
 }
