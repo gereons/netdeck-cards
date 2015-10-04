@@ -37,8 +37,17 @@
     self.searchBar.scopeButtonTitles = @[ l10n(@"Both"), l10n(@"Runner"), l10n(@"Corp") ];
     self.searchBar.showsCancelButton = NO;
     
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(showKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(hideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    
     self.role = NRRoleNone;
     [self refresh];
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void) refresh
@@ -95,15 +104,15 @@
     switch (card.type)
     {
         default:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %d Cr.", card.factionStr, card.cost];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d Cr", card.factionStr, card.cost];
             break;
             
         case NRCardTypeIdentity:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %d/%d", card.factionStr, card.minimumDecksize, card.influenceLimit];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d/%d", card.factionStr, card.minimumDecksize, card.influenceLimit];
             break;
             
         case NRCardTypeAgenda:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %d/%d", card.factionStr, card.advancementCost, card.agendaPoints];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d/%d", card.factionStr, card.advancementCost, card.agendaPoints];
             break;
     }
     
@@ -155,6 +164,27 @@
 {
     self.searchBar.showsCancelButton = NO;
     [self.searchBar resignFirstResponder];
+}
+
+#pragma mark - keyboard display
+
+-(void) showKeyboard:(NSNotification*)notification
+{
+    CGRect kbRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    float kbHeight = kbRect.size.height;
+    
+    UIEdgeInsets inset = self.tableView.contentInset;
+    inset.bottom = kbHeight;
+    self.tableView.contentInset = inset;
+    self.tableView.scrollIndicatorInsets = inset;
+}
+
+-(void) hideKeyboard:(id)notification
+{
+    UIEdgeInsets inset = self.tableView.contentInset;
+    inset.bottom = 0;
+    self.tableView.contentInset = inset;
+    self.tableView.scrollIndicatorInsets = inset;
 }
 
 @end
