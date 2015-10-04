@@ -13,9 +13,12 @@
 @property IBOutlet UITableViewController* tableViewController;
 @property IBOutlet UITableView* tableView;
 
+@property IBOutlet UIButton* titleButton;
+
 @property IBOutlet UISearchBar* searchBar;
 
 -(IBAction)createNewDeck:(id)sender;
 -(IBAction)openSettings:(id)sender;
+-(IBAction)titleButtonTapped:(id)sender;
 
 @end

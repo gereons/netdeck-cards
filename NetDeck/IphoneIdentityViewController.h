@@ -12,8 +12,12 @@
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UIBarButtonItem* okButton;
+@property IBOutlet UIBarButtonItem* cancelButton;
+
+@property IBOutlet UIToolbar* toolbar;
 
 -(IBAction)okClicked:(id)sender;
+-(IBAction)cancelClicked:(id)sender;
 
 @property NRRole role;
 @property Deck* deck;

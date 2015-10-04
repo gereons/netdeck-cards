@@ -11,6 +11,14 @@
 #import "Deck.h"
 #import "Hypergeometric.h"
 
+@interface DrawTableCell : UITableViewCell
+@property Card* card;
+@property UIImageView* imgView;
+@end
+
+@implementation  DrawTableCell
+@end
+
 @interface IphoneDrawSimulator ()
 
 @property NSMutableArray* draw;
@@ -134,6 +142,11 @@
 
 #pragma mark - table view
 
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.draw.count;
@@ -151,18 +164,39 @@
 {
     static NSString* cellIdentifier = @"drawCell";
     
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    DrawTableCell* cell = (DrawTableCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[DrawTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 60)];
+        cell.accessoryView = cell.imgView;
     }
     
     Card* card = self.draw[indexPath.row];
     cell.textLabel.text = card.name;
     cell.textLabel.textColor = [self.played[indexPath.row] boolValue] ? [UIColor lightGrayColor] : [UIColor blackColor];
+    cell.card = card;
+    
+    [self loadImageForCell:cell card:card];
     
     return cell;
+}
+
+-(void) loadImageForCell:(DrawTableCell*)cell card:(Card*)card
+{
+    cell.imageView.image = nil;
+    
+    [[ImageCache sharedInstance] getImageFor:card completion:^(Card *card, UIImage *image, BOOL placeholder) {
+        if ([cell.card.code isEqualToString:card.code])
+        {
+            cell.imgView.image = [ImageCache croppedImage:image forCard:card];
+        }
+        else
+        {
+            [self loadImageForCell:cell card:cell.card];
+        }
+    }];
 }
 
 @end

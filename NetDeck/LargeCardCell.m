@@ -56,12 +56,9 @@
     }
     
     self.name.textColor = [UIColor blackColor];
-    if (card.isCore && !self.deck.isDraft)
+    if (!self.deck.isDraft && card.owned < cc.count)
     {
-        if (card.owned < cc.count)
-        {
-            self.name.textColor = [UIColor redColor];
-        }
+        self.name.textColor = [UIColor redColor];
     }
     
     NSString* factionName = [Faction name:card.faction];

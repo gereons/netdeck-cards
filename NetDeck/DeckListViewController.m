@@ -242,6 +242,8 @@
     
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
+    
+    self.footerLabel.font = [UIFont md_systemFontOfSize:15];
 
     [self refresh];
 }
@@ -1443,12 +1445,9 @@
         }
         
         cell.copiesLabel.textColor = [UIColor blackColor];
-        if (cc.card.isCore && !self.deck.isDraft)
+        if (!self.deck.isDraft && cc.card.owned < cc.count)
         {
-            if (cc.card.owned < cc.count)
-            {
-                cell.copiesLabel.textColor = [UIColor redColor];
-            }
+            cell.copiesLabel.textColor = [UIColor redColor];
         }
     }
     
