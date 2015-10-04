@@ -83,8 +83,8 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     [self.diffModeControl setTitle:l10n(@"Diff") forSegmentAtIndex:DiffOnly];
     [self.diffModeControl setTitle:l10n(@"Intersect") forSegmentAtIndex:Intersect];
     [self.diffModeControl setTitle:l10n(@"Overlap") forSegmentAtIndex:Overlap];
-    [self.diffModeControl sizeToFit];
     self.diffModeControl.apportionsSegmentWidthsByContent = YES;
+    [self.diffModeControl sizeToFit];
     
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];

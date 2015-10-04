@@ -13,6 +13,7 @@
 #import "DeckChange.h"
 #import "DeckChangeSet.h"
 #import "DeckManager.h"
+#import "CardType.h"
 
 #import "SettingsKeys.h"
 
@@ -607,7 +608,7 @@
     
     [self sort];
     
-    [sections addObject:l10n(@"Identity")];
+    [sections addObject:[CardType name:NRCardTypeIdentity]];
     if (self.identityCc)
     {
         [cards addObject:@[ self.identityCc ]];
