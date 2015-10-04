@@ -42,6 +42,14 @@
     self.title = l10n(@"Choose Identity");
     
     self.okButton.enabled = self.deck != nil;
+    self.cancelButton.title = l10n(@"Cancel");
+    if (!self.deck)
+    {
+        NSMutableArray* barButtons = self.toolbar.items.mutableCopy;
+        
+        [barButtons removeObject:self.cancelButton];
+        self.toolbar.items = barButtons;
+    }
     
     self.selectedIdentity = self.deck.identity;
     
@@ -121,11 +129,8 @@
     if (self.deck)
     {
         [self.deck addCard:self.selectedIdentity copies:1];
-        // don't call [self.navController popViewControllerAnimated:YES] here - this will pop two VCs
-        // instead, call the nav bar delegate from NRNavigationController to do
-        UINavigationBar* navBar = self.navigationController.navigationBar;
-        UINavigationItem* navItem = self.navigationController.navigationItem;
-        [navBar.delegate navigationBar:navBar shouldPopItem:navItem];
+        
+        [self cancelClicked:sender];
     }
     else
     {
@@ -149,6 +154,17 @@
         [vcs addObject:edit];
         [self.navigationController setViewControllers:vcs animated:YES];
     }
+}
+
+-(void) cancelClicked:(id)sender
+{
+    NSAssert(self.deck, @"no deck?");
+    
+    // don't call [self.navController popViewControllerAnimated:YES] here - this will pop two VCs
+    // instead, call the nav bar delegate from NRNavigationController to do
+    UINavigationBar* navBar = self.navigationController.navigationBar;
+    UINavigationItem* navItem = self.navigationController.navigationItem;
+    [navBar.delegate navigationBar:navBar shouldPopItem:navItem];
 }
 
 #pragma mark - tableview
@@ -195,13 +211,14 @@
     cell.textLabel.text = card.name;
     cell.textLabel.textColor = card.factionColor;
  
+    NSString* influence = card.influenceLimit == -1 ? @"∞" : [NSString stringWithFormat:@"%d", card.influenceLimit];
     if (self.role == NRRoleRunner)
     {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d/%d - %d Link", card.minimumDecksize, card.influenceLimit, card.baseLink];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d/%@ · %d Link", card.minimumDecksize, influence, card.baseLink];
     }
     else
     {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d/%d", card.minimumDecksize, card.influenceLimit];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d/%@", card.minimumDecksize, influence];
     }
     
     return cell;
