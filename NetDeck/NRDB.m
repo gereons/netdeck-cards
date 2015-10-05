@@ -149,7 +149,7 @@ static NSDateFormatter* formatter;
              [settings synchronize];
              
              NSLog(@"nrdb (re)auth success, status: %d", ok);
-             [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:3600];
+             [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
              completionBlock(ok);
          }
          failure:^(AFHTTPRequestOperation* operation, NSError* error) {

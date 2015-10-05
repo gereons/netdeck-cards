@@ -36,7 +36,8 @@ const NSString* const kANY = @"Any";
     
     [self setAdditionalUserDefaults];
     
-    NSTimeInterval fetchInterval = [[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB] ? 3600 : UIApplicationBackgroundFetchIntervalNever;
+    BOOL useNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB];
+    NSTimeInterval fetchInterval = useNrdb ? UIApplicationBackgroundFetchIntervalNever : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
     
     @try

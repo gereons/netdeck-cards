@@ -4,13 +4,12 @@
 <dict>
 	<key>PreferenceSpecifiers</key>
 	<array>
-        <dict>
+		<dict>
 			<key>Title</key>
 			<string>Account</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
-		
 		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
@@ -19,29 +18,29 @@
 			<key>Key</key>
 			<string>useNrdb</string>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSTitleValueSpecifier</string>
-            <key>Title</key>
-            <string>Token expiry</string>
-            <key>Key</key>
-            <string>nrdbTokenExpiry</string>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>IASKButtonSpecifier</string>
-            <key>Title</key>
-            <string>Refresh Auth now</string>
-            <key>Key</key>
-            <string>refreshAuthNow</string>
-        </dict>
-        <dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Authentication valid until</string>
+			<key>Key</key>
+			<string>nrdbTokenExpiry</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>Refresh Authentication</string>
+			<key>Key</key>
+			<string>refreshAuthNow</string>
+		</dict>
+		<dict>
 			<key>Title</key>
 			<string>Saving</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
-        <dict>
+		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>

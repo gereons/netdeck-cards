@@ -70,6 +70,10 @@
     {
         [hiddenKeys addObject:AUTO_SAVE_DB];
     }
+    if (![settings boolForKey:USE_NRDB])
+    {
+        [hiddenKeys addObjectsFromArray:@[ NRDB_TOKEN_EXPIRY, REFRESH_AUTH_NOW ]];
+    }
     [self.iask setHiddenKeys:hiddenKeys];
 }
 
@@ -148,7 +152,9 @@
             [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
             [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
             [settings removeObjectForKey:NRDB_TOKEN_TTL];
+            
         }
+        [self refresh];
     }
     else if ([notification.object isEqualToString:UPDATE_INTERVAL])
     {
@@ -179,6 +185,7 @@
         {
             [SVProgressHUD showInfoWithStatus:@"re-authenticating"];
             [[NRDB sharedInstance] backgroundRefreshAuthentication:^(UIBackgroundFetchResult result) {
+                [self refresh];
                 [SVProgressHUD dismiss];
             }];
         }
