@@ -18,6 +18,8 @@ typedef void (^DecklistCompletionBlock)(NSArray* decks);
 typedef void (^SaveCompletionBlock)(BOOL ok, NSString* deckId);
 typedef void (^LoadCompletionBlock)(BOOL ok, Deck* deck);
 
+typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult result);
+
 -(void)authorizeWithCode:(NSString*)code completion:(AuthCompletionBlock)completionBlock;
 
 -(void)decklist:(DecklistCompletionBlock)completionBlock;
@@ -29,6 +31,7 @@ typedef void (^LoadCompletionBlock)(BOOL ok, Deck* deck);
 -(void)publishDeck:(Deck*)deck completion:(SaveCompletionBlock)completionBlock;
 
 -(void)refreshAuthentication;
+-(void)backgroundRefreshAuthentication:(BackgroundFetchCompletionBlock)completionHandler;
 -(void)stopRefresh;
 
 -(void)updateDeckMap:(NSArray*) decks;

@@ -57,6 +57,7 @@ static NSDateFormatter* formatter;
     
     [settings synchronize];
     [[NRDB sharedInstance].timer invalidate];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
 }
 
 #pragma mark autorization
@@ -101,7 +102,8 @@ static NSDateFormatter* formatter;
 
 -(void) getAuthorization:(NSDictionary*)parameters completion:(AuthCompletionBlock)completionBlock
 {
-    if (!APP_ONLINE)
+    BOOL foreground = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
+    if (foreground && !APP_ONLINE)
     {
         completionBlock(NO);
         return;
@@ -112,7 +114,7 @@ static NSDateFormatter* formatter;
     
     [manager GET:@TOKEN_URL parameters:parameters
          success:^(AFHTTPRequestOperation* operation, id responseObject) {
-             // NSLog(@"auth response: %@", responseObject);
+             NSLog(@"auth response: %@", responseObject);
              BOOL ok = YES;
              
              NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -146,7 +148,8 @@ static NSDateFormatter* formatter;
              }
              [settings synchronize];
              
-             // NSLog(@"nrdb (re)auth success, status: %d", ok);
+             NSLog(@"nrdb (re)auth success, status: %d", ok);
+             [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:3600];
              completionBlock(ok);
          }
          failure:^(AFHTTPRequestOperation* operation, NSError* error) {
@@ -157,6 +160,7 @@ static NSDateFormatter* formatter;
                                   message:l10n(@"Authorization at NetrunnerDB.com failed")
                                   buttons:@[ l10n(@"OK") ]];
              
+             [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
              completionBlock(NO);
          }
     ];
@@ -196,6 +200,32 @@ static NSDateFormatter* formatter;
                                                     userInfo:nil
                                                      repeats:NO];
     }
+}
+
+-(void) backgroundRefreshAuthentication:(BackgroundFetchCompletionBlock)completionHandler
+{
+    NSLog(@"start bg fetch");
+    
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    if (![settings boolForKey:USE_NRDB])
+    {
+        NSLog(@"no nrdb account");
+        completionHandler(UIBackgroundFetchResultNoData);
+        return;
+    }
+    
+    if ([settings objectForKey:NRDB_REFRESH_TOKEN] == nil)
+    {
+        NSLog(@"no token");
+        [NRDB clearSettings];
+        completionHandler(UIBackgroundFetchResultNoData);
+        return;
+    }
+
+    [self refreshToken:^(BOOL ok) {
+        NSLog(@"refresh: %d", ok);
+        completionHandler(ok ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultFailed);
+    }];
 }
 
 -(void) timedRefresh:(NSTimer*) timer

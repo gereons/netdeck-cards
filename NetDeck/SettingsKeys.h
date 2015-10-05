@@ -64,6 +64,7 @@
 #define NRDB_TOKEN_EXPIRY   @"nrdbTokenExpiry"
 #define NRDB_TOKEN_TTL      @"nrdbTokenTTL"
 #define NRDB_AUTOSAVE       @"nrdbAutoSave"
+#define REFRESH_AUTH_NOW    @"refreshAuthNow"
 
 #define IDENTITY_TABLE      @"identityTable"
 

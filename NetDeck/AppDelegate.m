@@ -36,6 +36,9 @@ const NSString* const kANY = @"Any";
     
     [self setAdditionalUserDefaults];
     
+    NSTimeInterval fetchInterval = [[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB] ? 3600 : UIApplicationBackgroundFetchIntervalNever;
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
+    
     @try
     {
         DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"4mhw6piwd9wqti3" secret:@"5j8qxt2ywsrlk73"];
@@ -222,6 +225,28 @@ const NSString* const kANY = @"Any";
     
     return version;
 }
+
+#pragma mark - background fetch
+
+static BOOL runningBackgroundFetch = NO;
+
+-(void) application:(UIApplication *)application performFetchWithCompletionHandler:(BackgroundFetchCompletionBlock)completionHandler
+{
+    NSLog(@"app perform bg fetch");
+    if (runningBackgroundFetch)
+    {
+        NSLog(@"dup call");
+        completionHandler(UIBackgroundFetchResultNoData);
+        return;
+    }
+    runningBackgroundFetch = YES;
+    [[NRDB sharedInstance] backgroundRefreshAuthentication:^(UIBackgroundFetchResult result) {
+        NSLog(@"primary call %ld", (long)result);
+        completionHandler(result);
+        runningBackgroundFetch = NO;
+    }];
+}
+
 
 #pragma mark - crashlytics delegate
 

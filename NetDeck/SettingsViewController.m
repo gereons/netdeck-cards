@@ -22,7 +22,7 @@
 #import "SettingsKeys.h"
 #import "Notifications.h"
 #import "NRDBAuthPopupViewController.h"
-
+#import "NRDB.h"
 
 @implementation SettingsViewController
 
@@ -167,6 +167,20 @@
         if (APP_ONLINE)
         {
             [DataDownload downloadCardData];
+        }
+        else
+        {
+            [self showOfflineAlert];
+        }
+    }
+    else if ([specifier.key isEqualToString:REFRESH_AUTH_NOW])
+    {
+        if (APP_ONLINE)
+        {
+            [SVProgressHUD showInfoWithStatus:@"re-authenticating"];
+            [[NRDB sharedInstance] backgroundRefreshAuthentication:^(UIBackgroundFetchResult result) {
+                [SVProgressHUD dismiss];
+            }];
         }
         else
         {
