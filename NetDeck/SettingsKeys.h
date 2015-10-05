@@ -65,6 +65,7 @@
 #define NRDB_TOKEN_TTL      @"nrdbTokenTTL"
 #define NRDB_AUTOSAVE       @"nrdbAutoSave"
 #define REFRESH_AUTH_NOW    @"refreshAuthNow"
+#define LAST_BG_FETCH       @"lastBackgroundFetch"
 
 #define IDENTITY_TABLE      @"identityTable"
 

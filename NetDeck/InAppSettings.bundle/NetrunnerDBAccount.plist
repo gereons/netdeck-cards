@@ -26,6 +26,14 @@
 			<key>Key</key>
 			<string>nrdbTokenExpiry</string>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSTitleValueSpecifier</string>
+            <key>Title</key>
+            <string>Last Background Authorization refresh</string>
+            <key>Key</key>
+            <string>lastBackgroundFetch</string>
+        </dict>
 		<dict>
 			<key>Type</key>
 			<string>IASKButtonSpecifier</string>

@@ -111,6 +111,7 @@ const NSString* const kANY = @"Any";
         NRDB_HOST: @"netrunnerdb.com",
         LANGUAGE: @"en",
         UPDATE_INTERVAL: @(7),
+        LAST_BG_FETCH: l10n(@"never"),
         
         DECK_FILTER_STATE: @(NRDeckStateNone),
         DECK_VIEW_STYLE: @(NRCardViewLargeTable),
@@ -233,6 +234,8 @@ static BOOL runningBackgroundFetch = NO;
 
 -(void) application:(UIApplication *)application performFetchWithCompletionHandler:(BackgroundFetchCompletionBlock)completionHandler
 {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:LAST_BG_FETCH];
+    
     NSLog(@"app perform bg fetch");
     if (runningBackgroundFetch)
     {

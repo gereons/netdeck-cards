@@ -67,12 +67,13 @@ static NSDateFormatter* formatter;
     // NSLog(@"auth code");
     // ?client_id=" CLIENT_ID "&client_secret=" CLIENT_SECRET "&grant_type=authorization_code&redirect_uri=" CLIENT_HOST "&code="
     
-    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
-    parameters[@"client_id"] = @CLIENT_ID;
-    parameters[@"client_secret"] = @CLIENT_SECRET;
-    parameters[@"grant_type"] = @"authorization_code";
-    parameters[@"redirect_uri"] = @CLIENT_HOST;
-    parameters[@"code"] = code;
+    NSDictionary* parameters = @{
+        @"client_id": @CLIENT_ID,
+        @"client_secret": @CLIENT_SECRET,
+        @"grant_type": @"authorization_code",
+        @"redirect_uri": @CLIENT_HOST,
+        @"code": code
+    };
     
     [self getAuthorization:parameters completion:completionBlock];
 }
@@ -90,12 +91,13 @@ static NSDateFormatter* formatter;
         return;
     }
     
-    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
-    parameters[@"client_id"] = @CLIENT_ID;
-    parameters[@"client_secret"] = @CLIENT_SECRET;
-    parameters[@"grant_type"] = @"refresh_token";
-    parameters[@"redirect_uri"] = @CLIENT_HOST;
-    parameters[@"refresh_token"] = token;
+    NSDictionary* parameters = @{
+        @"client_id": @CLIENT_ID,
+        @"client_secret":  @CLIENT_SECRET,
+        @"grant_type": @"refresh_token",
+        @"redirect_uri": @CLIENT_HOST,
+        @"refresh_token": token
+    };
 
     [self getAuthorization:parameters completion:completionBlock];
 }
