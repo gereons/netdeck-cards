@@ -451,15 +451,27 @@
     return arr.count;
 }
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+-(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) // no count for identities
+    NSString* name = [self.sections objectAtIndex:section];
+    NSArray* arr = self.cards[section];
+    int cnt = 0;
+    for (CardCounter* cc in arr)
     {
-        return self.sections[section];
+        if (!ISNULL(cc))
+        {
+            cnt += cc.count;
+        }
     }
     
-    NSArray* arr = self.cards[section];
-    return [NSString stringWithFormat:@"%@ (%ld)", self.sections[section], (long)arr.count];
+    if (section > 0 && cnt)
+    {
+        return [NSString stringWithFormat:@"%@ (%d)", name, cnt];
+    }
+    else
+    {
+        return name;
+    }
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -580,6 +592,11 @@
         
         [self performSelector:@selector(refreshDeck) withObject:nil afterDelay:0.001];
     }
+}
+
+-(NSString*) tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return l10n(@"Remove");
 }
 
 #pragma mark - Deck Editor
