@@ -22,6 +22,8 @@
 #define IS_IPAD         ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 #define IS_IPHONE       ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
 
+#define BG_FETCH_INTERVAL   (12*60*60)   // 12 hrs
+
 extern NSString* const kANY;
 
 typedef NS_ENUM(NSInteger, NRCardType)

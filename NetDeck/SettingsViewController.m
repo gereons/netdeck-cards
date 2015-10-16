@@ -64,6 +64,10 @@
     {
         [hiddenKeys addObjectsFromArray:@[ @"about_hide_1", @"about_hide_2" ]];
     }
+
+#if RELEASE
+    [hiddenKeys addObjectsFromArray:@[ NRDB_TOKEN_EXPIRY, REFRESH_AUTH_NOW, LAST_BG_FETCH ]];
+#endif
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     if (![settings boolForKey:USE_DROPBOX])

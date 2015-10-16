@@ -22,7 +22,7 @@
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 			<key>Title</key>
-			<string>Authentication valid until</string>
+			<string>Auth valid until</string>
 			<key>Key</key>
 			<string>nrdbTokenExpiry</string>
 		</dict>
@@ -30,7 +30,7 @@
             <key>Type</key>
             <string>PSTitleValueSpecifier</string>
             <key>Title</key>
-            <string>Last Background Authorization refresh</string>
+            <string>Last BG Fetch</string>
             <key>Key</key>
             <string>lastBackgroundFetch</string>
         </dict>

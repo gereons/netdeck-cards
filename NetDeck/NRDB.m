@@ -116,7 +116,7 @@ static NSDateFormatter* formatter;
     
     [manager GET:@TOKEN_URL parameters:parameters
          success:^(AFHTTPRequestOperation* operation, id responseObject) {
-             NSLog(@"auth response: %@", responseObject);
+             // NSLog(@"auth response: %@", responseObject);
              BOOL ok = YES;
              
              NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -150,14 +150,14 @@ static NSDateFormatter* formatter;
              }
              [settings synchronize];
              
-             NSLog(@"nrdb (re)auth success, status: %d", ok);
-             [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+             // NSLog(@"nrdb (re)auth success, status: %d", ok);
+             [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:BG_FETCH_INTERVAL];
              completionBlock(ok);
          }
          failure:^(AFHTTPRequestOperation* operation, NSError* error) {
              [NRDB clearSettings];
              
-             NSLog(@"nrdb (re)auth failed: %@", operation);
+             // NSLog(@"nrdb (re)auth failed: %@", operation);
              [SDCAlertView alertWithTitle:nil
                                   message:l10n(@"Authorization at NetrunnerDB.com failed")
                                   buttons:@[ l10n(@"OK") ]];
@@ -206,26 +206,26 @@ static NSDateFormatter* formatter;
 
 -(void) backgroundRefreshAuthentication:(BackgroundFetchCompletionBlock)completionHandler
 {
-    NSLog(@"start bg fetch");
+    // NSLog(@"start bg fetch");
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     if (![settings boolForKey:USE_NRDB])
     {
-        NSLog(@"no nrdb account");
+        // NSLog(@"no nrdb account");
         completionHandler(UIBackgroundFetchResultNoData);
         return;
     }
     
     if ([settings objectForKey:NRDB_REFRESH_TOKEN] == nil)
     {
-        NSLog(@"no token");
+        // NSLog(@"no token");
         [NRDB clearSettings];
         completionHandler(UIBackgroundFetchResultNoData);
         return;
     }
 
     [self refreshToken:^(BOOL ok) {
-        NSLog(@"refresh: %d", ok);
+        // NSLog(@"refresh: %d", ok);
         completionHandler(ok ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultFailed);
     }];
 }

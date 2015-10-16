@@ -37,7 +37,7 @@ const NSString* const kANY = @"Any";
     [self setAdditionalUserDefaults];
     
     BOOL useNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB];
-    NSTimeInterval fetchInterval = useNrdb ? UIApplicationBackgroundFetchIntervalNever : UIApplicationBackgroundFetchIntervalNever;
+    NSTimeInterval fetchInterval = useNrdb ? BG_FETCH_INTERVAL : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
     
     @try
@@ -230,22 +230,23 @@ const NSString* const kANY = @"Any";
 
 #pragma mark - background fetch
 
+// protect against running two bg fetches simultaneously - happens when initiated from Xcode manually
 static BOOL runningBackgroundFetch = NO;
 
 -(void) application:(UIApplication *)application performFetchWithCompletionHandler:(BackgroundFetchCompletionBlock)completionHandler
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:LAST_BG_FETCH];
     
-    NSLog(@"app perform bg fetch");
     if (runningBackgroundFetch)
     {
-        NSLog(@"dup call");
+        // NSLog(@"dup call");
         completionHandler(UIBackgroundFetchResultNoData);
         return;
     }
+    
     runningBackgroundFetch = YES;
     [[NRDB sharedInstance] backgroundRefreshAuthentication:^(UIBackgroundFetchResult result) {
-        NSLog(@"primary call %ld", (long)result);
+        // NSLog(@"primary call %ld", (long)result);
         completionHandler(result);
         runningBackgroundFetch = NO;
     }];

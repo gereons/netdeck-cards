@@ -381,7 +381,7 @@ static DeckImport* instance;
               }
               failure:^(AFHTTPRequestOperation* operation, NSError* error) {
                   @strongify(self);
-                  NSLog(@"download failed %@", operation);
+                  // NSLog(@"download failed %@", operation);
                   [self downloadFinished:NO];
               }
      ];
