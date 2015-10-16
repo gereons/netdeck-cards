@@ -161,17 +161,26 @@ static DeckImport* instance;
     // a netrunnerdb.com decklist url looks like this:
     // http://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
     
-    NSRegularExpression* urlRegex = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../decklist/(\\d*)/.*" options:0 error:nil];
+    // or like this:
+    // http://netrunnerdb.com/en/deck/view/456867 - but this doesn't work until
+    // https://bitbucket.org/alsciende/nrdb/issues/183/api-api-decklist-id-doesnt-work-for-shared gets fixed
     
-    for (NSString* line in lines)
+    
+    NSRegularExpression* re1 = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../decklist/(\\d*)/.*" options:0 error:nil];
+    // NSRegularExpression* re2 = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../deck/view/(\\d*)" options:0 error:nil];
+    
+    for (NSRegularExpression* regEx in @[ re1 /*, re2 */ ])
     {
-        NSTextCheckingResult* match = [urlRegex firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
-        if (match.numberOfRanges == 2)
+        for (NSString* line in lines)
         {
-            DeckSource* src = [[DeckSource alloc] init];
-            src.deckId = [line substringWithRange:[match rangeAtIndex:1]];
-            src.site = DeckBuilderSiteNetrunnerDB;
-            return src;
+            NSTextCheckingResult* match = [regEx firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
+            if (match.numberOfRanges == 2)
+            {
+                DeckSource* src = [[DeckSource alloc] init];
+                src.deckId = [line substringWithRange:[match rangeAtIndex:1]];
+                src.site = DeckBuilderSiteNetrunnerDB;
+                return src;
+            }
         }
     }
 
@@ -182,8 +191,10 @@ static DeckImport* instance;
 {
     // a netrunner.meteor.com decklist url looks like this:
     // http://netrunner.meteor.com/decks/yBMJ3GL6FPozt9nkQ/
+    // or like this (no slash)
+    // http://netrunner.meteor.com/decks/i6sLkn5cYZ3633WAu
     
-    NSRegularExpression* urlRegex = [NSRegularExpression regularExpressionWithPattern:@"http://netrunner.meteor.com/decks/(.*)/" options:0 error:nil];
+    NSRegularExpression* urlRegex = [NSRegularExpression regularExpressionWithPattern:@"http://netrunner.meteor.com/decks/(.*)/?" options:0 error:nil];
     
     for (NSString* line in lines)
     {
@@ -375,7 +386,7 @@ static DeckImport* instance;
                           }
                       }
                       
-                      ok = [self parseOctgnDeck:responseObject filename:filename];
+                      ok = [self parseOctgnDeck:responseObject name:filename];
                   }
                   [self downloadFinished:ok];
               }
@@ -430,7 +441,7 @@ static DeckImport* instance;
     return NO;
 }
 
--(BOOL) parseOctgnDeck:(NSXMLParser*)parser filename:(NSString*)filename
+-(BOOL) parseOctgnDeck:(NSXMLParser*)parser name:(NSString*)name
 {
     OctgnImport* importer = [[OctgnImport alloc] init];
     Deck* deck = [importer parseOctgnDeckWithParser:parser];
@@ -439,7 +450,7 @@ static DeckImport* instance;
     {
         // NSLog(@"got deck: %@ %d", deck.identity.name, deck.cards.count);
         // NSLog(@"name: %@", filename);
-        
+        deck.name = name;
         [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
         return YES;
     }
