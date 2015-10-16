@@ -13,6 +13,9 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UISearchBar* searchBar;
 
+@property IBOutlet UILabel* statusLabel;
+@property IBOutlet UIToolbar* toolBar;
+
 @property Deck* deck;
 
 @end

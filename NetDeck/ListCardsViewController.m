@@ -43,6 +43,13 @@ static NSString* kSearchFieldValue = @"searchField";
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
     
+    self.statusLabel.font = [UIFont md_systemFontOfSize:13];
+    self.statusLabel.text = @"";
+
+    // needed to make the 1 pixel separator show - wtf is this needed here but not elsewhere?
+    [self.view bringSubviewToFront:self.toolBar];
+    [self.view bringSubviewToFront:self.statusLabel];
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"EditDeckCell" bundle:nil] forCellReuseIdentifier:@"cardCell"];
     
     self.cardList = [[CardList alloc] initForRole:self.deck.role];
@@ -65,6 +72,8 @@ static NSString* kSearchFieldValue = @"searchField";
     {
         textField.returnKeyType = UIReturnKeyDone;
     }
+    
+    [self updateFooter];
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -141,6 +150,8 @@ static NSString* kSearchFieldValue = @"searchField";
     
     [self selectTextInSearchBar];
     [self.tableView reloadData];
+    
+    [self updateFooter];
 }
 
 -(void) updateCards
@@ -151,6 +162,39 @@ static NSString* kSearchFieldValue = @"searchField";
     self.cards = data.values;
     self.sections = data.sections;
     [self.tableView reloadData];
+    
+    [self updateFooter];
+}
+
+-(void) updateFooter
+{
+    NSMutableString* footer = [NSMutableString string];
+    [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
+    NSString* inf = self.deck.role == NRRoleCorp ? l10n(@"Inf") : l10n(@"Influence");
+    if (self.deck.identity && !self.deck.isDraft)
+    {
+        [footer appendString:[NSString stringWithFormat:@" · %d/%d %@", self.deck.influence, self.deck.identity.influenceLimit, inf]];
+    }
+    else
+    {
+        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.influence, inf]];
+    }
+    
+    if (self.deck.role == NRRoleCorp)
+    {
+        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.agendaPoints, l10n(@"AP")]];
+    }
+    
+    [footer appendString:@"\n"];
+    
+    NSArray* reasons = [self.deck checkValidity];
+    if (reasons.count > 0)
+    {
+        [footer appendString:reasons[0]];
+    }
+    
+    self.statusLabel.text = footer;
+    self.statusLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
 }
 
 #pragma mark search bar
@@ -189,6 +233,8 @@ static NSString* kSearchFieldValue = @"searchField";
         {
             [self.deck addCard:card copies:1];
             [self.tableView reloadData];
+            
+            [self updateFooter];
         }
     }
 }
