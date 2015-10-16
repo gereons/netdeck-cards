@@ -244,6 +244,12 @@ static NSDictionary* cropValues;
     JSON_INT(number, @"number");
     JSON_INT(quantity, @"quantity");
     
+    // workaround for https://bitbucket.org/alsciende/nrdb/issues/182/card-quantity-for-quetzal-and-underway
+    if ([c.code isEqualToString:@"06052"] || [c.code isEqualToString:@"08080"])
+    {
+        c->_quantity = 3;
+    }
+    
     JSON_BOOL(unique, @"uniqueness");
     
     if (c.type == NRCardTypeIdentity)
