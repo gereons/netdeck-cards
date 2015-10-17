@@ -387,8 +387,17 @@ static NSInteger viewMode = VIEW_LIST;
     
     CGFloat topY = self.searchSeparator.frame.origin.y;
     
-    CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    float kbHeight = kbRect.size.height;
+    CGRect keyboardFrame = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat kbHeight = keyboardFrame.size.height;
+    
+    CGRect keyboardRect = [self.view convertRect:keyboardFrame fromView:self.view.window];
+    CGFloat viewHeight = self.view.frame.size.height;
+    
+    if ((keyboardRect.origin.y + keyboardRect.size.height) > viewHeight) {
+        // external keyboard present, virtual kb is offscreen
+        kbHeight = 768 - keyboardFrame.origin.y;
+    }
+    
     float tableHeight = 768 - kbHeight - topY - 64; // screen height - kbd height - height of visible filter - height of status/nav bar
     
     CGRect newFrame = self.tableView.frame;
@@ -408,7 +417,7 @@ static NSInteger viewMode = VIEW_LIST;
     {
         return;
     }
-
+    
     // explicitly resignFirstResponser, since the kb may have been auto-dismissed by the identity selection form
     [self.searchField resignFirstResponder];
     NSTimeInterval animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
