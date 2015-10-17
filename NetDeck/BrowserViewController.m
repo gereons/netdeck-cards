@@ -12,6 +12,7 @@
 #import "ImageCache.h"
 #import "CardList.h"
 #import "Card.h"
+#import <SDCAlertView.h>
 
 @interface BrowserViewController ()
 
@@ -41,6 +42,9 @@
     [nc addObserver:self selector:@selector(showKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(hideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     
+    UILongPressGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self.tableView addGestureRecognizer:longPress];
+    
     self.role = NRRoleNone;
     [self refresh];
 }
@@ -62,6 +66,30 @@
     self.sections = data.sections;
     
     [self.tableView reloadData];
+}
+
+#pragma mark - long press
+
+-(void) longPress:(UIGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
+        CGPoint point = [gesture locationInView:self.tableView];
+        NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:point];
+        if (indexPath)
+        {
+            Card* card = [self.cards objectAtIndexPath:indexPath];
+            
+            NSString* msg = [NSString stringWithFormat:l10n(@"Open ANCUR page for\n%@?"), card.name];
+            SDCAlertView* alert = [SDCAlertView alertWithTitle:nil message:msg buttons:@[ l10n(@"OK"), l10n(@"Cancel") ]];
+            alert.didDismissHandler = ^(NSInteger buttonIndex) {
+                if (buttonIndex == 0)
+                {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:card.ancurLink]];
+                }
+            };
+        }
+    }
 }
 
 #pragma mark - table view
