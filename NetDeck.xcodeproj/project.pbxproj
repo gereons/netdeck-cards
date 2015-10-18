@@ -194,6 +194,7 @@
 		3A85327D185509B000507B9A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85327B185509B000507B9A /* SettingsViewController.m */; };
 		3A85328218550ACE00507B9A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85328018550ACE00507B9A /* AboutViewController.m */; };
 		3A85328318550ACE00507B9A /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328118550ACE00507B9A /* AboutView.xib */; };
+		3A8811261BD3C9B60023A81E /* hex_background@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8811251BD3C9B60023A81E /* hex_background@3x.png */; settings = {ASSET_TAGS = (); }; };
 		3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8FBC9D19547260009ED6E3 /* NRDB.m */; };
 		3A8FBCA119548933009ED6E3 /* netrunnerdb_com@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FBC9F19548933009ED6E3 /* netrunnerdb_com@2x.png */; };
 		3A8FBCA219548933009ED6E3 /* netrunnerdb_com.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FBCA019548933009ED6E3 /* netrunnerdb_com.png */; };
@@ -581,6 +582,7 @@
 		3A85327F18550ACE00507B9A /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AboutViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A85328018550ACE00507B9A /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AboutViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A85328118550ACE00507B9A /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
+		3A8811251BD3C9B60023A81E /* hex_background@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex_background@3x.png"; sourceTree = "<group>"; };
 		3A8FBC9C19547260009ED6E3 /* NRDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRDB.h; sourceTree = "<group>"; };
 		3A8FBC9D19547260009ED6E3 /* NRDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRDB.m; sourceTree = "<group>"; };
 		3A8FBC9F19548933009ED6E3 /* netrunnerdb_com@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com@2x.png"; sourceTree = "<group>"; };
@@ -1200,8 +1202,9 @@
 			isa = PBXGroup;
 			children = (
 				3AF424AA19150FC80005ACAA /* searchbar-bg.png */,
-				3A441C8A18E60A5300F46C92 /* hex_background@2x.png */,
 				3A441C8B18E60A5300F46C92 /* hex_background.png */,
+				3A441C8A18E60A5300F46C92 /* hex_background@2x.png */,
+				3A8811251BD3C9B60023A81E /* hex_background@3x.png */,
 				3A76EEBD18B5DA68004DB586 /* CorpPlaceholder.png */,
 				3A76EEBE18B5DA68004DB586 /* RunnerPlaceholder.png */,
 				3A663978193B4CBF00635447 /* card_backs.png */,
@@ -1674,6 +1677,7 @@
 				3A6E755A18E3FF7400EF8DE1 /* cardstats_identity_link.png in Resources */,
 				3A82624218E05EC70038B4AC /* cardstats_difficulty.png in Resources */,
 				3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */,
+				3A8811261BD3C9B60023A81E /* hex_background@3x.png in Resources */,
 				3A52E1921917F9EF00264C2A /* 763-arrow-up@2x.png in Resources */,
 				3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */,
 				3A82625818E05EC70038B4AC /* deckview_card@2x.png in Resources */,
