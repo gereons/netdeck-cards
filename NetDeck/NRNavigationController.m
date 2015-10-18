@@ -46,7 +46,7 @@
     UIViewController* popped = [super popViewControllerAnimated:animated];
     // NSInteger after = self.viewControllers.count;
     // UIViewController* newTop = self.viewControllers.lastObject;
-    // NSLog(@"doPop: before=%ld, after=%ld, popped off=%@, new top=%@", (long)before, (long)after, popped, newTop);
+    // NSLog(@"popViewControllerAnimated: before=%ld, after=%ld, popped off=%@, new top=%@", (long)before, (long)after, popped, newTop);
     return popped;
 }
 
@@ -54,6 +54,8 @@
 
 - (void)handlePopGesture:(UIGestureRecognizer *)gesture
 {
+    // TODO: it appears this whole method is completely unnecessary. Needs investigation, see also Crashlytics #109
+    
     CGPoint point = [gesture locationInView:self.view];
     CGRect frame = self.view.frame;
     
