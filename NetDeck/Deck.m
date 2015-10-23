@@ -232,34 +232,57 @@
 
 -(NSUInteger) influenceFor:(CardCounter *)cc
 {
-    if (self.identity.faction == cc.card.faction || cc.card.influence == -1)
-    {
+    if (self.identity.faction == cc.card.faction || cc.card.influence == -1) {
         return 0;
     }
     
     NSUInteger count = cc.count;
-    if (cc.card.type == NRCardTypeProgram && [self.identity.code isEqualToString:THE_PROFESSOR])
-    {
+    if (cc.card.type == NRCardTypeProgram && [self.identity.code isEqualToString:THE_PROFESSOR]) {
         --count;
     }
     
-    // mumbad temple: 0 inf if 15 or fewer ICE
-    if ([cc.card.code isEqualToString:MUMBAD_TEMPLE] && [self iceCount] <= 15)
-    {
+    // mumba temple: 0 inf if 15 or fewer ICE
+    if ([cc.card.code isEqualToString:MUMBA_TEMPLE] && [self iceCount] <= 15) {
         return 0;
     }
     // pad factory: 0 inf if 3 PAD Campaigns in deck
-    if ([cc.card.code isEqualToString:PAD_FACTORY] && [self padCampaignCount] == 3)
-    {
+    if ([cc.card.code isEqualToString:PAD_FACTORY] && [self padCampaignCount] == 3) {
         return 0;
     }
     // mumbad virtual tour: 0 inf if 7 or more assets
-    if ([cc.card.code isEqualToString:MUMBAD_VIRTUAL_TOUR] && [self assetCount] >= 7)
-    {
+    if ([cc.card.code isEqualToString:MUMBAD_VIRTUAL_TOUR] && [self assetCount] >= 7) {
+        return 0;
+    }
+    // jeeves model bioroid: 0 inf if >=6 non-alliance HB cards in deck
+    if ([cc.card.code isEqualToString:JEEVES_MODEL_BIOROID] && [self nonAllianceOfFaction:NRFactionHaasBioroid] >= 6) {
+        return 0;
+    }
+    // raman rai: 0 inf if >=6 non-alliance Jinteki cards in deck
+    if ([cc.card.code isEqualToString:RAMAN_RAI] && [self nonAllianceOfFaction:NRFactionJinteki] >= 6) {
+        return 0;
+    }
+    // salem's hospitality: 0 inf if >=6 non-alliance NBN cards in deck
+    if ([cc.card.code isEqualToString:SALEMS_HOSPITALITY] && [self nonAllianceOfFaction:NRFactionNBN] >= 6) {
+        return 0;
+    }
+    // executive search firm: 0 inf if >=6 non-alliance Weyland cards in deck
+    if ([cc.card.code isEqualToString:EXECUTIVE_SEARCH_FIRM] && [self nonAllianceOfFaction:NRFactionWeyland] >= 6) {
         return 0;
     }
     
     return count * cc.card.influence;
+}
+
+-(NSInteger) nonAllianceOfFaction:(NRFaction)faction {
+    NSInteger count = 0;
+    for (CardCounter* cc in self.cards)
+    {
+        if (cc.card.faction == faction && !cc.card.isAlliance)
+        {
+            count += cc.count;
+        }
+    }
+    return 0;
 }
 
 -(NSInteger) padCampaignCount

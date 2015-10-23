@@ -370,6 +370,12 @@ static NSDictionary* cropValues;
     return en || localized;
 }
 
+-(void) setAlliance:(NSString *)subtype
+{
+    NSRange range = [subtype rangeOfString:@"Alliance" options:NSCaseInsensitiveSearch];
+    self->_isAlliance = range.location != NSNotFound;
+}
+
 -(BOOL) isValid
 {
     return self.code.length > 0 && self.name.length > 0 && self.faction != NRFactionNone && self.role != NRRoleNone;

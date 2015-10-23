@@ -67,6 +67,12 @@ static NSDictionary* cardAliases;   // code -> alias
         @"02079": @"OAI",       // oversight AI
         @"08009": @"Baby",      // symmetrical visage
         @"08003": @"Pancakes",  // adjusted chronotype
+        @"07007": @"HRI",       // high-risk investment
+        @"08022": @"OCA",       // off-campus apartment
+        @"08051": @"SDC",       // self-destruct chips
+        @"05050": @"TMC",       // tri-maf contact
+        @"09022": @"ASI",       // the all-seeing i
+        @"05052": @"QCC",       // q-coherence chip
     };
 }
 
@@ -274,11 +280,13 @@ static NSDictionary* cardAliases;   // code -> alias
     {
         NSString* code = obj[@"code"];
         NSString* name_en = obj[@"title"];
+        NSString* subtype = obj[@"subtype"];
         
         Card* card = [Card cardByCode:code];
         if (card)
         {
             card.name_en = [name_en stringByReplacingHTMLEntities];
+            [card setAlliance:subtype];
         }
     }
     
