@@ -531,13 +531,10 @@
     cell.nameLabel.font = [UIFont md_systemFontOfSize:16];
     
     NSString* type = [Faction name:card.faction];;
-    NSString* influenceStr = @"";
     
     NSInteger influence = [self.deck influenceFor:cc];
     if (influence > 0)
     {
-        influenceStr = [NSString stringWithFormat:@" · %ld %@", (long)influence, l10n(@"Influence")];
-        
         cell.influenceLabel.text = [NSString stringWithFormat:@"%ld", (long)influence];
         cell.influenceLabel.textColor = card.factionColor;
     }
