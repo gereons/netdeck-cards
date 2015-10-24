@@ -30,7 +30,9 @@
     [super viewDidLoad];
 
     self.interactivePopGestureRecognizer.delegate = self;
-    [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
+    
+#warning get rid of this?
+    // [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
 }
 
 -(NSArray*) popToRootViewControllerAnimated:(BOOL)animated
@@ -54,6 +56,10 @@
 
 - (void)handlePopGesture:(UIGestureRecognizer *)gesture
 {
+#warning Test!
+    if (IS_IPHONE) {
+        return;
+    }
     // TODO: it appears this whole method is completely unnecessary. Needs investigation, see also Crashlytics #109
     
     CGPoint point = [gesture locationInView:self.view];
@@ -71,6 +77,8 @@
         }
     }
 }
+
+#pragma mark - gesture recognizer delegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
