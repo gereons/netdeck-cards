@@ -316,7 +316,7 @@ static NSDictionary* cropValues;
         c->_maxPerDeck = 1;
     }
     
-    if ([self isMultiIce:c])
+    if (c.isMultiIce)
     {
         [multiIce addObject:c.code];
     }
@@ -359,14 +359,14 @@ static NSDictionary* cropValues;
     return name;
 }
 
-+(BOOL) isMultiIce:(Card*)card
+-(BOOL) isMultiIce
 {
-    BOOL en = [card.subtypes containsObject:@"Sentry"]
-           && [card.subtypes containsObject:@"Barrier"]
-           && [card.subtypes containsObject:@"Code Gate"];
-    BOOL localized = [card.subtypes containsObject:l10n(@"Sentry")]
-                  && [card.subtypes containsObject:l10n(@"Barrier")]
-                  && [card.subtypes containsObject:l10n(@"Code Gate")];
+    BOOL en = [self.subtypes containsObject:@"Sentry"]
+           && [self.subtypes containsObject:@"Barrier"]
+           && [self.subtypes containsObject:@"Code Gate"];
+    BOOL localized = [self.subtypes containsObject:l10n(@"Sentry")]
+                  && [self.subtypes containsObject:l10n(@"Barrier")]
+                  && [self.subtypes containsObject:l10n(@"Code Gate")];
     return en || localized;
 }
 

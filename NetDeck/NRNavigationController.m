@@ -31,7 +31,7 @@
 
     self.interactivePopGestureRecognizer.delegate = self;
     
-#warning get rid of this?
+    // causes more problem than it solves, so we got rid of it
     // [self.interactivePopGestureRecognizer addTarget:self action:@selector(handlePopGesture:)];
 }
 
@@ -54,13 +54,10 @@
 
 #pragma mark gesture recognizer
 
+// it appears this whole method is completely unnecessary.
+#if 0
 - (void)handlePopGesture:(UIGestureRecognizer *)gesture
 {
-#warning Test!
-    if (IS_IPHONE) {
-        return;
-    }
-    // TODO: it appears this whole method is completely unnecessary. Needs investigation, see also Crashlytics #109
     
     CGPoint point = [gesture locationInView:self.view];
     CGRect frame = self.view.frame;
@@ -77,6 +74,7 @@
         }
     }
 }
+#endif
 
 #pragma mark - gesture recognizer delegate
 
@@ -108,6 +106,7 @@
             return NO;
         }
     }
+    
     self.swipePop = YES;
     // NSLog(@"swipe start ok");
     return YES;
