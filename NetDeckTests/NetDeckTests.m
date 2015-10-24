@@ -3,7 +3,7 @@
 //  NetDeckTests
 //
 //  Created by Gereon Steffens on 29.11.13.
-//  Copyright (c) 2014 Gereon Steffens. All rights reserved.
+//  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

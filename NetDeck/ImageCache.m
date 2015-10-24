@@ -3,7 +3,7 @@
 //  Net Deck
 //
 //  Created by Gereon Steffens on 16.01.14.
-//  Copyright (c) 2014 Gereon Steffens. All rights reserved.
+//  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
 #import "ImageCache.h"

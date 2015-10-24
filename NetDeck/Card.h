@@ -3,7 +3,7 @@
 //  Net Deck
 //
 //  Created by Gereon Steffens on 24.11.13.
-//  Copyright (c) 2014 Gereon Steffens. All rights reserved.
+//  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
 // identities we need to handle
