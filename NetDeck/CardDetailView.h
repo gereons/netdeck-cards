@@ -7,11 +7,11 @@
 //
 
 // since we can't have nice things (ie. multiple inheritance), this class mirrors the IBOutlet properties
-// from CardImageViewPopover, CardImageCell and BrowserImageCell - better than having to duplicate the code
+// from CardImageViewPopover, CardImageCell, BrowserImageCell and CardImageViewCell - better than having to duplicate the code
 
 // TODO for later: convert this to a category that uses objc_setAssociatedObject/obj_getAssociatedObject
 
-@class Card, CardImageViewPopover, CardImageCell, BrowserImageCell;
+@class Card, CardImageViewPopover, CardImageCell, BrowserImageCell, CardImageViewCell;
 
 @interface CardDetailView : NSObject
 
@@ -32,5 +32,6 @@
 +(void) setupDetailViewFromPopover:(CardImageViewPopover*)popover card:(Card*)card;
 +(void) setupDetailViewFromCell:(CardImageCell *)cell card:(Card*)card;
 +(void) setupDetailViewFromBrowser:(BrowserImageCell *)cell card:(Card*)card;
++(void) setupDetailViewFromIphone:(CardImageViewCell *)cell card:(Card*)card;
 
 @end

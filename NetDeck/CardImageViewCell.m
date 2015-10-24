@@ -7,6 +7,7 @@
 //
 
 #import "CardImageViewCell.h"
+#import "CardDetailView.h"
 #import "Card.h"
 #import "ImageCache.h"
 
@@ -62,6 +63,13 @@
              else
              {
                  self.countLabel.text = @"";
+             }
+             
+             self.imageView.hidden = NO;
+             self.detailView.hidden = !placeholder;
+             if (placeholder)
+             {
+                 [CardDetailView setupDetailViewFromIphone:self card:card];
              }
          }
          else

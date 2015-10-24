@@ -10,6 +10,7 @@
 #import "CardImageViewPopover.h"
 #import "CardImageCell.h"
 #import "BrowserImageCell.h"
+#import "CardImageViewCell.h"
 #import "Card.h"
 #import "CardType.h"
 #import "Faction.h"
@@ -80,6 +81,26 @@
     [cdv setupDetailView];
 }
 
++(void) setupDetailViewFromIphone:(CardImageViewCell *)cell card:(Card *)card
+{
+    CardDetailView* cdv = [[CardDetailView alloc] init];
+    
+    cdv.card = card;
+    cdv.detailView = cell.detailView;
+    cdv.cardName = cell.cardName;
+    cdv.cardType = cell.cardType;
+    cdv.cardText = cell.cardText;
+    
+    cdv.icon1 = cell.icon1;
+    cdv.icon2 = cell.icon2;
+    cdv.icon3 = cell.icon3;
+    
+    cdv.label1 = cell.label1;
+    cdv.label2 = cell.label2;
+    cdv.label3 = cell.label3;
+    
+    [cdv setupDetailView];
+}
 
 -(void) setupDetailView
 {

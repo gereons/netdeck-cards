@@ -12,6 +12,7 @@
 #define ANDROMEDA               @"02083"    // 9 card starting hand
 
 // alliance cards with weird influence rules
+#warning test!
 #define PAD_FACTORY             @"00000"    // code tbd; 0 inf if 3 pad campaigns in deck
 #define MUMBA_TEMPLE            @"10018"    // 0 inf if <= 15 ice in deck
 #define JEEVES_MODEL_BIOROID    @"10067"    // 0 inf if >=6 non-alliance HB cards in deck
