@@ -11,8 +11,7 @@
 #define THE_PROFESSOR           @"03029"    // first copy of each program has influence 0
 #define ANDROMEDA               @"02083"    // 9 card starting hand
 
-// alliance cards with weird influence rules
-
+// alliance cards with special influence rules
 #define PAD_FACTORY             @"00000"    // code tbd; 0 inf if 3 pad campaigns in deck
 #define MUMBA_TEMPLE            @"10018"    // 0 inf if <= 15 ice in deck
 #define JEEVES_MODEL_BIOROID    @"10067"    // 0 inf if >=6 non-alliance HB cards in deck

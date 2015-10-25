@@ -79,8 +79,13 @@ static NSString* kSearchFieldValue = @"searchField";
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+ 
+    TableData* data = [self.cardList dataForTableView];
     
-    self.searchBar.text = @"";
+    self.cards = data.values;
+    self.sections = data.sections;
+    
+    [self.tableView reloadData];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -92,12 +97,13 @@ static NSString* kSearchFieldValue = @"searchField";
     
     UIBarButtonItem* filterButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"798-filter-toolbar"] style:UIBarButtonItemStylePlain target:self action:@selector(showFilters:)];
     topItem.rightBarButtonItem = filterButton;
-    
-    TableData* data = [self.cardList dataForTableView];
-    
-    self.cards = data.values;
-    self.sections = data.sections;
-    [self.tableView reloadData];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    self.searchBar.text = @"";
+    self.filterText = nil;
+    [self.cardList clearFilters];
 }
 
 -(void) dealloc
