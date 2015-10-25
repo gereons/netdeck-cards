@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+#warning crash in CardFilterViewController.m when dismissing hw kbd
+
 #warning TODO: get rid of NRNavigationController. 
 // as long as deck is unmodified, show back and export buttons
 // if deck is modified, remove back button. show cancel and save instead

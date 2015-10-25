@@ -1123,6 +1123,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    NSLog(@"# sections in collection: %ld", self.cards.count);
     return self.cards.count;
 }
 
