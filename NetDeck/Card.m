@@ -326,7 +326,7 @@ static NSDictionary* cropValues;
     {
         c->_ancurLink = nil;
     }
-    
+        
     return c;
 }
 
@@ -372,8 +372,10 @@ static NSDictionary* cropValues;
 
 -(void) setAlliance:(NSString *)subtype
 {
-    NSRange range = [subtype rangeOfString:@"Alliance" options:NSCaseInsensitiveSearch];
-    self->_isAlliance = range.location != NSNotFound;
+    if (subtype.length > 0) {
+        NSRange range = [subtype rangeOfString:@"Alliance" options:NSCaseInsensitiveSearch];
+        self->_isAlliance = range.location != NSNotFound;
+    }
 }
 
 -(BOOL) isValid

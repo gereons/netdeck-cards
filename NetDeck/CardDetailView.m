@@ -111,7 +111,11 @@
     
     Card* card = self.card;
     
+#if DEBUG
+    self.cardName.text = [NSString stringWithFormat:@"%@ (%@)", card.name, card.code];
+#else
     self.cardName.text = card.name;
+#endif
     
     // hack: remove padding from the text view
     // see https://stackoverflow.com/questions/746670/how-to-lose-margin-padding-in-uitextview

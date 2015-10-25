@@ -275,21 +275,18 @@
 
 -(NSInteger) nonAllianceOfFaction:(NRFaction)faction {
     NSInteger count = 0;
-    for (CardCounter* cc in self.cards)
-    {
-        if (cc.card.faction == faction && !cc.card.isAlliance)
-        {
+    for (CardCounter* cc in self.cards) {
+        if (cc.card.faction == faction && !cc.card.isAlliance) {
             count += cc.count;
         }
     }
-    return 0;
+    return count;
 }
 
 -(NSInteger) padCampaignCount
 {
     NSInteger padIndex = [self indexOfCardCode:PAD_CAMPAIGN];
-    if (padIndex != -1)
-    {
+    if (padIndex != -1) {
         CardCounter* pad = _cards[padIndex];
         return pad.count;
     }

@@ -55,7 +55,7 @@
 #pragma mark gesture recognizer
 
 // it appears this whole method is completely unnecessary.
-#if 0
+/*
 - (void)handlePopGesture:(UIGestureRecognizer *)gesture
 {
     
@@ -74,7 +74,7 @@
         }
     }
 }
-#endif
+*/
 
 #pragma mark - gesture recognizer delegate
 
