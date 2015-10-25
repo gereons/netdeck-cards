@@ -964,7 +964,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.sections.count;
+    return viewMode == VIEW_LIST ? self.sections.count : 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -1123,8 +1123,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    NSLog(@"# sections in collection: %ld", self.cards.count);
-    return self.cards.count;
+    return viewMode != VIEW_LIST ? self.cards.count : 0;
 }
 
 -(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

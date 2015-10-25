@@ -1476,8 +1476,6 @@
     static CGFloat scaleStart;
     static NSIndexPath* startIndex;
     
-    NSLog(@"state = %d", (int)gesture.state);
-    
     if (gesture.state == UIGestureRecognizerStateBegan)
     {
         scaleStart = self.scale;
