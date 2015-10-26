@@ -145,8 +145,6 @@
         deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
 
         EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
-        NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-        nc.deckEditor = edit;
         edit.deck = deck;
         
         NSMutableArray* vcs = self.navigationController.viewControllers.mutableCopy;
@@ -160,11 +158,7 @@
 {
     NSAssert(self.deck, @"no deck?");
     
-    // don't call [self.navController popViewControllerAnimated:YES] here - this will pop two VCs
-    // instead, call the nav bar delegate from NRNavigationController to do
-    UINavigationBar* navBar = self.navigationController.navigationBar;
-    UINavigationItem* navItem = self.navigationController.navigationItem;
-    [navBar.delegate navigationBar:navBar shouldPopItem:navItem];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - tableview

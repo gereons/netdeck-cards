@@ -170,8 +170,6 @@
     EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
     edit.deck = deck;
     
-    self.deckEditor = edit;
-    
     if (self.viewControllers.count > 1)
     {
         [self popToRootViewControllerAnimated:NO];
@@ -391,7 +389,6 @@
     EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
     edit.deck = deck;
     
-    self.deckEditor = edit;
     [self pushViewController:edit animated:YES];
 }
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import "NRNavigationController.h"
+// #import "NRNavigationController.h"
 
-@interface IphoneStartViewController : NRNavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate>
+@interface IphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate>
 
 @property IBOutlet UITableViewController* tableViewController;
 @property IBOutlet UITableView* tableView;

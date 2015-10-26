@@ -27,6 +27,7 @@
 #import "NRDB.h"
 #import "DeckEmail.h"
 #import "SVProgressHud.h"
+#import "DeckManager.h"
 
 @interface EditDeckViewController ()
 
@@ -38,6 +39,10 @@
 @property NSArray* sections;
 
 @property UIButton* titleButton;  // used as the titleView in our navigation bar
+
+@property UIBarButtonItem* cancelButton;
+@property UIBarButtonItem* saveButton;
+@property UIBarButtonItem* exportButton;
 
 @property ListCardsViewController* listCards;
 
@@ -62,6 +67,9 @@
     self.autoSave = [settings boolForKey:AUTO_SAVE];
     self.autoSaveDropbox = self.autoSave && [settings boolForKey:AUTO_SAVE_DB];
     self.autoSaveNrdb = [settings boolForKey:NRDB_AUTOSAVE];
+    
+    self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelClicked:)];
+    self.saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveClicked:)];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -70,17 +78,14 @@
     
     NSAssert(self.navigationController.viewControllers.count == 2, @"nav oops");
     
-    // right buttons
-    UIBarButtonItem* exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"]
+    // right button
+    self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"]
                                                                      style:UIBarButtonItemStylePlain
                                                                     target:self
                                                                     action:@selector(exportDeck:)];
-    UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                               target:self
-                                                                               action:@selector(showCardList:)];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.rightBarButtonItems = @[ addButton, exportButton ];
+    topItem.rightBarButtonItem = self.exportButton;
 
     self.titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.titleButton addTarget:self action:@selector(titleTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -90,13 +95,6 @@
     
     [self setDeckName];
     topItem.titleView = self.titleButton;
-
-    if (self.autoSave)
-    {
-        // make save button disappear
-        self.saveButton.customView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.saveButton.enabled = NO;
-    }
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB])
     {
@@ -105,6 +103,18 @@
     }
     
     [self refreshDeck];
+}
+
+-(void) setupNavigationButtons
+{
+    UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    if (self.deck.modified) {
+        topItem.leftBarButtonItem = self.cancelButton;
+        topItem.rightBarButtonItem = self.saveButton;
+    } else {
+        topItem.leftBarButtonItem = nil;
+        topItem.rightBarButtonItem = self.exportButton;
+    }
 }
 
 #pragma mark - deck name
@@ -138,7 +148,6 @@
         UITextField* textField = alert.textFields.firstObject;
         self.deck.name = textField.text;
         [self setDeckName];
-        self.saveButton.enabled = YES;
     }]];
     [alert addAction:[UIAlertAction cancelAction:nil]];
     
@@ -222,10 +231,20 @@
 
 #pragma mark - save
 
+-(void) cancelClicked:(id)sender
+{
+    if (self.deck.filename) {
+        self.deck = [DeckManager loadDeckFromPath:self.deck.filename];
+        [self refreshDeck];
+        [self setupNavigationButtons];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 -(void) saveClicked:(id)sender
 {
     [self.deck saveToDisk];
-    self.saveButton.enabled = NO;
     if (self.autoSaveDropbox)
     {
         if (self.deck.identity && self.deck.cards.count > 0)
@@ -237,6 +256,8 @@
     {
         [self saveToNrdb];
     }
+    
+    [self setupNavigationButtons];
 }
 
 -(void) doAutoSave
@@ -401,10 +422,10 @@
     self.statusLabel.text = footer;
     self.statusLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
     
-    self.saveButton.enabled = self.deck.modified;
     self.drawButton.enabled = self.deck.size > 0;
     
     [self doAutoSave];
+    [self setupNavigationButtons];
 }
 
 -(void) changeCount:(UIStepper*)stepper
