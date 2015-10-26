@@ -285,11 +285,7 @@ static BrowserResultViewController* instance;
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (tableView.hidden)
-    {
-        return 0;
-    }
-    return self.sections.count;
+    return self.tableView.hidden ? 0 : self.sections.count;
 }
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -336,11 +332,7 @@ static BrowserResultViewController* instance;
 
 -(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    if (collectionView.hidden)
-    {
-        return 0;
-    }
-    return self.sections.count;
+    return self.collectionView.hidden ? 0 : self.sections.count;
 }
 
 -(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
