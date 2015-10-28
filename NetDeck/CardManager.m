@@ -288,6 +288,7 @@ static NSDictionary* cardAliases;   // code -> alias
         {
             card.name_en = [name_en stringByReplacingHTMLEntities];
             [card setAlliance:subtype];
+            [card setVirtual:subtype];
         }
     }
     

@@ -80,7 +80,7 @@
 "Too many Eden Fragments" = "Trop d'Eden Fragments";
 "Too many Eden Shards" = "Trop d'Eden Shards";
 "Cannot include Jinteki" = "Ne peux pas inclure de cartes de la faction Jinteki";
-"Cannot use out-of-faction agendas" = "Ne peut pas utiliser des projets hors faction";
+"Has out-of-faction agendas" = "Ne peut pas utiliser des projets hors faction";
 "Not enough cards" = "Pas assez de cartes";
 "Too much influence used" = "Trop d'infuence utilisée";
 

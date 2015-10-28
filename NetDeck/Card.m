@@ -378,6 +378,14 @@ static NSDictionary* cropValues;
     }
 }
 
+-(void) setVirtual:(NSString*)subtype
+{
+    if (subtype.length > 0) {
+        NSRange range = [subtype rangeOfString:@"Virtual" options:NSCaseInsensitiveSearch];
+        self->_isVirtual = range.location != NSNotFound;
+    }
+}
+
 -(BOOL) isValid
 {
     return self.code.length > 0 && self.name.length > 0 && self.faction != NRFactionNone && self.role != NRRoleNone;

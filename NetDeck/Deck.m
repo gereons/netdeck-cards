@@ -132,9 +132,10 @@
     }
     
     BOOL noJintekiAllowed = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
+    BOOL isApex = [self.identity.code isEqualToString:APEX];
     
     BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
-    BOOL fragError = NO, shardError = NO;
+    BOOL fragError = NO, shardError = NO, apexError = NO;
     
     // check max 1 per deck restrictions
     for (CardCounter* cc in self.cards)
@@ -171,7 +172,7 @@
             if (!self.isDraft && card.type == NRCardTypeAgenda && card.faction != NRFactionNeutral && card.faction != self.identity.faction && !agendaError)
             {
                 agendaError = YES;
-                [reasons addObject:l10n(@"Cannot use out-of-faction agendas")];
+                [reasons addObject:l10n(@"Has out-of-faction agendas")];
             }
         }
         else
@@ -182,6 +183,11 @@
             {
                 shardError = YES;
                 [reasons addObject:l10n(@"Too many shards")];
+            }
+            
+            if (isApex && !apexError && card.type == NRCardTypeResource && !card.isVirtual) {
+                apexError = YES;
+                [reasons addObject:l10n(@"Has non-virtual resources")];
             }
         }
     }

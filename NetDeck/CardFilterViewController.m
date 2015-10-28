@@ -238,11 +238,17 @@ static NSInteger viewMode = VIEW_LIST;
 -(void) deckChanged:(NSNotification*)notification
 {
     Card* identity = self.deckListViewController.deck.identity;
-    if (self.role == NRRoleCorp && identity != nil)
+    if (identity != nil)
     {
-        [self.cardList preFilterForCorp:identity];
+        if (self.role == NRRoleCorp) {
+            [self.cardList preFilterForCorp:identity];
+        }
+        else if (self.role == NRRoleRunner) {
+            [self.cardList preFilterForRunner:identity];
+        }
         [self initCards];
     }
+
     if (self.influenceValue != -1)
     {
         if (identity)

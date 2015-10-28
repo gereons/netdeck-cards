@@ -86,7 +86,8 @@
 "Too many shards" = "Zuviele Scherben";
 "Too many fragments" = "Zuviele Fragmente";
 "Faction not allowed" = "Fraktion nicht erlaubt";
-"Cannot use out-of-faction agendas" = "Fraktionsfremde Agenden";
+"Has out-of-faction agendas" = "Fraktionsfremde Agenden";
+"Has non-virtual resources" = "Nicht-virtuelle Ressourcen";
 "Not enough cards" = "Nicht genug Karten";
 "Too much influence used" = "Zuviel Einfluss";
 

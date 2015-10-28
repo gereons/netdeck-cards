@@ -124,6 +124,19 @@
     [self applyFilters];
 }
 
+-(void) preFilterForRunner:(Card*)identity
+{
+    [self resetInitialCards];
+    
+    if (identity.faction == NRFactionApex)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"type != %d OR (type = %d AND isVirtual = 1)", NRCardTypeResource, NRCardTypeResource];
+        [self.initialCards filterUsingPredicate:predicate];
+    }
+    
+    [self applyFilters];
+}
+
 -(void) clearFilters
 {
     self.cost = -1;

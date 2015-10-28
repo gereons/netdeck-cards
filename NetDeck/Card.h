@@ -10,6 +10,7 @@
 #define CUSTOM_BIOTICS          @"03002"    // no jinteki cards
 #define THE_PROFESSOR           @"03029"    // first copy of each program has influence 0
 #define ANDROMEDA               @"02083"    // 9 card starting hand
+#define APEX                    @"09029"    // no non-virtual resources
 
 // alliance cards with special influence rules
 #define PAD_FACTORY             @"00000"    // code tbd; 0 inf if 3 pad campaigns in deck
@@ -80,6 +81,7 @@
 @property (readonly) NSString* imageSrc;
 @property (readonly) NSString* ancurLink;
 @property (readonly) BOOL isAlliance;
+@property (readonly) BOOL isVirtual;
 
 @property (readonly) UIColor* factionColor;
 @property (readonly) NSUInteger factionHexColor;
@@ -96,5 +98,6 @@
 
 // NB: not part of the public API!
 -(void) setAlliance:(NSString*)subtype;
+-(void) setVirtual:(NSString*)subtype;
 
 @end

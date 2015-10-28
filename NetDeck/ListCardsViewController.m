@@ -54,9 +54,13 @@ static NSString* kSearchFieldValue = @"searchField";
     
     self.cardList = [[CardList alloc] initForRole:self.deck.role];
     
-    if (self.deck.role == NRRoleCorp && self.deck.identity != nil)
+    if (self.deck.identity != nil)
     {
-        [self.cardList preFilterForCorp:self.deck.identity];
+        if (self.deck.role == NRRoleCorp) {
+            [self.cardList preFilterForCorp:self.deck.identity];
+        } else if (self.deck.role == NRRoleRunner) {
+            [self.cardList preFilterForRunner:self.deck.identity];
+        }
     }
     
     TableData* data = [self.cardList dataForTableView];

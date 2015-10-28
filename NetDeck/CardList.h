@@ -17,6 +17,7 @@
 +(CardList*) browserInitForRole:(NRRole)role;
 
 -(void) preFilterForCorp:(Card*)identity;
+-(void) preFilterForRunner:(Card*)identity;
 
 -(void) filterByName:(NSString*) name;
 -(void) filterByText:(NSString*) text;
