@@ -105,9 +105,12 @@ static NSString* kSearchFieldValue = @"searchField";
 
 -(void) viewWillDisappear:(BOOL)animated
 {
-    self.searchBar.text = @"";
-    self.filterText = nil;
-    [self.cardList clearFilters];
+    // only clear filter when we're being popped from the nav stack
+    if (self.isMovingFromParentViewController) {
+        self.searchBar.text = @"";
+        self.filterText = nil;
+        [self.cardList clearFilters];
+    }
 }
 
 -(void) dealloc
