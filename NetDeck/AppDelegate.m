@@ -6,11 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#warning TODO: get rid of NRNavigationController. 
-// as long as deck is unmodified, show back and export buttons
-// if deck is modified, remove back button. show cancel and save instead
-// iphone: move + button from to to bottom, remove save icon. move draw button to the left, center status text
-
 #import <Dropbox/Dropbox.h>
 #import <SVProgressHUD.h>
 #import <AFNetworking.h>

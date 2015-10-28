@@ -24,7 +24,6 @@
 #import "CardSets.h"
 #import "SettingsKeys.h"
 #import "Deck.h"
-#import "NRNavigationController.h"
 #import "DataDownload.h"
 #import "CardUpdateCheck.h"
 
@@ -148,18 +147,14 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSString* filename = [userInfo objectForKey:@"filename"];
     
     CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andFile:filename];
-    NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
     
-    NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-    nc.deckEditor = filter.deckListViewController;
-    
+    UINavigationController* nc = self.navigationController;
     [nc pushViewController:filter animated:NO];
 }
 
 -(void)newDeck:(NSNotification*) notification
 {
-    NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
-    NRNavigationController* nc = (NRNavigationController*)self.navigationController;
+    UINavigationController* nc = self.navigationController;
 
     NSDictionary* userInfo = notification.userInfo;
     CardFilterViewController* filter;
@@ -184,7 +179,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         [nc popToRootViewControllerAnimated:NO];
     }
     
-    nc.deckEditor = filter.deckListViewController;
     [nc pushViewController:filter animated:NO];
 }
 
@@ -198,9 +192,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andDeck:deck];
     
-    NSAssert([self.navigationController isKindOfClass:[NRNavigationController class]], @"oops");
-    NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-    nc.deckEditor = filter.deckListViewController;
+    UINavigationController* nc = self.navigationController;
     
     if (nc.viewControllers.count > 1)
     {
@@ -319,9 +311,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             
         case NRMenuCardBrowser:
         {
-            NRNavigationController* nc = (NRNavigationController*)self.navigationController;
-            nc.deckEditor = nil;
-            
+            UINavigationController* nc = self.navigationController;
             BrowserFilterViewController* browser = [[BrowserFilterViewController alloc] init];
             [nc pushViewController:browser animated:NO];
             break;

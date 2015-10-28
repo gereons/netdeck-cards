@@ -295,6 +295,15 @@
     [self stopHistoryTimer:nil];
 }
 
+-(void) setDeck:(Deck *)deck
+{
+    BOOL overwriting = self->_deck != nil;
+    self->_deck = deck;
+    if (overwriting) {
+        [self refresh];
+    }
+}
+
 #pragma mark history timer
 
 -(void) startHistoryTimer:(id)notification
@@ -373,6 +382,7 @@
 -(void) saveDeckClicked:(id)sender
 {
     [self saveDeckManually:YES withHud:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_SAVED object:nil];
 }
 
 -(void) saveDeckManually:(BOOL)manually withHud:(BOOL)hud
@@ -769,6 +779,10 @@
             {
                 [self saveDeckManually:NO withHud:NO];
             }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+            }
             [self refresh];
         }
         self.nameAlert = nil;
@@ -1053,11 +1067,7 @@
     [self initCards];
     [self reloadViews];
     
-    if (self.deck.modified)
-    {
-        self.saveButton.enabled = YES;
-    }
-    
+    self.saveButton.enabled = self.deck.modified;
     self.drawButton.enabled = self.deck.cards.count > 0;
     self.analysisButton.enabled = self.deck.cards.count > 0;
     

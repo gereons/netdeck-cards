@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import "NRNavigationController.h"
 #import "IphoneIdentityViewController.h"
 #import "EditDeckViewController.h"
 #import "ImageCache.h"

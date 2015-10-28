@@ -28,7 +28,7 @@
 @property IBOutlet UIButton* historyButton;
 
 @property NRRole role;
-@property Deck* deck;
+@property (nonatomic) Deck* deck;
 
 -(void) addCard:(Card*)card;
 -(void) loadDeckFromFile:(NSString*) filename;

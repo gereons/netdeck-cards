@@ -12,6 +12,7 @@
 #define ADD_TOP_CARD    @"addTopCard"       // card filter: return pressed, add top card, no userInfo
 #define SELECT_IDENTITY @"selectIdentity"   // identity selection, userInfo contains @"code"
 #define DECK_CHANGED    @"deckChanged"      // change to current deck, e.g. count stepper, userInfo may contain @"initialLoad"=YES/NO
+#define DECK_SAVED      @"deckSaved"        // deck was saved
 #define LOAD_DECK       @"loadDeck"         // load a deck from disk, userInfo contains @"filename" and @"role"
 #define NEW_DECK        @"newDeck"          // create a new deck, userInfo contains @"role"
 #define IMPORT_DECK     @"importDeck"       // import deck from clipboard, userInfo contains @"deck"

@@ -25,9 +25,11 @@
 #import "SettingsKeys.h"
 #import "SmallPipsView.h"
 #import "NRCrashlytics.h"
+#import "DeckManager.h"
 
 @interface CardFilterViewController ()
 
+@property UIBarButtonItem* revertButton;
 @property (nonatomic) NRRole role;
 @property SubstitutableNavigationController* snc;
 @property CardList* cardList;
@@ -168,6 +170,11 @@ static NSInteger viewMode = VIEW_LIST;
     self.collectionView.hidden = viewMode == VIEW_LIST;
     self.tableView.hidden = viewMode != VIEW_LIST;
     
+    self.revertButton = [[UIBarButtonItem alloc] initWithTitle:@"Revert"
+                                                         style:UIBarButtonItemStylePlain
+                                                        target:self
+                                                        action:@selector(revertDeck:)];
+    
     [self resetAllButtons];
 }
 
@@ -199,6 +206,7 @@ static NSInteger viewMode = VIEW_LIST;
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
     [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(deckSaved:) name:DECK_SAVED object:nil];
     [nc addObserver:self selector:@selector(nameAlertWillAppear:) name:NAME_ALERT object:nil];
     
     [self initFilters];
@@ -237,7 +245,8 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) deckChanged:(NSNotification*)notification
 {
-    Card* identity = self.deckListViewController.deck.identity;
+    Deck* deck = self.deckListViewController.deck;
+    Card* identity = deck.identity;
     if (identity != nil)
     {
         if (self.role == NRRoleCorp) {
@@ -262,7 +271,41 @@ static NSInteger viewMode = VIEW_LIST;
         [self initCards];
     }
     
+    [self setBackOrRevertButton];
+    
     [self reloadData];
+}
+
+-(void) deckSaved:(id)notification
+{
+    [self setBackOrRevertButton];
+}
+
+-(void) setBackOrRevertButton
+{
+    Deck* deck = self.deckListViewController.deck;
+    UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    
+    if (deck.modified) {
+        topItem.leftBarButtonItem = self.revertButton;
+    } else {
+        topItem.leftBarButtonItem = nil;
+    }
+}
+
+-(void) revertDeck:(id)sender
+{
+    Deck* deck = self.deckListViewController.deck;
+    
+    if (deck.filename) {
+        deck = [DeckManager loadDeckFromPath:deck.filename];
+        [self reloadData];
+        self.deckListViewController.deck = deck;
+        [self setBackOrRevertButton];
+    } else {
+        self.navigationController.navigationBar.topItem.leftBarButtonItem = nil;
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
 }
 
 -(void) initFilters
@@ -377,6 +420,7 @@ static NSInteger viewMode = VIEW_LIST;
         {
             Card* card = arr[0];
             [self.deckListViewController addCard:card];
+            [self setBackOrRevertButton];
             [self reloadData];
         }
     }
@@ -1075,6 +1119,7 @@ static NSInteger viewMode = VIEW_LIST;
     if (card)
     {
         [self.deckListViewController addCard:card];
+        [self setBackOrRevertButton];
         
         NSArray* paths = @[indexPath];
         
