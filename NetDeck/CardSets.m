@@ -11,6 +11,7 @@
 #import "CardManager.h"
 #import "Deck.h"
 #import "SettingsKeys.h"
+#import "AppDelegate.h"
 
 @implementation CardSets
 
@@ -32,10 +33,10 @@ static TableData* enabledSets;
 
 +(NSString*) filename
 {
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString* supportDirectory = [paths objectAtIndex:0];
     
-    return [documentsDirectory stringByAppendingPathComponent:@"nrsets.json"];
+    return [supportDirectory stringByAppendingPathComponent:@"nrsets.json"];
 }
 
 +(void) removeFiles
@@ -79,6 +80,8 @@ static TableData* enabledSets;
 {
     NSString* setsFile = [CardSets filename];
     [json writeToFile:setsFile atomically:YES];
+    
+    [AppDelegate excludeFromBackup:setsFile];
     
     return [self setupFromJsonData:json];
 }

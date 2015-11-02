@@ -29,6 +29,8 @@ const NSString* const kANY = @"Any";
 {
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
+    [self moveFilesFromCacheToAppSupportDirectory];
+    
     [self setBuiltinUserDefaults];
     
     [CardSets setupFromFiles];
@@ -151,6 +153,48 @@ const NSString* const kANY = @"Any";
 
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NRDB sharedInstance] stopRefresh];
+}
+
+-(void) moveFilesFromCacheToAppSupportDirectory
+{
+    NSString* cacheDir = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    NSString* supportDir = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES)[0];
+    
+    NSFileManager* fileMgr = [NSFileManager defaultManager];
+    NSArray* files = @[ @"nrcards.json", @"nrcards_en.json", @"nrsets.json", @"images" ];
+    for (NSString* file in files) {
+        NSString* cachePath = [cacheDir stringByAppendingPathComponent:file];
+        BOOL isDirectory;
+        if ([fileMgr fileExistsAtPath:cachePath isDirectory:&isDirectory]) {
+            NSString* supportPath = [supportDir stringByAppendingPathComponent:file];
+            NSError* error = nil;
+            BOOL ok = [fileMgr moveItemAtPath:cachePath toPath:supportPath error:&error];
+            if (!ok || error) {
+                NSLog(@"move error=%@", error);
+            }
+            
+            if (!isDirectory) {
+                [AppDelegate excludeFromBackup:supportPath];
+            }
+        }
+    }
+    
+    NSString* imagesDir = [supportDir stringByAppendingPathComponent:@"images"];
+    files = [fileMgr contentsOfDirectoryAtPath:imagesDir error:nil];
+    for (NSString* file in files) {
+        NSString* pathname = [imagesDir stringByAppendingPathComponent:file];
+        [AppDelegate excludeFromBackup:pathname];
+    }
+}
+
++(void) excludeFromBackup:(NSString*)path
+{
+    NSURL* url = [NSURL fileURLWithPath:path];
+    NSError* error = nil;
+    BOOL ok = [url setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&error];
+    if (!ok || error) {
+        NSLog(@"setResource error=%@", error);
+    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

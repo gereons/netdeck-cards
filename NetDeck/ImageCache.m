@@ -7,6 +7,7 @@
 //
 
 #import "ImageCache.h"
+#import "AppDelegate.h"
 #import <EXTScope.h>
 #import <AFNetworking.h>
 
@@ -480,10 +481,10 @@ static NSCache* memCache;
 
 +(NSString*) directoryForImages
 {
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString* supportDirectory = [paths objectAtIndex:0];
     
-    NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    NSString* directory = [supportDirectory stringByAppendingPathComponent:@"images"];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:directory])
     {
@@ -495,10 +496,10 @@ static NSCache* memCache;
 
 +(void) removeCacheDirectory
 {
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString* supportDirectory = [paths objectAtIndex:0];
     
-    NSString* directory = [documentsDirectory stringByAppendingPathComponent:@"images"];
+    NSString* directory = [supportDirectory stringByAppendingPathComponent:@"images"];
     
     [[NSFileManager defaultManager] removeItemAtPath:directory error:nil];
 }
@@ -569,6 +570,7 @@ static NSCache* memCache;
     if (data != nil)
     {
         [data writeToFile:file atomically:YES];
+        [AppDelegate excludeFromBackup:file];
         return YES;
     }
     return NO;

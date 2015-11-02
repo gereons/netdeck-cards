@@ -21,4 +21,7 @@
 
 +(NSString*) appVersion;
 
+// utility method: set the excludeFromBackup flag on the specified path
++(void) excludeFromBackup:(NSString*)path;
+
 @end

@@ -12,6 +12,7 @@
 #import "CardSets.h"
 #import "CardType.h"
 #import "ImageCache.h"
+#import "AppDelegate.h"
 #import <DTCoreText.h>
 
 @implementation CardManager
@@ -67,12 +68,7 @@ static NSDictionary* cardAliases;   // code -> alias
         @"02079": @"OAI",       // oversight AI
         @"08009": @"Baby",      // symmetrical visage
         @"08003": @"Pancakes",  // adjusted chronotype
-        @"07007": @"HRI",       // high-risk investment
-        @"08022": @"OCA",       // off-campus apartment
-        @"08051": @"SDC",       // self-destruct chips
-        @"05050": @"TMC",       // tri-maf contact
         @"09022": @"ASI",       // the all-seeing i
-        @"05052": @"QCC",       // q-coherence chip
     };
 }
 
@@ -172,18 +168,18 @@ static NSDictionary* cardAliases;   // code -> alias
 
 +(NSString*) filename
 {
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString* supportDirectory = [paths objectAtIndex:0];
     
-    return [documentsDirectory stringByAppendingPathComponent:@"nrcards.json"];
+    return [supportDirectory stringByAppendingPathComponent:@"nrcards.json"];
 }
 
 +(NSString*) filenameEn
 {
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString* supportDirectory = [paths objectAtIndex:0];
     
-    return [documentsDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
+    return [supportDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
 }
 
 +(void) removeFiles
@@ -229,6 +225,7 @@ static NSDictionary* cardAliases;   // code -> alias
     
     NSString* cardsFile = [CardManager filename];
     [json writeToFile:cardsFile atomically:YES];
+    [AppDelegate excludeFromBackup:cardsFile];
     
     [CardManager initialize];
     return [self setupFromJsonData:json];
@@ -275,6 +272,8 @@ static NSDictionary* cardAliases;   // code -> alias
     {
         NSString* cardsFile = [CardManager filenameEn];
         [json writeToFile:cardsFile atomically:YES];
+        
+        [AppDelegate excludeFromBackup:cardsFile];
     }
     
     for (NSDictionary* obj in json)
