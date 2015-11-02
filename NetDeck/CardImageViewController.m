@@ -35,31 +35,11 @@
     self.collectionView.backgroundColor = [UIColor clearColor];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardImageViewCell" bundle:nil] forCellWithReuseIdentifier:@"cardCell"];
-    
-    if (self.parentViewController.view.frame.size.height == 480)
-    {
-        // iphone 4s
-        [self.navigationController setNavigationBarHidden:YES animated:NO];
-        
-        UISwipeGestureRecognizer* swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(popNavigation:)];
-        swipe.direction = UISwipeGestureRecognizerDirectionUp;
-        
-        [self.collectionView addGestureRecognizer:swipe];
-        
-        NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-        NSInteger hints = [settings integerForKey:IPHONE4_SWIPE_HINT];
-        if (hints < 2)
-        {
-            [SVProgressHUD showInfoWithStatus:l10n(@"Swipe up to go back") maskType:SVProgressHUDMaskTypeBlack];
-            [settings setInteger:hints+1 forKey:IPHONE4_SWIPE_HINT];
-        }
-    }
 }
 
--(void)popNavigation:(id)sender
+-(BOOL) prefersStatusBarHidden
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    return IS_IPHONE_4;
 }
 
 -(void) setCards:(NSArray *)cards
@@ -133,4 +113,8 @@
     return cell;
 }
 
+- (CGSize)XcollectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(300, 436);
+}
 @end

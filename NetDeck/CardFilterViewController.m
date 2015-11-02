@@ -170,7 +170,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.collectionView.hidden = viewMode == VIEW_LIST;
     self.tableView.hidden = viewMode != VIEW_LIST;
     
-    self.revertButton = [[UIBarButtonItem alloc] initWithTitle:@"Revert"
+    self.revertButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Cancel")
                                                          style:UIBarButtonItemStylePlain
                                                         target:self
                                                         action:@selector(revertDeck:)];

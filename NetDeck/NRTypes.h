@@ -22,6 +22,13 @@
 #define IS_IPAD         ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 #define IS_IPHONE       ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
 
+#define SCREEN_WIDTH        ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT       ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_MAX_LENGTH   (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH   (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+
+#define IS_IPHONE_4         (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
+
 #define BG_FETCH_INTERVAL   (12*60*60)   // 12 hrs
 
 extern NSString* const kANY;

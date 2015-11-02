@@ -12,7 +12,7 @@
 #import "CardDetailView.h"
 
 #define POPOVER_MARGIN  40 // 20px status bar + 10px top + 10px bottom
-#define SCREEN_HEIGHT   768
+#define IPAD_SCREEN_HEIGHT   768
 
 @interface CardImageViewPopover ()
 
@@ -42,7 +42,7 @@ static CGFloat popoverScale = 1.0;
     keyboardVisible = YES;
     NSValue* value = notification.userInfo [UIKeyboardFrameEndUserInfoKey];
     CGFloat keyboardHeight = value.CGRectValue.size.height;
-    popoverScale = (SCREEN_HEIGHT - keyboardHeight - POPOVER_MARGIN) / IMAGE_HEIGHT;
+    popoverScale = (IPAD_SCREEN_HEIGHT - keyboardHeight - POPOVER_MARGIN) / IMAGE_HEIGHT;
 }
 
 +(void) hideKeyboard:(NSNotification*)sender
