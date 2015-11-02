@@ -105,6 +105,8 @@ static NSString* kSearchFieldValue = @"searchField";
 
 -(void) viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     // only clear filter when we're being popped from the nav stack
     if (self.isMovingFromParentViewController) {
         self.searchBar.text = @"";

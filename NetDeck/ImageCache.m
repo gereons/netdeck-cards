@@ -484,7 +484,7 @@ static NSCache* memCache;
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString* supportDirectory = [paths objectAtIndex:0];
     
-    NSString* directory = [supportDirectory stringByAppendingPathComponent:@"images"];
+    NSString* directory = [supportDirectory stringByAppendingPathComponent:IMAGES_DIRNAME];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:directory])
     {
@@ -499,7 +499,7 @@ static NSCache* memCache;
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString* supportDirectory = [paths objectAtIndex:0];
     
-    NSString* directory = [supportDirectory stringByAppendingPathComponent:@"images"];
+    NSString* directory = [supportDirectory stringByAppendingPathComponent:IMAGES_DIRNAME];
     
     [[NSFileManager defaultManager] removeItemAtPath:directory error:nil];
 }

@@ -161,7 +161,7 @@ const NSString* const kANY = @"Any";
     NSString* supportDir = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES)[0];
     
     NSFileManager* fileMgr = [NSFileManager defaultManager];
-    NSArray* files = @[ @"nrcards.json", @"nrcards_en.json", @"nrsets.json", @"images" ];
+    NSArray* files = @[ CARDS_FILENAME, CARDS_FILENAME_EN, SETS_FILENAME, IMAGES_DIRNAME ];
     for (NSString* file in files) {
         NSString* cachePath = [cacheDir stringByAppendingPathComponent:file];
         BOOL isDirectory;
@@ -179,7 +179,7 @@ const NSString* const kANY = @"Any";
         }
     }
     
-    NSString* imagesDir = [supportDir stringByAppendingPathComponent:@"images"];
+    NSString* imagesDir = [supportDir stringByAppendingPathComponent:IMAGES_DIRNAME];
     files = [fileMgr contentsOfDirectoryAtPath:imagesDir error:nil];
     for (NSString* file in files) {
         NSString* pathname = [imagesDir stringByAppendingPathComponent:file];

@@ -171,7 +171,7 @@ static NSDictionary* cardAliases;   // code -> alias
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString* supportDirectory = [paths objectAtIndex:0];
     
-    return [supportDirectory stringByAppendingPathComponent:@"nrcards.json"];
+    return [supportDirectory stringByAppendingPathComponent:CARDS_FILENAME];
 }
 
 +(NSString*) filenameEn
@@ -179,7 +179,7 @@ static NSDictionary* cardAliases;   // code -> alias
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString* supportDirectory = [paths objectAtIndex:0];
     
-    return [supportDirectory stringByAppendingPathComponent:@"nrcards_en.json"];
+    return [supportDirectory stringByAppendingPathComponent:CARDS_FILENAME_EN];
 }
 
 +(void) removeFiles

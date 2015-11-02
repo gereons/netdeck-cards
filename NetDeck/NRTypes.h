@@ -29,6 +29,11 @@
 
 #define IS_IPHONE_4         (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
 
+#define CARDS_FILENAME      @"nrcards.json"
+#define CARDS_FILENAME_EN   @"nrcards_en.json"
+#define SETS_FILENAME       @"nrsets.json"
+#define IMAGES_DIRNAME      @"images"
+
 #define BG_FETCH_INTERVAL   (12*60*60)   // 12 hrs
 
 extern NSString* const kANY;

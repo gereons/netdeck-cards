@@ -36,7 +36,7 @@ static TableData* enabledSets;
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString* supportDirectory = [paths objectAtIndex:0];
     
-    return [supportDirectory stringByAppendingPathComponent:@"nrsets.json"];
+    return [supportDirectory stringByAppendingPathComponent:SETS_FILENAME];
 }
 
 +(void) removeFiles
