@@ -57,6 +57,7 @@
 
 - (void)initIdentities
 {
+    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
     NSMutableArray* factions = [[Faction factionsForRole:self.role] mutableCopy];
     // remove entries for "none" and "neutral"
     [factions removeObject:[Faction name:NRFactionNone]];
@@ -64,7 +65,7 @@
     // move 'neutral' to the end
     NSString* neutral = [Faction name:NRFactionNeutral];
     [factions removeObject:neutral];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
+    if (useDraft)
     {
         [factions addObject:neutral];
     }
@@ -88,7 +89,7 @@
                 continue;
             }
             
-            if ([[factions objectAtIndex:i] isEqualToString:card.factionStr])
+            if ([[factions objectAtIndex:i] isEqualToString:[Faction name:card.faction]])
             {
                 NSMutableArray* arr = self.identities[i];
                 [arr addObject:card];
@@ -99,6 +100,15 @@
                 }
             }
         }
+    }
+    
+    if (useDraft)
+    {
+        // rename "Neutral" section to "Draft"
+        NSMutableArray* tmp = self.factionNames.mutableCopy;
+        [tmp removeLastObject];
+        [tmp addObject:l10n(@"Draft")];
+        self.factionNames = tmp;
     }
     
     NSAssert(self.identities.count == self.factionNames.count, @"count mismatch");

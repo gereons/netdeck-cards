@@ -243,7 +243,7 @@
         }
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
+    if (useDraft)
     {
         // rename "Neutral" section to "Draft"
         NSMutableArray* tmp = self.factionNames.mutableCopy;
