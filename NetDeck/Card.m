@@ -290,6 +290,10 @@ static NSDictionary* cropValues;
     }
     
     JSON_INT(maxPerDeck, @"limited");
+    // TODO: remove this hack for v2.3
+    if (c->_maxPerDeck == 0) {
+        c->_maxPerDeck = 3;
+    }
     if ([max1InDeck containsObject:c.code] || c.type == NRCardTypeIdentity)
     {
         c->_maxPerDeck = 1;
