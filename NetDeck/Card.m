@@ -244,12 +244,6 @@ static NSDictionary* cropValues;
     JSON_INT(number, @"number");
     JSON_INT(quantity, @"quantity");
     
-    // workaround for https://bitbucket.org/alsciende/nrdb/issues/182/card-quantity-for-quetzal-and-underway
-    if ([c.code isEqualToString:@"06052"] || [c.code isEqualToString:@"08080"])
-    {
-        c->_quantity = 3;
-    }
-    
     JSON_BOOL(unique, @"uniqueness");
     
     if (c.type == NRCardTypeIdentity)
@@ -303,14 +297,7 @@ static NSDictionary* cropValues;
         c->_imageSrc = nil;
     }
     
-    JSON_INT(maxPerDeck, @"maxperdeck");
-    c->_maxPerDeck = 3;
-    NSNumber* limited = [json objectForKey:@"limited"];
-    if (limited && limited.boolValue)
-    {
-        c->_maxPerDeck = 1;
-    }
-
+    JSON_INT(maxPerDeck, @"limited");
     if ([max1InDeck containsObject:c.code] || c.type == NRCardTypeIdentity)
     {
         c->_maxPerDeck = 1;
