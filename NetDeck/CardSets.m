@@ -95,8 +95,7 @@ static TableData* enabledSets;
         CardSet* cs = [CardSet new];
         
         cs.setCode = set[@"code"];
-        if ([cs.setCode isEqualToString:SPECIAL_SET_CODE])
-        {
+        if ([cs.setCode isEqualToString:DRAFT_SET_CODE]) {
             continue;
         }
         cs.name = set[@"name"];

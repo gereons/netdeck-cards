@@ -13,9 +13,7 @@
 
 #define CORE_SET_CODE       @"core"
 #define DRAFT_SET_CODE      @"draft"
-#define SPECIAL_SET_CODE    @"special"
 
-#define DRAFT_SET_NAME      @"Draft"
 #define CORE_SET_NAME       @"Core"
 
 #define UNKNOWN_SET         @"unknown"

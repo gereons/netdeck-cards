@@ -14,6 +14,7 @@
 #import "DeckChangeSet.h"
 #import "DeckManager.h"
 #import "CardType.h"
+#import "CardSets.h"
 
 #import "SettingsKeys.h"
 
@@ -429,7 +430,7 @@
         // NSLog(@" deck has no identity");
         self.identityCc = nil;
     }
-    self->_isDraft = [DRAFT_IDS containsObject:identity.code];
+    self->_isDraft = [identity.setCode isEqualToString:DRAFT_SET_CODE];
 }
 
 -(void) resetToCards:(NSDictionary *)cards

@@ -36,10 +36,6 @@
 #define _15_MINUTES             @"09004"
 #define MAX_1_PER_DECK          @[ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT, UTOPIA_SHARD, UTOPIA_FRAGMENT, HADES_SHARD, \
                                    HADES_FRAGMENT, EDEN_SHARD, EDEN_FRAGMENT, GOVERNMENT_TAKEOVER, _15_MINUTES ]
-// draft ids
-#define THE_MASQUE              @"00006"
-#define THE_SHADOW              @"00005"
-#define DRAFT_IDS               @[ THE_MASQUE, THE_SHADOW ]
 
 // data for a single card
 

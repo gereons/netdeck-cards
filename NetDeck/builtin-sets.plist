@@ -24,19 +24,19 @@
 		<key>available</key>
 		<string></string>
 		<key>code</key>
-		<string>special</string>
+		<string>draft</string>
 		<key>cyclenumber</key>
 		<integer>0</integer>
 		<key>known</key>
 		<integer>6</integer>
 		<key>name</key>
-		<string>Special</string>
+		<string>Draft</string>
 		<key>number</key>
 		<integer>2</integer>
 		<key>total</key>
 		<integer>4</integer>
 		<key>url</key>
-		<string>http://netrunnerdb.com/en/set/special</string>
+		<string>http://netrunnerdb.com/en/set/draft</string>
 	</dict>
 	<dict>
 		<key>available</key>
