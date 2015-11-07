@@ -132,7 +132,8 @@
         [self.factionSelector setTitle:[Faction name:NRFactionShaper] forSegmentAtIndex:3];
         if (includeDraft)
         {
-            [self.factionSelector setTitle:[Faction name:NRFactionNeutral] forSegmentAtIndex:4];
+            // [self.factionSelector setTitle:[Faction name:NRFactionNeutral] forSegmentAtIndex:4];
+            [self.factionSelector setTitle:l10n(@"Draft") forSegmentAtIndex:4];
         }
         else
         {
@@ -158,7 +159,8 @@
 
         if (includeDraft)
         {
-            [self.factionSelector setTitle:[Faction name:NRFactionNeutral] forSegmentAtIndex:5];
+            // [self.factionSelector setTitle:[Faction name:NRFactionNeutral] forSegmentAtIndex:5];
+            [self.factionSelector setTitle:l10n(@"Draft") forSegmentAtIndex:5];
         }
         else
         {
@@ -181,6 +183,7 @@
 
 - (void)initIdentities
 {
+    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
     NSMutableArray* factions;
     
     if (self.selectedFaction == NRFactionNone)
@@ -193,7 +196,7 @@
         // move 'neutral' to the end
         NSString* neutral = [Faction name:NRFactionNeutral];
         [factions removeObject:neutral];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
+        if (useDraft)
         {
             [factions addObject:neutral];
         }
@@ -227,7 +230,7 @@
                 continue;
             }
             
-            if ([[factions objectAtIndex:i] isEqualToString:card.factionStr])
+            if ([[factions objectAtIndex:i] isEqualToString:[Faction name:card.faction]])
             {
                 NSMutableArray* arr = self.identities[i];
                 [arr addObject:card];
@@ -238,6 +241,15 @@
                 }
             }
         }
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS])
+    {
+        // rename "Neutral" section to "Draft"
+        NSMutableArray* tmp = self.factionNames.mutableCopy;
+        [tmp removeLastObject];
+        [tmp addObject:l10n(@"Draft")];
+        self.factionNames = tmp;
     }
     
     NSAssert(self.identities.count == self.factionNames.count, @"count mismatch");

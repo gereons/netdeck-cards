@@ -214,6 +214,9 @@ static NSDictionary* cropValues;
         c->_setCode = UNKNOWN_SET;
         c->_setName = UNKNOWN_SET;
     }
+    if ([c->_setCode isEqualToString:DRAFT_SET_CODE]) {
+        c->_faction = NRFactionNeutral;
+    }
 
     c->_setNumber = [CardSets setNumForCode:c->_setCode];
     c->_isCore = [c.setCode caseInsensitiveCompare:CORE_SET_CODE] == NSOrderedSame;
@@ -302,7 +305,7 @@ static NSDictionary* cropValues;
     {
         c->_ancurLink = nil;
     }
-        
+    
     return c;
 }
 
