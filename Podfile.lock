@@ -1,38 +1,38 @@
 PODS:
-  - AFNetworking (2.6.0):
-    - AFNetworking/NSURLConnection (= 2.6.0)
-    - AFNetworking/NSURLSession (= 2.6.0)
-    - AFNetworking/Reachability (= 2.6.0)
-    - AFNetworking/Security (= 2.6.0)
-    - AFNetworking/Serialization (= 2.6.0)
-    - AFNetworking/UIKit (= 2.6.0)
-  - AFNetworking/NSURLConnection (2.6.0):
+  - AFNetworking (2.6.2):
+    - AFNetworking/NSURLConnection (= 2.6.2)
+    - AFNetworking/NSURLSession (= 2.6.2)
+    - AFNetworking/Reachability (= 2.6.2)
+    - AFNetworking/Security (= 2.6.2)
+    - AFNetworking/Serialization (= 2.6.2)
+    - AFNetworking/UIKit (= 2.6.2)
+  - AFNetworking/NSURLConnection (2.6.2):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.0):
+  - AFNetworking/NSURLSession (2.6.2):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.0)
-  - AFNetworking/Security (2.6.0)
-  - AFNetworking/Serialization (2.6.0)
-  - AFNetworking/UIKit (2.6.0):
+  - AFNetworking/Reachability (2.6.2)
+  - AFNetworking/Security (2.6.2)
+  - AFNetworking/Serialization (2.6.2)
+  - AFNetworking/UIKit (2.6.2):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - CorePlot (1.6)
-  - CSStickyHeaderFlowLayout (0.2.9)
+  - CorePlot (2.0)
+  - CSStickyHeaderFlowLayout (0.2.10)
   - Dropbox-Sync-API-SDK (3.1.2)
   - DTCoreText (1.6.16):
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTFoundation/Core (1.7.7)
-  - DTFoundation/DTAnimatedGIF (1.7.7)
-  - DTFoundation/DTHTMLParser (1.7.7):
+  - DTFoundation/Core (1.7.8)
+  - DTFoundation/DTAnimatedGIF (1.7.8)
+  - DTFoundation/DTHTMLParser (1.7.8):
     - DTFoundation/Core
-  - DTFoundation/UIKit (1.7.7):
+  - DTFoundation/UIKit (1.7.8):
     - DTFoundation/Core
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
@@ -138,16 +138,16 @@ DEPENDENCIES:
   - MultiSelectSegmentedControl
   - PromiseKit (= 1.5.3)
   - PromiseKit-AFNetworking
-  - SDCAlertView
+  - SDCAlertView (~> 2.5.4)
   - SVProgressHUD
 
 SPEC CHECKSUMS:
-  AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
-  CorePlot: 820901f6c147f2d84549ffa1f0902869f980d74d
-  CSStickyHeaderFlowLayout: ece83dad3a1528af8b5a25bda3aa12536624ac65
+  AFNetworking: 7f317038a9710cabfa43ec56396b307b45df72ab
+  CorePlot: b7f422ad363f2b0e48152471d6da45ce232eb8c6
+  CSStickyHeaderFlowLayout: 5366582779d8b7c9ba9b9cc729c218cc23888776
   Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 934a16fe9ffdd169c96261721b39dc312b75713d
-  DTFoundation: c9b3362b83f0017389082ec067ede719826a579d
+  DTFoundation: 46e2b2fafe78d67febfd8d1f85fe9845a093f00e
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   InAppSettingsKit: cc56d3ec45f11352a16d5b210da8a3fa1b9d05ed
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
@@ -161,4 +161,4 @@ SPEC CHECKSUMS:
   SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

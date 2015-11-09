@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <CorePlot-CocoaTouch.h>
+#import "ios/CorePlot-CocoaTouch.h"
 #import "TableData.h"
 
 @interface Stats : NSObject
