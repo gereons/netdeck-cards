@@ -135,35 +135,22 @@
     BOOL noJintekiAllowed = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
     BOOL isApex = [self.identity.code isEqualToString:APEX];
     
-    BOOL petError = NO, jintekiError = NO, agendaError = NO, entError = NO;
-    BOOL fragError = NO, shardError = NO, apexError = NO;
+    BOOL limitError = NO, jintekiError = NO, agendaError = NO, apexError = NO;
     
     // check max 1 per deck restrictions
     for (CardCounter* cc in self.cards)
     {
         Card* card = cc.card;
         
+        // limit checks
+        if (card.maxPerDeck > cc.count && !limitError) {
+            limitError = YES;
+            [reasons addObject:l10n(@"Card limit exceeded")];
+        }
+        
         if (role == NRRoleCorp)
         {
-            if ([card.code isEqualToString:DIRECTOR_HAAS_PET_PROJ] && cc.count > 1 && !petError)
-            {
-                petError = YES;
-                [reasons addObject:l10n(@"Too many pet projects")];
-            }
-            
-            if ([card.code isEqualToString:PHILOTIC_ENTANGLEMENT] && cc.count > 1 && !entError)
-            {
-                entError = YES;
-                [reasons addObject:l10n(@"Too many entanglements")];
-            }
-            
-            BOOL isFragment = [card.code isEqualToString:HADES_FRAGMENT] || [card.code isEqualToString:EDEN_FRAGMENT] || [card.code isEqualToString:UTOPIA_FRAGMENT];
-            if (isFragment && cc.count > 1 && !fragError)
-            {
-                fragError = YES;
-                [reasons addObject:l10n(@"Too many fragments")];
-            }
-            
+            // corp-only checks
             if (noJintekiAllowed && card.faction == NRFactionJinteki && !jintekiError)
             {
                 jintekiError = YES;
@@ -179,13 +166,6 @@
         else
         {
             // runner-only checks
-            BOOL isShard = [card.code isEqualToString:HADES_SHARD] || [card.code isEqualToString:EDEN_SHARD] || [card.code isEqualToString:UTOPIA_SHARD];
-            if (isShard && cc.count > 1 && !shardError)
-            {
-                shardError = YES;
-                [reasons addObject:l10n(@"Too many shards")];
-            }
-            
             if (isApex && !apexError && card.type == NRCardTypeResource && !card.isVirtual) {
                 apexError = YES;
                 [reasons addObject:l10n(@"Has non-virtual resources")];

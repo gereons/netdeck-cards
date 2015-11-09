@@ -81,10 +81,7 @@
 // deck invalidity reasons
 "No Identity" = "Keine Identität";
 "AP must be %d or %d" = "Nur %d oder %d AP erlaubt";
-"Too many pet projects" = "Zuviele Lieblingsprojekte";
-"Too many entanglements" = "Zuviele Verschränkungen";
-"Too many shards" = "Zuviele Scherben";
-"Too many fragments" = "Zuviele Fragmente";
+"Card limit exceeded" = "Kartenlimit überschritten";
 "Faction not allowed" = "Fraktion nicht erlaubt";
 "Has out-of-faction agendas" = "Fraktionsfremde Agenden";
 "Has non-virtual resources" = "Nicht-virtuelle Ressourcen";

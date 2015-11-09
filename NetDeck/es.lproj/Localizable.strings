@@ -71,14 +71,6 @@
 // deck invalidity reasons
 "No Identity" = "Sin Identidad";
 "AP must be %d or %d" = "Los PP deben ser %d o %d";
-"Too many pet projects" = "Demasiadas Proyecto Favorito";
-"Too many entanglements" = "Demasiadas Maraña Filótica";
-"Too many Utopia Shards" = "Demasiadas Esquirla de Utopía";
-"Too many Utopia Fragments" = "Demasiadas Fragmento de Utopía";
-"Too many Hades Shards" = "Demasiadas Esquirla de Hades";
-"Too many Hades Fragments" = "Demasiadas Fragmento de Hades";
-"Too many Eden Fragments" = "Demasiadas Fragmento de Edén";
-"Too many Eden Shards" = "Demasiadas Esquirla de Edén";
 "Cannot include Jinteki" = "No puedes incluir cartas Jinteki";
 "Has out-of-faction agendas" = "No puedes usar Planes de otra facción";
 "Not enough cards" = "No hay cartas suficientes";
