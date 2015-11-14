@@ -7,7 +7,6 @@
 //
 
 #import "CardSets.h"
-#import "CardSet.h"
 #import "CardManager.h"
 #import "Deck.h"
 #import "SettingsKeys.h"

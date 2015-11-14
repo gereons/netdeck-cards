@@ -8,7 +8,6 @@
 
 #import "DeckDiffViewController.h"
 #import "Deck.h"
-#import "CardCounter.h"
 #import "DeckDiffCell.h"
 
 typedef NS_ENUM(NSInteger, DiffMode) {

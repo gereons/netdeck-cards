@@ -9,7 +9,6 @@
 #import "Deck.h"
 
 #import "Card.h"
-#import "CardCounter.h"
 #import "DeckChange.h"
 #import "DeckChangeSet.h"
 #import "DeckManager.h"
@@ -353,7 +352,7 @@
         // NSLog(@" add %d copies of %@, index=%d", ABS(copies), card.name, cardIndex);
         if (cc == nil)
         {
-            cc = [CardCounter initWithCard:card andCount:copies];
+            cc = [[CardCounter alloc] initWithCard:card andCount:copies];
             [_cards addObject:cc];
         }
         else
@@ -397,7 +396,7 @@
             [self.lastChanges addCardCode:identity.code copies:1];
         }
         
-        self.identityCc = [CardCounter initWithCard:identity andCount:1];
+        self.identityCc = [[CardCounter alloc] initWithCard:identity andCount:1];
         if (self.role != NRRoleNone)
         {
             NSAssert(self.role == identity.role, @"role mismatch");
@@ -424,7 +423,7 @@
         if (card.type != NRCardTypeIdentity)
         {
             NSNumber* qty = cards[code];
-            CardCounter* cc = [CardCounter initWithCard:card andCount:qty.intValue];
+            CardCounter* cc = [[CardCounter alloc] initWithCard:card andCount:qty.intValue];
             [newCards addObject:cc];
         }
         else
@@ -504,7 +503,7 @@
     newDeck.name = newName;
     if (self.identity != nil)
     {
-        newDeck->_identityCc = [CardCounter initWithCard:self.identity];
+        newDeck->_identityCc = [[CardCounter alloc] initWithCard:self.identity andCount:1];
     }
     newDeck->_isDraft = self.isDraft;
     newDeck->_cards = [NSMutableArray arrayWithArray:_cards];
@@ -725,7 +724,7 @@
         Card* identity = [Card cardByCode:identityCode];
         if (identity)
         {
-            _identityCc = [CardCounter initWithCard:identity andCount:1];
+            _identityCc = [[CardCounter alloc] initWithCard:identity andCount:1];
         }
         _lastModified = nil;
         _notes = [decoder decodeObjectForKey:@"notes"];

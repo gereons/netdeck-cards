@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import "CardCounter.h"
-
 @interface Deck : NSObject <NSCoding>
 
 @property (readonly) NSArray* cards;        // array of CardCounter, all cards except identity

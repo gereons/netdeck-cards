@@ -8,9 +8,7 @@
 
 #import "CardManager.h"
 #import "SettingsKeys.h"
-#import "Faction.h"
 #import "CardSets.h"
-#import "CardType.h"
 #import "ImageCache.h"
 #import "AppDelegate.h"
 #import <DTCoreText.h>

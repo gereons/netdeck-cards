@@ -9,7 +9,6 @@
 #import "SetSelectionViewController.h"
 #import "SettingsKeys.h"
 #import "CardSets.h"
-#import "CardSet.h"
 #import "UIAlertAction+NetDeck.h"
 #import "NRSwitch.h"
 

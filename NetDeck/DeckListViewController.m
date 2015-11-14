@@ -24,7 +24,6 @@
 #import "ImageCache.h"
 #import "Deck.h"
 #import "DeckManager.h"
-#import "CardCounter.h"
 #import "Card.h"
 #import "DeckExport.h"
 #import "DeckImport.h"

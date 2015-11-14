@@ -11,7 +11,6 @@
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
 #import "Deck.h"
-#import "CardCounter.h"
 #import "CardList.h"
 #import "CardManager.h"
 #import "CardSets.h"
