@@ -143,7 +143,7 @@
         Card* card = cc.card;
         
         // limit checks
-        if (card.maxPerDeck > cc.count && !limitError) {
+        if (cc.count > card.maxPerDeck && !limitError) {
             limitError = YES;
             [reasons addObject:l10n(@"Card limit exceeded")];
         }

@@ -187,7 +187,7 @@ static NSDictionary* cropValues;
     c->_role = rc ? rc.integerValue : NRRoleNone;
     NSAssert(c.role != NRRoleNone, @"no role for %@", c.code);
     
-    if (IS_IPHONE && c.type == NRCardTypeIdentity)
+    if (c.type == NRCardTypeIdentity)
     {
         c->_name = [Card shortIdentityName:c.name forRole:c.role andFaction:c.factionStr];
     }
@@ -274,26 +274,12 @@ static NSDictionary* cropValues;
         c->_imageSrc = [NSString stringWithFormat:@"http://%@%@", host, c->_imageSrc];
     }
     
-    if (c->_imageSrc == nil)
-    {
-        NSArray* images = [json objectForKey:@"images"];
-        if ([images isKindOfClass:[NSArray class]] && images.count > 0)
-        {
-            NSDictionary* img = images[0];
-            c->_imageSrc = [img objectForKey:@"src"];
-        }
-    }
-    
     if (c->_imageSrc.length == 0)
     {
         c->_imageSrc = nil;
     }
     
     JSON_INT(maxPerDeck, @"limited");
-    // TODO: remove this hack for v2.3
-    if (c->_maxPerDeck == 0) {
-        c->_maxPerDeck = 3;
-    }
     if ([max1InDeck containsObject:c.code] || c.type == NRCardTypeIdentity)
     {
         c->_maxPerDeck = 1;
