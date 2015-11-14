@@ -9,12 +9,12 @@
 #import "DeckChange.h"
 #import "Card.h"
 
-@implementation DeckChange
+@implementation xDeckChange
 
-+(DeckChange*) forCode:(NSString*)code copies:(NSInteger)copies
++(xDeckChange*) forCode:(NSString*)code copies:(NSInteger)copies
 {
     NSAssert(copies != 0, @"copies can't be 0");
-    DeckChange* dc = [[DeckChange alloc] init];
+    xDeckChange* dc = [[xDeckChange alloc] init];
     dc->_code = code;
     dc->_count = copies;
     return dc;

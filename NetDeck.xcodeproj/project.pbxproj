@@ -72,6 +72,7 @@
 		3A3C1E1B1BF77CCB000311FA /* CardSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E1A1BF77CCB000311FA /* CardSet.swift */; };
 		3A3C1E1D1BF77F10000311FA /* CardCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E1C1BF77F10000311FA /* CardCounter.swift */; };
 		3A3C1E1F1BF79A71000311FA /* DeckState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E1E1BF79A71000311FA /* DeckState.swift */; };
+		3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E201BF79C7D000311FA /* DeckChange.swift */; };
 		3A3E26E81A005042000C6D32 /* UIAlertAction+NetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */; };
 		3A3FA6911BBF07C100994A11 /* UIFont+monospacedDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
@@ -426,6 +427,7 @@
 		3A3C1E1A1BF77CCB000311FA /* CardSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSet.swift; sourceTree = "<group>"; };
 		3A3C1E1C1BF77F10000311FA /* CardCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCounter.swift; sourceTree = "<group>"; };
 		3A3C1E1E1BF79A71000311FA /* DeckState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckState.swift; sourceTree = "<group>"; };
+		3A3C1E201BF79C7D000311FA /* DeckChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckChange.swift; sourceTree = "<group>"; };
 		3A3D841419F1A24F00642CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3A3E26E61A004FD7000C6D32 /* UIAlertAction+NetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertAction+NetDeck.h"; sourceTree = "<group>"; };
 		3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertAction+NetDeck.m"; sourceTree = "<group>"; };
@@ -1338,6 +1340,7 @@
 				3A3C1E1A1BF77CCB000311FA /* CardSet.swift */,
 				3A3C1E1C1BF77F10000311FA /* CardCounter.swift */,
 				3A3C1E1E1BF79A71000311FA /* DeckState.swift */,
+				3A3C1E201BF79C7D000311FA /* DeckChange.swift */,
 				3A5BC3ED1849326B00E792F7 /* NRTypes.h */,
 				3A5BC3E51849326B00E792F7 /* Card.h */,
 				3A5BC3E61849326B00E792F7 /* Card.m */,
@@ -2046,6 +2049,7 @@
 				3AF2235E194364A80072FD9F /* CardFilterSectionHeaderView.m in Sources */,
 				3A56371319954B28006AD431 /* LargeBrowserCell.m in Sources */,
 				3AD860E01B79383500EEF8AC /* CardImageViewController.m in Sources */,
+				3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */,
 				3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */,
 				3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */,
 				3A5BC3EF1849326B00E792F7 /* Card.m in Sources */,

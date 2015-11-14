@@ -8,7 +8,7 @@
 
 @class Card;
 
-@interface DeckChange : NSObject <NSCoding>
+@interface xDeckChange : NSObject <NSCoding>
 
 @property (readonly) NSString* code;
 @property (readonly) NSInteger count;

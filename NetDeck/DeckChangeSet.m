@@ -26,7 +26,7 @@
 -(void) addCardCode:(NSString *)code copies:(NSInteger)copies
 {
     NSAssert(copies != 0, @"changing 0 copies?");
-    DeckChange* dc = [DeckChange forCode:code copies:copies];
+    DeckChange* dc = [[DeckChange alloc] initWithCode:code count:copies];
     
     [self.changes addObject:dc];
 }
@@ -64,7 +64,7 @@
         {
             if (count != 0)
             {
-                DeckChange* newDc = [DeckChange forCode:prevCode copies:count];
+                DeckChange* newDc = [[DeckChange alloc] initWithCode:prevCode count:count];
                 
                 [combinedChanges addObject:newDc];
             }
@@ -77,7 +77,7 @@
     }
     if (prevCode && count != 0)
     {
-        DeckChange* newDc = [DeckChange forCode:prevCode copies:count];
+        DeckChange* newDc = [[DeckChange alloc] initWithCode:prevCode count:count];
         [combinedChanges addObject:newDc];
     }
     

@@ -22,6 +22,6 @@ import Foundation
     }
     
     class func buttonLabelFor(state: NRDeckState) -> String {
-        return String(format:"%@ ▾", states[state]!);
+        return states[state]! + " ▾";
     }
 }
