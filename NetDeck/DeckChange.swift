@@ -18,7 +18,7 @@ import Foundation
         self.count = count
     }
 
-    func card() -> Card {
+    var card: Card {
         return Card(byCode: self.code)
     }
 

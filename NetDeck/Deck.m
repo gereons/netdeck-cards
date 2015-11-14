@@ -9,8 +9,6 @@
 #import "Deck.h"
 
 #import "Card.h"
-#import "DeckChange.h"
-#import "DeckChangeSet.h"
 #import "DeckManager.h"
 #import "CardSets.h"
 

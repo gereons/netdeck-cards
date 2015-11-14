@@ -8,8 +8,6 @@
 
 #import "DeckHistoryPopup.h"
 #import "Deck.h"
-#import "DeckChangeSet.h"
-#import "DeckChange.h"
 #import "DeckHistorySectionHeaderView.h"
 #import "Notifications.h"
 #import "CardImageViewPopover.h"
