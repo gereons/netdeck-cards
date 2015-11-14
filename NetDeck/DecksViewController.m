@@ -15,7 +15,6 @@
 #import "Deck.h"
 #import "ImageCache.h"
 #import "SettingsKeys.h"
-#import "DeckState.h"
 #import "NRDB.h"
 
 @interface DecksViewController ()

@@ -35,7 +35,6 @@
 #import "CGRectUtils.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"
-#import "DeckState.h"
 #import "NRDB.h"
 #import "NRCrashlytics.h"
 

@@ -12,9 +12,9 @@ import Foundation
     private(set) var card: Card
     var count: Int
     
-    init(card: Card, andCount count: Int) {
+    init(card: Card, andCount: Int) {
         self.card = card
-        self.count = count
+        self.count = andCount
     }
     
     // MARK: NSCoding
