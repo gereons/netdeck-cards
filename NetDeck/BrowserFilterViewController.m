@@ -10,9 +10,7 @@
 #import "BrowserResultViewController.h"
 #import "CardManager.h"
 #import "CardList.h"
-#import "CardType.h"
 #import "CardSets.h"
-#import "Faction.h"
 #import "CardFilterPopover.h"
 #import "Notifications.h"
 
@@ -87,7 +85,7 @@ static NSMutableArray* subtypeCollapsedSections;
     [self.scopeSelector setTitle:l10n(@"Name") forSegmentAtIndex:1];
     [self.scopeSelector setTitle:l10n(@"Text") forSegmentAtIndex:2];
     self.searchLabel.text = l10n(@"Search in:");
-    self.scope = NRSearchAll;
+    self.scope = NRSearchScopeAll;
     self.textField.delegate = self;
     self.textField.placeholder = l10n(@"Search Cards");
     self.textField.clearButtonMode = UITextFieldViewModeAlways;
@@ -190,7 +188,7 @@ static NSMutableArray* subtypeCollapsedSections;
     // clear textfield
     self.textField.text = @"";
     self.searchText = @"";
-    self.scope = NRSearchAll;
+    self.scope = NRSearchScopeAll;
     
     // reset sliders
     self.apSlider.value = 0;
@@ -507,13 +505,13 @@ static NSMutableArray* subtypeCollapsedSections;
     switch (sender.selectedSegmentIndex)
     {
         case 0:
-            self.scope = NRSearchAll;
+            self.scope = NRSearchScopeAll;
             break;
         case 1:
-            self.scope = NRSearchName;
+            self.scope = NRSearchScopeName;
             break;
         case 2:
-            self.scope = NRSearchText;
+            self.scope = NRSearchScopeText;
             break;
     }
     
@@ -524,13 +522,13 @@ static NSMutableArray* subtypeCollapsedSections;
 {
     switch (self.scope)
     {
-        case NRSearchText:
+        case NRSearchScopeText:
             [self.cardList filterByText:self.searchText];
             break;
-        case NRSearchAll:
+        case NRSearchScopeAll:
             [self.cardList filterByTextOrName:self.searchText];
             break;
-        case NRSearchName:
+        case NRSearchScopeName:
             [self.cardList filterByName:self.searchText];
             break;
     }

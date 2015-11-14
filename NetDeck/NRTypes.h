@@ -100,16 +100,16 @@ typedef NS_ENUM(NSInteger, NRDeckSort)
 
 typedef NS_ENUM(NSInteger, NRSearchScope)
 {
-    NRSearchAll,
-    NRSearchName,
-    NRSearchText
+    NRSearchScopeAll,
+    NRSearchScopeName,
+    NRSearchScopeText
 };
 
 typedef NS_ENUM(NSInteger, NRDeckSearchScope) {
-    NRDeckSearchAll,
-    NRDeckSearchName,
-    NRDeckSearchIdentity,
-    NRDeckSearchCard
+    NRDeckSearchScopeAll,
+    NRDeckSearchScopeName,
+    NRDeckSearchScopeIdentity,
+    NRDeckSearchScopeCard
 };
 
 typedef NS_ENUM(NSInteger, NRDeckListSort) {

@@ -8,8 +8,6 @@
 
 #import "FilterViewController.h"
 #import "ImageCache.h"
-#import "Faction.h"
-#import "CardType.h"
 #import "CardList.h"
 #import "SettingsKeys.h"
 #import "CardManager.h"

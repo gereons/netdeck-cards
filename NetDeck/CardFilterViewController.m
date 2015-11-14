@@ -14,9 +14,7 @@
 #import "CardCounter.h"
 #import "CardList.h"
 #import "CardManager.h"
-#import "CardType.h"
 #import "CardSets.h"
-#import "Faction.h"
 #import "CardFilterPopover.h"
 #import "Notifications.h"
 #import "CardImageViewPopover.h"
@@ -67,9 +65,9 @@ static NSInteger viewMode = VIEW_LIST;
 {
     scopes = @[ @"all text", @"card name", @"card text" ];
     
-    scopeLabels = @{ @(NRSearchAll): l10n(@"All"),
-                     @(NRSearchName): l10n(@"Name"),
-                     @(NRSearchText): l10n(@"Text")
+    scopeLabels = @{ @(NRSearchScopeAll): l10n(@"All"),
+                     @(NRSearchScopeName): l10n(@"Name"),
+                     @(NRSearchScopeText): l10n(@"Text")
                      };
 }
 
@@ -379,7 +377,7 @@ static NSInteger viewMode = VIEW_LIST;
 {
     self.sendNotifications = NO;
     
-    self.scope = NRSearchName;
+    self.scope = NRSearchScopeName;
     [self.scopeButton setTitle:[NSString stringWithFormat:@"%@ ▾", scopeLabels[@(self.scope)]] forState:UIControlStateNormal];
     self.scopeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.scopeButton.titleLabel.minimumScaleFactor = 0.5;
@@ -776,20 +774,20 @@ static NSInteger viewMode = VIEW_LIST;
 {
     UIAlertController* sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"All"), self.scope == NRSearchAll )
+    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"All"), self.scope == NRSearchScopeAll )
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
-                                                [self changeScope:NRSearchAll];
+                                                [self changeScope:NRSearchScopeAll];
                                             }]];
-    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Name"), self.scope == NRSearchName)
+    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Name"), self.scope == NRSearchScopeName)
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
-                                                [self changeScope:NRSearchName];
+                                                [self changeScope:NRSearchScopeName];
                                             }]];
-    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Text"), self.scope == NRSearchText)
+    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Text"), self.scope == NRSearchScopeText)
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
-                                                [self changeScope:NRSearchText];
+                                                [self changeScope:NRSearchScopeText];
                                             }]];
     
     UIPopoverPresentationController* popover = sheet.popoverPresentationController;

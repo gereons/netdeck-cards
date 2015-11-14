@@ -21,8 +21,6 @@
 		3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11C5F919715BE8003F2093 /* IdentitySectionHeaderView.m */; };
 		3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */; };
 		3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A167BD118B1E9C90023DF8A /* CardTypeStats.m */; };
-		3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EABD185DBA2D00DB7FFC /* Faction.m */; };
-		3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A16EAC0185DBC4700DB7FFC /* CardType.m */; };
 		3A1777DF1967EA0B0066E095 /* NRDBAuthPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1777DD1967EA0B0066E095 /* NRDBAuthPopupViewController.m */; };
 		3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */; };
 		3A1855F31A8E27EF00A1852D /* SetSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1855F11A8E27EF00A1852D /* SetSelectionViewController.m */; };
@@ -69,6 +67,9 @@
 		3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */; };
 		3A3845071B77CB5D007C76F2 /* CardUpdateCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845061B77CB5D007C76F2 /* CardUpdateCheck.m */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
+		3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E131BF74DAF000311FA /* TableData.swift */; };
+		3A3C1E161BF7525B000311FA /* Faction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E151BF7525B000311FA /* Faction.swift */; };
+		3A3C1E191BF771B2000311FA /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E181BF771B2000311FA /* CardType.swift */; };
 		3A3E26E81A005042000C6D32 /* UIAlertAction+NetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */; };
 		3A3FA6911BBF07C100994A11 /* UIFont+monospacedDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
@@ -199,6 +200,7 @@
 		3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8FBC9D19547260009ED6E3 /* NRDB.m */; };
 		3A8FBCA119548933009ED6E3 /* netrunnerdb_com@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FBC9F19548933009ED6E3 /* netrunnerdb_com@2x.png */; };
 		3A8FBCA219548933009ED6E3 /* netrunnerdb_com.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FBCA019548933009ED6E3 /* netrunnerdb_com.png */; };
+		3A904FCD1BF73723001C075A /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A904FCC1BF73723001C075A /* Types.swift */; };
 		3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C218B1630800AF5285 /* IceTypeStats.m */; };
 		3A9204C618B16B9B00AF5285 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C518B16B9B00AF5285 /* Stats.m */; };
 		3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AB18AF7DA900F83520 /* CostStats.m */; };
@@ -212,7 +214,6 @@
 		3A994275184B8CBB004B6E05 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A994274184B8CBB004B6E05 /* MobileCoreServices.framework */; };
 		3A9CE56518E0B6C0007A26CD /* IdentityViewCellSubtitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */; };
 		3A9CE56718E0CA2A007A26CD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9CE56618E0CA2A007A26CD /* MessageUI.framework */; };
-		3A9E7C4C18845FDA00A507C3 /* TableData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9E7C4B18845FDA00A507C3 /* TableData.m */; };
 		3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */ = {isa = PBXBuildFile; fileRef = 3AA0504919589F9B00DBDED6 /* Acknowledgements.html */; };
 		3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440E41854DA4C0051D4B0 /* ActionsTableViewController.m */; };
 		3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440E51854DA4C0051D4B0 /* MainWindow.xib */; };
@@ -355,10 +356,6 @@
 		3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentitySectionHeaderView.xib; sourceTree = "<group>"; };
 		3A167BD018B1E9C90023DF8A /* CardTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardTypeStats.h; sourceTree = "<group>"; };
 		3A167BD118B1E9C90023DF8A /* CardTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardTypeStats.m; sourceTree = "<group>"; };
-		3A16EABC185DBA2D00DB7FFC /* Faction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Faction.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A16EABD185DBA2D00DB7FFC /* Faction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Faction.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3A16EABF185DBC4700DB7FFC /* CardType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardType.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A16EAC0185DBC4700DB7FFC /* CardType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardType.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A1777DC1967EA0B0066E095 /* NRDBAuthPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRDBAuthPopupViewController.h; sourceTree = "<group>"; };
 		3A1777DD1967EA0B0066E095 /* NRDBAuthPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRDBAuthPopupViewController.m; sourceTree = "<group>"; };
 		3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NRDBAuthPopupViewController.xib; sourceTree = "<group>"; };
@@ -424,6 +421,10 @@
 		3A3845061B77CB5D007C76F2 /* CardUpdateCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardUpdateCheck.m; sourceTree = "<group>"; };
 		3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NROutlineLabel.h; sourceTree = "<group>"; };
 		3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NROutlineLabel.m; sourceTree = "<group>"; };
+		3A3C1E131BF74DAF000311FA /* TableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableData.swift; sourceTree = "<group>"; };
+		3A3C1E151BF7525B000311FA /* Faction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Faction.swift; sourceTree = "<group>"; };
+		3A3C1E171BF759F7000311FA /* NetDeck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetDeck.h; sourceTree = "<group>"; };
+		3A3C1E181BF771B2000311FA /* CardType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardType.swift; sourceTree = "<group>"; };
 		3A3D841419F1A24F00642CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3A3E26E61A004FD7000C6D32 /* UIAlertAction+NetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertAction+NetDeck.h"; sourceTree = "<group>"; };
 		3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertAction+NetDeck.m"; sourceTree = "<group>"; };
@@ -590,6 +591,8 @@
 		3A8FBC9D19547260009ED6E3 /* NRDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRDB.m; sourceTree = "<group>"; };
 		3A8FBC9F19548933009ED6E3 /* netrunnerdb_com@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com@2x.png"; sourceTree = "<group>"; };
 		3A8FBCA019548933009ED6E3 /* netrunnerdb_com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = netrunnerdb_com.png; sourceTree = "<group>"; };
+		3A904FCB1BF73722001C075A /* NetDeck-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NetDeck-Bridging-Header.h"; sourceTree = "<group>"; };
+		3A904FCC1BF73723001C075A /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		3A9204C118B1630800AF5285 /* IceTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IceTypeStats.h; sourceTree = "<group>"; };
 		3A9204C218B1630800AF5285 /* IceTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IceTypeStats.m; sourceTree = "<group>"; };
 		3A9204C418B16B9B00AF5285 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
@@ -617,8 +620,6 @@
 		3A9CDFF318FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCellSubtitle.xib; sourceTree = "<group>"; };
 		3A9CE56618E0CA2A007A26CD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		3A9E7C4A18845FDA00A507C3 /* TableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableData.h; sourceTree = "<group>"; };
-		3A9E7C4B18845FDA00A507C3 /* TableData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableData.m; sourceTree = "<group>"; };
 		3AA0504919589F9B00DBDED6 /* Acknowledgements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Acknowledgements.html; sourceTree = "<group>"; };
 		3AA440E31854DA4C0051D4B0 /* ActionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ActionsTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AA440E41854DA4C0051D4B0 /* ActionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ActionsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -897,6 +898,8 @@
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
 				3A36226D1849320C007F2854 /* main.m */,
 				3A36226F1849320C007F2854 /* NetDeck-Prefix.pch */,
+				3A3C1E171BF759F7000311FA /* NetDeck.h */,
+				3A904FCB1BF73722001C075A /* NetDeck-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1331,15 +1334,15 @@
 		3AA440DF1854DA0D0051D4B0 /* Data / Models */ = {
 			isa = PBXGroup;
 			children = (
+				3A904FCC1BF73723001C075A /* Types.swift */,
+				3A3C1E131BF74DAF000311FA /* TableData.swift */,
+				3A3C1E151BF7525B000311FA /* Faction.swift */,
+				3A3C1E181BF771B2000311FA /* CardType.swift */,
 				3A5BC3ED1849326B00E792F7 /* NRTypes.h */,
 				3A5BC3E51849326B00E792F7 /* Card.h */,
 				3A5BC3E61849326B00E792F7 /* Card.m */,
 				3AE0E62B1957222600633A71 /* CardManager.h */,
 				3AE0E62C1957222600633A71 /* CardManager.m */,
-				3A16EABC185DBA2D00DB7FFC /* Faction.h */,
-				3A16EABD185DBA2D00DB7FFC /* Faction.m */,
-				3A16EABF185DBC4700DB7FFC /* CardType.h */,
-				3A16EAC0185DBC4700DB7FFC /* CardType.m */,
 				3A5BC3E71849326B00E792F7 /* CardCounter.h */,
 				3A5BC3E81849326B00E792F7 /* CardCounter.m */,
 				3A71C9C6185CC4E200D66A27 /* CardSets.h */,
@@ -1358,8 +1361,6 @@
 				3AF831391A20B59000143FF6 /* DeckChangeSet.m */,
 				3ADE90901877317F006E187F /* DeckManager.h */,
 				3ADE90911877317F006E187F /* DeckManager.m */,
-				3A9E7C4A18845FDA00A507C3 /* TableData.h */,
-				3A9E7C4B18845FDA00A507C3 /* TableData.m */,
 			);
 			name = "Data / Models";
 			sourceTree = "<group>";
@@ -1628,6 +1629,7 @@
 		3A3622561849320C007F2854 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Gereon Steffens";
 				TargetAttributes = {
@@ -1960,7 +1962,6 @@
 				3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3AC6BC7419D3F37E002C7759 /* NSString+stripHTML.m in Sources */,
-				3A9E7C4C18845FDA00A507C3 /* TableData.m in Sources */,
 				3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */,
 				3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */,
 				3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */,
@@ -1970,7 +1971,7 @@
 				3A19B7961ACD841E0039A18A /* IdentityCollectionView.m in Sources */,
 				3A1777DF1967EA0B0066E095 /* NRDBAuthPopupViewController.m in Sources */,
 				3AA440EF1854DA630051D4B0 /* DetailViewManager.m in Sources */,
-				3A16EAC1185DBC4700DB7FFC /* CardType.m in Sources */,
+				3A3C1E191BF771B2000311FA /* CardType.swift in Sources */,
 				3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */,
 				3A531B2A1A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.m in Sources */,
 				3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */,
@@ -2000,6 +2001,7 @@
 				3ADE90921877317F006E187F /* DeckManager.m in Sources */,
 				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
 				3A5BC3F01849326B00E792F7 /* CardCounter.m in Sources */,
+				3A904FCD1BF73723001C075A /* Types.swift in Sources */,
 				3A058B1919D334660090F53A /* NRSwitch.m in Sources */,
 				3A1855F31A8E27EF00A1852D /* SetSelectionViewController.m in Sources */,
 				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
@@ -2021,8 +2023,9 @@
 				3A36226E1849320C007F2854 /* main.m in Sources */,
 				3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */,
 				3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */,
-				3A16EABE185DBA2D00DB7FFC /* Faction.m in Sources */,
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,
+				3A3C1E161BF7525B000311FA /* Faction.swift in Sources */,
+				3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */,
 				3AD860E51B7939E500EEF8AC /* CardImageViewCell.m in Sources */,
 				3AA463D41BC0042600591647 /* BrowserViewController.m in Sources */,
 				3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */,
@@ -2147,6 +2150,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2165,6 +2169,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_MODULE_NAME = NetDeck;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Externals/**";
@@ -2189,6 +2194,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
@@ -2200,6 +2206,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_MODULE_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -2214,9 +2221,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2226,9 +2235,12 @@
 				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "NetDeck/NetDeck-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Core/Externals/DTFoundation/**";
 				WRAPPER_EXTENSION = app;
@@ -2241,9 +2253,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2253,9 +2267,11 @@
 				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "NetDeck/NetDeck-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Core/Externals/DTFoundation/**";
 				WRAPPER_EXTENSION = app;
@@ -2280,6 +2296,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.steffens.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Externals/** \"$(CONFIGURATION_TEMP_DIR)/$(PROJECT_NAME).build/DerivedSources\"";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -2320,6 +2337,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = "ADHOC=1";
@@ -2331,6 +2349,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_MODULE_NAME = NetDeck;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -2345,9 +2364,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2357,10 +2378,12 @@
 				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
 				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "NetDeck/NetDeck-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Core/Externals/DTFoundation/**";
 				WRAPPER_EXTENSION = app;

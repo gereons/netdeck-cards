@@ -10,7 +10,6 @@
 #import "IphoneStartViewController.h"
 #import "DeckManager.h"
 #import "Deck.h"
-#import "Faction.h"
 #import "ImageCache.h"
 #import "NRDB.h"
 #import "CardUpdateCheck.h"

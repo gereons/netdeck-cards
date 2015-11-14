@@ -12,8 +12,6 @@
 #import "BrowserImageCell.h"
 #import "CardImageViewCell.h"
 #import "Card.h"
-#import "CardType.h"
-#import "Faction.h"
 #import "ImageCache.h"
 
 @implementation CardDetailView

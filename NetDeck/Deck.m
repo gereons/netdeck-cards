@@ -13,7 +13,6 @@
 #import "DeckChange.h"
 #import "DeckChangeSet.h"
 #import "DeckManager.h"
-#import "CardType.h"
 #import "CardSets.h"
 
 #import "SettingsKeys.h"

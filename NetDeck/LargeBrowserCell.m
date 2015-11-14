@@ -9,8 +9,6 @@
 #import "LargeBrowserCell.h"
 #import "CGRectUtils.h"
 #import "Card.h"
-#import "Faction.h"
-#import "CardType.h"
 #import "ImageCache.h"
 
 @interface LargeBrowserCell()

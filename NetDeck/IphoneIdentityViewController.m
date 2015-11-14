@@ -11,7 +11,6 @@
 #import "ImageCache.h"
 #import "CardManager.h"
 #import "Deck.h"
-#import "Faction.h"
 #import "SettingsKeys.h"
 #import "CardSets.h"
 

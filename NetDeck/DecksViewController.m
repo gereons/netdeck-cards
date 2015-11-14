@@ -14,7 +14,6 @@
 #import "DeckManager.h"
 #import "Deck.h"
 #import "ImageCache.h"
-#import "Faction.h"
 #import "SettingsKeys.h"
 #import "DeckState.h"
 #import "NRDB.h"
@@ -81,7 +80,7 @@ static NRFilter _filterType = NRFilterAll;
     if ((self = [self init]))
     {
         self.filterText = card.name;
-        self.searchScope = card.type == NRCardTypeIdentity ? NRDeckSearchIdentity : NRDeckSearchCard;
+        self.searchScope = card.type == NRCardTypeIdentity ? NRDeckSearchScopeIdentity : NRDeckSearchScopeCard;
     }
     return self;
 }
@@ -361,16 +360,16 @@ static NRFilter _filterType = NRFilterAll;
         NSPredicate* predicate;
         switch (self.searchScope)
         {
-            case NRDeckSearchAll:
+            case NRDeckSearchScopeAll:
                 predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[ namePredicate, identityPredicate, cardPredicate ]];
                 break;
-            case NRDeckSearchName:
+            case NRDeckSearchScopeName:
                 predicate = namePredicate;
                 break;
-            case NRDeckSearchIdentity:
+            case NRDeckSearchScopeIdentity:
                 predicate = identityPredicate;
                 break;
-            case NRDeckSearchCard:
+            case NRDeckSearchScopeCard:
                 predicate = cardPredicate;
                 break;
         }

@@ -8,7 +8,6 @@
 
 #import "SmallBrowserCell.h"
 #import "Card.h"
-#import "Faction.h"
 
 @implementation SmallBrowserCell
 

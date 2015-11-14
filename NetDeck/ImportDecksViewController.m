@@ -18,11 +18,10 @@
 #import "DeckCell.h"
 #import "OctgnImport.h"
 #import "SettingsKeys.h"
-#import "Faction.h"
 #import "NRDB.h"
 #import "DeckManager.h"
 
-static NRDeckSearchScope searchScope = NRDeckSearchAll;
+static NRDeckSearchScope searchScope = NRDeckSearchScopeAll;
 static NSString* filterText;
 
 @interface ImportDecksViewController ()
@@ -415,16 +414,16 @@ static NSString* filterText;
         NSPredicate* predicate;
         switch (searchScope)
         {
-            case NRDeckSearchAll:
+            case NRDeckSearchScopeAll:
                 predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[ namePredicate, identityPredicate, cardPredicate ]];
                 break;
-            case NRDeckSearchName:
+            case NRDeckSearchScopeName:
                 predicate = namePredicate;
                 break;
-            case NRDeckSearchIdentity:
+            case NRDeckSearchScopeIdentity:
                 predicate = identityPredicate;
                 break;
-            case NRDeckSearchCard:
+            case NRDeckSearchScopeCard:
                 predicate = cardPredicate;
                 break;
         }

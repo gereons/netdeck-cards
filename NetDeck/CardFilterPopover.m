@@ -9,7 +9,6 @@
 #import "CardFilterPopover.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
-#import "TableData.h"
 #import "CardFilterViewController.h"
 
 @interface CardFilterPopover ()

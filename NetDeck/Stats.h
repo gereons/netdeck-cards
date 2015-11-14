@@ -7,7 +7,6 @@
 //
 
 #import "ios/CorePlot-CocoaTouch.h"
-#import "TableData.h"
 
 @interface Stats : NSObject
 

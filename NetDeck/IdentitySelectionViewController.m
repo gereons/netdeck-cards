@@ -11,7 +11,6 @@
 #import "IdentityViewCell.h"
 #import "CardImageViewPopover.h"
 
-#import "Faction.h"
 #import "Card.h"
 #import "CardManager.h"
 #import "CardSets.h"

@@ -8,7 +8,7 @@
 
 #import "InfluenceStats.h"
 #import "Deck.h"
-#import "Faction.h"
+
 @interface InfluenceStats()
 @property NSMutableDictionary* colors;
 @end

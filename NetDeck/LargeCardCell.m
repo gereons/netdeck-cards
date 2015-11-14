@@ -9,8 +9,6 @@
 #import "LargeCardCell.h"
 #import "CardCounter.h"
 #import "Deck.h"
-#import "Faction.h"
-#import "CardType.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"

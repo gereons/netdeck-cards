@@ -7,7 +7,6 @@
 //
 
 #import "CardCounter.h"
-#import "TableData.h"
 
 @interface Deck : NSObject <NSCoding>
 

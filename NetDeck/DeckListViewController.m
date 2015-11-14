@@ -26,8 +26,6 @@
 #import "DeckManager.h"
 #import "CardCounter.h"
 #import "Card.h"
-#import "Faction.h"
-#import "CardType.h"
 #import "DeckExport.h"
 #import "DeckImport.h"
 #import "CardSets.h"

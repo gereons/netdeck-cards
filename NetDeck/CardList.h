@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import "TableData.h"
-
 @class Card;
 @interface CardList : NSObject
 

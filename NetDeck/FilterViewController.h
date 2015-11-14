@@ -7,6 +7,7 @@
 //
 
 #import "MultiSelectSegmentedControl.h"
+#import "NetDeck-Swift.h"
 
 @class Card, CardList;
 

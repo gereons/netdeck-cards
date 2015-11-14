@@ -154,7 +154,7 @@
     self.sets = nil;
     self.agendaPoints = -1;
     self.text = @"";
-    self.searchScope = NRSearchAll;
+    self.searchScope = NRSearchScopeAll;
     self.unique = NO;
     self.limited = NO;
     self.faction4inf = NRFactionNone;
@@ -187,19 +187,19 @@
 -(void) filterByText:(NSString*) text;
 {
     self.text = text;
-    self.searchScope = NRSearchText;
+    self.searchScope = NRSearchScopeText;
 }
 
 -(void) filterByTextOrName:(NSString*) text;
 {
     self.text = text;
-    self.searchScope = NRSearchAll;
+    self.searchScope = NRSearchScopeAll;
 }
 
 -(void) filterByName:(NSString*) name;
 {
     self.text = name;
-    self.searchScope = NRSearchName;
+    self.searchScope = NRSearchScopeName;
 }
 
 -(void) filterBySet:(NSString*) set;
@@ -371,11 +371,11 @@
         NSPredicate* predicate;
         switch (self.searchScope)
         {
-            case NRSearchAll:
+            case NRSearchScopeAll:
                 predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@) OR (name_en CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (alias CONTAINS[cd] %@)",
                              self.text, self.text, self.text, self.text];
                 break;
-            case NRSearchName:
+            case NRSearchScopeName:
             {
                 predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@) OR (name_en CONTAINS[cd] %@) OR (alias CONTAINS[cd] %@)", self.text, self.text, self.text];
                 unichar ch = [self.text characterAtIndex:0];
@@ -386,7 +386,7 @@
                 }
                 break;
             }
-            case NRSearchText:
+            case NRSearchScopeText:
                 predicate = [NSPredicate predicateWithFormat:@"text CONTAINS[cd] %@", self.text];
                 break;
         }

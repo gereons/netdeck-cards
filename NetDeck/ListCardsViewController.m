@@ -12,10 +12,8 @@
 #import "ImageCache.h"
 #import "EditDeckCell.h"
 #import "Deck.h"
-#import "TableData.h"
 #import "CardList.h"
-#import "Faction.h"
-#import "CardType.h"
+
 
 @interface ListCardsViewController ()
 
