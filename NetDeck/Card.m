@@ -7,7 +7,6 @@
 //
 
 #import "Card.h"
-#import "CardSets.h"
 #import "CardManager.h"
 #import "SettingsKeys.h"
 #import <DTCoreText.h>
@@ -209,15 +208,15 @@ static NSDictionary* cropValues;
     JSON_STR(setCode, @"set_code");
     if (c->_setCode == nil)
     {
-        c->_setCode = UNKNOWN_SET;
-        c->_setName = UNKNOWN_SET;
+        c->_setCode = [CardSets UNKNOWN_SET];
+        c->_setName = [CardSets UNKNOWN_SET];
     }
-    if ([c->_setCode isEqualToString:DRAFT_SET_CODE]) {
+    if ([c->_setCode isEqualToString:[CardSets DRAFT_SET_CODE]]) {
         c->_faction = NRFactionNeutral;
     }
 
     c->_setNumber = (int)[CardSets setNumForCode:c->_setCode];
-    c->_isCore = [c.setCode caseInsensitiveCompare:CORE_SET_CODE] == NSOrderedSame;
+    c->_isCore = [c.setCode caseInsensitiveCompare:[CardSets CORE_SET_CODE]] == NSOrderedSame;
     
     JSON_STR(subtype, @"subtype");
     if (c.subtype.length == 0)

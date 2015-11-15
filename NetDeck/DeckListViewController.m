@@ -27,7 +27,6 @@
 #import "Card.h"
 #import "DeckExport.h"
 #import "DeckImport.h"
-#import "CardSets.h"
 #import "DeckEmail.h"
 
 #import "CardCell.h"

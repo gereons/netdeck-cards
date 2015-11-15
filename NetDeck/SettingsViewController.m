@@ -13,7 +13,6 @@
 #import <AFNetworking.h>
 
 #import "SettingsViewController.h"
-#import "CardSets.h"
 #import "IASKAppSettingsViewController.h"
 #import "IASKSettingsReader.h"
 #import "DataDownload.h"

@@ -27,7 +27,7 @@
 
 +(void) resetModificationDate:(Deck*)deck;
 
-+(NSMutableArray*) decksForRole:(NRRole)role;
++(NSMutableArray<Deck*>*) decksForRole:(NRRole)role;
 
 +(NSString*) directoryForRole:(NRRole)role;
 

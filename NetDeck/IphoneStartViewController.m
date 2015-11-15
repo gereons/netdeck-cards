@@ -15,7 +15,6 @@
 #import "CardUpdateCheck.h"
 #import "Notifications.h"
 #import "CardManager.h"
-#import "CardSets.h"
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "SettingsViewController.h"

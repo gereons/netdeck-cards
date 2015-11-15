@@ -8,17 +8,16 @@
 
 #import "CardManager.h"
 #import "SettingsKeys.h"
-#import "CardSets.h"
 #import "ImageCache.h"
 #import "AppDelegate.h"
 #import <DTCoreText.h>
 
 @implementation CardManager
 
-static NSMutableArray* allRunnerCards;          // all non-identity runner cards
-static NSMutableArray* allCorpCards;            // all non-identity corp cards
-static NSMutableArray* allRunnerIdentities;     // all runner ids
-static NSMutableArray* allCorpIdentities;       // all corp ids
+static NSMutableArray<Card*>* allRunnerCards;          // all non-identity runner cards
+static NSMutableArray<Card*>* allCorpCards;            // all non-identity corp cards
+static NSMutableArray<Card*>* allRunnerIdentities;     // all runner ids
+static NSMutableArray<Card*>* allCorpIdentities;       // all corp ids
 
 static NSArray* subtypes;       // array[role] of dictionary type->array
 static NSArray* identitySubtypes; // array[role] of set of strings
@@ -26,7 +25,7 @@ static NSString* identityKey;
 
 static NSMutableArray* sortedIdentities;
 
-static NSMutableDictionary* allCards;   // code -> card
+static NSMutableDictionary<NSString*, Card*>* allCards;   // code -> card
 
 static int maxMU;
 static int maxStrength;
@@ -94,22 +93,22 @@ static NSDictionary* cardAliases;   // code -> alias
     }];
 }
 
-+(NSArray*) allForRole:(NRRole)role
++(NSArray<Card*>*) allForRole:(NRRole)role
 {
     return role == NRRoleRunner ? allRunnerCards : allCorpCards;
 }
 
-+(NSArray*) identitiesForRole:(NRRole)role
++(NSArray<Card*>*) identitiesForRole:(NRRole)role
 {
     return role == NRRoleRunner ? allRunnerIdentities : allCorpIdentities;
 }
 
-+(NSArray*) allRunnerCards
++(NSArray<Card*>*) allRunnerCards
 {
     return allRunnerCards;
 }
 
-+(NSArray*) allCorpCards
++(NSArray<Card*>*) allCorpCards
 {
     return allCorpCards;
 }

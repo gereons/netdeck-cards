@@ -12,7 +12,6 @@
 
 #import "DeckExport.h"
 #import "Deck.h"
-#import "CardSets.h"
 #import "GZip.h"
 
 #define APP_NAME    "Net Deck"

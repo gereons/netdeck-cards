@@ -133,7 +133,6 @@
 		3A6E757318E402A300EF8DE1 /* Icon-Small-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E757118E402A300EF8DE1 /* Icon-Small-29.png */; };
 		3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71628E197289E7001755BF /* DeckDiffViewController.m */; };
 		3A716291197289E7001755BF /* DeckDiffViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71628F197289E7001755BF /* DeckDiffViewController.xib */; };
-		3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71C9C7185CC4E200D66A27 /* CardSets.m */; };
 		3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71FFC71930BA6500C71C54 /* CardThumbView.xib */; };
 		3A71FFCB1930BAE800C71C54 /* CardThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71FFCA1930BAE800C71C54 /* CardThumbView.m */; };
 		3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A721DC0189CFA64004EFDFE /* DeckImport.m */; };
@@ -508,8 +507,6 @@
 		3A71628D197289E7001755BF /* DeckDiffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckDiffViewController.h; sourceTree = "<group>"; };
 		3A71628E197289E7001755BF /* DeckDiffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckDiffViewController.m; sourceTree = "<group>"; };
 		3A71628F197289E7001755BF /* DeckDiffViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffViewController.xib; sourceTree = "<group>"; };
-		3A71C9C6185CC4E200D66A27 /* CardSets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardSets.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A71C9C7185CC4E200D66A27 /* CardSets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardSets.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A71FFC71930BA6500C71C54 /* CardThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardThumbView.xib; sourceTree = "<group>"; };
 		3A71FFC91930BAE800C71C54 /* CardThumbView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardThumbView.h; sourceTree = "<group>"; };
 		3A71FFCA1930BAE800C71C54 /* CardThumbView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardThumbView.m; sourceTree = "<group>"; };
@@ -1343,8 +1340,6 @@
 				3A5BC3E61849326B00E792F7 /* Card.m */,
 				3AE0E62B1957222600633A71 /* CardManager.h */,
 				3AE0E62C1957222600633A71 /* CardManager.m */,
-				3A71C9C6185CC4E200D66A27 /* CardSets.h */,
-				3A71C9C7185CC4E200D66A27 /* CardSets.m */,
 				3A5BC3E91849326B00E792F7 /* CardList.h */,
 				3A5BC3EA1849326B00E792F7 /* CardList.m */,
 				3A5BC3EB1849326B00E792F7 /* Deck.h */,
@@ -1948,7 +1943,6 @@
 				3A461A7118BBF39500302A4D /* DataDownload.m in Sources */,
 				3A3622721849320C007F2854 /* AppDelegate.m in Sources */,
 				3A18B2561B8B7C650065EC4A /* FilterViewController.m in Sources */,
-				3A71C9C8185CC4E200D66A27 /* CardSets.m in Sources */,
 				3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3AC6BC7419D3F37E002C7759 /* NSString+stripHTML.m in Sources */,

@@ -9,13 +9,12 @@
 #import "CardList.h"
 #import "Card.h"
 #import "Deck.h"
-#import "CardSets.h"
 #import "CardManager.h"
 
 @interface CardList()
 
 @property NRRole role;
-@property NSMutableArray* initialCards;
+@property NSMutableArray<Card*>* initialCards;
 
 @property int cost;
 @property NSString* type;
@@ -278,10 +277,10 @@
     self.sortType = sortType;
 }
 
--(NSMutableArray*) applyFilters
+-(NSMutableArray<Card*>*) applyFilters
 {
-    NSMutableArray* filteredCards = [self.initialCards mutableCopy];
-    NSMutableArray* predicates = [NSMutableArray array];
+    NSMutableArray<Card*>* filteredCards = [self.initialCards mutableCopy];
+    NSMutableArray<NSPredicate*>* predicates = [NSMutableArray array];
     
     if (self.faction.length > 0 && ![self.faction isEqualToString:kANY])
     {
@@ -412,7 +411,7 @@
     return filteredCards;
 }
 
--(void) sort:(NSMutableArray*)cards
+-(void) sort:(NSMutableArray<Card*>*)cards
 {
     [cards sortUsingComparator:^NSComparisonResult(Card* c1, Card* c2) {
         NSComparisonResult cmp = NSOrderedSame;
@@ -472,17 +471,17 @@
     return arr.count;
 }
 
--(NSArray*) allCards
+-(NSArray<Card*>*) allCards
 {
-    NSMutableArray* filteredCards = [self applyFilters];
+    NSMutableArray<Card*>* filteredCards = [self applyFilters];
     [self sort:filteredCards];
     return filteredCards;
 }
 
 -(TableData*) dataForTableView
 {
-    NSMutableArray* sections = [NSMutableArray array];
-    NSMutableArray* cards = [NSMutableArray array];
+    NSMutableArray<NSString*>* sections = [NSMutableArray array];
+    NSMutableArray<NSArray<Card*>*>* cards = [NSMutableArray array];
     
     NSMutableArray* filteredCards = [self applyFilters];
     [self sort:filteredCards];

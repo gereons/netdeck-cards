@@ -13,7 +13,6 @@
 #import "CardTypeStats.h"
 #import "InfluenceStats.h"
 #import "Deck.h"
-#import "CardSets.h"
 
 @interface DeckAnalysisViewController ()
 

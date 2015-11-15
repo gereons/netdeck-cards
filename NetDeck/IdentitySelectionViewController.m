@@ -13,7 +13,6 @@
 
 #import "Card.h"
 #import "CardManager.h"
-#import "CardSets.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"

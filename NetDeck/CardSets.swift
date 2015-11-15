@@ -20,6 +20,7 @@ import Foundation
 @objc class CardSets: NSObject {
     static let DRAFT_SET_CODE = "draft"
     static let CORE_SET_CODE = "core"
+    static let UNKNOWN_SET = "unknown"
     
     static var allCardSets = [CardSet]()            // all known sets
     static var code2number = [String: Int]()        // map code -> number

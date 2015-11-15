@@ -13,7 +13,6 @@
 
 #import "AppDelegate.h"
 #import "CardManager.h"
-#import "CardSets.h"
 #import "SettingsKeys.h"
 #import "DeckImport.h"
 #import "CardImageViewPopover.h"

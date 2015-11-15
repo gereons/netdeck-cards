@@ -44,6 +44,6 @@
 -(void) sortBy:(NRBrowserSort)sortType;
 
 -(TableData*) dataForTableView;
--(NSArray*) allCards;
+-(NSArray<Card*>*) allCards;
 
 @end

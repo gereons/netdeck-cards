@@ -12,7 +12,6 @@
 #import "CardManager.h"
 #import "Deck.h"
 #import "SettingsKeys.h"
-#import "CardSets.h"
 
 @interface IphoneIdentityViewController ()
 

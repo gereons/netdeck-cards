@@ -15,7 +15,6 @@
 
 #import "DataDownload.h"
 #import "CardManager.h"
-#import "CardSets.h"
 #import "Card.h"
 #import "ImageCache.h"
 #import "SettingsKeys.h"

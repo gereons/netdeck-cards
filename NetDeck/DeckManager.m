@@ -111,11 +111,11 @@
     return path;
 }
 
-+(NSMutableArray*) decksForRole:(NRRole)role
++(NSMutableArray<Deck*>*) decksForRole:(NRRole)role
 {
     if (role == NRFactionNone)
     {
-        NSMutableArray* decks = [self readDecksForRole:NRRoleRunner];
+        NSMutableArray<Deck*>* decks = [self readDecksForRole:NRRoleRunner];
         [decks addObjectsFromArray:[self readDecksForRole:NRRoleCorp]];
         return decks;
     }
@@ -125,12 +125,12 @@
     }
 }
 
-+(NSMutableArray*) readDecksForRole:(NRRole)role
++(NSMutableArray<Deck*>*) readDecksForRole:(NRRole)role
 {
     NSString* directory = [DeckManager directoryForRole:role];
     NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
     
-    NSMutableArray* decks = [NSMutableArray array];
+    NSMutableArray<Deck*>* decks = [NSMutableArray array];
     
     for (NSString* file in dirContents)
     {
