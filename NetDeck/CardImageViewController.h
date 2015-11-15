@@ -15,7 +15,7 @@
 
 @property Card* selectedCard;
 
--(void) setCards:(NSArray*)cards;
--(void) setCardCounters:(NSArray*)cardCounters;
+-(void) setCards:(NSArray<Card*>*)cards;
+-(void) setCardCounters:(NSArray<CardCounter*>*)cardCounters;
 
 @end

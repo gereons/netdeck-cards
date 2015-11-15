@@ -281,7 +281,7 @@
     [self.tableView reloadData];
 }
 
--(NSMutableArray*) sortDecks:(NSArray*)decks
+-(NSMutableArray<Deck*>*) sortDecks:(NSArray<Deck*>*)decks
 {
     switch (self.deckListSort)
     {

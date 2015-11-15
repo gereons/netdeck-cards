@@ -242,7 +242,7 @@
     [self exportToNetrunnerDB:decks index:0];
 }
 
--(void) exportToNetrunnerDB:(NSArray*)decks index:(NSInteger)index
+-(void) exportToNetrunnerDB:(NSArray<Deck*>*)decks index:(NSInteger)index
 {
     if (index < decks.count)
     {

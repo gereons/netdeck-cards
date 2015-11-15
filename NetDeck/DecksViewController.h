@@ -18,7 +18,7 @@
 @property UIBarButtonItem* sortButton;
 
 @property UIAlertController* popup;
-@property NSArray* decks;
+@property NSArray<NSMutableArray<Deck*>*>* decks;
 
 @property NRFilter filterType;
 

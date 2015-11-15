@@ -19,8 +19,8 @@ static NSMutableArray<Card*>* allCorpCards;            // all non-identity corp 
 static NSMutableArray<Card*>* allRunnerIdentities;     // all runner ids
 static NSMutableArray<Card*>* allCorpIdentities;       // all corp ids
 
-static NSArray* subtypes;       // array[role] of dictionary type->array
-static NSArray* identitySubtypes; // array[role] of set of strings
+static NSArray<NSMutableDictionary<NSString*, NSMutableArray*>*>* subtypes;       // array[role] of dictionary type->array
+static NSArray<NSMutableSet<NSString*>*>* identitySubtypes; // array[role] of set of strings
 static NSString* identityKey;
 
 static NSMutableArray* sortedIdentities;
@@ -35,7 +35,7 @@ static int maxInf;
 static int maxAgendaPoints;
 static int maxTrash;
 
-static NSDictionary* cardAliases;   // code -> alias
+static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
 
 +(void) initialize
 {
@@ -74,7 +74,7 @@ static NSDictionary* cardAliases;   // code -> alias
     return [allCards objectForKey:code];
 }
 
-+(NSArray*) allCards
++(NSArray<Card*>*) allCards
 {
     NSMutableArray* cards = allCards.allValues.mutableCopy;
 
@@ -115,9 +115,9 @@ static NSDictionary* cardAliases;   // code -> alias
 
 #pragma mark subtypes
 
-+(NSMutableArray*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIds
++(NSMutableArray<NSString*>*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIds
 {
-    NSMutableArray* arr = [NSMutableArray arrayWithArray:subtypes[role][type]];
+    NSMutableArray<NSString*>* arr = [NSMutableArray<NSString*> arrayWithArray:subtypes[role][type]];
     
     includeIds = includeIds && ([type isEqualToString:kANY] || [type isEqualToString:identityKey]);
     if (includeIds)
@@ -141,7 +141,7 @@ static NSDictionary* cardAliases;   // code -> alias
     return nil;
 }
 
-+(NSMutableArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIds
++(NSMutableArray<NSString*>*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIds
 {
     NSMutableSet* subtypes = [NSMutableSet set];
     for (NSString* type in types)
@@ -412,15 +412,15 @@ static NSDictionary* cardAliases;   // code -> alias
         }
         else
         {
-            NSMutableDictionary* dict = subtypes[card.role];
+            NSMutableDictionary<NSString*, NSMutableArray*>* dict = subtypes[card.role];
             
             if (dict[card.typeStr] == nil)
             {
-                dict[card.typeStr] = [NSMutableArray array];
+                dict[card.typeStr] = [NSMutableArray<NSString*> array];
             }
             if (dict[kANY] == nil)
             {
-                dict[kANY] = [NSMutableArray array];
+                dict[kANY] = [NSMutableArray<NSString*> array];
             }
             for (NSString* st in card.subtypes)
             {

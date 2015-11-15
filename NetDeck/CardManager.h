@@ -17,8 +17,8 @@
 +(NSArray<Card*>*) allForRole:(NRRole)role;
 +(NSArray<Card*>*) identitiesForRole:(NRRole)role;
 
-+(NSMutableArray*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIdentities;
-+(NSMutableArray*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIdentities;
++(NSMutableArray<NSString*>*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIdentities;
++(NSMutableArray<NSString*>*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIdentities;
 
 +(int) maxStrength;
 +(int) maxRunnerCost;

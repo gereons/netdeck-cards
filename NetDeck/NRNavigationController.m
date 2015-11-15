@@ -12,6 +12,8 @@
 #import "NRNavigationController.h"
 #import "DeckListViewController.h"
 
+#warning remove this class entirely
+
 @interface NRNavigationController ()
 
 @property BOOL alertViewClicked;

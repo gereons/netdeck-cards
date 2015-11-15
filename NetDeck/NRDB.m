@@ -293,7 +293,7 @@ static NSDateFormatter* formatter;
     [operation start];
 }
 
--(void) finishedDecklist:(BOOL)ok decks:(NSArray*)decks
+-(void) finishedDecklist:(BOOL)ok decks:(NSArray<Deck*>*)decks
 {
     if (!ok)
     {
@@ -594,7 +594,7 @@ static NSDateFormatter* formatter;
 
 #pragma mark deck map
 
--(void) updateDeckMap:(NSArray *)decks
+-(void) updateDeckMap:(NSArray<Deck*>*)decks
 {
     self.deckMap = [NSMutableDictionary dictionary];
     for (Deck* deck in decks)

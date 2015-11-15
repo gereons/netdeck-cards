@@ -156,7 +156,7 @@ static DeckImport* instance;
     }
 }
 
--(DeckSource*) checkForNetrunnerDbDeckURL:(NSArray*) lines
+-(DeckSource*) checkForNetrunnerDbDeckURL:(NSArray<NSString*>*) lines
 {
     // a netrunnerdb.com decklist url looks like this:
     // http://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
@@ -187,7 +187,7 @@ static DeckImport* instance;
     return nil;
 }
 
--(DeckSource*) checkForMeteorDeckURL:(NSArray*) lines
+-(DeckSource*) checkForMeteorDeckURL:(NSArray<NSString*>*) lines
 {
     // a netrunner.meteor.com decklist url looks like this:
     // http://netrunner.meteor.com/decks/yBMJ3GL6FPozt9nkQ/
@@ -211,7 +211,7 @@ static DeckImport* instance;
     return nil;
 }
 
--(Deck*) checkForTextDeck:(NSArray*)lines
+-(Deck*) checkForTextDeck:(NSArray<NSString*>*)lines
 {
     NSArray* cards = [CardManager allCards];
     NSRegularExpression *regex1 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9])x" options:0 error:nil]; // start with "1x ..."

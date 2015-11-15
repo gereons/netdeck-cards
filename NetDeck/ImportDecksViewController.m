@@ -344,7 +344,7 @@ static NSString* filterText;
 
 #pragma mark filter
 
--(NSMutableArray*) sortDecks:(NSArray*)decksToSort
+-(NSMutableArray<Deck*>*) sortDecks:(NSArray<NSString*>*)decksToSort
 {
     NSArray* decks;
     

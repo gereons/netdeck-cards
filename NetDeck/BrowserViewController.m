@@ -19,8 +19,8 @@
 @property NRRole role;
 @property NSString* searchText;
 @property CardList* cardList;
-@property NSArray* cards;
-@property NSArray* sections;
+@property NSArray<NSArray<Card*>*>* cards;
+@property NSArray<NSString*>* sections;
 
 @end
 

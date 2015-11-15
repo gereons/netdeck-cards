@@ -78,12 +78,12 @@
     return self.identityCc.card;
 }
 
--(NSArray*) cards
+-(NSArray<Card*>*) cards
 {
     return self->_cards;
 }
 
--(NSArray*) allCards
+-(NSArray<Card*>*) allCards
 {
     NSMutableArray* arr = [NSMutableArray array];
     if (self.identityCc)
@@ -94,7 +94,7 @@
     return arr;
 }
 
--(NSArray*) checkValidity
+-(NSArray<NSString*>*) checkValidity
 {
     NSMutableArray* reasons = [NSMutableArray array];
     if (self.identityCc == nil)
@@ -408,7 +408,7 @@
     self->_isDraft = [identity.setCode isEqualToString:[CardSets DRAFT_SET_CODE]];
 }
 
--(void) resetToCards:(NSDictionary *)cards
+-(void) resetToCards:(NSDictionary<NSString*, NSNumber*>*)cards
 {
     NSMutableArray* newCards = [NSMutableArray array];
 

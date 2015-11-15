@@ -325,10 +325,10 @@ static NRFilter _filterType = NRFilterAll;
     [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(self.filterType)]]];
     [self.stateFilterButton setTitle:[DeckState buttonLabelFor:self.filterState]];
 
-    NSArray* runnerDecks = (self.filterType == NRFilterRunner || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
-    NSArray* corpDecks = (self.filterType == NRFilterCorp || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
+    NSArray<Deck*>* runnerDecks = (self.filterType == NRFilterRunner || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
+    NSArray<Deck*>* corpDecks = (self.filterType == NRFilterCorp || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
     
-    NSMutableArray* allDecks = [NSMutableArray arrayWithArray:runnerDecks];
+    NSMutableArray<Deck*>* allDecks = [NSMutableArray arrayWithArray:runnerDecks];
     [allDecks addObjectsFromArray:corpDecks];
     [[NRDB sharedInstance] updateDeckMap:allDecks];
 
@@ -343,7 +343,7 @@ static NRFilter _filterType = NRFilterAll;
     }
     else
     {
-        NSMutableArray* arr = [NSMutableArray arrayWithArray:runnerDecks];
+        NSMutableArray<Deck*>* arr = [NSMutableArray arrayWithArray:runnerDecks];
         [arr addObjectsFromArray:corpDecks];
         self.runnerDecks = [self sortDecks:arr];
         self.corpDecks = [NSMutableArray array];
@@ -389,7 +389,7 @@ static NRFilter _filterType = NRFilterAll;
     [self.tableView reloadData];
 }
 
--(void) checkDecks:(NSArray*)decks
+-(void) checkDecks:(NSArray<Deck*>*)decks
 {
     for (Deck* deck in decks)
     {
@@ -405,7 +405,7 @@ static NRFilter _filterType = NRFilterAll;
     }
 }
 
--(NSMutableArray*) sortDecks:(NSArray*)decks
+-(NSMutableArray<Deck*>*) sortDecks:(NSArray<Deck*>*)decks
 {
     switch (self.sortType)
     {

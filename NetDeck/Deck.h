@@ -38,7 +38,7 @@
 @property NSArray* tags;        // array of strings
 @property NSArray* revisions;   // array of DeckChangeSet, in reverse chronological order
 
--(NSArray*) checkValidity;  // returns array of reasons, deck is ok if count==0
+-(NSArray<NSString*>*) checkValidity;  // returns array of reasons, deck is ok if count==0
 
 /**
  * find a card in this deck
@@ -55,7 +55,7 @@
 -(void) addCard:(Card*)card copies:(NSInteger)copies;
 
 // revert to a given set of cards
--(void) resetToCards:(NSDictionary*)cards;
+-(void) resetToCards:(NSDictionary<NSString*, NSNumber*>*)cards;
 
 -(NSUInteger) influenceFor:(CardCounter*)cc;
 
