@@ -12,7 +12,7 @@ import Foundation
 
     var sections: NSArray!
     var values: NSArray!
-    var collapsedSections: NSMutableArray?
+    var collapsedSections: [Bool]?
     
     init(sections: NSArray, andValues values: NSArray) {
         super.init()

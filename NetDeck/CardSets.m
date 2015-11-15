@@ -6,13 +6,14 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+#if 0
 #import "CardSets.h"
 #import "CardManager.h"
 #import "Deck.h"
 #import "SettingsKeys.h"
 #import "AppDelegate.h"
 
-@implementation CardSets
+@implementation xCardSets
 
 static NSMutableArray* cardSets;
 static NSMutableDictionary* releases;
@@ -41,14 +42,14 @@ static TableData* enabledSets;
 +(void) removeFiles
 {
     NSFileManager* fileMgr = [NSFileManager defaultManager];
-    [fileMgr removeItemAtPath:[CardSets filename] error:nil];
+    [fileMgr removeItemAtPath:[xCardSets filename] error:nil];
     
     [CardManager initialize];
 }
 
 +(BOOL) setupFromFiles
 {
-    NSString* setsFile = [CardSets filename];
+    NSString* setsFile = [xCardSets filename];
     BOOL ok = NO;
     
     NSFileManager* fileMgr = [NSFileManager defaultManager];
@@ -77,7 +78,7 @@ static TableData* enabledSets;
 
 +(BOOL) setupFromNrdbApi:(NSArray *)json
 {
-    NSString* setsFile = [CardSets filename];
+    NSString* setsFile = [xCardSets filename];
     [json writeToFile:setsFile atomically:YES];
     
     [AppDelegate excludeFromBackup:setsFile];
@@ -151,7 +152,7 @@ static TableData* enabledSets;
     
     NSAssert(setGroups.count == setsPerGroup.count, @"count mismatch");
     
-    [[NSUserDefaults standardUserDefaults] registerDefaults:[CardSets settingsDefaults]];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:[xCardSets settingsDefaults]];
     return YES;
 }
 
@@ -235,7 +236,7 @@ static TableData* enabledSets;
 {
     if (enabledSets == nil)
     {
-        NSSet* disabledSetCodes = [CardSets disabledSetCodes];
+        NSSet* disabledSetCodes = [xCardSets disabledSetCodes];
         NSMutableArray* sections = [setGroups mutableCopy];
         NSMutableArray* sets = [NSMutableArray array];
         
@@ -401,3 +402,5 @@ static TableData* enabledSets;
 }
 
 @end
+
+#endif

@@ -216,7 +216,7 @@ static NSDictionary* cropValues;
         c->_faction = NRFactionNeutral;
     }
 
-    c->_setNumber = [CardSets setNumForCode:c->_setCode];
+    c->_setNumber = (int)[CardSets setNumForCode:c->_setCode];
     c->_isCore = [c.setCode caseInsensitiveCompare:CORE_SET_CODE] == NSOrderedSame;
     
     JSON_STR(subtype, @"subtype");

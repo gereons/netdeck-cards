@@ -69,7 +69,6 @@
 		3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E131BF74DAF000311FA /* TableData.swift */; };
 		3A3C1E161BF7525B000311FA /* Faction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E151BF7525B000311FA /* Faction.swift */; };
 		3A3C1E191BF771B2000311FA /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E181BF771B2000311FA /* CardType.swift */; };
-		3A3C1E1B1BF77CCB000311FA /* CardSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E1A1BF77CCB000311FA /* CardSet.swift */; };
 		3A3C1E1D1BF77F10000311FA /* CardCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E1C1BF77F10000311FA /* CardCounter.swift */; };
 		3A3C1E1F1BF79A71000311FA /* DeckState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E1E1BF79A71000311FA /* DeckState.swift */; };
 		3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E201BF79C7D000311FA /* DeckChange.swift */; };
@@ -78,6 +77,7 @@
 		3A3FA6911BBF07C100994A11 /* UIFont+monospacedDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
 		3A40EA4E19FD2CBE00B9CFDA /* 890-sort-ascending.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */; };
+		3A41DA871BF8785C003CB7E1 /* CardSets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A41DA861BF8785C003CB7E1 /* CardSets.swift */; };
 		3A441C8C18E60A5300F46C92 /* hex_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8A18E60A5300F46C92 /* hex_background@2x.png */; };
 		3A441C8D18E60A5300F46C92 /* hex_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A441C8B18E60A5300F46C92 /* hex_background.png */; };
 		3A445F711998AEF9000AD1C4 /* trash_slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */; };
@@ -423,7 +423,6 @@
 		3A3C1E151BF7525B000311FA /* Faction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Faction.swift; sourceTree = "<group>"; };
 		3A3C1E171BF759F7000311FA /* NetDeck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetDeck.h; sourceTree = "<group>"; };
 		3A3C1E181BF771B2000311FA /* CardType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardType.swift; sourceTree = "<group>"; };
-		3A3C1E1A1BF77CCB000311FA /* CardSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSet.swift; sourceTree = "<group>"; };
 		3A3C1E1C1BF77F10000311FA /* CardCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCounter.swift; sourceTree = "<group>"; };
 		3A3C1E1E1BF79A71000311FA /* DeckState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckState.swift; sourceTree = "<group>"; };
 		3A3C1E201BF79C7D000311FA /* DeckChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckChange.swift; sourceTree = "<group>"; };
@@ -435,6 +434,7 @@
 		3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+monospacedDigits.m"; sourceTree = "<group>"; };
 		3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending@2x.png"; sourceTree = "<group>"; };
 		3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending.png"; sourceTree = "<group>"; };
+		3A41DA861BF8785C003CB7E1 /* CardSets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSets.swift; sourceTree = "<group>"; };
 		3A441C8A18E60A5300F46C92 /* hex_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex_background@2x.png"; sourceTree = "<group>"; };
 		3A441C8B18E60A5300F46C92 /* hex_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hex_background.png; sourceTree = "<group>"; };
 		3A445F6F1998AEF9000AD1C4 /* trash_slider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash_slider@2x.png"; sourceTree = "<group>"; };
@@ -1333,7 +1333,7 @@
 				3A3C1E131BF74DAF000311FA /* TableData.swift */,
 				3A3C1E151BF7525B000311FA /* Faction.swift */,
 				3A3C1E181BF771B2000311FA /* CardType.swift */,
-				3A3C1E1A1BF77CCB000311FA /* CardSet.swift */,
+				3A41DA861BF8785C003CB7E1 /* CardSets.swift */,
 				3A3C1E1C1BF77F10000311FA /* CardCounter.swift */,
 				3A3C1E1E1BF79A71000311FA /* DeckState.swift */,
 				3A3C1E201BF79C7D000311FA /* DeckChange.swift */,
@@ -1988,8 +1988,8 @@
 				3AB9BD5E18FADC01004EAF10 /* DeckCell.m in Sources */,
 				3ABAD2FD1B83A6D7009E81F3 /* IphoneIdentityViewController.m in Sources */,
 				3ADE90921877317F006E187F /* DeckManager.m in Sources */,
+				3A41DA871BF8785C003CB7E1 /* CardSets.swift in Sources */,
 				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
-				3A3C1E1B1BF77CCB000311FA /* CardSet.swift in Sources */,
 				3A904FCD1BF73723001C075A /* Types.swift in Sources */,
 				3A058B1919D334660090F53A /* NRSwitch.m in Sources */,
 				3A3C1E1D1BF77F10000311FA /* CardCounter.swift in Sources */,

@@ -42,8 +42,9 @@
         CardSet* numCores = [[CardSet alloc] init];
         numCores.name = l10n(@"Number of Core Sets");
         numCores.settingsKey = NUM_CORES;
-        NSMutableArray* arr = self.values[0];
+        NSMutableArray* arr = [self.values[0] mutableCopy];
         [arr insertObject:numCores atIndex:1];
+        self.values[0] = arr;
         
         // add section for draft/unpublished ids
         [self.sections insertObject:l10n(@"Draft Identities") atIndex:1];

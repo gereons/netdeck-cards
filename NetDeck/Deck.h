@@ -9,7 +9,7 @@
 @interface Deck : NSObject <NSCoding>
 
 @property (readonly) NSArray* cards;        // array of CardCounter, all cards except identity
-@property (readonly) NSArray* allCards;     // array of CardCounter, all cards including identity, id is first element
+@property (readonly) NSArray<CardCounter*>* allCards;     // array of CardCounter, all cards including identity, id is first element
 
 @property (readonly) CardCounter* identityCc;   // a CardCounter with the deck's identity
 @property (readonly) Card* identity;            // convenience accessor

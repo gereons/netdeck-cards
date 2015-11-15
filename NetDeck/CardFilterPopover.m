@@ -36,7 +36,7 @@ static UIPopoverController* popover;
     CardFilterPopover* filter = [[CardFilterPopover alloc] initWithNibName:@"CardFilterPopover" bundle:nil];
     filter.sections = entries.sections;
     filter.values = entries.values;
-    filter.collapsedSections = entries.collapsedSections;
+    filter.collapsedSections = entries.collapsedSections.mutableCopy;
     filter.button = button;
     filter.type = type;
     filter.headerView = vc;

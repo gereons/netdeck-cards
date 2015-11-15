@@ -13,6 +13,7 @@ import Foundation
     var changes: [DeckChange]
     var initial: Bool
     var cards: NSMutableDictionary?
+    // TODO var cards: [String: Int]? // code -> qty
     
     override init() {
         self.changes = [DeckChange]()
@@ -61,7 +62,7 @@ import Foundation
         self.sort()
         self.timestamp = NSDate()
         
-        // [self dump];
+        // self.dump()
     }
     
     func sort() {

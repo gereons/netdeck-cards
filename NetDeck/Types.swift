@@ -12,6 +12,22 @@ extension String {
     func localized() -> String {
         return NSLocalizedString(self, comment: "")
     }
+    
+    var length : Int {
+        return self.characters.count
+    }
+    
+    func stringByAppendingPathComponent(component: String) -> String {
+        return (self as NSString).stringByAppendingPathComponent(component)
+    }
+}
+
+extension Int {
+    func compare(other: Int) -> NSComparisonResult {
+        if self < other { return .OrderedAscending }
+        if self > other { return .OrderedDescending }
+        return .OrderedSame
+    }
 }
 
 /*

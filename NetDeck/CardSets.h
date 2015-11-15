@@ -7,7 +7,7 @@
 //
 
 @class Deck;
-@interface CardSets : NSObject
+@interface xCardSets : NSObject
 
 #define CORE_SET_CODE       @"core"
 #define DRAFT_SET_CODE      @"draft"
