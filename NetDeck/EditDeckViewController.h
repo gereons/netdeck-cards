@@ -6,11 +6,9 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import "NRDeckEditor.h"
-
 @class Deck;
 
-@interface EditDeckViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, NRDeckEditor>
+@interface EditDeckViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UILabel* statusLabel;

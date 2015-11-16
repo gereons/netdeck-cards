@@ -8,11 +8,10 @@
 
 #import "DetailViewManager.h"
 #import "DecklistCollectionView.h"
-#import "NRDeckEditor.h"
 
 @class Card, Deck;
 
-@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, UITextFieldDelegate, NRDeckEditor>
+@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, UITextFieldDelegate>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet DecklistCollectionView* collectionView;

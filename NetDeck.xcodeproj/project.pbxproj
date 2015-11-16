@@ -112,7 +112,6 @@
 		3A689FA7195D3EB8004EBC41 /* retired.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A689FA1195D3EB8004EBC41 /* retired.png */; };
 		3A689FA8195D3EB8004EBC41 /* testing.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A689FA2195D3EB8004EBC41 /* testing.png */; };
 		3A689FA9195D3EB8004EBC41 /* active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A689FA3195D3EB8004EBC41 /* active@2x.png */; };
-		3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AF0E51899C12500227C25 /* NRNavigationController.m */; };
 		3A6C68501996BC0B00B29588 /* 727-more.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6C684E1996BC0B00B29588 /* 727-more.png */; };
 		3A6C68511996BC0B00B29588 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6C684F1996BC0B00B29588 /* 727-more@2x.png */; };
 		3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D51D31A2284540004951E /* DeckHistoryPopup.m */; };
@@ -483,8 +482,6 @@
 		3A689FA1195D3EB8004EBC41 /* retired.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retired.png; sourceTree = "<group>"; };
 		3A689FA2195D3EB8004EBC41 /* testing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testing.png; sourceTree = "<group>"; };
 		3A689FA3195D3EB8004EBC41 /* active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "active@2x.png"; sourceTree = "<group>"; };
-		3A6AF0E41899C12500227C25 /* NRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRNavigationController.h; sourceTree = "<group>"; };
-		3A6AF0E51899C12500227C25 /* NRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRNavigationController.m; sourceTree = "<group>"; };
 		3A6C684E1996BC0B00B29588 /* 727-more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more.png"; sourceTree = "<group>"; };
 		3A6C684F1996BC0B00B29588 /* 727-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more@2x.png"; sourceTree = "<group>"; };
 		3A6D51D21A2284540004951E /* DeckHistoryPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckHistoryPopup.h; sourceTree = "<group>"; };
@@ -737,7 +734,6 @@
 		3AF0622A1B886DFD00575984 /* 740-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear@2x.png"; sourceTree = "<group>"; };
 		3AF0622B1B886DFD00575984 /* 740-gear@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear@3x.png"; sourceTree = "<group>"; };
 		3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "NRDBAuthPopupViewController~iphone.xib"; sourceTree = "<group>"; };
-		3AF062391B88C3B400575984 /* NRDeckEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRDeckEditor.h; sourceTree = "<group>"; };
 		3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSectionHeaderView.xib; sourceTree = "<group>"; };
 		3AF2235C194364A80072FD9F /* CardFilterSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterSectionHeaderView.h; sourceTree = "<group>"; };
 		3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterSectionHeaderView.m; sourceTree = "<group>"; };
@@ -975,11 +971,8 @@
 				3A595423186ED61C0074B3B1 /* CGRectUtils.h */,
 				3AA440ED1854DA630051D4B0 /* DetailViewManager.h */,
 				3AA440EE1854DA630051D4B0 /* DetailViewManager.m */,
-				3AF062391B88C3B400575984 /* NRDeckEditor.h */,
 				3A85323D1855050900507B9A /* NRSplitViewController.h */,
 				3A85323E1855050900507B9A /* NRSplitViewController.m */,
-				3A6AF0E41899C12500227C25 /* NRNavigationController.h */,
-				3A6AF0E51899C12500227C25 /* NRNavigationController.m */,
 				3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */,
 				3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */,
 				3A058B1719D334660090F53A /* NRSwitch.h */,
@@ -2002,7 +1995,6 @@
 				3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */,
 				3A3845071B77CB5D007C76F2 /* CardUpdateCheck.m in Sources */,
 				3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */,
-				3A6AF0E61899C12500227C25 /* NRNavigationController.m in Sources */,
 				3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */,
 				3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,

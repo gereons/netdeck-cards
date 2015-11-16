@@ -20,8 +20,6 @@
 #import "NRDBAuth.h"
 #import "NRDB.h"
 
-// TODO for v2.3: remove maxPerDeck hack in Card.m
-
 const NSString* const kANY = @"Any";
 
 @implementation AppDelegate
