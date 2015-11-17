@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SVProgressHUD.h>
-#import <Dropbox/Dropbox.h>
-#import <SDCAlertView.h>
-#import <EXTScope.h>
-#import <AFNetworking.h>
+@import SVProgressHUD;
+@import SDCAlertView;
+@import AFNetworking;
 
+#import <Dropbox/Dropbox.h>
+#import "EXTScope.h"
 #import "SettingsViewController.h"
 #import "IASKAppSettingsViewController.h"
 #import "IASKSettingsReader.h"

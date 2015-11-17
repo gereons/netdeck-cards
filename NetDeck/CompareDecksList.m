@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
+@import SDCAlertView;
 
 #import "CompareDecksList.h"
 #import "DeckCell.h"

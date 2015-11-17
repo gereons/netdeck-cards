@@ -6,9 +6,10 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
-#import <AFNetworkReachabilityManager.h>
-#import <EXTScope.h>
+@import SDCAlertView;
+@import AFNetworking;
+
+#import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"

@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
-#import <SVProgressHud.h>
-#import <EXTScope.h>
+@import SDCAlertView;
+@import SVProgressHUD;
 
+#import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "SavedDecksList.h"
 #import "Deck.h"

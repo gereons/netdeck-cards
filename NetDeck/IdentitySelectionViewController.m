@@ -6,7 +6,8 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <CSStickyHeaderFlowLayout.h>
+@import CSStickyHeaderFlowLayout;
+
 #import "IdentitySelectionViewController.h"
 #import "IdentityViewCell.h"
 #import "CardImageViewPopover.h"

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <CSStickyHeaderFlowLayout.h>
+@import CSStickyHeaderFlowLayout;
 
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"

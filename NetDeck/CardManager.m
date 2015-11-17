@@ -6,11 +6,13 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+@import DTCoreText;
+
 #import "CardManager.h"
 #import "SettingsKeys.h"
 #import "ImageCache.h"
 #import "AppDelegate.h"
-#import <DTCoreText.h>
+
 
 @implementation CardManager
 

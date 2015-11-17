@@ -6,13 +6,12 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SVProgressHUD.h>
-#import <SDCAlertView.h>
-#import <EXTScope.h>
-#import <AFNetworking.h>
+@import SVProgressHUD;
+@import SDCAlertView;
+@import AFNetworking;
 
+#import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
-
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"

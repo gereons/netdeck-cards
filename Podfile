@@ -1,19 +1,23 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.3'
 inhibit_all_warnings!
+use_frameworks!
 pod 'DTCoreText'
-pod 'AFNetworking', '~> 2.0'
+pod 'AFNetworking', '~> 2.0' # -> Alamofire
 pod 'SVProgressHUD'
-pod 'Dropbox-Sync-API-SDK'
-pod 'GRMustache'
-pod 'CorePlot'
-pod 'libextobjc'
+pod 'Dropbox-Sync-API-SDK' # -> use new DB api?
+pod 'GRMustache' # -> GRMustache.swift
+pod 'libextobjc' # -> remove?
 pod 'CSStickyHeaderFlowLayout'
-pod 'SDCAlertView', '~> 2.5.4'
+pod 'SDCAlertView', '~> 2.5.4' # -> use v3.0
 pod 'InAppSettingsKit'
-pod 'PromiseKit', '1.5.3'
-pod 'PromiseKit-AFNetworking'
 pod 'MultiSelectSegmentedControl'
+
+# already swift/swift-ready
+pod 'CorePlot'
+pod 'PromiseKit'
+pod 'PromiseKit-AFNetworking'
+pod 'SwiftyJSON'
 
 post_install do | installer |
   require 'fileutils'

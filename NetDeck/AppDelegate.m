@@ -6,11 +6,12 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <Dropbox/Dropbox.h>
-#import <SVProgressHUD.h>
-#import <AFNetworking.h>
-#import <SDCAlertView.h>
 
+@import SVProgressHUD;
+@import AFNetworking;
+@import SDCAlertView;
+
+#import <Dropbox/Dropbox.h>
 #import "AppDelegate.h"
 #import "CardManager.h"
 #import "SettingsKeys.h"

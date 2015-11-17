@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <GRMustache.h>
-#import <Dropbox/Dropbox.h>
-#import <SVProgressHUD.h>
+@import GRMustache;
+@import SVProgressHUD;
 
+#import <Dropbox/Dropbox.h>
 #import "DeckExport.h"
 #import "Deck.h"
 #import "GZip.h"

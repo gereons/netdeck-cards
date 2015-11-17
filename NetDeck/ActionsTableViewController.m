@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
-#import <AFNetworking.h>
+@import SDCAlertView;
+@import AFNetworking;
 
 #import "AppDelegate.h"
 #import "ActionsTableViewController.h"

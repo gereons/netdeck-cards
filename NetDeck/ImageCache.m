@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+@import AFNetworking;
+
 #import "ImageCache.h"
 #import "AppDelegate.h"
-#import <EXTScope.h>
-#import <AFNetworking.h>
-
+#import "EXTScope.h"
 #import "Card.h"
 #import "SettingsKeys.h"
 

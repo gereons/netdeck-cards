@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <EXTScope.h>
-#import <SDCAlertView.h>
-#import <AFNetworking.h>
+@import SDCAlertView;
+@import AFNetworking;
 
+#import "EXTScope.h"
 #import "NRDB.h"
 #import "NRDBAuth.h"
 #import "SettingsKeys.h"

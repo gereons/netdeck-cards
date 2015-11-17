@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <EXTScope.h>
-#import <SDCAlertView.h>
-#import <AFNetworking.h>
+@import AFNetworking;
+@import SDCAlertView;
 
+#import "EXTScope.h"
 #import "DeckImport.h"
 #import "Deck.h"
 #import "CardManager.h"

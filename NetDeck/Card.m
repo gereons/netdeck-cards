@@ -6,10 +6,12 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+
 #import "Card.h"
 #import "CardManager.h"
 #import "SettingsKeys.h"
-#import <DTCoreText.h>
+
+#import "DTCoreText/DTCoreText.h"
 
 @interface Card()
 

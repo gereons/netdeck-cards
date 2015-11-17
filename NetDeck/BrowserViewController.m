@@ -6,13 +6,14 @@
 //  Copyright © 2015 Gereon Steffens. All rights reserved.
 //
 
+@import SDCAlertView;
+
 #import "BrowserViewController.h"
 #import "CardImageViewController.h"
 #import "SmallPipsView.h"
 #import "ImageCache.h"
 #import "CardList.h"
 #import "Card.h"
-#import <SDCAlertView.h>
 
 @interface BrowserViewController ()
 

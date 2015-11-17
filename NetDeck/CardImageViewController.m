@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SVProgressHUD.h>
+@import SVProgressHUD;
 
 #import "CardImageViewController.h"
 #import "CardImageViewCell.h"

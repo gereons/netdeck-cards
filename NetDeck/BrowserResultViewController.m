@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <CSStickyHeaderFlowLayout.h>
-#import <EXTScope.h>
+@import CSStickyHeaderFlowLayout;
 
+#import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "BrowserResultViewController.h"
 #import "CardList.h"

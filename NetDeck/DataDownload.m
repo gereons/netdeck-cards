@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <EXTScope.h>
-#import <SDCAlertView.h>
-#import <UIView+SDCAutoLayout.h>
-#import <AFNetworking.h>
-#import <PromiseKit.h>
-#import <PromiseKit-AFNetworking/AFNetworking+PromiseKit.h>
+@import PromiseKit;
+@import SDCAlertView;
+@import AFNetworking;
+@import SDCAutoLayout;
+@import PromiseKit_AFNetworking;
 
+#import "EXTScope.h"
 #import "DataDownload.h"
 #import "CardManager.h"
 #import "Card.h"

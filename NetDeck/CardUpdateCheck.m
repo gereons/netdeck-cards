@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
-#import <AFNetworkReachabilityManager.h>
+@import SDCAlertView;
+@import AFNetworking;
 
 #import "CardUpdateCheck.h"
 #import "CardManager.h"
