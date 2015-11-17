@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class Deck, CardCounter, DeckListViewController;
+@class Deck, DeckListViewController;
 
 @interface CardCell : UITableViewCell
 

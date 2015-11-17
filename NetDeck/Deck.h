@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+@class DeckChangeSet;
+
 @interface Deck : NSObject <NSCoding>
 
 @property (readonly) NSArray<CardCounter*>* cards;        // array of CardCounter, all cards except identity
@@ -35,8 +37,8 @@
 @property NSDate* dateCreated;
 @property NSDate* lastModified;
 
-@property NSArray* tags;        // array of strings
-@property NSArray* revisions;   // array of DeckChangeSet, in reverse chronological order
+@property NSArray<NSString*>* tags;        // array of strings
+@property NSArray<DeckChangeSet*>* revisions;   // array of DeckChangeSet, in reverse chronological order
 
 -(NSArray<NSString*>*) checkValidity;  // returns array of reasons, deck is ok if count==0
 

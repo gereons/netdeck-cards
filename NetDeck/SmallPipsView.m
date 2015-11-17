@@ -9,7 +9,7 @@
 #import "SmallPipsView.h"
 
 @interface SmallPipsView()
-@property NSArray* views;
+@property NSArray<UIView*>* views;
 @end
 
 @implementation SmallPipsView

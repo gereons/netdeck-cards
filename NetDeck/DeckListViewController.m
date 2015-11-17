@@ -38,8 +38,8 @@
 
 @interface DeckListViewController ()
 
-@property NSArray* sections;
-@property NSArray* cards;
+@property NSArray<NSString*>* sections;
+@property NSArray<NSArray<CardCounter*>*>* cards;
 
 @property UIAlertController* actionSheet;
 @property UIPrintInteractionController* printController;

@@ -8,7 +8,6 @@
 
 #import "FilterCallback.h"
 
-@class TableData;
 @class CardFilterViewController;
 
 @interface CardFilterPopover : UIViewController <UITableViewDataSource, UITableViewDelegate>

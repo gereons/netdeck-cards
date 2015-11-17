@@ -13,7 +13,7 @@
 
 @interface LargeBrowserCell()
 
-@property NSArray* pips;
+@property NSArray<UIView*>* pips;
 
 @end
 
