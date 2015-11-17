@@ -6,13 +6,10 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@import DTCoreText;
-
 #import "CardManager.h"
 #import "SettingsKeys.h"
 #import "ImageCache.h"
 #import "AppDelegate.h"
-
 
 @implementation CardManager
 
@@ -284,7 +281,7 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
         Card* card = [Card cardByCode:code];
         if (card)
         {
-            card.name_en = [name_en stringByReplacingHTMLEntities];
+            card.name_en = name_en;
             [card setAlliance:subtype];
             [card setVirtual:subtype];
         }

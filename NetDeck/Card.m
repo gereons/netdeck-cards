@@ -12,6 +12,7 @@
 #import "SettingsKeys.h"
 
 #import "DTCoreText/DTCoreText.h"
+// @import DTCoreText;
 
 @interface Card()
 

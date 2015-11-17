@@ -50,7 +50,7 @@
 @property (readonly) NRCardType type;
 @property (readonly) NSString* typeStr;
 @property (readonly) NSString* subtype;     // full subtype string like "Fracter - Icebreaker - AI"
-@property (readonly) NSArray* subtypes;     // array of subtypes like @[ @"Fracter", @"Icebreaker", @"AI" ]
+@property (readonly) NSArray<NSString*>* subtypes;     // array of subtypes like @[ @"Fracter", @"Icebreaker", @"AI" ]
 @property (readonly) NSString* iceType;     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
 @property (readonly) NSString* programType; // special for Programs: return "Icebreaker" for icebreakers, "Program" for other programs
 @property (readonly) NRFaction faction;
