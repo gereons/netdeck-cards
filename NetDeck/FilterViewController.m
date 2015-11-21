@@ -10,7 +10,6 @@
 #import "ImageCache.h"
 #import "CardList.h"
 #import "SettingsKeys.h"
-#import "CardManager.h"
 
 @interface FilterViewController ()
 

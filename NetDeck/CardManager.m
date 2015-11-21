@@ -11,7 +11,7 @@
 #import "ImageCache.h"
 #import "AppDelegate.h"
 
-@implementation CardManager
+@implementation yCardManager
 
 static NSMutableArray<Card*>* allRunnerCards;          // all non-identity runner cards
 static NSMutableArray<Card*>* allCorpCards;            // all non-identity corp cards
@@ -145,7 +145,7 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
     NSMutableSet* subtypes = [NSMutableSet set];
     for (NSString* type in types)
     {
-        NSMutableArray* arr = [NSMutableArray arrayWithArray:[CardManager subtypesForRole:role andType:type includeIdentities:includeIds]];
+        NSMutableArray* arr = [NSMutableArray arrayWithArray:[yCardManager subtypesForRole:role andType:type includeIdentities:includeIds]];
         if (arr.count > 0)
         {
             [subtypes addObjectsFromArray:arr];
@@ -181,16 +181,16 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
 +(void) removeFiles
 {
     NSFileManager* fileMgr = [NSFileManager defaultManager];
-    [fileMgr removeItemAtPath:[CardManager filename] error:nil];
-    [fileMgr removeItemAtPath:[CardManager filenameEn] error:nil];
+    [fileMgr removeItemAtPath:[yCardManager filename] error:nil];
+    [fileMgr removeItemAtPath:[yCardManager filenameEn] error:nil];
     
-    [CardManager initialize];
+    [yCardManager initialize];
 }
 
 +(BOOL) setupFromFiles
 {
-    NSString* cardsFile = [CardManager filename];
-    NSString* cardsEnFile = [CardManager filenameEn];
+    NSString* cardsFile = [yCardManager filename];
+    NSString* cardsEnFile = [yCardManager filenameEn];
     BOOL ok = NO;
     
     NSFileManager* fileMgr = [NSFileManager defaultManager];
@@ -217,13 +217,13 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
 
 +(BOOL) setupFromNrdbApi:(NSArray*)json
 {
-    [CardManager setNextDownloadDate];
+    [yCardManager setNextDownloadDate];
     
-    NSString* cardsFile = [CardManager filename];
+    NSString* cardsFile = [yCardManager filename];
     [json writeToFile:cardsFile atomically:YES];
     [AppDelegate excludeFromBackup:cardsFile];
     
-    [CardManager initialize];
+    [yCardManager initialize];
     return [self setupFromJsonData:json];
 }
 
@@ -266,7 +266,7 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
     // add english names from json
     if (saveFile)
     {
-        NSString* cardsFile = [CardManager filenameEn];
+        NSString* cardsFile = [yCardManager filenameEn];
         [json writeToFile:cardsFile atomically:YES];
         
         [AppDelegate excludeFromBackup:cardsFile];
@@ -278,7 +278,7 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
         NSString* name_en = obj[@"title"];
         NSString* subtype = obj[@"subtype"];
         
-        Card* card = [CardManager cardByCode:code];
+        Card* card = [yCardManager cardByCode:code];
         if (card)
         {
             [card setNameEn:name_en];
@@ -318,7 +318,7 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
     // add hard-coded aliases
     for (NSString* code in cardAliases.allKeys)
     {
-        Card* card = [CardManager cardByCode:code];
+        Card* card = [yCardManager cardByCode:code];
         [card setCardAlias:[cardAliases objectForKey:code]];
     }
 }
@@ -334,7 +334,7 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
             {
                 NSAssert(card.isValid, @"invalid card from %@", obj);
             
-                [CardManager addCard:card];
+                [yCardManager addCard:card];
             }
         }
                 

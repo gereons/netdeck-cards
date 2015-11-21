@@ -12,7 +12,6 @@
 #import "IdentityViewCell.h"
 #import "CardImageViewPopover.h"
 
-#import "CardManager.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"

@@ -14,7 +14,6 @@
 #import "NRDB.h"
 #import "CardUpdateCheck.h"
 #import "Notifications.h"
-#import "CardManager.h"
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "SettingsViewController.h"

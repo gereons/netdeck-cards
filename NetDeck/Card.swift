@@ -117,7 +117,8 @@ import DTCoreText
     }
     
     private var _attributedText: NSAttributedString?
-    var attributedText: NSAttributedString! {   // html rendered
+    // html rendered
+    var attributedText: NSAttributedString! {
         if (self._attributedText == nil) {
             let str = self.text.stringByReplacingOccurrencesOfString("\n", withString:"<br/>")
             let data = str.dataUsingEncoding(NSUTF8StringEncoding)
@@ -191,7 +192,10 @@ import DTCoreText
             assert(false, "no role for \(c.code)");
         }
         
-        print("\(c.code) \(c.name) \(c.faction.rawValue) \(c.role.rawValue)")
+        c.typeStr = json.objectForKey("type") as! String
+        let typeCode = json.objectForKey("type_code") as! String
+        c.type = CardType.type(typeCode)
+        assert(c.type != .None, "no type for \(c.code), \(c.typeStr)")
         
         if (c.type == .Identity)
         {
@@ -209,11 +213,6 @@ import DTCoreText
         if let flavor = json.objectForKey("flavor") as? String {
             c.flavor = flavor
         }
-        
-        c.typeStr = json.objectForKey("type") as! String
-        let typeCode = json.objectForKey("type_code") as! String
-        c.type = CardType.type(typeCode)
-        assert(c.type != .None, "no type for \(c.code), \(c.typeStr)")
         
         c.setName = json.objectForKey("setname") as! String
         c.setCode = json.objectForKey("set_code") as! String
@@ -309,8 +308,8 @@ import DTCoreText
         self.alias = alias
     }
     
+    // manipulate identity name
     func shortIdentityName(name: String, forRole: NRRole, andFaction faction: String) -> String {
-        // manipulate identity name
         if let colon = name.rangeOfString(": ") {
             // runner: remove stuff after the colon ("Andromeda: Disposessed Ristie" becomes "Andromeda")
             if role == .Runner

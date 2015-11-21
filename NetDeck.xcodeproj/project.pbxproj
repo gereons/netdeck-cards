@@ -297,6 +297,7 @@
 		3AE0D50F18F7B4A0007868A7 /* credit_slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE0D50518F7B4A0007868A7 /* credit_slider@2x.png */; };
 		3AE0D51018F7B4A0007868A7 /* credit_slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE0D50618F7B4A0007868A7 /* credit_slider.png */; };
 		3AE0E62D1957222600633A71 /* CardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0E62C1957222600633A71 /* CardManager.m */; };
+		3AEEBB671C00C9FF00CB6053 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEBB661C00C9FF00CB6053 /* CardManager.swift */; };
 		3AF0622C1B886DFD00575984 /* 740-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF062291B886DFD00575984 /* 740-gear.png */; };
 		3AF0622D1B886DFD00575984 /* 740-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF0622A1B886DFD00575984 /* 740-gear@2x.png */; };
 		3AF0622E1B886DFD00575984 /* 740-gear@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF0622B1B886DFD00575984 /* 740-gear@3x.png */; };
@@ -730,6 +731,7 @@
 		3AE0E62B1957222600633A71 /* CardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardManager.h; sourceTree = "<group>"; };
 		3AE0E62C1957222600633A71 /* CardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardManager.m; sourceTree = "<group>"; };
 		3AE9EA20198EA9E300DC867C /* FilterCallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterCallback.h; sourceTree = "<group>"; };
+		3AEEBB661C00C9FF00CB6053 /* CardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 		3AF062291B886DFD00575984 /* 740-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear.png"; sourceTree = "<group>"; };
 		3AF0622A1B886DFD00575984 /* 740-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear@2x.png"; sourceTree = "<group>"; };
 		3AF0622B1B886DFD00575984 /* 740-gear@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear@3x.png"; sourceTree = "<group>"; };
@@ -1328,6 +1330,7 @@
 				3A3C1E201BF79C7D000311FA /* DeckChange.swift */,
 				3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */,
 				3AC4F7851BFD2659008E42F7 /* Card.swift */,
+				3AEEBB661C00C9FF00CB6053 /* CardManager.swift */,
 				3A5BC3ED1849326B00E792F7 /* NRTypes.h */,
 				3AE0E62B1957222600633A71 /* CardManager.h */,
 				3AE0E62C1957222600633A71 /* CardManager.m */,
@@ -2003,6 +2006,7 @@
 				3A3C1E161BF7525B000311FA /* Faction.swift in Sources */,
 				3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */,
 				3AD860E51B7939E500EEF8AC /* CardImageViewCell.m in Sources */,
+				3AEEBB671C00C9FF00CB6053 /* CardManager.swift in Sources */,
 				3AA463D41BC0042600591647 /* BrowserViewController.m in Sources */,
 				3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */,
 				3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */,

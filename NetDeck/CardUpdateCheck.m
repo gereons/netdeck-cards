@@ -10,7 +10,6 @@
 @import AFNetworking;
 
 #import "CardUpdateCheck.h"
-#import "CardManager.h"
 #import "DataDownload.h"
 #import "SettingsKeys.h"
 

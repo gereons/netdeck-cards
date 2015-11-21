@@ -10,8 +10,6 @@
 #import "NRTypes.h"
 #import "SettingsKeys.h"
 
-#import "CardManager.h"
-
 #import "Deck.h"
 
 #import "AppDelegate.h"

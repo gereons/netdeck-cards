@@ -8,7 +8,7 @@
 
 @class Card;
 
-@interface CardManager : NSObject
+@interface yCardManager : NSObject
 
 +(Card*) cardByCode:(NSString*)code;
 

@@ -13,7 +13,6 @@
 
 #import <Dropbox/Dropbox.h>
 #import "AppDelegate.h"
-#import "CardManager.h"
 #import "SettingsKeys.h"
 #import "DeckImport.h"
 #import "CardImageViewPopover.h"

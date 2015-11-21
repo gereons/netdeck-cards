@@ -8,7 +8,6 @@
 
 #import "CardList.h"
 #import "Deck.h"
-#import "CardManager.h"
 
 @interface CardList()
 

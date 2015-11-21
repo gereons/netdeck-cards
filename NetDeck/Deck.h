@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class DeckChangeSet;
+@class Card, DeckChangeSet;
 
 @interface Deck : NSObject <NSCoding>
 

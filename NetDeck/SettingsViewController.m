@@ -16,7 +16,6 @@
 #import "IASKAppSettingsViewController.h"
 #import "IASKSettingsReader.h"
 #import "DataDownload.h"
-#import "CardManager.h"
 #import "ImageCache.h"
 #import "SettingsKeys.h"
 #import "Notifications.h"
