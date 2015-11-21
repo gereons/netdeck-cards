@@ -11,7 +11,6 @@
 #import "ImageCache.h"
 #import "AppDelegate.h"
 #import "EXTScope.h"
-#import "Card.h"
 #import "SettingsKeys.h"
 
 #define SEC_PER_DAY         (24 * 60 * 60)

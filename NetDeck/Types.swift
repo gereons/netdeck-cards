@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
     func localized() -> String {
@@ -27,6 +28,15 @@ extension Int {
         if self < other { return .OrderedAscending }
         if self > other { return .OrderedDescending }
         return .OrderedSame
+    }
+}
+
+extension UIColor {
+    class func colorWithRGB(rgb: UInt) -> UIColor! {
+        let r = CGFloat((rgb & 0xFF0000) >> 16)
+        let g = CGFloat((rgb & 0x00FF00) >> 8)
+        let b = CGFloat((rgb & 0x0000FF) >> 0)
+        return UIColor(red: r/255.0, green: g/255.0, blue: b/255.0, alpha: 1.0)
     }
 }
 

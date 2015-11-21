@@ -23,7 +23,6 @@
 #import "ImageCache.h"
 #import "Deck.h"
 #import "DeckManager.h"
-#import "Card.h"
 #import "DeckExport.h"
 #import "DeckImport.h"
 #import "DeckEmail.h"
@@ -807,7 +806,7 @@
 -(void) identitySelected:(NSNotification*)sender
 {
     NSString* code = [sender.userInfo objectForKey:@"code"];
-    Card* card = [Card cardByCode:code];
+    Card* card = [CardManager cardByCode:code];
     if (card)
     {
         NSAssert(card.role == self.deck.role, @"role mismatch");
@@ -1069,7 +1068,7 @@
     [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
     if (self.deck.identity && !self.deck.isDraft)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d/%d %@", self.deck.influence, self.deck.identity.influenceLimit, l10n(@"Influence")]];
+        [footer appendString:[NSString stringWithFormat:@" · %d/%ld %@", self.deck.influence, (long)self.deck.identity.influenceLimit, l10n(@"Influence")]];
     }
     else
     {

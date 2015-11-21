@@ -19,7 +19,7 @@ import Foundation
     }
 
     var card: Card {
-        return Card(byCode: self.code)
+        return CardManager.cardByCode(code)
     }
 
     //MARK: NSCoding

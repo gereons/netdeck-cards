@@ -47,7 +47,7 @@
     }
 }
 
--(void) setValue:(int)value
+-(void) setValue:(NSInteger)value
 {
     NSArray* show;
     switch (value) {

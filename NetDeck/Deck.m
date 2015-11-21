@@ -8,7 +8,6 @@
 
 #import "Deck.h"
 
-#import "Card.h"
 #import "DeckManager.h"
 
 #import "SettingsKeys.h"
@@ -127,8 +126,8 @@
         }
     }
     
-    BOOL noJintekiAllowed = [self.identity.code isEqualToString:CUSTOM_BIOTICS];
-    BOOL isApex = [self.identity.code isEqualToString:APEX];
+    BOOL noJintekiAllowed = [self.identity.code isEqualToString:Card.CUSTOM_BIOTICS];
+    BOOL isApex = [self.identity.code isEqualToString:Card.APEX];
     
     BOOL limitError = NO, jintekiError = NO, agendaError = NO, apexError = NO;
     
@@ -219,36 +218,36 @@
     }
     
     NSUInteger count = cc.count;
-    if (cc.card.type == NRCardTypeProgram && [self.identity.code isEqualToString:THE_PROFESSOR]) {
+    if (cc.card.type == NRCardTypeProgram && [self.identity.code isEqualToString:Card.THE_PROFESSOR]) {
         --count;
     }
     
     // mumba temple: 0 inf if 15 or fewer ICE
-    if ([cc.card.code isEqualToString:MUMBA_TEMPLE] && [self iceCount] <= 15) {
+    if ([cc.card.code isEqualToString:Card.MUMBA_TEMPLE] && [self iceCount] <= 15) {
         return 0;
     }
     // pad factory: 0 inf if 3 PAD Campaigns in deck
-    if ([cc.card.code isEqualToString:PAD_FACTORY] && [self padCampaignCount] == 3) {
+    if ([cc.card.code isEqualToString:Card.PAD_FACTORY] && [self padCampaignCount] == 3) {
         return 0;
     }
     // mumbad virtual tour: 0 inf if 7 or more assets
-    if ([cc.card.code isEqualToString:MUMBAD_VIRTUAL_TOUR] && [self assetCount] >= 7) {
+    if ([cc.card.code isEqualToString:Card.MUMBAD_VIRTUAL_TOUR] && [self assetCount] >= 7) {
         return 0;
     }
     // jeeves model bioroid: 0 inf if >=6 non-alliance HB cards in deck
-    if ([cc.card.code isEqualToString:JEEVES_MODEL_BIOROID] && [self nonAllianceOfFaction:NRFactionHaasBioroid] >= 6) {
+    if ([cc.card.code isEqualToString:Card.JEEVES_MODEL_BIOROID] && [self nonAllianceOfFaction:NRFactionHaasBioroid] >= 6) {
         return 0;
     }
     // raman rai: 0 inf if >=6 non-alliance Jinteki cards in deck
-    if ([cc.card.code isEqualToString:RAMAN_RAI] && [self nonAllianceOfFaction:NRFactionJinteki] >= 6) {
+    if ([cc.card.code isEqualToString:Card.RAMAN_RAI] && [self nonAllianceOfFaction:NRFactionJinteki] >= 6) {
         return 0;
     }
     // salem's hospitality: 0 inf if >=6 non-alliance NBN cards in deck
-    if ([cc.card.code isEqualToString:SALEMS_HOSPITALITY] && [self nonAllianceOfFaction:NRFactionNBN] >= 6) {
+    if ([cc.card.code isEqualToString:Card.SALEMS_HOSPITALITY] && [self nonAllianceOfFaction:NRFactionNBN] >= 6) {
         return 0;
     }
     // executive search firm: 0 inf if >=6 non-alliance Weyland cards in deck
-    if ([cc.card.code isEqualToString:EXECUTIVE_SEARCH_FIRM] && [self nonAllianceOfFaction:NRFactionWeyland] >= 6) {
+    if ([cc.card.code isEqualToString:Card.EXECUTIVE_SEARCH_FIRM] && [self nonAllianceOfFaction:NRFactionWeyland] >= 6) {
         return 0;
     }
     
@@ -267,7 +266,7 @@
 
 -(NSInteger) padCampaignCount
 {
-    NSInteger padIndex = [self indexOfCardCode:PAD_CAMPAIGN];
+    NSInteger padIndex = [self indexOfCardCode:Card.PAD_CAMPAIGN];
     if (padIndex != -1) {
         CardCounter* pad = _cards[padIndex];
         return pad.count;
@@ -360,7 +359,7 @@
             }
             else
             {
-                int max = cc.card.maxPerDeck;
+                NSInteger max = cc.card.maxPerDeck;
                 if (cc.count < max)
                 {
                     cc.count = MIN(max, cc.count + copies);
@@ -415,7 +414,7 @@
     Card* newIdentity;
     for (NSString* code in cards.allKeys)
     {
-        Card* card = [Card cardByCode:code];
+        Card* card = [CardManager cardByCode:code];
         
         if (card.type != NRCardTypeIdentity)
         {
@@ -718,7 +717,7 @@
         _state = [decoder decodeIntForKey:@"state"];
         _isDraft = [decoder decodeBoolForKey:@"draft"];
         NSString* identityCode = [decoder decodeObjectForKey:@"identity"];
-        Card* identity = [Card cardByCode:identityCode];
+        Card* identity = [CardManager cardByCode:identityCode];
         if (identity)
         {
             _identityCc = [[CardCounter alloc] initWithCard:identity andCount:1];

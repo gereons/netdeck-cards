@@ -100,7 +100,6 @@
 		3A5794DA19157A2D005DA4B2 /* CardDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5794D919157A2D005DA4B2 /* CardDetailView.m */; };
 		3A594E2F18E1F56D00832901 /* 702-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2D18E1F56D00832901 /* 702-share.png */; };
 		3A594E3018E1F56D00832901 /* 702-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2E18E1F56D00832901 /* 702-share@2x.png */; };
-		3A5BC3EF1849326B00E792F7 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BC3E61849326B00E792F7 /* Card.m */; };
 		3A5BC3F11849326B00E792F7 /* CardList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BC3EA1849326B00E792F7 /* CardList.m */; };
 		3A5BC3F21849326B00E792F7 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BC3EC1849326B00E792F7 /* Deck.m */; };
 		3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5FB2EB1888892300DD3CC5 /* ImageCache.m */; };
@@ -256,6 +255,7 @@
 		3ABE8A571B890C0200EC2C03 /* 831-stack-2-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A541B890C0200EC2C03 /* 831-stack-2-toolbar@2x.png */; };
 		3ABE8A581B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A551B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png */; };
 		3AC32DDA1B67F63300DFD98D /* GZip.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC32DD91B67F63300DFD98D /* GZip.m */; };
+		3AC4F7861BFD2659008E42F7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC4F7851BFD2659008E42F7 /* Card.swift */; };
 		3AC6BC7419D3F37E002C7759 /* NSString+stripHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
 		3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACCEE221869A25500CC3537 /* LargeCardCell.m */; };
@@ -465,8 +465,6 @@
 		3A594E2D18E1F56D00832901 /* 702-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share.png"; sourceTree = "<group>"; };
 		3A594E2E18E1F56D00832901 /* 702-share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share@2x.png"; sourceTree = "<group>"; };
 		3A595423186ED61C0074B3B1 /* CGRectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGRectUtils.h; sourceTree = "<group>"; };
-		3A5BC3E51849326B00E792F7 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Card.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A5BC3E61849326B00E792F7 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Card.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A5BC3E91849326B00E792F7 /* CardList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardList.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A5BC3EA1849326B00E792F7 /* CardList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A5BC3EB1849326B00E792F7 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Deck.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -673,6 +671,7 @@
 		3ABE8A551B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "831-stack-2-toolbar@3x.png"; sourceTree = "<group>"; };
 		3AC32DD81B67F63300DFD98D /* GZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZip.h; sourceTree = "<group>"; };
 		3AC32DD91B67F63300DFD98D /* GZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZip.m; sourceTree = "<group>"; };
+		3AC4F7851BFD2659008E42F7 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		3AC6BC7219D3F37E002C7759 /* NSString+stripHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+stripHTML.h"; sourceTree = "<group>"; };
 		3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+stripHTML.m"; sourceTree = "<group>"; };
 		3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargeCardCell.xib; sourceTree = "<group>"; };
@@ -1328,9 +1327,8 @@
 				3A3C1E1E1BF79A71000311FA /* DeckState.swift */,
 				3A3C1E201BF79C7D000311FA /* DeckChange.swift */,
 				3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */,
+				3AC4F7851BFD2659008E42F7 /* Card.swift */,
 				3A5BC3ED1849326B00E792F7 /* NRTypes.h */,
-				3A5BC3E51849326B00E792F7 /* Card.h */,
-				3A5BC3E61849326B00E792F7 /* Card.m */,
 				3AE0E62B1957222600633A71 /* CardManager.h */,
 				3AE0E62C1957222600633A71 /* CardManager.m */,
 				3A5BC3E91849326B00E792F7 /* CardList.h */,
@@ -1959,6 +1957,7 @@
 				3A5794DA19157A2D005DA4B2 /* CardDetailView.m in Sources */,
 				3AE0E62D1957222600633A71 /* CardManager.m in Sources */,
 				3ABDE5A418AFC52C00AFEA88 /* DrawSimulatorViewController.m in Sources */,
+				3AC4F7861BFD2659008E42F7 /* Card.swift in Sources */,
 				3AB2CF591938952600CCBE64 /* CardFilterViewController.m in Sources */,
 				3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */,
 				3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */,
@@ -2030,7 +2029,6 @@
 				3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */,
 				3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */,
 				3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */,
-				3A5BC3EF1849326B00E792F7 /* Card.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

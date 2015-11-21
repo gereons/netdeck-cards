@@ -26,13 +26,13 @@ static NSMutableArray* sortedIdentities;
 
 static NSMutableDictionary<NSString*, Card*>* allCards;   // code -> card
 
-static int maxMU;
-static int maxStrength;
-static int maxRunnerCost;
-static int maxCorpCost;
-static int maxInf;
-static int maxAgendaPoints;
-static int maxTrash;
+static NSInteger maxMU;
+static NSInteger maxStrength;
+static NSInteger maxRunnerCost;
+static NSInteger maxCorpCost;
+static NSInteger maxInf;
+static NSInteger maxAgendaPoints;
+static NSInteger maxTrash;
 
 static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
 
@@ -278,10 +278,10 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
         NSString* name_en = obj[@"title"];
         NSString* subtype = obj[@"subtype"];
         
-        Card* card = [Card cardByCode:code];
+        Card* card = [CardManager cardByCode:code];
         if (card)
         {
-            card.name_en = name_en;
+            [card setNameEn:name_en];
             [card setAlliance:subtype];
             [card setVirtual:subtype];
         }
@@ -309,7 +309,7 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
         
         if (card.name.length > 2 && alias.length > 1)
         {
-            card.alias = alias;
+            [card setCardAlias:alias];
         }
         
         // NSLog(@"%@ -> %@", card.name, alias);
@@ -318,8 +318,8 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
     // add hard-coded aliases
     for (NSString* code in cardAliases.allKeys)
     {
-        Card* card = [Card cardByCode:code];
-        card.alias = [cardAliases objectForKey:code];
+        Card* card = [CardManager cardByCode:code];
+        [card setCardAlias:[cardAliases objectForKey:code]];
     }
 }
 
@@ -437,12 +437,12 @@ static NSDictionary<NSString*, NSString*>* cardAliases;   // code -> alias
 
 #pragma mark max values
 
-+(int) maxMU { return maxMU; }
-+(int) maxStrength { return maxStrength; }
-+(int) maxInfluence { return maxInf; }
-+(int) maxRunnerCost { return maxRunnerCost; }
-+(int) maxCorpCost { return maxCorpCost; }
-+(int) maxAgendaPoints { return maxAgendaPoints; }
-+(int) maxTrash { return maxTrash; }
++(NSInteger) maxMU { return maxMU; }
++(NSInteger) maxStrength { return maxStrength; }
++(NSInteger) maxInfluence { return maxInf; }
++(NSInteger) maxRunnerCost { return maxRunnerCost; }
++(NSInteger) maxCorpCost { return maxCorpCost; }
++(NSInteger) maxAgendaPoints { return maxAgendaPoints; }
++(NSInteger) maxTrash { return maxTrash; }
 
 @end

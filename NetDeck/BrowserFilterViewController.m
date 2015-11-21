@@ -90,7 +90,7 @@ static NSMutableArray* subtypeCollapsedSections;
     self.textField.clearButtonMode = UITextFieldViewModeAlways;
     
     // sliders
-    int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
+    NSInteger maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
     if (self.role != NRRoleNone)
     {
         maxCost = self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost];
@@ -255,7 +255,7 @@ static NSMutableArray* subtypeCollapsedSections;
     
     [self resetAllButtons];
     
-    int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
+    NSInteger maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
     if (self.role != NRRoleNone)
     {
         maxCost = self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost];

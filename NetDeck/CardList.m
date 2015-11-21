@@ -7,7 +7,6 @@
 //
 
 #import "CardList.h"
-#import "Card.h"
 #import "Deck.h"
 #import "CardManager.h"
 
@@ -114,7 +113,7 @@
         [self.initialCards filterUsingPredicate:predicate];
     }
     
-    if ([identity.code isEqualToString:CUSTOM_BIOTICS])
+    if ([identity.code isEqualToString:Card.CUSTOM_BIOTICS])
     {
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"faction != %d", NRFactionJinteki];
         [self.initialCards filterUsingPredicate:predicate];

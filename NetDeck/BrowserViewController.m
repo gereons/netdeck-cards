@@ -13,7 +13,6 @@
 #import "SmallPipsView.h"
 #import "ImageCache.h"
 #import "CardList.h"
-#import "Card.h"
 
 @interface BrowserViewController ()
 
@@ -133,15 +132,15 @@
     switch (card.type)
     {
         default:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d Cr", card.factionStr, card.cost];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %ld Cr", card.factionStr, (long)card.cost];
             break;
             
         case NRCardTypeIdentity:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d/%d", card.factionStr, card.minimumDecksize, card.influenceLimit];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %ld/%ld", card.factionStr, (long)card.minimumDecksize, (long)card.influenceLimit];
             break;
             
         case NRCardTypeAgenda:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d/%d", card.factionStr, card.advancementCost, card.agendaPoints];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %ld/%ld", card.factionStr, (long)card.advancementCost, (long)card.agendaPoints];
             break;
     }
     

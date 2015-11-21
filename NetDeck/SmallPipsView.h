@@ -14,7 +14,7 @@
 @property IBOutlet UIView* pipSE;
 @property IBOutlet UIView* pipCenter;
 
--(void) setValue:(int)value;
+-(void) setValue:(NSInteger)value;
 -(void) setColor:(UIColor*)color;
 
 +(SmallPipsView*) createWithFrame:(CGRect)rect;

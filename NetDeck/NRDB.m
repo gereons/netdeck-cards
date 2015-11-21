@@ -380,7 +380,7 @@ static NSDateFormatter* formatter;
         NSString* code = c[@"card_code"];
         NSNumber* qty = c[@"qty"];
         
-        Card* card = [Card cardByCode:code];
+        Card* card = [CardManager cardByCode:code];
         if (card && qty)
         {
             [deck addCard:card copies:qty.intValue history:NO];
@@ -421,7 +421,7 @@ static NSDateFormatter* formatter;
                     qty = -qty;
                 }
                 
-                Card* card = [Card cardByCode:code];
+                Card* card = [CardManager cardByCode:code];
                 
                 if (card && qty)
                 {

@@ -15,7 +15,6 @@
 #import "EXTScope.h"
 #import "DataDownload.h"
 #import "CardManager.h"
-#import "Card.h"
 #import "ImageCache.h"
 #import "SettingsKeys.h"
 #import "Notifications.h"

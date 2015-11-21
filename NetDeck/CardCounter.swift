@@ -20,7 +20,7 @@ import Foundation
     // MARK: NSCoding
     convenience required init?(coder aDecoder: NSCoder) {
         let code = aDecoder.decodeObjectForKey("card") as! String
-        let card = Card(byCode: code)
+        let card = CardManager.cardByCode(code)
         let count = aDecoder.decodeIntegerForKey("count")
         
         self.init(card: card, andCount: count)

@@ -186,7 +186,7 @@ static NSString* kSearchFieldValue = @"searchField";
     NSString* inf = self.deck.role == NRRoleCorp ? l10n(@"Inf") : l10n(@"Influence");
     if (self.deck.identity && !self.deck.isDraft)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d/%d %@", self.deck.influence, self.deck.identity.influenceLimit, inf]];
+        [footer appendString:[NSString stringWithFormat:@" · %d/%ld %@", self.deck.influence, (long)self.deck.identity.influenceLimit, inf]];
     }
     else
     {

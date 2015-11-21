@@ -160,7 +160,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     if ([notification.name isEqualToString:BROWSER_NEW])
     {
-        Card* card = [Card cardByCode:[userInfo objectForKey:@"code"]];
+        Card* card = [CardManager cardByCode:[userInfo objectForKey:@"code"]];
         Deck* deck = [[Deck alloc] init];
         deck.role = card.role;
         [deck addCard:card copies:1];
@@ -208,7 +208,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 -(void) listDecks:(NSNotification*)sender
 {
     [self.navigationController popToRootViewControllerAnimated:NO];
-    self.searchForCard = [Card cardByCode:[sender.userInfo objectForKey:@"code"]];
+    self.searchForCard = [CardManager cardByCode:[sender.userInfo objectForKey:@"code"]];
 }
 
 #pragma mark Table view data source

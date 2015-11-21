@@ -422,7 +422,7 @@ static DeckImport* instance;
     for (NSString* code in [cards allKeys])
     {
         int qty = [[cards objectForKey:code] intValue];
-        Card* card = [Card cardByCode:code];
+        Card* card = [CardManager cardByCode:code];
         if (card)
         {
             if (card.type == NRCardTypeIdentity)
@@ -478,7 +478,7 @@ static DeckImport* instance;
         }
         else
         {
-            Card* card = [Card cardByCode:code];
+            Card* card = [CardManager cardByCode:code];
             if (card && qty.integerValue > 0)
             {
                 [deck addCard:card copies:qty.integerValue];

@@ -19,7 +19,7 @@
         NSMutableDictionary* costs = [NSMutableDictionary dictionary];
         for (CardCounter* cc in deck.cards)
         {
-            int cost = cc.card.cost;
+            NSInteger cost = cc.card.cost;
             if (cost != -1)
             {
                 NSNumber* n = [costs objectForKey:@(cost)];

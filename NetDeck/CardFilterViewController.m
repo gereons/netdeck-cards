@@ -1051,7 +1051,7 @@ static NSInteger viewMode = VIEW_LIST;
             
             Card* identity = self.deckListViewController.deck.identity;
             
-            int influence = card.influence;
+            NSInteger influence = card.influence;
             if (identity && card.faction == identity.faction)
             {
                 influence = 0;

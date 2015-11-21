@@ -12,7 +12,6 @@
 #import "UIAlertAction+NetDeck.h"
 #import "BrowserResultViewController.h"
 #import "CardList.h"
-#import "Card.h"
 #import "ImageCache.h"
 #import "CardImageViewPopover.h"
 #import "BrowserCell.h"

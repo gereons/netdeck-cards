@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import "Card.h"
+@class Card;
 
 @interface CardManager : NSObject
 
@@ -20,13 +20,13 @@
 +(NSMutableArray<NSString*>*) subtypesForRole:(NRRole)role andType:(NSString*)type includeIdentities:(BOOL)includeIdentities;
 +(NSMutableArray<NSString*>*) subtypesForRole:(NRRole)role andTypes:(NSSet*)types includeIdentities:(BOOL)includeIdentities;
 
-+(int) maxStrength;
-+(int) maxRunnerCost;
-+(int) maxCorpCost;
-+(int) maxMU;
-+(int) maxInfluence;
-+(int) maxAgendaPoints;
-+(int) maxTrash;
++(NSInteger) maxStrength;
++(NSInteger) maxRunnerCost;
++(NSInteger) maxCorpCost;
++(NSInteger) maxMU;
++(NSInteger) maxInfluence;
++(NSInteger) maxAgendaPoints;
++(NSInteger) maxTrash;
 
 // initialization
 +(BOOL) cardsAvailable;

@@ -212,14 +212,14 @@
     cell.textLabel.text = card.name;
     cell.textLabel.textColor = card.factionColor;
  
-    NSString* influence = card.influenceLimit == -1 ? @"∞" : [NSString stringWithFormat:@"%d", card.influenceLimit];
+    NSString* influence = card.influenceLimit == -1 ? @"∞" : [NSString stringWithFormat:@"%ld", (long)card.influenceLimit];
     if (self.role == NRRoleRunner)
     {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d/%@ · %d Link", card.minimumDecksize, influence, card.baseLink];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld/%@ · %ld Link", (long)card.minimumDecksize, influence, (long)card.baseLink];
     }
     else
     {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d/%@", card.minimumDecksize, influence];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld/%@", (long)card.minimumDecksize, influence];
     }
     
     return cell;

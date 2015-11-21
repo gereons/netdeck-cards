@@ -19,7 +19,7 @@
         NSMutableDictionary* strengths = [NSMutableDictionary dictionary];
         for (CardCounter* cc in deck.cards)
         {
-            int str = cc.card.strength;
+            NSInteger str = cc.card.strength;
             if (str != -1)
             {
                 NSNumber* n = [strengths objectForKey:@(str)];

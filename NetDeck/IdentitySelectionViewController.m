@@ -12,7 +12,6 @@
 #import "IdentityViewCell.h"
 #import "CardImageViewPopover.h"
 
-#import "Card.h"
 #import "CardManager.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
@@ -418,7 +417,7 @@
     
     if (self.role == NRRoleRunner)
     {
-        cell.linkLabel.text = [NSString stringWithFormat:@"%d", card.baseLink];
+        cell.linkLabel.text = [NSString stringWithFormat:@"%ld", (long)card.baseLink];
         cell.linkIcon.hidden = NO;
     }
     else

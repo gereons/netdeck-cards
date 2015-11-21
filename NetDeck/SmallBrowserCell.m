@@ -7,7 +7,6 @@
 //
 
 #import "SmallBrowserCell.h"
-#import "Card.h"
 
 @implementation SmallBrowserCell
 

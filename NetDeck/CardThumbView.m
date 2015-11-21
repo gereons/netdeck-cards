@@ -9,7 +9,6 @@
 //
 
 #import "CardThumbView.h"
-#import "Card.h"
 #import "ImageCache.h"
 
 @implementation CardThumbView
