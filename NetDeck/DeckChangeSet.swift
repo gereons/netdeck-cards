@@ -69,7 +69,7 @@ import Foundation
         self.changes.sortInPlace { (dc1, dc2) -> Bool in
             if dc1.count > 0 && dc2.count < 0 { return true }
             if dc1.count < 0 && dc2.count > 0 { return false }
-            return dc1.card.name < dc2.card.name
+            return dc1.card!.name < dc2.card!.name
         }
     }
     
@@ -78,7 +78,7 @@ import Foundation
         for dc in self.changes {
             NSLog("%@ %ld %@", dc.count > 0 ? "add" : "rem",
                 dc.count,
-                dc.card.name);
+                dc.card!.name);
         }
         NSLog("---end---");
     }

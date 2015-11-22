@@ -42,8 +42,8 @@ import Foundation
         return Faction.faction2name[faction]
     }
     
-    class func initializeFactionNames(cards: NSArray) {
-        for card in cards as! [Card] {
+    class func initializeFactionNames(cards: [Card]) {
+        for card in cards {
             faction2name[card.faction] = card.factionStr
         }
         

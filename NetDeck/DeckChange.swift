@@ -18,7 +18,7 @@ import Foundation
         self.count = count
     }
 
-    var card: Card {
+    var card: Card? {
         return CardManager.cardByCode(code)
     }
 

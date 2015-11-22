@@ -31,10 +31,10 @@ import Foundation
     private static var corpTypeNames = [String]()
     private(set) static var allTypes: TableData!
     
-    class func initializeCardTypes(cards: NSArray) {
+    class func initializeCardTypes(cards: [Card]) {
         type2name.removeAll()
         type2name[.None] = kANY
-        for card in cards as! [Card] {
+        for card in cards {
             type2name[card.type] = card.typeStr
         }
         

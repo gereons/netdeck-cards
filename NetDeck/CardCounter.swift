@@ -23,7 +23,7 @@ import Foundation
         let card = CardManager.cardByCode(code)
         let count = aDecoder.decodeIntegerForKey("count")
         
-        self.init(card: card, andCount: count)
+        self.init(card: card!, andCount: count)
 
     }
     

@@ -364,11 +364,11 @@ static NSMutableArray* subtypeCollapsedSections;
         NSMutableArray* arr;
         if (self.selectedTypes)
         {
-            arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:YES];
+            arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:YES].mutableCopy;
         }
         else
         {
-            arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:YES];
+            arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:YES].mutableCopy;
         }
         [arr insertObject:kANY atIndex:0];
         data = [[TableData alloc] initWithValues:arr];

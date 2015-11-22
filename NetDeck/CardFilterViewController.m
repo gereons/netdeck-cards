@@ -621,11 +621,11 @@ static NSInteger viewMode = VIEW_LIST;
     NSMutableArray* arr;
     if (self.selectedTypes)
     {
-        arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:NO];
+        arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:NO].mutableCopy;
     }
     else
     {
-        arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:NO];
+        arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:NO].mutableCopy;
     }
     [arr insertObject:kANY atIndex:0];
     TableData* data = [[TableData alloc] initWithValues:arr];
