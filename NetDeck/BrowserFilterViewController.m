@@ -8,7 +8,6 @@
 
 #import "BrowserFilterViewController.h"
 #import "BrowserResultViewController.h"
-#import "CardList.h"
 #import "CardFilterPopover.h"
 #import "Notifications.h"
 

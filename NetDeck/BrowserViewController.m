@@ -12,7 +12,6 @@
 #import "CardImageViewController.h"
 #import "SmallPipsView.h"
 #import "ImageCache.h"
-#import "CardList.h"
 
 @interface BrowserViewController ()
 

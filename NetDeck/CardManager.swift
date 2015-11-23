@@ -74,8 +74,14 @@ import Foundation
     
     class func allForRole(role: NRRole) -> [Card]
     {
-        assert(role != .None)
-        return allCardsByRole[role]!
+        if role != .None {
+            return allCardsByRole[role]!
+        }
+        else {
+            var cards = allCardsByRole[.Runner]!
+            cards.appendContentsOf(allCardsByRole[.Corp]!)
+            return cards
+        }
     }
     
     class func identitiesForRole(role: NRRole) -> [Card]
@@ -212,7 +218,6 @@ import Foundation
                 var dict = allSubtypes[card.role]
                 if (dict == nil) {
                     dict = [String: Set<String>]()
-                    
                 }
 
                 if dict![card.typeStr] == nil {

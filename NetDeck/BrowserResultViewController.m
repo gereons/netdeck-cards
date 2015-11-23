@@ -11,7 +11,6 @@
 #import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "BrowserResultViewController.h"
-#import "CardList.h"
 #import "ImageCache.h"
 #import "CardImageViewPopover.h"
 #import "BrowserCell.h"

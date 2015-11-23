@@ -8,7 +8,6 @@
 
 #import "FilterViewController.h"
 #import "ImageCache.h"
-#import "CardList.h"
 #import "SettingsKeys.h"
 
 @interface FilterViewController ()

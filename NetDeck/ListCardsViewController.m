@@ -12,8 +12,6 @@
 #import "ImageCache.h"
 #import "EditDeckCell.h"
 #import "Deck.h"
-#import "CardList.h"
-
 
 @interface ListCardsViewController ()
 
