@@ -7,7 +7,6 @@
 //
 
 #import "DeckManager.h"
-#import "Deck.h"
 #import "SettingsKeys.h"
 
 #define SAVE_DECK  @"deck_%d"

@@ -7,7 +7,6 @@
 //
 
 #import "CardCell.h"
-#import "Deck.h"
 #import "Notifications.h"
 #import "DeckListViewController.h"
 

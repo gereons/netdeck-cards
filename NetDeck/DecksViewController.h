@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class Card, Deck;
-
 @interface DecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate>
 
 @property IBOutlet UITableView* tableView;

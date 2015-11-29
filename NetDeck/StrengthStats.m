@@ -7,7 +7,6 @@
 //
 
 #import "StrengthStats.h"
-#import "Deck.h"
 
 @implementation StrengthStats
 

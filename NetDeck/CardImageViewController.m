@@ -10,7 +10,6 @@
 
 #import "CardImageViewController.h"
 #import "CardImageViewCell.h"
-#import "Deck.h"
 #import "ImageCache.h"
 #import "SettingsKeys.h"
 

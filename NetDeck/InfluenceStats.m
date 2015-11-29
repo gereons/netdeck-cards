@@ -7,7 +7,6 @@
 //
 
 #import "InfluenceStats.h"
-#import "Deck.h"
 
 @interface InfluenceStats()
 @property NSMutableDictionary* colors;

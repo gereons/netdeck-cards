@@ -9,8 +9,6 @@
 #import "DetailViewManager.h"
 #import "BrowserCollectionView.h"
 
-@class Card, CardList;
-
 @interface BrowserResultViewController : UIViewController <SubstitutableDetailViewController, UITabBarControllerDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property IBOutlet UITableView* tableView;

@@ -11,7 +11,6 @@
 
 #import <Dropbox/Dropbox.h>
 #import "DeckExport.h"
-#import "Deck.h"
 #import "GZip.h"
 
 #define APP_NAME    "Net Deck"
@@ -87,10 +86,10 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
-    [s appendFormat:@"%d/%ld influence used\n", deck.influence, (long)deck.identity.influenceLimit];
+    [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.identity.influenceLimit];
     if (deck.identity.role == NRRoleCorp)
     {
-        [s appendFormat:@"Agenda Points: %d\n", deck.agendaPoints];
+        [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
@@ -199,10 +198,10 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)  \n", numCards, (long)deck.identity.minimumDecksize];
-    [s appendFormat:@"%d/%ld influence used  \n", deck.influence, (long)deck.identity.influenceLimit];
+    [s appendFormat:@"%ld/%ld influence used  \n", (long)deck.influence, (long)deck.identity.influenceLimit];
     if (deck.identity.role == NRRoleCorp)
     {
-        [s appendFormat:@"Agenda Points: %d  \n", deck.agendaPoints];
+        [s appendFormat:@"Agenda Points: %ld  \n", (long)deck.agendaPoints];
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
@@ -273,10 +272,10 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
-    [s appendFormat:@"%d/%ld influence used\n", deck.influence, (long)deck.identity.influenceLimit];
+    [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.identity.influenceLimit];
     if (deck.identity.role == NRRoleCorp)
     {
-        [s appendFormat:@"Agenda Points: %d\n", deck.agendaPoints];
+        [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     

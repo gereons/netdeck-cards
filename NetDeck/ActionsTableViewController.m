@@ -21,7 +21,6 @@
 #import "CompareDecksList.h"
 #import "Notifications.h"
 #import "SettingsKeys.h"
-#import "Deck.h"
 #import "DataDownload.h"
 #import "CardUpdateCheck.h"
 

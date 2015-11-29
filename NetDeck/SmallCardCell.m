@@ -7,7 +7,6 @@
 //
 
 #import "SmallCardCell.h"
-#import "Deck.h"
 #import "SettingsKeys.h"
 
 @implementation SmallCardCell

@@ -16,11 +16,9 @@
 #import "CardImageViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "IphoneDrawSimulator.h"
-#import "Deck.h"
 #import "ImageCache.h"
 #import "EditDeckCell.h"
 #import "DeckExport.h"
-#import "UIAlertAction+NetDeck.h"
 #import "SettingsKeys.h"
 #import "NRDB.h"
 #import "DeckEmail.h"
@@ -393,20 +391,20 @@
     [self.tableView reloadData];
 
     NSMutableString* footer = [NSMutableString string];
-    [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
+    [footer appendString:[NSString stringWithFormat:@"%ld %@", (long)self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
     NSString* inf = self.deck.role == NRRoleCorp ? l10n(@"Inf") : l10n(@"Influence");
     if (self.deck.identity && !self.deck.isDraft)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d/%ld %@", self.deck.influence, (long)self.deck.identity.influenceLimit, inf]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld/%ld %@", (long)self.deck.influence, (long)self.deck.identity.influenceLimit, inf]];
     }
     else
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.influence, inf]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.influence, inf]];
     }
     
     if (self.deck.role == NRRoleCorp)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.agendaPoints, l10n(@"AP")]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.agendaPoints, l10n(@"AP")]];
     }
     
     [footer appendString:@"\n"];

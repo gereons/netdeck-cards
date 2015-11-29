@@ -85,6 +85,12 @@ import DTCoreText
     
     private static var multiIce = [String]()
     
+    static let nullInstance = Card()
+    
+    class func null() -> Card {
+        return nullInstance
+    }
+    
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
     var iceType: String? {
         assert(self.type == .Ice, "not an ice");

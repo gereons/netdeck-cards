@@ -10,8 +10,6 @@
 #import "CardFilterCollectionView.h"
 #import "DeckListViewController.h"
 
-@class Deck;
-
 @interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilterCallback>
 
 @property DeckListViewController* deckListViewController;

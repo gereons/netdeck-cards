@@ -12,7 +12,6 @@
 #import "UIAlertAction+NetDeck.h"
 #import "DeckCell.h"
 #import "DeckManager.h"
-#import "Deck.h"
 #import "ImageCache.h"
 #import "SettingsKeys.h"
 #import "NRDB.h"

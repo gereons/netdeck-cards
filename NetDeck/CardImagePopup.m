@@ -10,7 +10,6 @@
 #import "Notifications.h"
 #import "SettingsKeys.h"
 #import "CardImageCell.h"
-#import "Deck.h"
 
 @interface CardImagePopup ()
 

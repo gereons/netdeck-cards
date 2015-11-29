@@ -12,8 +12,7 @@ import Foundation
     var timestamp: NSDate?
     var changes: [DeckChange]
     var initial: Bool
-    var cards: NSMutableDictionary?
-    // TODO var cards: [String: Int]? // code -> qty
+    var cards: [String: Int]? // code -> qty
     
     override init() {
         self.changes = [DeckChange]()
@@ -90,7 +89,7 @@ import Foundation
         self.timestamp = aDecoder.decodeObjectForKey("timestamp") as? NSDate
         self.changes = aDecoder.decodeObjectForKey("changes") as! [DeckChange]
         self.initial = aDecoder.decodeBoolForKey("initial")
-        self.cards = aDecoder.decodeObjectForKey("cards") as? NSMutableDictionary
+        self.cards = aDecoder.decodeObjectForKey("cards") as? [String: Int]
     }
     
     func encodeWithCoder(aCoder: NSCoder) {

@@ -21,7 +21,6 @@
 #import "DeckHistoryPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
-#import "Deck.h"
 #import "DeckManager.h"
 #import "DeckExport.h"
 #import "DeckImport.h"
@@ -1065,19 +1064,19 @@
     self.analysisButton.enabled = self.deck.cards.count > 0;
     
     NSMutableString* footer = [NSMutableString string];
-    [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
+    [footer appendString:[NSString stringWithFormat:@"%ld %@", (long)self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
     if (self.deck.identity && !self.deck.isDraft)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d/%ld %@", self.deck.influence, (long)self.deck.identity.influenceLimit, l10n(@"Influence")]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld/%ld %@", (long)self.deck.influence, (long)self.deck.identity.influenceLimit, l10n(@"Influence")]];
     }
     else
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.influence, l10n(@"Influence")]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.influence, l10n(@"Influence")]];
     }
     
     if (self.role == NRRoleCorp)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.agendaPoints, l10n(@"AP")]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.agendaPoints, l10n(@"AP")]];
     }
     
     NSArray* reasons = [self.deck checkValidity];

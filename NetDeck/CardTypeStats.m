@@ -7,10 +7,9 @@
 //
 
 #import "CardTypeStats.h"
-#import "Deck.h"
 
 @interface CardTypeStats()
-@property int deckSize;
+@property NSInteger deckSize;
 @end
 
 @implementation CardTypeStats

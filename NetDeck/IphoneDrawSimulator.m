@@ -8,7 +8,6 @@
 
 #import "IphoneDrawSimulator.h"
 #import "ImageCache.h"
-#import "Deck.h"
 #import "Hypergeometric.h"
 
 @interface DrawTableCell : UITableViewCell

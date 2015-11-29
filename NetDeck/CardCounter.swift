@@ -12,9 +12,15 @@ import Foundation
     private(set) var card: Card
     var count: Int
     
+    static let nullInstance = CardCounter(card: Card.null(), andCount: 0)
+    
     init(card: Card, andCount: Int) {
         self.card = card
         self.count = andCount
+    }
+    
+    class func null() -> CardCounter {
+        return nullInstance
     }
     
     // MARK: NSCoding

@@ -12,7 +12,7 @@
 
 #import "SettingsKeys.h"
 
-@interface Deck()
+@interface yDeck()
 {
     NSMutableArray* _cards;     // array of CardCounter
     NSMutableArray* _revisions; // array of DeckChangeSet
@@ -23,9 +23,9 @@
 
 @end
 
-@implementation Deck
+@implementation yDeck
 
--(Deck*) init
+-(yDeck*) init
 {
     if ((self = [super init]))
     {
@@ -68,7 +68,7 @@
 }
 -(void) saveToDisk
 {
-    [DeckManager saveDeck:self];
+    //[DeckManager saveDeck:self];
     self->_modified = NO;
 }
 
@@ -474,9 +474,9 @@
     self->_modified = YES;
 }
 
--(Deck*) duplicate
+-(yDeck*) duplicate
 {
-    Deck* newDeck = [[Deck alloc] init];
+    yDeck* newDeck = [[yDeck alloc] init];
     
     NSString* oldName = self.name;
     NSString* newName = [NSString stringWithFormat:@"%@ %@", oldName, l10n(@"(Copy)")];
@@ -584,7 +584,7 @@
         self.lastChanges.cards = [NSMutableDictionary dictionary];
         for (CardCounter* cc in self.allCards)
         {
-            self.lastChanges.cards[cc.card.code] = @(cc.count);
+            // self.lastChanges.cards[cc.card.code] = @(cc.count);
         }
         
         if (self.revisions.count == 0)

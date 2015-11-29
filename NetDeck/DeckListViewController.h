@@ -9,8 +9,6 @@
 #import "DetailViewManager.h"
 #import "DecklistCollectionView.h"
 
-@class Card, Deck;
-
 @interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, UITextFieldDelegate>
 
 @property IBOutlet UITableView* tableView;

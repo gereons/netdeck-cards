@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class Deck;
-
 @interface DeckManager : NSObject
 
 // save deck, create new file if deck.filename is nil

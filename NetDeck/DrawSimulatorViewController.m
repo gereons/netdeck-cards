@@ -7,7 +7,6 @@
 //
 
 #import "DrawSimulatorViewController.h"
-#import "Deck.h"
 #import "CardImageViewPopover.h"
 #import "Hypergeometric.h"
 #import "CardThumbView.h"

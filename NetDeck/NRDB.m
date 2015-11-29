@@ -13,7 +13,6 @@
 #import "NRDB.h"
 #import "NRDBAuth.h"
 #import "SettingsKeys.h"
-#import "Deck.h"
 
 @interface NRDB()
 @property (strong) DecklistCompletionBlock decklistCompletionBlock;

@@ -10,7 +10,6 @@
 
 #import "CompareDecksList.h"
 #import "DeckCell.h"
-#import "Deck.h"
 #import "DeckDiffViewController.h"
 #import "DeckManager.h"
 

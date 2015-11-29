@@ -223,6 +223,7 @@
 		3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440F71854EF720051D4B0 /* DeckListViewController.xib */; };
 		3AA463D41BC0042600591647 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA463D21BC0042600591647 /* BrowserViewController.m */; };
 		3AA463D51BC0042600591647 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA463D31BC0042600591647 /* BrowserViewController.xib */; };
+		3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA50F351C0A2FC8007D5296 /* Deck.swift */; };
 		3AB2CF591938952600CCBE64 /* CardFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB2CF571938952600CCBE64 /* CardFilterViewController.m */; };
 		3AB2CF5A1938952600CCBE64 /* CardFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */; };
 		3AB34E5F1939AA7A000A43BB /* CardFilterThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB34E5E1939AA7A000A43BB /* CardFilterThumbView.m */; };
@@ -626,6 +627,7 @@
 		3AA463D11BC0042600591647 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		3AA463D21BC0042600591647 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		3AA463D31BC0042600591647 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
+		3AA50F351C0A2FC8007D5296 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		3AB2CF561938952600CCBE64 /* CardFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterViewController.h; sourceTree = "<group>"; };
 		3AB2CF571938952600CCBE64 /* CardFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterViewController.m; sourceTree = "<group>"; };
 		3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterViewController.xib; sourceTree = "<group>"; };
@@ -1316,6 +1318,7 @@
 		3AA440DF1854DA0D0051D4B0 /* Data / Models */ = {
 			isa = PBXGroup;
 			children = (
+				3A5BC3ED1849326B00E792F7 /* NRTypes.h */,
 				3A904FCC1BF73723001C075A /* Types.swift */,
 				3A3C1E131BF74DAF000311FA /* TableData.swift */,
 				3A3C1E151BF7525B000311FA /* Faction.swift */,
@@ -1328,7 +1331,7 @@
 				3AC4F7851BFD2659008E42F7 /* Card.swift */,
 				3AEEBB661C00C9FF00CB6053 /* CardManager.swift */,
 				3AA4088D1C038F480046922C /* CardList.swift */,
-				3A5BC3ED1849326B00E792F7 /* NRTypes.h */,
+				3AA50F351C0A2FC8007D5296 /* Deck.swift */,
 				3A5BC3EB1849326B00E792F7 /* Deck.h */,
 				3A5BC3EC1849326B00E792F7 /* Deck.m */,
 				3ADE90901877317F006E187F /* DeckManager.h */,
@@ -1958,6 +1961,7 @@
 				3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */,
 				3AB9BD5918FADB51004EAF10 /* DecksViewController.m in Sources */,
 				3A3E26E81A005042000C6D32 /* UIAlertAction+NetDeck.m in Sources */,
+				3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */,
 				3AD860D61B79154100EEF8AC /* EditDeckCell.m in Sources */,
 				3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */,
 				3A11B1121ADE35F600E5A410 /* DrawSimulatorCollectionView.m in Sources */,

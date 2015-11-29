@@ -12,7 +12,6 @@
 #import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "SavedDecksList.h"
-#import "Deck.h"
 #import "ImportDecksViewController.h"
 #import "SettingsKeys.h"
 #import "NRDB.h"

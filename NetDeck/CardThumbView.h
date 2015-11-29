@@ -8,8 +8,6 @@
 //  used in draw simulator & identity picker
 //
 
-@class Card;
-
 @interface CardThumbView : UICollectionViewCell
 
 @property IBOutlet UIImageView* imageView;

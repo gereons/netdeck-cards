@@ -7,7 +7,6 @@
 //
 
 #import "CostStats.h"
-#import "Deck.h"
 
 @implementation CostStats
 

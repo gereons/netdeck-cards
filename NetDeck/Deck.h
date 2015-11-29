@@ -8,7 +8,7 @@
 
 @class Card, DeckChangeSet;
 
-@interface Deck : NSObject <NSCoding>
+@interface yDeck : NSObject <NSCoding>
 
 @property (readonly) NSArray<CardCounter*>* cards;        // array of CardCounter, all cards except identity
 @property (readonly) NSArray<CardCounter*>* allCards;     // array of CardCounter, all cards including identity, id is first element
@@ -61,7 +61,7 @@
 
 -(NSUInteger) influenceFor:(CardCounter*)cc;
 
--(Deck*) duplicate;
+-(yDeck*) duplicate;
 
 -(void) mergeRevisions;
 

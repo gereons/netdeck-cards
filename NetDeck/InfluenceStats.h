@@ -8,8 +8,6 @@
 
 #import "Stats.h"
 
-@class Deck;
-
 @interface InfluenceStats : Stats <CPTPlotDataSource, CPTPlotDelegate>
 
 -(InfluenceStats*) initWithDeck:(Deck*)deck;

@@ -7,7 +7,6 @@
 //
 
 #import "DeckNotesPopup.h"
-#import "Deck.h"
 #import "SettingsKeys.h"
 #import "Notifications.h"
 

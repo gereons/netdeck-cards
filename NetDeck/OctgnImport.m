@@ -7,7 +7,6 @@
 //
 
 #import "OctgnImport.h"
-#import "Deck.h"
 
 @interface OctgnImport()
 

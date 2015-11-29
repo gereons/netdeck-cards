@@ -7,7 +7,6 @@
 //
 
 #import "DeckHistoryPopup.h"
-#import "Deck.h"
 #import "DeckHistorySectionHeaderView.h"
 #import "Notifications.h"
 #import "CardImageViewPopover.h"

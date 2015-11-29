@@ -13,7 +13,6 @@
 #import "ImportDecksViewController.h"
 #import "UIAlertAction+NetDeck.h"
 #import "EXTScope.h"
-#import "Deck.h"
 #import "ImageCache.h"
 #import "DeckCell.h"
 #import "OctgnImport.h"

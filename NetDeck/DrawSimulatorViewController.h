@@ -8,8 +8,6 @@
 
 #import "DrawSimulatorCollectionView.h"
 
-@class Deck;
-
 @interface DrawSimulatorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property IBOutlet UISegmentedControl* viewModeControl;
