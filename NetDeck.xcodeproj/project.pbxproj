@@ -258,7 +258,6 @@
 		3ABE8A581B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE8A551B890C0200EC2C03 /* 831-stack-2-toolbar@3x.png */; };
 		3AC32DDA1B67F63300DFD98D /* GZip.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC32DD91B67F63300DFD98D /* GZip.m */; };
 		3AC4F7861BFD2659008E42F7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC4F7851BFD2659008E42F7 /* Card.swift */; };
-		3AC6BC7419D3F37E002C7759 /* NSString+stripHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
 		3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACCEE221869A25500CC3537 /* LargeCardCell.m */; };
 		3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */; };
@@ -672,8 +671,6 @@
 		3AC32DD81B67F63300DFD98D /* GZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZip.h; sourceTree = "<group>"; };
 		3AC32DD91B67F63300DFD98D /* GZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZip.m; sourceTree = "<group>"; };
 		3AC4F7851BFD2659008E42F7 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		3AC6BC7219D3F37E002C7759 /* NSString+stripHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+stripHTML.h"; sourceTree = "<group>"; };
-		3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+stripHTML.m"; sourceTree = "<group>"; };
 		3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargeCardCell.xib; sourceTree = "<group>"; };
 		3ACCEE211869A25500CC3537 /* LargeCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LargeCardCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3ACCEE221869A25500CC3537 /* LargeCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LargeCardCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -973,8 +970,6 @@
 				3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */,
 				3A058B1719D334660090F53A /* NRSwitch.h */,
 				3A058B1819D334660090F53A /* NRSwitch.m */,
-				3AC6BC7219D3F37E002C7759 /* NSString+stripHTML.h */,
-				3AC6BC7319D3F37E002C7759 /* NSString+stripHTML.m */,
 				3A3E26E61A004FD7000C6D32 /* UIAlertAction+NetDeck.h */,
 				3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */,
 				3A8309861AE8C22D00FED08A /* NRCrashlytics.h */,
@@ -1929,7 +1924,6 @@
 				3A18B2561B8B7C650065EC4A /* FilterViewController.m in Sources */,
 				3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
-				3AC6BC7419D3F37E002C7759 /* NSString+stripHTML.m in Sources */,
 				3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */,
 				3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */,
 				3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */,
