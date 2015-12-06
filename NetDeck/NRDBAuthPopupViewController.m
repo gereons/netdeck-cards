@@ -77,15 +77,13 @@ static NRDBAuthPopupViewController* popup;
     // NSLog(@"nrdb popup dismiss");
     if (self.navController)
     {
-        // don't call [self.navController popViewControllerAnimated:YES] here - this will pop two VCs
-        // instead, call the nav bar delegate from NRNavigationController to do
-        UINavigationBar* navBar = self.navController.navigationBar;
-        UINavigationItem* navItem = self.navController.navigationItem;
-        [navBar.delegate navigationBar:navBar shouldPopItem:navItem];
+        NSAssert(IS_IPHONE, @"not on iphone");
+        [self.navController popViewControllerAnimated:YES];
         self.navController = nil;
     }
     else
     {
+        NSAssert(IS_IPAD, @"not on ipad");
         [self dismissViewControllerAnimated:NO completion:nil];
     }
     
