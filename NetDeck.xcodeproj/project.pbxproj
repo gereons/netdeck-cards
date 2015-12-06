@@ -281,7 +281,6 @@
 		3AD860E11B79383500EEF8AC /* CardImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860DF1B79383500EEF8AC /* CardImageViewController.xib */; };
 		3AD860E51B7939E500EEF8AC /* CardImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD860E31B7939E500EEF8AC /* CardImageViewCell.m */; };
 		3AD860E61B7939E500EEF8AC /* CardImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */; };
-		3ADC4DD01AAB035E002B7210 /* builtin-sets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADC4DCF1AAB035E002B7210 /* builtin-sets.plist */; };
 		3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE909D18775A77006E187F /* CardImageViewPopover.m */; };
 		3ADE90A118775A77006E187F /* CardImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageView.xib */; };
 		3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */; };
@@ -704,7 +703,6 @@
 		3AD860E21B7939E500EEF8AC /* CardImageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardImageViewCell.h; sourceTree = "<group>"; };
 		3AD860E31B7939E500EEF8AC /* CardImageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardImageViewCell.m; sourceTree = "<group>"; };
 		3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewCell.xib; sourceTree = "<group>"; };
-		3ADC4DCF1AAB035E002B7210 /* builtin-sets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "builtin-sets.plist"; sourceTree = "<group>"; };
 		3ADE9093187734B5006E187F /* SettingsKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsKeys.h; sourceTree = "<group>"; };
 		3ADE909D18775A77006E187F /* CardImageViewPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardImageViewPopover.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ADE909E18775A77006E187F /* CardImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageView.xib; sourceTree = "<group>"; };
@@ -875,7 +873,6 @@
 				3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */,
 				3A095E8D18BBC49C00C99FED /* Localizable.strings */,
 				3A3622691849320C007F2854 /* NetDeck-Info.plist */,
-				3ADC4DCF1AAB035E002B7210 /* builtin-sets.plist */,
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
 				3A36226D1849320C007F2854 /* main.m */,
 				3A36226F1849320C007F2854 /* NetDeck-Prefix.pch */,
@@ -1664,7 +1661,6 @@
 				3A6E756D18E401D400EF8DE1 /* Icon-Small-40.png in Resources */,
 				3A441C8D18E60A5300F46C92 /* hex_background.png in Resources */,
 				3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */,
-				3ADC4DD01AAB035E002B7210 /* builtin-sets.plist in Resources */,
 				3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */,
 				3A689FA4195D3EB8004EBC41 /* retired@2x.png in Resources */,
 				3A40EA4E19FD2CBE00B9CFDA /* 890-sort-ascending.png in Resources */,

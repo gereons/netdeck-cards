@@ -22,15 +22,28 @@ import Foundation
     static let CORE_SET_CODE = "core"
     static let UNKNOWN_SET = "unknown"
     
-    static var allCardSets = [CardSet]()            // all known sets
+    static var allCardSets = [Int: CardSet]()       // all known sets: map setNum: cardset
     static var code2number = [String: Int]()        // map code -> number
     static var code2name = [String: String]()       // map code -> name
     static var setGroups = [String]()               // section names: 0=empty/any 1=core+deluxe, plus one for each cycle
-    static var setsPerGroup = [[Int]]()             // one array per section, contains set numbers in that group
+    static var setsPerGroup = [NRCycle: [Int]]()    // one array per cycle, contains set numbers in that group
     
     // caches
     static var disabledSets: Set<String>?           // set of setCodes
     static var enabledSets: TableData!
+    
+    static let cycleMap: [Int: NRCycle] = [
+        1: .CoreDeluxe,
+        2: .Genesis,
+        3: .CoreDeluxe,
+        4: .Spin,
+        5: .CoreDeluxe,
+        6: .Lunar,
+        7: .CoreDeluxe,
+        8: .SanSan,
+        9: .CoreDeluxe,
+        10: .Mumbad
+    ]
     
     class func filename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
@@ -56,16 +69,7 @@ import Foundation
                 ok = setupFromJsonData(data)
             }
         }
-    
-        //TODO: do we still need this?
-        if (!ok) {
-            // no file or botched data: use built-in fallback file
-            let fallbackFile = NSBundle.mainBundle().pathForResource("builtin-sets", ofType:"plist");
-            if let data = NSArray(contentsOfFile: fallbackFile!) {
-                ok = setupFromJsonData(data)
-            }
-        }
-            
+                
         return ok;
     }
     
@@ -81,7 +85,7 @@ import Foundation
     
     class func setupFromJsonData(json: NSArray) -> Bool {
         var maxCycle = 0
-        allCardSets = [CardSet]()
+        allCardSets = [Int: CardSet]()
         for set in json as! [NSDictionary] {
             let cs = CardSet()
             
@@ -94,53 +98,47 @@ import Foundation
             cs.settingsKey = "use_" + cs.setCode
             
             let cycleNumber = set["cyclenumber"] as! Int
+            let number = set["number"] as! Int
             
-            if (cycleNumber % 2) == 0 { // even cycle number: this is a datapack
-                if let cycle = NRCycle(rawValue: cycleNumber / 2) {
-                    cs.cycle = cycle
-                    maxCycle = max(cs.cycle.rawValue, maxCycle)
-                    let number = set["number"] as! Int
-                    cs.setNum = (cycleNumber-2) / 2 * 7 + 1 + number
-                }
-                else {
-                    assert(false, "unknown cycle \(cycleNumber)")
-                }
-            }
-            else { // odd cycle number: it is a core or deluxe
-                cs.cycle = .CoreDeluxe;
-                cs.setNum = (cycleNumber-1) / 2 * 7 + 1;
-            }
+            cs.cycle = cycleMap[cycleNumber] ?? .Unknown
+            assert(cs.cycle != .Unknown)
+            maxCycle = max(maxCycle, cs.cycle.rawValue)
+            cs.setNum = cycleNumber*100 + number
+            
             let available = set["available"] as! String
             cs.released = available.length > 0;
             
-            allCardSets.append(cs)
+            allCardSets[cs.setNum] = cs
             code2name[cs.setCode] = cs.name
             code2number[cs.setCode] = cs.setNum
         }
         
-        allCardSets.sortInPlace {
-            return $0.setNum < $1.setNum
-        }
-        
         setGroups = [String]()
-        setsPerGroup = [[Int]]()
-        setsPerGroup.append([ 0 ])
-        for var i=0; i<=maxCycle; ++i {
-            setsPerGroup.append([Int]())
+        setsPerGroup = [NRCycle: [Int]]()
+        setsPerGroup[.CoreDeluxe] = [Int]()
+        for key in cycleMap.keys.sort({ $0 < $1 }) {
+            let cycle = cycleMap[key]!
+            if cycle != .CoreDeluxe {
+                setsPerGroup[cycle] = [Int]()
+                let name = "Cycle #\(cycle.rawValue)"
+                setGroups.append(name.localized())
+            }
         }
         
-        for cs in allCardSets
+        for cs in allCardSets.values
         {
-            setsPerGroup[cs.cycle.rawValue+1].append(cs.setNum)
+            setsPerGroup[cs.cycle]!.append(cs.setNum)
+            setsPerGroup[cs.cycle]!.sortInPlace { $0<$1 }
             
             if cs.cycle.rawValue > setGroups.count {
                 let cycle = "Cycle #\(cs.cycle.rawValue)"
                 setGroups.append(cycle.localized())
             }
         }
+        
         setGroups.insert("", atIndex:0)
         setGroups.insert("Core / Deluxe".localized(), atIndex:1)
-        
+        setsPerGroup[.None] = [Int]()
         assert(setGroups.count == setsPerGroup.count, "count mismatch");
         
         NSUserDefaults.standardUserDefaults().registerDefaults(CardSets.settingsDefaults())
@@ -152,15 +150,16 @@ import Foundation
     }
     
     class func nameForKey(key: String) -> String? {
-        if let index = allCardSets.indexOf({$0.settingsKey == key}) {
-            return allCardSets[index].name
+        let sets = allCardSets.values
+        if let index = sets.indexOf({$0.settingsKey == key}) {
+            return sets[index].name
         }
         return nil;
     }
 
     class func settingsDefaults() -> [String: Bool] {
         var defaults = [String: Bool]()
-        for cs in allCardSets {
+        for cs in allCardSets.values {
             defaults[cs.settingsKey] = cs.released
         }
         return defaults;
@@ -177,7 +176,7 @@ import Foundation
         if disabledSets == nil {
             var disabled = Set<String>()
             let settings = NSUserDefaults.standardUserDefaults()
-            for cs in allCardSets {
+            for cs in allCardSets.values {
                 if !settings.boolForKey(cs.settingsKey) {
                     disabled.insert(cs.setCode)
                 }
@@ -204,14 +203,16 @@ import Foundation
             var sections = setGroups
             var setNames = [[String]]()
             
-            for sets in setsPerGroup {
+            let keys = setsPerGroup.keys.sort { $0.rawValue < $1.rawValue }
+            
+            for cycle in keys {
                 var names = [String]()
-                for setNum in sets {
+                for setNum in setsPerGroup[cycle]! {
                     if setNum == 0 {
                         names.append(kANY)
                     }
-                    else if setNum <= allCardSets.count {
-                        let cs = allCardSets[setNum-1]
+                    else {
+                        let cs = allCardSets[setNum]!
                         let setName = cs.name
                         if setName != nil && !disabledSetCodes.contains(cs.setCode) {
                             names.append(setName)
@@ -248,14 +249,14 @@ import Foundation
         sections.removeAtIndex(0)
         
         var knownSets = [[CardSet]]()
-        for setNumbers in setsPerGroup {
+        for (_,setNumbers) in setsPerGroup {
             var sets = [CardSet]()
             for setNum in setNumbers {
                 if setNum == 0 {
                     continue
                 }
                 
-                let cs = allCardSets[setNum-1]
+                let cs = allCardSets[setNum]!
                 if cs.name != nil {
                     sets.append(cs)
                 }
@@ -329,9 +330,8 @@ import Foundation
             }
         }
         
-        for cs in allCardSets {
-            if cs.setNum == maxRelease
-            {
+        for cs in allCardSets.values {
+            if cs.setNum == maxRelease {
                 return cs.name
             }
         }

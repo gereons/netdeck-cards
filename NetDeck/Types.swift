@@ -126,12 +126,14 @@ extension NSRange {
 
 @objc enum NRCycle: Int {
     case None = -1
-    case CoreDeluxe
+    case CoreDeluxe // core, c&c, h&p, o&c, d&d
     case Genesis
     case Spin
     case Lunar
     case SanSan
     case Mumbad
+    
+    case Unknown
 }
 
 @objc enum NRImportSource: Int {
