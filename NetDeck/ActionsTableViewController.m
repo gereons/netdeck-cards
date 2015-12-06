@@ -7,7 +7,6 @@
 //
 
 @import SDCAlertView;
-@import AFNetworking;
 
 #import "AppDelegate.h"
 #import "ActionsTableViewController.h"

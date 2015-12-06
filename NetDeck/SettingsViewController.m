@@ -10,6 +10,7 @@
 @import SDCAlertView;
 @import AFNetworking;
 
+#import "AppDelegate.h"
 #import <Dropbox/Dropbox.h>
 #import "EXTScope.h"
 #import "SettingsViewController.h"
@@ -129,7 +130,7 @@
         
         if (useNrdb)
         {
-            if (APP_ONLINE)
+            if (AppDelegate.online)
             {
                 if (IS_IPAD)
                 {
@@ -172,7 +173,7 @@
 {
     if ([specifier.key isEqualToString:DOWNLOAD_DATA_NOW])
     {
-        if (APP_ONLINE)
+        if (AppDelegate.online)
         {
             [DataDownload downloadCardData];
         }
@@ -183,7 +184,7 @@
     }
     else if ([specifier.key isEqualToString:REFRESH_AUTH_NOW])
     {
-        if (APP_ONLINE)
+        if (AppDelegate.online)
         {
             [SVProgressHUD showInfoWithStatus:@"re-authenticating"];
             [[NRDB sharedInstance] backgroundRefreshAuthentication:^(UIBackgroundFetchResult result) {
@@ -198,7 +199,7 @@
     }
     else if ([specifier.key isEqualToString:DOWNLOAD_IMG_NOW])
     {
-        if (APP_ONLINE)
+        if (AppDelegate.online)
         {
             [DataDownload downloadAllImages];
         }
@@ -209,7 +210,7 @@
     }
     else if ([specifier.key isEqualToString:DOWNLOAD_MISSING_IMG])
     {
-        if (APP_ONLINE)
+        if (AppDelegate.online)
         {
             [DataDownload downloadMissingImages];
         }
@@ -239,7 +240,7 @@
     }
     else if ([specifier.key isEqualToString:TEST_API])
     {
-        if (APP_ONLINE)
+        if (AppDelegate.online)
         {
             [self testApiSettings];
         }

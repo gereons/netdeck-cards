@@ -7,11 +7,11 @@
 //
 
 @import SDCAlertView;
-@import AFNetworking;
 
 #import "CardUpdateCheck.h"
 #import "DataDownload.h"
 #import "SettingsKeys.h"
+#import "AppDelegate.h"
 
 @implementation CardUpdateCheck
 
@@ -54,7 +54,7 @@
     
     NSDate* now = [NSDate date];
     
-    if (APP_ONLINE && [scheduled compare:now] == NSOrderedAscending)
+    if (AppDelegate.online && [scheduled compare:now] == NSOrderedAscending)
     {
         SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Update cards")
                                                    message:l10n(@"Card data may be out of date. Download now?")

@@ -8,8 +8,8 @@
 
 @import SVProgressHUD;
 @import SDCAlertView;
-@import AFNetworking;
 
+#import "AppDelegate.h"
 #import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "DeckListViewController.h"
@@ -464,7 +464,7 @@
             switch (buttonIndex)
             {
                 case 1: // open in safari
-                    if (APP_ONLINE)
+                    if (AppDelegate.online)
                     {
                         [self openInSafari:self.deck];
                     }
@@ -475,7 +475,7 @@
                     break;
             
                 case 2: // publish
-                    if (APP_ONLINE)
+                    if (AppDelegate.online)
                     {
                         [self publishDeck:self.deck];
                     }
@@ -509,7 +509,7 @@
 
 -(void) saveDeckToNetrunnerDb
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;
@@ -537,7 +537,7 @@
 
 -(void) reImportDeckFromNetrunnerDb
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;

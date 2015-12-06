@@ -9,6 +9,7 @@
 @import SDCAlertView;
 @import AFNetworking;
 
+#import "AppDelegate.h"
 #import "EXTScope.h"
 #import "NRDB.h"
 #import "NRDBAuth.h"
@@ -102,7 +103,7 @@ static NSDateFormatter* formatter;
 -(void) getAuthorization:(NSDictionary*)parameters completion:(AuthCompletionBlock)completionBlock
 {
     BOOL foreground = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
-    if (foreground && !APP_ONLINE)
+    if (foreground && !AppDelegate.online)
     {
         completionBlock(NO);
         return;
@@ -169,7 +170,7 @@ static NSDateFormatter* formatter;
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    if (![settings boolForKey:USE_NRDB] || !APP_ONLINE)
+    if (![settings boolForKey:USE_NRDB] || !AppDelegate.online)
     {
         return;
     }

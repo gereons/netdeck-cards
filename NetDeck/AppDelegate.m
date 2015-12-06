@@ -295,6 +295,9 @@ static BOOL runningBackgroundFetch = NO;
     }];
 }
 
++(BOOL) online {
+    return [AFNetworkReachabilityManager sharedManager].reachable;
+}
 
 #pragma mark - crashlytics delegate
 

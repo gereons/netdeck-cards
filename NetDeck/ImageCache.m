@@ -159,7 +159,7 @@ static NSCache* memCache;
         
         if (img)
         {
-            if (APP_ONLINE)
+            if (AppDelegate.online)
             {
                 [self checkForImageUpdate:card withKey:key];
             }
@@ -172,7 +172,7 @@ static NSCache* memCache;
         else
         {
             // image is not in on-disk cache
-            if (APP_ONLINE)
+            if (AppDelegate.online)
             {
                 [self downloadImageFor:card withKey:key completion:^(Card *card, UIImage *image, BOOL placeholder) {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -267,7 +267,7 @@ static NSCache* memCache;
 -(void) updateImageFor:(Card *)card completion:(UpdateCompletionBlock)completionBlock
 {
     NSString* url = card.imageSrc;
-    if (!APP_ONLINE || url == nil)
+    if (!AppDelegate.online || url == nil)
     {
         completionBlock(NO);
         return;

@@ -15,8 +15,6 @@
 
 #define CHECKED_TITLE(str, cond)    [NSString stringWithFormat:@"%@%@", str, cond ? @" ✓" : @""]
 
-#define APP_ONLINE  [AFNetworkReachabilityManager sharedManager].reachable
-
 #define OCTGN_CODE_PREFIX   @"bc0f047c-01b1-427f-a439-d451eda"
 
 #define IS_IPAD         ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)

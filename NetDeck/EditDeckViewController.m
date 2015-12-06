@@ -7,8 +7,8 @@
 //
 
 @import SDCAlertView;
-@import AFNetworking;
 
+#import "AppDelegate.h"
 #import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "EditDeckViewController.h"
@@ -247,7 +247,7 @@
             [DeckExport asOctgn:self.deck autoSave:YES];
         }
     }
-    if (self.autoSaveNrdb && self.deck.netrunnerDbId && APP_ONLINE)
+    if (self.autoSaveNrdb && self.deck.netrunnerDbId && AppDelegate.online)
     {
         [self saveToNrdb];
     }
@@ -273,7 +273,7 @@
 
 -(void) saveToNrdb
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;
@@ -296,7 +296,7 @@
 
 -(void) reImportDeckFromNetrunnerDb
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;
@@ -326,7 +326,7 @@
 
 -(void) publishDeck
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;
