@@ -469,7 +469,7 @@ import Foundation
         var removals = [Card]()
         for cc in self.cards {
             assert(cc.count > 0, "found card with 0 copies")
-            if (cc.count > 0) {
+            if (cc.count == 0) {
                 removals.append(cc.card)
             }
         }
@@ -574,44 +574,4 @@ import Foundation
         coder.encodeObject(self.lastChanges, forKey:"lastChanges")
         coder.encodeObject(self.revisions, forKey:"revisions")
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

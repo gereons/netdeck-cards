@@ -39,6 +39,7 @@ import Foundation
         "02079": "OAI",       // oversight AI
         "08009": "Baby",      // symmetrical visage
         "08003": "Pancakes",  // adjusted chronotype
+        "08086": "Anita",     // film critic
     ]
     
     override class func initialize() {

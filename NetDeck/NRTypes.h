@@ -38,6 +38,14 @@
 
 extern NSString* const kANY;
 
+/*
+typedef NS_ENUM(NSInteger, NRRole)
+{
+    NRRoleNone = -1,
+    NRRoleRunner,
+    NRRoleCorp
+};
+
 typedef NS_ENUM(NSInteger, NRCardType)
 {
     NRCardTypeNone = -1,
@@ -55,13 +63,6 @@ typedef NS_ENUM(NSInteger, NRCardType)
     NRCardTypeHardware,
     NRCardTypeResource,
     NRCardTypeProgram
-};
-
-typedef NS_ENUM(NSInteger, NRRole)
-{
-    NRRoleNone = -1,
-    NRRoleRunner,
-    NRRoleCorp
 };
 
 typedef NS_ENUM(NSInteger, NRFaction)
@@ -157,5 +158,6 @@ typedef NS_ENUM(NSInteger, NRFilter) {
     NRFilterRunner,
     NRFilterCorp
 };
+*/
 
 #endif

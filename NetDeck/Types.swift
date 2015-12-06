@@ -48,7 +48,7 @@ extension NSRange {
     }
 }
 
-/*
+
 @objc enum NRCardType: Int {
     case None = -1
     case Identity
@@ -59,6 +59,7 @@ extension NSRange {
     // runner
     case Event, Hardware, Resource, Program
 }
+
 
 @objc enum NRRole: Int {
     case None = -1
@@ -144,4 +145,4 @@ extension NSRange {
     case Runner
     case Corp
 }
-*/
+

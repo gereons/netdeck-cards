@@ -11,7 +11,7 @@
 
 // umbrella header for swift/objc interoperability
 
-#import "NetDeck-Bridging-Header.h"
 #import "NetDeck-Swift.h"
+#import "NetDeck-Bridging-Header.h"
 
 #endif /* NetDeck_h */

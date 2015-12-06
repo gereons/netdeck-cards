@@ -5,10 +5,10 @@
 @import Foundation;
 @import UIKit;
 
-@class Deck, CardCounter, TableData;
+// @class Deck, CardCounter, TableData;
 
 #import "NRTypes.h"
 #import "SettingsKeys.h"
 
 #import "AppDelegate.h"
-#import "DeckManager.h"
+// #import "DeckManager.h"

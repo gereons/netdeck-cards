@@ -11,14 +11,14 @@
 
 #define SAVE_DECK  @"deck_%d"
 
-@implementation DeckManager
+@implementation xDeckManager
 
 // save deck
 +(void) saveDeck:(Deck*)deck
 {
     if (deck.filename == nil)
     {
-        deck.filename = [DeckManager pathForRole:deck.role];
+        deck.filename = [xDeckManager pathForRole:deck.role];
     }
         
     // NSLog(@"saving deck %@ (%@)", deck.name, deck.identity.name);
@@ -103,7 +103,7 @@
 +(NSString*) pathForRole:(NRRole)role
 {
     NSString* directory = [DeckManager directoryForRole:role];
-    NSString* filename = [NSString stringWithFormat:@"deck-%d.anr", [DeckManager nextFileId]];
+    NSString* filename = [NSString stringWithFormat:@"deck-%d.anr", [xDeckManager nextFileId]];
     NSString* path = [directory stringByAppendingPathComponent:filename];
     
     // NSLog(@"path: %@", path);
@@ -155,7 +155,7 @@
     return decks;
 }
 
-+(void) removeAll
++(void) xxremoveAll
 {
     NSArray* roles = @[ @(NRRoleRunner), @(NRRoleCorp) ];
     

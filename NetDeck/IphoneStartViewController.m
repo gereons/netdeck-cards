@@ -112,8 +112,8 @@
 
 -(void) initializeDecks
 {
-    self.runnerDecks = [DeckManager decksForRole:NRRoleRunner];
-    self.corpDecks = [DeckManager decksForRole:NRRoleCorp];
+    self.runnerDecks = [DeckManager decksForRole:NRRoleRunner].mutableCopy;
+    self.corpDecks = [DeckManager decksForRole:NRRoleCorp].mutableCopy;
 
     if (self.deckListSort != NRDeckListSortDate)
     {

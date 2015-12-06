@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@interface DeckManager : NSObject
+@interface xDeckManager : NSObject
 
 // save deck, create new file if deck.filename is nil
 +(void) saveDeck:(Deck*)deck;
@@ -18,7 +18,7 @@
 +(Deck*) loadDeckFromPath:(NSString*)pathname;
 
 // remove all saved decks
-+(void) removeAll;
++(void) xxremoveAll;
 
 // remove a file
 +(void) removeFile:(NSString*)pathname;
