@@ -18,7 +18,6 @@
 #import "OctgnImport.h"
 #import "SettingsKeys.h"
 #import "NRDB.h"
-#import "DeckManager.h"
 
 static NRDeckSearchScope searchScope = NRDeckSearchScopeAll;
 static NSString* filterText;

@@ -170,7 +170,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         {
             for (CardCounter* cc in data1.values[idx1])
             {
-                if (ISNULL(cc))
+                if (cc.isNull)
                 {
                     continue;
                 }
@@ -184,7 +184,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
                 {
                     for (CardCounter* cc2 in data2.values[idx2])
                     {
-                        if (ISNULL(cc2))
+                        if (cc2.isNull)
                         {
                             continue;
                         }
@@ -207,7 +207,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         {
             for (CardCounter* cc in data2.values[idx2])
             {
-                if (ISNULL(cc))
+                if (cc.isNull)
                 {
                     continue;
                 }

@@ -11,7 +11,6 @@
 #import "CompareDecksList.h"
 #import "DeckCell.h"
 #import "DeckDiffViewController.h"
-#import "DeckManager.h"
 
 @interface CompareDecksList ()
 

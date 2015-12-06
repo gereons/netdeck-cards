@@ -58,7 +58,7 @@
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
+        if (cc.isNull || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -171,7 +171,7 @@
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
+        if (cc.isNull || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -243,7 +243,7 @@
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
+        if (cc.isNull || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }

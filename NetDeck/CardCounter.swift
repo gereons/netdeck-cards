@@ -23,6 +23,10 @@ import Foundation
         return nullInstance
     }
     
+    var isNull: Bool {
+        return self == CardCounter.nullInstance
+    }
+    
     // MARK: NSCoding
     convenience required init?(coder aDecoder: NSCoder) {
         let code = aDecoder.decodeObjectForKey("card") as! String

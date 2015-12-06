@@ -11,7 +11,6 @@
 #import "DecksViewController.h"
 #import "UIAlertAction+NetDeck.h"
 #import "DeckCell.h"
-#import "DeckManager.h"
 #import "ImageCache.h"
 #import "SettingsKeys.h"
 #import "NRDB.h"

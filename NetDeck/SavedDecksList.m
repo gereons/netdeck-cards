@@ -15,7 +15,6 @@
 #import "ImportDecksViewController.h"
 #import "SettingsKeys.h"
 #import "NRDB.h"
-#import "DeckManager.h"
 #import "DeckExport.h"
 #import "Notifications.h"
 #import "DeckDiffViewController.h"

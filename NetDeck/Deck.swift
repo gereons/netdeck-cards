@@ -41,7 +41,7 @@ import Foundation
         return identityCc?.card
     }
     
-    var name: String = "" {
+    var name: String? {
         willSet { modified = true }
     }
     
@@ -94,7 +94,11 @@ import Foundation
         self.modified = false
     }
     
-    func influenceFor(cc: CardCounter) -> Int {
+    func influenceFor(cardcounter: CardCounter?) -> Int {
+        if cardcounter == nil {
+            return 0
+        }
+        let cc = cardcounter!
         if self.identity?.faction == cc.card.faction || cc.card.influence == -1 {
             return 0
         }
@@ -346,7 +350,7 @@ import Foundation
     func duplicate() -> Deck {
         let newDeck = Deck()
         
-        let oldName = self.name
+        let oldName = self.name ?? ""
         var newName = oldName + "(Copy)".localized()
         
         let regexPattern = "\\d+$";
@@ -532,7 +536,7 @@ import Foundation
         
         self.netrunnerDbId = decoder.decodeObjectForKey("netrunnerDbId") as? String
         
-        self.name = decoder.decodeObjectForKey("name") as! String
+        self.name = decoder.decodeObjectForKey("name") as? String
         self.role = NRRole(rawValue: decoder.decodeIntegerForKey("role"))!
         self.state = NRDeckState(rawValue: decoder.decodeIntegerForKey("state"))!
         self.isDraft = decoder.decodeBoolForKey("draft")

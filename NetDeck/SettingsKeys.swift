@@ -6,7 +6,6 @@
 //  Copyright © 2015 Gereon Steffens. All rights reserved.
 //
 
-
 class __SettingsKeys {
     static let LAST_MOD_CACHE      = "lastModified"
     static let NEXT_CHECK          = "nextCheck"

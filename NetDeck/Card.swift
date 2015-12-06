@@ -91,6 +91,10 @@ import DTCoreText
         return nullInstance
     }
     
+    var isNull: Bool {
+        return self == Card.nullInstance
+    }
+    
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
     var iceType: String? {
         assert(self.type == .Ice, "not an ice");

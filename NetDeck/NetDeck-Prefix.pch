@@ -17,7 +17,7 @@
 
 #define l10n(str)   NSLocalizedString(str, nil)
 
-#import "NetDeck.h"
+#import "NetDeck-Swift.h"
 #import "NRTypes.h"
 #import "NSArray+TwoD.h"
 #import "UIFont+monospacedDigits.h"

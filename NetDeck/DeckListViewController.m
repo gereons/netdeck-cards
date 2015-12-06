@@ -21,7 +21,6 @@
 #import "DeckHistoryPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
-#import "DeckManager.h"
 #import "DeckExport.h"
 #import "DeckImport.h"
 #import "DeckEmail.h"
@@ -1124,7 +1123,7 @@
         {
             CardCounter* cc = arr[row];
             
-            if (!ISNULL(cc) && [card isEqual:cc.card])
+            if (!cc.isNull && [card isEqual:cc.card])
             {
                 if (self.tableView.hidden)
                 {
@@ -1216,7 +1215,7 @@
     int cnt = 0;
     for (CardCounter* cc in arr)
     {
-        if (!ISNULL(cc))
+        if (!cc.isNull)
         {
             cnt += cc.count;
         }
@@ -1240,7 +1239,7 @@
     cell.separatorInset = UIEdgeInsetsZero;
     
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
-    if (ISNULL(cc))
+    if (cc.isNull)
     {
         cc = nil;
     }
@@ -1257,7 +1256,7 @@
     
     if (cc != nil)
     {
-        return !ISNULL(cc);
+        return !cc.isNull;
     }
     return NO;
 }
@@ -1268,7 +1267,7 @@
     {
         CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
         
-        if (!ISNULL(cc))
+        if (!cc.isNull)
         {
             [self.deck addCard:cc.card copies:0];
         }
@@ -1281,7 +1280,7 @@
 {
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     
-    if (!ISNULL(cc))
+    if (!cc.isNull)
     {
         CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
         [CardImageViewPopover showForCard:cc.card fromRect:rect inView:self.tableView];

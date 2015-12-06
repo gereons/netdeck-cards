@@ -23,7 +23,6 @@
 #import "NRDB.h"
 #import "DeckEmail.h"
 #import "SVProgressHud.h"
-#import "DeckManager.h"
 
 @interface EditDeckViewController ()
 
@@ -475,7 +474,7 @@
     int cnt = 0;
     for (CardCounter* cc in arr)
     {
-        if (!ISNULL(cc))
+        if (!cc.isNull)
         {
             cnt += cc.count;
         }
@@ -503,7 +502,7 @@
     
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     
-    if (ISNULL(cc))
+    if (cc.isNull)
     {
         // empty identity
         cell.nameLabel.textColor = [UIColor blackColor];
@@ -581,7 +580,7 @@
 {
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     
-    if (ISNULL(cc))
+    if (cc.isNull)
     {
         return;
     }
@@ -599,7 +598,7 @@
     {
         CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
         
-        if (!ISNULL(cc))
+        if (!cc.isNull)
         {
             [self.deck addCard:cc.card copies:0];
         }
