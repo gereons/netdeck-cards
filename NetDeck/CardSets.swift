@@ -54,7 +54,7 @@ import Foundation
     
     class func removeFiles() {
         let fileMgr = NSFileManager.defaultManager()
-        try! fileMgr.removeItemAtPath(filename())
+        _ = try? fileMgr.removeItemAtPath(filename())
     
         CardManager.initialize()
     }

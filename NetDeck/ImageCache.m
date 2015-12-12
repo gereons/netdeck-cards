@@ -99,7 +99,7 @@ static NSCache* memCache;
     }
     
     memCache = [[NSCache alloc] init];
-    memCache.name = @"netdeck";
+    memCache.name = @"imgCache";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [ImageCache initializeMemCache];

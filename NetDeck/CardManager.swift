@@ -298,7 +298,7 @@ import Foundation
         switch (interval) {
         case 30:
             let cal = NSCalendar.currentCalendar()
-            let next = cal.dateByAddingUnit(.Month, value:1, toDate:now, options:.WrapComponents)
+            let next = cal.dateByAddingUnit(.Month, value:1, toDate:now, options:[])
             nextDownload = fmt.stringFromDate(next!)
         case 0:
             nextDownload = "never".localized()
@@ -326,8 +326,8 @@ import Foundation
     
     class func removeFiles() {
         let fileMgr = NSFileManager.defaultManager()
-        try! fileMgr.removeItemAtPath(filename())
-        try! fileMgr.removeItemAtPath(filenameEn())
+        _ = try? fileMgr.removeItemAtPath(filename())
+        _ = try? fileMgr.removeItemAtPath(filenameEn())
     
         CardManager.initialize()
     }
