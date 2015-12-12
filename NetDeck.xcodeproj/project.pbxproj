@@ -2275,6 +2275,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.steffens.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "NetDeck Tests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "Externals/DTCoreText/Core/** Externals/DTCoreText/Externals/** \"$(CONFIGURATION_TEMP_DIR)/$(PROJECT_NAME).build/DerivedSources\"";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
