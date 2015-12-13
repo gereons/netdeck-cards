@@ -218,6 +218,13 @@ const NSString* const kANY = @"Any";
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+
+- (void) application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
+{
+    // Called when the user selects a shortcut item on the home screen (iPhone 6s/6s+)
+    completionHandler(NO);
+}
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     NSString* scheme = [url scheme];
