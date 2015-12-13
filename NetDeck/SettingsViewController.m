@@ -18,7 +18,6 @@
 #import "IASKSettingsReader.h"
 #import "DataDownload.h"
 #import "ImageCache.h"
-#import "Notifications.h"
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"
 
@@ -33,7 +32,7 @@
         self.iask.showDoneButton = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:kIASKAppSettingChanged object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:LOAD_CARDS object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:Notifications.LOAD_CARDS object:nil];
         
         [self refresh];
     }
@@ -120,7 +119,7 @@
         @catch (DBException* dbEx)
         {}
     
-        [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_CHANGED object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DROPBOX_CHANGED object:self];
         [self refresh];
     }
     else if ([notification.object isEqualToString:SettingsKeys.USE_NRDB])
@@ -233,7 +232,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.NEXT_DOWNLOAD];
                 [self refresh];
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self];
+                [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_CARDS object:self];
             }
         };
     }

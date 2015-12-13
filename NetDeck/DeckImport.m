@@ -11,7 +11,6 @@
 
 #import "EXTScope.h"
 #import "DeckImport.h"
-#import "Notifications.h"
 #import "OctgnImport.h"
 #import "GZip.h"
 
@@ -140,7 +139,7 @@ static DeckImport* instance;
             {
                 if (self.deck)
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
                 }
                 else if (self.deckSource)
                 {
@@ -432,7 +431,7 @@ static DeckImport* instance;
     
     if (deck.identity != nil && deck.cards.count > 0)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
         return YES;
     }
     return NO;
@@ -448,7 +447,7 @@ static DeckImport* instance;
         // NSLog(@"got deck: %@ %d", deck.identity.name, deck.cards.count);
         // NSLog(@"name: %@", filename);
         deck.name = name;
-        [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
         return YES;
     }
     return NO;
@@ -483,7 +482,7 @@ static DeckImport* instance;
         }
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
 }
 
 @end

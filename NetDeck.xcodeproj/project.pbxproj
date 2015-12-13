@@ -305,6 +305,7 @@
 		3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BA1883075500F6306B /* CardFilterPopover.m */; };
 		3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */; };
 		3AF424AB19150FC80005ACAA /* searchbar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF424AA19150FC80005ACAA /* searchbar-bg.png */; };
+		3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF697881C1DAC7300D254CE /* Notifications.swift */; };
 		3AFA3B6918DF862900F59331 /* altarttoggle_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6518DF862900F59331 /* altarttoggle_off.png */; };
 		3AFA3B6A18DF862900F59331 /* altarttoggle_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6618DF862900F59331 /* altarttoggle_on.png */; };
 		3AFA3B6B18DF862900F59331 /* altarttoggle_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */; };
@@ -585,7 +586,6 @@
 		3A9204C218B1630800AF5285 /* IceTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IceTypeStats.m; sourceTree = "<group>"; };
 		3A9204C418B16B9B00AF5285 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
 		3A9204C518B16B9B00AF5285 /* Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stats.m; sourceTree = "<group>"; };
-		3A9283DD187429DF00EA0B21 /* Notifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		3A94492818FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fr; path = fr.lproj/About.html; sourceTree = "<group>"; };
 		3A94492918FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A94492A18FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -732,6 +732,7 @@
 		3AF2E8BA1883075500F6306B /* CardFilterPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterPopover.m; sourceTree = "<group>"; };
 		3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterPopover.xib; sourceTree = "<group>"; };
 		3AF424AA19150FC80005ACAA /* searchbar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchbar-bg.png"; sourceTree = "<group>"; };
+		3AF697881C1DAC7300D254CE /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		3AFA3B6518DF862900F59331 /* altarttoggle_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altarttoggle_off.png; sourceTree = "<group>"; };
 		3AFA3B6618DF862900F59331 /* altarttoggle_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altarttoggle_on.png; sourceTree = "<group>"; };
 		3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altarttoggle_on@2x.png"; sourceTree = "<group>"; };
@@ -952,10 +953,10 @@
 		3A3BDD9E1930F36E00DEFD57 /* Utility Classes / Headers */ = {
 			isa = PBXGroup;
 			children = (
+				3A6228131C1456F400FBF041 /* SettingsKeys.swift */,
+				3AF697881C1DAC7300D254CE /* Notifications.swift */,
 				3ABAD2F71B8275F8009E81F3 /* NSArray+TwoD.h */,
 				3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */,
-				3A6228131C1456F400FBF041 /* SettingsKeys.swift */,
-				3A9283DD187429DF00EA0B21 /* Notifications.h */,
 				3A595423186ED61C0074B3B1 /* CGRectUtils.h */,
 				3AA440ED1854DA630051D4B0 /* DetailViewManager.h */,
 				3AA440EE1854DA630051D4B0 /* DetailViewManager.m */,
@@ -1952,6 +1953,7 @@
 				3A11B1151ADE364300E5A410 /* CardFilterCollectionView.m in Sources */,
 				3A4C7BFA18FEE9C0009B4A4B /* OctgnImport.m in Sources */,
 				3ABAD2F91B8275F8009E81F3 /* NSArray+TwoD.m in Sources */,
+				3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */,
 				3AB9BD5E18FADC01004EAF10 /* DeckCell.m in Sources */,
 				3ABAD2FD1B83A6D7009E81F3 /* IphoneIdentityViewController.m in Sources */,
 				3A41DA871BF8785C003CB7E1 /* CardSets.swift in Sources */,

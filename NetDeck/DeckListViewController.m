@@ -28,7 +28,6 @@
 #import "CardCell.h"
 #import "CardImageCell.h"
 #import "CGRectUtils.h"
-#import "Notifications.h"
 #import "NRDB.h"
 #import "NRCrashlytics.h"
 
@@ -216,11 +215,11 @@
     self.historyButton.enabled = self.deck.filename != nil && self.deck.revisions.count > 0;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(identitySelected:) name:Notifications.SELECT_IDENTITY object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:Notifications.DECK_CHANGED object:nil];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(notesChanged:) name:NOTES_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(notesChanged:) name:Notifications.NOTES_CHANGED object:nil];
     
     [nc addObserver:self selector:@selector(stopHistoryTimer:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [nc addObserver:self selector:@selector(startHistoryTimer:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -245,7 +244,7 @@
     if (self.deck.cards.count > 0 || self.deck.identity != nil)
     {
         // so that CardFilterViewController gets a chance to reload
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
     }
     self.initializing = NO;
     
@@ -372,7 +371,7 @@
 -(void) saveDeckClicked:(id)sender
 {
     [self saveDeckManually:YES withHud:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_SAVED object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_SAVED object:nil];
 }
 
 -(void) saveDeckManually:(BOOL)manually withHud:(BOOL)hud
@@ -756,7 +755,7 @@
     textField.returnKeyType = UIReturnKeyDone;
     textField.delegate = self;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:NAME_ALERT object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NAME_ALERT object:nil];
     
     @weakify(self);
     [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
@@ -771,7 +770,7 @@
             }
             else
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
             }
             [self refresh];
         }
@@ -814,7 +813,7 @@
         [self.deck addCard:card copies:1];
         [self refresh];
     
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
     }
 }
 
@@ -1271,7 +1270,7 @@
             [self.deck addCard:cc.card copies:0];
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
     }
 }
 

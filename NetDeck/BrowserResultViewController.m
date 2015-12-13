@@ -16,7 +16,6 @@
 #import "BrowserCell.h"
 #import "BrowserImageCell.h"
 #import "BrowserSectionHeaderView.h"
-#import "Notifications.h"
 #import "NRCrashlytics.h"
 
 @interface BrowserResultViewController ()
@@ -364,10 +363,10 @@ static BrowserResultViewController* instance;
     UIAlertController* sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"Find decks using this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:BROWSER_FIND object:self userInfo:@{ @"code": card.code }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.BROWSER_FIND object:self userInfo:@{ @"code": card.code }];
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"New deck with this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:BROWSER_NEW object:self userInfo:@{ @"code": card.code }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.BROWSER_NEW object:self userInfo:@{ @"code": card.code }];
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"ANCUR page for this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:card.ancurLink]];

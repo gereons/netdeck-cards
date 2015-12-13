@@ -15,7 +15,6 @@
 #import "ImportDecksViewController.h"
 #import "NRDB.h"
 #import "DeckExport.h"
-#import "Notifications.h"
 #import "DeckDiffViewController.h"
 #import "DeckCell.h"
 #import "DeckEmail.h"
@@ -333,7 +332,7 @@
     }
     if (role)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": role}];
         return;
     }
     
@@ -346,11 +345,11 @@
 
     self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": @(NRRoleRunner)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": @(NRRoleRunner)}];
         self.popup = nil;
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Corp Deck") handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": @(NRRoleCorp)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": @(NRRoleCorp)}];
         self.popup = nil;
     }]];
     [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
@@ -563,7 +562,7 @@
                                    @"filename" : deck.filename,
                                    @"role" : @(deck.role)
                                    };
-        [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_DECK object:self userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_DECK object:self userInfo:userInfo];
     }
 }
 

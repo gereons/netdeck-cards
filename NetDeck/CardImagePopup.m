@@ -7,7 +7,6 @@
 //
 
 #import "CardImagePopup.h"
-#import "Notifications.h"
 #import "CardImageCell.h"
 
 @interface CardImagePopup ()
@@ -106,7 +105,7 @@ static UIPopoverController* popover;
         
         if (self.cc.card.type == NRCardTypeIdentity)
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:SELECT_IDENTITY object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.SELECT_IDENTITY object:self];
             return;
         }
     }
@@ -121,7 +120,7 @@ static UIPopoverController* popover;
         self.copiesLabel.textColor = [UIColor redColor];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:self];
 }
 
 @end

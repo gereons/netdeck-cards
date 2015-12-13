@@ -12,7 +12,6 @@
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
 #import "CardFilterPopover.h"
-#import "Notifications.h"
 #import "CardImageViewPopover.h"
 #import "CardFilterThumbView.h"
 #import "CardFilterSectionHeaderView.h"
@@ -197,10 +196,10 @@ static NSInteger viewMode = VIEW_LIST;
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
-    [nc addObserver:self selector:@selector(deckSaved:) name:DECK_SAVED object:nil];
-    [nc addObserver:self selector:@selector(nameAlertWillAppear:) name:NAME_ALERT object:nil];
+    [nc addObserver:self selector:@selector(addTopCard:) name:Notifications.ADD_TOP_CARD object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:Notifications.DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(deckSaved:) name:Notifications.DECK_SAVED object:nil];
+    [nc addObserver:self selector:@selector(nameAlertWillAppear:) name:Notifications.NAME_ALERT object:nil];
     
     [self initFilters];
 }
@@ -841,7 +840,7 @@ static NSInteger viewMode = VIEW_LIST;
     if (self.searchText.length > 0)
     {
         [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ADD_TOP_CARD object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.ADD_TOP_CARD object:self];
     }
     else
     {

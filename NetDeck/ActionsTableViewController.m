@@ -18,7 +18,6 @@
 #import "BrowserFilterViewController.h"
 #import "SavedDecksList.h"
 #import "CompareDecksList.h"
-#import "Notifications.h"
 #import "DataDownload.h"
 #import "CardUpdateCheck.h"
 
@@ -77,13 +76,13 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
-    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
-    [nc addObserver:self selector:@selector(newDeck:) name:BROWSER_NEW object:nil];
-    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
-    [nc addObserver:self selector:@selector(listDecks:) name:BROWSER_FIND object:nil];
+    [nc addObserver:self selector:@selector(loadDeck:) name:Notifications.LOAD_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:Notifications.NEW_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:Notifications.BROWSER_NEW object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:Notifications.IMPORT_DECK object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.LOAD_CARDS object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.DROPBOX_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(listDecks:) name:Notifications.BROWSER_FIND object:nil];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -154,7 +153,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSDictionary* userInfo = notification.userInfo;
     CardFilterViewController* filter;
     
-    if ([notification.name isEqualToString:BROWSER_NEW])
+    if ([notification.name isEqualToString:Notifications.BROWSER_NEW])
     {
         Card* card = [CardManager cardByCode:[userInfo objectForKey:@"code"]];
         Deck* deck = [[Deck alloc] init];

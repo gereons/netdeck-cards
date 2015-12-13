@@ -9,7 +9,6 @@
 #import "BrowserFilterViewController.h"
 #import "BrowserResultViewController.h"
 #import "CardFilterPopover.h"
-#import "Notifications.h"
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
@@ -150,8 +149,8 @@ static NSMutableArray* subtypeCollapsedSections;
     self.subtypeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(dismissKeyboard:) name:BROWSER_FIND object:nil];
-    [nc addObserver:self selector:@selector(dismissKeyboard:) name:BROWSER_NEW object:nil];
+    [nc addObserver:self selector:@selector(dismissKeyboard:) name:Notifications.BROWSER_FIND object:nil];
+    [nc addObserver:self selector:@selector(dismissKeyboard:) name:Notifications.BROWSER_NEW object:nil];
     
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
     detailViewManager.detailViewController = self.snc;

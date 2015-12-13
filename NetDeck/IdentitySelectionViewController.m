@@ -13,7 +13,6 @@
 #import "CardImageViewPopover.h"
 
 #import "CGRectUtils.h"
-#import "Notifications.h"
 #import "IdentityCardView.h"
 #import "IdentitySectionHeaderView.h"
 #import "NRCrashlytics.h"
@@ -256,7 +255,7 @@
 {
     if (self.selectedIdentity)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:SELECT_IDENTITY object:self userInfo:@{ @"code": self.selectedIdentity.code }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.SELECT_IDENTITY object:self userInfo:@{ @"code": self.selectedIdentity.code }];
     }
     [self cancelClicked:sender];
 }

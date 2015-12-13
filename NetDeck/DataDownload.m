@@ -15,7 +15,6 @@
 #import "EXTScope.h"
 #import "DataDownload.h"
 #import "ImageCache.h"
-#import "Notifications.h"
 
 @interface DataDownload()
 
@@ -191,7 +190,7 @@ static DataDownload* instance;
     [CardManager addAdditionalNames:self.englishCards saveFile:YES];
     [CardSets setupFromNrdbApi:self.localizedSets];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
 }
 
 

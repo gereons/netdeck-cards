@@ -11,7 +11,6 @@
 #import "ImageCache.h"
 #import "NRDB.h"
 #import "CardUpdateCheck.h"
-#import "Notifications.h"
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "SettingsViewController.h"
@@ -46,8 +45,8 @@
     self.tableViewController.title = @"Net Deck";
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
-    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.LOAD_CARDS object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:Notifications.IMPORT_DECK object:nil];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
