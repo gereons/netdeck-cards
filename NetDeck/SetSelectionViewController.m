@@ -7,7 +7,6 @@
 //
 
 #import "SetSelectionViewController.h"
-#import "SettingsKeys.h"
 #import "UIAlertAction+NetDeck.h"
 #import "NRSwitch.h"
 
@@ -40,7 +39,7 @@
         // add "number of core sets" entry
         CardSet* numCores = [[CardSet alloc] init];
         numCores.name = l10n(@"Number of Core Sets");
-        numCores.settingsKey = NUM_CORES;
+        numCores.settingsKey = SettingsKeys.NUM_CORES;
         NSMutableArray* arr = [self.values[0] mutableCopy];
         [arr insertObject:numCores atIndex:1];
         self.values[0] = arr;
@@ -49,7 +48,7 @@
         [self.sections insertObject:l10n(@"Draft Identities") atIndex:1];
         CardSet* draft = [[CardSet alloc] init];
         draft.name = l10n(@"Include Draft Identities");
-        draft.settingsKey = USE_DRAFT_IDS;
+        draft.settingsKey = SettingsKeys.USE_DRAFT_IDS;
         
         [self.values insertObject:@[ draft ] atIndex:1];
     }
@@ -82,7 +81,7 @@
 
 -(void) changeCoreSets:(int)numCores
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@(numCores) forKey:NUM_CORES];
+    [[NSUserDefaults standardUserDefaults] setObject:@(numCores) forKey:SettingsKeys.NUM_CORES];
     NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:0];
     [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -128,9 +127,9 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    if ([cs.settingsKey isEqualToString:NUM_CORES])
+    if ([cs.settingsKey isEqualToString:SettingsKeys.NUM_CORES])
     {
-        NSNumber* numCores = [settings objectForKey:NUM_CORES];
+        NSNumber* numCores = [settings objectForKey:SettingsKeys.NUM_CORES];
         UIButton* button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = CGRectMake(0, 0, 40, 30);
         [button setTitle:numCores.stringValue forState:UIControlStateNormal];

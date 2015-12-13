@@ -18,7 +18,6 @@
 #import "IASKSettingsReader.h"
 #import "DataDownload.h"
 #import "ImageCache.h"
-#import "SettingsKeys.h"
 #import "Notifications.h"
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"
@@ -57,7 +56,7 @@
     }
     if (IS_IPHONE)
     {
-        [hiddenKeys addObjectsFromArray:@[ AUTO_HISTORY, CREATE_DECK_ACTIVE ]];
+        [hiddenKeys addObjectsFromArray:@[ SettingsKeys.AUTO_HISTORY, SettingsKeys.CREATE_DECK_ACTIVE ]];
     }
     if (IS_IPAD)
     {
@@ -69,13 +68,13 @@
 #endif
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    if (![settings boolForKey:USE_DROPBOX])
+    if (![settings boolForKey:SettingsKeys.USE_DROPBOX])
     {
-        [hiddenKeys addObject:AUTO_SAVE_DB];
+        [hiddenKeys addObject:SettingsKeys.AUTO_SAVE_DB];
     }
-    if (![settings boolForKey:USE_NRDB])
+    if (![settings boolForKey:SettingsKeys.USE_NRDB])
     {
-        [hiddenKeys addObjectsFromArray:@[ NRDB_TOKEN_EXPIRY, REFRESH_AUTH_NOW ]];
+        [hiddenKeys addObjectsFromArray:@[ SettingsKeys.NRDB_TOKEN_EXPIRY, SettingsKeys.REFRESH_AUTH_NOW ]];
     }
     [self.iask setHiddenKeys:hiddenKeys];
 }
@@ -92,9 +91,9 @@
 {
     // NSLog(@"changing %@ to %@", notification.object, notification.userInfo);
     
-    if ([notification.object isEqualToString:USE_DROPBOX])
+    if ([notification.object isEqualToString:SettingsKeys.USE_DROPBOX])
     {
-        BOOL useDropbox = [[notification.userInfo objectForKey:USE_DROPBOX] boolValue];
+        BOOL useDropbox = [[notification.userInfo objectForKey:SettingsKeys.USE_DROPBOX] boolValue];
         
         @try
         {
@@ -124,9 +123,9 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_CHANGED object:self];
         [self refresh];
     }
-    else if ([notification.object isEqualToString:USE_NRDB])
+    else if ([notification.object isEqualToString:SettingsKeys.USE_NRDB])
     {
-        BOOL useNrdb = [[notification.userInfo objectForKey:USE_NRDB] boolValue];
+        BOOL useNrdb = [[notification.userInfo objectForKey:SettingsKeys.USE_NRDB] boolValue];
         
         if (useNrdb)
         {
@@ -145,25 +144,25 @@
             else
             {
                 [self showOfflineAlert];
-                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:USE_NRDB];
+                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:SettingsKeys.USE_NRDB];
             }
         }
         else
         {
             NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-            [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
-            [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
-            [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
-            [settings removeObjectForKey:NRDB_TOKEN_TTL];
+            [settings removeObjectForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
+            [settings removeObjectForKey:SettingsKeys.NRDB_REFRESH_TOKEN];
+            [settings removeObjectForKey:SettingsKeys.NRDB_TOKEN_EXPIRY];
+            [settings removeObjectForKey:SettingsKeys.NRDB_TOKEN_TTL];
             
         }
         [self refresh];
     }
-    else if ([notification.object isEqualToString:UPDATE_INTERVAL])
+    else if ([notification.object isEqualToString:SettingsKeys.UPDATE_INTERVAL])
     {
         [CardManager setNextDownloadDate];
     }
-    else if ([notification.object isEqualToString:LANGUAGE])
+    else if ([notification.object isEqualToString:SettingsKeys.LANGUAGE])
     {
         [[ImageCache sharedInstance] clearLastModifiedInfo];
     }
@@ -171,7 +170,7 @@
 
 - (void)settingsViewController:(id)sender buttonTappedForSpecifier:(IASKSpecifier *)specifier
 {
-    if ([specifier.key isEqualToString:DOWNLOAD_DATA_NOW])
+    if ([specifier.key isEqualToString:SettingsKeys.DOWNLOAD_DATA_NOW])
     {
         if (AppDelegate.online)
         {
@@ -182,7 +181,7 @@
             [self showOfflineAlert];
         }
     }
-    else if ([specifier.key isEqualToString:REFRESH_AUTH_NOW])
+    else if ([specifier.key isEqualToString:SettingsKeys.REFRESH_AUTH_NOW])
     {
         if (AppDelegate.online)
         {
@@ -197,7 +196,7 @@
             [self showOfflineAlert];
         }
     }
-    else if ([specifier.key isEqualToString:DOWNLOAD_IMG_NOW])
+    else if ([specifier.key isEqualToString:SettingsKeys.DOWNLOAD_IMG_NOW])
     {
         if (AppDelegate.online)
         {
@@ -208,7 +207,7 @@
             [self showOfflineAlert];
         }
     }
-    else if ([specifier.key isEqualToString:DOWNLOAD_MISSING_IMG])
+    else if ([specifier.key isEqualToString:SettingsKeys.DOWNLOAD_MISSING_IMG])
     {
         if (AppDelegate.online)
         {
@@ -219,7 +218,7 @@
             [self showOfflineAlert];
         }
     }
-    else if ([specifier.key isEqualToString:CLEAR_CACHE])
+    else if ([specifier.key isEqualToString:SettingsKeys.CLEAR_CACHE])
     {
         SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
                                                    message:l10n(@"Clear Cache? You will need to re-download all data.")
@@ -230,15 +229,15 @@
                 [[ImageCache sharedInstance] clearCache];
                 [CardManager removeFiles];
                 [CardSets removeFiles];
-                [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:LAST_DOWNLOAD];
-                [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:NEXT_DOWNLOAD];
+                [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.LAST_DOWNLOAD];
+                [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.NEXT_DOWNLOAD];
                 [self refresh];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self];
             }
         };
     }
-    else if ([specifier.key isEqualToString:TEST_API])
+    else if ([specifier.key isEqualToString:SettingsKeys.TEST_API])
     {
         if (AppDelegate.online)
         {
@@ -254,7 +253,7 @@
 -(void) testApiSettings
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSString* nrdbHost = [settings stringForKey:NRDB_HOST];
+    NSString* nrdbHost = [settings stringForKey:SettingsKeys.NRDB_HOST];
     
     if (nrdbHost.length == 0)
     {

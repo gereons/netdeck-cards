@@ -84,7 +84,7 @@ import Foundation
         
         if (role == .Runner)
         {
-            let dataDestinyAllowed = NSUserDefaults.standardUserDefaults().boolForKey(USE_DATA_DESTINY)
+            let dataDestinyAllowed = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_DATA_DESTINY)
             return dataDestinyAllowed ? runnerFactionNames : runnerFactionNamesPreDAD
         }
         return corpFactionNames

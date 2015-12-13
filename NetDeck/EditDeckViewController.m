@@ -19,7 +19,6 @@
 #import "ImageCache.h"
 #import "EditDeckCell.h"
 #import "DeckExport.h"
-#import "SettingsKeys.h"
 #import "NRDB.h"
 #import "DeckEmail.h"
 #import "SVProgressHud.h"
@@ -59,9 +58,9 @@
     self.statusLabel.text = @"";
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    self.autoSave = [settings boolForKey:AUTO_SAVE];
-    self.autoSaveDropbox = self.autoSave && [settings boolForKey:AUTO_SAVE_DB];
-    self.autoSaveNrdb = [settings boolForKey:NRDB_AUTOSAVE];
+    self.autoSave = [settings boolForKey:SettingsKeys.AUTO_SAVE];
+    self.autoSaveDropbox = self.autoSave && [settings boolForKey:SettingsKeys.AUTO_SAVE_DB];
+    self.autoSaveNrdb = [settings boolForKey:SettingsKeys.NRDB_AUTOSAVE];
     
     self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelClicked:)];
     self.saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveClicked:)];
@@ -91,7 +90,7 @@
     [self setDeckName];
     topItem.titleView = self.titleButton;
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB])
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NRDB])
     {
         self.nrdbButton.customView = [[UIView alloc] initWithFrame:CGRectZero];
         self.nrdbButton.enabled = NO;
@@ -157,14 +156,14 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    if ([settings boolForKey:USE_DROPBOX])
+    if ([settings boolForKey:SettingsKeys.USE_DROPBOX])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To Dropbox") handler:^(UIAlertAction *action) {
             [DeckExport asOctgn:self.deck autoSave:NO];
         }]];
     }
     
-    if ([settings boolForKey:USE_NRDB])
+    if ([settings boolForKey:SettingsKeys.USE_NRDB])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction *action) {
             [self saveToNrdb];

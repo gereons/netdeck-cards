@@ -154,7 +154,7 @@ import DTCoreText
     var owned: Int {
         if (self.isCore)
         {
-            let cores = NSUserDefaults.standardUserDefaults().integerForKey(NUM_CORES)
+            let cores = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.NUM_CORES)
             return cores * self.quantity;
         }
         let disabledSets = CardSets.disabledSetCodes()
@@ -273,7 +273,7 @@ import DTCoreText
         c.imageSrc = json.objectForKey("imagesrc") as? String
         if (c.imageSrc?.length > 0)
         {
-            let host = NSUserDefaults.standardUserDefaults().stringForKey(NRDB_HOST)
+            let host = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_HOST)
             c.imageSrc = "http://" + host! + c.imageSrc!
         }
         

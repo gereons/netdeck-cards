@@ -12,7 +12,6 @@
 #import "UIAlertAction+NetDeck.h"
 #import "DeckCell.h"
 #import "ImageCache.h"
-#import "SettingsKeys.h"
 #import "NRDB.h"
 
 @interface DecksViewController ()
@@ -159,13 +158,13 @@ static NRFilter _filterType = NRFilterAll;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    self.filterType = [settings integerForKey:DECK_FILTER_TYPE];
+    self.filterType = [settings integerForKey:SettingsKeys.DECK_FILTER_TYPE];
     [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(self.filterType)]]];
     
-    self.filterState = [settings integerForKey:DECK_FILTER_STATE];
+    self.filterState = [settings integerForKey:SettingsKeys.DECK_FILTER_STATE];
     [self.stateFilterButton setTitle:[DeckState buttonLabelFor:self.filterState]];
     
-    self.sortType = [settings integerForKey:DECK_FILTER_SORT];
+    self.sortType = [settings integerForKey:SettingsKeys.DECK_FILTER_SORT];
     [self.sortButton setTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]]];
 }
 
@@ -187,9 +186,9 @@ static NRFilter _filterType = NRFilterAll;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    [settings setObject:@(self.filterType) forKey:DECK_FILTER_TYPE];
-    [settings setObject:@(self.filterState) forKey:DECK_FILTER_STATE];
-    [settings setObject:@(self.sortType) forKey:DECK_FILTER_SORT];
+    [settings setObject:@(self.filterType) forKey:SettingsKeys.DECK_FILTER_TYPE];
+    [settings setObject:@(self.filterState) forKey:SettingsKeys.DECK_FILTER_STATE];
+    [settings setObject:@(self.sortType) forKey:SettingsKeys.DECK_FILTER_SORT];
 }
 
 #pragma mark action sheet

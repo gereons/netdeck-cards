@@ -8,7 +8,6 @@
 
 #import "CardImagePopup.h"
 #import "Notifications.h"
-#import "SettingsKeys.h"
 #import "CardImageCell.h"
 
 @interface CardImagePopup ()

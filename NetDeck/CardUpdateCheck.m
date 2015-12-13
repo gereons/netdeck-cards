@@ -10,7 +10,6 @@
 
 #import "CardUpdateCheck.h"
 #import "DataDownload.h"
-#import "SettingsKeys.h"
 #import "AppDelegate.h"
 
 @implementation CardUpdateCheck
@@ -40,7 +39,7 @@
 
 +(void) checkCardUpdate
 {
-    NSString* next = [[NSUserDefaults standardUserDefaults] stringForKey:NEXT_DOWNLOAD];
+    NSString* next = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NEXT_DOWNLOAD];
     
     NSDateFormatter *fmt = [NSDateFormatter new];
     [fmt setDateStyle:NSDateFormatterShortStyle];
@@ -65,7 +64,7 @@
                 // ask again tomorrow
                 NSDate* next = [NSDate dateWithTimeIntervalSinceNow:24*60*60];
                 
-                [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
+                [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:SettingsKeys.NEXT_DOWNLOAD];
             }
             if (buttonIndex == 1) // ok
             {

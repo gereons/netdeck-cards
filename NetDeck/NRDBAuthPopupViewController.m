@@ -9,7 +9,6 @@
 #import "NRDBAuthPopupViewController.h"
 #import "NRDBAuth.h"
 #import "NRDB.h"
-#import "SettingsKeys.h"
 
 @interface NRDBAuthPopupViewController ()
 

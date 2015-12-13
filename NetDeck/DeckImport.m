@@ -11,7 +11,6 @@
 
 #import "EXTScope.h"
 #import "DeckImport.h"
-#import "SettingsKeys.h"
 #import "Notifications.h"
 #import "OctgnImport.h"
 #import "GZip.h"
@@ -67,7 +66,7 @@ static DeckImport* instance;
 {
     NSInteger c = [UIPasteboard generalPasteboard].changeCount;
     
-    [[NSUserDefaults standardUserDefaults] setInteger:c forKey:CLIP_CHANGE_COUNT];
+    [[NSUserDefaults standardUserDefaults] setInteger:c forKey:SettingsKeys.CLIP_CHANGE_COUNT];
 }
 
 +(void) checkClipboardForDeck
@@ -80,12 +79,12 @@ static DeckImport* instance;
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     
-    NSInteger lastChange = [[NSUserDefaults standardUserDefaults] integerForKey:CLIP_CHANGE_COUNT];
+    NSInteger lastChange = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.CLIP_CHANGE_COUNT];
     if (lastChange == pasteboard.changeCount && !IMPORT_ALWAYS)
     {
         return;
     }
-    [[NSUserDefaults standardUserDefaults] setInteger:pasteboard.changeCount forKey:CLIP_CHANGE_COUNT];
+    [[NSUserDefaults standardUserDefaults] setInteger:pasteboard.changeCount forKey:SettingsKeys.CLIP_CHANGE_COUNT];
     
     NSString* clip = pasteboard.string;
 

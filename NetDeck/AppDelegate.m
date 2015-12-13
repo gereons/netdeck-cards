@@ -13,7 +13,6 @@
 
 #import <Dropbox/Dropbox.h>
 #import "AppDelegate.h"
-#import "SettingsKeys.h"
 #import "DeckImport.h"
 #import "CardImageViewPopover.h"
 #import "NRDBAuthPopupViewController.h"
@@ -37,7 +36,7 @@ const NSString* const kANY = @"Any";
     
     [self setAdditionalUserDefaults];
     
-    BOOL useNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB];
+    BOOL useNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NRDB];
     NSTimeInterval fetchInterval = useNrdb ? BG_FETCH_INTERVAL : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
     
@@ -99,38 +98,38 @@ const NSString* const kANY = @"Any";
 -(void) setBuiltinUserDefaults
 {
     NSDictionary* dict = @{
-        LAST_DOWNLOAD: l10n(@"never"),
-        NEXT_DOWNLOAD: l10n(@"never"),
+        SettingsKeys.LAST_DOWNLOAD: l10n(@"never"),
+        SettingsKeys.NEXT_DOWNLOAD: l10n(@"never"),
         
-        USE_DRAFT_IDS: @(YES),
-        AUTO_SAVE: @(NO),
-        AUTO_HISTORY: @(YES),
-        USE_DROPBOX: @(NO),
-        AUTO_SAVE_DB: @(NO),
-        USE_NRDB: @(NO),
-        NRDB_AUTOSAVE: @(NO),
-        NRDB_HOST: @"netrunnerdb.com",
-        LANGUAGE: @"en",
-        UPDATE_INTERVAL: @(7),
-        LAST_BG_FETCH: l10n(@"never"),
+        SettingsKeys.USE_DRAFT_IDS: @(YES),
+        SettingsKeys.AUTO_SAVE: @(NO),
+        SettingsKeys.AUTO_HISTORY: @(YES),
+        SettingsKeys.USE_DROPBOX: @(NO),
+        SettingsKeys.AUTO_SAVE_DB: @(NO),
+        SettingsKeys.USE_NRDB: @(NO),
+        SettingsKeys.NRDB_AUTOSAVE: @(NO),
+        SettingsKeys.NRDB_HOST: @"netrunnerdb.com",
+        SettingsKeys.LANGUAGE: @"en",
+        SettingsKeys.UPDATE_INTERVAL: @(7),
+        SettingsKeys.LAST_BG_FETCH: l10n(@"never"),
         
-        DECK_FILTER_STATE: @(NRDeckStateNone),
-        DECK_VIEW_STYLE: @(NRCardViewLargeTable),
-        DECK_VIEW_SCALE: @(1.0),
-        DECK_VIEW_SORT: @(NRDeckSortType),
-        DECK_FILTER_SORT: @(NRDeckListSortA_Z),
-        DECK_FILTER_TYPE: @(NRFilterAll),
+        SettingsKeys.DECK_FILTER_STATE: @(NRDeckStateNone),
+        SettingsKeys.DECK_VIEW_STYLE: @(NRCardViewLargeTable),
+        SettingsKeys.DECK_VIEW_SCALE: @(1.0),
+        SettingsKeys.DECK_VIEW_SORT: @(NRDeckSortType),
+        SettingsKeys.DECK_FILTER_SORT: @(NRDeckListSortA_Z),
+        SettingsKeys.DECK_FILTER_TYPE: @(NRFilterAll),
         
-        CREATE_DECK_ACTIVE: @(NO),
+        SettingsKeys.CREATE_DECK_ACTIVE: @(NO),
         
-        BROWSER_VIEW_STYLE: @(NRCardViewLargeTable),
-        BROWSER_VIEW_SCALE: @(1.0),
-        BROWSER_SORT_TYPE: @(NRBrowserSortType),
+        SettingsKeys.BROWSER_VIEW_STYLE: @(NRCardViewLargeTable),
+        SettingsKeys.BROWSER_VIEW_SCALE: @(1.0),
+        SettingsKeys.BROWSER_SORT_TYPE: @(NRBrowserSortType),
         
-        NUM_CORES: @(3),
+        SettingsKeys.NUM_CORES: @(3),
         
-        SHOW_ALL_FILTERS: @(YES),
-        IDENTITY_TABLE: @(YES),
+        SettingsKeys.SHOW_ALL_FILTERS: @(YES),
+        SettingsKeys.IDENTITY_TABLE: @(YES),
     };
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
@@ -246,7 +245,7 @@ const NSString* const kANY = @"Any";
                 DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
                 [DBFilesystem setSharedFilesystem:fileSystem];
             }
-            [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
+            [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:SettingsKeys.USE_DROPBOX];
         }
         @catch (DBException* dbEx)
         {}
@@ -278,7 +277,7 @@ static BOOL runningBackgroundFetch = NO;
 
 -(void) application:(UIApplication *)application performFetchWithCompletionHandler:(BackgroundFetchCompletionBlock)completionHandler
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:LAST_BG_FETCH];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:SettingsKeys.LAST_BG_FETCH];
     
     if (runningBackgroundFetch)
     {

@@ -16,7 +16,6 @@
 #import "ImageCache.h"
 #import "DeckCell.h"
 #import "OctgnImport.h"
-#import "SettingsKeys.h"
 #import "NRDB.h"
 
 static NRDeckSearchScope searchScope = NRDeckSearchScopeAll;
@@ -75,7 +74,7 @@ static NSString* filterText;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_FILTER_SORT];
+    self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECK_FILTER_SORT];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     
@@ -180,7 +179,7 @@ static NSString* filterText;
 
 -(void) changeSortType:(NRDeckListSort)sort
 {
-    [[NSUserDefaults standardUserDefaults] setInteger:sort forKey:DECK_FILTER_SORT];
+    [[NSUserDefaults standardUserDefaults] setInteger:sort forKey:SettingsKeys.DECK_FILTER_SORT];
     self.deckListSort = sort;
     
     [self filterDecks];

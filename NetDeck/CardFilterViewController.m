@@ -16,7 +16,6 @@
 #import "CardImageViewPopover.h"
 #import "CardFilterThumbView.h"
 #import "CardFilterSectionHeaderView.h"
-#import "SettingsKeys.h"
 #import "SmallPipsView.h"
 #import "NRCrashlytics.h"
 
@@ -122,8 +121,8 @@ static NSInteger viewMode = VIEW_LIST;
     [super viewDidLoad];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    showAllFilters = [settings boolForKey:SHOW_ALL_FILTERS];
-    viewMode = [settings integerForKey:FILTER_VIEW_MODE];
+    showAllFilters = [settings boolForKey:SettingsKeys.SHOW_ALL_FILTERS];
+    viewMode = [settings integerForKey:SettingsKeys.FILTER_VIEW_MODE];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
@@ -214,8 +213,8 @@ static NSInteger viewMode = VIEW_LIST;
     [super viewDidDisappear:animated];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setObject:@(showAllFilters) forKey:SHOW_ALL_FILTERS];
-    [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
+    [settings setObject:@(showAllFilters) forKey:SettingsKeys.SHOW_ALL_FILTERS];
+    [settings setObject:@(viewMode) forKey:SettingsKeys.FILTER_VIEW_MODE];
 }
 
 -(void) setResultFrames

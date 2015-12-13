@@ -15,7 +15,6 @@
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "SettingsViewController.h"
-#import "SettingsKeys.h"
 #import "ImportDecksViewController.h"
 #import "BrowserViewController.h"
 
@@ -72,7 +71,7 @@
     topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
     topItem.leftBarButtonItems = @[ self.settingsButton, self.sortButton ];
     
-    self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_FILTER_SORT];
+    self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECK_FILTER_SORT];
     
     [CardUpdateCheck checkCardsAvailable];
     
@@ -203,8 +202,8 @@
 -(void) importDecks:(id)sender
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    BOOL useNrdb = [settings boolForKey:USE_NRDB];
-    BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
+    BOOL useNrdb = [settings boolForKey:SettingsKeys.USE_NRDB];
+    BOOL useDropbox = [settings boolForKey:SettingsKeys.USE_DROPBOX];
     
     if (useNrdb && useDropbox)
     {
@@ -271,7 +270,7 @@
 
 -(void) changeSortType:(NRDeckListSort)sort
 {
-    [[NSUserDefaults standardUserDefaults] setInteger:sort forKey:DECK_FILTER_SORT];
+    [[NSUserDefaults standardUserDefaults] setInteger:sort forKey:SettingsKeys.DECK_FILTER_SORT];
     self.deckListSort = sort;
     
     [self initializeDecks];

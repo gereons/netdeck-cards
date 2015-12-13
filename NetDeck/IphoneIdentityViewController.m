@@ -9,7 +9,6 @@
 #import "IphoneIdentityViewController.h"
 #import "EditDeckViewController.h"
 #import "ImageCache.h"
-#import "SettingsKeys.h"
 
 @interface IphoneIdentityViewController ()
 
@@ -53,7 +52,7 @@
 
 - (void)initIdentities
 {
-    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
+    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
     NSMutableArray* factions = [[Faction factionsForRole:self.role] mutableCopy];
     // remove entries for "none" and "neutral"
     [factions removeObject:[Faction name:NRFactionNone]];
@@ -146,7 +145,7 @@
             [deck addCard:self.selectedIdentity copies:1];
         }
         
-        NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
+        NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.FILE_SEQ] + 1;
         deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
 
         EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];

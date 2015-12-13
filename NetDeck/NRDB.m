@@ -13,7 +13,6 @@
 #import "EXTScope.h"
 #import "NRDB.h"
 #import "NRDBAuth.h"
-#import "SettingsKeys.h"
 
 @interface NRDB()
 @property (strong) DecklistCompletionBlock decklistCompletionBlock;
@@ -47,11 +46,11 @@ static NSDateFormatter* formatter;
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    [settings removeObjectForKey:NRDB_ACCESS_TOKEN];
-    [settings removeObjectForKey:NRDB_REFRESH_TOKEN];
-    [settings removeObjectForKey:NRDB_TOKEN_EXPIRY];
-    [settings removeObjectForKey:NRDB_TOKEN_TTL];
-    [settings setObject:@(NO) forKey:USE_NRDB];
+    [settings removeObjectForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
+    [settings removeObjectForKey:SettingsKeys.NRDB_REFRESH_TOKEN];
+    [settings removeObjectForKey:SettingsKeys.NRDB_TOKEN_EXPIRY];
+    [settings removeObjectForKey:SettingsKeys.NRDB_TOKEN_TTL];
+    [settings setObject:@(NO) forKey:SettingsKeys.USE_NRDB];
     
     [settings synchronize];
     [[NRDB sharedInstance].timer invalidate];
@@ -81,7 +80,7 @@ static NSDateFormatter* formatter;
     // NSLog(@"refresh token");
     // ?client_id=" CLIENT_ID "&client_secret=" CLIENT_SECRET "&grant_type=refresh_token&redirect_uri=" CLIENT_HOST "&refresh_token="
 
-    NSString* token = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_REFRESH_TOKEN];
+    NSString* token = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NRDB_REFRESH_TOKEN];
     
     if (token == nil)
     {
@@ -121,7 +120,7 @@ static NSDateFormatter* formatter;
              NSString* token = responseObject[@"access_token"];
              if (token)
              {
-                 [settings setObject:token forKey:NRDB_ACCESS_TOKEN];
+                 [settings setObject:token forKey:SettingsKeys.NRDB_ACCESS_TOKEN];
              }
              else
              {
@@ -131,16 +130,16 @@ static NSDateFormatter* formatter;
              token = responseObject[@"refresh_token"];
              if (token)
              {
-                 [settings setObject:token forKey:NRDB_REFRESH_TOKEN];
+                 [settings setObject:token forKey:SettingsKeys.NRDB_REFRESH_TOKEN];
              }
              else
              {
                  ok = NO;
              }
              NSNumber* exp = responseObject[@"expires_in"];
-             [settings setObject:exp forKey:NRDB_TOKEN_TTL];
+             [settings setObject:exp forKey:SettingsKeys.NRDB_TOKEN_TTL];
              NSDate* expiry = [[NSDate date] dateByAddingTimeInterval:[exp intValue]];
-             [settings setObject:expiry forKey:NRDB_TOKEN_EXPIRY];
+             [settings setObject:expiry forKey:SettingsKeys.NRDB_TOKEN_EXPIRY];
              
              if (!ok)
              {
@@ -170,18 +169,18 @@ static NSDateFormatter* formatter;
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    if (![settings boolForKey:USE_NRDB] || !AppDelegate.online)
+    if (![settings boolForKey:SettingsKeys.USE_NRDB] || !AppDelegate.online)
     {
         return;
     }
     
-    if ([settings objectForKey:NRDB_REFRESH_TOKEN] == nil)
+    if ([settings objectForKey:SettingsKeys.NRDB_REFRESH_TOKEN] == nil)
     {
         [NRDB clearSettings];
         return;
     }
     
-    NSDate* expiry = [settings objectForKey:NRDB_TOKEN_EXPIRY];
+    NSDate* expiry = [settings objectForKey:SettingsKeys.NRDB_TOKEN_EXPIRY];
     NSDate* now = [NSDate date];
     NSTimeInterval diff = [expiry timeIntervalSinceDate:now];
     diff -= 5*60; // 5 minutes overlap
@@ -207,14 +206,14 @@ static NSDateFormatter* formatter;
     // NSLog(@"start bg fetch");
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    if (![settings boolForKey:USE_NRDB])
+    if (![settings boolForKey:SettingsKeys.USE_NRDB])
     {
         // NSLog(@"no nrdb account");
         completionHandler(UIBackgroundFetchResultNoData);
         return;
     }
     
-    if ([settings objectForKey:NRDB_REFRESH_TOKEN] == nil)
+    if ([settings objectForKey:SettingsKeys.NRDB_REFRESH_TOKEN] == nil)
     {
         // NSLog(@"no token");
         [NRDB clearSettings];
@@ -234,7 +233,7 @@ static NSDateFormatter* formatter;
         NSTimeInterval ti = 300;
         if (ok)
         {
-            NSNumber* ttl = [[NSUserDefaults standardUserDefaults] objectForKey:NRDB_TOKEN_TTL];
+            NSNumber* ttl = [[NSUserDefaults standardUserDefaults] objectForKey:SettingsKeys.NRDB_TOKEN_TTL];
             ti = [ttl floatValue];
             ti -= 300; // 5 minutes before expiry
             
@@ -266,7 +265,7 @@ static NSDateFormatter* formatter;
 {
     NSString* decksUrl = @"http://netrunnerdb.com/api_oauth2/decks";
     
-    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
+    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
     NSError* error;
     NSDictionary* params = @{
         @"access_token" : accessToken ? accessToken : @""
@@ -317,7 +316,7 @@ static NSDateFormatter* formatter;
 {
     NSString* publishUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/publish_deck/%@", deck.netrunnerDbId];
     
-    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
+    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
     NSDictionary* parameters = @{
         @"access_token" : accessToken ? accessToken : @""
     };
@@ -329,7 +328,7 @@ static NSDateFormatter* formatter;
 
 -(void) loadDeck:(Deck *)deck completion:(LoadCompletionBlock)completionBlock
 {
-    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
+    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
     if (!accessToken)
     {
         completionBlock(NO, nil);
@@ -486,7 +485,7 @@ static NSDateFormatter* formatter;
 {
     self.saveCompletionBlock = completionBlock;
     
-    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
+    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
     if (accessToken)
     {
         [self saveDeck:deck];
@@ -518,7 +517,7 @@ static NSDateFormatter* formatter;
     }
     NSString* saveUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/save_deck/%@", deckId];
     
-    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:NRDB_ACCESS_TOKEN];
+    NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
     parameters[@"access_token"] = accessToken ? accessToken : @"";
     parameters[@"content"] = jsonStr;

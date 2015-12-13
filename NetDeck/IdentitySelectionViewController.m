@@ -14,10 +14,8 @@
 
 #import "CGRectUtils.h"
 #import "Notifications.h"
-#import "SettingsKeys.h"
 #import "IdentityCardView.h"
 #import "IdentitySectionHeaderView.h"
-#import "SettingsKeys.h"
 #import "NRCrashlytics.h"
 
 @interface IdentitySelectionViewController ()
@@ -54,7 +52,7 @@
         self.initialIdentity = identity;
         self.selectedIdentity = identity;
         self.selectedFaction = NRFactionNone;
-        self.viewTable = [[NSUserDefaults standardUserDefaults] boolForKey:IDENTITY_TABLE];
+        self.viewTable = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.IDENTITY_TABLE];
         
         [self initIdentities];
     }
@@ -116,8 +114,8 @@
     
     CGPoint oldCenter = self.factionSelector.center;
     
-    BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
-    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
+    BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
+    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DATA_DESTINY];
     
     if (self.role == NRRoleRunner)
     {
@@ -180,7 +178,7 @@
 
 - (void)initIdentities
 {
-    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
+    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
     NSMutableArray* factions;
     
     if (self.selectedFaction == NRFactionNone)
@@ -296,7 +294,7 @@
     self.viewTable = sender.selectedSegmentIndex;
     self.tableView.hidden = !self.viewTable;
     self.collectionView.hidden = self.viewTable;
-    [[NSUserDefaults standardUserDefaults] setBool:self.viewTable forKey:IDENTITY_TABLE];
+    [[NSUserDefaults standardUserDefaults] setBool:self.viewTable forKey:SettingsKeys.IDENTITY_TABLE];
     
     if (self.selectedIndexPath)
     {
@@ -310,7 +308,7 @@
 
 -(void) factionChange:(UISegmentedControl*)sender
 {
-    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
+    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DATA_DESTINY];
     NRFaction faction4 = dataDestinyAllowed ? NRFactionAdam : NRFactionNeutral;
 
     switch (sender.selectedSegmentIndex)

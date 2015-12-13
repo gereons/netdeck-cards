@@ -182,7 +182,7 @@ import Foundation
                 }
             }
     
-            if !settings.boolForKey(USE_DRAFT_IDS) {
+            if !settings.boolForKey(SettingsKeys.USE_DRAFT_IDS) {
                 disabled.insert(DRAFT_SET_CODE)
             }
     

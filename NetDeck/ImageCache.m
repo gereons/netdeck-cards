@@ -11,7 +11,6 @@
 #import "ImageCache.h"
 #import "AppDelegate.h"
 #import "EXTScope.h"
-#import "SettingsKeys.h"
 
 #define SEC_PER_DAY         (24 * 60 * 60)
 #define SUCCESS_INTERVAL    (30*SEC_PER_DAY)
@@ -64,16 +63,16 @@ static NSCache* memCache;
     hexTile = [UIImage imageNamed:@"hex_background"];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    if ([settings objectForKey:LAST_MOD_CACHE] == nil)
+    if ([settings objectForKey:SettingsKeys.LAST_MOD_CACHE] == nil)
     {
-        [settings setObject:@{} forKey:LAST_MOD_CACHE];
+        [settings setObject:@{} forKey:SettingsKeys.LAST_MOD_CACHE];
     }
-    if ([settings objectForKey:NEXT_CHECK] == nil)
+    if ([settings objectForKey:SettingsKeys.NEXT_CHECK] == nil)
     {
-        [settings setObject:@{} forKey:NEXT_CHECK];
+        [settings setObject:@{} forKey:SettingsKeys.NEXT_CHECK];
     }
 
-    NSArray* imgs = [settings objectForKey:UNAVAILABLE_IMG];
+    NSArray* imgs = [settings objectForKey:SettingsKeys.UNAVAILABLE_IMG];
     if (imgs == nil)
     {
         unavailableImages = [NSMutableSet set];
@@ -83,7 +82,7 @@ static NSCache* memCache;
         unavailableImages = [NSMutableSet setWithArray:imgs];
     }
     NSTimeInterval today = [NSDate date].timeIntervalSinceReferenceDate / (48*60*60);
-    NSTimeInterval lastCheck = [settings doubleForKey:UNAVAIL_IMG_DATE];
+    NSTimeInterval lastCheck = [settings doubleForKey:SettingsKeys.UNAVAIL_IMG_DATE];
     
     // repair busted settings
     if (lastCheck > today)
@@ -94,8 +93,8 @@ static NSCache* memCache;
     if (floor(lastCheck) < floor(today))
     {
         unavailableImages = [NSMutableSet set];
-        [settings setDouble:today forKey:UNAVAIL_IMG_DATE];
-        [settings setObject:@[] forKey:UNAVAILABLE_IMG];
+        [settings setDouble:today forKey:SettingsKeys.UNAVAIL_IMG_DATE];
+        [settings setObject:@[] forKey:SettingsKeys.UNAVAILABLE_IMG];
     }
     
     memCache = [[NSCache alloc] init];
@@ -118,8 +117,8 @@ static NSCache* memCache;
 -(void) clearLastModifiedInfo
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setObject:@{} forKey:LAST_MOD_CACHE];
-    [settings setObject:@{} forKey:NEXT_CHECK];
+    [settings setObject:@{} forKey:SettingsKeys.LAST_MOD_CACHE];
+    [settings setObject:@{} forKey:SettingsKeys.NEXT_CHECK];
     [settings synchronize];
     
     [memCache removeAllObjects];
@@ -130,7 +129,7 @@ static NSCache* memCache;
     [self clearLastModifiedInfo];
     
     unavailableImages = [NSMutableSet set];
-    [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:UNAVAILABLE_IMG];
+    [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:SettingsKeys.UNAVAILABLE_IMG];
     
     [ImageCache removeCacheDirectory];
 }
@@ -229,7 +228,7 @@ static NSCache* memCache;
              if ([unavailableImages containsObject:key])
              {
                  [unavailableImages removeObject:key];
-                 [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:UNAVAILABLE_IMG];
+                 [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:SettingsKeys.UNAVAILABLE_IMG];
              }
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -245,7 +244,7 @@ static NSCache* memCache;
                  completionBlock(card, img, YES);
              }
              [unavailableImages addObject:key];
-             [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:UNAVAILABLE_IMG];
+             [[NSUserDefaults standardUserDefaults] setObject:unavailableImages.allObjects forKey:SettingsKeys.UNAVAILABLE_IMG];
          }];
 }
 
@@ -276,7 +275,7 @@ static NSCache* memCache;
     NSString* key = card.code;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSDictionary* dict = [settings objectForKey:LAST_MOD_CACHE];
+    NSDictionary* dict = [settings objectForKey:SettingsKeys.LAST_MOD_CACHE];
     NSString* lastModDate = [dict objectForKey:key];
     
     NSURL *URL = [NSURL URLWithString:url];
@@ -317,7 +316,7 @@ static NSCache* memCache;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    NSDictionary* dict = [settings objectForKey:NEXT_CHECK];
+    NSDictionary* dict = [settings objectForKey:SettingsKeys.NEXT_CHECK];
     NSDate* nextCheck = [dict objectForKey:key];
     if (nextCheck)
     {
@@ -330,7 +329,7 @@ static NSCache* memCache;
     }
     
     NLOG(@"check for %@: %@", key, nextCheck);
-    dict = [settings objectForKey:LAST_MOD_CACHE];
+    dict = [settings objectForKey:SettingsKeys.LAST_MOD_CACHE];
     NSString* lastModDate = [dict objectForKey:key];
     
     NSURL *URL = [NSURL URLWithString:url];
@@ -380,9 +379,9 @@ static NSCache* memCache;
     NSTimeInterval interval = SUCCESS_INTERVAL;
     if (lastModified)
     {
-        NSMutableDictionary* dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
+        NSMutableDictionary* dict = [[settings objectForKey:SettingsKeys.LAST_MOD_CACHE] mutableCopy];
         [dict setObject:lastModified forKey:key];
-        [settings setObject:dict forKey:LAST_MOD_CACHE];
+        [settings setObject:dict forKey:SettingsKeys.LAST_MOD_CACHE];
     }
     else
     {
@@ -394,16 +393,16 @@ static NSCache* memCache;
     BOOL ok = [ImageCache saveImage:image forKey:key];
     if (!ok)
     {
-        NSMutableDictionary* dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
+        NSMutableDictionary* dict = [[settings objectForKey:SettingsKeys.LAST_MOD_CACHE] mutableCopy];
         [dict removeObjectForKey:key];
-        [settings setObject:dict forKey:LAST_MOD_CACHE];
+        [settings setObject:dict forKey:SettingsKeys.LAST_MOD_CACHE];
     }
 }
 
 -(void) setNextCheck:(NSString*)key withTimeIntervalFromNow:(NSTimeInterval)interval
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary* dict = [[settings objectForKey:NEXT_CHECK] mutableCopy];
+    NSMutableDictionary* dict = [[settings objectForKey:SettingsKeys.NEXT_CHECK] mutableCopy];
 
     NSTimeInterval nextCheck = [NSDate timeIntervalSinceReferenceDate];
     nextCheck += interval;
@@ -411,7 +410,7 @@ static NSCache* memCache;
     [dict setObject:next forKey:key];
     
     NLOG(@"set next check for %@ to %@", key, next);
-    [settings setObject:dict forKey:NEXT_CHECK];
+    [settings setObject:dict forKey:SettingsKeys.NEXT_CHECK];
 }
 
 #pragma mark icon/image access
@@ -539,9 +538,9 @@ static NSCache* memCache;
         [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
         
         NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-        NSMutableDictionary* dict = [[settings objectForKey:LAST_MOD_CACHE] mutableCopy];
+        NSMutableDictionary* dict = [[settings objectForKey:SettingsKeys.LAST_MOD_CACHE] mutableCopy];
         [dict removeObjectForKey:key];
-        [settings setObject:dict forKey:LAST_MOD_CACHE];
+        [settings setObject:dict forKey:SettingsKeys.LAST_MOD_CACHE];
     }
     
     return img;

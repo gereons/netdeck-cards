@@ -7,7 +7,6 @@
 //
 
 #import "SmallCardCell.h"
-#import "SettingsKeys.h"
 
 @implementation SmallCardCell
 

@@ -290,9 +290,9 @@ import Foundation
         let now = NSDate()
         
         let settings = NSUserDefaults.standardUserDefaults()
-        settings.setObject(fmt.stringFromDate(now), forKey:LAST_DOWNLOAD)
+        settings.setObject(fmt.stringFromDate(now), forKey:SettingsKeys.LAST_DOWNLOAD)
         
-        let interval = settings.integerForKey(UPDATE_INTERVAL)
+        let interval = settings.integerForKey(SettingsKeys.UPDATE_INTERVAL)
         
         var nextDownload: String
         switch (interval) {
@@ -307,7 +307,7 @@ import Foundation
             nextDownload = fmt.stringFromDate(next)
         }
         
-        settings.setObject(nextDownload, forKey:NEXT_DOWNLOAD)
+        settings.setObject(nextDownload, forKey:SettingsKeys.NEXT_DOWNLOAD)
     }
 
     class func filename() -> String {

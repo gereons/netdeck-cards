@@ -19,7 +19,6 @@
 #import "SavedDecksList.h"
 #import "CompareDecksList.h"
 #import "Notifications.h"
-#import "SettingsKeys.h"
 #import "DataDownload.h"
 #import "CardUpdateCheck.h"
 

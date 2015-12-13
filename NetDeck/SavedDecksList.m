@@ -13,7 +13,6 @@
 #import "UIAlertAction+NetDeck.h"
 #import "SavedDecksList.h"
 #import "ImportDecksViewController.h"
-#import "SettingsKeys.h"
 #import "NRDB.h"
 #import "DeckExport.h"
 #import "Notifications.h"
@@ -98,8 +97,8 @@
     }
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
-    BOOL useNetrunnerdb = [settings boolForKey:USE_NRDB];
+    BOOL useDropbox = [settings boolForKey:SettingsKeys.USE_DROPBOX];
+    BOOL useNetrunnerdb = [settings boolForKey:SettingsKeys.USE_NRDB];
     
     if (!useDropbox && !useNetrunnerdb)
     {
@@ -162,8 +161,8 @@
     }
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
-    BOOL useNetrunnerdb = [settings boolForKey:USE_NRDB];
+    BOOL useDropbox = [settings boolForKey:SettingsKeys.USE_DROPBOX];
+    BOOL useNetrunnerdb = [settings boolForKey:SettingsKeys.USE_NRDB];
     
     if (!useDropbox && !useNetrunnerdb)
     {
@@ -383,7 +382,7 @@
                 [newDeck saveToDisk];
                 
                 NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-                BOOL autoSaveDropbox = [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
+                BOOL autoSaveDropbox = [settings boolForKey:SettingsKeys.USE_DROPBOX] && [settings boolForKey:SettingsKeys.AUTO_SAVE_DB];
                 
                 if (autoSaveDropbox)
                 {

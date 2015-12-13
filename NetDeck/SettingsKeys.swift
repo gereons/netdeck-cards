@@ -6,7 +6,7 @@
 //  Copyright © 2015 Gereon Steffens. All rights reserved.
 //
 
-class __SettingsKeys {
+@objc class SettingsKeys: NSObject {
     static let LAST_MOD_CACHE      = "lastModified"
     static let NEXT_CHECK          = "nextCheck"
     static let UNAVAILABLE_IMG     = "unavailableImages"

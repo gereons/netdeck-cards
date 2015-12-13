@@ -703,7 +703,6 @@
 		3AD860E21B7939E500EEF8AC /* CardImageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardImageViewCell.h; sourceTree = "<group>"; };
 		3AD860E31B7939E500EEF8AC /* CardImageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardImageViewCell.m; sourceTree = "<group>"; };
 		3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewCell.xib; sourceTree = "<group>"; };
-		3ADE9093187734B5006E187F /* SettingsKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsKeys.h; sourceTree = "<group>"; };
 		3ADE909D18775A77006E187F /* CardImageViewPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardImageViewPopover.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ADE909E18775A77006E187F /* CardImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageView.xib; sourceTree = "<group>"; };
 		3ADE909F18775A77006E187F /* CardImageViewPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardImageViewPopover.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -955,7 +954,6 @@
 			children = (
 				3ABAD2F71B8275F8009E81F3 /* NSArray+TwoD.h */,
 				3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */,
-				3ADE9093187734B5006E187F /* SettingsKeys.h */,
 				3A6228131C1456F400FBF041 /* SettingsKeys.swift */,
 				3A9283DD187429DF00EA0B21 /* Notifications.h */,
 				3A595423186ED61C0074B3B1 /* CGRectUtils.h */,

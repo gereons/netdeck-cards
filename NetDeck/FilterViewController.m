@@ -8,7 +8,6 @@
 
 #import "FilterViewController.h"
 #import "ImageCache.h"
-#import "SettingsKeys.h"
 
 @interface FilterViewController ()
 
@@ -31,7 +30,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     
     self.title = @"Filter";
     
-    self.dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
+    self.dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DATA_DESTINY];
     self.factionLabel.text = l10n(@"Faction");
     self.typeLabel.text = l10n(@"Type");
     

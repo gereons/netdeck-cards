@@ -9,7 +9,6 @@
 #import "LargeCardCell.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
-#import "SettingsKeys.h"
 #import "ImageCache.h"
 
 @interface LargeCardCell()

@@ -25,7 +25,7 @@ import Foundation
     private var lastChanges = DeckChangeSet()
 
     override init() {
-        self.state = NSUserDefaults.standardUserDefaults().boolForKey(CREATE_DECK_ACTIVE) ? NRDeckState.Active : NRDeckState.Testing
+        self.state = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.CREATE_DECK_ACTIVE) ? NRDeckState.Active : NRDeckState.Testing
     }
     
     var allCards: [CardCounter] {

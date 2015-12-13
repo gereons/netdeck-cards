@@ -5,6 +5,4 @@
 @import UIKit;
 
 #import "NRTypes.h"
-#import "SettingsKeys.h"
-
 #import "AppDelegate.h"

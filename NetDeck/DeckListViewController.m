@@ -29,7 +29,6 @@
 #import "CardImageCell.h"
 #import "CGRectUtils.h"
 #import "Notifications.h"
-#import "SettingsKeys.h"
 #import "NRDB.h"
 #import "NRCrashlytics.h"
 
@@ -93,11 +92,11 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    self.useNetrunnerdb = [settings boolForKey:USE_NRDB];
-    self.autoSaveNRDB = self.useNetrunnerdb && [settings boolForKey:NRDB_AUTOSAVE];
-    self.sortType = [settings integerForKey:DECK_VIEW_SORT];
+    self.useNetrunnerdb = [settings boolForKey:SettingsKeys.USE_NRDB];
+    self.autoSaveNRDB = self.useNetrunnerdb && [settings boolForKey:SettingsKeys.NRDB_AUTOSAVE];
+    self.sortType = [settings integerForKey:SettingsKeys.DECK_VIEW_SORT];
     
-    CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
+    CGFloat scale = [settings floatForKey:SettingsKeys.DECK_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
     
     if (self.filename)
@@ -117,7 +116,7 @@
     {
         if (self.deck.name == nil)
         {
-            NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
+            NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.FILE_SEQ] + 1;
             self.deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
         }
         self.deckNameLabel.text = self.deck.name;
@@ -158,7 +157,7 @@
         [UIImage imageNamed:@"deckview_list"]    // NRCardViewSmallTable
     ];
     UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
-    viewSelector.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_VIEW_STYLE];
+    viewSelector.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECK_VIEW_STYLE];
     [viewSelector addTarget:self action:@selector(toggleView:) forControlEvents:UIControlEventValueChanged];
     self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
     [self doToggleView:viewSelector.selectedSegmentIndex];
@@ -167,8 +166,8 @@
         self.toggleViewButton,
     ];
     
-    self.autoSave = [settings boolForKey:AUTO_SAVE];
-    self.autoSaveDropbox = self.autoSave && [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
+    self.autoSave = [settings boolForKey:SettingsKeys.AUTO_SAVE];
+    self.autoSaveDropbox = self.autoSave && [settings boolForKey:SettingsKeys.USE_DROPBOX] && [settings boolForKey:SettingsKeys.AUTO_SAVE_DB];
     
     // right buttons
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
@@ -255,7 +254,7 @@
         [self selectIdentity:nil];
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.AUTO_HISTORY])
     {
         int x = self.view.center.x - HISTORY_SAVE_INTERVAL;
         int width = 2 * HISTORY_SAVE_INTERVAL; // self.analysisButton.frame.origin.x + self.analysisButton.frame.size.width - x;
@@ -280,8 +279,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidDisappear:animated];
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
-    [settings setObject:@(self.sortType) forKey:DECK_VIEW_SORT];
+    [settings setObject:@(self.scale) forKey:SettingsKeys.DECK_VIEW_SCALE];
+    [settings setObject:@(self.sortType) forKey:SettingsKeys.DECK_VIEW_SORT];
 
     [self stopHistoryTimer:nil];
 }
@@ -302,7 +301,7 @@
     // stop existing timer, if any
     [self stopHistoryTimer:notification];
 
-    BOOL autoHistory = [[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY];
+    BOOL autoHistory = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.AUTO_HISTORY];
     if (autoHistory)
     {
         self.historyTimer = [NSTimer timerWithTimeInterval:1
@@ -893,7 +892,7 @@
     
     self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DROPBOX])
     {
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: OCTGN")
                                                            handler:^(UIAlertAction *action) {
@@ -994,7 +993,7 @@
     }
 
     NSInteger viewMode = sender.selectedSegmentIndex;
-    [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:DECK_VIEW_STYLE];
+    [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:SettingsKeys.DECK_VIEW_STYLE];
     [self doToggleView:viewMode];
 }
 

@@ -135,8 +135,8 @@ import Foundation
     
     class func nextFileId() -> Int {
         let settings = NSUserDefaults.standardUserDefaults()
-        let fileId = settings.integerForKey(FILE_SEQ)
-        settings.setInteger(fileId+1, forKey: FILE_SEQ)
+        let fileId = settings.integerForKey(SettingsKeys.FILE_SEQ)
+        settings.setInteger(fileId+1, forKey: SettingsKeys.FILE_SEQ)
         return fileId
     }
 }
