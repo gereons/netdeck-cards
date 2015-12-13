@@ -16,7 +16,6 @@
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"
 #import "DeckAnalysisViewController.h"
-#import "DrawSimulatorViewController.h"
 #import "DeckNotesPopup.h"
 #import "DeckHistoryPopup.h"
 #import "CardImagePopup.h"
