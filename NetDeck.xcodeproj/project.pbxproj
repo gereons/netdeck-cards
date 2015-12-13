@@ -16,7 +16,6 @@
 		3A095E9118BBCB2200C99FED /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E9318BBCB2200C99FED /* About.html */; };
 		3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11341E19AC5B5A0012494E /* IdentityCardView.xib */; };
 		3A11342219AC5C580012494E /* IdentityCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11342119AC5C580012494E /* IdentityCardView.m */; };
-		3A11B1121ADE35F600E5A410 /* DrawSimulatorCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B1111ADE35F600E5A410 /* DrawSimulatorCollectionView.m */; };
 		3A11B1151ADE364300E5A410 /* CardFilterCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B1141ADE364300E5A410 /* CardFilterCollectionView.m */; };
 		3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11C5F919715BE8003F2093 /* IdentitySectionHeaderView.m */; };
 		3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */; };
@@ -102,7 +101,6 @@
 		3A594E2F18E1F56D00832901 /* 702-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2D18E1F56D00832901 /* 702-share.png */; };
 		3A594E3018E1F56D00832901 /* 702-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A594E2E18E1F56D00832901 /* 702-share@2x.png */; };
 		3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5FB2EB1888892300DD3CC5 /* ImageCache.m */; };
-		3A61D69D18CA458100E091DD /* Hypergeometric.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A61D69C18CA458100E091DD /* Hypergeometric.m */; };
 		3A6228141C1456F400FBF041 /* SettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6228131C1456F400FBF041 /* SettingsKeys.swift */; };
 		3A663979193B4CBF00635447 /* card_backs.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A663978193B4CBF00635447 /* card_backs.png */; };
 		3A689FA4195D3EB8004EBC41 /* retired@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A689F9E195D3EB8004EBC41 /* retired@2x.png */; };
@@ -306,6 +304,8 @@
 		3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */; };
 		3AF424AB19150FC80005ACAA /* searchbar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF424AA19150FC80005ACAA /* searchbar-bg.png */; };
 		3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF697881C1DAC7300D254CE /* Notifications.swift */; };
+		3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */; };
+		3AF6978D1C1DF96400D254CE /* DrawSimulatorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978C1C1DF96400D254CE /* DrawSimulatorCollectionView.swift */; };
 		3AFA3B6918DF862900F59331 /* altarttoggle_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6518DF862900F59331 /* altarttoggle_off.png */; };
 		3AFA3B6A18DF862900F59331 /* altarttoggle_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6618DF862900F59331 /* altarttoggle_on.png */; };
 		3AFA3B6B18DF862900F59331 /* altarttoggle_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */; };
@@ -346,8 +346,6 @@
 		3A11341E19AC5B5A0012494E /* IdentityCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityCardView.xib; sourceTree = "<group>"; };
 		3A11342019AC5C580012494E /* IdentityCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityCardView.h; sourceTree = "<group>"; };
 		3A11342119AC5C580012494E /* IdentityCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityCardView.m; sourceTree = "<group>"; };
-		3A11B1101ADE35F600E5A410 /* DrawSimulatorCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSimulatorCollectionView.h; sourceTree = "<group>"; };
-		3A11B1111ADE35F600E5A410 /* DrawSimulatorCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSimulatorCollectionView.m; sourceTree = "<group>"; };
 		3A11B1131ADE364300E5A410 /* CardFilterCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterCollectionView.h; sourceTree = "<group>"; };
 		3A11B1141ADE364300E5A410 /* CardFilterCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterCollectionView.m; sourceTree = "<group>"; };
 		3A11C5F819715BE8003F2093 /* IdentitySectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentitySectionHeaderView.h; sourceTree = "<group>"; };
@@ -468,8 +466,6 @@
 		3A5BC3ED1849326B00E792F7 /* NRTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NRTypes.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A5FB2EA1888892300DD3CC5 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
 		3A5FB2EB1888892300DD3CC5 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
-		3A61D69B18CA458100E091DD /* Hypergeometric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hypergeometric.h; sourceTree = "<group>"; };
-		3A61D69C18CA458100E091DD /* Hypergeometric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hypergeometric.m; sourceTree = "<group>"; };
 		3A6228131C1456F400FBF041 /* SettingsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsKeys.swift; sourceTree = "<group>"; };
 		3A663978193B4CBF00635447 /* card_backs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card_backs.png; sourceTree = "<group>"; };
 		3A689F9E195D3EB8004EBC41 /* retired@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "retired@2x.png"; sourceTree = "<group>"; };
@@ -733,6 +729,8 @@
 		3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterPopover.xib; sourceTree = "<group>"; };
 		3AF424AA19150FC80005ACAA /* searchbar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchbar-bg.png"; sourceTree = "<group>"; };
 		3AF697881C1DAC7300D254CE /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hypergeometric.swift; sourceTree = "<group>"; };
+		3AF6978C1C1DF96400D254CE /* DrawSimulatorCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawSimulatorCollectionView.swift; sourceTree = "<group>"; };
 		3AFA3B6518DF862900F59331 /* altarttoggle_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altarttoggle_off.png; sourceTree = "<group>"; };
 		3AFA3B6618DF862900F59331 /* altarttoggle_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altarttoggle_on.png; sourceTree = "<group>"; };
 		3AFA3B6718DF862900F59331 /* altarttoggle_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altarttoggle_on@2x.png"; sourceTree = "<group>"; };
@@ -1451,13 +1449,11 @@
 		3ABDE5A018AFC4B200AFEA88 /* Draw Simulator */ = {
 			isa = PBXGroup;
 			children = (
-				3A61D69B18CA458100E091DD /* Hypergeometric.h */,
-				3A61D69C18CA458100E091DD /* Hypergeometric.m */,
+				3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */,
 				3ABDE5A118AFC52C00AFEA88 /* DrawSimulatorViewController.h */,
 				3ABDE5A218AFC52C00AFEA88 /* DrawSimulatorViewController.m */,
 				3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */,
-				3A11B1101ADE35F600E5A410 /* DrawSimulatorCollectionView.h */,
-				3A11B1111ADE35F600E5A410 /* DrawSimulatorCollectionView.m */,
+				3AF6978C1C1DF96400D254CE /* DrawSimulatorCollectionView.swift */,
 			);
 			name = "Draw Simulator";
 			sourceTree = "<group>";
@@ -1947,7 +1943,6 @@
 				3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */,
 				3AD860D61B79154100EEF8AC /* EditDeckCell.m in Sources */,
 				3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */,
-				3A11B1121ADE35F600E5A410 /* DrawSimulatorCollectionView.m in Sources */,
 				3A11342219AC5C580012494E /* IdentityCardView.m in Sources */,
 				3A843A961B8A156B000CC60D /* DeckEmail.m in Sources */,
 				3A11B1151ADE364300E5A410 /* CardFilterCollectionView.m in Sources */,
@@ -1982,6 +1977,7 @@
 				3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,
 				3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */,
+				3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */,
 				3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */,
 				3A721DC1189CFA64004EFDFE /* DeckImport.m in Sources */,
 				3A3C1E161BF7525B000311FA /* Faction.swift in Sources */,
@@ -1999,10 +1995,10 @@
 				3A9204C618B16B9B00AF5285 /* Stats.m in Sources */,
 				3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */,
 				3A85327D185509B000507B9A /* SettingsViewController.m in Sources */,
-				3A61D69D18CA458100E091DD /* Hypergeometric.m in Sources */,
 				3A563717199552BA006AD431 /* BrowserCell.m in Sources */,
 				3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */,
 				3A3FA6911BBF07C100994A11 /* UIFont+monospacedDigits.m in Sources */,
+				3AF6978D1C1DF96400D254CE /* DrawSimulatorCollectionView.swift in Sources */,
 				3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */,
 				3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */,
 				3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */,
