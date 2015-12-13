@@ -217,6 +217,7 @@ static DeckImport* instance;
     NSString* name;
     
     Deck* deck = [[Deck alloc] init];
+    NRRole role = NRRoleNone;
     for (NSString* line in lines)
     {
         if (name == nil)
@@ -226,6 +227,12 @@ static DeckImport* instance;
         
         for (Card* c in cards)
         {
+            // don't bother checking cards of the opposite role (as soon as we know this deck's role)
+            BOOL roleOk = role == NRRoleNone || role == c.role;
+            if (!roleOk) {
+                continue;
+            }
+
             NSUInteger loc = [line rangeOfString:c.name_en options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch].location;
             if (loc == NSNotFound)
             {
@@ -234,9 +241,11 @@ static DeckImport* instance;
             
             if (loc != NSNotFound)
             {
+                
                 if (c.type == NRCardTypeIdentity)
                 {
                     [deck addCard:c copies:1];
+                    role = c.role;
                     // NSLog(@"found identity %@", c.name);
                 }
                 else
@@ -258,7 +267,7 @@ static DeckImport* instance;
                         
                         int cnt = [count intValue];
                         int max = deck.isDraft ? 100 : 4;
-                        if (cnt > 0 && max)
+                        if (cnt > 0 && cnt < max)
                         {
                             [deck addCard:c copies:cnt];
                         }

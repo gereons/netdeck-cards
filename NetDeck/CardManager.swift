@@ -69,7 +69,7 @@ import Foundation
         let cards = allKnownCards.values
         
         return cards.sort({
-            return $0.name.length < $1.name.length
+            return $0.name.length > $1.name.length
         })
     }
     
