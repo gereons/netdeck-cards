@@ -8,11 +8,9 @@
 
 #import "DrawSimulatorViewController.h"
 #import "CardImageViewPopover.h"
-#import "Hypergeometric.h"
 #import "CardThumbView.h"
-#import "NRCrashlytics.h"
 
-@interface DrawSimulatorViewController ()
+@interface xDrawSimulatorViewController ()
 @property Deck* deck;
 @property NSMutableArray* cards;    // cards in deck
 @property NSMutableArray* draw;     // cards drawn
@@ -21,11 +19,11 @@
 
 static NSInteger viewMode;
 
-@implementation DrawSimulatorViewController
+@implementation xDrawSimulatorViewController
 
 +(void) showForDeck:(Deck*)deck inViewController:(UIViewController*)vc
 {
-    DrawSimulatorViewController* davc = [[DrawSimulatorViewController alloc] initWithDeck:deck];
+    xDrawSimulatorViewController* davc = [[xDrawSimulatorViewController alloc] initWithDeck:deck];
     
     [vc presentViewController:davc animated:NO completion:nil];
 }

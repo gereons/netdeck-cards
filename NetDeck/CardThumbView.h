@@ -13,6 +13,6 @@
 @property IBOutlet UIImageView* imageView;
 @property IBOutlet UILabel* nameLabel;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
-
 @property (nonatomic) Card* card;
+
 @end

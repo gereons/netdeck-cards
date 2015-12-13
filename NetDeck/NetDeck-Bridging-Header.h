@@ -4,5 +4,10 @@
 
 @import UIKit;
 
+
 #import "NRTypes.h"
 #import "AppDelegate.h"
+
+@class Card;
+#import "CardImageViewPopover.h"
+#import "CardThumbView.h"
