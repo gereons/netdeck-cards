@@ -236,7 +236,7 @@ import Foundation
             enabledSets = TableData(sections:sections, andValues:setNames)
             
             enabledSets.collapsedSections = [Bool]()
-            for var i=0; i<enabledSets.sections.count; ++i {
+            for _ in  0 ..< enabledSets.sections.count {
                 enabledSets.collapsedSections?.append(false)
             }
         }

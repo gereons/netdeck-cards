@@ -247,7 +247,7 @@ import Foundation
     }
     
     func indexOfCardCode(code: String) -> Int {
-        for var i=0; i<cards.count; ++i {
+        for i in 0 ..< cards.count {
             let cc = cards[i]
             if cc.card.code == code {
                 return i

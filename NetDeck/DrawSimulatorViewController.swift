@@ -67,7 +67,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         self.played = [Bool]()
         
         for cc in self.deck.cards {
-            for var c=0; c<cc.count; ++c {
+            for _ in 0 ..< cc.count {
                 cards.append(cc.card)
             }
         }

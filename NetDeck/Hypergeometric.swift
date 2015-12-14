@@ -9,7 +9,7 @@
 @objc class Hypergeometric: NSObject {
     class func getProbabilityFor(desiredCards: UInt, cardsInDeck: UInt, desiredCardsInDeck: UInt, cardsDrawn: UInt) -> Double {
         var r = 0.0
-        for var dc=desiredCards; dc <= cardsDrawn; ++dc {
+        for dc in desiredCards ... cardsDrawn {
             r += probabilityFor(dc, cardsInDeck, desiredCardsInDeck, cardsDrawn)
         }
         return min(r, 1.0)
@@ -37,7 +37,7 @@
             return coefficientFor(n, over: n-k)
         } else {
             var result = UInt64(n-k+1)
-            for var i:UInt=2; i<=k; ++i {
+            for i in 2 ... k {
                 result *= UInt64(n-k+i)
                 result /= UInt64(i)
             }
