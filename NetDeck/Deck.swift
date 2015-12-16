@@ -128,8 +128,8 @@ import Foundation
         if cc.card.code == Card.RAMAN_RAI && self.nonAllianceOfFaction(.Jinteki) >= 6 {
             return 0
         }
-        // salem's hospitality: 0 inf if >=6 non-alliance NBN cards in deck
-        if cc.card.code == Card.SALEMS_HOSPITALITY && self.nonAllianceOfFaction(.NBN) >= 6 {
+        // salem's hospitality and ibrahim salem: 0 inf if >=6 non-alliance NBN cards in deck
+        if (cc.card.code == Card.SALEMS_HOSPITALITY || cc.card.code == Card.IBRAHIM_SALEM) && self.nonAllianceOfFaction(.NBN) >= 6 {
             return 0
         }
         // executive search firm: 0 inf if >=6 non-alliance Weyland cards in deck
