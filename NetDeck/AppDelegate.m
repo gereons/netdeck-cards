@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+// TODOs:
+
+// add UIKeyCommand: http://nshipster.com/uikeycommand/
+
 
 @import SVProgressHUD;
 @import AFNetworking;

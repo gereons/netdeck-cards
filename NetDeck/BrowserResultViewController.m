@@ -16,7 +16,6 @@
 #import "BrowserCell.h"
 #import "BrowserImageCell.h"
 #import "BrowserSectionHeaderView.h"
-#import "NRCrashlytics.h"
 
 @interface BrowserResultViewController ()
 

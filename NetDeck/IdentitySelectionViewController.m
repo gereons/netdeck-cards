@@ -15,7 +15,6 @@
 #import "CGRectUtils.h"
 #import "IdentityCardView.h"
 #import "IdentitySectionHeaderView.h"
-#import "NRCrashlytics.h"
 
 @interface IdentitySelectionViewController ()
 

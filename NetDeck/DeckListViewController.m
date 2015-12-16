@@ -28,7 +28,6 @@
 #import "CardImageCell.h"
 #import "CGRectUtils.h"
 #import "NRDB.h"
-#import "NRCrashlytics.h"
 
 @interface DeckListViewController ()
 

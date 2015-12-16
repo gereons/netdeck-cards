@@ -16,7 +16,6 @@
 #import "CardFilterThumbView.h"
 #import "CardFilterSectionHeaderView.h"
 #import "SmallPipsView.h"
-#import "NRCrashlytics.h"
 
 @interface CardFilterViewController ()
 

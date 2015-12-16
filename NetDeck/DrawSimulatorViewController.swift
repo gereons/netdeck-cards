@@ -74,12 +74,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         
         assert(self.cards.count == self.deck.size, "oops")
         
-        for var i=self.cards.count-1; i>0; --i {
-            let n = Int(arc4random_uniform(UInt32(i+1)))
-            if i != n {
-                swap(&self.cards[i], &self.cards[n])
-            }
-        }
+        self.cards.shuffleInPlace()
         
         self.oddsLabel.text = ""
         self.drawnLabel.text = ""
