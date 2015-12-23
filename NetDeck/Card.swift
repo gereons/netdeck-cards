@@ -18,7 +18,7 @@ import DTCoreText
     static let APEX                     = "09029"    // no non-virtual resources
     
     // alliance cards with special influence rules
-    static let PAD_FACTORY              = "00000"    // code tbd; 0 inf if 3 pad campaigns in deck
+    static var PAD_FACTORY              = "00000"    // code tbd; 0 inf if 3 pad campaigns in deck
     static let MUMBA_TEMPLE             = "10018"    // 0 inf if <= 15 ice in deck
     static let JEEVES_MODEL_BIOROID     = "10067"    // 0 inf if >= 6 non-alliance HB cards in deck
     static let RAMAN_RAI                = "10068"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
@@ -77,7 +77,7 @@ import DTCoreText
     private(set) var setCode: String!
     private(set) var setNumber: Int = -1         // our own internal set number, for sorting by set release
     private(set) var unique: Bool = false
-    private(set) var maxPerDeck: Int = -1        // limited cards
+    private(set) var maxPerDeck: Int = -1        // how many may be in deck? currently either 1, 3 or 6
     private(set) var imageSrc: String?
     private(set) var ancurLink: String?
     private(set) var isAlliance: Bool = false
