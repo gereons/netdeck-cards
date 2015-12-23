@@ -57,7 +57,6 @@
 		3A3622901849320C007F2854 /* NetDeckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36228F1849320C007F2854 /* NetDeckTests.m */; };
 		3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */; };
 		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
-		3A38091B1B0F8ACE00042A67 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A38091A1B0F8ACE00042A67 /* Fabric.framework */; };
 		3A38091D1B0F8AE300042A67 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A38091C1B0F8AE300042A67 /* libz.dylib */; };
 		3A3844FB1B77859E007C76F2 /* MainWindow~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */; };
 		3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */; };
@@ -157,7 +156,6 @@
 		3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */; };
 		3A8061E71972990E003ACF44 /* DeckDiffCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8061E51972990E003ACF44 /* DeckDiffCell.m */; };
 		3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8061E61972990E003ACF44 /* DeckDiffCell.xib */; };
-		3A814EC719ADBF1C008C3285 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A814EC619ADBF1C008C3285 /* Crashlytics.framework */; };
 		3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A818EEA198E3A0900126495 /* BrowserResultViewController.m */; };
 		3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */; };
 		3A82624218E05EC70038B4AC /* cardstats_difficulty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A82622A18E05EC70038B4AC /* cardstats_difficulty.png */; };
@@ -405,7 +403,6 @@
 		3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPipsView.xib; sourceTree = "<group>"; };
 		3A36A0FC1974F79300D8D26A /* SmallPipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallPipsView.h; sourceTree = "<group>"; };
 		3A36A0FD1974F79300D8D26A /* SmallPipsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallPipsView.m; sourceTree = "<group>"; };
-		3A38091A1B0F8ACE00042A67 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		3A38091C1B0F8AE300042A67 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow~iPhone.xib"; sourceTree = "<group>"; };
 		3A3844FC1B77879B007C76F2 /* IphoneStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IphoneStartViewController.h; sourceTree = "<group>"; };
@@ -529,7 +526,6 @@
 		3A8061E41972990E003ACF44 /* DeckDiffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckDiffCell.h; sourceTree = "<group>"; };
 		3A8061E51972990E003ACF44 /* DeckDiffCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckDiffCell.m; sourceTree = "<group>"; };
 		3A8061E61972990E003ACF44 /* DeckDiffCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffCell.xib; sourceTree = "<group>"; };
-		3A814EC619ADBF1C008C3285 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		3A818EE9198E3A0900126495 /* BrowserResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserResultViewController.h; sourceTree = "<group>"; };
 		3A818EEA198E3A0900126495 /* BrowserResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserResultViewController.m; sourceTree = "<group>"; };
 		3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserResultViewController.xib; sourceTree = "<group>"; };
@@ -759,8 +755,6 @@
 				3A3622641849320C007F2854 /* CoreGraphics.framework in Frameworks */,
 				3A3622661849320C007F2854 /* UIKit.framework in Frameworks */,
 				3A3622621849320C007F2854 /* Foundation.framework in Frameworks */,
-				3A814EC719ADBF1C008C3285 /* Crashlytics.framework in Frameworks */,
-				3A38091B1B0F8ACE00042A67 /* Fabric.framework in Frameworks */,
 				71B5FBE6589E7D9FAE12FBF7 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -815,9 +809,7 @@
 			children = (
 				3ABA7AAC1B1B253E00E8E892 /* Accelerate.framework */,
 				3A38091C1B0F8AE300042A67 /* libz.dylib */,
-				3A38091A1B0F8ACE00042A67 /* Fabric.framework */,
 				3A3D841419F1A24F00642CE7 /* StoreKit.framework */,
-				3A814EC619ADBF1C008C3285 /* Crashlytics.framework */,
 				3A9CE56618E0CA2A007A26CD /* MessageUI.framework */,
 				3A994274184B8CBB004B6E05 /* MobileCoreServices.framework */,
 				3A994272184B8CB4004B6E05 /* CoreText.framework */,
@@ -1549,8 +1541,8 @@
 				3A36225B1849320C007F2854 /* Frameworks */,
 				3A36225C1849320C007F2854 /* Resources */,
 				874BC020E2E4438DA4A0C588 /* Copy Pods Resources */,
-				3A66FFB619DEE75000B847E7 /* ShellScript */,
-				3A814EC519ADBEEE008C3285 /* ShellScript */,
+				3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */,
+				3A814EC519ADBEEE008C3285 /* Crashlytics */,
 				E525F2EF6AA369C7A2D03D1F /* Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -1832,31 +1824,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3A66FFB619DEE75000B847E7 /* ShellScript */ = {
+		3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Set CFBundleVersion from git";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" != \"Release\" ]; then\nGITVERSION=$(git rev-parse --short HEAD)\necho \"add git version... $GITVERSION\"\necho -n \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\" | xargs -0 /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $GITVERSION\"\nfi\n";
 		};
-		3A814EC519ADBEEE008C3285 /* ShellScript */ = {
+		3A814EC519ADBEEE008C3285 /* Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = Crashlytics;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" != \"Debug\" ]; then\necho \"init crashlytics\"\n./Crashlytics.framework/run fe0f0f5f919be6211c1de668d91332e311ddad9e fa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8\nfi";
+			shellScript = "if [ \"${CONFIGURATION}\" != \"Debug\" ]; then\necho \"init crashlytics\"\n\"${PODS_ROOT}/Fabric/run\" fe0f0f5f919be6211c1de668d91332e311ddad9e fa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8\nfi";
 		};
 		725041DF7F0E4BE9AF0B94A3 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

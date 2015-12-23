@@ -14,6 +14,7 @@
 
 #if USE_CRASHLYTICS
 
+#import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
 #define CRASHLYTICS_DELEGATE        , CrashlyticsDelegate

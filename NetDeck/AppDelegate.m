@@ -63,7 +63,8 @@ const NSString* const kANY = @"Any";
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
         
 #if USE_CRASHLYTICS
-    [Crashlytics startWithAPIKey:@"fe0f0f5f919be6211c1de668d91332e311ddad9e" delegate:self];
+    [CrashlyticsKit setDelegate:self];
+    [Fabric with:@[ CrashlyticsKit ]];
 #endif
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
