@@ -18,6 +18,7 @@ import DTCoreText
     static let APEX                     = "09029"    // no non-virtual resources
     
     // alliance cards with special influence rules
+    // FIXME: make this a let ASAP
     static var PAD_FACTORY              = "00000"    // code tbd; 0 inf if 3 pad campaigns in deck
     static let MUMBA_TEMPLE             = "10018"    // 0 inf if <= 15 ice in deck
     static let JEEVES_MODEL_BIOROID     = "10067"    // 0 inf if >= 6 non-alliance HB cards in deck

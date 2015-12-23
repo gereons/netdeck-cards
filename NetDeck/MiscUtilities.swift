@@ -61,3 +61,6 @@ extension NSRange {
         return Range<String.Index>(start: start, end: end)
     }
 }
+
+@available(iOS, deprecated=1.0, message="I'm not deprecated, please **FIXME**")
+func FIXME(msg: String){}
