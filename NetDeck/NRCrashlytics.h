@@ -18,10 +18,12 @@
 #import <Crashlytics/Crashlytics.h>
 
 #define CRASHLYTICS_DELEGATE        , CrashlyticsDelegate
+#define LOG_EVENT(name, attrs)      [Answers logCustomEventWithName:name customAttributes:attrs]
 
 #else
 
 #define CRASHLYTICS_DELEGATE        /* nop */
+#define LOG_EVENT(name, attrs)      /* nop */
 
 #endif // USE_CRASHLYTICS
 #endif // NR_CRASHLYTICS_H

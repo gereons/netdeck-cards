@@ -159,6 +159,7 @@
     if ([settings boolForKey:SettingsKeys.USE_DROPBOX])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To Dropbox") handler:^(UIAlertAction *action) {
+            LOG_EVENT(@"Export .o8d", nil);
             [DeckExport asOctgn:self.deck autoSave:NO];
         }]];
     }
@@ -166,6 +167,7 @@
     if ([settings boolForKey:SettingsKeys.USE_NRDB])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction *action) {
+            LOG_EVENT(@"Save NRDB", nil);
             [self saveToNrdb];
         }]];
     }
@@ -173,6 +175,7 @@
     if ([MFMailComposeViewController canSendMail])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"As Email") handler:^(UIAlertAction *action) {
+            LOG_EVENT(@"Email Deck", nil);
             [DeckEmail emailDeck:self.deck fromViewController:self];
         }]];
     }

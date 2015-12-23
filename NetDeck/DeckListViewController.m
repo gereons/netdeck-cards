@@ -893,38 +893,45 @@
     {
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: OCTGN")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Export .o8d", nil);
                                                                [self octgnExport];
                                                            }]];
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: BBCode")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Export BBCode", nil);
                                                                [DeckExport asBBCode:self.deck];
                                                                self.actionSheet = nil;
                                                            }]];
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Markdown")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Export MD", nil);
                                                                [DeckExport asMarkdown:self.deck];
                                                                self.actionSheet = nil;
                                                            }]];
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Plain Text")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Export Text", nil);
                                                                [DeckExport asPlaintext:self.deck];
                                                                self.actionSheet = nil;
                                                            }]];
     }
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: BBCode")
                                                        handler:^(UIAlertAction *action) {
+                                                           LOG_EVENT(@"Clip BBCode", nil);
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asBBCodeString:self.deck];
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: Markdown")
                                                        handler:^(UIAlertAction *action) {
+                                                           LOG_EVENT(@"Clip MD", nil);
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asMarkdownString:self.deck];
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: Plain Text")
                                                        handler:^(UIAlertAction *action) {
+                                                           LOG_EVENT(@"Clip Text", nil);
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asPlaintextString:self.deck];
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
@@ -934,6 +941,7 @@
     {
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"As Email")
                                                        handler:^(UIAlertAction *action) {
+                                                           LOG_EVENT(@"Email Deck", nil);
                                                            [DeckEmail emailDeck:self.deck fromViewController:self];
                                                            self.actionSheet = nil;
                                                        }]];
@@ -942,6 +950,7 @@
     {
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Print")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Print Deck", nil);
                                                                [self printDeck:self.exportButton];
                                                                self.actionSheet = nil;
                                                            }]];
