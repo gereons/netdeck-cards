@@ -300,7 +300,8 @@
     popover.sourceView = self.view;
     popover.sourceRect = frame;
     popover.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
-
+    [self.popup.view layoutIfNeeded];
+    
     [self presentViewController:self.popup animated:NO completion:nil];
 }
 
@@ -361,6 +362,7 @@
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
     
+    [self.popup.view layoutIfNeeded];
     [self presentViewController:self.popup animated:NO completion:nil];
 }
 

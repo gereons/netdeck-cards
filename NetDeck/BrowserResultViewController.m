@@ -220,6 +220,7 @@ static BrowserResultViewController* instance;
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.popup.view layoutIfNeeded];
     
     [self presentViewController:self.popup animated:NO completion:nil];
 }
@@ -375,7 +376,7 @@ static BrowserResultViewController* instance;
     popover.sourceRect = rect;
     popover.sourceView = view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown;
-    
+    [sheet.view layoutIfNeeded];
     NSAssert(instance != nil, @"oops");
     [instance presentViewController:sheet animated:NO completion:nil];
 }

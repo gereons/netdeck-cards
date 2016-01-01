@@ -186,6 +186,7 @@
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Cancel") handler:nil]];
     
+    [alert.view layoutIfNeeded];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

@@ -787,6 +787,7 @@ static NSInteger viewMode = VIEW_LIST;
     popover.sourceRect = sender.frame;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    [sheet.view layoutIfNeeded];
     
     [self presentViewController:sheet animated:NO completion:nil];
 }
