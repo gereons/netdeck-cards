@@ -29,6 +29,7 @@ import DTCoreText
     static let IBRAHIM_SALEM            = "10109"    // 0 inf if >= 6 non-alliance NBN cards in deck
     
     static let PAD_CAMPAIGN             = "01109"    // needed for pad factory
+    static let WIRELESS_NET_PAVILLION   = "08108"    // errata'd to be unique
     
     // "limit 1 per deck" cards
     static let DIRECTOR_HAAS_PET_PROJ   = "03004"
@@ -41,12 +42,30 @@ import DTCoreText
     static let UTOPIA_FRAGMENT          = "06110"
     static let GOVERNMENT_TAKEOVER      = "07006"
     static let _15_MINUTES              = "09004"
-    static let MAX_1_PER_DECK           = [ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
+    static let MAX_1_PER_DECK           = Set<String>([ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
                                             UTOPIA_SHARD, UTOPIA_FRAGMENT, HADES_SHARD,
                                             HADES_FRAGMENT, EDEN_SHARD, EDEN_FRAGMENT,
-                                            GOVERNMENT_TAKEOVER, _15_MINUTES ]
+                                            GOVERNMENT_TAKEOVER, _15_MINUTES ])
     
     private static let OCTGN_PREFIX = "bc0f047c-01b1-427f-a439-d451eda"
+    
+    // "most wanted" list
+    static let CERBERUS_H1      = "06099"
+    static let CLONE_CHIP       = "03038"
+    static let DESPERADO        = "01024"
+    static let PARASITE         = "01012"
+    static let PREPAID_VOICEPAD = "04029"
+    static let YOG_0            = "01014"
+    
+    static let ARCHITECT        = "06061"
+    static let ASTROSCRIPT      = "01081"
+    static let ELI_1            = "02110"
+    static let NAPD_CONTRACT    = "04119"
+    static let SANSAN_CITY_GRID = "01092"
+    
+    static let MOST_WANTED_LIST = Set<String>([
+        CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
+        ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])
     
     private(set) var code: String!
     private(set) var name: String!
@@ -62,7 +81,7 @@ import DTCoreText
     private(set) var factionStr: String!
     private(set) var role: NRRole = .None
     private(set) var roleStr: String!
-    private(set) var influenceLimit: Int = -1   // for id
+    private(set) var _influenceLimit: Int = -1   // for id
     private(set) var minimumDecksize: Int = -1  // for id
     private(set) var baseLink: Int = -1         // for runner id
     private(set) var influence: Int = -1
@@ -95,6 +114,10 @@ import DTCoreText
     
     var isNull: Bool {
         return self == Card.nullInstance
+    }
+    
+    var isMostWanted: Bool {
+        return Card.MOST_WANTED_LIST.contains(self.code)
     }
     
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
@@ -252,10 +275,13 @@ import DTCoreText
         c.number = json_int(json, "number")
         c.quantity = json_int(json, "quantity")
         c.unique = json_bool(json, "uniqueness")
+        if (c.code == WIRELESS_NET_PAVILLION) {
+            c.unique = true
+        }
         
         if (c.type == .Identity)
         {
-            c.influenceLimit = json_int(json, "influencelimit")
+            c._influenceLimit = json_int(json, "influencelimit")
             c.minimumDecksize = json_int(json, "mindecksize")
             c.minimumDecksize = json_int(json, "minimumdecksize")
             c.baseLink = json_int(json, "baselink")

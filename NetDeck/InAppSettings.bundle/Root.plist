@@ -34,6 +34,16 @@
             <key>DefaultValue</key>
             <false/>
         </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Use “NAPD Most Wanted List”</string>
+            <key>Key</key>
+            <string>useNapdMWL</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
 		<dict>
 			<key>Title</key>
 			<string>Card Data</string>

@@ -67,5 +67,5 @@
     
     static let IDENTITY_TABLE      = "identityTable"
     
-    static let IPHONE4_SWIPE_HINT  = "iphone4SwipeHint"
+    static let USE_NAPD_MWL        = "useNapdMWL"
 }

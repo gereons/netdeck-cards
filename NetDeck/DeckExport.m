@@ -86,7 +86,7 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
-    [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.identity.influenceLimit];
+    [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
     if (deck.identity.role == NRRoleCorp)
     {
         [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];
@@ -198,7 +198,7 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)  \n", numCards, (long)deck.identity.minimumDecksize];
-    [s appendFormat:@"%ld/%ld influence used  \n", (long)deck.influence, (long)deck.identity.influenceLimit];
+    [s appendFormat:@"%ld/%ld influence used  \n", (long)deck.influence, (long)deck.influenceLimit];
     if (deck.identity.role == NRRoleCorp)
     {
         [s appendFormat:@"Agenda Points: %ld  \n", (long)deck.agendaPoints];
@@ -272,7 +272,7 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
-    [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.identity.influenceLimit];
+    [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
     if (deck.identity.role == NRRoleCorp)
     {
         [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];

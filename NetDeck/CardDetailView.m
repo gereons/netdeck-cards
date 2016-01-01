@@ -138,13 +138,13 @@
         case NRCardTypeIdentity:
             self.label1.text = [@(card.minimumDecksize) stringValue];
             self.icon1.image = [ImageCache cardIcon];
-            if (card.influenceLimit == -1)
+            if (card._influenceLimit == -1)
             {
                 self.label2.text = @"∞";
             }
             else
             {
-                self.label2.text = [@(card.influenceLimit) stringValue];
+                self.label2.text = [@(card._influenceLimit) stringValue];
             }
             self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)

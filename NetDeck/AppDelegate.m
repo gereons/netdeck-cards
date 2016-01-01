@@ -135,6 +135,8 @@ const NSString* const kANY = @"Any";
         
         SettingsKeys.SHOW_ALL_FILTERS: @(YES),
         SettingsKeys.IDENTITY_TABLE: @(YES),
+        
+        SettingsKeys.USE_NAPD_MWL: @(YES),
     };
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];

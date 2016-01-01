@@ -40,6 +40,22 @@
     {
         self.name.text = card.name;
     }
+    else
+    {
+        NSString* suffix = @"";
+        if (card.unique) {
+            suffix = @"•";
+        }
+        if (card.isMostWanted) {
+            suffix = [suffix stringByAppendingString:@"¹"];
+        }
+        if (suffix) {
+            suffix = [@" " stringByAppendingString:suffix];
+        }
+        self.name.text = [NSString stringWithFormat:@"%lu× %@%@", (unsigned long)cc.count, card.name, suffix];
+    }
+    
+    /*
     else if (card.unique)
     {
         self.name.text = [NSString stringWithFormat:@"%lu× %@ •", (unsigned long)cc.count, card.name];
@@ -48,6 +64,7 @@
     {
         self.name.text = [NSString stringWithFormat:@"%lu× %@", (unsigned long)cc.count, card.name];
     }
+    */
     
     self.name.textColor = [UIColor blackColor];
     if (!self.deck.isDraft && card.owned < cc.count)
@@ -97,13 +114,13 @@
         case NRCardTypeIdentity:
             self.label1.text = [@(card.minimumDecksize) stringValue];
             self.icon1.image = [ImageCache cardIcon];
-            if (card.influenceLimit == -1)
+            if (card._influenceLimit == -1)
             {
                 self.label2.text = @"∞";
             }
             else
             {
-                self.label2.text = [@(card.influenceLimit) stringValue];
+                self.label2.text = [@(card._influenceLimit) stringValue];
             }
             self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)

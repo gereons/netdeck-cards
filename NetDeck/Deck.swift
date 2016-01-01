@@ -94,6 +94,20 @@ import Foundation
         self.modified = false
     }
     
+    var influenceLimit: Int {
+        if self.identity == nil {
+            return 0
+        }
+        
+        var limit = self.identity!._influenceLimit
+        for cc in cards {
+            if cc.card.isMostWanted {
+                limit -= cc.count
+            }
+        }
+        return max(1, limit)
+    }
+    
     func influenceFor(cardcounter: CardCounter?) -> Int {
         if cardcounter == nil {
             return 0
@@ -295,7 +309,7 @@ import Foundation
             assert(self.identityCc?.count == 1, "identity count")
         }
         
-        if !self.isDraft && self.influence > self.identity?.influenceLimit {
+        if !self.isDraft && self.influence > self.influenceLimit {
             reasons.append("Too much influence used".localized())
         }
         
