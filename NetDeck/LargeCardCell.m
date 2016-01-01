@@ -217,6 +217,21 @@
             pip.hidden = YES;
         }
     }
+    
+    if (card.isMostWanted) {
+        for (UIView* pip in self.pips) {
+            // find the first non-hidden pip, and draw it as a black circle
+            if (!pip.hidden) {
+                continue;
+            }
+            
+            pip.layer.backgroundColor = [UIColor whiteColor].CGColor;
+            pip.layer.borderWidth = 1;
+            pip.layer.borderColor = [UIColor blackColor].CGColor;
+            pip.hidden = NO;
+            break;
+        }
+    }
 }
 
 @end
