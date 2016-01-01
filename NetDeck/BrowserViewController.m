@@ -135,7 +135,7 @@
             break;
             
         case NRCardTypeIdentity:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %ld/%ld", card.factionStr, (long)card.minimumDecksize, (long)card._influenceLimit];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %ld/%ld", card.factionStr, (long)card.minimumDecksize, (long)card.influenceLimit];
             break;
             
         case NRCardTypeAgenda:

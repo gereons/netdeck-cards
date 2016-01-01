@@ -401,13 +401,13 @@
     
     cell.deckSizeLabel.text = [@(card.minimumDecksize) stringValue];
     
-    if (card._influenceLimit == -1)
+    if (card.influenceLimit == -1)
     {
         cell.influenceLimitLabel.text = @"∞";
     }
     else
     {
-        cell.influenceLimitLabel.text = [@(card._influenceLimit) stringValue];
+        cell.influenceLimitLabel.text = [@(card.influenceLimit) stringValue];
     }
     
     if (self.role == NRRoleRunner)

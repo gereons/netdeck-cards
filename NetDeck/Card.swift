@@ -81,7 +81,7 @@ import DTCoreText
     private(set) var factionStr: String!
     private(set) var role: NRRole = .None
     private(set) var roleStr: String!
-    private(set) var _influenceLimit: Int = -1   // for id
+    private(set) var influenceLimit: Int = -1   // for id
     private(set) var minimumDecksize: Int = -1  // for id
     private(set) var baseLink: Int = -1         // for runner id
     private(set) var influence: Int = -1
@@ -281,7 +281,7 @@ import DTCoreText
         
         if (c.type == .Identity)
         {
-            c._influenceLimit = json_int(json, "influencelimit")
+            c.influenceLimit = json_int(json, "influencelimit")
             c.minimumDecksize = json_int(json, "mindecksize")
             c.minimumDecksize = json_int(json, "minimumdecksize")
             c.baseLink = json_int(json, "baselink")

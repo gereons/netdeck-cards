@@ -209,7 +209,7 @@
     cell.textLabel.text = card.name;
     cell.textLabel.textColor = card.factionColor;
  
-    NSString* influence = card._influenceLimit == -1 ? @"∞" : [NSString stringWithFormat:@"%ld", (long)card._influenceLimit];
+    NSString* influence = card.influenceLimit == -1 ? @"∞" : [NSString stringWithFormat:@"%ld", (long)card.influenceLimit];
     if (self.role == NRRoleRunner)
     {
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld/%@ · %ld Link", (long)card.minimumDecksize, influence, (long)card.baseLink];

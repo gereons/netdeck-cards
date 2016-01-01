@@ -99,13 +99,23 @@ import Foundation
             return 0
         }
         
-        var limit = self.identity!._influenceLimit
+        var limit = self.identity!.influenceLimit
         for cc in cards {
             if cc.card.isMostWanted {
                 limit -= cc.count
             }
         }
         return max(1, limit)
+    }
+    
+    var cardsFromMWL: Int {
+        var mwl = 0
+        for cc in cards {
+            if cc.card.isMostWanted {
+                mwl += cc.count
+            }
+        }
+        return mwl
     }
     
     func influenceFor(cardcounter: CardCounter?) -> Int {

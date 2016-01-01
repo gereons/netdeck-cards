@@ -87,6 +87,7 @@
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
     [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
+    [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
     if (deck.identity.role == NRRoleCorp)
     {
         [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];
@@ -199,11 +200,12 @@
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)  \n", numCards, (long)deck.identity.minimumDecksize];
     [s appendFormat:@"%ld/%ld influence used  \n", (long)deck.influence, (long)deck.influenceLimit];
+    [s appendFormat:@"%ld cards from MWL  \n", (long)deck.cardsFromMWL];
     if (deck.identity.role == NRRoleCorp)
     {
         [s appendFormat:@"Agenda Points: %ld  \n", (long)deck.agendaPoints];
     }
-    [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
+    [s appendFormat:@"Cards up to %@  \n", [CardSets mostRecentSetUsedInDeck:deck]];
     
     [s appendString:@"\nDeck built with [" APP_NAME "](" APP_URL ").\n"];
     
@@ -273,6 +275,7 @@
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
     [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
+    [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
     if (deck.identity.role == NRRoleCorp)
     {
         [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];
