@@ -63,7 +63,7 @@
     }
 
 #if RELEASE
-    [hiddenKeys addObjectsFromArray:@[ NRDB_TOKEN_EXPIRY, REFRESH_AUTH_NOW, LAST_BG_FETCH ]];
+    [hiddenKeys addObjectsFromArray:@[ SettingsKeys.NRDB_TOKEN_EXPIRY, SettingsKeys.REFRESH_AUTH_NOW, SettingsKeys.LAST_BG_FETCH ]];
 #endif
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];

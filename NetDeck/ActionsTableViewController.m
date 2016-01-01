@@ -95,7 +95,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     // first start with this version?
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     // [defaults setObject:@"" forKey:LAST_START_VERSION];
-    NSString* lastVersion = [defaults stringForKey:LAST_START_VERSION];
+    NSString* lastVersion = [defaults stringForKey:SettingsKeys.LAST_START_VERSION];
     NSString* thisVersion = [AppDelegate appVersion];
     if ([thisVersion isEqualToString:lastVersion])
     {
@@ -103,7 +103,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuAbout inSection:0];
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-        [defaults setObject:thisVersion forKey:LAST_START_VERSION];
+        [defaults setObject:thisVersion forKey:SettingsKeys.LAST_START_VERSION];
         [defaults synchronize];
         return;
     }
