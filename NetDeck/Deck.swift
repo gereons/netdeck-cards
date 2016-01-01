@@ -99,13 +99,17 @@ import Foundation
             return 0
         }
         
-        var limit = self.identity!.influenceLimit
-        for cc in cards {
-            if cc.card.isMostWanted {
-                limit -= cc.count
+        if NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_NAPD_MWL) {
+            var limit = self.identity!.influenceLimit
+            for cc in cards {
+                if cc.card.isMostWanted {
+                    limit -= cc.count
+                }
             }
+            return max(1, limit)
+        } else {
+            return self.identity!.influenceLimit
         }
-        return max(1, limit)
     }
     
     var cardsFromMWL: Int {
