@@ -29,7 +29,7 @@
         return b1 * b2 / d
     }
     
-    class func coefficientFor(n: UInt, over k: UInt) -> Double {
+    private class func coefficientFor(n: UInt, over k: UInt) -> Double {
         if k == 0 { return 1.0 }
         if n == 0 || k > n { return 0.0 }
         

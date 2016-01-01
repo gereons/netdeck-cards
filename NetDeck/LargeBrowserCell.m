@@ -30,6 +30,18 @@
         pip.frame = CGRectSetSize(pip.frame, diameter, diameter);
         pip.layer.cornerRadius = diameter/2;
     }
+    
+    self.name.font = [UIFont md_mediumSystemFontOfSize:17];
+    
+    for (UILabel* lbl in @[ self.label1, self.label2, self.label3]) {
+        lbl.font = [UIFont md_systemFontOfSize:17];
+    }
+}
+
+-(void) prepareForReuse {
+    for (UIView* pip in self.pips) {
+        pip.layer.borderWidth = 0;
+    }
 }
 
 -(void) setCard:(Card*)card
@@ -60,16 +72,7 @@
         self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
     
-    NSInteger influence = 0;
-    if (card.type == NRCardTypeAgenda)
-    {
-        influence = card.agendaPoints;
-    }
-    else
-    {
-        influence = card.influence;
-    }
-    [self setInfluence:influence withColor:card.factionColor];
+    [self setInfluence:card.influence withCard:card];
     
     // labels from top: cost/strength/mu
     switch (card.type)
@@ -145,14 +148,14 @@
     }
 }
 
--(void) setInfluence:(NSInteger)influence withColor:(UIColor*)color
+-(void) setInfluence:(NSInteger)influence withCard:(Card*)card
 {
     if (influence > 0)
     {
         for (int i=0; i<self.pips.count; ++i)
         {
             UIView* pip = self.pips[i];
-            pip.layer.backgroundColor = [color CGColor];
+            pip.layer.backgroundColor = [card.factionColor CGColor];
             pip.hidden = i >= influence;
             // NSLog(@"%d %d", i, pip.hidden);
         }
@@ -162,6 +165,21 @@
         for (UIView* pip in self.pips)
         {
             pip.hidden = YES;
+        }
+    }
+    
+    if (card.isMostWanted) {
+        for (UIView* pip in self.pips) {
+            // find the first non-hidden pip, and draw it as a black circle
+            if (!pip.hidden) {
+                continue;
+            }
+            
+            pip.layer.backgroundColor = [UIColor whiteColor].CGColor;
+            pip.layer.borderWidth = 1;
+            pip.layer.borderColor = [UIColor blackColor].CGColor;
+            pip.hidden = NO;
+            break;
         }
     }
 }

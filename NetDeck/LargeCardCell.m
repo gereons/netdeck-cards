@@ -35,6 +35,12 @@
     }
 }
 
+-(void) prepareForReuse {
+    for (UIView* pip in self.pips) {
+        pip.layer.borderWidth = 0;
+    }
+}
+
 -(void) setCardCounter:(CardCounter *)cc
 {
     [super setCardCounter:cc];
@@ -71,24 +77,12 @@
     {
         self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
-    
-    NSUInteger influence = 0;
-    if (card.type == NRCardTypeAgenda)
-    {
-        influence = card.agendaPoints * cc.count;
+
+    if (self.deck) {
+        [self setInfluence:[self.deck influenceFor:cc] andCard:cc];
+    } else {
+        [self setInfluence:card.influence andCard:cc];
     }
-    else
-    {
-        if (self.deck)
-        {
-            influence = [self.deck influenceFor:cc];
-        }
-        else
-        {
-            influence = card.influence * cc.count;
-        }
-    }
-    [self setInfluence:influence andCard:card];
     
     self.copiesLabel.hidden = card.type == NRCardTypeIdentity;
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
@@ -193,20 +187,20 @@
     self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count];
 }
 
--(void) setInfluence:(NSUInteger)influence andCard:(Card*)card
+-(void) setInfluence:(NSInteger)influence andCard:(CardCounter*)cc
 {
     if (influence > 0)
     {
-        self.influenceLabel.textColor = card.factionColor;
+        self.influenceLabel.textColor = cc.card.factionColor;
         self.influenceLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)influence];
         
-        CGColorRef color = card.factionColor.CGColor;
+        CGColorRef color = cc.card.factionColor.CGColor;
         
         for (int i=0; i<self.pips.count; ++i)
         {
             UIView* pip = self.pips[i];
             pip.layer.backgroundColor = color;
-            pip.hidden = i >= card.influence;
+            pip.hidden = i >= cc.card.influence;
         }
     }
     else
@@ -218,7 +212,7 @@
         }
     }
     
-    if (card.isMostWanted) {
+    if (cc.card.isMostWanted) {
         for (UIView* pip in self.pips) {
             // find the first non-hidden pip, and draw it as a black circle
             if (!pip.hidden) {

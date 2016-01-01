@@ -71,7 +71,7 @@
             CardCounter* cc = cards[j];
             [s appendString:[NSString stringWithFormat:@"%lux %@ (%@)", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
-            NSUInteger influence = [deck influenceFor:cc];
+            NSInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
@@ -186,7 +186,7 @@
             CardCounter* cc = cards[j];
             [s appendString:[NSString stringWithFormat:@"%lux %@ _(%@)_", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
-            NSUInteger influence = [deck influenceFor:cc];
+            NSInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
@@ -262,7 +262,7 @@
             CardCounter* cc = cards[j];
             [s appendString:[NSString stringWithFormat:@"%lux %@ [i](%@)[/i]", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
-            NSUInteger influence = [deck influenceFor:cc];
+            NSInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 NSString* color = [NSString stringWithFormat:@"%lx", (unsigned long)cc.card.factionHexColor];
@@ -308,13 +308,13 @@
     [DeckExport writeToDropbox:s fileName:bbcName deckType:l10n(@"BBCode Deck") autoSave:NO];
 }
 
-+(NSString*) dots:(NSUInteger)count
++(NSString*) dots:(NSUInteger)influence
 {
-    NSMutableString* s = [NSMutableString stringWithCapacity:count+5];
-    for (int i=0; i<count; ++i)
+    NSMutableString* s = [NSMutableString stringWithCapacity:influence+5];
+    for (int i=0; i<influence; ++i)
     {
         [s appendString:@"·"];
-        if ((i+1)%5 == 0 && i<count-1)
+        if ((i+1)%5 == 0 && i<influence-1)
         {
             [s appendString:@" "];
         }
