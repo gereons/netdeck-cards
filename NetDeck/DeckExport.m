@@ -74,12 +74,13 @@
             NSUInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
-                [s appendString:[NSString stringWithFormat:@" %@\n", [DeckExport dots:influence]]];
+                [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
             }
-            else
-            {
-                [s appendString:@"\n"];
+            if (cc.card.isMostWanted) {
+                [s appendString:@" (MWL)"];
             }
+            
+            [s appendString:@"\n"];
             numCards += cc.count;
         }
     }
@@ -190,6 +191,9 @@
             {
                 [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
             }
+            if (cc.card.isMostWanted) {
+                [s appendString:@" (MWL)"];
+            }
             
             [s appendString:@"  \n"];
             
@@ -262,12 +266,15 @@
             if (influence > 0)
             {
                 NSString* color = [NSString stringWithFormat:@"%lx", (unsigned long)cc.card.factionHexColor];
-                [s appendString:[NSString stringWithFormat:@" [color=#%@]%@[/color]\n", color, [DeckExport dots:influence]]];
+                [s appendString:[NSString stringWithFormat:@" [color=#%@]%@[/color]", color, [DeckExport dots:influence]]];
             }
-            else
-            {
-                [s appendString:@"\n"];
+            
+            if (cc.card.isMostWanted) {
+                [s appendString:@" (MWL)"];
             }
+            
+            [s appendString:@"\n"];
+
             numCards += cc.count;
         }
     }
