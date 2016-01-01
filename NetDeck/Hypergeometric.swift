@@ -37,9 +37,11 @@
             return coefficientFor(n, over: n-k)
         } else {
             var result = UInt64(n-k+1)
-            for i in 2 ... k {
-                result *= UInt64(n-k+i)
-                result /= UInt64(i)
+            if k > 1 {
+                for i in 2 ... k {
+                    result *= UInt64(n-k+i)
+                    result /= UInt64(i)
+                }
             }
             return Double(result)
         }
