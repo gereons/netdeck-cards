@@ -174,6 +174,7 @@ static NSString* filterText;
         alert.popoverPresentationController.barButtonItem = sender;
     }
     
+    [alert.view layoutIfNeeded];
     [self presentViewController:alert animated:NO completion:nil];
 }
 

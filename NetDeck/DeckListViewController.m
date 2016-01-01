@@ -706,6 +706,7 @@
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.actionSheet.view layoutIfNeeded];
     
     [self presentViewController:self.actionSheet animated:NO completion:nil];
 }
@@ -861,6 +862,7 @@
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.actionSheet.view layoutIfNeeded];
     
     [self presentViewController:self.actionSheet animated:NO completion:nil];
 }
@@ -963,6 +965,7 @@
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.actionSheet.view layoutIfNeeded];
     
     [self presentViewController:self.actionSheet animated:NO completion:nil];
 }

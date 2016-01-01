@@ -226,6 +226,7 @@ static NRFilter _filterType = NRFilterAll;
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.popup.view layoutIfNeeded];
     
     [self presentViewController:self.popup animated:NO completion:nil];
 }
@@ -264,6 +265,7 @@ static NRFilter _filterType = NRFilterAll;
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.popup.view layoutIfNeeded];
     
     [self presentViewController:self.popup animated:NO completion:nil];
 }
@@ -305,6 +307,7 @@ static NRFilter _filterType = NRFilterAll;
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.popup.view layoutIfNeeded];
     
     [self presentViewController:self.popup animated:NO completion:nil];
 }

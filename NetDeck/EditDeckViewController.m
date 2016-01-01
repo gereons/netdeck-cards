@@ -181,6 +181,7 @@
     }
     
     [alert addAction:[UIAlertAction cancelAction:nil]];
+    [alert.view layoutIfNeeded];
     
     [self presentViewController:alert animated:NO completion:nil];
 }
@@ -222,6 +223,7 @@
     }
     
     [alert addAction:[UIAlertAction cancelAction:nil]];
+    [alert.view layoutIfNeeded];
     
     [self presentViewController:alert animated:NO completion:nil];
 }
