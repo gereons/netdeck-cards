@@ -289,7 +289,7 @@ static NSInteger viewMode = VIEW_LIST;
     Deck* deck = self.deckListViewController.deck;
     
     if (deck.filename) {
-        deck = [DeckManager loadDeckFromPath:deck.filename];
+        deck = [DeckManager loadDeckFromPath:deck.filename useCache:NO];
         [self reloadData];
         self.deckListViewController.deck = deck;
         [self setBackOrRevertButton];

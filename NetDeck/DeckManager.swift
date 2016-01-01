@@ -87,8 +87,14 @@ import Foundation
     }
     
     class func loadDeckFromPath(path: String) -> Deck? {
-        if let cachedDeck = DeckManager.cache.objectForKey(path) as? Deck {
-            return cachedDeck
+        return loadDeckFromPath(path, useCache: true)
+    }
+    
+    class func loadDeckFromPath(path: String, useCache: Bool = true) -> Deck? {
+        if useCache {
+            if let cachedDeck = DeckManager.cache.objectForKey(path) as? Deck {
+                return cachedDeck
+            }
         }
         
         let data = NSData(contentsOfFile: path)
