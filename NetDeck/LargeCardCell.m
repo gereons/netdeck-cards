@@ -29,6 +29,10 @@
     }
     
     self.name.font = [UIFont md_mediumSystemFontOfSize:17];
+    
+    for (UILabel* lbl in @[ self.label1, self.label2, self.label3]) {
+        lbl.font = [UIFont md_systemFontOfSize:17];
+    }
 }
 
 -(void) setCardCounter:(CardCounter *)cc
@@ -91,6 +95,7 @@
     self.identityButton.hidden = card.type != NRCardTypeIdentity;
     self.type.hidden = NO;
     
+    self.label2.textColor = [UIColor blackColor];
     // labels from top: cost/strength/mu
     switch (card.type)
     {
@@ -103,7 +108,11 @@
             }
             else
             {
-                self.label2.text = [@(card.influenceLimit) stringValue];
+                NSInteger inf = self.deck.influenceLimit;
+                self.label2.text = [NSString stringWithFormat:@"%ld", (long)inf];
+                if (inf != card.influenceLimit) {
+                    self.label2.textColor = [UIColor redColor];
+                }
             }
             self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)
