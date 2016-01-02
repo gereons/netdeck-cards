@@ -16,6 +16,7 @@
 #import "BrowserCell.h"
 #import "BrowserImageCell.h"
 #import "BrowserSectionHeaderView.h"
+#import "NRCrashlytics.h"
 
 @interface BrowserResultViewController ()
 
@@ -369,6 +370,7 @@ static BrowserResultViewController* instance;
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.BROWSER_NEW object:self userInfo:@{ @"code": card.code }];
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"ANCUR page for this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        LOG_EVENT(@"Open ANCUR", @{@"Card": card.name});
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:card.ancurLink]];
     }]];
     

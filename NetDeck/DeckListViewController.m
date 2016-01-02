@@ -440,6 +440,7 @@
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             if (buttonIndex == 0)
             {
+                LOG_EVENT(@"Save to NRDB", nil);
                 [self saveDeckToNetrunnerDb];
             }
         };
@@ -462,6 +463,7 @@
                 case 1: // open in safari
                     if (AppDelegate.online)
                     {
+                        LOG_EVENT(@"Open in Safari", nil);
                         [self openInSafari:self.deck];
                     }
                     else
@@ -473,6 +475,7 @@
                 case 2: // publish
                     if (AppDelegate.online)
                     {
+                        LOG_EVENT(@"Publish Deck", nil);
                         [self publishDeck:self.deck];
                     }
                     else
@@ -485,17 +488,20 @@
                     self.deck.netrunnerDbId = nil;
                     if (self.autoSave)
                     {
+                        LOG_EVENT(@"Unlink Deck", nil);
                         [self saveDeckManually:NO withHud:NO];
                     }
                     [self refresh];
                     break;
                     
                 case 4: // re-import
+                    LOG_EVENT(@"Reimport Deck", nil);
                     [self reImportDeckFromNetrunnerDb];
                     break;
                     
             
                 case 5: // save/upload
+                    LOG_EVENT(@"Save to NRDB", nil);
                     [self saveDeckToNetrunnerDb];
                     break;
             }
@@ -713,6 +719,7 @@
 
 -(void) changeDeckState:(NRDeckState)newState
 {
+    LOG_EVENT(@"Change State", (@{ @"From": @(oldState), @"To": @(newState)}) );
     NRDeckState oldState = self.deck.state;
     self.deck.state = newState;
     [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];

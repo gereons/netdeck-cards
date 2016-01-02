@@ -192,7 +192,7 @@
     if (influence > 0)
     {
         self.influenceLabel.textColor = cc.card.factionColor;
-        self.influenceLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)influence];
+        self.influenceLabel.text = [NSString stringWithFormat:@"%ld", (long)influence];
         
         CGColorRef color = cc.card.factionColor.CGColor;
         
