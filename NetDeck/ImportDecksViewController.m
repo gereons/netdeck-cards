@@ -32,6 +32,7 @@ static NSString* filterText;
 @property UIBarButtonItem* spacer;
 @property UIBarButtonItem* sortButton;
 @property NSArray* barButtons;
+@property UIAlertController* alert;
 
 @property NSDateFormatter* dateFormatter;
 @property NRDeckListSort deckListSort;
@@ -156,26 +157,31 @@ static NSString* filterText;
 
 -(void)changeSort:(UIBarButtonItem*)sender
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Sort by") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.alert = [UIAlertController alertControllerWithTitle:l10n(@"Sort by") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
+    [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortDate];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
+    [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortFaction];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
+    [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortA_Z];
     }]];
-    [alert addAction:[UIAlertAction cancelAction:nil]];
+    [self.alert addAction:[UIAlertAction cancelAction:^(UIAlertAction* action) {
+        self.alert = nil;
+    }]];
     
     if (IS_IPAD)
     {
-        alert.popoverPresentationController.barButtonItem = sender;
+        UIPopoverPresentationController* popover = self.alert.popoverPresentationController;
+        popover.barButtonItem = sender;
+        popover.sourceView = self.view;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        [self.alert.view layoutIfNeeded];
     }
     
-    [alert.view layoutIfNeeded];
-    [self presentViewController:alert animated:NO completion:nil];
+    [self presentViewController:self.alert animated:NO completion:nil];
 }
 
 -(void) changeSortType:(NRDeckListSort)sort
@@ -187,10 +193,20 @@ static NSString* filterText;
     [self.tableView reloadData];
 }
 
+-(void) dismissSortPopup {
+    [self.alert dismissViewControllerAnimated:NO completion:nil];
+    self.alert = nil;
+}
+
 #pragma mark import all
 
 -(void) importAll:(id)sender
 {
+    if (self.alert) {
+        [self dismissSortPopup];
+        return;
+    }
+    
     NSString* msg;
     if (self.source == NRImportSourceDropbox)
     {
