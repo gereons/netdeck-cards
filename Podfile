@@ -21,7 +21,7 @@ pod 'MultiSelectSegmentedControl'
 pod 'CorePlot'
 pod 'PromiseKit'
 pod 'PromiseKit-AFNetworking'
-pod 'SwiftyJSON'
+# pod 'SwiftyJSON'
 
 post_install do | installer |
   require 'fileutils'
