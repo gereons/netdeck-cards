@@ -719,8 +719,8 @@
 
 -(void) changeDeckState:(NRDeckState)newState
 {
-    LOG_EVENT(@"Change State", (@{ @"From": @(oldState), @"To": @(newState)}) );
     NRDeckState oldState = self.deck.state;
+    LOG_EVENT(@"Change State", (@{ @"From": @(oldState), @"To": @(newState)}) );
     self.deck.state = newState;
     [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];
     if (self.deck.state != oldState)
