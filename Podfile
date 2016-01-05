@@ -6,7 +6,7 @@ use_frameworks!
 pod 'Fabric'
 pod 'Crashlytics'
 
-pod 'DTCoreText'
+pod 'DTCoreText', :git => 'https://github.com/gereons/DTCoreText', :branch => 'fix-938'
 pod 'AFNetworking', '~> 2.0' # -> Alamofire
 pod 'SVProgressHUD'
 pod 'Dropbox-Sync-API-SDK' # -> use new DB api?

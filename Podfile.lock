@@ -112,7 +112,7 @@ DEPENDENCIES:
   - Crashlytics
   - CSStickyHeaderFlowLayout
   - Dropbox-Sync-API-SDK
-  - DTCoreText
+  - DTCoreText (from `https://github.com/gereons/DTCoreText`, branch `fix-938`)
   - Fabric
   - GRMustache
   - InAppSettingsKit
@@ -122,6 +122,16 @@ DEPENDENCIES:
   - PromiseKit-AFNetworking
   - SDCAlertView (~> 2.5.4)
   - SVProgressHUD
+
+EXTERNAL SOURCES:
+  DTCoreText:
+    :branch: fix-938
+    :git: https://github.com/gereons/DTCoreText
+
+CHECKOUT OPTIONS:
+  DTCoreText:
+    :commit: 255036e91325a76fe5bc86229eefaf93628feb13
+    :git: https://github.com/gereons/DTCoreText
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60

@@ -514,6 +514,7 @@
         cell.typeLabel.text = @"";
         cell.stepper.hidden = YES;
         cell.idButton.hidden = NO;
+        cell.mwlLabel.hidden = YES;
         return cell;
     }
     
@@ -524,10 +525,6 @@
     cell.stepper.hidden = card.type == NRCardTypeIdentity;
     cell.idButton.hidden = card.type != NRCardTypeIdentity;
     
-//    cell.nameLabel.backgroundColor = [UIColor redColor];
-//    cell.typeLabel.backgroundColor = [UIColor greenColor];
-//    cell.influenceLabel.backgroundColor = [UIColor blueColor];
-
     if (card.unique)
     {
         cell.nameLabel.text = [NSString stringWithFormat:@"%lu× %@ •", (unsigned long)cc.count, card.name];
@@ -562,6 +559,11 @@
     {
         cell.influenceLabel.text = @"";
     }
+    
+    if (card.isMostWanted) {
+        cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)-cc.count];
+    }
+    cell.mwlLabel.hidden = !card.isMostWanted;
     
     NSString* subtype = card.subtype;
     if (subtype)

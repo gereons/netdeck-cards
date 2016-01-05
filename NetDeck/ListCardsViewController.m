@@ -25,6 +25,7 @@
 @end
 
 static NSString* kSearchFieldValue = @"searchField";
+static NSString* kCancelButton = @"cancelButton";
 
 @implementation ListCardsViewController
 
@@ -224,6 +225,10 @@ static NSString* kSearchFieldValue = @"searchField";
 -(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     searchBar.showsCancelButton = YES;
+    UIButton* cancelBtn = [self.searchBar valueForKey:kCancelButton];
+    if (cancelBtn) {
+        [cancelBtn setTitle:l10n(@"Done") forState:UIControlStateNormal];
+    }
     self.tableView.tableHeaderView = self.searchBar;
 }
 
@@ -354,6 +359,11 @@ static NSString* kSearchFieldValue = @"searchField";
         cell.influenceLabel.text = @"";
     }
     
+    if (card.isMostWanted) {
+        cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)MIN(-1, -cc.count)];
+    }
+    cell.mwlLabel.hidden = !card.isMostWanted;
+    
     NSString* subtype = card.subtype;
     if (subtype)
     {
@@ -368,7 +378,6 @@ static NSString* kSearchFieldValue = @"searchField";
         cell.typeLabel.text = type;
     }
 
-    
     return cell;
 }
 
