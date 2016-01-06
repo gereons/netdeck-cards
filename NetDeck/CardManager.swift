@@ -160,6 +160,9 @@ import Foundation
         for obj in json {
             let card = Card.cardFromJson(obj as! NSDictionary)
             assert(card.isValid, "invalid card from \(obj)");
+            if !card.isValid {
+                return false
+            }
                 
             CardManager.addCard(card)
         }

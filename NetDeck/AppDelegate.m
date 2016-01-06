@@ -35,8 +35,17 @@ const NSString* const kANY = @"Any";
     
     [self setBuiltinUserDefaults];
     
-    [CardSets setupFromFiles];
-    [CardManager setupFromFiles];
+    BOOL setsOk = NO, cardsOk = NO;
+    
+    setsOk = [CardSets setupFromFiles];
+    if (setsOk) {
+        cardsOk = [CardManager setupFromFiles];
+    }
+    
+    if (!setsOk || !cardsOk) {
+        [CardSets removeFiles];
+        [CardManager removeFiles];
+    }
     
     [self setAdditionalUserDefaults];
     

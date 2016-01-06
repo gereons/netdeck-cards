@@ -102,6 +102,9 @@ import Foundation
             
             cs.cycle = cycleMap[cycleNumber] ?? .Unknown
             assert(cs.cycle != .Unknown)
+            if cs.cycle == .Unknown {
+                return false
+            }
             maxCycle = max(maxCycle, cs.cycle.rawValue)
             cs.setNum = cycleNumber*100 + number
             
@@ -139,10 +142,13 @@ import Foundation
         setGroups.insert("", atIndex:0)
         setGroups.insert("Core / Deluxe".localized(), atIndex:1)
         setsPerGroup[.None] = [Int]()
-        assert(setGroups.count == setsPerGroup.count, "count mismatch");
+        assert(setGroups.count == setsPerGroup.count, "count mismatch")
+        if setGroups.count != setsPerGroup.count {
+            return false
+        }
         
         NSUserDefaults.standardUserDefaults().registerDefaults(CardSets.settingsDefaults())
-        return true;
+        return true
     }
     
     class func setsAvailable() -> Bool {
