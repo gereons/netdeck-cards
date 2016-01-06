@@ -14,5 +14,6 @@
 @property IBOutlet UILabel* influenceLabel;
 @property IBOutlet UILabel* factionLabel;
 @property IBOutlet UIStepper* copiesStepper;
+@property IBOutlet UIView* mwlMarker;
 
 @end
