@@ -100,18 +100,14 @@ import Foundation
         }
         
         if NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_NAPD_MWL) {
-            var limit = self.identity!.influenceLimit
-            for cc in cards {
-                if cc.card.isMostWanted {
-                    limit -= cc.count
-                }
-            }
-            return max(1, limit)
+            let limit = self.identity!.influenceLimit
+            return max(1, limit - self.mwlPenalty)
         } else {
             return self.identity!.influenceLimit
         }
     }
     
+    /// how many cards in this deck are on the MWL?
     var cardsFromMWL: Int {
         var mwl = 0
         for cc in cards {
@@ -120,6 +116,12 @@ import Foundation
             }
         }
         return mwl
+    }
+    
+    /// what's the influence penalty incurred through MWL cards?
+    /// (separate from `cardsFromMWL` in case we ever get rules other than "1 inf per card")
+    var mwlPenalty: Int {
+        return self.cardsFromMWL
     }
     
     func influenceFor(cardcounter: CardCounter?) -> Int {

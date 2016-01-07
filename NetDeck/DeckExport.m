@@ -87,8 +87,13 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
-    [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
-    [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL]) {
+        [s appendFormat:@"%ld/%ld (%ld-%ld) influence used\n", (long)deck.influence, (long)deck.influenceLimit, (long)deck.identity.influenceLimit, (long)deck.mwlPenalty];
+        [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
+    } else {
+        [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
+    }
+    
     if (deck.identity.role == NRRoleCorp)
     {
         [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];
@@ -203,8 +208,13 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)  \n", numCards, (long)deck.identity.minimumDecksize];
-    [s appendFormat:@"%ld/%ld influence used  \n", (long)deck.influence, (long)deck.influenceLimit];
-    [s appendFormat:@"%ld cards from MWL  \n", (long)deck.cardsFromMWL];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL]) {
+        [s appendFormat:@"%ld/%ld (%ld-%ld) influence used  \n", (long)deck.influence, (long)deck.influenceLimit, (long)deck.identity.influenceLimit, (long)deck.mwlPenalty];
+        [s appendFormat:@"%ld cards from MWL  \n", (long)deck.cardsFromMWL];
+    } else {
+        [s appendFormat:@"%ld/%ld influence used  \n", (long)deck.influence, (long)deck.influenceLimit];
+    }
+
     if (deck.identity.role == NRRoleCorp)
     {
         [s appendFormat:@"Agenda Points: %ld  \n", (long)deck.agendaPoints];
@@ -281,8 +291,13 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
-    [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
-    [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL]) {
+        [s appendFormat:@"%ld/%ld (%ld-%ld) influence used\n", (long)deck.influence, (long)deck.influenceLimit, (long)deck.identity.influenceLimit, (long)deck.mwlPenalty];
+        [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
+    } else {
+        [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
+    }
+
     if (deck.identity.role == NRRoleCorp)
     {
         [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];
