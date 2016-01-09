@@ -21,12 +21,16 @@ import DTCoreText
     // FIXME: make this a let ASAP
     static var PAD_FACTORY              = "00000"    // code tbd; 0 inf if 3 pad campaigns in deck
     static let MUMBA_TEMPLE             = "10018"    // 0 inf if <= 15 ice in deck
+    static let MUMBAD_VIRTUAL_TOUR      = "10075"    // 0 inf if >= 7 assets in deck
+    
+    // alliance-based: 0 inf if >= non-alliance cards of same faction in deck
     static let JEEVES_MODEL_BIOROID     = "10067"    // 0 inf if >= 6 non-alliance HB cards in deck
     static let RAMAN_RAI                = "10068"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
     static let SALEMS_HOSPITALITY       = "10071"    // 0 inf if >= 6 non-alliance NBN cards in deck
     static let EXECUTIVE_SEARCH_FIRM    = "10072"    // 0 inf if >= 6 non-alliance Weyland cards in deck
-    static let MUMBAD_VIRTUAL_TOUR      = "10075"    // 0 inf if >= 7 assets in deck
     static let IBRAHIM_SALEM            = "10109"    // 0 inf if >= 6 non-alliance NBN cards in deck
+    
+    static let ALLIANCE_6 = Set<String>([ JEEVES_MODEL_BIOROID, RAMAN_RAI, SALEMS_HOSPITALITY, EXECUTIVE_SEARCH_FIRM, IBRAHIM_SALEM ])
     
     static let PAD_CAMPAIGN             = "01109"    // needed for pad factory
     static let WIRELESS_NET_PAVILLION   = "08108"    // errata'd to be unique
@@ -63,6 +67,7 @@ import DTCoreText
     static let NAPD_CONTRACT    = "04119"
     static let SANSAN_CITY_GRID = "01092"
     
+    // MWL from Tournament Rules 3.0.2, valid from 2016-02-01 onwards
     static let MOST_WANTED_LIST = Set<String>([
         CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
         ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])

@@ -150,20 +150,8 @@ import Foundation
         if cc.card.code == Card.MUMBAD_VIRTUAL_TOUR && self.assetCount() >= 7 {
             return 0
         }
-        // jeeves model bioroid: 0 inf if >=6 non-alliance HB cards in deck
-        if cc.card.code == Card.JEEVES_MODEL_BIOROID && self.nonAllianceOfFaction(.HaasBioroid) >= 6 {
-            return 0
-        }
-        // raman rai: 0 inf if >=6 non-alliance Jinteki cards in deck
-        if cc.card.code == Card.RAMAN_RAI && self.nonAllianceOfFaction(.Jinteki) >= 6 {
-            return 0
-        }
-        // salem's hospitality and ibrahim salem: 0 inf if >=6 non-alliance NBN cards in deck
-        if (cc.card.code == Card.SALEMS_HOSPITALITY || cc.card.code == Card.IBRAHIM_SALEM) && self.nonAllianceOfFaction(.NBN) >= 6 {
-            return 0
-        }
-        // executive search firm: 0 inf if >=6 non-alliance Weyland cards in deck
-        if cc.card.code == Card.EXECUTIVE_SEARCH_FIRM && self.nonAllianceOfFaction(.Weyland) >= 6 {
+        // alliance-based cards: 0 inf if >=6 non-alliance cards of same faction in deck
+        if Card.ALLIANCE_6.contains(cc.card.code) && self.nonAllianceOfFaction(cc.card.faction) >= 6 {
             return 0
         }
         
