@@ -24,16 +24,17 @@
 #endif
 #endif
 
-typedef NS_ENUM(NSInteger, DeckBuilderSite)
+typedef NS_ENUM(NSInteger, DeckBuilderSource)
 {
-    DeckBuilderSiteNone,
-    DeckBuilderSiteNetrunnerDB,
-    DeckBuilderSiteMeteor
+    DeckBuilderSourceNone,
+    DeckBuilderSourceNRDBList,
+    DeckBuilderSourceNRDBShared,
+    DeckBuilderSourceMeteor
 };
 
 @interface DeckSource : NSObject
 @property NSString* deckId;
-@property DeckBuilderSite site;
+@property DeckBuilderSource source;
 @end
 @implementation DeckSource
 @end
@@ -105,13 +106,13 @@ static DeckImport* instance;
     SDCAlertView* alert = nil;
     if (self.deckSource)
     {
-        if (self.deckSource.site == DeckBuilderSiteNetrunnerDB)
+        if (self.deckSource.source == DeckBuilderSourceNRDBList || self.deckSource.source == DeckBuilderSourceNRDBShared)
         {
             alert = [SDCAlertView alertWithTitle:nil
                                          message:l10n(@"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?")
                                          buttons:@[l10n(@"No"), l10n(@"Yes")]];
         }
-        else if (self.deckSource.site == DeckBuilderSiteMeteor)
+        else if (self.deckSource.source == DeckBuilderSourceMeteor)
         {
             alert = [SDCAlertView alertWithTitle:nil
                                          message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
@@ -156,17 +157,23 @@ static DeckImport* instance;
 {
     // a netrunnerdb.com decklist url looks like this:
     // http://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
-    
     // or like this:
-    // http://netrunnerdb.com/en/deck/view/456867 - but this doesn't work until
-    // https://bitbucket.org/alsciende/nrdb/issues/183/api-api-decklist-id-doesnt-work-for-shared gets fixed
+    // http://netrunnerdb.com/en/deck/view/456867
+   
+    NSRegularExpression* list = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../decklist/(\\d*)/.*" options:0 error:nil];
+    NSRegularExpression* shared = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../deck/view/(\\d*)" options:0 error:nil];
+
+    NSDictionary* dict = @{
+        @(DeckBuilderSourceNRDBShared): shared,
+        @(DeckBuilderSourceNRDBList): list
+    };
     
     
-    NSRegularExpression* re1 = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../decklist/(\\d*)/.*" options:0 error:nil];
-    // NSRegularExpression* re2 = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../deck/view/(\\d*)" options:0 error:nil];
-    
-    for (NSRegularExpression* regEx in @[ re1 /*, re2 */ ])
+    for (NSNumber*n in dict)
     {
+        DeckBuilderSource source = n.integerValue;
+        NSRegularExpression* regEx = dict[n];
+        
         for (NSString* line in lines)
         {
             NSTextCheckingResult* match = [regEx firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
@@ -174,7 +181,7 @@ static DeckImport* instance;
             {
                 DeckSource* src = [[DeckSource alloc] init];
                 src.deckId = [line substringWithRange:[match rangeAtIndex:1]];
-                src.site = DeckBuilderSiteNetrunnerDB;
+                src.source = source;
                 return src;
             }
         }
@@ -199,7 +206,7 @@ static DeckImport* instance;
         {
             DeckSource* src = [[DeckSource alloc] init];
             src.deckId = [line substringWithRange:[match rangeAtIndex:1]];
-            src.site = DeckBuilderSiteMeteor;
+            src.source = DeckBuilderSourceMeteor;
             return src;
         }
     }
@@ -317,19 +324,29 @@ static DeckImport* instance;
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    if (deckSource.site == DeckBuilderSiteNetrunnerDB)
-    {
-        [self performSelector:@selector(doDownloadDeckFromNetrunnerDb:) withObject:deckSource.deckId afterDelay:0.01];
+    if (deckSource.source == DeckBuilderSourceNRDBList) {
+        [self performSelector:@selector(doDownloadDeckFromNetrunnerDbList:) withObject:deckSource.deckId afterDelay:0.01];
     }
-    else
-    {
+    else if (deckSource.source == DeckBuilderSourceNRDBShared) {
+        [self performSelector:@selector(doDownloadDeckFromNetrunnerDbShared:) withObject:deckSource.deckId afterDelay:0.01];
+    }
+    else {
         [self performSelector:@selector(doDownloadDeckFromMeteor:) withObject:deckSource.deckId afterDelay:0.01];
     }
 }
 
--(void) doDownloadDeckFromNetrunnerDb:(NSString*)deckId
-{
+-(void) doDownloadDeckFromNetrunnerDbList:(NSString*)deckId {
     NSString* deckUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api/decklist/%@", deckId];
+    [self doDownloadDeckFromNetrunnerDb:deckUrl];
+}
+
+-(void) doDownloadDeckFromNetrunnerDbShared:(NSString*)deckId {
+    NSString* deckUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api/shareddeck/%@", deckId];
+    [self doDownloadDeckFromNetrunnerDb:deckUrl];
+}
+
+-(void) doDownloadDeckFromNetrunnerDb:(NSString*)deckUrl
+{
     BOOL __block ok = NO;
     self.downloadStopped = NO;
     
