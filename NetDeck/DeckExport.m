@@ -53,6 +53,7 @@
         [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
     }
     
+    BOOL useMWL = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL];
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
@@ -76,7 +77,7 @@
             {
                 [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
             }
-            if (cc.card.isMostWanted) {
+            if (useMWL && cc.card.isMostWanted) {
                 [s appendString:@" (MWL)"];
             }
             
@@ -87,7 +88,7 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL]) {
+    if (useMWL) {
         [s appendFormat:@"%ld/%ld (%ld-%ld) influence used\n", (long)deck.influence, (long)deck.influenceLimit, (long)deck.identity.influenceLimit, (long)deck.mwlPenalty];
         [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
     } else {
@@ -173,6 +174,7 @@
         [s appendString:[NSString stringWithFormat:@"%@ _(%@)_\n", deck.identity.name, deck.identity.setName]];
     }
     
+    BOOL useMWL = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL];
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
@@ -196,7 +198,7 @@
             {
                 [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
             }
-            if (cc.card.isMostWanted) {
+            if (useMWL && cc.card.isMostWanted) {
                 [s appendString:@" (MWL)"];
             }
             
@@ -208,7 +210,7 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)  \n", numCards, (long)deck.identity.minimumDecksize];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL]) {
+    if (useMWL) {
         [s appendFormat:@"%ld/%ld (%ld-%ld) influence used  \n", (long)deck.influence, (long)deck.influenceLimit, (long)deck.identity.influenceLimit, (long)deck.mwlPenalty];
         [s appendFormat:@"%ld cards from MWL  \n", (long)deck.cardsFromMWL];
     } else {
@@ -254,6 +256,7 @@
         [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
     }
     
+    BOOL useMWL = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL];
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
@@ -279,7 +282,7 @@
                 [s appendString:[NSString stringWithFormat:@" [color=#%@]%@[/color]", color, [DeckExport dots:influence]]];
             }
             
-            if (cc.card.isMostWanted) {
+            if (useMWL && cc.card.isMostWanted) {
                 [s appendString:@" (MWL)"];
             }
             
@@ -291,7 +294,7 @@
     
     [s appendFormat:@"\n"];
     [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL]) {
+    if (useMWL) {
         [s appendFormat:@"%ld/%ld (%ld-%ld) influence used\n", (long)deck.influence, (long)deck.influenceLimit, (long)deck.identity.influenceLimit, (long)deck.mwlPenalty];
         [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
     } else {
