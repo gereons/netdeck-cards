@@ -399,6 +399,9 @@ static NSDateFormatter* formatter;
         
         NSArray* variation = dict[@"variation"];
         NSAssert(variation.count == 2, @"wrong variation count");
+        if (![variation isKindOfClass:[NSArray class]] || variation.count != 2) {
+            continue;
+        }
         // 2-element array: variation[0] contains additions, variation[1] contains deletions
         
         for (int i=0; i<variation.count; ++i)
@@ -406,8 +409,7 @@ static NSDateFormatter* formatter;
             NSDictionary* dict = variation[i];
             
             // skip over empty and non-dictionary entries
-            if (dict.count == 0) // || ![dict isKindOfClass:[NSDictionary class]])
-            {
+            if (![dict isKindOfClass:[NSDictionary class]] || dict.count == 0) {
                 continue;
             }
             
