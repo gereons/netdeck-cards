@@ -7,15 +7,13 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class Deck, Card;
-
 @interface CardImageViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property IBOutlet UICollectionView* collectionView;
 
 @property Card* selectedCard;
 
--(void) setCards:(NSArray*)cards;
--(void) setCardCounters:(NSArray*)cardCounters;
+-(void) setCards:(NSArray<Card*>*)cards;
+-(void) setCardCounters:(NSArray<CardCounter*>*)cardCounters;
 
 @end

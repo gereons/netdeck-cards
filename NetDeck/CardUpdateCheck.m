@@ -6,14 +6,11 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
-#import <AFNetworkReachabilityManager.h>
+@import SDCAlertView;
 
 #import "CardUpdateCheck.h"
-#import "CardManager.h"
-#import "CardSets.h"
 #import "DataDownload.h"
-#import "SettingsKeys.h"
+#import "AppDelegate.h"
 
 @implementation CardUpdateCheck
 
@@ -42,7 +39,7 @@
 
 +(void) checkCardUpdate
 {
-    NSString* next = [[NSUserDefaults standardUserDefaults] stringForKey:NEXT_DOWNLOAD];
+    NSString* next = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NEXT_DOWNLOAD];
     
     NSDateFormatter *fmt = [NSDateFormatter new];
     [fmt setDateStyle:NSDateFormatterShortStyle];
@@ -56,7 +53,7 @@
     
     NSDate* now = [NSDate date];
     
-    if (APP_ONLINE && [scheduled compare:now] == NSOrderedAscending)
+    if (AppDelegate.online && [scheduled compare:now] == NSOrderedAscending)
     {
         SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Update cards")
                                                    message:l10n(@"Card data may be out of date. Download now?")
@@ -67,7 +64,7 @@
                 // ask again tomorrow
                 NSDate* next = [NSDate dateWithTimeIntervalSinceNow:24*60*60];
                 
-                [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:NEXT_DOWNLOAD];
+                [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:SettingsKeys.NEXT_DOWNLOAD];
             }
             if (buttonIndex == 1) // ok
             {

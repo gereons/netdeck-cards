@@ -8,8 +8,6 @@
 
 #import "Stats.h"
 
-@class Deck;
-
 @interface CardTypeStats : Stats <CPTPlotDataSource, CPTPlotDelegate>
 
 -(CardTypeStats*) initWithDeck:(Deck*)deck;

@@ -11,9 +11,6 @@
 #import "CardImageCell.h"
 #import "BrowserImageCell.h"
 #import "CardImageViewCell.h"
-#import "Card.h"
-#import "CardType.h"
-#import "Faction.h"
 #import "ImageCache.h"
 
 @implementation CardDetailView
@@ -152,7 +149,7 @@
             self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)
             {
-                self.label3.text = [NSString stringWithFormat:@"%d", card.baseLink];
+                self.label3.text = [NSString stringWithFormat:@"%ld", (long)card.baseLink];
                 self.icon3.image = [ImageCache linkIcon];
             }
             else
@@ -166,40 +163,40 @@
         case NRCardTypeResource:
         case NRCardTypeEvent:
         case NRCardTypeHardware:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
-            self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%ld", (long)card.strength] : @"";
             self.icon2.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
-            self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%d", card.mu] : @"";
+            self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%ld", (long)card.mu] : @"";
             self.icon3.image = card.mu != -1 ? [ImageCache muIcon] : nil;
             break;
             
         case NRCardTypeIce:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%ld", (long)card.strength] : @"";
             self.icon3.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
             break;
             
         case NRCardTypeAgenda:
-            self.label1.text = [NSString stringWithFormat:@"%d", card.advancementCost];
+            self.label1.text = [NSString stringWithFormat:@"%ld", (long)card.advancementCost];
             self.icon1.image = [ImageCache difficultyIcon];
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = [NSString stringWithFormat:@"%d", card.agendaPoints];
+            self.label3.text = [NSString stringWithFormat:@"%ld", (long)card.agendaPoints];
             self.icon3.image = [ImageCache apIcon];
             break;
             
         case NRCardTypeAsset:
         case NRCardTypeOperation:
         case NRCardTypeUpgrade:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%d", card.trash] : @"";
+            self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%ld", (long)card.trash] : @"";
             self.icon3.image = card.trash != -1 ? [ImageCache trashIcon] : nil;
             break;
             

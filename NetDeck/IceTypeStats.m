@@ -7,7 +7,6 @@
 //
 
 #import "IceTypeStats.h"
-#import "Deck.h"
 
 @interface IceTypeStats()
 @property NSUInteger iceCount;

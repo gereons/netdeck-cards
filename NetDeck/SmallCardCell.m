@@ -7,15 +7,20 @@
 //
 
 #import "SmallCardCell.h"
-#import "CardCounter.h"
-#import "Deck.h"
-#import "SettingsKeys.h"
+#import "CGRectUtils.h"
 
 @implementation SmallCardCell
 
 -(void) awakeFromNib
 {
     self.name.font = [UIFont md_mediumSystemFontOfSize:17];
+    
+    NSInteger diameter = 8;
+    self.mwlMarker.frame = CGRectSetSize(self.mwlMarker.frame, diameter, diameter);
+    self.mwlMarker.layer.cornerRadius = diameter/2;
+    self.mwlMarker.layer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.mwlMarker.layer.borderWidth = 1;
+    self.mwlMarker.layer.borderColor = [UIColor blackColor].CGColor;
 }
 
 -(void) setCardCounter:(CardCounter *)cc
@@ -85,6 +90,7 @@
         self.influenceLabel.text = @"";
     }
     
+    self.mwlMarker.hidden = !card.isMostWanted;
     self.factionLabel.text = card.factionStr;
 }
 

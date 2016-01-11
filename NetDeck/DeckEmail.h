@@ -8,8 +8,6 @@
 
 #import <MessageUI/MessageUI.h>
 
-@class Deck;
-
 @interface DeckEmail : NSObject<MFMailComposeViewControllerDelegate>
 
 +(BOOL) canSendMail;

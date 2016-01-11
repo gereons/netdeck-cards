@@ -8,7 +8,6 @@
 
 #import "DeckEmail.h"
 #import "DeckExport.h"
-#import "Deck.h"
 
 @interface DeckEmail()
 @property UIViewController* viewController;

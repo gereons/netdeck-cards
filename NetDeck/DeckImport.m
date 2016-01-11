@@ -6,15 +6,11 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <EXTScope.h>
-#import <SDCAlertView.h>
-#import <AFNetworking.h>
+@import AFNetworking;
+@import SDCAlertView;
 
+#import "EXTScope.h"
 #import "DeckImport.h"
-#import "Deck.h"
-#import "CardManager.h"
-#import "SettingsKeys.h"
-#import "Notifications.h"
 #import "OctgnImport.h"
 #import "GZip.h"
 
@@ -28,16 +24,17 @@
 #endif
 #endif
 
-typedef NS_ENUM(NSInteger, DeckBuilderSite)
+typedef NS_ENUM(NSInteger, DeckBuilderSource)
 {
-    DeckBuilderSiteNone,
-    DeckBuilderSiteNetrunnerDB,
-    DeckBuilderSiteMeteor
+    DeckBuilderSourceNone,
+    DeckBuilderSourceNRDBList,
+    DeckBuilderSourceNRDBShared,
+    DeckBuilderSourceMeteor
 };
 
 @interface DeckSource : NSObject
 @property NSString* deckId;
-@property DeckBuilderSite site;
+@property DeckBuilderSource source;
 @end
 @implementation DeckSource
 @end
@@ -69,7 +66,7 @@ static DeckImport* instance;
 {
     NSInteger c = [UIPasteboard generalPasteboard].changeCount;
     
-    [[NSUserDefaults standardUserDefaults] setInteger:c forKey:CLIP_CHANGE_COUNT];
+    [[NSUserDefaults standardUserDefaults] setInteger:c forKey:SettingsKeys.CLIP_CHANGE_COUNT];
 }
 
 +(void) checkClipboardForDeck
@@ -82,12 +79,12 @@ static DeckImport* instance;
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     
-    NSInteger lastChange = [[NSUserDefaults standardUserDefaults] integerForKey:CLIP_CHANGE_COUNT];
+    NSInteger lastChange = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.CLIP_CHANGE_COUNT];
     if (lastChange == pasteboard.changeCount && !IMPORT_ALWAYS)
     {
         return;
     }
-    [[NSUserDefaults standardUserDefaults] setInteger:pasteboard.changeCount forKey:CLIP_CHANGE_COUNT];
+    [[NSUserDefaults standardUserDefaults] setInteger:pasteboard.changeCount forKey:SettingsKeys.CLIP_CHANGE_COUNT];
     
     NSString* clip = pasteboard.string;
 
@@ -109,13 +106,13 @@ static DeckImport* instance;
     SDCAlertView* alert = nil;
     if (self.deckSource)
     {
-        if (self.deckSource.site == DeckBuilderSiteNetrunnerDB)
+        if (self.deckSource.source == DeckBuilderSourceNRDBList || self.deckSource.source == DeckBuilderSourceNRDBShared)
         {
             alert = [SDCAlertView alertWithTitle:nil
                                          message:l10n(@"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?")
                                          buttons:@[l10n(@"No"), l10n(@"Yes")]];
         }
-        else if (self.deckSource.site == DeckBuilderSiteMeteor)
+        else if (self.deckSource.source == DeckBuilderSourceMeteor)
         {
             alert = [SDCAlertView alertWithTitle:nil
                                          message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
@@ -143,7 +140,7 @@ static DeckImport* instance;
             {
                 if (self.deck)
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
                 }
                 else if (self.deckSource)
                 {
@@ -156,21 +153,27 @@ static DeckImport* instance;
     }
 }
 
--(DeckSource*) checkForNetrunnerDbDeckURL:(NSArray*) lines
+-(DeckSource*) checkForNetrunnerDbDeckURL:(NSArray<NSString*>*) lines
 {
     // a netrunnerdb.com decklist url looks like this:
     // http://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
-    
     // or like this:
-    // http://netrunnerdb.com/en/deck/view/456867 - but this doesn't work until
-    // https://bitbucket.org/alsciende/nrdb/issues/183/api-api-decklist-id-doesnt-work-for-shared gets fixed
+    // http://netrunnerdb.com/en/deck/view/456867
+   
+    NSRegularExpression* list = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../decklist/(\\d*)/.*" options:0 error:nil];
+    NSRegularExpression* shared = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../deck/view/(\\d*)" options:0 error:nil];
+
+    NSDictionary* dict = @{
+        @(DeckBuilderSourceNRDBShared): shared,
+        @(DeckBuilderSourceNRDBList): list
+    };
     
     
-    NSRegularExpression* re1 = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../decklist/(\\d*)/.*" options:0 error:nil];
-    // NSRegularExpression* re2 = [NSRegularExpression regularExpressionWithPattern:@"http://netrunnerdb.com/../deck/view/(\\d*)" options:0 error:nil];
-    
-    for (NSRegularExpression* regEx in @[ re1 /*, re2 */ ])
+    for (NSNumber*n in dict)
     {
+        DeckBuilderSource source = n.integerValue;
+        NSRegularExpression* regEx = dict[n];
+        
         for (NSString* line in lines)
         {
             NSTextCheckingResult* match = [regEx firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
@@ -178,7 +181,7 @@ static DeckImport* instance;
             {
                 DeckSource* src = [[DeckSource alloc] init];
                 src.deckId = [line substringWithRange:[match rangeAtIndex:1]];
-                src.site = DeckBuilderSiteNetrunnerDB;
+                src.source = source;
                 return src;
             }
         }
@@ -187,7 +190,7 @@ static DeckImport* instance;
     return nil;
 }
 
--(DeckSource*) checkForMeteorDeckURL:(NSArray*) lines
+-(DeckSource*) checkForMeteorDeckURL:(NSArray<NSString*>*) lines
 {
     // a netrunner.meteor.com decklist url looks like this:
     // http://netrunner.meteor.com/decks/yBMJ3GL6FPozt9nkQ/
@@ -203,7 +206,7 @@ static DeckImport* instance;
         {
             DeckSource* src = [[DeckSource alloc] init];
             src.deckId = [line substringWithRange:[match rangeAtIndex:1]];
-            src.site = DeckBuilderSiteMeteor;
+            src.source = DeckBuilderSourceMeteor;
             return src;
         }
     }
@@ -211,7 +214,7 @@ static DeckImport* instance;
     return nil;
 }
 
--(Deck*) checkForTextDeck:(NSArray*)lines
+-(Deck*) checkForTextDeck:(NSArray<NSString*>*)lines
 {
     NSArray* cards = [CardManager allCards];
     NSRegularExpression *regex1 = [NSRegularExpression regularExpressionWithPattern:@"^([0-9])x" options:0 error:nil]; // start with "1x ..."
@@ -221,6 +224,7 @@ static DeckImport* instance;
     NSString* name;
     
     Deck* deck = [[Deck alloc] init];
+    NRRole role = NRRoleNone;
     for (NSString* line in lines)
     {
         if (name == nil)
@@ -230,6 +234,12 @@ static DeckImport* instance;
         
         for (Card* c in cards)
         {
+            // don't bother checking cards of the opposite role (as soon as we know this deck's role)
+            BOOL roleOk = role == NRRoleNone || role == c.role;
+            if (!roleOk) {
+                continue;
+            }
+
             NSUInteger loc = [line rangeOfString:c.name_en options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch].location;
             if (loc == NSNotFound)
             {
@@ -238,9 +248,11 @@ static DeckImport* instance;
             
             if (loc != NSNotFound)
             {
+                
                 if (c.type == NRCardTypeIdentity)
                 {
                     [deck addCard:c copies:1];
+                    role = c.role;
                     // NSLog(@"found identity %@", c.name);
                 }
                 else
@@ -262,7 +274,7 @@ static DeckImport* instance;
                         
                         int cnt = [count intValue];
                         int max = deck.isDraft ? 100 : 4;
-                        if (cnt > 0 && max)
+                        if (cnt > 0 && cnt < max)
                         {
                             [deck addCard:c copies:cnt];
                         }
@@ -312,19 +324,29 @@ static DeckImport* instance;
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    if (deckSource.site == DeckBuilderSiteNetrunnerDB)
-    {
-        [self performSelector:@selector(doDownloadDeckFromNetrunnerDb:) withObject:deckSource.deckId afterDelay:0.01];
+    if (deckSource.source == DeckBuilderSourceNRDBList) {
+        [self performSelector:@selector(doDownloadDeckFromNetrunnerDbList:) withObject:deckSource.deckId afterDelay:0.01];
     }
-    else
-    {
+    else if (deckSource.source == DeckBuilderSourceNRDBShared) {
+        [self performSelector:@selector(doDownloadDeckFromNetrunnerDbShared:) withObject:deckSource.deckId afterDelay:0.01];
+    }
+    else {
         [self performSelector:@selector(doDownloadDeckFromMeteor:) withObject:deckSource.deckId afterDelay:0.01];
     }
 }
 
--(void) doDownloadDeckFromNetrunnerDb:(NSString*)deckId
-{
+-(void) doDownloadDeckFromNetrunnerDbList:(NSString*)deckId {
     NSString* deckUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api/decklist/%@", deckId];
+    [self doDownloadDeckFromNetrunnerDb:deckUrl];
+}
+
+-(void) doDownloadDeckFromNetrunnerDbShared:(NSString*)deckId {
+    NSString* deckUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api/shareddeck/%@", deckId];
+    [self doDownloadDeckFromNetrunnerDb:deckUrl];
+}
+
+-(void) doDownloadDeckFromNetrunnerDb:(NSString*)deckUrl
+{
     BOOL __block ok = NO;
     self.downloadStopped = NO;
     
@@ -422,7 +444,7 @@ static DeckImport* instance;
     for (NSString* code in [cards allKeys])
     {
         int qty = [[cards objectForKey:code] intValue];
-        Card* card = [Card cardByCode:code];
+        Card* card = [CardManager cardByCode:code];
         if (card)
         {
             if (card.type == NRCardTypeIdentity)
@@ -435,7 +457,7 @@ static DeckImport* instance;
     
     if (deck.identity != nil && deck.cards.count > 0)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
         return YES;
     }
     return NO;
@@ -451,7 +473,7 @@ static DeckImport* instance;
         // NSLog(@"got deck: %@ %d", deck.identity.name, deck.cards.count);
         // NSLog(@"name: %@", filename);
         deck.name = name;
-        [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
         return YES;
     }
     return NO;
@@ -478,7 +500,7 @@ static DeckImport* instance;
         }
         else
         {
-            Card* card = [Card cardByCode:code];
+            Card* card = [CardManager cardByCode:code];
             if (card && qty.integerValue > 0)
             {
                 [deck addCard:card copies:qty.integerValue];
@@ -486,7 +508,7 @@ static DeckImport* instance;
         }
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": deck }];
 }
 
 @end

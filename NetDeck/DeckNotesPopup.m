@@ -7,9 +7,6 @@
 //
 
 #import "DeckNotesPopup.h"
-#import "Deck.h"
-#import "SettingsKeys.h"
-#import "Notifications.h"
 
 @interface DeckNotesPopup ()
 
@@ -63,7 +60,7 @@
 {
     self.deck.notes = self.textView.text;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTES_CHANGED object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NOTES_CHANGED object:nil];
     [self cancelClicked:sender];
 }
 

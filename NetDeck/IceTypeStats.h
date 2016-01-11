@@ -8,8 +8,6 @@
 
 #import "Stats.h"
 
-@class Deck;
-
 @interface IceTypeStats : Stats <CPTPlotDataSource, CPTPlotDelegate>
 
 -(IceTypeStats*) initWithDeck:(Deck*)deck;

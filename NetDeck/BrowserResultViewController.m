@@ -6,22 +6,16 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <CSStickyHeaderFlowLayout.h>
-#import <EXTScope.h>
+@import CSStickyHeaderFlowLayout;
 
+#import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "BrowserResultViewController.h"
-#import "CardList.h"
-#import "Card.h"
-#import "TableData.h"
 #import "ImageCache.h"
-#import "Faction.h"
 #import "CardImageViewPopover.h"
 #import "BrowserCell.h"
-#import "SettingsKeys.h"
 #import "BrowserImageCell.h"
 #import "BrowserSectionHeaderView.h"
-#import "Notifications.h"
 #import "NRCrashlytics.h"
 
 @interface BrowserResultViewController ()
@@ -81,10 +75,10 @@ static BrowserResultViewController* instance;
     instance = self;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    CGFloat scale = [settings floatForKey:BROWSER_VIEW_SCALE];
+    CGFloat scale = [settings floatForKey:SettingsKeys.BROWSER_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
     
-    self.sortType = [settings integerForKey:BROWSER_SORT_TYPE];
+    self.sortType = [settings integerForKey:SettingsKeys.BROWSER_SORT_TYPE];
     
     // left buttons
     NSArray* selections = @[
@@ -93,7 +87,7 @@ static BrowserResultViewController* instance;
                             [UIImage imageNamed:@"deckview_list"]    // NRCardViewSmallTable
                             ];
     UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
-    viewSelector.selectedSegmentIndex = [settings integerForKey:BROWSER_VIEW_STYLE];
+    viewSelector.selectedSegmentIndex = [settings integerForKey:SettingsKeys.BROWSER_VIEW_STYLE];
     [viewSelector addTarget:self action:@selector(toggleView:) forControlEvents:UIControlEventValueChanged];
     self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
     [self doToggleView:viewSelector.selectedSegmentIndex];
@@ -169,8 +163,8 @@ static BrowserResultViewController* instance;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setObject:@(self.scale) forKey:BROWSER_VIEW_SCALE];
-    [settings setObject:@(self.sortType) forKey:BROWSER_SORT_TYPE];
+    [settings setObject:@(self.scale) forKey:SettingsKeys.BROWSER_VIEW_SCALE];
+    [settings setObject:@(self.sortType) forKey:SettingsKeys.BROWSER_SORT_TYPE];
     
     instance = nil;
 }
@@ -227,6 +221,7 @@ static BrowserResultViewController* instance;
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.popup.view layoutIfNeeded];
     
     [self presentViewController:self.popup animated:NO completion:nil];
 }
@@ -242,7 +237,7 @@ static BrowserResultViewController* instance;
 -(void) toggleView:(UISegmentedControl*)sender
 {
     NSInteger viewMode = sender.selectedSegmentIndex;
-    [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:BROWSER_VIEW_STYLE];
+    [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:SettingsKeys.BROWSER_VIEW_STYLE];
     [self doToggleView:viewMode];
 }
 
@@ -369,12 +364,13 @@ static BrowserResultViewController* instance;
     UIAlertController* sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"Find decks using this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:BROWSER_FIND object:self userInfo:@{ @"code": card.code }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.BROWSER_FIND object:self userInfo:@{ @"code": card.code }];
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"New deck with this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:BROWSER_NEW object:self userInfo:@{ @"code": card.code }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.BROWSER_NEW object:self userInfo:@{ @"code": card.code }];
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"ANCUR page for this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        LOG_EVENT(@"Open ANCUR", @{@"Card": card.name});
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:card.ancurLink]];
     }]];
     
@@ -382,7 +378,7 @@ static BrowserResultViewController* instance;
     popover.sourceRect = rect;
     popover.sourceView = view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown;
-    
+    [sheet.view layoutIfNeeded];
     NSAssert(instance != nil, @"oops");
     [instance presentViewController:sheet animated:NO completion:nil];
 }

@@ -6,28 +6,22 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
-#import <AFNetworkReachabilityManager.h>
-#import <EXTScope.h>
+@import SDCAlertView;
+
+#import "AppDelegate.h"
+#import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
 #import "CardImageViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "IphoneDrawSimulator.h"
-#import "Deck.h"
-#import "TableData.h"
 #import "ImageCache.h"
-#import "Faction.h"
-#import "CardType.h"
 #import "EditDeckCell.h"
 #import "DeckExport.h"
-#import "UIAlertAction+NetDeck.h"
-#import "SettingsKeys.h"
 #import "NRDB.h"
 #import "DeckEmail.h"
 #import "SVProgressHud.h"
-#import "DeckManager.h"
 
 @interface EditDeckViewController ()
 
@@ -64,9 +58,9 @@
     self.statusLabel.text = @"";
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    self.autoSave = [settings boolForKey:AUTO_SAVE];
-    self.autoSaveDropbox = self.autoSave && [settings boolForKey:AUTO_SAVE_DB];
-    self.autoSaveNrdb = [settings boolForKey:NRDB_AUTOSAVE];
+    self.autoSave = [settings boolForKey:SettingsKeys.AUTO_SAVE];
+    self.autoSaveDropbox = self.autoSave && [settings boolForKey:SettingsKeys.AUTO_SAVE_DB];
+    self.autoSaveNrdb = [settings boolForKey:SettingsKeys.NRDB_AUTOSAVE];
     
     self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelClicked:)];
     self.saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveClicked:)];
@@ -96,7 +90,7 @@
     [self setDeckName];
     topItem.titleView = self.titleButton;
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB])
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NRDB])
     {
         self.nrdbButton.customView = [[UIView alloc] initWithFrame:CGRectZero];
         self.nrdbButton.enabled = NO;
@@ -162,16 +156,18 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    if ([settings boolForKey:USE_DROPBOX])
+    if ([settings boolForKey:SettingsKeys.USE_DROPBOX])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To Dropbox") handler:^(UIAlertAction *action) {
+            LOG_EVENT(@"Export .o8d", nil);
             [DeckExport asOctgn:self.deck autoSave:NO];
         }]];
     }
     
-    if ([settings boolForKey:USE_NRDB])
+    if ([settings boolForKey:SettingsKeys.USE_NRDB])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction *action) {
+            LOG_EVENT(@"Save NRDB", nil);
             [self saveToNrdb];
         }]];
     }
@@ -179,11 +175,13 @@
     if ([MFMailComposeViewController canSendMail])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"As Email") handler:^(UIAlertAction *action) {
+            LOG_EVENT(@"Email Deck", nil);
             [DeckEmail emailDeck:self.deck fromViewController:self];
         }]];
     }
     
     [alert addAction:[UIAlertAction cancelAction:nil]];
+    [alert.view layoutIfNeeded];
     
     [self presentViewController:alert animated:NO completion:nil];
 }
@@ -225,6 +223,7 @@
     }
     
     [alert addAction:[UIAlertAction cancelAction:nil]];
+    [alert.view layoutIfNeeded];
     
     [self presentViewController:alert animated:NO completion:nil];
 }
@@ -252,7 +251,7 @@
             [DeckExport asOctgn:self.deck autoSave:YES];
         }
     }
-    if (self.autoSaveNrdb && self.deck.netrunnerDbId && APP_ONLINE)
+    if (self.autoSaveNrdb && self.deck.netrunnerDbId && AppDelegate.online)
     {
         [self saveToNrdb];
     }
@@ -278,7 +277,7 @@
 
 -(void) saveToNrdb
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;
@@ -301,7 +300,7 @@
 
 -(void) reImportDeckFromNetrunnerDb
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;
@@ -331,7 +330,7 @@
 
 -(void) publishDeck
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;
@@ -395,20 +394,20 @@
     [self.tableView reloadData];
 
     NSMutableString* footer = [NSMutableString string];
-    [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
+    [footer appendString:[NSString stringWithFormat:@"%ld %@", (long)self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
     NSString* inf = self.deck.role == NRRoleCorp ? l10n(@"Inf") : l10n(@"Influence");
     if (self.deck.identity && !self.deck.isDraft)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d/%d %@", self.deck.influence, self.deck.identity.influenceLimit, inf]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld/%ld %@", (long)self.deck.influence, (long)self.deck.influenceLimit, inf]];
     }
     else
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.influence, inf]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.influence, inf]];
     }
     
     if (self.deck.role == NRRoleCorp)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.agendaPoints, l10n(@"AP")]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.agendaPoints, l10n(@"AP")]];
     }
     
     [footer appendString:@"\n"];
@@ -479,7 +478,7 @@
     int cnt = 0;
     for (CardCounter* cc in arr)
     {
-        if (!ISNULL(cc))
+        if (!cc.isNull)
         {
             cnt += cc.count;
         }
@@ -507,7 +506,7 @@
     
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     
-    if (ISNULL(cc))
+    if (cc.isNull)
     {
         // empty identity
         cell.nameLabel.textColor = [UIColor blackColor];
@@ -515,6 +514,7 @@
         cell.typeLabel.text = @"";
         cell.stepper.hidden = YES;
         cell.idButton.hidden = NO;
+        cell.mwlLabel.hidden = YES;
         return cell;
     }
     
@@ -525,10 +525,6 @@
     cell.stepper.hidden = card.type == NRCardTypeIdentity;
     cell.idButton.hidden = card.type != NRCardTypeIdentity;
     
-//    cell.nameLabel.backgroundColor = [UIColor redColor];
-//    cell.typeLabel.backgroundColor = [UIColor greenColor];
-//    cell.influenceLabel.backgroundColor = [UIColor blueColor];
-
     if (card.unique)
     {
         cell.nameLabel.text = [NSString stringWithFormat:@"%lu× %@ •", (unsigned long)cc.count, card.name];
@@ -564,6 +560,11 @@
         cell.influenceLabel.text = @"";
     }
     
+    if (card.isMostWanted) {
+        cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)-cc.count];
+    }
+    cell.mwlLabel.hidden = !card.isMostWanted;
+    
     NSString* subtype = card.subtype;
     if (subtype)
     {
@@ -585,7 +586,7 @@
 {
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     
-    if (ISNULL(cc))
+    if (cc.isNull)
     {
         return;
     }
@@ -603,7 +604,7 @@
     {
         CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
         
-        if (!ISNULL(cc))
+        if (!cc.isNull)
         {
             [self.deck addCard:cc.card copies:0];
         }

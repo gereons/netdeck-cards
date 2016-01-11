@@ -6,19 +6,15 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
-#import <SVProgressHud.h>
-#import <EXTScope.h>
+@import SDCAlertView;
+@import SVProgressHUD;
 
+#import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "SavedDecksList.h"
-#import "Deck.h"
 #import "ImportDecksViewController.h"
-#import "SettingsKeys.h"
 #import "NRDB.h"
-#import "DeckManager.h"
 #import "DeckExport.h"
-#import "Notifications.h"
 #import "DeckDiffViewController.h"
 #import "DeckCell.h"
 #import "DeckEmail.h"
@@ -100,8 +96,8 @@
     }
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
-    BOOL useNetrunnerdb = [settings boolForKey:USE_NRDB];
+    BOOL useDropbox = [settings boolForKey:SettingsKeys.USE_DROPBOX];
+    BOOL useNetrunnerdb = [settings boolForKey:SettingsKeys.USE_NRDB];
     
     if (!useDropbox && !useNetrunnerdb)
     {
@@ -128,6 +124,7 @@
         popover.barButtonItem = sender;
         popover.sourceView = self.view;
         popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        [self.popup.view layoutIfNeeded];
         
         [self presentViewController:self.popup animated:NO completion:nil];
     }
@@ -164,8 +161,8 @@
     }
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
-    BOOL useNetrunnerdb = [settings boolForKey:USE_NRDB];
+    BOOL useDropbox = [settings boolForKey:SettingsKeys.USE_DROPBOX];
+    BOOL useNetrunnerdb = [settings boolForKey:SettingsKeys.USE_NRDB];
     
     if (!useDropbox && !useNetrunnerdb)
     {
@@ -242,7 +239,7 @@
     [self exportToNetrunnerDB:decks index:0];
 }
 
--(void) exportToNetrunnerDB:(NSArray*)decks index:(NSInteger)index
+-(void) exportToNetrunnerDB:(NSArray<Deck*>*)decks index:(NSInteger)index
 {
     if (index < decks.count)
     {
@@ -304,7 +301,8 @@
     popover.sourceView = self.view;
     popover.sourceRect = frame;
     popover.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
-
+    [self.popup.view layoutIfNeeded];
+    
     [self presentViewController:self.popup animated:NO completion:nil];
 }
 
@@ -336,7 +334,7 @@
     }
     if (role)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": role}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": role}];
         return;
     }
     
@@ -349,11 +347,11 @@
 
     self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": @(NRRoleRunner)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": @(NRRoleRunner)}];
         self.popup = nil;
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Corp Deck") handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_DECK object:self userInfo:@{ @"role": @(NRRoleCorp)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": @(NRRoleCorp)}];
         self.popup = nil;
     }]];
     [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
@@ -365,6 +363,7 @@
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
     
+    [self.popup.view layoutIfNeeded];
     [self presentViewController:self.popup animated:NO completion:nil];
 }
 
@@ -385,7 +384,7 @@
                 [newDeck saveToDisk];
                 
                 NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-                BOOL autoSaveDropbox = [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
+                BOOL autoSaveDropbox = [settings boolForKey:SettingsKeys.USE_DROPBOX] && [settings boolForKey:SettingsKeys.AUTO_SAVE_DB];
                 
                 if (autoSaveDropbox)
                 {
@@ -463,6 +462,7 @@
             popover.sourceRect = cell.frame;
             popover.sourceView = self.tableView;
             popover.permittedArrowDirections = UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown;
+            [self.popup.view layoutIfNeeded];
             
             [self presentViewController:self.popup animated:NO completion:nil];
         }
@@ -566,7 +566,7 @@
                                    @"filename" : deck.filename,
                                    @"role" : @(deck.role)
                                    };
-        [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_DECK object:self userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_DECK object:self userInfo:userInfo];
     }
 }
 

@@ -6,15 +6,13 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class Deck;
-
 @interface NRDB : NSObject
 
 +(NRDB*) sharedInstance;
 +(void) clearSettings;
 
 typedef void (^AuthCompletionBlock)(BOOL ok);
-typedef void (^DecklistCompletionBlock)(NSArray* decks);
+typedef void (^DecklistCompletionBlock)(NSArray<Deck*>* decks);
 typedef void (^SaveCompletionBlock)(BOOL ok, NSString* deckId);
 typedef void (^LoadCompletionBlock)(BOOL ok, Deck* deck);
 
@@ -34,7 +32,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult result);
 -(void)backgroundRefreshAuthentication:(BackgroundFetchCompletionBlock)completionHandler;
 -(void)stopRefresh;
 
--(void)updateDeckMap:(NSArray*) decks;
+-(void)updateDeckMap:(NSArray<Deck*>*) decks;
 -(NSString*)filenameForId:(NSString*)deckId;
 -(void)deleteDeck:(NSString*)filename;
 

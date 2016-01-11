@@ -6,23 +6,19 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
+@import SVProgressHUD;
+@import SDCAlertView;
+
+#import <Dropbox/Dropbox.h>
 #import "ImportDecksViewController.h"
 #import "UIAlertAction+NetDeck.h"
-#import <Dropbox/Dropbox.h>
-#import <SVProgressHUD.h>
-#import <EXTScope.h>
-#import <SDCAlertView.h>
-
-#import "Deck.h"
+#import "EXTScope.h"
 #import "ImageCache.h"
 #import "DeckCell.h"
 #import "OctgnImport.h"
-#import "SettingsKeys.h"
-#import "Faction.h"
 #import "NRDB.h"
-#import "DeckManager.h"
 
-static NRDeckSearchScope searchScope = NRDeckSearchAll;
+static NRDeckSearchScope searchScope = NRDeckSearchScopeAll;
 static NSString* filterText;
 
 @interface ImportDecksViewController ()
@@ -36,6 +32,7 @@ static NSString* filterText;
 @property UIBarButtonItem* spacer;
 @property UIBarButtonItem* sortButton;
 @property NSArray* barButtons;
+@property UIAlertController* alert;
 
 @property NSDateFormatter* dateFormatter;
 @property NRDeckListSort deckListSort;
@@ -78,7 +75,7 @@ static NSString* filterText;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_FILTER_SORT];
+    self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECK_FILTER_SORT];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     
@@ -160,40 +157,56 @@ static NSString* filterText;
 
 -(void)changeSort:(UIBarButtonItem*)sender
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Sort by") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.alert = [UIAlertController alertControllerWithTitle:l10n(@"Sort by") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
+    [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortDate];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
+    [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortFaction];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
+    [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortA_Z];
     }]];
-    [alert addAction:[UIAlertAction cancelAction:nil]];
+    [self.alert addAction:[UIAlertAction cancelAction:^(UIAlertAction* action) {
+        self.alert = nil;
+    }]];
     
     if (IS_IPAD)
     {
-        alert.popoverPresentationController.barButtonItem = sender;
+        UIPopoverPresentationController* popover = self.alert.popoverPresentationController;
+        popover.barButtonItem = sender;
+        popover.sourceView = self.view;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        [self.alert.view layoutIfNeeded];
     }
     
-    [self presentViewController:alert animated:NO completion:nil];
+    [self presentViewController:self.alert animated:NO completion:nil];
 }
 
 -(void) changeSortType:(NRDeckListSort)sort
 {
-    [[NSUserDefaults standardUserDefaults] setInteger:sort forKey:DECK_FILTER_SORT];
+    [[NSUserDefaults standardUserDefaults] setInteger:sort forKey:SettingsKeys.DECK_FILTER_SORT];
     self.deckListSort = sort;
     
     [self filterDecks];
     [self.tableView reloadData];
 }
 
+-(void) dismissSortPopup {
+    [self.alert dismissViewControllerAnimated:NO completion:nil];
+    self.alert = nil;
+}
+
 #pragma mark import all
 
 -(void) importAll:(id)sender
 {
+    if (self.alert) {
+        [self dismissSortPopup];
+        return;
+    }
+    
     NSString* msg;
     if (self.source == NRImportSourceDropbox)
     {
@@ -345,7 +358,7 @@ static NSString* filterText;
 
 #pragma mark filter
 
--(NSMutableArray*) sortDecks:(NSArray*)decksToSort
+-(NSMutableArray<Deck*>*) sortDecks:(NSArray<NSString*>*)decksToSort
 {
     NSArray* decks;
     
@@ -415,16 +428,16 @@ static NSString* filterText;
         NSPredicate* predicate;
         switch (searchScope)
         {
-            case NRDeckSearchAll:
+            case NRDeckSearchScopeAll:
                 predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[ namePredicate, identityPredicate, cardPredicate ]];
                 break;
-            case NRDeckSearchName:
+            case NRDeckSearchScopeName:
                 predicate = namePredicate;
                 break;
-            case NRDeckSearchIdentity:
+            case NRDeckSearchScopeIdentity:
                 predicate = identityPredicate;
                 break;
-            case NRDeckSearchCard:
+            case NRDeckSearchScopeCard:
                 predicate = cardPredicate;
                 break;
         }

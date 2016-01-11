@@ -8,19 +8,12 @@
 
 #import "UIAlertAction+NetDeck.h"
 #import "IphoneStartViewController.h"
-#import "DeckManager.h"
-#import "Deck.h"
-#import "Faction.h"
 #import "ImageCache.h"
 #import "NRDB.h"
 #import "CardUpdateCheck.h"
-#import "Notifications.h"
-#import "CardManager.h"
-#import "CardSets.h"
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "SettingsViewController.h"
-#import "SettingsKeys.h"
 #import "ImportDecksViewController.h"
 #import "BrowserViewController.h"
 
@@ -52,8 +45,8 @@
     self.tableViewController.title = @"Net Deck";
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
-    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.LOAD_CARDS object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:Notifications.IMPORT_DECK object:nil];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -77,7 +70,7 @@
     topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
     topItem.leftBarButtonItems = @[ self.settingsButton, self.sortButton ];
     
-    self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_FILTER_SORT];
+    self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECK_FILTER_SORT];
     
     [CardUpdateCheck checkCardsAvailable];
     
@@ -116,8 +109,8 @@
 
 -(void) initializeDecks
 {
-    self.runnerDecks = [DeckManager decksForRole:NRRoleRunner];
-    self.corpDecks = [DeckManager decksForRole:NRRoleCorp];
+    self.runnerDecks = [DeckManager decksForRole:NRRoleRunner].mutableCopy;
+    self.corpDecks = [DeckManager decksForRole:NRRoleCorp].mutableCopy;
 
     if (self.deckListSort != NRDeckListSortDate)
     {
@@ -193,6 +186,8 @@
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Cancel") handler:nil]];
     
+    [alert.view layoutIfNeeded];
+    
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -208,8 +203,8 @@
 -(void) importDecks:(id)sender
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    BOOL useNrdb = [settings boolForKey:USE_NRDB];
-    BOOL useDropbox = [settings boolForKey:USE_DROPBOX];
+    BOOL useNrdb = [settings boolForKey:SettingsKeys.USE_NRDB];
+    BOOL useDropbox = [settings boolForKey:SettingsKeys.USE_DROPBOX];
     
     if (useNrdb && useDropbox)
     {
@@ -276,14 +271,14 @@
 
 -(void) changeSortType:(NRDeckListSort)sort
 {
-    [[NSUserDefaults standardUserDefaults] setInteger:sort forKey:DECK_FILTER_SORT];
+    [[NSUserDefaults standardUserDefaults] setInteger:sort forKey:SettingsKeys.DECK_FILTER_SORT];
     self.deckListSort = sort;
     
     [self initializeDecks];
     [self.tableView reloadData];
 }
 
--(NSMutableArray*) sortDecks:(NSArray*)decks
+-(NSMutableArray<Deck*>*) sortDecks:(NSArray<Deck*>*)decks
 {
     switch (self.deckListSort)
     {

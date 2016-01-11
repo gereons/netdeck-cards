@@ -8,13 +8,11 @@
 //  used in draw simulator & identity picker
 //
 
-@class Card;
-
 @interface CardThumbView : UICollectionViewCell
 
 @property IBOutlet UIImageView* imageView;
 @property IBOutlet UILabel* nameLabel;
 @property IBOutlet UIActivityIndicatorView* activityIndicator;
-
 @property (nonatomic) Card* card;
+
 @end

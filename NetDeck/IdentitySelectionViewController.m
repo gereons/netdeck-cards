@@ -6,22 +6,15 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <CSStickyHeaderFlowLayout.h>
+@import CSStickyHeaderFlowLayout;
+
 #import "IdentitySelectionViewController.h"
 #import "IdentityViewCell.h"
 #import "CardImageViewPopover.h"
 
-#import "Faction.h"
-#import "Card.h"
-#import "CardManager.h"
-#import "CardSets.h"
 #import "CGRectUtils.h"
-#import "Notifications.h"
-#import "SettingsKeys.h"
 #import "IdentityCardView.h"
 #import "IdentitySectionHeaderView.h"
-#import "SettingsKeys.h"
-#import "NRCrashlytics.h"
 
 @interface IdentitySelectionViewController ()
 
@@ -57,7 +50,7 @@
         self.initialIdentity = identity;
         self.selectedIdentity = identity;
         self.selectedFaction = NRFactionNone;
-        self.viewTable = [[NSUserDefaults standardUserDefaults] boolForKey:IDENTITY_TABLE];
+        self.viewTable = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.IDENTITY_TABLE];
         
         [self initIdentities];
     }
@@ -119,8 +112,8 @@
     
     CGPoint oldCenter = self.factionSelector.center;
     
-    BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
-    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
+    BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
+    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DATA_DESTINY];
     
     if (self.role == NRRoleRunner)
     {
@@ -183,7 +176,7 @@
 
 - (void)initIdentities
 {
-    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
+    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
     NSMutableArray* factions;
     
     if (self.selectedFaction == NRFactionNone)
@@ -261,7 +254,7 @@
 {
     if (self.selectedIdentity)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:SELECT_IDENTITY object:self userInfo:@{ @"code": self.selectedIdentity.code }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.SELECT_IDENTITY object:self userInfo:@{ @"code": self.selectedIdentity.code }];
     }
     [self cancelClicked:sender];
 }
@@ -299,7 +292,7 @@
     self.viewTable = sender.selectedSegmentIndex;
     self.tableView.hidden = !self.viewTable;
     self.collectionView.hidden = self.viewTable;
-    [[NSUserDefaults standardUserDefaults] setBool:self.viewTable forKey:IDENTITY_TABLE];
+    [[NSUserDefaults standardUserDefaults] setBool:self.viewTable forKey:SettingsKeys.IDENTITY_TABLE];
     
     if (self.selectedIndexPath)
     {
@@ -313,7 +306,7 @@
 
 -(void) factionChange:(UISegmentedControl*)sender
 {
-    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DATA_DESTINY];
+    BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DATA_DESTINY];
     NRFaction faction4 = dataDestinyAllowed ? NRFactionAdam : NRFactionNeutral;
 
     switch (sender.selectedSegmentIndex)
@@ -419,7 +412,7 @@
     
     if (self.role == NRRoleRunner)
     {
-        cell.linkLabel.text = [NSString stringWithFormat:@"%d", card.baseLink];
+        cell.linkLabel.text = [NSString stringWithFormat:@"%ld", (long)card.baseLink];
         cell.linkIcon.hidden = NO;
     }
     else

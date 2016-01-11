@@ -6,18 +6,16 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SVProgressHUD.h>
+@import SVProgressHUD;
 
 #import "CardImageViewController.h"
 #import "CardImageViewCell.h"
-#import "Deck.h"
 #import "ImageCache.h"
-#import "SettingsKeys.h"
 
 @interface CardImageViewController ()
 
-@property NSMutableArray* cardsArray;
-@property NSMutableArray* countsArray;
+@property NSMutableArray<Card*>* cardsArray;
+@property NSMutableArray<NSNumber*>* countsArray;
 
 @property BOOL initialScrollDone;
 
@@ -44,13 +42,13 @@
     return IS_IPHONE_4;
 }
 
--(void) setCards:(NSArray *)cards
+-(void) setCards:(NSArray<Card*>*)cards
 {
     self.cardsArray = [NSMutableArray arrayWithArray:cards];
     self.countsArray = nil;
 }
 
--(void) setCardCounters:(NSArray *)cardCounters
+-(void) setCardCounters:(NSArray<CardCounter*>*)cardCounters
 {
     self.cardsArray = [NSMutableArray array];
     self.countsArray = [NSMutableArray array];

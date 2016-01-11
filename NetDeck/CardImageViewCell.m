@@ -8,7 +8,6 @@
 
 #import "CardImageViewCell.h"
 #import "CardDetailView.h"
-#import "Card.h"
 #import "ImageCache.h"
 
 @interface CardImageViewCell()

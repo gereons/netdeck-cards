@@ -9,7 +9,6 @@
 #define IMAGE_WIDTH     300
 #define IMAGE_HEIGHT    418
 
-@class Card;
 @interface ImageCache : NSObject
 
 typedef void (^CompletionBlock)(Card* card, UIImage* image, BOOL placeholder);

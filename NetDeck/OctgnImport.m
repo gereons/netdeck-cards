@@ -7,7 +7,6 @@
 //
 
 #import "OctgnImport.h"
-#import "Deck.h"
 
 @interface OctgnImport()
 
@@ -60,7 +59,7 @@
         
         if ([code hasPrefix:OCTGN_CODE_PREFIX] && code.length > 32)
         {
-            Card* card = [Card cardByCode:[code substringFromIndex:31]];
+            Card* card = [CardManager cardByCode:[code substringFromIndex:31]];
             int copies = [qty intValue];
         
             if (card)

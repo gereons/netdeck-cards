@@ -7,11 +7,7 @@
 //
 
 #import "DeckHistoryPopup.h"
-#import "Deck.h"
-#import "DeckChangeSet.h"
-#import "DeckChange.h"
 #import "DeckHistorySectionHeaderView.h"
-#import "Notifications.h"
 #import "CardImageViewPopover.h"
 
 @interface DeckHistoryPopup ()
@@ -72,7 +68,7 @@
 
     [self.deck resetToCards:dcs.cards];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:self];
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 

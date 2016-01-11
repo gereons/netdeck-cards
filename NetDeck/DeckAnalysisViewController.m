@@ -12,15 +12,13 @@
 #import "IceTypeStats.h"
 #import "CardTypeStats.h"
 #import "InfluenceStats.h"
-#import "Deck.h"
-#import "CardSets.h"
 
 @interface DeckAnalysisViewController ()
 
 @property Deck* deck;
-@property NSArray* errors;
+@property NSArray<NSString*>* errors;
 @property BOOL showSets;
-@property NSArray* sets;
+@property NSArray<NSString*>* sets;
 
 @property CostStats* costStats;
 @property StrengthStats* strengthStats;

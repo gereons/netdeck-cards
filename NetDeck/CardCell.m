@@ -7,9 +7,6 @@
 //
 
 #import "CardCell.h"
-#import "CardCounter.h"
-#import "Deck.h"
-#import "Notifications.h"
 #import "DeckListViewController.h"
 
 @implementation CardCell
@@ -28,7 +25,7 @@
     }
     self.cardCounter.count = copies;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:self];
 }
 
 -(void) awakeFromNib

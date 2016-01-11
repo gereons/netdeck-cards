@@ -10,12 +10,10 @@
 #define NRTypes_h
 
 #define DIM(x)      (sizeof(x) / sizeof(x[0]))
-#define ISNULL(x)   [x isKindOfClass:[NSNull class]]
+// #define ISNULL(x)   [x isKindOfClass:[NSNull class]]
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #define CHECKED_TITLE(str, cond)    [NSString stringWithFormat:@"%@%@", str, cond ? @" ✓" : @""]
-
-#define APP_ONLINE  [AFNetworkReachabilityManager sharedManager].reachable
 
 #define OCTGN_CODE_PREFIX   @"bc0f047c-01b1-427f-a439-d451eda"
 
@@ -36,7 +34,20 @@
 
 #define BG_FETCH_INTERVAL   (12*60*60)   // 12 hrs
 
+#define IOS9_KEYCMD         [[UIKeyCommand class] respondsToSelector:@selector(keyCommandWithInput:modifierFlags:action:discoverabilityTitle:)]
+#define KEYCMD(letter, modifiers, sel, title) ((IOS9_KEYCMD) ? \
+    [UIKeyCommand keyCommandWithInput:letter modifierFlags:modifiers action:@selector(sel) discoverabilityTitle:title] : \
+    [UIKeyCommand keyCommandWithInput:letter modifierFlags:modifiers action:@selector(sel)])
+
 extern NSString* const kANY;
+
+/*
+typedef NS_ENUM(NSInteger, NRRole)
+{
+    NRRoleNone = -1,
+    NRRoleRunner,
+    NRRoleCorp
+};
 
 typedef NS_ENUM(NSInteger, NRCardType)
 {
@@ -55,13 +66,6 @@ typedef NS_ENUM(NSInteger, NRCardType)
     NRCardTypeHardware,
     NRCardTypeResource,
     NRCardTypeProgram
-};
-
-typedef NS_ENUM(NSInteger, NRRole)
-{
-    NRRoleNone = -1,
-    NRRoleRunner,
-    NRRoleCorp
 };
 
 typedef NS_ENUM(NSInteger, NRFaction)
@@ -100,16 +104,16 @@ typedef NS_ENUM(NSInteger, NRDeckSort)
 
 typedef NS_ENUM(NSInteger, NRSearchScope)
 {
-    NRSearchAll,
-    NRSearchName,
-    NRSearchText
+    NRSearchScopeAll,
+    NRSearchScopeName,
+    NRSearchScopeText
 };
 
 typedef NS_ENUM(NSInteger, NRDeckSearchScope) {
-    NRDeckSearchAll,
-    NRDeckSearchName,
-    NRDeckSearchIdentity,
-    NRDeckSearchCard
+    NRDeckSearchScopeAll,
+    NRDeckSearchScopeName,
+    NRDeckSearchScopeIdentity,
+    NRDeckSearchScopeCard
 };
 
 typedef NS_ENUM(NSInteger, NRDeckListSort) {
@@ -157,5 +161,6 @@ typedef NS_ENUM(NSInteger, NRFilter) {
     NRFilterRunner,
     NRFilterCorp
 };
+*/
 
 #endif

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class CardCounter, CardImageCell, Deck;
+@class CardImageCell;
 
 @interface CardImagePopup : UIViewController
 

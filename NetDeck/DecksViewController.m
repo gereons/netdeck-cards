@@ -6,17 +6,12 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
+@import SDCAlertView;
 
 #import "DecksViewController.h"
 #import "UIAlertAction+NetDeck.h"
 #import "DeckCell.h"
-#import "DeckManager.h"
-#import "Deck.h"
 #import "ImageCache.h"
-#import "Faction.h"
-#import "SettingsKeys.h"
-#import "DeckState.h"
 #import "NRDB.h"
 
 @interface DecksViewController ()
@@ -81,7 +76,7 @@ static NRFilter _filterType = NRFilterAll;
     if ((self = [self init]))
     {
         self.filterText = card.name;
-        self.searchScope = card.type == NRCardTypeIdentity ? NRDeckSearchIdentity : NRDeckSearchCard;
+        self.searchScope = card.type == NRCardTypeIdentity ? NRDeckSearchScopeIdentity : NRDeckSearchScopeCard;
     }
     return self;
 }
@@ -163,13 +158,13 @@ static NRFilter _filterType = NRFilterAll;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    self.filterType = [settings integerForKey:DECK_FILTER_TYPE];
+    self.filterType = [settings integerForKey:SettingsKeys.DECK_FILTER_TYPE];
     [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(self.filterType)]]];
     
-    self.filterState = [settings integerForKey:DECK_FILTER_STATE];
+    self.filterState = [settings integerForKey:SettingsKeys.DECK_FILTER_STATE];
     [self.stateFilterButton setTitle:[DeckState buttonLabelFor:self.filterState]];
     
-    self.sortType = [settings integerForKey:DECK_FILTER_SORT];
+    self.sortType = [settings integerForKey:SettingsKeys.DECK_FILTER_SORT];
     [self.sortButton setTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]]];
 }
 
@@ -191,9 +186,9 @@ static NRFilter _filterType = NRFilterAll;
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    [settings setObject:@(self.filterType) forKey:DECK_FILTER_TYPE];
-    [settings setObject:@(self.filterState) forKey:DECK_FILTER_STATE];
-    [settings setObject:@(self.sortType) forKey:DECK_FILTER_SORT];
+    [settings setObject:@(self.filterType) forKey:SettingsKeys.DECK_FILTER_TYPE];
+    [settings setObject:@(self.filterState) forKey:SettingsKeys.DECK_FILTER_STATE];
+    [settings setObject:@(self.sortType) forKey:SettingsKeys.DECK_FILTER_SORT];
 }
 
 #pragma mark action sheet
@@ -231,6 +226,7 @@ static NRFilter _filterType = NRFilterAll;
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.popup.view layoutIfNeeded];
     
     [self presentViewController:self.popup animated:NO completion:nil];
 }
@@ -269,6 +265,7 @@ static NRFilter _filterType = NRFilterAll;
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.popup.view layoutIfNeeded];
     
     [self presentViewController:self.popup animated:NO completion:nil];
 }
@@ -310,6 +307,7 @@ static NRFilter _filterType = NRFilterAll;
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.popup.view layoutIfNeeded];
     
     [self presentViewController:self.popup animated:NO completion:nil];
 }
@@ -327,10 +325,10 @@ static NRFilter _filterType = NRFilterAll;
     [self.sideFilterButton setTitle:[NSString stringWithFormat:@"%@ ▾", sideStr[@(self.filterType)]]];
     [self.stateFilterButton setTitle:[DeckState buttonLabelFor:self.filterState]];
 
-    NSArray* runnerDecks = (self.filterType == NRFilterRunner || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
-    NSArray* corpDecks = (self.filterType == NRFilterCorp || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
+    NSArray<Deck*>* runnerDecks = (self.filterType == NRFilterRunner || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleRunner] : [NSArray array];
+    NSArray<Deck*>* corpDecks = (self.filterType == NRFilterCorp || self.filterType == NRFilterAll) ? [DeckManager decksForRole:NRRoleCorp] : [NSArray array];
     
-    NSMutableArray* allDecks = [NSMutableArray arrayWithArray:runnerDecks];
+    NSMutableArray<Deck*>* allDecks = [NSMutableArray arrayWithArray:runnerDecks];
     [allDecks addObjectsFromArray:corpDecks];
     [[NRDB sharedInstance] updateDeckMap:allDecks];
 
@@ -345,7 +343,7 @@ static NRFilter _filterType = NRFilterAll;
     }
     else
     {
-        NSMutableArray* arr = [NSMutableArray arrayWithArray:runnerDecks];
+        NSMutableArray<Deck*>* arr = [NSMutableArray arrayWithArray:runnerDecks];
         [arr addObjectsFromArray:corpDecks];
         self.runnerDecks = [self sortDecks:arr];
         self.corpDecks = [NSMutableArray array];
@@ -361,16 +359,16 @@ static NRFilter _filterType = NRFilterAll;
         NSPredicate* predicate;
         switch (self.searchScope)
         {
-            case NRDeckSearchAll:
+            case NRDeckSearchScopeAll:
                 predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[ namePredicate, identityPredicate, cardPredicate ]];
                 break;
-            case NRDeckSearchName:
+            case NRDeckSearchScopeName:
                 predicate = namePredicate;
                 break;
-            case NRDeckSearchIdentity:
+            case NRDeckSearchScopeIdentity:
                 predicate = identityPredicate;
                 break;
-            case NRDeckSearchCard:
+            case NRDeckSearchScopeCard:
                 predicate = cardPredicate;
                 break;
         }
@@ -391,7 +389,7 @@ static NRFilter _filterType = NRFilterAll;
     [self.tableView reloadData];
 }
 
--(void) checkDecks:(NSArray*)decks
+-(void) checkDecks:(NSArray<Deck*>*)decks
 {
     for (Deck* deck in decks)
     {
@@ -407,7 +405,7 @@ static NRFilter _filterType = NRFilterAll;
     }
 }
 
--(NSMutableArray*) sortDecks:(NSArray*)decks
+-(NSMutableArray<Deck*>*) sortDecks:(NSArray<Deck*>*)decks
 {
     switch (self.sortType)
     {

@@ -11,7 +11,7 @@
 
 // TODO for later: convert this to a category that uses objc_setAssociatedObject/obj_getAssociatedObject
 
-@class Card, CardImageViewPopover, CardImageCell, BrowserImageCell, CardImageViewCell;
+@class CardImageViewPopover, CardImageCell, BrowserImageCell, CardImageViewCell;
 
 @interface CardDetailView : NSObject
 

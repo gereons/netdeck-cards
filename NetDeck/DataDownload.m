@@ -6,20 +6,15 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <EXTScope.h>
-#import <SDCAlertView.h>
-#import <UIView+SDCAutoLayout.h>
-#import <AFNetworking.h>
-#import <PromiseKit.h>
-#import <PromiseKit-AFNetworking/AFNetworking+PromiseKit.h>
+@import PromiseKit;
+@import SDCAlertView;
+@import AFNetworking;
+@import SDCAutoLayout;
+@import PromiseKit_AFNetworking;
 
+#import "EXTScope.h"
 #import "DataDownload.h"
-#import "CardManager.h"
-#import "CardSets.h"
-#import "Card.h"
 #import "ImageCache.h"
-#import "SettingsKeys.h"
-#import "Notifications.h"
 
 @interface DataDownload()
 
@@ -76,7 +71,7 @@ static DataDownload* instance;
 -(void) downloadCardAndSetsData
 {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSString* nrdbHost = [settings stringForKey:NRDB_HOST];
+    NSString* nrdbHost = [settings stringForKey:SettingsKeys.NRDB_HOST];
     
     if (nrdbHost.length == 0)
     {
@@ -122,8 +117,8 @@ static DataDownload* instance;
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    NSString* nrdbHost = [settings stringForKey:NRDB_HOST];
-    NSString* language = [settings stringForKey:LANGUAGE];
+    NSString* nrdbHost = [settings stringForKey:SettingsKeys.NRDB_HOST];
+    NSString* language = [settings stringForKey:SettingsKeys.LANGUAGE];
     
     NSString* cardsUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
     NSString* setsUrl = [NSString stringWithFormat:@"http://%@/api/sets/", nrdbHost];
@@ -135,8 +130,9 @@ static DataDownload* instance;
     self.englishCards = nil;
     self.localizedSets = nil;
     
-    [self.manager GET:cardsUrl parameters:userLocale]
-    .then(^(id responseObject, AFHTTPRequestOperation *operation){
+    AFPromise* promise = [self.manager GET:cardsUrl parameters:userLocale];
+    
+    promise.then(^(id responseObject, AFHTTPRequestOperation *operation){
         // NSLog(@"1st request completed for operation: %@", operation.request.description);
         // NSLog(@"1st result %d elements", [responseObject count]);
         self.localizedCards = responseObject;
@@ -194,7 +190,7 @@ static DataDownload* instance;
     [CardManager addAdditionalNames:self.englishCards saveFile:YES];
     [CardSets setupFromNrdbApi:self.localizedSets];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
 }
 
 

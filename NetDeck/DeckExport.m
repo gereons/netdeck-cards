@@ -6,13 +6,11 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <GRMustache.h>
-#import <Dropbox/Dropbox.h>
-#import <SVProgressHUD.h>
+@import GRMustache;
+@import SVProgressHUD;
 
+#import <Dropbox/Dropbox.h>
 #import "DeckExport.h"
-#import "Deck.h"
-#import "CardSets.h"
 #import "GZip.h"
 
 #define APP_NAME    "Net Deck"
@@ -55,12 +53,13 @@
         [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
     }
     
+    BOOL useMWL = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL];
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
+        if (cc.isNull || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -73,25 +72,32 @@
             CardCounter* cc = cards[j];
             [s appendString:[NSString stringWithFormat:@"%lux %@ (%@)", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
-            NSUInteger influence = [deck influenceFor:cc];
+            NSInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
-                [s appendString:[NSString stringWithFormat:@" %@\n", [DeckExport dots:influence]]];
+                [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
             }
-            else
-            {
-                [s appendString:@"\n"];
+            if (useMWL && cc.card.isMostWanted) {
+                [s appendString:@" (MWL)"];
             }
+            
+            [s appendString:@"\n"];
             numCards += cc.count;
         }
     }
     
     [s appendFormat:@"\n"];
-    [s appendFormat:@"Cards in deck: %d (min %d)\n", numCards, deck.identity.minimumDecksize];
-    [s appendFormat:@"%d/%d influence used\n", deck.influence, deck.identity.influenceLimit];
+    [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
+    if (useMWL) {
+        [s appendFormat:@"%ld/%ld (%ld-%ld) influence used\n", (long)deck.influence, (long)deck.influenceLimit, (long)deck.identity.influenceLimit, (long)deck.mwlPenalty];
+        [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
+    } else {
+        [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
+    }
+    
     if (deck.identity.role == NRRoleCorp)
     {
-        [s appendFormat:@"Agenda Points: %d\n", deck.agendaPoints];
+        [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
@@ -168,12 +174,13 @@
         [s appendString:[NSString stringWithFormat:@"%@ _(%@)_\n", deck.identity.name, deck.identity.setName]];
     }
     
+    BOOL useMWL = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL];
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
+        if (cc.isNull || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -186,10 +193,13 @@
             CardCounter* cc = cards[j];
             [s appendString:[NSString stringWithFormat:@"%lux %@ _(%@)_", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
-            NSUInteger influence = [deck influenceFor:cc];
+            NSInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 [s appendString:[NSString stringWithFormat:@" %@", [DeckExport dots:influence]]];
+            }
+            if (useMWL && cc.card.isMostWanted) {
+                [s appendString:@" (MWL)"];
             }
             
             [s appendString:@"  \n"];
@@ -199,13 +209,19 @@
     }
     
     [s appendFormat:@"\n"];
-    [s appendFormat:@"Cards in deck: %d (min %d)  \n", numCards, deck.identity.minimumDecksize];
-    [s appendFormat:@"%d/%d influence used  \n", deck.influence, deck.identity.influenceLimit];
+    [s appendFormat:@"Cards in deck: %d (min %ld)  \n", numCards, (long)deck.identity.minimumDecksize];
+    if (useMWL) {
+        [s appendFormat:@"%ld/%ld (%ld-%ld) influence used  \n", (long)deck.influence, (long)deck.influenceLimit, (long)deck.identity.influenceLimit, (long)deck.mwlPenalty];
+        [s appendFormat:@"%ld cards from MWL  \n", (long)deck.cardsFromMWL];
+    } else {
+        [s appendFormat:@"%ld/%ld influence used  \n", (long)deck.influence, (long)deck.influenceLimit];
+    }
+
     if (deck.identity.role == NRRoleCorp)
     {
-        [s appendFormat:@"Agenda Points: %d  \n", deck.agendaPoints];
+        [s appendFormat:@"Agenda Points: %ld  \n", (long)deck.agendaPoints];
     }
-    [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
+    [s appendFormat:@"Cards up to %@  \n", [CardSets mostRecentSetUsedInDeck:deck]];
     
     [s appendString:@"\nDeck built with [" APP_NAME "](" APP_URL ").\n"];
     
@@ -240,12 +256,13 @@
         [s appendString:[NSString stringWithFormat:@"%@ (%@)\n", deck.identity.name, deck.identity.setName]];
     }
     
+    BOOL useMWL = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NAPD_MWL];
     int numCards = 0;
     for (int i=0; i<sections.count; ++i)
     {
         NSArray* cards = cardsArray[i];
         CardCounter* cc = cards[0];
-        if (ISNULL(cc) || cc.card.type == NRCardTypeIdentity)
+        if (cc.isNull || cc.card.type == NRCardTypeIdentity)
         {
             continue;
         }
@@ -258,26 +275,35 @@
             CardCounter* cc = cards[j];
             [s appendString:[NSString stringWithFormat:@"%lux %@ [i](%@)[/i]", (unsigned long)cc.count, cc.card.name, cc.card.setName]];
             
-            NSUInteger influence = [deck influenceFor:cc];
+            NSInteger influence = [deck influenceFor:cc];
             if (influence > 0)
             {
                 NSString* color = [NSString stringWithFormat:@"%lx", (unsigned long)cc.card.factionHexColor];
-                [s appendString:[NSString stringWithFormat:@" [color=#%@]%@[/color]\n", color, [DeckExport dots:influence]]];
+                [s appendString:[NSString stringWithFormat:@" [color=#%@]%@[/color]", color, [DeckExport dots:influence]]];
             }
-            else
-            {
-                [s appendString:@"\n"];
+            
+            if (useMWL && cc.card.isMostWanted) {
+                [s appendString:@" (MWL)"];
             }
+            
+            [s appendString:@"\n"];
+
             numCards += cc.count;
         }
     }
     
     [s appendFormat:@"\n"];
-    [s appendFormat:@"Cards in deck: %d (min %d)\n", numCards, deck.identity.minimumDecksize];
-    [s appendFormat:@"%d/%d influence used\n", deck.influence, deck.identity.influenceLimit];
+    [s appendFormat:@"Cards in deck: %d (min %ld)\n", numCards, (long)deck.identity.minimumDecksize];
+    if (useMWL) {
+        [s appendFormat:@"%ld/%ld (%ld-%ld) influence used\n", (long)deck.influence, (long)deck.influenceLimit, (long)deck.identity.influenceLimit, (long)deck.mwlPenalty];
+        [s appendFormat:@"%ld cards from MWL\n", (long)deck.cardsFromMWL];
+    } else {
+        [s appendFormat:@"%ld/%ld influence used\n", (long)deck.influence, (long)deck.influenceLimit];
+    }
+
     if (deck.identity.role == NRRoleCorp)
     {
-        [s appendFormat:@"Agenda Points: %d\n", deck.agendaPoints];
+        [s appendFormat:@"Agenda Points: %ld\n", (long)deck.agendaPoints];
     }
     [s appendFormat:@"Cards up to %@\n", [CardSets mostRecentSetUsedInDeck:deck]];
     
@@ -300,13 +326,13 @@
     [DeckExport writeToDropbox:s fileName:bbcName deckType:l10n(@"BBCode Deck") autoSave:NO];
 }
 
-+(NSString*) dots:(NSUInteger)count
++(NSString*) dots:(NSUInteger)influence
 {
-    NSMutableString* s = [NSMutableString stringWithCapacity:count+5];
-    for (int i=0; i<count; ++i)
+    NSMutableString* s = [NSMutableString stringWithCapacity:influence+5];
+    for (int i=0; i<influence; ++i)
     {
         [s appendString:@"·"];
-        if ((i+1)%5 == 0 && i<count-1)
+        if ((i+1)%5 == 0 && i<influence-1)
         {
             [s appendString:@" "];
         }

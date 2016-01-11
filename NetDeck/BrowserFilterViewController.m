@@ -8,13 +8,7 @@
 
 #import "BrowserFilterViewController.h"
 #import "BrowserResultViewController.h"
-#import "CardManager.h"
-#import "CardList.h"
-#import "CardType.h"
-#import "CardSets.h"
-#import "Faction.h"
 #import "CardFilterPopover.h"
-#import "Notifications.h"
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
@@ -87,13 +81,13 @@ static NSMutableArray* subtypeCollapsedSections;
     [self.scopeSelector setTitle:l10n(@"Name") forSegmentAtIndex:1];
     [self.scopeSelector setTitle:l10n(@"Text") forSegmentAtIndex:2];
     self.searchLabel.text = l10n(@"Search in:");
-    self.scope = NRSearchAll;
+    self.scope = NRSearchScopeAll;
     self.textField.delegate = self;
     self.textField.placeholder = l10n(@"Search Cards");
     self.textField.clearButtonMode = UITextFieldViewModeAlways;
     
     // sliders
-    int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
+    NSInteger maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
     if (self.role != NRRoleNone)
     {
         maxCost = self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost];
@@ -155,8 +149,8 @@ static NSMutableArray* subtypeCollapsedSections;
     self.subtypeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(dismissKeyboard:) name:BROWSER_FIND object:nil];
-    [nc addObserver:self selector:@selector(dismissKeyboard:) name:BROWSER_NEW object:nil];
+    [nc addObserver:self selector:@selector(dismissKeyboard:) name:Notifications.BROWSER_FIND object:nil];
+    [nc addObserver:self selector:@selector(dismissKeyboard:) name:Notifications.BROWSER_NEW object:nil];
     
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
     detailViewManager.detailViewController = self.snc;
@@ -172,6 +166,29 @@ static NSMutableArray* subtypeCollapsedSections;
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+-(BOOL) canBecomeFirstResponder {
+    return YES;
+}
+
+-(NSArray*) keyCommands {
+    return @[
+        KEYCMD(@"F", UIKeyModifierCommand, startTextSearch:, @"Find Cards"),
+        KEYCMD(@"A", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: All"),
+        KEYCMD(@"N", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Name"),
+        KEYCMD(@"T", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Text"),
+        [UIKeyCommand keyCommandWithInput:UIKeyInputEscape modifierFlags:0 action:@selector(escKeyPressed:)]
+    ];
+}
+
+-(void) startTextSearch:(UIKeyCommand*) keyCmd {
+    [self.textField becomeFirstResponder];
+}
+
+-(void) escKeyPressed:(UIKeyCommand*) keyCmd {
+    [self.textField resignFirstResponder];
+}
+
 
 -(void) dismissKeyboard:(id)sender
 {
@@ -190,7 +207,7 @@ static NSMutableArray* subtypeCollapsedSections;
     // clear textfield
     self.textField.text = @"";
     self.searchText = @"";
-    self.scope = NRSearchAll;
+    self.scope = NRSearchScopeAll;
     
     // reset sliders
     self.apSlider.value = 0;
@@ -258,7 +275,7 @@ static NSMutableArray* subtypeCollapsedSections;
     
     [self resetAllButtons];
     
-    int maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
+    NSInteger maxCost = MAX([CardManager maxRunnerCost], [CardManager maxCorpCost]);
     if (self.role != NRRoleNone)
     {
         maxCost = self.role == NRRoleRunner ? [CardManager maxRunnerCost] : [CardManager maxCorpCost];
@@ -368,11 +385,11 @@ static NSMutableArray* subtypeCollapsedSections;
         NSMutableArray* arr;
         if (self.selectedTypes)
         {
-            arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:YES];
+            arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:YES].mutableCopy;
         }
         else
         {
-            arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:YES];
+            arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:YES].mutableCopy;
         }
         [arr insertObject:kANY atIndex:0];
         data = [[TableData alloc] initWithValues:arr];
@@ -502,18 +519,31 @@ static NSMutableArray* subtypeCollapsedSections;
 
 #pragma mark - text search
 
+-(void) changeScopeKeyCmd:(UIKeyCommand*)keyCommand {
+    if ([keyCommand.input.lowercaseString isEqualToString:@"a"]) {
+        self.scope = NRSearchScopeAll;
+    }
+    else if ([keyCommand.input.lowercaseString isEqualToString:@"n"]) {
+        self.scope = NRSearchScopeName;
+    }
+    else if ([keyCommand.input.lowercaseString isEqualToString:@"t"]) {
+        self.scope = NRSearchScopeText;
+    }
+    [self filterWithText];
+}
+
 -(IBAction)scopeSelected:(UISegmentedControl*)sender
 {
     switch (sender.selectedSegmentIndex)
     {
         case 0:
-            self.scope = NRSearchAll;
+            self.scope = NRSearchScopeAll;
             break;
         case 1:
-            self.scope = NRSearchName;
+            self.scope = NRSearchScopeName;
             break;
         case 2:
-            self.scope = NRSearchText;
+            self.scope = NRSearchScopeText;
             break;
     }
     
@@ -524,13 +554,13 @@ static NSMutableArray* subtypeCollapsedSections;
 {
     switch (self.scope)
     {
-        case NRSearchText:
+        case NRSearchScopeText:
             [self.cardList filterByText:self.searchText];
             break;
-        case NRSearchAll:
+        case NRSearchScopeAll:
             [self.cardList filterByTextOrName:self.searchText];
             break;
-        case NRSearchName:
+        case NRSearchScopeName:
             [self.cardList filterByName:self.searchText];
             break;
     }

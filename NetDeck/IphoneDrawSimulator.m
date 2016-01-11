@@ -8,8 +8,6 @@
 
 #import "IphoneDrawSimulator.h"
 #import "ImageCache.h"
-#import "Deck.h"
-#import "Hypergeometric.h"
 
 @interface DrawTableCell : UITableViewCell
 @property Card* card;
@@ -98,7 +96,7 @@
     if (drawInitialHand)
     {
         int handSize = 5;
-        if ([self.deck.identity.code isEqualToString:ANDROMEDA])
+        if ([self.deck.identity.code isEqualToString:Card.ANDROMEDA])
         {
             handSize = 9;
         }

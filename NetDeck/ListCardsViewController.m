@@ -11,11 +11,6 @@
 #import "FilterViewController.h"
 #import "ImageCache.h"
 #import "EditDeckCell.h"
-#import "Deck.h"
-#import "TableData.h"
-#import "CardList.h"
-#import "Faction.h"
-#import "CardType.h"
 
 @interface ListCardsViewController ()
 
@@ -30,6 +25,7 @@
 @end
 
 static NSString* kSearchFieldValue = @"searchField";
+static NSString* kCancelButton = @"cancelButton";
 
 @implementation ListCardsViewController
 
@@ -184,20 +180,20 @@ static NSString* kSearchFieldValue = @"searchField";
 -(void) updateFooter
 {
     NSMutableString* footer = [NSMutableString string];
-    [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
+    [footer appendString:[NSString stringWithFormat:@"%ld %@", (long)self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
     NSString* inf = self.deck.role == NRRoleCorp ? l10n(@"Inf") : l10n(@"Influence");
     if (self.deck.identity && !self.deck.isDraft)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d/%d %@", self.deck.influence, self.deck.identity.influenceLimit, inf]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld/%ld %@", (long)self.deck.influence, (long)self.deck.influenceLimit, inf]];
     }
     else
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.influence, inf]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.influence, inf]];
     }
     
     if (self.deck.role == NRRoleCorp)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.agendaPoints, l10n(@"AP")]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.agendaPoints, l10n(@"AP")]];
     }
     
     [footer appendString:@"\n"];
@@ -229,6 +225,10 @@ static NSString* kSearchFieldValue = @"searchField";
 -(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     searchBar.showsCancelButton = YES;
+    UIButton* cancelBtn = [self.searchBar valueForKey:kCancelButton];
+    if (cancelBtn) {
+        [cancelBtn setTitle:l10n(@"Done") forState:UIControlStateNormal];
+    }
     self.tableView.tableHeaderView = self.searchBar;
 }
 
@@ -359,6 +359,11 @@ static NSString* kSearchFieldValue = @"searchField";
         cell.influenceLabel.text = @"";
     }
     
+    if (card.isMostWanted) {
+        cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)MIN(-1, -cc.count)];
+    }
+    cell.mwlLabel.hidden = !card.isMostWanted;
+    
     NSString* subtype = card.subtype;
     if (subtype)
     {
@@ -373,7 +378,6 @@ static NSString* kSearchFieldValue = @"searchField";
         cell.typeLabel.text = type;
     }
 
-    
     return cell;
 }
 

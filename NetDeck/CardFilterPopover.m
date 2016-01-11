@@ -8,8 +8,6 @@
 
 #import "CardFilterPopover.h"
 #import "CGRectUtils.h"
-#import "Notifications.h"
-#import "TableData.h"
 #import "CardFilterViewController.h"
 
 @interface CardFilterPopover ()
@@ -37,7 +35,7 @@ static UIPopoverController* popover;
     CardFilterPopover* filter = [[CardFilterPopover alloc] initWithNibName:@"CardFilterPopover" bundle:nil];
     filter.sections = entries.sections;
     filter.values = entries.values;
-    filter.collapsedSections = entries.collapsedSections;
+    filter.collapsedSections = entries.collapsedSections.mutableCopy;
     filter.button = button;
     filter.type = type;
     filter.headerView = vc;

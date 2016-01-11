@@ -13,5 +13,6 @@
 @property IBOutlet UIStepper* stepper;
 @property IBOutlet UIButton* idButton;
 @property IBOutlet UILabel* influenceLabel;
+@property IBOutlet UILabel* mwlLabel;
 
 @end

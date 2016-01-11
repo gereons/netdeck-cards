@@ -9,11 +9,6 @@
 #import "IphoneIdentityViewController.h"
 #import "EditDeckViewController.h"
 #import "ImageCache.h"
-#import "CardManager.h"
-#import "Deck.h"
-#import "Faction.h"
-#import "SettingsKeys.h"
-#import "CardSets.h"
 
 @interface IphoneIdentityViewController ()
 
@@ -57,7 +52,7 @@
 
 - (void)initIdentities
 {
-    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:USE_DRAFT_IDS];
+    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
     NSMutableArray* factions = [[Faction factionsForRole:self.role] mutableCopy];
     // remove entries for "none" and "neutral"
     [factions removeObject:[Faction name:NRFactionNone]];
@@ -150,7 +145,7 @@
             [deck addCard:self.selectedIdentity copies:1];
         }
         
-        NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
+        NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.FILE_SEQ] + 1;
         deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
 
         EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
@@ -214,14 +209,14 @@
     cell.textLabel.text = card.name;
     cell.textLabel.textColor = card.factionColor;
  
-    NSString* influence = card.influenceLimit == -1 ? @"∞" : [NSString stringWithFormat:@"%d", card.influenceLimit];
+    NSString* influence = card.influenceLimit == -1 ? @"∞" : [NSString stringWithFormat:@"%ld", (long)card.influenceLimit];
     if (self.role == NRRoleRunner)
     {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d/%@ · %d Link", card.minimumDecksize, influence, card.baseLink];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld/%@ · %ld Link", (long)card.minimumDecksize, influence, (long)card.baseLink];
     }
     else
     {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d/%@", card.minimumDecksize, influence];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld/%@", (long)card.minimumDecksize, influence];
     }
     
     return cell;

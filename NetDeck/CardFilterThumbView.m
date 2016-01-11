@@ -7,7 +7,6 @@
 //
 
 #import "CardFilterThumbView.h"
-#import "Card.h"
 #import "ImageCache.h"
 
 @implementation CardFilterThumbView

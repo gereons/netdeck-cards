@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class Deck;
-
 @interface OctgnImport : NSObject <NSXMLParserDelegate>
 
 -(Deck*) parseOctgnDeckFromData:(NSData*)data;

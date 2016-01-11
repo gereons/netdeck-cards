@@ -6,21 +6,20 @@
 //  Copyright © 2015 Gereon Steffens. All rights reserved.
 //
 
+@import SDCAlertView;
+
 #import "BrowserViewController.h"
 #import "CardImageViewController.h"
 #import "SmallPipsView.h"
 #import "ImageCache.h"
-#import "CardList.h"
-#import "Card.h"
-#import <SDCAlertView.h>
 
 @interface BrowserViewController ()
 
 @property NRRole role;
 @property NSString* searchText;
 @property CardList* cardList;
-@property NSArray* cards;
-@property NSArray* sections;
+@property NSArray<NSArray<Card*>*>* cards;
+@property NSArray<NSString*>* sections;
 
 @end
 
@@ -132,15 +131,15 @@
     switch (card.type)
     {
         default:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d Cr", card.factionStr, card.cost];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %ld Cr", card.factionStr, (long)card.cost];
             break;
             
         case NRCardTypeIdentity:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d/%d", card.factionStr, card.minimumDecksize, card.influenceLimit];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %ld/%ld", card.factionStr, (long)card.minimumDecksize, (long)card.influenceLimit];
             break;
             
         case NRCardTypeAgenda:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %d/%d", card.factionStr, card.advancementCost, card.agendaPoints];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ · %ld/%ld", card.factionStr, (long)card.advancementCost, (long)card.agendaPoints];
             break;
     }
     

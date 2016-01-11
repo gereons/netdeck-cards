@@ -13,6 +13,9 @@
 -(void) awakeFromNib
 {
     self.accessoryView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.influenceLabel.font = [UIFont md_systemFontOfSize:15];
+    self.mwlLabel.font = [UIFont md_systemFontOfSize:13];
 }
 
 @end

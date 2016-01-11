@@ -6,46 +6,33 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SVProgressHUD.h>
-#import <SDCAlertView.h>
-#import <EXTScope.h>
-#import <AFNetworking.h>
+@import SVProgressHUD;
+@import SDCAlertView;
 
+#import "AppDelegate.h"
+#import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
-
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"
 #import "DeckAnalysisViewController.h"
-#import "DrawSimulatorViewController.h"
 #import "DeckNotesPopup.h"
 #import "DeckHistoryPopup.h"
 #import "CardImagePopup.h"
 #import "ImageCache.h"
-#import "Deck.h"
-#import "DeckManager.h"
-#import "CardCounter.h"
-#import "Card.h"
-#import "Faction.h"
-#import "CardType.h"
 #import "DeckExport.h"
 #import "DeckImport.h"
-#import "CardSets.h"
 #import "DeckEmail.h"
 
 #import "CardCell.h"
 #import "CardImageCell.h"
 #import "CGRectUtils.h"
-#import "Notifications.h"
-#import "SettingsKeys.h"
-#import "DeckState.h"
 #import "NRDB.h"
-#import "NRCrashlytics.h"
 
 @interface DeckListViewController ()
 
-@property NSArray* sections;
-@property NSArray* cards;
+@property NSArray<NSString*>* sections;
+@property NSArray<NSArray<CardCounter*>*>* cards;
 
 @property UIAlertController* actionSheet;
 @property UIPrintInteractionController* printController;
@@ -102,11 +89,11 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    self.useNetrunnerdb = [settings boolForKey:USE_NRDB];
-    self.autoSaveNRDB = self.useNetrunnerdb && [settings boolForKey:NRDB_AUTOSAVE];
-    self.sortType = [settings integerForKey:DECK_VIEW_SORT];
+    self.useNetrunnerdb = [settings boolForKey:SettingsKeys.USE_NRDB];
+    self.autoSaveNRDB = self.useNetrunnerdb && [settings boolForKey:SettingsKeys.NRDB_AUTOSAVE];
+    self.sortType = [settings integerForKey:SettingsKeys.DECK_VIEW_SORT];
     
-    CGFloat scale = [settings floatForKey:DECK_VIEW_SCALE];
+    CGFloat scale = [settings floatForKey:SettingsKeys.DECK_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
     
     if (self.filename)
@@ -126,7 +113,7 @@
     {
         if (self.deck.name == nil)
         {
-            NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:FILE_SEQ] + 1;
+            NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.FILE_SEQ] + 1;
             self.deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
         }
         self.deckNameLabel.text = self.deck.name;
@@ -167,7 +154,7 @@
         [UIImage imageNamed:@"deckview_list"]    // NRCardViewSmallTable
     ];
     UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
-    viewSelector.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:DECK_VIEW_STYLE];
+    viewSelector.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECK_VIEW_STYLE];
     [viewSelector addTarget:self action:@selector(toggleView:) forControlEvents:UIControlEventValueChanged];
     self.toggleViewButton = [[UIBarButtonItem alloc] initWithCustomView:viewSelector];
     [self doToggleView:viewSelector.selectedSegmentIndex];
@@ -176,8 +163,8 @@
         self.toggleViewButton,
     ];
     
-    self.autoSave = [settings boolForKey:AUTO_SAVE];
-    self.autoSaveDropbox = self.autoSave && [settings boolForKey:USE_DROPBOX] && [settings boolForKey:AUTO_SAVE_DB];
+    self.autoSave = [settings boolForKey:SettingsKeys.AUTO_SAVE];
+    self.autoSaveDropbox = self.autoSave && [settings boolForKey:SettingsKeys.USE_DROPBOX] && [settings boolForKey:SettingsKeys.AUTO_SAVE_DB];
     
     // right buttons
     self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"] style:UIBarButtonItemStylePlain target:self action:@selector(exportDeck:)];
@@ -226,11 +213,11 @@
     self.historyButton.enabled = self.deck.filename != nil && self.deck.revisions.count > 0;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(identitySelected:) name:SELECT_IDENTITY object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(identitySelected:) name:Notifications.SELECT_IDENTITY object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:Notifications.DECK_CHANGED object:nil];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(notesChanged:) name:NOTES_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(notesChanged:) name:Notifications.NOTES_CHANGED object:nil];
     
     [nc addObserver:self selector:@selector(stopHistoryTimer:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [nc addObserver:self selector:@selector(startHistoryTimer:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -255,7 +242,7 @@
     if (self.deck.cards.count > 0 || self.deck.identity != nil)
     {
         // so that CardFilterViewController gets a chance to reload
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
     }
     self.initializing = NO;
     
@@ -264,7 +251,7 @@
         [self selectIdentity:nil];
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.AUTO_HISTORY])
     {
         int x = self.view.center.x - HISTORY_SAVE_INTERVAL;
         int width = 2 * HISTORY_SAVE_INTERVAL; // self.analysisButton.frame.origin.x + self.analysisButton.frame.size.width - x;
@@ -289,8 +276,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidDisappear:animated];
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setObject:@(self.scale) forKey:DECK_VIEW_SCALE];
-    [settings setObject:@(self.sortType) forKey:DECK_VIEW_SORT];
+    [settings setObject:@(self.scale) forKey:SettingsKeys.DECK_VIEW_SCALE];
+    [settings setObject:@(self.sortType) forKey:SettingsKeys.DECK_VIEW_SORT];
 
     [self stopHistoryTimer:nil];
 }
@@ -311,7 +298,7 @@
     // stop existing timer, if any
     [self stopHistoryTimer:notification];
 
-    BOOL autoHistory = [[NSUserDefaults standardUserDefaults] boolForKey:AUTO_HISTORY];
+    BOOL autoHistory = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.AUTO_HISTORY];
     if (autoHistory)
     {
         self.historyTimer = [NSTimer timerWithTimeInterval:1
@@ -382,7 +369,7 @@
 -(void) saveDeckClicked:(id)sender
 {
     [self saveDeckManually:YES withHud:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:DECK_SAVED object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_SAVED object:nil];
 }
 
 -(void) saveDeckManually:(BOOL)manually withHud:(BOOL)hud
@@ -453,6 +440,7 @@
         alert.didDismissHandler = ^(NSInteger buttonIndex) {
             if (buttonIndex == 0)
             {
+                LOG_EVENT(@"Save to NRDB", nil);
                 [self saveDeckToNetrunnerDb];
             }
         };
@@ -473,8 +461,9 @@
             switch (buttonIndex)
             {
                 case 1: // open in safari
-                    if (APP_ONLINE)
+                    if (AppDelegate.online)
                     {
+                        LOG_EVENT(@"Open in Safari", nil);
                         [self openInSafari:self.deck];
                     }
                     else
@@ -484,8 +473,9 @@
                     break;
             
                 case 2: // publish
-                    if (APP_ONLINE)
+                    if (AppDelegate.online)
                     {
+                        LOG_EVENT(@"Publish Deck", nil);
                         [self publishDeck:self.deck];
                     }
                     else
@@ -498,17 +488,20 @@
                     self.deck.netrunnerDbId = nil;
                     if (self.autoSave)
                     {
+                        LOG_EVENT(@"Unlink Deck", nil);
                         [self saveDeckManually:NO withHud:NO];
                     }
                     [self refresh];
                     break;
                     
                 case 4: // re-import
+                    LOG_EVENT(@"Reimport Deck", nil);
                     [self reImportDeckFromNetrunnerDb];
                     break;
                     
             
                 case 5: // save/upload
+                    LOG_EVENT(@"Save to NRDB", nil);
                     [self saveDeckToNetrunnerDb];
                     break;
             }
@@ -518,7 +511,7 @@
 
 -(void) saveDeckToNetrunnerDb
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;
@@ -546,7 +539,7 @@
 
 -(void) reImportDeckFromNetrunnerDb
 {
-    if (!APP_ONLINE)
+    if (!AppDelegate.online)
     {
         [self showOfflineAlert];
         return;
@@ -719,6 +712,7 @@
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.actionSheet.view layoutIfNeeded];
     
     [self presentViewController:self.actionSheet animated:NO completion:nil];
 }
@@ -726,6 +720,7 @@
 -(void) changeDeckState:(NRDeckState)newState
 {
     NRDeckState oldState = self.deck.state;
+    LOG_EVENT(@"Change State", (@{ @"From": @(oldState), @"To": @(newState)}) );
     self.deck.state = newState;
     [self.stateButton setTitle:[DeckState buttonLabelFor:self.deck.state]];
     if (self.deck.state != oldState)
@@ -766,7 +761,7 @@
     textField.returnKeyType = UIReturnKeyDone;
     textField.delegate = self;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:NAME_ALERT object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NAME_ALERT object:nil];
     
     @weakify(self);
     [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
@@ -781,7 +776,7 @@
             }
             else
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
             }
             [self refresh];
         }
@@ -813,7 +808,7 @@
 -(void) identitySelected:(NSNotification*)sender
 {
     NSString* code = [sender.userInfo objectForKey:@"code"];
-    Card* card = [Card cardByCode:code];
+    Card* card = [CardManager cardByCode:code];
     if (card)
     {
         NSAssert(card.role == self.deck.role, @"role mismatch");
@@ -824,7 +819,7 @@
         [self.deck addCard:card copies:1];
         [self refresh];
     
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
     }
 }
 
@@ -874,6 +869,7 @@
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.actionSheet.view layoutIfNeeded];
     
     [self presentViewController:self.actionSheet animated:NO completion:nil];
 }
@@ -902,42 +898,49 @@
     
     self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:USE_DROPBOX])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DROPBOX])
     {
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: OCTGN")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Export .o8d", nil);
                                                                [self octgnExport];
                                                            }]];
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: BBCode")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Export BBCode", nil);
                                                                [DeckExport asBBCode:self.deck];
                                                                self.actionSheet = nil;
                                                            }]];
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Markdown")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Export MD", nil);
                                                                [DeckExport asMarkdown:self.deck];
                                                                self.actionSheet = nil;
                                                            }]];
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Plain Text")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Export Text", nil);
                                                                [DeckExport asPlaintext:self.deck];
                                                                self.actionSheet = nil;
                                                            }]];
     }
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: BBCode")
                                                        handler:^(UIAlertAction *action) {
+                                                           LOG_EVENT(@"Clip BBCode", nil);
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asBBCodeString:self.deck];
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: Markdown")
                                                        handler:^(UIAlertAction *action) {
+                                                           LOG_EVENT(@"Clip MD", nil);
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asMarkdownString:self.deck];
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Clipboard: Plain Text")
                                                        handler:^(UIAlertAction *action) {
+                                                           LOG_EVENT(@"Clip Text", nil);
                                                            [UIPasteboard generalPasteboard].string = [DeckExport asPlaintextString:self.deck];
                                                            [DeckImport updateCount];
                                                            self.actionSheet = nil;
@@ -947,6 +950,7 @@
     {
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"As Email")
                                                        handler:^(UIAlertAction *action) {
+                                                           LOG_EVENT(@"Email Deck", nil);
                                                            [DeckEmail emailDeck:self.deck fromViewController:self];
                                                            self.actionSheet = nil;
                                                        }]];
@@ -955,6 +959,7 @@
     {
         [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Print")
                                                            handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Print Deck", nil);
                                                                [self printDeck:self.exportButton];
                                                                self.actionSheet = nil;
                                                            }]];
@@ -967,6 +972,7 @@
     popover.barButtonItem = sender;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.actionSheet.view layoutIfNeeded];
     
     [self presentViewController:self.actionSheet animated:NO completion:nil];
 }
@@ -1003,7 +1009,7 @@
     }
 
     NSInteger viewMode = sender.selectedSegmentIndex;
-    [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:DECK_VIEW_STYLE];
+    [[NSUserDefaults standardUserDefaults] setInteger:viewMode forKey:SettingsKeys.DECK_VIEW_STYLE];
     [self doToggleView:viewMode];
 }
 
@@ -1072,19 +1078,19 @@
     self.analysisButton.enabled = self.deck.cards.count > 0;
     
     NSMutableString* footer = [NSMutableString string];
-    [footer appendString:[NSString stringWithFormat:@"%d %@", self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
+    [footer appendString:[NSString stringWithFormat:@"%ld %@", (long)self.deck.size, self.deck.size == 1 ? l10n(@"Card") : l10n(@"Cards")]];
     if (self.deck.identity && !self.deck.isDraft)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d/%d %@", self.deck.influence, self.deck.identity.influenceLimit, l10n(@"Influence")]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld/%ld %@", (long)self.deck.influence, (long)self.deck.influenceLimit, l10n(@"Influence")]];
     }
     else
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.influence, l10n(@"Influence")]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.influence, l10n(@"Influence")]];
     }
     
     if (self.role == NRRoleCorp)
     {
-        [footer appendString:[NSString stringWithFormat:@" · %d %@", self.deck.agendaPoints, l10n(@"AP")]];
+        [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.agendaPoints, l10n(@"AP")]];
     }
     
     NSArray* reasons = [self.deck checkValidity];
@@ -1132,7 +1138,7 @@
         {
             CardCounter* cc = arr[row];
             
-            if (!ISNULL(cc) && [card isEqual:cc.card])
+            if (!cc.isNull && [card isEqual:cc.card])
             {
                 if (self.tableView.hidden)
                 {
@@ -1224,7 +1230,7 @@
     int cnt = 0;
     for (CardCounter* cc in arr)
     {
-        if (!ISNULL(cc))
+        if (!cc.isNull)
         {
             cnt += cc.count;
         }
@@ -1248,7 +1254,7 @@
     cell.separatorInset = UIEdgeInsetsZero;
     
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
-    if (ISNULL(cc))
+    if (cc.isNull)
     {
         cc = nil;
     }
@@ -1265,7 +1271,7 @@
     
     if (cc != nil)
     {
-        return !ISNULL(cc);
+        return !cc.isNull;
     }
     return NO;
 }
@@ -1276,12 +1282,12 @@
     {
         CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
         
-        if (!ISNULL(cc))
+        if (!cc.isNull)
         {
             [self.deck addCard:cc.card copies:0];
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
     }
 }
 
@@ -1289,7 +1295,7 @@
 {
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];
     
-    if (!ISNULL(cc))
+    if (!cc.isNull)
     {
         CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
         [CardImageViewPopover showForCard:cc.card fromRect:rect inView:self.tableView];

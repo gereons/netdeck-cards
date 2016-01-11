@@ -7,7 +7,6 @@
 //
 
 #import "CardImageViewPopover.h"
-#import "Card.h"
 #import "ImageCache.h"
 #import "CardDetailView.h"
 

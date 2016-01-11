@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -18,25 +18,21 @@
                 <subviews>
                     <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="gtw-AN-Eiy">
                         <rect key="frame" x="336" y="7" width="94" height="29"/>
-                        <animations/>
                     </stepper>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Card Details" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IoM-OL-Bo9">
-                        <rect key="frame" x="8" y="21" width="320" height="22"/>
-                        <animations/>
+                        <rect key="frame" x="8" y="20.5" width="291" height="22.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XsA-ls-8Lk">
                         <rect key="frame" x="365" y="7" width="57" height="30"/>
-                        <animations/>
                         <state key="normal" title="Identität">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cF-N7-Su9">
                         <rect key="frame" x="307" y="6" width="21" height="18"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="r67-qI-2CR"/>
                         </constraints>
@@ -44,20 +40,28 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d1a-2Z-BSV">
+                        <rect key="frame" x="307" y="23" width="21" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="HZG-QT-KcE"/>
+                            <constraint firstAttribute="width" constant="21" id="NQx-XF-m1Q"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Name" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="onJ-KM-u9a">
-                        <rect key="frame" x="8" y="5" width="291" height="20"/>
-                        <animations/>
+                        <rect key="frame" x="8" y="5" width="291" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="gtw-AN-Eiy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-86" id="1d9-6Y-Gfw"/>
                     <constraint firstAttribute="bottomMargin" secondItem="IoM-OL-Bo9" secondAttribute="bottom" constant="-7.5" id="71C-Gw-lns"/>
-                    <constraint firstItem="gtw-AN-Eiy" firstAttribute="leading" secondItem="IoM-OL-Bo9" secondAttribute="trailing" constant="8" id="Aau-PY-WuN"/>
                     <constraint firstItem="onJ-KM-u9a" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-3" id="E2N-4Q-y0w"/>
+                    <constraint firstItem="gtw-AN-Eiy" firstAttribute="leading" secondItem="d1a-2Z-BSV" secondAttribute="trailing" constant="8" id="Hel-hu-CkL"/>
                     <constraint firstItem="gtw-AN-Eiy" firstAttribute="leading" secondItem="4cF-N7-Su9" secondAttribute="trailing" constant="8" id="KKh-Mc-mKo"/>
                     <constraint firstItem="4cF-N7-Su9" firstAttribute="leading" secondItem="onJ-KM-u9a" secondAttribute="trailing" constant="8" id="L5x-dz-86E"/>
                     <constraint firstAttribute="centerY" secondItem="gtw-AN-Eiy" secondAttribute="centerY" id="N2H-Zw-EbA"/>
@@ -68,12 +72,14 @@
                     <constraint firstItem="onJ-KM-u9a" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="cTR-6b-oxV"/>
                     <constraint firstAttribute="centerY" secondItem="XsA-ls-8Lk" secondAttribute="centerY" id="jfk-sP-AXI"/>
                     <constraint firstAttribute="trailingMargin" secondItem="gtw-AN-Eiy" secondAttribute="trailing" constant="-8" id="mfA-xl-FKE"/>
+                    <constraint firstItem="d1a-2Z-BSV" firstAttribute="centerY" secondItem="IoM-OL-Bo9" secondAttribute="centerY" id="tim-Hj-KVS"/>
+                    <constraint firstItem="d1a-2Z-BSV" firstAttribute="leading" secondItem="IoM-OL-Bo9" secondAttribute="trailing" constant="8" id="wfy-Uo-c4l"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="idButton" destination="XsA-ls-8Lk" id="BV8-a9-XdI"/>
                 <outlet property="influenceLabel" destination="4cF-N7-Su9" id="bCn-ZX-JsM"/>
+                <outlet property="mwlLabel" destination="d1a-2Z-BSV" id="E6X-nz-cnu"/>
                 <outlet property="nameLabel" destination="onJ-KM-u9a" id="Wli-yR-Ng6"/>
                 <outlet property="stepper" destination="gtw-AN-Eiy" id="x8w-Cg-RLh"/>
                 <outlet property="typeLabel" destination="IoM-OL-Bo9" id="ljV-QY-8i8"/>

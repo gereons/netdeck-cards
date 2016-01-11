@@ -6,13 +6,11 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
+@import SDCAlertView;
 
 #import "CompareDecksList.h"
 #import "DeckCell.h"
-#import "Deck.h"
 #import "DeckDiffViewController.h"
-#import "DeckManager.h"
 
 @interface CompareDecksList ()
 

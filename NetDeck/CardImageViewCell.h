@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class Card;
-
 @interface CardImageViewCell : UICollectionViewCell
 
 @property IBOutlet UIImageView* imageView;

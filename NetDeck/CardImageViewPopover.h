@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@class Card;
-
 @interface CardImageViewPopover : UIViewController<UIPopoverControllerDelegate>
 
 +(void) showForCard:(Card*)card fromRect:(CGRect)rect inView:(UIView*)vc;

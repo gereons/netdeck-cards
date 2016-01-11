@@ -6,22 +6,22 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <Dropbox/Dropbox.h>
-#import <SVProgressHUD.h>
-#import <AFNetworking.h>
-#import <SDCAlertView.h>
+// TODOs:
 
+// add UIKeyCommand: http://nshipster.com/uikeycommand/
+// card/set update in bg fetch
+
+@import SVProgressHUD;
+@import AFNetworking;
+@import SDCAlertView;
+
+#import <Dropbox/Dropbox.h>
 #import "AppDelegate.h"
-#import "CardManager.h"
-#import "CardSets.h"
-#import "SettingsKeys.h"
 #import "DeckImport.h"
 #import "CardImageViewPopover.h"
 #import "NRDBAuthPopupViewController.h"
 #import "NRDBAuth.h"
 #import "NRDB.h"
-
-// TODO for v2.3: remove maxPerDeck hack in Card.m
 
 const NSString* const kANY = @"Any";
 
@@ -35,12 +35,21 @@ const NSString* const kANY = @"Any";
     
     [self setBuiltinUserDefaults];
     
-    [CardSets setupFromFiles];
-    [CardManager setupFromFiles];
+    BOOL setsOk = NO, cardsOk = NO;
+    
+    setsOk = [CardSets setupFromFiles];
+    if (setsOk) {
+        cardsOk = [CardManager setupFromFiles];
+    }
+    
+    if (!setsOk || !cardsOk) {
+        [CardSets removeFiles];
+        [CardManager removeFiles];
+    }
     
     [self setAdditionalUserDefaults];
     
-    BOOL useNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:USE_NRDB];
+    BOOL useNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NRDB];
     NSTimeInterval fetchInterval = useNrdb ? BG_FETCH_INTERVAL : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
     
@@ -63,7 +72,8 @@ const NSString* const kANY = @"Any";
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
         
 #if USE_CRASHLYTICS
-    [Crashlytics startWithAPIKey:@"fe0f0f5f919be6211c1de668d91332e311ddad9e" delegate:self];
+    [CrashlyticsKit setDelegate:self];
+    [Fabric with:@[ CrashlyticsKit ]];
 #endif
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -102,38 +112,40 @@ const NSString* const kANY = @"Any";
 -(void) setBuiltinUserDefaults
 {
     NSDictionary* dict = @{
-        LAST_DOWNLOAD: l10n(@"never"),
-        NEXT_DOWNLOAD: l10n(@"never"),
+        SettingsKeys.LAST_DOWNLOAD: l10n(@"never"),
+        SettingsKeys.NEXT_DOWNLOAD: l10n(@"never"),
         
-        USE_DRAFT_IDS: @(YES),
-        AUTO_SAVE: @(NO),
-        AUTO_HISTORY: @(YES),
-        USE_DROPBOX: @(NO),
-        AUTO_SAVE_DB: @(NO),
-        USE_NRDB: @(NO),
-        NRDB_AUTOSAVE: @(NO),
-        NRDB_HOST: @"netrunnerdb.com",
-        LANGUAGE: @"en",
-        UPDATE_INTERVAL: @(7),
-        LAST_BG_FETCH: l10n(@"never"),
+        SettingsKeys.USE_DRAFT_IDS: @(YES),
+        SettingsKeys.AUTO_SAVE: @(NO),
+        SettingsKeys.AUTO_HISTORY: @(YES),
+        SettingsKeys.USE_DROPBOX: @(NO),
+        SettingsKeys.AUTO_SAVE_DB: @(NO),
+        SettingsKeys.USE_NRDB: @(NO),
+        SettingsKeys.NRDB_AUTOSAVE: @(NO),
+        SettingsKeys.NRDB_HOST: @"netrunnerdb.com",
+        SettingsKeys.LANGUAGE: @"en",
+        SettingsKeys.UPDATE_INTERVAL: @(7),
+        SettingsKeys.LAST_BG_FETCH: l10n(@"never"),
         
-        DECK_FILTER_STATE: @(NRDeckStateNone),
-        DECK_VIEW_STYLE: @(NRCardViewLargeTable),
-        DECK_VIEW_SCALE: @(1.0),
-        DECK_VIEW_SORT: @(NRDeckSortType),
-        DECK_FILTER_SORT: @(NRDeckListSortA_Z),
-        DECK_FILTER_TYPE: @(NRFilterAll),
+        SettingsKeys.DECK_FILTER_STATE: @(NRDeckStateNone),
+        SettingsKeys.DECK_VIEW_STYLE: @(NRCardViewLargeTable),
+        SettingsKeys.DECK_VIEW_SCALE: @(1.0),
+        SettingsKeys.DECK_VIEW_SORT: @(NRDeckSortType),
+        SettingsKeys.DECK_FILTER_SORT: @(NRDeckListSortA_Z),
+        SettingsKeys.DECK_FILTER_TYPE: @(NRFilterAll),
         
-        CREATE_DECK_ACTIVE: @(NO),
+        SettingsKeys.CREATE_DECK_ACTIVE: @(NO),
         
-        BROWSER_VIEW_STYLE: @(NRCardViewLargeTable),
-        BROWSER_VIEW_SCALE: @(1.0),
-        BROWSER_SORT_TYPE: @(NRBrowserSortType),
+        SettingsKeys.BROWSER_VIEW_STYLE: @(NRCardViewLargeTable),
+        SettingsKeys.BROWSER_VIEW_SCALE: @(1.0),
+        SettingsKeys.BROWSER_SORT_TYPE: @(NRBrowserSortType),
         
-        NUM_CORES: @(3),
+        SettingsKeys.NUM_CORES: @(3),
         
-        SHOW_ALL_FILTERS: @(YES),
-        IDENTITY_TABLE: @(YES),
+        SettingsKeys.SHOW_ALL_FILTERS: @(YES),
+        SettingsKeys.IDENTITY_TABLE: @(YES),
+        
+        SettingsKeys.USE_NAPD_MWL: @(YES),
     };
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
@@ -222,6 +234,13 @@ const NSString* const kANY = @"Any";
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+
+- (void) application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
+{
+    // Called when the user selects a shortcut item on the home screen (iPhone 6s/6s+)
+    completionHandler(NO);
+}
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     NSString* scheme = [url scheme];
@@ -249,7 +268,7 @@ const NSString* const kANY = @"Any";
                 DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
                 [DBFilesystem setSharedFilesystem:fileSystem];
             }
-            [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:USE_DROPBOX];
+            [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:SettingsKeys.USE_DROPBOX];
         }
         @catch (DBException* dbEx)
         {}
@@ -281,7 +300,7 @@ static BOOL runningBackgroundFetch = NO;
 
 -(void) application:(UIApplication *)application performFetchWithCompletionHandler:(BackgroundFetchCompletionBlock)completionHandler
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:LAST_BG_FETCH];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:SettingsKeys.LAST_BG_FETCH];
     
     if (runningBackgroundFetch)
     {
@@ -298,6 +317,9 @@ static BOOL runningBackgroundFetch = NO;
     }];
 }
 
++(BOOL) online {
+    return [AFNetworkReachabilityManager sharedManager].reachable;
+}
 
 #pragma mark - crashlytics delegate
 

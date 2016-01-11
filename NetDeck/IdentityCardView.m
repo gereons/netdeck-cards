@@ -8,7 +8,6 @@
 
 #import "IdentityCardView.h"
 #import "ImageCache.h"
-#import "Card.h"
 
 @implementation IdentityCardView
 

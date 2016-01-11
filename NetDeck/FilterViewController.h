@@ -7,11 +7,9 @@
 //
 
 #import "MultiSelectSegmentedControl.h"
-
-@class Card, CardList;
+#import "NetDeck-Swift.h"
 
 @interface FilterViewController : UIViewController<MultiSelectSegmentedControlDelegate, UITableViewDataSource, UITableViewDelegate>
-
 
 @property IBOutlet UILabel* factionLabel;
 @property IBOutlet MultiSelectSegmentedControl* factionControl;

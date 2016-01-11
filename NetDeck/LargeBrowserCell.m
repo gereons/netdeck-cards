@@ -8,14 +8,11 @@
 
 #import "LargeBrowserCell.h"
 #import "CGRectUtils.h"
-#import "Card.h"
-#import "Faction.h"
-#import "CardType.h"
 #import "ImageCache.h"
 
 @interface LargeBrowserCell()
 
-@property NSArray* pips;
+@property NSArray<UIView*>* pips;
 
 @end
 
@@ -32,6 +29,18 @@
     {
         pip.frame = CGRectSetSize(pip.frame, diameter, diameter);
         pip.layer.cornerRadius = diameter/2;
+    }
+    
+    self.name.font = [UIFont md_mediumSystemFontOfSize:17];
+    
+    for (UILabel* lbl in @[ self.label1, self.label2, self.label3]) {
+        lbl.font = [UIFont md_systemFontOfSize:17];
+    }
+}
+
+-(void) prepareForReuse {
+    for (UIView* pip in self.pips) {
+        pip.layer.borderWidth = 0;
     }
 }
 
@@ -63,16 +72,7 @@
         self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
     
-    NSInteger influence = 0;
-    if (card.type == NRCardTypeAgenda)
-    {
-        influence = card.agendaPoints;
-    }
-    else
-    {
-        influence = card.influence;
-    }
-    [self setInfluence:influence withColor:card.factionColor];
+    [self setInfluence:card.influence withCard:card];
     
     // labels from top: cost/strength/mu
     switch (card.type)
@@ -91,7 +91,7 @@
             self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)
             {
-                self.label3.text = [NSString stringWithFormat:@"%d", card.baseLink];
+                self.label3.text = [NSString stringWithFormat:@"%ld", (long)card.baseLink];
                 self.icon3.image = [ImageCache linkIcon];
             }
             else
@@ -105,40 +105,40 @@
         case NRCardTypeResource:
         case NRCardTypeEvent:
         case NRCardTypeHardware:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
-            self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%ld", (long)card.strength] : @"";
             self.icon2.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
-            self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%d", card.mu] : @"";
+            self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%ld", (long)card.mu] : @"";
             self.icon3.image = card.mu != -1 ? [ImageCache muIcon] : nil;
             break;
             
         case NRCardTypeIce:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%ld", (long)card.strength] : @"";
             self.icon3.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
             break;
             
         case NRCardTypeAgenda:
-            self.label1.text = [NSString stringWithFormat:@"%d", card.advancementCost];
+            self.label1.text = [NSString stringWithFormat:@"%ld", (long)card.advancementCost];
             self.icon1.image = [ImageCache difficultyIcon];
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = [NSString stringWithFormat:@"%d", card.agendaPoints];
+            self.label3.text = [NSString stringWithFormat:@"%ld", (long)card.agendaPoints];
             self.icon3.image = [ImageCache apIcon];
             break;
             
         case NRCardTypeAsset:
         case NRCardTypeOperation:
         case NRCardTypeUpgrade:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%d", card.trash] : @"";
+            self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%ld", (long)card.trash] : @"";
             self.icon3.image = card.trash != -1 ? [ImageCache trashIcon] : nil;
             break;
             
@@ -148,14 +148,14 @@
     }
 }
 
--(void) setInfluence:(NSInteger)influence withColor:(UIColor*)color
+-(void) setInfluence:(NSInteger)influence withCard:(Card*)card
 {
     if (influence > 0)
     {
         for (int i=0; i<self.pips.count; ++i)
         {
             UIView* pip = self.pips[i];
-            pip.layer.backgroundColor = [color CGColor];
+            pip.layer.backgroundColor = [card.factionColor CGColor];
             pip.hidden = i >= influence;
             // NSLog(@"%d %d", i, pip.hidden);
         }
@@ -165,6 +165,21 @@
         for (UIView* pip in self.pips)
         {
             pip.hidden = YES;
+        }
+    }
+    
+    if (card.isMostWanted) {
+        for (UIView* pip in self.pips) {
+            // find the first non-hidden pip, and draw it as a black circle
+            if (!pip.hidden) {
+                continue;
+            }
+            
+            pip.layer.backgroundColor = [UIColor whiteColor].CGColor;
+            pip.layer.borderWidth = 1;
+            pip.layer.borderColor = [UIColor blackColor].CGColor;
+            pip.hidden = NO;
+            break;
         }
     }
 }

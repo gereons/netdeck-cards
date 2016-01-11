@@ -6,8 +6,7 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <SDCAlertView.h>
-#import <AFNetworking.h>
+@import SDCAlertView;
 
 #import "AppDelegate.h"
 #import "ActionsTableViewController.h"
@@ -19,11 +18,6 @@
 #import "BrowserFilterViewController.h"
 #import "SavedDecksList.h"
 #import "CompareDecksList.h"
-#import "Notifications.h"
-#import "CardManager.h"
-#import "CardSets.h"
-#import "SettingsKeys.h"
-#import "Deck.h"
 #import "DataDownload.h"
 #import "CardUpdateCheck.h"
 
@@ -82,13 +76,13 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(loadDeck:) name:LOAD_DECK object:nil];
-    [nc addObserver:self selector:@selector(newDeck:) name:NEW_DECK object:nil];
-    [nc addObserver:self selector:@selector(newDeck:) name:BROWSER_NEW object:nil];
-    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:IMPORT_DECK object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:LOAD_CARDS object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:DROPBOX_CHANGED object:nil];
-    [nc addObserver:self selector:@selector(listDecks:) name:BROWSER_FIND object:nil];
+    [nc addObserver:self selector:@selector(loadDeck:) name:Notifications.LOAD_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:Notifications.NEW_DECK object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:Notifications.BROWSER_NEW object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:Notifications.IMPORT_DECK object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.LOAD_CARDS object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.DROPBOX_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(listDecks:) name:Notifications.BROWSER_FIND object:nil];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -101,7 +95,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     // first start with this version?
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     // [defaults setObject:@"" forKey:LAST_START_VERSION];
-    NSString* lastVersion = [defaults stringForKey:LAST_START_VERSION];
+    NSString* lastVersion = [defaults stringForKey:SettingsKeys.LAST_START_VERSION];
     NSString* thisVersion = [AppDelegate appVersion];
     if ([thisVersion isEqualToString:lastVersion])
     {
@@ -109,7 +103,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuAbout inSection:0];
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-        [defaults setObject:thisVersion forKey:LAST_START_VERSION];
+        [defaults setObject:thisVersion forKey:SettingsKeys.LAST_START_VERSION];
         [defaults synchronize];
         return;
     }
@@ -159,9 +153,9 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSDictionary* userInfo = notification.userInfo;
     CardFilterViewController* filter;
     
-    if ([notification.name isEqualToString:BROWSER_NEW])
+    if ([notification.name isEqualToString:Notifications.BROWSER_NEW])
     {
-        Card* card = [Card cardByCode:[userInfo objectForKey:@"code"]];
+        Card* card = [CardManager cardByCode:[userInfo objectForKey:@"code"]];
         Deck* deck = [[Deck alloc] init];
         deck.role = card.role;
         [deck addCard:card copies:1];
@@ -209,7 +203,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 -(void) listDecks:(NSNotification*)sender
 {
     [self.navigationController popToRootViewControllerAnimated:NO];
-    self.searchForCard = [Card cardByCode:[sender.userInfo objectForKey:@"code"]];
+    self.searchForCard = [CardManager cardByCode:[sender.userInfo objectForKey:@"code"]];
 }
 
 #pragma mark Table view data source

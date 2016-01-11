@@ -7,13 +7,7 @@
 //
 
 #import "LargeCardCell.h"
-#import "CardCounter.h"
-#import "Deck.h"
-#import "Faction.h"
-#import "CardType.h"
 #import "CGRectUtils.h"
-#import "Notifications.h"
-#import "SettingsKeys.h"
 #import "ImageCache.h"
 
 @interface LargeCardCell()
@@ -35,6 +29,16 @@
     }
     
     self.name.font = [UIFont md_mediumSystemFontOfSize:17];
+    
+    for (UILabel* lbl in @[ self.label1, self.label2, self.label3]) {
+        lbl.font = [UIFont md_systemFontOfSize:17];
+    }
+}
+
+-(void) prepareForReuse {
+    for (UIView* pip in self.pips) {
+        pip.layer.borderWidth = 0;
+    }
 }
 
 -(void) setCardCounter:(CardCounter *)cc
@@ -65,7 +69,7 @@
     NSString* typeName = [CardType name:card.type];
     
     NSString* subtype = card.subtype;
-    if (subtype)
+    if (subtype.length > 0)
     {
         self.type.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];
     }
@@ -73,30 +77,19 @@
     {
         self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
-    
-    NSUInteger influence = 0;
-    if (card.type == NRCardTypeAgenda)
-    {
-        influence = card.agendaPoints * cc.count;
+
+    if (self.deck) {
+        [self setInfluence:[self.deck influenceFor:cc] andCard:cc];
+    } else {
+        [self setInfluence:card.influence andCard:cc];
     }
-    else
-    {
-        if (self.deck)
-        {
-            influence = [self.deck influenceFor:cc];
-        }
-        else
-        {
-            influence = card.influence * cc.count;
-        }
-    }
-    [self setInfluence:influence andCard:card];
     
     self.copiesLabel.hidden = card.type == NRCardTypeIdentity;
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
     self.identityButton.hidden = card.type != NRCardTypeIdentity;
     self.type.hidden = NO;
     
+    self.label2.textColor = [UIColor blackColor];
     // labels from top: cost/strength/mu
     switch (card.type)
     {
@@ -109,12 +102,16 @@
             }
             else
             {
-                self.label2.text = [@(card.influenceLimit) stringValue];
+                NSInteger inf = self.deck.influenceLimit;
+                self.label2.text = [NSString stringWithFormat:@"%ld", (long)inf];
+                if (inf != card.influenceLimit) {
+                    self.label2.textColor = [UIColor redColor];
+                }
             }
             self.icon2.image = [ImageCache influenceIcon];
             if (card.role == NRRoleRunner)
             {
-                self.label3.text = [NSString stringWithFormat:@"%d", card.baseLink];
+                self.label3.text = [NSString stringWithFormat:@"%ld", (long)card.baseLink];
                 self.icon3.image = [ImageCache linkIcon];
             }
             else
@@ -143,40 +140,40 @@
         case NRCardTypeResource:
         case NRCardTypeEvent:
         case NRCardTypeHardware:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
-            self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%ld", (long)card.strength] : @"";
             self.icon2.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
-            self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%d", card.mu] : @"";
+            self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%ld", (long)card.mu] : @"";
             self.icon3.image = card.mu != -1 ? [ImageCache muIcon] : nil;
             break;
             
         case NRCardTypeIce:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%d", card.strength] : @"";
+            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%ld", (long)card.strength] : @"";
             self.icon3.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
             break;
             
         case NRCardTypeAgenda:
-            self.label1.text = [NSString stringWithFormat:@"%d", card.advancementCost];
+            self.label1.text = [NSString stringWithFormat:@"%ld", (long)card.advancementCost];
             self.icon1.image = [ImageCache difficultyIcon];
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = [NSString stringWithFormat:@"%d", card.agendaPoints];
+            self.label3.text = [NSString stringWithFormat:@"%ld", (long)card.agendaPoints];
             self.icon3.image = [ImageCache apIcon];
             break;
             
         case NRCardTypeAsset:
         case NRCardTypeOperation:
         case NRCardTypeUpgrade:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%d", card.cost] : @"";
+            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
             self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%d", card.trash] : @"";
+            self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%ld", (long)card.trash] : @"";
             self.icon3.image = card.trash != -1 ? [ImageCache trashIcon] : nil;
             break;
             
@@ -190,20 +187,20 @@
     self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)cc.count];
 }
 
--(void) setInfluence:(NSUInteger)influence andCard:(Card*)card
+-(void) setInfluence:(NSInteger)influence andCard:(CardCounter*)cc
 {
     if (influence > 0)
     {
-        self.influenceLabel.textColor = card.factionColor;
-        self.influenceLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)influence];
+        self.influenceLabel.textColor = cc.card.factionColor;
+        self.influenceLabel.text = [NSString stringWithFormat:@"%ld", (long)influence];
         
-        CGColorRef color = card.factionColor.CGColor;
+        CGColorRef color = cc.card.factionColor.CGColor;
         
         for (int i=0; i<self.pips.count; ++i)
         {
             UIView* pip = self.pips[i];
             pip.layer.backgroundColor = color;
-            pip.hidden = i >= card.influence;
+            pip.hidden = i >= cc.card.influence;
         }
     }
     else
@@ -212,6 +209,21 @@
         for (UIView* pip in self.pips)
         {
             pip.hidden = YES;
+        }
+    }
+    
+    if (cc.card.isMostWanted) {
+        for (UIView* pip in self.pips) {
+            // find the first non-hidden pip, and draw it as a black circle
+            if (!pip.hidden) {
+                continue;
+            }
+            
+            pip.layer.backgroundColor = [UIColor whiteColor].CGColor;
+            pip.layer.borderWidth = 1;
+            pip.layer.borderColor = [UIColor blackColor].CGColor;
+            pip.hidden = NO;
+            break;
         }
     }
 }

@@ -6,26 +6,16 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-#import <CSStickyHeaderFlowLayout.h>
+@import CSStickyHeaderFlowLayout;
 
+// #import "CSStickyHeaderFlowLayout/CSStickyHeaderFlowLayout.h"
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
-#import "Deck.h"
-#import "CardCounter.h"
-#import "CardList.h"
-#import "CardManager.h"
-#import "CardType.h"
-#import "CardSets.h"
-#import "Faction.h"
 #import "CardFilterPopover.h"
-#import "Notifications.h"
 #import "CardImageViewPopover.h"
 #import "CardFilterThumbView.h"
 #import "CardFilterSectionHeaderView.h"
-#import "SettingsKeys.h"
 #import "SmallPipsView.h"
-#import "NRCrashlytics.h"
-#import "DeckManager.h"
 
 @interface CardFilterViewController ()
 
@@ -67,9 +57,9 @@ static NSInteger viewMode = VIEW_LIST;
 {
     scopes = @[ @"all text", @"card name", @"card text" ];
     
-    scopeLabels = @{ @(NRSearchAll): l10n(@"All"),
-                     @(NRSearchName): l10n(@"Name"),
-                     @(NRSearchText): l10n(@"Text")
+    scopeLabels = @{ @(NRSearchScopeAll): l10n(@"All"),
+                     @(NRSearchScopeName): l10n(@"Name"),
+                     @(NRSearchScopeText): l10n(@"Text")
                      };
 }
 
@@ -129,8 +119,8 @@ static NSInteger viewMode = VIEW_LIST;
     [super viewDidLoad];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    showAllFilters = [settings boolForKey:SHOW_ALL_FILTERS];
-    viewMode = [settings integerForKey:FILTER_VIEW_MODE];
+    showAllFilters = [settings boolForKey:SettingsKeys.SHOW_ALL_FILTERS];
+    viewMode = [settings integerForKey:SettingsKeys.FILTER_VIEW_MODE];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
@@ -150,6 +140,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.collectionView.delegate = self;
     
     CSStickyHeaderFlowLayout *layout = (CSStickyHeaderFlowLayout*)self.collectionView.collectionViewLayout;
+    // UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(320, 22);
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
     layout.minimumInteritemSpacing = 3;
@@ -204,10 +195,10 @@ static NSInteger viewMode = VIEW_LIST;
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(addTopCard:) name:ADD_TOP_CARD object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:DECK_CHANGED object:nil];
-    [nc addObserver:self selector:@selector(deckSaved:) name:DECK_SAVED object:nil];
-    [nc addObserver:self selector:@selector(nameAlertWillAppear:) name:NAME_ALERT object:nil];
+    [nc addObserver:self selector:@selector(addTopCard:) name:Notifications.ADD_TOP_CARD object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:Notifications.DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(deckSaved:) name:Notifications.DECK_SAVED object:nil];
+    [nc addObserver:self selector:@selector(nameAlertWillAppear:) name:Notifications.NAME_ALERT object:nil];
     
     [self initFilters];
 }
@@ -220,8 +211,30 @@ static NSInteger viewMode = VIEW_LIST;
     [super viewDidDisappear:animated];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    [settings setObject:@(showAllFilters) forKey:SHOW_ALL_FILTERS];
-    [settings setObject:@(viewMode) forKey:FILTER_VIEW_MODE];
+    [settings setObject:@(showAllFilters) forKey:SettingsKeys.SHOW_ALL_FILTERS];
+    [settings setObject:@(viewMode) forKey:SettingsKeys.FILTER_VIEW_MODE];
+}
+
+-(BOOL) canBecomeFirstResponder {
+    return YES;
+}
+
+-(NSArray*) keyCommands {
+    return @[
+        KEYCMD(@"F", UIKeyModifierCommand, startTextSearch:, @"Find Cards"),
+        KEYCMD(@"A", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: All"),
+        KEYCMD(@"N", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Name"),
+        KEYCMD(@"T", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Text"),
+        [UIKeyCommand keyCommandWithInput:UIKeyInputEscape modifierFlags:0 action:@selector(escKeyPressed:)]
+    ];
+}
+
+-(void) startTextSearch:(UIKeyCommand*)keyCommand {
+    [self.searchField becomeFirstResponder];
+}
+
+-(void) escKeyPressed:(UIKeyCommand*) keyCmd {
+    [self.searchField resignFirstResponder];
 }
 
 -(void) setResultFrames
@@ -298,7 +311,7 @@ static NSInteger viewMode = VIEW_LIST;
     Deck* deck = self.deckListViewController.deck;
     
     if (deck.filename) {
-        deck = [DeckManager loadDeckFromPath:deck.filename];
+        deck = [DeckManager loadDeckFromPath:deck.filename useCache:NO];
         [self reloadData];
         self.deckListViewController.deck = deck;
         [self setBackOrRevertButton];
@@ -379,7 +392,7 @@ static NSInteger viewMode = VIEW_LIST;
 {
     self.sendNotifications = NO;
     
-    self.scope = NRSearchName;
+    self.scope = NRSearchScopeName;
     [self.scopeButton setTitle:[NSString stringWithFormat:@"%@ ▾", scopeLabels[@(self.scope)]] forState:UIControlStateNormal];
     self.scopeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.scopeButton.titleLabel.minimumScaleFactor = 0.5;
@@ -626,11 +639,11 @@ static NSInteger viewMode = VIEW_LIST;
     NSMutableArray* arr;
     if (self.selectedTypes)
     {
-        arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:NO];
+        arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:NO].mutableCopy;
     }
     else
     {
-        arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:NO];
+        arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:NO].mutableCopy;
     }
     [arr insertObject:kANY atIndex:0];
     TableData* data = [[TableData alloc] initWithValues:arr];
@@ -776,28 +789,41 @@ static NSInteger viewMode = VIEW_LIST;
 {
     UIAlertController* sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"All"), self.scope == NRSearchAll )
+    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"All"), self.scope == NRSearchScopeAll )
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
-                                                [self changeScope:NRSearchAll];
+                                                [self changeScope:NRSearchScopeAll];
                                             }]];
-    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Name"), self.scope == NRSearchName)
+    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Name"), self.scope == NRSearchScopeName)
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
-                                                [self changeScope:NRSearchName];
+                                                [self changeScope:NRSearchScopeName];
                                             }]];
-    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Text"), self.scope == NRSearchText)
+    [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Text"), self.scope == NRSearchScopeText)
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
-                                                [self changeScope:NRSearchText];
+                                                [self changeScope:NRSearchScopeText];
                                             }]];
     
     UIPopoverPresentationController* popover = sheet.popoverPresentationController;
     popover.sourceRect = sender.frame;
     popover.sourceView = self.view;
     popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    [sheet.view layoutIfNeeded];
     
     [self presentViewController:sheet animated:NO completion:nil];
+}
+
+-(void) changeScopeKeyCmd:(UIKeyCommand*)keyCommand {
+    if ([keyCommand.input.lowercaseString isEqualToString:@"a"]) {
+        [self changeScope:NRSearchScopeAll];
+    }
+    else if ([keyCommand.input.lowercaseString isEqualToString:@"n"]) {
+        [self changeScope:NRSearchScopeName];
+    }
+    else if ([keyCommand.input.lowercaseString isEqualToString:@"t"]) {
+        [self changeScope:NRSearchScopeText];
+    }
 }
 
 -(void) changeScope:(NRSearchScope)scope
@@ -848,7 +874,7 @@ static NSInteger viewMode = VIEW_LIST;
     if (self.searchText.length > 0)
     {
         [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ADD_TOP_CARD object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.ADD_TOP_CARD object:self];
     }
     else
     {
@@ -1055,7 +1081,7 @@ static NSInteger viewMode = VIEW_LIST;
             
             Card* identity = self.deckListViewController.deck.identity;
             
-            int influence = card.influence;
+            NSInteger influence = card.influence;
             if (identity && card.faction == identity.faction)
             {
                 influence = 0;
