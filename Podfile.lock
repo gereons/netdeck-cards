@@ -21,7 +21,7 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CorePlot (2.0)
-  - Crashlytics (3.4.1):
+  - Crashlytics (3.5.0):
     - Fabric (~> 1.6.0)
   - CSStickyHeaderFlowLayout (0.2.10)
   - Dropbox-Sync-API-SDK (3.1.2)
@@ -36,7 +36,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.9):
     - DTFoundation/Core
-  - Fabric (1.6.1)
+  - Fabric (1.6.2)
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
   - InAppSettingsKit (2.6)
@@ -112,7 +112,7 @@ DEPENDENCIES:
   - Crashlytics
   - CSStickyHeaderFlowLayout
   - Dropbox-Sync-API-SDK
-  - DTCoreText (from `https://github.com/gereons/DTCoreText`, branch `fix-938`)
+  - DTCoreText
   - Fabric
   - GRMustache
   - InAppSettingsKit
@@ -123,25 +123,15 @@ DEPENDENCIES:
   - SDCAlertView (~> 2.5.4)
   - SVProgressHUD
 
-EXTERNAL SOURCES:
-  DTCoreText:
-    :branch: fix-938
-    :git: https://github.com/gereons/DTCoreText
-
-CHECKOUT OPTIONS:
-  DTCoreText:
-    :commit: 255036e91325a76fe5bc86229eefaf93628feb13
-    :git: https://github.com/gereons/DTCoreText
-
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   CorePlot: b7f422ad363f2b0e48152471d6da45ce232eb8c6
-  Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
+  Crashlytics: fabfd45d0e8b8dc936c682b97e302b9a49a1c827
   CSStickyHeaderFlowLayout: 5366582779d8b7c9ba9b9cc729c218cc23888776
   Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 70a0765e3596f82dd421832e95c65e2166eb3102
-  Fabric: bf0ceb04e7c924090efc5f8c55e4fbcca189e0a0
+  Fabric: e8296d4a1abb3c5eed770cc86b311c862f51d340
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   InAppSettingsKit: cc56d3ec45f11352a16d5b210da8a3fa1b9d05ed
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
