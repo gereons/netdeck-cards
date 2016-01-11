@@ -215,6 +215,28 @@ static NSInteger viewMode = VIEW_LIST;
     [settings setObject:@(viewMode) forKey:SettingsKeys.FILTER_VIEW_MODE];
 }
 
+-(BOOL) canBecomeFirstResponder {
+    return YES;
+}
+
+-(NSArray*) keyCommands {
+    return @[
+        KEYCMD(@"F", UIKeyModifierCommand, startTextSearch:, @"Find Cards"),
+        KEYCMD(@"A", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: All"),
+        KEYCMD(@"N", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Name"),
+        KEYCMD(@"T", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Text"),
+        [UIKeyCommand keyCommandWithInput:UIKeyInputEscape modifierFlags:0 action:@selector(escKeyPressed:)]
+    ];
+}
+
+-(void) startTextSearch:(UIKeyCommand*)keyCommand {
+    [self.searchField becomeFirstResponder];
+}
+
+-(void) escKeyPressed:(UIKeyCommand*) keyCmd {
+    [self.searchField resignFirstResponder];
+}
+
 -(void) setResultFrames
 {
     if (viewMode == VIEW_LIST)
@@ -790,6 +812,18 @@ static NSInteger viewMode = VIEW_LIST;
     [sheet.view layoutIfNeeded];
     
     [self presentViewController:sheet animated:NO completion:nil];
+}
+
+-(void) changeScopeKeyCmd:(UIKeyCommand*)keyCommand {
+    if ([keyCommand.input.lowercaseString isEqualToString:@"a"]) {
+        [self changeScope:NRSearchScopeAll];
+    }
+    else if ([keyCommand.input.lowercaseString isEqualToString:@"n"]) {
+        [self changeScope:NRSearchScopeName];
+    }
+    else if ([keyCommand.input.lowercaseString isEqualToString:@"t"]) {
+        [self changeScope:NRSearchScopeText];
+    }
 }
 
 -(void) changeScope:(NRSearchScope)scope

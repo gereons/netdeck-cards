@@ -34,6 +34,11 @@
 
 #define BG_FETCH_INTERVAL   (12*60*60)   // 12 hrs
 
+#define IOS9_KEYCMD         [[UIKeyCommand class] respondsToSelector:@selector(keyCommandWithInput:modifierFlags:action:discoverabilityTitle:)]
+#define KEYCMD(letter, modifiers, sel, title) ((IOS9_KEYCMD) ? \
+    [UIKeyCommand keyCommandWithInput:letter modifierFlags:modifiers action:@selector(sel) discoverabilityTitle:title] : \
+    [UIKeyCommand keyCommandWithInput:letter modifierFlags:modifiers action:@selector(sel)])
+
 extern NSString* const kANY;
 
 /*

@@ -167,6 +167,29 @@ static NSMutableArray* subtypeCollapsedSections;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(BOOL) canBecomeFirstResponder {
+    return YES;
+}
+
+-(NSArray*) keyCommands {
+    return @[
+        KEYCMD(@"F", UIKeyModifierCommand, startTextSearch:, @"Find Cards"),
+        KEYCMD(@"A", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: All"),
+        KEYCMD(@"N", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Name"),
+        KEYCMD(@"T", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Text"),
+        [UIKeyCommand keyCommandWithInput:UIKeyInputEscape modifierFlags:0 action:@selector(escKeyPressed:)]
+    ];
+}
+
+-(void) startTextSearch:(UIKeyCommand*) keyCmd {
+    [self.textField becomeFirstResponder];
+}
+
+-(void) escKeyPressed:(UIKeyCommand*) keyCmd {
+    [self.textField resignFirstResponder];
+}
+
+
 -(void) dismissKeyboard:(id)sender
 {
     [self.textField resignFirstResponder];
@@ -495,6 +518,19 @@ static NSMutableArray* subtypeCollapsedSections;
 }
 
 #pragma mark - text search
+
+-(void) changeScopeKeyCmd:(UIKeyCommand*)keyCommand {
+    if ([keyCommand.input.lowercaseString isEqualToString:@"a"]) {
+        self.scope = NRSearchScopeAll;
+    }
+    else if ([keyCommand.input.lowercaseString isEqualToString:@"n"]) {
+        self.scope = NRSearchScopeName;
+    }
+    else if ([keyCommand.input.lowercaseString isEqualToString:@"t"]) {
+        self.scope = NRSearchScopeText;
+    }
+    [self filterWithText];
+}
 
 -(IBAction)scopeSelected:(UISegmentedControl*)sender
 {
