@@ -6,9 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@import CSStickyHeaderFlowLayout;
-
-// #import "CSStickyHeaderFlowLayout/CSStickyHeaderFlowLayout.h"
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
 #import "CardFilterPopover.h"
@@ -139,8 +136,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
-    CSStickyHeaderFlowLayout *layout = (CSStickyHeaderFlowLayout*)self.collectionView.collectionViewLayout;
-    // UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
+    UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(320, 22);
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
     layout.minimumInteritemSpacing = 3;

@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Gereon Steffens. All rights reserved.
 //
 
-@import CSStickyHeaderFlowLayout;
-
 #import "EXTScope.h"
 #import "UIAlertAction+NetDeck.h"
 #import "BrowserResultViewController.h"
@@ -140,7 +138,7 @@ static BrowserResultViewController* instance;
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
-    CSStickyHeaderFlowLayout *layout = (CSStickyHeaderFlowLayout*)self.collectionView.collectionViewLayout;
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
     layout.headerReferenceSize = CGSizeMake(703, 22);
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 2, 2);
     layout.minimumInteritemSpacing = 3;
