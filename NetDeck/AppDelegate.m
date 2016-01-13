@@ -7,9 +7,7 @@
 //
 
 // TODOs:
-
-// add UIKeyCommand: http://nshipster.com/uikeycommand/
-// card/set update in bg fetch
+// card/set update in bg fetch?
 
 @import SVProgressHUD;
 @import AFNetworking;

@@ -255,7 +255,10 @@ import Foundation
         sections.removeAtIndex(0)
         
         var knownSets = [[CardSet]]()
-        for (_,setNumbers) in setsPerGroup {
+
+        let cycles = setsPerGroup.keys.sort { $0.rawValue < $1.rawValue }
+        for cycle in cycles {
+            let setNumbers = setsPerGroup[cycle]!
             var sets = [CardSet]()
             for setNum in setNumbers {
                 if setNum == 0 {
