@@ -21,8 +21,8 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CorePlot (2.0)
-  - Crashlytics (3.5.0):
-    - Fabric (~> 1.6.0)
+  - Crashlytics (3.6.0):
+    - Fabric (~> 1.6.3)
   - CSStickyHeaderFlowLayout (0.2.10)
   - Dropbox-Sync-API-SDK (3.1.2)
   - DTCoreText (1.6.17):
@@ -36,7 +36,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.9):
     - DTFoundation/Core
-  - Fabric (1.6.2)
+  - Fabric (1.6.3)
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
   - InAppSettingsKit (2.6)
@@ -84,20 +84,20 @@ PODS:
     - OMGHTTPURLRQ/FormURLEncode
     - OMGHTTPURLRQ/UserAgent
   - OMGHTTPURLRQ/UserAgent (3.0.2)
-  - PromiseKit (3.0.0):
-    - PromiseKit/Foundation (= 3.0.0)
-    - PromiseKit/QuartzCore (= 3.0.0)
-    - PromiseKit/UIKit (= 3.0.0)
+  - PromiseKit (3.0.1):
+    - PromiseKit/Foundation (= 3.0.1)
+    - PromiseKit/QuartzCore (= 3.0.1)
+    - PromiseKit/UIKit (= 3.0.1)
   - PromiseKit-AFNetworking (0.6.0):
     - AFNetworking (~> 2.0)
     - PromiseKit/CorePromise (~> 3.0)
-  - PromiseKit/CorePromise (3.0.0)
-  - PromiseKit/Foundation (3.0.0):
+  - PromiseKit/CorePromise (3.0.1)
+  - PromiseKit/Foundation (3.0.1):
     - OMGHTTPURLRQ (~> 3.0.0)
     - PromiseKit/CorePromise
-  - PromiseKit/QuartzCore (3.0.0):
+  - PromiseKit/QuartzCore (3.0.1):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (3.0.0):
+  - PromiseKit/UIKit (3.0.1):
     - PromiseKit/CorePromise
   - RBBAnimation (0.4.0)
   - SDCAlertView (2.5.4):
@@ -126,19 +126,19 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   CorePlot: b7f422ad363f2b0e48152471d6da45ce232eb8c6
-  Crashlytics: fabfd45d0e8b8dc936c682b97e302b9a49a1c827
+  Crashlytics: e4e8d02914f2608fbc7bf42b1a7af838b0db67a2
   CSStickyHeaderFlowLayout: 5366582779d8b7c9ba9b9cc729c218cc23888776
   Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 70a0765e3596f82dd421832e95c65e2166eb3102
-  Fabric: e8296d4a1abb3c5eed770cc86b311c862f51d340
+  Fabric: cbe0ca6c9531bba17910052f6f105fcbc5fa7f67
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   InAppSettingsKit: cc56d3ec45f11352a16d5b210da8a3fa1b9d05ed
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   MultiSelectSegmentedControl: 61389b88420074fc972e61ee9ef3d8bb4c286071
   OMGHTTPURLRQ: 8376dc887d76a5a7e2a67881dc788f917a2f437c
-  PromiseKit: 665540a1eb43156446872dcf49ed7dee6ebbe13b
+  PromiseKit: 19d12914484a15c25a46f72fde38579204a5dac6
   PromiseKit-AFNetworking: d3b2c88f9bb6bd3124454df99feb47e620873ce4
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
   SDCAlertView: 2e2b0ecc5f1ec367e45d83efa2e512688ca7fa55

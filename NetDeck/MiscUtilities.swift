@@ -20,6 +20,10 @@ extension String {
     func stringByAppendingPathComponent(component: String) -> String {
         return (self as NSString).stringByAppendingPathComponent(component)
     }
+    
+    func trim() -> String {
+        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    }
 }
 
 extension CollectionType {

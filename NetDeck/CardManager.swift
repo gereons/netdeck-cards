@@ -248,8 +248,11 @@ import Foundation
         }
         
         for obj in json {
-            let code = obj["code"] as! String
-            let name_en = obj["title"] as! String
+            guard
+                let code = obj["code"] as? String,
+                let name_en = obj["title"] as? String
+            else { continue }
+            
             let subtype = obj["subtype"] as? String
             
             if let card = CardManager.cardByCode(code) {
@@ -270,11 +273,13 @@ import Foundation
                 let words = card.name.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: " -"))
                 if words.count > 2 {
                     for word in words {
-                        var c = word.characters[word.startIndex]
-                        if c == "\"" {
-                            c = word.characters[word.startIndex.advancedBy(1)]
+                        if word.length > 0 {
+                            var c = word.characters[word.startIndex]
+                            if c == "\"" {
+                                c = word.characters[word.startIndex.advancedBy(1)]
+                            }
+                            alias.append(c)
                         }
-                        alias.append(c)
                     }
                     // NSLog("%@ -> %@", card.name, alias);
                     card.setCardAlias(alias)
