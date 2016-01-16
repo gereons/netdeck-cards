@@ -62,7 +62,7 @@ import Foundation
     }
 
     class func cardByCode(code: String) -> Card? {
-        return allKnownCards[code]!
+        return allKnownCards[code]
     }
     
     class func allCards() -> [Card] {
