@@ -115,7 +115,7 @@ import Foundation
             }
         }
     
-        return subtypes.sort({ $0.lowercaseString > $1.lowercaseString })
+        return subtypes.sort({ $0.lowercaseString < $1.lowercaseString })
     }
     
     class func cardsAvailable() -> Bool {

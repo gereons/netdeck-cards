@@ -8,6 +8,7 @@
 
 // TODOs:
 // card/set update in bg fetch?
+// 3d touch shortcuts
 
 @import SVProgressHUD;
 @import AFNetworking;

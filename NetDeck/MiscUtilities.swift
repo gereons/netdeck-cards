@@ -67,4 +67,4 @@ extension NSRange {
 }
 
 @available(iOS, deprecated=1.0, message="I'm not deprecated, please **FIXME**")
-func FIXME(msg: String){}
+func FIXME(msg: String=""){}
