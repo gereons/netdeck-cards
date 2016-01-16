@@ -233,7 +233,7 @@
 -(void) cancelClicked:(id)sender
 {
     if (self.deck.filename) {
-        self.deck = [DeckManager loadDeckFromPath:self.deck.filename];
+        self.deck = [DeckManager loadDeckFromPath:self.deck.filename useCache:NO];
         [self refreshDeck];
         [self setupNavigationButtons];
     } else {
