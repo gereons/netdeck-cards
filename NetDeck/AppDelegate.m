@@ -29,6 +29,11 @@ const NSString* const kANY = @"Any";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+
+#if USE_CRASHLYTICS
+    [CrashlyticsKit setDelegate:self];
+    [Fabric with:@[ CrashlyticsKit ]];
+#endif
     
     [self moveFilesFromCacheToAppSupportDirectory];
     
@@ -69,11 +74,6 @@ const NSString* const kANY = @"Any";
     }
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
-        
-#if USE_CRASHLYTICS
-    [CrashlyticsKit setDelegate:self];
-    [Fabric with:@[ CrashlyticsKit ]];
-#endif
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
