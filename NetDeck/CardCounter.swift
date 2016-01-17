@@ -24,17 +24,16 @@ import Foundation
     }
     
     var isNull: Bool {
-        return self == CardCounter.nullInstance
+        return self === CardCounter.nullInstance || self.card.isNull
     }
     
     // MARK: NSCoding
     convenience required init?(coder aDecoder: NSCoder) {
         let code = aDecoder.decodeObjectForKey("card") as! String
-        let card = CardManager.cardByCode(code)
+        let card = CardManager.cardByCode(code) ?? Card.null()
         let count = aDecoder.decodeIntegerForKey("count")
         
-        self.init(card: card!, andCount: count)
-
+        self.init(card: card, andCount: count)
     }
     
     func encodeWithCoder(aCoder: NSCoder) {

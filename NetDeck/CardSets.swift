@@ -61,16 +61,15 @@ import Foundation
     
     class func setupFromFiles() -> Bool {
         let setsFile = filename()
-        var ok = false
     
         let fileMgr = NSFileManager.defaultManager()
         if fileMgr.fileExistsAtPath(setsFile) {
             if let data = NSArray(contentsOfFile: setsFile) {
-                ok = setupFromJsonData(data)
+                return setupFromJsonData(data)
             }
         }
                 
-        return ok;
+        return false
     }
     
     class func setupFromNrdbApi(json: NSArray) -> Bool {
@@ -82,34 +81,45 @@ import Foundation
         return setupFromJsonData(json)
     }
 
-    
     class func setupFromJsonData(json: NSArray) -> Bool {
         var maxCycle = 0
         allCardSets = [Int: CardSet]()
         for set in json as! [NSDictionary] {
             let cs = CardSet()
             
-            cs.setCode = set["code"] as! String
+            if let code = set["code"] as? String {
+                cs.setCode = code
+            } else {
+                continue
+            }
+            
             if cs.setCode == DRAFT_SET_CODE {
                 continue
             }
             
-            cs.name = set["name"] as! String
+            if let name = set["name"] as? String {
+                cs.name = name
+            } else {
+                continue
+            }
+            
             cs.settingsKey = "use_" + cs.setCode
             
-            let cycleNumber = set["cyclenumber"] as! Int
-            let number = set["number"] as! Int
+            if let cycleNumber = set["cyclenumber"] as? Int,
+                let number = set["number"] as? Int {
             
-            cs.cycle = cycleMap[cycleNumber] ?? .Unknown
-            assert(cs.cycle != .Unknown)
-            if cs.cycle == .Unknown {
-                return false
+                cs.cycle = cycleMap[cycleNumber] ?? .Unknown
+                assert(cs.cycle != .Unknown)
+                if cs.cycle == .Unknown {
+                    return false
+                }
+                maxCycle = max(maxCycle, cs.cycle.rawValue)
+                cs.setNum = cycleNumber*100 + number
             }
-            maxCycle = max(maxCycle, cs.cycle.rawValue)
-            cs.setNum = cycleNumber*100 + number
             
-            let available = set["available"] as! String
-            cs.released = available.length > 0;
+            if let available = set["available"] as? String {
+                cs.released = available.length > 0
+            }
             
             allCardSets[cs.setNum] = cs
             code2name[cs.setCode] = cs.name

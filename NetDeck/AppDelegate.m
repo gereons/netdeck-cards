@@ -28,7 +28,7 @@ const NSString* const kANY = @"Any";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    
 
 #if USE_CRASHLYTICS
     [CrashlyticsKit setDelegate:self];
@@ -50,8 +50,6 @@ const NSString* const kANY = @"Any";
         [CardSets removeFiles];
         [CardManager removeFiles];
     }
-    
-    [self setAdditionalUserDefaults];
     
     BOOL useNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NRDB];
     NSTimeInterval fetchInterval = useNrdb ? BG_FETCH_INTERVAL : UIApplicationBackgroundFetchIntervalNever;
@@ -90,6 +88,7 @@ const NSString* const kANY = @"Any";
     [DeckImport checkClipboardForDeck];
     [CardImageViewPopover monitorKeyboard];
     
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status)
         {
@@ -148,15 +147,6 @@ const NSString* const kANY = @"Any";
     };
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
-}
-
--(void) setAdditionalUserDefaults
-{
-    NSDictionary* dict = [CardSets settingsDefaults];
-    if (dict.count > 0)
-    {
-        [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
-    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

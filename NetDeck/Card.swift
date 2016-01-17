@@ -118,7 +118,7 @@ import DTCoreText
     }
     
     var isNull: Bool {
-        return self == Card.nullInstance
+        return self === Card.nullInstance
     }
     
     var isMostWanted: Bool {
