@@ -133,9 +133,9 @@
     self.oddsLabel.text = odds;
 }
 
--(double) oddsFor:(int)cardsInDeck
+-(double) oddsFor:(int)cards
 {
-    return 100.0 * [Hypergeometric getProbabilityFor:1 cardsInDeck:self.deck.size desiredCardsInDeck:cardsInDeck cardsDrawn:self.draw.count];
+    return 100.0 * [Hypergeometric getProbabilityFor:1 cardsInDeck:self.deck.size desiredCardsInDeck:MIN(self.deck.size, cards) cardsDrawn:self.draw.count];
 }
 
 #pragma mark - table view
