@@ -170,7 +170,7 @@ import Foundation
         if let index = sets.indexOf({$0.settingsKey == key}) {
             return sets[index].name
         }
-        return nil;
+        return nil
     }
 
     class func settingsDefaults() -> [String: Bool] {
@@ -178,7 +178,7 @@ import Foundation
         for cs in allCardSets.values {
             defaults[cs.settingsKey] = cs.released
         }
-        return defaults;
+        return defaults
     }
     
     class func setNumForCode(code: String) -> Int {
@@ -202,15 +202,15 @@ import Foundation
                 disabled.insert(DRAFT_SET_CODE)
             }
     
-            disabledSets = disabled;
+            disabledSets = disabled
         }
     
         return disabledSets!
     }
     
     class func clearDisabledSets() {
-        disabledSets = nil;
-        enabledSets = nil;
+        disabledSets = nil
+        enabledSets = nil
     }
 
     class func allEnabledSetsForTableview() -> TableData {
@@ -257,7 +257,7 @@ import Foundation
             }
         }
         
-        return enabledSets;
+        return enabledSets
     }
 
     class func allKnownSetsForTableview() -> TableData {
@@ -302,7 +302,7 @@ import Foundation
             var used = setsUsed[code] ?? 1
             
             if isCore && cc.count > Int(cc.card.quantity) {
-                let needed = Int(0.5 + Float(cc.count) / Float(cc.card.quantity));
+                let needed = Int(0.5 + Float(cc.count) / Float(cc.card.quantity))
                 if needed > used {
                     used = needed
                 }
@@ -318,7 +318,7 @@ import Foundation
             cardsUsed[code] = cu
         }
             
-        // NSLog(@"%@ %@", sets, setNums);
+        // NSLog(@"%@ %@", sets, setNums)
         
         let keys = setNums.keys
     
@@ -336,12 +336,12 @@ import Foundation
                 result.append(String(format:"%@ - %d %@", code2name[code]!, used, cards))
             }
         }
-        // NSLog(@"%@", result);
-        return result;
+        // NSLog(@"%@", result)
+        return result
     }
     
     class func mostRecentSetUsedInDeck(deck: Deck) -> String {
-        var maxRelease = 0;
+        var maxRelease = 0
         
         for cc in deck.allCards {
             if let rel = code2number[cc.card.setCode] {

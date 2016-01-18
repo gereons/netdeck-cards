@@ -21,15 +21,15 @@ import Foundation
     }
     
     func addCardCode(code: String, copies:Int) {
-        assert(copies != 0, "changing 0 copies?");
-        let dc = DeckChange(code:code, count:copies);
+        assert(copies != 0, "changing 0 copies?")
+        let dc = DeckChange(code:code, count:copies)
     
         self.changes.append(dc)
     }
     
     func coalesce() {
         if (self.changes.count == 0) {
-            return;
+            return
         }
         
         let sorted = self.changes.sort { (dc1, dc2) -> Bool in
@@ -46,11 +46,11 @@ import Foundation
                     combinedChanges.append(newDc)
                 }
                 
-                count = 0;
+                count = 0
             }
             
-            prevCode = dc.code;
-            count += dc.count;
+            prevCode = dc.code
+            count += dc.count
         }
         if prevCode != nil && count != 0 {
             let newDc = DeckChange(code: prevCode!, count: count)
@@ -77,9 +77,9 @@ import Foundation
         for dc in self.changes {
             NSLog("%@ %ld %@", dc.count > 0 ? "add" : "rem",
                 dc.count,
-                dc.card!.name);
+                dc.card!.name)
         }
-        NSLog("---end---");
+        NSLog("---end---")
     }
     
     // MARK: NSCoding

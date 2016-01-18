@@ -69,7 +69,7 @@
     case Image
     case LargeTable
     case SmallTable
-};
+}
 
 @objc enum NRBrowserSort: Int {
     case Type

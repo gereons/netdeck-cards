@@ -159,7 +159,7 @@ import Foundation
 
         for obj in json {
             let card = Card.cardFromJson(obj as! NSDictionary)
-            assert(card.isValid, "invalid card from \(obj)");
+            assert(card.isValid, "invalid card from \(obj)")
             if !card.isValid {
                 return false
             }
@@ -202,19 +202,19 @@ import Foundation
         
         if card.role == .Runner
         {
-            maxRunnerCost = max(card.cost, maxRunnerCost);
+            maxRunnerCost = max(card.cost, maxRunnerCost)
         }
         else
         {
-            maxCorpCost = max(card.cost, maxCorpCost);
+            maxCorpCost = max(card.cost, maxCorpCost)
         }
         
         // fill subtypes per role
         if (card.subtypes.count > 0) {
-            // NSLog(@"%@", card.subtype);
+            // NSLog(@"%@", card.subtype)
             if (card.type == .Identity)
             {
-                identityKey = card.typeStr;
+                identityKey = card.typeStr
                 identitySubtypes[card.role]?.unionInPlace(card.subtypes)
             }
             else
@@ -281,7 +281,7 @@ import Foundation
                             alias.append(c)
                         }
                     }
-                    // NSLog("%@ -> %@", card.name, alias);
+                    // NSLog("%@ -> %@", card.name, alias)
                     card.setCardAlias(alias)
                 }
             }
@@ -323,14 +323,14 @@ import Foundation
     }
 
     class func filename() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true);
+        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]
     
         return supportDirectory.stringByAppendingPathComponent(CARDS_FILENAME)
     }
     
     class func filenameEn() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true);
+        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]
         
         return supportDirectory.stringByAppendingPathComponent(CARDS_FILENAME_EN)

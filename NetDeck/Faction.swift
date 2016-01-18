@@ -80,7 +80,7 @@ import Foundation
     }
     
     class func factionsForRole(role: NRRole) -> [String] {
-        assert(role != .None, "no role");
+        assert(role != .None, "no role")
         
         if (role == .Runner)
         {

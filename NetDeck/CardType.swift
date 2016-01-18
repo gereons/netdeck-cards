@@ -23,8 +23,8 @@ import Foundation
     ]
     
     // NB: Card diff depends on ICE/Program being the last entries!
-    private static let runnerTypes:[NRCardType] = [ .Event, .Hardware, .Resource, .Program ];
-    private static let corpTypes:[NRCardType] = [ .Agenda, .Asset, .Upgrade, .Operation, .Ice ];
+    private static let runnerTypes:[NRCardType] = [ .Event, .Hardware, .Resource, .Program ]
+    private static let corpTypes:[NRCardType] = [ .Agenda, .Asset, .Upgrade, .Operation, .Ice ]
     
     private static var type2name = [NRCardType: String]()
     private static var runnerTypeNames = [String]()
@@ -45,13 +45,13 @@ import Foundation
             corpTypeNames.append(CardType.name(type)!)
         }
         
-        let typeSections = [ "", "Runner".localized(), "Corp".localized() ];
+        let typeSections = [ "", "Runner".localized(), "Corp".localized() ]
         let types = [
             [CardType.name(.None)!, CardType.name(.Identity)!],
             runnerTypeNames,
             corpTypeNames]
         
-        allTypes = TableData(sections:typeSections, andValues:types);
+        allTypes = TableData(sections:typeSections, andValues:types)
         
         runnerTypeNames.insert(kANY, atIndex: 0)
         corpTypeNames.insert(kANY, atIndex: 0)
@@ -69,7 +69,7 @@ import Foundation
     }
     
     class func typesForRole(role: NRRole) -> [String] {
-        assert(role != .None, "no role");
-        return role == .Runner ? runnerTypeNames : corpTypeNames;
+        assert(role != .None, "no role")
+        return role == .Runner ? runnerTypeNames : corpTypeNames
     }
 }

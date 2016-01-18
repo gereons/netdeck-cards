@@ -18,10 +18,10 @@ import Foundation
     ]
     
     class func labelFor(state: NRDeckState) -> String {
-        return states[state]!;
+        return states[state]!
     }
     
     class func buttonLabelFor(state: NRDeckState) -> String {
-        return states[state]! + " ▾";
+        return states[state]! + " ▾"
     }
 }

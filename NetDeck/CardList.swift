@@ -35,9 +35,9 @@ class CardList: NSObject {
     private var sortType: NRBrowserSort = .Type
 
     init(forRole role: NRRole) {
-        self.role = role;
-        self.sortType = .Type;
-        self.faction4inf = .None;
+        self.role = role
+        self.sortType = .Type
+        self.faction4inf = .None
         self.initialCards = [Card]()
         super.init()
         
@@ -135,120 +135,120 @@ class CardList: NSObject {
     
     func filterByType(type: String)
     {
-        self.type = type;
-        self.types = nil;
+        self.type = type
+        self.types = nil
     }
     
     func filterByTypes(types: Set<String>)
     {
-        self.type = "";
-        self.types = types;
+        self.type = ""
+        self.types = types
     }
     
     func filterByFaction(faction: String)
     {
-        self.faction = faction;
-        self.factions = nil;
+        self.faction = faction
+        self.factions = nil
     }
     
     func filterByFactions(factions: Set<String>)
     {
-        self.faction = "";
-        self.factions = factions;
+        self.faction = ""
+        self.factions = factions
     }
     
     func filterByText(text: String)
     {
-        self.text = text;
-        self.searchScope = .Text;
+        self.text = text
+        self.searchScope = .Text
     }
     
     func filterByTextOrName(text: String)
     {
-        self.text = text;
-        self.searchScope = .All;
+        self.text = text
+        self.searchScope = .All
     }
     
     func filterByName(name: String)
     {
-        self.text = name;
-        self.searchScope = .Name;
+        self.text = name
+        self.searchScope = .Name
     }
     
     func filterBySet(set: String)
     {
-        self.set = set;
-        self.sets = nil;
+        self.set = set
+        self.sets = nil
     }
     
     func filterBySets(sets: Set<String>)
     {
-        self.set = "";
-        self.sets = sets;
+        self.set = ""
+        self.sets = sets
     }
     
     func filterByInfluence(influence: Int)
     {
-        self.influence = influence;
-        self.faction4inf = .None;
+        self.influence = influence
+        self.faction4inf = .None
     }
     
     func filterByInfluence(influence: Int, forFaction faction : NRFaction)
     {
-        self.influence = influence;
-        self.faction4inf = faction;
+        self.influence = influence
+        self.faction4inf = faction
     }
     
     func filterByMU(mu: Int)
     {
-        self.mu = mu;
+        self.mu = mu
     }
     
     func filterByTrash(trash: Int)
     {
-        self.trash = trash;
+        self.trash = trash
     }
     
     func filterByCost(cost: Int)
     {
-        self.cost = cost;
+        self.cost = cost
     }
     
     func filterBySubtype(subtype: String)
     {
-        self.subtype = subtype;
-        self.subtypes = nil;
+        self.subtype = subtype
+        self.subtypes = nil
     }
     
     func filterBySubtypes(subtypes: Set<String>)
     {
-        self.subtype = "";
-        self.subtypes = subtypes;
+        self.subtype = ""
+        self.subtypes = subtypes
     }
     
     func filterByStrength(strength: Int)
     {
-        self.strength = strength;
+        self.strength = strength
     }
     
     func filterByAgendaPoints(ap: Int)
     {
-        self.agendaPoints = ap;
+        self.agendaPoints = ap
     }
     
     func filterByUniqueness(unique: Bool)
     {
-        self.unique = unique;
+        self.unique = unique
     }
     
     func filterByLimited(limited: Bool)
     {
-        self.limited = limited;
+        self.limited = limited
     }
     
     func sortBy(sortType: NRBrowserSort)
     {
-        self.sortType = sortType;
+        self.sortType = sortType
     }
     
     func applyPredicate(predicate: NSPredicate) {
@@ -375,7 +375,7 @@ class CardList: NSObject {
             filteredCards = filteredCards.filter { allPredicates.evaluateWithObject($0) }
         }
         
-        return filteredCards;
+        return filteredCards
     }
     
     func sort(inout cards: [Card]) {
@@ -404,7 +404,7 @@ class CardList: NSObject {
             case .SetType, .Faction:
                 if c1.type.rawValue < c2.type.rawValue { return true }
                 if c1.type.rawValue > c2.type.rawValue { return false }
-            default: break;
+            default: break
             }
             
             return c1.name.lowercaseString < c2.name.lowercaseString
@@ -436,11 +436,11 @@ class CardList: NSObject {
             switch (self.sortType)
             {
             case .Type, .TypeFaction:
-                section = card.typeStr;
+                section = card.typeStr
             case .Faction:
-                section = card.factionStr;
+                section = card.factionStr
             default:
-                section = card.setName;
+                section = card.setName
             }
             if section != prevSection
             {

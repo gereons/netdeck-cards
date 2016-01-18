@@ -127,7 +127,7 @@ import DTCoreText
     
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
     var iceType: String? {
-        assert(self.type == .Ice, "not an ice");
+        assert(self.type == .Ice, "not an ice")
         
         if Card.multiIce.contains(self.code) {
             return "Multi".localized()
@@ -143,7 +143,7 @@ import DTCoreText
         {
             return self.subtypes[0]
         } else {
-            return self.typeStr;
+            return self.typeStr
         }
     }
 
@@ -185,13 +185,13 @@ import DTCoreText
         if (self.isCore)
         {
             let cores = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.NUM_CORES)
-            return cores * self.quantity;
+            return cores * self.quantity
         }
         let disabledSets = CardSets.disabledSetCodes()
         if disabledSets.contains(self.setCode) {
-            return 0;
+            return 0
         }
-        return self.quantity;
+        return self.quantity
     }
     
     class func json_int(json: NSDictionary, _ name: String) -> Int {
@@ -222,14 +222,14 @@ import DTCoreText
         c.factionStr = json.objectForKey("faction") as! String
         let factionCode = json.objectForKey("faction_code") as! String
         c.faction = Faction.faction(factionCode)
-        assert(c.faction != .None, "no faction for \(c.code)");
+        assert(c.faction != .None, "no faction for \(c.code)")
         
         c.roleStr = json.objectForKey("side") as! String
         let roleCode = json.objectForKey("side_code") as! String
         if let role = roleCodes[roleCode] {
             c.role = role
         } else {
-            assert(false, "no role for \(c.code)");
+            assert(false, "no role for \(c.code)")
         }
         
         c.typeStr = json.objectForKey("type") as! String
@@ -244,7 +244,7 @@ import DTCoreText
         // remove the "consortium" from weyland's name
         if (c.faction == .Weyland)
         {
-            c.factionStr = "Weyland";
+            c.factionStr = "Weyland"
         }
         
         if let text = json.objectForKey("text") as? String {
@@ -262,7 +262,7 @@ import DTCoreText
             c.setName = CardSets.UNKNOWN_SET
         }
         if c.setCode == CardSets.DRAFT_SET_CODE {
-            c.faction = .Neutral;
+            c.faction = .Neutral
         }
         
         c.setNumber = CardSets.setNumForCode(c.setCode)
@@ -318,7 +318,7 @@ import DTCoreText
         c.maxPerDeck = json_int(json, "limited")
         if Card.MAX_1_PER_DECK.contains(c.code) || c.type == .Identity
         {
-            c.maxPerDeck = 1;
+            c.maxPerDeck = 1
         }
         
         if c.isMultiIce() {
@@ -328,10 +328,10 @@ import DTCoreText
         c.ancurLink = json.objectForKey("ancurLink") as? String
         if (c.ancurLink?.length == 0)
         {
-            c.ancurLink = nil;
+            c.ancurLink = nil
         }
         
-        return c;
+        return c
     }
     
     // NB: not part of the public API!
@@ -371,13 +371,13 @@ import DTCoreText
                 }
             }
         }
-        return name;
+        return name
     }
     
     func isMultiIce() -> Bool {
         let en = self.subtypes.contains("Sentry") && self.subtypes.contains("Barrier") && self.subtypes.contains("Code Gate")
         let localized = self.subtypes.contains("Sentry".localized()) && self.subtypes.contains("Barrier".localized()) && self.subtypes.contains("Code Gate".localized())
-        return en || localized;
+        return en || localized
     }
     
     private static let roleCodes = [ "runner": NRRole.Runner, "corp": NRRole.Corp ]

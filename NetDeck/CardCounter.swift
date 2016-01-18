@@ -37,7 +37,7 @@ import Foundation
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeInteger(self.count, forKey:"count");
-        aCoder.encodeObject(self.card.code, forKey:"card");
+        aCoder.encodeInteger(self.count, forKey:"count")
+        aCoder.encodeObject(self.card.code, forKey:"card")
     }
 }
