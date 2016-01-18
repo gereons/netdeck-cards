@@ -10,8 +10,8 @@ import Foundation
 
 @objc class Faction: NSObject {
     
-    static var faction2name = [NRFaction: String]()
-    static let code2faction: [String: NRFaction] = [
+    private static var faction2name = [NRFaction: String]()
+    private static let code2faction: [String: NRFaction] = [
         "anarch": .Anarch,
         "shaper": .Shaper,
         "criminal": .Criminal,
@@ -24,18 +24,19 @@ import Foundation
         "sunny-lebeau": .SunnyLebeau,
         "neutral": .Neutral
     ]
-    private static var runnerFactions: [NRFaction] = [ .Anarch, .Criminal, .Shaper, .Adam, .Apex, .SunnyLebeau ]
-    private static var runnerFactionsPreDAD: [NRFaction] = [ .Anarch, .Criminal, .Shaper ]
-    private static var corpFactions: [NRFaction] = [ .HaasBioroid, .Jinteki, .NBN, .Weyland ]
+    private static let runnerFactions: [NRFaction] = [ .Anarch, .Criminal, .Shaper, .Adam, .Apex, .SunnyLebeau ]
+    private static let runnerFactionsPreDAD: [NRFaction] = [ .Anarch, .Criminal, .Shaper ]
+    private static let corpFactions: [NRFaction] = [ .HaasBioroid, .Jinteki, .NBN, .Weyland ]
     
-    static var runnerFactionNames = [String]()
-    static var runnerFactionNamesPreDAD = [String]()
-    static var corpFactionNames = [String]()
+    private static var runnerFactionNames = [String]()
+    private static var runnerFactionNamesPreDAD = [String]()
+    private static var corpFactionNames = [String]()
     
     private(set) static var allFactions: TableData!
     
     override class func initialize() {
         faction2name[.None] = kANY
+        faction2name[.Neutral] = "Neutral".localized()
     }
     
     class func name(faction: NRFaction) -> String? {
@@ -46,6 +47,7 @@ import Foundation
         for card in cards {
             faction2name[card.faction] = card.factionStr
         }
+        assert(faction2name.count == runnerFactions.count + corpFactions.count + 2)
         
         let common = [ Faction.name(.None)!, Faction.name(.Neutral)! ]
         
