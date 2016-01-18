@@ -371,7 +371,7 @@ import Foundation
         let oldName = self.name ?? ""
         var newName = oldName + "(Copy)".localized()
         
-        let regexPattern = "\\d+$";
+        let regexPattern = "\\d+$"
         let regex = try! NSRegularExpression(pattern:regexPattern, options:[])
         
         let matches = regex.matchesInString(oldName, options: [], range: NSMakeRange(0, oldName.length))
@@ -545,12 +545,9 @@ import Foundation
         self.init()
         
         self.cards = decoder.decodeObjectForKey("cards") as! [CardCounter]
-        for var i = cards.count-1; i>=0; --i {
-            let cc = cards[i]
-            if cc.count == 0 {
-                cards.removeAtIndex(i)
-            }
-        }
+        
+        // kill cards that we couldn't deserialize
+        self.cards = self.cards.filter{ $0.isNull || $0.count == 0 }
         
         self.netrunnerDbId = decoder.decodeObjectForKey("netrunnerDbId") as? String
         
@@ -563,7 +560,7 @@ import Foundation
                 self.identityCc = CardCounter(card:identity, andCount:1)
             }
         }
-        self.lastModified = nil;
+        self.lastModified = nil
         self.notes = decoder.decodeObjectForKey("notes") as? String
         self.tags = decoder.decodeObjectForKey("tags") as? [String]
         self.sortType = .Type
