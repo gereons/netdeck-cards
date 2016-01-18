@@ -121,7 +121,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func oddsFor(cards: Int) -> Double {
-        return 100.0 * Hypergeometric.getProbabilityFor(1, cardsInDeck:self.deck.size, desiredCardsInDeck:cards, cardsDrawn:self.drawn.count)
+        return 100.0 * Hypergeometric.getProbabilityFor(1, cardsInDeck:self.deck.size, desiredCardsInDeck:min(self.deck.size, cards), cardsDrawn:self.drawn.count)
     }
     
     // MARK: table view
