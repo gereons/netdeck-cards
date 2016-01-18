@@ -32,24 +32,27 @@ import Foundation
     private(set) static var allTypes: TableData!
     
     class func initializeCardTypes(cards: [Card]) {
+        assert(code2type.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
         type2name.removeAll()
         type2name[.None] = kANY
         for card in cards {
             type2name[card.type] = card.typeStr
         }
+        assert(type2name.count == code2type.count + 1) // +1 for "Any"
         
         for type in runnerTypes {
-            runnerTypeNames.append(CardType.name(type)!)
+            runnerTypeNames.append(CardType.name(type))
         }
         for type in corpTypes {
-            corpTypeNames.append(CardType.name(type)!)
+            corpTypeNames.append(CardType.name(type))
         }
         
         let typeSections = [ "", "Runner".localized(), "Corp".localized() ]
         let types = [
-            [CardType.name(.None)!, CardType.name(.Identity)!],
+            [CardType.name(.None), CardType.name(.Identity)],
             runnerTypeNames,
-            corpTypeNames]
+            corpTypeNames
+        ]
         
         allTypes = TableData(sections:typeSections, andValues:types)
         
@@ -57,15 +60,12 @@ import Foundation
         corpTypeNames.insert(kANY, atIndex: 0)
     }
     
-    class func name(type: NRCardType) -> String? {
-        return type2name[type]
+    class func name(type: NRCardType) -> String {
+        return type2name[type] ?? "n/a"
     }
     
     class func type(type: String) -> NRCardType {
-        if let t = code2type[type] {
-            return t
-        }
-        return .None
+        return code2type[type] ?? .None
     }
     
     class func typesForRole(role: NRRole) -> [String] {

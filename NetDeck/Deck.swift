@@ -481,7 +481,7 @@ import Foundation
         
         self.sort()
         
-        sections.append(CardType.name(.Identity)!)
+        sections.append(CardType.name(.Identity))
         if self.identityCc != nil {
             cards.append([self.identityCc!])
         } else {
