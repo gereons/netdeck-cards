@@ -31,7 +31,7 @@
 @property CGRect smallResultFrame;
 @property CGRect largeResultFrame;
 @property NSMutableDictionary* selectedValues;
-
+@property BOOL searchFieldActive;
 @property int influenceValue;
 
 @end
@@ -439,10 +439,11 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) willShowKeyboard:(NSNotification*)sender
 {
-    if (!self.searchField.isFirstResponder)
-    {
+    // NSLog(@"show: %d %d", self.searchField.isFirstResponder, self.searchFieldActive);
+    if (!self.searchField.isFirstResponder) {
         return;
     }
+    self.searchFieldActive = YES;
     
     CGFloat topY = self.searchSeparator.frame.origin.y;
     
@@ -472,13 +473,13 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) willHideKeyboard:(NSNotification*)sender
 {
-    if (!self.searchField.isFirstResponder)
-    {
-        return;
-    }
+    // NSLog(@"hide: %d %d", self.searchField.isFirstResponder, self.searchFieldActive);
     
-    // explicitly resignFirstResponser, since the kb may have been auto-dismissed by the identity selection form
-    [self.searchField resignFirstResponder];
+    if (self.searchFieldActive) {
+        [self.searchField resignFirstResponder];
+    }
+    self.searchFieldActive = NO;
+    
     NSTimeInterval animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
     [UIView animateWithDuration:animDuration animations:^{
