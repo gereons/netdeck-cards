@@ -68,4 +68,6 @@
     static let IDENTITY_TABLE      = "identityTable"
     
     static let USE_NAPD_MWL        = "useNapdMWL"
+    
+    static let FILES_MOVED         = "filesMoved"
 }

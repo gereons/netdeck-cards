@@ -10,6 +10,8 @@
 // card/set update in bg fetch?
 // 3d touch shortcuts
 
+#warning improve startup time!
+
 @import SVProgressHUD;
 @import AFNetworking;
 @import SDCAlertView;
@@ -28,8 +30,6 @@ const NSString* const kANY = @"Any";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-
 #if USE_CRASHLYTICS
     [CrashlyticsKit setDelegate:self];
     [Fabric with:@[ CrashlyticsKit ]];
@@ -160,6 +160,11 @@ const NSString* const kANY = @"Any";
 
 -(void) moveFilesFromCacheToAppSupportDirectory
 {
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    if ([settings boolForKey:SettingsKeys.FILES_MOVED]) {
+        return;
+    }
+    
     NSString* cacheDir = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
     NSString* supportDir = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES)[0];
     
@@ -188,6 +193,8 @@ const NSString* const kANY = @"Any";
         NSString* pathname = [imagesDir stringByAppendingPathComponent:file];
         [AppDelegate excludeFromBackup:pathname];
     }
+
+    [settings setBool:YES forKey:SettingsKeys.FILES_MOVED];
 }
 
 +(void) excludeFromBackup:(NSString*)path
