@@ -67,9 +67,7 @@ const NSString* const kANY = @"Any";
             [DBFilesystem setSharedFilesystem:fileSystem];
         }
     }
-    @catch (DBException* dbEx)
-    {
-    }
+    @catch (DBException* dbEx) {}
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     

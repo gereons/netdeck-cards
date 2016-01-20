@@ -163,6 +163,9 @@ import DTCoreText
             let str = self.text.stringByReplacingOccurrencesOfString("\n", withString:"<br/>")
             let data = str.dataUsingEncoding(NSUTF8StringEncoding)
             self._attributedText = NSAttributedString(HTMLData: data, options: Card.coreTextOptions, documentAttributes: nil)
+            if (self._attributedText == nil) {
+                self._attributedText = NSAttributedString(string: "")
+            }
         }
         return self._attributedText!
     }
