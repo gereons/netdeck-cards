@@ -42,6 +42,7 @@ static CGFloat popoverScale = 1.0;
     NSValue* value = notification.userInfo [UIKeyboardFrameEndUserInfoKey];
     CGFloat keyboardHeight = value.CGRectValue.size.height;
     popoverScale = (IPAD_SCREEN_HEIGHT - keyboardHeight - POPOVER_MARGIN) / IMAGE_HEIGHT;
+    popoverScale = MIN(1.0, popoverScale);
 }
 
 +(void) hideKeyboard:(NSNotification*)sender
