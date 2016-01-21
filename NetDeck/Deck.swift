@@ -150,6 +150,10 @@ import Foundation
         if cc.card.code == Card.MUMBAD_VIRTUAL_TOUR && self.assetCount() >= 7 {
             return 0
         }
+        // museum of history: 0 inf if >= 50 cards in deck
+        if cc.card.code == Card.MUSEUM_OF_HISTORY && self.size >= 50 {
+            return 0
+        }
         // alliance-based cards: 0 inf if >=6 non-alliance cards of same faction in deck
         if Card.ALLIANCE_6.contains(cc.card.code) && self.nonAllianceOfFaction(cc.card.faction) >= 6 {
             return 0
