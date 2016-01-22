@@ -218,6 +218,7 @@ import Foundation
             let disabledSetCodes = CardSets.disabledSetCodes()
             var sections = setGroups
             var setNames = [[String]]()
+            var collapsed = [Bool]()
             
             let keys = setsPerGroup.keys.sort { $0.rawValue < $1.rawValue }
             
@@ -236,7 +237,14 @@ import Foundation
                     }
                 }
                 setNames.append(names)
+                // collapse genesis, spin and luna cycle by default
+                switch cycle {
+                case .Genesis, .Spin, .Lunar: collapsed.append(true)
+                default: collapsed.append(false)
+                }
             }
+            
+            assert(collapsed.count == setNames.count)
             
             var i = 0
             while i < setNames.count {
@@ -244,17 +252,14 @@ import Foundation
                 if arr.count == 0 {
                     setNames.removeAtIndex(i)
                     sections.removeAtIndex(i)
+                    collapsed.removeAtIndex(i)
                 }
                 else {
                     ++i
                 }
             }
             enabledSets = TableData(sections:sections, andValues:setNames)
-            
-            enabledSets.collapsedSections = [Bool]()
-            for _ in  0 ..< enabledSets.sections.count {
-                enabledSets.collapsedSections?.append(false)
-            }
+            enabledSets.collapsedSections = collapsed
         }
         
         return enabledSets
