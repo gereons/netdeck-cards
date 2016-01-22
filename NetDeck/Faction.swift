@@ -44,6 +44,10 @@ import Foundation
     }
     
     class func initializeFactionNames(cards: [Card]) {
+        runnerFactionNames = [String]()
+        runnerFactionNamesPreDAD = [String]()
+        corpFactionNames = [String]()
+        
         for card in cards {
             faction2name[card.faction] = card.factionStr
         }

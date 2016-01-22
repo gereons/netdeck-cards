@@ -32,6 +32,9 @@ import Foundation
     private(set) static var allTypes: TableData!
     
     class func initializeCardTypes(cards: [Card]) {
+        runnerTypeNames = [String]()
+        corpTypeNames = [String]()
+        
         assert(code2type.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
         type2name.removeAll()
         type2name[.None] = kANY
