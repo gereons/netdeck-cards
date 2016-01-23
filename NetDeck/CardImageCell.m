@@ -3,7 +3,7 @@
 //  Net Deck
 //
 //  Created by Gereon Steffens on 11.01.14.
-//  Copyright (c) 2015 Gereon Steffens. All rights reserved.
+//  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
 #import "CardImageCell.h"
