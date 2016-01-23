@@ -36,7 +36,6 @@ import DTCoreText
     static let ALLIANCE_6 = Set<String>([ JEEVES_MODEL_BIOROID, RAMAN_RAI, HERITAGE_COMMITTEE, SALEMS_HOSPITALITY, EXECUTIVE_SEARCH_FIRM, IBRAHIM_SALEM ])
     
     static let PAD_CAMPAIGN             = "01109"    // needed for pad factory
-    static let WIRELESS_NET_PAVILLION   = "08108"    // errata'd to be unique
     
     // "limit 1 per deck" cards
     static let DIRECTOR_HAAS_PET_PROJ   = "03004"
@@ -286,9 +285,6 @@ import DTCoreText
         c.number = json_int(json, "number")
         c.quantity = json_int(json, "quantity")
         c.unique = json_bool(json, "uniqueness")
-        if (c.code == WIRELESS_NET_PAVILLION) {
-            c.unique = true
-        }
         
         if (c.type == .Identity)
         {
