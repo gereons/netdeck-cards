@@ -36,7 +36,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.9):
     - DTFoundation/Core
-  - Fabric (1.6.3)
+  - Fabric (1.6.4)
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
   - InAppSettingsKit (2.6)
@@ -131,7 +131,7 @@ SPEC CHECKSUMS:
   Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 70a0765e3596f82dd421832e95c65e2166eb3102
-  Fabric: cbe0ca6c9531bba17910052f6f105fcbc5fa7f67
+  Fabric: ed41fd62173c6bdea24ab02c9d7707161eabb750
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   InAppSettingsKit: cc56d3ec45f11352a16d5b210da8a3fa1b9d05ed
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
