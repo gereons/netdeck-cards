@@ -401,10 +401,10 @@ static DeckImport* instance;
                       {
                           filename = [disposition substringFromIndex:range.location+9];
                           range = [filename rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
-                          if (range.location !=NSNotFound)
+                          if (range.location != NSNotFound)
                           {
                               filename = [filename substringToIndex:range.location];
-                              filename = [filename stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                              filename = [filename stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
                           }
                       }
                       
@@ -496,7 +496,7 @@ static DeckImport* instance;
         
         if ([code isEqualToString:@"name"])
         {
-            deck.name = [qty stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            deck.name = [qty stringByRemovingPercentEncoding];            
         }
         else
         {

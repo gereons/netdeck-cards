@@ -77,28 +77,10 @@ PODS:
   - libextobjc/RuntimeExtensions (0.4.1)
   - libextobjc/UmbrellaHeader (0.4.1)
   - MultiSelectSegmentedControl (1.0)
-  - OMGHTTPURLRQ (3.0.2):
-    - OMGHTTPURLRQ/RQ (= 3.0.2)
-  - OMGHTTPURLRQ/FormURLEncode (3.0.2)
-  - OMGHTTPURLRQ/RQ (3.0.2):
-    - OMGHTTPURLRQ/FormURLEncode
-    - OMGHTTPURLRQ/UserAgent
-  - OMGHTTPURLRQ/UserAgent (3.0.2)
-  - PromiseKit (3.0.1):
-    - PromiseKit/Foundation (= 3.0.1)
-    - PromiseKit/QuartzCore (= 3.0.1)
-    - PromiseKit/UIKit (= 3.0.1)
   - PromiseKit-AFNetworking (0.6.0):
     - AFNetworking (~> 2.0)
     - PromiseKit/CorePromise (~> 3.0)
   - PromiseKit/CorePromise (3.0.1)
-  - PromiseKit/Foundation (3.0.1):
-    - OMGHTTPURLRQ (~> 3.0.0)
-    - PromiseKit/CorePromise
-  - PromiseKit/QuartzCore (3.0.1):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (3.0.1):
-    - PromiseKit/CorePromise
   - RBBAnimation (0.4.0)
   - SDCAlertView (2.5.4):
     - RBBAnimation (~> 0.3)
@@ -118,8 +100,8 @@ DEPENDENCIES:
   - InAppSettingsKit
   - libextobjc
   - MultiSelectSegmentedControl
-  - PromiseKit
   - PromiseKit-AFNetworking
+  - PromiseKit/CorePromise
   - SDCAlertView (~> 2.5.4)
   - SVProgressHUD
 
@@ -137,7 +119,6 @@ SPEC CHECKSUMS:
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   MultiSelectSegmentedControl: 61389b88420074fc972e61ee9ef3d8bb4c286071
-  OMGHTTPURLRQ: 8376dc887d76a5a7e2a67881dc788f917a2f437c
   PromiseKit: 19d12914484a15c25a46f72fde38579204a5dac6
   PromiseKit-AFNetworking: d3b2c88f9bb6bd3124454df99feb47e620873ce4
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59

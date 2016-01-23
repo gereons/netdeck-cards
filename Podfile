@@ -19,7 +19,7 @@ pod 'MultiSelectSegmentedControl'
 
 # already swift/swift-ready
 pod 'CorePlot'
-pod 'PromiseKit'
+pod 'PromiseKit/CorePromise'
 pod 'PromiseKit-AFNetworking'
 # pod 'SwiftyJSON'
 

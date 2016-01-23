@@ -128,7 +128,7 @@
     }
     if (deck.name.length > 0)
     {
-        dict[@"name"] = [deck.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        dict[@"name"] = [deck.name stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
     }
     
     NSMutableArray* keys = [dict allKeys].mutableCopy;
