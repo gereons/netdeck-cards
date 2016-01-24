@@ -1409,7 +1409,7 @@
     
     if (cc && cc.card.type != NRCardTypeIdentity)
     {
-        CardImagePopup* cip = [CardImagePopup showForCard:cc inDeck:self.deck fromRect:popupOrigin inView:self.collectionView direction:direction];
+        CardImagePopup* cip = [CardImagePopup showForCard:cc inDeck:self.deck fromRect:popupOrigin inViewController:self subView:self.collectionView direction:direction];
         cip.cell = cell;
     }
     else

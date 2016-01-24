@@ -18,7 +18,7 @@
 
 -(IBAction) copiesChanged:(id)sender;
 
-+(CardImagePopup*) showForCard:(CardCounter*)card inDeck:(Deck*)deck fromRect:(CGRect)rect inView:(UIView*)vc direction:(UIPopoverArrowDirection)direction;
++(CardImagePopup*) showForCard:(CardCounter*)card inDeck:(Deck*)deck fromRect:(CGRect)rect inViewController:(UIViewController*)vc subView:(UIView*)view direction:(UIPopoverArrowDirection)direction;
 +(void) dismiss;
 
 @end

@@ -19,25 +19,29 @@
 
 @implementation CardImagePopup
 
-static UIPopoverController* popover;
+static CardImagePopup* popover;
 
-+(CardImagePopup*) showForCard:(CardCounter *)cc inDeck:(Deck*)deck fromRect:(CGRect)rect inView:(UIView*)view direction:(UIPopoverArrowDirection)direction
++(CardImagePopup*) showForCard:(CardCounter *)cc inDeck:(Deck*)deck fromRect:(CGRect)rect inViewController:(UIViewController*)vc subView:(UIView*)view direction:(UIPopoverArrowDirection)direction
 {
-    CardImagePopup* cip = [[CardImagePopup alloc] initWithCard:cc andDeck:deck];
+    popover = [[CardImagePopup alloc] initWithCard:cc andDeck:deck];
     
-    popover = [[UIPopoverController alloc] initWithContentViewController:cip];
-    popover.popoverContentSize = cip.view.frame.size;
-    popover.backgroundColor = [UIColor whiteColor];
+    popover.modalPresentationStyle = UIModalPresentationPopover;
+    popover.popoverPresentationController.sourceRect = rect;
+    popover.popoverPresentationController.sourceView = view;
+    popover.popoverPresentationController.permittedArrowDirections = direction;
     
-    [popover presentPopoverFromRect:rect inView:view permittedArrowDirections:direction animated:NO];
-    return cip;
+    popover.preferredContentSize = popover.view.frame.size;
+    
+    [vc presentViewController:popover animated:NO completion:nil];
+
+    return popover;
 }
 
 +(void) dismiss
 {
     if (popover)
     {
-        [popover dismissPopoverAnimated:NO];
+        [popover dismissViewControllerAnimated:NO completion:nil];
         popover = nil;
     }
 }
@@ -50,7 +54,6 @@ static UIPopoverController* popover;
         self.cc = cc;
         self.prevCount = cc.count;
         self.deck = deck;
-        self.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     return self;
 }
