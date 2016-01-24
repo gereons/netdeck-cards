@@ -28,65 +28,65 @@
 
 @implementation CardFilterPopover
 
-static UIPopoverController* popover;
+static CardFilterPopover* popover;
 
 +(void) showFromButton:(UIButton *)button inView:(UIViewController<FilterCallback>*)vc entries:(TableData*)entries type:(NSString *)type selected:(id)preselected
 {
-    CardFilterPopover* filter = [[CardFilterPopover alloc] initWithNibName:@"CardFilterPopover" bundle:nil];
-    filter.sections = entries.sections;
-    filter.values = entries.values;
-    filter.collapsedSections = entries.collapsedSections.mutableCopy;
-    filter.button = button;
-    filter.type = type;
-    filter.headerView = vc;
+    popover = [[CardFilterPopover alloc] initWithNibName:@"CardFilterPopover" bundle:nil];
+    popover.sections = entries.sections;
+    popover.values = entries.values;
+    popover.collapsedSections = entries.collapsedSections.mutableCopy;
+    popover.button = button;
+    popover.type = type;
+    popover.headerView = vc;
 
     if ([preselected isKindOfClass:[NSSet class]])
     {
-        filter.selectedValues = [[NSSet setWithSet:preselected] mutableCopy];
+        popover.selectedValues = [[NSSet setWithSet:preselected] mutableCopy];
     }
     else
     {
-        filter.selectedValues = [NSMutableSet set];
+        popover.selectedValues = [NSMutableSet set];
         if (preselected && ![preselected isEqualToString:kANY])
         {
-            [filter.selectedValues addObject:preselected];
+            [popover.selectedValues addObject:preselected];
         }
     }
-    filter.sectionToggles = [NSMutableArray array];
+    popover.sectionToggles = [NSMutableArray array];
     
-    filter.sectionCount = 0;
+    popover.sectionCount = 0;
     for (NSString* s in entries.sections)
     {
-        [filter.sectionToggles addObject:@(NO)];
-        [filter.collapsedSections addObject:@(NO)];
+        [popover.sectionToggles addObject:@(NO)];
+        [popover.collapsedSections addObject:@(NO)];
         if (s.length > 0)
         {
-            ++filter.sectionCount;
+            ++popover.sectionCount;
         }
     }
     
-    filter.totalEntries = 0;
+    popover.totalEntries = 0;
     for (NSArray* arr in entries.values)
     {
-        filter.totalEntries += arr.count;
+        popover.totalEntries += arr.count;
     }
     
-    popover = [[UIPopoverController alloc] initWithContentViewController:filter];
-    popover.backgroundColor = [UIColor whiteColor];
     
-    // make the popover height match the height of the inner tableView
-    CGSize tableSize = filter.tableView.frame.size;
-    popover.popoverContentSize = tableSize;
+    // popover.preferredContentSize = popover.tableView.frame.size;
     
-    CGRect rect = button.frame;
-    rect = [button.superview convertRect:rect toView:vc.view];
+    CGRect rect = [button.superview convertRect:button.frame toView:vc.view];
     
-    [popover presentPopoverFromRect:rect inView:vc.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:NO];
+    popover.modalPresentationStyle = UIModalPresentationPopover;
+    popover.popoverPresentationController.sourceRect = rect;
+    popover.popoverPresentationController.sourceView = vc.view;
+    popover.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionLeft;
+    
+    [vc presentViewController:popover animated:NO completion:nil];
 }
 
 +(void) dismiss
 {
-    [popover dismissPopoverAnimated:NO];
+    [popover dismissViewControllerAnimated:NO completion:nil];
     popover = nil;
 }
 
@@ -108,7 +108,8 @@ static UIPopoverController* popover;
     
     [self setTableHeight];
     
-    popover.popoverContentSize = self.tableView.frame.size;
+    // make the popover height match the height of the inner tableView
+    self.preferredContentSize = self.tableView.frame.size;
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -124,6 +125,7 @@ static UIPopoverController* popover;
 
 #define CELL_HEIGHT     40
 #define HEADER_HEIGHT   25
+#define TABLE_WIDTH     220 // same as in xib!
 
 -(void) setTableHeight
 {
@@ -173,13 +175,13 @@ static UIPopoverController* popover;
 
 -(UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, HEADER_HEIGHT)];
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TABLE_WIDTH, HEADER_HEIGHT)];
     view.backgroundColor = [UIColor colorWithWhite:.9 alpha:1];
     view.tag = section;
     view.userInteractionEnabled = YES;
     
     CGFloat xOffset = self.collapsedSections == nil ? 15 : 25;
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(xOffset, 0, 200, HEADER_HEIGHT)];
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(xOffset, 0, TABLE_WIDTH, HEADER_HEIGHT)];
     label.font = [UIFont boldSystemFontOfSize:15];
     label.text = self.sections[section];
     
@@ -215,8 +217,9 @@ static UIPopoverController* popover;
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     NSString* value = [self.values objectAtIndexPath:indexPath];

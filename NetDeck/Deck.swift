@@ -373,7 +373,7 @@ import Foundation
         let newDeck = Deck()
         
         let oldName = self.name ?? ""
-        var newName = oldName + "(Copy)".localized()
+        var newName = oldName + " " + "(Copy)".localized()
         
         let regexPattern = "\\d+$"
         let regex = try! NSRegularExpression(pattern:regexPattern, options:[])
