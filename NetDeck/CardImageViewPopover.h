@@ -6,9 +6,9 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@interface CardImageViewPopover : UIViewController<UIPopoverControllerDelegate>
+@interface CardImageViewPopover : UIViewController<UIPopoverPresentationControllerDelegate>
 
-+(void) showForCard:(Card*)card fromRect:(CGRect)rect inView:(UIView*)vc;
++(void) showForCard:(Card*)card fromRect:(CGRect)rect inViewController:(UIViewController*)vc subView:(UIView*)view;
 +(BOOL) dismiss; // return YES if popup was visible
 
 @property IBOutlet UIImageView* imageView;

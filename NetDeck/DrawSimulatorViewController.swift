@@ -150,7 +150,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         
         let rect = self.tableView.rectForRowAtIndexPath(indexPath)
         
-        CardImageViewPopover.showForCard(card, fromRect: rect, inView: self.tableView)
+        CardImageViewPopover.showForCard(card, fromRect: rect, inViewController:self, subView:self.tableView)
     }
     
     // MARK: collection view
@@ -178,7 +178,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         let cell = collectionView.cellForItemAtIndexPath(indexPath)
         let rect = collectionView.convertRect(cell!.frame, toView: collectionView)
         
-        CardImageViewPopover.showForCard(card, fromRect: rect, inView: self.collectionView)
+        CardImageViewPopover.showForCard(card, fromRect: rect, inViewController:self, subView:self.collectionView)
     }
     
     // MARK: long press

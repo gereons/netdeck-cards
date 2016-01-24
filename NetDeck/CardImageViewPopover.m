@@ -20,7 +20,8 @@
 
 @end
 
-static UIPopoverController* popover;
+static CardImageViewPopover* popover;
+
 static BOOL keyboardVisible = NO;
 static CGFloat popoverScale = 1.0;
 
@@ -52,44 +53,45 @@ static CGFloat popoverScale = 1.0;
     
     if (popover)
     {
-        CardImageViewPopover* ci = (CardImageViewPopover*)popover.contentViewController;
-        ci.view.transform = CGAffineTransformIdentity;
-        popover.popoverContentSize = CGSizeMake(IMAGE_WIDTH, IMAGE_HEIGHT);
+        popover.view.transform = CGAffineTransformIdentity;
+        popover.preferredContentSize = CGSizeMake(IMAGE_WIDTH, IMAGE_HEIGHT);
     }
 }
 
 #pragma mark show/dismiss
 
-+(void)showForCard:(Card *)card fromRect:(CGRect)rect inView:(UIView*)view
++(void)showForCard:(Card *)card fromRect:(CGRect)rect inViewController:(UIViewController *)vc subView:(UIView *)view
 {
-    if (card == nil || view == nil)
+    if (card == nil || vc == nil)
     {
         return;
     }
-    CardImageViewPopover* cardImageView = [[CardImageViewPopover alloc] initWithCard:card];
     
     NSAssert(popover == nil, @"previous popover still visible?");
-    popover = [[UIPopoverController alloc] initWithContentViewController:cardImageView];
+    popover = [[CardImageViewPopover alloc] initWithCard:card];
     
-    popover.popoverContentSize = CGSizeMake((int)(IMAGE_WIDTH*popoverScale), (int)(IMAGE_HEIGHT*popoverScale));
-    popover.backgroundColor = [UIColor whiteColor];
-    popover.delegate = cardImageView;
+    popover.modalPresentationStyle = UIModalPresentationPopover;
+    popover.popoverPresentationController.sourceRect = rect;
+    popover.popoverPresentationController.sourceView = view;
+    popover.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
+    popover.popoverPresentationController.delegate = popover;
+    popover.preferredContentSize = CGSizeMake((int)(IMAGE_WIDTH*popoverScale), (int)(IMAGE_HEIGHT*popoverScale));
     
-    [popover presentPopoverFromRect:rect inView:view permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight animated:NO];
+    [vc presentViewController:popover animated:NO completion:nil];
 }
 
 +(BOOL) dismiss
 {
     if (popover)
     {
-        [popover dismissPopoverAnimated:NO];
+        [popover dismissViewControllerAnimated:NO completion:nil];
         popover = nil;
         return YES;
     }
     return NO;
 }
 
--(void) popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+-(void) popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController
 {
     popover = nil;
 }

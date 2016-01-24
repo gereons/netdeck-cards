@@ -1298,7 +1298,7 @@
     if (!cc.isNull)
     {
         CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-        [CardImageViewPopover showForCard:cc.card fromRect:rect inView:self.tableView];
+        [CardImageViewPopover showForCard:cc.card fromRect:rect inViewController:self subView:self.tableView];
     }
 }
 

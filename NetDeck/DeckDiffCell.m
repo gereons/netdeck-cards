@@ -7,6 +7,7 @@
 //
 
 #import "DeckDiffCell.h"
+#import "DeckDiffViewController.h"
 #import "CardImageViewPopover.h"
 
 @implementation DeckDiffCell
@@ -28,10 +29,11 @@
 {
     if (self.card1)
     {
-        NSIndexPath* idx = [self.tableView indexPathForRowAtPoint:[sender locationInView:self.tableView]];
-        CGRect rect = [self.tableView rectForRowAtIndexPath:idx];
+        UITableView* tableView = self.vc.tableView;
+        NSIndexPath* idx = [tableView indexPathForRowAtPoint:[sender locationInView:tableView]];
+        CGRect rect = [tableView rectForRowAtIndexPath:idx];
         rect.size.width = 330;
-        [CardImageViewPopover showForCard:self.card1 fromRect:rect inView:self.tableView];
+        [CardImageViewPopover showForCard:self.card1 fromRect:rect inViewController:self.vc subView:tableView];
     }
 }
 
@@ -39,11 +41,12 @@
 {
     if (self.card2)
     {
-        NSIndexPath* idx = [self.tableView indexPathForRowAtPoint:[sender locationInView:self.tableView]];
-        CGRect rect = [self.tableView rectForRowAtIndexPath:idx];
+        UITableView* tableView = self.vc.tableView;
+        NSIndexPath* idx = [tableView indexPathForRowAtPoint:[sender locationInView:tableView]];
+        CGRect rect = [tableView rectForRowAtIndexPath:idx];
         rect.origin.x = 400;
         rect.size.width = 310;
-        [CardImageViewPopover showForCard:self.card2 fromRect:rect inView:self.tableView];
+        [CardImageViewPopover showForCard:self.card2 fromRect:rect inViewController:self.vc subView:tableView];
     }
 }
 

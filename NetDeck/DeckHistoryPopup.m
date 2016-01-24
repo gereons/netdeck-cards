@@ -141,7 +141,7 @@
             DeckChange* dc = dcs.changes[indexPath.row];
             
             CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-            [CardImageViewPopover showForCard:dc.card fromRect:rect inView:self.tableView];
+            [CardImageViewPopover showForCard:dc.card fromRect:rect inViewController:self subView:self.tableView];
         }
     }
 }

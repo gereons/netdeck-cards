@@ -305,7 +305,7 @@ static BrowserResultViewController* instance;
     Card* card = [self.values objectAtIndexPath:indexPath];
     
     CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-    [CardImageViewPopover showForCard:card fromRect:rect inView:self.tableView];
+    [CardImageViewPopover showForCard:card fromRect:rect inViewController:self subView:self.tableView];
 }
 
 #pragma mark collectionview
@@ -410,7 +410,7 @@ static BrowserResultViewController* instance;
             
             Card* card = [self.values objectAtIndexPath:indexPath];
             
-            [CardImageViewPopover showForCard:card fromRect:cell.frame inView:self.collectionView];
+            [CardImageViewPopover showForCard:card fromRect:cell.frame inViewController:self subView:self.collectionView];
         }
     }
 }

@@ -426,7 +426,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     }
     CardDiff* cd = arr[indexPath.row];
     
-    cell.tableView = self.tableView;
+    cell.vc = self;
     cell.card1 = nil;
     cell.card2 = nil;
     
