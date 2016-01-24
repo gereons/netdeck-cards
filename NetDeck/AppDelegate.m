@@ -71,18 +71,6 @@ const NSString* const kANY = @"Any";
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    if (IS_IPHONE)
-    {
-        self.window.rootViewController = self.navigationController;
-    }
-    else
-    {
-        self.window.rootViewController = self.splitViewController;
-    }
-    [self.window makeKeyAndVisible];
-    
     [DeckImport checkClipboardForDeck];
     [CardImageViewPopover monitorKeyboard];
     
@@ -101,6 +89,18 @@ const NSString* const kANY = @"Any";
                 break;
         }
     }];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    if (IS_IPHONE)
+    {
+        self.window.rootViewController = self.navigationController;
+    }
+    else
+    {
+        self.window.rootViewController = self.splitViewController;
+    }
+    [self.window makeKeyAndVisible];
     
     return YES;
 }
@@ -327,6 +327,10 @@ static BOOL runningBackgroundFetch = NO;
         }
     });
     
+    [self performSelector:@selector(showCrashAlert) withObject:nil afterDelay:0.15];
+}
+
+-(void) showCrashAlert {
     SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Oops, we crashed :(")
                                                message:l10n(@"Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.")
                                                buttons:@[l10n(@"Not now"), l10n(@"OK")]];
@@ -338,10 +342,10 @@ static BOOL runningBackgroundFetch = NO;
             NSString* body = @"If possible, please describe what caused the crash. Thanks!";
             
             NSMutableString* mailto = @"mailto:netdeck@steffens.org?subject=".mutableCopy;
-            [mailto appendString:[subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            [mailto appendString:[subject stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
             [mailto appendString:@"&body="];
-            [mailto appendString:[body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
+            [mailto appendString:[body stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
+            
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailto]];
         }
     };
