@@ -32,7 +32,8 @@ import Foundation
     private static var runnerFactionNamesPreDAD = [String]()
     private static var corpFactionNames = [String]()
     
-    private(set) static var allFactions: TableData!
+    private static var allFactions: TableData!
+    private static var allFactionsPreDAD: TableData!
     
     override class func initialize() {
         faction2name[.None] = kANY
@@ -73,8 +74,10 @@ import Foundation
         
         let factionSections = [ "", "Runner".localized(), "Corp".localized() ]
         let factions = [ common, runnerFactionNames, corpFactionNames ]
+        let factionsPreDAD = [ common, runnerFactionNamesPreDAD, corpFactionNames ]
 
         allFactions = TableData(sections: factionSections, andValues: factions)
+        allFactionsPreDAD = TableData(sections: factionSections, andValues: factionsPreDAD)
         
         runnerFactionNames.insertContentsOf(common, at: 0)
         runnerFactionNamesPreDAD.insertContentsOf(common, at: 0)
@@ -99,6 +102,12 @@ import Foundation
             return dataDestinyAllowed ? runnerFactionNames : runnerFactionNamesPreDAD
         }
         return corpFactionNames
+    }
+    
+    class func factionsForBrowser() -> TableData {
+        let dataDestinyAllowed = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_DATA_DESTINY)
+        
+        return dataDestinyAllowed ? allFactions : allFactionsPreDAD
     }
     
     class func shortName(faction: NRFaction) -> String {

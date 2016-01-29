@@ -235,6 +235,8 @@ static NSMutableArray* subtypeCollapsedSections;
     self.selectedType = kANY;
     self.selectedTypes = nil;
     self.selectedValues = [NSMutableDictionary dictionary];
+    
+    [self resetAllButtons];
 }
 
 -(IBAction)sideSelected:(UISegmentedControl*)sender
@@ -405,7 +407,7 @@ static NSMutableArray* subtypeCollapsedSections;
     
     if (self.role == NRRoleNone)
     {
-        data = [Faction allFactions];
+        data = [Faction factionsForBrowser];
     }
     else
     {
