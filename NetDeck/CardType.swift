@@ -31,17 +31,24 @@ import Foundation
     private static var corpTypeNames = [String]()
     private(set) static var allTypes: TableData!
     
-    class func initializeCardTypes(cards: [Card]) {
+    class func initializeCardTypes(cards: [Card]) -> Bool {
         runnerTypeNames = [String]()
         corpTypeNames = [String]()
         
         assert(code2type.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
+        if code2type.count != runnerTypes.count + corpTypes.count + 1 {
+            return false
+        }
+        
         type2name.removeAll()
         type2name[.None] = kANY
         for card in cards {
             type2name[card.type] = card.typeStr
         }
         assert(type2name.count == code2type.count + 1) // +1 for "Any"
+        if type2name.count != code2type.count + 1 {
+            return false
+        }
         
         for type in runnerTypes {
             runnerTypeNames.append(CardType.name(type))
@@ -61,6 +68,8 @@ import Foundation
         
         runnerTypeNames.insert(kANY, atIndex: 0)
         corpTypeNames.insert(kANY, atIndex: 0)
+        
+        return true
     }
     
     class func name(type: NRCardType) -> String {

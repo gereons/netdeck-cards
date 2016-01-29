@@ -169,8 +169,8 @@ import Foundation
         }
         
         let cards = Array(allKnownCards.values)
-        Faction.initializeFactionNames(cards)
-        CardType.initializeCardTypes(cards)
+        if !Faction.initializeFactionNames(cards) { return false }
+        if !CardType.initializeCardTypes(cards) { return false }
         
         // sort identities by faction and name
         for var arr in [ allIdentitiesByRole[.Runner]!, allIdentitiesByRole[.Corp]! ] {

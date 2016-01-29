@@ -43,7 +43,7 @@ import Foundation
         return Faction.faction2name[faction]
     }
     
-    class func initializeFactionNames(cards: [Card]) {
+    class func initializeFactionNames(cards: [Card]) -> Bool {
         runnerFactionNames = [String]()
         runnerFactionNamesPreDAD = [String]()
         corpFactionNames = [String]()
@@ -52,6 +52,9 @@ import Foundation
             faction2name[card.faction] = card.factionStr
         }
         assert(faction2name.count == runnerFactions.count + corpFactions.count + 2)
+        if faction2name.count != runnerFactions.count + corpFactions.count + 2 {
+            return false
+        }
         
         let common = [ Faction.name(.None)!, Faction.name(.Neutral)! ]
         
@@ -76,6 +79,8 @@ import Foundation
         runnerFactionNames.insertContentsOf(common, at: 0)
         runnerFactionNamesPreDAD.insertContentsOf(common, at: 0)
         corpFactionNames.insertContentsOf(common, at: 0)
+        
+        return true
     }
     
     class func faction(faction: String) -> NRFaction {
