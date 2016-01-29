@@ -8,9 +8,11 @@
 
 // TODOs:
 // card/set update in bg fetch?
-// 3d touch shortcuts
 
+#warning 3d touch shortcuts
 #warning improve startup time!
+#warning remove mustache?
+#warning crash regressions?!
 
 @import SVProgressHUD;
 @import AFNetworking;

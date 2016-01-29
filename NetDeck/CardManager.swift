@@ -35,11 +35,12 @@ import Foundation
         "03035": "LARLA",     // levy ar lab access
         "04029": "PPVP",      // prepaid voicepad
         "01092": "SSCG",      // sansan city grid
-        "03049": "ProCo",     // professional contacts
+        "03049": "Proco",     // professional contacts
         "02079": "OAI",       // oversight AI
         "08009": "Baby",      // symmetrical visage
         "08003": "Pancakes",  // adjusted chronotype
         "08086": "Anita",     // film critic
+        "01044": "Mopus",     // magnum opus
     ]
     
     override class func initialize() {
