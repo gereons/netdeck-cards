@@ -27,10 +27,12 @@
         self.sections = td.sections.mutableCopy;
         self.values = td.values.mutableCopy;
         
-        // no idea why/how this should be necessary, but we do get rare crashes otherwise (crashlytics #102)
+        NSInteger insertAt = 1;
+        // no idea why/how this should be necessary, but we do get rare crashes otherwise (crashlytics #102/#143)
         if (self.values.count == 0)
         {
             [self.values addObject:[NSMutableArray array]];
+            insertAt = 0;
         }
         
         // set title for core / deluxe section
