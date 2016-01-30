@@ -13,6 +13,8 @@
 #warning improve startup time!
 #warning remove mustache?
 #warning crash regressions?!
+#warning settings: allow whole cycles to be turned on/off
+#warning iphone browser: add hint on startup, more filters (type + set)
 
 @import SVProgressHUD;
 @import AFNetworking;

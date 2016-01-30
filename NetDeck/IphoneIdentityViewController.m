@@ -35,7 +35,7 @@
     
     self.title = l10n(@"Choose Identity");
     
-    self.okButton.enabled = self.deck != nil;
+    
     self.cancelButton.title = l10n(@"Cancel");
     if (!self.deck)
     {
@@ -48,6 +48,21 @@
     self.selectedIdentity = self.deck.identity;
     
     [self initIdentities];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.okButton.enabled = self.deck != nil && self.deck.identity != nil;
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (self.selectedIndexPath)
+    {
+        [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+    }
 }
 
 - (void)initIdentities
@@ -109,15 +124,6 @@
     NSAssert(self.identities.count == self.factionNames.count, @"count mismatch");
 }
 
--(void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    if (self.selectedIndexPath)
-    {
-        [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-    }
-}
 
 -(void) doubleTap:(UITapGestureRecognizer*)gesture
 {
