@@ -131,9 +131,18 @@
     [view addSubview:label];
     
     if (section > 1) {
-#warning get sets by cycle, if at least one is "on", set toggle to on
-        UISwitch* cycleSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(width-72, 0, 50, 33)];
-        cycleSwitch.tag = section - 1; // section 2 == Genesis
+        NRCycle cycle = section - 1; // section 2 == Genesis
+        NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+        BOOL on = NO;
+        for (NSString* key in [CardSets keysForCycle:cycle]) {
+            if ([settings boolForKey:key]) {
+                on = YES;
+            }
+        }
+        
+        UISwitch* cycleSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(width-66, 0, 50, 33)];
+        cycleSwitch.tag = cycle;
+        cycleSwitch.on = on;
         [cycleSwitch addTarget:self action:@selector(toggleCycle:) forControlEvents:UIControlEventValueChanged];
         [view addSubview:cycleSwitch];
     }
@@ -143,8 +152,11 @@
 
 -(void) toggleCycle:(UISwitch*)sender {
     NRCycle cycle = sender.tag;
-    NSLog(@"toggle section %d", cycle);
-#warning get sets by cycle, toggle all, reload section
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    for (NSString* key in [CardSets keysForCycle:cycle]) {
+        [settings setBool:sender.on forKey:key];
+    }
+    [self.tableView reloadData];
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

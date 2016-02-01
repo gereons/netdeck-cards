@@ -1148,6 +1148,7 @@ static NSInteger viewMode = VIEW_LIST;
         
         if (viewMode == VIEW_LIST)
         {
+#warning crashlytics #147
             [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
         }
         else

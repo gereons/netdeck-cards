@@ -27,6 +27,7 @@ import Foundation
     static var code2name = [String: String]()       // map code -> name
     static var setGroups = [String]()               // section names: 0=empty/any 1=core+deluxe, plus one for each cycle
     static var setsPerGroup = [NRCycle: [Int]]()    // one array per cycle, contains set numbers in that group
+    static var keysPerCycle = [NRCycle: [String]]()    // "use_xyz" settings keys, per cycle
     
     // caches
     static var disabledSets: Set<String>?           // set of setCodes
@@ -129,6 +130,8 @@ import Foundation
         setGroups = [String]()
         setsPerGroup = [NRCycle: [Int]]()
         setsPerGroup[.CoreDeluxe] = [Int]()
+        keysPerCycle = [NRCycle: [String]]()
+        
         for key in cycleMap.keys.sort({ $0 < $1 }) {
             let cycle = cycleMap[key]!
             if cycle != .CoreDeluxe {
@@ -146,6 +149,12 @@ import Foundation
             if cs.cycle.rawValue > setGroups.count {
                 let cycle = "Cycle #\(cs.cycle.rawValue)"
                 setGroups.append(cycle.localized())
+            }
+            
+            if cs.cycle != .CoreDeluxe {
+                var arr = keysPerCycle[cs.cycle] ?? [String]()
+                arr.append(cs.settingsKey)
+                keysPerCycle[cs.cycle] = arr
             }
         }
         
@@ -186,6 +195,10 @@ import Foundation
             return num
         }
         return 0
+    }
+    
+    class func keysForCycle(cycle: NRCycle) -> [String]? {
+        return keysPerCycle[cycle]
     }
     
     class func disabledSetCodes() -> Set<String> {
