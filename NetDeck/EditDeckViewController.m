@@ -514,6 +514,7 @@
         cell.stepper.hidden = YES;
         cell.idButton.hidden = NO;
         cell.mwlLabel.hidden = YES;
+        cell.influenceLabel.hidden = YES;
         return cell;
     }
     
@@ -536,6 +537,12 @@
     {
         cell.nameLabel.text = card.name;
         cell.stepper.hidden = YES;
+        NSInteger inf = self.deck.influenceLimit;
+        cell.influenceLabel.text = [NSString stringWithFormat:@"%ld", (long)inf];
+        if (inf != card.influenceLimit) {
+            cell.influenceLabel.textColor = [UIColor redColor];
+        }
+        cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)card.baseLink];
     }
     
     cell.nameLabel.textColor = [UIColor blackColor];
@@ -548,21 +555,25 @@
     
     NSString* type = [Faction name:card.faction];;
     
-    NSInteger influence = [self.deck influenceFor:cc];
-    if (influence > 0)
-    {
-        cell.influenceLabel.text = [NSString stringWithFormat:@"%ld", (long)influence];
-        cell.influenceLabel.textColor = card.factionColor;
-    }
-    else
-    {
-        cell.influenceLabel.text = @"";
+    if (card.type != NRCardTypeIdentity) {
+        NSInteger influence = [self.deck influenceFor:cc];
+        if (influence > 0)
+        {
+            cell.influenceLabel.text = [NSString stringWithFormat:@"%ld", (long)influence];
+            cell.influenceLabel.textColor = card.factionColor;
+            cell.influenceLabel.hidden = NO;
+        }
+        else
+        {
+            cell.influenceLabel.text = @"";
+            cell.influenceLabel.hidden = YES;
+        }
+        if (card.isMostWanted) {
+            cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)-cc.count];
+        }
+        cell.mwlLabel.hidden = !card.isMostWanted;
     }
     
-    if (card.isMostWanted) {
-        cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)-cc.count];
-    }
-    cell.mwlLabel.hidden = !card.isMostWanted;
     
     NSString* subtype = card.subtype;
     if (subtype)

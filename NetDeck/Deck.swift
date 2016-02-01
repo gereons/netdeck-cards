@@ -125,10 +125,8 @@ import Foundation
     }
     
     func influenceFor(cardcounter: CardCounter?) -> Int {
-        if cardcounter == nil {
-            return 0
-        }
-        let cc = cardcounter!
+        guard let cc = cardcounter else { return 0 }
+
         if self.identity?.faction == cc.card.faction || cc.card.influence == -1 {
             return 0
         }
@@ -138,25 +136,28 @@ import Foundation
             --count
         }
         
-        // mumba temple: 0 inf if 15 or fewer ICE
-        if cc.card.code == Card.MUMBA_TEMPLE && self.iceCount() <= 15 {
-            return 0
-        }
-        // pad factory: 0 inf if 3 PAD Campaigns in deck
-        if cc.card.code == Card.PAD_FACTORY && self.padCampaignCount() == 3 {
-            return 0
-        }
-        // mumbad virtual tour: 0 inf if 7 or more assets
-        if cc.card.code == Card.MUMBAD_VIRTUAL_TOUR && self.assetCount() >= 7 {
-            return 0
-        }
-        // museum of history: 0 inf if >= 50 cards in deck
-        if cc.card.code == Card.MUSEUM_OF_HISTORY && self.size >= 50 {
-            return 0
-        }
-        // alliance-based cards: 0 inf if >=6 non-alliance cards of same faction in deck
-        if Card.ALLIANCE_6.contains(cc.card.code) && self.nonAllianceOfFaction(cc.card.faction) >= 6 {
-            return 0
+        // alliance rules for corp
+        if self.role == .Corp {
+            // mumba temple: 0 inf if 15 or fewer ICE
+            if cc.card.code == Card.MUMBA_TEMPLE && self.iceCount() <= 15 {
+                return 0
+            }
+            // pad factory: 0 inf if 3 PAD Campaigns in deck
+            if cc.card.code == Card.PAD_FACTORY && self.padCampaignCount() == 3 {
+                return 0
+            }
+            // mumbad virtual tour: 0 inf if 7 or more assets
+            if cc.card.code == Card.MUMBAD_VIRTUAL_TOUR && self.assetCount() >= 7 {
+                return 0
+            }
+            // museum of history: 0 inf if >= 50 cards in deck
+            if cc.card.code == Card.MUSEUM_OF_HISTORY && self.size >= 50 {
+                return 0
+            }
+            // alliance-based cards: 0 inf if >=6 non-alliance cards of same faction in deck
+            if Card.ALLIANCE_6.contains(cc.card.code) && self.nonAllianceOfFaction(cc.card.faction) >= 6 {
+                return 0
+            }
         }
         
         return count * cc.card.influence
@@ -297,7 +298,9 @@ import Foundation
             if self.sortType == .SetNum {
                 return c1.number < c2.number
             }
-            if c1.type != c2.type { return c1.type.rawValue < c2.type.rawValue }
+            if c1.type != c2.type {
+                return c1.type.rawValue < c2.type.rawValue
+            }
             if c1.type == .Ice && c2.type == .Ice {
                 return c1.iceType < c2.iceType
             }
@@ -477,7 +480,6 @@ import Foundation
     }
     
     func dataForTableView(sortType: NRDeckSort) -> TableData {
-        
         self.sortType = sortType
         
         var sections = [String]()

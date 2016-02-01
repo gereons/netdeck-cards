@@ -18,4 +18,8 @@
     self.mwlLabel.font = [UIFont md_systemFontOfSize:13];
 }
 
+-(void) prepareForReuse {
+    self.influenceLabel.textColor = [UIColor blackColor];
+}
+
 @end
