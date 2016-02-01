@@ -12,3 +12,10 @@
 +(UIAlertAction*) actionWithTitle:(NSString*)title handler:(void (^)(UIAlertAction *action))handler;
 
 @end
+
+@interface UIAlertController(NetDeck)
+
+-(void) show;
+-(void) present:(BOOL)animated completion:^(void)completion
+
+@end
