@@ -72,7 +72,7 @@
 		3A3C1E1F1BF79A71000311FA /* DeckState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E1E1BF79A71000311FA /* DeckState.swift */; };
 		3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E201BF79C7D000311FA /* DeckChange.swift */; };
 		3A3C1E231BF7A131000311FA /* DeckChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */; };
-		3A3E26E81A005042000C6D32 /* UIAlertAction+NetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */; };
+		3A3E26E81A005042000C6D32 /* UIAlert+NetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */; };
 		3A3FA6911BBF07C100994A11 /* UIFont+monospacedDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
 		3A40EA4E19FD2CBE00B9CFDA /* 890-sort-ascending.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4C19FD2CBE00B9CFDA /* 890-sort-ascending.png */; };
@@ -423,8 +423,8 @@
 		3A3C1E201BF79C7D000311FA /* DeckChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckChange.swift; sourceTree = "<group>"; };
 		3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckChangeSet.swift; sourceTree = "<group>"; };
 		3A3D841419F1A24F00642CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		3A3E26E61A004FD7000C6D32 /* UIAlertAction+NetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertAction+NetDeck.h"; sourceTree = "<group>"; };
-		3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertAction+NetDeck.m"; sourceTree = "<group>"; };
+		3A3E26E61A004FD7000C6D32 /* UIAlert+NetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlert+NetDeck.h"; sourceTree = "<group>"; };
+		3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlert+NetDeck.m"; sourceTree = "<group>"; };
 		3A3FA68F1BBF07C100994A11 /* UIFont+monospacedDigits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+monospacedDigits.h"; sourceTree = "<group>"; };
 		3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+monospacedDigits.m"; sourceTree = "<group>"; };
 		3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending@2x.png"; sourceTree = "<group>"; };
@@ -957,8 +957,8 @@
 				3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */,
 				3A058B1719D334660090F53A /* NRSwitch.h */,
 				3A058B1819D334660090F53A /* NRSwitch.m */,
-				3A3E26E61A004FD7000C6D32 /* UIAlertAction+NetDeck.h */,
-				3A3E26E71A005042000C6D32 /* UIAlertAction+NetDeck.m */,
+				3A3E26E61A004FD7000C6D32 /* UIAlert+NetDeck.h */,
+				3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */,
 				3A8309861AE8C22D00FED08A /* NRCrashlytics.h */,
 				3AC32DD81B67F63300DFD98D /* GZip.h */,
 				3AC32DD91B67F63300DFD98D /* GZip.m */,
@@ -1934,7 +1934,7 @@
 				3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */,
 				3AB9BD5918FADB51004EAF10 /* DecksViewController.m in Sources */,
 				3AF6978F1C1DFD2100D254CE /* DrawSimulatorViewController.swift in Sources */,
-				3A3E26E81A005042000C6D32 /* UIAlertAction+NetDeck.m in Sources */,
+				3A3E26E81A005042000C6D32 /* UIAlert+NetDeck.m in Sources */,
 				3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */,
 				3AD860D61B79154100EEF8AC /* EditDeckCell.m in Sources */,
 				3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */,

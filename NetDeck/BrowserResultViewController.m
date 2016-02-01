@@ -7,7 +7,6 @@
 //
 
 #import "EXTScope.h"
-#import "UIAlertAction+NetDeck.h"
 #import "BrowserResultViewController.h"
 #import "ImageCache.h"
 #import "CardImageViewPopover.h"

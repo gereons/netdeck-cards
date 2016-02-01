@@ -7,7 +7,6 @@
 //
 
 #import "SetSelectionViewController.h"
-#import "UIAlertAction+NetDeck.h"
 #import "NRSwitch.h"
 
 @interface SetSelectionViewController ()
@@ -95,6 +94,11 @@
     return 44;
 }
 
+-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 33;
+}
+
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
     return self.sections.count;
@@ -109,6 +113,38 @@
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return self.sections[section];
+}
+
+-(UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CGFloat width = tableView.frame.size.width;
+    
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 33)];
+    view.backgroundColor = [UIColor colorWithRGB:0xEFEFF4];
+    view.tag = section;
+    view.userInteractionEnabled = YES;
+    
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(20, 2, width, 33)];
+    label.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
+    label.text = [self.sections[section] uppercaseString];
+    label.textColor = [UIColor colorWithRGB:0x6d6d72];
+    [view addSubview:label];
+    
+    if (section > 1) {
+#warning get sets by cycle, if at least one is "on", set toggle to on
+        UISwitch* cycleSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(width-72, 0, 50, 33)];
+        cycleSwitch.tag = section - 1; // section 2 == Genesis
+        [cycleSwitch addTarget:self action:@selector(toggleCycle:) forControlEvents:UIControlEventValueChanged];
+        [view addSubview:cycleSwitch];
+    }
+    
+    return view;
+}
+
+-(void) toggleCycle:(UISwitch*)sender {
+    NRCycle cycle = sender.tag;
+    NSLog(@"toggle section %d", cycle);
+#warning get sets by cycle, toggle all, reload section
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -11,14 +11,13 @@
 
 #warning 3d touch shortcuts
 #warning improve startup time!
-#warning remove mustache?
-#warning crash regressions?!
+#warning remove grmustache?
 #warning settings: allow whole cycles to be turned on/off
 #warning iphone browser: add hint on startup, more filters (type + set)
+#warning remove SDCalertview where not needed
 
 @import SVProgressHUD;
 @import AFNetworking;
-@import SDCAlertView;
 
 #import <Dropbox/Dropbox.h>
 #import "AppDelegate.h"
@@ -335,24 +334,26 @@ static BOOL runningBackgroundFetch = NO;
 }
 
 -(void) showCrashAlert {
-    SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Oops, we crashed :(")
-                                               message:l10n(@"Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.")
-                                               buttons:@[l10n(@"Not now"), l10n(@"OK")]];
+    NSString* msg = l10n(@"Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.");
     
-    alert.didDismissHandler = ^(NSInteger buttonIndex) {
-        if (buttonIndex == 1)
-        {
-            NSString* subject = [NSString stringWithFormat:@"Bug in Net Deck %@", [AppDelegate appVersion]];
-            NSString* body = @"If possible, please describe what caused the crash. Thanks!";
-            
-            NSMutableString* mailto = @"mailto:netdeck@steffens.org?subject=".mutableCopy;
-            [mailto appendString:[subject stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
-            [mailto appendString:@"&body="];
-            [mailto appendString:[body stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
-            
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailto]];
-        }
-    };
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Oops, we crashed :(")
+                                                                   message:msg
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Not now") handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction *action) {
+        NSString* subject = [NSString stringWithFormat:@"Bug in Net Deck %@", [AppDelegate appVersion]];
+        NSString* body = @"If possible, please describe what caused the crash. Thanks!";
+        
+        NSMutableString* mailto = @"mailto:netdeck@steffens.org?subject=".mutableCopy;
+        [mailto appendString:[subject stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
+        [mailto appendString:@"&body="];
+        [mailto appendString:[body stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailto]];
+    }]];
+    
+    [self.window.rootViewController presentViewController:alert animated:NO completion:nil];
 }
 #endif
 

@@ -11,7 +11,6 @@
 
 #import "AppDelegate.h"
 #import "EXTScope.h"
-#import "UIAlertAction+NetDeck.h"
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"

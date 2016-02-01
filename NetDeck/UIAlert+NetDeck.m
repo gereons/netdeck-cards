@@ -1,18 +1,24 @@
 //
-//  UIAlertAction+NetDeck.m
+//  UIAlert+NetDeck.m
 //  Net Deck
 //
 //  Created by Gereon Steffens on 28.10.14.
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "UIAlertAction+NetDeck.h"
+#import "UIAlert+NetDeck.h"
 
 @implementation UIAlertAction (NetDeck)
 
 +(UIAlertAction*) cancelAction:(void (^)(UIAlertAction *action))handler
 {
     NSString* title = IS_IPAD ? @"" : l10n(@"Cancel");
+    return [UIAlertAction actionWithTitle:title style:UIAlertActionStyleCancel handler:handler];
+}
+
++(UIAlertAction*) cancelAlertAction:(void (^)(UIAlertAction *action))handler
+{
+    NSString* title = l10n(@"Cancel");
     return [UIAlertAction actionWithTitle:title style:UIAlertActionStyleCancel handler:handler];
 }
 
@@ -23,32 +29,35 @@
 
 @end
 
+// see http://stackoverflow.com/questions/26554894/how-to-present-uialertcontroller-when-not-in-a-view-controller
 @implementation UIAlertController(NetDeck)
 
--(void) present:(BOOL)animated completion:(^(void))completion {
+-(void) show {
+    [self present:NO completion:nil];
+}
+
+-(void) present:(BOOL)animated completion:(void (^ __nullable)(void))completion {
     UIViewController* rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
-    if (rootVC != nil) {
-        [self presentFromController:rootVC animated:animated completion:completion];
+    [self presentFromController:rootVC animated:animated completion:completion];
+}
+
+-(void) presentFromController:(UIViewController*)controller animated:(BOOL)animated completion:(void (^ __nullable)(void))completion {
+    if ([controller isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navVC = (UINavigationController*)controller;
+        if ([navVC visibleViewController]) {
+            [self presentFromController:navVC.visibleViewController animated:animated completion:completion];
+        }
+        else if ([controller isKindOfClass:[UITabBarController class]]) {
+            UITabBarController* tabVC = (UITabBarController*)controller;
+            UIViewController* selected = [tabVC selectedViewController];
+            if (selected) {
+                [self presentFromController:selected animated:animated completion:completion];
+            }
+        }
+        else {
+            [controller presentViewController:self animated:animated completion:completion];
+        }
     }
-}
-
-/*
-private func presentFromController(controller: UIViewController, animated: Bool, completion: (() -> Void)?) {
-    if let navVC = controller as? UINavigationController,
-        let visibleVC = navVC.visibleViewController {
-            presentFromController(visibleVC, animated: animated, completion: completion)
-        } else
-            if let tabVC = controller as? UITabBarController,
-                let selectedVC = tabVC.selectedViewController {
-                    presentFromController(selectedVC, animated: animated, completion: completion)
-                } else {
-                    controller.presentViewController(self, animated: animated, completion: completion);
-                }
-}
- */
-
--(void) presentFromController:(UIViewController*)controller animated:(BOOL)animated completion:^(void)completion {
-    
 }
 
 @end

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@import SDCAlertView;
-
 #import "BrowserViewController.h"
 #import "CardImageViewController.h"
 #import "SmallPipsView.h"
@@ -80,13 +78,14 @@
             Card* card = [self.cards objectAtIndexPath:indexPath];
             
             NSString* msg = [NSString stringWithFormat:l10n(@"Open ANCUR page for\n%@?"), card.name];
-            SDCAlertView* alert = [SDCAlertView alertWithTitle:nil message:msg buttons:@[ l10n(@"OK"), l10n(@"Cancel") ]];
-            alert.didDismissHandler = ^(NSInteger buttonIndex) {
-                if (buttonIndex == 0)
-                {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:card.ancurLink]];
-                }
-            };
+            
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:msg preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * _Nonnull action) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:card.ancurLink]];
+            }]];
+            [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+            
+            [self presentViewController:alert animated:NO completion:nil];
         }
     }
 }

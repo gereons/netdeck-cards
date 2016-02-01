@@ -6,7 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "UIAlertAction+NetDeck.h"
 #import "IphoneStartViewController.h"
 #import "ImageCache.h"
 #import "NRDB.h"
@@ -72,8 +71,6 @@
     
     self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECK_FILTER_SORT];
     
-    [CardUpdateCheck checkCardsAvailable];
-    
     if ([CardManager cardsAvailable] && [CardSets setsAvailable])
     {
         [self initializeDecks];
@@ -82,6 +79,12 @@
     self.tableView.contentInset = UIEdgeInsetsZero; // wtf is this needed since iOS9?
     
     [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [CardUpdateCheck checkCardsAvailable:self];
 }
 
 -(void) dealloc

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@import SDCAlertView;
-
 #import "AboutViewController.h"
 #import "AppDelegate.h"
 
@@ -76,20 +74,17 @@
 {
     NSString* msg = l10n(@"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store.");
     
-    SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
-                                               message:msg
-                                               buttons:@[l10n(@"Cancel"), l10n(@"Write a Review"), l10n(@"Contact Developers")]];
-    alert.didDismissHandler = ^(NSInteger buttonIndex) {
-        switch (buttonIndex)
-        {
-            case 1:
-                [self rateApp];
-                break;
-            case 2:
-                [self sendEmail];
-                break;
-        }
-    };
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:msg preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Write a Review") handler:^(UIAlertAction * _Nonnull action) {
+        [self rateApp];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Contact Developers") handler:^(UIAlertAction * _Nonnull action) {
+        [self sendEmail];
+    }]];
+    [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+
+    [self presentViewController:alert animated:NO completion:nil];
 }
 
 -(void) rateApp

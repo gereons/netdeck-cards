@@ -6,8 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@import SDCAlertView;
-
 #import "AppDelegate.h"
 #import "ActionsTableViewController.h"
 #import "EmptyDetailViewController.h"
@@ -89,7 +87,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     [super viewDidAppear:animated];
     
-    [CardUpdateCheck checkCardsAvailable];
+    [CardUpdateCheck checkCardsAvailable:self];
     
 #if !DEBUG
     // first start with this version?

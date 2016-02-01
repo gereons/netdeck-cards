@@ -6,10 +6,8 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface CardUpdateCheck : NSObject
 
-+(void) checkCardsAvailable;
++(void) checkCardsAvailable:(UIViewController*)vc;
 
 @end

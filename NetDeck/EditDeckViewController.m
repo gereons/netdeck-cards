@@ -10,7 +10,6 @@
 
 #import "AppDelegate.h"
 #import "EXTScope.h"
-#import "UIAlertAction+NetDeck.h"
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
 #import "CardImageViewController.h"
