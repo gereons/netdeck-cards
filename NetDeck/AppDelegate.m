@@ -12,7 +12,6 @@
 #warning 3d touch shortcuts
 #warning improve startup time!
 #warning remove grmustache?
-#warning settings: allow whole cycles to be turned on/off
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning remove SDCalertview where not needed
 

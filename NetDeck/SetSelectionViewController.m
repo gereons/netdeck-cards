@@ -156,6 +156,7 @@
     for (NSString* key in [CardSets keysForCycle:cycle]) {
         [settings setBool:sender.on forKey:key];
     }
+    [CardSets clearDisabledSets];
     [self.tableView reloadData];
 }
 
