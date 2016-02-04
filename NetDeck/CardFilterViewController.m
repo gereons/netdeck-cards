@@ -1143,21 +1143,14 @@ static NSInteger viewMode = VIEW_LIST;
     {
         [self.deckListViewController addCard:card];
         [self setBackOrRevertButton];
-        
-        NSArray* paths = @[indexPath];
-        
+    
         if (viewMode == VIEW_LIST)
         {
-#warning crashlytics #147
-            [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView reloadData];
         }
         else
         {
-            [UIView setAnimationsEnabled:NO];
-#warning crashlytics #145 - wtf?
-            /*Invalid update: invalid number of sections. The number of sections contained in the collection view after the update (5) must be equal to the number of sections contained in the collection view before the update (1), plus or minus the number of sections inserted or deleted (0 inserted, 0 deleted).*/
-            [self.collectionView reloadItemsAtIndexPaths:paths];
-            [UIView setAnimationsEnabled:YES];
+            [self.collectionView reloadData];
         }
     }
 }
