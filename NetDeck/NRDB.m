@@ -6,7 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@import SDCAlertView;
 @import AFNetworking;
 
 #import "AppDelegate.h"
@@ -155,9 +154,9 @@ static NSDateFormatter* formatter;
              [NRDB clearSettings];
              
              // NSLog(@"nrdb (re)auth failed: %@", operation);
-             [SDCAlertView alertWithTitle:nil
-                                  message:l10n(@"Authorization at NetrunnerDB.com failed")
-                                  buttons:@[ l10n(@"OK") ]];
+             [UIAlertController alertWithTitle:nil
+                                       message:l10n(@"Authorization at NetrunnerDB.com failed")
+                                        button:l10n(@"OK")];
              
              [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
              completionBlock(NO);
@@ -296,9 +295,9 @@ static NSDateFormatter* formatter;
 {
     if (!ok)
     {
-        [SDCAlertView alertWithTitle:nil
+        [UIAlertController alertWithTitle:nil
                              message:l10n(@"Loading decks from NetrunnerDB.com failed")
-                             buttons:@[l10n(@"OK")]];
+                             button:l10n(@"OK")];
     }
     
     self.decklistCompletionBlock(decks);

@@ -75,7 +75,7 @@ static DataDownload* instance;
     
     if (nrdbHost.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"No known NetrunnerDB server") buttons:@[l10n(@"OK")]];
+        [UIAlertController alertWithTitle:nil message:l10n(@"No known NetrunnerDB server") button:l10n(@"OK")];
         return;
     }
 
@@ -180,9 +180,9 @@ static DataDownload* instance;
     
     if (!ok && !self.downloadStopped)
     {
-        [SDCAlertView alertWithTitle:nil
+        [UIAlertController alertWithTitle:nil
                              message:l10n(@"Unable to download cards at this time. Please try again later.")
-                             buttons:@[l10n(@"OK")]];
+                             button:l10n(@"OK")];
         return;
     }
     
@@ -216,15 +216,15 @@ static DataDownload* instance;
     {
         if (scope == DownloadAll)
         {
-            [SDCAlertView alertWithTitle:l10n(@"No Card Data")
-                                 message:l10n(@"Please download card data first")
-                                 buttons:@[l10n(@"OK")]];
+            [UIAlertController alertWithTitle:l10n(@"No Card Data")
+                                      message:l10n(@"Please download card data first")
+                                       button:l10n(@"OK")];
         }
         else
         {
-            [SDCAlertView alertWithTitle:nil
-                                 message:l10n(@"No missing card images")
-                                 buttons:@[l10n(@"OK")]];
+            [UIAlertController alertWithTitle:nil
+                                      message:l10n(@"No missing card images")
+                                       button:l10n(@"OK")];
         }
         
         return;
@@ -320,7 +320,7 @@ static DataDownload* instance;
         {
             NSString* msg = [NSString stringWithFormat:l10n(@"%d of %lu images could not be downloaded."), self.downloadErrors, (unsigned long)self.cards.count];
             
-            [SDCAlertView alertWithTitle:nil message:msg buttons:@[l10n(@"OK")]];
+            [UIAlertController alertWithTitle:nil message:msg button:l10n(@"OK")];
         }
         
         self.cards = nil;

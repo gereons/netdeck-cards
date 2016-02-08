@@ -6,8 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@import SDCAlertView;
-
 #import "AppDelegate.h"
 #import "EXTScope.h"
 #import "EditDeckViewController.h"
@@ -311,7 +309,7 @@
     [[NRDB sharedInstance] loadDeck:self.deck completion:^(BOOL ok, Deck* deck) {
         if (!ok)
         {
-            [SDCAlertView alertWithTitle:nil message:l10n(@"Loading the deck from NetrunnerDB.com failed.") buttons:@[l10n(@"OK")]];
+            [UIAlertController alertWithTitle:nil message:l10n(@"Loading the deck from NetrunnerDB.com failed.") button:l10n(@"OK")];
         }
         else
         {
@@ -344,12 +342,12 @@
         [[NRDB sharedInstance] publishDeck:self.deck completion:^(BOOL ok, NSString *deckId) {
             if (!ok)
             {
-                [SDCAlertView alertWithTitle:nil message:l10n(@"Publishing the deck at NetrunnerDB.com failed.") buttons:@[l10n(@"OK")]];
+                [UIAlertController alertWithTitle:nil message:l10n(@"Publishing the deck at NetrunnerDB.com failed.") button:l10n(@"OK")];
             }
             if (ok && deckId)
             {
                 NSString* msg = [NSString stringWithFormat:l10n(@"Deck published with ID %@"), deckId];
-                [SDCAlertView alertWithTitle:nil message:msg buttons:@[l10n(@"OK")]];
+                [UIAlertController alertWithTitle:nil message:msg button:l10n(@"OK")];
             }
             
             [SVProgressHUD dismiss];
@@ -358,15 +356,15 @@
     }
     else
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Only valid decks can be published.") buttons:@[ l10n(@"OK") ]];
+        [UIAlertController alertWithTitle:nil message:l10n(@"Only valid decks can be published.") button:l10n(@"OK")];
     }
 }
 
 -(void) showOfflineAlert
 {
-    [SDCAlertView alertWithTitle:nil
+    [UIAlertController alertWithTitle:nil
                          message:l10n(@"An Internet connection is required.")
-                         buttons:@[l10n(@"OK")]];
+                         button:l10n(@"OK")];
 }
 
 -(void) showCardList:(id)sender

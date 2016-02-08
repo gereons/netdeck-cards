@@ -6,8 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@import SDCAlertView;
-
 #import "DecksViewController.h"
 #import "DeckCell.h"
 #import "ImageCache.h"
@@ -398,7 +396,7 @@ static NRFilter _filterType = NRFilterAll;
             {
                 NSString* msg = [NSString stringWithFormat:@"deck role mismatch %@ %ld != %ld %@",
                                  deck.name, (long)deck.role, (long)deck.identity.role, deck.identity.name];
-                [SDCAlertView alertWithTitle:nil message:msg buttons:@[@"Oops"]];
+                [UIAlertController alertWithTitle:nil message:msg button:@"Oops"];
             }
         }
     }

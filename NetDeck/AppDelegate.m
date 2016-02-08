@@ -14,6 +14,8 @@
 #warning remove grmustache?
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning remove SDCalertview where not needed
+#warning convert http stuff to swift -> use alamofire
+#warning convert json-parsing stuff to swift -> use swiftyjson
 
 @import SVProgressHUD;
 @import AFNetworking;

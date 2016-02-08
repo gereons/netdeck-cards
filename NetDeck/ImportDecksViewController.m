@@ -292,9 +292,9 @@ static NSString* filterText;
             [SVProgressHUD dismiss];
             if (count == 0)
             {
-                [SDCAlertView alertWithTitle:l10n(@"No Decks found")
+                [UIAlertController alertWithTitle:l10n(@"No Decks found")
                                      message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.")
-                                     buttons:@[ l10n(@"OK") ]];
+                                     button:l10n(@"OK")];
             }
             [self filterDecks];
             [self.tableView reloadData];

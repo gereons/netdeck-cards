@@ -174,8 +174,7 @@ import Foundation
     }
     
     func padCampaignCount() -> Int {
-        let padIndex = self.indexOfCardCode(Card.PAD_CAMPAIGN)
-        if padIndex != -1 {
+        if let padIndex = self.indexOfCardCode(Card.PAD_CAMPAIGN) {
             let pad = cards[padIndex]
             return pad.count
         }
@@ -214,19 +213,19 @@ import Foundation
             return
         }
         
-        let cardIndex = self.indexOfCardCode(card.code)
         var cc: CardCounter?
-        if cardIndex != -1 {
-            cc = cards[cardIndex]
+        let cardIndex = self.indexOfCardCode(card.code)
+        if cardIndex != nil {
+            cc = cards[cardIndex!]
         }
         
         if copies < 1 {
             if cc != nil {
                 if copies == 0 || abs(copies) >= cc!.count {
-                    cards.removeAtIndex(cardIndex)
+                    cards.removeAtIndex(cardIndex!)
                     copies = -cc!.count
                 } else {
-                    cc?.count -= abs(copies)
+                    cc!.count -= abs(copies)
                 }
             }
         } else {
@@ -269,19 +268,15 @@ import Foundation
         self.isDraft = identity?.setCode == CardSets.DRAFT_SET_CODE
     }
     
-    func indexOfCardCode(code: String) -> Int {
-        for i in 0 ..< cards.count {
-            let cc = cards[i]
-            if cc.card.code == code {
-                return i
-            }
-        }
-        return -1
+    func indexOfCardCode(code: String) -> Int? {
+        return cards.indexOf { $0.card.code == code }
     }
     
     func findCard(card: Card) -> CardCounter? {
-        let index = self.indexOfCardCode(card.code)
-        return index == -1 ? nil : cards[index]
+        if let index = self.indexOfCardCode(card.code) {
+            return cards[index]
+        }
+        return nil
     }
     
     func sort() {

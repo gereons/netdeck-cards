@@ -7,7 +7,6 @@
 //
 
 @import SVProgressHUD;
-@import SDCAlertView;
 @import AFNetworking;
 
 #import "AppDelegate.h"
@@ -219,22 +218,20 @@
     }
     else if ([specifier.key isEqualToString:SettingsKeys.CLEAR_CACHE])
     {
-        SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
-                                                   message:l10n(@"Clear Cache? You will need to re-download all data.")
-                                                   buttons:@[l10n(@"No"), l10n(@"Yes") ]];
-        alert.didDismissHandler = ^(NSInteger buttonIndex) {
-            if (buttonIndex == 1) // yes, clear
-            {
-                [[ImageCache sharedInstance] clearCache];
-                [CardManager removeFiles];
-                [CardSets removeFiles];
-                [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.LAST_DOWNLOAD];
-                [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.NEXT_DOWNLOAD];
-                [self refresh];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_CARDS object:self];
-            }
-        };
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:l10n(@"Clear Cache? You will need to re-download all data.") preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"No") style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes") handler:^(UIAlertAction * _Nonnull action) {
+            [[ImageCache sharedInstance] clearCache];
+            [CardManager removeFiles];
+            [CardSets removeFiles];
+            [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.LAST_DOWNLOAD];
+            [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.NEXT_DOWNLOAD];
+            [self refresh];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_CARDS object:self];
+        }]];
+        
+        [self.iask presentViewController:alert animated:NO completion:nil];
     }
     else if ([specifier.key isEqualToString:SettingsKeys.TEST_API])
     {
@@ -256,7 +253,7 @@
     
     if (nrdbHost.length == 0)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Please enter a Server Name") buttons:@[l10n(@"OK")]];
+        [UIAlertController alertWithTitle:nil message:l10n(@"Please enter a Server Name") button:l10n(@"OK")];
         return;
     }
 
@@ -291,14 +288,14 @@
     [SVProgressHUD dismiss];
     
     NSString* message = nrdbOk ? l10n(@"NetrunnerDB is OK") : l10n(@"NetrunnerDB is invalid");
-    [SDCAlertView alertWithTitle:nil message:message buttons:@[ l10n(@"OK") ]];
+    [UIAlertController alertWithTitle:nil message:message button:l10n(@"OK")];
 }
 
 -(void) showOfflineAlert
 {
-    [SDCAlertView alertWithTitle:nil
+    [UIAlertController alertWithTitle:nil
                          message:l10n(@"An Internet connection is required.")
-                         buttons:@[l10n(@"OK")]];
+                         button:l10n(@"OK")];
 }
 
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender

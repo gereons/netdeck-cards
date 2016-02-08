@@ -6,8 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@import SDCAlertView;
-
 #import "CompareDecksList.h"
 #import "DeckCell.h"
 #import "DeckDiffViewController.h"
@@ -67,7 +65,7 @@
     
     if (deck1.role != deck2.role)
     {
-        [SDCAlertView alertWithTitle:nil message:l10n(@"Both decks must be for the same side.") buttons:@[ l10n(@"OK")] ];
+        [UIAlertController alertWithTitle:nil message:l10n(@"Both decks must be for the same side.") button:l10n(@"OK")];
         return;
     }
     

@@ -47,17 +47,20 @@
         if ([navVC visibleViewController]) {
             [self presentFromController:navVC.visibleViewController animated:animated completion:completion];
         }
-        else if ([controller isKindOfClass:[UITabBarController class]]) {
-            UITabBarController* tabVC = (UITabBarController*)controller;
-            UIViewController* selected = [tabVC selectedViewController];
-            if (selected) {
-                [self presentFromController:selected animated:animated completion:completion];
-            }
+    } else if ([controller isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabVC = (UITabBarController*)controller;
+        UIViewController* selected = [tabVC selectedViewController];
+        if (selected) {
+            [self presentFromController:selected animated:animated completion:completion];
         }
-        else {
-            [controller presentViewController:self animated:animated completion:completion];
-        }
+    } else {
+        [controller presentViewController:self animated:animated completion:completion];
     }
 }
 
++(void) alertWithTitle:(NSString*)title message:(NSString*)msg button:(NSString*)button {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:button handler:nil]];
+    [alert show];
+}
 @end

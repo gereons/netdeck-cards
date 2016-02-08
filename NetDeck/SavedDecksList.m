@@ -100,9 +100,9 @@
     
     if (!useDropbox && !useNetrunnerdb)
     {
-        [SDCAlertView alertWithTitle:l10n(@"Import Decks")
-                             message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")
-                             buttons:@[l10n(@"OK")]];
+        [UIAlertController alertWithTitle:l10n(@"Import Decks")
+                                  message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")
+                                   button:l10n(@"OK")];
         return;
     }
     
@@ -165,9 +165,9 @@
     
     if (!useDropbox && !useNetrunnerdb)
     {
-        [SDCAlertView alertWithTitle:l10n(@"Export Decks")
-                             message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")
-                             buttons:@[l10n(@"OK")]];
+        [UIAlertController alertWithTitle:l10n(@"Export Decks")
+                                  message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")
+                                   button:l10n(@"OK")];
         return;
     }
     
