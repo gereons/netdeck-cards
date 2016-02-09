@@ -784,7 +784,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) scopeClicked:(UIButton*)sender
 {
-    UIAlertController* sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController* sheet = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [sheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"All"), self.scope == NRSearchScopeAll )
                                               style:UIAlertActionStyleDefault

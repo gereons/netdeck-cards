@@ -108,15 +108,13 @@ static DeckImport* instance;
     {
         if (self.deckSource.source == DeckBuilderSourceNRDBList || self.deckSource.source == DeckBuilderSourceNRDBShared)
         {
-            alert = [UIAlertController alertControllerWithTitle:nil
-                                                        message:l10n(@"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?")
-                                                 preferredStyle:UIAlertControllerStyleAlert];
+            alert = [UIAlertController alertWithTitle:nil
+                                                        message:l10n(@"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?")];
         }
         else if (self.deckSource.source == DeckBuilderSourceMeteor)
         {
-            alert = [UIAlertController alertControllerWithTitle:nil
-                                                        message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
-                                                 preferredStyle:UIAlertControllerStyleAlert];
+            alert = [UIAlertController alertWithTitle:nil
+                                                        message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")];
         }
     }
     else
@@ -125,9 +123,8 @@ static DeckImport* instance;
         
         if (self.deck != nil)
         {
-            alert = [UIAlertController alertControllerWithTitle:nil
-                                                        message:l10n(@"Detected a deck list in your clipboard. Import this deck?")
-                                                 preferredStyle:UIAlertControllerStyleAlert];
+            alert = [UIAlertController alertWithTitle:nil
+                                                        message:l10n(@"Detected a deck list in your clipboard. Import this deck?")];
         }
     }
     
@@ -137,7 +134,7 @@ static DeckImport* instance;
     
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"No") style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes") handler:^(UIAlertAction * _Nonnull action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes") handler:^(UIAlertAction * action) {
         if (self.deck)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];

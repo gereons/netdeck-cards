@@ -79,8 +79,8 @@
             
             NSString* msg = [NSString stringWithFormat:l10n(@"Open ANCUR page for\n%@?"), card.name];
             
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:msg preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertController* alert = [UIAlertController alertWithTitle:nil message:msg];
+            [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * action) {
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:card.ancurLink]];
             }]];
             [alert addAction:[UIAlertAction cancelAlertAction:nil]];

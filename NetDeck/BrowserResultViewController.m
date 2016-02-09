@@ -186,7 +186,7 @@ static BrowserResultViewController* instance;
         return;
     }
     
-    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Type") handler:^(UIAlertAction *action) {
         [self changeSortType:NRBrowserSortType];
@@ -358,7 +358,7 @@ static BrowserResultViewController* instance;
 
 +(void) showPopupForCard:(Card*)card inView:(UIView*)view fromRect:(CGRect)rect
 {
-    UIAlertController* sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController* sheet = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"Find decks using this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.BROWSER_FIND object:self userInfo:@{ @"code": card.code }];

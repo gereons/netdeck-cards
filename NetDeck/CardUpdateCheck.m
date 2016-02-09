@@ -17,11 +17,10 @@
     // check if card data is available at all, and if so, if it maybe needs an update
     if (![CardManager cardsAvailable] || ![CardSets setsAvailable])
     {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"No Card Data")
-                                                                       message:l10n(@"To use this app, you must first download card data.")
-                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"No Card Data")
+                                                             message:l10n(@"To use this app, you must first download card data.")];
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Not now") handler:nil]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Download") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Download") style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
             [DataDownload downloadCardData];
         }]];
         
@@ -52,17 +51,16 @@
     
     if (AppDelegate.online && [scheduled compare:now] == NSOrderedAscending)
     {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Update cards")
-                                                                       message:l10n(@"Card data may be out of date. Download now?")
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Later") handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Update cards")
+                                                                       message:l10n(@"Card data may be out of date. Download now?")];
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Later") handler:^(UIAlertAction * action) {
             // ask again tomorrow
             NSDate* next = [NSDate dateWithTimeIntervalSinceNow:24*60*60];
             
             [[NSUserDefaults standardUserDefaults] setObject:[fmt stringFromDate:next] forKey:SettingsKeys.NEXT_DOWNLOAD];
         }]];
 
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
             [DataDownload downloadCardData];
         }]];
         

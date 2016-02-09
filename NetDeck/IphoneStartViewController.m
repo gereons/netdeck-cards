@@ -177,9 +177,8 @@
 
 -(void) createNewDeck:(id)sender
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"New Deck")
-                                                                   message:nil
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController* alert = [UIAlertController actionSheetWithTitle:l10n(@"New Deck")
+                                                                   message:nil];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") handler:^(UIAlertAction *action) {
         [self addNewDeck:NRRoleRunner];
@@ -211,9 +210,8 @@
     
     if (useNrdb && useDropbox)
     {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Import Decks")
-                                                                       message:nil
-                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Import Decks")
+                                                                       message:nil];
         
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"From Dropbox") handler:^(UIAlertAction *action) {
             [self importDecksFrom:NRImportSourceDropbox];
@@ -235,9 +233,8 @@
     }
     else
     {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Import Decks")
-                                                                       message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")
-                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Import Decks")
+                                                                       message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")];
         
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:nil]];
         
@@ -256,7 +253,7 @@
 
 -(void) changeSort:(id)sender
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Sort by") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController* alert = [UIAlertController actionSheetWithTitle:l10n(@"Sort by") message:nil];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortDate];

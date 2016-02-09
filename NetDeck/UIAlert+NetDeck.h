@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIAlertController(NetDeck)
 
++(UIAlertController*) alertWithTitle:(NSString* __nullable)title message:(NSString* __nullable)msg;
++(UIAlertController*) actionSheetWithTitle:(NSString* __nullable)title message:(NSString* __nullable)msg;
+
 +(void) alertWithTitle:(NSString* __nullable)title message:(NSString* __nullable)msg button:(NSString*)button;
 
 -(void) show; // shortcut for [self present:NO completion:nil]

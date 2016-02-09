@@ -204,7 +204,7 @@ static NRFilter _filterType = NRFilterAll;
         return;
     }
     
-    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortDate];
@@ -243,7 +243,7 @@ static NRFilter _filterType = NRFilterAll;
         return;
     }
 
-    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Both") handler:^(UIAlertAction *action) {
         [self changeSide:NRFilterAll];
@@ -282,7 +282,7 @@ static NRFilter _filterType = NRFilterAll;
         return;
     }
     
-    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"All") handler:^(UIAlertAction *action) {
         [self changeState:NRDeckStateNone];

@@ -336,9 +336,7 @@ static BOOL runningBackgroundFetch = NO;
 -(void) showCrashAlert {
     NSString* msg = l10n(@"Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.");
     
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Oops, we crashed :(")
-                                                                   message:msg
-                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Oops, we crashed :(") message:msg];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Not now") handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction *action) {

@@ -429,11 +429,10 @@
     if (self.deck.netrunnerDbId.length == 0)
     {
         NSString* msg = l10n(@"This deck is not (yet) linked to a deck on NetrunnerDB.com");
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                                       message:msg
-                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController* alert = [UIAlertController alertWithTitle:nil
+                                                                       message:msg];
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") style:UIAlertActionStyleCancel handler:nil]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Save") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Save") handler:^(UIAlertAction * action) {
             LOG_EVENT(@"Save to NRDB", nil);
             [self saveDeckToNetrunnerDb];
         }]];
@@ -442,12 +441,11 @@
     else
     {
         NSString* msg = [NSString stringWithFormat:l10n(@"This deck is linked to deck %@ on NetrunnerDB.com"), self.deck.netrunnerDbId ];
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                             message:msg
-                                                      preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController* alert = [UIAlertController alertWithTitle:nil
+                                                             message:msg];
         
         [alert addAction:[UIAlertAction cancelAlertAction:nil]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Open in Safari") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Open in Safari") handler:^(UIAlertAction * action) {
             if (AppDelegate.online) {
                 LOG_EVENT(@"Open in Safari", nil);
                 [self openInSafari:self.deck];
@@ -455,7 +453,7 @@
                 [self showOfflineAlert];
             }
         }]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Publish deck") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Publish deck") handler:^(UIAlertAction * action) {
             if (AppDelegate.online) {
                 LOG_EVENT(@"Publish Deck", nil);
                 [self publishDeck:self.deck];
@@ -463,7 +461,7 @@
                 [self showOfflineAlert];
             }
         }]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Unlink") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Unlink") handler:^(UIAlertAction * action) {
             self.deck.netrunnerDbId = nil;
             if (self.autoSave)
             {
@@ -472,11 +470,11 @@
             }
             [self refresh];
         }]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Reimport") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Reimport") handler:^(UIAlertAction * action) {
             LOG_EVENT(@"Reimport Deck", nil);
             [self reImportDeckFromNetrunnerDb];
         }]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Save") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Save") handler:^(UIAlertAction * action) {
             LOG_EVENT(@"Save to NRDB", nil);
             [self saveDeckToNetrunnerDb];
         }]];
@@ -617,12 +615,11 @@
         return;
     }
     
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                                   message:l10n(@"Duplicate this deck?")
-                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertWithTitle:nil
+                                                                   message:l10n(@"Duplicate this deck?")];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"No") style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes, switch to copy") handler:^(UIAlertAction * _Nonnull action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes, switch to copy") handler:^(UIAlertAction * action) {
         Deck* newDeck = [self.deck duplicate];
         self.deck = newDeck;
         if (self.autoSave)
@@ -635,7 +632,7 @@
         }
         [self refresh];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes, but stay here") handler:^(UIAlertAction * _Nonnull action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes, but stay here") handler:^(UIAlertAction * action) {
         Deck* newDeck = [self.deck duplicate];
         [newDeck saveToDisk];
         if (self.autoSaveDropbox)
@@ -660,7 +657,7 @@
         return;
     }
     
-    self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.actionSheet = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Active"), self.deck.state == NRDeckStateActive)
@@ -716,11 +713,10 @@
         return;
     }
     
-    UIAlertController* nameAlert = [UIAlertController alertControllerWithTitle:l10n(@"Enter Name")
-                                                         message:nil
-                                                  preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* nameAlert = [UIAlertController alertWithTitle:l10n(@"Enter Name")
+                                                         message:nil];
     
-    [nameAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+    [nameAlert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
         textField.placeholder = l10n(@"Deck Name");
         textField.text = self.deck.name;
         textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
@@ -730,7 +726,7 @@
     }];
     
     [nameAlert addAction:[UIAlertAction cancelAlertAction:nil]];
-    [nameAlert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * _Nonnull action) {
+    [nameAlert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * action) {
         self.deck.name = nameAlert.textFields[0].text;
         self.deckNameLabel.text = self.deck.name;
         if (self.autoSave)
@@ -795,7 +791,7 @@
         return;
     }
     
-    self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.actionSheet = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     
     [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Type"), self.sortType == NRDeckSortType)
@@ -853,7 +849,7 @@
         return;
     }
     
-    self.actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.actionSheet = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DROPBOX])
     {

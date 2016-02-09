@@ -105,7 +105,7 @@
     
     if (useDropbox && useNetrunnerdb)
     {
-        self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
         [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Import from Dropbox") handler:^(UIAlertAction *action) {
             [self importFromSource:NRImportSourceDropbox];
         }]];
@@ -168,13 +168,12 @@
         return;
     }
     
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Export Decks")
-                                                                   message:l10n(@"Export all currently visible decks")
-                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Export Decks")
+                                                                   message:l10n(@"Export all currently visible decks")];
     
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];
     if (useDropbox) {
-        [alert addAction:[UIAlertAction actionWithTitle:@"To Dropbox" handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:@"To Dropbox" handler:^(UIAlertAction * action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...") maskType:SVProgressHUDMaskTypeBlack];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToDropbox) withObject:nil afterDelay:0.01];
@@ -182,7 +181,7 @@
         }]];
     }
     if (useNetrunnerdb) {
-        [alert addAction:[UIAlertAction actionWithTitle:@"To NetrunnerDB.com" handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:@"To NetrunnerDB.com" handler:^(UIAlertAction * action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...") maskType:SVProgressHUDMaskTypeBlack];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToNetrunnerDB) withObject:nil afterDelay:0.01];
@@ -259,7 +258,7 @@
     UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
     CGRect frame = [cell.contentView convertRect:sender.frame toView:self.view];
     
-    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Active"), deck.state == NRDeckStateActive) handler:^(UIAlertAction *action) {
         [self changeState:deck newState:NRDeckStateActive];
@@ -327,7 +326,7 @@
         return;
     }
 
-    self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") handler:^(UIAlertAction *action) {
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": @(NRRoleRunner)}];
         self.popup = nil;
@@ -360,7 +359,7 @@
         {
             Deck* deck = [self.decks objectAtIndexPath:indexPath];
 
-            self.popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
             [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Duplicate") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 Deck* newDeck = [deck duplicate];
                 [newDeck saveToDisk];
@@ -385,11 +384,10 @@
                     [self.searchBar resignFirstResponder];
                 }
                 
-                UIAlertController* nameAlert = [UIAlertController alertControllerWithTitle:l10n(@"Enter Name")
-                                                                                   message:nil
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController* nameAlert = [UIAlertController alertWithTitle:l10n(@"Enter Name")
+                                                                                   message:nil];
                 
-                [nameAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                [nameAlert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
                     textField.placeholder = l10n(@"Deck Name");
                     textField.text = deck.name;
                     textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
@@ -397,7 +395,7 @@
                     textField.returnKeyType = UIReturnKeyDone;
                 }];
                 [nameAlert addAction:[UIAlertAction cancelAlertAction:nil]];
-                [nameAlert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * _Nonnull action) {
+                [nameAlert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * action) {
                     deck.name = nameAlert.textFields[0].text;
                     [deck saveToDisk];
                     [self updateDecks];

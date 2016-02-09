@@ -218,9 +218,9 @@
     }
     else if ([specifier.key isEqualToString:SettingsKeys.CLEAR_CACHE])
     {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:l10n(@"Clear Cache? You will need to re-download all data.") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController* alert = [UIAlertController alertWithTitle:nil message:l10n(@"Clear Cache? You will need to re-download all data.")];
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"No") style:UIAlertActionStyleCancel handler:nil]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes") handler:^(UIAlertAction * action) {
             [[ImageCache sharedInstance] clearCache];
             [CardManager removeFiles];
             [CardSets removeFiles];

@@ -122,7 +122,7 @@
 
 -(void) titleTapped:(id)sender
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Enter Name") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Enter Name") message:nil];
 
     @weakify(self);
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
@@ -149,7 +149,7 @@
 
 -(void) exportDeck:(id)sender
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Export") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController* alert = [UIAlertController actionSheetWithTitle:l10n(@"Export") message:nil];
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
@@ -194,7 +194,7 @@
 
 -(void) nrdbButtonClicked:(id)sender
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"NetrunnerDB.com" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController* alert = [UIAlertController actionSheetWithTitle:@"NetrunnerDB.com" message:nil];
     
     if (self.deck.netrunnerDbId.length)
     {

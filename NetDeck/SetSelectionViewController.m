@@ -64,7 +64,7 @@
 
 -(void) coresAlert:(UIButton*) sender
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Number of Core Sets") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Number of Core Sets") message:nil];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"1" handler:^(UIAlertAction *action) {
         [self changeCoreSets:1];

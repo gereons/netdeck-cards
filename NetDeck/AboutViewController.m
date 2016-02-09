@@ -74,12 +74,12 @@
 {
     NSString* msg = l10n(@"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store.");
     
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:msg preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertWithTitle:nil message:msg];
     
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Write a Review") handler:^(UIAlertAction * _Nonnull action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Write a Review") handler:^(UIAlertAction * action) {
         [self rateApp];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Contact Developers") handler:^(UIAlertAction * _Nonnull action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Contact Developers") handler:^(UIAlertAction * action) {
         [self sendEmail];
     }]];
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];

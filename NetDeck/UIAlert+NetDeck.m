@@ -32,6 +32,20 @@
 // see http://stackoverflow.com/questions/26554894/how-to-present-uialertcontroller-when-not-in-a-view-controller
 @implementation UIAlertController(NetDeck)
 
++(void) alertWithTitle:(NSString*)title message:(NSString*)msg button:(NSString*)button {
+    UIAlertController* alert = [UIAlertController alertWithTitle:title message:msg];
+    [alert addAction:[UIAlertAction actionWithTitle:button handler:nil]];
+    [alert show];
+}
+
++(UIAlertController*) alertWithTitle:(NSString*)title message:(NSString*)msg {
+    return [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
+}
+
++(UIAlertController*) actionSheetWithTitle:(NSString*)title message:(NSString*)msg {
+    return [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleActionSheet];
+}
+
 -(void) show {
     [self present:NO completion:nil];
 }
@@ -58,9 +72,4 @@
     }
 }
 
-+(void) alertWithTitle:(NSString*)title message:(NSString*)msg button:(NSString*)button {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:button handler:nil]];
-    [alert show];
-}
 @end

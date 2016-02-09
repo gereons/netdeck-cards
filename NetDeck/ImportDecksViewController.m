@@ -155,7 +155,7 @@ static NSString* filterText;
 
 -(void)changeSort:(UIBarButtonItem*)sender
 {
-    self.alert = [UIAlertController alertControllerWithTitle:l10n(@"Sort by") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    self.alert = [UIAlertController actionSheetWithTitle:l10n(@"Sort by") message:nil];
     
     [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortDate];
@@ -215,12 +215,11 @@ static NSString* filterText;
         msg = l10n(@"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten.");
     }
     
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Import All")
-                                                                   message:msg
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-                                //  buttons:@[ l10n(@"Cancel"), l10n(@"OK") ]];
+    UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Import All")
+                                                                   message:msg];
+
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK")  handler:^(UIAlertAction * _Nonnull action) {
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK")  handler:^(UIAlertAction * action) {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Imported decks")];
         [self performSelector:@selector(doImportAll) withObject:nil afterDelay:0.001];
     }]];
@@ -570,16 +569,15 @@ static NSString* filterText;
     NSString* filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];    
     if (filename)
     {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                                       message:l10n(@"A local copy of this deck already exists.")
-                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController* alert = [UIAlertController alertWithTitle:nil
+                                                             message:l10n(@"A local copy of this deck already exists.")];
         
         [alert addAction:[UIAlertAction cancelAlertAction:nil]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Overwrite") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Overwrite") handler:^(UIAlertAction * action) {
             deck.filename = filename;
             [self importDeckFromNRDB:deck];
         }]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Import as new") handler:^(UIAlertAction * _Nonnull action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Import as new") handler:^(UIAlertAction * action) {
             [self importDeckFromNRDB:deck];
         }]];
         
