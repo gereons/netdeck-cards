@@ -7,7 +7,6 @@
 //
 
 @import SVProgressHUD;
-@import SDCAlertView;
 
 #import <Dropbox/Dropbox.h>
 #import "ImportDecksViewController.h"
@@ -215,17 +214,18 @@ static NSString* filterText;
     {
         msg = l10n(@"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten.");
     }
-    SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Import All")
-                                               message:msg
-                                               buttons:@[ l10n(@"Cancel"), l10n(@"OK") ]];
     
-    alert.didDismissHandler = ^(NSInteger buttonIndex) {
-        if (buttonIndex == 1) // ok, import
-        {
-            [SVProgressHUD showSuccessWithStatus:l10n(@"Imported decks")];
-            [self performSelector:@selector(doImportAll) withObject:nil afterDelay:0.001];
-        }
-    };
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Import All")
+                                                                   message:msg
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+                                //  buttons:@[ l10n(@"Cancel"), l10n(@"OK") ]];
+    [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK")  handler:^(UIAlertAction * _Nonnull action) {
+        [SVProgressHUD showSuccessWithStatus:l10n(@"Imported decks")];
+        [self performSelector:@selector(doImportAll) withObject:nil afterDelay:0.001];
+    }]];
+    
+    [alert show];
 }
 
 -(void) doImportAll
@@ -570,36 +570,37 @@ static NSString* filterText;
     NSString* filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];    
     if (filename)
     {
-        SDCAlertView* alert = [SDCAlertView alertWithTitle:nil
-                                                   message:l10n(@"A local copy of this deck already exists.")
-                                                   buttons:@[ l10n(@"Cancel"), l10n(@"Overwrite"), l10n(@"Import as new")]];
-        alert.didDismissHandler = ^(NSInteger buttonIndex) {
-            switch (buttonIndex)
-            {
-                case 0: // cancel
-                    return;
-                case 1: // overwrite
-                    deck.filename = filename;
-                    break;
-                case 2: // new
-                    break;
-            }
-            
-            if (self.source == NRImportSourceNetrunnerDb)
-            {
-                [[NRDB sharedInstance] loadDeck:deck completion:^(BOOL ok, Deck *deck) {
-                    [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-                    [deck saveToDisk];
-                    [DeckManager resetModificationDate:deck];
-                }];
-            }
-        };
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
+                                                                       message:l10n(@"A local copy of this deck already exists.")
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Overwrite") handler:^(UIAlertAction * _Nonnull action) {
+            deck.filename = filename;
+            [self importDeckFromNRDB:deck];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Import as new") handler:^(UIAlertAction * _Nonnull action) {
+            [self importDeckFromNRDB:deck];
+        }]];
+        
+        [alert show];
     }
     else
     {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
         [deck saveToDisk];
         [DeckManager resetModificationDate:deck];
+    }
+}
+
+-(void) importDeckFromNRDB:(Deck*)deck {
+    if (self.source == NRImportSourceNetrunnerDb)
+    {
+        [[NRDB sharedInstance] loadDeck:deck completion:^(BOOL ok, Deck *deck) {
+            [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
+            [deck saveToDisk];
+            [DeckManager resetModificationDate:deck];
+        }];
     }
 }
 

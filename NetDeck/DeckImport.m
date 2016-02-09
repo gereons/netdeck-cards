@@ -103,20 +103,20 @@ static DeckImport* instance;
         self.deckSource = [self checkForMeteorDeckURL:lines];
     }
     
-    SDCAlertView* alert = nil;
+    UIAlertController* alert = nil;
     if (self.deckSource)
     {
         if (self.deckSource.source == DeckBuilderSourceNRDBList || self.deckSource.source == DeckBuilderSourceNRDBShared)
         {
-            alert = [SDCAlertView alertWithTitle:nil
-                                         message:l10n(@"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?")
-                                         buttons:@[l10n(@"No"), l10n(@"Yes")]];
+            alert = [UIAlertController alertControllerWithTitle:nil
+                                                        message:l10n(@"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?")
+                                                 preferredStyle:UIAlertControllerStyleAlert];
         }
         else if (self.deckSource.source == DeckBuilderSourceMeteor)
         {
-            alert = [SDCAlertView alertWithTitle:nil
-                                         message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
-                                         buttons:@[l10n(@"No"), l10n(@"Yes")]];
+            alert = [UIAlertController alertControllerWithTitle:nil
+                                                        message:l10n(@"Detected a meteor deck list URL in your clipboard. Download and import this deck?")
+                                                 preferredStyle:UIAlertControllerStyleAlert];
         }
     }
     else
@@ -125,32 +125,32 @@ static DeckImport* instance;
         
         if (self.deck != nil)
         {
-            alert = [SDCAlertView alertWithTitle:nil
-                                         message:l10n(@"Detected a deck list in your clipboard. Import this deck?")
-                                         buttons:@[l10n(@"No"), l10n(@"Yes")]];
+            alert = [UIAlertController alertControllerWithTitle:nil
+                                                        message:l10n(@"Detected a deck list in your clipboard. Import this deck?")
+                                                 preferredStyle:UIAlertControllerStyleAlert];
         }
     }
     
-    if (alert)
-    {
-        @weakify(self);
-        alert.didDismissHandler = ^(NSInteger buttonIndex) {
-            @strongify(self);
-            if (buttonIndex == 1) // yes
-            {
-                if (self.deck)
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
-                }
-                else if (self.deckSource)
-                {
-                    [self downloadDeck:self.deckSource];
-                }
-                self.deck = nil;
-                self.deckSource = nil;
-            }
-        };
+    if (!alert) {
+        return;
     }
+    
+    
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"No") style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes") handler:^(UIAlertAction * _Nonnull action) {
+        if (self.deck)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.IMPORT_DECK object:self userInfo:@{ @"deck": self.deck }];
+        }
+        else if (self.deckSource)
+        {
+            [self downloadDeck:self.deckSource];
+        }
+        self.deck = nil;
+        self.deckSource = nil;
+
+    }]];
+    [alert show];
 }
 
 -(DeckSource*) checkForNetrunnerDbDeckURL:(NSArray<NSString*>*) lines

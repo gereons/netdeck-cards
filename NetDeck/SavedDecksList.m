@@ -6,7 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@import SDCAlertView;
 @import SVProgressHUD;
 
 #import "EXTScope.h"
@@ -29,8 +28,6 @@
 
 @property NSArray* normalRightButtons;
 @property NSArray* diffRightButtons;
-
-@property SDCAlertView* nameAlert;
 
 @property BOOL diffSelection;
 @property NSString* diffDeck;
@@ -171,42 +168,28 @@
         return;
     }
     
-    NSMutableArray* buttons = [NSMutableArray array];
-    NSInteger dbButton = 0;
-    NSInteger nrdbButton = 0;
-    [buttons addObject:l10n(@"Cancel")];
-    if (useDropbox)
-    {
-        [buttons addObject:l10n(@"To Dropbox")];
-        dbButton = 1;
-    }
-    if (useNetrunnerdb)
-    {
-        [buttons addObject:l10n(@"To NetrunnerDB.com")];
-        nrdbButton = dbButton + 1;
-    }
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Export Decks")
+                                                                   message:l10n(@"Export all currently visible decks")
+                                                            preferredStyle:UIAlertControllerStyleAlert];
     
-    SDCAlertView* alert = [SDCAlertView alertWithTitle:l10n(@"Export Decks")
-                                               message:l10n(@"Export all currently visible decks")
-                                               buttons:buttons];
-    alert.didDismissHandler = ^(NSInteger buttonIndex) {
-        if (buttonIndex == 0) // cancel
-        {
-            return;
-        }
-        if (buttonIndex == dbButton)
-        {
+    [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+    if (useDropbox) {
+        [alert addAction:[UIAlertAction actionWithTitle:@"To Dropbox" handler:^(UIAlertAction * _Nonnull action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...") maskType:SVProgressHUDMaskTypeBlack];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToDropbox) withObject:nil afterDelay:0.01];
-        }
-        if (buttonIndex == nrdbButton)
-        {
+
+        }]];
+    }
+    if (useNetrunnerdb) {
+        [alert addAction:[UIAlertAction actionWithTitle:@"To NetrunnerDB.com" handler:^(UIAlertAction * _Nonnull action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...") maskType:SVProgressHUDMaskTypeBlack];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToNetrunnerDB) withObject:nil afterDelay:0.01];
-        }
-    };
+        }]];
+    }
+    
+    [alert show];
 }
 
 -(void) exportAllToDropbox
@@ -397,44 +380,36 @@
                 self.popup = nil;
             }]];
             [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Rename") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                self.nameAlert = [[SDCAlertView alloc] initWithTitle:l10n(@"Enter Name")
-                                                            message:nil
-                                                           delegate:nil
-                                                  cancelButtonTitle:l10n(@"Cancel")
-                                                  otherButtonTitles:l10n(@"OK"), nil];
-                
-                self.nameAlert.alertViewStyle = SDCAlertViewStylePlainTextInput;
-                
-                UITextField* textField = [self.nameAlert textFieldAtIndex:0];
-                textField.placeholder = l10n(@"Deck Name");
-                textField.text = deck.name;
-                textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-                textField.clearButtonMode = UITextFieldViewModeAlways;
-                textField.returnKeyType = UIReturnKeyDone;
-                textField.delegate = self;
-                
                 BOOL searchBarActive = self.searchBar.isFirstResponder;
-                if (searchBarActive)
-                {
+                if (searchBarActive) {
                     [self.searchBar resignFirstResponder];
                 }
                 
-                @weakify(self);
-                [self.nameAlert showWithDismissHandler:^(NSInteger buttonIndex) {
-                    @strongify(self);
-                    if (buttonIndex == 1)
-                    {
-                        deck.name = [self.nameAlert textFieldAtIndex:0].text;
-                        [deck saveToDisk];
-                        [self updateDecks];
-                    }
-                    self.nameAlert = nil;
+                UIAlertController* nameAlert = [UIAlertController alertControllerWithTitle:l10n(@"Enter Name")
+                                                                                   message:nil
+                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                
+                [nameAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                    textField.placeholder = l10n(@"Deck Name");
+                    textField.text = deck.name;
+                    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+                    textField.clearButtonMode = UITextFieldViewModeAlways;
+                    textField.returnKeyType = UIReturnKeyDone;
+                }];
+                [nameAlert addAction:[UIAlertAction cancelAlertAction:nil]];
+                [nameAlert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * _Nonnull action) {
+                    deck.name = nameAlert.textFields[0].text;
+                    [deck saveToDisk];
+                    [self updateDecks];
                     
                     if (searchBarActive)
                     {
                         [self.searchBar becomeFirstResponder];
                     }
-                }];
+                }]];
+                
+                [nameAlert show];
+                
                 self.popup = nil;
             }]];
             if ([MFMailComposeViewController canSendMail])
@@ -553,7 +528,7 @@
         Deck* d = [DeckManager loadDeckFromPath:self.diffDeck];
         if (d.role != deck.role)
         {
-            [SDCAlertView alertWithTitle:nil message:l10n(@"Both decks must be for the same side.") buttons:@[ l10n(@"OK")]];
+            [UIAlertController alertWithTitle:nil message:l10n(@"Both decks must be for the same side.") button:l10n(@"OK")];
             return;
         }
 
@@ -598,13 +573,6 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return UITableViewCellEditingStyleDelete;
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self.nameAlert dismissWithClickedButtonIndex:1 animated:NO];
-    [textField resignFirstResponder];
-    return NO;
 }
 
 @end
