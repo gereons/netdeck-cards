@@ -269,6 +269,7 @@
 		3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */; };
 		3AD4FBB219D60929000BF9B4 /* red_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD4FBB019D60929000BF9B4 /* red_placeholder.png */; };
 		3AD4FBB319D60929000BF9B4 /* blue_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AD4FBB119D60929000BF9B4 /* blue_placeholder.png */; };
+		3AD796871C6B52E600D5B24C /* DeckExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD796861C6B52E600D5B24C /* DeckExport.swift */; };
 		3AD860D61B79154100EEF8AC /* EditDeckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD860D41B79154100EEF8AC /* EditDeckCell.m */; };
 		3AD860D71B79154100EEF8AC /* EditDeckCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860D51B79154100EEF8AC /* EditDeckCell.xib */; };
 		3AD860DB1B792B6700EEF8AC /* ListCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD860D91B792B6700EEF8AC /* ListCardsViewController.m */; };
@@ -683,6 +684,7 @@
 		3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckAnalysisViewController.xib; sourceTree = "<group>"; };
 		3AD4FBB019D60929000BF9B4 /* red_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_placeholder.png; sourceTree = "<group>"; };
 		3AD4FBB119D60929000BF9B4 /* blue_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_placeholder.png; sourceTree = "<group>"; };
+		3AD796861C6B52E600D5B24C /* DeckExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckExport.swift; sourceTree = "<group>"; };
 		3AD860D31B79154100EEF8AC /* EditDeckCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = EditDeckCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AD860D41B79154100EEF8AC /* EditDeckCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = EditDeckCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AD860D51B79154100EEF8AC /* EditDeckCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDeckCell.xib; sourceTree = "<group>"; };
@@ -775,6 +777,7 @@
 		3A1ECC8E1879A1B1003400A9 /* Deck Export */ = {
 			isa = PBXGroup;
 			children = (
+				3AD796861C6B52E600D5B24C /* DeckExport.swift */,
 				3A1ECC8F1879A1CC003400A9 /* DeckExport.h */,
 				3A1ECC901879A1CC003400A9 /* DeckExport.m */,
 				3A1ECC921879A383003400A9 /* OCTGN.mustache */,
@@ -2004,6 +2007,7 @@
 				3AD860E01B79383500EEF8AC /* CardImageViewController.m in Sources */,
 				3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */,
 				3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */,
+				3AD796871C6B52E600D5B24C /* DeckExport.swift in Sources */,
 				3A5FB2EC1888892300DD3CC5 /* ImageCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,6 +15,9 @@
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning convert http stuff to swift -> use alamofire
 #warning convert json-parsing stuff to swift -> use swiftyjson
+#warning iphone: duplicate deck
+#warning nrdb re-auth issues
+
 
 @import SVProgressHUD;
 @import AFNetworking;
