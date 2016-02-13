@@ -127,10 +127,16 @@
 
 -(void) doubleTap:(UITapGestureRecognizer*)gesture
 {
-    if (UIGestureRecognizerStateEnded != gesture.state)
-    {
+    if (UIGestureRecognizerStateEnded != gesture.state) {
         return;
     }
+    
+    CGPoint point = [gesture locationInView:self.tableView];
+    NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:point];
+    if (indexPath == nil) {
+        return;
+    }
+    
     [self okClicked:nil];
 }
 
