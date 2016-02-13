@@ -88,8 +88,9 @@
 - (void) settingsChanged:(NSNotification*)notification
 {
     // NSLog(@"changing %@ to %@", notification.object, notification.userInfo);
+    NSString* key = notification.userInfo.allKeys.firstObject;
     
-    if ([notification.object isEqualToString:SettingsKeys.USE_DROPBOX])
+    if ([key isEqualToString:SettingsKeys.USE_DROPBOX])
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:SettingsKeys.USE_DROPBOX] boolValue];
         
@@ -121,7 +122,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DROPBOX_CHANGED object:self];
         [self refresh];
     }
-    else if ([notification.object isEqualToString:SettingsKeys.USE_NRDB])
+    else if ([key isEqualToString:SettingsKeys.USE_NRDB])
     {
         BOOL useNrdb = [[notification.userInfo objectForKey:SettingsKeys.USE_NRDB] boolValue];
         
@@ -156,11 +157,11 @@
         }
         [self refresh];
     }
-    else if ([notification.object isEqualToString:SettingsKeys.UPDATE_INTERVAL])
+    else if ([key isEqualToString:SettingsKeys.UPDATE_INTERVAL])
     {
         [CardManager setNextDownloadDate];
     }
-    else if ([notification.object isEqualToString:SettingsKeys.LANGUAGE])
+    else if ([key isEqualToString:SettingsKeys.LANGUAGE])
     {
         [[ImageCache sharedInstance] clearLastModifiedInfo];
     }

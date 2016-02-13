@@ -36,10 +36,10 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.9):
     - DTFoundation/Core
-  - Fabric (1.6.4)
+  - Fabric (1.6.5)
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
-  - InAppSettingsKit (2.6)
+  - InAppSettingsKit (2.6.1)
   - JRSwizzle (1.0)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT (= 0.4.1)
@@ -80,7 +80,7 @@ PODS:
   - PromiseKit-AFNetworking (0.6.0):
     - AFNetworking (~> 2.0)
     - PromiseKit/CorePromise (~> 3.0)
-  - PromiseKit/CorePromise (3.0.1)
+  - PromiseKit/CorePromise (3.0.2)
   - RBBAnimation (0.4.0)
   - SDCAlertView (2.5.4):
     - RBBAnimation (~> 0.3)
@@ -113,13 +113,13 @@ SPEC CHECKSUMS:
   Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 70a0765e3596f82dd421832e95c65e2166eb3102
-  Fabric: ed41fd62173c6bdea24ab02c9d7707161eabb750
+  Fabric: 338ffd3c2afcab120638907b4251189de9ad17b3
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
-  InAppSettingsKit: cc56d3ec45f11352a16d5b210da8a3fa1b9d05ed
+  InAppSettingsKit: 03c932a354bb6284279b7907d27952cce2afbddc
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   MultiSelectSegmentedControl: 61389b88420074fc972e61ee9ef3d8bb4c286071
-  PromiseKit: 19d12914484a15c25a46f72fde38579204a5dac6
+  PromiseKit: ab1a380f7a30cf8cce663a2411e8b3580b10313d
   PromiseKit-AFNetworking: d3b2c88f9bb6bd3124454df99feb47e620873ce4
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
   SDCAlertView: 2e2b0ecc5f1ec367e45d83efa2e512688ca7fa55
