@@ -42,4 +42,41 @@ class NRDropbox: NSObject {
     class func unlinkClient() {
         Dropbox.unlinkClient()
     }
+    
+    class func listDropboxFiles(completion: [String] -> Void ) {
+        guard let client = Dropbox.authorizedClient else { return }
+        
+        client.files.listFolder(path: "").response { response, error in
+            if let result = response {
+                
+                var names = [String]()
+                for entry in result.entries {
+                    names.append(entry.name)
+                }
+                completion(names)
+            }
+        }
+    }
+    
+    class func downloadDropboxFiles(names: [String], toDirectory: String, completion: ()->()) {
+        guard let client = Dropbox.authorizedClient else { return }
+        var count = 0
+        for name in names {
+            client.files.download(path: "/" + name, destination: { (url, response) -> NSURL in
+                let path = toDirectory.stringByAppendingPathComponent(name)
+                let destination = NSURL(fileURLWithPath: path)
+                return destination
+            }).response { response, error in
+                ++count
+                if count == names.count {
+                    completion()
+                }
+                if let (metadata, _) = response {
+                    let attrs = [ NSFileModificationDate: metadata.serverModified ]
+                    let path = toDirectory.stringByAppendingPathComponent(name)
+                    _ = try? NSFileManager.defaultManager().setAttributes(attrs, ofItemAtPath: path)
+                }
+            }
+        }
+    }
 }
