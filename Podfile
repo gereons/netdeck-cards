@@ -23,6 +23,8 @@ pod 'PromiseKit/CorePromise'
 pod 'PromiseKit-AFNetworking'
 # pod 'SwiftyJSON'
 
+pod 'SwiftyDropbox'
+
 post_install do | installer |
   require 'fileutils'
   system("awk -f ackhtml.awk <'Pods/Target Support Files/Pods/Pods-acknowledgements.markdown' >NetDeck/Acknowledgements.html")

@@ -10,7 +10,6 @@
 @import AFNetworking;
 
 #import "AppDelegate.h"
-#import <Dropbox/Dropbox.h>
 #import "EXTScope.h"
 #import "SettingsViewController.h"
 #import "IASKAppSettingsViewController.h"
@@ -89,39 +88,22 @@
 {
     // NSLog(@"changing %@ to %@", notification.object, notification.userInfo);
     
-    if ([notification.object isEqualToString:SettingsKeys.USE_DROPBOX])
+    NSString* key = notification.userInfo.allKeys.firstObject;
+    
+    if ([key isEqualToString:SettingsKeys.USE_DROPBOX])
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:SettingsKeys.USE_DROPBOX] boolValue];
         
-        @try
-        {
-            DBAccountManager* accountManager = [DBAccountManager sharedManager];
-            DBAccount *account = accountManager.linkedAccount;
-            
-            if (useDropbox)
-            {
-                if (!account)
-                {
-                    UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-                    [accountManager linkFromController:topMost];
-                }
-            }
-            else
-            {
-                if (account)
-                {
-                    [account unlink];
-                    [DBFilesystem setSharedFilesystem:nil];
-                }
+        if (useDropbox) {
+            [NRDropbox authorizeFromController:self.iask];
+        } else {
+            [NRDropbox unlinkClient];
         }
-        }
-        @catch (DBException* dbEx)
-        {}
     
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DROPBOX_CHANGED object:self];
         [self refresh];
     }
-    else if ([notification.object isEqualToString:SettingsKeys.USE_NRDB])
+    else if ([key isEqualToString:SettingsKeys.USE_NRDB])
     {
         BOOL useNrdb = [[notification.userInfo objectForKey:SettingsKeys.USE_NRDB] boolValue];
         
@@ -156,11 +138,11 @@
         }
         [self refresh];
     }
-    else if ([notification.object isEqualToString:SettingsKeys.UPDATE_INTERVAL])
+    else if ([key isEqualToString:SettingsKeys.UPDATE_INTERVAL])
     {
         [CardManager setNextDownloadDate];
     }
-    else if ([notification.object isEqualToString:SettingsKeys.LANGUAGE])
+    else if ([key isEqualToString:SettingsKeys.LANGUAGE])
     {
         [[ImageCache sharedInstance] clearLastModifiedInfo];
     }
