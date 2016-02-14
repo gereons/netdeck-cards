@@ -27,7 +27,7 @@ enum ExportFormat {
     class func asPlaintext(deck: Deck) {
         let s = self.asPlaintextString(deck)
         let filename = (deck.name ?? "deck") + ".txt"
-        self.writeToDropbox(s, filename:filename, deckType:"Plain Text Deck".localized())
+        self.writeToDropbox(s, filename:filename, deckType:"Plain Text Deck".localized(), autoSave:false)
     }
     
     class func asMarkdownString(deck: Deck) -> String {
@@ -37,7 +37,7 @@ enum ExportFormat {
     class func asMarkdown(deck: Deck) {
         let s = self.asMarkdownString(deck)
         let filename = (deck.name ?? "deck") + ".md"
-        self.writeToDropbox(s, filename:filename, deckType:"Markdown Deck".localized())
+        self.writeToDropbox(s, filename:filename, deckType:"Markdown Deck".localized(), autoSave:false)
     }
     
     class func asBBCodeString(deck: Deck) -> String {
@@ -47,7 +47,7 @@ enum ExportFormat {
     class func asBBCode(deck: Deck) {
         let s = self.asBBCodeString(deck)
         let filename = (deck.name ?? "deck") + ".bbc"
-        self.writeToDropbox(s, filename:filename, deckType:"BBCode Deck".localized())
+        self.writeToDropbox(s, filename:filename, deckType:"BBCode Deck".localized(), autoSave:false)
     }
     
     class func asOctgn(deck: Deck, autoSave: Bool) {
@@ -56,13 +56,13 @@ enum ExportFormat {
             var xml = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n" +
                 "<deck game=\"0f38e453-26df-4c04-9d67-6d43de939c77\">\n" +
                 "<section name=\"Identity\">\n" +
-                "<card qty=\"1\" id=\"\(identity.octgnCode)\">\(name)</card>\n" +
+                "  <card qty=\"1\" id=\"\(identity.octgnCode)\">\(name)</card>\n" +
                 "</section>\n" +
                 "<section name=\"R&amp;D / Stack\">\n"
             
             for cc in deck.cards {
                 let name = self.xmlEscape(cc.card.name)
-                xml += "<card qty=\"\(cc.count)\" id=\"\(cc.card.octgnCode)\">\(name)</card>\n"
+                xml += "  <card qty=\"\(cc.count)\" id=\"\(cc.card.octgnCode)\">\(name)</card>\n"
             }
             xml += "</section>\n"
             
@@ -70,6 +70,9 @@ enum ExportFormat {
                 xml += "<notes><![CDATA[\(notes)]]></notes>\n"
             }
             xml += "</deck>\n"
+            
+            let filename = (deck.name ?? "") + ".o8d"
+            self.writeToDropbox(xml, filename: filename, deckType: "OCTGN Deck".localized(), autoSave:autoSave)
         }
     }
     
@@ -82,9 +85,13 @@ enum ExportFormat {
             .stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
     }
 
-    class func writeToDropbox(content: String, filename: String, deckType: String) {
+    class func writeToDropbox(content: String, filename: String, deckType: String, autoSave: Bool) {
         NRDropbox.saveFileToDropbox(content, filename: filename) { ok in
-            if (ok) {
+            if autoSave {
+                return
+            }
+            
+            if ok {
                 SVProgressHUD.showSuccessWithStatus(String(format: "%@ exported".localized(), deckType))
             } else {
                 SVProgressHUD.showErrorWithStatus(String(format:"Error exporting %@".localized(), deckType))
@@ -136,7 +143,7 @@ enum ExportFormat {
         s += "Cards in deck: \(deck.size) (min \(deckSize)" + eol
         if useMWL {
             let limit = deck.identity?.influenceLimit ?? 0
-            s += "\(deck.influence)/\(deck.influenceLimit) (\(limit)-\(deck.mwlPenalty) influence used" + eol
+            s += "\(deck.influence)/\(deck.influenceLimit) (=\(limit)-\(deck.mwlPenalty)) influence used" + eol
             s += "\(deck.cardsFromMWL) cards from MWL" + eol
         } else {
             s += "\(deck.influence)/\(deck.influenceLimit) influence used" + eol
