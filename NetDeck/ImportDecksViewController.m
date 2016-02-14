@@ -8,7 +8,6 @@
 
 @import SVProgressHUD;
 
-#import <Dropbox/Dropbox.h>
 #import "ImportDecksViewController.h"
 #import "EXTScope.h"
 #import "ImageCache.h"
@@ -140,13 +139,13 @@ static NSString* filterText;
 {
     [super viewDidDisappear:animated];
     
-    @try
-    {
-        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-        [filesystem removeObserver:self];
-    }
-    @catch (DBException* dbEx)
-    {}
+//    @try
+//    {
+//        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+//        [filesystem removeObserver:self];
+//    }
+//    @catch (DBException* dbEx)
+//    {}
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -419,87 +418,87 @@ static NSString* filterText;
     }
 }
 
--(NSUInteger) listDropboxFiles
-{
-    self.runnerDecks = [NSMutableArray array];
-    self.corpDecks = [NSMutableArray array];
-    
-    NSUInteger totalDecks = 0;
-    
-    @try
-    {
-        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-        DBPath* path = [DBPath root];
-        DBError* error;
-        
-        for (DBFileInfo* fileInfo in [filesystem listFolder:path error:&error])
-        {
-            NSString* name = fileInfo.path.name;
-            NSRange textRange = [name rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
-            
-            if (textRange.location == name.length-4)
-            {
-                // NSLog(@"%@", fileInfo.path);
-                Deck* deck = [self importDeckFromDropbox:fileInfo.path.name];
-                if (deck && deck.role != NRRoleNone)
-                {
-                    NSMutableArray* decks = deck.role == NRRoleRunner ? self.runnerDecks : self.corpDecks;
+//-(NSUInteger) listDropboxFiles
+//{
+//    self.runnerDecks = [NSMutableArray array];
+//    self.corpDecks = [NSMutableArray array];
+//    
+//    NSUInteger totalDecks = 0;
+//    
+//    @try
+//    {
+//        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+//        DBPath* path = [DBPath root];
+//        DBError* error;
+//        
+//        for (DBFileInfo* fileInfo in [filesystem listFolder:path error:&error])
+//        {
+//            NSString* name = fileInfo.path.name;
+//            NSRange textRange = [name rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
+//            
+//            if (textRange.location == name.length-4)
+//            {
+//                // NSLog(@"%@", fileInfo.path);
+//                Deck* deck = [self importDeckFromDropbox:fileInfo.path.name];
+//                if (deck && deck.role != NRRoleNone)
+//                {
+//                    NSMutableArray* decks = deck.role == NRRoleRunner ? self.runnerDecks : self.corpDecks;
+//
+//                    [decks addObject:deck];
+//                    ++totalDecks;
+//                }
+//            }
+//        }
+//    }
+//    @catch (DBException* dbEx)
+//    {}
+//    
+//    return totalDecks;
+//}
 
-                    [decks addObject:deck];
-                    ++totalDecks;
-                }
-            }
-        }
-    }
-    @catch (DBException* dbEx)
-    {}
-    
-    return totalDecks;
-}
-
--(Deck*) importDeckFromDropbox:(NSString*)fileName
-{
-    @try
-    {
-        DBFile *file = nil;
-        DBPath *path = [[DBPath root] childPath:fileName];
-        if (path)
-        {
-            file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
-        }
-        
-        if (file)
-        {
-            NSData* data = [file readData:nil];
-            NSDate* lastModified = file.info.modifiedTime;
-            [file close];
-            
-            OctgnImport* importer = [[OctgnImport alloc] init];
-            Deck* deck = [importer parseOctgnDeckFromData:data];
-            
-            if (deck)
-            {
-                NSRange textRange = [fileName rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
-                
-                if (textRange.location == fileName.length-4)
-                {
-                    deck.name = [fileName substringToIndex:textRange.location];
-                }
-                else
-                {
-                    deck.name = fileName;
-                }
-                
-                deck.lastModified = lastModified;
-                return deck;
-            }
-        }
-    }
-    @catch (DBException* dbEx)
-    {}
-    
-    return nil;
-}
+//-(Deck*) importDeckFromDropbox:(NSString*)fileName
+//{
+//    @try
+//    {
+//        DBFile *file = nil;
+//        DBPath *path = [[DBPath root] childPath:fileName];
+//        if (path)
+//        {
+//            file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
+//        }
+//        
+//        if (file)
+//        {
+//            NSData* data = [file readData:nil];
+//            NSDate* lastModified = file.info.modifiedTime;
+//            [file close];
+//            
+//            OctgnImport* importer = [[OctgnImport alloc] init];
+//            Deck* deck = [importer parseOctgnDeckFromData:data];
+//            
+//            if (deck)
+//            {
+//                NSRange textRange = [fileName rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
+//                
+//                if (textRange.location == fileName.length-4)
+//                {
+//                    deck.name = [fileName substringToIndex:textRange.location];
+//                }
+//                else
+//                {
+//                    deck.name = fileName;
+//                }
+//                
+//                deck.lastModified = lastModified;
+//                return deck;
+//            }
+//        }
+//    }
+//    @catch (DBException* dbEx)
+//    {}
+//    
+//    return nil;
+//}
 
 
 #pragma mark filter

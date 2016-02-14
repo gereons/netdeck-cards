@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@interface DeckExport : NSObject
+@interface yDeckExport : NSObject
 
 +(void) asOctgn:(Deck*)deck autoSave:(BOOL)autoSave;
 

@@ -9,7 +9,6 @@ pod 'Crashlytics'
 pod 'DTCoreText'
 pod 'AFNetworking', '~> 2.0' # -> Alamofire
 pod 'SVProgressHUD'
-pod 'Dropbox-Sync-API-SDK' # -> use new DB api?
 pod 'GRMustache' # -> GRMustache.swift
 pod 'libextobjc' # -> remove?
 pod 'CSStickyHeaderFlowLayout'

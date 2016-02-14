@@ -25,7 +25,6 @@ PODS:
   - Crashlytics (3.6.0):
     - Fabric (~> 1.6.3)
   - CSStickyHeaderFlowLayout (0.2.10)
-  - Dropbox-Sync-API-SDK (3.1.2)
   - DTCoreText (1.6.17):
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
@@ -96,7 +95,6 @@ DEPENDENCIES:
   - CorePlot
   - Crashlytics
   - CSStickyHeaderFlowLayout
-  - Dropbox-Sync-API-SDK
   - DTCoreText
   - Fabric
   - GRMustache
@@ -115,7 +113,6 @@ SPEC CHECKSUMS:
   CorePlot: b7f422ad363f2b0e48152471d6da45ce232eb8c6
   Crashlytics: e4e8d02914f2608fbc7bf42b1a7af838b0db67a2
   CSStickyHeaderFlowLayout: 5366582779d8b7c9ba9b9cc729c218cc23888776
-  Dropbox-Sync-API-SDK: 92652bd663984740f963ba228864542711eda148
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 70a0765e3596f82dd421832e95c65e2166eb3102
   Fabric: 338ffd3c2afcab120638907b4251189de9ad17b3

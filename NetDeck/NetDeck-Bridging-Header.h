@@ -4,9 +4,9 @@
 
 @import UIKit;
 
-
 #import "NRTypes.h"
 #import "AppDelegate.h"
+#import "GZip.h"
 
 @class Card;
 #import "CardImageViewPopover.h"

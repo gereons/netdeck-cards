@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SVProgressHUD
 
 enum ExportFormat {
     case PlainText
@@ -14,7 +15,7 @@ enum ExportFormat {
     case BBCode
 }
 
-class xDeckExport {
+@objc class DeckExport: NSObject {
     
     static let APP_NAME = "Net Deck"
     static let APP_URL = "http://appstore.com/netdeck"
@@ -23,15 +24,74 @@ class xDeckExport {
         return self.textExport(deck, .PlainText)
     }
     
+    class func asPlaintext(deck: Deck) {
+        let s = self.asPlaintextString(deck)
+        let filename = (deck.name ?? "deck") + ".txt"
+        self.writeToDropbox(s, filename:filename, deckType:"Plain Text Deck".localized())
+    }
+    
     class func asMarkdownString(deck: Deck) -> String {
         return self.textExport(deck, .Markdown)
+    }
+    
+    class func asMarkdown(deck: Deck) {
+        let s = self.asMarkdownString(deck)
+        let filename = (deck.name ?? "deck") + ".md"
+        self.writeToDropbox(s, filename:filename, deckType:"Markdown Deck".localized())
     }
     
     class func asBBCodeString(deck: Deck) -> String {
         return self.textExport(deck, .BBCode)
     }
     
+    class func asBBCode(deck: Deck) {
+        let s = self.asBBCodeString(deck)
+        let filename = (deck.name ?? "deck") + ".bbc"
+        self.writeToDropbox(s, filename:filename, deckType:"BBCode Deck".localized())
+    }
+    
+    class func asOctgn(deck: Deck, autoSave: Bool) {
+        if let identity = deck.identity {
+            let name = self.xmlEscape(identity.name)
+            var xml = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n" +
+                "<deck game=\"0f38e453-26df-4c04-9d67-6d43de939c77\">\n" +
+                "<section name=\"Identity\">\n" +
+                "<card qty=\"1\" id=\"\(identity.octgnCode)\">\(name)</card>\n" +
+                "</section>\n" +
+                "<section name=\"R&amp;D / Stack\">\n"
+            
+            for cc in deck.cards {
+                let name = self.xmlEscape(cc.card.name)
+                xml += "<card qty=\"\(cc.count)\" id=\"\(cc.card.octgnCode)\">\(name)</card>\n"
+            }
+            xml += "</section>\n"
+            
+            if let notes = deck.notes where notes.length > 0 {
+                xml += "<notes><![CDATA[\(notes)]]></notes>\n"
+            }
+            xml += "</deck>\n"
+        }
+    }
+    
+    class func xmlEscape(s: String) -> String {
+        return s
+            .stringByReplacingOccurrencesOfString("&", withString: "&amp;")
+            .stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+            .stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            .stringByReplacingOccurrencesOfString("'", withString: "&#39;")
+            .stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
+    }
 
+    class func writeToDropbox(content: String, filename: String, deckType: String) {
+        NRDropbox.saveFileToDropbox(content, filename: filename) { ok in
+            if (ok) {
+                SVProgressHUD.showSuccessWithStatus(String(format: "%@ exported".localized(), deckType))
+            } else {
+                SVProgressHUD.showErrorWithStatus(String(format:"Error exporting %@".localized(), deckType))
+            }
+        }
+    }
+    
     class func textExport(deck: Deck, _ fmt: ExportFormat) -> String {
         let data = deck.dataForTableView(.Type)
         let cardsArray = data.values as! [[CardCounter]]
@@ -41,7 +101,7 @@ class xDeckExport {
         
         var s = (deck.name ?? "") + eol + eol
         if let identity = deck.identity {
-            s += identity.name + self.italics("(" + identity.setName + ")", fmt) + eol
+            s += identity.name + " " + self.italics("(" + identity.setName + ")", fmt) + eol
         }
         
         let useMWL = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_NAPD_MWL)
@@ -59,7 +119,7 @@ class xDeckExport {
             s += eol + self.bold(sections[i], fmt) + " (\(cnt))" + eol
             
             for cc in cards {
-                s += "\(cc.count)x " + cc.card.name + self.italics("(" + cc.card.setName + ")", fmt)
+                s += "\(cc.count)x " + cc.card.name + " " + self.italics("(" + cc.card.setName + ")", fmt)
                 let inf = deck.influenceFor(cc)
                 if inf > 0 {
                     s += " " + self.color(self.dots(inf), cc.card.factionHexColor, fmt)
@@ -72,9 +132,11 @@ class xDeckExport {
         }
         
         s += eol
-        s += "Cards in deck: \(deck.size) (min \(deck.identity?.minimumDecksize)" + eol
+        let deckSize: Int = deck.identity?.minimumDecksize ?? 0
+        s += "Cards in deck: \(deck.size) (min \(deckSize)" + eol
         if useMWL {
-            s += "\(deck.influence)/\(deck.influenceLimit) (\(deck.identity?.influenceLimit)-\(deck.mwlPenalty) influence used" + eol
+            let limit = deck.identity?.influenceLimit ?? 0
+            s += "\(deck.influence)/\(deck.influenceLimit) (\(limit)-\(deck.mwlPenalty) influence used" + eol
             s += "\(deck.cardsFromMWL) cards from MWL" + eol
         } else {
             s += "\(deck.influence)/\(deck.influenceLimit) influence used" + eol
@@ -88,16 +150,13 @@ class xDeckExport {
         
         s += eol + "Deck built with " + self.link(APP_NAME, APP_URL, fmt) + eol
         
-        if deck.notes?.length > 0 {
-            s += eol + deck.notes! + eol
+        if let notes = deck.notes where notes.length > 0 {
+            s += eol + notes + eol
         }
         
-        s += eol + xDeckExport.localUrlForDeck(deck) + eol
+        s += eol + self.localUrlForDeck(deck) + eol
         
         return s;
-    }
-    
-    class func writeToDropbox() {
     }
     
     class func dots(influence: Int) -> String {
@@ -113,9 +172,32 @@ class xDeckExport {
     }
     
     class func localUrlForDeck(deck: Deck) -> String {
-        return "netdeck://<local url>"
+        var dict = [String: String]()
+        if let id = deck.identity {
+            dict[id.code] = "1"
+        }
+        for cc in deck.cards {
+            dict[cc.card.code] = "\(cc.count)"
+        }
+        if let name = deck.name where name.length > 0 {
+            dict["name"] = name.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        }
+        
+        let keys = dict.keys.sort{ $0 < $1 }
+        var url = ""
+        var sep = ""
+        for k in keys {
+            let v = dict[k]!
+            url += sep + k + "=" + v
+            sep = "&"
+        }
+        
+        let compressed = GZip.gzipDeflate(url.dataUsingEncoding(NSUTF8StringEncoding))
+        let base64url = compressed.base64EncodedStringWithOptions([])
+        
+        return "netdeck://load/" + base64url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet())!
     }
-    
+
     class func italics(s: String, _ format: ExportFormat) -> String {
         switch format {
         case .PlainText: return s

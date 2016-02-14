@@ -43,12 +43,11 @@ class NRDropbox: NSObject {
         Dropbox.unlinkClient()
     }
     
-    class func listDropboxFiles(completion: [String] -> Void ) {
+    class func listDropboxFiles(completion: ([String])->() ) {
         guard let client = Dropbox.authorizedClient else { return }
         
         client.files.listFolder(path: "").response { response, error in
             if let result = response {
-                
                 var names = [String]()
                 for entry in result.entries {
                     names.append(entry.name)
@@ -58,8 +57,9 @@ class NRDropbox: NSObject {
         }
     }
     
-    class func downloadDropboxFiles(names: [String], toDirectory: String, completion: ()->()) {
+    class func downloadDropboxFiles(names: [String], toDirectory: String, completion: ()->() ) {
         guard let client = Dropbox.authorizedClient else { return }
+        
         var count = 0
         for name in names {
             client.files.download(path: "/" + name, destination: { (url, response) -> NSURL in
@@ -77,6 +77,18 @@ class NRDropbox: NSObject {
                     _ = try? NSFileManager.defaultManager().setAttributes(attrs, ofItemAtPath: path)
                 }
             }
+        }
+    }
+    
+    class func saveFileToDropbox(content: String, filename: String, completion: (Bool)->() ) {
+        guard let client = Dropbox.authorizedClient else { return }
+        
+        if let data = content.dataUsingEncoding(NSUTF8StringEncoding) {
+            client.files.upload(path: "/" + filename, mode: .Overwrite, autorename: false, clientModified: nil, mute: false, body: data).response { response, error in
+                completion(error == nil)
+            }
+        } else {
+            completion(false)
         }
     }
 }

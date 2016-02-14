@@ -9,14 +9,13 @@
 @import GRMustache;
 @import SVProgressHUD;
 
-#import <Dropbox/Dropbox.h>
 #import "DeckExport.h"
 #import "GZip.h"
 
 #define APP_NAME    "Net Deck"
 #define APP_URL     "http://appstore.com/netdeck"
 
-@implementation DeckExport
+@implementation yDeckExport
 
 +(void) asOctgn:(Deck*)deck autoSave:(BOOL)autoSave
 {
@@ -36,7 +35,7 @@
     NSString* octgnName = [NSString stringWithFormat:@"%@.o8d", deck.name];
     NSString* content = [template renderObject:objects error:&error];
     
-    [DeckExport writeToDropbox:content fileName:octgnName deckType:l10n(@"OCTGN Deck") autoSave:autoSave];
+    [yDeckExport writeToDropbox:content fileName:octgnName deckType:l10n(@"OCTGN Deck") autoSave:autoSave];
 }
 
 +(NSString*) asPlaintextString:(Deck *)deck
@@ -157,7 +156,7 @@
 {
     NSString* s = [DeckExport asPlaintextString:deck];
     NSString* txtName = [NSString stringWithFormat:@"%@.txt", deck.name];
-    [DeckExport writeToDropbox:s fileName:txtName deckType:l10n(@"Plain Text Deck") autoSave:NO];
+    [yDeckExport writeToDropbox:s fileName:txtName deckType:l10n(@"Plain Text Deck") autoSave:NO];
 }
 
 +(NSString*) asMarkdownString:(Deck*)deck
@@ -239,7 +238,7 @@
 {
     NSString* s = [DeckExport asMarkdownString:deck];
     NSString* mdName = [NSString stringWithFormat:@"%@.md", deck.name];
-    [DeckExport writeToDropbox:s fileName:mdName deckType:l10n(@"Markdown Deck") autoSave:NO];
+    [yDeckExport writeToDropbox:s fileName:mdName deckType:l10n(@"Markdown Deck") autoSave:NO];
 }
 
 +(NSString*) asBBCodeString:(Deck*)deck
@@ -323,7 +322,7 @@
 {
     NSString* s = [DeckExport asBBCodeString:deck];
     NSString* bbcName = [NSString stringWithFormat:@"%@.bbc", deck.name];
-    [DeckExport writeToDropbox:s fileName:bbcName deckType:l10n(@"BBCode Deck") autoSave:NO];
+    [yDeckExport writeToDropbox:s fileName:bbcName deckType:l10n(@"BBCode Deck") autoSave:NO];
 }
 
 +(NSString*) dots:(NSUInteger)influence
@@ -342,44 +341,40 @@
 
 +(void) writeToDropbox:(NSString*)content fileName:(NSString*)filename deckType:(NSString*)deckType autoSave:(BOOL)autoSave
 {
-    BOOL writeOk = NO;
-    @try
-    {
-        NSError* error;
-        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-        DBPath* path = [[DBPath root] childPath:filename];
-        
-        DBFile* textFile;
-        if (path)
-        {
-            if ([filesystem fileInfoForPath:path error:&error] != nil)
-            {
-                textFile = [filesystem openFile:path error:&error];
-            }
-            else
-            {
-                textFile = [filesystem createFile:path error:&error];
-            }
-            writeOk = [textFile writeString:content error:&error];
-            [textFile close];
+    [NRDropbox saveFileToDropbox:content filename:filename completion:^(BOOL ok) {
+        if (autoSave) {
+            return;
         }
-    }
-    @catch (DBException* dbEx)
-    {}
+        if (ok) {
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:l10n(@"%@ exported"), deckType]];
+        } else {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:l10n(@"Error exporting %@"), deckType]];
+        }
+    }];
     
-    if (autoSave)
-    {
-        return;
-    }
-    
-    if (writeOk)
-    {
-        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:l10n(@"%@ exported"), deckType]];
-    }
-    else
-    {
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:l10n(@"Error exporting %@"), deckType]];
-    }
+//    @try
+//    {
+//        NSError* error;
+//        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+//        DBPath* path = [[DBPath root] childPath:filename];
+//        
+//        DBFile* textFile;
+//        if (path)
+//        {
+//            if ([filesystem fileInfoForPath:path error:&error] != nil)
+//            {
+//                textFile = [filesystem openFile:path error:&error];
+//            }
+//            else
+//            {
+//                textFile = [filesystem createFile:path error:&error];
+//            }
+//            writeOk = [textFile writeString:content error:&error];
+//            [textFile close];
+//        }
+//    }
+//    @catch (DBException* dbEx)
+//    {}
 }
 
 
