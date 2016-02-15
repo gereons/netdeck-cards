@@ -95,9 +95,9 @@
         BOOL useDropbox = [[notification.userInfo objectForKey:SettingsKeys.USE_DROPBOX] boolValue];
         
         if (useDropbox) {
-            [NRDropbox authorizeFromController:self.iask];
+            [DropboxWrapper authorizeFromController:self.iask];
         } else {
-            [NRDropbox unlinkClient];
+            [DropboxWrapper unlinkClient];
         }
     
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DROPBOX_CHANGED object:self];

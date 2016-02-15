@@ -16,7 +16,7 @@
 		3A095E9118BBCB2200C99FED /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E9318BBCB2200C99FED /* About.html */; };
 		3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11341E19AC5B5A0012494E /* IdentityCardView.xib */; };
 		3A11342219AC5C580012494E /* IdentityCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11342119AC5C580012494E /* IdentityCardView.m */; };
-		3A114EBF1C6F7FDB00BF8C3C /* NRDropbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A114EBE1C6F7FDB00BF8C3C /* NRDropbox.swift */; };
+		3A114EBF1C6F7FDB00BF8C3C /* DropboxWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */; };
 		3A11B1151ADE364300E5A410 /* CardFilterCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B1141ADE364300E5A410 /* CardFilterCollectionView.m */; };
 		3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11C5F919715BE8003F2093 /* IdentitySectionHeaderView.m */; };
 		3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */; };
@@ -35,7 +35,6 @@
 		3A19B7961ACD841E0039A18A /* IdentityCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */; };
 		3A1D86D51B8CCD9600FA30AB /* 890-sort-ascending@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1D86D41B8CCD9600FA30AB /* 890-sort-ascending@3x.png */; };
 		3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */; };
-		3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ECC901879A1CC003400A9 /* DeckExport.m */; };
 		3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 3A1ECC921879A383003400A9 /* OCTGN.mustache */; };
 		3A2221DE1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2221DD1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m */; };
 		3A2310421B90C77600487119 /* 798-filter-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A23103F1B90C77600487119 /* 798-filter-toolbar.png */; };
@@ -347,7 +346,7 @@
 		3A11341E19AC5B5A0012494E /* IdentityCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityCardView.xib; sourceTree = "<group>"; };
 		3A11342019AC5C580012494E /* IdentityCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IdentityCardView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A11342119AC5C580012494E /* IdentityCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IdentityCardView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3A114EBE1C6F7FDB00BF8C3C /* NRDropbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDropbox.swift; sourceTree = "<group>"; };
+		3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropboxWrapper.swift; sourceTree = "<group>"; };
 		3A11B1131ADE364300E5A410 /* CardFilterCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardFilterCollectionView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A11B1141ADE364300E5A410 /* CardFilterCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardFilterCollectionView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A11C5F819715BE8003F2093 /* IdentitySectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IdentitySectionHeaderView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -376,8 +375,6 @@
 		3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IdentityCollectionView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A1D86D41B8CCD9600FA30AB /* 890-sort-ascending@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending@3x.png"; sourceTree = "<group>"; };
 		3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSmallThumbView.xib; sourceTree = "<group>"; };
-		3A1ECC8F1879A1CC003400A9 /* DeckExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckExport.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A1ECC901879A1CC003400A9 /* DeckExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckExport.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A1ECC921879A383003400A9 /* OCTGN.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OCTGN.mustache; sourceTree = "<group>"; };
 		3A2221DC1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterCellCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		3A2221DD1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterCellCollectionViewFlowLayout.m; sourceTree = "<group>"; };
@@ -780,8 +777,6 @@
 			isa = PBXGroup;
 			children = (
 				3AD796861C6B52E600D5B24C /* DeckExport.swift */,
-				3A1ECC8F1879A1CC003400A9 /* DeckExport.h */,
-				3A1ECC901879A1CC003400A9 /* DeckExport.m */,
 				3A1ECC921879A383003400A9 /* OCTGN.mustache */,
 				3A843A941B8A156B000CC60D /* DeckEmail.h */,
 				3A843A951B8A156B000CC60D /* DeckEmail.m */,
@@ -838,7 +833,7 @@
 				3A3622711849320C007F2854 /* AppDelegate.m */,
 				3A5FB2EA1888892300DD3CC5 /* ImageCache.h */,
 				3A5FB2EB1888892300DD3CC5 /* ImageCache.m */,
-				3A114EBE1C6F7FDB00BF8C3C /* NRDropbox.swift */,
+				3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */,
 				3A3BDD9E1930F36E00DEFD57 /* Utility Classes / Headers */,
 				3A6AF0D71899BB3B00227C25 /* Icons */,
 				3A76EEBC18B5DA68004DB586 /* Images */,
@@ -1917,7 +1912,6 @@
 				3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */,
-				3A1ECC911879A1CC003400A9 /* DeckExport.m in Sources */,
 				3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */,
 				3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */,
 				3AB357DA186DC1E50027D5FC /* IdentityViewCell.m in Sources */,
@@ -1931,7 +1925,7 @@
 				3A531B2A1A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.m in Sources */,
 				3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */,
 				3A8061E71972990E003ACF44 /* DeckDiffCell.m in Sources */,
-				3A114EBF1C6F7FDB00BF8C3C /* NRDropbox.swift in Sources */,
+				3A114EBF1C6F7FDB00BF8C3C /* DropboxWrapper.swift in Sources */,
 				3A85328218550ACE00507B9A /* AboutViewController.m in Sources */,
 				3A2221DE1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m in Sources */,
 				3A5794DA19157A2D005DA4B2 /* CardDetailView.m in Sources */,

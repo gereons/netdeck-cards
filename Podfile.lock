@@ -37,10 +37,7 @@ PODS:
   - DTFoundation/UIKit (1.7.9):
     - DTFoundation/Core
   - Fabric (1.6.5)
-  - GRMustache (7.3.2):
-    - JRSwizzle (~> 1.0)
   - InAppSettingsKit (2.6.1)
-  - JRSwizzle (1.0)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT (= 0.4.1)
     - libextobjc/EXTConcreteProtocol (= 0.4.1)
@@ -97,7 +94,6 @@ DEPENDENCIES:
   - CSStickyHeaderFlowLayout
   - DTCoreText
   - Fabric
-  - GRMustache
   - InAppSettingsKit
   - libextobjc
   - MultiSelectSegmentedControl
@@ -116,9 +112,7 @@ SPEC CHECKSUMS:
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 70a0765e3596f82dd421832e95c65e2166eb3102
   Fabric: 338ffd3c2afcab120638907b4251189de9ad17b3
-  GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   InAppSettingsKit: 03c932a354bb6284279b7907d27952cce2afbddc
-  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   MultiSelectSegmentedControl: 61389b88420074fc972e61ee9ef3d8bb4c286071
   PromiseKit: ab1a380f7a30cf8cce663a2411e8b3580b10313d

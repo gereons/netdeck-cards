@@ -11,7 +11,6 @@
 
 #warning 3d touch shortcuts
 #warning improve startup time!
-#warning remove grmustache?
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning convert http stuff to swift -> use alamofire
 #warning convert json-parsing stuff to swift -> use swiftyjson
@@ -60,7 +59,8 @@ const NSString* const kANY = @"Any";
     NSTimeInterval fetchInterval = useNrdb ? BG_FETCH_INTERVAL : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
     
-    [NRDropbox setup];
+#warning handle migration from old to new DB api 
+    [DropboxWrapper setup];
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     
@@ -246,7 +246,7 @@ const NSString* const kANY = @"Any";
     }
     else if ([scheme hasPrefix:@"db-"])
     {
-        BOOL ok = [NRDropbox handleURL:url];
+        BOOL ok = [DropboxWrapper handleURL:url];
         [[NSUserDefaults standardUserDefaults] setBool:ok forKey:SettingsKeys.USE_DROPBOX];
         
         if (ok) {

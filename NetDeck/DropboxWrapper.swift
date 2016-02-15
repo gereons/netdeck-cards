@@ -1,5 +1,5 @@
 //
-//  NRDropbox.swift
+//  DropboxWrapper
 //  NetDeck
 //
 //  Created by Gereon Steffens on 13.02.16.
@@ -10,7 +10,7 @@
 
 import SwiftyDropbox
 
-class NRDropbox: NSObject {
+class DropboxWrapper: NSObject {
     
     class func setup() {
         Dropbox.setupWithAppKey("4mhw6piwd9wqti3")

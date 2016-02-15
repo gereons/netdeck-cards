@@ -86,7 +86,7 @@ enum ExportFormat {
     }
 
     class func writeToDropbox(content: String, filename: String, deckType: String, autoSave: Bool) {
-        NRDropbox.saveFileToDropbox(content, filename: filename) { ok in
+        DropboxWrapper.saveFileToDropbox(content, filename: filename) { ok in
             if autoSave {
                 return
             }
