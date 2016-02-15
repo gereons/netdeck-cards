@@ -8,9 +8,7 @@
 
 @import SVProgressHUD;
 
-#import <Dropbox/Dropbox.h>
 #import "ImportDecksViewController.h"
-#import "EXTScope.h"
 #import "ImageCache.h"
 #import "DeckCell.h"
 #import "OctgnImport.h"
@@ -101,7 +99,7 @@ static NSString* filterText;
     if (self.source == NRImportSourceDropbox)
     {
         [SVProgressHUD showWithStatus:l10n(@"Loading decks from Dropbox") maskType:SVProgressHUDMaskTypeBlack];
-        [self startDropboxImport];
+        [self getDropboxDecks];
     }
     else
     {
@@ -139,14 +137,6 @@ static NSString* filterText;
 -(void) viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-    @try
-    {
-        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-        [filesystem removeObserver:self];
-    }
-    @catch (DBException* dbEx)
-    {}
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -276,82 +266,108 @@ static NSString* filterText;
     }];
 }
 
-#pragma mark dropbox import
-
--(void) startDropboxImport
-{
-    @weakify(self);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        @strongify(self);
-        NSUInteger count = [self listDropboxFiles];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            @strongify(self);
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            [SVProgressHUD dismiss];
-            if (count == 0)
-            {
-                [UIAlertController alertWithTitle:l10n(@"No Decks found")
-                                     message:l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.")
-                                     button:l10n(@"OK")];
-            }
-            [self filterDecks];
-            [self.tableView reloadData];
-            self.navigationController.navigationBar.topItem.rightBarButtonItems = self.barButtons;
-        });
-    });
-    
-    @try
+-(void) importDeckFromNRDB:(Deck*)deck {
+    if (self.source == NRImportSourceNetrunnerDb)
     {
-        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-        DBPath* path = [DBPath root];
-        
-        [filesystem addObserver:self forPathAndChildren:path block:^() {
-            [self listDropboxFiles];
-            [self filterDecks];
-            [self.tableView reloadData];
+        [[NRDB sharedInstance] loadDeck:deck completion:^(BOOL ok, Deck *deck) {
+            [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
+            [deck saveToDisk];
+            [DeckManager resetModificationDate:deck];
         }];
     }
-    @catch (DBException* dbEx)
-    {}
 }
 
--(NSUInteger) listDropboxFiles
+#pragma mark dropbox import
+
+-(void) getDropboxDecks
 {
+    // get a list of all files in our dropbox folder
     self.runnerDecks = [NSMutableArray array];
     self.corpDecks = [NSMutableArray array];
     
-    NSUInteger totalDecks = 0;
-    
-    @try
-    {
-        DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-        DBPath* path = [DBPath root];
-        DBError* error;
-        
-        for (DBFileInfo* fileInfo in [filesystem listFolder:path error:&error])
-        {
-            NSString* name = fileInfo.path.name;
+    // NSLog(@"start listing");
+    [DropboxWrapper listDropboxFiles:^(NSArray<NSString *> * _Nonnull names) {
+        NSMutableArray* deckNames = [NSMutableArray array];
+        for (NSString* name in names) {
             NSRange textRange = [name rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
             
             if (textRange.location == name.length-4)
             {
-                // NSLog(@"%@", fileInfo.path);
-                Deck* deck = [self parseDeck:fileInfo.path.name];
-                if (deck && deck.role != NRRoleNone)
-                {
-                    NSMutableArray* decks = deck.role == NRRoleRunner ? self.runnerDecks : self.corpDecks;
-
-                    [decks addObject:deck];
-                    ++totalDecks;
-                }
+                [deckNames addObject:name];
             }
         }
-    }
-    @catch (DBException* dbEx)
-    {}
+        
+        [self downloadDropboxDecks:deckNames];
+    }];
+}
+
+-(void) downloadDropboxDecks:(NSArray*)deckNames {
+    NSString* cacheDir = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    NSString* directory = [cacheDir stringByAppendingPathComponent:@"dropbox"];
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:directory error:nil];
+    [fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
     
-    return totalDecks;
+    NSLog(@"start download");
+    [DropboxWrapper downloadDropboxFiles:deckNames toDirectory:directory completion:^{
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [SVProgressHUD dismiss];
+        NSLog(@"downloads finished");
+        
+        [self readDecksFromDropbox:directory];
+        self.navigationController.navigationBar.topItem.rightBarButtonItems = self.barButtons;
+    }];
+}
+
+-(void) readDecksFromDropbox:(NSString*)cacheDir {
+    NSFileManager* fileMgr = [NSFileManager defaultManager];
+    
+    NSArray* files = [fileMgr contentsOfDirectoryAtPath:cacheDir error:nil];
+    
+    for (NSString* file in files) {
+        NSString* path = [cacheDir stringByAppendingPathComponent:file];
+        NSData* data = [NSData dataWithContentsOfFile:path];
+        NSDictionary* attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
+        NSDate* lastModified = attrs[NSFileModificationDate];
+        
+        OctgnImport* importer = [[OctgnImport alloc] init];
+        Deck* deck = [importer parseOctgnDeckFromData:data];
+        
+        if (deck)
+        {
+            NSRange textRange = [file rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
+            
+            if (textRange.location == file.length-4)
+            {
+                deck.name = [file substringToIndex:textRange.location];
+            }
+            else
+            {
+                deck.name = file;
+            }
+            
+            deck.lastModified = lastModified;
+        }
+
+        if (deck && deck.role != NRRoleNone)
+        {
+            NSMutableArray* decks = deck.role == NRRoleRunner ? self.runnerDecks : self.corpDecks;
+            
+            [decks addObject:deck];
+        }
+    }
+    
+    NSInteger count = self.runnerDecks.count + self.corpDecks.count;
+    if (count == 0)
+    {
+        NSString* msg = l10n(@"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App.");
+        [UIAlertController alertWithTitle:l10n(@"No Decks found")
+                                  message:msg
+                                   button:l10n(@"OK")];
+    } else {
+        [self filterDecks];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark filter
@@ -589,61 +605,6 @@ static NSString* filterText;
         [deck saveToDisk];
         [DeckManager resetModificationDate:deck];
     }
-}
-
--(void) importDeckFromNRDB:(Deck*)deck {
-    if (self.source == NRImportSourceNetrunnerDb)
-    {
-        [[NRDB sharedInstance] loadDeck:deck completion:^(BOOL ok, Deck *deck) {
-            [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-            [deck saveToDisk];
-            [DeckManager resetModificationDate:deck];
-        }];
-    }
-}
-
--(Deck*) parseDeck:(NSString*)fileName
-{
-    @try
-    {
-        DBFile *file = nil;
-        DBPath *path = [[DBPath root] childPath:fileName];
-        if (path)
-        {
-            file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
-        }
-        
-        if (file)
-        {
-            NSData* data = [file readData:nil];
-            NSDate* lastModified = file.info.modifiedTime;
-            [file close];
-            
-            OctgnImport* importer = [[OctgnImport alloc] init];
-            Deck* deck = [importer parseOctgnDeckFromData:data];
-            
-            if (deck)
-            {
-                NSRange textRange = [fileName rangeOfString:@".o8d" options:NSCaseInsensitiveSearch];
-                
-                if (textRange.location == fileName.length-4)
-                {
-                    deck.name = [fileName substringToIndex:textRange.location];
-                }
-                else
-                {
-                    deck.name = fileName;
-                }
-                            
-                deck.lastModified = lastModified;
-                return deck;
-            }
-        }
-    }
-    @catch (DBException* dbEx)
-    {}
-    
-    return nil;
 }
 
 #pragma mark keyboard show/hide

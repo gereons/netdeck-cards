@@ -11,7 +11,6 @@
 
 #warning 3d touch shortcuts
 #warning improve startup time!
-#warning remove grmustache?
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning convert http stuff to swift -> use alamofire
 #warning convert json-parsing stuff to swift -> use swiftyjson
@@ -22,7 +21,6 @@
 @import SVProgressHUD;
 @import AFNetworking;
 
-#import <Dropbox/Dropbox.h>
 #import "AppDelegate.h"
 #import "DeckImport.h"
 #import "CardImageViewPopover.h"
@@ -61,19 +59,8 @@ const NSString* const kANY = @"Any";
     NSTimeInterval fetchInterval = useNrdb ? BG_FETCH_INTERVAL : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
     
-    @try
-    {
-        DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"4mhw6piwd9wqti3" secret:@"5j8qxt2ywsrlk73"];
-        [DBAccountManager setSharedManager:accountManager];
-        
-        DBAccount* account = [DBAccountManager sharedManager].linkedAccount;
-        if (account)
-        {
-            DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
-            [DBFilesystem setSharedFilesystem:fileSystem];
-        }
-    }
-    @catch (DBException* dbEx) {}
+#warning handle migration from old to new DB api 
+    [DropboxWrapper setup];
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     
@@ -259,19 +246,12 @@ const NSString* const kANY = @"Any";
     }
     else if ([scheme hasPrefix:@"db-"])
     {
-        @try {
-            DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
-            if (account)
-            {
-                [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
-
-                DBFilesystem* fileSystem = [[DBFilesystem alloc] initWithAccount:account];
-                [DBFilesystem setSharedFilesystem:fileSystem];
-            }
-            [[NSUserDefaults standardUserDefaults] setBool:(account != nil) forKey:SettingsKeys.USE_DROPBOX];
+        BOOL ok = [DropboxWrapper handleURL:url];
+        [[NSUserDefaults standardUserDefaults] setBool:ok forKey:SettingsKeys.USE_DROPBOX];
+        
+        if (ok) {
+            [SVProgressHUD showSuccessWithStatus:l10n(@"Successfully connected to your Dropbox account")];
         }
-        @catch (DBException* dbEx)
-        {}
         
         return YES;
     }

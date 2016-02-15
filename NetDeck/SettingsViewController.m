@@ -10,7 +10,6 @@
 @import AFNetworking;
 
 #import "AppDelegate.h"
-#import <Dropbox/Dropbox.h>
 #import "EXTScope.h"
 #import "SettingsViewController.h"
 #import "IASKAppSettingsViewController.h"
@@ -94,30 +93,11 @@
     {
         BOOL useDropbox = [[notification.userInfo objectForKey:SettingsKeys.USE_DROPBOX] boolValue];
         
-        @try
-        {
-            DBAccountManager* accountManager = [DBAccountManager sharedManager];
-            DBAccount *account = accountManager.linkedAccount;
-            
-            if (useDropbox)
-            {
-                if (!account)
-                {
-                    UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-                    [accountManager linkFromController:topMost];
-                }
-            }
-            else
-            {
-                if (account)
-                {
-                    [account unlink];
-                    [DBFilesystem setSharedFilesystem:nil];
-                }
+        if (useDropbox) {
+            [DropboxWrapper authorizeFromController:self.iask];
+        } else {
+            [DropboxWrapper unlinkClient];
         }
-        }
-        @catch (DBException* dbEx)
-        {}
     
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DROPBOX_CHANGED object:self];
         [self refresh];

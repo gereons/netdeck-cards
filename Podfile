@@ -9,8 +9,6 @@ pod 'Crashlytics'
 pod 'DTCoreText'
 pod 'AFNetworking', '~> 2.0' # -> Alamofire
 pod 'SVProgressHUD'
-pod 'Dropbox-Sync-API-SDK' # -> use new DB api?
-pod 'GRMustache' # -> GRMustache.swift
 pod 'libextobjc' # -> remove?
 pod 'CSStickyHeaderFlowLayout'
 pod 'SDCAlertView', '~> 2.5.4' # -> use v3.0
@@ -22,6 +20,8 @@ pod 'CorePlot'
 pod 'PromiseKit/CorePromise'
 pod 'PromiseKit-AFNetworking'
 # pod 'SwiftyJSON'
+
+pod 'SwiftyDropbox'
 
 post_install do | installer |
   require 'fileutils'
