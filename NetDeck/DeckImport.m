@@ -11,7 +11,6 @@
 
 #import "EXTScope.h"
 #import "DeckImport.h"
-#import "OctgnImport.h"
 #import "GZip.h"
 
 #define IMPORT_ALWAYS   NO  // set to yes for easier debugging

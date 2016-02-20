@@ -11,7 +11,6 @@
 #import "ImportDecksViewController.h"
 #import "ImageCache.h"
 #import "DeckCell.h"
-#import "OctgnImport.h"
 #import "NRDB.h"
 
 static NRDeckSearchScope searchScope = NRDeckSearchScopeAll;

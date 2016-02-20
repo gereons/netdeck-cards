@@ -18,7 +18,6 @@
 #import "CardImagePopup.h"
 #import "ImageCache.h"
 #import "DeckImport.h"
-#import "DeckEmail.h"
 
 #import "CardCell.h"
 #import "CardImageCell.h"

@@ -35,7 +35,6 @@
 		3A19B7961ACD841E0039A18A /* IdentityCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */; };
 		3A1D86D51B8CCD9600FA30AB /* 890-sort-ascending@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1D86D41B8CCD9600FA30AB /* 890-sort-ascending@3x.png */; };
 		3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */; };
-		3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 3A1ECC921879A383003400A9 /* OCTGN.mustache */; };
 		3A2221DE1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2221DD1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m */; };
 		3A2310421B90C77600487119 /* 798-filter-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A23103F1B90C77600487119 /* 798-filter-toolbar.png */; };
 		3A2310431B90C77600487119 /* 798-filter-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2310401B90C77600487119 /* 798-filter-toolbar@2x.png */; };
@@ -43,6 +42,7 @@
 		3A2310481B90D0F700487119 /* 890-sort-ascending-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2310451B90D0F700487119 /* 890-sort-ascending-toolbar.png */; };
 		3A2310491B90D0F700487119 /* 890-sort-ascending-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2310461B90D0F700487119 /* 890-sort-ascending-toolbar@2x.png */; };
 		3A23104A1B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2310471B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png */; };
+		3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A33AE2F1C7272ED00453C33 /* DeckEmail.swift */; };
 		3A3622621849320C007F2854 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622611849320C007F2854 /* Foundation.framework */; };
 		3A3622641849320C007F2854 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622631849320C007F2854 /* CoreGraphics.framework */; };
 		3A3622661849320C007F2854 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622651849320C007F2854 /* UIKit.framework */; };
@@ -86,7 +86,6 @@
 		3A461A7118BBF39500302A4D /* DataDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A461A7018BBF39500302A4D /* DataDownload.m */; };
 		3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4866E5193B85560045C927 /* DeckNotesPopup.m */; };
 		3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A4866E6193B85560045C927 /* DeckNotesPopup.xib */; };
-		3A4C7BFA18FEE9C0009B4A4B /* OctgnImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C7BF918FEE9C0009B4A4B /* OctgnImport.m */; };
 		3A52E1911917F9EF00264C2A /* 763-arrow-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18D1917F9EF00264C2A /* 763-arrow-up.png */; };
 		3A52E1921917F9EF00264C2A /* 763-arrow-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18E1917F9EF00264C2A /* 763-arrow-up@2x.png */; };
 		3A52E1931917F9EF00264C2A /* 764-arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */; };
@@ -185,7 +184,6 @@
 		3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */; };
 		3A843A911B89D97F000CC60D /* IphoneDrawSimulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */; };
 		3A843A931B8A0114000CC60D /* DeckCell~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */; };
-		3A843A961B8A156B000CC60D /* DeckEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A843A951B8A156B000CC60D /* DeckEmail.m */; };
 		3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85323E1855050900507B9A /* NRSplitViewController.m */; };
 		3A8532791855084900507B9A /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3A8532781855084900507B9A /* InAppSettings.bundle */; };
 		3A85327D185509B000507B9A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85327B185509B000507B9A /* SettingsViewController.m */; };
@@ -282,6 +280,7 @@
 		3ADE90A118775A77006E187F /* CardImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageView.xib */; };
 		3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */; };
 		3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADFB17818817AA200AC8F3E /* CardImagePopup.m */; };
+		3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */; };
 		3AE0D50718F7B4A0007868A7 /* influence_slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE0D4FD18F7B4A0007868A7 /* influence_slider@2x.png */; };
 		3AE0D50818F7B4A0007868A7 /* influence_slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE0D4FE18F7B4A0007868A7 /* influence_slider.png */; };
 		3AE0D50918F7B4A0007868A7 /* point_slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE0D4FF18F7B4A0007868A7 /* point_slider@2x.png */; };
@@ -375,7 +374,6 @@
 		3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IdentityCollectionView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A1D86D41B8CCD9600FA30AB /* 890-sort-ascending@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending@3x.png"; sourceTree = "<group>"; };
 		3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSmallThumbView.xib; sourceTree = "<group>"; };
-		3A1ECC921879A383003400A9 /* OCTGN.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OCTGN.mustache; sourceTree = "<group>"; };
 		3A2221DC1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterCellCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		3A2221DD1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterCellCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		3A23103F1B90C77600487119 /* 798-filter-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter-toolbar.png"; sourceTree = "<group>"; };
@@ -384,6 +382,7 @@
 		3A2310451B90D0F700487119 /* 890-sort-ascending-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar.png"; sourceTree = "<group>"; };
 		3A2310461B90D0F700487119 /* 890-sort-ascending-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar@2x.png"; sourceTree = "<group>"; };
 		3A2310471B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar@3x.png"; sourceTree = "<group>"; };
+		3A33AE2F1C7272ED00453C33 /* DeckEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckEmail.swift; sourceTree = "<group>"; };
 		3A36225E1849320C007F2854 /* NetDeck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetDeck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3622611849320C007F2854 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3A3622631849320C007F2854 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -442,8 +441,6 @@
 		3A4866E4193B85560045C927 /* DeckNotesPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckNotesPopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A4866E5193B85560045C927 /* DeckNotesPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckNotesPopup.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A4866E6193B85560045C927 /* DeckNotesPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckNotesPopup.xib; sourceTree = "<group>"; };
-		3A4C7BF818FEE9C0009B4A4B /* OctgnImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OctgnImport.h; sourceTree = "<group>"; };
-		3A4C7BF918FEE9C0009B4A4B /* OctgnImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OctgnImport.m; sourceTree = "<group>"; };
 		3A52E18D1917F9EF00264C2A /* 763-arrow-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "763-arrow-up.png"; sourceTree = "<group>"; };
 		3A52E18E1917F9EF00264C2A /* 763-arrow-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "763-arrow-up@2x.png"; sourceTree = "<group>"; };
 		3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "764-arrow-down.png"; sourceTree = "<group>"; };
@@ -558,8 +555,6 @@
 		3A843A8E1B89D97F000CC60D /* IphoneDrawSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IphoneDrawSimulator.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IphoneDrawSimulator.xib; sourceTree = "<group>"; };
 		3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DeckCell~iphone.xib"; sourceTree = "<group>"; };
-		3A843A941B8A156B000CC60D /* DeckEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckEmail.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A843A951B8A156B000CC60D /* DeckEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckEmail.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A85323D1855050900507B9A /* NRSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NRSplitViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A85323E1855050900507B9A /* NRSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NRSplitViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A8532781855084900507B9A /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
@@ -702,6 +697,7 @@
 		3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DTCoreTextFontOverrides.plist; sourceTree = "<group>"; };
 		3ADFB17718817AA200AC8F3E /* CardImagePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardImagePopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3ADFB17818817AA200AC8F3E /* CardImagePopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardImagePopup.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OctgnImport.swift; sourceTree = "<group>"; };
 		3AE0D4FD18F7B4A0007868A7 /* influence_slider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "influence_slider@2x.png"; sourceTree = "<group>"; };
 		3AE0D4FE18F7B4A0007868A7 /* influence_slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = influence_slider.png; sourceTree = "<group>"; };
 		3AE0D4FF18F7B4A0007868A7 /* point_slider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "point_slider@2x.png"; sourceTree = "<group>"; };
@@ -777,9 +773,7 @@
 			isa = PBXGroup;
 			children = (
 				3AD796861C6B52E600D5B24C /* DeckExport.swift */,
-				3A1ECC921879A383003400A9 /* OCTGN.mustache */,
-				3A843A941B8A156B000CC60D /* DeckEmail.h */,
-				3A843A951B8A156B000CC60D /* DeckEmail.m */,
+				3A33AE2F1C7272ED00453C33 /* DeckEmail.swift */,
 			);
 			name = "Deck Export";
 			sourceTree = "<group>";
@@ -1105,8 +1099,7 @@
 			children = (
 				3A721DBF189CFA64004EFDFE /* DeckImport.h */,
 				3A721DC0189CFA64004EFDFE /* DeckImport.m */,
-				3A4C7BF818FEE9C0009B4A4B /* OctgnImport.h */,
-				3A4C7BF918FEE9C0009B4A4B /* OctgnImport.m */,
+				3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */,
 			);
 			name = "Deck Import";
 			sourceTree = "<group>";
@@ -1727,7 +1720,6 @@
 				3A52E1911917F9EF00264C2A /* 763-arrow-up.png in Resources */,
 				3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */,
 				3A82624B18E05EC70038B4AC /* cardstats_link@2x.png in Resources */,
-				3A1ECC931879A383003400A9 /* OCTGN.mustache in Resources */,
 				3A7C48231B91F07300D31B6D /* mem_slider@3x.png in Resources */,
 				3A663979193B4CBF00635447 /* card_backs.png in Resources */,
 				3A6E756F18E401D400EF8DE1 /* Icon-76.png in Resources */,
@@ -1940,9 +1932,7 @@
 				3AD860D61B79154100EEF8AC /* EditDeckCell.m in Sources */,
 				3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */,
 				3A11342219AC5C580012494E /* IdentityCardView.m in Sources */,
-				3A843A961B8A156B000CC60D /* DeckEmail.m in Sources */,
 				3A11B1151ADE364300E5A410 /* CardFilterCollectionView.m in Sources */,
-				3A4C7BFA18FEE9C0009B4A4B /* OctgnImport.m in Sources */,
 				3ABAD2F91B8275F8009E81F3 /* NSArray+TwoD.m in Sources */,
 				3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */,
 				3AB9BD5E18FADC01004EAF10 /* DeckCell.m in Sources */,
@@ -1969,6 +1959,7 @@
 				3A3845071B77CB5D007C76F2 /* CardUpdateCheck.m in Sources */,
 				3A6228141C1456F400FBF041 /* SettingsKeys.swift in Sources */,
 				3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */,
+				3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */,
 				3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */,
 				3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,
@@ -1989,6 +1980,7 @@
 				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,
 				3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */,
 				3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */,
+				3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */,
 				3A9204C618B16B9B00AF5285 /* Stats.m in Sources */,
 				3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */,
 				3A85327D185509B000507B9A /* SettingsViewController.m in Sources */,

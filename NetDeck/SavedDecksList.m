@@ -14,7 +14,6 @@
 #import "NRDB.h"
 #import "DeckDiffViewController.h"
 #import "DeckCell.h"
-#import "DeckEmail.h"
 
 @interface SavedDecksList ()
 

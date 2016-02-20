@@ -16,7 +16,6 @@
 #import "ImageCache.h"
 #import "EditDeckCell.h"
 #import "NRDB.h"
-#import "DeckEmail.h"
 #import "SVProgressHud.h"
 
 @interface EditDeckViewController ()
