@@ -27,7 +27,8 @@ class DeckImport: NSObject {
     }
     
     static let sharedInstance = DeckImport()
-    static let IMPORT_ALWAYS = true // set to true for easier debugging
+    
+    static let DEBUG_IMPORT_ALWAYS = true // set to true for easier debugging
     
     var deck: Deck?
     var deckSource: DeckSource?
@@ -46,10 +47,15 @@ class DeckImport: NSObject {
     }
     
     func checkClipboardForDeck() {
-        let pasteboard = UIPasteboard.generalPasteboard()
+        #if DEBUG
+            let always = DeckImport.DEBUG_IMPORT_ALWAYS
+        #else
+            let always = false
+        #endif
         
+        let pasteboard = UIPasteboard.generalPasteboard()
         let lastChange = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.CLIP_CHANGE_COUNT)
-        if lastChange == pasteboard.changeCount && !DeckImport.IMPORT_ALWAYS {
+        if lastChange == pasteboard.changeCount && !always {
             return;
         }
         NSUserDefaults.standardUserDefaults().setInteger(pasteboard.changeCount, forKey: SettingsKeys.CLIP_CHANGE_COUNT)
@@ -316,7 +322,48 @@ class DeckImport: NSObject {
     }
 
     func doDownloadDeckFromMeteor(deckId: String) {
+        let deckUrl = "http://netrunner.meteor.com/deckexport/octgn/" + deckId
+        var ok = false
+        self.downloadStopped = false
         
+        self.request = Alamofire.request(.GET, deckUrl).responseData({ (response) -> Void in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    var filename: NSString = ""
+                    if let disposition = response.response?.allHeaderFields["Content-Disposition"] {
+                        var range = disposition.rangeOfString("filename=", options: .CaseInsensitiveSearch)
+                        if range.location != NSNotFound {
+                            filename = disposition.substringFromIndex(range.location+9)
+                            range = filename.rangeOfString(".o8d")
+                            if range.location != NSNotFound {
+                                filename = filename.substringToIndex(range.location)
+                            }
+                            filename = filename.stringByRemovingPercentEncoding!
+                        }
+                    }
+                    ok = self.importOctgnDeck(value, name: filename as String)
+                    
+                    self.downloadFinished(ok)
+                }
+            case .Failure(let error):
+                print(error)
+                self.downloadFinished(false)
+            }
+        })
+        
+     }
+
+    func importOctgnDeck(data: NSData, name: String) -> Bool {
+        let importer = OctgnImport()
+        if let deck = importer.parseOctgnDeckFromData(data) {
+            if deck.identity != nil && deck.cards.count > 0 {
+                deck.name = name
+                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
+                return true
+            }
+        }
+        return false
     }
 
     func downloadFinished(ok: Bool) {
@@ -326,8 +373,33 @@ class DeckImport: NSObject {
         }
         self.request = nil
     }
-    
+
     class func importDeckFromLocalUrl(url: NSURL) {
+        let path = url.path!
+        let b64 = path.substringFromIndex(path.startIndex.advancedBy(1)) // strip off the leading "/" character
+        let data = NSData(base64EncodedString: b64, options: [])
+        let uncompressed = GZip.gzipDeflate(data)
+        let deckStr = NSString(data: uncompressed, encoding: NSUTF8StringEncoding)
         
+        let deck = Deck()
+        if let parts = deckStr?.componentsSeparatedByString("&") {
+            for card in parts {
+                let arr = card.componentsSeparatedByString("=")
+                let code = arr[0]
+                let qty = arr[1]
+                
+                if code == "name" {
+                    deck.name = qty
+                } else {
+                    if let card = CardManager.cardByCode(code), q = Int(qty) where q > 0 {
+                        deck.addCard(card, copies: q)
+                    }
+                }
+            }
+        }
+        
+        if deck.identity != nil && deck.cards.count > 0 {
+            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
+        }
     }
 }
