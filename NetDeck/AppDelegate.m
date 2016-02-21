@@ -9,14 +9,15 @@
 // TODOs:
 // card/set update in bg fetch?
 
-#warning 3d touch shortcuts
-#warning improve startup time!
+#warning notification system
+#warning iphone: duplicate deck (long press?)
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning convert http stuff to swift -> use alamofire
 #warning convert json-parsing stuff to swift -> use swiftyjson
-#warning iphone: duplicate deck
-#warning nrdb re-auth issues
 
+#warning 3d touch shortcuts
+#warning improve startup time!
+#warning nrdb re-auth issues
 
 @import SVProgressHUD;
 @import AFNetworking;
@@ -64,7 +65,7 @@ const NSString* const kANY = @"Any";
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     
-    [DeckImport checkClipboardForDeck];
+    
     [CardImageViewPopover monitorKeyboard];
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
@@ -94,6 +95,8 @@ const NSString* const kANY = @"Any";
         self.window.rootViewController = self.splitViewController;
     }
     [self.window makeKeyAndVisible];
+    
+    [DeckImport checkClipboardForDeck];
     
     return YES;
 }

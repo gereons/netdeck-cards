@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@interface DeckImport : NSObject
+@interface yDeckImport : NSObject
 
 +(void) updateCount;
 +(void) checkClipboardForDeck;

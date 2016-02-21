@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, DeckBuilderSource)
 @implementation DeckSource
 @end
 
-@interface DeckImport()
+@interface yDeckImport()
 
 @property SDCAlertView* alert;
 @property AFHTTPRequestOperationManager* manager;
@@ -48,15 +48,15 @@ typedef NS_ENUM(NSInteger, DeckBuilderSource)
 
 @end
 
-@implementation DeckImport
+@implementation yDeckImport
 
-static DeckImport* instance;
+static yDeckImport* instance;
 
-+(DeckImport*) sharedInstance
++(yDeckImport*) sharedInstance
 {
     if (instance == nil)
     {
-        instance = [DeckImport new];
+        instance = [yDeckImport new];
     }
     return instance;
 }
@@ -70,7 +70,7 @@ static DeckImport* instance;
 
 +(void) checkClipboardForDeck
 {
-    DeckImport* di = [DeckImport sharedInstance];
+    yDeckImport* di = [yDeckImport sharedInstance];
     [di checkClipboardForDeck];
 }
 

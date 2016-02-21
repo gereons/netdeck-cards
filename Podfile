@@ -11,7 +11,7 @@ pod 'AFNetworking', '~> 2.0' # -> Alamofire
 pod 'SVProgressHUD'
 pod 'libextobjc' # -> remove?
 pod 'CSStickyHeaderFlowLayout'
-pod 'SDCAlertView', '~> 2.5.4' # -> use v3.0
+pod 'SDCAlertView', '~> 2.5.4' # -> use v4.0
 pod 'InAppSettingsKit'
 pod 'MultiSelectSegmentedControl'
 
@@ -19,8 +19,9 @@ pod 'MultiSelectSegmentedControl'
 pod 'CorePlot'
 pod 'PromiseKit/CorePromise'
 pod 'PromiseKit-AFNetworking'
-# pod 'SwiftyJSON'
 
+pod 'Alamofire'
+pod 'SwiftyJSON'
 pod 'SwiftyDropbox'
 
 post_install do | installer |

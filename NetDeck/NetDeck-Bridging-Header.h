@@ -7,6 +7,7 @@
 #import "NRTypes.h"
 #import "AppDelegate.h"
 #import "GZip.h"
+#import "UIAlert+NetDeck.h"
 
 @class Card;
 #import "CardImageViewPopover.h"
