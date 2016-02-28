@@ -18,10 +18,9 @@ import DTCoreText
     static let APEX                     = "09029"    // no non-virtual resources
     
     // alliance cards with special influence rules
-    // FIXME: make this a let ASAP
-    static var PAD_FACTORY              = "00000"    // code tbd; 0 inf if 3 pad campaigns in deck
     static let MUMBA_TEMPLE             = "10018"    // 0 inf if <= 15 ice in deck
     static let MUSEUM_OF_HISTORY        = "10019"    // 0 inf if >= 50 cards in deck
+    static let PAD_FACTORY              = "10038"    // 0 inf if 3 pad campaigns in deck
     static let MUMBAD_VIRTUAL_TOUR      = "10075"    // 0 inf if >= 7 assets in deck
     
     // alliance-based: 0 inf if >= non-alliance cards of same faction in deck

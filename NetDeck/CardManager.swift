@@ -261,10 +261,6 @@ import Foundation
                 card.setAlliance(subtype ?? "")
                 card.setVirtual(subtype ?? "")
             }
-            
-            if name_en.lowercaseString == "pad factory" {
-                Card.PAD_FACTORY = code
-            }
         }
         
         // add automatic aliases like "Self Modifying Code" -> "SMC"
