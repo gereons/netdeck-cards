@@ -1297,13 +1297,13 @@
 				3A3C1E181BF771B2000311FA /* CardType.swift */,
 				3A41DA861BF8785C003CB7E1 /* CardSets.swift */,
 				3A3C1E1C1BF77F10000311FA /* CardCounter.swift */,
-				3A3C1E1E1BF79A71000311FA /* DeckState.swift */,
-				3A3C1E201BF79C7D000311FA /* DeckChange.swift */,
-				3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */,
 				3AC4F7851BFD2659008E42F7 /* Card.swift */,
 				3AEEBB661C00C9FF00CB6053 /* CardManager.swift */,
 				3AA4088D1C038F480046922C /* CardList.swift */,
 				3AA50F351C0A2FC8007D5296 /* Deck.swift */,
+				3A3C1E1E1BF79A71000311FA /* DeckState.swift */,
+				3A3C1E201BF79C7D000311FA /* DeckChange.swift */,
+				3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */,
 				3A3A83881C135BE3004F6562 /* DeckManager.swift */,
 			);
 			name = "Data / Models";

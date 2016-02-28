@@ -421,7 +421,6 @@ import Foundation
             
             self.lastChanges = DeckChangeSet()
         }
-        
     }
     
     func resetToCards(cards: [String: Int]) {
@@ -568,8 +567,7 @@ import Foundation
         
         if let lastChanges = decoder.decodeObjectForKey("lastChanges") as? DeckChangeSet {
             self.lastChanges = lastChanges
-        }
-        else {
+        } else {
             self.lastChanges = DeckChangeSet()
         }
         self.revisions = decoder.decodeObjectForKey("revisions") as? [DeckChangeSet]

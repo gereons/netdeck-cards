@@ -9,6 +9,8 @@
 // TODOs:
 // card/set update in bg fetch?
 
+#warning fix edit history
+
 #warning notification system
 #warning iphone: duplicate deck (long press?)
 #warning iphone browser: add hint on startup, more filters (type + set)
