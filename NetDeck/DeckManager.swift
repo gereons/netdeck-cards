@@ -145,4 +145,8 @@ import Foundation
         settings.setInteger(fileId+1, forKey: SettingsKeys.FILE_SEQ)
         return fileId
     }
+    
+    class func flushCache() {
+        DeckManager.cache.removeAllObjects()
+    }
 }

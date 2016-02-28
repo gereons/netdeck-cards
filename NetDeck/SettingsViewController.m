@@ -81,6 +81,7 @@
     if ([[notification.userInfo objectForKey:@"success"] boolValue])
     {
         [self refresh];
+        [DeckManager flushCache];
     }
 }
 
@@ -144,6 +145,7 @@
     else if ([key isEqualToString:SettingsKeys.LANGUAGE])
     {
         [[ImageCache sharedInstance] clearLastModifiedInfo];
+        [DeckManager flushCache];
     }
 }
 
