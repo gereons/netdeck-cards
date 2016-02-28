@@ -28,7 +28,7 @@ class DeckImport: NSObject {
     
     static let sharedInstance = DeckImport()
     
-    static let DEBUG_IMPORT_ALWAYS = true // set to true for easier debugging
+    static let DEBUG_IMPORT_ALWAYS = false // set to true for easier debugging
     
     var deck: Deck?
     var deckSource: DeckSource?
