@@ -42,7 +42,8 @@ import Foundation
         
         // update the in-memory lastModified date, and store the deck in our cache
         deck.lastModified = NSDate()
-        DeckManager.cache.setObject(deck, forKey: deck.filename!)
+
+        DeckManager.cache.removeObjectForKey(deck.filename!)
     }
     
     class func removeFile(pathname: String) {
@@ -90,7 +91,7 @@ import Foundation
         return loadDeckFromPath(path, useCache: true)
     }
     
-    class func loadDeckFromPath(path: String, useCache: Bool = true) -> Deck? {
+    class func loadDeckFromPath(path: String, useCache: Bool) -> Deck? {
         if useCache {
             if let cachedDeck = DeckManager.cache.objectForKey(path) as? Deck {
                 return cachedDeck

@@ -9,9 +9,7 @@
 // TODOs:
 // card/set update in bg fetch?
 
-#warning fix edit history
-
-#warning notification system
+#warning notification system (updates, bugs etc)
 #warning iphone: duplicate deck (long press?)
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning convert http stuff to swift -> use alamofire
@@ -66,7 +64,6 @@ const NSString* const kANY = @"Any";
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     
-    
     [CardImageViewPopover monitorKeyboard];
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
@@ -97,7 +94,9 @@ const NSString* const kANY = @"Any";
     }
     [self.window makeKeyAndVisible];
     
-    [DeckImport checkClipboardForDeck];
+    if ([CardManager cardsAvailable]) {
+        [DeckImport checkClipboardForDeck];
+    }
     
     return YES;
 }

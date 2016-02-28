@@ -15,8 +15,8 @@ class DropboxWrapper: NSObject {
     class func setup() {
         Dropbox.setupWithAppKey("4mhw6piwd9wqti3")
         
-        let clientOk = Dropbox.authorizedClient != nil
-        print("dropbox setup, clientOk=\(clientOk)")
+        // let clientOk = Dropbox.authorizedClient != nil
+        // print("dropbox setup, clientOk=\(clientOk)")
     }
 
     class func handleURL(url: NSURL) -> Bool {
