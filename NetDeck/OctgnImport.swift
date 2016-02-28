@@ -18,17 +18,6 @@ class OctgnImport: NSObject, NSXMLParserDelegate {
         self.parser = NSXMLParser(data: data)
         self.parser.delegate = self
         
-        return self.parseDeck()
-    }
-    
-    func parseOctgnDeckWithParser(parser: NSXMLParser) -> Deck? {
-        self.parser = parser
-        self.parser.delegate = self
-        
-        return self.parseDeck()
-    }
-    
-    func parseDeck() -> Deck? {
         self.deck = Deck()
         
         let ok = self.parser.parse()
