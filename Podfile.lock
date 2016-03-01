@@ -77,12 +77,8 @@ PODS:
   - PromiseKit-AFNetworking (0.6.0):
     - AFNetworking (~> 2.0)
     - PromiseKit/CorePromise (~> 3.0)
-  - PromiseKit/CorePromise (3.0.2)
-  - RBBAnimation (0.4.0)
-  - SDCAlertView (2.5.4):
-    - RBBAnimation (~> 0.3)
-    - SDCAutoLayout (~> 2.0)
-  - SDCAutoLayout (2.0.3)
+  - PromiseKit/CorePromise (3.0.3)
+  - SDCAlertView (4.0.1)
   - SVProgressHUD (1.1.3)
   - SwiftyDropbox (3.0.0):
     - Alamofire (~> 3.1)
@@ -101,7 +97,7 @@ DEPENDENCIES:
   - MultiSelectSegmentedControl
   - PromiseKit-AFNetworking
   - PromiseKit/CorePromise
-  - SDCAlertView (~> 2.5.4)
+  - SDCAlertView
   - SVProgressHUD
   - SwiftyDropbox
   - SwiftyJSON
@@ -118,11 +114,9 @@ SPEC CHECKSUMS:
   InAppSettingsKit: a384eab9c18d9e8d4256e36f17a61e37f9226285
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   MultiSelectSegmentedControl: 61389b88420074fc972e61ee9ef3d8bb4c286071
-  PromiseKit: ab1a380f7a30cf8cce663a2411e8b3580b10313d
+  PromiseKit: 00ec2a219bf5ad2833f95977698e921932b8dfd3
   PromiseKit-AFNetworking: d3b2c88f9bb6bd3124454df99feb47e620873ce4
-  RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
-  SDCAlertView: 2e2b0ecc5f1ec367e45d83efa2e512688ca7fa55
-  SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
+  SDCAlertView: 046bcf893b3585ffa2ecaba536dc3de334959d72
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SwiftyDropbox: e0d4aa3166082ec07ed942e94edb8c732b3376e4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a

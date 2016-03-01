@@ -28,12 +28,12 @@ class DeckImport: NSObject {
     
     static let sharedInstance = DeckImport()
     
-    static let DEBUG_IMPORT_ALWAYS = false // set to true for easier debugging
+    static let DEBUG_IMPORT_ALWAYS = true // set to true for easier debugging
     
     var deck: Deck?
     var deckSource: DeckSource?
     var uiAlert: UIAlertController?
-    var sdcAlert: SDCAlertView?
+    var sdcAlert: AlertController?
     var downloadStopped: Bool!
     var request: Request?
  
@@ -231,22 +231,30 @@ class DeckImport: NSObject {
     }
     
     func downloadDeck(source: DeckSource) {
-        let view = UIView(frame: CGRectMake(0,0, SDCAlertViewWidth, 20))
-        let act = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-        act.center = CGPointMake(SDCAlertViewWidth/2, view.frame.size.height/2)
-        act.startAnimating()
-        view.addSubview(act)
         
-        self.sdcAlert = SDCAlertView.alertWithTitle("Downloading Deck".localized(), message: nil, subview: view, buttons: [ "Stop".localized()] )
+        let alert = AlertController(title: "Downloading Deck".localized(), message: nil, preferredStyle: .Alert)
+        self.sdcAlert = alert
         
-        self.sdcAlert!.didDismissHandler = { (Int) -> Void in
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.startAnimating()
+        
+        alert.contentView.addSubview(spinner)
+        
+        spinner.centerXAnchor.constraintEqualToAnchor(alert.contentView.centerXAnchor).active = true
+        spinner.topAnchor.constraintEqualToAnchor(alert.contentView.topAnchor).active = true
+        spinner.bottomAnchor.constraintEqualToAnchor(alert.contentView.bottomAnchor).active = true
+        
+        alert.addAction(AlertAction(title: "Stop".localized(), style: .Default, handler: { (action) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.downloadStopped = true
             self.sdcAlert = nil
             if let req = self.request {
                 req.cancel()
             }
-        }
+        }))
+        
+        alert.present()
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -369,7 +377,7 @@ class DeckImport: NSObject {
     func downloadFinished(ok: Bool) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         if let alert = self.sdcAlert {
-            alert.dismissWithClickedButtonIndex(0, animated: false)
+            alert.dismiss()
         }
         self.request = nil
     }

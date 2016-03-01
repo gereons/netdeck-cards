@@ -9,7 +9,6 @@
 @import PromiseKit;
 @import SDCAlertView;
 @import AFNetworking;
-@import SDCAutoLayout;
 @import PromiseKit_AFNetworking;
 
 #import "EXTScope.h"
@@ -23,7 +22,7 @@
 
 @property AFHTTPRequestOperationManager *manager;
 
-@property SDCAlertView* alert;
+@property SDCAlertController* alert;
 @property UIProgressView* progressView;
 @property NSArray* cards;
 
@@ -87,28 +86,24 @@ static DataDownload* instance;
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
+    self.alert = [[SDCAlertController alloc] initWithTitle:l10n(@"Downloading Card Data") message:nil preferredStyle:AlertControllerStyleAlert];
+
     UIActivityIndicatorView* act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [act startAnimating];
-    [act setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    self.alert = [[SDCAlertView alloc] initWithTitle:l10n(@"Downloading Card Data")
-                                             message:nil
-                                            delegate:nil
-                                   cancelButtonTitle:l10n(@"Stop")
-                                   otherButtonTitles:nil];
-    
+    act.translatesAutoresizingMaskIntoConstraints = NO;
     [self.alert.contentView addSubview:act];
+    [act.centerXAnchor constraintEqualToAnchor:self.alert.contentView.centerXAnchor].active = YES;
+    [act.topAnchor constraintEqualToAnchor:self.alert.contentView.topAnchor].active = YES;
+    [act.bottomAnchor constraintEqualToAnchor:self.alert.contentView.bottomAnchor].active = YES;
     
     self.downloadStopped = NO;
     self.downloadErrors = 0;
     
-    [act sdc_centerInSuperview];
-    [self.alert showWithDismissHandler:^(NSInteger buttonIndex) {
-        if (buttonIndex != -1)
-        {
-            [self stopDownload];
-        }
-    }];
+    [self.alert addAction:[[SDCAlertAction alloc] initWithTitle:l10n(@"Stop") style:AlertActionStyleDefault handler:^(SDCAlertAction * action) {
+        [self stopDownload];
+    }]];
+    
+    [self.alert presentAnimated:NO completion:nil];
 }
     
 -(void) doDownloadCardData:(id)dummy
@@ -170,27 +165,32 @@ static DataDownload* instance;
 
 -(void) finishDownloads
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [self.alert dismissWithClickedButtonIndex:-1 animated:NO];
-    
     BOOL ok = self.localizedCards != nil
-            && self.englishCards != nil
-            && self.localizedSets != nil
-            && self.downloadErrors == 0;
+        && self.englishCards != nil
+        && self.localizedSets != nil
+        && self.downloadErrors == 0;
     
-    if (!ok && !self.downloadStopped)
-    {
-        [UIAlertController alertWithTitle:nil
-                             message:l10n(@"Unable to download cards at this time. Please try again later.")
-                             button:l10n(@"OK")];
-        return;
-    }
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [self.alert dismissAnimated:NO completion:^{
+        if (self.downloadStopped) {
+            return;
+        }
+        
+        if (!ok)
+        {
+            [UIAlertController alertWithTitle:nil
+                                      message:l10n(@"Unable to download cards at this time. Please try again later.")
+                                       button:l10n(@"OK")];
+            return;
+        } else {
+            [CardManager setupFromNrdbApi:self.localizedCards];
+            [CardManager addAdditionalNames:self.englishCards saveFile:YES];
+            [CardSets setupFromNrdbApi:self.localizedSets];
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
+        }
+    }];
     
-    [CardManager setupFromNrdbApi:self.localizedCards];
-    [CardManager addAdditionalNames:self.englishCards saveFile:YES];
-    [CardSets setupFromNrdbApi:self.localizedSets];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
+    self.alert = nil;
 }
 
 
@@ -235,25 +235,25 @@ static DataDownload* instance;
     self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     self.progressView.progress = 0;
     
-    
     [self.progressView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    self.alert = [[SDCAlertView alloc] initWithTitle:@"Downloading Images"
-                                             message:[NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count]
-                                            delegate:nil
-                                   cancelButtonTitle:l10n(@"Stop")
-                                   otherButtonTitles: nil];
-    self.alert.messageLabelFont = [UIFont md_systemFontOfSize:12];
+    
+    NSString* msg = [NSString stringWithFormat:l10n(@"Image %d of %d"), 1, self.cards.count];
+    self.alert = [[SDCAlertController alloc] initWithTitle:@"Downloading Images" message:nil preferredStyle:AlertControllerStyleAlert];
+    
+    NSDictionary* attrs = @{ NSFontAttributeName: [UIFont md_systemFontOfSize:12] };
+    self.alert.attributedMessage = [[NSAttributedString alloc] initWithString:msg attributes:attrs];
+    // self.alert.messageLabelFont = [UIFont md_systemFontOfSize:12];
     
     [self.alert.contentView addSubview:self.progressView];
     
     [self.progressView sdc_pinWidthToWidthOfView:self.alert.contentView offset:-20];
     [self.progressView sdc_centerInSuperview];
     
-    @weakify(self);
-    [self.alert showWithDismissHandler:^(NSInteger buttonIndex) {
-        @strongify(self);
+    [self.alert addAction:[[SDCAlertAction alloc] initWithTitle:l10n(@"Stop") style:AlertActionStyleDefault handler:^(SDCAlertAction * action) {
         [self stopDownload];
-    }];
+    }]];
+    
+    [self.alert presentAnimated:NO completion:nil];
     
     self.downloadStopped = NO;
     self.downloadErrors = 0;
@@ -306,8 +306,10 @@ static DataDownload* instance;
         
         self.progressView.progress = progress/100.0;
     
-        self.alert.message = [NSString stringWithFormat:l10n(@"Image %d of %d"), index+1, self.cards.count ];
-
+        NSDictionary* attrs = @{ NSFontAttributeName: [UIFont md_systemFontOfSize:12] };
+        NSString* msg = [NSString stringWithFormat:l10n(@"Image %d of %d"), index+1, self.cards.count ];
+        self.alert.attributedMessage = [[NSAttributedString alloc] initWithString:msg attributes:attrs];
+        
         // use -performSelector: so the UI can refresh
         [self performSelector:@selector(downloadImageForCard:) withObject:dict afterDelay:.001];
     }
@@ -315,7 +317,8 @@ static DataDownload* instance;
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
-        [self.alert dismissWithClickedButtonIndex:99 animated:NO];
+        [self.alert dismissAnimated:NO completion:nil];
+        self.alert = nil;
         if (self.downloadErrors > 0)
         {
             NSString* msg = [NSString stringWithFormat:l10n(@"%d of %lu images could not be downloaded."), self.downloadErrors, (unsigned long)self.cards.count];

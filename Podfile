@@ -10,8 +10,8 @@ pod 'DTCoreText'
 pod 'AFNetworking', '~> 2.0' # -> Alamofire
 pod 'SVProgressHUD'
 pod 'libextobjc' # -> remove?
+
 pod 'CSStickyHeaderFlowLayout'
-pod 'SDCAlertView', '~> 2.5.4' # -> use v4.0
 pod 'InAppSettingsKit'
 pod 'MultiSelectSegmentedControl'
 
@@ -23,6 +23,7 @@ pod 'PromiseKit-AFNetworking'
 pod 'Alamofire'
 pod 'SwiftyJSON'
 pod 'SwiftyDropbox'
+pod 'SDCAlertView'
 
 post_install do | installer |
   require 'fileutils'
