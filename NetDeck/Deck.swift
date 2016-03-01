@@ -12,7 +12,7 @@ import Foundation
 
     var filename: String?
     var tags: [String]?
-    var revisions: [DeckChangeSet]?
+    var revisions = [DeckChangeSet]()
     var lastModified: NSDate?
     var dateCreated: NSDate?
 
@@ -413,11 +413,11 @@ import Foundation
                 self.lastChanges.cards![cc.card.code] = cc.count
             }
             
-            if self.revisions?.count == 0 {
+            if self.revisions.count == 0 {
                 self.lastChanges.initial = true
             }
             
-            self.revisions?.insert(self.lastChanges, atIndex: 0)
+            self.revisions.insert(self.lastChanges, atIndex: 0)
             
             self.lastChanges = DeckChangeSet()
         }
@@ -441,8 +441,8 @@ import Foundation
         
         // figure out changes between this and the last saved state
         
-        if self.revisions?.count > 0 {
-            let dcs = self.revisions![0]
+        if self.revisions.count > 0 {
+            let dcs = self.revisions[0]
             let lastSavedCards = dcs.cards
             let lastSavedCodes = dcs.cards?.keys
             
@@ -565,15 +565,12 @@ import Foundation
         self.tags = decoder.decodeObjectForKey("tags") as? [String]
         self.sortType = .Type
         
-        if let lastChanges = decoder.decodeObjectForKey("lastChanges") as? DeckChangeSet {
-            self.lastChanges = lastChanges
-        } else {
-            self.lastChanges = DeckChangeSet()
-        }
-        self.revisions = decoder.decodeObjectForKey("revisions") as? [DeckChangeSet]
-        if self.revisions == nil {
-            self.revisions = [DeckChangeSet]()
-        }
+        let lastChanges = decoder.decodeObjectForKey("lastChanges") as? DeckChangeSet
+        self.lastChanges = lastChanges ?? DeckChangeSet()
+            
+        let revisions = decoder.decodeObjectForKey("revisions") as? [DeckChangeSet]
+        self.revisions = revisions ?? [DeckChangeSet]()
+
         self.modified = false
     }
     

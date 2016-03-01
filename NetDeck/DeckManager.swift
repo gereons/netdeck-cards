@@ -21,15 +21,16 @@ import Foundation
             deck.filename = DeckManager.pathForRole(deck.role)
         }
         
+        let filename = deck.filename!
         let data = NSMutableData()
         let encoder = NSKeyedArchiver(forWritingWithMutableData: data)
         
         encoder.encodeObject(deck, forKey: "deck")
         encoder.finishEncoding()
         
-        let saveOk = data.writeToFile(deck.filename!, atomically: true)
+        let saveOk = data.writeToFile(filename, atomically: true)
         if !saveOk {
-            DeckManager.removeFile(deck.filename!)
+            DeckManager.removeFile(filename)
             return
         }
         
@@ -37,13 +38,13 @@ import Foundation
         if let date = deck.dateCreated {
             let attrs = [ NSFileCreationDate: date ]
             
-            _ = try? fileMgr.setAttributes(attrs, ofItemAtPath: deck.filename!)
+            _ = try? fileMgr.setAttributes(attrs, ofItemAtPath: filename)
         }
         
         // update the in-memory lastModified date, and store the deck in our cache
         deck.lastModified = NSDate()
 
-        DeckManager.cache.removeObjectForKey(deck.filename!)
+        DeckManager.cache.setObject(deck, forKey: filename)
     }
     
     class func removeFile(pathname: String) {
