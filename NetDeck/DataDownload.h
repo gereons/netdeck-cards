@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@interface DataDownload : NSObject
+@interface xDataDownload : NSObject
 
 +(void) downloadCardData;       // blocks UI, posts LOAD_CARDS notification when done
 +(void) downloadAllImages;      // blocks UI, returns when download is done

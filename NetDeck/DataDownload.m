@@ -15,7 +15,7 @@
 #import "DataDownload.h"
 #import "ImageCache.h"
 
-@interface DataDownload()
+@interface xDataDownload()
 
 @property int downloadErrors;
 @property BOOL downloadStopped;
@@ -38,29 +38,29 @@ typedef NS_ENUM(NSInteger, DownloadScope)
     DownloadMissing
 };
 
-@implementation DataDownload
+@implementation xDataDownload
     
 +(void) downloadCardData
 {
-    [[DataDownload sharedInstance] downloadCardAndSetsData];
+    [[xDataDownload sharedInstance] downloadCardAndSetsData];
 }
 
 +(void) downloadAllImages
 {
-    [[DataDownload sharedInstance] downloadImages:DownloadAll];
+    [[xDataDownload sharedInstance] downloadImages:DownloadAll];
 }
 
 +(void) downloadMissingImages
 {
-    [[DataDownload sharedInstance] downloadImages:DownloadMissing];
+    [[xDataDownload sharedInstance] downloadImages:DownloadMissing];
 }
 
-static DataDownload* instance;
-+(DataDownload*) sharedInstance
+static xDataDownload* instance;
++(xDataDownload*) sharedInstance
 {
     if (instance == nil)
     {
-        instance = [DataDownload new];
+        instance = [xDataDownload new];
     }
     return instance;
 }
@@ -183,9 +183,9 @@ static DataDownload* instance;
                                        button:l10n(@"OK")];
             return;
         } else {
-            [CardManager setupFromNrdbApi:self.localizedCards];
-            [CardManager addAdditionalNames:self.englishCards saveFile:YES];
-            [CardSets setupFromNrdbApi:self.localizedSets];
+//            [CardManager setupFromNrdbApi:self.localizedCards];
+//            [CardManager addAdditionalNames:self.englishCards saveFile:YES];
+//            [CardSets setupFromNrdbApi:self.localizedSets];
             [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_CARDS object:self userInfo:@{ @"success": @(ok) }];
         }
     }];

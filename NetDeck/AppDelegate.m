@@ -18,6 +18,7 @@
 #warning 3d touch shortcuts
 #warning improve startup time!
 #warning nrdb re-auth issues
+#warning move status bar up when hw keyboard shortcut bar is displayed
 
 @import SVProgressHUD;
 @import AFNetworking;

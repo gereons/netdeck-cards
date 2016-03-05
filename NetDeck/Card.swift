@@ -8,6 +8,7 @@
 
 import Foundation
 import DTCoreText
+import SwiftyJSON
 
 @objc class Card: NSObject {
     
@@ -198,46 +199,28 @@ import DTCoreText
         return self.quantity
     }
     
-    class func json_int(json: NSDictionary, _ name: String) -> Int {
-        if let obj = json.objectForKey(name) as? Int {
-            return obj
-        }
-        else {
-            return -1
-        }
-    }
-    
-    class func json_bool(json: NSDictionary, _ name: String) -> Bool {
-        if let obj = json.objectForKey(name) as? Bool {
-            return obj
-        }
-        else {
-            return false
-        }
-    }
-    
-    class func cardFromJson(json: NSDictionary) -> Card {
+    class func cardFromJson(json: JSON) -> Card {
         let c = Card()
         
-        c.code = json.objectForKey("code") as! String
-        c.name = json.objectForKey("title") as! String
+        c.code = json["code"].stringValue
+        c.name = json["title"].stringValue
         c.name_en = c.name
         
-        c.factionStr = json.objectForKey("faction") as! String
-        let factionCode = json.objectForKey("faction_code") as! String
+        c.factionStr = json["faction"].stringValue
+        let factionCode = json["faction_code"].stringValue
         c.faction = Faction.faction(factionCode)
         assert(c.faction != .None, "no faction for \(c.code)")
         
-        c.roleStr = json.objectForKey("side") as! String
-        let roleCode = json.objectForKey("side_code") as! String
+        c.roleStr = json["side"].stringValue
+        let roleCode = json["side_code"].stringValue
         if let role = roleCodes[roleCode] {
             c.role = role
         } else {
             assert(false, "no role for \(c.code)")
         }
         
-        c.typeStr = json.objectForKey("type") as! String
-        let typeCode = json.objectForKey("type_code") as! String
+        c.typeStr = json["type"].stringValue
+        let typeCode = json["type_code"].stringValue
         c.type = CardType.type(typeCode)
         assert(c.type != .None, "no type for \(c.code), \(c.typeStr)")
         
@@ -251,15 +234,15 @@ import DTCoreText
             c.factionStr = "Weyland"
         }
         
-        if let text = json.objectForKey("text") as? String {
+        if let text = json["text"].string {
             c.text = text
         }
-        if let flavor = json.objectForKey("flavor") as? String {
+        if let flavor = json["flavor"].string {
             c.flavor = flavor
         }
         
-        c.setName = json.objectForKey("setname") as! String
-        c.setCode = json.objectForKey("set_code") as! String
+        c.setName = json["setname"].stringValue
+        c.setCode = json["set_code"].stringValue
         if (c.setCode == nil)
         {
             c.setCode = CardSets.UNKNOWN_SET
@@ -272,7 +255,7 @@ import DTCoreText
         c.setNumber = CardSets.setNumForCode(c.setCode)
         c.isCore = c.setCode.lowercaseString == CardSets.CORE_SET_CODE
         
-        if let subtype = json.objectForKey("subtype") as? String {
+        if let subtype = json["subtype"].string {
             c.subtype = subtype
         }
         if c.subtype.length > 0 {
@@ -281,30 +264,29 @@ import DTCoreText
             c.subtypes = c.subtype.componentsSeparatedByString(" - ")
         }
         
-        c.number = json_int(json, "number")
-        c.quantity = json_int(json, "quantity")
-        c.unique = json_bool(json, "uniqueness")
+        c.number = json["number"].int ?? -1
+        c.quantity = json["quantity"].int ?? -1
+        c.unique = json["uniqueness"].boolValue
         
         if (c.type == .Identity)
         {
-            c.influenceLimit = json_int(json, "influencelimit")
-            c.minimumDecksize = json_int(json, "mindecksize")
-            c.minimumDecksize = json_int(json, "minimumdecksize")
-            c.baseLink = json_int(json, "baselink")
+            c.influenceLimit = json["influencelimit"].int ?? -1
+            c.minimumDecksize = json["minimumdecksize"].int ?? -1
+            c.baseLink = json["baselink"].int ?? -1
         }
         if (c.type == .Agenda)
         {
-            c.advancementCost = json_int(json, "advancementcost")
-            c.agendaPoints = json_int(json, "agendapoints")
+            c.advancementCost = json["advancementcost"].int ?? -1
+            c.agendaPoints = json["agendapoints"].int ?? -1
         }
         
-        c.mu = json_int(json, "memoryunits")
-        c.strength = json_int(json, "strength")
-        c.cost = json_int(json, "cost")
-        c.influence = json_int(json, "factioncost")
-        c.trash = json_int(json, "trash")
+        c.mu = json["memoryunits"].int ?? -1
+        c.strength = json["strength"].int ?? -1
+        c.cost = json["cost"].int ?? -1
+        c.influence = json["factioncost"].int ?? -1
+        c.trash = json["trash"].int ?? -1
         
-        c.imageSrc = json.objectForKey("imagesrc") as? String
+        c.imageSrc = json["imagesrc"].string
         if (c.imageSrc?.length > 0)
         {
             let host = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_HOST)
@@ -316,7 +298,7 @@ import DTCoreText
             c.imageSrc = nil
         }
         
-        c.maxPerDeck = json_int(json, "limited")
+        c.maxPerDeck = json["limited"].int ?? -1
         if Card.MAX_1_PER_DECK.contains(c.code) || c.type == .Identity
         {
             c.maxPerDeck = 1
@@ -326,7 +308,7 @@ import DTCoreText
             multiIce.append(c.code)
         }
         
-        c.ancurLink = json.objectForKey("ancurLink") as? String
+        c.ancurLink = json["ancurLink"].string
         if (c.ancurLink?.length == 0)
         {
             c.ancurLink = nil

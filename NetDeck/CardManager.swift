@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 @objc class CardManager: NSObject {
     private(set) static var allCardsByRole = [NRRole: [Card] ]()    // non-id cards
@@ -125,41 +126,58 @@ import Foundation
     
     class func setupFromFiles() -> Bool {
         let cardsFile = CardManager.filename()
+        FIXME()
+        let cardsFilex = cardsFile + "x"
         let cardsEnFile = CardManager.filenameEn()
         var ok = false
         
         let fileMgr = NSFileManager.defaultManager()
-        if fileMgr.fileExistsAtPath(cardsFile) {
-            if let data = NSArray(contentsOfFile: cardsFile) {
-                ok = CardManager.setupFromJsonData(data)
+        
+        if fileMgr.fileExistsAtPath(cardsFilex) {
+            if let str = try? NSString(contentsOfFile: cardsFilex, encoding: NSUTF8StringEncoding) {
+                let json = JSON.parse(str as String)
+                ok = CardManager.setupFromJsonData(json)
+            }
+        }
+        else if fileMgr.fileExistsAtPath(cardsFile) {
+            if let array = NSArray(contentsOfFile: cardsFile) {
+                let json = JSON(array)
+                ok = CardManager.setupFromJsonData(json)
             }
         }
         
         if ok && fileMgr.fileExistsAtPath(cardsEnFile)
         {
-            if let data = NSArray(contentsOfFile:cardsEnFile) {
-                CardManager.addAdditionalNames(data, saveFile:false)
+            if let array = NSArray(contentsOfFile:cardsEnFile) {
+                let json = JSON(array)
+                CardManager.addAdditionalNames(json, saveFile:false)
+            } else if let str = try? NSString(contentsOfFile: cardsEnFile, encoding: NSUTF8StringEncoding) {
+                let json = JSON.parse(str as String)
+                CardManager.addAdditionalNames(json, saveFile:false)
             }
         }
         
         return ok
     }
     
-    class func setupFromNrdbApi(json: NSArray) -> Bool {
+    class func setupFromNrdbApi(json: JSON) -> Bool {
         CardManager.setNextDownloadDate()
         
-        let cardsFile = CardManager.filename()
-        json.writeToFile(cardsFile, atomically:true)
+        FIXME()
+        let cardsFile = CardManager.filename() + "x"
+        if let data = try? json.rawData() {
+            data.writeToFile(cardsFile, atomically:true)
+        }
         AppDelegate.excludeFromBackup(cardsFile)
         
         CardManager.initialize()
         return setupFromJsonData(json)
     }
     
-    class func setupFromJsonData(json: NSArray) -> Bool {
+    class func setupFromJsonData(json: JSON) -> Bool {
 
-        for obj in json {
-            let card = Card.cardFromJson(obj as! NSDictionary)
+        for obj in json.arrayValue {
+            let card = Card.cardFromJson(obj)
             assert(card.isValid, "invalid card from \(obj)")
             if !card.isValid {
                 return false
@@ -239,22 +257,25 @@ import Foundation
         }
     }
     
-    class func addAdditionalNames(json: NSArray, saveFile: Bool) {
+    class func addAdditionalNames(json: JSON, saveFile: Bool) {
         // add english names from json
         if (saveFile) {
-            let cardsFile = CardManager.filenameEn()
-            json.writeToFile(cardsFile, atomically: true)
+            FIXME()
+            let cardsFile = CardManager.filenameEn() + "x"
+            if let data = try? json.rawData() {
+                data.writeToFile(cardsFile, atomically: true)
+            }
             
             AppDelegate.excludeFromBackup(cardsFile)
         }
         
-        for obj in json {
+        for obj in json.arrayValue {
             guard
-                let code = obj["code"] as? String,
-                let name_en = obj["title"] as? String
+                let code = obj["code"].string,
+                let name_en = obj["title"].string
             else { continue }
             
-            let subtype = obj["subtype"] as? String
+            let subtype = obj["subtype"].string
             
             if let card = CardManager.cardByCode(code) {
                 card.setNameEn(name_en)
