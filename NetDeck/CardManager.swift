@@ -126,22 +126,17 @@ import SwiftyJSON
     
     class func setupFromFiles() -> Bool {
         let cardsFile = CardManager.filename()
-        FIXME()
-        let cardsFilex = cardsFile + "x"
         let cardsEnFile = CardManager.filenameEn()
         var ok = false
         
         let fileMgr = NSFileManager.defaultManager()
         
-        if fileMgr.fileExistsAtPath(cardsFilex) {
-            if let str = try? NSString(contentsOfFile: cardsFilex, encoding: NSUTF8StringEncoding) {
-                let json = JSON.parse(str as String)
-                ok = CardManager.setupFromJsonData(json)
-            }
-        }
-        else if fileMgr.fileExistsAtPath(cardsFile) {
+        if fileMgr.fileExistsAtPath(cardsFile) {
             if let array = NSArray(contentsOfFile: cardsFile) {
                 let json = JSON(array)
+                ok = CardManager.setupFromJsonData(json)
+            } else if let str = try? NSString(contentsOfFile: cardsFile, encoding: NSUTF8StringEncoding) {
+                let json = JSON.parse(str as String)
                 ok = CardManager.setupFromJsonData(json)
             }
         }
@@ -163,8 +158,7 @@ import SwiftyJSON
     class func setupFromNrdbApi(json: JSON) -> Bool {
         CardManager.setNextDownloadDate()
         
-        FIXME()
-        let cardsFile = CardManager.filename() + "x"
+        let cardsFile = CardManager.filename()
         if let data = try? json.rawData() {
             data.writeToFile(cardsFile, atomically:true)
         }
@@ -260,8 +254,7 @@ import SwiftyJSON
     class func addAdditionalNames(json: JSON, saveFile: Bool) {
         // add english names from json
         if (saveFile) {
-            FIXME()
-            let cardsFile = CardManager.filenameEn() + "x"
+            let cardsFile = CardManager.filenameEn()
             if let data = try? json.rawData() {
                 data.writeToFile(cardsFile, atomically: true)
             }

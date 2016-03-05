@@ -260,13 +260,13 @@ class DeckImport: NSObject {
         
         switch source.source {
         case .NRDBList:
-            self.performSelector("doDownloadDeckFromNetrunnerDbList:", withObject:source.deckId, afterDelay:0.01)
+            self.performSelector("doDownloadDeckFromNetrunnerDbList:", withObject:source.deckId, afterDelay:0.0)
         
         case .NRDBShared:
-            self.performSelector("doDownloadDeckFromNetrunnerDbShared:", withObject:source.deckId, afterDelay:0.01)
+            self.performSelector("doDownloadDeckFromNetrunnerDbShared:", withObject:source.deckId, afterDelay:0.0)
         
         default:
-            self.performSelector("doDownloadDeckFromMeteor:", withObject:source.deckId, afterDelay:0.01)
+            self.performSelector("doDownloadDeckFromMeteor:", withObject:source.deckId, afterDelay:0.0)
         }
     }
     

@@ -7,7 +7,6 @@
 //
 
 #import "CardUpdateCheck.h"
-#import "DataDownload.h"
 #import "AppDelegate.h"
 
 @implementation CardUpdateCheck

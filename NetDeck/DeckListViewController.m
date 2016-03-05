@@ -1108,12 +1108,12 @@
     if (!self.tableView.hidden)
     {
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-        [self performSelector:@selector(flashTableCell:) withObject:indexPath afterDelay:0.01];
+        [self performSelector:@selector(flashTableCell:) withObject:indexPath afterDelay:0.0];
     }
     if (!self.collectionView.hidden)
     {
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-        [self performSelector:@selector(flashImageCell:) withObject:indexPath afterDelay:0.01];
+        [self performSelector:@selector(flashImageCell:) withObject:indexPath afterDelay:0.0];
     }
     
     if (self.autoSave)

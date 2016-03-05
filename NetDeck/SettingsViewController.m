@@ -14,7 +14,6 @@
 #import "SettingsViewController.h"
 #import "IASKAppSettingsViewController.h"
 #import "IASKSettingsReader.h"
-#import "DataDownload.h"
 #import "ImageCache.h"
 #import "NRDBAuthPopupViewController.h"
 #import "NRDB.h"

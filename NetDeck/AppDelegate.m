@@ -13,7 +13,7 @@
 #warning iphone: duplicate deck (long press?)
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning convert http stuff to swift -> use alamofire
-#warning convert json-parsing stuff to swift -> use swiftyjson
+#warning remove promisekit pod
 
 #warning 3d touch shortcuts
 #warning improve startup time!
@@ -60,7 +60,7 @@ const NSString* const kANY = @"Any";
     NSTimeInterval fetchInterval = useNrdb ? BG_FETCH_INTERVAL : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
     
-#warning handle migration from old to new DB api 
+#warning handle migration from old to new DB api (if necessary)
     [DropboxWrapper setup];
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];

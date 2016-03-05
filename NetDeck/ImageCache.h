@@ -33,7 +33,7 @@ typedef void (^UpdateCompletionBlock)(BOOL ok);
 +(UIImage*) difficultyIcon;
 +(UIImage*) influenceIcon;
 
-+(UIImage*) placeholderFor:(NRRole)role;
++(UIImage*) placeholderFor:(NSInteger)role; // actually NRRole
 +(UIImage*) hexTile;
 
 +(UIImage*) croppedImage:(UIImage*)img forCard:(Card*)card;

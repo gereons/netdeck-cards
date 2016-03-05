@@ -615,7 +615,7 @@
             [self.deck addCard:cc.card copies:0];
         }
         
-        [self performSelector:@selector(refreshDeck) withObject:nil afterDelay:0.001];
+        [self performSelector:@selector(refreshDeck) withObject:nil afterDelay:0.0];
     }
 }
 

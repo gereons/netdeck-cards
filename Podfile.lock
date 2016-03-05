@@ -37,7 +37,7 @@ PODS:
   - DTFoundation/UIKit (1.7.9):
     - DTFoundation/Core
   - Fabric (1.6.6)
-  - InAppSettingsKit (2.6.2)
+  - InAppSettingsKit (2.7.1)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT (= 0.4.1)
     - libextobjc/EXTConcreteProtocol (= 0.4.1)
@@ -74,10 +74,6 @@ PODS:
   - libextobjc/RuntimeExtensions (0.4.1)
   - libextobjc/UmbrellaHeader (0.4.1)
   - MultiSelectSegmentedControl (1.0)
-  - PromiseKit-AFNetworking (0.6.0):
-    - AFNetworking (~> 2.0)
-    - PromiseKit/CorePromise (~> 3.0)
-  - PromiseKit/CorePromise (3.0.3)
   - SDCAlertView (4.0.1)
   - SVProgressHUD (1.1.3)
   - SwiftyDropbox (3.0.0):
@@ -95,8 +91,6 @@ DEPENDENCIES:
   - InAppSettingsKit
   - libextobjc
   - MultiSelectSegmentedControl
-  - PromiseKit-AFNetworking
-  - PromiseKit/CorePromise
   - SDCAlertView
   - SVProgressHUD
   - SwiftyDropbox
@@ -111,11 +105,9 @@ SPEC CHECKSUMS:
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 70a0765e3596f82dd421832e95c65e2166eb3102
   Fabric: 1abc1e59f11fa39ede6f690ef7309d8563e3ec59
-  InAppSettingsKit: a384eab9c18d9e8d4256e36f17a61e37f9226285
+  InAppSettingsKit: 2b9fcdb82cdff2f99c51cae544e9f4df0df7afbf
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   MultiSelectSegmentedControl: 61389b88420074fc972e61ee9ef3d8bb4c286071
-  PromiseKit: 00ec2a219bf5ad2833f95977698e921932b8dfd3
-  PromiseKit-AFNetworking: d3b2c88f9bb6bd3124454df99feb47e620873ce4
   SDCAlertView: 046bcf893b3585ffa2ecaba536dc3de334959d72
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SwiftyDropbox: e0d4aa3166082ec07ed942e94edb8c732b3376e4

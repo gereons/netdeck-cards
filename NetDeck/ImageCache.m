@@ -426,7 +426,7 @@ static NSCache* memCache;
 +(UIImage*) influenceIcon { return influenceIcon; }
 +(UIImage*) hexTile { return hexTile; }
 
-+(UIImage*) placeholderFor:(NRRole)role
++(UIImage*) placeholderFor:(NSInteger)role // actually NRRole
 {
     return role == NRRoleRunner ? runnerPlaceholder : corpPlaceholder;
 }

@@ -210,7 +210,7 @@ static NSString* filterText;
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK")  handler:^(UIAlertAction * action) {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Imported decks")];
-        [self performSelector:@selector(doImportAll) withObject:nil afterDelay:0.001];
+        [self performSelector:@selector(doImportAll) withObject:nil afterDelay:0.0];
     }]];
     
     [alert show];
@@ -307,11 +307,9 @@ static NSString* filterText;
     [fileManager removeItemAtPath:directory error:nil];
     [fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
     
-    NSLog(@"start download");
     [DropboxWrapper downloadDropboxFiles:deckNames toDirectory:directory completion:^{
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [SVProgressHUD dismiss];
-        NSLog(@"downloads finished");
         
         [self readDecksFromDropbox:directory];
         self.navigationController.navigationBar.topItem.rightBarButtonItems = self.barButtons;

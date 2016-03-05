@@ -16,7 +16,6 @@
 #import "BrowserFilterViewController.h"
 #import "SavedDecksList.h"
 #import "CompareDecksList.h"
-#import "DataDownload.h"
 #import "CardUpdateCheck.h"
 
 typedef NS_ENUM(NSInteger, NRMenuItem)

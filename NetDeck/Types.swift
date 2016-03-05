@@ -17,7 +17,6 @@
     case Event, Hardware, Resource, Program
 }
 
-
 @objc enum NRRole: Int {
     case None = -1
     case Runner, Corp

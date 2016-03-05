@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-import Foundation
+import SwiftyJSON
 
 @objc class CardSet: NSObject {
     var name: String!
@@ -65,30 +65,36 @@ import Foundation
     
         let fileMgr = NSFileManager.defaultManager()
         if fileMgr.fileExistsAtPath(setsFile) {
-            if let data = NSArray(contentsOfFile: setsFile) {
-                return setupFromJsonData(data)
+            if let array = NSArray(contentsOfFile: setsFile) {
+                let json = JSON(array)
+                return setupFromJsonData(json)
+            } else if let str = try? NSString(contentsOfFile: setsFile, encoding: NSUTF8StringEncoding) {
+                let json = JSON.parse(str as String)
+                return setupFromJsonData(json)
             }
         }
                 
         return false
     }
     
-    class func setupFromNrdbApi(json: NSArray) -> Bool {
+    class func setupFromNrdbApi(json: JSON) -> Bool {
         let setsFile = filename()
-        json.writeToFile(setsFile, atomically:true)
+        if let data = try? json.rawData() {
+            data.writeToFile(setsFile, atomically:true)
+        }
     
         AppDelegate.excludeFromBackup(setsFile)
     
         return setupFromJsonData(json)
     }
 
-    class func setupFromJsonData(json: NSArray) -> Bool {
+    class func setupFromJsonData(json: JSON) -> Bool {
         var maxCycle = 0
         allCardSets = [Int: CardSet]()
-        for set in json as! [NSDictionary] {
+        for set in json.arrayValue {
             let cs = CardSet()
             
-            if let code = set["code"] as? String {
+            if let code = set["code"].string {
                 cs.setCode = code
             } else {
                 continue
@@ -98,7 +104,7 @@ import Foundation
                 continue
             }
             
-            if let name = set["name"] as? String {
+            if let name = set["name"].string {
                 cs.name = name
             } else {
                 continue
@@ -106,8 +112,8 @@ import Foundation
             
             cs.settingsKey = "use_" + cs.setCode
             
-            if let cycleNumber = set["cyclenumber"] as? Int,
-                let number = set["number"] as? Int {
+            if let cycleNumber = set["cyclenumber"].int,
+                let number = set["number"].int {
             
                 cs.cycle = cycleMap[cycleNumber] ?? .Unknown
                 assert(cs.cycle != .Unknown)
@@ -118,7 +124,7 @@ import Foundation
                 cs.setNum = cycleNumber*100 + number
             }
             
-            if let available = set["available"] as? String {
+            if let available = set["available"].string {
                 cs.released = available.length > 0
             }
             
