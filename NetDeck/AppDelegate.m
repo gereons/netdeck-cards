@@ -7,18 +7,15 @@
 //
 
 // TODOs:
-// card/set update in bg fetch?
-
 #warning notification system (updates, bugs etc)
-#warning iphone: duplicate deck (long press?)
+
+#warning move status bar up when hw keyboard shortcut bar is displayed
 #warning iphone browser: add hint on startup, more filters (type + set)
-#warning convert http stuff to swift -> use alamofire
-#warning remove promisekit pod
+#warning convert rest of http stuff/json to swift -> use alamofire/swiftyjson
 
 #warning 3d touch shortcuts
 #warning improve startup time!
 #warning nrdb re-auth issues
-#warning move status bar up when hw keyboard shortcut bar is displayed
 
 @import SVProgressHUD;
 @import AFNetworking;

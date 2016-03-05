@@ -175,6 +175,12 @@
         }]];
     }
     
+    [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Duplicate Deck") handler:^(UIAlertAction * _Nonnull action) {
+        Deck* newDeck = [self.deck duplicate];
+        [newDeck saveToDisk];
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:l10n(@"Copy saved as %@"), newDeck.name]];
+    }]];
+    
     [alert addAction:[UIAlertAction cancelAction:nil]];
     [alert.view layoutIfNeeded];
     

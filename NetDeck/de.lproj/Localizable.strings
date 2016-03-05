@@ -57,8 +57,10 @@
 "Save" = "Speichern";
 "Saving..." = "Speichern...";
 "Duplicate" = "Duplizieren";
+"Duplicate Deck" = "Deck duplizieren";
 "Rename" = "Umbenennen";
 "Duplicate this deck?" = "Dieses Deck duplizieren?";
+"Copy saved as %@" = "Kopie als %@ gespeichert";
 "Yes, switch to copy" = "Ja, zur Kopie wechseln";
 "Yes, but stay here" = "Ja, hier bleiben";
 "Identity" = "Identität";

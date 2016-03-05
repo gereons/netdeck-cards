@@ -612,8 +612,7 @@
         return;
     }
     
-    UIAlertController* alert = [UIAlertController alertWithTitle:nil
-                                                                   message:l10n(@"Duplicate this deck?")];
+    UIAlertController* alert = [UIAlertController alertWithTitle:nil message:l10n(@"Duplicate this deck?")];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"No") style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes, switch to copy") handler:^(UIAlertAction * action) {

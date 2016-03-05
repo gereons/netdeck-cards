@@ -52,10 +52,12 @@
 "Save" = "Guardar";
 "Saving..." = "Guardando...";
 "Duplicate" = "Duplicar";
+"Duplicate Deck" = "Duplicar mazo";
 "Rename" = "Renombrar";
-"Duplicate this deck?" = "¿Duplicar este mazo?"; // en
+"Duplicate this deck?" = "¿Duplicar este mazo?";
 "Yes, switch to copy" = "Sí, y pasar a la copia";
 "Yes, but stay here" = "Sí, pero permanecer aquí";
+"Copy saved as %@" = "Copia guardada como %@";
 "Identity" = "Identidad";
 "Enter Name" = "Introducir Nombre";
 "Deck Name" = "Nombre del Mazo";
