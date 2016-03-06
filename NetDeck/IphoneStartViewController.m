@@ -9,7 +9,6 @@
 #import "IphoneStartViewController.h"
 #import "ImageCache.h"
 #import "NRDB.h"
-#import "CardUpdateCheck.h"
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "SettingsViewController.h"

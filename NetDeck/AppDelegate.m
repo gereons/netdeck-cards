@@ -7,14 +7,16 @@
 //
 
 // TODOs:
+#warning test text export in jinteki.net
 #warning notification system (updates, bugs etc)
 
+#warning convert rest of http stuff/json to swift -> use alamofire/swiftyjson
 #warning move status bar up when hw keyboard shortcut bar is displayed
 #warning iphone browser: add hint on startup, more filters (type + set)
-#warning convert rest of http stuff/json to swift -> use alamofire/swiftyjson
+#warning iphone: deck edit history
 
 #warning 3d touch shortcuts
-#warning improve startup time!
+#warning improve startup time
 #warning nrdb re-auth issues
 
 @import SVProgressHUD;
