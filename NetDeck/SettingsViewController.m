@@ -7,7 +7,6 @@
 //
 
 @import SVProgressHUD;
-@import AFNetworking;
 
 #import "AppDelegate.h"
 #import "EXTScope.h"
@@ -243,25 +242,10 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     NSString* nrdbUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:nrdbUrl parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            BOOL ok = YES;
-            if ([responseObject isKindOfClass:[NSArray class]])
-            {
-                NSArray* arr = responseObject;
-                NSDictionary* dict = arr[0];
-                if (dict[@"code"] == nil)
-                {
-                    ok = NO;
-                }
-            }
-             [self finishApiTests:ok];
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self finishApiTests:NO];
-        }
-    ];
+    
+    [DataDownload checkNrdbApi:nrdbUrl completion:^(BOOL ok) {
+        [self finishApiTests:ok];
+    }];
 }
 
 -(void) finishApiTests:(BOOL)nrdbOk

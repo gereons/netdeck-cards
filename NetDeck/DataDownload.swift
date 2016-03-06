@@ -304,4 +304,26 @@ class DataDownload: NSObject {
         self.alert = nil
     }
 
+    // MARK: - api checker
+    
+    class func checkNrdbApi(url: String, completion: (Bool) -> Void) {
+        Alamofire.request(.GET, url)
+            .validate()
+            .responseJSON { (response) in
+                switch response.result {
+                case .Success:
+                    var ok = false
+                    if let value = response.result.value {
+                        let json = JSON(value)
+                        if json[0]["code"].string != nil {
+                            ok = true
+                        }
+                    }
+                    completion(ok)
+                case .Failure:
+                    completion(false)
+                }
+        }
+        
+    }
 }
