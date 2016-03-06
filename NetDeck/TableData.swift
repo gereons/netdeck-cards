@@ -24,6 +24,6 @@ import Foundation
     }
     
     convenience init(values: NSArray) {
-        self.init(sections: [""], andValues:[values])
+        self.init(sections: [""], andValues: [values])
     }
 }

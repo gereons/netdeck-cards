@@ -324,6 +324,5 @@ class DataDownload: NSObject {
                     completion(false)
                 }
         }
-        
     }
 }

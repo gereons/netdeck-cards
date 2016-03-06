@@ -103,4 +103,3 @@
     case Runner
     case Corp
 }
-

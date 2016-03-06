@@ -141,8 +141,7 @@ import SwiftyJSON
     // special for Programs: return "Icebreaker" for icebreakers, "Program" for other programs
     var programType: String? {
         assert(self.type == .Program, "not a program")
-        if (self.strength != -1)
-        {
+        if self.strength != -1 {
             return self.subtypes[0]
         } else {
             return self.typeStr
@@ -161,11 +160,11 @@ import SwiftyJSON
     private var _attributedText: NSAttributedString?
     // html rendered
     var attributedText: NSAttributedString! {
-        if (self._attributedText == nil) {
-            let str = self.text.stringByReplacingOccurrencesOfString("\n", withString:"<br/>")
+        if self._attributedText == nil {
+            let str = self.text.stringByReplacingOccurrencesOfString("\n", withString: "<br/>")
             let data = str.dataUsingEncoding(NSUTF8StringEncoding)
             self._attributedText = NSAttributedString(HTMLData: data, options: Card.coreTextOptions, documentAttributes: nil)
-            if (self._attributedText == nil) {
+            if self._attributedText == nil {
                 self._attributedText = NSAttributedString(string: "")
             }
         }
@@ -187,8 +186,7 @@ import SwiftyJSON
     
     // how many copies owned
     var owned: Int {
-        if (self.isCore)
-        {
+        if self.isCore {
             let cores = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.NUM_CORES)
             return cores * self.quantity
         }
@@ -224,13 +222,11 @@ import SwiftyJSON
         c.type = CardType.type(typeCode)
         assert(c.type != .None, "no type for \(c.code), \(c.typeStr)")
         
-        if (c.type == .Identity)
-        {
-            c.name = c.shortIdentityName(c.name, forRole:c.role, andFaction:c.factionStr)
+        if c.type == .Identity {
+            c.name = c.shortIdentityName(c.name, forRole: c.role, andFaction: c.factionStr)
         }
         // remove the "consortium" from weyland's name
-        if (c.faction == .Weyland)
-        {
+        if c.faction == .Weyland {
             c.factionStr = "Weyland"
         }
         
@@ -243,8 +239,7 @@ import SwiftyJSON
         
         c.setName = json["setname"].stringValue
         c.setCode = json["set_code"].stringValue
-        if (c.setCode == nil)
-        {
+        if c.setCode == nil {
             c.setCode = CardSets.UNKNOWN_SET
             c.setName = CardSets.UNKNOWN_SET
         }
@@ -259,8 +254,8 @@ import SwiftyJSON
             c.subtype = subtype
         }
         if c.subtype.length > 0 {
-            c.subtype = c.subtype.stringByReplacingOccurrencesOfString("G-Mod", withString:"G-mod")
-            c.subtype = c.subtype.stringByReplacingOccurrencesOfString(" – ", withString:" - ") // fix dashes in german subtypes
+            c.subtype = c.subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")
+            c.subtype = c.subtype.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
             c.subtypes = c.subtype.componentsSeparatedByString(" - ")
         }
         
@@ -268,14 +263,12 @@ import SwiftyJSON
         c.quantity = json["quantity"].int ?? -1
         c.unique = json["uniqueness"].boolValue
         
-        if (c.type == .Identity)
-        {
+        if c.type == .Identity {
             c.influenceLimit = json["influencelimit"].int ?? -1
             c.minimumDecksize = json["minimumdecksize"].int ?? -1
             c.baseLink = json["baselink"].int ?? -1
         }
-        if (c.type == .Agenda)
-        {
+        if c.type == .Agenda {
             c.advancementCost = json["advancementcost"].int ?? -1
             c.agendaPoints = json["agendapoints"].int ?? -1
         }
@@ -287,20 +280,17 @@ import SwiftyJSON
         c.trash = json["trash"].int ?? -1
         
         c.imageSrc = json["imagesrc"].string
-        if (c.imageSrc?.length > 0)
-        {
+        if c.imageSrc?.length > 0 {
             let host = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_HOST)
             c.imageSrc = "http://" + host! + c.imageSrc!
         }
         
-        if (c.imageSrc?.length == 0)
-        {
+        if c.imageSrc?.length == 0 {
             c.imageSrc = nil
         }
         
         c.maxPerDeck = json["limited"].int ?? -1
-        if Card.MAX_1_PER_DECK.contains(c.code) || c.type == .Identity
-        {
+        if Card.MAX_1_PER_DECK.contains(c.code) || c.type == .Identity {
             c.maxPerDeck = 1
         }
         
@@ -309,8 +299,7 @@ import SwiftyJSON
         }
         
         c.ancurLink = json["ancurLink"].string
-        if (c.ancurLink?.length == 0)
-        {
+        if c.ancurLink?.length == 0 {
             c.ancurLink = nil
         }
         
@@ -338,15 +327,13 @@ import SwiftyJSON
     func shortIdentityName(name: String, forRole: NRRole, andFaction faction: String) -> String {
         if let colon = name.rangeOfString(": ") {
             // runner: remove stuff after the colon ("Andromeda: Disposessed Ristie" becomes "Andromeda")
-            if role == .Runner
-            {
+            if role == .Runner {
                 return name.substringToIndex(colon.startIndex)
             }
         
             // corp: if faction name is part of the title, remove it ("NBN: The World is Yours*" becomes "The World is Yours*")
             // otherwise, remove stuff after the colon ("Harmony Medtech: Biomedical Pioneer" becomes "Harmony Medtech")
-            if (role == .Corp)
-            {
+            if role == .Corp {
                 if let range = name.rangeOfString(faction + ": ") {
                     return name.substringFromIndex(range.endIndex)
                 } else {
@@ -403,8 +390,6 @@ import SwiftyJSON
     }
 }
 
-func ==(lhs: Card, rhs: Card) -> Bool {
+func == (lhs: Card, rhs: Card) -> Bool {
     return lhs.code == rhs.code
 }
-
-

@@ -20,5 +20,4 @@
     static let BROWSER_NEW     = "browserNew"       // new deck with card, userInfo contains = "code"
     static let BROWSER_FIND    = "browserFind"      // find decks with card, userInfo contains = "code"
     static let NAME_ALERT      = "nameAlert"        // name alert is about to appear, no userInfo
-
 }

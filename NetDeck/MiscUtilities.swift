@@ -13,7 +13,7 @@ extension String {
         return NSLocalizedString(self, comment: "")
     }
     
-    var length : Int {
+    var length: Int {
         return self.characters.count
     }
     
@@ -39,7 +39,9 @@ extension MutableCollectionType where Index == Int {
     /// Shuffle the elements of `self` in-place.
     mutating func shuffleInPlace() {
         // empty and single-element collections don't shuffle
-        if count < 2 { return }
+        if count < 2 {
+            return
+        }
         
         for i in 0..<count - 1 {
             let j = Int(arc4random_uniform(UInt32(count - i))) + i
@@ -67,4 +69,4 @@ extension NSRange {
 }
 
 @available(iOS, deprecated=1.0, message="I'm not deprecated, please **FIXME**")
-func FIXME(msg: String=""){}
+func FIXME(msg: String="") {}

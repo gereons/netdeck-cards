@@ -28,7 +28,7 @@ class OctgnImport: NSObject, NSXMLParserDelegate {
         }
     }
     
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
         
         self.notes = nil
         
@@ -43,7 +43,7 @@ class OctgnImport: NSObject, NSXMLParserDelegate {
                     
                     if card != nil && copies != nil {
                         // NSLog(@"card: %d %@", copies, card.name);
-                        self.deck.addCard(card!, copies:copies!)
+                        self.deck.addCard(card!, copies: copies!)
                         self.deck.role = card!.role
                     }
                 }
