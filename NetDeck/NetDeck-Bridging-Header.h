@@ -12,4 +12,3 @@
 @class Card;
 #import "CardImageViewPopover.h"
 #import "CardThumbView.h"
-#import "ImageCache.h"

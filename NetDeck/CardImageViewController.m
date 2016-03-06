@@ -10,7 +10,6 @@
 
 #import "CardImageViewController.h"
 #import "CardImageViewCell.h"
-#import "ImageCache.h"
 
 @interface CardImageViewController ()
 

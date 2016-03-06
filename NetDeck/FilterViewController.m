@@ -7,7 +7,6 @@
 //
 
 #import "FilterViewController.h"
-#import "ImageCache.h"
 
 @interface FilterViewController ()
 

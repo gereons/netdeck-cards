@@ -13,7 +13,6 @@
 #import "CardImageViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "IphoneDrawSimulator.h"
-#import "ImageCache.h"
 #import "EditDeckCell.h"
 #import "NRDB.h"
 #import "SVProgressHud.h"

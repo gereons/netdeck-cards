@@ -7,7 +7,6 @@
 //
 
 #import "EmptyDetailViewController.h"
-#import "ImageCache.h"
 
 @implementation EmptyDetailViewController
 

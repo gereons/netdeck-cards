@@ -8,7 +8,6 @@
 
 #import "LargeBrowserCell.h"
 #import "CGRectUtils.h"
-#import "ImageCache.h"
 
 @interface LargeBrowserCell()
 

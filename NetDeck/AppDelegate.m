@@ -7,7 +7,6 @@
 //
 
 // TODOs:
-#warning test text export in jinteki.net
 #warning notification system (updates, bugs etc)
 
 #warning convert rest of http stuff/json to swift -> use alamofire/swiftyjson
@@ -65,6 +64,9 @@ const NSString* const kANY = @"Any";
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     
     [CardImageViewPopover monitorKeyboard];
+    
+    // just so the initializer gets called
+    (void)[ImageCache sharedInstance];
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
@@ -150,6 +152,7 @@ const NSString* const kANY = @"Any";
 
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NRDB sharedInstance] stopRefresh];
+    [[ImageCache sharedInstance] saveData];
 }
 
 -(void) moveFilesFromCacheToAppSupportDirectory

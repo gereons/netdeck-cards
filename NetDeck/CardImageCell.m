@@ -7,7 +7,6 @@
 //
 
 #import "CardImageCell.h"
-#import "ImageCache.h"
 #import "CardDetailView.h"
 
 @implementation CardImageCell

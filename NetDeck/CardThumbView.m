@@ -9,7 +9,6 @@
 //
 
 #import "CardThumbView.h"
-#import "ImageCache.h"
 
 @implementation CardThumbView
 
@@ -37,7 +36,7 @@
          {
              [self.activityIndicator stopAnimating];
              
-             self.imageView.image = [ImageCache croppedImage:img forCard:card];
+             self.imageView.image = [[ImageCache sharedInstance] croppedImage:img forCard:card];
              self.nameLabel.text = placeholder ? card.name : nil;
          }
          else

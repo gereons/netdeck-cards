@@ -8,7 +8,6 @@
 
 #import "LargeCardCell.h"
 #import "CGRectUtils.h"
-#import "ImageCache.h"
 
 @interface LargeCardCell()
 @property NSArray* pips;

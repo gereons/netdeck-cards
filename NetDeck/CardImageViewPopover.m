@@ -7,7 +7,6 @@
 //
 
 #import "CardImageViewPopover.h"
-#import "ImageCache.h"
 #import "CardDetailView.h"
 
 #define POPOVER_MARGIN  40 // 20px status bar + 10px top + 10px bottom
@@ -42,7 +41,7 @@ static CGFloat popoverScale = 1.0;
     keyboardVisible = YES;
     NSValue* value = notification.userInfo [UIKeyboardFrameEndUserInfoKey];
     CGFloat keyboardHeight = value.CGRectValue.size.height;
-    popoverScale = (IPAD_SCREEN_HEIGHT - keyboardHeight - POPOVER_MARGIN) / IMAGE_HEIGHT;
+    popoverScale = (IPAD_SCREEN_HEIGHT - keyboardHeight - POPOVER_MARGIN) / ImageCache.IMAGE_HEIGHT;
     popoverScale = MIN(1.0, popoverScale);
 }
 
@@ -54,7 +53,7 @@ static CGFloat popoverScale = 1.0;
     if (popover)
     {
         popover.view.transform = CGAffineTransformIdentity;
-        popover.preferredContentSize = CGSizeMake(IMAGE_WIDTH, IMAGE_HEIGHT);
+        popover.preferredContentSize = CGSizeMake(ImageCache.IMAGE_WIDTH, ImageCache.IMAGE_HEIGHT);
     }
 }
 
@@ -75,7 +74,7 @@ static CGFloat popoverScale = 1.0;
     popover.popoverPresentationController.sourceView = view;
     popover.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
     popover.popoverPresentationController.delegate = popover;
-    popover.preferredContentSize = CGSizeMake((int)(IMAGE_WIDTH*popoverScale), (int)(IMAGE_HEIGHT*popoverScale));
+    popover.preferredContentSize = CGSizeMake((int)(ImageCache.IMAGE_WIDTH*popoverScale), (int)(ImageCache.IMAGE_HEIGHT*popoverScale));
     
     [vc presentViewController:popover animated:NO completion:nil];
 }

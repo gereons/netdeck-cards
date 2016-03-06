@@ -8,7 +8,6 @@
 
 #import "EXTScope.h"
 #import "BrowserResultViewController.h"
-#import "ImageCache.h"
 #import "CardImageViewPopover.h"
 #import "BrowserCell.h"
 #import "BrowserImageCell.h"

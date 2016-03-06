@@ -7,7 +7,6 @@
 //
 
 #import "BrowserImageCell.h"
-#import "ImageCache.h"
 #import "CardDetailView.h"
 
 @implementation BrowserImageCell

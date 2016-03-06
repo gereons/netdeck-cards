@@ -9,7 +9,7 @@
 @objc class SettingsKeys: NSObject {
     static let LAST_MOD_CACHE      = "lastModified"
     static let NEXT_CHECK          = "nextCheck"
-    static let UNAVAILABLE_IMG     = "unavailableImages"
+    static let UNAVAILABLE_IMAGES  = "unavailableImages"
     static let UNAVAIL_IMG_DATE    = "unavailableImagesDate"
     
     static let FILE_SEQ            = "fileSequence"

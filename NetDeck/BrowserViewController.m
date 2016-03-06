@@ -9,7 +9,6 @@
 #import "BrowserViewController.h"
 #import "CardImageViewController.h"
 #import "SmallPipsView.h"
-#import "ImageCache.h"
 
 @interface BrowserViewController ()
 

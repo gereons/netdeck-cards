@@ -175,7 +175,7 @@ import SwiftyJSON
         return Card.OCTGN_PREFIX + self.code
     }
     
-    var cropY: Int {
+    var cropY: Double {
         assert(self.type != .None)
         return Card.cropValues[self.type]!
     }
@@ -365,7 +365,7 @@ import SwiftyJSON
         .Neutral:      0x000000
     ]
     
-    private static let cropValues: [NRCardType: Int] = [
+    private static let cropValues: [NRCardType: Double] = [
         .Agenda: 15,
         .Asset: 20,
         .Event: 10,

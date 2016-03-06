@@ -182,7 +182,7 @@ class DataDownload: NSObject {
         if scope == .Missing {
             var missing = [Card]()
             for card in self.cards {
-                if !ImageCache.sharedInstance().imageAvailableFor(card) {
+                if !ImageCache.sharedInstance.imageAvailableFor(card) {
                     missing.append(card)
                 }
             }
@@ -253,11 +253,11 @@ class DataDownload: NSObject {
             }
             
             if scope == .All {
-                ImageCache.sharedInstance().updateImageFor(card, completion: downloadNext)
+                ImageCache.sharedInstance.updateImageFor(card, completion: downloadNext)
             }
             else
             {
-                ImageCache.sharedInstance().updateMissingImageFor(card, completion: downloadNext)
+                ImageCache.sharedInstance.updateMissingImageFor(card, completion: downloadNext)
             }
         }
     }

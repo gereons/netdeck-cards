@@ -8,7 +8,6 @@
 
 #import "IphoneIdentityViewController.h"
 #import "EditDeckViewController.h"
-#import "ImageCache.h"
 
 @interface IphoneIdentityViewController ()
 

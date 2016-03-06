@@ -7,7 +7,6 @@
 //
 
 #import "IphoneDrawSimulator.h"
-#import "ImageCache.h"
 
 @interface DrawTableCell : UITableViewCell
 @property Card* card;
@@ -188,7 +187,7 @@
     [[ImageCache sharedInstance] getImageFor:card completion:^(Card *card, UIImage *image, BOOL placeholder) {
         if ([cell.card.code isEqualToString:card.code])
         {
-            cell.imgView.image = [ImageCache croppedImage:image forCard:card];
+            cell.imgView.image = [[ImageCache sharedInstance] croppedImage:image forCard:card];
         }
         else
         {
