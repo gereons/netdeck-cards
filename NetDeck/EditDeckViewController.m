@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "EXTScope.h"
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
 #import "CardImageViewController.h"
@@ -121,9 +120,7 @@
 {
     UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Enter Name") message:nil];
 
-    @weakify(self);
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        @strongify(self);
         textField.text = self.deck.name;
         textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -132,7 +129,6 @@
     }];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction *action) {
-        @strongify(self);
         UITextField* textField = alert.textFields.firstObject;
         self.deck.name = textField.text;
         [self setDeckName];

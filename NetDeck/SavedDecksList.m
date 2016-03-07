@@ -8,7 +8,6 @@
 
 @import SVProgressHUD;
 
-#import "EXTScope.h"
 #import "SavedDecksList.h"
 #import "ImportDecksViewController.h"
 #import "NRDB.h"

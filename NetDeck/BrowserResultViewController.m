@@ -6,7 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "EXTScope.h"
 #import "BrowserResultViewController.h"
 #import "CardImageViewPopover.h"
 #import "BrowserCell.h"

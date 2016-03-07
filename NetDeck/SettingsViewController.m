@@ -9,7 +9,6 @@
 @import SVProgressHUD;
 
 #import "AppDelegate.h"
-#import "EXTScope.h"
 #import "SettingsViewController.h"
 #import "IASKAppSettingsViewController.h"
 #import "IASKSettingsReader.h"
