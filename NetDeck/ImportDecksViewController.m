@@ -10,7 +10,6 @@
 
 #import "ImportDecksViewController.h"
 #import "DeckCell.h"
-#import "NRDB.h"
 
 static NRDeckSearchScope searchScope = NRDeckSearchScopeAll;
 static NSString* filterText;
@@ -250,7 +249,8 @@ static NSString* filterText;
         
         for (NSDictionary* dict in decks)
         {
-            Deck* deck = [[NRDB sharedInstance] parseDeckFromJson:dict];
+#warning fixme
+            Deck* deck = nil; // [[NRDB sharedInstance] parseDeckFromJson:dict];
             if (deck.role != NRRoleNone)
             {
                 NSMutableArray* decks = deck.role == NRRoleRunner ? self.runnerDecks : self.corpDecks;

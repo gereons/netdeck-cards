@@ -7,7 +7,6 @@
 //
 
 #import "IphoneStartViewController.h"
-#import "NRDB.h"
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "SettingsViewController.h"

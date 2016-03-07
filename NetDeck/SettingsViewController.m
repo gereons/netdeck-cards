@@ -13,7 +13,6 @@
 #import "IASKAppSettingsViewController.h"
 #import "IASKSettingsReader.h"
 #import "NRDBAuthPopupViewController.h"
-#import "NRDB.h"
 
 @implementation SettingsViewController
 

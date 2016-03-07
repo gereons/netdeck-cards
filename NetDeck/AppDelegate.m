@@ -13,6 +13,7 @@
 #warning move status bar up when hw keyboard shortcut bar is displayed
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning iphone: deck edit history
+#warning move icons etc to Images.xcassets
 
 #warning 3d touch shortcuts
 #warning improve startup time
@@ -24,8 +25,6 @@
 #import "AppDelegate.h"
 #import "CardImageViewPopover.h"
 #import "NRDBAuthPopupViewController.h"
-#import "NRDBAuth.h"
-#import "NRDB.h"
 
 const NSString* const kANY = @"Any";
 
@@ -55,7 +54,7 @@ const NSString* const kANY = @"Any";
     }
     
     BOOL useNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NRDB];
-    NSTimeInterval fetchInterval = useNrdb ? BG_FETCH_INTERVAL : UIApplicationBackgroundFetchIntervalNever;
+    NSTimeInterval fetchInterval = useNrdb ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
     
 #warning handle migration from old to new DB api (if necessary)
@@ -66,7 +65,7 @@ const NSString* const kANY = @"Any";
     [CardImageViewPopover monitorKeyboard];
     
     // just so the initializer gets called
-    (void)[ImageCache sharedInstance];
+    [ImageCache sharedInstance];
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
@@ -281,25 +280,13 @@ const NSString* const kANY = @"Any";
 
 #pragma mark - background fetch
 
-// protect against running two bg fetches simultaneously - happens when initiated from Xcode manually
-static BOOL runningBackgroundFetch = NO;
-
--(void) application:(UIApplication *)application performFetchWithCompletionHandler:(BackgroundFetchCompletionBlock)completionHandler
+-(void) application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:SettingsKeys.LAST_BG_FETCH];
     
-    if (runningBackgroundFetch)
-    {
-        // NSLog(@"dup call");
-        completionHandler(UIBackgroundFetchResultNoData);
-        return;
-    }
-    
-    runningBackgroundFetch = YES;
     [[NRDB sharedInstance] backgroundRefreshAuthentication:^(UIBackgroundFetchResult result) {
         // NSLog(@"primary call %ld", (long)result);
         completionHandler(result);
-        runningBackgroundFetch = NO;
     }];
 }
 

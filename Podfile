@@ -3,12 +3,14 @@ platform :ios, '9.2'
 inhibit_all_warnings!
 use_frameworks!
 
+pod 'AFNetworking', '~> 2.0' # -> Alamofire
+pod 'libextobjc' # -> remove?
+
+
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'DTCoreText'
-pod 'AFNetworking', '~> 2.0' # -> Alamofire
 pod 'SVProgressHUD'
-pod 'libextobjc' # -> remove?
 pod 'CSStickyHeaderFlowLayout'
 pod 'InAppSettingsKit'
 pod 'MultiSelectSegmentedControl'

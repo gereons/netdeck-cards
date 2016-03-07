@@ -7,8 +7,6 @@
 //
 
 #import "NRDBAuthPopupViewController.h"
-#import "NRDBAuth.h"
-#import "NRDB.h"
 
 @interface NRDBAuthPopupViewController ()
 
@@ -56,7 +54,7 @@ static NRDBAuthPopupViewController* popup;
     self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
     
     // NSLog(@"%@", @CODE_URL);
-    NSURL* url= [NSURL URLWithString:@AUTH_URL];
+    NSURL* url= [NSURL URLWithString:NRDB.AUTH_URL];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     

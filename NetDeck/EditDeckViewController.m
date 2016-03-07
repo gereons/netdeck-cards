@@ -13,7 +13,6 @@
 #import "IphoneIdentityViewController.h"
 #import "IphoneDrawSimulator.h"
 #import "EditDeckCell.h"
-#import "NRDB.h"
 #import "SVProgressHud.h"
 
 @interface EditDeckViewController ()

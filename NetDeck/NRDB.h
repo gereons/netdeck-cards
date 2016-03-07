@@ -6,9 +6,9 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@interface NRDB : NSObject
+@interface xNRDB : NSObject
 
-+(NRDB*) sharedInstance;
++(xNRDB*) sharedInstance;
 +(void) clearSettings;
 
 typedef void (^AuthCompletionBlock)(BOOL ok);

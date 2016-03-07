@@ -13,23 +13,23 @@
 #import "NRDB.h"
 #import "NRDBAuth.h"
 
-@interface NRDB()
+@interface xNRDB()
 @property (strong) DecklistCompletionBlock decklistCompletionBlock;
 @property (strong) SaveCompletionBlock saveCompletionBlock;
 @property NSMutableDictionary* deckMap;
 @property NSTimer* timer;
 @end
 
-@implementation NRDB
+@implementation xNRDB
 
-static NRDB* instance;
+static xNRDB* instance;
 static NSDateFormatter* formatter;
 
-+(NRDB*) sharedInstance
++(xNRDB*) sharedInstance
 {
     if (!instance)
     {
-        instance = [[NRDB alloc] init];
+        instance = [[xNRDB alloc] init];
     }
     return instance;
 }
@@ -52,7 +52,7 @@ static NSDateFormatter* formatter;
     [settings setObject:@(NO) forKey:SettingsKeys.USE_NRDB];
     
     [settings synchronize];
-    [[NRDB sharedInstance].timer invalidate];
+    [[xNRDB sharedInstance].timer invalidate];
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
 }
 
@@ -142,17 +142,17 @@ static NSDateFormatter* formatter;
              
              if (!ok)
              {
-                 [NRDB clearSettings];
+                 [xNRDB clearSettings];
              }
              [settings synchronize];
              
              // NSLog(@"nrdb (re)auth success, status: %d", ok);
-             [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:BG_FETCH_INTERVAL];
+             [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
              completionBlock(ok);
          }
          failure:^(AFHTTPRequestOperation* operation, NSError* error) {
-             [NRDB clearSettings];
              
+             [xNRDB clearSettings];
              // NSLog(@"nrdb (re)auth failed: %@", operation);
              [UIAlertController alertWithTitle:nil
                                        message:l10n(@"Authorization at NetrunnerDB.com failed")
@@ -175,7 +175,7 @@ static NSDateFormatter* formatter;
     
     if ([settings objectForKey:SettingsKeys.NRDB_REFRESH_TOKEN] == nil)
     {
-        [NRDB clearSettings];
+        [xNRDB clearSettings];
         return;
     }
     
@@ -215,7 +215,7 @@ static NSDateFormatter* formatter;
     if ([settings objectForKey:SettingsKeys.NRDB_REFRESH_TOKEN] == nil)
     {
         // NSLog(@"no token");
-        [NRDB clearSettings];
+        [xNRDB clearSettings];
         completionHandler(UIBackgroundFetchResultNoData);
         return;
     }

@@ -8,7 +8,6 @@
 
 #import "DecksViewController.h"
 #import "DeckCell.h"
-#import "NRDB.h"
 
 @interface DecksViewController ()
 
