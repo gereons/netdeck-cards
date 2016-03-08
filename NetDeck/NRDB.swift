@@ -223,8 +223,29 @@ class NRDB: NSObject {
         }
     }
     
-    func loadDeck(deck: Deck, completion: (Bool, Deck) -> Void) {
-    
+    func loadDeck(deck: Deck, completion: (Deck?) -> Void) {
+        guard let accessToken = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_ACCESS_TOKEN) else {
+            completion(nil)
+            return
+        }
+        
+        assert(deck.netrunnerDbId != nil, "no nrdb id")
+        let loadUrl = NSURL(string: "http://netrunnerdb.com/api_oauth2/load_deck/" + deck.netrunnerDbId! + "?access_token=" + accessToken)!
+        
+        let request = NSMutableURLRequest(URL: loadUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
+        
+        Alamofire.request(request).validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    let deck = self.parseDeckFromJson(json)
+                    completion(deck)
+                }
+            case .Failure:
+                completion(nil)
+            }
+        }
     }
     
     func parseDecksFromJson(json: JSON) -> [Deck] {

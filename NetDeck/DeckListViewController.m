@@ -517,13 +517,10 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [SVProgressHUD showWithStatus:l10n(@"Loading Deck...") maskType:SVProgressHUDMaskTypeBlack];
     
-    [[NRDB sharedInstance] loadDeck:self.deck completion:^(BOOL ok, Deck* deck) {
-        if (!ok)
-        {
+    [[NRDB sharedInstance] loadDeck:self.deck completion:^(Deck* deck) {
+        if (deck == nil) {
             [UIAlertController alertWithTitle:nil message:l10n(@"Loading the deck from NetrunnerDB.com failed.") button:l10n(@"OK")];
-        }
-        else
-        {
+        } else {
             deck.filename = self.deck.filename;
             self.deck = deck;
             self.deck.state = self.deck.state; // force .modified=YES

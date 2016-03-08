@@ -16,8 +16,8 @@ static NSString* filterText;
 
 @interface ImportDecksViewController ()
 
-@property NSMutableArray* runnerDecks;
-@property NSMutableArray* corpDecks;
+@property NSMutableArray<Deck*>* runnerDecks;
+@property NSMutableArray<Deck*>* corpDecks;
 
 @property NSArray* filteredDecks;
 
@@ -240,23 +240,23 @@ static NSString* filterText;
     [SVProgressHUD showWithStatus:l10n(@"Loading Decks...") maskType:SVProgressHUDMaskTypeBlack];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    [[NRDB sharedInstance] decklist:^(NSArray* decks) {
+    [[NRDB sharedInstance] decklist:^(NSArray<Deck*>* decks) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [SVProgressHUD dismiss];
 
         NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH':'mm':'ss"];
         
-        for (NSDictionary* dict in decks)
+        for (Deck* deck in decks)
         {
-#warning fixme
-            Deck* deck = nil; // [[NRDB sharedInstance] parseDeckFromJson:dict];
             if (deck.role != NRRoleNone)
             {
-                NSMutableArray* decks = deck.role == NRRoleRunner ? self.runnerDecks : self.corpDecks;
-                [decks addObject:deck];
+                NSMutableArray<Deck*>* arr = deck.role == NRRoleRunner ? self.runnerDecks : self.corpDecks;
+                [arr addObject:deck];
             }
         }
+        
+        NSAssert(decks.count == self.runnerDecks.count + self.corpDecks.count, @"oops");
         
         [self filterDecks];
         [self.tableView reloadData];
@@ -267,10 +267,14 @@ static NSString* filterText;
 -(void) importDeckFromNRDB:(Deck*)deck {
     if (self.source == NRImportSourceNetrunnerDb)
     {
-        [[NRDB sharedInstance] loadDeck:deck completion:^(BOOL ok, Deck *deck) {
-            [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-            [deck saveToDisk];
-            [DeckManager resetModificationDate:deck];
+        [[NRDB sharedInstance] loadDeck:deck completion:^(Deck *deck) {
+            if (deck) {
+                [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
+                [deck saveToDisk];
+                [DeckManager resetModificationDate:deck];
+            } else {
+                [SVProgressHUD showErrorWithStatus:l10n(@"Deck import failed")];
+            }
         }];
     }
 }
@@ -368,7 +372,7 @@ static NSString* filterText;
 
 #pragma mark filter
 
--(NSMutableArray<Deck*>*) sortDecks:(NSArray<NSString*>*)decksToSort
+-(NSMutableArray<Deck*>*) sortDecks:(NSArray<Deck*>*)decksToSort
 {
     NSArray* decks;
     
