@@ -31,3 +31,5 @@ Please note that the word "Android" in the app's metadata does NOT refer to a mo
 <string>org.steffens.NRDB.cardBrowser</string>
 </dict>
 </array>
+
+<key>ITSAppUsesNonExemptEncryption</key><false/>
