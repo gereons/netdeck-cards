@@ -25,6 +25,7 @@ import SwiftyJSON
     static let MUMBAD_VIRTUAL_TOUR      = "10075"    // 0 inf if >= 7 assets in deck
     
     // alliance-based: 0 inf if >= non-alliance cards of same faction in deck
+    static let PRODUCT_RECALL           = "10029"    // 0 inf if >= 6 non-alliance HB cards in deck
     static let JEEVES_MODEL_BIOROID     = "10067"    // 0 inf if >= 6 non-alliance HB cards in deck
     static let RAMAN_RAI                = "10068"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
     static let HERITAGE_COMMITTEE       = "10013"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
@@ -33,7 +34,11 @@ import SwiftyJSON
     static let EXECUTIVE_SEARCH_FIRM    = "10072"    // 0 inf if >= 6 non-alliance Weyland cards in deck
 
     
-    static let ALLIANCE_6 = Set<String>([ JEEVES_MODEL_BIOROID, RAMAN_RAI, HERITAGE_COMMITTEE, SALEMS_HOSPITALITY, EXECUTIVE_SEARCH_FIRM, IBRAHIM_SALEM ])
+    static let ALLIANCE_6 = Set<String>([
+        PRODUCT_RECALL, JEEVES_MODEL_BIOROID,
+        RAMAN_RAI, HERITAGE_COMMITTEE,
+        SALEMS_HOSPITALITY, IBRAHIM_SALEM,
+        EXECUTIVE_SEARCH_FIRM ])
     
     static let PAD_CAMPAIGN             = "01109"    // needed for pad factory
     
