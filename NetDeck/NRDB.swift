@@ -31,9 +31,6 @@ class NRDB: NSObject {
     private var timer: NSTimer?
     private var deckMap = [String: String]()
     
-//    private var decklistCompletionBlock: (([Deck]) -> Void)?
-//    private var saveCompletionBlock: ((Bool, String) -> Void)?
-    
     class func clearSettings() {
         let settings = NSUserDefaults.standardUserDefaults()
         
@@ -280,98 +277,61 @@ class NRDB: NSObject {
             }
         }
         
-        /*
-        NSArray* history = json["history"];
-        
-        NSMutableArray* revisions = [NSMutableArray array];
-        
-        for (NSDictionary* dict in history)
-        {
-            NSString* datecreation = dict["datecreation"];
-            // NSLog(@"changeset created: %@", datecreation);
-            DeckChangeSet* dcs = [[DeckChangeSet alloc] init];
-            dcs.timestamp = [formatter dateFromString:datecreation];
-            
-            NSArray* variation = dict["variation"];
-            NSAssert(variation.count == 2, "wrong variation count");
-            if (![variation isKindOfClass:[NSArray class]] || variation.count != 2) {
-                continue;
-            }
-            // 2-element array: variation[0] contains additions, variation[1] contains deletions
-            
-            for (int i=0; i<variation.count; ++i)
-            {
-                NSDictionary* dict = variation[i];
+        var revisions = [DeckChangeSet]()
+        if let history = json["history"].array {
+            for entry in history {
+                let datecreation = entry["datecreation"].string
+                let dcs = DeckChangeSet()
+                dcs.timestamp = NRDB.dateFormatter.dateFromString(datecreation ?? "")
                 
-                // skip over empty and non-dictionary entries
-                if (![dict isKindOfClass:[NSDictionary class]] || dict.count == 0) {
-                    continue;
-                }
+                let variation = entry["variation"].arrayValue
                 
-                for (NSString* code in [dict allKeys])
-                {
-                    NSNumber* quantity = dict[code];
-                    NSInteger qty = quantity.integerValue;
-                    if (i == 1)
-                    {
-                        qty = -qty;
-                    }
-                    
-                    Card* card = [CardManager cardByCode:code];
-                    
-                    if (card && qty)
-                    {
-                        [dcs addCardCode:card.code copies:qty];
+                for i in 0..<variation.count {
+                    let mult = i==0 ? 1 : -1
+                    let v = variation[i]
+                    if v.type == .Dictionary {
+                        for (code, qty):(String,JSON) in v {
+                            let amount = mult * qty.intValue
+                            if let _ = CardManager.cardByCode(code) {
+                                dcs.addCardCode(code, copies: amount)
+                            }
+                        }
                     }
                 }
+                
+                dcs.sort()
+                revisions.append(dcs)
             }
-            [dcs sort];
-            [revisions addObject:dcs];
         }
         
-        DeckChangeSet* initial = [[DeckChangeSet alloc] init];
-        initial.initial = YES;
-        initial.timestamp = deck.dateCreated;
-        [revisions addObject:initial];
+        let initial = DeckChangeSet()
+        initial.initial = true
+        initial.timestamp = deck.dateCreated
+        revisions.append(initial)
+        deck.revisions = revisions
         
-        deck.revisions = revisions;
-        
-        DeckChangeSet* newest = deck.revisions[0];
-        NSMutableDictionary* cards = [NSMutableDictionary dictionary];
-        for (CardCounter* cc in deck.allCards)
-        {
-            cards[cc.card.code] = @(cc.count);
+        let newest = deck.revisions.first
+        var cards = [String: Int]()
+        for cc in deck.allCards {
+            cards[cc.card.code] = cc.count
         }
-        newest.cards = [NSMutableDictionary dictionaryWithDictionary:cards];
+        newest?.cards = cards
         
         // walk through the deck's history and pre-compute a card list for every revision
-        for (int i = 0; i < deck.revisions.count-1; ++i)
-        {
-            DeckChangeSet* prev = deck.revisions[i];
-            for (DeckChange* dc in prev.changes)
-            {
-                NSNumber* qty = cards[dc.code];
-                qty = @(qty.integerValue - dc.count);
-                if (qty.integerValue == 0)
-                {
-                    [cards removeObjectForKey:dc.code];
-                }
-                else
-                {
-                    cards[dc.code] = qty;
+        for i in 0..<deck.revisions.count-1 {
+            let prev = deck.revisions[i]
+            for dc in prev.changes {
+                let qty = (cards[dc.code] ?? 0) - dc.count
+                if qty == 0 {
+                    cards.removeValueForKey(dc.code)
+                } else {
+                    cards[dc.code] = qty
                 }
             }
-            DeckChangeSet* dcs = deck.revisions[i+1];
-            dcs.cards = [NSMutableDictionary dictionaryWithDictionary:cards];
+            
+            let dcs = deck.revisions[i+1]
+            dcs.cards = cards
         }
-        */
-        /*
-        for (int i=0; i < deck.revisions.count; ++i)
-        {
-        DeckChangeSet* dcs = deck.revisions[i];
-        NSLog(@"%d %@", i, dcs.cards);
-        }
-        */
         
         return deck
     }
