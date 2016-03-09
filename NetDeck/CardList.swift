@@ -139,115 +139,95 @@ class CardList: NSObject {
         self.types = nil
     }
     
-    func filterByTypes(types: Set<String>)
-    {
+    func filterByTypes(types: Set<String>) {
         self.type = ""
         self.types = types
     }
     
-    func filterByFaction(faction: String)
-    {
+    func filterByFaction(faction: String) {
         self.faction = faction
         self.factions = nil
     }
     
-    func filterByFactions(factions: Set<String>)
-    {
+    func filterByFactions(factions: Set<String>) {
         self.faction = ""
         self.factions = factions
     }
     
-    func filterByText(text: String)
-    {
+    func filterByText(text: String) {
         self.text = text
         self.searchScope = .Text
     }
     
-    func filterByTextOrName(text: String)
-    {
+    func filterByTextOrName(text: String) {
         self.text = text
         self.searchScope = .All
     }
     
-    func filterByName(name: String)
-    {
+    func filterByName(name: String) {
         self.text = name
         self.searchScope = .Name
     }
     
-    func filterBySet(set: String)
-    {
+    func filterBySet(set: String) {
         self.set = set
         self.sets = nil
     }
     
-    func filterBySets(sets: Set<String>)
-    {
+    func filterBySets(sets: Set<String>) {
         self.set = ""
         self.sets = sets
     }
     
-    func filterByInfluence(influence: Int)
-    {
+    func filterByInfluence(influence: Int) {
         self.influence = influence
         self.faction4inf = .None
     }
     
-    func filterByInfluence(influence: Int, forFaction faction : NRFaction)
-    {
+    func filterByInfluence(influence: Int, forFaction faction : NRFaction) {
         self.influence = influence
         self.faction4inf = faction
     }
     
-    func filterByMU(mu: Int)
-    {
+    func filterByMU(mu: Int) {
         self.mu = mu
     }
     
-    func filterByTrash(trash: Int)
-    {
+    func filterByTrash(trash: Int) {
         self.trash = trash
     }
     
-    func filterByCost(cost: Int)
-    {
+    func filterByCost(cost: Int) {
         self.cost = cost
     }
     
-    func filterBySubtype(subtype: String)
-    {
+    func filterBySubtype(subtype: String) {
         self.subtype = subtype
         self.subtypes = nil
     }
     
-    func filterBySubtypes(subtypes: Set<String>)
-    {
+    func filterBySubtypes(subtypes: Set<String>) {
         self.subtype = ""
         self.subtypes = subtypes
     }
     
-    func filterByStrength(strength: Int)
-    {
+    func filterByStrength(strength: Int) {
         self.strength = strength
     }
     
-    func filterByAgendaPoints(ap: Int)
-    {
+    func filterByAgendaPoints(ap: Int) {
         self.agendaPoints = ap
     }
     
-    func filterByUniqueness(unique: Bool)
-    {
+    func filterByUniqueness(unique: Bool) {
         self.unique = unique
     }
     
-    func filterByLimited(limited: Bool)
-    {
+    func filterByLimited(limited: Bool) {
         self.limited = limited
     }
     
-    func sortBy(sortType: NRBrowserSort)
-    {
+    func sortBy(sortType: NRBrowserSort) {
         self.sortType = sortType
     }
     
@@ -276,30 +256,23 @@ class CardList: NSObject {
             let predicate = NSPredicate(format:"typeStr IN %@", self.types!)
             predicates.append(predicate)
         }
-        if (self.mu != -1)
-        {
+        if (self.mu != -1) {
             let predicate = NSPredicate(format:"mu == %d", self.mu)
             predicates.append(predicate)
         }
-        if (self.trash != -1)
-        {
+        if (self.trash != -1) {
             let predicate = NSPredicate(format:"trash == %d", self.trash)
             predicates.append(predicate)
         }
-        if (self.strength != -1)
-        {
+        if (self.strength != -1) {
             let predicate = NSPredicate(format:"strength == %d", self.strength)
             predicates.append(predicate)
         }
-        if (self.influence != -1)
-        {
-            if (self.faction4inf == .None)
-            {
+        if (self.influence != -1) {
+            if (self.faction4inf == .None) {
                 let predicate = NSPredicate(format:"influence == %d", self.influence)
                 predicates.append(predicate)
-            }
-            else
-            {
+            } else {
                 let predicate = NSPredicate(format:"influence == %d && faction != %d", self.influence, self.faction4inf.rawValue)
                 predicates.append(predicate)
             }
@@ -325,23 +298,19 @@ class CardList: NSObject {
         if (self.subtypes?.count > 0)
         {
             var subPredicates = [NSPredicate]()
-            for subtype in self.subtypes!
-            {
+            for subtype in self.subtypes! {
                 subPredicates.append(NSPredicate(format:"%@ IN subtypes", subtype))
             }
             let subtypePredicate = NSCompoundPredicate(orPredicateWithSubpredicates:subPredicates)
             predicates.append(subtypePredicate)
         }
-        if (self.agendaPoints != -1)
-        {
+        if (self.agendaPoints != -1) {
             let predicate = NSPredicate(format:"agendaPoints == %d", self.agendaPoints)
             predicates.append(predicate)
         }
-        if (self.text?.length > 0)
-        {
+        if (self.text?.length > 0) {
             var predicate: NSPredicate
-            switch (self.searchScope)
-            {
+            switch (self.searchScope) {
             case .All:
                 predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (name_en CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (alias CONTAINS[cd] %@)",
                 self.text!, self.text!, self.text!, self.text!)
@@ -358,19 +327,16 @@ class CardList: NSObject {
             }
             predicates.append(predicate)
         }
-        if (self.unique)
-        {
+        if (self.unique) {
             let predicate = NSPredicate(format:"unique == 1")
             predicates.append(predicate)
         }
-        if (self.limited)
-        {
+        if (self.limited) {
             let predicate = NSPredicate(format:"type != %d AND maxPerDeck == 1", NRCardType.Identity.rawValue)
             predicates.append(predicate)
         }
         
-        if (predicates.count > 0)
-        {
+        if (predicates.count > 0) {
             let allPredicates = NSCompoundPredicate(andPredicateWithSubpredicates:predicates)
             filteredCards = filteredCards.filter { allPredicates.evaluateWithObject($0) }
         }
@@ -433,8 +399,7 @@ class CardList: NSObject {
         var arr: [Card]?
         for card in filteredCards {
             var section = ""
-            switch (self.sortType)
-            {
+            switch (self.sortType) {
             case .Type, .TypeFaction:
                 section = card.typeStr
             case .Faction:
@@ -442,8 +407,8 @@ class CardList: NSObject {
             default:
                 section = card.setName
             }
-            if section != prevSection
-            {
+            
+            if section != prevSection {
                 sections.append(section)
                 if (arr != nil)
                 {
@@ -455,8 +420,7 @@ class CardList: NSObject {
             prevSection = section
         }
         
-        if (arr?.count > 0)
-        {
+        if (arr?.count > 0) {
             cards.append(arr!)
         }
         
