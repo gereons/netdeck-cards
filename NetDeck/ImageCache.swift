@@ -59,15 +59,15 @@ class ImageCache: NSObject {
         
         let settings = NSUserDefaults.standardUserDefaults()
         
-        if let lastMod = settings.objectForKey(SettingsKeys.LAST_MOD_CACHE) as? [String: String] {
+        if let lastMod = settings.dictionaryForKey(SettingsKeys.LAST_MOD_CACHE) as? [String: String] {
             self.lastModifiedDates = lastMod
         }
         
-        if let nextCheck = settings.objectForKey(SettingsKeys.NEXT_CHECK) as? [String: NSDate] {
+        if let nextCheck = settings.dictionaryForKey(SettingsKeys.NEXT_CHECK) as? [String: NSDate] {
             self.nextCheckDates = nextCheck
         }
         
-        if let imgs = settings.objectForKey(SettingsKeys.UNAVAILABLE_IMAGES) as? [String] {
+        if let imgs = settings.arrayForKey(SettingsKeys.UNAVAILABLE_IMAGES) as? [String] {
             self.unavailableImages.unionInPlace(imgs)
         }
         
