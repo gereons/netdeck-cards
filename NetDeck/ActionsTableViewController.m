@@ -85,7 +85,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     [super viewDidAppear:animated];
     
-    [CardUpdateCheck checkCardsAvailable:self];
+    BOOL displayedAlert = [CardUpdateCheck checkCardsAvailable:self];
+    
+    if (!displayedAlert) {
+        [AppUpdateCheck checkUpdate];
+    }
     
 #if !DEBUG
     // first start with this version?

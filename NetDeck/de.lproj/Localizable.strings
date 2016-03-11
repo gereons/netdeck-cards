@@ -199,6 +199,10 @@
 "Card data may be out of date. Download now?" = "Karten-Daten können veraltet sein. Jetzt aktualisieren?";
 "Later" = "Später";
 
+"Update available" = "Update verfügbar";
+"Version %@ is available on the App Store" = "Version %@ ist im App Store verfügbar";
+"Update" = "Update";
+
 // unsaved changes alert
 "Discard" = "Verwerfen";
 "There are unsaved changes" = "Es gibt ungesicherte Änderungen";

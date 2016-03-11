@@ -12,6 +12,8 @@
     static let UNAVAILABLE_IMAGES  = "unavailableImages"
     static let UNAVAIL_IMG_DATE    = "unavailableImagesDate"
     
+    static let NEXT_UPDATE_CHECK   = "nextUpdateCheck"
+    
     static let FILE_SEQ            = "fileSequence"
     static let LAST_START_VERSION  = "lastStartVersion"
     

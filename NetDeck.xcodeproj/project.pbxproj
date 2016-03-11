@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */; };
 		3A058B1919D334660090F53A /* NRSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A058B1819D334660090F53A /* NRSwitch.m */; };
 		3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */; };
 		3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A08DE6B1996175400F2025E /* BrowserImageCell.m */; };
@@ -329,6 +330,7 @@
 /* Begin PBXFileReference section */
 		1177AECC149D5AD3422387E3 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		242F7FDB1B64BD7EE1846987 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdateCheck.swift; sourceTree = "<group>"; };
 		3A058B1719D334660090F53A /* NRSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRSwitch.h; sourceTree = "<group>"; };
 		3A058B1819D334660090F53A /* NRSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRSwitch.m; sourceTree = "<group>"; };
 		3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewReminder.txt; sourceTree = "<group>"; };
@@ -902,6 +904,7 @@
 			isa = PBXGroup;
 			children = (
 				3AA0B3011C8C2C7E007B4983 /* CardUpdateCheck.swift */,
+				3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */,
 			);
 			name = "Update Check";
 			sourceTree = "<group>";
@@ -1989,6 +1992,7 @@
 				3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */,
 				3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */,
 				3AB34E5F1939AA7A000A43BB /* CardFilterThumbView.m in Sources */,
+				3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */,
 				3AF2235E194364A80072FD9F /* CardFilterSectionHeaderView.m in Sources */,
 				3A56371319954B28006AD431 /* LargeBrowserCell.m in Sources */,
 				3AD860E01B79383500EEF8AC /* CardImageViewController.m in Sources */,
