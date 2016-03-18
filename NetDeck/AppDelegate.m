@@ -7,10 +7,10 @@
 //
 
 // TODOs:
-#warning notification system (updates, bugs etc)
-
 #warning convert rest of http stuff/json to swift -> use alamofire/swiftyjson
-#warning move status bar up when hw keyboard shortcut bar is displayed
+// open: more nrdb testing, use Alamo reachability + activity indicator
+
+#warning move status bar up when hw keyboard shortcut bar is displayed (or alway when kb is visible?)
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning iphone: deck edit history
 #warning move icons etc to Images.xcassets
@@ -18,6 +18,8 @@
 #warning 3d touch shortcuts
 #warning improve startup time
 #warning nrdb re-auth issues
+
+#warning japanese l10n
 
 @import SVProgressHUD;
 @import AFNetworking;

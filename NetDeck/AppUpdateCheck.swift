@@ -17,10 +17,14 @@ class AppUpdateCheck: NSObject {
     class func checkUpdate() {
         
         let settings = NSUserDefaults.standardUserDefaults()
-        let nextCheck = settings.objectForKey(SettingsKeys.NEXT_UPDATE_CHECK) as? NSDate ?? NSDate(timeIntervalSinceNow: WEEK)
-        let now = NSDate()
-//        let now = nextCheck.dateByAddingTimeInterval(10.0)
         
+        guard let nextCheck = settings.objectForKey(SettingsKeys.NEXT_UPDATE_CHECK) as? NSDate else {
+            let nextCheck = NSDate(timeIntervalSinceNow: WEEK)
+            settings.setObject(nextCheck, forKey: SettingsKeys.NEXT_UPDATE_CHECK)
+            return
+        }
+        
+        let now = NSDate()
         if now.timeIntervalSince1970 > nextCheck.timeIntervalSince1970 && AppDelegate.online() {
             self.checkForUpdate { version in
                 if let v = version {
@@ -52,7 +56,7 @@ class AppUpdateCheck: NSObject {
             return
         }
         
-        let url = "http://itunes.apple.com/lookup?bundleId=" + bundleId
+        let url = "https://itunes.apple.com/lookup?bundleId=" + bundleId
         
         Alamofire.request(.GET, url).responseJSON { response in
             switch response.result {
@@ -60,7 +64,6 @@ class AppUpdateCheck: NSObject {
                 if let value = response.result.value {
                     let json = JSON(value)
                     if let appstoreVersion = json["results"][0]["version"].string {
-                        
                         if let appstore = Double(appstoreVersion), let current = Double(currentVersion) {
                             completion(appstore > current ? appstoreVersion : nil)
                             return
@@ -73,5 +76,4 @@ class AppUpdateCheck: NSObject {
             }
         }
     }
-    
 }
