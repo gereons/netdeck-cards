@@ -272,8 +272,8 @@ import Foundation
         return cards.indexOf { $0.card.code == code }
     }
     
-    func findCard(card: Card) -> CardCounter? {
-        if let index = self.indexOfCardCode(card.code) {
+    func findCard(card: Card?) -> CardCounter? {
+        if let c = card, index = self.indexOfCardCode(c.code) {
             return cards[index]
         }
         return nil
