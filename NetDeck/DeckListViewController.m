@@ -115,11 +115,8 @@
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.backgroundColor = [UIColor clearColor];
     
-    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0);
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 44, 0);
-    
-    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0); // top == 0 because this is the first view in the .xib. wtf?
-    self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 44, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 0, 0);
     
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -330,26 +327,25 @@
 
 -(void) willShowKeyboard:(NSNotification*)sender
 {
-    CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    float kbHeight = kbRect.size.height;
-
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight, 0.0);
-    self.tableView.contentInset = contentInsets;
-    self.tableView.scrollIndicatorInsets = contentInsets;
+    float duration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
-    self.collectionView.contentInset = contentInsets;
-    self.collectionView.scrollIndicatorInsets = contentInsets;
+    CGRect beginFrame = [[sender.userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    CGRect endFrame = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    float yDiff = beginFrame.origin.y - endFrame.origin.y;
+
+    self.toolbarBottomMargin.constant = yDiff;
+    [UIView animateWithDuration:duration animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 -(void) willHideKeyboard:(NSNotification*)sender
 {
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64, 0, 44, 0);
-    
-    self.tableView.contentInset = contentInsets;
-    self.tableView.scrollIndicatorInsets = contentInsets;
-    
-    self.collectionView.contentInset = contentInsets;
-    self.collectionView.scrollIndicatorInsets = contentInsets;
+    float duration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    self.toolbarBottomMargin.constant = 0;
+    [UIView animateWithDuration:duration animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 -(void) loadDeckFromFile:(NSString *)filename

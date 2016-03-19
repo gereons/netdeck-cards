@@ -24,6 +24,8 @@
 @property IBOutlet UIButton* notesButton;
 @property IBOutlet UIButton* historyButton;
 
+@property IBOutlet NSLayoutConstraint *toolbarBottomMargin;
+
 @property NRRole role;
 @property (nonatomic) Deck* deck;
 
