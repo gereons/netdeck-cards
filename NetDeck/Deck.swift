@@ -206,43 +206,46 @@ import Foundation
     // add (copies>0) or remove (copies<0) a copy of a card from the deck
     // if copies==0, removes ALL copies of the card
     func addCard(card: Card, var copies: Int, history: Bool) {
-        self.modified = true
-
+        
         if card.type == .Identity {
+            self.modified = true
             self.setIdentity(card, copies: copies, history: history)
             return
         }
         
-        var cc: CardCounter?
-        let cardIndex = self.indexOfCardCode(card.code)
-        if cardIndex != nil {
-            cc = cards[cardIndex!]
-        }
-        
-        if copies < 1 {
-            if cc != nil {
-                if copies == 0 || abs(copies) >= cc!.count {
-                    cards.removeAtIndex(cardIndex!)
-                    copies = -cc!.count
+        if let cardIndex = self.indexOfCardCode(card.code) {
+            // modify an existing card
+            let cc = self.cards[cardIndex]
+            
+            if copies < 1 {
+                // remove N (or all) copies of card
+                if copies == 0 || abs(copies) >= cc.count {
+                    cards.removeAtIndex(cardIndex)
+                    copies = -cc.count
                 } else {
-                    cc!.count -= abs(copies)
+                    cc.count -= abs(copies)
                 }
+            } else {
+                // add N copies
+                let max = cc.card.maxPerDeck
+                let maxAdd = max - cc.count
+                copies = min(copies, maxAdd)
+                cc.count += copies
             }
         } else {
-            if cc == nil {
-                cc = CardCounter(card: card, andCount: copies)
-                cards.append(cc!)
-            } else {
-                let max = cc!.card.maxPerDeck
-                if cc!.count < max {
-                    cc!.count = min(max, cc!.count + copies)
-                }
-            }
+            // add a new card
+            assert(copies > 0, "removing a card that isn't in deck")
+            copies = min(copies, card.maxPerDeck)
+            let cc = CardCounter(card: card, andCount: copies)
+            cards.append(cc)
         }
         
-        if history && cc != nil {
-            self.lastChanges.addCardCode(cc!.card.code, copies: copies)
+        // print("copies=\(copies) of \(card.name)")
+        if history && copies != 0 {
+            self.lastChanges.addCardCode(card.code, copies: copies)
         }
+        
+        self.modified = copies != 0
         
         self.sort()
     }
