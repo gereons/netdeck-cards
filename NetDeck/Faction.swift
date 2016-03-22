@@ -11,19 +11,7 @@ import Foundation
 @objc class Faction: NSObject {
     
     private static var faction2name = [NRFaction: String]()
-    private static let code2faction: [String: NRFaction] = [
-        "anarch": .Anarch,
-        "shaper": .Shaper,
-        "criminal": .Criminal,
-        "weyland-consortium": .Weyland,
-        "haas-bioroid": .HaasBioroid,
-        "nbn": .NBN,
-        "jinteki": .Jinteki,
-        "adam": .Adam,
-        "apex": .Apex,
-        "sunny-lebeau": .SunnyLebeau,
-        "neutral": .Neutral
-    ]
+    
     private static let runnerFactions: [NRFaction] = [ .Anarch, .Criminal, .Shaper, .Adam, .Apex, .SunnyLebeau ]
     private static let runnerFactionsPreDAD: [NRFaction] = [ .Anarch, .Criminal, .Shaper ]
     private static let corpFactions: [NRFaction] = [ .HaasBioroid, .Jinteki, .NBN, .Weyland ]
@@ -86,11 +74,8 @@ import Foundation
         return true
     }
     
-    class func faction(faction: String) -> NRFaction {
-        if let faction = code2faction[faction] {
-            return faction
-        }
-        return .None
+    class func faction(code: String) -> NRFaction {
+        return Codes.factionForCode(code)
     }
     
     class func factionsForRole(role: NRRole) -> [String] {

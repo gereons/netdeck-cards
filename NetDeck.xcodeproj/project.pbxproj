@@ -75,6 +75,7 @@
 		3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E201BF79C7D000311FA /* DeckChange.swift */; };
 		3A3C1E231BF7A131000311FA /* DeckChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */; };
 		3A3CE0F01C79EE31003BF8D9 /* DeckImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3CE0EF1C79EE31003BF8D9 /* DeckImport.swift */; };
+		3A3D8CA71CA1C6EF002C73E3 /* Codes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D8CA61CA1C6EF002C73E3 /* Codes.swift */; };
 		3A3E26E81A005042000C6D32 /* UIAlert+NetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */; };
 		3A3FA6911BBF07C100994A11 /* UIFont+monospacedDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3FA6901BBF07C100994A11 /* UIFont+monospacedDigits.m */; };
 		3A40EA4D19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40EA4B19FD2CBE00B9CFDA /* 890-sort-ascending@2x.png */; };
@@ -426,6 +427,7 @@
 		3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckChangeSet.swift; sourceTree = "<group>"; };
 		3A3CE0EF1C79EE31003BF8D9 /* DeckImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckImport.swift; sourceTree = "<group>"; };
 		3A3D841419F1A24F00642CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		3A3D8CA61CA1C6EF002C73E3 /* Codes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codes.swift; sourceTree = "<group>"; };
 		3A3E26E61A004FD7000C6D32 /* UIAlert+NetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlert+NetDeck.h"; sourceTree = "<group>"; };
 		3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlert+NetDeck.m"; sourceTree = "<group>"; };
 		3A3FA68F1BBF07C100994A11 /* UIFont+monospacedDigits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+monospacedDigits.h"; sourceTree = "<group>"; };
@@ -1294,6 +1296,7 @@
 				3A9752201C1F6E310070E39B /* MiscUtilities.swift */,
 				3A3C1E131BF74DAF000311FA /* TableData.swift */,
 				3A3C1E151BF7525B000311FA /* Faction.swift */,
+				3A3D8CA61CA1C6EF002C73E3 /* Codes.swift */,
 				3A3C1E181BF771B2000311FA /* CardType.swift */,
 				3A41DA861BF8785C003CB7E1 /* CardSets.swift */,
 				3A3C1E1C1BF77F10000311FA /* CardCounter.swift */,
@@ -1977,6 +1980,7 @@
 				3AD860DB1B792B6700EEF8AC /* ListCardsViewController.m in Sources */,
 				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,
 				3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */,
+				3A3D8CA71CA1C6EF002C73E3 /* Codes.swift in Sources */,
 				3A85323F1855050900507B9A /* NRSplitViewController.m in Sources */,
 				3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */,
 				3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */,

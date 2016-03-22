@@ -18,15 +18,14 @@
 {
     if ((self = [super init]))
     {
-        // calculate ice type distribution
+        // calculate type distribution
         NSMutableDictionary* types = [NSMutableDictionary dictionary];
         for (CardCounter* cc in deck.cards)
         {
             NSString* type = l10n(cc.card.typeStr);
             
-            if (cc.card.type == NRCardTypeProgram && cc.card.strength != -1)
-            {
-                type = l10n(@"Icebreaker");
+            if (cc.card.type == NRCardTypeProgram) {
+                type = cc.card.programType;
             }
             NSNumber* n = [types objectForKey:type];
             int prev = n == nil ? 0 : [n intValue];

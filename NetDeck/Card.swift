@@ -185,10 +185,6 @@ import SwiftyJSON
         return Card.cropValues[self.type]!
     }
     
-    var isValid: Bool {
-        return self.code.length > 0 && self.name.length > 0 && self.faction != .None && self.role != .None
-    }
-    
     // how many copies owned
     var owned: Int {
         if self.isCore {
@@ -202,7 +198,7 @@ import SwiftyJSON
         return self.quantity
     }
     
-    class func cardFromJson(json: JSON) -> Card {
+    class func cardFromJson(json: JSON) -> Card? {
         let c = Card()
         
         c.code = json["code"].stringValue
@@ -213,19 +209,29 @@ import SwiftyJSON
         let factionCode = json["faction_code"].stringValue
         c.faction = Faction.faction(factionCode)
         assert(c.faction != .None, "no faction for \(c.code)")
+        if c.faction == .None {
+            print("missing faction: \(factionCode) \(c.name)")
+            return nil
+        }
         
         c.roleStr = json["side"].stringValue
         let roleCode = json["side_code"].stringValue
-        if let role = roleCodes[roleCode] {
-            c.role = role
-        } else {
-            assert(false, "no role for \(c.code)")
+        
+        c.role = Codes.roleForCode(roleCode)
+        assert(c.role != .None, "no role for \(c.code)")
+        if c.role == .None {
+            print("missing role: \(roleCode) \(c.name)")
+            return nil
         }
         
         c.typeStr = json["type"].stringValue
         let typeCode = json["type_code"].stringValue
         c.type = CardType.type(typeCode)
-        assert(c.type != .None, "no type for \(c.code), \(c.typeStr)")
+        assert(c.type != .None, "no type for \(c.code), \(typeCode)")
+        if c.type == .None {
+            print("missing type: \(typeCode) \(c.name)")
+            return nil
+        }
         
         if c.type == .Identity {
             c.name = c.shortIdentityName(c.name, forRole: c.role, andFaction: c.factionStr)
@@ -259,9 +265,9 @@ import SwiftyJSON
             c.subtype = subtype
         }
         if c.subtype.length > 0 {
-            c.subtype = c.subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")
-            c.subtype = c.subtype.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
-            c.subtypes = c.subtype.componentsSeparatedByString(" - ")
+            let split = self.subtypeSplit(c.subtype)
+            c.subtype = split.subtype
+            c.subtypes = split.subtypes
         }
         
         c.number = json["number"].int ?? -1
@@ -299,16 +305,19 @@ import SwiftyJSON
             c.maxPerDeck = 1
         }
         
-        if c.isMultiIce() {
-            multiIce.append(c.code)
-        }
-        
         c.ancurLink = json["ancurLink"].string
         if c.ancurLink?.length == 0 {
             c.ancurLink = nil
         }
         
         return c
+    }
+    
+    private class func subtypeSplit(subtype: String) -> (subtype: String, subtypes: [String]) {
+        var s = subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")
+        s = subtype.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
+        let subtypes = s.componentsSeparatedByString(" - ")
+        return (subtype, subtypes)
     }
     
     // NB: not part of the public API!
@@ -318,7 +327,20 @@ import SwiftyJSON
     
     func setVirtual(subtype: String) {
         self.isVirtual = subtype.lowercaseString.containsString("virtual")
-     }
+    }
+    
+    func setMultiIce(subtype: String) {
+        if self.type == .Ice {
+            let (_, subtypes) = Card.subtypeSplit(subtype)
+            let barrier = subtypes.contains("Barrier")
+            let sentry = subtypes.contains("Sentry")
+            let codeGate = subtypes.contains("Code Gate")
+            if barrier && sentry && codeGate {
+                print("multi: \(self.name)")
+                Card.multiIce.append(self.code)
+            }
+        }
+    }
     
     func setNameEn(nameEn: String) {
         self.name_en = nameEn
@@ -349,13 +371,6 @@ import SwiftyJSON
         return name
     }
     
-    func isMultiIce() -> Bool {
-        let en = self.subtypes.contains("Sentry") && self.subtypes.contains("Barrier") && self.subtypes.contains("Code Gate")
-        let localized = self.subtypes.contains("Sentry".localized()) && self.subtypes.contains("Barrier".localized()) && self.subtypes.contains("Code Gate".localized())
-        return en || localized
-    }
-    
-    private static let roleCodes = [ "runner": NRRole.Runner, "corp": NRRole.Corp ]
     private static let factionColors: [NRFaction: UInt] = [
         .Jinteki:      0x940c00,
         .NBN:          0xd7a32d,

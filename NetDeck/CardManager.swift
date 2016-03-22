@@ -169,20 +169,22 @@ import SwiftyJSON
     }
     
     class func setupFromJsonData(json: JSON) -> Bool {
-
         for obj in json.arrayValue {
-            let card = Card.cardFromJson(obj)
-            assert(card.isValid, "invalid card from \(obj)")
-            if !card.isValid {
-                return false
+            if let card = Card.cardFromJson(obj) {
+                CardManager.addCard(card)
             }
-                
-            CardManager.addCard(card)
         }
         
         let cards = Array(allKnownCards.values)
-        if !Faction.initializeFactionNames(cards) { return false }
-        if !CardType.initializeCardTypes(cards) { return false }
+        if cards.count == 0 {
+            return false
+        }
+        if !Faction.initializeFactionNames(cards) {
+            return false
+        }
+        if !CardType.initializeCardTypes(cards) {
+            return false
+        }
         
         // sort identities by faction and name
         for var arr in [ allIdentitiesByRole[.Runner]!, allIdentitiesByRole[.Corp]! ] {
@@ -274,6 +276,7 @@ import SwiftyJSON
                 card.setNameEn(name_en)
                 card.setAlliance(subtype ?? "")
                 card.setVirtual(subtype ?? "")
+                card.setMultiIce(subtype ?? "")
             }
         }
         

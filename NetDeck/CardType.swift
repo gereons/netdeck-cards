@@ -9,22 +9,10 @@
 import Foundation
 
 @objc class CardType: NSObject {
-    private static let code2type: [String: NRCardType] = [
-        "identity": .Identity,
-        "asset": .Asset,
-        "agenda": .Agenda,
-        "ice": .Ice,
-        "upgrade": .Upgrade,
-        "operation": .Operation,
-        "program": .Program,
-        "hardware": .Hardware,
-        "resource": .Resource,
-        "event": .Event,
-    ]
     
     // NB: Card diff depends on ICE/Program being the last entries!
-    private static let runnerTypes:[NRCardType] = [ .Event, .Hardware, .Resource, .Program ]
-    private static let corpTypes:[NRCardType] = [ .Agenda, .Asset, .Upgrade, .Operation, .Ice ]
+    private static let runnerTypes: [NRCardType] = [ .Event, .Hardware, .Resource, .Program ]
+    private static let corpTypes: [NRCardType] = [ .Agenda, .Asset, .Upgrade, .Operation, .Ice ]
     
     private static var type2name = [NRCardType: String]()
     private static var runnerTypeNames = [String]()
@@ -35,8 +23,8 @@ import Foundation
         runnerTypeNames = [String]()
         corpTypeNames = [String]()
         
-        assert(code2type.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
-        if code2type.count != runnerTypes.count + corpTypes.count + 1 {
+        assert(Codes.codesForType.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
+        if Codes.codesForType.count != runnerTypes.count + corpTypes.count + 1 {
             return false
         }
         
@@ -45,8 +33,8 @@ import Foundation
         for card in cards {
             type2name[card.type] = card.typeStr
         }
-        assert(type2name.count == code2type.count + 1) // +1 for "Any"
-        if type2name.count != code2type.count + 1 {
+        assert(type2name.count == Codes.codesForType.count + 1) // +1 for "Any"
+        if type2name.count != Codes.codesForType.count + 1 {
             return false
         }
         
@@ -76,8 +64,8 @@ import Foundation
         return type2name[type] ?? "n/a"
     }
     
-    class func type(type: String) -> NRCardType {
-        return code2type[type] ?? .None
+    class func type(code: String) -> NRCardType {
+        return Codes.typeForCode(code)
     }
     
     class func typesForRole(role: NRRole) -> [String] {
