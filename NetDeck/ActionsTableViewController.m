@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRMenuSettings,
     NRMenuAbout,
     
+    NRMenuTest,
+    
     NRMenuItemCount
 };
 
@@ -246,6 +248,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             cell.textLabel.text = l10n(@"Card Browser");
             cell.textLabel.enabled = cardsAvailable;
             break;
+            
+        case NRMenuTest:
+            cell.textLabel.text = @"NRDB Login Test";
+            break;
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -326,6 +332,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:about];
             detailViewManager.detailViewController = self.snc;
             break;
+        }
+            
+        case NRMenuTest:
+        {
+            [[NRDB sharedInstance] testLogin];
         }
     }
 }
