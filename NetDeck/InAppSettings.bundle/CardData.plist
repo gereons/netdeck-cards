@@ -25,6 +25,9 @@
                 <string>de</string>
                 <string>fr</string>
                 <string>es</string>
+                <string>pl</string>
+                <string>kr</string>
+                <string>jp</string>
             </array>
             <key>Titles</key>
             <array>
@@ -32,6 +35,9 @@
                 <string>German</string>
                 <string>French</string>
                 <string>Spanish</string>
+                <string>Polish</string>
+                <string>Korean</string>
+                <string>Japanese</string>
             </array>
             <key>FooterText</key>
             <string>LanguageFooterText</string>
