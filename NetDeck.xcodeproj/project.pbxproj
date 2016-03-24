@@ -2169,6 +2169,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 242F7FDB1B64BD7EE1846987 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -2202,6 +2203,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AC9022848911E8162E8048A8 /* Pods.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -2233,6 +2235,7 @@
 		3A3622971849320C007F2854 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2256,6 +2259,7 @@
 		3A3622981849320C007F2854 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2315,6 +2319,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 53700086EE846BB882A399B8 /* Pods.adhoc.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -2347,6 +2352,7 @@
 		3A6322A318617AEC0095330F /* Adhoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

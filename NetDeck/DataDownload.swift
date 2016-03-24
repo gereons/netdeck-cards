@@ -50,7 +50,7 @@ class DataDownload: NSObject {
             
         if nrdbHost?.length > 0 {
             self.showDownloadAlert()
-            self.performSelector("doDownloadCardData:", withObject: nil, afterDelay: 0.0)
+            self.performSelector(#selector(DataDownload.doDownloadCardData(_:)), withObject: nil, afterDelay: 0.0)
         } else {
             UIAlertController.alertWithTitle(nil, message: "No known NetrunnerDB server".localized(), button: "OK".localized());
             return
@@ -100,7 +100,7 @@ class DataDownload: NSObject {
                     self.localizedCards = JSON(value)
                 }
             case .Failure:
-                ++self.downloadErrors
+                self.downloadErrors += 1
             }
             
             if self.downloadStopped { return }
@@ -114,7 +114,7 @@ class DataDownload: NSObject {
                         self.englishCards = JSON(value)
                     }
                 case .Failure:
-                    ++self.downloadErrors
+                    self.downloadErrors += 1
                 }
                 
                 if self.downloadStopped { return }
@@ -128,7 +128,7 @@ class DataDownload: NSObject {
                             self.localizedSets = JSON(value)
                         }
                     case .Failure:
-                        ++self.downloadErrors
+                        self.downloadErrors += 1
                     }
                     
                     self.finishDownloads()
@@ -247,7 +247,7 @@ class DataDownload: NSObject {
             
             let downloadNext: (Bool) -> Void = { (ok) in
                 if !ok && card.imageSrc != nil {
-                    ++self.downloadErrors
+                    self.downloadErrors += 1
                 }
                 self.downloadNextImage([ "index": index+1, "scope": scope.rawValue])
             }
@@ -277,7 +277,7 @@ class DataDownload: NSObject {
             }
             
             // use -performSelector: so the UI can refresh
-            self.performSelector("downloadImageForCard:", withObject:dict, afterDelay:0.0)
+            self.performSelector(#selector(DataDownload.downloadImageForCard(_:)), withObject:dict, afterDelay:0.0)
         }
         else
         {

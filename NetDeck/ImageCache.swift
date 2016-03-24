@@ -257,10 +257,11 @@ class ImageCache: NSObject {
         }
     }
     
-    private func saveImage(var img: UIImage, key: String) -> Bool {
+    private func saveImage(image: UIImage, key: String) -> Bool {
         let dir = self.directoryForImages()
         let file = dir.stringByAppendingPathComponent(key)
         
+        var img = image
         self.NLOG("save img for %@", key)
         if img.size.width > 300 {
             // rescale image to 300x418 and save the scaled-down version

@@ -239,7 +239,7 @@ class NRDB: NSObject {
             self.timedRefresh(nil)
         } else {
             self.timer?.invalidate()
-            self.timer = NSTimer(timeInterval:diff, target:self, selector:"timedRefresh:", userInfo: nil, repeats: false)
+            self.timer = NSTimer(timeInterval:diff, target:self, selector:#selector(NRDB.timedRefresh(_:)), userInfo: nil, repeats: false)
         }
     }
     
@@ -271,7 +271,7 @@ class NRDB: NSObject {
                 ti = NSUserDefaults.standardUserDefaults().doubleForKey(SettingsKeys.NRDB_TOKEN_TTL) as NSTimeInterval
                 ti -= 300; // 5 minutes before expiry
             }
-            self.timer = NSTimer(timeInterval:ti, target:self, selector:"timedRefresh:", userInfo:nil, repeats: false)
+            self.timer = NSTimer(timeInterval:ti, target:self, selector:#selector(NRDB.timedRefresh(_:)), userInfo:nil, repeats: false)
         }
     }
     

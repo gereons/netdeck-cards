@@ -133,7 +133,7 @@ import Foundation
         
         var count = cc.count
         if cc.card.type == .Program && self.identity?.code == Card.THE_PROFESSOR {
-            --count
+            count -= 1
         }
         
         // alliance rules for corp
@@ -205,8 +205,9 @@ import Foundation
     
     // add (copies>0) or remove (copies<0) a copy of a card from the deck
     // if copies==0, removes ALL copies of the card
-    func addCard(card: Card, var copies: Int, history: Bool) {
+    func addCard(card: Card, copies: Int, history: Bool) {
         
+        var copies = copies
         if card.type == .Identity {
             self.modified = true
             self.setIdentity(card, copies: copies, history: history)

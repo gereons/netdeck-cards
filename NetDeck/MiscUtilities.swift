@@ -64,7 +64,8 @@ extension NSRange {
     func stringRangeForText(string: String) -> Range<String.Index> {
         let start = string.startIndex.advancedBy(self.location)
         let end = start.advancedBy(self.length)
-        return Range<String.Index>(start: start, end: end)
+        // return Range<String.Index>(start: start, end: end)
+        return start ..< end
     }
 }
 

@@ -54,8 +54,8 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         self.collectionView.hidden = DrawSimulatorViewController.viewMode == 1
         
         // each view needs its own long press recognizer
-        self.tableView.addGestureRecognizer(UILongPressGestureRecognizer(target:self, action:"longPress:"))
-        self.collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target:self, action:"longPress:"))
+        self.tableView.addGestureRecognizer(UILongPressGestureRecognizer(target:self, action:#selector(DrawSimulatorViewController.longPress(_:))))
+        self.collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target:self, action:#selector(DrawSimulatorViewController.longPress(_:))))
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self

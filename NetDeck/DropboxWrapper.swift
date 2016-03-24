@@ -70,7 +70,7 @@ class DropboxWrapper: NSObject {
                 let destination = NSURL(fileURLWithPath: path)
                 return destination
             }).response { response, error in
-                ++count
+                count += 1
                 if count == names.count {
                     completion()
                 }

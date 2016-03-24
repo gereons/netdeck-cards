@@ -274,7 +274,7 @@ import SwiftyJSON
                     collapsed.removeAtIndex(i)
                 }
                 else {
-                    ++i
+                    i += 1
                 }
             }
             enabledSets = TableData(sections:sections, andValues:setNames)

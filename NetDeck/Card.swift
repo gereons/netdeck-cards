@@ -227,7 +227,7 @@ import SwiftyJSON
         c.typeStr = json["type"].stringValue
         let typeCode = json["type_code"].stringValue
         c.type = CardType.type(typeCode)
-        assert(c.type != .None, "no type for \(c.code), \(typeCode)")
+        // assert(c.type != .None, "no type for \(c.code), \(typeCode)")
         if c.type == .None {
             print("missing type: \(typeCode) \(c.name)")
             return nil
