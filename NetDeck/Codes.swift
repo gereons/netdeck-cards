@@ -12,23 +12,23 @@ import Foundation
 class Codes {
     
     static let codesForType: [NRCardType: Set<String>] = [
-        .Identity: setOf("identity", "identität", "identité", "identidad"),
+        .Identity: setOf("identity", "identität", "identité", "identidad", "tożsamość"),
         
-        .Asset: setOf("asset", "aktivposten", "avoir", "ventaja"),
-        .Agenda: setOf("agenda", "projet", "plan"),
-        .Ice: setOf("ice", "glace", "hielo"),
+        .Asset: setOf("asset", "aktivposten", "avoir", "ventaja", "aktywa"),
+        .Agenda: setOf("agenda", "projet", "plan", "projekt"),
+        .Ice: setOf("ice", "glace", "hielo", "lód"),
         .Upgrade: setOf("upgrade", "extension", "mejora"),
-        .Operation: setOf("operation", "opération", "operación"),
+        .Operation: setOf("operation", "opération", "operación", "operacja"),
         
         .Program: setOf("program", "programm", "programme", "programa"),
-        .Hardware: setOf("hardware", "matériel"),
-        .Resource: setOf("resource", "ressource", "recurso"),
-        .Event: setOf("event", "ereignis", "événement", "evento"),
+        .Hardware: setOf("hardware", "matériel", "sprzęt"),
+        .Resource: setOf("resource", "ressource", "recurso", "zasób"),
+        .Event: setOf("event", "ereignis", "événement", "evento", "wydarzenie"),
     ]
     
     static let codesForRole: [NRRole: Set<String>] = [
-        .Runner: setOf("runner"),
-        .Corp: setOf("corp", "konzern", "corpo", "corporación")
+        .Runner: setOf("runner", "기업"),
+        .Corp: setOf("corp", "konzern", "corpo", "corporación", "korp", "러너")
     ]
     
     static let codesForFaction: [NRFaction: Set<String>] = [
