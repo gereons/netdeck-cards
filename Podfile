@@ -3,10 +3,6 @@ platform :ios, '9.2'
 inhibit_all_warnings!
 use_frameworks!
 
-pod 'AFNetworking', '~> 2.0' # -> Alamofire
-pod 'libextobjc' # -> remove?
-
-
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'DTCoreText'
@@ -17,6 +13,8 @@ pod 'MultiSelectSegmentedControl'
 pod 'CorePlot'
 pod 'Alamofire'
 pod 'AlamofireImage'
+pod 'AlamofireNetworkActivityIndicator'
+pod 'AlamofireNetworkActivityIndicator'
 pod 'SwiftyJSON'
 pod 'SwiftyDropbox'
 pod 'SDCAlertView'

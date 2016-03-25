@@ -113,7 +113,7 @@ class ImageCache: NSObject {
             // get image from our on-disk cache
             if let img = self.getDecodedImageFor(key)
             {
-                if AppDelegate.online() {
+                if Reachability.online() {
                     self.checkForImageUpdate(card, key: key)
                 }
                 
@@ -125,7 +125,7 @@ class ImageCache: NSObject {
             else
             {
                 // image is not in on-disk cache
-                if AppDelegate.online() {
+                if Reachability.online() {
                     self.downloadImageFor(card, key: key) { (card, image, placeholder) in
                         dispatch_async(dispatch_get_main_queue()) {
                             completion(card, image, placeholder)
@@ -149,7 +149,7 @@ class ImageCache: NSObject {
     }
     
     func updateImageFor(card: Card, completion: (Bool) -> Void) {
-        guard AppDelegate.online() else {
+        guard Reachability.online() else {
             completion(false)
             return
         }

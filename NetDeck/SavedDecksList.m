@@ -170,7 +170,7 @@
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];
     if (useDropbox) {
         [alert addAction:[UIAlertAction actionWithTitle:@"To Dropbox" handler:^(UIAlertAction * action) {
-            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...") maskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToDropbox) withObject:nil afterDelay:0.0];
 
@@ -178,7 +178,7 @@
     }
     if (useNetrunnerdb) {
         [alert addAction:[UIAlertAction actionWithTitle:@"To NetrunnerDB.com" handler:^(UIAlertAction * action) {
-            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...") maskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToNetrunnerDB) withObject:nil afterDelay:0.0];
         }]];

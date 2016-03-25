@@ -104,7 +104,7 @@
         
         if (useNrdb)
         {
-            if (AppDelegate.online)
+            if (Reachability.online)
             {
                 if (IS_IPAD)
                 {
@@ -148,7 +148,7 @@
 {
     if ([specifier.key isEqualToString:SettingsKeys.DOWNLOAD_DATA_NOW])
     {
-        if (AppDelegate.online)
+        if (Reachability.online)
         {
             [DataDownload downloadCardData];
         }
@@ -159,7 +159,7 @@
     }
     else if ([specifier.key isEqualToString:SettingsKeys.REFRESH_AUTH_NOW])
     {
-        if (AppDelegate.online)
+        if (Reachability.online)
         {
             [SVProgressHUD showInfoWithStatus:@"re-authenticating"];
             [[NRDB sharedInstance] backgroundRefreshAuthentication:^(UIBackgroundFetchResult result) {
@@ -174,7 +174,7 @@
     }
     else if ([specifier.key isEqualToString:SettingsKeys.DOWNLOAD_IMG_NOW])
     {
-        if (AppDelegate.online)
+        if (Reachability.online)
         {
             [DataDownload downloadAllImages];
         }
@@ -185,7 +185,7 @@
     }
     else if ([specifier.key isEqualToString:SettingsKeys.DOWNLOAD_MISSING_IMG])
     {
-        if (AppDelegate.online)
+        if (Reachability.online)
         {
             [DataDownload downloadMissingImages];
         }
@@ -213,7 +213,7 @@
     }
     else if ([specifier.key isEqualToString:SettingsKeys.TEST_API])
     {
-        if (AppDelegate.online)
+        if (Reachability.online)
         {
             [self testApiSettings];
         }

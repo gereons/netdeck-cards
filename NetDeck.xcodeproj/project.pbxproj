@@ -89,6 +89,7 @@
 		3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */; };
 		3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4866E5193B85560045C927 /* DeckNotesPopup.m */; };
 		3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A4866E6193B85560045C927 /* DeckNotesPopup.xib */; };
+		3A529E631CA57BF70061E065 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A529E621CA57BF70061E065 /* Reachability.swift */; };
 		3A52E1911917F9EF00264C2A /* 763-arrow-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18D1917F9EF00264C2A /* 763-arrow-up.png */; };
 		3A52E1921917F9EF00264C2A /* 763-arrow-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18E1917F9EF00264C2A /* 763-arrow-up@2x.png */; };
 		3A52E1931917F9EF00264C2A /* 764-arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */; };
@@ -450,6 +451,7 @@
 		3A4866E4193B85560045C927 /* DeckNotesPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckNotesPopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A4866E5193B85560045C927 /* DeckNotesPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckNotesPopup.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A4866E6193B85560045C927 /* DeckNotesPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckNotesPopup.xib; sourceTree = "<group>"; };
+		3A529E621CA57BF70061E065 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		3A52E18D1917F9EF00264C2A /* 763-arrow-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "763-arrow-up.png"; sourceTree = "<group>"; };
 		3A52E18E1917F9EF00264C2A /* 763-arrow-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "763-arrow-up@2x.png"; sourceTree = "<group>"; };
 		3A52E18F1917F9EF00264C2A /* 764-arrow-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "764-arrow-down.png"; sourceTree = "<group>"; };
@@ -947,6 +949,7 @@
 			children = (
 				3A6228131C1456F400FBF041 /* SettingsKeys.swift */,
 				3AF697881C1DAC7300D254CE /* Notifications.swift */,
+				3A529E621CA57BF70061E065 /* Reachability.swift */,
 				3ABAD2F71B8275F8009E81F3 /* NSArray+TwoD.h */,
 				3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */,
 				3A595423186ED61C0074B3B1 /* CGRectUtils.h */,
@@ -1962,6 +1965,7 @@
 				3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */,
 				3AD066791896CD2100FF1666 /* CardCell.m in Sources */,
 				3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */,
+				3A529E631CA57BF70061E065 /* Reachability.swift in Sources */,
 				3AA0B3021C8C2C7E007B4983 /* CardUpdateCheck.swift in Sources */,
 				3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */,
 				3A3A83891C135BE3004F6562 /* DeckManager.swift in Sources */,
@@ -2094,7 +2098,7 @@
 		3A3622911849320C007F2854 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2139,7 +2143,7 @@
 		3A3622921849320C007F2854 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2290,7 +2294,7 @@
 		3A6322A118617AEC0095330F /* Adhoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

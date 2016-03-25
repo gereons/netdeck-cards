@@ -334,7 +334,7 @@ class DeckImport: NSObject {
         var ok = false
         self.downloadStopped = false
         
-        self.request = Alamofire.request(.GET, deckUrl).responseData({ (response) -> Void in
+        self.request = Alamofire.request(.GET, deckUrl).responseData(completionHandler: { (response) in
             switch response.result {
             case .Success:
                 if let value = response.result.value {

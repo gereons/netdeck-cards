@@ -165,7 +165,7 @@ class NRDB: NSObject {
     
     private func getAuthorization(parameters: [String: String], completion: (Bool) -> Void) {
         let foreground = UIApplication.sharedApplication().applicationState == .Active
-        if foreground && !AppDelegate.online() {
+        if foreground && !Reachability.online() {
             completion(false)
             return
         }
@@ -219,7 +219,7 @@ class NRDB: NSObject {
     func refreshAuthentication() {
         let settings = NSUserDefaults.standardUserDefaults()
         
-        if !settings.boolForKey(SettingsKeys.USE_NRDB) || !AppDelegate.online() {
+        if !settings.boolForKey(SettingsKeys.USE_NRDB) || !Reachability.online() {
             return
         }
         

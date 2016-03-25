@@ -6,10 +6,11 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+#if 0
 @import AFNetworking;
 
 #import "AppDelegate.h"
-#import "EXTScope.h"
+// #import "EXTScope.h"
 #import "NRDB.h"
 #import "NRDBAuth.h"
 
@@ -279,13 +280,13 @@ static NSDateFormatter* formatter;
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    @weakify(self);
+    // @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        @strongify(self);
+        // @strongify(self);
         [self finishedDecklist:YES decks:responseObject];
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        @strongify(self);
+        // @strongify(self);
         [self finishedDecklist:NO decks:nil];
     }];
     [operation start];
@@ -553,9 +554,9 @@ static NSDateFormatter* formatter;
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    @weakify(self);
+    // @weakify(self);
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        @strongify(self);
+        // @strongify(self);
         BOOL success = [responseObject[@"success"] boolValue];
         if (success)
         {
@@ -585,7 +586,7 @@ static NSDateFormatter* formatter;
         }
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        @strongify(self);
+        // @strongify(self);
         // NSLog(@"save failed: %@", operation);
         self.saveCompletionBlock(NO, nil);
     }];
@@ -620,3 +621,4 @@ static NSDateFormatter* formatter;
 }
 
 @end
+#endif

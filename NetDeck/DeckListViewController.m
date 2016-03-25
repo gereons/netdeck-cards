@@ -437,7 +437,7 @@
         
         [alert addAction:[UIAlertAction cancelAlertAction:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Open in Safari") handler:^(UIAlertAction * action) {
-            if (AppDelegate.online) {
+            if (Reachability.online) {
                 LOG_EVENT(@"Open in Safari", nil);
                 [self openInSafari:self.deck];
             } else {
@@ -445,7 +445,7 @@
             }
         }]];
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Publish deck") handler:^(UIAlertAction * action) {
-            if (AppDelegate.online) {
+            if (Reachability.online) {
                 LOG_EVENT(@"Publish Deck", nil);
                 [self publishDeck:self.deck];
             } else {
@@ -476,14 +476,14 @@
 
 -(void) saveDeckToNetrunnerDb
 {
-    if (!AppDelegate.online)
+    if (!Reachability.online)
     {
         [self showOfflineAlert];
         return;
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...") maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...")];
     
     [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
         if (!ok)
@@ -504,14 +504,14 @@
 
 -(void) reImportDeckFromNetrunnerDb
 {
-    if (!AppDelegate.online)
+    if (!Reachability.online)
     {
         [self showOfflineAlert];
         return;
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Loading Deck...") maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:l10n(@"Loading Deck...")];
     
     [[NRDB sharedInstance] loadDeck:self.deck completion:^(Deck* deck) {
         if (deck == nil) {
@@ -541,7 +541,7 @@
     if (errors.count == 0)
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...") maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
 
         [[NRDB sharedInstance] publishDeck:deck completion:^(BOOL ok, NSString *deckId) {
             if (!ok)

@@ -25,7 +25,7 @@ class AppUpdateCheck: NSObject {
         }
         
         let now = NSDate()
-        if now.timeIntervalSince1970 > nextCheck.timeIntervalSince1970 && AppDelegate.online() {
+        if now.timeIntervalSince1970 > nextCheck.timeIntervalSince1970 && Reachability.online() {
             self.checkForUpdate { version in
                 if let v = version {
                     let msg = String(format: "Version %@ is available on the App Store".localized(), v)

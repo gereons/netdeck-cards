@@ -7,8 +7,6 @@
 //
 
 // TODOs:
-#warning japanese l10n
-
 #warning convert rest of http stuff/json to swift -> use alamofire/swiftyjson
 // open: more nrdb testing, use Alamo reachability + activity indicator
 
@@ -22,7 +20,6 @@
 
 
 @import SVProgressHUD;
-@import AFNetworking;
 
 #import "AppDelegate.h"
 #import "CardImageViewPopover.h"
@@ -63,27 +60,14 @@ const NSString* const kANY = @"Any";
     [DropboxWrapper setup];
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     [CardImageViewPopover monitorKeyboard];
     
     // just so the initializer gets called
     [ImageCache sharedInstance];
     
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        switch (status)
-        {
-            case AFNetworkReachabilityStatusNotReachable:
-            case AFNetworkReachabilityStatusUnknown:
-                [[NRDB sharedInstance] stopRefresh];
-                break;
-                
-            case AFNetworkReachabilityStatusReachableViaWiFi:
-            case AFNetworkReachabilityStatusReachableViaWWAN:
-                [[NRDB sharedInstance] refreshAuthentication];
-                break;
-        }
-    }];
+    [Reachability start];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -290,10 +274,6 @@ const NSString* const kANY = @"Any";
         // NSLog(@"primary call %ld", (long)result);
         completionHandler(result);
     }];
-}
-
-+(BOOL) online {
-    return [AFNetworkReachabilityManager sharedManager].reachable;
 }
 
 #pragma mark - crashlytics delegate

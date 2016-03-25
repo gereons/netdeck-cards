@@ -246,7 +246,7 @@
             [DeckExport asOctgn:self.deck autoSave:YES];
         }
     }
-    if (self.autoSaveNrdb && self.deck.netrunnerDbId && AppDelegate.online)
+    if (self.autoSaveNrdb && self.deck.netrunnerDbId && Reachability.online)
     {
         [self saveToNrdb];
     }
@@ -272,14 +272,14 @@
 
 -(void) saveToNrdb
 {
-    if (!AppDelegate.online)
+    if (!Reachability.online)
     {
         [self showOfflineAlert];
         return;
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...") maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:l10n(@"Saving Deck...")];
     
     [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
         // NSLog(@"saved ok=%d id=%@", ok, deckId);
@@ -295,14 +295,14 @@
 
 -(void) reImportDeckFromNetrunnerDb
 {
-    if (!AppDelegate.online)
+    if (!Reachability.online)
     {
         [self showOfflineAlert];
         return;
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [SVProgressHUD showWithStatus:l10n(@"Loading Deck...") maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:l10n(@"Loading Deck...")];
     
     [[NRDB sharedInstance] loadDeck:self.deck completion:^(Deck* deck) {
         if (deck == nil) {
@@ -322,7 +322,7 @@
 
 -(void) publishDeck
 {
-    if (!AppDelegate.online)
+    if (!Reachability.online)
     {
         [self showOfflineAlert];
         return;
@@ -332,7 +332,7 @@
     if (errors.count == 0)
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...") maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
         
         [[NRDB sharedInstance] publishDeck:self.deck completion:^(BOOL ok, NSString *deckId) {
             if (!ok)

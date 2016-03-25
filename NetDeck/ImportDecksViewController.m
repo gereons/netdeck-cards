@@ -95,12 +95,12 @@ static NSString* filterText;
     
     if (self.source == NRImportSourceDropbox)
     {
-        [SVProgressHUD showWithStatus:l10n(@"Loading decks from Dropbox") maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:l10n(@"Loading decks from Dropbox")];
         [self getDropboxDecks];
     }
     else
     {
-        [SVProgressHUD showWithStatus:l10n(@"Loading decks from NetrunnerDB.com") maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:l10n(@"Loading decks from NetrunnerDB.com")];
         [self getNetrunnerdbDecks];
     }
 
@@ -237,7 +237,7 @@ static NSString* filterText;
     self.runnerDecks = [NSMutableArray array];
     self.corpDecks = [NSMutableArray array];
     
-    [SVProgressHUD showWithStatus:l10n(@"Loading Decks...") maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:l10n(@"Loading Decks...")];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     [[NRDB sharedInstance] decklist:^(NSArray<Deck*>* decks) {
