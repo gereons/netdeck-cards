@@ -39,13 +39,13 @@ static BrowserResultViewController* instance;
 + (void) initialize
 {
     sortStr = @{
-                @(NRBrowserSortType): l10n(@"Type"),
-                @(NRBrowserSortFaction): l10n(@"Faction"),
-                @(NRBrowserSortTypeFaction): l10n(@"Type/Faction"),
-                @(NRBrowserSortSet): l10n(@"Set"),
-                @(NRBrowserSortSetFaction): l10n(@"Set/Faction"),
-                @(NRBrowserSortSetType): l10n(@"Set/Type"),
-                @(NRBrowserSortSetNumber): l10n(@"Set/Number")
+        @(NRBrowserSortType): l10n(@"Type"),
+        @(NRBrowserSortFaction): l10n(@"Faction"),
+        @(NRBrowserSortTypeFaction): l10n(@"Type/Faction"),
+        @(NRBrowserSortSet): l10n(@"Set"),
+        @(NRBrowserSortSetFaction): l10n(@"Set/Faction"),
+        @(NRBrowserSortSetType): l10n(@"Set/Type"),
+        @(NRBrowserSortSetNumber): l10n(@"Set/Number")
     };
 }
 
@@ -77,10 +77,10 @@ static BrowserResultViewController* instance;
     
     // left buttons
     NSArray* selections = @[
-                            [UIImage imageNamed:@"deckview_card"],   // NRCardViewImage
-                            [UIImage imageNamed:@"deckview_table"],  // NRCardViewLargeTable
-                            [UIImage imageNamed:@"deckview_list"]    // NRCardViewSmallTable
-                            ];
+        [UIImage imageNamed:@"deckview_card"],   // NRCardViewImage
+        [UIImage imageNamed:@"deckview_table"],  // NRCardViewLargeTable
+        [UIImage imageNamed:@"deckview_list"]    // NRCardViewSmallTable
+    ];
     UISegmentedControl* viewSelector = [[UISegmentedControl alloc] initWithItems:selections];
     viewSelector.selectedSegmentIndex = [settings integerForKey:SettingsKeys.BROWSER_VIEW_STYLE];
     [viewSelector addTarget:self action:@selector(toggleView:) forControlEvents:UIControlEventValueChanged];
@@ -89,9 +89,7 @@ static BrowserResultViewController* instance;
     
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.leftBarButtonItems = @[
-                                   self.toggleViewButton,
-                                   ];
+    topItem.leftBarButtonItems = @[ self.toggleViewButton ];
 
     // right buttons
     self.sortButton = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]]
@@ -99,13 +97,13 @@ static BrowserResultViewController* instance;
                                                       target:self
                                                       action:@selector(sortPopup:)];
     self.sortButton.possibleTitles = [NSSet setWithArray:@[
-                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Type")],
-                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Faction")],
-                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Type/Faction")],
-                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Set")],
-                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Set/Faction")],
-                                                           [NSString stringWithFormat:@"%@ ▾", l10n(@"Set/Type")],
-                                                           ] ];
+        [NSString stringWithFormat:@"%@ ▾", l10n(@"Type")],
+        [NSString stringWithFormat:@"%@ ▾", l10n(@"Faction")],
+        [NSString stringWithFormat:@"%@ ▾", l10n(@"Type/Faction")],
+        [NSString stringWithFormat:@"%@ ▾", l10n(@"Set")],
+        [NSString stringWithFormat:@"%@ ▾", l10n(@"Set/Faction")],
+        [NSString stringWithFormat:@"%@ ▾", l10n(@"Set/Type")],
+    ] ];
     topItem.rightBarButtonItem = self.sortButton;
     
     self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
@@ -149,6 +147,8 @@ static BrowserResultViewController* instance;
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [self updateDisplay:self.cardList];
 }
 
 -(void) viewDidDisappear:(BOOL)animated

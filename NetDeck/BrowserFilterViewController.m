@@ -26,7 +26,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 @property NSSet* selectedTypes;
 @property NSMutableDictionary* selectedValues;
 
-@property BOOL inititalizing;
+@property BOOL initializing;
 
 @end
 
@@ -61,7 +61,7 @@ static NSMutableArray* subtypeCollapsedSections;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.inititalizing = YES;
+    self.initializing = YES;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
@@ -157,7 +157,7 @@ static NSMutableArray* subtypeCollapsedSections;
 
     [self clearFiltersClicked:nil];
     
-    self.inititalizing = NO;
+    self.initializing = NO;
     [self updateResults];
 }
 
@@ -672,7 +672,7 @@ static NSMutableArray* subtypeCollapsedSections;
     NSUInteger count = self.cardList.count;
     NSString* fmt = count == 1 ? l10n(@"%lu matching card") : l10n(@"%lu matching cards");
     self.summaryLabel.text = [NSString stringWithFormat:fmt, count ];
-    if (!self.inititalizing)
+    if (!self.initializing)
     {
         [self.browser updateDisplay:self.cardList];
     }
