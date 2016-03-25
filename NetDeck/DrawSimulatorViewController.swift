@@ -59,6 +59,9 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
+        
+        self.oddsLabel.font = UIFont.monospacedDigitSystemFontOfSize(17, weight: UIFontWeightRegular)
+        self.drawnLabel.font = UIFont.monospacedDigitSystemFontOfSize(15, weight: UIFontWeightRegular)
     }
     
     func initCards(drawInitialHand: Bool) {

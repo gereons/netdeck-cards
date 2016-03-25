@@ -17,7 +17,6 @@
     }
     
     private class func probabilityFor(desiredCards: Int, _ cardsInDeck: Int, _ desiredCardsInDeck: Int, _ cardsDrawn: Int) -> Double {
-        assert(desiredCards>0 && cardsInDeck>0 && desiredCardsInDeck>0 && cardsDrawn>0)
         if desiredCards==0 || cardsInDeck==0 || desiredCardsInDeck==0 || cardsDrawn==0 {
             return 0.0
         }
@@ -40,10 +39,11 @@
             return coefficientFor(n, over: n-k)
         } else {
             var result = UInt64(n - k + 1)
-            // for var i:UInt=2; i<=k; ++i {
-            for i in 2 ... k {
-                result *= UInt64(n-k+i)
-                result /= UInt64(i)
+            if k > 1 {
+                for i in 2 ... k {
+                    result *= UInt64(n-k+i)
+                    result /= UInt64(i)
+                }
             }
             return Double(result)
         }
