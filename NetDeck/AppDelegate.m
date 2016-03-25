@@ -18,7 +18,6 @@
 #warning improve startup time
 #warning nrdb re-auth issues
 
-
 @import SVProgressHUD;
 
 #import "AppDelegate.h"

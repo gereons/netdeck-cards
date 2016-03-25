@@ -212,7 +212,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    return NRMenuItemCount;
+    return NRMenuItemCount - 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
