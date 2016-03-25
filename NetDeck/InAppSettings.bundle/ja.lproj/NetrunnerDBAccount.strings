@@ -1,0 +1,35 @@
+﻿/* NetrunnerDBAccount.strings - ja */
+
+"Account" = "アカウント";
+"Saving" = "セーブ中";
+
+"Manually saving also uploads to NetrunnerDB.com" = "手動セーブでNetrunnerDB.comにアップロード";
+"Connect to NetrunnerDB.com Account" = "NetrunnerDB.comのアカウントに接続";
+
+"Authentication valid until" = "認証有効期限：";
+"Refresh Authentication" = "認証のリフレッシュ";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

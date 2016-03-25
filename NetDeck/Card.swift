@@ -306,7 +306,7 @@ import SwiftyJSON
                 let sentry = c.subtypes.contains("Sentry")
                 let codeGate = c.subtypes.contains("Code Gate")
                 if barrier && sentry && codeGate {
-                    print("multi: \(c.name)")
+                    // print("multi: \(c.name)")
                     Card.multiIce.append(c.code)
                 }
             }

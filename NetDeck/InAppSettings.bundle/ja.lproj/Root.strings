@@ -1,0 +1,50 @@
+﻿/* Settings Root.strings - ja */
+
+
+"Number of Core Sets" = "基本セットの数";
+"Auto-save decks" = "デッキの自動セーブ";
+"Auto-save history" = "履歴の自動セーブ";
+
+"Card Data" = "カードデータ";
+
+
+"Card Sets" = "カードセット";
+"Set/Datapack Selection" = "セット/データパック選択";
+
+"Data Export" = "データのエクスポート";
+"Use Dropbox" = "Dropboxの使用";
+"Auto-save decks to Dropbox" = "Dropboxへのデッキの自動セーブ";
+"Connect to your Dropbox account to enable export and import of decks." = "Dropboxのアカウントに接続することで、デッキのエクスポートやインポートが可能になります。";
+
+"NetrunnerDB.com" = "NetrunnerDB.com";
+"NetrunnerDB.com Account" = "NetrunnerDB.comアカウント";
+
+"Create new Decks as 'Active'" = "新デッキを「アクティブ」で作成する";
+"Use “NAPD Most Wanted List”" = "「NAPD重要指名手配リスト」を使用する";
+
+"About Net Deck" = "Net Deckについて";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

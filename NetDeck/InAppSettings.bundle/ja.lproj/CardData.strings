@@ -1,0 +1,40 @@
+﻿/* CardData.strings - ja */
+
+"Card Data" = "カードデータ";
+
+"Last Downloaded on" = "最終ダウンロード：";
+"Next Download on" = "次のダウンロード：";
+"Update Card Data Now" = "今すぐカードデータを更新";
+"Update Card Images Now" = "今すぐカード画像を更新";
+"Download missing Card Images Now" = "今すぐ不足カード画像をダウンロード";
+"Clear All Cached Data" = "キャッシュデータをすべてクリア";
+
+"Expert Settings" = "エキスパート設定";
+"API Settings" = "API設定";
+
+"Language" = "言語";
+"English" = "English";
+"German" = "Deutsch";
+"French" = "Français";
+"Spanish" = "Español";
+
+"Update Interval" = "更新間隔";
+"Weekly" = "毎週";
+"Bi-Weekly" = "隔週";
+"Monthly" = "毎月";
+"Manual" = "手動";
+
+"LanguageFooterText" = "Netrunner.DBは英語以外の言語を完全にサポートしているわけではありません。\n設定を変更した場合、カードデータをダウンロードし直してください。";
+
+
+
+
+
+
+
+
+
+
+
+
+
