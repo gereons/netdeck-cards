@@ -27,11 +27,6 @@
 
 #define IS_IPHONE_4         (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
 
-#define CARDS_FILENAME      @"nrcards.json"
-#define CARDS_FILENAME_EN   @"nrcards_en.json"
-#define SETS_FILENAME       @"nrsets.json"
-#define IMAGES_DIRNAME      @"images"
-
 #define IOS9_KEYCMD         [[UIKeyCommand class] respondsToSelector:@selector(keyCommandWithInput:modifierFlags:action:discoverabilityTitle:)]
 #define KEYCMD(letter, modifiers, sel, title) ((IOS9_KEYCMD) ? \
     [UIKeyCommand keyCommandWithInput:letter modifierFlags:modifiers action:@selector(sel) discoverabilityTitle:title] : \

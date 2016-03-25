@@ -10,6 +10,10 @@ import Foundation
 import SwiftyJSON
 
 @objc class CardManager: NSObject {
+    
+    static let localCardsFilename = "nrcards.json"
+    static let englishCardsFilename = "nrcards_en.json"
+    
     private(set) static var allCardsByRole = [NRRole: [Card] ]()    // non-id cards
     private static var allIdentitiesByRole = [NRRole: [Card] ]()    // ids
     
@@ -46,7 +50,6 @@ import SwiftyJSON
     
     override class func initialize() {
         super.initialize()
-        // TODO: clear data
         
         allKnownCards.removeAll()
         
@@ -61,6 +64,14 @@ import SwiftyJSON
         
         allSubtypes[.Runner] = [String: Set<String>]()
         allSubtypes[.Corp] = [String: Set<String>]()
+        
+        maxMU = -1
+        maxInfluence = -1
+        maxStrength = -1
+        maxAgendaPoints = -1
+        maxRunnerCost = -1
+        maxCorpCost = -1
+        maxTrash = -1
     }
 
     class func cardByCode(code: String) -> Card? {
@@ -125,53 +136,37 @@ import SwiftyJSON
     }
     
     class func setupFromFiles() -> Bool {
-        let cardsFile = CardManager.filename()
-        let cardsEnFile = CardManager.filenameEn()
+        let englishCardsFile = CardManager.englishFilename()
+        let localCardsFile = CardManager.localFilename()
+        
         var ok = false
-        
-        let fileMgr = NSFileManager.defaultManager()
-        
-        if fileMgr.fileExistsAtPath(cardsFile) {
-            if let array = NSArray(contentsOfFile: cardsFile) {
-                let json = JSON(array)
-                ok = CardManager.setupFromJsonData(json)
-            } else if let str = try? NSString(contentsOfFile: cardsFile, encoding: NSUTF8StringEncoding) {
-                let json = JSON.parse(str as String)
-                ok = CardManager.setupFromJsonData(json)
-            }
-        }
-        
-        if ok && fileMgr.fileExistsAtPath(cardsEnFile)
-        {
-            if let array = NSArray(contentsOfFile:cardsEnFile) {
-                let json = JSON(array)
-                CardManager.addAdditionalNames(json, saveFile:false)
-            } else if let str = try? NSString(contentsOfFile: cardsEnFile, encoding: NSUTF8StringEncoding) {
-                let json = JSON.parse(str as String)
-                CardManager.addAdditionalNames(json, saveFile:false)
-            }
+    
+        if let englishJson = jsonFromFile(englishCardsFile), localJson = jsonFromFile(localCardsFile) {
+            ok = setupFromJson(englishJson, local: localJson, saveToDisk: false)
         }
         
         return ok
     }
     
-    class func setupFromNrdbApi(json: JSON) -> Bool {
-        CardManager.setNextDownloadDate()
-        
-        let cardsFile = CardManager.filename()
-        if let data = try? json.rawData() {
-            data.writeToFile(cardsFile, atomically:true)
-        }
-        AppDelegate.excludeFromBackup(cardsFile)
-        
+    class func setupFromJson(english: JSON, local: JSON, saveToDisk: Bool) -> Bool {
         CardManager.initialize()
-        return setupFromJsonData(json)
-    }
-    
-    class func setupFromJsonData(json: JSON) -> Bool {
-        for obj in json.arrayValue {
-            if let card = Card.cardFromJson(obj) {
-                CardManager.addCard(card)
+        
+        if saveToDisk {
+            self.saveToDisk(english, filename: CardManager.englishFilename())
+            self.saveToDisk(local, filename: CardManager.localFilename())
+        }
+        
+        // parse base data from english dataset
+        for cardJson in english.arrayValue {
+            let card = Card.cardFromJson(cardJson, english: true)
+            CardManager.addCard(card)
+        }
+        
+        // overwrite with language-specific stuff
+        for cardJson in local.arrayValue {
+            let localCard = Card.cardFromJson(cardJson, english: false)
+            if let englishCard = CardManager.cardByCode(localCard.code) where englishCard.isValid {
+                englishCard.setLocalPropertiesFrom(localCard)
             }
         }
         
@@ -179,6 +174,10 @@ import SwiftyJSON
         if cards.count == 0 {
             return false
         }
+        
+        CardManager.setSubtypes()
+        CardManager.addCardAliases()
+        
         if !Faction.initializeFactionNames(cards) {
             return false
         }
@@ -198,8 +197,74 @@ import SwiftyJSON
         return true
     }
     
-    class func addCard(card: Card) {
-        // add to dictionaries/arrays
+    private class func setSubtypes() {
+        // fill subtypes per role
+        for card in allKnownCards.values {
+            if (card.subtypes.count > 0) {
+                // NSLog(@"%@", card.subtype)
+                if (card.type == .Identity)
+                {
+                    identityKey = card.typeStr
+                    identitySubtypes[card.role]?.unionInPlace(card.subtypes)
+                }
+                else
+                {
+                    var dict = allSubtypes[card.role]
+                    if (dict == nil) {
+                        dict = [String: Set<String>]()
+                    }
+                    
+                    if dict![card.typeStr] == nil {
+                        dict![card.typeStr] = Set<String>()
+                    }
+                    if (dict![kANY] == nil) {
+                        dict![kANY] = Set<String>()
+                    }
+                    
+                    dict![card.typeStr]?.unionInPlace(card.subtypes)
+                    dict![kANY]?.unionInPlace(card.subtypes)
+                    allSubtypes[card.role] = dict
+                }
+            }
+        }
+    }
+    
+    private class func addCardAliases() {
+        // add automatic aliases like "Self Modifying Code" -> "SMC"
+        for card in allKnownCards.values {
+            if (card.name.length > 2) {
+                let words = card.name.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: " -"))
+                if words.count > 2 {
+                    var alias = ""
+                    for word in words {
+                        if word.length > 0 {
+                            var c = word.characters[word.startIndex]
+                            if c == "\"" {
+                                c = word.characters[word.startIndex.advancedBy(1)]
+                            }
+                            alias.append(c)
+                        }
+                    }
+                    // NSLog("%@ -> %@", card.name, alias)
+                    card.setCardAlias(alias)
+                }
+            }
+        }
+        
+        // add hard-coded aliases
+        for code in cardAliases.keys {
+            if let card = CardManager.cardByCode(code) {
+                card.setCardAlias(cardAliases[code]!)
+            }
+        }
+    }
+    
+    private class func addCard(card: Card) {
+        guard card.isValid else {
+            print("invalid card: \(card.code) \(card.name)")
+            return
+        }
+        
         allKnownCards[card.code] = card
         
         if (card.type == .Identity) {
@@ -222,90 +287,6 @@ import SwiftyJSON
         else
         {
             maxCorpCost = max(card.cost, maxCorpCost)
-        }
-        
-        // fill subtypes per role
-        if (card.subtypes.count > 0) {
-            // NSLog(@"%@", card.subtype)
-            if (card.type == .Identity)
-            {
-                identityKey = card.typeStr
-                identitySubtypes[card.role]?.unionInPlace(card.subtypes)
-            }
-            else
-            {
-                var dict = allSubtypes[card.role]
-                if (dict == nil) {
-                    dict = [String: Set<String>]()
-                }
-
-                if dict![card.typeStr] == nil {
-                    dict![card.typeStr] = Set<String>()
-                }
-                if (dict![kANY] == nil) {
-                    dict![kANY] = Set<String>()
-                }
-
-                dict![card.typeStr]?.unionInPlace(card.subtypes)
-                dict![kANY]?.unionInPlace(card.subtypes)
-                allSubtypes[card.role] = dict
-            }
-        }
-    }
-    
-    class func addAdditionalNames(json: JSON, saveFile: Bool) {
-        // add english names from json
-        if (saveFile) {
-            let cardsFile = CardManager.filenameEn()
-            if let data = try? json.rawData() {
-                data.writeToFile(cardsFile, atomically: true)
-            }
-            
-            AppDelegate.excludeFromBackup(cardsFile)
-        }
-        
-        for obj in json.arrayValue {
-            guard
-                let code = obj["code"].string,
-                let name_en = obj["title"].string
-            else { continue }
-            
-            let subtype = obj["subtype"].string
-            
-            if let card = CardManager.cardByCode(code) {
-                card.setNameEn(name_en)
-                card.setAlliance(subtype ?? "")
-                card.setVirtual(subtype ?? "")
-                card.setMultiIce(subtype ?? "")
-            }
-        }
-        
-        // add automatic aliases like "Self Modifying Code" -> "SMC"
-        for card in allKnownCards.values {
-            if (card.name.length > 2) {
-                var alias = ""
-                let words = card.name.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: " -"))
-                if words.count > 2 {
-                    for word in words {
-                        if word.length > 0 {
-                            var c = word.characters[word.startIndex]
-                            if c == "\"" {
-                                c = word.characters[word.startIndex.advancedBy(1)]
-                            }
-                            alias.append(c)
-                        }
-                    }
-                    // NSLog("%@ -> %@", card.name, alias)
-                    card.setCardAlias(alias)
-                }
-            }
-        }
-        
-        // add hard-coded aliases
-        for code in cardAliases.keys {
-            if let card = CardManager.cardByCode(code) {
-                card.setCardAlias(cardAliases[code]!)
-            }
         }
     }
     
@@ -336,26 +317,41 @@ import SwiftyJSON
         settings.setObject(nextDownload, forKey:SettingsKeys.NEXT_DOWNLOAD)
     }
 
-    class func filename() -> String {
+    private class func localFilename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]
     
-        return supportDirectory.stringByAppendingPathComponent(CARDS_FILENAME)
+        return supportDirectory.stringByAppendingPathComponent(CardManager.localCardsFilename)
     }
     
-    class func filenameEn() -> String {
+    private class func englishFilename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]
         
-        return supportDirectory.stringByAppendingPathComponent(CARDS_FILENAME_EN)
+        return supportDirectory.stringByAppendingPathComponent(CardManager.englishCardsFilename)
     }
     
     class func removeFiles() {
         let fileMgr = NSFileManager.defaultManager()
-        _ = try? fileMgr.removeItemAtPath(filename())
-        _ = try? fileMgr.removeItemAtPath(filenameEn())
+        _ = try? fileMgr.removeItemAtPath(localFilename())
+        _ = try? fileMgr.removeItemAtPath(englishFilename())
     
         CardManager.initialize()
     }
-
+    
+    private class func jsonFromFile(filename: String) -> JSON? {
+        if let array = NSArray(contentsOfFile: filename) {
+            return JSON(array)
+        } else if let str = try? NSString(contentsOfFile: filename, encoding: NSUTF8StringEncoding) {
+            return JSON.parse(str as String)
+        }
+        return nil
+    }
+    
+    private class func saveToDisk(json: JSON, filename: String) {
+        if let data = try? json.rawData() {
+            data.writeToFile(filename, atomically:true)
+        }
+        AppDelegate.excludeFromBackup(filename)
+    }
 }

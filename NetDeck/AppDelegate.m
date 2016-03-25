@@ -7,7 +7,6 @@
 //
 
 // TODOs:
-#warning get rid of Codes.swift again, move type/role/faction parsing to parsing of english data. remove "addAdditionalNames" as a separate step
 #warning japanese l10n
 
 #warning convert rest of http stuff/json to swift -> use alamofire/swiftyjson
@@ -168,7 +167,7 @@ const NSString* const kANY = @"Any";
     NSString* supportDir = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES)[0];
     
     NSFileManager* fileMgr = [NSFileManager defaultManager];
-    NSArray* files = @[ CARDS_FILENAME, CARDS_FILENAME_EN, SETS_FILENAME, IMAGES_DIRNAME ];
+    NSArray* files = @[ CardManager.localCardsFilename, CardManager.englishCardsFilename, CardSets.setsFilename, ImageCache.imagesDirectory ];
     for (NSString* file in files) {
         NSString* cachePath = [cacheDir stringByAppendingPathComponent:file];
         BOOL isDirectory;
@@ -186,7 +185,7 @@ const NSString* const kANY = @"Any";
         }
     }
     
-    NSString* imagesDir = [supportDir stringByAppendingPathComponent:IMAGES_DIRNAME];
+    NSString* imagesDir = [supportDir stringByAppendingPathComponent:ImageCache.imagesDirectory];
     files = [fileMgr contentsOfDirectoryAtPath:imagesDir error:nil];
     for (NSString* file in files) {
         NSString* pathname = [imagesDir stringByAppendingPathComponent:file];

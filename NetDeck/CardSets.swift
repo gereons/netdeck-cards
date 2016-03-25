@@ -21,6 +21,7 @@ import SwiftyJSON
     static let DRAFT_SET_CODE = "draft"
     static let CORE_SET_CODE = "core"
     static let UNKNOWN_SET = "unknown"
+    static let setsFilename = "nrsets.json"
     
     static var allCardSets = [Int: CardSet]()       // all known sets: map setNum: cardset
     static var code2number = [String: Int]()        // map code -> number
@@ -46,22 +47,22 @@ import SwiftyJSON
         10: .Mumbad
     ]
     
-    class func filename() -> String {
+    class func pathname() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]
         
-        return supportDirectory.stringByAppendingPathComponent(SETS_FILENAME)
+        return supportDirectory.stringByAppendingPathComponent(CardSets.setsFilename)
     }
     
     class func removeFiles() {
         let fileMgr = NSFileManager.defaultManager()
-        _ = try? fileMgr.removeItemAtPath(filename())
+        _ = try? fileMgr.removeItemAtPath(pathname())
     
         CardManager.initialize()
     }
     
     class func setupFromFiles() -> Bool {
-        let setsFile = filename()
+        let setsFile = pathname()
     
         let fileMgr = NSFileManager.defaultManager()
         if fileMgr.fileExistsAtPath(setsFile) {
@@ -78,7 +79,7 @@ import SwiftyJSON
     }
     
     class func setupFromNrdbApi(json: JSON) -> Bool {
-        let setsFile = filename()
+        let setsFile = pathname()
         if let data = try? json.rawData() {
             data.writeToFile(setsFile, atomically:true)
         }

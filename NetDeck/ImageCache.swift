@@ -10,6 +10,7 @@ import Alamofire
 import AlamofireImage
 
 class ImageCache: NSObject {
+    static let imagesDirectory = "images"
     static let sharedInstance = ImageCache()
     
     static let trashIcon = UIImage(named: "cardstats_trash")!
@@ -295,7 +296,7 @@ class ImageCache: NSObject {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths.first!
         
-        let directory = supportDirectory.stringByAppendingPathComponent(IMAGES_DIRNAME)
+        let directory = supportDirectory.stringByAppendingPathComponent(ImageCache.imagesDirectory)
         
         let _ = try? NSFileManager.defaultManager().removeItemAtPath(directory)
     }
@@ -424,7 +425,7 @@ class ImageCache: NSObject {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths.first!
         
-        let directory = supportDirectory.stringByAppendingPathComponent(IMAGES_DIRNAME)
+        let directory = supportDirectory.stringByAppendingPathComponent(ImageCache.imagesDirectory)
         
         let fileMgr = NSFileManager.defaultManager()
         if !fileMgr.fileExistsAtPath(directory) {

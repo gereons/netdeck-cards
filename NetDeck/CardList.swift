@@ -312,10 +312,10 @@ class CardList: NSObject {
             var predicate: NSPredicate
             switch (self.searchScope) {
             case .All:
-                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (name_en CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (alias CONTAINS[cd] %@)",
+                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (alias CONTAINS[cd] %@)",
                 self.text!, self.text!, self.text!, self.text!)
             case .Name:
-                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (name_en CONTAINS[cd] %@) OR (alias CONTAINS[cd] %@)", self.text!, self.text!, self.text!)
+                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (alias CONTAINS[cd] %@)", self.text!, self.text!, self.text!)
                 let ch = self.text!.characters[self.text!.startIndex]
                 if (ch >= "0" && ch <= "9")
                 {

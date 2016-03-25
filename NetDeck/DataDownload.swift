@@ -147,8 +147,9 @@ class DataDownload: NSObject {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
         if ok {
-            CardManager.setupFromNrdbApi(self.localizedCards!)
-            CardManager.addAdditionalNames(self.englishCards!, saveFile: true)
+            CardManager.setupFromJson(self.englishCards!, local: self.localizedCards!, saveToDisk: true)
+            // CardManager.setupFromNrdbApi(self.localizedCards!)
+            // CardManager.addAdditionalNames(self.englishCards!, saveFile: true)
             CardSets.setupFromNrdbApi(self.localizedSets!)
         }
         

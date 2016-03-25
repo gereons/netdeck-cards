@@ -186,7 +186,7 @@ class DeckImport: NSObject {
                     continue
                 }
                 
-                var range = line.rangeOfString(c.name_en, options:[.CaseInsensitiveSearch,.DiacriticInsensitiveSearch])
+                var range = line.rangeOfString(c.englishName, options:[.CaseInsensitiveSearch,.DiacriticInsensitiveSearch])
                 if range == nil {
                     range = line.rangeOfString(c.name, options:[.CaseInsensitiveSearch,.DiacriticInsensitiveSearch])
                 }

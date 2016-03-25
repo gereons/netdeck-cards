@@ -74,10 +74,6 @@ import Foundation
         return true
     }
     
-    class func faction(code: String) -> NRFaction {
-        return Codes.factionForCode(code)
-    }
-    
     class func factionsForRole(role: NRRole) -> [String] {
         assert(role != .None, "no role")
         

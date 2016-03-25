@@ -80,8 +80,8 @@ import SwiftyJSON
         ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])
     
     private(set) var code: String!
-    private(set) var name: String!
-    private(set) var name_en: String!
+    private(set) var name: String!              // localized name of card, used for display
+    private(set) var englishName: String!       // english name of card, used for searches
     private(set) var alias: String?
     private(set) var text: String! = ""
     private(set) var flavor: String! = ""
@@ -198,40 +198,28 @@ import SwiftyJSON
         return self.quantity
     }
     
-    class func cardFromJson(json: JSON) -> Card? {
+    var isValid: Bool {
+        return self.role != .None && self.faction != .None && self.type != .None
+    }
+    
+    class func cardFromJson(json: JSON, english: Bool) -> Card {
         let c = Card()
         
         c.code = json["code"].stringValue
         c.name = json["title"].stringValue
-        c.name_en = c.name
+        c.englishName = c.name
         
         c.factionStr = json["faction"].stringValue
         let factionCode = json["faction_code"].stringValue
-        c.faction = Faction.faction(factionCode)
-        assert(c.faction != .None, "no faction for \(c.code)")
-        if c.faction == .None {
-            print("missing faction: \(factionCode) \(c.name)")
-            return nil
-        }
+        c.faction = Codes.factionForCode(factionCode)
         
         c.roleStr = json["side"].stringValue
         let roleCode = json["side_code"].stringValue
-        
         c.role = Codes.roleForCode(roleCode)
-        assert(c.role != .None, "no role for \(c.code)")
-        if c.role == .None {
-            print("missing role: \(roleCode) \(c.name)")
-            return nil
-        }
         
         c.typeStr = json["type"].stringValue
         let typeCode = json["type_code"].stringValue
-        c.type = CardType.type(typeCode)
-        // assert(c.type != .None, "no type for \(c.code), \(typeCode)")
-        if c.type == .None {
-            print("missing type: \(typeCode) \(c.name)")
-            return nil
-        }
+        c.type = Codes.typeForCode(typeCode)
         
         if c.type == .Identity {
             c.name = c.shortIdentityName(c.name, forRole: c.role, andFaction: c.factionStr)
@@ -310,40 +298,44 @@ import SwiftyJSON
             c.ancurLink = nil
         }
         
+        if english {
+            c.isAlliance = c.subtype.lowercaseString.containsString("alliance")
+            c.isVirtual = c.subtype.lowercaseString.containsString("virtual")
+            if c.type == .Ice {
+                let barrier = c.subtypes.contains("Barrier")
+                let sentry = c.subtypes.contains("Sentry")
+                let codeGate = c.subtypes.contains("Code Gate")
+                if barrier && sentry && codeGate {
+                    print("multi: \(c.name)")
+                    Card.multiIce.append(c.code)
+                }
+            }
+        }
+        
         return c
+    }
+    
+    func setLocalPropertiesFrom(localCard: Card) {
+        self.name = localCard.name
+        self.typeStr = localCard.typeStr
+        self.subtype = localCard.subtype
+        self.subtypes = localCard.subtypes
+        self.factionStr = localCard.factionStr
+        self.text = localCard.text
+        self.flavor = localCard.flavor
+        if let localImg = localCard.imageSrc {
+            self.imageSrc = localImg
+        }
     }
     
     private class func subtypeSplit(subtype: String) -> (subtype: String, subtypes: [String]) {
         var s = subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")
-        s = subtype.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
-        let subtypes = s.componentsSeparatedByString(" - ")
-        return (subtype, subtypes)
-    }
-    
-    // NB: not part of the public API!
-    func setAlliance(subtype: String) {
-        self.isAlliance = subtype.lowercaseString.containsString("alliance")
-    }
-    
-    func setVirtual(subtype: String) {
-        self.isVirtual = subtype.lowercaseString.containsString("virtual")
-    }
-    
-    func setMultiIce(subtype: String) {
-        if self.type == .Ice {
-            let (_, subtypes) = Card.subtypeSplit(subtype)
-            let barrier = subtypes.contains("Barrier")
-            let sentry = subtypes.contains("Sentry")
-            let codeGate = subtypes.contains("Code Gate")
-            if barrier && sentry && codeGate {
-                print("multi: \(self.name)")
-                Card.multiIce.append(self.code)
-            }
+        s = s.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
+        var subtypes = s.componentsSeparatedByString(" - ")
+        for i in 0 ..< subtypes.count {
+            subtypes[i] = subtypes[i].trim()
         }
-    }
-    
-    func setNameEn(nameEn: String) {
-        self.name_en = nameEn
+        return (subtype, subtypes)
     }
     
     func setCardAlias(alias: String) {

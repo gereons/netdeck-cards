@@ -14,5 +14,8 @@
 "German" = "Allemand";
 "French" = "Français";
 "Spanish" = "Espagnol";
+"Polish" = "Polonais";
+"Korean" = "Coréen";
+"Japanese" = "Japonais";
 
 "LanguageFooterText" = "Le soutien de NetrunnerDB.com pour les langues autres que l'anglais ne est pas complète à 100%.\nSi vous modifiez ce paramètre, vous devez mettre à jour les données des cartes ainsi.";

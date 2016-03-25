@@ -435,9 +435,9 @@ static NSString* filterText;
         // NSLog(@"filter %@ %d", filterText, searchScope);
         
         NSPredicate* namePredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", filterText];
-        NSPredicate* identityPredicate = [NSPredicate predicateWithFormat:@"(identity.name CONTAINS[cd] %@) or (identity.name_en CONTAINS[cd] %@)",
+        NSPredicate* identityPredicate = [NSPredicate predicateWithFormat:@"(identity.name CONTAINS[cd] %@) or (identity.englishName CONTAINS[cd] %@)",
                                           filterText, filterText];
-        NSPredicate* cardPredicate = [NSPredicate predicateWithFormat:@"(ANY cards.card.name CONTAINS[cd] %@) OR (ANY cards.card.name_en CONTAINS[cd] %@)", filterText, filterText];
+        NSPredicate* cardPredicate = [NSPredicate predicateWithFormat:@"(ANY cards.card.name CONTAINS[cd] %@) OR (ANY cards.card.englishName CONTAINS[cd] %@)", filterText, filterText];
         
         NSPredicate* predicate;
         switch (searchScope)

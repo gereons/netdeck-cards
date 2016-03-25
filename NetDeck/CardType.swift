@@ -23,8 +23,8 @@ import Foundation
         runnerTypeNames = [String]()
         corpTypeNames = [String]()
         
-        assert(Codes.codesForType.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
-        if Codes.codesForType.count != runnerTypes.count + corpTypes.count + 1 {
+        assert(Codes.code2Type.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
+        if Codes.code2Type.count != runnerTypes.count + corpTypes.count + 1 {
             return false
         }
         
@@ -33,8 +33,8 @@ import Foundation
         for card in cards {
             type2name[card.type] = card.typeStr
         }
-        assert(type2name.count == Codes.codesForType.count + 1) // +1 for "Any"
-        if type2name.count != Codes.codesForType.count + 1 {
+        assert(type2name.count == Codes.code2Type.count + 1) // +1 for "Any"
+        if type2name.count != Codes.code2Type.count + 1 {
             return false
         }
         
@@ -62,10 +62,6 @@ import Foundation
     
     class func name(type: NRCardType) -> String {
         return type2name[type] ?? "n/a"
-    }
-    
-    class func type(code: String) -> NRCardType {
-        return Codes.typeForCode(code)
     }
     
     class func typesForRole(role: NRRole) -> [String] {
