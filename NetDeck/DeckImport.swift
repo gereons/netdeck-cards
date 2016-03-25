@@ -246,7 +246,6 @@ class DeckImport: NSObject {
         spinner.bottomAnchor.constraintEqualToAnchor(alert.contentView.bottomAnchor).active = true
         
         alert.addAction(AlertAction(title: "Stop".localized(), style: .Default, handler: { (action) -> Void in
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.downloadStopped = true
             self.sdcAlert = nil
             if let req = self.request {
@@ -255,8 +254,6 @@ class DeckImport: NSObject {
         }))
         
         alert.present()
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         switch source.source {
         case .NRDBList:
@@ -375,7 +372,6 @@ class DeckImport: NSObject {
     }
 
     func downloadFinished(ok: Bool) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         if let alert = self.sdcAlert {
             alert.dismiss()
         }

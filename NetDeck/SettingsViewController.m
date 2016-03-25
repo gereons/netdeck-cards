@@ -236,7 +236,6 @@
     }
 
     [SVProgressHUD showWithStatus:l10n(@"Testing...")];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     NSString* nrdbUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
     
@@ -247,7 +246,6 @@
 
 -(void) finishApiTests:(BOOL)nrdbOk
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];
     
     NSString* message = nrdbOk ? l10n(@"NetrunnerDB is OK") : l10n(@"NetrunnerDB is invalid");

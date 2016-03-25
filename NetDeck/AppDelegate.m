@@ -7,8 +7,8 @@
 //
 
 // TODOs:
-#warning convert rest of http stuff/json to swift -> use alamofire/swiftyjson
-// open: more nrdb testing, use Alamo reachability + activity indicator
+
+#warning more nrdb testing
 
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning iphone: deck edit history

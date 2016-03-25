@@ -91,7 +91,6 @@ static NSString* filterText;
     [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
     
     // do the initial listing in the background, as it may block the ui thread
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     if (self.source == NRImportSourceDropbox)
     {
@@ -238,10 +237,8 @@ static NSString* filterText;
     self.corpDecks = [NSMutableArray array];
     
     [SVProgressHUD showWithStatus:l10n(@"Loading Decks...")];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     [[NRDB sharedInstance] decklist:^(NSArray<Deck*>* decks) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [SVProgressHUD dismiss];
 
         NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
@@ -311,7 +308,6 @@ static NSString* filterText;
     [fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
     
     [DropboxWrapper downloadDropboxFiles:deckNames toDirectory:directory completion:^{
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [SVProgressHUD dismiss];
         
         [self readDecksFromDropbox:directory];

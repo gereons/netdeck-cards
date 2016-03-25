@@ -58,8 +58,6 @@ class DataDownload: NSObject {
     }
 
     private func showDownloadAlert() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
         let alert = AlertController(title: "Downloading Card Data".localized(), message:nil, preferredStyle:.Alert)
         self.alert = alert
         
@@ -156,8 +154,6 @@ class DataDownload: NSObject {
             && self.localizedSets != nil
             && self.downloadErrors == 0
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        
         if ok {
             CardManager.setupFromJson(self.englishCards!, local: self.localizedCards!, saveToDisk: true)
             CardSets.setupFromNrdbApi(self.localizedSets!)
@@ -214,8 +210,6 @@ class DataDownload: NSObject {
             
             return
         }
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 
         self.progressView = UIProgressView(progressViewStyle: .Default)
         self.progressView.progress = 0
@@ -293,8 +287,6 @@ class DataDownload: NSObject {
         }
         else
         {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
             self.alert?.dismiss(animated:false, completion:nil)
             self.alert = nil
             if self.downloadErrors > 0 {
@@ -311,7 +303,6 @@ class DataDownload: NSObject {
     // MARK: - stop downloads
     
     private func stopDownload() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         self.downloadStopped = true
         self.alert = nil
     }

@@ -171,15 +171,12 @@
     if (useDropbox) {
         [alert addAction:[UIAlertAction actionWithTitle:@"To Dropbox" handler:^(UIAlertAction * action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToDropbox) withObject:nil afterDelay:0.0];
-
         }]];
     }
     if (useNetrunnerdb) {
         [alert addAction:[UIAlertAction actionWithTitle:@"To NetrunnerDB.com" handler:^(UIAlertAction * action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self performSelector:@selector(exportAllToNetrunnerDB) withObject:nil afterDelay:0.0];
         }]];
     }
@@ -199,7 +196,6 @@
             }
         }
     }
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD dismiss];
 }
 
@@ -235,7 +231,6 @@
     else
     {
         // NSLog(@"export done");
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [SVProgressHUD dismiss];
         [self updateDecks];
     }

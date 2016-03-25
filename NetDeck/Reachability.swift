@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import AlamofireNetworkActivityIndicator
 
 class Reachability: NSObject {
     static var manager: NetworkReachabilityManager?
@@ -23,6 +24,9 @@ class Reachability: NSObject {
         }
     
         Reachability.manager?.startListening()
+        
+        NetworkActivityIndicatorManager.sharedManager.isEnabled = true
+        NetworkActivityIndicatorManager.sharedManager.startDelay = 0.2
     }
     
     class func online() -> Bool {

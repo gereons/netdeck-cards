@@ -277,8 +277,7 @@
         [self showOfflineAlert];
         return;
     }
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
     [SVProgressHUD showWithStatus:l10n(@"Saving Deck...")];
     
     [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
@@ -288,7 +287,6 @@
             self.deck.netrunnerDbId = deckId;
             [self.deck saveToDisk];
         }
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [SVProgressHUD dismiss];
     }];
 }
@@ -301,7 +299,6 @@
         return;
     }
     
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [SVProgressHUD showWithStatus:l10n(@"Loading Deck...")];
     
     [[NRDB sharedInstance] loadDeck:self.deck completion:^(Deck* deck) {
@@ -316,7 +313,6 @@
         }
         
         [SVProgressHUD dismiss];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
 }
 
@@ -331,7 +327,6 @@
     NSArray* errors = [self.deck checkValidity];
     if (errors.count == 0)
     {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
         
         [[NRDB sharedInstance] publishDeck:self.deck completion:^(BOOL ok, NSString *deckId) {
@@ -346,7 +341,6 @@
             }
             
             [SVProgressHUD dismiss];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }];
     }
     else
