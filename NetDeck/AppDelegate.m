@@ -9,6 +9,7 @@
 // TODOs:
 
 #warning more nrdb testing
+#warning sdcalertview: customized visual when PR is merged
 
 #warning iphone browser: add hint on startup, more filters (type + set)
 #warning iphone: deck edit history

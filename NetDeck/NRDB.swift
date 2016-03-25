@@ -16,10 +16,6 @@ class NRDB: NSObject {
     static let PROVIDER_HOST =  "http://netrunnerdb.com"
     
     static let AUTH_URL =       PROVIDER_HOST + "/oauth/v2/auth?client_id=" + CLIENT_ID + "&response_type=code&redirect_uri=" + CLIENT_HOST
-    
-    static let _AUTH =          PROVIDER_HOST + "/oauth/v2/auth"
-    static let _LOGIN_CHECK =   PROVIDER_HOST + "/oauth/v2/auth_login_check"
-    
     static let TOKEN_URL =      PROVIDER_HOST + "/oauth/v2/token"
     
     static let sharedInstance = NRDB()
@@ -33,90 +29,6 @@ class NRDB: NSObject {
     
     private var timer: NSTimer?
     private var deckMap = [String: String]()
-    
-    
-    private var mgr: Alamofire.Manager!
-    private var cookieJar = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-    
-    func testLogin() {
-        print("testing login")
-        
-        if let cookies = self.cookieJar.cookies {
-            for cookie in cookies {
-                if cookie.name == "PHPSESSID" {
-                    self.cookieJar.deleteCookie(cookie)
-                    break
-                }
-            }
-        }
-        
-        let cfg = NSURLSessionConfiguration.defaultSessionConfiguration()
-        cfg.HTTPCookieStorage = self.cookieJar
-        cfg.HTTPShouldSetCookies = true
-        self.mgr = Alamofire.Manager(configuration: cfg)
-        
-        self.mgr.delegate.taskWillPerformHTTPRedirection = { (session: NSURLSession!, task: NSURLSessionTask!, response: NSHTTPURLResponse!, request: NSURLRequest!) in
-            // Accept the redirect by returning the updated request.
-            print("redirecting to \(request.URL)")
-            return request
-        }
-        
-        print("GET " + NRDB.AUTH_URL)
-        
-        let parameters = [ "client_id": NRDB.CLIENT_ID, "response_type": "code", "redirect_uri": NRDB.CLIENT_HOST ]
-        self.mgr.request(.GET, NRDB._AUTH, parameters: parameters).validate().responseString { response in
-            self.showCookies()
-            // print(response.result.value)
-            
-            let parameters = [ "_username": "SpaceHonk", "_password": "Skild123", "_submit": "Log In" ]
-            let headers = [ "Content-Type": "application/x-www-form-urlencoded" ]
-            print("POST " + NRDB._LOGIN_CHECK)
-            self.mgr.request(.POST, NRDB._LOGIN_CHECK, parameters: parameters, headers: headers).validate().responseString { response in
-                self.showCookies()
-                if let body = response.result.value, token = self.findToken(body) {
-                    
-                    let accept = [
-                        "accepted": "Allow",
-                        "fos_oauth_server_authorize_form[client_id]": NRDB.CLIENT_ID,
-                        "fos_oauth_server_authorize_form[response_type]": "code",
-                        "fos_oauth_server_authorize_form[redirect_uri]": NRDB.CLIENT_HOST,
-                        "fos_oauth_server_authorize_form[state]": "",
-                        "fos_oauth_server_authorize_form[scope]": "",
-                        "fos_oauth_server_authorize_form[_token]": token
-                    ]
-                    
-                    self.mgr.delegate.taskWillPerformHTTPRedirection = nil
-                    self.mgr.request(.POST, NRDB._AUTH, parameters: accept, headers: headers).responseString { response in
-                        print(response.result.value)
-                        print(response.response?.allHeaderFields)
-                    }
-                }
-            }
-        }
-    }
-    
-    func findToken(body: String) -> String? {
-        let lines = body.characters.split("\n").map(String.init)
-        
-        let regex = try! NSRegularExpression(pattern: "id=\"fos_oauth_server_authorize_form__token\".*value=\"(.*)\"", options:[])
-        
-        for line in lines {
-            if let match = regex.firstMatchInString(line, options: [], range: NSMakeRange(0, line.length)) {
-                if match.numberOfRanges == 2 {
-                    let l = line as NSString
-                    let token = l.substringWithRange(match.rangeAtIndex(1))
-                    return token
-                }
-            }
-        }
-        return nil
-    }
-    
-    func showCookies() {
-        for c in self.cookieJar.cookies! {
-            print("\(c.name) \(c.value)")
-        }
-    }
     
     class func clearSettings() {
         let settings = NSUserDefaults.standardUserDefaults()

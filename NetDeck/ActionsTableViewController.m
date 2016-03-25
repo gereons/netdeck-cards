@@ -212,7 +212,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    return NRMenuItemCount - 1;
+    return NRMenuItemCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -336,7 +336,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             
         case NRMenuTest:
         {
-            [[NRDB sharedInstance] testLogin];
+            NRDBHack* hack = [[NRDBHack alloc] init];
+            [hack hackedLogin:@"SpaceHonk" password:@"Skild123" completion:^(BOOL ok) {
+                NSLog(@"hack ok: %d", ok);
+            }];
         }
     }
 }
