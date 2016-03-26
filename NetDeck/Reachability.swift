@@ -18,8 +18,10 @@ class Reachability: NSObject {
         Reachability.manager?.listener = { status in
             // print("Network Status Changed: \(status)")
             switch status {
-            case .NotReachable: NRDB.sharedInstance.stopRefresh()
-            default: NRDB.sharedInstance.refreshAuthentication()
+            case .NotReachable:
+                NRDB.sharedInstance.stopAuthorizationRefresh()
+            default:
+                NRDB.sharedInstance.startAuthorizationRefresh()
             }
         }
     

@@ -5,6 +5,7 @@
 
 "Manually saving also uploads to NetrunnerDB.com" = "Beim Speichern auch zu NetrunnerDB.com hochladen";
 "Connect to NetrunnerDB.com Account" = "App mit deinem NetrunnerDB.com-Konto verbinden";
+"Save Username and Password on device" = "Usernamen und Passwort auf dem Gerät speichern";
 
 "Authentication valid until" = "Autorisierung gültig bis";
 "Refresh Authentication" = "Autorisierung erneuern";

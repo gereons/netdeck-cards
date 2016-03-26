@@ -18,7 +18,10 @@ class NRDB: NSObject {
     static let AUTH_URL =       PROVIDER_HOST + "/oauth/v2/auth?client_id=" + CLIENT_ID + "&response_type=code&redirect_uri=" + CLIENT_HOST
     static let TOKEN_URL =      PROVIDER_HOST + "/oauth/v2/token"
     
+    static let FIVE_MINUTES: NSTimeInterval = 300 // in seconds
+    
     static let sharedInstance = NRDB()
+    override private init() {}
     
     private static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
@@ -32,21 +35,25 @@ class NRDB: NSObject {
     
     class func clearSettings() {
         let settings = NSUserDefaults.standardUserDefaults()
+        settings.setBool(false, forKey: SettingsKeys.USE_NRDB)
+        NRDB.clearCredentials()
+        
+        NRDB.sharedInstance.stopAuthorizationRefresh()
+    }
+    
+    class func clearCredentials() {
+        let settings = NSUserDefaults.standardUserDefaults()
         
         settings.removeObjectForKey(SettingsKeys.NRDB_ACCESS_TOKEN)
         settings.removeObjectForKey(SettingsKeys.NRDB_REFRESH_TOKEN)
         settings.removeObjectForKey(SettingsKeys.NRDB_TOKEN_EXPIRY)
         settings.removeObjectForKey(SettingsKeys.NRDB_TOKEN_TTL)
-        settings.setBool(false, forKey: SettingsKeys.USE_NRDB)
-        
-        settings.synchronize()
-        NRDB.sharedInstance.timer?.invalidate()
-        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
     }
     
     // MARK: - authorization
     
     func authorizeWithCode(code: String, completion: (Bool) -> Void) {
+        // NSLog("NRDB authWithCode")
         let parameters = [
             "client_id": NRDB.CLIENT_ID,
             "client_secret": NRDB.CLIENT_SECRET,
@@ -55,10 +62,11 @@ class NRDB: NSObject {
             "code": code
         ]
         
-        self.getAuthorization(parameters, completion: completion)
+        self.getAuthorization(parameters, isRefresh: false, completion: completion)
     }
     
     private func refreshToken(completion: (Bool) -> Void) {
+        // NSLog("NRDB refreshToken")
         guard let token = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_REFRESH_TOKEN) else {
             completion(false)
             return
@@ -72,16 +80,18 @@ class NRDB: NSObject {
             "refresh_token": token
         ]
         
-        self.getAuthorization(parameters, completion:completion)
+        self.getAuthorization(parameters, isRefresh: true, completion: completion)
     }
     
-    private func getAuthorization(parameters: [String: String], completion: (Bool) -> Void) {
+    private func getAuthorization(parameters: [String: String], isRefresh: Bool, completion: (Bool) -> Void) {
+        
+        // NSLog("NRDB get Auth")
         let foreground = UIApplication.sharedApplication().applicationState == .Active
         if foreground && !Reachability.online() {
             completion(false)
             return
         }
-        
+
         Alamofire.request(.GET, NRDB.TOKEN_URL, parameters: parameters)
             .validate()
             .responseJSON { response in
@@ -109,29 +119,39 @@ class NRDB: NSObject {
                         let expiry = NSDate(timeIntervalSinceNow: exp)
                         settings.setObject(expiry, forKey: SettingsKeys.NRDB_TOKEN_EXPIRY)
                         
-                        if !ok {
-                            NRDB.clearSettings()
-                        } else {
+                        if ok {
                             UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
-                            self.refreshAuthentication()
+                            completion(ok)
+                        } else {
+                            self.handleAuthorizationFailure(isRefresh, completion: completion)
                         }
-                        completion(ok)
                     }
-                    break
                 case .Failure:
-                    NRDB.clearSettings()
-                    UIAlertController.alertWithTitle(nil, message: "Authorization at NetrunnerDB.com failed".localized(), button: "OK")
-                    
-                    UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
-                    completion(false)
+                    self.handleAuthorizationFailure(isRefresh, completion: completion)
                 }
             }
     }
     
-    func refreshAuthentication() {
+    private func handleAuthorizationFailure(isRefresh: Bool, completion: (Bool) -> Void) {
+        if !isRefresh {
+            NRDB.clearSettings()
+            UIAlertController.alertWithTitle(nil, message: "Authorization at NetrunnerDB.com failed".localized(), button: "OK")
+            
+            UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+            completion(false)
+            return
+        }
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.KEEP_NRDB_CREDENTIALS) {
+            NRDBHack.sharedInstance.silentlyLogin()
+        }
+    }
+    
+    func startAuthorizationRefresh() {
+        // NSLog("NRDB startAuthRefresh timer=\(self.timer)")
         let settings = NSUserDefaults.standardUserDefaults()
         
-        if !settings.boolForKey(SettingsKeys.USE_NRDB) || !Reachability.online() {
+        if !settings.boolForKey(SettingsKeys.USE_NRDB) || self.timer != nil {
             return
         }
         
@@ -142,55 +162,55 @@ class NRDB: NSObject {
         
         let expiry = settings.objectForKey(SettingsKeys.NRDB_TOKEN_EXPIRY) as? NSDate ?? NSDate()
         let now = NSDate()
-        var diff = expiry.timeIntervalSinceDate(now)
-        diff -= 5*60; // 5 minutes overlap
-        // NSLog(@"start nrdb auth refresh in %f seconds", diff);
+        let diff = expiry.timeIntervalSinceDate(now) - NRDB.FIVE_MINUTES
+        // NSLog("start nrdb auth refresh in %f seconds", diff);
         
-        if diff < 0 {
-            // token is expired, refresh now
-            self.timedRefresh(nil)
-        } else {
-            self.timer?.invalidate()
-            self.timer = NSTimer(timeInterval:diff, target:self, selector:#selector(NRDB.timedRefresh(_:)), userInfo: nil, repeats: false)
+        self.timer?.invalidate()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(diff, target: self, selector: #selector(NRDB.timedRefresh(_:)), userInfo: nil, repeats: false)
+    }
+    
+    func stopAuthorizationRefresh() {
+        // NSLog("NRDB stopAuthRefresh")
+        self.timer?.invalidate()
+        self.timer = nil
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+    }
+    
+    func timedRefresh(timer: NSTimer?) {
+        // NSLog("NRDB refresh timer callback")
+        self.timer = nil
+        self.refreshToken { ok in
+            if (ok) {
+                // schedule next run at 5 minutes before expiry
+                let ti = NSUserDefaults.standardUserDefaults().doubleForKey(SettingsKeys.NRDB_TOKEN_TTL) as NSTimeInterval - NRDB.FIVE_MINUTES
+                // NSLog("next refresh in %f seconds", ti)
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(ti, target: self, selector: #selector(NRDB.timedRefresh(_:)), userInfo: nil, repeats: false)
+            }
         }
     }
     
     func backgroundRefreshAuthentication(completion: (UIBackgroundFetchResult) -> Void) {
+        // NSLog("NRDB background Refresh")
         let settings = NSUserDefaults.standardUserDefaults()
         if !settings.boolForKey(SettingsKeys.USE_NRDB) {
-            // NSLog(@"no nrdb account");
+            // NSLog("no nrdb account");
             completion(.NoData)
             return
         }
         
         if settings.stringForKey(SettingsKeys.NRDB_REFRESH_TOKEN) == nil {
-            // NSLog(@"no token");
+            // NSLog("no token");
             NRDB.clearSettings()
             completion(.NoData)
             return
         }
         
         self.refreshToken { ok in
-            // NSLog(@"refresh: %d", ok);
+            // NSLog("refresh: %d", ok);
             completion(ok ? .NewData : .Failed)
         }
     }
     
-    func timedRefresh(timer: NSTimer?) {
-        self.refreshToken { ok in
-            var ti: NSTimeInterval = 300
-            if (ok) {
-                ti = NSUserDefaults.standardUserDefaults().doubleForKey(SettingsKeys.NRDB_TOKEN_TTL) as NSTimeInterval
-                ti -= 300; // 5 minutes before expiry
-            }
-            self.timer = NSTimer(timeInterval:ti, target:self, selector:#selector(NRDB.timedRefresh(_:)), userInfo:nil, repeats: false)
-        }
-    }
-    
-    func stopRefresh() {
-        self.timer?.invalidate()
-        self.timer = nil
-    }
 
     private func accessToken() -> String? {
         return NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_ACCESS_TOKEN)

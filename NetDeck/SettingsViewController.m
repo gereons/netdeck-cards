@@ -82,8 +82,8 @@
 
 - (void) settingsChanged:(NSNotification*)notification
 {
-    // NSLog(@"changing %@ to %@", notification.object, notification.userInfo);
     NSString* key = notification.userInfo.allKeys.firstObject;
+    // NSLog(@"changing %@ to %@", key, notification.userInfo);
     
     if ([key isEqualToString:SettingsKeys.USE_DROPBOX])
     {
@@ -102,45 +102,57 @@
     {
         BOOL useNrdb = [[notification.userInfo objectForKey:SettingsKeys.USE_NRDB] boolValue];
         
-        if (useNrdb)
-        {
-            if (Reachability.online)
-            {
-                if (IS_IPAD)
-                {
-                    UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-                    [NRDBAuthPopupViewController showInViewController:topMost];
-                }
-                else
-                {
-                    [NRDBAuthPopupViewController pushOn:self.iask.navigationController];
-                }
-            }
-            else
-            {
-                [self showOfflineAlert];
-                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:SettingsKeys.USE_NRDB];
-            }
-        }
-        else
-        {
-            NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-            [settings removeObjectForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
-            [settings removeObjectForKey:SettingsKeys.NRDB_REFRESH_TOKEN];
-            [settings removeObjectForKey:SettingsKeys.NRDB_TOKEN_EXPIRY];
-            [settings removeObjectForKey:SettingsKeys.NRDB_TOKEN_TTL];
-            
+        if (useNrdb) {
+            [self nrdbLogin];
+        } else {
+            [NRDB clearSettings];
+            [NRDBHack clearCredentials];
         }
         [self refresh];
     }
-    else if ([key isEqualToString:SettingsKeys.UPDATE_INTERVAL])
-    {
+    else if ([key isEqualToString:SettingsKeys.UPDATE_INTERVAL]) {
         [CardManager setNextDownloadDate];
     }
-    else if ([key isEqualToString:SettingsKeys.LANGUAGE])
-    {
+    else if ([key isEqualToString:SettingsKeys.LANGUAGE]) {
         [[ImageCache sharedInstance] clearLastModifiedInfo];
         [DeckManager flushCache];
+    }
+    else if ([key isEqualToString:SettingsKeys.KEEP_NRDB_CREDENTIALS]) {
+        BOOL keep = [[notification.userInfo objectForKey:SettingsKeys.KEEP_NRDB_CREDENTIALS] boolValue];
+        
+        [[NRDB sharedInstance] stopAuthorizationRefresh];
+        
+        if (keep) {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NRDB]) {
+                [[NRDB sharedInstance] stopAuthorizationRefresh];
+                [self nrdbLogin];
+            }
+        } else {
+            [NRDBHack clearCredentials];
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:SettingsKeys.USE_NRDB];
+        }
+    }
+}
+
+- (void)nrdbLogin {
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    if (!Reachability.online) {
+        [self showOfflineAlert];
+        [settings setObject:@NO forKey:SettingsKeys.USE_NRDB];
+        return;
+    }
+    
+    if ([settings boolForKey:SettingsKeys.KEEP_NRDB_CREDENTIALS]) {
+        [[NRDBHack sharedInstance] enterNrdbCredentialsAndLogin];
+        return;
+    }
+    
+    if (IS_IPAD) {
+        UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+        [NRDBAuthPopupViewController showInViewController:topMost];
+    } else {
+        [NRDBAuthPopupViewController pushOn:self.iask.navigationController];
     }
 }
 

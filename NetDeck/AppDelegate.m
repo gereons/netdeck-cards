@@ -9,6 +9,8 @@
 // TODOs:
 
 #warning more nrdb testing
+#warning nrdb re-auth issues
+
 #warning sdcalertview: customized visual when PR is merged
 
 #warning iphone browser: add hint on startup, more filters (type + set)
@@ -17,7 +19,6 @@
 
 #warning 3d touch shortcuts
 #warning improve startup time
-#warning nrdb re-auth issues
 
 @import SVProgressHUD;
 
@@ -61,6 +62,7 @@ const NSString* const kANY = @"Any";
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setMinimumDismissTimeInterval:2.0];
     
     [CardImageViewPopover monitorKeyboard];
     
@@ -100,6 +102,7 @@ const NSString* const kANY = @"Any";
         SettingsKeys.USE_DROPBOX: @(NO),
         SettingsKeys.AUTO_SAVE_DB: @(NO),
         SettingsKeys.USE_NRDB: @(NO),
+        SettingsKeys.KEEP_NRDB_CREDENTIALS: @(YES),
         SettingsKeys.NRDB_AUTOSAVE: @(NO),
         SettingsKeys.NRDB_HOST: @"netrunnerdb.com",
         SettingsKeys.LANGUAGE: @"en",
@@ -136,7 +139,7 @@ const NSString* const kANY = @"Any";
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [[NRDB sharedInstance] stopRefresh];
+    [[NRDB sharedInstance] stopAuthorizationRefresh];
     [[ImageCache sharedInstance] saveData];
 }
 
@@ -199,7 +202,7 @@ const NSString* const kANY = @"Any";
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     [DeckImport checkClipboardForDeck];
-    [[NRDB sharedInstance] refreshAuthentication];
+    [[NRDB sharedInstance] startAuthorizationRefresh];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

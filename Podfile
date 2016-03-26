@@ -18,6 +18,7 @@ pod 'AlamofireNetworkActivityIndicator'
 pod 'SwiftyJSON'
 pod 'SwiftyDropbox'
 pod 'SDCAlertView'
+pod 'SwiftKeychainWrapper'
 
 post_install do | installer |
   require 'fileutils'

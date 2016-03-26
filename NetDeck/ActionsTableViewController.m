@@ -25,8 +25,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NRMenuSettings,
     NRMenuAbout,
     
-    NRMenuTest,
-    
     NRMenuItemCount
 };
 
@@ -224,6 +222,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.font = [UIFont systemFontOfSize:17];
     }
     
     BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
@@ -248,14 +248,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             cell.textLabel.text = l10n(@"Card Browser");
             cell.textLabel.enabled = cardsAvailable;
             break;
-            
-        case NRMenuTest:
-            cell.textLabel.text = @"NRDB Login Test";
-            break;
     }
-    
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.font = [UIFont systemFontOfSize:17];
     
     return cell;
 }
@@ -332,14 +325,6 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:about];
             detailViewManager.detailViewController = self.snc;
             break;
-        }
-            
-        case NRMenuTest:
-        {
-            NRDBHack* hack = [[NRDBHack alloc] init];
-            [hack hackedLogin:@"SpaceHonk" password:@"Skild123" completion:^(BOOL ok) {
-                NSLog(@"hack ok: %d", ok);
-            }];
         }
     }
 }

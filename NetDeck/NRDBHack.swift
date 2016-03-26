@@ -7,6 +7,8 @@
 //
 
 import Alamofire
+import SwiftKeychainWrapper
+import SVProgressHUD
 
 class NRDBHack: NSObject {
 
@@ -15,31 +17,91 @@ class NRDBHack: NSObject {
     
     private var cookieJar = NSHTTPCookieStorage.sharedHTTPCookieStorage()
     private var manager: Alamofire.Manager!
-    private var completion: ((Bool) -> Void)!
-
-    func redirectHandler(session: NSURLSession!, task: NSURLSessionTask!, response: NSHTTPURLResponse!, request: NSURLRequest!) -> NSURLRequest {
-        print("redirecting to \(request.URL)")
-        
-        if let url = request.URL?.absoluteString where url.hasPrefix(NRDB.CLIENT_HOST) {
-            // this is the oauth answer we want to intercept. 
-            // extract the value of the "code" parameter from the URL and use that to finalize the authorization
-            if let components = NSURLComponents(URL: request.URL!, resolvingAgainstBaseURL: false), items = components.queryItems {
-                for item in items {
-                    if item.name == "code"{
-                        let code = item.value
-                        print("found code \(code)")
-                        NRDB.sharedInstance.authorizeWithCode(code ?? "", completion: completion)
-                    }
-                }
-            }
+    private var authCompletion: ((Bool) -> Void)!
+    
+    private var username: String?
+    private var password: String?
+    
+    static let sharedInstance = NRDBHack()
+    
+    func enterNrdbCredentialsAndLogin() {
+        let alert = UIAlertController(title: "NetrunnerDB.com Login".localized(), message: nil, preferredStyle: .Alert)
+        alert.addTextFieldWithConfigurationHandler { textField in
+            textField.placeholder = "Username".localized()
+            textField.autocorrectionType = .No
+            textField.returnKeyType = .Next
+            textField.enablesReturnKeyAutomatically = true
         }
-        return request
+        
+        alert.addTextFieldWithConfigurationHandler { textField in
+            textField.placeholder = "Password".localized()
+            textField.autocorrectionType = .No
+            textField.returnKeyType = .Done
+            textField.secureTextEntry = true
+            textField.enablesReturnKeyAutomatically = true
+        }
+        
+        alert.addAction(UIAlertAction(title: "Login".localized(), style: .Default) { action in
+            self.username = alert.textFields?[0].text
+            self.password = alert.textFields?[1].text!
+            self.hackedLogin(self.manualLoginCompletion)
+            SVProgressHUD.showWithStatus("Logging in...".localized())
+        })
+            
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .Cancel, handler: nil))
+        
+        alert.show()
+    }
+    
+    func silentlyLogin() {
+        if let username = KeychainWrapper.stringForKey(SettingsKeys.NRDB_USERNAME), password = KeychainWrapper.stringForKey(SettingsKeys.NRDB_PASSWORD) {
+            self.username = username
+            self.password = password
+            self.hackedLogin(self.silentLoginCompletion)
+        }
+    }
+    
+    func manualLoginCompletion(ok: Bool) {
+        self.loginCompletion(ok, verbose: true)
+    }
+    
+    func silentLoginCompletion(ok: Bool) {
+        self.loginCompletion(ok, verbose: false)
+    }
+    
+    func loginCompletion(ok: Bool, verbose: Bool) {
+        // NSLog("manual login completed ok=\(ok)")
+        if ok {
+            if verbose {
+                SVProgressHUD.dismiss()
+            }
+            KeychainWrapper.setString(self.username!, forKey: SettingsKeys.NRDB_USERNAME)
+            KeychainWrapper.setString(self.password!, forKey: SettingsKeys.NRDB_PASSWORD)
+            
+            NRDB.sharedInstance.startAuthorizationRefresh()
+        } else {
+            if verbose {
+                SVProgressHUD.showErrorWithStatus("Login failed".localized())
+            }
+            NRDBHack.clearCredentials()
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: SettingsKeys.USE_NRDB)
+        }
+    }
+        
+    class func clearCredentials() {
+        KeychainWrapper.removeObjectForKey(SettingsKeys.NRDB_USERNAME)
+        KeychainWrapper.removeObjectForKey(SettingsKeys.NRDB_PASSWORD)
     }
 
-    func hackedLogin(userName: String, password: String, completion: (Bool) -> Void) {
-        print("hacking around oauth login")
+    func hackedLogin(completion: (Bool) -> Void) {
+        // NSLog("hacking around oauth login")
         
-        self.completion = completion
+        guard let username = username, password = password else {
+            completion(false)
+            return
+        }
+        
+        self.authCompletion = completion
         
         // make sure we're not reusing an old session
         if let cookies = self.cookieJar.cookies {
@@ -66,7 +128,7 @@ class NRDBHack: NSObject {
         self.manager.request(.GET, NRDBHack.AUTH_URL, parameters: parameters).validate().responseString { response in
         
             let parameters = [
-                "_username": userName,
+                "_username": username,
                 "_password": password,
                 "_submit": "Log In"
             ]
@@ -88,10 +150,32 @@ class NRDBHack: NSObject {
                             completion(false)
                         }
                     }
+                } else {
+                    completion(false)
                 }
             }
         }
     }
+    
+    private func redirectHandler(session: NSURLSession!, task: NSURLSessionTask!, response: NSHTTPURLResponse!, request: NSURLRequest!) -> NSURLRequest {
+        // NSLog("redirecting to \(request.URL)")
+        
+        if let url = request.URL?.absoluteString where url.hasPrefix(NRDB.CLIENT_HOST) {
+            // this is the oauth answer we want to intercept.
+            // extract the value of the "code" parameter from the URL and use that to finalize the authorization
+            if let components = NSURLComponents(URL: request.URL!, resolvingAgainstBaseURL: false), items = components.queryItems {
+                for item in items {
+                    if item.name == "code"{
+                        let code = item.value
+                        // NSLog("found code \(code)")
+                        NRDB.sharedInstance.authorizeWithCode(code ?? "", completion: self.authCompletion)
+                    }
+                }
+            }
+        }
+        return request
+    }
+
     
     private func findToken(body: String) -> String? {
         
@@ -107,4 +191,5 @@ class NRDBHack: NSObject {
         }
         return nil
     }
+    
 }

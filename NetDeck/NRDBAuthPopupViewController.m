@@ -112,6 +112,7 @@ static NRDBAuthPopupViewController* popup;
             codeFound = YES;
             [[NRDB sharedInstance] authorizeWithCode:code completion:^(BOOL ok) {
                 [popup dismiss];
+                [[NRDB sharedInstance] startAuthorizationRefresh];
             }];
             break;
         }

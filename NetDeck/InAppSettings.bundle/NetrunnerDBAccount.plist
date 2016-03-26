@@ -18,6 +18,14 @@
 			<key>Key</key>
 			<string>useNrdb</string>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Save Username and Password on device</string>
+            <key>Key</key>
+            <string>keepNrdbCredentials</string>
+        </dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
