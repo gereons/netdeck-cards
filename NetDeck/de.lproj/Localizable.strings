@@ -278,6 +278,12 @@
 "Imported decks" = "Decks importiert";
 "Authorization at NetrunnerDB.com failed" = "Autorisierung bei NetrunnerDB.com fehlgeschlagen";
 
+"NetrunnerDB.com Login" = "Login bei NetrunnerDB.com";
+"Logging in..." = "Einloggen...";
+"Login failed" = "Login fehlgeschlagen";
+"Username" = "Benutzername";
+"Password" = "Passwort";
+
 // deck diff
 "Select to Compare" = "Für Vergleich auswählen";
 "Compare" = "Vergleichen";

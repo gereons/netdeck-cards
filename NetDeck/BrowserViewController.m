@@ -26,6 +26,7 @@
 {
     [super viewDidLoad];
     self.title = l10n(@"Browser");
+    LOG_EVENT(@"Browser", @{@"Device": @"iPhone"});
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];

@@ -29,6 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    LOG_EVENT(@"Draw Sim", @{@"Device": @"iPhone"});
     
     NSAssert(self.navigationController.viewControllers.count == 3, @"nav oops");
     

@@ -62,6 +62,7 @@ static NSMutableArray* subtypeCollapsedSections;
 {
     [super viewDidLoad];
     self.initializing = YES;
+    LOG_EVENT(@"Browser", @{@"Device": @"iPad"});
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     

@@ -36,6 +36,8 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Analytics.logEvent("Draw Sim", attributes: ["Device": "iPad"])
+        
         self.initCards(true)
         
         self.titleLabel.text = "Draw Simulator".localized()

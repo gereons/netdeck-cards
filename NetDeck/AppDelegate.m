@@ -8,9 +8,6 @@
 
 // TODOs:
 
-#warning more nrdb testing
-#warning nrdb re-auth issues
-
 #warning sdcalertview: customized visual when PR is merged
 
 #warning iphone browser: add hint on startup, more filters (type + set)
@@ -33,6 +30,7 @@ const NSString* const kANY = @"Any";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 #if USE_CRASHLYTICS
+    Analytics.enableAnswers = true;
     [CrashlyticsKit setDelegate:self];
     [Fabric with:@[ CrashlyticsKit ]];
 #endif
@@ -57,7 +55,6 @@ const NSString* const kANY = @"Any";
     NSTimeInterval fetchInterval = useNrdb ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
     
-#warning handle migration from old to new DB api (if necessary)
     [DropboxWrapper setup];
     
     [SVProgressHUD setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
@@ -92,6 +89,7 @@ const NSString* const kANY = @"Any";
 
 -(void) setBuiltinUserDefaults
 {
+    BOOL usingNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NRDB];
     NSDictionary* dict = @{
         SettingsKeys.LAST_DOWNLOAD: l10n(@"never"),
         SettingsKeys.NEXT_DOWNLOAD: l10n(@"never"),
@@ -102,7 +100,7 @@ const NSString* const kANY = @"Any";
         SettingsKeys.USE_DROPBOX: @(NO),
         SettingsKeys.AUTO_SAVE_DB: @(NO),
         SettingsKeys.USE_NRDB: @(NO),
-        SettingsKeys.KEEP_NRDB_CREDENTIALS: @(YES),
+        SettingsKeys.KEEP_NRDB_CREDENTIALS: @(!usingNrdb),
         SettingsKeys.NRDB_AUTOSAVE: @(NO),
         SettingsKeys.NRDB_HOST: @"netrunnerdb.com",
         SettingsKeys.LANGUAGE: @"en",
