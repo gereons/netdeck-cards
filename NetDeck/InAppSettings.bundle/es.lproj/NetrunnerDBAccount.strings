@@ -4,4 +4,5 @@
 "Saving" = "Guardando";
 
 "Manually saving also uploads to NetrunnerDB.com" = "Guardar en NetrunnerDB.com incluso cuando se guarda manualmente";
-"Connect to NetrunnerDB.com Account" = "Conectar con tu cuenta de NetrunnerDB.com"; // en
+"Connect to NetrunnerDB.com Account" = "Conectar con tu cuenta de NetrunnerDB.com";
+"Save Username and Password on device" = "Guardar nombre y contraseña";

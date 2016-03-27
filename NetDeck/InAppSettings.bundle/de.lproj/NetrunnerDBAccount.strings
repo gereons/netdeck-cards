@@ -8,4 +8,5 @@
 "Save Username and Password on device" = "Usernamen und Passwort auf dem Gerät speichern";
 
 "Authentication valid until" = "Autorisierung gültig bis";
+"Last Refresh" = "Letzter Refresh";
 "Refresh Authentication" = "Autorisierung erneuern";

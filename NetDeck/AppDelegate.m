@@ -84,6 +84,8 @@ const NSString* const kANY = @"Any";
         [DeckImport checkClipboardForDeck];
     }
     
+    [self logStartup];
+    
     return YES;
 }
 
@@ -106,6 +108,7 @@ const NSString* const kANY = @"Any";
         SettingsKeys.LANGUAGE: @"en",
         SettingsKeys.UPDATE_INTERVAL: @(7),
         SettingsKeys.LAST_BG_FETCH: l10n(@"never"),
+        SettingsKeys.LAST_REFRESH: l10n(@"never"),
         
         SettingsKeys.DECK_FILTER_STATE: @(NRDeckStateNone),
         SettingsKeys.DECK_VIEW_STYLE: @(NRCardViewLargeTable),
@@ -129,6 +132,18 @@ const NSString* const kANY = @"Any";
     };
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dict];
+}
+
+-(void) logStartup {
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    NSDictionary* attrs = @{
+        @"cardLanguage": [settings stringForKey:SettingsKeys.LANGUAGE],
+        @"appLanguage": [[NSLocale preferredLanguages] objectAtIndex:0],
+        @"useNrdb": [settings objectForKey:SettingsKeys.USE_NRDB],
+        @"useDropbox": [settings objectForKey:SettingsKeys.USE_DROPBOX],
+    };
+    (void)attrs;
+    LOG_EVENT(@"Start", attrs);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -201,6 +216,8 @@ const NSString* const kANY = @"Any";
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     [DeckImport checkClipboardForDeck];
     [[NRDB sharedInstance] startAuthorizationRefresh];
+    
+    [self logStartup];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

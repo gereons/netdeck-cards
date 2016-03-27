@@ -72,6 +72,8 @@ class NRDB: NSObject {
             return
         }
         
+        NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: SettingsKeys.LAST_REFRESH)
+        
         let parameters = [
             "client_id": NRDB.CLIENT_ID,
             "client_secret":  NRDB.CLIENT_SECRET,

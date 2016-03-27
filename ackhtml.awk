@@ -2,7 +2,7 @@ BEGIN {
     print "<html><head>\
 <meta http-equiv='content-type' content='text/html; charset=UTF-8'> \
 <style type='text/css'> \
-  pre { font-family: 'HelveticaNeue-Light'; white-space: pre-wrap; } \
+  pre { font-family: -apple-system,HelveticaNeue-Light; white-space: pre-wrap; } \
   h1 { font-size: 110% } \
   h2 { font-size: 100% } \
   h1,h2 { margin: 0; padding: 0} \

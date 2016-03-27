@@ -42,6 +42,14 @@
             <key>Key</key>
             <string>lastBackgroundFetch</string>
         </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSTitleValueSpecifier</string>
+            <key>Title</key>
+            <string>Last Refresh</string>
+            <key>Key</key>
+            <string>lastRefresh</string>
+        </dict>
 		<dict>
 			<key>Type</key>
 			<string>IASKButtonSpecifier</string>

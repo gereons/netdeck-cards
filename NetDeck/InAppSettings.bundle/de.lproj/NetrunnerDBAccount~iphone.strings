@@ -1,7 +1,8 @@
-/* NetrunnerDBAccount.strings - de */
+/* NetrunnerDBAccount~iphone.strings - de */
 
 "Account" = "Konto";
 "Saving" = "Speichern";
 
 "Manually saving also uploads to NetrunnerDB.com" = "Beim Speichern auch hochladen";
 "Connect to NetrunnerDB.com Account" = "App mit NetrunnerDB.com verbinden";
+"Save Username and Password on device" = "Usernamen und Passwort auf dem Gerät speichern";

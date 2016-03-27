@@ -66,6 +66,8 @@
     static let NRDB_AUTOSAVE       = "nrdbAutoSave"
     static let REFRESH_AUTH_NOW    = "refreshAuthNow"
     static let LAST_BG_FETCH       = "lastBackgroundFetch"
+    static let LAST_REFRESH        = "lastRefresh"
+    
     static let KEEP_NRDB_CREDENTIALS = "keepNrdbCredentials"
     
     static let NRDB_USERNAME       = "nrdbUsername"

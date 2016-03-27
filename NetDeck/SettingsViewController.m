@@ -56,7 +56,7 @@
     }
 
 #if RELEASE
-    [hiddenKeys addObjectsFromArray:@[ SettingsKeys.NRDB_TOKEN_EXPIRY, SettingsKeys.REFRESH_AUTH_NOW, SettingsKeys.LAST_BG_FETCH ]];
+    [hiddenKeys addObjectsFromArray:@[ SettingsKeys.NRDB_TOKEN_EXPIRY, SettingsKeys.REFRESH_AUTH_NOW, SettingsKeys.LAST_BG_FETCH, SettingsKeys.LAST_REFRESH ]];
 #endif
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -114,6 +114,7 @@
         [CardManager setNextDownloadDate];
     }
     else if ([key isEqualToString:SettingsKeys.LANGUAGE]) {
+        LOG_EVENT(@"Change Language", @{@"Language": [notification.userInfo stringForKey:SettingsKeys.LANGUAGE]});
         [[ImageCache sharedInstance] clearLastModifiedInfo];
         [DeckManager flushCache];
     }

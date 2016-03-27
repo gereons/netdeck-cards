@@ -317,7 +317,6 @@
 		3AFA3B6C18DF862900F59331 /* altarttoggle_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */; };
 		3AFB25401987789E0051C894 /* netrunnerdb_com-bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */; };
 		3AFB25411987789E0051C894 /* netrunnerdb_com-bw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */; };
-		3AFEC40A19B74359000D025C /* Crashlytics.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3AFEC40C19B74359000D025C /* Crashlytics.strings */; };
 		71B5FBE6589E7D9FAE12FBF7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1177AECC149D5AD3422387E3 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -391,7 +390,6 @@
 		3A2310471B90D0F700487119 /* 890-sort-ascending-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "890-sort-ascending-toolbar@3x.png"; sourceTree = "<group>"; };
 		3A2F4ADB1C8C716400B711BD /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		3A3293DF1CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = ja; path = ja.lproj/About.html; sourceTree = "<group>"; };
-		3A3293E01CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Crashlytics.strings; sourceTree = "<group>"; };
 		3A3293E11CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A3293E21CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A3293E31CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -744,7 +742,6 @@
 		3AFA3B6818DF862900F59331 /* altarttoggle_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altarttoggle_off@2x.png"; sourceTree = "<group>"; };
 		3AFB253E1987789E0051C894 /* netrunnerdb_com-bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw.png"; sourceTree = "<group>"; };
 		3AFB253F1987789E0051C894 /* netrunnerdb_com-bw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "netrunnerdb_com-bw@2x.png"; sourceTree = "<group>"; };
-		3AFEC40B19B74359000D025C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Crashlytics.strings; sourceTree = "<group>"; };
 		53700086EE846BB882A399B8 /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
 		AC9022848911E8162E8048A8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -867,7 +864,6 @@
 			isa = PBXGroup;
 			children = (
 				3AA0504919589F9B00DBDED6 /* Acknowledgements.html */,
-				3AFEC40C19B74359000D025C /* Crashlytics.strings */,
 				3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */,
 				3A095E8D18BBC49C00C99FED /* Localizable.strings */,
 				3A3622691849320C007F2854 /* NetDeck-Info.plist */,
@@ -1766,7 +1762,6 @@
 				3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */,
 				3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */,
 				3A82625018E05EC70038B4AC /* cardstats_decksize@2x.png in Resources */,
-				3AFEC40A19B74359000D025C /* Crashlytics.strings in Resources */,
 				3AF424AB19150FC80005ACAA /* searchbar-bg.png in Resources */,
 				3A82624D18E05EC70038B4AC /* cardstats_influence@2x.png in Resources */,
 				3AE0D50718F7B4A0007868A7 /* influence_slider@2x.png in Resources */,
@@ -2089,15 +2084,6 @@
 				3A3293E31CA5662C00884DE5 /* ja */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		3AFEC40C19B74359000D025C /* Crashlytics.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3AFEC40B19B74359000D025C /* de */,
-				3A3293E01CA5662C00884DE5 /* ja */,
-			);
-			name = Crashlytics.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
