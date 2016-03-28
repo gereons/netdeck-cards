@@ -14,7 +14,6 @@
 #warning iphone: deck edit history
 #warning move icons etc to Images.xcassets
 
-#warning 3d touch shortcuts
 #warning improve startup time
 
 @import SVProgressHUD;
@@ -22,8 +21,13 @@
 #import "AppDelegate.h"
 #import "CardImageViewPopover.h"
 #import "NRDBAuthPopupViewController.h"
+#import "IphoneStartViewController.h"
 
 const NSString* const kANY = @"Any";
+
+@interface AppDelegate()
+@property UIApplicationShortcutItem* launchShortcutItem;
+@end
 
 @implementation AppDelegate
 
@@ -86,7 +90,39 @@ const NSString* const kANY = @"Any";
     
     [self logStartup];
     
+    UIApplicationShortcutItem* shortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
+    if (shortcutItem != nil) {
+        self.launchShortcutItem = shortcutItem;
+        return NO;
+    }
+    
     return YES;
+}
+
+-(void) application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    BOOL ok = [self handleShortcutItem:shortcutItem];
+    completionHandler(ok);
+}
+
+-(BOOL) handleShortcutItem:(UIApplicationShortcutItem *)shortcutItem {
+    BOOL cardsOk = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    if (!cardsOk || !IS_IPHONE) {
+        return NO;
+    }
+
+    BOOL ok = NO;
+    IphoneStartViewController* start = (IphoneStartViewController*)self.navigationController;
+    if ([shortcutItem.type isEqualToString:@"org.steffens.NRDB.newRunner"]) {
+        [start addNewDeck:NRRoleRunner];
+        ok = YES;
+    } else if ([shortcutItem.type isEqualToString:@"org.steffens.NRDB.newCorp"]) {
+        [start addNewDeck:NRRoleCorp];
+        ok = YES;
+    } else if ([shortcutItem.type isEqualToString:@"org.steffens.NRDB.cardBrowser"]) {
+        [start openBrowser];
+        ok = YES;
+    }
+    return ok;
 }
 
 -(void) setBuiltinUserDefaults
@@ -223,18 +259,15 @@ const NSString* const kANY = @"Any";
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if (self.launchShortcutItem) {
+        [self handleShortcutItem:self.launchShortcutItem];
+        self.launchShortcutItem = nil;
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-
-- (void) application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
-{
-    // Called when the user selects a shortcut item on the home screen (iPhone 6s/6s+)
-    completionHandler(NO);
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation

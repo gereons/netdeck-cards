@@ -436,4 +436,10 @@
     [searchBar resignFirstResponder];
 }
 
+#pragma mark 3d touch shortcuts
+
+-(void) openBrowser {
+    [self titleButtonTapped:nil];
+}
+
 @end

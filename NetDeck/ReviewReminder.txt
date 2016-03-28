@@ -4,32 +4,6 @@ Wenn dir Net Deck gefällt wäre es toll, wenn du eine positive Bewertung oder R
 
 Please note that the word "Android" in the app's metadata does NOT refer to a mobile operating system, but rather to the name of the card game "Android: Netrunner".
 
-<key>UIApplicationShortcutItems</key>
-<array>
-<dict>
-<key>UIApplicationShortcutItemIconType</key>
-<string>UIApplicationShortcutItemTypeAdd</string>
-<key>UIApplicationShortcutItemTitle</key>
-<string>New Runner Deck</string>
-<key>UIApplicationShortcutItemType</key>
-<string>org.steffens.NRDB.newRunner</string>
-</dict>
-<dict>
-<key>UIApplicationShortcutItemIconType</key>
-<string>UIApplicationShortcutItemTypeAdd</string>
-<key>UIApplicationShortcutItemTitle</key>
-<string>New Corp Deck</string>
-<key>UIApplicationShortcutItemType</key>
-<string>org.steffens.NRDB.newCorp</string>
-</dict>
-<dict>
-<key>UIApplicationShortcutItemIconType</key>
-<string>UIApplicationShortcutIconTypeSearch</string>
-<key>UIApplicationShortcutItemTitle</key>
-<string>Card Browser</string>
-<key>UIApplicationShortcutItemType</key>
-<string>org.steffens.NRDB.cardBrowser</string>
-</dict>
-</array>
+
 
 <key>ITSAppUsesNonExemptEncryption</key><false/>
