@@ -1,12 +1,10 @@
 ﻿/* Settings Root.strings - ja */
 
-
 "Number of Core Sets" = "基本セットの数";
 "Auto-save decks" = "デッキの自動セーブ";
 "Auto-save history" = "履歴の自動セーブ";
 
 "Card Data" = "カードデータ";
-
 
 "Card Sets" = "カードセット";
 "Set/Datapack Selection" = "セット/データパック選択";
@@ -23,28 +21,3 @@
 "Use “NAPD Most Wanted List”" = "「NAPD重要指名手配リスト」を使用する";
 
 "About Net Deck" = "Net Deckについて";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

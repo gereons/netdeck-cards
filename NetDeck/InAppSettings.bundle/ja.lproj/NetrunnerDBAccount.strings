@@ -1,33 +1,8 @@
-﻿/* NetrunnerDBAccount.strings - ja */
+/* NetrunnerDBAccount.strings - ja */
 
 "Account" = "アカウント";
 "Saving" = "セーブ中";
 
 "Manually saving also uploads to NetrunnerDB.com" = "手動セーブでNetrunnerDB.comにアップロード";
 "Connect to NetrunnerDB.com Account" = "NetrunnerDB.comのアカウントに接続";
-"Save Username and Password on device" = "保存ユーザー名とパスワード";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+"Save Username and Password on device" = "ユーザー名とパスワードをデバイスに保存";

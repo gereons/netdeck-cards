@@ -1,4 +1,4 @@
-﻿/* CardData.strings - ja */
+/* CardData.strings - ja */
 
 "Card Data" = "カードデータ";
 
@@ -28,16 +28,3 @@
 "Manual" = "手動";
 
 "LanguageFooterText" = "Netrunner.DBは英語以外の言語を完全にサポートしているわけではありません。\n設定を変更した場合、カードデータをダウンロードし直してください。";
-
-
-
-
-
-
-
-
-
-
-
-
-

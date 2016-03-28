@@ -280,7 +280,7 @@
 "Authorization at NetrunnerDB.com failed" = "NetrunnerDB.comの認証に失敗しました";
 
 "NetrunnerDB.com Login" = "NetrunnerDB.comログイン";
-"Logging in..." = "のログイン...";
+"Logging in..." = "ログイン中……";
 "Login failed" = "ログインに失敗しました";
 "Username" = "ユーザー名";
 "Password" = "パスワード";
@@ -293,7 +293,7 @@
 "Reverse" = "反転";
 "Full" = "全体";
 "Diff" = "差分";
-"Intersect" = "共通";
+"Intersect" = "総数不足";
 "Overlap" = "重複";
 "Both decks must be for the same side." = "両方のデッキは同一サイドの必要があります。";
 "Select two decks to compare them" = "比較するデッキを2つ選んでください。";
