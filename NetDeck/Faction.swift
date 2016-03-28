@@ -94,7 +94,7 @@ import Foundation
     class func shortName(faction: NRFaction) -> String {
         switch faction {
         case .HaasBioroid: return "H-B"
-        case .Weyland: return "Weyland"
+        case .Weyland: return "Weyland".localized()
         case .SunnyLebeau: return "Sunny"
         default: return Faction.name(faction)!
         }

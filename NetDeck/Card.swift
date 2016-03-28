@@ -226,7 +226,7 @@ import SwiftyJSON
         }
         // remove the "consortium" from weyland's name
         if c.faction == .Weyland {
-            c.factionStr = "Weyland"
+            c.factionStr = "Weyland".localized()
         }
         
         if let text = json["text"].string {

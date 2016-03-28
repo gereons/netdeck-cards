@@ -10,7 +10,10 @@
 #import "DeckDiffCell.h"
 
 typedef NS_ENUM(NSInteger, DiffMode) {
-    FullComparison, DiffOnly, Intersect, Overlap
+    FullComparison,     // all cards from both decks
+    DiffOnly,           // differing cards
+    Intersect,          // cards that are in both decks, and total count is more than owned
+    Overlap,            // cards that are in both decks
 };
 
 @interface DeckDiffViewController ()

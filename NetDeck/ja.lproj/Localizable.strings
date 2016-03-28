@@ -1,4 +1,4 @@
-﻿/*
+/*
   Localizable.strings (ja)
   Net Deck
 
@@ -25,7 +25,7 @@
 "OK" = "OK";
 "Cancel" = "キャンセル";
 "Stop" = "停止";
-"Edit" = "修正";
+"Edit" = "編集";
 "Done" = "完了";
 "Remove" = "消去";
 "Delete" = "削除";
@@ -36,6 +36,7 @@
 "Deck" = "デッキ";
 "Decks" = "デッキ";
 "Password" = "パスワード";
+"Weyland" = "ウェイランド";
 
 // main menu
 "New Runner Deck" = "新規ランナーデッキ";
@@ -277,6 +278,12 @@
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "NetrunnerDB.comから全デッキをインポートしますか？現在リンクされているデッキは上書きされます";
 "Imported decks" = "インポートされたデッキ";
 "Authorization at NetrunnerDB.com failed" = "NetrunnerDB.comの認証に失敗しました";
+
+"NetrunnerDB.com Login" = "NetrunnerDB.comログイン";
+"Logging in..." = "のログイン...";
+"Login failed" = "ログインに失敗しました";
+"Username" = "ユーザー名";
+"Password" = "パスワード";
 
 // deck diff
 "Select to Compare" = "比較デッキを選択";
