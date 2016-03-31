@@ -121,7 +121,7 @@
     <array>
         <dict>
             <key>UIApplicationShortcutItemIconType</key>
-            <string>UIApplicationShortcutItemTypeAdd</string>
+            <string>UIApplicationShortcutIconTypeAdd</string>
             <key>UIApplicationShortcutItemTitle</key>
             <string>New Runner Deck</string>
             <key>UIApplicationShortcutItemType</key>
@@ -129,7 +129,7 @@
         </dict>
         <dict>
             <key>UIApplicationShortcutItemIconType</key>
-            <string>UIApplicationShortcutItemTypeAdd</string>
+            <string>UIApplicationShortcutIconTypeAdd</string>
             <key>UIApplicationShortcutItemTitle</key>
             <string>New Corp Deck</string>
             <key>UIApplicationShortcutItemType</key>

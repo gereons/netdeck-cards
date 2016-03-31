@@ -105,6 +105,9 @@ const NSString* const kANY = @"Any";
 }
 
 -(BOOL) handleShortcutItem:(UIApplicationShortcutItem *)shortcutItem {
+    
+#warning if app is already running, pop nav controller to root!
+    
     BOOL cardsOk = [CardManager cardsAvailable] && [CardSets setsAvailable];
     if (!cardsOk || !IS_IPHONE) {
         return NO;
