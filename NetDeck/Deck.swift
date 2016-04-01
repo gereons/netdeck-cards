@@ -551,7 +551,7 @@ import Foundation
         self.cards = decoder.decodeObjectForKey("cards") as! [CardCounter]
         
         // kill cards that we couldn't deserialize
-        self.cards = self.cards.filter{ !$0.isNull || $0.count > 0 }
+        self.cards = self.cards.filter{ !$0.isNull && $0.count > 0 }
         
         self.netrunnerDbId = decoder.decodeObjectForKey("netrunnerDbId") as? String
         

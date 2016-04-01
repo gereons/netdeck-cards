@@ -75,7 +75,7 @@ import SwiftyJSON
     static let SANSAN_CITY_GRID = "01092"
     
     // MWL from Tournament Rules 3.0.2, valid from 2016-02-01 onwards
-    static let MOST_WANTED_LIST = Set<String>([
+    private static let MOST_WANTED_LIST = Set<String>([
         CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
         ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])
     
@@ -118,7 +118,7 @@ import SwiftyJSON
     
     private static var multiIce = [String]()
     
-    static let nullInstance = Card()
+    private static let nullInstance = Card()
     
     class func null() -> Card {
         return nullInstance
