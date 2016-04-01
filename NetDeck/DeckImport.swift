@@ -82,7 +82,7 @@ class DeckImport: NSObject {
                 self.uiAlert = UIAlertController(title: nil, message: msg, preferredStyle: .Alert)
                 
             case .Meteor:
-                let msg = "Detected a meteor deck list URL in your clipboard. Download and import this deck?".localized()
+                let msg = "Detected a Meteor deck list URL in your clipboard. Download and import this deck?".localized()
                 self.uiAlert = UIAlertController(title: nil, message: msg, preferredStyle: .Alert)
                 
             default:
@@ -147,12 +147,12 @@ class DeckImport: NSObject {
     }
     
     func checkForMeteorDeckURL(lines: [String]) -> DeckSource? {
-        // a netrunner.meteor.com decklist url looks like this:
-        // http://netrunner.meteor.com/decks/yBMJ3GL6FPozt9nkQ/
+        // a meteor.stimhack.com decklist url looks like this:
+        // http://meteor.stimhack.com/decks/yBMJ3GL6FPozt9nkQ/
         // or like this (no slash)
-        // http://netrunner.meteor.com/decks/i6sLkn5cYZ3633WAu
+        // http://meteor.stimhack.com/decks/i6sLkn5cYZ3633WAu
         
-        let regEx = try! NSRegularExpression(pattern:"http://netrunner.meteor.com/decks/(.*)/?", options:[])
+        let regEx = try! NSRegularExpression(pattern:"http://meteor.stimhack.com/decks/(.*)/?", options:[])
         
         for line in lines {
             if let match = regEx.firstMatchInString(line, options:[], range:NSMakeRange(0, line.length)) where match.numberOfRanges == 2 {
@@ -327,7 +327,7 @@ class DeckImport: NSObject {
     }
 
     func doDownloadDeckFromMeteor(deckId: String) {
-        let deckUrl = "http://netrunner.meteor.com/deckexport/octgn/" + deckId
+        let deckUrl = "http://meteor.stimhack.com/deckexport/octgn/" + deckId
         var ok = false
         self.downloadStopped = false
         

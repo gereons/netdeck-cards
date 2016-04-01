@@ -217,7 +217,7 @@
 "Deck imported" = "デッキがインポートされました";
 "Detected a deck list in your clipboard. Import this deck?" = "クリップボードにデッキリストがあります。このデッキをインポートしますか？";
 "Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?" = "クリップボードにNetrunnerDB.comのデッキリストURLがあります。このデッキをダウンロードしインポートしますか？";
-"Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "クリップボードにmeteorのデッキリストURLがあります。このデッキをダウンロードしインポートしますか？";
+"Detected a Meteor deck list URL in your clipboard. Download and import this deck?" = "クリップボードにMeteorのデッキリストURLがあります。このデッキをダウンロードしインポートしますか？";
 "No Decks found" = "デッキがありません";
 "Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App." = "このアプリにインポートするために、デッキをOCTGN形式（.o8d）で、DropboxのApps/Net Deckフォルダにコピーします。";
 "Loading decks from Dropbox" = "Dropboxからデッキのロード中";

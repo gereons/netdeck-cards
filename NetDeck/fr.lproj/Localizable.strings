@@ -190,7 +190,7 @@
 "Deck imported" = "Deck importé";
 "Detected a deck list in your clipboard. Import this deck?" = "Une decklist a été detectée dans votre presse papiers, l'importer ?";
 "Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?" = "Une NetrunnerDB.com URL d'une decklist a été detectée dans votre presse papiers, l'importer ?";
-"Detected a meteor deck list URL in your clipboard. Download and import this deck?" = "Une meteor URL d'une decklist a été detectée dans votre presse papiers, l'importer ?";
+"Detected a Meteor deck list URL in your clipboard. Download and import this deck?" = "Une Meteor URL d'une decklist a été detectée dans votre presse papiers, l'importer ?";
 "No Decks found" = "Aucun deck trouvé";
 "Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into the App." = "Copier les decks au format OCTGN (.o8d) dans le fichier Apps/Net de Dropbox pour pouvoir les importer dans l'application.";
 "Loading decks from Dropbox" = "Charger des Decks de Dropbox";

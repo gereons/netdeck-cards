@@ -64,7 +64,7 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>netrunner.meteor.com</key>
+			<key>meteor.stimhack.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
 				<true/>
@@ -117,32 +117,32 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-    <key>UIApplicationShortcutItems</key>
-    <array>
-        <dict>
-            <key>UIApplicationShortcutItemIconType</key>
-            <string>UIApplicationShortcutIconTypeAdd</string>
-            <key>UIApplicationShortcutItemTitle</key>
-            <string>New Runner Deck</string>
-            <key>UIApplicationShortcutItemType</key>
-            <string>org.steffens.NRDB.newRunner</string>
-        </dict>
-        <dict>
-            <key>UIApplicationShortcutItemIconType</key>
-            <string>UIApplicationShortcutIconTypeAdd</string>
-            <key>UIApplicationShortcutItemTitle</key>
-            <string>New Corp Deck</string>
-            <key>UIApplicationShortcutItemType</key>
-            <string>org.steffens.NRDB.newCorp</string>
-        </dict>
-        <dict>
-            <key>UIApplicationShortcutItemIconType</key>
-            <string>UIApplicationShortcutIconTypeSearch</string>
-            <key>UIApplicationShortcutItemTitle</key>
-            <string>Card Browser</string>
-            <key>UIApplicationShortcutItemType</key>
-            <string>org.steffens.NRDB.cardBrowser</string>
-        </dict>
-    </array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeAdd</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>New Runner Deck</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>org.steffens.NRDB.newRunner</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeAdd</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>New Corp Deck</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>org.steffens.NRDB.newCorp</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeSearch</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Card Browser</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>org.steffens.NRDB.cardBrowser</string>
+		</dict>
+	</array>
 </dict>
 </plist>
