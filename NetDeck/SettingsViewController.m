@@ -114,7 +114,7 @@
         [CardManager setNextDownloadDate];
     }
     else if ([key isEqualToString:SettingsKeys.LANGUAGE]) {
-        LOG_EVENT(@"Change Language", @{@"Language": [notification.userInfo stringForKey:SettingsKeys.LANGUAGE]});
+        LOG_EVENT(@"Change Language", @{@"Language": [notification.userInfo objectForKey:SettingsKeys.LANGUAGE]});
         [[ImageCache sharedInstance] clearLastModifiedInfo];
         [DeckManager flushCache];
     }
