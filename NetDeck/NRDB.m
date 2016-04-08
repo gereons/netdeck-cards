@@ -263,7 +263,7 @@ static NSDateFormatter* formatter;
 
 -(void) getDecks
 {
-    NSString* decksUrl = @"http://netrunnerdb.com/api_oauth2/decks";
+    NSString* decksUrl = @"https://netrunnerdb.com/api_oauth2/decks";
     
     NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
     NSError* error;
@@ -314,7 +314,7 @@ static NSDateFormatter* formatter;
 
 -(void) publishDeck:(Deck *)deck
 {
-    NSString* publishUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/publish_deck/%@", deck.netrunnerDbId];
+    NSString* publishUrl = [NSString stringWithFormat:@"https://netrunnerdb.com/api_oauth2/publish_deck/%@", deck.netrunnerDbId];
     
     NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
     NSDictionary* parameters = @{
@@ -336,7 +336,7 @@ static NSDateFormatter* formatter;
     }
 
     NSAssert(deck.netrunnerDbId, @"no nrdb id");
-    NSString* loadUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/load_deck/%@", deck.netrunnerDbId];
+    NSString* loadUrl = [NSString stringWithFormat:@"https://netrunnerdb.com/api_oauth2/load_deck/%@", deck.netrunnerDbId];
     
     NSDictionary* parameters = @{ @"access_token" : accessToken };
     NSError* error;
@@ -517,7 +517,7 @@ static NSDateFormatter* formatter;
     {
         deckId = deck.netrunnerDbId;
     }
-    NSString* saveUrl = [NSString stringWithFormat:@"http://netrunnerdb.com/api_oauth2/save_deck/%@", deckId];
+    NSString* saveUrl = [NSString stringWithFormat:@"https://netrunnerdb.com/api_oauth2/save_deck/%@", deckId];
     
     NSString* accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:SettingsKeys.NRDB_ACCESS_TOKEN];
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];

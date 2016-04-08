@@ -1159,7 +1159,7 @@
 				ORGANIZATIONNAME = "Gereon Steffens";
 				TargetAttributes = {
 					3A36225D1849320C007F2854 = {
-						DevelopmentTeam = 858Z7CGJH8;
+						DevelopmentTeam = FNTE2633S8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;

@@ -527,7 +527,7 @@
 
 -(void) openInSafari:(Deck*)deck
 {
-    NSString* url = [NSString stringWithFormat:@"http://netrunnerdb.com/en/deck/view/%@", deck.netrunnerDbId ];
+    NSString* url = [NSString stringWithFormat:@"https://netrunnerdb.com/en/deck/view/%@", deck.netrunnerDbId ];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 

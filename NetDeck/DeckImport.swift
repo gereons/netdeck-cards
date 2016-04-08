@@ -119,12 +119,12 @@ class DeckImport: NSObject {
     
     func checkForNetrunnerDbDeckURL(lines: [String]) -> DeckSource? {
         // a netrunnerdb.com decklist url looks like this:
-        // http://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
+        // https://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
         // or like this:
-        // http://netrunnerdb.com/en/deck/view/456867
+        // https://netrunnerdb.com/en/deck/view/456867
         
-        let list = try! NSRegularExpression(pattern: "http://netrunnerdb.com/../decklist/(\\d*)/.*", options:[])
-        let shared = try! NSRegularExpression(pattern: "http://netrunnerdb.com/../deck/view/(\\d*)", options:[])
+        let list = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../decklist/(\\d*)/.*", options:[])
+        let shared = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../deck/view/(\\d*)", options:[])
         
         let dict = [
             DeckBuilderSource.NRDBShared: shared,
@@ -268,12 +268,12 @@ class DeckImport: NSObject {
     }
     
     func doDownloadDeckFromNetrunnerDbList(deckId: String) {
-        let deckUrl = "http://netrunnerdb.com/api/decklist/" + deckId
+        let deckUrl = "https://netrunnerdb.com/api/decklist/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     }
     
     func doDownloadDeckFromNetrunnerDbShared(deckId: String) {
-        let deckUrl = "http://netrunnerdb.com/api/shareddeck/" + deckId
+        let deckUrl = "https://netrunnerdb.com/api/shareddeck/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     }
     

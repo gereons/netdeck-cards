@@ -281,7 +281,7 @@ import SwiftyJSON
         c.imageSrc = json["imagesrc"].string
         if c.imageSrc?.length > 0 {
             let host = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_HOST)
-            c.imageSrc = "http://" + host! + c.imageSrc!
+            c.imageSrc = "https://" + host! + c.imageSrc!
         }
         
         if c.imageSrc?.length == 0 {

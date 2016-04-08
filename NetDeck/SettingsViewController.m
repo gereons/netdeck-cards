@@ -250,7 +250,7 @@
 
     [SVProgressHUD showWithStatus:l10n(@"Testing...")];
 
-    NSString* nrdbUrl = [NSString stringWithFormat:@"http://%@/api/cards/", nrdbHost];
+    NSString* nrdbUrl = [NSString stringWithFormat:@"https://%@/api/cards/", nrdbHost];
     
     [DataDownload checkNrdbApi:nrdbUrl completion:^(BOOL ok) {
         [self finishApiTests:ok];

@@ -13,7 +13,7 @@ class NRDB: NSObject {
     static let CLIENT_HOST =    "netdeck://oauth2"
     static let CLIENT_ID =      "4_1onrqq7q82w0ow4scww84sw4k004g8cososcg8gog004s4gs08"
     static let CLIENT_SECRET =  "2myhr1ijml6o4kc0wgsww040o8cc84oso80o0w0s44k4k0c84"
-    static let PROVIDER_HOST =  "http://netrunnerdb.com"
+    static let PROVIDER_HOST =  "https://netrunnerdb.com"
     
     static let AUTH_URL =       PROVIDER_HOST + "/oauth/v2/auth?client_id=" + CLIENT_ID + "&response_type=code&redirect_uri=" + CLIENT_HOST
     static let TOKEN_URL =      PROVIDER_HOST + "/oauth/v2/token"
@@ -222,7 +222,7 @@ class NRDB: NSObject {
     
     func decklist(completion: ([Deck]?) -> Void) {
         let accessToken = self.accessToken() ?? ""
-        let decksUrl = NSURL(string: "http://netrunnerdb.com/api_oauth2/decks?access_token=" + accessToken)!
+        let decksUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/decks?access_token=" + accessToken)!
     
         let request = NSMutableURLRequest(URL: decksUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
 
@@ -252,7 +252,7 @@ class NRDB: NSObject {
         }
         
         assert(deck.netrunnerDbId != nil, "no nrdb id")
-        let loadUrl = NSURL(string: "http://netrunnerdb.com/api_oauth2/load_deck/" + deck.netrunnerDbId! + "?access_token=" + accessToken)!
+        let loadUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/load_deck/" + deck.netrunnerDbId! + "?access_token=" + accessToken)!
         
         let request = NSMutableURLRequest(URL: loadUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
         
@@ -382,7 +382,7 @@ class NRDB: NSObject {
         
         let deckId = deck.netrunnerDbId ?? "0"
         
-        let saveUrl = "http://netrunnerdb.com/api_oauth2/save_deck/" + deckId
+        let saveUrl = "https://netrunnerdb.com/api_oauth2/save_deck/" + deckId
         var parameters = [
             "access_token": accessToken,
             "content": json.rawString() ?? ""
@@ -404,7 +404,7 @@ class NRDB: NSObject {
     }
     
     func publishDeck(deck: Deck, completion: (Bool, String?) -> Void) {
-        let publishUrl = "http://netrunnerdb.com/api_oauth2/publish_deck/" + (deck.netrunnerDbId ?? "")
+        let publishUrl = "https://netrunnerdb.com/api_oauth2/publish_deck/" + (deck.netrunnerDbId ?? "")
         
         let accessToken = self.accessToken()
         let parameters = [

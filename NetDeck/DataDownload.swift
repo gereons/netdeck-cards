@@ -84,9 +84,9 @@ class DataDownload: NSObject {
         let nrdbHost = settings.stringForKey(SettingsKeys.NRDB_HOST)
         let language = settings.stringForKey(SettingsKeys.LANGUAGE) ?? "en"
         
-        let localCardsUrl = String(format: "http://%@/api/cards/?_locale=%@", nrdbHost!, language)
-        let englishCardsUrl = String(format: "http://%@/api/cards/?_locale=en", nrdbHost!)
-        let setsUrl = String(format: "http://%@/api/sets/?_locale=%@", nrdbHost!, language)
+        let localCardsUrl = String(format: "https://%@/api/cards/?_locale=%@", nrdbHost!, language)
+        let englishCardsUrl = String(format: "https://%@/api/cards/?_locale=en", nrdbHost!)
+        let setsUrl = String(format: "https://%@/api/sets/?_locale=%@", nrdbHost!, language)
         
         let localCardsRequest = NSMutableURLRequest(URL:NSURL(string: localCardsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 10)
         let englishCardsRequest = NSMutableURLRequest(URL:NSURL(string: englishCardsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 10)
