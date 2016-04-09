@@ -26,30 +26,34 @@
         self.sections = td.sections.mutableCopy;
         self.values = td.values.mutableCopy;
         
-        // no idea why/how this should be necessary, but we do get rare crashes otherwise (crashlytics #102/#143)
-        if (self.values.count == 0)
-        {
-            [self.values addObject:[NSMutableArray array]];
+        if (self.values.count != 0) {
+            // set title for core / deluxe section
+            self.sections[0] = l10n(@"Core Set and Deluxe Expansions");
+            
+            // add "number of core sets" entry
+            CardSet* numCores = [[CardSet alloc] init];
+            numCores.name = l10n(@"Number of Core Sets");
+            numCores.settingsKey = SettingsKeys.NUM_CORES;
+            NSMutableArray* arr = [self.values[0] mutableCopy];
+            [arr insertObject:numCores atIndex:1];
+            self.values[0] = arr;
+            
+            // add section for draft/unpublished ids
+            [self.sections insertObject:l10n(@"Draft Identities") atIndex:1];
+            CardSet* draft = [[CardSet alloc] init];
+            draft.name = l10n(@"Include Draft Identities");
+            draft.settingsKey = SettingsKeys.USE_DRAFT_IDS;
+            
+            [self.values insertObject:@[ draft ] atIndex:1];
+        } else {
+            // wtf. very rarely, there is no set data. and I have no idea why or how to reproduce :(
+            // see crashlytics #102/#143/#155
+            self.sections = @[ @"" ].mutableCopy;
+            CardSet* cs = [[CardSet alloc] init];
+            cs.name = l10n(@"No Card Data");
+            cs.settingsKey = nil;
+            self.values = @[ @[ cs ] ].mutableCopy;
         }
-        
-        // set title for core / deluxe section
-        self.sections[0] = l10n(@"Core Set and Deluxe Expansions");
-        
-        // add "number of core sets" entry
-        CardSet* numCores = [[CardSet alloc] init];
-        numCores.name = l10n(@"Number of Core Sets");
-        numCores.settingsKey = SettingsKeys.NUM_CORES;
-        NSMutableArray* arr = [self.values[0] mutableCopy];
-        [arr insertObject:numCores atIndex:1];
-        self.values[0] = arr;
-        
-        // add section for draft/unpublished ids
-        [self.sections insertObject:l10n(@"Draft Identities") atIndex:1];
-        CardSet* draft = [[CardSet alloc] init];
-        draft.name = l10n(@"Include Draft Identities");
-        draft.settingsKey = SettingsKeys.USE_DRAFT_IDS;
-        
-        [self.values insertObject:@[ draft ] atIndex:1];
     }
     return self;
 }
@@ -162,8 +166,7 @@
 {
     static NSString* cellIdentifier = @"setCell";
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell)
-    {
+    if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -176,8 +179,7 @@
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
-    if ([cs.settingsKey isEqualToString:SettingsKeys.NUM_CORES])
-    {
+    if ([cs.settingsKey isEqualToString:SettingsKeys.NUM_CORES]) {
         NSNumber* numCores = [settings objectForKey:SettingsKeys.NUM_CORES];
         UIButton* button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = CGRectMake(0, 0, 40, 30);
@@ -185,9 +187,7 @@
         button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         [button addTarget:self action:@selector(coresAlert:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = button;
-    }
-    else
-    {
+    } else if (cs.settingsKey != nil) {
         NRSwitch* setSwitch = [[NRSwitch alloc] initWithHandler:^(BOOL on) {
             [settings setBool:on forKey:cs.settingsKey];
             [CardSets clearDisabledSets];

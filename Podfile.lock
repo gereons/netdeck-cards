@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (3.3.0)
+  - Alamofire (3.3.1)
   - AlamofireImage (2.4.0):
     - Alamofire (~> 3.3)
   - AlamofireNetworkActivityIndicator (1.0.1):
@@ -13,17 +13,17 @@ PODS:
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTFoundation/Core (1.7.9)
-  - DTFoundation/DTAnimatedGIF (1.7.9)
-  - DTFoundation/DTHTMLParser (1.7.9):
+  - DTFoundation/Core (1.7.10)
+  - DTFoundation/DTAnimatedGIF (1.7.10)
+  - DTFoundation/DTHTMLParser (1.7.10):
     - DTFoundation/Core
-  - DTFoundation/UIKit (1.7.9):
+  - DTFoundation/UIKit (1.7.10):
     - DTFoundation/Core
   - Fabric (1.6.7)
   - InAppSettingsKit (2.7.1)
   - MultiSelectSegmentedControl (1.1.0)
   - SDCAlertView (5.0)
-  - SVProgressHUD (2.0.2)
+  - SVProgressHUD (2.0.3)
   - SwiftKeychainWrapper (1.0.11)
   - SwiftyDropbox (3.0.0):
     - Alamofire (~> 3.1)
@@ -47,19 +47,19 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: 9054db4a1b1ca9e363223183e01cea380159a27c
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
   AlamofireNetworkActivityIndicator: 49a6e39afb947136f7b1872bae2d684957c26697
   CorePlot: b7f422ad363f2b0e48152471d6da45ce232eb8c6
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   CSStickyHeaderFlowLayout: 5366582779d8b7c9ba9b9cc729c218cc23888776
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
-  DTFoundation: 70a0765e3596f82dd421832e95c65e2166eb3102
+  DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   InAppSettingsKit: 2b9fcdb82cdff2f99c51cae544e9f4df0df7afbf
   MultiSelectSegmentedControl: 54fb23c997b971eff621cfcf965ff1613d99c3d2
   SDCAlertView: e552dd803a1ea47ffda9f718b046e307cfd6b82a
-  SVProgressHUD: e4020e23badbd7cc61bc4a80d3c1da57f166a978
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftKeychainWrapper: 011a6946923948ffa49708014dd691164d7621d1
   SwiftyDropbox: e0d4aa3166082ec07ed942e94edb8c732b3376e4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
