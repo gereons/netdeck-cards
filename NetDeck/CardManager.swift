@@ -104,28 +104,24 @@ import SwiftyJSON
         return allIdentitiesByRole[role]!
     }
     
-    class func subtypesForRole(role: NRRole, andType type: String, includeIdentities: Bool) -> [String]? {
-        var subtypes = allSubtypes[role]?[type]
+    class func subtypesForRole(role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {
+        var subtypes = allSubtypes[role]?[type] ?? Set<String>()
         
         let includeIds = includeIdentities && (type == kANY || type == identityKey)
         if (includeIds) {
-            if (subtypes == nil) {
-                subtypes = Set<String>()
-            }
             if let set = identitySubtypes[role] {
-                subtypes?.unionInPlace(set)
+                subtypes.unionInPlace(set)
             }
         }
     
-        return subtypes?.sort({ $0.lowercaseString < $1.lowercaseString })
+        return subtypes.sort({ $0.lowercaseString < $1.lowercaseString })
     }
     
-    class func subtypesForRole(role: NRRole, andTypes types: Set<String>, includeIdentities: Bool) -> [String]? {
+    class func subtypesForRole(role: NRRole, andTypes types: Set<String>, includeIdentities: Bool) -> [String] {
         var subtypes = Set<String>()
         for type in types {
-            if let arr = subtypesForRole(role, andType: type, includeIdentities: includeIdentities) {
-                subtypes.unionInPlace(arr)
-            }
+            let arr = subtypesForRole(role, andType: type, includeIdentities: includeIdentities)
+            subtypes.unionInPlace(arr)
         }
     
         return subtypes.sort({ $0.lowercaseString < $1.lowercaseString })
