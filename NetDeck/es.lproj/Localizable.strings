@@ -98,7 +98,7 @@
 "Draw Simulator" = "Simulador de robo";
 "%ld %@ drawn" = "%ld %@ robadas";
 "Clear" = "Limpiar";
-"Odds to draw a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Probabilidades para robar una carta: 1×%.1f%%  2×%.1f%%  3×%.1f%%";
+"Odds to draw a card: 1×%.2f%%  2×%.2f%%  3×%.2f%%" = "Probabilidades para robar una carta: 1×%.2f%%  2×%.2f%%  3×%.2f%%";
 "Odds for a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Probabilidades para 1 carta: 1×%.1f%% 2×%.1f%% 3×%.1f%%";
 
 // deck view

@@ -120,13 +120,14 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         }
         
         // calculate drawing odds
-        let odds = String(format: "Odds to draw a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%".localized(),
-            self.oddsFor(1), self.oddsFor(2), self.oddsFor(3))
+        let fmt = "Odds to draw a card: 1×%.2f%%  2×%.2f%%  3×%.2f%%".localized()
+        let odds = String(format: fmt, self.oddsFor(1), self.oddsFor(2), self.oddsFor(3))
         self.oddsLabel.text = odds
     }
     
     func oddsFor(cards: Int) -> Double {
-        return 100.0 * Hypergeometric.getProbabilityFor(1, cardsInDeck:self.deck.size, desiredCardsInDeck:min(self.deck.size, cards), cardsDrawn:self.drawn.count)
+        let odds = 100.0 * Hypergeometric.getProbabilityFor(1, cardsInDeck:self.deck.size, desiredCardsInDeck:min(self.deck.size, cards), cardsDrawn:self.drawn.count)
+        return odds
     }
     
     // MARK: table view

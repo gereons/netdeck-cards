@@ -32,20 +32,21 @@
     
     private class func coefficientFor(n: Int, over k: Int) -> Double {
         assert(n>=0 && k>=0)
+        
         if k == 0 { return 1.0 }
         if n == 0 || k > n { return 0.0 }
         
         if 2*k > n {
             return coefficientFor(n, over: n-k)
         } else {
-            var result = UInt64(n - k + 1)
+            var result = Double(n - k + 1)
             if k > 1 {
                 for i in 2 ... k {
-                    result *= UInt64(n-k+i)
-                    result /= UInt64(i)
+                    result *= Double(n-k+i)
+                    result /= Double(i)
                 }
             }
-            return Double(result)
+            return result
         }
     }
 }

@@ -117,7 +117,7 @@
 "Draw Simulator" = "Zug-Simulator";
 "%ld %@ drawn" = "%ld %@ gezogen";
 "Clear" = "Reset";
-"Odds to draw a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Chance für eine Karte: 1×%.1f%%  2×%.1f%%  3×%.1f%%";
+"Odds to draw a card: 1×%.2f%%  2×%.2f%%  3×%.2f%%" = "Chance für eine Karte: 1×%.2f%%  2×%.2f%%  3×%.2f%%";
 "Odds for a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "Chance für 1 Karte: 1×%.1f%% 2×%.1f%% 3×%.1f%%";
 
 // deck view
