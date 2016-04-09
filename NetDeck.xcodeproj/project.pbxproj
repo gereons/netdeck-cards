@@ -56,6 +56,8 @@
 		3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */; };
 		3A3881D81CA5D73200DFF1BA /* NRDBHack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */; };
 		3A38BA071C8ADCC700F957D4 /* DataDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A38BA061C8ADCC700F957D4 /* DataDownload.swift */; };
+		3A39FBC61CB96E81000F1B23 /* BrowserFilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A39FBC51CB96E81000F1B23 /* BrowserFilterView.xib */; };
+		3A39FBC81CB96F6B000F1B23 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A39FBC71CB96F6B000F1B23 /* BrowserViewController.swift */; };
 		3A3A83891C135BE3004F6562 /* DeckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A83881C135BE3004F6562 /* DeckManager.swift */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
 		3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E131BF74DAF000311FA /* TableData.swift */; };
@@ -285,6 +287,8 @@
 		3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDeckViewController.xib; sourceTree = "<group>"; };
 		3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDBHack.swift; sourceTree = "<group>"; };
 		3A38BA061C8ADCC700F957D4 /* DataDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDownload.swift; sourceTree = "<group>"; };
+		3A39FBC51CB96E81000F1B23 /* BrowserFilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserFilterView.xib; sourceTree = "<group>"; };
+		3A39FBC71CB96F6B000F1B23 /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		3A3A83881C135BE3004F6562 /* DeckManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckManager.swift; sourceTree = "<group>"; };
 		3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NROutlineLabel.h; sourceTree = "<group>"; };
 		3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NROutlineLabel.m; sourceTree = "<group>"; };
@@ -982,7 +986,9 @@
 			children = (
 				3AA463D11BC0042600591647 /* BrowserViewController.h */,
 				3AA463D21BC0042600591647 /* BrowserViewController.m */,
+				3A39FBC71CB96F6B000F1B23 /* BrowserViewController.swift */,
 				3AA463D31BC0042600591647 /* BrowserViewController.xib */,
+				3A39FBC51CB96E81000F1B23 /* BrowserFilterView.xib */,
 			);
 			name = Browser;
 			sourceTree = "<group>";
@@ -1258,6 +1264,7 @@
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
 				3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */,
+				3A39FBC61CB96E81000F1B23 /* BrowserFilterView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1368,6 +1375,7 @@
 				3A38BA071C8ADCC700F957D4 /* DataDownload.swift in Sources */,
 				3AA440EF1854DA630051D4B0 /* DetailViewManager.m in Sources */,
 				3A3C1E191BF771B2000311FA /* CardType.swift in Sources */,
+				3A39FBC81CB96F6B000F1B23 /* BrowserViewController.swift in Sources */,
 				3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */,
 				3A531B2A1A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.m in Sources */,
 				3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */,

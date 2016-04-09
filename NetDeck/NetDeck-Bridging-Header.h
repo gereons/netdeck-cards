@@ -10,5 +10,8 @@
 #import "UIAlert+NetDeck.h"
 
 @class Card;
+@class CardCounter;
 #import "CardImageViewPopover.h"
 #import "CardThumbView.h"
+#import "SmallPipsView.h"
+#import "CardImageViewController.h"

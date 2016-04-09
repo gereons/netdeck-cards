@@ -178,6 +178,7 @@ const NSString* const kANY = @"Any";
         @"appLanguage": [[NSLocale preferredLanguages] objectAtIndex:0],
         @"useNrdb": [settings objectForKey:SettingsKeys.USE_NRDB],
         @"useDropbox": [settings objectForKey:SettingsKeys.USE_DROPBOX],
+        @"device": [UIDevice currentDevice].model
     };
     (void)attrs;
     LOG_EVENT(@"Start", attrs);

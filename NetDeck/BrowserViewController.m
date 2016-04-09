@@ -10,7 +10,7 @@
 #import "CardImageViewController.h"
 #import "SmallPipsView.h"
 
-@interface BrowserViewController ()
+@interface xBrowserViewController ()
 
 @property NRRole role;
 @property NSString* searchText;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation BrowserViewController
+@implementation xBrowserViewController
 
 - (void)viewDidLoad
 {

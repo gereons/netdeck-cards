@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowserViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface xBrowserViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UISearchBar* searchBar;
