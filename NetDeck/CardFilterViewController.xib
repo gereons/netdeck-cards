@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardFilterViewController">
@@ -58,9 +59,9 @@
                             <rect key="frame" x="190" y="47" width="110" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="" image="deckview_list.png"/>
-                                <segment title="" image="deckview_2col.png"/>
-                                <segment title="" image="deckview_3col.png"/>
+                                <segment title="" image="deckview_list"/>
+                                <segment title="" image="deckview_2col"/>
+                                <segment title="" image="deckview_3col"/>
                             </segments>
                             <connections>
                                 <action selector="viewModeChanged:" destination="-1" eventType="valueChanged" id="cM1-Is-MDg"/>
@@ -256,13 +257,8 @@
         </view>
     </objects>
     <resources>
-        <image name="deckview_2col.png" width="22" height="22"/>
-        <image name="deckview_3col.png" width="22" height="22"/>
-        <image name="deckview_list.png" width="22" height="22"/>
+        <image name="deckview_2col" width="22" height="22"/>
+        <image name="deckview_3col" width="22" height="22"/>
+        <image name="deckview_list" width="22" height="22"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
 </document>
