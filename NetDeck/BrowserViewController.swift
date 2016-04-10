@@ -12,12 +12,21 @@ import UIKit
 class BrowserViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var typeButton: UIButton!
+    @IBOutlet weak var setButton: UIButton!
+    @IBOutlet weak var factionButton: UIButton!
+    @IBOutlet weak var clearButton: UIButton!
     
     private var role = NRRole.None
     private var cardList: CardList!
-    private var searchText = ""
     private var cards = [[Card]]()
     private var sections = [String]()
+    
+    // filter criteria
+    private var searchText = ""
+    private var types = Set<String>()
+    private var sets = Set<String>()
+    private var factions = Set<String>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +40,12 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         
         self.searchBar.scopeButtonTitles = [ "Both".localized(), "Runner".localized(), "Corp".localized() ]
         self.searchBar.showsCancelButton = false
+        self.searchBar.showsScopeBar = true
+        
+        self.typeButton.setTitle("Type".localized(), forState: .Normal)
+        self.setButton.setTitle("Set".localized(), forState: .Normal)
+        self.factionButton.setTitle("Faction".localized(), forState: .Normal)
+        self.clearButton.setTitle("Clear".localized(), forState: .Normal)
         
         let nc = NSNotificationCenter.defaultCenter()
         nc.addObserver(self, selector:#selector(BrowserViewController.showKeyboard(_:)), name:UIKeyboardWillShowNotification, object:nil)
@@ -52,6 +67,19 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         if self.searchText.length > 0 {
             self.cardList.filterByName(self.searchText)
         }
+        
+        if self.types.count > 0 {
+            self.cardList.filterByTypes(self.types)
+        }
+        
+        if self.sets.count > 0 {
+            self.cardList.filterBySets(self.sets)
+        }
+        
+        if self.factions.count > 0 {
+            self.cardList.filterByFactions(self.factions)
+        }
+        
         let data = self.cardList.dataForTableView()
         self.cards = data.values as! [[Card]]
         self.sections = data.sections as! [String]
@@ -145,6 +173,62 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.searchBar.showsCancelButton = false
         self.searchBar.resignFirstResponder()
     }
+    
+    // MARK: type, factio & set buttons
+    @IBAction func typeButtonTapped(btn: UIButton) {
+        
+        let picker = BrowserValuePicker(title: "Type".localized())
+        if role == .None {
+            picker.data = CardType.allTypes
+        } else {
+            let types = CardType.typesForRole(role)
+            picker.data = TableData(values: types)
+        }
+        
+        picker.preselected = self.types
+        picker.setResult = { result in
+            self.types = result
+            self.refresh()
+        }
+    
+        self.navigationController?.pushViewController(picker, animated: true)
+    }
+    
+    
+    @IBAction func setButtonTapped(btn: UIButton) {
+        let picker = BrowserValuePicker(title: "Set".localized())
+        picker.data = CardSets.allEnabledSetsForTableview()
+        picker.preselected = self.sets
+        picker.setResult = { result in
+            self.sets = result
+            self.refresh()
+        }
+        
+        self.navigationController?.pushViewController(picker, animated: true)
+    }
+    
+    @IBAction func factionButtonTapped(btn: UIButton) {
+        let picker = BrowserValuePicker(title: "Faction".localized())
+        picker.data = Faction.factionsForBrowser()
+        picker.preselected = self.factions
+        picker.setResult = { result in
+            self.factions = result
+            self.refresh()
+        }
+        
+        self.navigationController?.pushViewController(picker, animated: true)
+    }
+    
+    // MARK: clear button
+    
+    @IBAction func clearButtonTapped(btn: UIButton) {
+        self.sets.removeAll()
+        self.types.removeAll()
+        self.factions.removeAll()
+        self.searchText = ""
+        
+        self.refresh()
+    }
 
     // MARK: keyboard show/hide
     @objc func showKeyboard(notification: NSNotification) {
@@ -172,7 +256,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
                 let card = self.cards[indexPath.section][indexPath.row]
                 
                 let msg = String(format:"Open ANCUR page for\n%@?".localized(), card.name)
-                    
+                
                 let alert = UIAlertController.alertWithTitle(nil, message: msg)
                 alert.addAction(UIAlertAction(title:"OK".localized()) { action in
                     if let ancur = card.ancurLink, url = NSURL(string: ancur) {

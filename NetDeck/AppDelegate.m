@@ -15,6 +15,8 @@
 
 #warning improve startup time
 
+#warning make TableData type-safe (ie, rewrite all users in Swift)
+
 @import SVProgressHUD;
 
 #import "AppDelegate.h"

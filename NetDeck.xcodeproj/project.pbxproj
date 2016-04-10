@@ -56,7 +56,6 @@
 		3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */; };
 		3A3881D81CA5D73200DFF1BA /* NRDBHack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */; };
 		3A38BA071C8ADCC700F957D4 /* DataDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A38BA061C8ADCC700F957D4 /* DataDownload.swift */; };
-		3A39FBC61CB96E81000F1B23 /* BrowserFilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A39FBC51CB96E81000F1B23 /* BrowserFilterView.xib */; };
 		3A39FBC81CB96F6B000F1B23 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A39FBC71CB96F6B000F1B23 /* BrowserViewController.swift */; };
 		3A3A83891C135BE3004F6562 /* DeckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A83881C135BE3004F6562 /* DeckManager.swift */; };
 		3A3BDD9D1930F27200DEFD57 /* NROutlineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BDD9C1930F27200DEFD57 /* NROutlineLabel.m */; };
@@ -110,6 +109,8 @@
 		3A904FCD1BF73723001C075A /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A904FCC1BF73723001C075A /* Types.swift */; };
 		3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C218B1630800AF5285 /* IceTypeStats.m */; };
 		3A9204C618B16B9B00AF5285 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C518B16B9B00AF5285 /* Stats.m */; };
+		3A92DFD81CBA59EE0043F2F6 /* BrowserValuePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A92DFD61CBA59EE0043F2F6 /* BrowserValuePicker.swift */; };
+		3A92DFD91CBA59EE0043F2F6 /* BrowserValuePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A92DFD71CBA59EE0043F2F6 /* BrowserValuePicker.xib */; };
 		3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AB18AF7DA900F83520 /* CostStats.m */; };
 		3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AF18AF95E700F83520 /* StrengthStats.m */; };
 		3A9752211C1F6E310070E39B /* MiscUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9752201C1F6E310070E39B /* MiscUtilities.swift */; };
@@ -132,7 +133,6 @@
 		3AA440EF1854DA630051D4B0 /* DetailViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440EE1854DA630051D4B0 /* DetailViewManager.m */; };
 		3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440F61854EF720051D4B0 /* DeckListViewController.m */; };
 		3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440F71854EF720051D4B0 /* DeckListViewController.xib */; };
-		3AA463D41BC0042600591647 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA463D21BC0042600591647 /* BrowserViewController.m */; };
 		3AA463D51BC0042600591647 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA463D31BC0042600591647 /* BrowserViewController.xib */; };
 		3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA50F351C0A2FC8007D5296 /* Deck.swift */; };
 		3AAE4C4B1CA7105A0039F822 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAE4C4A1CA7105A0039F822 /* Analytics.swift */; };
@@ -287,7 +287,6 @@
 		3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDeckViewController.xib; sourceTree = "<group>"; };
 		3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDBHack.swift; sourceTree = "<group>"; };
 		3A38BA061C8ADCC700F957D4 /* DataDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDownload.swift; sourceTree = "<group>"; };
-		3A39FBC51CB96E81000F1B23 /* BrowserFilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserFilterView.xib; sourceTree = "<group>"; };
 		3A39FBC71CB96F6B000F1B23 /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		3A3A83881C135BE3004F6562 /* DeckManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckManager.swift; sourceTree = "<group>"; };
 		3A3BDD9B1930F27200DEFD57 /* NROutlineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NROutlineLabel.h; sourceTree = "<group>"; };
@@ -368,6 +367,8 @@
 		3A9204C218B1630800AF5285 /* IceTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IceTypeStats.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A9204C418B16B9B00AF5285 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
 		3A9204C518B16B9B00AF5285 /* Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stats.m; sourceTree = "<group>"; };
+		3A92DFD61CBA59EE0043F2F6 /* BrowserValuePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserValuePicker.swift; sourceTree = "<group>"; };
+		3A92DFD71CBA59EE0043F2F6 /* BrowserValuePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserValuePicker.xib; sourceTree = "<group>"; };
 		3A94492818FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fr; path = fr.lproj/About.html; sourceTree = "<group>"; };
 		3A94492918FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A94492A18FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -405,8 +406,6 @@
 		3AA440F51854EF720051D4B0 /* DeckListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AA440F61854EF720051D4B0 /* DeckListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AA440F71854EF720051D4B0 /* DeckListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckListViewController.xib; sourceTree = "<group>"; };
-		3AA463D11BC0042600591647 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
-		3AA463D21BC0042600591647 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		3AA463D31BC0042600591647 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
 		3AA50F351C0A2FC8007D5296 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		3AAE4C4A1CA7105A0039F822 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
@@ -984,11 +983,10 @@
 		3AA463D01BC0040B00591647 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
-				3AA463D11BC0042600591647 /* BrowserViewController.h */,
-				3AA463D21BC0042600591647 /* BrowserViewController.m */,
 				3A39FBC71CB96F6B000F1B23 /* BrowserViewController.swift */,
 				3AA463D31BC0042600591647 /* BrowserViewController.xib */,
-				3A39FBC51CB96E81000F1B23 /* BrowserFilterView.xib */,
+				3A92DFD61CBA59EE0043F2F6 /* BrowserValuePicker.swift */,
+				3A92DFD71CBA59EE0043F2F6 /* BrowserValuePicker.xib */,
 			);
 			name = Browser;
 			sourceTree = "<group>";
@@ -1235,6 +1233,7 @@
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A6D51D61A2284540004951E /* DeckHistoryPopup.xib in Resources */,
+				3A92DFD91CBA59EE0043F2F6 /* BrowserValuePicker.xib in Resources */,
 				3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,
 				3AA463D51BC0042600591647 /* BrowserViewController.xib in Resources */,
@@ -1264,7 +1263,6 @@
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
 				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
 				3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */,
-				3A39FBC61CB96E81000F1B23 /* BrowserFilterView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1403,6 +1401,7 @@
 				3ABAD2FD1B83A6D7009E81F3 /* IphoneIdentityViewController.m in Sources */,
 				3A41DA871BF8785C003CB7E1 /* CardSets.swift in Sources */,
 				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
+				3A92DFD81CBA59EE0043F2F6 /* BrowserValuePicker.swift in Sources */,
 				3A904FCD1BF73723001C075A /* Types.swift in Sources */,
 				3A058B1919D334660090F53A /* NRSwitch.m in Sources */,
 				3AA4088E1C038F480046922C /* CardList.swift in Sources */,
@@ -1437,7 +1436,6 @@
 				3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */,
 				3AD860E51B7939E500EEF8AC /* CardImageViewCell.m in Sources */,
 				3AEEBB671C00C9FF00CB6053 /* CardManager.swift in Sources */,
-				3AA463D41BC0042600591647 /* BrowserViewController.m in Sources */,
 				3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */,
 				3A9752211C1F6E310070E39B /* MiscUtilities.swift in Sources */,
 				3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */,

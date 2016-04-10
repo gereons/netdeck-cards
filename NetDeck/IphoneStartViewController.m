@@ -11,7 +11,6 @@
 #import "IphoneIdentityViewController.h"
 #import "SettingsViewController.h"
 #import "ImportDecksViewController.h"
-#import "BrowserViewController.h"
 
 @interface IphoneStartViewController ()
 
