@@ -22,7 +22,7 @@ import SwiftyJSON
     static let MUMBA_TEMPLE             = "10018"    // 0 inf if <= 15 ice in deck
     static let MUSEUM_OF_HISTORY        = "10019"    // 0 inf if >= 50 cards in deck
     static let PAD_FACTORY              = "10038"    // 0 inf if 3 pad campaigns in deck
-    static let MUMBAD_VIRTUAL_TOUR      = "10075"    // 0 inf if >= 7 assets in deck
+    static let MUMBAD_VIRTUAL_TOUR      = "10076"    // 0 inf if >= 7 assets in deck
     
     // alliance-based: 0 inf if >= non-alliance cards of same faction in deck
     static let PRODUCT_RECALL           = "10029"    // 0 inf if >= 6 non-alliance HB cards in deck
