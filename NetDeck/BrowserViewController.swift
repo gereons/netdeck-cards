@@ -121,7 +121,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         switch card.type {
         
         case .Identity:
-            cell!.detailTextLabel?.text = String(format: "%@ · %ld/%ld", card.factionStr, card.minimumDecksize, card.influenceLimit)
+            let inf = card.influenceLimit == -1 ? "∞" : "\(card.influenceLimit)"
+            cell!.detailTextLabel?.text = String(format: "%@ · %ld/%@", card.factionStr, card.minimumDecksize, inf)
         
         case .Agenda:
             cell!.detailTextLabel?.text = String(format: "%@ · %ld/%ld", card.factionStr, card.advancementCost, card.agendaPoints)

@@ -24,6 +24,10 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        self.tableView.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
     }
     
     override func viewWillAppear(animated: Bool) {

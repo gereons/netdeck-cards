@@ -10,7 +10,7 @@
 
 #warning sdcalertview: customized visual when PR is merged
 
-#warning iphone browser: add hint on startup, more filters (type + set)
+#warning iphone browser: add hint on startup?
 #warning iphone: deck edit history
 
 #warning improve startup time

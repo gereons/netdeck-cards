@@ -29,6 +29,7 @@
 @property UIBarButtonItem* cancelButton;
 @property UIBarButtonItem* saveButton;
 @property UIBarButtonItem* exportButton;
+@property UIBarButtonItem* historyButton;
 
 @property ListCardsViewController* listCards;
 
@@ -70,8 +71,13 @@
                                                                     target:self
                                                                     action:@selector(exportDeck:)];
     
+    self.historyButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"718-timer-1"]
+                                                          style:UIBarButtonItemStylePlain
+                                                         target:self
+                                                         action:@selector(showEditHistory:)];
+    
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.rightBarButtonItem = self.exportButton;
+    topItem.rightBarButtonItems = @[ self.exportButton ];
 
     self.titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.titleButton addTarget:self action:@selector(titleTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -179,6 +185,11 @@
     [alert.view layoutIfNeeded];
     
     [self presentViewController:alert animated:NO completion:nil];
+}
+
+-(void) showEditHistory:(id)sender {
+#warning fixme
+    NSAssert(NO, @"not implemented");
 }
 
 -(void) drawClicked:(id)sender
