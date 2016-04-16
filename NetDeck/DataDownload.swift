@@ -260,9 +260,7 @@ class DataDownload: NSObject {
             
             if scope == .All {
                 ImageCache.sharedInstance.updateImageFor(card, completion: downloadNext)
-            }
-            else
-            {
+            } else  {
                 ImageCache.sharedInstance.updateMissingImageFor(card, completion: downloadNext)
             }
         }
