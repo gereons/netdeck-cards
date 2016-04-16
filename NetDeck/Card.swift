@@ -53,10 +53,12 @@ import SwiftyJSON
     static let UTOPIA_FRAGMENT          = "06110"
     static let GOVERNMENT_TAKEOVER      = "07006"
     static let _15_MINUTES              = "09004"
+    static let REBIRTH                  = "10083"
+    static let BLACK_FILE               = "10099"
     static let MAX_1_PER_DECK           = Set<String>([ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
                                             UTOPIA_SHARD, UTOPIA_FRAGMENT, HADES_SHARD,
                                             HADES_FRAGMENT, EDEN_SHARD, EDEN_FRAGMENT,
-                                            GOVERNMENT_TAKEOVER, _15_MINUTES ])
+                                            GOVERNMENT_TAKEOVER, _15_MINUTES, REBIRTH, BLACK_FILE ])
     
     private static let OCTGN_PREFIX = "bc0f047c-01b1-427f-a439-d451eda"
     
