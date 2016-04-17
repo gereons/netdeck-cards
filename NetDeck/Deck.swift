@@ -246,7 +246,7 @@ import Foundation
             self.lastChanges.addCardCode(card.code, copies: copies)
         }
         
-        self.modified = copies != 0
+        self.modified = self.modified || copies != 0
         
         self.sort()
     }
