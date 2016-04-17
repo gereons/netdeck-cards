@@ -54,13 +54,15 @@
          {
              [self.activityIndicator stopAnimating];
              self.imageView.image = img;
-             if (count > 0)
-             {
-                 self.countLabel.text = [NSString stringWithFormat:@"%ld×", (long)count];
-             }
-             else
-             {
-                 self.countLabel.text = @"";
+             
+             if (self.showAsDifferences) {
+                 self.countLabel.text = [NSString stringWithFormat:@"%+ld", (long)count];
+             } else {
+                 if (count > 0) {
+                     self.countLabel.text = [NSString stringWithFormat:@"%ld×", (long)count];
+                 } else {
+                     self.countLabel.text = @"";
+                 }
              }
              
              self.imageView.hidden = NO;

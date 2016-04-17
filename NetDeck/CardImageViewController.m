@@ -97,6 +97,7 @@
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CardImageViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cardCell" forIndexPath:indexPath];
+    cell.showAsDifferences = self.showAsDifferences;
     
     Card* card = self.cardsArray[indexPath.row];
     

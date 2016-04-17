@@ -77,7 +77,7 @@
                                                          action:@selector(showEditHistory:)];
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.rightBarButtonItems = @[ self.exportButton ];
+    topItem.rightBarButtonItems = @[ self.exportButton, self.historyButton ];
 
     self.titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.titleButton addTarget:self action:@selector(titleTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -102,10 +102,10 @@
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     if (self.deck.modified) {
         topItem.leftBarButtonItem = self.cancelButton;
-        topItem.rightBarButtonItem = self.saveButton;
+        topItem.rightBarButtonItems = @[ self.saveButton, self.historyButton ];
     } else {
         topItem.leftBarButtonItem = nil;
-        topItem.rightBarButtonItem = self.exportButton;
+        topItem.rightBarButtonItems = @[ self.exportButton, self.historyButton ];
     }
 }
 
@@ -188,8 +188,12 @@
 }
 
 -(void) showEditHistory:(id)sender {
-#warning fixme
-    NSAssert(NO, @"not implemented");
+    DeckHistoryViewController* histController = [DeckHistoryViewController new];
+    
+    [self.deck mergeRevisions];
+    histController.deck = self.deck;
+    
+    [self.navigationController pushViewController:histController animated:YES];
 }
 
 -(void) drawClicked:(id)sender
@@ -249,6 +253,7 @@
 
 -(void) saveClicked:(id)sender
 {
+    [self.deck mergeRevisions];
     [self.deck saveToDisk];
     if (self.autoSaveDropbox)
     {
@@ -535,12 +540,28 @@
     {
         cell.nameLabel.text = card.name;
         cell.stepper.hidden = YES;
-        NSInteger inf = self.deck.influenceLimit;
-        cell.influenceLabel.text = [NSString stringWithFormat:@"%ld", (long)inf];
-        if (inf != card.influenceLimit) {
-            cell.influenceLabel.textColor = [UIColor redColor];
+        
+        // show influence
+        cell.influenceLabel.textColor = [UIColor blackColor];
+        
+        if (self.deck.isDraft) {
+            cell.influenceLabel.text = @"∞";
+        } else {
+            NSInteger deckInfluence = self.deck.influenceLimit;
+            NSString* inf = deckInfluence == -1 ? @"∞" : [NSString stringWithFormat:@"%ld", (long)deckInfluence];
+            
+            cell.influenceLabel.text = inf;
+            if (deckInfluence != card.influenceLimit) {
+                cell.influenceLabel.textColor = [UIColor redColor];
+            }
         }
-        cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)card.baseLink];
+        
+        // runners: show base link
+        if (self.deck.role == NRRoleRunner) {
+            cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)card.baseLink];
+        } else {
+            cell.mwlLabel.text = @"";
+        }
     }
     
     cell.nameLabel.textColor = [UIColor blackColor];

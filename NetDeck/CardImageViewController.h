@@ -16,4 +16,7 @@
 -(void) setCards:(NSArray<Card*>*)cards;
 -(void) setCardCounters:(NSArray<CardCounter*>*)cardCounters;
 
+// for editing history: show counts as +x/-x instead of "X times"
+@property BOOL showAsDifferences;
+
 @end

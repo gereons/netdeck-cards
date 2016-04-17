@@ -3,7 +3,3 @@ If you're enjoying using Net Deck please consider leaving a positive review or r
 Wenn dir Net Deck gefällt wäre es toll, wenn du eine positive Bewertung oder Rezension im App Store abgeben würdest. Falls du das für eine frühere Version schon getan hast, erneuere sie doch bitte, da Bewertungen bei jedem Update zurückgesetzt werden. Danke für deine Unterstützung!
 
 Please note that the word "Android" in the app's metadata does NOT refer to a mobile operating system, but rather to the name of the card game "Android: Netrunner".
-
-
-
-<key>ITSAppUsesNonExemptEncryption</key><false/>

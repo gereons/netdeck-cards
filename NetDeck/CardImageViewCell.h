@@ -24,6 +24,8 @@
 @property IBOutlet UIImageView* icon2;
 @property IBOutlet UIImageView* icon3;
 
+@property BOOL showAsDifferences;
+
 -(void) setCard:(Card*)card;
 -(void) setCard:(Card*)card andCount:(NSInteger)count;
 

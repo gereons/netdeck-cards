@@ -7,7 +7,6 @@
 //
 
 #import "DeckHistoryPopup.h"
-#import "DeckHistorySectionHeaderView.h"
 #import "CardImageViewPopover.h"
 
 @interface DeckHistoryPopup ()
@@ -117,8 +116,7 @@
 
 -(UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NSArray* views = [[NSBundle mainBundle] loadNibNamed:@"DeckHistorySectionHeaderView" owner:self options:nil];
-    DeckHistorySectionHeaderView* header = views[0];
+    DeckHistorySectionHeaderView* header = [DeckHistorySectionHeaderView initFromNib];
     
     DeckChangeSet* dcs = self.deck.revisions[section];
     header.dateLabel.text = [self.dateFormatter stringFromDate:dcs.timestamp];
