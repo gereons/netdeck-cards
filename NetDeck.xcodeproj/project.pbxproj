@@ -999,8 +999,6 @@
 		3AA463D61BC0045700591647 /* Edit Deck */ = {
 			isa = PBXGroup;
 			children = (
-				3AA8EC281CC3A05E00370A26 /* DeckHistoryViewController.swift */,
-				3AA8EC291CC3A05E00370A26 /* DeckHistoryViewController.xib */,
 				3A3844FF1B77BA89007C76F2 /* EditDeckViewController.h */,
 				3A3845001B77BA89007C76F2 /* EditDeckViewController.m */,
 				3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */,
@@ -1010,6 +1008,8 @@
 				3AD860D81B792B6700EEF8AC /* ListCardsViewController.h */,
 				3AD860D91B792B6700EEF8AC /* ListCardsViewController.m */,
 				3AD860DA1B792B6700EEF8AC /* ListCardsViewController.xib */,
+				3AA8EC281CC3A05E00370A26 /* DeckHistoryViewController.swift */,
+				3AA8EC291CC3A05E00370A26 /* DeckHistoryViewController.xib */,
 			);
 			name = "Edit Deck";
 			sourceTree = "<group>";

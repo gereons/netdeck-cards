@@ -24,6 +24,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
 
         self.title = "Editing History".localized()
         
+        Analytics.logEvent("Deck History", attributes: ["Device": "iPhone"])
     }
     
     override func viewWillAppear(animated: Bool) {

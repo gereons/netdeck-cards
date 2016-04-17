@@ -22,6 +22,7 @@
 {
     DeckHistoryPopup* dhp = [[DeckHistoryPopup alloc] initWithDeck:deck];
     
+    LOG_EVENT(@"Deck History", @{ @"Device": @"iPad" });
     [vc presentViewController:dhp animated:NO completion:nil];
 }
 
