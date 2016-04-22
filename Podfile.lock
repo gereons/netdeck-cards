@@ -4,7 +4,7 @@ PODS:
     - Alamofire (~> 3.3)
   - AlamofireNetworkActivityIndicator (1.0.1):
     - Alamofire (~> 3.3)
-  - CorePlot (2.0)
+  - CorePlot (2.1)
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
   - CSStickyHeaderFlowLayout (0.2.10)
@@ -50,7 +50,7 @@ SPEC CHECKSUMS:
   Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
   AlamofireNetworkActivityIndicator: 49a6e39afb947136f7b1872bae2d684957c26697
-  CorePlot: b7f422ad363f2b0e48152471d6da45ce232eb8c6
+  CorePlot: ab9898c79b94999018e9634ab0aa4c21480c8552
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   CSStickyHeaderFlowLayout: 5366582779d8b7c9ba9b9cc729c218cc23888776
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4

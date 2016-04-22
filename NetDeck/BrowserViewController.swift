@@ -53,8 +53,18 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(BrowserViewController.longPress(_:)))
         self.tableView.addGestureRecognizer(longPress)
-        
+
         self.refresh()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        let filtersActive = CardManager.cardsAvailable() && CardSets.setsAvailable()
+        
+        self.typeButton.enabled = filtersActive
+        self.setButton.enabled = filtersActive
+        self.factionButton.enabled = filtersActive
+        self.clearButton.enabled = filtersActive
     }
     
     override func viewDidDisappear(animated: Bool) {

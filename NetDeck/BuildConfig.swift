@@ -12,4 +12,6 @@ struct BuildConfig {
     #else
     static let release = false
     #endif
+    
+    static let debug = !release
 }

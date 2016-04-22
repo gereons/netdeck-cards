@@ -444,20 +444,19 @@ import Foundation
         }
         
         // figure out changes between this and the last saved state
-        
         if self.revisions.count > 0 {
             let dcs = self.revisions[0]
             let lastSavedCards = dcs.cards
             let lastSavedCodes = dcs.cards?.keys
             
             for code in lastSavedCodes! {
-                let oldQty = lastSavedCards![code]
+                let oldQty = lastSavedCards![code]!
                 let newQty = cards[code]
                 
                 if newQty == nil {
-                    self.lastChanges .addCardCode(code, copies: -oldQty!)
+                    self.lastChanges.addCardCode(code, copies: -oldQty)
                 } else {
-                    let diff = oldQty! - newQty!
+                    let diff = oldQty - newQty!
                     if diff != 0 {
                         self.lastChanges.addCardCode(code, copies: diff)
                     }
@@ -471,7 +470,7 @@ import Foundation
                 }
             }
         }
-        
+
         self.setIdentity(newIdentity, copies: 1, history: false)
         self.cards = newCards
         self.modified = true

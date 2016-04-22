@@ -8,6 +8,9 @@
 
 // TODOs:
 
+#warning iphone: disable browser if no card data is loaded
+#warning nrdb import: keep last-modified date of decks!
+
 #warning sdcalertview: customized visual when PR is merged
 
 #warning iphone browser: add hint on startup?
@@ -176,12 +179,14 @@ const NSString* const kANY = @"Any";
 
 -(void) logStartup {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
     NSDictionary* attrs = @{
         @"cardLanguage": [settings stringForKey:SettingsKeys.LANGUAGE],
         @"appLanguage": [[NSLocale preferredLanguages] objectAtIndex:0],
-        @"useNrdb": [settings objectForKey:SettingsKeys.USE_NRDB],
-        @"useDropbox": [settings objectForKey:SettingsKeys.USE_DROPBOX],
-        @"device": [UIDevice currentDevice].model
+        @"useNrdb": @([settings boolForKey:SettingsKeys.USE_NRDB]),
+        @"useDropbox": @([settings boolForKey:SettingsKeys.USE_DROPBOX]),
+        @"device": [UIDevice currentDevice].model,
+        @"os": [UIDevice currentDevice].systemVersion
     };
     (void)attrs;
     LOG_EVENT(@"Start", attrs);

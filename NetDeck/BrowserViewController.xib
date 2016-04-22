@@ -10,7 +10,7 @@
                 <outlet property="clearButton" destination="JY7-qH-HwL" id="ngR-qF-mdS"/>
                 <outlet property="factionButton" destination="DBV-kt-2UJ" id="taE-D9-kha"/>
                 <outlet property="searchBar" destination="tJq-2W-YqI" id="C8Q-pe-2cb"/>
-                <outlet property="setButton" destination="DBV-kt-2UJ" id="M4t-9w-26k"/>
+                <outlet property="setButton" destination="ags-Vi-ryy" id="QmO-BC-v75"/>
                 <outlet property="tableView" destination="CGo-ye-AHj" id="Asl-QP-HPr"/>
                 <outlet property="typeButton" destination="stp-TL-u1g" id="7Fe-eG-SpW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
