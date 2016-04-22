@@ -31,7 +31,6 @@
 
 -(void) addCard:(Card*)card;
 -(void) loadDeckFromFile:(NSString*) filename;
--(void) saveDeckManually:(BOOL)manually withHud:(BOOL)hud;
 -(void) selectIdentity:(id)sender;
 
 -(IBAction)analysisClicked:(id)sender;

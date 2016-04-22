@@ -177,7 +177,7 @@
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Duplicate Deck") handler:^(UIAlertAction * _Nonnull action) {
         Deck* newDeck = [self.deck duplicate];
-        [newDeck saveToDisk];
+        [DeckManager saveDeck:newDeck keepLastModified:NO];
         [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:l10n(@"Copy saved as %@"), newDeck.name]];
     }]];
     
@@ -254,7 +254,7 @@
 -(void) saveClicked:(id)sender
 {
     [self.deck mergeRevisions];
-    [self.deck saveToDisk];
+    [DeckManager saveDeck:self.deck keepLastModified:NO];
     if (self.autoSaveDropbox)
     {
         if (self.deck.identity && self.deck.cards.count > 0)
@@ -275,7 +275,7 @@
     BOOL modified = self.deck.modified;
     if (modified && self.autoSave)
     {
-        [self.deck saveToDisk];
+        [DeckManager saveDeck:self.deck keepLastModified:NO];
     }
     if (modified && self.autoSaveDropbox)
     {
@@ -301,7 +301,7 @@
         if (ok && deckId)
         {
             self.deck.netrunnerDbId = deckId;
-            [self.deck saveToDisk];
+            [DeckManager saveDeck:self.deck keepLastModified:NO];
         }
         [SVProgressHUD dismiss];
     }];
@@ -645,24 +645,6 @@
 -(NSString*) tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return l10n(@"Remove");
-}
-
-#pragma mark - Deck Editor
-
--(BOOL) deckModified
-{
-    // only answer truthfully if we're the current top viewcontroller
-    UIViewController* topVC = self.navigationController.viewControllers.lastObject;
-    if (topVC == self)
-    {
-        return self.deck.modified;
-    }
-    return NO;
-}
-
--(void) saveDeck
-{
-    [self.deck saveToDisk];
 }
 
 @end

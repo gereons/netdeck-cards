@@ -223,7 +223,7 @@
             if (ok && deckId)
             {
                 deck.netrunnerDbId = deckId;
-                [deck saveToDisk];
+                [DeckManager saveDeck:deck keepLastModified:NO];
             }
             [self exportToNetrunnerDB:decks index:index+1];
         }];
@@ -284,8 +284,7 @@
     deck.state = newState;
     if (deck.state != oldState)
     {
-        [deck saveToDisk];
-        [DeckManager resetModificationDate:deck];
+        [DeckManager saveDeck:deck keepLastModified:YES];
         
         [self updateDecks];
     }
@@ -353,7 +352,7 @@
             self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
             [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Duplicate") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 Deck* newDeck = [deck duplicate];
-                [newDeck saveToDisk];
+                [DeckManager saveDeck:newDeck keepLastModified:NO];
                 
                 NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
                 BOOL autoSaveDropbox = [settings boolForKey:SettingsKeys.USE_DROPBOX] && [settings boolForKey:SettingsKeys.AUTO_SAVE_DB];
@@ -388,7 +387,7 @@
                 [nameAlert addAction:[UIAlertAction cancelAlertAction:nil]];
                 [nameAlert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * action) {
                     deck.name = nameAlert.textFields[0].text;
-                    [deck saveToDisk];
+                    [DeckManager saveDeck:deck keepLastModified:NO];
                     [self updateDecks];
                     
                     if (searchBarActive)

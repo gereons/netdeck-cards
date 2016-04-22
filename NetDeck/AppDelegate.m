@@ -8,7 +8,6 @@
 
 // TODOs:
 
-#warning iphone: disable browser if no card data is loaded
 #warning nrdb import: keep last-modified date of decks!
 
 #warning sdcalertview: customized visual when PR is merged

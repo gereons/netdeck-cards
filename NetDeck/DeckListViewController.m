@@ -355,11 +355,11 @@
 
 -(void) saveDeckClicked:(id)sender
 {
-    [self saveDeckManually:YES withHud:YES];
+    [self saveDeckManually:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_SAVED object:nil];
 }
 
--(void) saveDeckManually:(BOOL)manually withHud:(BOOL)hud
+-(void) saveDeckManually:(BOOL)manually
 {
     if (self.actionSheet)
     {
@@ -375,13 +375,10 @@
         [self startHistoryTimer:nil];
         
         [self.deck mergeRevisions];
-    }
-    if (hud)
-    {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
     }
     
-    [self.deck saveToDisk];
+    [DeckManager saveDeck:self.deck keepLastModified:!manually];
     
     if (manually && self.autoSaveNRDB)
     {
@@ -457,7 +454,7 @@
             if (self.autoSave)
             {
                 LOG_EVENT(@"Unlink Deck", nil);
-                [self saveDeckManually:NO withHud:NO];
+                [self saveDeckManually:NO];
             }
             [self refresh];
         }]];
@@ -492,8 +489,7 @@
         if (ok && deckId)
         {
             self.deck.netrunnerDbId = deckId;
-            [self.deck saveToDisk];
-            [DeckManager resetModificationDate:self.deck];
+            [DeckManager saveDeck:self.deck keepLastModified:YES];
         }
         
         [SVProgressHUD dismiss];
@@ -605,7 +601,7 @@
         self.deck = newDeck;
         if (self.autoSave)
         {
-            [self.deck saveToDisk];
+            [DeckManager saveDeck:self.deck keepLastModified:NO];
         }
         else
         {
@@ -615,7 +611,7 @@
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes, but stay here") handler:^(UIAlertAction * action) {
         Deck* newDeck = [self.deck duplicate];
-        [newDeck saveToDisk];
+        [DeckManager saveDeck:newDeck keepLastModified:NO];
         if (self.autoSaveDropbox)
         {
             if (newDeck.identity && newDeck.cards.count > 0)
@@ -676,8 +672,7 @@
     {
         if (self.autoSave)
         {
-            [self saveDeckManually:NO withHud:NO];
-            [DeckManager resetModificationDate:self.deck];
+            [self saveDeckManually:NO];
         }
         [self refresh];
     }
@@ -712,7 +707,7 @@
         self.deckNameLabel.text = self.deck.name;
         if (self.autoSave)
         {
-            [self saveDeckManually:NO withHud:NO];
+            [self saveDeckManually:NO];
         }
         else
         {
@@ -983,7 +978,7 @@
 {
     if (self.autoSave)
     {
-        [self saveDeckManually:NO withHud:NO];
+        [self saveDeckManually:NO];
     }
     [self refresh];
 }
@@ -998,7 +993,7 @@
     
     if (self.autoSave && self.deck.modified)
     {
-        [self saveDeckManually:NO withHud:NO];
+        [self saveDeckManually:NO];
     }
 }
 
@@ -1102,7 +1097,7 @@
     
     if (self.autoSave)
     {
-        [self saveDeckManually:NO withHud:NO];
+        [self saveDeckManually:NO];
     }
 }
 
@@ -1492,18 +1487,6 @@
 -(void)printInteractionControllerDidDismissPrinterOptions:(UIPrintInteractionController *)printInteractionController
 {
     self.printController = nil;
-}
-
-#pragma mark - DeckEditor protocol
-
--(BOOL) deckModified
-{
-    return self.deck.modified;
-}
-
--(void) saveDeck
-{
-    [self saveDeckManually:YES withHud:NO];
 }
 
 @end

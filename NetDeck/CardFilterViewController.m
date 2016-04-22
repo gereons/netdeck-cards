@@ -280,22 +280,21 @@ static NSInteger viewMode = VIEW_LIST;
         [self initCards];
     }
     
-    [self setBackOrRevertButton];
+    [self setBackOrRevertButton:deck.modified];
     
     [self reloadData];
 }
 
 -(void) deckSaved:(id)notification
 {
-    [self setBackOrRevertButton];
+    [self setBackOrRevertButton:NO];
 }
 
--(void) setBackOrRevertButton
+-(void) setBackOrRevertButton:(BOOL)modified
 {
-    Deck* deck = self.deckListViewController.deck;
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     
-    if (deck.modified) {
+    if (modified) {
         topItem.leftBarButtonItem = self.revertButton;
     } else {
         topItem.leftBarButtonItem = nil;
@@ -310,7 +309,7 @@ static NSInteger viewMode = VIEW_LIST;
         deck = [DeckManager loadDeckFromPath:deck.filename useCache:NO];
         [self reloadData];
         self.deckListViewController.deck = deck;
-        [self setBackOrRevertButton];
+        [self setBackOrRevertButton:NO];
     } else {
         self.navigationController.navigationBar.topItem.leftBarButtonItem = nil;
         [self.navigationController popToRootViewControllerAnimated:NO];
@@ -429,7 +428,8 @@ static NSInteger viewMode = VIEW_LIST;
         {
             Card* card = arr[0];
             [self.deckListViewController addCard:card];
-            [self setBackOrRevertButton];
+            Deck* deck = self.deckListViewController.deck;
+            [self setBackOrRevertButton:deck.modified];
             [self reloadData];
         }
     }
@@ -1142,7 +1142,8 @@ static NSInteger viewMode = VIEW_LIST;
     if (card)
     {
         [self.deckListViewController addCard:card];
-        [self setBackOrRevertButton];
+        Deck* deck = self.deckListViewController.deck;
+        [self setBackOrRevertButton:deck.modified];
     
         if (viewMode == VIEW_LIST)
         {

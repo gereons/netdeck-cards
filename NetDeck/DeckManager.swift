@@ -16,7 +16,7 @@ import Foundation
         return c
     }()
     
-    class func saveDeck(deck: Deck) {
+    class func saveDeck(deck: Deck, keepLastModified: Bool) {
         if deck.filename == nil {
             deck.filename = DeckManager.pathForRole(deck.role)
         }
@@ -41,22 +41,21 @@ import Foundation
             _ = try? fileMgr.setAttributes(attrs, ofItemAtPath: filename)
         }
         
-        // update the in-memory lastModified date, and store the deck in our cache
-        deck.lastModified = NSDate()
+        if keepLastModified && deck.lastModified != nil {
+            let attrs = [ NSFileModificationDate: deck.lastModified! ]
+            _ = try? NSFileManager.defaultManager().setAttributes(attrs, ofItemAtPath: deck.filename!)
+        } else {
+            // update the in-memory lastModified date
+            deck.lastModified = NSDate()
+        }
 
+        // store the deck in our cache
         DeckManager.cache.setObject(deck, forKey: filename)
     }
     
     class func removeFile(pathname: String) {
         DeckManager.cache.removeObjectForKey(pathname)
         _ = try? NSFileManager.defaultManager().removeItemAtPath(pathname)
-    }
-    
-    class func resetModificationDate(deck: Deck) {
-        if deck.filename != nil && deck.lastModified != nil {
-            let attrs = [ NSFileModificationDate: deck.lastModified! ]
-            _ = try? NSFileManager.defaultManager().setAttributes(attrs, ofItemAtPath: deck.filename!)
-        }
     }
     
     class func decksForRole(role: NRRole) -> [Deck] {

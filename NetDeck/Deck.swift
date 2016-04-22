@@ -89,11 +89,6 @@ import Foundation
         return inf
     }
     
-    func saveToDisk() {
-        DeckManager.saveDeck(self)
-        self.modified = false
-    }
-    
     var influenceLimit: Int {
         if self.identity == nil {
             return 0
@@ -207,6 +202,7 @@ import Foundation
     // if copies==0, removes ALL copies of the card
     func addCard(card: Card, copies: Int, history: Bool) {
         
+        var changed = false
         var copies = copies
         if card.type == .Identity {
             self.modified = true
@@ -226,12 +222,14 @@ import Foundation
                 } else {
                     cc.count -= abs(copies)
                 }
+                changed = true
             } else {
                 // add N copies
                 let max = cc.card.maxPerDeck
                 let maxAdd = max - cc.count
                 copies = min(copies, maxAdd)
                 cc.count += copies
+                changed = copies != 0
             }
         } else {
             // add a new card
@@ -239,6 +237,7 @@ import Foundation
             copies = min(copies, card.maxPerDeck)
             let cc = CardCounter(card: card, andCount: copies)
             cards.append(cc)
+            changed = true
         }
         
         // print("copies=\(copies) of \(card.name)")
@@ -246,7 +245,7 @@ import Foundation
             self.lastChanges.addCardCode(card.code, copies: copies)
         }
         
-        self.modified = self.modified || copies != 0
+        self.modified = self.modified || changed
         
         self.sort()
     }

@@ -223,8 +223,7 @@ static NSString* filterText;
             {
                 deck.filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
             }
-            [deck saveToDisk];
-            [DeckManager resetModificationDate:deck];
+            [DeckManager saveDeck:deck keepLastModified:YES];
         }
     }
 }
@@ -267,8 +266,7 @@ static NSString* filterText;
         [[NRDB sharedInstance] loadDeck:deck completion:^(Deck *deck) {
             if (deck) {
                 [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-                [deck saveToDisk];
-                [DeckManager resetModificationDate:deck];
+                [DeckManager saveDeck:deck keepLastModified:YES];
             } else {
                 [SVProgressHUD showErrorWithStatus:l10n(@"Deck import failed")];
             }
@@ -598,8 +596,7 @@ static NSString* filterText;
     else
     {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-        [deck saveToDisk];
-        [DeckManager resetModificationDate:deck];
+        [DeckManager saveDeck:deck keepLastModified:YES];
     }
 }
 

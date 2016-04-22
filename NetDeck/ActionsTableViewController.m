@@ -182,7 +182,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     Deck* deck = [userInfo objectForKey:@"deck"];
     NRRole role = deck.identity.role;
     
-    [deck saveToDisk];
+    [DeckManager saveDeck:deck keepLastModified:NO];
     
     CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andDeck:deck];
     

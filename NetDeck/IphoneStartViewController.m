@@ -157,7 +157,7 @@
     NSDictionary* userInfo = notification.userInfo;
     Deck* deck = [userInfo objectForKey:@"deck"];
     
-    [deck saveToDisk];
+    [DeckManager saveDeck:deck keepLastModified:NO];
     
     EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
     edit.deck = deck;
