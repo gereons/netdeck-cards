@@ -10,8 +10,6 @@
 
 #warning sdcalertview: customized visual when PR is merged
 
-#warning iphone browser: add hint on startup?
-
 #warning improve startup time
 
 #warning make TableData type-safe (ie, rewrite all users in Swift)
