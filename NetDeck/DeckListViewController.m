@@ -378,7 +378,15 @@
         [SVProgressHUD showSuccessWithStatus:l10n(@"Saving...")];
     }
     
-    [DeckManager saveDeck:self.deck keepLastModified:!manually];
+    BOOL keepLastModified = !manually;
+    if (self.autoSave) {
+        keepLastModified = NO;
+    }
+    if (keepLastModified) {
+        [self.deck updateOnDisk];
+    } else {
+        [self.deck saveToDisk];
+    }
     
     if (manually && self.autoSaveNRDB)
     {
@@ -489,7 +497,7 @@
         if (ok && deckId)
         {
             self.deck.netrunnerDbId = deckId;
-            [DeckManager saveDeck:self.deck keepLastModified:YES];
+            [self.deck updateOnDisk];
         }
         
         [SVProgressHUD dismiss];
@@ -601,7 +609,7 @@
         self.deck = newDeck;
         if (self.autoSave)
         {
-            [DeckManager saveDeck:self.deck keepLastModified:NO];
+            [self.deck saveToDisk];
         }
         else
         {
@@ -611,7 +619,7 @@
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes, but stay here") handler:^(UIAlertAction * action) {
         Deck* newDeck = [self.deck duplicate];
-        [DeckManager saveDeck:newDeck keepLastModified:NO];
+        [newDeck saveToDisk];
         if (self.autoSaveDropbox)
         {
             if (newDeck.identity && newDeck.cards.count > 0)

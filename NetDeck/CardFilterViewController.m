@@ -292,6 +292,11 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) setBackOrRevertButton:(BOOL)modified
 {
+    BOOL autoSave = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.AUTO_SAVE];
+    if (autoSave) {
+        return;
+    }
+    
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     
     if (modified) {

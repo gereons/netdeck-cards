@@ -97,10 +97,10 @@
     [self refreshDeck];
 }
 
--(void) setupNavigationButtons
+-(void) setupNavigationButtons:(BOOL)modified
 {
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    if (self.deck.modified) {
+    if (modified) {
         topItem.leftBarButtonItem = self.cancelButton;
         topItem.rightBarButtonItems = @[ self.saveButton, self.historyButton ];
     } else {
@@ -177,7 +177,7 @@
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Duplicate Deck") handler:^(UIAlertAction * _Nonnull action) {
         Deck* newDeck = [self.deck duplicate];
-        [DeckManager saveDeck:newDeck keepLastModified:NO];
+        [newDeck saveToDisk];
         [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:l10n(@"Copy saved as %@"), newDeck.name]];
     }]];
     
@@ -245,7 +245,7 @@
     if (self.deck.filename) {
         self.deck = [DeckManager loadDeckFromPath:self.deck.filename useCache:NO];
         [self refreshDeck];
-        [self setupNavigationButtons];
+        [self setupNavigationButtons:NO];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -254,7 +254,8 @@
 -(void) saveClicked:(id)sender
 {
     [self.deck mergeRevisions];
-    [DeckManager saveDeck:self.deck keepLastModified:NO];
+    [self.deck saveToDisk];
+    
     if (self.autoSaveDropbox)
     {
         if (self.deck.identity && self.deck.cards.count > 0)
@@ -267,7 +268,7 @@
         [self saveToNrdb];
     }
     
-    [self setupNavigationButtons];
+    [self setupNavigationButtons:self.deck.modified];
 }
 
 -(void) doAutoSave
@@ -275,7 +276,7 @@
     BOOL modified = self.deck.modified;
     if (modified && self.autoSave)
     {
-        [DeckManager saveDeck:self.deck keepLastModified:NO];
+        [self.deck saveToDisk];
     }
     if (modified && self.autoSaveDropbox)
     {
@@ -301,7 +302,7 @@
         if (ok && deckId)
         {
             self.deck.netrunnerDbId = deckId;
-            [DeckManager saveDeck:self.deck keepLastModified:NO];
+            [self.deck saveToDisk];
         }
         [SVProgressHUD dismiss];
     }];
@@ -426,7 +427,7 @@
     self.drawButton.enabled = self.deck.size > 0;
     
     [self doAutoSave];
-    [self setupNavigationButtons];
+    [self setupNavigationButtons:self.deck.modified];
 }
 
 -(void) changeCount:(UIStepper*)stepper

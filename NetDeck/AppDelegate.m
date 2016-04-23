@@ -8,8 +8,6 @@
 
 // TODOs:
 
-#warning nrdb import: keep last-modified date of decks!
-
 #warning sdcalertview: customized visual when PR is merged
 
 #warning iphone browser: add hint on startup?

@@ -542,6 +542,16 @@ import Foundation
         return TableData(sections: sections, andValues: cards)
     }
     
+    func saveToDisk() {
+        DeckManager.saveDeck(self, keepLastModified: false)
+        self.modified = false
+    }
+    
+    func updateOnDisk() {
+        DeckManager.saveDeck(self, keepLastModified: true)
+        self.modified = false
+    }
+    
     // MARK: NSCoding
     convenience required init?(coder decoder: NSCoder) {
         self.init()

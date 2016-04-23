@@ -223,7 +223,7 @@ static NSString* filterText;
             {
                 deck.filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
             }
-            [DeckManager saveDeck:deck keepLastModified:YES];
+            [deck updateOnDisk];
         }
     }
 }
@@ -266,7 +266,7 @@ static NSString* filterText;
         [[NRDB sharedInstance] loadDeck:deck completion:^(Deck *deck) {
             if (deck) {
                 [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-                [DeckManager saveDeck:deck keepLastModified:YES];
+                [deck updateOnDisk];
             } else {
                 [SVProgressHUD showErrorWithStatus:l10n(@"Deck import failed")];
             }
@@ -579,8 +579,8 @@ static NSString* filterText;
     NSString* filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];    
     if (filename)
     {
-        UIAlertController* alert = [UIAlertController alertWithTitle:nil
-                                                             message:l10n(@"A local copy of this deck already exists.")];
+        NSString* msg = l10n(@"A local copy of this deck already exists.");
+        UIAlertController* alert = [UIAlertController alertWithTitle:nil message:msg];
         
         [alert addAction:[UIAlertAction cancelAlertAction:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Overwrite") handler:^(UIAlertAction * action) {
@@ -596,7 +596,7 @@ static NSString* filterText;
     else
     {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-        [DeckManager saveDeck:deck keepLastModified:YES];
+        [deck updateOnDisk];
     }
 }
 

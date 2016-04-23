@@ -157,7 +157,7 @@
     NSDictionary* userInfo = notification.userInfo;
     Deck* deck = [userInfo objectForKey:@"deck"];
     
-    [DeckManager saveDeck:deck keepLastModified:NO];
+    [deck saveToDisk];
     
     EditDeckViewController* edit = [[EditDeckViewController alloc] initWithNibName:@"EditDeckViewController" bundle:nil];
     edit.deck = deck;
@@ -366,7 +366,7 @@
     }
     else
     {
-        cell.detailTextLabel.text = @"no Identity";
+        cell.detailTextLabel.text = l10n(@"No Identity");
         cell.detailTextLabel.textColor = [UIColor blackColor];
     }
     
