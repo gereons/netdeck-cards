@@ -8,6 +8,8 @@
 
 // TODOs:
 
+#warning add missing alliance cards/rules from "the liberated mind"
+#warning add cycle after mumbad
 #warning sdcalertview: customized visual when PR is merged
 
 #warning improve startup time

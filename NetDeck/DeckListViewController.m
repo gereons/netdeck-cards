@@ -218,7 +218,7 @@
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGesture:)];
     [self.collectionView addGestureRecognizer:pinch];
     
-    self.footerLabel.font = [UIFont md_systemFontOfSize:15];
+    self.footerLabel.font = [UIFont monospacedDigitSystemFontOfSize:15 weight:UIFontWeightRegular];
 
     [self refresh];
 }

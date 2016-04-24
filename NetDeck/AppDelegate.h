@@ -7,16 +7,17 @@
 //
 
 #import "DetailViewManager.h"
-#import "NRSplitViewController.h"
 #import "NRCrashlytics.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate CRASHLYTICS_DELEGATE>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (nonatomic, retain) IBOutlet NRSplitViewController *splitViewController;
+// root controller on ipad
+@property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
 @property (nonatomic, retain) IBOutlet DetailViewManager *detailViewManager;
 
+// root controller on iphone
 @property (nonatomic, retain) IBOutlet UINavigationController* navigationController;
 
 +(NSString*) appVersion;

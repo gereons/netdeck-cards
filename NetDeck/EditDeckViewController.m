@@ -47,7 +47,7 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"EditDeckCell" bundle:nil] forCellReuseIdentifier:@"cardCell"];
     
-    self.statusLabel.font = [UIFont md_systemFontOfSize:13];
+    self.statusLabel.font = [UIFont monospacedDigitSystemFontOfSize:13 weight:UIFontWeightRegular];
     self.statusLabel.text = @"";
     
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
@@ -81,7 +81,7 @@
 
     self.titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.titleButton addTarget:self action:@selector(titleTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.titleButton.titleLabel.font = [UIFont md_mediumSystemFontOfSize:17];
+    self.titleButton.titleLabel.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightMedium];
     self.titleButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.titleButton.titleLabel.minimumScaleFactor = 0.5;
     
@@ -571,7 +571,7 @@
         cell.nameLabel.textColor = [UIColor redColor];
     }
     
-    cell.nameLabel.font = [UIFont md_systemFontOfSize:16];
+    cell.nameLabel.font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
     
     NSString* type = [Faction name:card.faction];;
     

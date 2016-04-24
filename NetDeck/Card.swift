@@ -60,7 +60,7 @@ import SwiftyJSON
                                             HADES_FRAGMENT, EDEN_SHARD, EDEN_FRAGMENT,
                                             GOVERNMENT_TAKEOVER, _15_MINUTES, REBIRTH, BLACK_FILE ])
     
-    private static let OCTGN_PREFIX = "bc0f047c-01b1-427f-a439-d451eda"
+    static let OCTGN_PREFIX = "bc0f047c-01b1-427f-a439-d451eda"
     
     // "most wanted" list
     static let CERBERUS_H1      = "06099"

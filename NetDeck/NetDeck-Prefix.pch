@@ -20,6 +20,5 @@
 #import "NetDeck-Swift.h"
 #import "NRTypes.h"
 #import "NSArray+TwoD.h"
-#import "UIFont+monospacedDigits.h"
 #import "UIAlert+NetDeck.h"
 #import "NRCrashlytics.h"

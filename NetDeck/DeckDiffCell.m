@@ -17,12 +17,12 @@
     UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popupCard1:)];
     [self.deck1Card addGestureRecognizer:tap1];
     self.deck1Card.userInteractionEnabled = YES;
-    self.deck1Card.font = [UIFont md_systemFontOfSize:15];
+    self.deck1Card.font = [UIFont monospacedDigitSystemFontOfSize:15 weight:UIFontWeightRegular];
     
     UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popupCard2:)];
     [self.deck2Card addGestureRecognizer:tap2];
     self.deck2Card.userInteractionEnabled = YES;
-    self.deck2Card.font = [UIFont md_systemFontOfSize:15];
+    self.deck2Card.font = [UIFont monospacedDigitSystemFontOfSize:15 weight:UIFontWeightRegular];
 }
 
 -(void) popupCard1:(UITapGestureRecognizer*)sender

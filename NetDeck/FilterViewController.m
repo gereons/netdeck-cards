@@ -106,7 +106,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
         self.showPreviewTable = NO;
     }
     
-    self.previewHeader.font = [UIFont md_systemFontOfSize:15];
+    self.previewHeader.font = [UIFont monospacedDigitSystemFontOfSize:15 weight:UIFontWeightRegular];
 }
 
 -(void) viewDidAppear:(BOOL)animated

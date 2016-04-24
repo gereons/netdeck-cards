@@ -38,7 +38,7 @@ static NSString* kCancelButton = @"cancelButton";
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
     
-    self.statusLabel.font = [UIFont md_systemFontOfSize:13];
+    self.statusLabel.font = [UIFont monospacedDigitSystemFontOfSize:13 weight:UIFontWeightRegular];
     self.statusLabel.text = @"";
 
     // needed to make the 1 pixel separator show - wtf is this needed here but not elsewhere?
@@ -292,11 +292,11 @@ static NSString* kCancelButton = @"cancelButton";
     
     if (cc.count > 0)
     {
-        cell.nameLabel.font = [UIFont md_mediumSystemFontOfSize:16];
+        cell.nameLabel.font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightMedium];
     }
     else
     {
-        cell.nameLabel.font = [UIFont md_systemFontOfSize:16];
+        cell.nameLabel.font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
     }
 }
 

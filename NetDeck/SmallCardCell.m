@@ -13,7 +13,7 @@
 
 -(void) awakeFromNib
 {
-    self.name.font = [UIFont md_mediumSystemFontOfSize:17];
+    self.name.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightMedium];
     
     NSInteger diameter = 8;
     self.mwlMarker.frame = CGRectSetSize(self.mwlMarker.frame, diameter, diameter);
