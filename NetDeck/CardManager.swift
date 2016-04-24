@@ -46,6 +46,8 @@ import SwiftyJSON
         "08003": "Pancakes",  // adjusted chronotype
         "08086": "Anita",     // film critic
         "01044": "Mopus",     // magnum opus
+        "09007": "Kitty",     // quantum predictive model
+        "10043": "Polop",     // political operative
     ]
     
     override class func initialize() {
