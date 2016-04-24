@@ -28,6 +28,7 @@
                 <string>pl</string>
                 <string>kr</string>
                 <string>jp</string>
+                <string>zh</string>
             </array>
             <key>Titles</key>
             <array>
@@ -38,6 +39,7 @@
                 <string>Polish</string>
                 <string>Korean</string>
                 <string>Japanese</string>
+                <string>Chinese</string>
             </array>
             <key>FooterText</key>
             <string>LanguageFooterText</string>
