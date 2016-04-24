@@ -281,9 +281,12 @@ import SwiftyJSON
         c.trash = json["trash"].int ?? -1
         
         c.imageSrc = json["imagesrc"].string
-        if c.imageSrc?.length > 0 {
-            let host = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_HOST)
-            c.imageSrc = "https://" + host! + c.imageSrc!
+        if let imgSrc = c.imageSrc where imgSrc.length > 0 {
+            let isAbsoluteUrl = imgSrc.hasPrefix("http://") || imgSrc.hasPrefix("https://")
+            if !isAbsoluteUrl {
+                let host = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_HOST)
+                c.imageSrc = "https://" + host! + c.imageSrc!
+            }
         }
         
         if c.imageSrc?.length == 0 {
