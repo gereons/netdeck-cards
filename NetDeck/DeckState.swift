@@ -11,17 +11,21 @@ import Foundation
 @objc class DeckState: NSObject {
 
     private static let states: [NRDeckState: String] = [
-        .None: "All".localized(),
-        .Retired: "Retired".localized(),
-        .Testing: "Testing".localized(),
-        .Active: "Active".localized()
+        .None: "All",
+        .Retired: "Retired",
+        .Testing: "Testing",
+        .Active: "Active"
     ]
     
-    class func labelFor(state: NRDeckState) -> String {
+    class func rawLabelFor(state: NRDeckState) -> String {
         return states[state]!
     }
     
+    class func labelFor(state: NRDeckState) -> String {
+        return rawLabelFor(state).localized()
+    }
+    
     class func buttonLabelFor(state: NRDeckState) -> String {
-        return states[state]! + " ▾"
+        return labelFor(state) + " ▾"
     }
 }
