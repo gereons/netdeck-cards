@@ -32,6 +32,7 @@ class DataDownload: NSObject {
     static private let instance = DataDownload()
     
     private var alert: AlertController?
+    private var progressView: UIProgressView?
     private var downloadStopped = false
     private var downloadErrors = 0
     
@@ -39,7 +40,6 @@ class DataDownload: NSObject {
     private var englishCards: JSON?
     private var localizedSets: JSON?
     
-    private var progressView: UIProgressView!
     
     private var cards: [Card]!
     
@@ -211,10 +211,10 @@ class DataDownload: NSObject {
             return
         }
 
-        self.progressView = UIProgressView(progressViewStyle: .Default)
-        self.progressView.progress = 0
-        
-        self.progressView.translatesAutoresizingMaskIntoConstraints = false
+        let progressView = UIProgressView(progressViewStyle: .Default)
+        self.progressView = progressView
+        progressView.progress = 0
+        progressView.translatesAutoresizingMaskIntoConstraints = false
         
         let msg = String(format:"Image %d of %d".localized(), 1, self.cards.count)
         let alert = AlertController(title: "Downloading Images".localized(), message:nil, preferredStyle: .Alert)
@@ -223,10 +223,10 @@ class DataDownload: NSObject {
         let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFontOfSize(12, weight: UIFontWeightRegular) ]
         alert.attributedMessage = NSAttributedString(string: msg, attributes: attrs)
         
-        alert.contentView.addSubview(self.progressView)
+        alert.contentView.addSubview(progressView)
         
-        self.progressView.sdc_pinWidthToWidthOfView(alert.contentView, offset:-20)
-        self.progressView.sdc_centerInSuperview()
+        progressView.sdc_pinWidthToWidthOfView(alert.contentView, offset:-20)
+        progressView.sdc_centerInSuperview()
         
         alert.addAction(AlertAction(title:"Stop".localized(), style:.Default) { (action) -> Void in
             self.stopDownload()
@@ -272,11 +272,10 @@ class DataDownload: NSObject {
             let progress = (Float(index) * 100.0) / Float(self.cards.count)
             // NSLog(@"%@ - progress %.1f", card.name, progress);
             
-            self.progressView.progress = progress/100.0;
-            
-            if let alert = self.alert {
+            if let alert = self.alert, progressView = self.progressView {
+                progressView.progress = progress/100.0;
                 let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFontOfSize(12, weight: UIFontWeightRegular) ]
-                let msg = String(format:"Image %d of %d".localized(), index+1, self.cards.count)
+                let msg = String(format: "Image %d of %d".localized(), index+1, self.cards.count)
                 alert.attributedMessage = NSAttributedString(string:msg, attributes:attrs)
             }
             
@@ -286,6 +285,7 @@ class DataDownload: NSObject {
         else
         {
             self.alert?.dismiss(animated:false, completion:nil)
+            self.progressView = nil
             self.alert = nil
             if self.downloadErrors > 0 {
                 let msg = String(format:"%d of %d images could not be downloaded.".localized(),
@@ -302,6 +302,7 @@ class DataDownload: NSObject {
     
     private func stopDownload() {
         self.downloadStopped = true
+        self.progressView = nil
         self.alert = nil
     }
 
