@@ -237,13 +237,10 @@ class DataDownload: NSObject {
         self.downloadStopped = false
         self.downloadErrors = 0
         
-        self.downloadImageForCard(["index": 0, "scope": scope.rawValue ])
+        self.downloadImageForCard(0, scope: scope)
     }
     
-    @objc private func downloadImageForCard(dict: [String: Int]) {
-        let index = dict["index"]!
-        let scope = DownloadScope(rawValue: dict["scope"]!)!
-        
+    private func downloadImageForCard(index: Int, scope: DownloadScope) {
         if self.downloadStopped {
             return
         }
@@ -255,7 +252,17 @@ class DataDownload: NSObject {
                 if !ok && card.imageSrc != nil {
                     self.downloadErrors += 1
                 }
-                self.downloadNextImage([ "index": index+1, "scope": scope.rawValue])
+                
+                // update the alert
+                dispatch_async(dispatch_get_main_queue()) {
+                    let progress = Float(index) / Float(self.cards.count)
+                    self.progressView?.progress = progress
+                    let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFontOfSize(12, weight: UIFontWeightRegular) ]
+                    let msg = String(format: "Image %d of %d".localized(), index+1, self.cards.count)
+                    self.alert?.attributedMessage = NSAttributedString(string:msg, attributes:attrs)
+                }
+                
+                self.downloadImageForCard(index+1, scope: scope)
             }
             
             if scope == .All {
@@ -263,38 +270,20 @@ class DataDownload: NSObject {
             } else  {
                 ImageCache.sharedInstance.updateMissingImageFor(card, completion: downloadNext)
             }
-        }
-    }
-    
-    private func downloadNextImage(dict: [String: Int]) {
-        let index = dict["index"]!
-        if index < self.cards.count {
-            let progress = (Float(index) * 100.0) / Float(self.cards.count)
-            // NSLog(@"%@ - progress %.1f", card.name, progress);
-            
-            if let alert = self.alert, progressView = self.progressView {
-                progressView.progress = progress/100.0;
-                let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFontOfSize(12, weight: UIFontWeightRegular) ]
-                let msg = String(format: "Image %d of %d".localized(), index+1, self.cards.count)
-                alert.attributedMessage = NSAttributedString(string:msg, attributes:attrs)
-            }
-            
-            // use -performSelector: so the UI can refresh
-            self.performSelector(#selector(DataDownload.downloadImageForCard(_:)), withObject:dict, afterDelay:0.0)
-        }
-        else
-        {
-            self.alert?.dismiss(animated:false, completion:nil)
-            self.progressView = nil
-            self.alert = nil
-            if self.downloadErrors > 0 {
-                let msg = String(format:"%d of %d images could not be downloaded.".localized(),
-                    self.downloadErrors, self.cards.count)
+        } else {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.alert?.dismiss(animated:false, completion:nil)
+                self.progressView = nil
+                self.alert = nil
+                if self.downloadErrors > 0 {
+                    let msg = String(format:"%d of %d images could not be downloaded.".localized(),
+                                     self.downloadErrors, self.cards.count)
+                    
+                    UIAlertController.alertWithTitle(nil, message:msg, button:"OK")
+                }
                 
-                UIAlertController.alertWithTitle(nil, message:msg, button:"OK")
+                self.cards = nil
             }
-            
-            self.cards = nil
         }
     }
     
