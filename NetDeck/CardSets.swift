@@ -44,7 +44,8 @@ import SwiftyJSON
         7: .CoreDeluxe,
         8: .SanSan,
         9: .CoreDeluxe,
-        10: .Mumbad
+        10: .Mumbad,
+        11: .Cycle6
     ]
     
     class func pathname() -> String {
@@ -116,9 +117,9 @@ import SwiftyJSON
             if let cycleNumber = set["cyclenumber"].int,
                 let number = set["number"].int {
             
-                cs.cycle = cycleMap[cycleNumber] ?? .Unknown
-                assert(cs.cycle != .Unknown)
-                if cs.cycle == .Unknown {
+                cs.cycle = cycleMap[cycleNumber] ?? .None
+                assert(cs.cycle != .None)
+                if cs.cycle == .None {
                     return false
                 }
                 maxCycle = max(maxCycle, cs.cycle.rawValue)
