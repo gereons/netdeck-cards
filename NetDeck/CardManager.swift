@@ -232,7 +232,7 @@ import SwiftyJSON
         for card in allKnownCards.values {
             if (card.name.length > 2) {
                 let words = card.name.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: " -"))
-                if words.count > 2 {
+                if words.count > 1 {
                     var alias = ""
                     for word in words {
                         if word.length > 0 {

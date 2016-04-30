@@ -251,24 +251,23 @@ class CardList: NSObject {
             let predicate = NSPredicate(format:"typeStr LIKE[cd] %@", self.type!)
             predicates.append(predicate)
         }
-        if (self.types?.count > 0)
-        {
+        if self.types?.count > 0 {
             let predicate = NSPredicate(format:"typeStr IN %@", self.types!)
             predicates.append(predicate)
         }
-        if (self.mu != -1) {
+        if self.mu != -1 {
             let predicate = NSPredicate(format:"mu == %d", self.mu)
             predicates.append(predicate)
         }
-        if (self.trash != -1) {
+        if self.trash != -1 {
             let predicate = NSPredicate(format:"trash == %d", self.trash)
             predicates.append(predicate)
         }
-        if (self.strength != -1) {
+        if self.strength != -1 {
             let predicate = NSPredicate(format:"strength == %d", self.strength)
             predicates.append(predicate)
         }
-        if (self.influence != -1) {
+        if self.influence != -1 {
             if (self.faction4inf == .None) {
                 let predicate = NSPredicate(format:"influence == %d", self.influence)
                 predicates.append(predicate)
@@ -281,13 +280,11 @@ class CardList: NSObject {
             let predicate = NSPredicate(format:"setName LIKE[cd] %@", self.set!)
             predicates.append(predicate)
         }
-        if (self.sets?.count > 0)
-        {
+        if self.sets?.count > 0 {
             let predicate = NSPredicate(format:"setName IN %@", self.sets!)
             predicates.append(predicate)
         }
-        if (self.cost != -1)
-        {
+        if self.cost != -1 {
             let predicate = NSPredicate(format:"cost == %d || advancementCost == %d", self.cost, self.cost)
             predicates.append(predicate)
         }
@@ -295,8 +292,7 @@ class CardList: NSObject {
             let predicate = NSPredicate(format:"%@ IN subtypes", self.subtype!)
             predicates.append(predicate)
         }
-        if (self.subtypes?.count > 0)
-        {
+        if self.subtypes?.count > 0 {
             var subPredicates = [NSPredicate]()
             for subtype in self.subtypes! {
                 subPredicates.append(NSPredicate(format:"%@ IN subtypes", subtype))
@@ -304,39 +300,39 @@ class CardList: NSObject {
             let subtypePredicate = NSCompoundPredicate(orPredicateWithSubpredicates:subPredicates)
             predicates.append(subtypePredicate)
         }
-        if (self.agendaPoints != -1) {
+        if self.agendaPoints != -1 {
             let predicate = NSPredicate(format:"agendaPoints == %d", self.agendaPoints)
             predicates.append(predicate)
         }
-        if (self.text?.length > 0) {
+        if let text = self.text where text.length > 0 {
             var predicate: NSPredicate
             switch (self.searchScope) {
             case .All:
                 predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (alias CONTAINS[cd] %@)",
-                self.text!, self.text!, self.text!, self.text!)
+                                        text, text, text, text)
             case .Name:
-                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (alias CONTAINS[cd] %@)", self.text!, self.text!, self.text!)
-                let ch = self.text!.characters[self.text!.startIndex]
+                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (alias CONTAINS[cd] %@)",
+                                        text, text, text)
+                let ch = text.characters[text.startIndex]
                 if (ch >= "0" && ch <= "9")
                 {
-                    let codePredicate = NSPredicate(format:"code BEGINSWITH %@", self.text!)
+                    let codePredicate = NSPredicate(format:"code BEGINSWITH %@", text)
                     predicate = NSCompoundPredicate(orPredicateWithSubpredicates:[ predicate, codePredicate ])
                 }
             case .Text:
-                predicate = NSPredicate(format:"text CONTAINS[cd] %@", self.text!)
+                predicate = NSPredicate(format:"text CONTAINS[cd] %@", text)
             }
-            predicates.append(predicate)
         }
-        if (self.unique) {
+        if self.unique {
             let predicate = NSPredicate(format:"unique == 1")
             predicates.append(predicate)
         }
-        if (self.limited) {
+        if self.limited {
             let predicate = NSPredicate(format:"type != %d AND maxPerDeck == 1", NRCardType.Identity.rawValue)
             predicates.append(predicate)
         }
         
-        if (predicates.count > 0) {
+        if predicates.count > 0 {
             let allPredicates = NSCompoundPredicate(andPredicateWithSubpredicates:predicates)
             filteredCards = filteredCards.filter { allPredicates.evaluateWithObject($0) }
         }
