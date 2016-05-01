@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
 
 +(void) showForDecks:(Deck*)deck1 deck2:(Deck*)deck2 inViewController:(UIViewController*)vc
 {
+    LOG_EVENT(@"Compare Decks", nil);
     DeckDiffViewController* ddvc = [[DeckDiffViewController alloc] initWithDecks:deck1 deck2:deck2];
     
     [vc presentViewController:ddvc animated:NO completion:nil];

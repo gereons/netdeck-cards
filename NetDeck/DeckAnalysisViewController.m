@@ -40,6 +40,7 @@
 
 - (id)initWithDeck:(Deck*)deck
 {
+    LOG_EVENT(@"Deck Analysis", nil);
     self = [super initWithNibName:@"DeckAnalysisViewController" bundle:nil];
     if (self)
     {
