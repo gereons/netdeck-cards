@@ -138,23 +138,29 @@
         case NRCardTypeProgram:
         case NRCardTypeResource:
         case NRCardTypeEvent:
-        case NRCardTypeHardware:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
-            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
-            self.label2.text = card.strength != -1 ? [NSString stringWithFormat:@"%ld", (long)card.strength] : @"";
-            self.icon2.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
+        case NRCardTypeHardware: {
+            NSString* cost = card.costString;
+            NSString* str = card.strengthString;
+            self.label1.text = cost;
+            self.icon1.image = cost.length > 0 ? [ImageCache creditIcon] : nil;
+            self.label2.text = str;
+            self.icon2.image = str.length > 0 ? [ImageCache strengthIcon] : nil;
             self.label3.text = card.mu != -1 ? [NSString stringWithFormat:@"%ld", (long)card.mu] : @"";
             self.icon3.image = card.mu != -1 ? [ImageCache muIcon] : nil;
             break;
+        }
             
-        case NRCardTypeIce:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
-            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
+        case NRCardTypeIce: {
+            NSString* cost = card.costString;
+            NSString* str = card.strengthString;
+            self.label1.text = cost;
+            self.icon1.image = cost.length > 0 ? [ImageCache creditIcon] : nil;
             self.label2.text = @"";
             self.icon2.image = nil;
-            self.label3.text = card.strength != -1 ? [NSString stringWithFormat:@"%ld", (long)card.strength] : @"";
-            self.icon3.image = card.strength != -1 ? [ImageCache strengthIcon] : nil;
+            self.label3.text = str;
+            self.icon3.image = str.length > 0 ? [ImageCache strengthIcon] : nil;
             break;
+        }
             
         case NRCardTypeAgenda:
             self.label1.text = [NSString stringWithFormat:@"%ld", (long)card.advancementCost];
@@ -167,14 +173,16 @@
             
         case NRCardTypeAsset:
         case NRCardTypeOperation:
-        case NRCardTypeUpgrade:
-            self.label1.text = card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
-            self.icon1.image = card.cost != -1 ? [ImageCache creditIcon] : nil;
+        case NRCardTypeUpgrade: {
+            NSString* cost = card.costString;
+            self.label1.text = cost;
+            self.icon1.image = cost.length > 0 ? [ImageCache creditIcon] : nil;
             self.label2.text = @"";
             self.icon2.image = nil;
             self.label3.text = card.trash != -1 ? [NSString stringWithFormat:@"%ld", (long)card.trash] : @"";
             self.icon3.image = card.trash != -1 ? [ImageCache trashIcon] : nil;
             break;
+        }
             
         case NRCardTypeNone:
             NSAssert(NO, @"this can't happen");

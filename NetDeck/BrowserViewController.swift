@@ -138,7 +138,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             cell!.detailTextLabel?.text = String(format: "%@ · %ld/%ld", card.factionStr, card.advancementCost, card.agendaPoints)
             
         default:
-            cell!.detailTextLabel?.text = String(format: "%@ · %ld Cr", card.factionStr, card.cost)
+            cell!.detailTextLabel?.text = String(format: "%@ · %l@ Cr", card.factionStr, card.costString)
         }
     
         let pips = cell!.accessoryView as! SmallPipsView

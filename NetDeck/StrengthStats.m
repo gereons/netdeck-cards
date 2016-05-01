@@ -19,7 +19,7 @@
         for (CardCounter* cc in deck.cards)
         {
             NSInteger str = cc.card.strength;
-            if (str != -1)
+            if (str >= 0)
             {
                 NSNumber* n = [strengths objectForKey:@(str)];
                 int prev = n == nil ? 0 : [n intValue];

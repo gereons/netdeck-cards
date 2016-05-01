@@ -19,7 +19,7 @@
         for (CardCounter* cc in deck.cards)
         {
             NSInteger cost = cc.card.cost;
-            if (cost != -1)
+            if (cost >= 0)
             {
                 NSNumber* n = [costs objectForKey:@(cost)];
                 int prev = n == nil ? 0 : [n intValue];

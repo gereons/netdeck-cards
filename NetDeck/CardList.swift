@@ -322,6 +322,7 @@ class CardList: NSObject {
             case .Text:
                 predicate = NSPredicate(format:"text CONTAINS[cd] %@", text)
             }
+            predicates.append(predicate)
         }
         if self.unique {
             let predicate = NSPredicate(format:"unique == 1")

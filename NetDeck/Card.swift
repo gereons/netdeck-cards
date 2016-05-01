@@ -33,7 +33,6 @@ import SwiftyJSON
     static let IBRAHIM_SALEM            = "10109"    // 0 inf if >= 6 non-alliance NBN cards in deck
     static let EXECUTIVE_SEARCH_FIRM    = "10072"    // 0 inf if >= 6 non-alliance Weyland cards in deck
 
-    
     static let ALLIANCE_6 = Set<String>([
         PRODUCT_RECALL, JEEVES_MODEL_BIOROID,
         RAMAN_RAI, HERITAGE_COMMITTEE,
@@ -76,10 +75,13 @@ import SwiftyJSON
     static let NAPD_CONTRACT    = "04119"
     static let SANSAN_CITY_GRID = "01092"
     
-    // MWL from Tournament Rules 3.0.2, valid from 2016-02-01 onwards
+    // MWL introduced in Tournament Rules 3.0.2, valid from 2016-02-01 onwards
     private static let MOST_WANTED_LIST = Set<String>([
         CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
         ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])
+    
+   
+    private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
     private(set) var code: String!
     private(set) var name: String!              // localized name of card, used for display
@@ -148,7 +150,7 @@ import SwiftyJSON
     // special for Programs: return "Icebreaker" for icebreakers, "Program" for other programs
     var programType: String? {
         assert(self.type == .Program, "not a program")
-        if self.strength != -1 {
+        if self.strength >= 0 {
             return self.subtypes[0]
         } else {
             return self.typeStr
@@ -202,6 +204,22 @@ import SwiftyJSON
     
     var isValid: Bool {
         return self.role != .None && self.faction != .None && self.type != .None
+    }
+    
+    var costString: String {
+        return xStringify(self.cost)
+    }
+    
+    var strengthString: String {
+        return xStringify(self.strength)
+    }
+    
+    private func xStringify(x: Int) -> String {
+        switch x {
+        case -1: return ""
+        case Card.X: return "X"
+        default: return "\(x)"
+        }
     }
     
     class func cardFromJson(json: JSON, english: Bool) -> Card {
@@ -275,8 +293,19 @@ import SwiftyJSON
         }
         
         c.mu = json["memoryunits"].int ?? -1
-        c.strength = json["strength"].int ?? -1
-        c.cost = json["cost"].int ?? -1
+        
+        if json["strength"].stringValue == "X" {
+            c.strength = Card.X
+        } else {
+            c.strength = json["strength"].int ?? -1
+        }
+        
+        if json["cost"].stringValue == "X" {
+            c.cost = Card.X
+        } else {
+            c.cost = json["cost"].int ?? -1
+        }
+        
         c.influence = json["factioncost"].int ?? -1
         c.trash = json["trash"].int ?? -1
         
