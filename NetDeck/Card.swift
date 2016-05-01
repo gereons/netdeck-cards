@@ -297,7 +297,7 @@ import SwiftyJSON
             c.maxPerDeck = 1
         }
         
-        c.ancurLink = json["ancurLink"].string
+        c.ancurLink = json["ancur_link"].string
         if c.ancurLink?.length == 0 {
             c.ancurLink = nil
         }
