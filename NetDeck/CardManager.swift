@@ -274,17 +274,17 @@ import SwiftyJSON
         // calculate max values for filter sliders
         maxMU = max(card.mu, maxMU)
         maxTrash = max(card.trash, maxTrash)
-        maxStrength = max(card._strength, maxStrength)
+        maxStrength = max(card.strength, maxStrength)
         maxInfluence = max(card.influence, maxInfluence)
         maxAgendaPoints = max(card.agendaPoints, maxAgendaPoints)
         
         if card.role == .Runner
         {
-            maxRunnerCost = max(card._cost, maxRunnerCost)
+            maxRunnerCost = max(card.cost, maxRunnerCost)
         }
         else
         {
-            maxCorpCost = max(card._cost, maxCorpCost)
+            maxCorpCost = max(card.cost, maxCorpCost)
         }
     }
     
