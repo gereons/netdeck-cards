@@ -177,9 +177,14 @@ const NSString* const kANY = @"Any";
 -(void) logStartup {
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     
+    NSString* cardLanguage = [settings stringForKey:SettingsKeys.LANGUAGE];
+    NSString* appLanguage = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSDictionary* languageComponents = [NSLocale componentsFromLocaleIdentifier:appLanguage];
+    NSString* languageFromComponents = languageComponents[NSLocaleLanguageCode];
     NSDictionary* attrs = @{
-        @"cardLanguage": [settings stringForKey:SettingsKeys.LANGUAGE],
-        @"appLanguage": [[NSLocale preferredLanguages] objectAtIndex:0],
+        @"cardLanguage": cardLanguage,
+        @"appLanguage": appLanguage,
+        @"Language": [NSString stringWithFormat:@"%@/%@", cardLanguage, languageFromComponents],
         @"useNrdb": @([settings boolForKey:SettingsKeys.USE_NRDB]),
         @"useDropbox": @([settings boolForKey:SettingsKeys.USE_DROPBOX]),
         @"device": [UIDevice currentDevice].model,
