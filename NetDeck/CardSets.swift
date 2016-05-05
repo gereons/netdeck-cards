@@ -114,9 +114,7 @@ import SwiftyJSON
             
             cs.settingsKey = "use_" + cs.setCode
             
-            if let cycleNumber = set["cyclenumber"].int,
-                let number = set["number"].int {
-            
+            if let cycleNumber = set["cyclenumber"].int, let number = set["number"].int {
                 cs.cycle = cycleMap[cycleNumber] ?? .None
                 assert(cs.cycle != .None)
                 if cs.cycle == .None {
@@ -172,6 +170,15 @@ import SwiftyJSON
         assert(setGroups.count == setsPerGroup.count, "count mismatch")
         if setGroups.count != setsPerGroup.count {
             return false
+        }
+        
+        // eliminate cycles where we have an enum value, but no data is available (yet)
+        for cycle in cycleMap.values {
+            let count = setsPerGroup[cycle]!.count
+            if count == 0 {
+                setGroups.removeAtIndex(cycle.rawValue+1)
+                setsPerGroup.removeValueForKey(cycle)
+            }
         }
         
         NSUserDefaults.standardUserDefaults().registerDefaults(CardSets.settingsDefaults())

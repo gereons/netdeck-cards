@@ -24,7 +24,7 @@ import SwiftyJSON
     static let PAD_FACTORY              = "10038"    // 0 inf if 3 pad campaigns in deck
     static let MUMBAD_VIRTUAL_TOUR      = "10076"    // 0 inf if >= 7 assets in deck
     
-    // alliance-based: 0 inf if >= non-alliance cards of same faction in deck
+    // alliance-based: 0 inf if >= 6 non-alliance cards of same faction in deck
     static let PRODUCT_RECALL           = "10029"    // 0 inf if >= 6 non-alliance HB cards in deck
     static let JEEVES_MODEL_BIOROID     = "10067"    // 0 inf if >= 6 non-alliance HB cards in deck
     static let RAMAN_RAI                = "10068"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
