@@ -88,7 +88,7 @@
     case Lunar
     case SanSan
     case Mumbad
-    case Cycle6     // FIXME when the name is known
+    case Flashpoint
 }
 
 @objc enum NRImportSource: Int {

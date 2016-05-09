@@ -45,7 +45,7 @@ import SwiftyJSON
         8: .SanSan,
         9: .CoreDeluxe,
         10: .Mumbad,
-        11: .Cycle6
+        11: .Flashpoint
     ]
     
     class func pathname() -> String {
