@@ -16,8 +16,6 @@
 
 #warning make TableData type-safe (ie, rewrite all users in Swift)
 
-#warning re-set CLANG_ENABLE_MODULE_DEBUGGING=YES when xc 7.3 crash bug is fixed
-
 @import SVProgressHUD;
 
 #import "AppDelegate.h"

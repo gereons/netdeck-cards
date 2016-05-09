@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (3.3.1)
+  - Alamofire (3.4.0)
   - AlamofireImage (2.4.0):
     - Alamofire (~> 3.3)
   - AlamofireNetworkActivityIndicator (1.0.1):
@@ -47,7 +47,7 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
+  Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
   AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
   AlamofireNetworkActivityIndicator: 49a6e39afb947136f7b1872bae2d684957c26697
   CorePlot: ab9898c79b94999018e9634ab0aa4c21480c8552
