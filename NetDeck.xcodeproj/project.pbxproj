@@ -53,6 +53,7 @@
 		3A38BA071C8ADCC700F957D4 /* DataDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A38BA061C8ADCC700F957D4 /* DataDownload.swift */; };
 		3A39FBC81CB96F6B000F1B23 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A39FBC71CB96F6B000F1B23 /* BrowserViewController.swift */; };
 		3A3A83891C135BE3004F6562 /* DeckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A83881C135BE3004F6562 /* DeckManager.swift */; };
+		3A3AA9A91CE13011003F21EE /* DebugTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3AA9A81CE13011003F21EE /* DebugTimer.swift */; };
 		3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E131BF74DAF000311FA /* TableData.swift */; };
 		3A3C1E161BF7525B000311FA /* Faction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E151BF7525B000311FA /* Faction.swift */; };
 		3A3C1E191BF771B2000311FA /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C1E181BF771B2000311FA /* CardType.swift */; };
@@ -188,12 +189,11 @@
 		3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */; };
 		3AF6978D1C1DF96400D254CE /* DrawSimulatorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978C1C1DF96400D254CE /* DrawSimulatorCollectionView.swift */; };
 		3AF6978F1C1DFD2100D254CE /* DrawSimulatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978E1C1DFD2100D254CE /* DrawSimulatorViewController.swift */; };
-		71B5FBE6589E7D9FAE12FBF7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1177AECC149D5AD3422387E3 /* Pods.framework */; };
+		BDF6E1A45BDD2269ED47E09D /* Pods_NetDeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8171B5D03856602872A9AECE /* Pods_NetDeck.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1177AECC149D5AD3422387E3 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		242F7FDB1B64BD7EE1846987 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdateCheck.swift; sourceTree = "<group>"; };
 		3A058B1719D334660090F53A /* NRSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRSwitch.h; sourceTree = "<group>"; };
 		3A058B1819D334660090F53A /* NRSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRSwitch.m; sourceTree = "<group>"; };
@@ -274,6 +274,7 @@
 		3A38BA061C8ADCC700F957D4 /* DataDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDownload.swift; sourceTree = "<group>"; };
 		3A39FBC71CB96F6B000F1B23 /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		3A3A83881C135BE3004F6562 /* DeckManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckManager.swift; sourceTree = "<group>"; };
+		3A3AA9A81CE13011003F21EE /* DebugTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTimer.swift; sourceTree = "<group>"; };
 		3A3C1E131BF74DAF000311FA /* TableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableData.swift; sourceTree = "<group>"; };
 		3A3C1E151BF7525B000311FA /* Faction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Faction.swift; sourceTree = "<group>"; };
 		3A3C1E181BF771B2000311FA /* CardType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardType.swift; sourceTree = "<group>"; };
@@ -473,8 +474,10 @@
 		3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hypergeometric.swift; sourceTree = "<group>"; };
 		3AF6978C1C1DF96400D254CE /* DrawSimulatorCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawSimulatorCollectionView.swift; sourceTree = "<group>"; };
 		3AF6978E1C1DFD2100D254CE /* DrawSimulatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawSimulatorViewController.swift; sourceTree = "<group>"; };
-		53700086EE846BB882A399B8 /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
-		AC9022848911E8162E8048A8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		4B3ED278C485C4DD0795F558 /* Pods-NetDeck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.debug.xcconfig"; sourceTree = "<group>"; };
+		796DF0A5738142FC6D02DC2E /* Pods-NetDeck.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.adhoc.xcconfig"; sourceTree = "<group>"; };
+		8171B5D03856602872A9AECE /* Pods_NetDeck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		832C019F9B9F781A1430910C /* Pods-NetDeck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -493,7 +496,7 @@
 				3A3622641849320C007F2854 /* CoreGraphics.framework in Frameworks */,
 				3A3622661849320C007F2854 /* UIKit.framework in Frameworks */,
 				3A3622621849320C007F2854 /* Foundation.framework in Frameworks */,
-				71B5FBE6589E7D9FAE12FBF7 /* Pods.framework in Frameworks */,
+				BDF6E1A45BDD2269ED47E09D /* Pods_NetDeck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,7 +519,7 @@
 				3A3622891849320C007F2854 /* NetDeckTests */,
 				3A3622601849320C007F2854 /* Frameworks */,
 				3A36225F1849320C007F2854 /* Products */,
-				6E0C1DE33116E426077EF555 /* Pods */,
+				EF2B273DAF9123ABF9F266E8 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -545,6 +548,7 @@
 				3A3622651849320C007F2854 /* UIKit.framework */,
 				3A3622831849320C007F2854 /* XCTest.framework */,
 				1177AECC149D5AD3422387E3 /* Pods.framework */,
+				8171B5D03856602872A9AECE /* Pods_NetDeck.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -683,6 +687,7 @@
 				3AAE4C4A1CA7105A0039F822 /* Analytics.swift */,
 				3AC32DD81B67F63300DFD98D /* GZip.h */,
 				3AC32DD91B67F63300DFD98D /* GZip.m */,
+				3A3AA9A81CE13011003F21EE /* DebugTimer.swift */,
 			);
 			name = "Utility Classes / Headers";
 			sourceTree = "<group>";
@@ -1067,12 +1072,12 @@
 			name = "Deck Analysis";
 			sourceTree = "<group>";
 		};
-		6E0C1DE33116E426077EF555 /* Pods */ = {
+		EF2B273DAF9123ABF9F266E8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				242F7FDB1B64BD7EE1846987 /* Pods.debug.xcconfig */,
-				AC9022848911E8162E8048A8 /* Pods.release.xcconfig */,
-				53700086EE846BB882A399B8 /* Pods.adhoc.xcconfig */,
+				4B3ED278C485C4DD0795F558 /* Pods-NetDeck.debug.xcconfig */,
+				832C019F9B9F781A1430910C /* Pods-NetDeck.release.xcconfig */,
+				796DF0A5738142FC6D02DC2E /* Pods-NetDeck.adhoc.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1084,14 +1089,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "NetDeck" */;
 			buildPhases = (
-				725041DF7F0E4BE9AF0B94A3 /* Check Pods Manifest.lock */,
+				C62555A389DA66E9F987B229 /* 📦 Check Pods Manifest.lock */,
 				3A36225A1849320C007F2854 /* Sources */,
 				3A36225B1849320C007F2854 /* Frameworks */,
 				3A36225C1849320C007F2854 /* Resources */,
-				874BC020E2E4438DA4A0C588 /* Copy Pods Resources */,
 				3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */,
 				3A814EC519ADBEEE008C3285 /* Crashlytics */,
-				E525F2EF6AA369C7A2D03D1F /* Embed Pods Frameworks */,
+				5F030FDE434FC2961F4D20B9 /* 📦 Embed Pods Frameworks */,
+				C576FDA1A12A9ED691A68447 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1244,49 +1249,49 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" == \"xRelease\" ]; then\necho \"init crashlytics\"\n\"${PODS_ROOT}/Fabric/run\" fe0f0f5f919be6211c1de668d91332e311ddad9e fa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8\nfi";
 		};
-		725041DF7F0E4BE9AF0B94A3 /* Check Pods Manifest.lock */ = {
+		5F030FDE434FC2961F4D20B9 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C576FDA1A12A9ED691A68447 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C62555A389DA66E9F987B229 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		874BC020E2E4438DA4A0C588 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E525F2EF6AA369C7A2D03D1F /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1369,6 +1374,7 @@
 				3AAE4C4B1CA7105A0039F822 /* Analytics.swift in Sources */,
 				3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,
+				3A3AA9A91CE13011003F21EE /* DebugTimer.swift in Sources */,
 				3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */,
 				3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */,
 				3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */,
@@ -1547,7 +1553,7 @@
 		};
 		3A3622941849320C007F2854 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 242F7FDB1B64BD7EE1846987 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 4B3ED278C485C4DD0795F558 /* Pods-NetDeck.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1581,7 +1587,7 @@
 		};
 		3A3622951849320C007F2854 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AC9022848911E8162E8048A8 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 832C019F9B9F781A1430910C /* Pods-NetDeck.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1652,7 +1658,7 @@
 		};
 		3A6322A218617AEC0095330F /* Adhoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53700086EE846BB882A399B8 /* Pods.adhoc.xcconfig */;
+			baseConfigurationReference = 796DF0A5738142FC6D02DC2E /* Pods-NetDeck.adhoc.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
