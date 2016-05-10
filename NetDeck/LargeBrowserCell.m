@@ -62,7 +62,7 @@
     NSString* typeName = [CardType name:card.type];
     
     NSString* subtype = card.subtype;
-    if (subtype)
+    if (subtype.length > 0)
     {
         self.type.text = [NSString stringWithFormat:@"%@ · %@: %@", factionName, typeName, card.subtype];
     }
