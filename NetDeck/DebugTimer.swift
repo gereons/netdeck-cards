@@ -8,15 +8,17 @@
 
 import Foundation
 
+
 class DebugTimer: NSObject {
    
-    struct Timer {
+    private struct Timer {
         var count = 0
         var time = 0.0
     }
-    static var timers = [String: Timer]()
-    var name = ""
-    var start: NSTimeInterval = 0.0
+    
+    private static var timers = [String: Timer]()
+    private var name = ""
+    private var start: NSTimeInterval = 0.0
     
     init(name: String) {
         self.name = name
@@ -42,7 +44,15 @@ class DebugTimer: NSObject {
             NSLog("\(key): \(value.count) \(value.time) \(avg)")
         }
     }
-    static func reset() {
-        self.timers.removeAll()
+    
+    static func reset(names: [String]? = nil) {
+        if names == nil {
+            self.timers.removeAll()
+        } else {
+            for n in names! {
+                self.timers.removeValueForKey(n)
+            }
+        }
     }
+
 }
