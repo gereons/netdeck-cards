@@ -155,8 +155,8 @@
             NSString* str = card.strengthString;
             self.label1.text = cost;
             self.icon1.image = cost.length > 0 ? [ImageCache creditIcon] : nil;
-            self.label2.text = @"";
-            self.icon2.image = nil;
+            self.label2.text = card.trash != -1 ? [NSString stringWithFormat:@"%ld", (long)card.trash] : @"";
+            self.icon2.image = card.trash != -1 ? [ImageCache trashIcon] : nil;
             self.label3.text = str;
             self.icon3.image = str.length > 0 ? [ImageCache strengthIcon] : nil;
             break;
