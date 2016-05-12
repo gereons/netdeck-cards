@@ -89,6 +89,10 @@
     case SanSan
     case Mumbad
     case Flashpoint
+    
+    static var lastCycle: NRCycle {
+        return .Flashpoint
+    }
 }
 
 @objc enum NRImportSource: Int {

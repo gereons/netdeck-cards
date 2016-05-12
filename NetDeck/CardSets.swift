@@ -34,6 +34,7 @@ import SwiftyJSON
     static var disabledSets: Set<String>?           // set of setCodes
     static var enabledSets: TableData!
     
+    // map of NRDB's "cyclenumber" values to our NRCycle values
     static let cycleMap: [Int: NRCycle] = [
         1: .CoreDeluxe,
         2: .Genesis,
@@ -91,8 +92,8 @@ import SwiftyJSON
     }
 
     class func setupFromJsonData(json: JSON) -> Bool {
-        var maxCycle = 0
         allCardSets = [Int: CardSet]()
+
         for set in json.arrayValue {
             let cs = CardSet()
             
@@ -115,13 +116,14 @@ import SwiftyJSON
             cs.settingsKey = "use_" + cs.setCode
             
             if let cycleNumber = set["cyclenumber"].int, let number = set["number"].int {
-                cs.cycle = cycleMap[cycleNumber] ?? .None
-                assert(cs.cycle != .None)
-                if cs.cycle == .None {
-                    return false
+                if let cycle = cycleMap[cycleNumber] {
+                    cs.cycle = cycle
+                    cs.setNum = cycleNumber * 100 + number
+                } else {
+                    // new/unknown cycle
+                    cs.cycle = NRCycle.lastCycle
+                    cs.setNum = (NRCycle.lastCycle.rawValue + 1) * 100 + number
                 }
-                maxCycle = max(maxCycle, cs.cycle.rawValue)
-                cs.setNum = cycleNumber*100 + number
             }
             
             if let available = set["available"].string {
