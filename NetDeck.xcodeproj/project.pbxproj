@@ -98,7 +98,6 @@
 		3A85327D185509B000507B9A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85327B185509B000507B9A /* SettingsViewController.m */; };
 		3A85328218550ACE00507B9A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85328018550ACE00507B9A /* AboutViewController.m */; };
 		3A85328318550ACE00507B9A /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328118550ACE00507B9A /* AboutView.xib */; };
-		3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8FBC9D19547260009ED6E3 /* NRDB.m */; };
 		3A904FCD1BF73723001C075A /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A904FCC1BF73723001C075A /* Types.swift */; };
 		3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C218B1630800AF5285 /* IceTypeStats.m */; };
 		3A9204C618B16B9B00AF5285 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C518B16B9B00AF5285 /* Stats.m */; };
@@ -339,8 +338,6 @@
 		3A85327F18550ACE00507B9A /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AboutViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A85328018550ACE00507B9A /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AboutViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A85328118550ACE00507B9A /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
-		3A8FBC9C19547260009ED6E3 /* NRDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRDB.h; sourceTree = "<group>"; };
-		3A8FBC9D19547260009ED6E3 /* NRDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRDB.m; sourceTree = "<group>"; };
 		3A904FCB1BF73722001C075A /* NetDeck-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NetDeck-Bridging-Header.h"; sourceTree = "<group>"; };
 		3A904FCC1BF73723001C075A /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		3A9204C118B1630800AF5285 /* IceTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IceTypeStats.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -839,8 +836,6 @@
 				3A733B991C8DF801005B1F9B /* NRDB.swift */,
 				3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */,
 				3A1777E11967F7E50066E095 /* NRDBAuth.h */,
-				3A8FBC9C19547260009ED6E3 /* NRDB.h */,
-				3A8FBC9D19547260009ED6E3 /* NRDB.m */,
 				3A1777DC1967EA0B0066E095 /* NRDBAuthPopupViewController.h */,
 				3A1777DD1967EA0B0066E095 /* NRDBAuthPopupViewController.m */,
 				3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */,
@@ -1372,7 +1367,6 @@
 				3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */,
 				3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */,
 				3AAE4C4B1CA7105A0039F822 /* Analytics.swift in Sources */,
-				3A8FBC9E19547260009ED6E3 /* NRDB.m in Sources */,
 				3A36226E1849320C007F2854 /* main.m in Sources */,
 				3A3AA9A91CE13011003F21EE /* DebugTimer.swift in Sources */,
 				3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */,
