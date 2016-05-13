@@ -140,7 +140,7 @@ enum ExportFormat {
         
         s += eol
         let deckSize: Int = deck.identity?.minimumDecksize ?? 0
-        s += "Cards in deck: \(deck.size) (min \(deckSize)" + eol
+        s += "Cards in deck: \(deck.size) (min \(deckSize))" + eol
         if useMWL {
             let limit = deck.identity?.influenceLimit ?? 0
             s += "\(deck.influence)/\(deck.influenceLimit) (=\(limit)-\(deck.mwlPenalty)) influence used" + eol
