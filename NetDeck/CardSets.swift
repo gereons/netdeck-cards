@@ -120,9 +120,9 @@ import SwiftyJSON
                     cs.cycle = cycle
                     cs.setNum = cycleNumber * 100 + number
                 } else {
-                    // new/unknown cycle
+                    // new/unknown cycle -> make this the 7th/8th... pack of the last known cycle
                     cs.cycle = NRCycle.lastCycle
-                    cs.setNum = (NRCycle.lastCycle.rawValue + 1) * 100 + number
+                    cs.setNum = NRCycle.lastCycle.rawValue * 100 + number + 6
                 }
             }
             

@@ -8,6 +8,9 @@
 
 // TODOs:
 
+#warning debug loss of nrdb connection!
+#warning browser: allow all know sets?
+#warning decklist import: add option to use selected card language
 #warning add missing alliance cards/rules from "the liberated mind"
 #warning sdcalertview: customized visual when PR is merged
 
@@ -182,8 +185,8 @@ const NSString* const kANY = @"Any";
         @"cardLanguage": cardLanguage,
         @"appLanguage": appLanguage,
         @"Language": [NSString stringWithFormat:@"%@/%@", cardLanguage, languageFromComponents],
-        @"useNrdb": @([settings boolForKey:SettingsKeys.USE_NRDB]),
-        @"useDropbox": @([settings boolForKey:SettingsKeys.USE_DROPBOX]),
+        @"useNrdb": [settings boolForKey:SettingsKeys.USE_NRDB] ? @"on" : @"off",
+        @"useDropbox": [settings boolForKey:SettingsKeys.USE_DROPBOX] ? @"on" : @"off",
         @"device": [UIDevice currentDevice].model,
         @"os": [UIDevice currentDevice].systemVersion
     };
