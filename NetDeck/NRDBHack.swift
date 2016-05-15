@@ -53,6 +53,18 @@ class NRDBHack: NSObject {
         alert.show()
     }
     
+    func silentlyLoginOnStartup() {
+        let settings = NSUserDefaults.standardUserDefaults()
+        
+        let expiry = settings.objectForKey(SettingsKeys.NRDB_TOKEN_EXPIRY) as? NSDate ?? NSDate()
+        let now = NSDate()
+        let diff = expiry.timeIntervalSinceDate(now) - NRDB.FIVE_MINUTES
+        
+        if diff < 0 {
+            self.silentlyLogin()
+        }
+    }
+    
     func silentlyLogin() {
         if let username = KeychainWrapper.stringForKey(SettingsKeys.NRDB_USERNAME), password = KeychainWrapper.stringForKey(SettingsKeys.NRDB_PASSWORD) {
             self.username = username

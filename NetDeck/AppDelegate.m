@@ -10,7 +10,8 @@
 
 #warning debug loss of nrdb connection!
 #warning browser: allow all know sets?
-#warning decklist import: add option to use selected card language
+#warning handle empty tables: https://thatthinginswift.com/upgrade-tableview-loading-state/, https://github.com/dzenbot/DZNEmptyDataSet
+
 #warning add missing alliance cards/rules from "the liberated mind"
 #warning sdcalertview: customized visual when PR is merged
 
@@ -57,9 +58,15 @@ const NSString* const kANY = @"Any";
         [CardManager removeFiles];
     }
     
-    BOOL useNrdb = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_NRDB];
-    NSTimeInterval fetchInterval = useNrdb ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever;
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    BOOL useNrdb = [settings boolForKey:SettingsKeys.USE_NRDB];
+    BOOL keepCredentials = [settings boolForKey:SettingsKeys.KEEP_NRDB_CREDENTIALS];
+    NSTimeInterval fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever;
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:fetchInterval];
+    
+    if (useNrdb && keepCredentials) {
+        [[NRDBHack sharedInstance] silentlyLoginOnStartup];
+    }
     
     [DropboxWrapper setup];
     

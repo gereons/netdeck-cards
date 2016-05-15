@@ -122,7 +122,9 @@ class NRDB: NSObject {
                         settings.setObject(expiry, forKey: SettingsKeys.NRDB_TOKEN_EXPIRY)
                         
                         if ok {
-                            UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+                            if !settings.boolForKey(SettingsKeys.KEEP_NRDB_CREDENTIALS) {
+                                UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+                            }
                             completion(ok)
                         } else {
                             self.handleAuthorizationFailure(isRefresh, completion: completion)
