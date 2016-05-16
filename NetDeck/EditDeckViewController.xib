@@ -39,7 +39,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="MnM-iJ-94L"/>
-                        <barButtonItem image="831-stack-2-toolbar" id="Mfs-Fy-ONa">
+                        <barButtonItem image="1063-layers-3-toolbar" id="Mfs-Fy-ONa">
                             <connections>
                                 <action selector="drawClicked:" destination="-1" id="fp8-q1-LNn"/>
                             </connections>
@@ -79,7 +79,7 @@ Not enough Cards</string>
         </view>
     </objects>
     <resources>
-        <image name="831-stack-2-toolbar" width="22" height="10"/>
+        <image name="1063-layers-3-toolbar" width="22" height="14"/>
         <image name="netrunnerdb_com-bw" width="16" height="16"/>
     </resources>
 </document>

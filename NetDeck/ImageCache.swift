@@ -24,6 +24,7 @@ class ImageCache: NSObject {
     static let influenceIcon = UIImage(named: "cardstats_influence")!
     
     static let hexTile = UIImage(named: "hex_background")!
+    static let hexTileLight = UIImage(named: "hex_background_light")!
 
     static let runnerPlaceholder = UIImage(named: "RunnerPlaceholder")!
     static let corpPlaceholder = UIImage(named: "CorpPlaceholder")!

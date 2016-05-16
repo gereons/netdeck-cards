@@ -19,6 +19,8 @@
     [self.downloadButton setTitle:l10n(@"Download") forState:UIControlStateNormal];
     
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTileLight]];
 }
 
 -(void) downloadTapped:(id)sender {

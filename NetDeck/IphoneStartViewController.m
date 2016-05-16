@@ -478,7 +478,7 @@
 }
 
 -(UIColor*) backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
+    return [UIColor colorWithPatternImage:[ImageCache hexTileLight]];
 }
 
 -(void) emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {

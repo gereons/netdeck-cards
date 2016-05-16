@@ -591,7 +591,7 @@ static NRFilter _filterType = NRFilterAll;
 }
 
 -(UIColor*) backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
+    return [UIColor colorWithPatternImage:[ImageCache hexTileLight]];
 }
 
 @end
