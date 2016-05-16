@@ -290,7 +290,7 @@
     self.popup = nil;
 }
 
--(void) newDeck:(UIBarButtonItem*)sender
+-(void) newDeck:(id)sender
 {
     NSNumber* role;
     
@@ -329,9 +329,18 @@
     }]];
     
     UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
-    popover.barButtonItem = sender;
-    popover.sourceView = self.view;
-    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+        popover.barButtonItem = sender;
+        popover.sourceView = self.view;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    } else if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton* btn = (UIButton*)sender;
+        popover.sourceRect = [btn.superview convertRect:btn.frame toView:self.tableView];
+        popover.sourceView = self.tableView;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    } else {
+        NSAssert(NO, @"oops");
+    }
     
     [self.popup.view layoutIfNeeded];
     [self presentViewController:self.popup animated:NO completion:nil];
@@ -560,6 +569,19 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return UITableViewCellEditingStyleDelete;
+}
+
+#pragma mark - empty set
+
+- (NSAttributedString*) buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIColor* color = self.tableView.tintColor;
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName: color };
+    
+    return [[NSAttributedString alloc] initWithString:l10n(@"New Deck") attributes:attributes];
+}
+
+-(void) emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    [self newDeck:button];
 }
 
 @end

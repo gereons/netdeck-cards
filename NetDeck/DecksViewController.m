@@ -145,6 +145,9 @@ static NRFilter _filterType = NRFilterAll;
     [self.tableView registerNib:[UINib nibWithNibName:@"DeckCell" bundle:nil] forCellReuseIdentifier:@"deckCell"];
     
     [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
+    
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -566,6 +569,29 @@ static NRFilter _filterType = NRFilterAll;
     
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark empty dataset
+
+-(NSAttributedString*) titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:21.0f],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:l10n(@"No Decks") attributes:attributes];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
+{
+   NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:l10n(@"Your decks will be shown here") attributes:attributes];
+}
+
+-(UIColor*) backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
 }
 
 @end

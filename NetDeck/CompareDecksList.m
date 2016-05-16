@@ -159,4 +159,8 @@
     [self.tableView reloadData];
 }
 
+- (NSAttributedString*) buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    return nil;
+}
+
 @end
