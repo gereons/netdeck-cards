@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     [super viewDidAppear:animated];
     
-    BOOL displayedAlert = [CardUpdateCheck checkCardsAvailable:self];
+    BOOL displayedAlert = [CardUpdateCheck checkCardUpdateAvailable:self];
     
     if (!displayedAlert) {
         [AppUpdateCheck checkUpdate];
@@ -198,6 +198,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 -(void)loadCards:(id) sender
 {
     [self.tableView reloadData];
+    
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
+    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
 }
 
 -(void) listDecks:(NSNotification*)sender
@@ -255,17 +259,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 #pragma mark Table view selection
 
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-    return cell.textLabel.enabled ? indexPath : nil;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if (!cell.textLabel.enabled)
     {
+        [self resetDetailView];
         return;
     }
     

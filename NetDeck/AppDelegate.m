@@ -8,9 +8,7 @@
 
 // TODOs:
 
-#warning debug loss of nrdb connection!
 #warning browser: allow all know sets?
-#warning handle empty tables: https://thatthinginswift.com/upgrade-tableview-loading-state/, https://github.com/dzenbot/DZNEmptyDataSet
 
 #warning add missing alliance cards/rules from "the liberated mind"
 #warning sdcalertview: customized visual when PR is merged

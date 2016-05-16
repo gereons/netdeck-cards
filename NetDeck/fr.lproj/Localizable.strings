@@ -33,6 +33,7 @@
 "Corp" = "Corpo";
 
 // menu principal
+"New Deck" = "Nouveau deck";
 "New Runner Deck" = "Nouveau deck Runner";
 "New Corp Deck" = "Nouveau deck Corpo";
 "Load Runner Deck" = "Charger un deck Runner";
@@ -40,6 +41,8 @@
 "Import Decks" = "Importer des decks";
 "Settings" = "Réglages";
 "About" = "Infos";
+"No Decks" = "Aucun deck";
+"Your decks will be shown here" = "Decks seront affichés ici";
 
 // infos
 "About Net Deck %@" = "À propos de Net Deck %@";

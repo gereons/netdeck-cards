@@ -162,7 +162,7 @@
     if ([settings boolForKey:SettingsKeys.USE_NRDB])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction *action) {
-            LOG_EVENT(@"Save NRDB", nil);
+            LOG_EVENT(@"Save to NRDB", nil);
             [self saveToNrdb];
         }]];
     }

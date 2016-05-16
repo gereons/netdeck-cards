@@ -39,6 +39,7 @@
 "Weyland" = "ウェイランド";
 
 // main menu
+"New Deck" = "新規デッキ";
 "New Runner Deck" = "新規ランナーデッキ";
 "New Corp Deck" = "新規コーポデッキ";
 "Load Runner Deck" = "ランナーデッキのロード";
@@ -46,6 +47,9 @@
 "Import Decks" = "デッキのインポート";
 "Settings" = "設定";
 "About" = "詳細情報";
+"No Decks" = "何のデッキません";
+"Your decks will be shown here" = "デッキはここに表示されます";
+
 
 // about
 "About Net Deck %@" = "Net Deck %@ について";

@@ -38,6 +38,7 @@
 "Password" = "Passwort";
 
 // main menu
+"New Deck" = "Neues Deck";
 "New Runner Deck" = "Neues Runner-Deck";
 "New Corp Deck" = "Neues Kon-Deck";
 "Load Runner Deck" = "Runner-Deck laden";
@@ -45,6 +46,8 @@
 "Import Decks" = "Decks importieren";
 "Settings" = "Einstellungen";
 "About" = "Infos";
+"No Decks" = "Keine Decks";
+"Your decks will be shown here" = "Hier werden deine Decks angezeigt";
 
 // about
 "About Net Deck %@" = "Über Net Deck %@";

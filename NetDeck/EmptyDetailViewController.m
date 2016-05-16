@@ -12,18 +12,17 @@
 
 -(void) viewDidLoad
 {
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
+    [super viewDidLoad];
+    
+    self.titleLabel.text = l10n(@"No Card Data");
+    self.textLabel.text = l10n(@"To use this app, you must first download card data.");
+    [self.downloadButton setTitle:l10n(@"Download") forState:UIControlStateNormal];
     
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    [super viewDidLoad];
 }
 
-
-#pragma mark Rotation support
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+-(void) downloadTapped:(id)sender {
+    [DataDownload downloadCardData];
 }
 
 @end

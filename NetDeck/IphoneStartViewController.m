@@ -47,6 +47,9 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
     
+    self.tableView.emptyDataSetDelegate = self;
+    self.tableView.emptyDataSetSource = self;
+    
     self.searchBar.delegate = self;
     
     BOOL cardsAvailable = [CardManager cardsAvailable];
@@ -80,7 +83,7 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [CardUpdateCheck checkCardsAvailable:self];
+    [CardUpdateCheck checkCardUpdateAvailable:self];
 }
 
 -(void) dealloc
@@ -439,6 +442,52 @@
 
 -(void) openBrowser {
     [self titleButtonTapped:nil];
+}
+
+#pragma mark empty dataset
+
+-(NSAttributedString*) titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:21.0f],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor]};
+    
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    NSString* title = cardsAvailable ? @"No Decks" : @"No Card Data";
+    
+    return [[NSAttributedString alloc] initWithString:l10n(title) attributes:attributes];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
+{
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    NSString *text = cardsAvailable ? @"Your decks will be shown here" : @"To use this app, you must first download card data.";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:l10n(text) attributes:attributes];
+}
+
+- (NSAttributedString*) buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIColor* color = self.tableView.tintColor;
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName: color };
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    NSString* text = cardsAvailable ? @"New Deck" : @"Download";
+    return [[NSAttributedString alloc] initWithString:l10n(text) attributes:attributes];
+}
+
+-(UIColor*) backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
+}
+
+-(void) emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    if (cardsAvailable) {
+        [self createNewDeck:nil];
+    } else {
+        [DataDownload downloadCardData];
+    }
 }
 
 @end

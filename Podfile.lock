@@ -19,6 +19,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.10):
     - DTFoundation/Core
+  - DZNEmptyDataSet (1.8)
   - Fabric (1.6.7)
   - InAppSettingsKit (2.7.1)
   - MultiSelectSegmentedControl (1.1.0)
@@ -37,6 +38,7 @@ DEPENDENCIES:
   - Crashlytics
   - CSStickyHeaderFlowLayout
   - DTCoreText
+  - DZNEmptyDataSet
   - Fabric
   - InAppSettingsKit
   - MultiSelectSegmentedControl
@@ -55,6 +57,7 @@ SPEC CHECKSUMS:
   CSStickyHeaderFlowLayout: 5366582779d8b7c9ba9b9cc729c218cc23888776
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
+  DZNEmptyDataSet: d2351b2e8daefa40433ef292e246e21f6be31a7b
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   InAppSettingsKit: 2b9fcdb82cdff2f99c51cae544e9f4df0df7afbf
   MultiSelectSegmentedControl: 54fb23c997b971eff621cfcf965ff1613d99c3d2
@@ -64,6 +67,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: e0d4aa3166082ec07ed942e94edb8c732b3376e4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: e01e417d484add5b6bebba64e15a4f44c469f16d
+PODFILE CHECKSUM: 821961f8ee4da8887b11dd28f4569e99e1c75c28
 
 COCOAPODS: 1.0.0

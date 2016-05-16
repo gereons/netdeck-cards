@@ -6,7 +6,9 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@interface IphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate>
+#import "UIScrollView+EmptyDataSet.h"
+
+@interface IphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
 
 @property IBOutlet UITableViewController* tableViewController;
 @property IBOutlet UITableView* tableView;

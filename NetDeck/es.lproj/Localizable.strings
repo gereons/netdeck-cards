@@ -33,6 +33,7 @@
 
 // main menu
 "Decks" = "Mazos";
+"New Deck" = "Nuevo Mazo";
 "New Runner Deck" = "Nuevo Mazo de Runner";
 "New Corp Deck" = "Nuevo Mazo de Corporación";
 "Load Runner Deck" = "Cargar Mazo de Runner";
@@ -40,6 +41,8 @@
 "Import Decks" = "Importar mazos";
 "Settings" = "Ajustes";
 "About" = "Información";
+"No Decks" = "No Mazos";
+"Your decks will be shown here" = "Sus Mazos se le aparecen aquí";
 
 // about
 "About Net Deck %@" = "Acerca de Net Deck %@";

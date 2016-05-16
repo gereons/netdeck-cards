@@ -8,7 +8,7 @@
 
 class CardUpdateCheck: NSObject {
     
-    class func checkCardsAvailable(vc: UIViewController) -> Bool {
+    class func __checkCardsAvailable(vc: UIViewController) -> Bool {
 
         // check if card data is available at all, and if so, if it maybe needs an update
         if !CardManager.cardsAvailable() || !CardSets.setsAvailable() {
@@ -23,11 +23,11 @@ class CardUpdateCheck: NSObject {
             vc.presentViewController(alert, animated:false, completion:nil)
             return true
         } else {
-            return CardUpdateCheck.checkCardUpdate(vc)
+            return CardUpdateCheck.checkCardUpdateAvailable(vc)
         }
     }
 
-    private class func checkCardUpdate(vc: UIViewController) -> Bool {
+    class func checkCardUpdateAvailable(vc: UIViewController) -> Bool {
         let next = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NEXT_DOWNLOAD)
         
         let fmt = NSDateFormatter()

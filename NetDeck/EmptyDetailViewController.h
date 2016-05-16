@@ -10,4 +10,10 @@
 
 @interface EmptyDetailViewController : UIViewController <SubstitutableDetailViewController>
 
+@property IBOutlet UILabel* titleLabel;
+@property IBOutlet UILabel* textLabel;
+@property IBOutlet UIButton* downloadButton;
+
+-(IBAction)downloadTapped:(id)sender;
+
 @end
