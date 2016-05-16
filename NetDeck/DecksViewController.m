@@ -572,7 +572,6 @@ static NRFilter _filterType = NRFilterAll;
 
 -(NSAttributedString*) titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSLog(@"title for empty");
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:21.0f],
                                  NSForegroundColorAttributeName: [UIColor lightGrayColor]};
     
@@ -590,6 +589,10 @@ static NRFilter _filterType = NRFilterAll;
 
 -(UIColor*) backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor colorWithPatternImage:[ImageCache hexTileLight]];
+}
+
+-(CGFloat) verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -64;
 }
 
 @end
