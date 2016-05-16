@@ -21,6 +21,19 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTileLight]];
+    
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    self.emptyDataSetView.hidden = cardsAvailable;
+    self.spinner.hidden = !cardsAvailable;
+    
+    if (cardsAvailable) {
+        [self.spinner startAnimating];
+    }
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.spinner stopAnimating];
 }
 
 -(void) downloadTapped:(id)sender {

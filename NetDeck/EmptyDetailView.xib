@@ -8,6 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EmptyDetailViewController">
             <connections>
                 <outlet property="downloadButton" destination="k4h-4o-HQR" id="Dgk-fG-zFs"/>
+                <outlet property="emptyDataSetView" destination="6xO-b2-dLs" id="J8d-cJ-gQy"/>
+                <outlet property="spinner" destination="QX4-wh-GC0" id="c4k-7j-590"/>
                 <outlet property="textLabel" destination="ai4-Nu-Wca" id="Gs2-4y-G9h"/>
                 <outlet property="titleLabel" destination="kAg-rR-I2x" id="mcv-ci-euo"/>
                 <outlet property="view" destination="2" id="p9A-lR-bVc"/>
@@ -54,11 +56,17 @@
                         <constraint firstItem="kAg-rR-I2x" firstAttribute="leading" secondItem="6xO-b2-dLs" secondAttribute="leading" constant="8" id="qql-CG-8Cf"/>
                     </constraints>
                 </view>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="QX4-wh-GC0">
+                    <rect key="frame" x="333" y="365" width="37" height="37"/>
+                    <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="6xO-b2-dLs" firstAttribute="centerY" secondItem="2" secondAttribute="centerY" id="KWu-kj-hc3"/>
+                <constraint firstItem="QX4-wh-GC0" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="Pa4-JQ-qxi"/>
                 <constraint firstItem="6xO-b2-dLs" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="cis-pM-106"/>
+                <constraint firstItem="QX4-wh-GC0" firstAttribute="centerY" secondItem="2" secondAttribute="centerY" id="uCb-9B-MOW"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

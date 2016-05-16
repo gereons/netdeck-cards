@@ -10,9 +10,13 @@
 
 @interface EmptyDetailViewController : UIViewController <SubstitutableDetailViewController>
 
+@property IBOutlet UIView* emptyDataSetView;
+
 @property IBOutlet UILabel* titleLabel;
 @property IBOutlet UILabel* textLabel;
 @property IBOutlet UIButton* downloadButton;
+
+@property IBOutlet UIActivityIndicatorView* spinner;
 
 -(IBAction)downloadTapped:(id)sender;
 

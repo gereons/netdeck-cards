@@ -47,18 +47,18 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
--(void) viewDidAppear:(BOOL)animated
+-(void) viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     
     NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck %@"), [AppDelegate appVersion]];
     if (IS_IPHONE)
     {
         title = [NSString stringWithFormat:l10n(@"Net Deck %@"), [AppDelegate appVersion]];
     }
-    self.navigationController.navigationBar.topItem.title = title;
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    topItem.title = title;
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Feedback" style:UIBarButtonItemStylePlain target:self action:@selector(leaveFeedback:)];
 }
 

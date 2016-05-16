@@ -164,17 +164,14 @@ static NRFilter _filterType = NRFilterAll;
     
     self.sortType = [settings integerForKey:SettingsKeys.DECK_FILTER_SORT];
     [self.sortButton setTitle:[NSString stringWithFormat:@"%@ ▾", sortStr[@(self.sortType)]]];
-}
-
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
+    
     [self updateDecks];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
 }
+
 
 -(void) viewDidDisappear:(BOOL)animated
 {
@@ -575,6 +572,7 @@ static NRFilter _filterType = NRFilterAll;
 
 -(NSAttributedString*) titleForEmptyDataSet:(UIScrollView *)scrollView
 {
+    NSLog(@"title for empty");
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:21.0f],
                                  NSForegroundColorAttributeName: [UIColor lightGrayColor]};
     
