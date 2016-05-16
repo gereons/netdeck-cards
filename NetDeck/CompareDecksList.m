@@ -95,7 +95,8 @@
         // cell.accessoryType = UITableViewCellAccessoryCheckmark;
         cell.infoButton.hidden = NO;
         cell.infoButton.userInteractionEnabled = NO;
-        [cell.infoButton setImage:[UIImage imageNamed:@"888-checkmark-selected"] forState:UIControlStateNormal];
+        UIImage* img = [[UIImage imageNamed:@"888-checkmark-selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [cell.infoButton setImage:img forState:UIControlStateNormal];
     }
     
     return cell;

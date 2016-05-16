@@ -500,7 +500,8 @@
         case NRDeckStateTesting: icon = @"testing";
             break;
     }
-    [cell.infoButton setImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
+    UIImage* img = [[UIImage imageNamed:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [cell.infoButton setImage:img forState:UIControlStateNormal];
 
     if ([self.diffDeck isEqualToString:deck.filename])
     {
