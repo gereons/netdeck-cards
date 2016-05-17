@@ -10,10 +10,10 @@ import Foundation
 
 @objc(DeckChange) class DeckChange: NSObject, NSCoding {
     private(set) var code: String
-    private(set) var count: Int = 0
+    private(set) var count: Int
     
     init(code: String, count: Int) {
-        assert(count != 0, "count can't be 0")
+        // assert(count != 0, "count can't be 0")
         self.code = code
         self.count = count
     }

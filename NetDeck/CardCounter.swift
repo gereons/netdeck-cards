@@ -12,11 +12,11 @@ import Foundation
     private(set) var card: Card
     var count: Int
     
-    private static let nullInstance = CardCounter(card: Card.null(), andCount: 0)
+    private static let nullInstance = CardCounter(card: Card.null(), count: 0)
     
-    init(card: Card, andCount: Int) {
+    init(card: Card, count: Int) {
         self.card = card
-        self.count = andCount
+        self.count = count
     }
     
     class func null() -> CardCounter {
@@ -33,7 +33,7 @@ import Foundation
         let count = aDecoder.decodeIntegerForKey("count")
         let card = CardManager.cardByCode(code) ?? Card.null()
         
-        self.init(card: card, andCount: card.isNull ? 0 : count)
+        self.init(card: card, count: card.isNull ? 0 : count)
     }
     
     func encodeWithCoder(aCoder: NSCoder) {

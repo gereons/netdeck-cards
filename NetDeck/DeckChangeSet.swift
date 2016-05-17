@@ -10,15 +10,9 @@ import Foundation
 
 @objc(DeckChangeSet) class DeckChangeSet: NSObject, NSCoding {
     var timestamp: NSDate?
-    var changes: [DeckChange]
-    var initial: Bool
-    var cards: [String: Int]? // code -> qty
-    
-    override init() {
-        self.changes = [DeckChange]()
-        self.initial = false
-        self.cards = nil
-    }
+    var changes = [DeckChange]()
+    var initial: Bool = false
+    var cards: [String: Int]?       // code -> qty
     
     func addCardCode(code: String, copies:Int) {
         assert(copies != 0, "changing 0 copies?")

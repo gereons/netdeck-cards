@@ -103,7 +103,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
                 var ccs = [CardCounter]()
                 for dc in dcs.changes {
                     if let card = dc.card {
-                        let cc = CardCounter(card: card, andCount: dc.count)
+                        let cc = CardCounter(card: card, count: dc.count)
                         ccs.append(cc)
                     }
                 }

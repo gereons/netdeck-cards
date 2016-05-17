@@ -23,17 +23,16 @@ import Foundation
     
     private var sortType: NRDeckSort = .Type
     private var lastChanges = DeckChangeSet()
-
+    
     override init() {
         self.state = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.CREATE_DECK_ACTIVE) ? NRDeckState.Active : NRDeckState.Testing
     }
     
     var allCards: [CardCounter] {
-        var all = [CardCounter]()
+        var all = self.cards
         if let id = self.identityCc {
-            all.append(id)
+            all.insert(id, atIndex: 0)
         }
-        all.appendContentsOf(cards)
         return all
     }
     
@@ -62,31 +61,15 @@ import Foundation
     }
     
     var size: Int {
-        var sz = 0
-        for cc in cards {
-            sz += cc.count
-        }
-        return sz
+        return cards.reduce(0) { $0 + $1.count }
     }
     
     var agendaPoints: Int {
-        var ap = 0
-        for cc in cards {
-            if cc.card.type == .Agenda {
-                ap += cc.card.agendaPoints * cc.count
-            }
-        }
-        return ap
+        return cards.filter({ $0.card.type == .Agenda}).reduce(0) { $0 + $1.card.agendaPoints * $1.count }
     }
     
     var influence: Int {
-        var inf = 0
-        for cc in cards {
-            if cc.card.faction != self.identity?.faction && cc.card.influence != -1 {
-                inf += self.influenceFor(cc)
-            }
-        }
-        return inf
+        return cards.filter( { $0.card.faction != self.identity?.faction && $0.card.influence != -1 }).reduce(0) { $0 + self.influenceFor($1) }
     }
     
     var influenceLimit: Int {
@@ -104,13 +87,7 @@ import Foundation
     
     /// how many cards in this deck are on the MWL?
     var cardsFromMWL: Int {
-        var mwl = 0
-        for cc in cards {
-            if cc.card.isMostWanted {
-                mwl += cc.count
-            }
-        }
-        return mwl
+        return cards.filter({ $0.card.isMostWanted }).reduce(0) { $0 + $1.count }
     }
     
     /// what's the influence penalty incurred through MWL cards?
@@ -185,13 +162,7 @@ import Foundation
     }
     
     func typeCount(type: NRCardType) -> Int {
-        var count = 0
-        for cc in cards {
-            if cc.card.type == type {
-                count += cc.count
-            }
-        }
-        return count
+        return cards.filter({ $0.card.type == type}).reduce(0) { $0 + $1.count }
     }
     
     func addCard(card: Card, copies: Int) {
@@ -235,7 +206,7 @@ import Foundation
             // add a new card
             assert(copies > 0, "removing a card that isn't in deck")
             copies = min(copies, card.maxPerDeck)
-            let cc = CardCounter(card: card, andCount: copies)
+            let cc = CardCounter(card: card, count: copies)
             cards.append(cc)
             changed = true
         }
@@ -260,7 +231,7 @@ import Foundation
                 self.lastChanges.addCardCode(id.code, copies: 1)
             }
             
-            self.identityCc = CardCounter(card: id, andCount: 1)
+            self.identityCc = CardCounter(card: id, count: 1)
             if self.role != .None {
                 assert(self.role == id.role, "role mismatch")
             }
@@ -392,7 +363,7 @@ import Foundation
         
         newDeck.name = newName
         if (self.identityCc != nil) {
-            newDeck.identityCc = CardCounter(card: self.identity!, andCount: 1)
+            newDeck.identityCc = CardCounter(card: self.identity!, count: 1)
         }
         newDeck.isDraft = self.isDraft
         newDeck.cards = self.cards
@@ -434,7 +405,7 @@ import Foundation
             let card = CardManager.cardByCode(code)
             
             if card?.type != .Identity {
-                let cc = CardCounter(card: card!, andCount: qty)
+                let cc = CardCounter(card: card!, count: qty)
                 newCards.append(cc)
             } else {
                 assert(newIdentity == nil, "new identity already set")
@@ -569,7 +540,7 @@ import Foundation
         self.isDraft = decoder.decodeBoolForKey("draft")
         if let identityCode = decoder.decodeObjectForKey("identity") as? String {
             if let identity = CardManager.cardByCode(identityCode) {
-                self.identityCc = CardCounter(card:identity, andCount:1)
+                self.identityCc = CardCounter(card:identity, count:1)
             }
         }
         self.lastModified = nil
@@ -579,7 +550,7 @@ import Foundation
         
         let lastChanges = decoder.decodeObjectForKey("lastChanges") as? DeckChangeSet
         self.lastChanges = lastChanges ?? DeckChangeSet()
-            
+
         let revisions = decoder.decodeObjectForKey("revisions") as? [DeckChangeSet]
         self.revisions = revisions ?? [DeckChangeSet]()
 
