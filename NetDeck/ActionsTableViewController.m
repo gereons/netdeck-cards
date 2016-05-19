@@ -199,10 +199,17 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     [self.tableView reloadData];
 
-#warning do this only when loading from the empty screen!
-//    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
-//    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-//    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+    id delegate = self.splitViewController.delegate;
+    if ([delegate isKindOfClass:[DetailViewManager class]]) {
+        DetailViewManager* manager = (DetailViewManager*)delegate;
+        UIViewController* detail = manager.detailViewController;
+        
+        if ([detail.childViewControllers.firstObject isKindOfClass:[EmptyDetailViewController class]]) {
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
+            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+        }
+    }
 }
 
 -(void) listDecks:(NSNotification*)sender
