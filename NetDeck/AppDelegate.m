@@ -10,9 +10,6 @@
 
 #warning browser: allow all know sets?
 
-#warning add missing alliance cards/rules from "the liberated mind"
-#warning sdcalertview: customized visual when PR is merged
-
 #warning improve startup time
 
 #warning make TableData type-safe (ie, rewrite all users in Swift)

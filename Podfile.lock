@@ -19,11 +19,11 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.10):
     - DTFoundation/Core
-  - DZNEmptyDataSet (1.8)
+  - DZNEmptyDataSet (1.8.1)
   - Fabric (1.6.7)
   - InAppSettingsKit (2.7.1)
   - MultiSelectSegmentedControl (1.1.0)
-  - SDCAlertView (5.0)
+  - SDCAlertView (5.1)
   - SVProgressHUD (2.0.3)
   - SwiftKeychainWrapper (1.0.11)
   - SwiftyDropbox (3.0.0):
@@ -57,11 +57,11 @@ SPEC CHECKSUMS:
   CSStickyHeaderFlowLayout: 5366582779d8b7c9ba9b9cc729c218cc23888776
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
-  DZNEmptyDataSet: d2351b2e8daefa40433ef292e246e21f6be31a7b
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   InAppSettingsKit: 2b9fcdb82cdff2f99c51cae544e9f4df0df7afbf
   MultiSelectSegmentedControl: 54fb23c997b971eff621cfcf965ff1613d99c3d2
-  SDCAlertView: e552dd803a1ea47ffda9f718b046e307cfd6b82a
+  SDCAlertView: 0aaa3feb542c2f28784d9c9a8573c4b7459ed404
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftKeychainWrapper: 011a6946923948ffa49708014dd691164d7621d1
   SwiftyDropbox: e0d4aa3166082ec07ed942e94edb8c732b3376e4

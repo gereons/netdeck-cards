@@ -31,7 +31,7 @@ class DataDownload: NSObject {
     
     static private let instance = DataDownload()
     
-    private var alert: AlertController?
+    private var sdcAlert: AlertController?
     private var progressView: UIProgressView?
     private var downloadStopped = false
     private var downloadErrors = 0
@@ -59,7 +59,8 @@ class DataDownload: NSObject {
 
     private func showDownloadAlert() {
         let alert = AlertController(title: "Downloading Card Data".localized(), message:nil, preferredStyle:.Alert)
-        self.alert = alert
+        alert.visualStyle = CustomAlertVisualStyle(alertStyle: .Alert)
+        self.sdcAlert = alert
         
         let act = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
         act.startAnimating()
@@ -164,7 +165,7 @@ class DataDownload: NSObject {
         self.englishCards = nil
         self.localizedSets = nil
         
-        if let alert = self.alert {
+        if let alert = self.sdcAlert {
             alert.dismiss(animated:false) {
                 if self.downloadStopped {
                     return
@@ -179,7 +180,7 @@ class DataDownload: NSObject {
             }
         }
         
-        self.alert = nil
+        self.sdcAlert = nil
     }
     
     // MARK: - image download
@@ -218,7 +219,7 @@ class DataDownload: NSObject {
         
         let msg = String(format:"Image %d of %d".localized(), 1, self.cards.count)
         let alert = AlertController(title: "Downloading Images".localized(), message:nil, preferredStyle: .Alert)
-        self.alert = alert
+        self.sdcAlert = alert
         
         let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFontOfSize(12, weight: UIFontWeightRegular) ]
         alert.attributedMessage = NSAttributedString(string: msg, attributes: attrs)
@@ -259,7 +260,7 @@ class DataDownload: NSObject {
                     self.progressView?.progress = progress
                     let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFontOfSize(12, weight: UIFontWeightRegular) ]
                     let msg = String(format: "Image %d of %d".localized(), index+1, self.cards.count)
-                    self.alert?.attributedMessage = NSAttributedString(string:msg, attributes:attrs)
+                    self.sdcAlert?.attributedMessage = NSAttributedString(string:msg, attributes:attrs)
                 }
                 
                 self.downloadImageForCard(index+1, scope: scope)
@@ -272,9 +273,9 @@ class DataDownload: NSObject {
             }
         } else {
             dispatch_async(dispatch_get_main_queue()) {
-                self.alert?.dismiss(animated:false, completion:nil)
+                self.sdcAlert?.dismiss(animated:false, completion:nil)
                 self.progressView = nil
-                self.alert = nil
+                self.sdcAlert = nil
                 if self.downloadErrors > 0 {
                     let msg = String(format:"%d of %d images could not be downloaded.".localized(),
                                      self.downloadErrors, self.cards.count)
@@ -292,7 +293,7 @@ class DataDownload: NSObject {
     private func stopDownload() {
         self.downloadStopped = true
         self.progressView = nil
-        self.alert = nil
+        self.sdcAlert = nil
     }
 
     // MARK: - api checker

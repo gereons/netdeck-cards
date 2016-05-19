@@ -233,6 +233,7 @@ class DeckImport: NSObject {
     func downloadDeck(source: DeckSource) {
         
         let alert = AlertController(title: "Downloading Deck".localized(), message: nil, preferredStyle: .Alert)
+        alert.visualStyle = CustomAlertVisualStyle(alertStyle: .Alert)
         self.sdcAlert = alert
         
         let spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

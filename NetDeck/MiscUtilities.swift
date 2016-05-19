@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SDCAlertView
 
 extension String {
     func localized() -> String {
@@ -66,6 +67,13 @@ extension NSRange {
         let end = start.advancedBy(self.length)
         // return Range<String.Index>(start: start, end: end)
         return start ..< end
+    }
+}
+
+class CustomAlertVisualStyle: AlertVisualStyle {
+    override init(alertStyle: AlertControllerStyle) {
+        super.init(alertStyle: alertStyle)
+        self.backgroundColor = UIColor.whiteColor()
     }
 }
 
