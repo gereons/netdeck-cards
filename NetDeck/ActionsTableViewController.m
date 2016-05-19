@@ -198,10 +198,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 -(void)loadCards:(id) sender
 {
     [self.tableView reloadData];
-    
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
-    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+
+#warning do this only when loading from the empty screen!
+//    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:NRMenuDecks inSection:0];
+//    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+//    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
 }
 
 -(void) listDecks:(NSNotification*)sender
