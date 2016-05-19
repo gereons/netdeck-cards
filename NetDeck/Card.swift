@@ -32,12 +32,13 @@ import SwiftyJSON
     static let SALEMS_HOSPITALITY       = "10071"    // 0 inf if >= 6 non-alliance NBN cards in deck
     static let IBRAHIM_SALEM            = "10109"    // 0 inf if >= 6 non-alliance NBN cards in deck
     static let EXECUTIVE_SEARCH_FIRM    = "10072"    // 0 inf if >= 6 non-alliance Weyland cards in deck
+    static let CONSULTING_VISIT         = "10094"    // 0 inf if >= 6 non-alliance Weyland cards in deck
 
     static let ALLIANCE_6 = Set<String>([
         PRODUCT_RECALL, JEEVES_MODEL_BIOROID,
         RAMAN_RAI, HERITAGE_COMMITTEE,
         SALEMS_HOSPITALITY, IBRAHIM_SALEM,
-        EXECUTIVE_SEARCH_FIRM ])
+        EXECUTIVE_SEARCH_FIRM, CONSULTING_VISIT ])
     
     static let PAD_CAMPAIGN             = "01109"    // needed for pad factory
     
