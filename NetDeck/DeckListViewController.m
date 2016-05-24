@@ -1475,7 +1475,8 @@
     
     UISimpleTextPrintFormatter *formatter = [[UISimpleTextPrintFormatter alloc] initWithText:[DeckExport asPlaintextString:self.deck]];
     formatter.startPage = 0;
-    formatter.contentInsets = UIEdgeInsetsMake(72.0, 72.0, 72.0, 72.0); // 1 inch margins
+    formatter.contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0); // no margins
+    formatter.font = [UIFont systemFontOfSize:10];
     self.printController.printFormatter = formatter;
     self.printController.showsPageRange = YES;
     

@@ -108,7 +108,9 @@ enum ExportFormat {
         
         var s = (deck.name ?? "") + eol + eol
         if let identity = deck.identity {
-            s += identity.name + " " + self.italics("(" + identity.setName + ")", fmt) + eol
+            s += identity.name
+            s += " " + self.italics("(" + identity.setName + ")", fmt)
+            s += eol
         }
         
         let useMWL = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_NAPD_MWL)
@@ -126,13 +128,15 @@ enum ExportFormat {
             s += eol + self.bold(sections[i], fmt) + " (\(cnt))" + eol
             
             for cc in cards {
-                s += "\(cc.count)x " + cc.card.name + " " + self.italics("(" + cc.card.setName + ")", fmt)
+                s += "\(cc.count)x " + cc.card.name
+                s += " " + self.italics("(" + cc.card.setName + ")", fmt)
+
                 let inf = deck.influenceFor(cc)
                 if inf > 0 {
                     s += " " + self.color(self.dots(inf), cc.card.factionHexColor, fmt)
                 }
                 if useMWL && cc.card.isMostWanted {
-                    s += " (MWL)"
+                    s += " " + self.color(self.stars(cc.count), cc.card.factionHexColor, fmt)
                 }
                 s += eol
             }
@@ -140,17 +144,16 @@ enum ExportFormat {
         
         s += eol
         let deckSize: Int = deck.identity?.minimumDecksize ?? 0
-        s += "Cards in deck: \(deck.size) (min \(deckSize))" + eol
-        if useMWL {
+        s += "\(deck.size) cards (minimum \(deckSize))" + eol
+        if useMWL && deck.mwlPenalty > 0 {
             let limit = deck.identity?.influenceLimit ?? 0
-            s += "\(deck.influence)/\(deck.influenceLimit) (=\(limit)-\(deck.mwlPenalty)) influence used" + eol
-            s += "\(deck.cardsFromMWL) cards from MWL" + eol
+            s += "\(deck.influence)/\(deck.influenceLimit) (=\(limit)-\(deck.mwlPenalty)☆) influence used" + eol
         } else {
             s += "\(deck.influence)/\(deck.influenceLimit) influence used" + eol
         }
         
         if deck.identity?.role == .Corp {
-            s += "Agenda Points: \(deck.agendaPoints)" + eol
+            s += "\(deck.agendaPoints) agenda points" + eol
         }
         let set = CardSets.mostRecentSetUsedInDeck(deck)
         s += "Cards up to \(set)" + eol
@@ -161,17 +164,28 @@ enum ExportFormat {
             s += eol + notes + eol
         }
         
-        s += eol + self.localUrlForDeck(deck) + eol
+        s += self.localUrlForDeck(deck) + eol
         
+        print("---")
+        print(s)
+        print("---")
         return s;
     }
     
-    class func dots(influence: Int) -> String {
+    class func stars(count: Int) -> String {
+        return nTimes("☆", count)
+    }
+    
+    class func dots(count: Int) -> String {
+        return nTimes("·", count)
+    }
+    
+    class func nTimes(str: String, _ count: Int) -> String {
         var s = ""
         
-        for i in 0..<influence {
-            s += "·"
-            if (i+1)%5 == 0 && i < influence-1 {
+        for i in 0..<count {
+            s += str
+            if (i+1)%5 == 0 && i < count-1 {
                 s += " "
             }
         }
@@ -223,8 +237,7 @@ enum ExportFormat {
     
     class func color(s: String, _ color: UInt, _ format: ExportFormat) -> String {
         switch format {
-        case .PlainText,
-        .Markdown: return s
+        case .PlainText, .Markdown: return s
         case .BBCode: return "[color=#\(color)]" + s + "[/color]"
         }
     }
@@ -233,7 +246,7 @@ enum ExportFormat {
         switch format {
         case .PlainText: return s + " " + target
         case .Markdown: return "[\(s)](\(target))"
-        case .BBCode: return "[b]" + s + "[/b]"
+        case .BBCode: return "[url=\(target)]" + s + "[/url]"
         }
     }
 

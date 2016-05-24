@@ -102,6 +102,7 @@ class DeckImport: NSObject {
         if let alert = self.uiAlert {
             alert.addAction(UIAlertAction(title:"No".localized(), style: .Cancel, handler: nil))
             alert.addAction(UIAlertAction(title:"Yes".localized(), style: .Default) { (UIAlertAction) -> Void in
+                Analytics.logEvent("Import from Clipboard", attributes: nil)
                 if self.deck != nil {
                     NSNotificationCenter.defaultCenter().postNotificationName(Notifications.IMPORT_DECK, object:self, userInfo:["deck": self.deck!])
                 }
@@ -110,7 +111,6 @@ class DeckImport: NSObject {
                 }
                 self.deck = nil
                 self.deckSource = nil
-        
             })
             
             alert.show()
@@ -380,6 +380,7 @@ class DeckImport: NSObject {
     }
 
     class func importDeckFromLocalUrl(url: NSURL) {
+        Analytics.logEvent("Import from URL", attributes: nil)
         let path = url.path!
         let b64 = path.substringFromIndex(path.startIndex.advancedBy(1)) // strip off the leading "/" character
         let data = NSData(base64EncodedString: b64, options: [])

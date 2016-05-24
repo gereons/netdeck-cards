@@ -9,7 +9,8 @@
 // TODOs:
 
 #warning browser: allow all know sets?
-
+#warning use icon font for special symbols, including rendererd html text
+#warning prepare for nrdb api changes?
 #warning improve startup time
 
 #warning make TableData type-safe (ie, rewrite all users in Swift)
