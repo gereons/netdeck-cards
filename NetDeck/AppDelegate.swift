@@ -10,6 +10,16 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
+/*
+ TODOs
+ browser: allow all know sets?
+ use icon font for special symbols, including rendererd html text
+ prepare for nrdb api changes?
+ improve startup time
+ make TableData type-safe (ie, rewrite all users in Swift)
+*/
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var window: UIWindow?
@@ -25,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         if BuildConfig.useCrashlytics {
-            Analytics.enableAnswers = true
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self]);
         }
@@ -63,7 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         SVProgressHUD.setDefaultMaskType(.Black)
         SVProgressHUD.setMinimumDismissTimeInterval(2.0)
         
-        FIXME("do we have to start this here?")
         CardImageViewPopover.monitorKeyboard()
         
         // just so the initializer gets called
@@ -73,12 +81,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        if (Device.isIphone)
-        {
+        if (Device.isIphone) {
             self.window!.rootViewController = self.navigationController
-        }
-        else
-        {
+        } else {
             self.window!.rootViewController = self.splitViewController
         }
         self.window!.makeKeyAndVisible()
@@ -174,70 +179,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         NSUserDefaults.standardUserDefaults().registerDefaults(defaults)
     }
     
-    func logStartup() {
-        let settings = NSUserDefaults.standardUserDefaults()
-        
-        let cardLanguage = settings.stringForKey(SettingsKeys.LANGUAGE) ?? ""
-        let appLanguage = NSLocale.preferredLanguages().first ?? ""
-        let languageComponents = NSLocale.componentsFromLocaleIdentifier(appLanguage)
-        let languageFromComponents = languageComponents[NSLocaleLanguageCode] ?? ""
-        let attrs = [
-            "cardLanguage": cardLanguage,
-            "appLanguage": appLanguage,
-            "Language": cardLanguage + "/" + languageFromComponents,
-            "useNrdb": settings.boolForKey(SettingsKeys.USE_NRDB) ? "on" : "off",
-            "useDropbox": settings.boolForKey(SettingsKeys.USE_DROPBOX) ? "on" : "off",
-            "device": UIDevice.currentDevice().model,
-            "os": UIDevice.currentDevice().systemVersion
-        ]
-        Analytics.logEvent("Start", attributes: attrs)
-    }
-    
-    func moveFilesFromCacheToAppSupportDirectory() {
-        let settings = NSUserDefaults.standardUserDefaults()
-        if settings.boolForKey(SettingsKeys.FILES_MOVED) {
-            return
-        }
-        
-        Analytics.logEvent("MoveCache", attributes: nil)
-        
-        guard
-            let cacheDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first,
-            let supportDir = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true).first
-            else { return }
-        
-        let fileMgr = NSFileManager.defaultManager()
-        let files = [ CardManager.localCardsFilename, CardManager.englishCardsFilename, CardSets.setsFilename, ImageCache.imagesDirectory ]
-        for file in files {
-            let cachePath = cacheDir.stringByAppendingPathComponent(file)
-            var isDirectory: ObjCBool = false
-            if fileMgr.fileExistsAtPath(cachePath, isDirectory:&isDirectory) {
-                let supportPath = supportDir.stringByAppendingPathComponent(file)
-                
-                do {
-                    try fileMgr.moveItemAtPath(cachePath, toPath:supportPath)
-                } catch let error {
-                    NSLog("move error=\(error)")
-                }
-                
-                if !isDirectory {
-                    AppDelegate.excludeFromBackup(supportPath)
-                }
-            }
-        }
-        
-        let imagesDir = supportDir.stringByAppendingPathComponent(ImageCache.imagesDirectory)
-        if let images = try? fileMgr.contentsOfDirectoryAtPath(imagesDir) {
-            for img in images {
-                let pathname = imagesDir.stringByAppendingPathComponent(img)
-                AppDelegate.excludeFromBackup(pathname)
-            }
-        }
-        
-        settings.setBool(true, forKey:SettingsKeys.FILES_MOVED)
-    }
-
-    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -292,6 +233,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         }
         
         return false
+    }
+    
+    private func logStartup() {
+        let settings = NSUserDefaults.standardUserDefaults()
+        
+        let cardLanguage = settings.stringForKey(SettingsKeys.LANGUAGE) ?? ""
+        let appLanguage = NSLocale.preferredLanguages().first ?? ""
+        let languageComponents = NSLocale.componentsFromLocaleIdentifier(appLanguage)
+        let languageFromComponents = languageComponents[NSLocaleLanguageCode] ?? ""
+        let attrs = [
+            "cardLanguage": cardLanguage,
+            "appLanguage": appLanguage,
+            "Language": cardLanguage + "/" + languageFromComponents,
+            "useNrdb": settings.boolForKey(SettingsKeys.USE_NRDB) ? "on" : "off",
+            "useDropbox": settings.boolForKey(SettingsKeys.USE_DROPBOX) ? "on" : "off",
+            "device": UIDevice.currentDevice().model,
+            "os": UIDevice.currentDevice().systemVersion
+        ]
+        Analytics.logEvent("Start", attributes: attrs)
     }
     
     class func appVersion() -> String {
@@ -358,5 +318,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         })
         
         self.window?.rootViewController?.presentViewController(alert, animated:false, completion:nil)
+    }
+    
+    // MARK: - files migration
+    func moveFilesFromCacheToAppSupportDirectory() {
+        let settings = NSUserDefaults.standardUserDefaults()
+        if settings.boolForKey(SettingsKeys.FILES_MOVED) {
+            return
+        }
+        
+        guard
+            let cacheDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first,
+            let supportDir = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true).first
+            else { return }
+        
+        var movedFiles = 0
+        let fileMgr = NSFileManager.defaultManager()
+        let files = [ CardManager.localCardsFilename, CardManager.englishCardsFilename, CardSets.setsFilename, ImageCache.imagesDirectory ]
+        for file in files {
+            let cachePath = cacheDir.stringByAppendingPathComponent(file)
+            var isDirectory: ObjCBool = false
+            if fileMgr.fileExistsAtPath(cachePath, isDirectory:&isDirectory) {
+                let supportPath = supportDir.stringByAppendingPathComponent(file)
+                
+                do {
+                    movedFiles += 1
+                    try fileMgr.moveItemAtPath(cachePath, toPath:supportPath)
+                } catch let error {
+                    NSLog("move error=\(error)")
+                }
+                
+                if !isDirectory {
+                    AppDelegate.excludeFromBackup(supportPath)
+                }
+            }
+        }
+        
+        let imagesDir = supportDir.stringByAppendingPathComponent(ImageCache.imagesDirectory)
+        if let images = try? fileMgr.contentsOfDirectoryAtPath(imagesDir) {
+            for img in images {
+                let pathname = imagesDir.stringByAppendingPathComponent(img)
+                AppDelegate.excludeFromBackup(pathname)
+                movedFiles += 1
+            }
+        }
+        
+        if movedFiles > 0 {
+            Analytics.logEvent("Migrated files", attributes: [ "count": movedFiles ])
+        }
+        
+        settings.setBool(true, forKey:SettingsKeys.FILES_MOVED)
     }
 }

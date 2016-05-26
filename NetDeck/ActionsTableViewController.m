@@ -6,7 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "AppDelegate.h"
 #import "ActionsTableViewController.h"
 #import "EmptyDetailViewController.h"
 #import "DetailViewManager.h"

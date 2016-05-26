@@ -8,7 +8,6 @@
 
 @import SVProgressHUD;
 
-#import "AppDelegate.h"
 #import "SettingsViewController.h"
 #import "IASKAppSettingsViewController.h"
 #import "IASKSettingsReader.h"
@@ -46,11 +45,11 @@
     {
         [hiddenKeys addObjectsFromArray:@[ @"sets_hide_1", @"sets_hide_2" ]];
     }
-    if (IS_IPHONE)
+    if (Device.isIphone)
     {
         [hiddenKeys addObjectsFromArray:@[ SettingsKeys.AUTO_HISTORY, SettingsKeys.CREATE_DECK_ACTIVE ]];
     }
-    if (IS_IPAD)
+    if (Device.isIpad)
     {
         [hiddenKeys addObjectsFromArray:@[ @"about_hide_1", @"about_hide_2" ]];
     }
@@ -149,7 +148,7 @@
         return;
     }
     
-    if (IS_IPAD) {
+    if (Device.isIpad) {
         UIViewController* topMost = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         [NRDBAuthPopupViewController showInViewController:topMost];
     } else {

@@ -39,8 +39,6 @@
 		3A3622641849320C007F2854 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622631849320C007F2854 /* CoreGraphics.framework */; };
 		3A3622661849320C007F2854 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622651849320C007F2854 /* UIKit.framework */; };
 		3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A36226A1849320C007F2854 /* InfoPlist.strings */; };
-		3A36226E1849320C007F2854 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36226D1849320C007F2854 /* main.m */; };
-		3A3622721849320C007F2854 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3622711849320C007F2854 /* AppDelegate.m */; };
 		3A36227D1849320C007F2854 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A36227C1849320C007F2854 /* Images.xcassets */; };
 		3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */; };
 		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
@@ -223,7 +221,6 @@
 		3A1777DC1967EA0B0066E095 /* NRDBAuthPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRDBAuthPopupViewController.h; sourceTree = "<group>"; };
 		3A1777DD1967EA0B0066E095 /* NRDBAuthPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRDBAuthPopupViewController.m; sourceTree = "<group>"; };
 		3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NRDBAuthPopupViewController.xib; sourceTree = "<group>"; };
-		3A1777E11967F7E50066E095 /* NRDBAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NRDBAuth.h; sourceTree = "<group>"; };
 		3A1855F01A8E27EF00A1852D /* SetSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectionViewController.h; sourceTree = "<group>"; };
 		3A1855F11A8E27EF00A1852D /* SetSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectionViewController.m; sourceTree = "<group>"; };
 		3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionViewController.xib; sourceTree = "<group>"; };
@@ -251,10 +248,7 @@
 		3A3622651849320C007F2854 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A3622691849320C007F2854 /* NetDeck-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetDeck-Info.plist"; sourceTree = "<group>"; };
 		3A36226B1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A36226D1849320C007F2854 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A36226F1849320C007F2854 /* NetDeck-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NetDeck-Prefix.pch"; sourceTree = "<group>"; };
-		3A3622701849320C007F2854 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A3622711849320C007F2854 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A36227C1849320C007F2854 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3A3622831849320C007F2854 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3A36228B1849320C007F2854 /* NetDeckTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetDeckTests-Info.plist"; sourceTree = "<group>"; };
@@ -557,8 +551,6 @@
 			children = (
 				3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */,
 				3A9795351CF63EE100479ADF /* AppDelegate.swift */,
-				3A3622701849320C007F2854 /* AppDelegate.h */,
-				3A3622711849320C007F2854 /* AppDelegate.m */,
 				3A2F4ADB1C8C716400B711BD /* ImageCache.swift */,
 				3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */,
 				3A3BDD9E1930F36E00DEFD57 /* Utility Classes / Headers */,
@@ -590,7 +582,6 @@
 				3A095E8D18BBC49C00C99FED /* Localizable.strings */,
 				3A3622691849320C007F2854 /* NetDeck-Info.plist */,
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
-				3A36226D1849320C007F2854 /* main.m */,
 				3A36226F1849320C007F2854 /* NetDeck-Prefix.pch */,
 				3A904FCB1BF73722001C075A /* NetDeck-Bridging-Header.h */,
 			);
@@ -838,7 +829,6 @@
 			children = (
 				3A733B991C8DF801005B1F9B /* NRDB.swift */,
 				3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */,
-				3A1777E11967F7E50066E095 /* NRDBAuth.h */,
 				3A1777DC1967EA0B0066E095 /* NRDBAuthPopupViewController.h */,
 				3A1777DD1967EA0B0066E095 /* NRDBAuthPopupViewController.m */,
 				3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */,
@@ -1300,7 +1290,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */,
-				3A3622721849320C007F2854 /* AppDelegate.m in Sources */,
 				3AA8EC2C1CC3AA8200370A26 /* DeckHistorySectionHeaderView.swift in Sources */,
 				3A18B2561B8B7C650065EC4A /* FilterViewController.m in Sources */,
 				3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */,
@@ -1370,7 +1359,6 @@
 				3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */,
 				3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */,
 				3AAE4C4B1CA7105A0039F822 /* Analytics.swift in Sources */,
-				3A36226E1849320C007F2854 /* main.m in Sources */,
 				3A3AA9A91CE13011003F21EE /* DebugTimer.swift in Sources */,
 				3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */,
 				3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */,

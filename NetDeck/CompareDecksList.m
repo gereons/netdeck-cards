@@ -153,7 +153,7 @@
             break;
         case 2:
             self.footerLabel.text = [NSString stringWithFormat:l10n(@"Selected ‘%@’ and ‘%@’, tap to compare"), self.names[0], self.names[1]];
-            self.footerLabel.textColor = UIColorFromRGB(0x007aff);
+            self.footerLabel.textColor = [UIColor colorWithRGB:0x007aff];
             break;
     }
     

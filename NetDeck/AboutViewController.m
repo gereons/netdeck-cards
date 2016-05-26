@@ -7,7 +7,6 @@
 //
 
 #import "AboutViewController.h"
-#import "AppDelegate.h"
 
 @interface AboutViewController ()
 @property MFMailComposeViewController *mailer;
@@ -52,7 +51,7 @@
     [super viewWillAppear:animated];
     
     NSString* title = [NSString stringWithFormat:l10n(@"About Net Deck %@"), [AppDelegate appVersion]];
-    if (IS_IPHONE)
+    if (Device.isIphone)
     {
         title = [NSString stringWithFormat:l10n(@"Net Deck %@"), [AppDelegate appVersion]];
     }

@@ -20,7 +20,7 @@ static NRDBAuthPopupViewController* popup;
 
 +(void) showInViewController:(UIViewController*)vc
 {
-    NSAssert(IS_IPAD, @"ipad only");
+    NSAssert(Device.isIpad, @"ipad only");
     popup = [[NRDBAuthPopupViewController alloc] initWithNibName:@"NRDBAuthPopupViewController" bundle:nil];
     
     [vc presentViewController:popup animated:NO completion:nil];
@@ -29,7 +29,7 @@ static NRDBAuthPopupViewController* popup;
 
 +(void) pushOn:(UINavigationController *)navController
 {
-    NSAssert(IS_IPHONE, @"iphone only");
+    NSAssert(Device.isIphone, @"iphone only");
     popup = [[NRDBAuthPopupViewController alloc] initWithNibName:@"NRDBAuthPopupViewController" bundle:nil];
     popup.navController = navController;
     
@@ -39,7 +39,7 @@ static NRDBAuthPopupViewController* popup;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self && IS_IPAD)
+    if (self && Device.isIpad)
     {
         self.modalPresentationStyle = UIModalPresentationFormSheet;
     }
@@ -74,13 +74,13 @@ static NRDBAuthPopupViewController* popup;
     // NSLog(@"nrdb popup dismiss");
     if (self.navController)
     {
-        NSAssert(IS_IPHONE, @"not on iphone");
+        NSAssert(Device.isIphone, @"not on iphone");
         [self.navController popViewControllerAnimated:YES];
         self.navController = nil;
     }
     else
     {
-        NSAssert(IS_IPAD, @"not on ipad");
+        NSAssert(Device.isIpad, @"not on ipad");
         [self dismissViewControllerAnimated:NO completion:nil];
     }
     

@@ -6,15 +6,12 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-import Foundation
-
 import Crashlytics
 
 class Analytics: NSObject {
-    static var enableAnswers = false
     
     class func logEvent(name: String, attributes: [String: AnyObject]?) {
-        if enableAnswers {
+        if BuildConfig.useCrashlytics {
             Answers.logCustomEventWithName(name, customAttributes: attributes)
         }
     }

@@ -5,7 +5,6 @@
 @import UIKit;
 
 #import "NRTypes.h"
-#import "AppDelegate.h"
 #import "GZip.h"
 #import "UIAlert+NetDeck.h"
 
@@ -17,3 +16,4 @@
 #import "CardImageViewController.h"
 #import "IphoneStartViewController.h"
 #import "NRDBAuthPopupViewController.h"
+#import "DetailViewManager.h"

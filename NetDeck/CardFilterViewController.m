@@ -1021,7 +1021,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (void) tableView:(UITableView *)tableView willDisplayHeaderView:(UITableViewHeaderFooterView *)view forSection:(NSInteger)section
 {
-    view.contentView.backgroundColor = UIColorFromRGB(0xEBEBEC);
+    view.contentView.backgroundColor = [UIColor colorWithRGB:0xEBEBEC];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

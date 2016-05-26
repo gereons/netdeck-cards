@@ -12,7 +12,7 @@
 
 +(UIAlertAction*) cancelAction:(void (^)(UIAlertAction *action))handler
 {
-    NSString* title = IS_IPAD ? @"" : l10n(@"Cancel");
+    NSString* title = Device.isIpad ? @"" : l10n(@"Cancel");
     return [UIAlertAction actionWithTitle:title style:UIAlertActionStyleCancel handler:handler];
 }
 

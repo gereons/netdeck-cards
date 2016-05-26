@@ -485,7 +485,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
         if (diff != 0)
         {
             cell.diff.text = [NSString stringWithFormat:@"%+ld", (long)diff];
-            cell.diff.textColor = diff > 0 ? UIColorFromRGB(0x177a00) : UIColorFromRGB(0xdb0c0c);
+            cell.diff.textColor = [UIColor colorWithRGB:diff > 0 ? 0x177a00 : 0xdb0c0c];
         }
         else
         {

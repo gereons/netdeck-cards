@@ -38,7 +38,7 @@
 
 -(BOOL) prefersStatusBarHidden
 {
-    return IS_IPHONE_4;
+    return Device.isIphone4;
 }
 
 -(void) setCards:(NSArray<Card*>*)cards

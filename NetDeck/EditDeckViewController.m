@@ -6,7 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "AppDelegate.h"
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
 #import "CardImageViewController.h"

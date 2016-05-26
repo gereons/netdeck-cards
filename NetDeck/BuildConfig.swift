@@ -20,12 +20,19 @@ struct BuildConfig {
     static let useCrashlytics = release || debugCrashLytics
 }
 
-struct Device {
+class Device: NSObject {
     static var isIphone: Bool {
         return UIDevice.currentDevice().userInterfaceIdiom == .Phone
     }
 
     static var isIpad: Bool {
         return UIDevice.currentDevice().userInterfaceIdiom == .Pad
+    }
+    
+    static let screenSize = UIScreen.mainScreen().bounds.size
+    static let maxSize = max(screenSize.width, screenSize.height)
+    
+    static var isIphone4: Bool {
+        return isIphone && maxSize < 568
     }
 }

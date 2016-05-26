@@ -40,13 +40,10 @@ static NSString* filterText;
     if (self)
     {
         self.dateFormatter = [[NSDateFormatter alloc] init];
-        if (IS_IPAD)
-        {
+        if (Device.isIpad) {
             [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
             [self.dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-        }
-        else
-        {
+        } else {
             [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
             [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         }
@@ -103,10 +100,10 @@ static NSString* filterText;
         [self getNetrunnerdbDecks];
     }
 
-    NSString* title = IS_IPHONE ? l10n(@"All") : l10n(@"Import All");
+    NSString* title = Device.isIphone ? l10n(@"All") : l10n(@"Import All");
     self.importButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:self action:@selector(importAll:)];
     
-    if (IS_IPHONE)
+    if (Device.isIphone)
     {
         self.sortButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"890-sort-ascending-toolbar"] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
     }
@@ -115,7 +112,7 @@ static NSString* filterText;
         self.sortButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Sort") style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
     }
     self.spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    self.barButtons = IS_IPHONE ? @[ self.importButton, self.sortButton ] : @[ self.importButton, self.spacer, self.sortButton ];
+    self.barButtons = Device.isIphone ? @[ self.importButton, self.sortButton ] : @[ self.importButton, self.spacer, self.sortButton ];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -123,7 +120,7 @@ static NSString* filterText;
     [super viewDidAppear:animated];
     
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.topItem.title = IS_IPHONE ? l10n(@"Import") : l10n(@"Import Deck");
+    self.navigationController.navigationBar.topItem.title = Device.isIphone ? l10n(@"Import") : l10n(@"Import Deck");
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
@@ -156,8 +153,7 @@ static NSString* filterText;
         self.alert = nil;
     }]];
     
-    if (IS_IPAD)
-    {
+    if (Device.isIpad) {
         UIPopoverPresentationController* popover = self.alert.popoverPresentationController;
         popover.barButtonItem = sender;
         popover.sourceView = self.view;

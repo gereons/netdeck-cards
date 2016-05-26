@@ -8,7 +8,6 @@
 
 @import SVProgressHUD;
 
-#import "AppDelegate.h"
 #import "DeckListViewController.h"
 #import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"
