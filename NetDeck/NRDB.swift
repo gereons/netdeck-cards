@@ -291,8 +291,8 @@ class NRDB: NSObject {
         deck.netrunnerDbId = "\(json["id"].intValue)"
         
         // parse last update '2014-06-19T13:52:24Z'
-        deck.lastModified = NRDB.dateFormatter.dateFromString(json["dateupdate"].stringValue)
-        deck.dateCreated = NRDB.dateFormatter.dateFromString(json["datecreation"].stringValue)
+        deck.lastModified = NRDB.dateFormatter.dateFromString(json["date_update"].stringValue)
+        deck.dateCreated = NRDB.dateFormatter.dateFromString(json["date_creation"].stringValue)
         
         for c in json["cards"].arrayValue {
             let code = c["card_code"].stringValue
@@ -307,7 +307,7 @@ class NRDB: NSObject {
         var revisions = [DeckChangeSet]()
         if let history = json["history"].array {
             for entry in history {
-                let datecreation = entry["datecreation"].string
+                let datecreation = entry["date_creation"].string
                 let dcs = DeckChangeSet()
                 dcs.timestamp = NRDB.dateFormatter.dateFromString(datecreation ?? "")
                 
