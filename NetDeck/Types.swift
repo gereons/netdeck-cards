@@ -17,7 +17,7 @@
     case Event, Hardware, Resource, Program
 }
 
-@objc enum NRRole: Int {
+@objc(NRRole) enum NRRole: Int {
     case None = -1
     case Runner, Corp
 }
@@ -39,10 +39,10 @@
 }
 
 @objc enum NRDeckSort: Int {
-    case Type           // sort by type, then alpha
-    case FactionType    // sort by faction, then type, then alpha
-    case SetType        // sort by set, then type, then alpha
-    case SetNum         // sort by set, then number in set
+    case ByType           // sort by type, then alpha
+    case ByFactionType    // sort by faction, then type, then alpha
+    case BySetType        // sort by set, then type, then alpha
+    case BySetNum         // sort by set, then number in set
 }
 
 @objc enum NRSearchScope: Int {
@@ -59,9 +59,9 @@
 }
 
 @objc enum NRDeckListSort: Int {
-    case Date
-    case Faction
-    case A_Z
+    case ByDate
+    case ByFaction
+    case ByName
 }
 
 @objc enum NRCardView: Int {
@@ -71,13 +71,13 @@
 }
 
 @objc enum NRBrowserSort: Int {
-    case Type
-    case Faction
-    case TypeFaction
-    case Set
-    case SetFaction
-    case SetType
-    case SetNumber
+    case ByType
+    case ByFaction
+    case ByTypeFaction
+    case BySet
+    case BySetFaction
+    case BySetType
+    case BySetNumber
 }
 
 @objc enum NRCycle: Int {

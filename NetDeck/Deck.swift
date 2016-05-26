@@ -21,7 +21,7 @@ import Foundation
     private(set) var modified = false
     private(set) var isDraft = false
     
-    private var sortType: NRDeckSort = .Type
+    private var sortType: NRDeckSort = .ByType
     private var lastChanges = DeckChangeSet()
     
     override init() {
@@ -258,13 +258,13 @@ import Foundation
             let c1 = cc1.card
             let c2 = cc2.card
             
-            if self.sortType == .SetType || self.sortType == .SetNum {
+            if self.sortType == .BySetType || self.sortType == .BySetNum {
                 if c1.setNumber != c2.setNumber { return c1.setNumber < c2.setNumber }
             }
-            if self.sortType == .FactionType {
+            if self.sortType == .ByFactionType {
                 if c1.faction != c2.faction { return c1.faction.rawValue < c2.faction.rawValue }
             }
-            if self.sortType == .SetNum {
+            if self.sortType == .BySetNum {
                 return c1.number < c2.number
             }
             if c1.type != c2.type {
@@ -479,7 +479,7 @@ import Foundation
             var section: String
             
             switch self.sortType {
-            case .Type:
+            case .ByType:
                 section = cc.card.typeStr
                 if cc.card.type == .Ice {
                     section = cc.card.iceType!
@@ -487,9 +487,9 @@ import Foundation
                 if cc.card.type == .Program {
                     section = cc.card.programType!
                 }
-            case .SetType, .SetNum:
+            case .BySetType, .BySetNum:
                 section = cc.card.setName
-            case .FactionType:
+            case .ByFactionType:
                 section = cc.card.factionStr
             }
             
@@ -546,7 +546,7 @@ import Foundation
         self.lastModified = nil
         self.notes = decoder.decodeObjectForKey("notes") as? String
         self.tags = decoder.decodeObjectForKey("tags") as? [String]
-        self.sortType = .Type
+        self.sortType = .ByType
         
         let lastChanges = decoder.decodeObjectForKey("lastChanges") as? DeckChangeSet
         self.lastChanges = lastChanges ?? DeckChangeSet()

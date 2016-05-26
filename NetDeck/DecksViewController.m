@@ -32,7 +32,7 @@ static NSDictionary* sideStr;
 // by statics so that whenever we switch between views of subclasses, the filters
 // remain intact
 static NRDeckState _filterState = NRDeckStateNone;
-static NRDeckListSort _sortType = NRDeckListSortA_Z;
+static NRDeckListSort _sortType = NRDeckListSortByName;
 static NRFilter _filterType = NRFilterAll;
 
 -(NRFilter) filterType { return _filterType; }
@@ -44,7 +44,7 @@ static NRFilter _filterType = NRFilterAll;
 
 +(void) initialize
 {
-    sortStr = @{ @(NRDeckListSortDate): l10n(@"Date"), @(NRDeckListSortFaction): l10n(@"Faction"), @(NRDeckListSortA_Z): l10n(@"A-Z") };
+    sortStr = @{ @(NRDeckListSortByDate): l10n(@"Date"), @(NRDeckListSortByFaction): l10n(@"Faction"), @(NRDeckListSortByName): l10n(@"A-Z") };
     sideStr = @{ @(NRFilterAll): l10n(@"Both"), @(NRFilterRunner): l10n(@"Runner"), @(NRFilterCorp): l10n(@"Corp") };
 }
 
@@ -205,13 +205,13 @@ static NRFilter _filterType = NRFilterAll;
     self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRDeckListSortDate];
+        [self changeSortType:NRDeckListSortByDate];
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRDeckListSortFaction];
+        [self changeSortType:NRDeckListSortByFaction];
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRDeckListSortA_Z];
+        [self changeSortType:NRDeckListSortByName];
     }]];
     [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
         self.popup = nil;
@@ -327,7 +327,7 @@ static NRFilter _filterType = NRFilterAll;
     [allDecks addObjectsFromArray:corpDecks];
     [[NRDB sharedInstance] updateDeckMap:allDecks];
 
-    if (self.sortType != NRDeckListSortDate)
+    if (self.sortType != NRDeckListSortByDate)
     {
         self.runnerDecks = [self sortDecks:runnerDecks];
         self.corpDecks = [self sortDecks:corpDecks];
@@ -404,12 +404,12 @@ static NRFilter _filterType = NRFilterAll;
 {
     switch (self.sortType)
     {
-        case NRDeckListSortA_Z:
+        case NRDeckListSortByName:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 return [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
             }];
             break;
-        case NRDeckListSortDate:
+        case NRDeckListSortByDate:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 NSComparisonResult cmp = [d2.lastModified compare:d1.lastModified];
                 if (cmp == NSOrderedSame)
@@ -419,7 +419,7 @@ static NRFilter _filterType = NRFilterAll;
                 return cmp;
             }];
             break;
-        case NRDeckListSortFaction:
+        case NRDeckListSortByFaction:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 NSString* faction1 = [Faction name:d1.identity.faction];
                 NSString* faction2 = [Faction name:d2.identity.faction];
@@ -536,7 +536,7 @@ static NRFilter _filterType = NRFilterAll;
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (self.sortType == NRDeckListSortDate)
+    if (self.sortType == NRDeckListSortByDate)
     {
         return nil;
     }

@@ -110,7 +110,7 @@ import SwiftyJSON
     class func subtypesForRole(role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {
         var subtypes = allSubtypes[role]?[type] ?? Set<String>()
         
-        let includeIds = includeIdentities && (type == kANY || type == identityKey)
+        let includeIds = includeIdentities && (type == Constant.kANY || type == identityKey)
         if (includeIds) {
             if let set = identitySubtypes[role] {
                 subtypes.unionInPlace(set)
@@ -216,12 +216,12 @@ import SwiftyJSON
                     if dict![card.typeStr] == nil {
                         dict![card.typeStr] = Set<String>()
                     }
-                    if (dict![kANY] == nil) {
-                        dict![kANY] = Set<String>()
+                    if (dict![Constant.kANY] == nil) {
+                        dict![Constant.kANY] = Set<String>()
                     }
                     
                     dict![card.typeStr]?.unionInPlace(card.subtypes)
-                    dict![kANY]?.unionInPlace(card.subtypes)
+                    dict![Constant.kANY]?.unionInPlace(card.subtypes)
                     allSubtypes[card.role] = dict
                 }
             }

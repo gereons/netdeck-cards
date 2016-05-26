@@ -9,7 +9,7 @@
 #import "DetailViewManager.h"
 #import "NRCrashlytics.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate CRASHLYTICS_DELEGATE>
+@interface xAppDelegate : UIResponder <UIApplicationDelegate CRASHLYTICS_DELEGATE>
 
 @property (strong, nonatomic) UIWindow *window;
 

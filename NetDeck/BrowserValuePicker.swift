@@ -102,7 +102,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
         // special case for "Any", which is always at section 0, row 0
         let arr = self.data.values[indexPath.section] as! [String]
         let text = arr[indexPath.row]
-        if indexPath.section == 0 && indexPath.row == 0 && text == kANY {
+        if indexPath.section == 0 && indexPath.row == 0 && text == Constant.kANY {
             self.selected.removeAll()
             self.tableView.reloadData()
             return

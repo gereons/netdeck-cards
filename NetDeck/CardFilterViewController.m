@@ -416,7 +416,7 @@ static NSInteger viewMode = VIEW_LIST;
     [self apValueChanged:nil];
     
     [self resetAllButtons];
-    self.selectedType = kANY;
+    self.selectedType = Constant.kANY;
     self.selectedTypes = nil;
     
     self.selectedValues = [NSMutableDictionary dictionary];
@@ -647,7 +647,7 @@ static NSInteger viewMode = VIEW_LIST;
     {
         arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:NO].mutableCopy;
     }
-    [arr insertObject:kANY atIndex:0];
+    [arr insertObject:Constant.kANY atIndex:0];
     TableData* data = [[TableData alloc] initWithValues:arr];
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
     
@@ -730,9 +730,9 @@ static NSInteger viewMode = VIEW_LIST;
         }
     }
     
-    [self.selectedValues setObject:kANY forKey:@(tag)];
-    [self updateFilter:[pfx lowercaseString] value:kANY];
-    [btn setTitle:[NSString stringWithFormat:@"%@: %@", l10n(pfx), l10n(kANY)] forState:UIControlStateNormal];
+    [self.selectedValues setObject:Constant.kANY forKey:@(tag)];
+    [self updateFilter:[pfx lowercaseString] value:Constant.kANY];
+    [btn setTitle:[NSString stringWithFormat:@"%@: %@", l10n(pfx), l10n(Constant.kANY)] forState:UIControlStateNormal];
     
     NSAssert(btn != nil, @"no button");
 }

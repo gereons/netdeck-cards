@@ -144,13 +144,13 @@ static NSString* filterText;
     self.alert = [UIAlertController actionSheetWithTitle:l10n(@"Sort by") message:nil];
     
     [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRDeckListSortDate];
+        [self changeSortType:NRDeckListSortByDate];
     }]];
     [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRDeckListSortFaction];
+        [self changeSortType:NRDeckListSortByFaction];
     }]];
     [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRDeckListSortA_Z];
+        [self changeSortType:NRDeckListSortByName];
     }]];
     [self.alert addAction:[UIAlertAction cancelAction:^(UIAlertAction* action) {
         self.alert = nil;
@@ -372,12 +372,12 @@ static NSString* filterText;
     
     switch (self.deckListSort)
     {
-        case NRDeckListSortA_Z:
+        case NRDeckListSortByName:
             decks = [decksToSort sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 return [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
             }];
             break;
-        case NRDeckListSortDate:
+        case NRDeckListSortByDate:
             decks = [decksToSort sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 NSComparisonResult cmp = [d2.lastModified compare:d1.lastModified];
                 if (cmp == NSOrderedSame)
@@ -387,7 +387,7 @@ static NSString* filterText;
                 return cmp;
             }];
             break;
-        case NRDeckListSortFaction:
+        case NRDeckListSortByFaction:
             decks = [decksToSort sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 NSString* faction1 = [Faction name:d1.identity.faction];
                 NSString* faction2 = [Faction name:d2.identity.faction];
@@ -412,7 +412,7 @@ static NSString* filterText;
 -(void) filterDecks
 {
     NSMutableArray* allDecks = nil;
-    if (self.deckListSort == NRDeckListSortDate)
+    if (self.deckListSort == NRDeckListSortByDate)
     {
         allDecks = [NSMutableArray arrayWithArray:self.runnerDecks];
         [allDecks addObjectsFromArray:self.corpDecks];
@@ -527,7 +527,7 @@ static NSString* filterText;
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.deckListSort == NRDeckListSortDate ? 0 : section == NRRoleRunner ? l10n(@"Runner") : l10n(@"Corp");
+    return self.deckListSort == NRDeckListSortByDate ? 0 : section == NRRoleRunner ? l10n(@"Runner") : l10n(@"Corp");
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

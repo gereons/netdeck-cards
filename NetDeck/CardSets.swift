@@ -256,7 +256,7 @@ import SwiftyJSON
                 var names = [String]()
                 for setNum in setsPerGroup[cycle]! {
                     if setNum == 0 {
-                        names.append(kANY)
+                        names.append(Constant.kANY)
                     }
                     else {
                         let cs = allCardSets[setNum]!

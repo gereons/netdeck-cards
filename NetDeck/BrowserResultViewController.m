@@ -38,13 +38,13 @@ static BrowserResultViewController* instance;
 + (void) initialize
 {
     sortStr = @{
-        @(NRBrowserSortType): l10n(@"Type"),
-        @(NRBrowserSortFaction): l10n(@"Faction"),
-        @(NRBrowserSortTypeFaction): l10n(@"Type/Faction"),
-        @(NRBrowserSortSet): l10n(@"Set"),
-        @(NRBrowserSortSetFaction): l10n(@"Set/Faction"),
-        @(NRBrowserSortSetType): l10n(@"Set/Type"),
-        @(NRBrowserSortSetNumber): l10n(@"Set/Number")
+        @(NRBrowserSortByType): l10n(@"Type"),
+        @(NRBrowserSortByFaction): l10n(@"Faction"),
+        @(NRBrowserSortByTypeFaction): l10n(@"Type/Faction"),
+        @(NRBrowserSortBySet): l10n(@"Set"),
+        @(NRBrowserSortBySetFaction): l10n(@"Set/Faction"),
+        @(NRBrowserSortBySetType): l10n(@"Set/Type"),
+        @(NRBrowserSortBySetNumber): l10n(@"Set/Number")
     };
 }
 
@@ -186,25 +186,25 @@ static BrowserResultViewController* instance;
     self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Type") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRBrowserSortType];
+        [self changeSortType:NRBrowserSortByType];
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRBrowserSortFaction];
+        [self changeSortType:NRBrowserSortByFaction];
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Type/Faction") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRBrowserSortTypeFaction];
+        [self changeSortType:NRBrowserSortByTypeFaction];
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Set") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRBrowserSortSet];
+        [self changeSortType:NRBrowserSortBySet];
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Set/Faction") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRBrowserSortSetFaction];
+        [self changeSortType:NRBrowserSortBySetFaction];
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Set/Type") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRBrowserSortSetType];
+        [self changeSortType:NRBrowserSortBySetType];
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Set/Number") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRBrowserSortSetNumber];
+        [self changeSortType:NRBrowserSortBySetNumber];
     }]];
     
     [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {

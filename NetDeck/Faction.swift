@@ -24,7 +24,7 @@ import Foundation
     private static var allFactionsPreDAD: TableData!
     
     override class func initialize() {
-        faction2name[.None] = kANY
+        faction2name[.None] = Constant.kANY
         faction2name[.Neutral] = "Neutral".localized()
     }
     

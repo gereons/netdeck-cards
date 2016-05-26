@@ -28,6 +28,6 @@
     [UIKeyCommand keyCommandWithInput:letter modifierFlags:modifiers action:@selector(sel) discoverabilityTitle:title] : \
     [UIKeyCommand keyCommandWithInput:letter modifierFlags:modifiers action:@selector(sel)])
 
-extern NSString* const kANY;
+// extern NSString* const kANY;
 
 #endif

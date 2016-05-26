@@ -7,6 +7,7 @@
 //
 
 // TODOs:
+#if 0
 
 #warning browser: allow all know sets?
 #warning use icon font for special symbols, including rendererd html text
@@ -24,11 +25,11 @@
 
 const NSString* const kANY = @"Any";
 
-@interface AppDelegate()
+@interface xAppDelegate()
 @property UIApplicationShortcutItem* launchShortcutItem;
 @end
 
-@implementation AppDelegate
+@implementation xAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -156,15 +157,15 @@ const NSString* const kANY = @"Any";
         SettingsKeys.DECK_FILTER_STATE: @(NRDeckStateNone),
         SettingsKeys.DECK_VIEW_STYLE: @(NRCardViewLargeTable),
         SettingsKeys.DECK_VIEW_SCALE: @(1.0),
-        SettingsKeys.DECK_VIEW_SORT: @(NRDeckSortType),
-        SettingsKeys.DECK_FILTER_SORT: @(NRDeckListSortA_Z),
+        SettingsKeys.DECK_VIEW_SORT: @(NRDeckSortByType),
+        SettingsKeys.DECK_FILTER_SORT: @(NRDeckListSortByName),
         SettingsKeys.DECK_FILTER_TYPE: @(NRFilterAll),
         
         SettingsKeys.CREATE_DECK_ACTIVE: @(NO),
         
         SettingsKeys.BROWSER_VIEW_STYLE: @(NRCardViewLargeTable),
         SettingsKeys.BROWSER_VIEW_SCALE: @(1.0),
-        SettingsKeys.BROWSER_SORT_TYPE: @(NRBrowserSortType),
+        SettingsKeys.BROWSER_SORT_TYPE: @(NRBrowserSortByType),
         
         SettingsKeys.NUM_CORES: @(3),
         
@@ -231,7 +232,7 @@ const NSString* const kANY = @"Any";
             }
             
             if (!isDirectory) {
-                [AppDelegate excludeFromBackup:supportPath];
+                [xAppDelegate excludeFromBackup:supportPath];
             }
         }
     }
@@ -240,7 +241,7 @@ const NSString* const kANY = @"Any";
     files = [fileMgr contentsOfDirectoryAtPath:imagesDir error:nil];
     for (NSString* file in files) {
         NSString* pathname = [imagesDir stringByAppendingPathComponent:file];
-        [AppDelegate excludeFromBackup:pathname];
+        [xAppDelegate excludeFromBackup:pathname];
     }
 
     [settings setBool:YES forKey:SettingsKeys.FILES_MOVED];
@@ -364,7 +365,7 @@ const NSString* const kANY = @"Any";
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Not now") handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction *action) {
-        NSString* subject = [NSString stringWithFormat:@"Bug in Net Deck %@", [AppDelegate appVersion]];
+        NSString* subject = [NSString stringWithFormat:@"Bug in Net Deck %@", [xAppDelegate appVersion]];
         NSString* body = @"If possible, please describe what caused the crash. Thanks!";
         
         NSMutableString* mailto = @"mailto:netdeck@steffens.org?subject=".mutableCopy;
@@ -380,3 +381,4 @@ const NSString* const kANY = @"Any";
 #endif
 
 @end
+#endif

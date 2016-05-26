@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "UIScrollView+EmptyDataSet.h"
+@import DZNEmptyDataSet;
 
 @interface IphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
 
@@ -22,7 +22,7 @@
 -(IBAction)titleButtonTapped:(id)sender;
 
 // support for 3d touch shortcuts
--(void) addNewDeck:(NRRole)role;
+-(void) addNewDeck:(NSInteger)role; // actually NRRole
 -(void) openBrowser;
 
 @end

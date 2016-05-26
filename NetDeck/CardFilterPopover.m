@@ -47,7 +47,7 @@ static CardFilterPopover* popover;
     else
     {
         popover.selectedValues = [NSMutableSet set];
-        if (preselected && ![preselected isEqualToString:kANY])
+        if (preselected && ![preselected isEqualToString:Constant.kANY])
         {
             [popover.selectedValues addObject:preselected];
         }
@@ -224,7 +224,7 @@ static CardFilterPopover* popover;
     
     NSString* value = [self.values objectAtIndexPath:indexPath];
     
-    if ([value isEqualToString:kANY])
+    if ([value isEqualToString:Constant.kANY])
     {
         cell.textLabel.text = l10n(value);
     }
@@ -235,7 +235,7 @@ static CardFilterPopover* popover;
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:1 alpha:1];
     
-    if ([self.selectedValues containsObject:value] && ![value isEqualToString:kANY])
+    if ([self.selectedValues containsObject:value] && ![value isEqualToString:Constant.kANY])
     {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
@@ -254,7 +254,7 @@ static CardFilterPopover* popover;
     if (!anyCell && ![self.selectedValues containsObject:value] && self.selectedValues.count == self.totalEntries - 2)
     {
         anyCell = YES;
-        value = kANY;
+        value = Constant.kANY;
     }
 
     if (anyCell)
@@ -337,7 +337,7 @@ static CardFilterPopover* popover;
 -(void) filterWithMultipleSelection
 {
     // NSLog(@"notify %@ %@", self.type, self.selectedValues);
-    NSString* selected = self.selectedValues.count == 0 ? l10n(kANY) : (self.selectedValues.count == 1 ? [[self.selectedValues allObjects] objectAtIndex:0] : @"⋯");
+    NSString* selected = self.selectedValues.count == 0 ? l10n(Constant.kANY) : (self.selectedValues.count == 1 ? [[self.selectedValues allObjects] objectAtIndex:0] : @"⋯");
     NSString* title = [NSString stringWithFormat:@"%@: %@", l10n(self.type), selected];
     [self.button setTitle:title forState:UIControlStateNormal];
     

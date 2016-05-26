@@ -390,7 +390,7 @@
 
 -(void) refreshDeck
 {
-    TableData* data = [self.deck dataForTableView:NRDeckSortType];
+    TableData* data = [self.deck dataForTableView:NRDeckSortByType];
     self.cards = data.values;
     self.sections = data.sections;
     

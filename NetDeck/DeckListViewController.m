@@ -779,25 +779,25 @@
     self.actionSheet = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Type"), self.sortType == NRDeckSortType)
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Type"), self.sortType == NRDeckSortByType)
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
-                                                           [self changeDeckSort:NRDeckSortType];
+                                                           [self changeDeckSort:NRDeckSortByType];
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Faction"), self.sortType == NRDeckSortFactionType)
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Faction"), self.sortType == NRDeckSortByFactionType)
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
-                                                           [self changeDeckSort:NRDeckSortFactionType];
+                                                           [self changeDeckSort:NRDeckSortByFactionType];
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Set/Type"), self.sortType == NRDeckSortSetType)
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Set/Type"), self.sortType == NRDeckSortBySetType)
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
-                                                           [self changeDeckSort:NRDeckSortSetType];
+                                                           [self changeDeckSort:NRDeckSortBySetType];
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Set/Number"), self.sortType == NRDeckSortSetNum)
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Set/Number"), self.sortType == NRDeckSortBySetNum)
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
-                                                           [self changeDeckSort:NRDeckSortSetNum];
+                                                           [self changeDeckSort:NRDeckSortBySetNum];
                                                        }]];
     [self.actionSheet addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
                                                            self.actionSheet = nil;

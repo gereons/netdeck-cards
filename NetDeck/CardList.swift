@@ -32,11 +32,11 @@ class CardList: NSObject {
     private var limited: Bool = false
     private var faction4inf: NRFaction = .None   // faction for influence filter
     
-    private var sortType: NRBrowserSort = .Type
+    private var sortType: NRBrowserSort = .ByType
 
     init(forRole role: NRRole) {
         self.role = role
-        self.sortType = .Type
+        self.sortType = .ByType
         self.faction4inf = .None
         self.initialCards = [Card]()
         super.init()
@@ -239,7 +239,7 @@ class CardList: NSObject {
         var filteredCards = self.initialCards
         var predicates = [NSPredicate]()
         
-        if self.faction?.length > 0 && self.faction != kANY {
+        if self.faction?.length > 0 && self.faction != Constant.kANY {
             let predicate = NSPredicate(format:"factionStr LIKE[cd] %@", self.faction!)
             predicates.append(predicate)
         }
@@ -247,7 +247,7 @@ class CardList: NSObject {
             let predicate = NSPredicate(format:"factionStr IN %@", self.factions!)
             predicates.append(predicate)
         }
-        if self.type?.length > 0 && self.type != kANY {
+        if self.type?.length > 0 && self.type != Constant.kANY {
             let predicate = NSPredicate(format:"typeStr LIKE[cd] %@", self.type!)
             predicates.append(predicate)
         }
@@ -276,7 +276,7 @@ class CardList: NSObject {
                 predicates.append(predicate)
             }
         }
-        if self.set?.length > 0 && self.set != kANY {
+        if self.set?.length > 0 && self.set != Constant.kANY {
             let predicate = NSPredicate(format:"setName LIKE[cd] %@", self.set!)
             predicates.append(predicate)
         }
@@ -288,7 +288,7 @@ class CardList: NSObject {
             let predicate = NSPredicate(format:"cost == %d || advancementCost == %d", self.cost, self.cost)
             predicates.append(predicate)
         }
-        if self.subtype?.length > 0 && self.subtype != kANY {
+        if self.subtype?.length > 0 && self.subtype != Constant.kANY {
             let predicate = NSPredicate(format:"%@ IN subtypes", self.subtype!)
             predicates.append(predicate)
         }
@@ -345,26 +345,26 @@ class CardList: NSObject {
         
         cards.sortInPlace { (c1, c2) -> Bool in
             switch (self.sortType) {
-            case .Type, .TypeFaction:
+            case .ByType, .ByTypeFaction:
                 if c1.type.rawValue < c2.type.rawValue { return true }
                 if c1.type.rawValue > c2.type.rawValue { return false }
-            case .Faction:
+            case .ByFaction:
                 if c1.factionStr < c2.factionStr { return true }
                 if c1.factionStr > c2.factionStr { return false }
-            case .Set, .SetType, .SetFaction:
+            case .BySet, .BySetType, .BySetFaction:
                 if c1.setNumber < c2.setNumber { return true }
                 if c1.setNumber > c2.setNumber { return false }
-            case .SetNumber:
+            case .BySetNumber:
                 if c1.code < c2.code { return true }
                 if c1.code > c2.code { return false }
             }
             
             switch (self.sortType)
             {
-            case .TypeFaction, .SetFaction:
+            case .ByTypeFaction, .BySetFaction:
                 if c1.factionStr < c2.factionStr { return true }
                 if c1.factionStr > c2.factionStr { return false }
-            case .SetType, .Faction:
+            case .BySetType, .ByFaction:
                 if c1.type.rawValue < c2.type.rawValue { return true }
                 if c1.type.rawValue > c2.type.rawValue { return false }
             default: break
@@ -397,9 +397,9 @@ class CardList: NSObject {
         for card in filteredCards {
             var section = ""
             switch (self.sortType) {
-            case .Type, .TypeFaction:
+            case .ByType, .ByTypeFaction:
                 section = card.typeStr
-            case .Faction:
+            case .ByFaction:
                 section = card.factionStr
             default:
                 section = card.setName

@@ -100,7 +100,7 @@ enum ExportFormat {
     }
     
     class func textExport(deck: Deck, _ fmt: ExportFormat) -> String {
-        let data = deck.dataForTableView(.Type)
+        let data = deck.dataForTableView(.ByType)
         let cardsArray = data.values as! [[CardCounter]]
         let sections = data.sections as! [String]
         

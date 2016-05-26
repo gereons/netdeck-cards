@@ -9,6 +9,10 @@
 import Foundation
 import SDCAlertView
 
+class Constant: NSObject {
+    static let kANY = "Any"
+}
+
 extension String {
     func localized() -> String {
         return NSLocalizedString(self, comment: "")

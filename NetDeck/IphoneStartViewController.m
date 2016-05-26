@@ -114,7 +114,7 @@
     self.runnerDecks = [DeckManager decksForRole:NRRoleRunner].mutableCopy;
     self.corpDecks = [DeckManager decksForRole:NRRoleCorp].mutableCopy;
 
-    if (self.deckListSort != NRDeckListSortDate)
+    if (self.deckListSort != NRDeckListSortByDate)
     {
         self.runnerDecks = [self sortDecks:self.runnerDecks];
         self.corpDecks = [self sortDecks:self.corpDecks];
@@ -192,10 +192,10 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void) addNewDeck:(NRRole)role
+-(void) addNewDeck:(NSInteger)role // actually NRRole
 {
     IphoneIdentityViewController* idvc = [[IphoneIdentityViewController alloc] initWithNibName:@"IphoneIdentityViewController" bundle:nil];
-    idvc.role = role;
+    idvc.role = (NRRole)role;
     [self pushViewController:idvc animated:YES];
 }
 
@@ -255,13 +255,13 @@
     UIAlertController* alert = [UIAlertController actionSheetWithTitle:l10n(@"Sort by") message:nil];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Date") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRDeckListSortDate];
+        [self changeSortType:NRDeckListSortByDate];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Faction") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRDeckListSortFaction];
+        [self changeSortType:NRDeckListSortByFaction];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
-        [self changeSortType:NRDeckListSortA_Z];
+        [self changeSortType:NRDeckListSortByName];
     }]];
     [alert addAction:[UIAlertAction cancelAction:nil]];
     
@@ -281,12 +281,12 @@
 {
     switch (self.deckListSort)
     {
-        case NRDeckListSortA_Z:
+        case NRDeckListSortByName:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 return [[d1.name lowercaseString] compare:[d2.name lowercaseString]];
             }];
             break;
-        case NRDeckListSortDate:
+        case NRDeckListSortByDate:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 NSComparisonResult cmp = [d2.lastModified compare:d1.lastModified];
                 if (cmp == NSOrderedSame)
@@ -296,7 +296,7 @@
                 return cmp;
             }];
             break;
-        case NRDeckListSortFaction:
+        case NRDeckListSortByFaction:
             decks = [decks sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
                 NSString* faction1 = [Faction name:d1.identity.faction];
                 NSString* faction2 = [Faction name:d2.identity.faction];

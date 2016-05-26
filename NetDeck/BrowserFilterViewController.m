@@ -233,7 +233,7 @@ static NSMutableArray* subtypeCollapsedSections;
     [self updateResults];
     
     // type selection
-    self.selectedType = kANY;
+    self.selectedType = Constant.kANY;
     self.selectedTypes = nil;
     self.selectedValues = [NSMutableDictionary dictionary];
     
@@ -297,11 +297,11 @@ static NSMutableArray* subtypeCollapsedSections;
     if ([selectedSets isKindOfClass:[NSSet class]])
     {
         NSSet* set = (NSSet*) selectedSets;
-        selected = set.count == 0 ? l10n(kANY) : (set.count == 1 ? [[set allObjects] objectAtIndex:0] : @"⋯");
+        selected = set.count == 0 ? l10n(Constant.kANY) : (set.count == 1 ? [[set allObjects] objectAtIndex:0] : @"⋯");
     }
     else
     {
-        selected = l10n(kANY);
+        selected = l10n(Constant.kANY);
     }
     NSString* title = [NSString stringWithFormat:@"%@: %@", l10n(@"Set"), selected];
     [self.setButton setTitle:title forState:UIControlStateNormal];
@@ -367,7 +367,7 @@ static NSMutableArray* subtypeCollapsedSections;
         }
         NSMutableArray* sections = [NSMutableArray array];
         NSMutableArray* values = [NSMutableArray array];
-        [values addObject:@[ kANY ]];
+        [values addObject:@[ Constant.kANY ]];
         [sections addObject:@""];
         if (runner.count > 1)
         {
@@ -394,7 +394,7 @@ static NSMutableArray* subtypeCollapsedSections;
         {
             arr = [CardManager subtypesForRole:self.role andType:self.selectedType includeIdentities:YES].mutableCopy;
         }
-        [arr insertObject:kANY atIndex:0];
+        [arr insertObject:Constant.kANY atIndex:0];
         data = [[TableData alloc] initWithValues:arr];
     }
     id selected = [self.selectedValues objectForKey:@(SUBTYPE_BUTTON)];
@@ -495,7 +495,7 @@ static NSMutableArray* subtypeCollapsedSections;
         {
             btn = self.typeButton;
             pfx = @"Type";
-            self.selectedType = kANY;
+            self.selectedType = Constant.kANY;
             self.selectedTypes = nil;
             // reset subtypes to "any"
             [self resetButton:SUBTYPE_BUTTON];
@@ -516,8 +516,8 @@ static NSMutableArray* subtypeCollapsedSections;
     }
     NSAssert(btn != nil, @"no button");
     
-    [self.selectedValues setObject:kANY forKey:@(tag)];
-    [btn setTitle:[NSString stringWithFormat:@"%@: %@", l10n(pfx), l10n(kANY)] forState:UIControlStateNormal];
+    [self.selectedValues setObject:Constant.kANY forKey:@(tag)];
+    [btn setTitle:[NSString stringWithFormat:@"%@: %@", l10n(pfx), l10n(Constant.kANY)] forState:UIControlStateNormal];
 }
 
 #pragma mark - text search

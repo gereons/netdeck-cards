@@ -14,4 +14,18 @@ struct BuildConfig {
     #endif
     
     static let debug = !release
+    
+    static let debugCrashLytics = false
+    
+    static let useCrashlytics = release || debugCrashLytics
+}
+
+struct Device {
+    static var isIphone: Bool {
+        return UIDevice.currentDevice().userInterfaceIdiom == .Phone
+    }
+
+    static var isIpad: Bool {
+        return UIDevice.currentDevice().userInterfaceIdiom == .Pad
+    }
 }

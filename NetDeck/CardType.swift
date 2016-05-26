@@ -29,7 +29,7 @@ import Foundation
         }
         
         type2name.removeAll()
-        type2name[.None] = kANY
+        type2name[.None] = Constant.kANY
         for card in cards {
             type2name[card.type] = card.typeStr
         }
@@ -54,8 +54,8 @@ import Foundation
         
         allTypes = TableData(sections:typeSections, andValues:types)
         
-        runnerTypeNames.insert(kANY, atIndex: 0)
-        corpTypeNames.insert(kANY, atIndex: 0)
+        runnerTypeNames.insert(Constant.kANY, atIndex: 0)
+        corpTypeNames.insert(Constant.kANY, atIndex: 0)
         
         return true
     }

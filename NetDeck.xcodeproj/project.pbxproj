@@ -106,6 +106,7 @@
 		3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AB18AF7DA900F83520 /* CostStats.m */; };
 		3A9742B018AF95E700F83520 /* StrengthStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9742AF18AF95E700F83520 /* StrengthStats.m */; };
 		3A9752211C1F6E310070E39B /* MiscUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9752201C1F6E310070E39B /* MiscUtilities.swift */; };
+		3A9795361CF63EE100479ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9795351CF63EE100479ADF /* AppDelegate.swift */; };
 		3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A98964019953AAD0023880B /* SmallBrowserCell.m */; };
 		3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A98964119953AAD0023880B /* SmallBrowserCell.xib */; };
 		3A99426D184B8C9E004B6E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426C184B8C9E004B6E05 /* libxml2.dylib */; };
@@ -355,6 +356,7 @@
 		3A9742AE18AF95E700F83520 /* StrengthStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrengthStats.h; sourceTree = "<group>"; };
 		3A9742AF18AF95E700F83520 /* StrengthStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StrengthStats.m; sourceTree = "<group>"; };
 		3A9752201C1F6E310070E39B /* MiscUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscUtilities.swift; sourceTree = "<group>"; };
+		3A9795351CF63EE100479ADF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A98963F19953AAD0023880B /* SmallBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallBrowserCell.h; sourceTree = "<group>"; };
 		3A98964019953AAD0023880B /* SmallBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallBrowserCell.m; sourceTree = "<group>"; };
 		3A98964119953AAD0023880B /* SmallBrowserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallBrowserCell.xib; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 			isa = PBXGroup;
 			children = (
 				3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */,
+				3A9795351CF63EE100479ADF /* AppDelegate.swift */,
 				3A3622701849320C007F2854 /* AppDelegate.h */,
 				3A3622711849320C007F2854 /* AppDelegate.m */,
 				3A2F4ADB1C8C716400B711BD /* ImageCache.swift */,
@@ -1384,6 +1387,7 @@
 				3AD860DB1B792B6700EEF8AC /* ListCardsViewController.m in Sources */,
 				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,
 				3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */,
+				3A9795361CF63EE100479ADF /* AppDelegate.swift in Sources */,
 				3A3D8CA71CA1C6EF002C73E3 /* Codes.swift in Sources */,
 				3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */,
 				3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */,
