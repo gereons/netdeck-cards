@@ -6,9 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "DetailViewManager.h"
-
-@interface EmptyDetailViewController : UIViewController <SubstitutableDetailViewController>
+@interface EmptyDetailViewController : UIViewController
 
 @property IBOutlet UIView* emptyDataSetView;
 

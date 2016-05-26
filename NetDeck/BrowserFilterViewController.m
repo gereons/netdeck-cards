@@ -15,7 +15,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 @interface BrowserFilterViewController ()
 
 @property BrowserResultViewController* browser;
-@property SubstitutableNavigationController* snc;
+@property UINavigationController* navController;
 
 @property CardList* cardList;
 @property NRRole role;
@@ -44,7 +44,7 @@ static NSMutableArray* subtypeCollapsedSections;
     if ((self = [super initWithNibName:@"BrowserFilterViewController" bundle:nil]))
     {
         self.browser = [[BrowserResultViewController alloc] initWithNibName:@"BrowserResultViewController" bundle:nil];
-        self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:self.browser];
+        self.navController = [[UINavigationController alloc] initWithRootViewController:self.browser];
         
         self.role = NRRoleNone;
         self.cardList = [CardList browserInitForRole:self.role];
@@ -154,7 +154,7 @@ static NSMutableArray* subtypeCollapsedSections;
     [nc addObserver:self selector:@selector(dismissKeyboard:) name:Notifications.BROWSER_NEW object:nil];
     
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
-    detailViewManager.detailViewController = self.snc;
+    detailViewManager.detailViewController = self.navController;
 
     [self clearFiltersClicked:nil];
     

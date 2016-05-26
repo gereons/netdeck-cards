@@ -18,7 +18,7 @@
 
 @property UIBarButtonItem* revertButton;
 @property (nonatomic) NRRole role;
-@property SubstitutableNavigationController* snc;
+@property UINavigationController* navController;
 @property CardList* cardList;
 @property NSArray* cards;
 @property NSArray* sections;
@@ -69,7 +69,7 @@ static NSInteger viewMode = VIEW_LIST;
         self.deckListViewController = [[DeckListViewController alloc] initWithNibName:@"DeckListViewController" bundle:nil];
         self.deckListViewController.role = role;
         
-        self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:self.deckListViewController];
+        self.navController = [[UINavigationController alloc] initWithRootViewController:self.deckListViewController];
     }
     return self;
 }
@@ -172,7 +172,7 @@ static NSInteger viewMode = VIEW_LIST;
     [self setEdgesForExtendedLayout:UIRectEdgeBottom];
     
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
-    detailViewManager.detailViewController = self.snc;
+    detailViewManager.detailViewController = self.navController;
 }
 
 -(void) viewDidAppear:(BOOL)animated

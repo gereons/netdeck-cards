@@ -16,4 +16,3 @@
 #import "CardImageViewController.h"
 #import "IphoneStartViewController.h"
 #import "NRDBAuthPopupViewController.h"
-#import "DetailViewManager.h"

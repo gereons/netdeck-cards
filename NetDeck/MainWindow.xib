@@ -17,7 +17,7 @@
                 <outlet property="splitViewController" destination="6" id="15"/>
             </connections>
         </customObject>
-        <customObject id="19" customClass="DetailViewManager">
+        <customObject id="19" customClass="DetailViewManager" customModule="NetDeck">
             <connections>
                 <outlet property="detailViewController" destination="8" id="23"/>
                 <outlet property="splitViewController" destination="6" id="22"/>

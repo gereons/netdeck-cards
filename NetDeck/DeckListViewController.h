@@ -6,10 +6,9 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "DetailViewManager.h"
 #import "DecklistCollectionView.h"
 
-@interface DeckListViewController : UIViewController <SubstitutableDetailViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate>
+@interface DeckListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet DecklistCollectionView* collectionView;

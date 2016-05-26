@@ -8,7 +8,6 @@
 
 #import "ActionsTableViewController.h"
 #import "EmptyDetailViewController.h"
-#import "DetailViewManager.h"
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "CardFilterViewController.h"
@@ -29,7 +28,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 @interface ActionsTableViewController()
 
-@property SubstitutableNavigationController* snc;
+@property UINavigationController* navController;
 @property SettingsViewController* settings;
 @property Card* searchForCard;
 
@@ -124,10 +123,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     EmptyDetailViewController *empty = [[EmptyDetailViewController alloc] initWithNibName:@"EmptyDetailView" bundle:nil];
     
-    self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:empty];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:empty];
     
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
-    detailViewManager.detailViewController = self.snc;
+    detailViewManager.detailViewController = self.navController;
 }
 
 #pragma mark notifications
@@ -295,16 +294,16 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
                 decks = [[SavedDecksList alloc] initWithCardFilter:self.searchForCard];
                 self.searchForCard = nil;
             }
-            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:decks];
-            detailViewManager.detailViewController = self.snc;
+            self.navController = [[UINavigationController alloc] initWithRootViewController:decks];
+            detailViewManager.detailViewController = self.navController;
             break;
         }
             
         case NRMenuDeckDiff:
         {
             CompareDecksList* decks = [[CompareDecksList alloc] init];
-            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:decks];
-            detailViewManager.detailViewController = self.snc;
+            self.navController = [[UINavigationController alloc] initWithRootViewController:decks];
+            detailViewManager.detailViewController = self.navController;
             break;
         }
             
@@ -319,8 +318,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         case NRMenuSettings:
         {
             self.settings = [[SettingsViewController alloc] init];
-            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:self.settings.iask];
-            detailViewManager.detailViewController = self.snc;
+            self.navController = [[UINavigationController alloc] initWithRootViewController:self.settings.iask];
+            detailViewManager.detailViewController = self.navController;
             break;
         }
             
@@ -328,8 +327,8 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         {
             AboutViewController* about = [[AboutViewController alloc] initWithNibName:@"AboutView" bundle:nil];
             
-            self.snc = [[SubstitutableNavigationController alloc] initWithRootViewController:about];
-            detailViewManager.detailViewController = self.snc;
+            self.navController = [[UINavigationController alloc] initWithRootViewController:about];
+            detailViewManager.detailViewController = self.navController;
             break;
         }
     }

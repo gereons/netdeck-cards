@@ -6,10 +6,9 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "DetailViewManager.h"
 #import <MessageUI/MessageUI.h>
 
-@interface AboutViewController : UIViewController<SubstitutableDetailViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate>
+@interface AboutViewController : UIViewController<UIWebViewDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIWebView* webView;
 
