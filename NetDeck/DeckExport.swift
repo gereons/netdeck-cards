@@ -166,9 +166,6 @@ enum ExportFormat {
         
         s += self.localUrlForDeck(deck) + eol
         
-        print("---")
-        print(s)
-        print("---")
         return s;
     }
     
