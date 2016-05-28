@@ -85,7 +85,11 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         let header = DeckHistorySectionHeaderView.initFromNib()
         
         let dcs = self.deck.revisions[section]
-        header.dateLabel.text = self.dateFormatter.stringFromDate(dcs.timestamp!)
+        if let timestamp = dcs.timestamp {
+            header.dateLabel.text = self.dateFormatter.stringFromDate(timestamp)
+        } else {
+            header.dateLabel.text = "n/a"
+        }
         
         header.revertButton.setTitle("Revert".localized(), forState: .Normal)
         header.revertButton.tag = section
