@@ -266,14 +266,20 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             if let indexPath = self.tableView.indexPathForRowAtPoint(point) {
                 let card = self.cards[indexPath.section][indexPath.row]
                 
-                let msg = String(format:"Open ANCUR page for\n%@?".localized(), card.name)
+                let msg = String(format:"Open web page for\n%@?".localized(), card.name)
                 
                 let alert = UIAlertController.alertWithTitle(nil, message: msg)
-                alert.addAction(UIAlertAction(title:"OK".localized()) { action in
+                alert.addAction(UIAlertAction(title:"ANCUR".localized()) { action in
                     if let ancur = card.ancurLink, url = NSURL(string: ancur) {
                         UIApplication.sharedApplication().openURL(url)
                     }
                 })
+                alert.addAction(UIAlertAction(title:"NetrunnerDB".localized()) { action in
+                    if let url = NSURL(string: card.nrdbLink) {
+                        UIApplication.sharedApplication().openURL(url)
+                    }
+                })
+                
                 alert.addAction(UIAlertAction.cancelAlertAction(nil))
                 
                 self.presentViewController(alert, animated:false, completion:nil)

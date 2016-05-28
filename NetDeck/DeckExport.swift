@@ -174,7 +174,7 @@ enum ExportFormat {
     }
     
     class func dots(count: Int) -> String {
-        return nTimes("·", count)
+        return nTimes("•", count)
     }
     
     class func nTimes(str: String, _ count: Int) -> String {

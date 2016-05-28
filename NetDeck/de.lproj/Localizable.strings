@@ -314,7 +314,8 @@
 "Find decks using this card" = "Decks mit dieser Karte";
 "New deck with this card" = "Neues Deck mit dieser Karte";
 "ANCUR page for this card" = "ANCUR-Seite für diese Karte";
-"Open ANCUR page for\n%@?" = "ANCUR-Seite für %@ öffnen?";
+"NetrunnerDB page for this card" = "NetrunnerDB-Seite für diese Karte";
+"Open web page for\n%@?" = "Webseite für %@ öffnen?";
 "Faction/A-Z" = "Fraktion/A-Z";
 "Type/Faction" = "Typ/Fraktion";
 "Set/Faction" = "Set/Fraktion";

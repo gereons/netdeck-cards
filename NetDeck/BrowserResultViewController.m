@@ -367,6 +367,10 @@ static BrowserResultViewController* instance;
         LOG_EVENT(@"Open ANCUR", @{@"Card": card.name});
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:card.ancurLink]];
     }]];
+    [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"NetrunnerDB page for this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        LOG_EVENT(@"Open NRDB", @{@"Card": card.name});
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:card.nrdbLink]];
+    }]];
     
     UIPopoverPresentationController* popover = sheet.popoverPresentationController;
     popover.sourceRect = rect;

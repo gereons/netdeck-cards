@@ -117,6 +117,7 @@ import SwiftyJSON
     private(set) var maxPerDeck: Int = -1        // how many may be in deck? currently either 1, 3 or 6
     private(set) var imageSrc: String?
     private(set) var ancurLink: String?
+    private(set) var nrdbLink: String = ""
     private(set) var isAlliance: Bool = false
     private(set) var isVirtual: Bool = false
     private(set) var isCore: Bool = false       // card is from core set
@@ -331,6 +332,9 @@ import SwiftyJSON
         if c.ancurLink?.length == 0 {
             c.ancurLink = nil
         }
+        
+        let language = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.LANGUAGE) ?? "en"
+        c.nrdbLink = "https://netrunnerdb.com/" + language + "/card/" + c.code
         
         if english {
             c.isAlliance = c.subtype.lowercaseString.containsString("alliance")

@@ -316,7 +316,8 @@
 "Find decks using this card" = "このカードを使用するデッキ";
 "New deck with this card" = "このカードで新デッキ";
 "ANCUR page for this card" = "このカードのANCURページ";
-"Open ANCUR page for\n%@?" = "%@のANCURページを開きますか？";
+"NetrunnerDB page for this card" = "このカードのNetrunnerDBページ";
+"Open web page for\n%@?" = "%@のページを開きますか？";
 "Faction/A-Z" = "派閥/A-Z";
 "Type/Faction" = "タイプ/派閥";
 "Set/Faction" = "セット/派閥";
