@@ -118,6 +118,7 @@
     self.title = self.deck.name;
     
     [self doAutoSave];
+    [self setupNavigationButtons:self.deck.modified];
 }
 
 -(void) titleTapped:(id)sender
