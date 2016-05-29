@@ -13,6 +13,7 @@ import SwiftyJSON
 class AppUpdateCheck: NSObject {
     
     static let WEEK: NSTimeInterval = 7*24*60*60 // one week in seconds
+    static let forceTest = false
     
     class func checkUpdate() {
         
@@ -24,8 +25,9 @@ class AppUpdateCheck: NSObject {
             return
         }
         
+        let force = forceTest && BuildConfig.debug
         let now = NSDate()
-        if now.timeIntervalSince1970 > nextCheck.timeIntervalSince1970 && Reachability.online() {
+        if (now.timeIntervalSince1970 > nextCheck.timeIntervalSince1970 && Reachability.online()) || force {
             self.checkForUpdate { version in
                 if let v = version {
                     let msg = String(format: "Version %@ is available on the App Store".localized(), v)
@@ -64,10 +66,8 @@ class AppUpdateCheck: NSObject {
                 if let value = response.result.value {
                     let json = JSON(value)
                     if let appstoreVersion = json["results"][0]["version"].string {
-                        if let appstore = Double(appstoreVersion), let current = Double(currentVersion) {
-                            completion(appstore > current ? appstoreVersion : nil)
-                            return
-                        }
+                        let cmp = appstoreVersion.compare(currentVersion, options: .NumericSearch)
+                        completion(cmp == .OrderedDescending ? appstoreVersion : nil)
                     }
                 }
                 fallthrough
