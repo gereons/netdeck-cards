@@ -35,14 +35,10 @@
 		3A2221DE1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2221DD1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m */; };
 		3A2F4ADC1C8C716400B711BD /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2F4ADB1C8C716400B711BD /* ImageCache.swift */; };
 		3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A33AE2F1C7272ED00453C33 /* DeckEmail.swift */; };
-		3A3622621849320C007F2854 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622611849320C007F2854 /* Foundation.framework */; };
-		3A3622641849320C007F2854 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622631849320C007F2854 /* CoreGraphics.framework */; };
-		3A3622661849320C007F2854 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3622651849320C007F2854 /* UIKit.framework */; };
 		3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A36226A1849320C007F2854 /* InfoPlist.strings */; };
 		3A36227D1849320C007F2854 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A36227C1849320C007F2854 /* Images.xcassets */; };
 		3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */; };
 		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
-		3A38091D1B0F8AE300042A67 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A38091C1B0F8AE300042A67 /* libz.dylib */; };
 		3A3844FB1B77859E007C76F2 /* MainWindow~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */; };
 		3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */; };
 		3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845001B77BA89007C76F2 /* EditDeckViewController.m */; };
@@ -108,13 +104,7 @@
 		3A9795361CF63EE100479ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9795351CF63EE100479ADF /* AppDelegate.swift */; };
 		3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A98964019953AAD0023880B /* SmallBrowserCell.m */; };
 		3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A98964119953AAD0023880B /* SmallBrowserCell.xib */; };
-		3A99426D184B8C9E004B6E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426C184B8C9E004B6E05 /* libxml2.dylib */; };
-		3A99426F184B8CA6004B6E05 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A99426E184B8CA6004B6E05 /* ImageIO.framework */; };
-		3A994271184B8CAB004B6E05 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A994270184B8CAB004B6E05 /* QuartzCore.framework */; };
-		3A994273184B8CB4004B6E05 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A994272184B8CB4004B6E05 /* CoreText.framework */; };
-		3A994275184B8CBB004B6E05 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A994274184B8CBB004B6E05 /* MobileCoreServices.framework */; };
 		3A9CE56518E0B6C0007A26CD /* IdentityViewCellSubtitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */; };
-		3A9CE56718E0CA2A007A26CD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9CE56618E0CA2A007A26CD /* MessageUI.framework */; };
 		3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */ = {isa = PBXBuildFile; fileRef = 3AA0504919589F9B00DBDED6 /* Acknowledgements.html */; };
 		3AA0B3021C8C2C7E007B4983 /* CardUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0B3011C8C2C7E007B4983 /* CardUpdateCheck.swift */; };
 		3AA4088E1C038F480046922C /* CardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4088D1C038F480046922C /* CardList.swift */; };
@@ -142,7 +132,6 @@
 		3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */; };
 		3AB9BD5E18FADC01004EAF10 /* DeckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5C18FADC01004EAF10 /* DeckCell.m */; };
 		3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */; };
-		3ABA7AAD1B1B253E00E8E892 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABA7AAC1B1B253E00E8E892 /* Accelerate.framework */; };
 		3ABAD2F91B8275F8009E81F3 /* NSArray+TwoD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */; };
 		3ABAD2FD1B83A6D7009E81F3 /* IphoneIdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABAD2FB1B83A6D7009E81F3 /* IphoneIdentityViewController.m */; };
 		3ABAD2FE1B83A6D7009E81F3 /* IphoneIdentityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABAD2FC1B83A6D7009E81F3 /* IphoneIdentityViewController.xib */; };
@@ -477,17 +466,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3ABA7AAD1B1B253E00E8E892 /* Accelerate.framework in Frameworks */,
-				3A38091D1B0F8AE300042A67 /* libz.dylib in Frameworks */,
-				3A9CE56718E0CA2A007A26CD /* MessageUI.framework in Frameworks */,
-				3A994275184B8CBB004B6E05 /* MobileCoreServices.framework in Frameworks */,
-				3A994273184B8CB4004B6E05 /* CoreText.framework in Frameworks */,
-				3A994271184B8CAB004B6E05 /* QuartzCore.framework in Frameworks */,
-				3A99426F184B8CA6004B6E05 /* ImageIO.framework in Frameworks */,
-				3A99426D184B8C9E004B6E05 /* libxml2.dylib in Frameworks */,
-				3A3622641849320C007F2854 /* CoreGraphics.framework in Frameworks */,
-				3A3622661849320C007F2854 /* UIKit.framework in Frameworks */,
-				3A3622621849320C007F2854 /* Foundation.framework in Frameworks */,
 				BDF6E1A45BDD2269ED47E09D /* Pods_NetDeck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
