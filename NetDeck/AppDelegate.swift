@@ -10,15 +10,11 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-/*
- TODOs
- browser: allow all know sets?
- use icon font for special symbols, including rendererd html text
- prepare for nrdb api changes?
- improve startup time
- make TableData type-safe (ie, rewrite all users in Swift)
-*/
-
+// TODO: browser: allow all know sets?
+// TODO: use icon font for special symbols, including rendererd html text
+// TODO: prepare for nrdb api changes?
+// TODO: improve startup time
+// TODO: make TableData type-safe (ie, rewrite all users in Swift)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
