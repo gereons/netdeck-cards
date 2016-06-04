@@ -83,7 +83,7 @@
     self.factionNames = [NSArray arrayWithArray:factions];
     
     self.selectedIndexPath = nil;
-    NSSet* disabledSetCodes = [CardSets disabledSetCodes];
+    NSSet* disabledSetCodes = [PackManager disabledPackCodes];
     
     NSArray* identities = [CardManager identitiesForRole:self.role];
     for (int i=0; i<factions.count; ++i)

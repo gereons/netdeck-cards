@@ -8,25 +8,6 @@
 
 class CardUpdateCheck: NSObject {
     
-    class func __checkCardsAvailable(vc: UIViewController) -> Bool {
-
-        // check if card data is available at all, and if so, if it maybe needs an update
-        if !CardManager.cardsAvailable() || !CardSets.setsAvailable() {
-            let msg = "To use this app, you must first download card data.".localized()
-            let alert = UIAlertController.alertWithTitle("No Card Data".localized(), message:msg)
-            
-            alert.addAction(UIAlertAction(title:"Not now".localized(), style:.Default, handler:nil))
-            alert.addAction(UIAlertAction(title:"Download".localized(), style:.Cancel) { (action) -> Void in
-                DataDownload.downloadCardData()
-            })
-    
-            vc.presentViewController(alert, animated:false, completion:nil)
-            return true
-        } else {
-            return CardUpdateCheck.checkCardUpdateAvailable(vc)
-        }
-    }
-
     class func checkCardUpdateAvailable(vc: UIViewController) -> Bool {
         let next = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NEXT_DOWNLOAD)
         
@@ -61,4 +42,5 @@ class CardUpdateCheck: NSObject {
         
         return false
     }
+    
 }

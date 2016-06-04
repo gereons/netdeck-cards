@@ -48,7 +48,7 @@
         self.modalPresentationStyle = UIModalPresentationFormSheet;
         
         self.errors = [deck checkValidity];
-        self.sets = [CardSets setsUsedInDeck:deck];
+        self.sets = [PackManager packsUsedInDeck:deck];
         self.costStats = [[CostStats alloc] initWithDeck:deck];
         self.strengthStats = [[StrengthStats alloc] initWithDeck:deck];
         self.cardTypeStats = [[CardTypeStats alloc] initWithDeck:deck];
@@ -225,7 +225,7 @@
                 }
                 else if (indexPath.row == self.errors.count)
                 {
-                    cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [CardSets mostRecentSetUsedInDeck:self.deck]];
+                    cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [PackManager mostRecentPackUsedInDeck:self.deck]];
                     cell.textLabel.textColor = [UIColor blackColor];
                     [cell.contentView addSubview:self.toggleButton];
                 }
@@ -243,7 +243,7 @@
                         cell.textLabel.text = l10n(@"Deck is valid");
                         break;
                     case 1:
-                        cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [CardSets mostRecentSetUsedInDeck:self.deck]];
+                        cell.textLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), [PackManager mostRecentPackUsedInDeck:self.deck]];
                         [cell.contentView addSubview:self.toggleButton];
                         break;
                     default:

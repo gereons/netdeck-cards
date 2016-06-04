@@ -1,5 +1,5 @@
 //
-//  CardSets.swift
+//  PackManager.swift
 //  NetDeck
 //
 //  Created by Gereon Steffens on 15.11.15.
@@ -8,22 +8,34 @@
 
 import SwiftyJSON
 
-@objc class CardSet: NSObject {
-    var name: String!
-    var setNum: Int = 0             // unique number //TODO: why not cycle*100+number?
-    var setCode: String!
-    var settingsKey: String!
-    var cycle: NRCycle = .None
-    var released = false
+class Cycle {
+    var name = ""
+    var code = ""
+    var position = 0
 }
 
-@objc class CardSets: NSObject {
+@objc class Pack: NSObject {
+    var name = ""
+    var code = ""
+    var cycleCode = ""
+    var position = 0
+    var released = false
+    var settingsKey = ""
+}
+
+@objc class PackManager: NSObject {
     static let DRAFT_SET_CODE = "draft"
     static let CORE_SET_CODE = "core"
     static let UNKNOWN_SET = "unknown"
-    static let setsFilename = "nrsets.json"
     
-    static var allCardSets = [Int: CardSet]()       // all known sets: map setNum: cardset
+    static let cyclesFilename = "nrcycles2.json"
+    static let packsFilename = "nrpacks2.json"
+    
+    static var cyclesByCode = [String: Cycle]()     // code -> cycle
+    static var allCycles = [Int: Cycle]()           // position -> cycles
+    static var packsByCode = [String: Pack]()       // code -> pack
+    static var allPacks = [Pack]()
+
     static var code2number = [String: Int]()        // map code -> number
     static var code2name = [String: String]()       // map code -> name
     static var setGroups = [String]()               // section names: 0=empty/any 1=core+deluxe, plus one for each cycle
@@ -31,7 +43,7 @@ import SwiftyJSON
     static var keysPerCycle = [NRCycle: [String]]()    // "use_xyz" settings keys, per cycle
     
     // caches
-    static var disabledSets: Set<String>?           // set of setCodes
+    static var disabledPacks: Set<String>?          // set of pack codes
     static var enabledSets: TableData!
     
     // map of NRDB's "cyclenumber" values to our NRCycle values
@@ -49,56 +61,117 @@ import SwiftyJSON
         11: .Flashpoint
     ]
     
-    class func pathname() -> String {
+    class func packsPathname() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]
         
-        return supportDirectory.stringByAppendingPathComponent(CardSets.setsFilename)
+        return supportDirectory.stringByAppendingPathComponent(PackManager.packsFilename)
+    }
+    
+    class func cyclesPathname() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+        let supportDirectory = paths[0]
+        
+        return supportDirectory.stringByAppendingPathComponent(PackManager.cyclesFilename)
     }
     
     class func removeFiles() {
         let fileMgr = NSFileManager.defaultManager()
-        _ = try? fileMgr.removeItemAtPath(pathname())
+        _ = try? fileMgr.removeItemAtPath(packsPathname())
+        _ = try? fileMgr.removeItemAtPath(cyclesPathname())
     
         CardManager.initialize()
     }
     
-    class func setupFromFiles() -> Bool {
-        let setsFile = pathname()
+    class func setupFromFiles(language: String) -> Bool {
+        let packsFile = packsPathname()
+        let cyclesFile = cyclesPathname()
     
         let fileMgr = NSFileManager.defaultManager()
-        if fileMgr.fileExistsAtPath(setsFile) {
-            if let array = NSArray(contentsOfFile: setsFile) {
-                let json = JSON(array)
-                return setupFromJsonData(json)
-            } else if let str = try? NSString(contentsOfFile: setsFile, encoding: NSUTF8StringEncoding) {
-                let json = JSON.parse(str as String)
-                return setupFromJsonData(json)
+        
+        if fileMgr.fileExistsAtPath(packsFile) && fileMgr.fileExistsAtPath(cyclesFile){
+            let packsStr = try? NSString(contentsOfFile: packsFile, encoding: NSUTF8StringEncoding)
+            let cyclesStr = try? NSString(contentsOfFile: cyclesFile, encoding: NSUTF8StringEncoding)
+            
+            if packsStr != nil && cyclesStr != nil {
+                let packsJson = JSON.parse(packsStr! as String)
+                let cyclesJson = JSON.parse(cyclesStr! as String)
+                return setupFromJsonData(cyclesJson, packsJson, language: language)
             }
         }
                 
         return false
     }
     
-    class func setupFromNrdbApi(json: JSON) -> Bool {
-        let setsFile = pathname()
-        if let data = try? json.rawData() {
-            data.writeToFile(setsFile, atomically:true)
+    class func setupFromNetrunnerDb(cycles: JSON, _ packs: JSON, language: String) -> Bool {
+        let packsFile = packsPathname()
+        if let data = try? packs.rawData() {
+            data.writeToFile(packsFile, atomically:true)
         }
-    
-        AppDelegate.excludeFromBackup(setsFile)
-    
-        return setupFromJsonData(json)
+        AppDelegate.excludeFromBackup(packsFile)
+        
+        let cyclesFile = cyclesPathname()
+        if let data = try? cycles.rawData() {
+            data.writeToFile(cyclesFile, atomically:true)
+        }
+        AppDelegate.excludeFromBackup(cyclesFile)
+        
+        return setupFromJsonData(cycles, packs, language: language)
     }
 
-    class func setupFromJsonData(json: JSON) -> Bool {
-        allCardSets = [Int: CardSet]()
+    class func setupFromJsonData(cycles: JSON, _ packs: JSON, language: String) -> Bool {
+        cyclesByCode = [String: Cycle]()     // code -> cycle
+        allCycles = [Int: Cycle]()           // position -> cycles
+        packsByCode = [String: Pack]()       // code -> pack
+        allPacks = [Pack]()
+        
+        let ok = cycles.validNrdbResponse && packs.validNrdbResponse
+        if !ok {
+            return false
+        }
+        
+        for cycle in cycles["data"].arrayValue {
+            let c = Cycle()
+            c.name = cycle.localized("name", language)
+            c.position = cycle["position"].intValue
+            c.code = cycle["code"].stringValue
+            
+            cyclesByCode[c.code] = c
+            allCycles[c.position] = c
+        }
+        
+        for pack in packs["data"].arrayValue {
+            let p = Pack()
+            p.name = pack.localized("name", language)
+            p.code = pack["code"].stringValue
+            p.position = pack["position"].intValue
+            p.cycleCode = pack["cycle_code"].stringValue
+            p.settingsKey = "use_" + p.code
+            p.released = pack["date_release"].string != nil
+            
+            packsByCode[p.code] = p
+            allPacks.append(p)
+        }
+        
+        // sort packs in release order
+        allPacks.sortInPlace { p1, p2 in
+            let c1 = cyclesByCode[p1.cycleCode]?.position ?? -1
+            let c2 = cyclesByCode[p2.cycleCode]?.position ?? -1
+            if c1 == c2 {
+                return p1.position < p2.position
+            } else {
+                return c1 < c2
+            }
+        }
+        
 
+        /*
+        let json = cycles
         for set in json.arrayValue {
-            let cs = CardSet()
+            let cs = Pack()
             
             if let code = set["code"].string {
-                cs.setCode = code
+                cs.code = code
             } else {
                 continue
             }
@@ -184,25 +257,26 @@ import SwiftyJSON
         }
         
         NSUserDefaults.standardUserDefaults().registerDefaults(CardSets.settingsDefaults())
+        */
+        
         return true
     }
     
-    class func setsAvailable() -> Bool {
-        return allCardSets.count > 0
+    class func packsAvailable() -> Bool {
+        return allPacks.count > 0
     }
     
     class func nameForKey(key: String) -> String? {
-        let sets = allCardSets.values
-        if let index = sets.indexOf({$0.settingsKey == key}) {
-            return sets[index].name
+        if let index = allPacks.indexOf({$0.settingsKey == key}) {
+            return allPacks[index].name
         }
         return nil
     }
 
     class func settingsDefaults() -> [String: Bool] {
         var defaults = [String: Bool]()
-        for cs in allCardSets.values {
-            defaults[cs.settingsKey] = cs.released
+        for pack in allPacks {
+            defaults[pack.settingsKey] = pack.released
         }
         return defaults
     }
@@ -218,13 +292,13 @@ import SwiftyJSON
         return keysPerCycle[cycle]
     }
     
-    class func disabledSetCodes() -> Set<String> {
-        if disabledSets == nil {
+    class func disabledPackCodes() -> Set<String> {
+        if disabledPacks == nil {
             var disabled = Set<String>()
             let settings = NSUserDefaults.standardUserDefaults()
-            for cs in allCardSets.values {
-                if !settings.boolForKey(cs.settingsKey) {
-                    disabled.insert(cs.setCode)
+            for pack in allPacks {
+                if !settings.boolForKey(pack.settingsKey) {
+                    disabled.insert(pack.code)
                 }
             }
     
@@ -232,20 +306,20 @@ import SwiftyJSON
                 disabled.insert(DRAFT_SET_CODE)
             }
     
-            disabledSets = disabled
+            disabledPacks = disabled
         }
     
-        return disabledSets!
+        return disabledPacks!
     }
     
-    class func clearDisabledSets() {
-        disabledSets = nil
+    class func clearDisabledPacks() {
+        disabledPacks = nil
         enabledSets = nil
     }
 
-    class func allEnabledSetsForTableview() -> TableData {
+    class func allEnabledPacksForTableview() -> TableData {
         if (enabledSets == nil) {
-            let disabledSetCodes = CardSets.disabledSetCodes()
+            let disabledSetCodes = PackManager.disabledPackCodes()
             var sections = setGroups
             var setNames = [[String]]()
             var collapsed = [Bool]()
@@ -261,7 +335,7 @@ import SwiftyJSON
                     else {
                         let cs = allCardSets[setNum]!
                         let setName = cs.name
-                        if setName != nil && !disabledSetCodes.contains(cs.setCode) {
+                        if !disabledSetCodes.contains(cs.code) {
                             names.append(setName)
                         }
                     }
@@ -295,25 +369,23 @@ import SwiftyJSON
         return enabledSets
     }
 
-    class func allKnownSetsForTableview() -> TableData {
+    class func allKnownPacksForTableview() -> TableData {
         var sections = setGroups
         sections.removeAtIndex(0)
         
-        var knownSets = [[CardSet]]()
+        var knownSets = [[Pack]]()
 
         let cycles = setsPerGroup.keys.sort { $0.rawValue < $1.rawValue }
         for cycle in cycles {
             let setNumbers = setsPerGroup[cycle]!
-            var sets = [CardSet]()
+            var sets = [Pack]()
             for setNum in setNumbers {
                 if setNum == 0 {
                     continue
                 }
                 
                 let cs = allCardSets[setNum]!
-                if cs.name != nil {
-                    sets.append(cs)
-                }
+                sets.append(cs)
             }
             if sets.count > 0 {
                 knownSets.append(sets)
@@ -325,7 +397,7 @@ import SwiftyJSON
         return TableData(sections:sections, andValues:knownSets)
     }
     
-    class func setsUsedInDeck(deck: Deck) -> [String] {
+    class func packsUsedInDeck(deck: Deck) -> [String] {
         var setsUsed = [String: Int]()
         var cardsUsed = [String: Int]()
         var setNums = [String: Int]()
@@ -375,7 +447,7 @@ import SwiftyJSON
         return result
     }
     
-    class func mostRecentSetUsedInDeck(deck: Deck) -> String {
+    class func mostRecentPackUsedInDeck(deck: Deck) -> String {
         var maxRelease = 0
         
         for cc in deck.allCards {
@@ -384,8 +456,8 @@ import SwiftyJSON
             }
         }
         
-        for cs in allCardSets.values {
-            if cs.setNum == maxRelease {
+        for pack in allPacks {
+            if true { // cs.setNum == maxRelease {
                 return cs.name
             }
         }

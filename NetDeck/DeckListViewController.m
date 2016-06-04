@@ -1040,7 +1040,7 @@
     self.footerLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
     self.footerLabel.text = footer;
     
-    NSString* set = [CardSets mostRecentSetUsedInDeck:self.deck];
+    NSString* set = [PackManager mostRecentPackUsedInDeck:self.deck];
     if (set)
     {
         self.lastSetLabel.text = [NSString stringWithFormat:l10n(@"Cards up to %@"), set];

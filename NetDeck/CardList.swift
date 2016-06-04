@@ -98,7 +98,7 @@ class CardList: NSObject {
     }
     
     func filterDeselectedSets() {
-        let disabledSetCodes = CardSets.disabledSetCodes()
+        let disabledSetCodes = PackManager.disabledPackCodes()
         let predicate = NSPredicate(format: "!(setCode in %@)", disabledSetCodes)
         applyPredicate(predicate)
     }

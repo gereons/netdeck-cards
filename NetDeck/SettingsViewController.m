@@ -41,7 +41,7 @@
 -(void) refresh
 {
     NSMutableSet* hiddenKeys = [NSMutableSet set];
-    if (![CardManager cardsAvailable] || ![CardSets setsAvailable])
+    if (![CardManager cardsAvailable] || ![PackManager packsAvailable])
     {
         [hiddenKeys addObjectsFromArray:@[ @"sets_hide_1", @"sets_hide_2" ]];
     }
@@ -213,7 +213,7 @@
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Yes") handler:^(UIAlertAction * action) {
             [[ImageCache sharedInstance] clearCache];
             [CardManager removeFiles];
-            [CardSets removeFiles];
+            [PackManager removeFiles];
             [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.LAST_DOWNLOAD];
             [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.NEXT_DOWNLOAD];
             [self refresh];
@@ -249,7 +249,7 @@
 
     [SVProgressHUD showWithStatus:l10n(@"Testing...")];
 
-    NSString* nrdbUrl = [NSString stringWithFormat:@"https://%@/api/cards/", nrdbHost];
+    NSString* nrdbUrl = [NSString stringWithFormat:@"https://%@/api/2.0/public/card/01001", nrdbHost];
     
     [DataDownload checkNrdbApi:nrdbUrl completion:^(BOOL ok) {
         [self finishApiTests:ok];

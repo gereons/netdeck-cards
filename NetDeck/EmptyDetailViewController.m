@@ -22,7 +22,7 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTileLight]];
     
-    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [PackManager packsAvailable];
     self.emptyDataSetView.hidden = cardsAvailable;
     self.spinner.hidden = !cardsAvailable;
     

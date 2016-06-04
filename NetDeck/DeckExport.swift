@@ -155,7 +155,7 @@ enum ExportFormat {
         if deck.identity?.role == .Corp {
             s += "\(deck.agendaPoints) agenda points" + eol
         }
-        let set = CardSets.mostRecentSetUsedInDeck(deck)
+        let set = PackManager.mostRecentPackUsedInDeck(deck)
         s += "Cards up to \(set)" + eol
         
         s += eol + "Deck built with " + self.link(APP_NAME, APP_URL, fmt) + eol

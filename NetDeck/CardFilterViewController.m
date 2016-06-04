@@ -633,7 +633,7 @@ static NSInteger viewMode = VIEW_LIST;
 -(void) setClicked:(UIButton*)sender
 {
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
-    [CardFilterPopover showFromButton:sender inView:self entries:[CardSets allEnabledSetsForTableview] type:@"Set" selected:selected];
+    [CardFilterPopover showFromButton:sender inView:self entries:[PackManager allEnabledPacksForTableview] type:@"Set" selected:selected];
 }
 
 -(void) subtypeClicked:(UIButton*)sender

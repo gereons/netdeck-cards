@@ -20,6 +20,8 @@ class NRDB: NSObject {
     
     static let FIVE_MINUTES: NSTimeInterval = 300 // in seconds
     
+    static let supportedApiVersion = 2
+    
     static let sharedInstance = NRDB()
     override private init() {}
     
@@ -454,5 +456,21 @@ class NRDB: NSObject {
     
     func deleteDeck(deckId: String?) {
         self.deckMap.removeValueForKey(deckId ?? "")
+    }
+}
+
+extension JSON {
+    var validNrdbResponse: Bool {
+        let version = self["version_number"].intValue
+        let success = self["success"].boolValue
+        return success && version == NRDB.supportedApiVersion
+    }
+    
+    func localized(property: String, _ language: String) -> String {
+        let value = self[property].stringValue
+        if let localized = self["_locale"][language][property].string where localized.length > 0 {
+            return localized
+        }
+        return value
     }
 }

@@ -22,7 +22,7 @@
 {
     if ((self = [super init]))
     {
-        TableData* td = [CardSets allKnownSetsForTableview];
+        TableData* td = [PackManager allKnownPacksForTableview];
         self.sections = td.sections.mutableCopy;
         self.values = td.values.mutableCopy;
         
@@ -31,7 +31,7 @@
             self.sections[0] = l10n(@"Core Set and Deluxe Expansions");
             
             // add "number of core sets" entry
-            CardSet* numCores = [[CardSet alloc] init];
+            Pack* numCores = [[Pack alloc] init];
             numCores.name = l10n(@"Number of Core Sets");
             numCores.settingsKey = SettingsKeys.NUM_CORES;
             NSMutableArray* arr = [self.values[0] mutableCopy];
@@ -40,7 +40,7 @@
             
             // add section for draft/unpublished ids
             [self.sections insertObject:l10n(@"Draft Identities") atIndex:1];
-            CardSet* draft = [[CardSet alloc] init];
+            Pack* draft = [[Pack alloc] init];
             draft.name = l10n(@"Include Draft Identities");
             draft.settingsKey = SettingsKeys.USE_DRAFT_IDS;
             
@@ -49,9 +49,9 @@
             // wtf. very rarely, there is no set data. and I have no idea why or how to reproduce :(
             // see crashlytics #102/#143/#155
             self.sections = @[ @"" ].mutableCopy;
-            CardSet* cs = [[CardSet alloc] init];
+            Pack* cs = [[Pack alloc] init];
             cs.name = l10n(@"No Card Data");
-            cs.settingsKey = nil;
+            cs.settingsKey = @"";
             self.values = @[ @[ cs ] ].mutableCopy;
         }
     }
@@ -136,7 +136,7 @@
         NRCycle cycle = section - 1; // section 2 == Genesis
         NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
         BOOL on = NO;
-        for (NSString* key in [CardSets keysForCycle:cycle]) {
+        for (NSString* key in [PackManager keysForCycle:cycle]) {
             if ([settings boolForKey:key]) {
                 on = YES;
             }
@@ -155,10 +155,10 @@
 -(void) toggleCycle:(UISwitch*)sender {
     NRCycle cycle = sender.tag;
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    for (NSString* key in [CardSets keysForCycle:cycle]) {
+    for (NSString* key in [PackManager keysForCycle:cycle]) {
         [settings setBool:sender.on forKey:key];
     }
-    [CardSets clearDisabledSets];
+    [PackManager clearDisabledPacks];
     [self.tableView reloadData];
 }
 
@@ -172,7 +172,7 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    CardSet* cs = [self.values objectAtIndexPath:indexPath];
+    Pack* cs = [self.values objectAtIndexPath:indexPath];
 
     cell.textLabel.text = cs.name;
     cell.accessoryView = nil;
@@ -190,7 +190,7 @@
     } else if (cs.settingsKey != nil) {
         NRSwitch* setSwitch = [[NRSwitch alloc] initWithHandler:^(BOOL on) {
             [settings setBool:on forKey:cs.settingsKey];
-            [CardSets clearDisabledSets];
+            [PackManager clearDisabledPacks];
         }];
         setSwitch.on = [settings boolForKey:cs.settingsKey];
         cell.accessoryView = setSwitch;

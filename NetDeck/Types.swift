@@ -9,10 +9,10 @@
 @objc enum NRCardType: Int {
     case None = -1
     case Identity
-        
+
     // corp
     case Agenda, Asset, Upgrade, Operation, Ice
-    
+
     // runner
     case Event, Hardware, Resource, Program
 }

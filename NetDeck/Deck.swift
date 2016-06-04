@@ -239,7 +239,7 @@ import Foundation
         } else {
             self.identityCc = nil
         }
-        self.isDraft = identity?.setCode == CardSets.DRAFT_SET_CODE
+        self.isDraft = identity?.setCode == PackManager.DRAFT_SET_CODE
     }
     
     func indexOfCardCode(code: String) -> Int? {
