@@ -81,12 +81,11 @@ import SwiftyJSON
         CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
         ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])
     
-   
     private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
-    private(set) var code: String!
-    private(set) var name: String!              // localized name of card, used for display
-    private(set) var englishName: String!       // english name of card, used for searches
+    private(set) var code = ""
+    private(set) var name = ""                  // localized name of card, used for display
+    private(set) var englishName = ""           // english name of card, used for searches
     private(set) var alias: String?
     private(set) var text = ""
     private(set) var flavor = ""
@@ -108,7 +107,7 @@ import SwiftyJSON
     private(set) var quantity = -1              // number of cards in set
     private(set) var number = -1                // card no. in set
     private(set) var packCode = ""
-    private(set) var setNumber = -1             // our own internal set number, for sorting by set release
+    private(set) var packNumber = -1            // our own internal pack number, for sorting by pack release
     private(set) var unique = false
     private(set) var maxPerDeck = -1            // how many may be in deck? currently either 1, 3 or 6
     
@@ -124,9 +123,9 @@ import SwiftyJSON
     private var roleCode = ""
     private var typeCode = ""
     
-    var typeStr: String { return self.typeCode.localized() }
-    var factionStr: String { return self.factionCode.localized() }
-    var roleStr: String { return self.roleCode.localized() }
+    var typeStr: String { return Translation.forTerm(self.typeCode, language: Card.currentLanguage) }
+    var factionStr: String { return Translation.forTerm(self.factionCode, language: Card.currentLanguage) }
+    var roleStr: String { return Translation.forTerm(self.roleCode, language: Card.currentLanguage) }
 
     var packName: String {
         return PackManager.packsByCode[self.packCode]?.name ?? ""
@@ -138,8 +137,16 @@ import SwiftyJSON
             .stringByReplacingOccurrencesOfString("{code}", withString: self.code)
     }
     
-    private(set) var ancurLink: String?
-    private(set) var nrdbLink: String = "" // c.nrdbLink = "https://netrunnerdb.com/" + language + "/card/" + c.code
+    var ancurLink: String {
+        let wikiName = self.englishName
+            .stringByReplacingOccurrencesOfString(" ", withString: "_")
+            .stringByAddingPercentEncodingWithAllowedCharacters(.URLPathAllowedCharacterSet()) ?? self.englishName
+        return "http://ancur.wikia.com/wiki/" + wikiName
+    }
+    
+    var nrdbLink: String {
+        return "https://netrunnerdb.com/" + Card.currentLanguage + "/card/" + self.code
+    }
     
     static private var imgSrcTemplate = ""
     static private var currentLanguage = ""
@@ -258,7 +265,7 @@ import SwiftyJSON
         
         c.code = json["code"].stringValue
         c.englishName = json["title"].stringValue
-        c.name = c.englishName
+        c.name = json.localized("title", language)
         
         c.factionCode = json["faction_code"].stringValue
         c.faction = Codes.factionForCode(c.factionCode)
@@ -273,12 +280,8 @@ import SwiftyJSON
             c.name = c.shortIdentityName(c.name, forRole: c.role, andFaction: c.factionStr)
         }
         
-        if let text = json["text"].string {
-            c.text = text
-        }
-        if let flavor = json["flavor"].string {
-            c.flavor = flavor
-        }
+        c.text = json.localized("text", language)
+        c.flavor = json.localized("flavor", language)
         
         c.packCode = json["pack_code"].stringValue
         if c.packCode == "" {
@@ -289,12 +292,10 @@ import SwiftyJSON
             c.faction = .Neutral
         }
         
-        c.setNumber = PackManager.setNumForCode(c.packCode)
+        c.packNumber = PackManager.packNumberForCode(c.packCode)
         c.isCore = c.packCode == PackManager.CORE_SET_CODE
         
-        if let subtype = json["keywords"].string {
-            c.subtype = subtype
-        }
+        c.subtype = json.localized("keywords", language)
         if c.subtype.length > 0 {
             let split = self.subtypeSplit(c.subtype)
             c.subtype = split.subtype
@@ -337,10 +338,6 @@ import SwiftyJSON
             c.maxPerDeck = 1
         }
         
-//        let language = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.LANGUAGE) ?? "en"
-//        c.nrdbLink = "https://netrunnerdb.com/" + language + "/card/" + c.code
-        
-        
         c.isAlliance = c.subtype.lowercaseString.containsString("alliance")
         c.isVirtual = c.subtype.lowercaseString.containsString("virtual")
         if c.type == .Ice {
@@ -370,9 +367,12 @@ import SwiftyJSON
 //    }
     
     private class func subtypeSplit(subtype: String) -> (subtype: String, subtypes: [String]) {
-        var s = subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")
-        s = s.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
-        var subtypes = s.componentsSeparatedByString(" - ")
+        let s = subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")
+        let t = s.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
+        if s != t {
+            print("dashes found!")
+        }
+        var subtypes = t.componentsSeparatedByString(" - ")
         for i in 0 ..< subtypes.count {
             subtypes[i] = subtypes[i].trim()
         }

@@ -259,7 +259,7 @@ import Foundation
             let c2 = cc2.card
             
             if self.sortType == .BySetType || self.sortType == .BySetNum {
-                if c1.setNumber != c2.setNumber { return c1.setNumber < c2.setNumber }
+                if c1.packNumber != c2.packNumber { return c1.packNumber < c2.packNumber }
             }
             if self.sortType == .ByFactionType {
                 if c1.faction != c2.faction { return c1.faction.rawValue < c2.faction.rawValue }

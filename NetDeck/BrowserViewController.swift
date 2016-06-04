@@ -270,7 +270,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 let alert = UIAlertController.alertWithTitle(nil, message: msg)
                 alert.addAction(UIAlertAction(title:"ANCUR".localized()) { action in
-                    if let ancur = card.ancurLink, url = NSURL(string: ancur) {
+                    if let url = NSURL(string: card.ancurLink) {
                         UIApplication.sharedApplication().openURL(url)
                     }
                 })

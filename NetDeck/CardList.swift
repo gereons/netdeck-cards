@@ -352,8 +352,8 @@ class CardList: NSObject {
                 if c1.factionStr < c2.factionStr { return true }
                 if c1.factionStr > c2.factionStr { return false }
             case .BySet, .BySetType, .BySetFaction:
-                if c1.setNumber < c2.setNumber { return true }
-                if c1.setNumber > c2.setNumber { return false }
+                if c1.packNumber < c2.packNumber { return true }
+                if c1.packNumber > c2.packNumber { return false }
             case .BySetNumber:
                 if c1.code < c2.code { return true }
                 if c1.code > c2.code { return false }

@@ -14,6 +14,7 @@ class Cycle {
     var position = 0
 }
 
+// TODO: make this swift-only
 @objc class Pack: NSObject {
     var name = ""
     var code = ""
@@ -35,9 +36,6 @@ class Cycle {
     static var allCycles = [Int: Cycle]()           // position -> cycles
     static var packsByCode = [String: Pack]()       // code -> pack
     static var allPacks = [Pack]()
-
-    static var code2number = [String: Int]()        // map code -> number
-    static var code2name = [String: String]()       // map code -> name
     
     // caches
     static var disabledPacks: Set<String>?          // set of pack codes
@@ -172,9 +170,9 @@ class Cycle {
         return defaults
     }
     
-    class func setNumForCode(code: String) -> Int {
-        if let num = code2number[code] {
-            return num
+    class func packNumberForCode(code: String) -> Int {
+        if let pack = packsByCode[code], cycle = cyclesByCode[pack.cycleCode] {
+            return cycle.position * 1000 + pack.position
         }
         return 0
     }
@@ -253,52 +251,38 @@ class Cycle {
     }
     
     class func packsUsedInDeck(deck: Deck) -> [String] {
-        var setsUsed = [String: Int]()
-        var cardsUsed = [String: Int]()
-        var setNums = [String: Int]()
+        var packsUsed = [String: Int]() // pack code -> number of times used
+        var cardsUsed = [String: Int]() // pack code -> number of cards used
             
         for cc in deck.allCards {
             let code = cc.card.packCode
-            let isCore = cc.card.isCore
             
-            var used = setsUsed[code] ?? 1
-            
-            if isCore && cc.count > Int(cc.card.quantity) {
+            var used = packsUsed[code] ?? 1
+            if cc.count > Int(cc.card.quantity) {
                 let needed = Int(0.5 + Float(cc.count) / Float(cc.card.quantity))
                 if needed > used {
                     used = needed
                 }
             }
+            packsUsed[code] = used
             
-            setsUsed[code] = used
-            if let num = code2number[code] {
-                setNums[cc.card.packCode] = num
-            }
-            
-            var cu = cardsUsed[code] ?? 0
-            cu += cc.count
-            cardsUsed[code] = cu
+            var cardUsed = cardsUsed[code] ?? 0
+            cardUsed += cc.count
+            cardsUsed[code] = cardUsed
         }
-            
-        // NSLog(@"%@ %@", sets, setNums)
-        
-        let keys = setNums.keys
-    
-        let sorted = keys.sort { setNums[$0] < setNums[$1] }
         
         var result = [String]()
-        for code in sorted {
-            let used = cardsUsed[code]!
-            let cards = used == 1 ? "Card".localized() : "Cards".localized()
-            if code == CORE_SET_CODE {
-                let needed = setsUsed[code]
-                result.append(String(format:"%d×%@ - %d %@", needed!, code2name[code]!, used, cards))
-            }
-            else {
-                result.append(String(format:"%@ - %d %@", code2name[code]!, used, cards))
+        for pack in allPacks {
+            if let used = cardsUsed[pack.code], needed = packsUsed[pack.code] {
+                let cards = used == 1 ? "Card".localized() : "Cards".localized()
+                if needed > 1 {
+                    result.append(String(format:"%d×%@ - %d %@", needed, pack.name, used, cards))
+                }
+                else {
+                    result.append(String(format:"%@ - %d %@", pack.name, used, cards))
+                }
             }
         }
-        // NSLog(@"%@", result)
         return result
     }
     
