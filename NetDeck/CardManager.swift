@@ -134,9 +134,11 @@ import SwiftyJSON
     }
     
     class func setupFromFiles(language: String) -> Bool {
-        let cardsFile = CardManager.filename()
+        let filename = CardManager.filename()
         var ok = false
-        if let cardsJson = jsonFromFile(cardsFile) {
+        
+        if let str = try? NSString(contentsOfFile: filename, encoding: NSUTF8StringEncoding) {
+            let cardsJson =  JSON.parse(str as String)
             ok = setupFromJson(cardsJson, language: language)
         }
         
@@ -146,7 +148,11 @@ import SwiftyJSON
     class func setupFromNetrunnerDb(cards: JSON, language: String) -> Bool {
         let ok = setupFromJson(cards, language: language)
         if ok {
-            self.saveToDisk(cards, filename: CardManager.filename())
+            let filename = CardManager.filename()
+            if let data = try? cards.rawData() {
+                data.writeToFile(filename, atomically:true)
+            }
+            AppDelegate.excludeFromBackup(filename)
         }
         return ok
     }
@@ -323,21 +329,5 @@ import SwiftyJSON
         _ = try? fileMgr.removeItemAtPath(filename())
     
         CardManager.initialize()
-    }
-    
-    private class func jsonFromFile(filename: String) -> JSON? {
-        if let array = NSArray(contentsOfFile: filename) {
-            return JSON(array)
-        } else if let str = try? NSString(contentsOfFile: filename, encoding: NSUTF8StringEncoding) {
-            return JSON.parse(str as String)
-        }
-        return nil
-    }
-    
-    private class func saveToDisk(json: JSON, filename: String) {
-        if let data = try? json.rawData() {
-            data.writeToFile(filename, atomically:true)
-        }
-        AppDelegate.excludeFromBackup(filename)
     }
 }

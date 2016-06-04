@@ -164,6 +164,7 @@ class Cycle {
             }
         }
         
+        
 
         /*
         let json = cycles
@@ -318,6 +319,8 @@ class Cycle {
     }
 
     class func allEnabledPacksForTableview() -> TableData {
+        return TableData(values: [""])
+        /*
         if (enabledSets == nil) {
             let disabledSetCodes = PackManager.disabledPackCodes()
             var sections = setGroups
@@ -367,34 +370,36 @@ class Cycle {
         }
         
         return enabledSets
+        */
     }
 
     class func allKnownPacksForTableview() -> TableData {
-        var sections = setGroups
-        sections.removeAtIndex(0)
-        
-        var knownSets = [[Pack]]()
-
-        let cycles = setsPerGroup.keys.sort { $0.rawValue < $1.rawValue }
-        for cycle in cycles {
-            let setNumbers = setsPerGroup[cycle]!
-            var sets = [Pack]()
-            for setNum in setNumbers {
-                if setNum == 0 {
-                    continue
-                }
-                
-                let cs = allCardSets[setNum]!
-                sets.append(cs)
-            }
-            if sets.count > 0 {
-                knownSets.append(sets)
-            }
-        }
-        
-        assert(sections.count == knownSets.count, "count mismatch")
-        
-        return TableData(sections:sections, andValues:knownSets)
+        return TableData(values: [""])
+//        var sections = setGroups
+//        sections.removeAtIndex(0)
+//        
+//        var knownSets = [[Pack]]()
+//
+//        let cycles = setsPerGroup.keys.sort { $0.rawValue < $1.rawValue }
+//        for cycle in cycles {
+//            let setNumbers = setsPerGroup[cycle]!
+//            var sets = [Pack]()
+//            for setNum in setNumbers {
+//                if setNum == 0 {
+//                    continue
+//                }
+//                
+//                let cs = allCardSets[setNum]!
+//                sets.append(cs)
+//            }
+//            if sets.count > 0 {
+//                knownSets.append(sets)
+//            }
+//        }
+//        
+//        assert(sections.count == knownSets.count, "count mismatch")
+//        
+//        return TableData(sections:sections, andValues:knownSets)
     }
     
     class func packsUsedInDeck(deck: Deck) -> [String] {
@@ -448,20 +453,15 @@ class Cycle {
     }
     
     class func mostRecentPackUsedInDeck(deck: Deck) -> String {
-        var maxRelease = 0
+        var maxIndex = 0
         
         for cc in deck.allCards {
-            if let rel = code2number[cc.card.setCode] {
-                maxRelease = max(maxRelease, rel)
+            if let index = allPacks.indexOf({ $0.code == cc.card.setCode}) {
+                maxIndex = max(index, maxIndex)
             }
         }
         
-        for pack in allPacks {
-            if true { // cs.setNum == maxRelease {
-                return cs.name
-            }
-        }
-        return "?"
+        return allPacks[maxIndex].name
     }
 }
 

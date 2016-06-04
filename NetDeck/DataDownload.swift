@@ -118,7 +118,9 @@ class DataDownload: NSObject {
             var ok = !self.downloadStopped && results.count == requests.count
             if ok {
                 ok = PackManager.setupFromNetrunnerDb(results[.Cycles]!, results[.Packs]!, language: language)
-                ok = ok || CardManager.setupFromNetrunnerDb(results[.Cards]!, language: language)
+                if ok {
+                    ok = CardManager.setupFromNetrunnerDb(results[.Cards]!, language: language)
+                }
                 CardManager.setNextDownloadDate()
             }
             
