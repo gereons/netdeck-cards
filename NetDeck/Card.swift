@@ -120,12 +120,10 @@ import SwiftyJSON
     private static let nullInstance = Card()
     
     private var factionCode = ""
-    private var roleCode = ""
     private var typeCode = ""
     
     var typeStr: String { return Translation.forTerm(self.typeCode, language: Card.currentLanguage) }
     var factionStr: String { return Translation.forTerm(self.factionCode, language: Card.currentLanguage) }
-    var roleStr: String { return Translation.forTerm(self.roleCode, language: Card.currentLanguage) }
 
     var packName: String {
         return PackManager.packsByCode[self.packCode]?.name ?? ""
@@ -270,8 +268,8 @@ import SwiftyJSON
         c.factionCode = json["faction_code"].stringValue
         c.faction = Codes.factionForCode(c.factionCode)
         
-        c.roleCode = json["side_code"].stringValue
-        c.role = Codes.roleForCode(c.roleCode)
+        let roleCode = json["side_code"].stringValue
+        c.role = Codes.roleForCode(roleCode)
         
         c.typeCode = json["type_code"].stringValue
         c.type = Codes.typeForCode(c.typeCode)
