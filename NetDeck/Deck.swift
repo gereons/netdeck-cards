@@ -239,7 +239,7 @@ import Foundation
         } else {
             self.identityCc = nil
         }
-        self.isDraft = identity?.setCode == PackManager.DRAFT_SET_CODE
+        self.isDraft = identity?.packCode == PackManager.DRAFT_SET_CODE
     }
     
     func indexOfCardCode(code: String) -> Int? {
@@ -488,7 +488,7 @@ import Foundation
                     section = cc.card.programType!
                 }
             case .BySetType, .BySetNum:
-                section = cc.card.setName
+                section = cc.card.packName
             case .ByFactionType:
                 section = cc.card.factionStr
             }

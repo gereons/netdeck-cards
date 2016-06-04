@@ -105,7 +105,7 @@ class ImageCache: NSObject {
         }
         
         // if we know we don't (or can't) have an image, return a placeholder immediately
-        if card.imageSrc == nil || unavailableImages.contains(key) {
+        if unavailableImages.contains(key) {
             completion(card, ImageCache.placeholderFor(card.role), true)
             return
         }
@@ -154,7 +154,7 @@ class ImageCache: NSObject {
             completion(false)
             return
         }
-        guard let imgUrl = card.imageSrc, url = NSURL(string: imgUrl) else {
+        guard let url = NSURL(string: card.imageSrc) else {
             completion(false)
             return
         }
@@ -188,7 +188,7 @@ class ImageCache: NSObject {
         }
         
         // if we know we don't (or can't) have an image, return a placeholder immediately
-        if card.imageSrc == nil || self.unavailableImages.contains(key) {
+        if self.unavailableImages.contains(key) {
             return false
         }
         
@@ -353,10 +353,6 @@ class ImageCache: NSObject {
     }
     
     private func checkForImageUpdate(card: Card, key: String) {
-        guard let src = card.imageSrc else {
-            return
-        }
-        
         if let checkDate = self.nextCheckDates[key] {
             let now = NSDate()
             if now.timeIntervalSinceReferenceDate < checkDate.timeIntervalSinceReferenceDate {
@@ -366,14 +362,14 @@ class ImageCache: NSObject {
         }
         
         self.NLOG("check for %@", key)
-        let url = NSURL(string: src)
+        let url = NSURL(string: card.imageSrc)
         let request = NSMutableURLRequest(URL: url!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 10)
         let lastModDate = self.lastModifiedDates[key]
         if lastModDate != nil {
             request.setValue(lastModDate, forHTTPHeaderField: "If-Modified-Since")
         }
         
-        self.NLOG("GET %@ If-Modified-Since %@", src, lastModDate ?? "n/a");
+        self.NLOG("GET %@ If-Modified-Since %@", card.imageSrc, lastModDate ?? "n/a");
         Alamofire.request(request).responseImage { response in
             if let img = response.result.value {
                 self.NLOG("GOT %@ status 200")
@@ -390,12 +386,7 @@ class ImageCache: NSObject {
     }
     
     private func downloadImageFor(card: Card, key: String, completion: (Card, UIImage, Bool) -> Void) {
-        guard let src = card.imageSrc else {
-            let img = ImageCache.placeholderFor(card.role)
-            completion(card, img, true)
-            return
-        }
-        
+        let src = card.imageSrc
         Alamofire.request(.GET, src)
             .validate()
             .responseImage { response in

@@ -38,29 +38,11 @@ class Cycle {
 
     static var code2number = [String: Int]()        // map code -> number
     static var code2name = [String: String]()       // map code -> name
-    static var setGroups = [String]()               // section names: 0=empty/any 1=core+deluxe, plus one for each cycle
-    static var setsPerGroup = [NRCycle: [Int]]()    // one array per cycle, contains set numbers in that group
-    static var keysPerCycle = [NRCycle: [String]]()    // "use_xyz" settings keys, per cycle
     
     // caches
     static var disabledPacks: Set<String>?          // set of pack codes
-    static var enabledPacks: TableData!
-    
-    // map of NRDB's "cyclenumber" values to our NRCycle values
-    static let cycleMap: [Int: NRCycle] = [
-        1: .CoreDeluxe,
-        2: .Genesis,
-        3: .CoreDeluxe,
-        4: .Spin,
-        5: .CoreDeluxe,
-        6: .Lunar,
-        7: .CoreDeluxe,
-        8: .SanSan,
-        9: .CoreDeluxe,
-        10: .Mumbad,
-        11: .Flashpoint
-    ]
-    
+    static var enabledPacks: TableData?
+        
     class func packsPathname() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]
@@ -167,100 +149,7 @@ class Cycle {
             }
         }
 
-        /*
-        let json = cycles
-        for set in json.arrayValue {
-            let cs = Pack()
-            
-            if let code = set["code"].string {
-                cs.code = code
-            } else {
-                continue
-            }
-            
-            if cs.setCode == DRAFT_SET_CODE {
-                continue
-            }
-            
-            if let name = set["name"].string {
-                cs.name = name
-            } else {
-                continue
-            }
-            
-            cs.settingsKey = "use_" + cs.setCode
-            
-            if let cycleNumber = set["cyclenumber"].int, let number = set["number"].int {
-                if let cycle = cycleMap[cycleNumber] {
-                    cs.cycle = cycle
-                    cs.setNum = cycleNumber * 100 + number
-                } else {
-                    // new/unknown cycle -> make this the 7th/8th... pack of the last known cycle
-                    cs.cycle = NRCycle.lastCycle
-                    cs.setNum = NRCycle.lastCycle.rawValue * 100 + number + 6
-                }
-            }
-            
-            if let available = set["available"].string {
-                cs.released = available.length > 0
-            }
-            
-            allCardSets[cs.setNum] = cs
-            code2name[cs.setCode] = cs.name
-            code2number[cs.setCode] = cs.setNum
-        }
-        
-        setGroups = [String]()
-        setsPerGroup = [NRCycle: [Int]]()
-        setsPerGroup[.CoreDeluxe] = [Int]()
-        keysPerCycle = [NRCycle: [String]]()
-        
-        for key in cycleMap.keys.sort({ $0 < $1 }) {
-            let cycle = cycleMap[key]!
-            if cycle != .CoreDeluxe {
-                setsPerGroup[cycle] = [Int]()
-                let name = "Cycle #\(cycle.rawValue)"
-                setGroups.append(name.localized())
-            }
-        }
-        
-        for cs in allCardSets.values
-        {
-            setsPerGroup[cs.cycle]!.append(cs.setNum)
-            setsPerGroup[cs.cycle]!.sortInPlace { $0<$1 }
-            
-            if cs.cycle.rawValue > setGroups.count {
-                let cycle = "Cycle #\(cs.cycle.rawValue)"
-                setGroups.append(cycle.localized())
-            }
-            
-            if cs.cycle != .CoreDeluxe {
-                var arr = keysPerCycle[cs.cycle] ?? [String]()
-                arr.append(cs.settingsKey)
-                keysPerCycle[cs.cycle] = arr
-            }
-        }
-        
-        setGroups.insert("", atIndex:0)
-        setGroups.insert("Core / Deluxe".localized(), atIndex:1)
-        setsPerGroup[.None] = [Int]()
-        assert(setGroups.count == setsPerGroup.count, "count mismatch")
-        if setGroups.count != setsPerGroup.count {
-            return false
-        }
-        
-        // eliminate cycles where we have an enum value, but no data is available (yet)
-        for cycle in cycleMap.values {
-            let count = setsPerGroup[cycle]!.count
-            if count == 0 {
-                setGroups.removeAtIndex(cycle.rawValue+1)
-                setsPerGroup.removeValueForKey(cycle)
-            }
-        }
-        
-        */
         NSUserDefaults.standardUserDefaults().registerDefaults(PackManager.settingsDefaults())
-        
         return true
     }
     
@@ -290,10 +179,6 @@ class Cycle {
         return 0
     }
     
-    class func keysForCycle(cycle: NRCycle) -> [String]? {
-        return keysPerCycle[cycle]
-    }
-    
     class func disabledPackCodes() -> Set<String> {
         if disabledPacks == nil {
             var disabled = Set<String>()
@@ -320,58 +205,37 @@ class Cycle {
     }
 
     class func allEnabledPacksForTableview() -> TableData {
-        return TableData(values: [""])
-        /*
-        if (enabledSets == nil) {
-            let disabledSetCodes = PackManager.disabledPackCodes()
-            var sections = setGroups
-            var setNames = [[String]]()
-            var collapsed = [Bool]()
+        var sections = [String]()
+        var values = [[String]]()
+        
+        sections.append("")
+        values.append([Constant.kANY])
+        
+        let settings = NSUserDefaults.standardUserDefaults()
+        
+        for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
+            sections.append(cycle.name)
             
-            let keys = setsPerGroup.keys.sort { $0.rawValue < $1.rawValue }
+            let packs = allPacks.filter{ $0.cycleCode == cycle.code && settings.boolForKey($0.settingsKey) }
             
-            for cycle in keys {
-                var names = [String]()
-                for setNum in setsPerGroup[cycle]! {
-                    if setNum == 0 {
-                        names.append(Constant.kANY)
-                    }
-                    else {
-                        let cs = allCardSets[setNum]!
-                        let setName = cs.name
-                        if !disabledSetCodes.contains(cs.code) {
-                            names.append(setName)
-                        }
-                    }
-                }
-                setNames.append(names)
-                // collapse genesis, spin and luna cycle by default
-                switch cycle {
-                case .Genesis, .Spin, .Lunar: collapsed.append(true)
-                default: collapsed.append(false)
-                }
+            if packs.count > 0 {
+                values.append(packs.map({$0.name}))
+            } else {
+                sections.removeLast()
             }
-            
-            assert(collapsed.count == setNames.count)
-            
-            var i = 0
-            while i < setNames.count {
-                let arr = setNames[i]
-                if arr.count == 0 {
-                    setNames.removeAtIndex(i)
-                    sections.removeAtIndex(i)
-                    collapsed.removeAtIndex(i)
-                }
-                else {
-                    i += 1
-                }
-            }
-            enabledSets = TableData(sections:sections, andValues:setNames)
-            enabledSets.collapsedSections = collapsed
         }
         
-        return enabledSets
-        */
+        assert(values.count == sections.count, "count mismatch")
+        
+        let result = TableData(sections: sections, andValues: values)
+        let count = sections.count
+        var collapsedSections = [Bool](count: count, repeatedValue: true)
+        collapsedSections[0] = false
+        if count-1 > 0 { collapsedSections[count-1] = false }
+        if count-2 > 0 { collapsedSections[count-2] = false }
+        
+        result.collapsedSections = collapsedSections
+        return result
     }
 
     class func allKnownPacksForTableview() -> TableData {
@@ -394,7 +258,7 @@ class Cycle {
         var setNums = [String: Int]()
             
         for cc in deck.allCards {
-            let code = cc.card.setCode
+            let code = cc.card.packCode
             let isCore = cc.card.isCore
             
             var used = setsUsed[code] ?? 1
@@ -408,7 +272,7 @@ class Cycle {
             
             setsUsed[code] = used
             if let num = code2number[code] {
-                setNums[cc.card.setCode] = num
+                setNums[cc.card.packCode] = num
             }
             
             var cu = cardsUsed[code] ?? 0
@@ -442,7 +306,7 @@ class Cycle {
         var maxIndex = 0
         
         for cc in deck.allCards {
-            if let index = allPacks.indexOf({ $0.code == cc.card.setCode}) {
+            if let index = allPacks.indexOf({ $0.code == cc.card.packCode}) {
                 maxIndex = max(index, maxIndex)
             }
         }

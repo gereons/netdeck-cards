@@ -80,21 +80,6 @@
     case BySetNumber
 }
 
-@objc enum NRCycle: Int {
-    case None = -1
-    case CoreDeluxe // core, c&c, h&p, o&c, d&d
-    case Genesis
-    case Spin
-    case Lunar
-    case SanSan
-    case Mumbad
-    case Flashpoint
-    
-    static var lastCycle: NRCycle {
-        return .Flashpoint
-    }
-}
-
 @objc enum NRImportSource: Int {
     case None
     case Dropbox

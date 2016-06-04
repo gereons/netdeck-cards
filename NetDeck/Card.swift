@@ -88,33 +88,33 @@ import SwiftyJSON
     private(set) var name: String!              // localized name of card, used for display
     private(set) var englishName: String!       // english name of card, used for searches
     private(set) var alias: String?
-    private(set) var text: String! = ""
-    private(set) var flavor: String! = ""
-    private(set) var type: NRCardType = .None
-    private(set) var subtype: String! = ""      // full subtype string like "Fracter - Icebreaker - AI"
+    private(set) var text = ""
+    private(set) var flavor = ""
+    private(set) var type = NRCardType.None
+    private(set) var subtype = ""               // full subtype string like "Fracter - Icebreaker - AI"
     private(set) var subtypes = [String]()      // array of subtypes like [ "Fracter", "Icebreaker", "AI" ]
-    private(set) var faction: NRFaction = .None
-    private(set) var role: NRRole = .None
-    private(set) var influenceLimit: Int = -1   // for id
-    private(set) var minimumDecksize: Int = -1  // for id
-    private(set) var baseLink: Int = -1         // for runner id
-    private(set) var influence: Int = -1
-    private(set) var mu: Int = -1
-    private(set) var strength: Int = -1
-    private(set) var cost: Int = -1
-    private(set) var advancementCost: Int = -1   // agenda
-    private(set) var agendaPoints: Int = -1      // agenda
-    private(set) var trash: Int = -1
-    private(set) var quantity: Int = -1          // number of cards in set
-    private(set) var number: Int = -1            // card no. in set
-    private(set) var setCode: String!
-    private(set) var setNumber: Int = -1         // our own internal set number, for sorting by set release
-    private(set) var unique: Bool = false
-    private(set) var maxPerDeck: Int = -1        // how many may be in deck? currently either 1, 3 or 6
+    private(set) var faction = NRFaction.None
+    private(set) var role = NRRole.None
+    private(set) var influenceLimit = -1        // for id
+    private(set) var minimumDecksize = -1       // for id
+    private(set) var baseLink = -1              // for runner id
+    private(set) var influence = -1
+    private(set) var mu = -1
+    private(set) var strength = -1
+    private(set) var cost = -1
+    private(set) var advancementCost = -1       // agenda
+    private(set) var agendaPoints = -1          // agenda
+    private(set) var trash = -1
+    private(set) var quantity = -1              // number of cards in set
+    private(set) var number = -1                // card no. in set
+    private(set) var packCode = ""
+    private(set) var setNumber = -1             // our own internal set number, for sorting by set release
+    private(set) var unique = false
+    private(set) var maxPerDeck = -1            // how many may be in deck? currently either 1, 3 or 6
     
-    private(set) var isAlliance: Bool = false
-    private(set) var isVirtual: Bool = false
-    private(set) var isCore: Bool = false       // card is from core set
+    private(set) var isAlliance = false
+    private(set) var isVirtual = false
+    private(set) var isCore = false             // card is from core set
     
     private static var multiIce = [String]()
     
@@ -128,10 +128,21 @@ import SwiftyJSON
     var factionStr: String { return self.factionCode.localized() }
     var roleStr: String { return self.roleCode.localized() }
 
-    private(set) var setName: String!
-    private(set) var imageSrc: String?
+    var packName: String {
+        return PackManager.packsByCode[self.packCode]?.name ?? ""
+    }
+    
+    var imageSrc: String {
+        return Card.imgSrcTemplate
+            .stringByReplacingOccurrencesOfString("{locale}", withString: Card.currentLanguage)
+            .stringByReplacingOccurrencesOfString("{code}", withString: self.code)
+    }
+    
     private(set) var ancurLink: String?
-    private(set) var nrdbLink: String = ""
+    private(set) var nrdbLink: String = "" // c.nrdbLink = "https://netrunnerdb.com/" + language + "/card/" + c.code
+    
+    static private var imgSrcTemplate = ""
+    static private var currentLanguage = ""
     
     class func null() -> Card {
         return nullInstance
@@ -204,8 +215,8 @@ import SwiftyJSON
             let cores = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.NUM_CORES)
             return cores * self.quantity
         }
-        let disabledSets = PackManager.disabledPackCodes()
-        if disabledSets.contains(self.setCode) {
+        let disabledPacks = PackManager.disabledPackCodes()
+        if disabledPacks.contains(self.packCode) {
             return 0
         }
         return self.quantity
@@ -231,7 +242,18 @@ import SwiftyJSON
         }
     }
     
-    class func cardFromJson(json: JSON, language: String) -> Card {
+    class func cardsFromJson(json: JSON, language: String) -> [Card] {
+        var cards = [Card]()
+        imgSrcTemplate = json["imageUrlTemplate"].stringValue
+        currentLanguage = language
+        for cardJson in json["data"].arrayValue {
+            let card = Card.cardFromJson(cardJson, language: language)
+            cards.append(card)
+        }
+        return cards
+    }
+    
+    private class func cardFromJson(json: JSON, language: String) -> Card {
         let c = Card()
         
         c.code = json["code"].stringValue
@@ -258,17 +280,17 @@ import SwiftyJSON
             c.flavor = flavor
         }
         
-        c.setCode = json["pack_code"].stringValue
-        if c.setCode == "" {
-            c.setCode = PackManager.UNKNOWN_SET
-            c.setName = PackManager.UNKNOWN_SET
+        c.packCode = json["pack_code"].stringValue
+        if c.packCode == "" {
+            c.packCode = PackManager.UNKNOWN_SET
+            c.packCode = PackManager.UNKNOWN_SET
         }
-        if c.setCode == PackManager.DRAFT_SET_CODE {
+        if c.packCode == PackManager.DRAFT_SET_CODE {
             c.faction = .Neutral
         }
         
-        c.setNumber = PackManager.setNumForCode(c.setCode)
-        c.isCore = c.setCode == PackManager.CORE_SET_CODE
+        c.setNumber = PackManager.setNumForCode(c.packCode)
+        c.isCore = c.packCode == PackManager.CORE_SET_CODE
         
         if let subtype = json["keywords"].string {
             c.subtype = subtype

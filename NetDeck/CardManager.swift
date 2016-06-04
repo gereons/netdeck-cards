@@ -165,8 +165,8 @@ import SwiftyJSON
         CardManager.initialize()
         
         // parse data
-        for cardJson in cards["data"].arrayValue {
-            let card = Card.cardFromJson(cardJson, language: language)
+        let parsedCards = Card.cardsFromJson(cards, language: language)
+        for card in parsedCards {
             CardManager.addCard(card)
         }
         

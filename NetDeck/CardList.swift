@@ -98,8 +98,8 @@ class CardList: NSObject {
     }
     
     func filterDeselectedSets() {
-        let disabledSetCodes = PackManager.disabledPackCodes()
-        let predicate = NSPredicate(format: "!(setCode in %@)", disabledSetCodes)
+        let disabledPackCodes = PackManager.disabledPackCodes()
+        let predicate = NSPredicate(format: "!(packCode in %@)", disabledPackCodes)
         applyPredicate(predicate)
     }
     
@@ -277,11 +277,11 @@ class CardList: NSObject {
             }
         }
         if self.set?.length > 0 && self.set != Constant.kANY {
-            let predicate = NSPredicate(format:"setName LIKE[cd] %@", self.set!)
+            let predicate = NSPredicate(format:"packName LIKE[cd] %@", self.set!)
             predicates.append(predicate)
         }
         if self.sets?.count > 0 {
-            let predicate = NSPredicate(format:"setName IN %@", self.sets!)
+            let predicate = NSPredicate(format:"packName IN %@", self.sets!)
             predicates.append(predicate)
         }
         if self.cost != -1 {
@@ -402,7 +402,7 @@ class CardList: NSObject {
             case .ByFaction:
                 section = card.factionStr
             default:
-                section = card.setName
+                section = card.packName
             }
             
             if section != prevSection {

@@ -207,7 +207,7 @@ class DataDownload: NSObject {
             let card = self.cards[index]
             
             let downloadNext: (Bool) -> Void = { (ok) in
-                if !ok && card.imageSrc != nil {
+                if !ok {
                     self.downloadErrors += 1
                 }
                 
