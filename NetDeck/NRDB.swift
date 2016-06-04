@@ -25,7 +25,8 @@ class NRDB: NSObject {
     
     private static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+        FIXME("restore time part when issue #4 is resolved")
+        formatter.dateFormat = "yyyy'-'MM'-'dd" // "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
         formatter.timeZone = NSTimeZone(name: "GMT")
         return formatter
     }()
@@ -224,8 +225,9 @@ class NRDB: NSObject {
     
     func decklist(completion: ([Deck]?) -> Void) {
         let accessToken = self.accessToken() ?? ""
-        FIXME("api 2.0")
-        let decksUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/decks?access_token=" + accessToken)!
+    
+        // let decksUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/decks?access_token=" + accessToken)!
+        let decksUrl = NSURL(string: "https://netrunnerdb.com/api/2.0/private/decks?access_token=" + accessToken)!
     
         let request = NSMutableURLRequest(URL: decksUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
 
@@ -276,7 +278,13 @@ class NRDB: NSObject {
     
     func parseDecksFromJson(json: JSON) -> [Deck] {
         var decks = [Deck]()
-        for d in json.arrayValue {
+        
+        if !json.validNrdbResponse {
+            return decks
+        }
+        
+        let data = json["data"]
+        for d in data.arrayValue {
             if let deck = self.parseDeckFromJson(d) {
                 decks.append(deck)
             }
@@ -296,13 +304,9 @@ class NRDB: NSObject {
         deck.lastModified = NRDB.dateFormatter.dateFromString(json["date_update"].stringValue)
         deck.dateCreated = NRDB.dateFormatter.dateFromString(json["date_creation"].stringValue)
         
-        for c in json["cards"].arrayValue {
-            let code = c["card_code"].stringValue
-            let qty = c["qty"].int
-            
-            let card = CardManager.cardByCode(code)
-            if card != nil && qty != nil {
-                deck.addCard(card!, copies:qty!, history: false)
+        for (code, qty) in json["cards"].dictionaryValue {
+            if let card = CardManager.cardByCode(code) {
+                deck.addCard(card, copies:qty.intValue, history: false)
             }
         }
         
