@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 class Translation {
     class func forTerm(term: String, language: String) -> String {
@@ -26,7 +25,7 @@ class Translation {
             "neutral": "Neutral",
             "shaper": "Shaper",
             "sunny-lebeau": "Sunny Lebeau",
-            "weyland-consortium": "Weyland-Konsortium",
+            "weyland-consortium": "Weyland Consortium",
             "agenda": "Agenda",
             "asset": "Asset",
             "event": "Event",
