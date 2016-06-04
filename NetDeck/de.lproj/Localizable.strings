@@ -101,7 +101,7 @@
 "No missing card images" = "Alle Karten-Bilder vorhanden";
 "Image %d of %d" = "Bild %d von %d";
 "Unable to download cards at this time. Please try again later." = "Laden aktuell nicht möglich, bitte versuche es später nochmal.";
-"%d of %lu images could not be downloaded." = "%d von %lu Bildern konnten nicht geladen werden.";
+"%d of %d images could not be downloaded." = "%d von %d Bildern konnten nicht geladen werden.";
 "Clear Cache? You will need to re-download all data." = "Cache löschen? Du musst danach alle Daten neu laden.";
 "An Internet connection is required." = "Internet-Verbindung wird benötigt.";
 "Cards Endpoint URL is not set" = "Cards-URL ist leer";

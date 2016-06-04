@@ -269,11 +269,13 @@ class DeckImport: NSObject {
     }
     
     func doDownloadDeckFromNetrunnerDbList(deckId: String) {
+        FIXME("api 2.0")
         let deckUrl = "https://netrunnerdb.com/api/decklist/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
-    }
     
+    }
     func doDownloadDeckFromNetrunnerDbShared(deckId: String) {
+        FIXME("api 2.0")
         let deckUrl = "https://netrunnerdb.com/api/shareddeck/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     }

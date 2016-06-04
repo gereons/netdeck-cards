@@ -13,7 +13,7 @@ class Translation {
         return data[language]?[term] ?? term.capitalizedString
     }
     
-    static let data = [
+    private static let data = [
         "en": [
             "adam": "Adam",
             "anarch": "Anarch",
@@ -39,7 +39,6 @@ class Translation {
             "runner": "Runner",
             "corp": "Corp"
         ],
-        
         "de": [
             "adam": "Adam",
             "anarch": "Anarchos",
@@ -50,7 +49,7 @@ class Translation {
             "nbn": "NBN",
             "neutral": "Neutral",
             "shaper": "Gestalter",
-            "sunny-lebeau": "SunnyLebeau",
+            "sunny-lebeau": "Sunny Lebeau",
             "weyland-consortium": "Weyland-Konsortium",
             "agenda": "Agenda",
             "asset": "Aktivposten",
@@ -75,7 +74,7 @@ class Translation {
             "nbn": "NBN",
             "neutral": "Neutrales",
             "shaper": "Moldeadores",
-            "sunny-lebeau": "SunnyLebeau",
+            "sunny-lebeau": "Sunny Lebeau",
             "weyland-consortium": "Weyland Consortium",
             "agenda": "Plan",
             "asset": "Ventaja",
@@ -174,7 +173,7 @@ class Translation {
             "nbn": "NBN",
             "neutral": "Neutralne",
             "shaper": "Kształcerze",
-            "sunny-lebeau": "SunnyLebeau",
+            "sunny-lebeau": "Sunny Lebeau",
             "weyland-consortium": "Weyland",
             "agenda": "Projekt",
             "asset": "Aktywa",

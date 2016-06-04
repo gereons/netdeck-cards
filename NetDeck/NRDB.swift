@@ -20,8 +20,6 @@ class NRDB: NSObject {
     
     static let FIVE_MINUTES: NSTimeInterval = 300 // in seconds
     
-    static let supportedApiVersion = 2
-    
     static let sharedInstance = NRDB()
     override private init() {}
     
@@ -226,6 +224,7 @@ class NRDB: NSObject {
     
     func decklist(completion: ([Deck]?) -> Void) {
         let accessToken = self.accessToken() ?? ""
+        FIXME("api 2.0")
         let decksUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/decks?access_token=" + accessToken)!
     
         let request = NSMutableURLRequest(URL: decksUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -256,6 +255,7 @@ class NRDB: NSObject {
         }
         
         assert(deck.netrunnerDbId != nil, "no nrdb id")
+        FIXME("api 2.0")
         let loadUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/load_deck/" + deck.netrunnerDbId! + "?access_token=" + accessToken)!
         
         let request = NSMutableURLRequest(URL: loadUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -386,6 +386,7 @@ class NRDB: NSObject {
         
         let deckId = deck.netrunnerDbId ?? "0"
         
+        FIXME("api 2.0")
         let saveUrl = "https://netrunnerdb.com/api_oauth2/save_deck/" + deckId
         var parameters = [
             "access_token": accessToken,
@@ -408,6 +409,7 @@ class NRDB: NSObject {
     }
     
     func publishDeck(deck: Deck, completion: (Bool, String?) -> Void) {
+        FIXME("api 2.0")
         let publishUrl = "https://netrunnerdb.com/api_oauth2/publish_deck/" + (deck.netrunnerDbId ?? "")
         
         let accessToken = self.accessToken()
@@ -459,18 +461,25 @@ class NRDB: NSObject {
     }
 }
 
+// NRDB-specific JSON extension
+
 extension JSON {
+    
+    static private let supportedNrdbApiVersion = 2
+    
+    // check if this is a valid API response
     var validNrdbResponse: Bool {
         let version = self["version_number"].intValue
         let success = self["success"].boolValue
-        return success && version == NRDB.supportedApiVersion
+        return success && version == JSON.supportedNrdbApiVersion
     }
     
+    // get a localized property from a "data" object
     func localized(property: String, _ language: String) -> String {
-        let value = self[property].stringValue
         if let localized = self["_locale"][language][property].string where localized.length > 0 {
             return localized
+        } else {
+            return self[property].stringValue
         }
-        return value
     }
 }

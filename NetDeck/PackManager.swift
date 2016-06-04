@@ -84,21 +84,23 @@ class Cycle {
     }
     
     class func setupFromNetrunnerDb(cycles: JSON, _ packs: JSON, language: String) -> Bool {
-        let packsFile = packsPathname()
-        if let data = try? packs.rawData() {
-            let ok = data.writeToFile(packsFile, atomically:true)
-            print("write packs ok=\(ok)")
+        let ok = setupFromJsonData(cycles, packs, language: language)
+        if ok {
+            let packsFile = packsPathname()
+            if let data = try? packs.rawData() {
+                let ok = data.writeToFile(packsFile, atomically:true)
+                print("write packs ok=\(ok)")
+            }
+            AppDelegate.excludeFromBackup(packsFile)
+            
+            let cyclesFile = cyclesPathname()
+            if let data = try? cycles.rawData() {
+                let ok = data.writeToFile(cyclesFile, atomically:true)
+                print("write cycles ok=\(ok)")
+            }
+            AppDelegate.excludeFromBackup(cyclesFile)
         }
-        AppDelegate.excludeFromBackup(packsFile)
-        
-        let cyclesFile = cyclesPathname()
-        if let data = try? cycles.rawData() {
-            let ok = data.writeToFile(cyclesFile, atomically:true)
-            print("write cycles ok=\(ok)")
-        }
-        AppDelegate.excludeFromBackup(cyclesFile)
-        
-        return setupFromJsonData(cycles, packs, language: language)
+        return ok
     }
 
     class func setupFromJsonData(cycles: JSON, _ packs: JSON, language: String) -> Bool {
