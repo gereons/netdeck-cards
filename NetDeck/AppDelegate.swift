@@ -42,8 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         let language = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.LANGUAGE) ?? "en"
         setsOk = PackManager.setupFromFiles(language)
+        print("app start, setsOk=\(setsOk)")
         if setsOk {
             cardsOk = CardManager.setupFromFiles(language)
+            print("app start, cardsOk=\(cardsOk)")
         }
         
         if !setsOk || !cardsOk {
@@ -136,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             SettingsKeys.LAST_DOWNLOAD: "never".localized(),
             SettingsKeys.NEXT_DOWNLOAD: "never".localized(),
             
-            SettingsKeys.USE_DRAFT_IDS: true,
+            SettingsKeys.USE_DRAFT: false,
             SettingsKeys.AUTO_SAVE: false,
             SettingsKeys.AUTO_HISTORY: true,
             SettingsKeys.USE_DROPBOX: false,

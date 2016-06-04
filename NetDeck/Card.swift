@@ -124,9 +124,10 @@ import SwiftyJSON
     private var roleCode = ""
     private var typeCode = ""
     
-    private(set) var typeStr: String! = ""
+    var typeStr: String { return self.typeCode.localized() }
     var factionStr: String { return self.factionCode.localized() }
-    private(set) var roleStr: String!
+    var roleStr: String { return self.roleCode.localized() }
+
     private(set) var setName: String!
     private(set) var imageSrc: String?
     private(set) var ancurLink: String?

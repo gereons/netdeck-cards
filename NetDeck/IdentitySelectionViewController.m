@@ -110,7 +110,7 @@
     
     CGPoint oldCenter = self.factionSelector.center;
     
-    BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
+    BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT];
     BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DATA_DESTINY];
     
     if (self.role == NRRoleRunner)
@@ -174,7 +174,7 @@
 
 - (void)initIdentities
 {
-    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
+    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT];
     NSMutableArray* factions;
     
     if (self.selectedFaction == NRFactionNone)

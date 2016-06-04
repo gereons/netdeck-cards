@@ -66,7 +66,7 @@
 
 - (void)initIdentities
 {
-    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
+    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT];
     NSMutableArray* factions = [[Faction factionsForRole:self.role] mutableCopy];
     // remove entries for "none" and "neutral"
     [factions removeObject:[Faction name:NRFactionNone]];

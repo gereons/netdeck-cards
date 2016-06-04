@@ -44,7 +44,7 @@ class Cycle {
     
     // caches
     static var disabledPacks: Set<String>?          // set of pack codes
-    static var enabledSets: TableData!
+    static var enabledPacks: TableData!
     
     // map of NRDB's "cyclenumber" values to our NRCycle values
     static let cycleMap: [Int: NRCycle] = [
@@ -99,20 +99,22 @@ class Cycle {
                 return setupFromJsonData(cyclesJson, packsJson, language: language)
             }
         }
-                
+        print("app start: missing pack/cycles files")
         return false
     }
     
     class func setupFromNetrunnerDb(cycles: JSON, _ packs: JSON, language: String) -> Bool {
         let packsFile = packsPathname()
         if let data = try? packs.rawData() {
-            data.writeToFile(packsFile, atomically:true)
+            let ok = data.writeToFile(packsFile, atomically:true)
+            print("write packs ok=\(ok)")
         }
         AppDelegate.excludeFromBackup(packsFile)
         
         let cyclesFile = cyclesPathname()
         if let data = try? cycles.rawData() {
-            data.writeToFile(cyclesFile, atomically:true)
+            let ok = data.writeToFile(cyclesFile, atomically:true)
+            print("write cycles ok=\(ok)")
         }
         AppDelegate.excludeFromBackup(cyclesFile)
         
@@ -127,6 +129,7 @@ class Cycle {
         
         let ok = cycles.validNrdbResponse && packs.validNrdbResponse
         if !ok {
+            print("cards/packs invalid")
             return false
         }
         
@@ -163,8 +166,6 @@ class Cycle {
                 return c1 < c2
             }
         }
-        
-        
 
         /*
         let json = cycles
@@ -257,8 +258,8 @@ class Cycle {
             }
         }
         
-        NSUserDefaults.standardUserDefaults().registerDefaults(CardSets.settingsDefaults())
         */
+        NSUserDefaults.standardUserDefaults().registerDefaults(PackManager.settingsDefaults())
         
         return true
     }
@@ -303,7 +304,7 @@ class Cycle {
                 }
             }
     
-            if !settings.boolForKey(SettingsKeys.USE_DRAFT_IDS) {
+            if !settings.boolForKey(SettingsKeys.USE_DRAFT) {
                 disabled.insert(DRAFT_SET_CODE)
             }
     
@@ -315,7 +316,7 @@ class Cycle {
     
     class func clearDisabledPacks() {
         disabledPacks = nil
-        enabledSets = nil
+        enabledPacks = nil
     }
 
     class func allEnabledPacksForTableview() -> TableData {
@@ -374,32 +375,17 @@ class Cycle {
     }
 
     class func allKnownPacksForTableview() -> TableData {
-        return TableData(values: [""])
-//        var sections = setGroups
-//        sections.removeAtIndex(0)
-//        
-//        var knownSets = [[Pack]]()
-//
-//        let cycles = setsPerGroup.keys.sort { $0.rawValue < $1.rawValue }
-//        for cycle in cycles {
-//            let setNumbers = setsPerGroup[cycle]!
-//            var sets = [Pack]()
-//            for setNum in setNumbers {
-//                if setNum == 0 {
-//                    continue
-//                }
-//                
-//                let cs = allCardSets[setNum]!
-//                sets.append(cs)
-//            }
-//            if sets.count > 0 {
-//                knownSets.append(sets)
-//            }
-//        }
-//        
-//        assert(sections.count == knownSets.count, "count mismatch")
-//        
-//        return TableData(sections:sections, andValues:knownSets)
+        var sections = [String]()
+        var values = [[Pack]]()
+        
+        for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
+            sections.append(cycle.name)
+            
+            let packs = allPacks.filter{ $0.cycleCode == cycle.code }
+            values.append(packs)
+        }
+        
+        return TableData(sections: sections, andValues: values)
     }
     
     class func packsUsedInDeck(deck: Deck) -> [String] {

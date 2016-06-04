@@ -135,14 +135,13 @@ import SwiftyJSON
     
     class func setupFromFiles(language: String) -> Bool {
         let filename = CardManager.filename()
-        var ok = false
         
         if let str = try? NSString(contentsOfFile: filename, encoding: NSUTF8StringEncoding) {
-            let cardsJson =  JSON.parse(str as String)
-            ok = setupFromJson(cardsJson, language: language)
+            let cardsJson = JSON.parse(str as String)
+            return setupFromJson(cardsJson, language: language)
         }
-        
-        return ok
+        print("app start: missing card file")
+        return false
     }
     
     class func setupFromNetrunnerDb(cards: JSON, language: String) -> Bool {
@@ -150,7 +149,8 @@ import SwiftyJSON
         if ok {
             let filename = CardManager.filename()
             if let data = try? cards.rawData() {
-                data.writeToFile(filename, atomically:true)
+                let ok = data.writeToFile(filename, atomically:true)
+                print("write cards ok=\(ok)")
             }
             AppDelegate.excludeFromBackup(filename)
         }

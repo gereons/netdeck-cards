@@ -27,7 +27,7 @@
     static let LANGUAGE            = "language"
     
     static let NUM_CORES           = "number_coresets"
-    static let USE_DRAFT_IDS       = "use_draft_identities"
+    static let USE_DRAFT           = "use_draft"
     static let USE_DATA_DESTINY    = "use_dad"
     
     static let USE_DROPBOX         = "useDropbox"
