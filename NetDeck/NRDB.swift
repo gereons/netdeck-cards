@@ -25,8 +25,8 @@ class NRDB: NSObject {
     
     private static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        FIXME("restore time part when issue #4 is resolved")
-        formatter.dateFormat = "yyyy'-'MM'-'dd" // "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+        formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ'"
+                            // "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
         formatter.timeZone = NSTimeZone(name: "GMT")
         return formatter
     }()
@@ -225,8 +225,6 @@ class NRDB: NSObject {
     
     func decklist(completion: ([Deck]?) -> Void) {
         let accessToken = self.accessToken() ?? ""
-    
-        // let decksUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/decks?access_token=" + accessToken)!
         let decksUrl = NSURL(string: "https://netrunnerdb.com/api/2.0/private/decks?access_token=" + accessToken)!
     
         let request = NSMutableURLRequest(URL: decksUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -300,7 +298,7 @@ class NRDB: NSObject {
         deck.tags = json["tags"].arrayObject as? [String]
         deck.netrunnerDbId = "\(json["id"].intValue)"
         
-        // parse last update '2014-06-19T13:52:24Z'
+        // parse last update '2014-06-19T13:52:24+00:00'
         deck.lastModified = NRDB.dateFormatter.dateFromString(json["date_update"].stringValue)
         deck.dateCreated = NRDB.dateFormatter.dateFromString(json["date_creation"].stringValue)
         
