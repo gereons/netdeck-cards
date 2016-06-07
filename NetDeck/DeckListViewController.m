@@ -511,9 +511,10 @@
         return;
     }
     
+    NSAssert(self.deck.netrunnerDbId != nil, @"no nrdb deck id");
     [SVProgressHUD showWithStatus:l10n(@"Loading Deck...")];
     
-    [[NRDB sharedInstance] loadDeck:self.deck completion:^(Deck* deck) {
+    [[NRDB sharedInstance] loadDeck:self.deck.netrunnerDbId completion:^(Deck* deck) {
         if (deck == nil) {
             [UIAlertController alertWithTitle:nil message:l10n(@"Loading the deck from NetrunnerDB.com failed.") button:l10n(@"OK")];
         } else {

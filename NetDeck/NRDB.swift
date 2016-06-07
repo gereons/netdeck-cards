@@ -248,15 +248,13 @@ class NRDB: NSObject {
         }
     }
     
-    func loadDeck(deck: Deck, completion: (Deck?) -> Void) {
+    func loadDeck(deckId: String, completion: (Deck?) -> Void) {
         guard let accessToken = self.accessToken() else {
             completion(nil)
             return
         }
         
-        assert(deck.netrunnerDbId != nil, "no nrdb id")
-        FIXME("api 2.0")
-        let loadUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/load_deck/" + deck.netrunnerDbId! + "?access_token=" + accessToken)!
+        let loadUrl = NSURL(string: "https://netrunnerdb.com/api/2.0/private/deck/" + deckId + "?include_history=1&access_token=" + accessToken)!
         
         let request = NSMutableURLRequest(URL: loadUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
         
@@ -274,7 +272,7 @@ class NRDB: NSObject {
         }
     }
     
-    func parseDecksFromJson(json: JSON) -> [Deck] {
+    private func parseDecksFromJson(json: JSON) -> [Deck] {
         var decks = [Deck]()
         
         if !json.validNrdbResponse {
@@ -283,14 +281,23 @@ class NRDB: NSObject {
         
         let data = json["data"]
         for d in data.arrayValue {
-            if let deck = self.parseDeckFromJson(d) {
+            if let deck = self.parseDeckFromData(d) {
                 decks.append(deck)
             }
         }
         return decks
     }
     
-    func parseDeckFromJson(json: JSON) -> Deck? {
+    private func parseDeckFromJson(json: JSON) -> Deck? {
+        if !json.validNrdbResponse {
+            return nil
+        }
+    
+        let data = json["data"][0]
+        return self.parseDeckFromData(data)
+    }
+    
+    private func parseDeckFromData(json: JSON) -> Deck? {
         let deck = Deck()
         
         deck.name = json["name"].string
@@ -309,31 +316,25 @@ class NRDB: NSObject {
         }
         
         var revisions = [DeckChangeSet]()
-        if let history = json["history"].array {
-            for entry in history {
-                let datecreation = entry["date_creation"].string
-                let dcs = DeckChangeSet()
-                dcs.timestamp = NRDB.dateFormatter.dateFromString(datecreation ?? "")
-                
-                let variation = entry["variation"].arrayValue
-                
-                for i in 0..<variation.count {
-                    let mult = i==0 ? 1 : -1
-                    let v = variation[i]
-                    if v.type == .Dictionary {
-                        for (code, qty):(String,JSON) in v {
-                            let amount = mult * qty.intValue
-                            if let _ = CardManager.cardByCode(code) {
-                                dcs.addCardCode(code, copies: amount)
-                            }
+        if let history = json["history"].dictionary {
+            for (date, changes) in history {
+                if let timestamp = NRDB.dateFormatter.dateFromString(date) {
+                    let dcs = DeckChangeSet()
+                    dcs.timestamp = timestamp
+                    
+                    for (code, amount) in changes.dictionaryValue {
+                        if let card = CardManager.cardByCode(code), amount = amount.int {
+                            dcs.addCardCode(card.code, copies: amount)
                         }
                     }
+                    
+                    dcs.sort()
+                    revisions.append(dcs)
                 }
-                
-                dcs.sort()
-                revisions.append(dcs)
             }
         }
+        
+        revisions.sortInPlace { $0.timestamp?.timeIntervalSince1970 ?? 0 < $1.timestamp?.timeIntervalSinceNow ?? 0 }
         
         let initial = DeckChangeSet()
         initial.initial = true
