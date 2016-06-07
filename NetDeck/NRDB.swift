@@ -370,78 +370,77 @@ class NRDB: NSObject {
     
     // MARK: - save / publish
     
+    func publishDeck(deck: Deck, completion: (Bool, String?) -> Void) {
+        guard let accessToken = self.accessToken() else {
+            completion(false, nil)
+            return
+        }
+
+        FIXME("api 2.0")
+        let publishUrl = "https://netrunnerdb.com/api_oauth2/publish_deck/" + (deck.netrunnerDbId ?? "")
+        
+        let parameters = [
+            "access_token": accessToken
+        ]
+        
+        self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)
+    }
+
     func saveDeck(deck: Deck, completion: (Bool, String?) -> Void) {
+        FIXME()
         guard let accessToken = self.accessToken() else {
             completion(false, nil)
             return
         }
         
-        let cards = NSMutableArray()
+        var cards = [String: Int]()
         if let id = deck.identity {
-            let c = [ "card_code": id.code, "qty": 1 ]
-            cards.addObject(c)
+            cards[id.code] = 1
         }
         for cc in deck.cards {
-            let c = [ "card_code": cc.card.code, "qty": cc.count ]
-            cards.addObject(c)
+            cards[cc.card.code] = cc.count
         }
-        let json = JSON(cards)
+        // let json = JSON(cards)
         
-        let deckId = deck.netrunnerDbId ?? "0"
-        
-        FIXME("api 2.0")
-        let saveUrl = "https://netrunnerdb.com/api_oauth2/save_deck/" + deckId
-        var parameters = [
-            "access_token": accessToken,
-            "content": json.rawString() ?? ""
+        var tags = ""
+        if deck.tags != nil {
+            tags = (deck.tags! as NSArray).componentsJoinedByString(" ")
+        }
+        let saveUrl = "https://netrunnerdb.com/api/2.0/private/deck/save?access_token=" + accessToken
+        let parameters: [String: AnyObject] = [
+            // "access_token": accessToken,
+            "deck_id": deck.netrunnerDbId ?? "0",
+            "name": deck.name ?? "Deck",
+            "tags": tags,
+            "description": deck.notes ?? "",
+            // "content": json.rawString(options: []) ?? ""
+            "content": cards
         ]
-        if let notes = deck.notes {
-            parameters["description"] = notes
-        }
-        if let name = deck.name {
-            parameters["name"] = name
-        }
-        if deckId != "0" {
-            parameters["id"] = deckId
-        }
-        if let tags = deck.tags {
-            parameters["tags"] = (tags as NSArray).componentsJoinedByString(" ")
-        }
         
         self.saveOrPublish(saveUrl, parameters: parameters, completion: completion)
     }
     
-    func publishDeck(deck: Deck, completion: (Bool, String?) -> Void) {
-        FIXME("api 2.0")
-        let publishUrl = "https://netrunnerdb.com/api_oauth2/publish_deck/" + (deck.netrunnerDbId ?? "")
-        
-        let accessToken = self.accessToken()
-        let parameters = [
-            "access_token": accessToken ?? ""
-        ]
-        
-        self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)
-    }
-    
-    func saveOrPublish(url: String, parameters: [String:String], completion: (Bool, String?)->Void) {
-        
-        Alamofire.request(.GET, url, parameters: parameters).validate().responseJSON { response in
-            switch response.result {
-            case .Success(let value):
-                let json = JSON(value)
-                let ok = json["success"].boolValue
-                if ok {
-                    let deckId = json["message"]["id"].stringValue
-                    if deckId != "" {
-                        completion(true, deckId)
-                        return
+    func saveOrPublish(url: String, parameters: [String: AnyObject], completion: (Bool, String?)->Void) {
+        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let value):
+                    print("\(value)")
+                    let json = JSON(value)
+                    let ok = json["success"].boolValue
+                    if ok {
+                        let deckId = json["message"]["id"].stringValue
+                        if deckId != "" {
+                            completion(true, deckId)
+                            return
+                        }
                     }
+                case .Failure:
+                    break
                 }
-            case .Failure:
-                break
+                completion(false, nil)
             }
-            completion(false, nil)
-        }
     }
     
     // MARK: - mapping of nrdb ids to filenames
