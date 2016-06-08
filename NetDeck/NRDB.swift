@@ -370,22 +370,6 @@ class NRDB: NSObject {
     
     // MARK: - save / publish
     
-    func publishDeck(deck: Deck, completion: (Bool, String?) -> Void) {
-        guard let accessToken = self.accessToken() else {
-            completion(false, nil)
-            return
-        }
-
-        FIXME("api 2.0")
-        let publishUrl = "https://netrunnerdb.com/api_oauth2/publish_deck/" + (deck.netrunnerDbId ?? "")
-        
-        let parameters = [
-            "access_token": accessToken
-        ]
-        
-        self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)
-    }
-
     func saveDeck(deck: Deck, completion: (Bool, String?) -> Void) {
         guard let accessToken = self.accessToken() else {
             completion(false, nil)
@@ -417,6 +401,22 @@ class NRDB: NSObject {
         self.saveOrPublish(saveUrl, parameters: parameters, completion: completion)
     }
     
+    func publishDeck(deck: Deck, completion: (Bool, String?) -> Void) {
+        guard let accessToken = self.accessToken() else {
+            completion(false, nil)
+            return
+        }
+        
+        let publishUrl = "https://netrunnerdb.com/api/2.0/private/deck/publish?access_token=" + accessToken
+        
+        let parameters = [
+            "deck_id": deck.netrunnerDbId ?? "0",
+            "name": deck.name ?? "Deck"
+        ]
+        
+        self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)
+    }
+
     func saveOrPublish(url: String, parameters: [String: AnyObject], completion: (Bool, String?)->Void) {
         Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON)
             .validate()
