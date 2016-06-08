@@ -387,7 +387,6 @@ class NRDB: NSObject {
     }
 
     func saveDeck(deck: Deck, completion: (Bool, String?) -> Void) {
-        FIXME()
         guard let accessToken = self.accessToken() else {
             completion(false, nil)
             return
@@ -408,12 +407,10 @@ class NRDB: NSObject {
         }
         let saveUrl = "https://netrunnerdb.com/api/2.0/private/deck/save?access_token=" + accessToken
         let parameters: [String: AnyObject] = [
-            // "access_token": accessToken,
             "deck_id": deck.netrunnerDbId ?? "0",
             "name": deck.name ?? "Deck",
             "tags": tags,
             "description": deck.notes ?? "",
-            // "content": json.rawString(options: []) ?? ""
             "content": cards
         ]
         
@@ -426,11 +423,10 @@ class NRDB: NSObject {
             .responseJSON { response in
                 switch response.result {
                 case .Success(let value):
-                    print("\(value)")
                     let json = JSON(value)
-                    let ok = json["success"].boolValue
+                    let ok = json.validNrdbResponse
                     if ok {
-                        let deckId = json["message"]["id"].stringValue
+                        let deckId = json["data"][0]["id"].stringValue
                         if deckId != "" {
                             completion(true, deckId)
                             return

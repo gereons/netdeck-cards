@@ -259,6 +259,8 @@ static NSString* filterText;
 -(void) importDeckFromNRDB:(NSString*)deckId {
     if (self.source == NRImportSourceNetrunnerDb && deckId != nil)
     {
+        [SVProgressHUD showWithStatus:@"Import Deck"];
+        
         [[NRDB sharedInstance] loadDeck:deckId completion:^(Deck *deck) {
             if (deck) {
                 [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
