@@ -35,23 +35,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             Fabric.with([Crashlytics.self]);
         }
         
-        self.moveFilesFromCacheToAppSupportDirectory()
-        
         self.setBuiltinUserDefaults()
         
         var setsOk = false
         var cardsOk = false
         
-        setsOk = CardSets.setupFromFiles()
+        let language = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.LANGUAGE) ?? "en"
+        setsOk = PackManager.setupFromFiles(language)
+        print("app start, setsOk=\(setsOk)")
         if setsOk {
-            cardsOk = CardManager.setupFromFiles()
+            cardsOk = CardManager.setupFromFiles(language)
+            print("app start, cardsOk=\(cardsOk)")
         }
-        
-        if !setsOk || !cardsOk {
-            CardSets.removeFiles()
-            CardManager.removeFiles()
-        }
-        
+                
         let settings = NSUserDefaults.standardUserDefaults()
         let useNrdb = settings.boolForKey(SettingsKeys.USE_NRDB)
         let keepCredentials = settings.boolForKey(SettingsKeys.KEEP_NRDB_CREDENTIALS)
@@ -106,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     
     func handleShortcutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
     
-        let cardsOk = CardManager.cardsAvailable() && CardSets.setsAvailable()
+        let cardsOk = CardManager.cardsAvailable() && PackManager.packsAvailable()
         if !cardsOk || !Device.isIphone {
             return false
         }
@@ -137,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             SettingsKeys.LAST_DOWNLOAD: "never".localized(),
             SettingsKeys.NEXT_DOWNLOAD: "never".localized(),
             
-            SettingsKeys.USE_DRAFT_IDS: true,
+            SettingsKeys.USE_DRAFT: false,
             SettingsKeys.AUTO_SAVE: false,
             SettingsKeys.AUTO_HISTORY: true,
             SettingsKeys.USE_DROPBOX: false,
@@ -316,53 +312,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         self.window?.rootViewController?.presentViewController(alert, animated:false, completion:nil)
     }
     
-    // MARK: - files migration
-    func moveFilesFromCacheToAppSupportDirectory() {
-        let settings = NSUserDefaults.standardUserDefaults()
-        if settings.boolForKey(SettingsKeys.FILES_MOVED) {
-            return
-        }
-        
-        guard
-            let cacheDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first,
-            let supportDir = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true).first
-            else { return }
-        
-        var movedFiles = 0
-        let fileMgr = NSFileManager.defaultManager()
-        let files = [ CardManager.localCardsFilename, CardManager.englishCardsFilename, CardSets.setsFilename, ImageCache.imagesDirectory ]
-        for file in files {
-            let cachePath = cacheDir.stringByAppendingPathComponent(file)
-            var isDirectory: ObjCBool = false
-            if fileMgr.fileExistsAtPath(cachePath, isDirectory:&isDirectory) {
-                let supportPath = supportDir.stringByAppendingPathComponent(file)
-                
-                do {
-                    movedFiles += 1
-                    try fileMgr.moveItemAtPath(cachePath, toPath:supportPath)
-                } catch let error {
-                    NSLog("move error=\(error)")
-                }
-                
-                if !isDirectory {
-                    AppDelegate.excludeFromBackup(supportPath)
-                }
-            }
-        }
-        
-        let imagesDir = supportDir.stringByAppendingPathComponent(ImageCache.imagesDirectory)
-        if let images = try? fileMgr.contentsOfDirectoryAtPath(imagesDir) {
-            for img in images {
-                let pathname = imagesDir.stringByAppendingPathComponent(img)
-                AppDelegate.excludeFromBackup(pathname)
-                movedFiles += 1
-            }
-        }
-        
-        if movedFiles > 0 {
-            Analytics.logEvent("Migrated files", attributes: [ "count": movedFiles ])
-        }
-        
-        settings.setBool(true, forKey:SettingsKeys.FILES_MOVED)
-    }
 }

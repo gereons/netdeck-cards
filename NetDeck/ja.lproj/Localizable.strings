@@ -103,7 +103,7 @@
 "No missing card images" = "不足カード画像がありません";
 "Image %d of %d" = "画像%d/%d";
 "Unable to download cards at this time. Please try again later." = "現在カードをダウンロードできません。後ほど再度実行してください。";
-"%d of %lu images could not be downloaded." = "%d/%ld枚の画像がダウンロードできません。";
+"%d of %d images could not be downloaded." = "%d/%d枚の画像がダウンロードできません。";
 "Clear Cache? You will need to re-download all data." = "キャッシュをクリアしますか？すべてのデータの再ダウンロードが必要です。";
 "An Internet connection is required." = "ネット接続が必要です。";
 "Cards Endpoint URL is not set" = "カードの終了ポイントURLがありません。";

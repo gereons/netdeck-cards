@@ -184,7 +184,9 @@
 -(void) loadImageForCell:(DrawTableCell*)cell card:(Card*)card
 {
     cell.imageView.image = nil;
-    
+    if (card == nil) {
+        return;
+    }
     [[ImageCache sharedInstance] getImageFor:card completion:^(Card *card, UIImage *image, BOOL placeholder) {
         if ([cell.card.code isEqualToString:card.code])
         {

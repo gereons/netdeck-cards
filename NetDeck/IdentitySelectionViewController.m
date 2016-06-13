@@ -110,7 +110,7 @@
     
     CGPoint oldCenter = self.factionSelector.center;
     
-    BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
+    BOOL includeDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT];
     BOOL dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DATA_DESTINY];
     
     if (self.role == NRRoleRunner)
@@ -174,7 +174,7 @@
 
 - (void)initIdentities
 {
-    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT_IDS];
+    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT];
     NSMutableArray* factions;
     
     if (self.selectedFaction == NRFactionNone)
@@ -202,7 +202,7 @@
     self.factionNames = [NSArray arrayWithArray:factions];
     
     self.selectedIndexPath = nil;
-    NSSet* disabledSetCodes = [CardSets disabledSetCodes];
+    NSSet* disabledPackCodes = [PackManager disabledPackCodes];
     
     NSArray* identities = [CardManager identitiesForRole:self.role];
     for (int i=0; i<factions.count; ++i)
@@ -212,7 +212,7 @@
         for (int j=0; j<identities.count; ++j)
         {
             Card* card = identities[j];
-            if ([disabledSetCodes containsObject:card.setCode])
+            if ([disabledPackCodes containsObject:card.packCode])
             {
                 continue;
             }

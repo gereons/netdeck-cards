@@ -25,7 +25,8 @@ class NRDB: NSObject {
     
     private static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+        formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ'"
+                            // "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
         formatter.timeZone = NSTimeZone(name: "GMT")
         return formatter
     }()
@@ -224,7 +225,7 @@ class NRDB: NSObject {
     
     func decklist(completion: ([Deck]?) -> Void) {
         let accessToken = self.accessToken() ?? ""
-        let decksUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/decks?access_token=" + accessToken)!
+        let decksUrl = NSURL(string: "https://netrunnerdb.com/api/2.0/private/decks?access_token=" + accessToken)!
     
         let request = NSMutableURLRequest(URL: decksUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
 
@@ -247,14 +248,13 @@ class NRDB: NSObject {
         }
     }
     
-    func loadDeck(deck: Deck, completion: (Deck?) -> Void) {
+    func loadDeck(deckId: String, completion: (Deck?) -> Void) {
         guard let accessToken = self.accessToken() else {
             completion(nil)
             return
         }
         
-        assert(deck.netrunnerDbId != nil, "no nrdb id")
-        let loadUrl = NSURL(string: "https://netrunnerdb.com/api_oauth2/load_deck/" + deck.netrunnerDbId! + "?access_token=" + accessToken)!
+        let loadUrl = NSURL(string: "https://netrunnerdb.com/api/2.0/private/deck/" + deckId + "?include_history=1&access_token=" + accessToken)!
         
         let request = NSMutableURLRequest(URL: loadUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
         
@@ -272,17 +272,32 @@ class NRDB: NSObject {
         }
     }
     
-    func parseDecksFromJson(json: JSON) -> [Deck] {
+    private func parseDecksFromJson(json: JSON) -> [Deck] {
         var decks = [Deck]()
-        for d in json.arrayValue {
-            if let deck = self.parseDeckFromJson(d) {
+        
+        if !json.validNrdbResponse {
+            return decks
+        }
+        
+        let data = json["data"]
+        for d in data.arrayValue {
+            if let deck = self.parseDeckFromData(d) {
                 decks.append(deck)
             }
         }
         return decks
     }
     
-    func parseDeckFromJson(json: JSON) -> Deck? {
+    private func parseDeckFromJson(json: JSON) -> Deck? {
+        if !json.validNrdbResponse {
+            return nil
+        }
+    
+        let data = json["data"][0]
+        return self.parseDeckFromData(data)
+    }
+    
+    private func parseDeckFromData(json: JSON) -> Deck? {
         let deck = Deck()
         
         deck.name = json["name"].string
@@ -290,46 +305,36 @@ class NRDB: NSObject {
         deck.tags = json["tags"].arrayObject as? [String]
         deck.netrunnerDbId = "\(json["id"].intValue)"
         
-        // parse last update '2014-06-19T13:52:24Z'
+        // parse last update '2014-06-19T13:52:24+00:00'
         deck.lastModified = NRDB.dateFormatter.dateFromString(json["date_update"].stringValue)
         deck.dateCreated = NRDB.dateFormatter.dateFromString(json["date_creation"].stringValue)
         
-        for c in json["cards"].arrayValue {
-            let code = c["card_code"].stringValue
-            let qty = c["qty"].int
-            
-            let card = CardManager.cardByCode(code)
-            if card != nil && qty != nil {
-                deck.addCard(card!, copies:qty!, history: false)
+        for (code, qty) in json["cards"].dictionaryValue {
+            if let card = CardManager.cardByCode(code) {
+                deck.addCard(card, copies:qty.intValue, history: false)
             }
         }
         
         var revisions = [DeckChangeSet]()
-        if let history = json["history"].array {
-            for entry in history {
-                let datecreation = entry["date_creation"].string
-                let dcs = DeckChangeSet()
-                dcs.timestamp = NRDB.dateFormatter.dateFromString(datecreation ?? "")
-                
-                let variation = entry["variation"].arrayValue
-                
-                for i in 0..<variation.count {
-                    let mult = i==0 ? 1 : -1
-                    let v = variation[i]
-                    if v.type == .Dictionary {
-                        for (code, qty):(String,JSON) in v {
-                            let amount = mult * qty.intValue
-                            if let _ = CardManager.cardByCode(code) {
-                                dcs.addCardCode(code, copies: amount)
-                            }
+        if let history = json["history"].dictionary {
+            for (date, changes) in history {
+                if let timestamp = NRDB.dateFormatter.dateFromString(date) {
+                    let dcs = DeckChangeSet()
+                    dcs.timestamp = timestamp
+                    
+                    for (code, amount) in changes.dictionaryValue {
+                        if let card = CardManager.cardByCode(code), amount = amount.int {
+                            dcs.addCardCode(card.code, copies: amount)
                         }
                     }
+                    
+                    dcs.sort()
+                    revisions.append(dcs)
                 }
-                
-                dcs.sort()
-                revisions.append(dcs)
             }
         }
+        
+        revisions.sortInPlace { $0.timestamp?.timeIntervalSince1970 ?? 0 < $1.timestamp?.timeIntervalSinceNow ?? 0 }
         
         let initial = DeckChangeSet()
         initial.initial = true
@@ -371,70 +376,66 @@ class NRDB: NSObject {
             return
         }
         
-        let cards = NSMutableArray()
+        var cards = [String: Int]()
         if let id = deck.identity {
-            let c = [ "card_code": id.code, "qty": 1 ]
-            cards.addObject(c)
+            cards[id.code] = 1
         }
         for cc in deck.cards {
-            let c = [ "card_code": cc.card.code, "qty": cc.count ]
-            cards.addObject(c)
+            cards[cc.card.code] = cc.count
         }
-        let json = JSON(cards)
         
-        let deckId = deck.netrunnerDbId ?? "0"
-        
-        let saveUrl = "https://netrunnerdb.com/api_oauth2/save_deck/" + deckId
-        var parameters = [
-            "access_token": accessToken,
-            "content": json.rawString() ?? ""
+        var tags = ""
+        if deck.tags != nil {
+            tags = (deck.tags! as NSArray).componentsJoinedByString(" ")
+        }
+        let saveUrl = "https://netrunnerdb.com/api/2.0/private/deck/save?access_token=" + accessToken
+        let parameters: [String: AnyObject] = [
+            "deck_id": deck.netrunnerDbId ?? "0",
+            "name": deck.name ?? "Deck",
+            "tags": tags,
+            "description": deck.notes ?? "",
+            "content": cards
         ]
-        if let notes = deck.notes {
-            parameters["description"] = notes
-        }
-        if let name = deck.name {
-            parameters["name"] = name
-        }
-        if deckId != "0" {
-            parameters["id"] = deckId
-        }
-        if let tags = deck.tags {
-            parameters["tags"] = (tags as NSArray).componentsJoinedByString(" ")
-        }
         
         self.saveOrPublish(saveUrl, parameters: parameters, completion: completion)
     }
     
     func publishDeck(deck: Deck, completion: (Bool, String?) -> Void) {
-        let publishUrl = "https://netrunnerdb.com/api_oauth2/publish_deck/" + (deck.netrunnerDbId ?? "")
+        guard let accessToken = self.accessToken() else {
+            completion(false, nil)
+            return
+        }
         
-        let accessToken = self.accessToken()
+        let publishUrl = "https://netrunnerdb.com/api/2.0/private/deck/publish?access_token=" + accessToken
+        
         let parameters = [
-            "access_token": accessToken ?? ""
+            "deck_id": deck.netrunnerDbId ?? "0",
+            "name": deck.name ?? "Deck"
         ]
         
         self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)
     }
-    
-    func saveOrPublish(url: String, parameters: [String:String], completion: (Bool, String?)->Void) {
-        
-        Alamofire.request(.GET, url, parameters: parameters).validate().responseJSON { response in
-            switch response.result {
-            case .Success(let value):
-                let json = JSON(value)
-                let ok = json["success"].boolValue
-                if ok {
-                    let deckId = json["message"]["id"].stringValue
-                    if deckId != "" {
-                        completion(true, deckId)
-                        return
+
+    func saveOrPublish(url: String, parameters: [String: AnyObject], completion: (Bool, String?)->Void) {
+        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let value):
+                    let json = JSON(value)
+                    let ok = json.validNrdbResponse
+                    if ok {
+                        let deckId = json["data"][0]["id"].stringValue
+                        if deckId != "" {
+                            completion(true, deckId)
+                            return
+                        }
                     }
+                case .Failure:
+                    break
                 }
-            case .Failure:
-                break
+                completion(false, nil)
             }
-            completion(false, nil)
-        }
     }
     
     // MARK: - mapping of nrdb ids to filenames
@@ -454,5 +455,28 @@ class NRDB: NSObject {
     
     func deleteDeck(deckId: String?) {
         self.deckMap.removeValueForKey(deckId ?? "")
+    }
+}
+
+// NRDB-specific JSON extension
+
+extension JSON {
+    
+    static private let supportedNrdbApiVersion = 2
+    
+    // check if this is a valid API response
+    var validNrdbResponse: Bool {
+        let version = self["version_number"].intValue
+        let success = self["success"].boolValue
+        return success && version == JSON.supportedNrdbApiVersion
+    }
+    
+    // get a localized property from a "data" object
+    func localized(property: String, _ language: String) -> String {
+        if let localized = self["_locale"][language][property].string where localized.length > 0 {
+            return localized
+        } else {
+            return self[property].stringValue
+        }
     }
 }

@@ -88,7 +88,7 @@
 "Please download card data first" = "Télécharger les données d'abord";
 "Image %d of %d" = "Image %d de %d";
 "Unable to download cards at this time. Please try again later." = "Le téléchargement a échoué. Merci de réessayer ultérieurement.";
-"%d of %lu images could not be downloaded." = "%d de %lu d'images n'ont pu être téléchargé.";
+"%d of %d images could not be downloaded." = "%d de %d d'images n'ont pu être téléchargé.";
 "Clear Cache? You will need to re-download all data from NetrunnerDB.com." = "Vider le cache ? Il va falloir télécharger les données de NetrunnerDB.com à nouveau.";
 "An Internet connection is required." = "Une connection internet est requise.";
 

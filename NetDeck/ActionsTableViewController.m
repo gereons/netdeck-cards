@@ -107,7 +107,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     }
 #endif
     
-    if (![CardManager cardsAvailable] || ![CardSets setsAvailable])
+    if (![CardManager cardsAvailable] || ![PackManager packsAvailable])
     {
         [self resetDetailView];
         return;
@@ -236,7 +236,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         cell.textLabel.font = [UIFont systemFontOfSize:17];
     }
     
-    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [PackManager packsAvailable];
     // Set appropriate labels for the cells.
     switch (indexPath.row)
     {

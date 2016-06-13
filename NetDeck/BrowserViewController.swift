@@ -59,7 +59,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        let filtersActive = CardManager.cardsAvailable() && CardSets.setsAvailable()
+        let filtersActive = CardManager.cardsAvailable() && PackManager.packsAvailable()
         
         self.typeButton.enabled = filtersActive
         self.setButton.enabled = filtersActive
@@ -208,7 +208,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBAction func setButtonTapped(btn: UIButton) {
         let picker = BrowserValuePicker(title: "Set".localized())
-        picker.data = CardSets.allEnabledSetsForTableview()
+        picker.data = PackManager.allEnabledPacksForTableview()
         picker.preselected = self.sets
         picker.setResult = { result in
             self.sets = result
@@ -270,7 +270,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 let alert = UIAlertController.alertWithTitle(nil, message: msg)
                 alert.addAction(UIAlertAction(title:"ANCUR".localized()) { action in
-                    if let ancur = card.ancurLink, url = NSURL(string: ancur) {
+                    if let url = NSURL(string: card.ancurLink) {
                         UIApplication.sharedApplication().openURL(url)
                     }
                 })

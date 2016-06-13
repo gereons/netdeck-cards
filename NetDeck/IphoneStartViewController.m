@@ -70,7 +70,7 @@
     
     self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECK_FILTER_SORT];
     
-    if ([CardManager cardsAvailable] && [CardSets setsAvailable])
+    if ([CardManager cardsAvailable] && [PackManager packsAvailable])
     {
         [self initializeDecks];
     }
@@ -101,7 +101,7 @@
     }
     
     NSAssert(navigationController.viewControllers.count == 1, @"nav oops");
-    if ([CardManager cardsAvailable] && [CardSets setsAvailable])
+    if ([CardManager cardsAvailable] && [PackManager packsAvailable])
     {
         [self initializeDecks];
     }
@@ -451,7 +451,7 @@
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:21.0f],
                                  NSForegroundColorAttributeName: [UIColor lightGrayColor]};
     
-    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [PackManager packsAvailable];
     NSString* title = cardsAvailable ? @"No Decks" : @"No Card Data";
     
     return [[NSAttributedString alloc] initWithString:l10n(title) attributes:attributes];
@@ -459,7 +459,7 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
-    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [PackManager packsAvailable];
     NSString *text = cardsAvailable ? @"Your decks will be shown here" : @"To use this app, you must first download card data.";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0f],
@@ -472,7 +472,7 @@
 - (NSAttributedString*) buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     UIColor* color = self.tableView.tintColor;
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName: color };
-    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [PackManager packsAvailable];
     NSString* text = cardsAvailable ? @"New Deck" : @"Download";
     return [[NSAttributedString alloc] initWithString:l10n(text) attributes:attributes];
 }
@@ -482,7 +482,7 @@
 }
 
 -(void) emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    BOOL cardsAvailable = [CardManager cardsAvailable] && [CardSets setsAvailable];
+    BOOL cardsAvailable = [CardManager cardsAvailable] && [PackManager packsAvailable];
     if (cardsAvailable) {
         [self createNewDeck:nil];
     } else {

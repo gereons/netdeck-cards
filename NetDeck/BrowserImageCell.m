@@ -113,24 +113,27 @@
 
 -(void) loadImageFor:(Card *)card
 {
-    [[ImageCache sharedInstance] getImageFor:card
-                                  completion:^(Card* card, UIImage* img, BOOL placeholder) {
-                                      if ([self.card.code isEqual:card.code])
-                                      {
-                                          [self.activityIndicator stopAnimating];
-                                          self.image.image = img;
-                                          
-                                          self.detailView.hidden = !placeholder;
-                                          if (placeholder)
-                                          {
-                                              [CardDetailView setupDetailViewFromBrowser:self card:card];
-                                          }
-                                      }
-                                      else
-                                      {
-                                          [self loadImageFor:self.card];
-                                      }
-                                  }];
+    if (card == nil) {
+        return;
+    }
+    
+    [[ImageCache sharedInstance] getImageFor:card completion:^(Card* card, UIImage* img, BOOL placeholder) {
+        if ([self.card.code isEqual:card.code])
+        {
+              [self.activityIndicator stopAnimating];
+              self.image.image = img;
+              
+              self.detailView.hidden = !placeholder;
+              if (placeholder)
+              {
+                  [CardDetailView setupDetailViewFromBrowser:self card:card];
+              }
+        }
+        else
+        {
+            [self loadImageFor:self.card];
+        }
+    }];
 }
 
 @end

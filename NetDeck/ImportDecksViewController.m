@@ -1,4 +1,4 @@
-//
+    //
 //  ImportDecksViewController.m
 //  Net Deck
 //
@@ -256,10 +256,12 @@ static NSString* filterText;
     }];
 }
 
--(void) importDeckFromNRDB:(Deck*)deck {
-    if (self.source == NRImportSourceNetrunnerDb)
+-(void) importDeckFromNRDB:(NSString*)deckId {
+    if (self.source == NRImportSourceNetrunnerDb && deckId != nil)
     {
-        [[NRDB sharedInstance] loadDeck:deck completion:^(Deck *deck) {
+        [SVProgressHUD showWithStatus:@"Import Deck"];
+        
+        [[NRDB sharedInstance] loadDeck:deckId completion:^(Deck *deck) {
             if (deck) {
                 [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
                 [deck updateOnDisk];
@@ -581,18 +583,19 @@ static NSString* filterText;
         [alert addAction:[UIAlertAction cancelAlertAction:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Overwrite") handler:^(UIAlertAction * action) {
             deck.filename = filename;
-            [self importDeckFromNRDB:deck];
+            [self importDeckFromNRDB:deck.netrunnerDbId];
         }]];
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Import as new") handler:^(UIAlertAction * action) {
-            [self importDeckFromNRDB:deck];
+            [self importDeckFromNRDB:deck.netrunnerDbId];
         }]];
         
         [alert show];
     }
     else
     {
-        [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-        [deck updateOnDisk];
+        // [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
+        // [deck updateOnDisk];
+        [self importDeckFromNRDB:deck.netrunnerDbId];
     }
 }
 

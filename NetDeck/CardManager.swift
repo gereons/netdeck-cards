@@ -11,8 +11,7 @@ import SwiftyJSON
 
 @objc class CardManager: NSObject {
     
-    static let localCardsFilename = "nrcards.json"
-    static let englishCardsFilename = "nrcards_en.json"
+    static let cardsFilename = "nrcards2.json"
     
     private(set) static var allCardsByRole = [NRRole: [Card] ]()    // non-id cards
     private static var allIdentitiesByRole = [NRRole: [Card] ]()    // ids
@@ -134,39 +133,41 @@ import SwiftyJSON
         return allKnownCards.count > 0
     }
     
-    class func setupFromFiles() -> Bool {
-        let englishCardsFile = CardManager.englishFilename()
-        let localCardsFile = CardManager.localFilename()
+    class func setupFromFiles(language: String) -> Bool {
+        let filename = CardManager.filename()
         
-        var ok = false
-    
-        if let englishJson = jsonFromFile(englishCardsFile), localJson = jsonFromFile(localCardsFile) {
-            ok = setupFromJson(englishJson, local: localJson, saveToDisk: false)
+        if let str = try? NSString(contentsOfFile: filename, encoding: NSUTF8StringEncoding) {
+            let cardsJson = JSON.parse(str as String)
+            return setupFromJson(cardsJson, language: language)
         }
-        
+        print("app start: missing card file")
+        return false
+    }
+    
+    class func setupFromNetrunnerDb(cards: JSON, language: String) -> Bool {
+        let ok = setupFromJson(cards, language: language)
+        if ok {
+            let filename = CardManager.filename()
+            if let data = try? cards.rawData() {
+                let ok = data.writeToFile(filename, atomically:true)
+                print("write cards ok=\(ok)")
+            }
+            AppDelegate.excludeFromBackup(filename)
+        }
         return ok
     }
     
-    class func setupFromJson(english: JSON, local: JSON, saveToDisk: Bool) -> Bool {
+    class func setupFromJson(cards: JSON, language: String) -> Bool {
+        if !cards.validNrdbResponse {
+            return false
+        }
+        
         CardManager.initialize()
         
-        if saveToDisk {
-            self.saveToDisk(english, filename: CardManager.englishFilename())
-            self.saveToDisk(local, filename: CardManager.localFilename())
-        }
-        
-        // parse base data from english dataset
-        for cardJson in english.arrayValue {
-            let card = Card.cardFromJson(cardJson, english: true)
+        // parse data
+        let parsedCards = Card.cardsFromJson(cards, language: language)
+        for card in parsedCards {
             CardManager.addCard(card)
-        }
-        
-        // overwrite with language-specific stuff
-        for cardJson in local.arrayValue {
-            let localCard = Card.cardFromJson(cardJson, english: false)
-            if let englishCard = CardManager.cardByCode(localCard.code) where englishCard.isValid {
-                englishCard.setLocalPropertiesFrom(localCard)
-            }
         }
         
         let cards = Array(allKnownCards.values)
@@ -316,41 +317,17 @@ import SwiftyJSON
         settings.setObject(nextDownload, forKey:SettingsKeys.NEXT_DOWNLOAD)
     }
 
-    private class func localFilename() -> String {
+    private class func filename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]
     
-        return supportDirectory.stringByAppendingPathComponent(CardManager.localCardsFilename)
-    }
-    
-    private class func englishFilename() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
-        let supportDirectory = paths[0]
-        
-        return supportDirectory.stringByAppendingPathComponent(CardManager.englishCardsFilename)
+        return supportDirectory.stringByAppendingPathComponent(CardManager.cardsFilename)
     }
     
     class func removeFiles() {
         let fileMgr = NSFileManager.defaultManager()
-        _ = try? fileMgr.removeItemAtPath(localFilename())
-        _ = try? fileMgr.removeItemAtPath(englishFilename())
+        _ = try? fileMgr.removeItemAtPath(filename())
     
         CardManager.initialize()
-    }
-    
-    private class func jsonFromFile(filename: String) -> JSON? {
-        if let array = NSArray(contentsOfFile: filename) {
-            return JSON(array)
-        } else if let str = try? NSString(contentsOfFile: filename, encoding: NSUTF8StringEncoding) {
-            return JSON.parse(str as String)
-        }
-        return nil
-    }
-    
-    private class func saveToDisk(json: JSON, filename: String) {
-        if let data = try? json.rawData() {
-            data.writeToFile(filename, atomically:true)
-        }
-        AppDelegate.excludeFromBackup(filename)
     }
 }

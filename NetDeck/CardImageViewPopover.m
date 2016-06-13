@@ -139,6 +139,9 @@ static CGFloat popoverScale = 1.0;
 
 -(void) loadCardImage:(Card*)card
 {
+    if (card == nil) {
+        return;
+    }
     [[ImageCache sharedInstance] getImageFor:card
                                      completion:^(Card* card, UIImage* image, BOOL placeholder) {
                                          if ([card.code isEqualToString:self.card.code])

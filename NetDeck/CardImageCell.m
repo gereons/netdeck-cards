@@ -158,6 +158,9 @@
 
 -(void) loadImage:(Card*)card
 {
+    if (card == nil) {
+        return;
+    }
     [[ImageCache sharedInstance] getImageFor:card
                                   completion:^(Card* card, UIImage* img, BOOL placeholder) {
                                       if ([self.cc.card.code isEqual:card.code])

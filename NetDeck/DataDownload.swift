@@ -15,6 +15,12 @@ private enum DownloadScope: Int {
     case Missing
 }
 
+private enum ApiRequest {
+    case Cycles
+    case Packs
+    case Cards
+}
+
 class DataDownload: NSObject {
     
     class func downloadCardData() {
@@ -35,11 +41,6 @@ class DataDownload: NSObject {
     private var progressView: UIProgressView?
     private var downloadStopped = false
     private var downloadErrors = 0
-    
-    private var localizedCards: JSON?
-    private var englishCards: JSON?
-    private var localizedSets: JSON?
-    
     
     private var cards: [Card]!
     
@@ -85,103 +86,59 @@ class DataDownload: NSObject {
         let nrdbHost = settings.stringForKey(SettingsKeys.NRDB_HOST)
         let language = settings.stringForKey(SettingsKeys.LANGUAGE) ?? "en"
         
-        let localCardsUrl = String(format: "https://%@/api/cards/?_locale=%@", nrdbHost!, language)
-        let englishCardsUrl = String(format: "https://%@/api/cards/?_locale=en", nrdbHost!)
-        let setsUrl = String(format: "https://%@/api/sets/?_locale=%@", nrdbHost!, language)
+        let cyclesUrl = String(format: "https://%@/api/2.0/public/cycles?_locale=%@", nrdbHost!, language)
+        let packsUrl = String(format: "https://%@/api/2.0/public/packs?_locale=%@", nrdbHost!, language)
+        let cardsUrl = String(format: "https://%@/api/2.0/public/cards?_locale=%@", nrdbHost!, language)
         
-        let localCardsRequest = NSMutableURLRequest(URL:NSURL(string: localCardsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 10)
-        let englishCardsRequest = NSMutableURLRequest(URL:NSURL(string: englishCardsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 10)
-        let setsRequest = NSMutableURLRequest(URL:NSURL(string: setsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 10)
+        let requests: [ApiRequest: NSURLRequest] = [
+            .Cycles: NSURLRequest(URL:NSURL(string: cyclesUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 15),
+            .Packs: NSURLRequest(URL:NSURL(string: packsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 15),
+            .Cards: NSURLRequest(URL:NSURL(string: cardsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 15)
+        ]
         
-        Alamofire.request(localCardsRequest).responseJSON { response in
-            switch response.result {
-            case .Success:
-                if let value = response.result.value {
-                    self.localizedCards = JSON(value)
-                }
-            case .Failure:
-                self.downloadErrors += 1
-            }
-            
-            if self.downloadStopped {
-                return
-            }
-            
-            if language == "en" {
-                // no need to download again
-                self.englishCards = self.localizedCards
-                self.downloadSets(setsRequest)
-            } else {
-                // get english cards
-                Alamofire.request(englishCardsRequest).responseJSON { response in
-                    switch response.result {
-                    case .Success:
-                        if let value = response.result.value {
-                            self.englishCards = JSON(value)
-                        }
-                    case .Failure:
-                        self.downloadErrors += 1
+        let group = dispatch_group_create()
+        var results = [ApiRequest: JSON]()
+        
+        for (key, req) in requests {
+            dispatch_group_enter(group)
+            Alamofire.request(req).responseJSON { response in
+                switch response.result {
+                case .Success(let value):
+                    if !self.downloadStopped {
+                        results[key] = JSON(value)
                     }
-                    
-                    if self.downloadStopped {
-                        return
-                    }
-                    
-                    self.downloadSets(setsRequest)
+                case .Failure:
+                    break
                 }
+                dispatch_group_leave(group)
             }
         }
-    }
-    
-    private func downloadSets(setsRequest: NSURLRequest) {
-        // get sets
-        Alamofire.request(setsRequest).responseJSON { response in
-            switch response.result {
-            case .Success:
-                if let value = response.result.value {
-                    self.localizedSets = JSON(value)
+        
+        dispatch_group_notify(group, dispatch_get_main_queue()) {
+            print("dl finished. stopped=\(self.downloadStopped), \(results.count) results")
+            var ok = !self.downloadStopped && results.count == requests.count
+            if ok {
+                ok = PackManager.setupFromNetrunnerDb(results[.Cycles]!, results[.Packs]!, language: language)
+                print("packs setup ok=\(ok)")
+                if ok {
+                    ok = CardManager.setupFromNetrunnerDb(results[.Cards]!, language: language)
+                    print("cards setup ok=\(ok)")
                 }
-            case .Failure:
-                self.downloadErrors += 1
+                CardManager.setNextDownloadDate()
             }
             
-            self.finishDownloads()
-        }
-    }
-    
-    private func finishDownloads() {
-        let ok = self.localizedCards != nil
-            && self.englishCards != nil
-            && self.localizedSets != nil
-            && self.downloadErrors == 0
-        
-        if ok {
-            CardManager.setupFromJson(self.englishCards!, local: self.localizedCards!, saveToDisk: true)
-            CardSets.setupFromNrdbApi(self.localizedSets!)
-            CardManager.setNextDownloadDate()
-        }
-        
-        self.localizedCards = nil
-        self.englishCards = nil
-        self.localizedSets = nil
-        
-        if let alert = self.sdcAlert {
-            alert.dismiss(animated:false) {
-                if self.downloadStopped {
-                    return
-                }
-                
-                if (!ok) {
+            if let alert = self.sdcAlert {
+                alert.dismiss(animated:false)
+                if !ok {
                     let msg = "Unable to download cards at this time. Please try again later.".localized()
                     UIAlertController.alertWithTitle(nil, message: msg, button: "OK")
-                } else {
-                    NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LOAD_CARDS, object:self, userInfo:["success": ok])
                 }
             }
+            self.sdcAlert = nil
+            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LOAD_CARDS, object:self, userInfo:["success": ok])
         }
-        
-        self.sdcAlert = nil
     }
+    
     
     // MARK: - image download
     
@@ -250,7 +207,7 @@ class DataDownload: NSObject {
             let card = self.cards[index]
             
             let downloadNext: (Bool) -> Void = { (ok) in
-                if !ok && card.imageSrc != nil {
+                if !ok {
                     self.downloadErrors += 1
                 }
                 
@@ -307,7 +264,8 @@ class DataDownload: NSObject {
                     var ok = false
                     if let value = response.result.value {
                         let json = JSON(value)
-                        if json[0]["code"].string != nil {
+                        let code = json["data"][0]["code"].stringValue
+                        if json.validNrdbResponse && code == "01001" {
                             ok = true
                         }
                     }

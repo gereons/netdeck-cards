@@ -81,50 +81,73 @@ import SwiftyJSON
         CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
         ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])
     
-   
     private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
-    private(set) var code: String!
-    private(set) var name: String!              // localized name of card, used for display
-    private(set) var englishName: String!       // english name of card, used for searches
+    private(set) var code = ""
+    private(set) var name = ""                  // localized name of card, used for display
+    private(set) var englishName = ""           // english name of card, used for searches
     private(set) var alias: String?
-    private(set) var text: String! = ""
-    private(set) var flavor: String! = ""
-    private(set) var type: NRCardType = .None
-    private(set) var typeStr: String! = ""
-    private(set) var subtype: String! = ""      // full subtype string like "Fracter - Icebreaker - AI"
+    private(set) var text = ""
+    private(set) var flavor = ""
+    private(set) var type = NRCardType.None
+    private(set) var subtype = ""               // full subtype string like "Fracter - Icebreaker - AI"
     private(set) var subtypes = [String]()      // array of subtypes like [ "Fracter", "Icebreaker", "AI" ]
-    private(set) var faction: NRFaction = .None
-    private(set) var factionStr: String!
-    private(set) var role: NRRole = .None
-    private(set) var roleStr: String!
-    private(set) var influenceLimit: Int = -1   // for id
-    private(set) var minimumDecksize: Int = -1  // for id
-    private(set) var baseLink: Int = -1         // for runner id
-    private(set) var influence: Int = -1
-    private(set) var mu: Int = -1
-    private(set) var strength: Int = -1
-    private(set) var cost: Int = -1
-    private(set) var advancementCost: Int = -1   // agenda
-    private(set) var agendaPoints: Int = -1      // agenda
-    private(set) var trash: Int = -1
-    private(set) var quantity: Int = -1          // number of cards in set
-    private(set) var number: Int = -1            // card no. in set
-    private(set) var setName: String!
-    private(set) var setCode: String!
-    private(set) var setNumber: Int = -1         // our own internal set number, for sorting by set release
-    private(set) var unique: Bool = false
-    private(set) var maxPerDeck: Int = -1        // how many may be in deck? currently either 1, 3 or 6
-    private(set) var imageSrc: String?
-    private(set) var ancurLink: String?
-    private(set) var nrdbLink: String = ""
-    private(set) var isAlliance: Bool = false
-    private(set) var isVirtual: Bool = false
-    private(set) var isCore: Bool = false       // card is from core set
+    private(set) var faction = NRFaction.None
+    private(set) var role = NRRole.None
+    private(set) var influenceLimit = -1        // for id
+    private(set) var minimumDecksize = -1       // for id
+    private(set) var baseLink = -1              // for runner id
+    private(set) var influence = -1
+    private(set) var mu = -1
+    private(set) var strength = -1
+    private(set) var cost = -1
+    private(set) var advancementCost = -1       // agenda
+    private(set) var agendaPoints = -1          // agenda
+    private(set) var trash = -1
+    private(set) var quantity = -1              // number of cards in set
+    private(set) var number = -1                // card no. in set
+    private(set) var packCode = ""
+    private(set) var packNumber = -1            // our own internal pack number, for sorting by pack release
+    private(set) var unique = false
+    private(set) var maxPerDeck = -1            // how many may be in deck? currently either 1, 3 or 6
+    
+    private(set) var isAlliance = false
+    private(set) var isVirtual = false
+    private(set) var isCore = false             // card is from core set
     
     private static var multiIce = [String]()
     
     private static let nullInstance = Card()
+    
+    private var factionCode = ""
+    private var typeCode = ""
+    
+    var typeStr: String { return Translation.forTerm(self.typeCode, language: Card.currentLanguage) }
+    var factionStr: String { return Translation.forTerm(self.factionCode, language: Card.currentLanguage) }
+
+    var packName: String {
+        return PackManager.packsByCode[self.packCode]?.name ?? ""
+    }
+    
+    var imageSrc: String {
+        return Card.imgSrcTemplate
+            .stringByReplacingOccurrencesOfString("{locale}", withString: Card.currentLanguage)
+            .stringByReplacingOccurrencesOfString("{code}", withString: self.code)
+    }
+    
+    var ancurLink: String {
+        let wikiName = self.englishName
+            .stringByReplacingOccurrencesOfString(" ", withString: "_")
+            .stringByAddingPercentEncodingWithAllowedCharacters(.URLPathAllowedCharacterSet()) ?? self.englishName
+        return "http://ancur.wikia.com/wiki/" + wikiName
+    }
+    
+    var nrdbLink: String {
+        return "https://netrunnerdb.com/" + Card.currentLanguage + "/card/" + self.code
+    }
+    
+    static private var imgSrcTemplate = ""
+    static private var currentLanguage = ""
     
     class func null() -> Card {
         return nullInstance
@@ -197,8 +220,8 @@ import SwiftyJSON
             let cores = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.NUM_CORES)
             return cores * self.quantity
         }
-        let disabledSets = CardSets.disabledSetCodes()
-        if disabledSets.contains(self.setCode) {
+        let disabledPacks = PackManager.disabledPackCodes()
+        if disabledPacks.contains(self.packCode) {
             return 0
         }
         return self.quantity
@@ -224,77 +247,74 @@ import SwiftyJSON
         }
     }
     
-    class func cardFromJson(json: JSON, english: Bool) -> Card {
+    class func cardsFromJson(json: JSON, language: String) -> [Card] {
+        var cards = [Card]()
+        imgSrcTemplate = json["imageUrlTemplate"].stringValue
+        currentLanguage = language
+        for cardJson in json["data"].arrayValue {
+            let card = Card.cardFromJson(cardJson, language: language)
+            cards.append(card)
+        }
+        return cards
+    }
+    
+    private class func cardFromJson(json: JSON, language: String) -> Card {
         let c = Card()
         
         c.code = json["code"].stringValue
-        c.name = json["title"].stringValue
-        c.englishName = c.name
+        c.englishName = json["title"].stringValue
+        c.name = json.localized("title", language)
         
-        c.factionStr = json["faction"].stringValue
-        let factionCode = json["faction_code"].stringValue
-        c.faction = Codes.factionForCode(factionCode)
+        c.factionCode = json["faction_code"].stringValue
+        c.faction = Codes.factionForCode(c.factionCode)
         
-        c.roleStr = json["side"].stringValue
         let roleCode = json["side_code"].stringValue
         c.role = Codes.roleForCode(roleCode)
         
-        c.typeStr = json["type"].stringValue
-        let typeCode = json["type_code"].stringValue
-        c.type = Codes.typeForCode(typeCode)
+        c.typeCode = json["type_code"].stringValue
+        c.type = Codes.typeForCode(c.typeCode)
         
         if c.type == .Identity {
             c.name = c.shortIdentityName(c.name, forRole: c.role, andFaction: c.factionStr)
         }
-        // remove the "consortium" from weyland's name
-        if c.faction == .Weyland {
-            c.factionStr = "Weyland".localized()
-        }
         
-        if let text = json["text"].string {
-            c.text = text
-        }
-        if let flavor = json["flavor"].string {
-            c.flavor = flavor
-        }
+        c.text = json.localized("text", language)
+        c.flavor = json.localized("flavor", language)
         
-        c.setName = json["setname"].stringValue
-        c.setCode = json["set_code"].stringValue
-        if c.setCode == nil {
-            c.setCode = CardSets.UNKNOWN_SET
-            c.setName = CardSets.UNKNOWN_SET
+        c.packCode = json["pack_code"].stringValue
+        if c.packCode == "" {
+            c.packCode = PackManager.UNKNOWN_SET
+            c.packCode = PackManager.UNKNOWN_SET
         }
-        if c.setCode == CardSets.DRAFT_SET_CODE {
+        if c.packCode == PackManager.DRAFT_SET_CODE {
             c.faction = .Neutral
         }
         
-        c.setNumber = CardSets.setNumForCode(c.setCode)
-        c.isCore = c.setCode.lowercaseString == CardSets.CORE_SET_CODE
+        c.packNumber = PackManager.packNumberForCode(c.packCode)
+        c.isCore = c.packCode == PackManager.CORE_SET_CODE
         
-        if let subtype = json["subtype"].string {
-            c.subtype = subtype
-        }
+        c.subtype = json.localized("keywords", language)
         if c.subtype.length > 0 {
             let split = self.subtypeSplit(c.subtype)
             c.subtype = split.subtype
             c.subtypes = split.subtypes
         }
         
-        c.number = json["number"].int ?? -1
+        c.number = json["position"].int ?? -1
         c.quantity = json["quantity"].int ?? -1
         c.unique = json["uniqueness"].boolValue
         
         if c.type == .Identity {
-            c.influenceLimit = json["influencelimit"].int ?? -1
-            c.minimumDecksize = json["minimumdecksize"].int ?? -1
-            c.baseLink = json["baselink"].int ?? -1
+            c.influenceLimit = json["influence_limit"].int ?? -1
+            c.minimumDecksize = json["minimum_deck_size"].int ?? -1
+            c.baseLink = json["base_link"].int ?? -1
         }
         if c.type == .Agenda {
-            c.advancementCost = json["advancementcost"].int ?? -1
-            c.agendaPoints = json["agendapoints"].int ?? -1
+            c.advancementCost = json["advancement_cost"].int ?? -1
+            c.agendaPoints = json["agenda_points"].int ?? -1
         }
         
-        c.mu = json["memoryunits"].int ?? -1
+        c.mu = json["memory_cost"].int ?? -1
         
         if json["strength"].stringValue == "X" {
             c.strength = Card.X
@@ -308,68 +328,49 @@ import SwiftyJSON
             c.cost = json["cost"].int ?? -1
         }
         
-        c.influence = json["factioncost"].int ?? -1
-        c.trash = json["trash"].int ?? -1
+        c.influence = json["faction_cost"].int ?? -1
+        c.trash = json["trash_cost"].int ?? -1
         
-        c.imageSrc = json["imagesrc"].string
-        if let imgSrc = c.imageSrc where imgSrc.length > 0 {
-            let host = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_HOST) ?? ""
-            if let base = NSURL(string: "https://" + host), src = NSURL(string: imgSrc, relativeToURL: base) {
-                c.imageSrc = src.absoluteString
-            }
-        }
-        
-        if c.imageSrc?.length == 0 {
-            c.imageSrc = nil
-        }
-        
-        c.maxPerDeck = json["limited"].int ?? -1
+        c.maxPerDeck = json["deck_limit"].int ?? -1
         if Card.MAX_1_PER_DECK.contains(c.code) || c.type == .Identity {
             c.maxPerDeck = 1
         }
         
-        c.ancurLink = json["ancur_link"].string
-        if c.ancurLink?.length == 0 {
-            c.ancurLink = nil
-        }
-        
-        let language = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.LANGUAGE) ?? "en"
-        c.nrdbLink = "https://netrunnerdb.com/" + language + "/card/" + c.code
-        
-        if english {
-            c.isAlliance = c.subtype.lowercaseString.containsString("alliance")
-            c.isVirtual = c.subtype.lowercaseString.containsString("virtual")
-            if c.type == .Ice {
-                let barrier = c.subtypes.contains("Barrier")
-                let sentry = c.subtypes.contains("Sentry")
-                let codeGate = c.subtypes.contains("Code Gate")
-                if barrier && sentry && codeGate {
-                    // print("multi: \(c.name)")
-                    Card.multiIce.append(c.code)
-                }
+        c.isAlliance = c.subtype.lowercaseString.containsString("alliance")
+        c.isVirtual = c.subtype.lowercaseString.containsString("virtual")
+        if c.type == .Ice {
+            let barrier = c.subtypes.contains("Barrier")
+            let sentry = c.subtypes.contains("Sentry")
+            let codeGate = c.subtypes.contains("Code Gate")
+            if barrier && sentry && codeGate {
+                // print("multi: \(c.name)")
+                Card.multiIce.append(c.code)
             }
         }
         
         return c
     }
     
-    func setLocalPropertiesFrom(localCard: Card) {
-        self.name = localCard.name
-        self.typeStr = localCard.typeStr
-        self.subtype = localCard.subtype
-        self.subtypes = localCard.subtypes
-        self.factionStr = localCard.factionStr
-        self.text = localCard.text
-        self.flavor = localCard.flavor
-        if let localImg = localCard.imageSrc {
-            self.imageSrc = localImg
-        }
-    }
+//    func setLocalPropertiesFrom(localCard: Card) {
+//        self.name = localCard.name
+//        self.typeStr = localCard.typeStr
+//        self.subtype = localCard.subtype
+//        self.subtypes = localCard.subtypes
+//        self.factionStr = localCard.factionStr
+//        self.text = localCard.text
+//        self.flavor = localCard.flavor
+//        if let localImg = localCard.imageSrc {
+//            self.imageSrc = localImg
+//        }
+//    }
     
     private class func subtypeSplit(subtype: String) -> (subtype: String, subtypes: [String]) {
-        var s = subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")
-        s = s.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
-        var subtypes = s.componentsSeparatedByString(" - ")
+        let s = subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")
+        let t = s.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
+        if s != t {
+            print("dashes found!")
+        }
+        var subtypes = t.componentsSeparatedByString(" - ")
         for i in 0 ..< subtypes.count {
             subtypes[i] = subtypes[i].trim()
         }

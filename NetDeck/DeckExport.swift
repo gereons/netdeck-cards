@@ -109,7 +109,7 @@ enum ExportFormat {
         var s = (deck.name ?? "") + eol + eol
         if let identity = deck.identity {
             s += identity.name
-            s += " " + self.italics("(" + identity.setName + ")", fmt)
+            s += " " + self.italics("(" + identity.packName + ")", fmt)
             s += eol
         }
         
@@ -129,7 +129,7 @@ enum ExportFormat {
             
             for cc in cards {
                 s += "\(cc.count)x " + cc.card.name
-                s += " " + self.italics("(" + cc.card.setName + ")", fmt)
+                s += " " + self.italics("(" + cc.card.packName + ")", fmt)
 
                 let inf = deck.influenceFor(cc)
                 if inf > 0 {
@@ -155,7 +155,7 @@ enum ExportFormat {
         if deck.identity?.role == .Corp {
             s += "\(deck.agendaPoints) agenda points" + eol
         }
-        let set = CardSets.mostRecentSetUsedInDeck(deck)
+        let set = PackManager.mostRecentPackUsedInDeck(deck)
         s += "Cards up to \(set)" + eol
         
         s += eol + "Deck built with " + self.link(APP_NAME, APP_URL, fmt) + eol

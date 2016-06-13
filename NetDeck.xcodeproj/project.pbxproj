@@ -21,6 +21,7 @@
 		3A11B1151ADE364300E5A410 /* CardFilterCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B1141ADE364300E5A410 /* CardFilterCollectionView.m */; };
 		3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11C5F919715BE8003F2093 /* IdentitySectionHeaderView.m */; };
 		3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */; };
+		3A126E901D0320ED00CDF580 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A126E8F1D0320ED00CDF580 /* Translation.swift */; };
 		3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A167BD118B1E9C90023DF8A /* CardTypeStats.m */; };
 		3A1777DF1967EA0B0066E095 /* NRDBAuthPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1777DD1967EA0B0066E095 /* NRDBAuthPopupViewController.m */; };
 		3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */; };
@@ -58,7 +59,7 @@
 		3A3CE0F01C79EE31003BF8D9 /* DeckImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3CE0EF1C79EE31003BF8D9 /* DeckImport.swift */; };
 		3A3D8CA71CA1C6EF002C73E3 /* Codes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D8CA61CA1C6EF002C73E3 /* Codes.swift */; };
 		3A3E26E81A005042000C6D32 /* UIAlert+NetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */; };
-		3A41DA871BF8785C003CB7E1 /* CardSets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A41DA861BF8785C003CB7E1 /* CardSets.swift */; };
+		3A41DA871BF8785C003CB7E1 /* PackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A41DA861BF8785C003CB7E1 /* PackManager.swift */; };
 		3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */; };
 		3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */; };
 		3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4866E5193B85560045C927 /* DeckNotesPopup.m */; };
@@ -205,6 +206,7 @@
 		3A11C5F819715BE8003F2093 /* IdentitySectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IdentitySectionHeaderView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A11C5F919715BE8003F2093 /* IdentitySectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IdentitySectionHeaderView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentitySectionHeaderView.xib; sourceTree = "<group>"; };
+		3A126E8F1D0320ED00CDF580 /* Translation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
 		3A167BD018B1E9C90023DF8A /* CardTypeStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardTypeStats.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A167BD118B1E9C90023DF8A /* CardTypeStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardTypeStats.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A1777DC1967EA0B0066E095 /* NRDBAuthPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRDBAuthPopupViewController.h; sourceTree = "<group>"; };
@@ -270,7 +272,7 @@
 		3A3D8CA61CA1C6EF002C73E3 /* Codes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codes.swift; sourceTree = "<group>"; };
 		3A3E26E61A004FD7000C6D32 /* UIAlert+NetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlert+NetDeck.h"; sourceTree = "<group>"; };
 		3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlert+NetDeck.m"; sourceTree = "<group>"; };
-		3A41DA861BF8785C003CB7E1 /* CardSets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSets.swift; sourceTree = "<group>"; };
+		3A41DA861BF8785C003CB7E1 /* PackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackManager.swift; sourceTree = "<group>"; };
 		3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserSectionHeaderView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserSectionHeaderView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserSectionHeaderView.xib; sourceTree = "<group>"; };
@@ -842,16 +844,17 @@
 				3A3C1E151BF7525B000311FA /* Faction.swift */,
 				3A3D8CA61CA1C6EF002C73E3 /* Codes.swift */,
 				3A3C1E181BF771B2000311FA /* CardType.swift */,
-				3A41DA861BF8785C003CB7E1 /* CardSets.swift */,
 				3A3C1E1C1BF77F10000311FA /* CardCounter.swift */,
 				3AC4F7851BFD2659008E42F7 /* Card.swift */,
 				3AEEBB661C00C9FF00CB6053 /* CardManager.swift */,
+				3A41DA861BF8785C003CB7E1 /* PackManager.swift */,
 				3AA4088D1C038F480046922C /* CardList.swift */,
 				3AA50F351C0A2FC8007D5296 /* Deck.swift */,
 				3A3C1E1E1BF79A71000311FA /* DeckState.swift */,
 				3A3C1E201BF79C7D000311FA /* DeckChange.swift */,
 				3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */,
 				3A3A83881C135BE3004F6562 /* DeckManager.swift */,
+				3A126E8F1D0320ED00CDF580 /* Translation.swift */,
 			);
 			name = "Data / Models";
 			sourceTree = "<group>";
@@ -1307,7 +1310,7 @@
 				3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */,
 				3AB9BD5E18FADC01004EAF10 /* DeckCell.m in Sources */,
 				3ABAD2FD1B83A6D7009E81F3 /* IphoneIdentityViewController.m in Sources */,
-				3A41DA871BF8785C003CB7E1 /* CardSets.swift in Sources */,
+				3A41DA871BF8785C003CB7E1 /* PackManager.swift in Sources */,
 				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
 				3A92DFD81CBA59EE0043F2F6 /* BrowserValuePicker.swift in Sources */,
 				3A904FCD1BF73723001C075A /* Types.swift in Sources */,
@@ -1358,6 +1361,7 @@
 				3A3CE0F01C79EE31003BF8D9 /* DeckImport.swift in Sources */,
 				3A9204C618B16B9B00AF5285 /* Stats.m in Sources */,
 				3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */,
+				3A126E901D0320ED00CDF580 /* Translation.swift in Sources */,
 				3A85327D185509B000507B9A /* SettingsViewController.m in Sources */,
 				3A563717199552BA006AD431 /* BrowserCell.m in Sources */,
 				3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */,

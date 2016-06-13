@@ -269,12 +269,12 @@ class DeckImport: NSObject {
     }
     
     func doDownloadDeckFromNetrunnerDbList(deckId: String) {
-        let deckUrl = "https://netrunnerdb.com/api/decklist/" + deckId
+        let deckUrl = "https://netrunnerdb.com/api/2.0/public/decklist/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
-    }
     
+    }
     func doDownloadDeckFromNetrunnerDbShared(deckId: String) {
-        let deckUrl = "https://netrunnerdb.com/api/shareddeck/" + deckId
+        let deckUrl = "https://netrunnerdb.com/api/2.0/public/deck/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     }
     
@@ -301,22 +301,23 @@ class DeckImport: NSObject {
     func parseJsonDeckList(json: JSON) -> Bool {
         let deck = Deck()
         
-        deck.name = json["name"].stringValue
-        var notes = json["description"].stringValue
+        if !json.validNrdbResponse {
+            return false
+        }
+        
+        let data = json["data"][0]
+        
+        deck.name = data["name"].stringValue
+        var notes = data["description"].stringValue
         if notes.length > 0 {
             notes = notes.stringByReplacingOccurrencesOfString("<p>", withString: "")
             notes = notes.stringByReplacingOccurrencesOfString("</p>", withString: "")
             deck.notes = notes
         }
         
-        let cards = json["cards"].dictionaryValue
-        for code in cards.keys {
-            let qty = cards[code]!.intValue
-            if let card = CardManager.cardByCode(code) where qty > 0 {
-                if card.type == .Identity {
-                    deck.role = card.role
-                }
-                deck.addCard(card, copies: qty)
+        for (code, qty) in data["cards"].dictionaryValue {
+            if let card = CardManager.cardByCode(code) where qty.intValue > 0 {
+                deck.addCard(card, copies: qty.intValue)
             }
         }
         
