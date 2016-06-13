@@ -383,7 +383,6 @@ class NRDB: NSObject {
         for cc in deck.cards {
             cards[cc.card.code] = cc.count
         }
-        // let json = JSON(cards)
         
         var tags = ""
         if deck.tags != nil {
