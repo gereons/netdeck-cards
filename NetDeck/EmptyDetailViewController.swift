@@ -39,9 +39,9 @@ class EmptyDetailViewController: UIViewController {
         super.viewDidAppear(animated)
         
         let settings = NSUserDefaults.standardUserDefaults()
-//        if settings.boolForKey(SettingsKeys.UPDATE_2_11) || settings.stringForKey(SettingsKeys.LAST_DOWNLOAD) == "never".localized() {
-//            return
-//        }
+        if settings.boolForKey(SettingsKeys.UPDATE_2_11) || settings.stringForKey(SettingsKeys.LAST_DOWNLOAD) == "never".localized() {
+            return
+        }
         
         settings.setBool(true, forKey: SettingsKeys.UPDATE_2_11)
         

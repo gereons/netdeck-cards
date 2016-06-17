@@ -140,7 +140,7 @@ import SwiftyJSON
             let cardsJson = JSON.parse(str as String)
             return setupFromJson(cardsJson, language: language)
         }
-        print("app start: missing card file")
+        // print("app start: missing card file")
         return false
     }
     
@@ -149,8 +149,8 @@ import SwiftyJSON
         if ok {
             let filename = CardManager.filename()
             if let data = try? cards.rawData() {
-                let ok = data.writeToFile(filename, atomically:true)
-                print("write cards ok=\(ok)")
+                data.writeToFile(filename, atomically:true)
+                // print("write cards ok=\(ok)")
             }
             AppDelegate.excludeFromBackup(filename)
         }

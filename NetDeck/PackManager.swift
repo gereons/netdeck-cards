@@ -79,7 +79,7 @@ class Cycle {
                 return setupFromJsonData(cyclesJson, packsJson, language: language)
             }
         }
-        print("app start: missing pack/cycles files")
+        // print("app start: missing pack/cycles files")
         return false
     }
     
@@ -88,15 +88,15 @@ class Cycle {
         if ok {
             let packsFile = packsPathname()
             if let data = try? packs.rawData() {
-                let ok = data.writeToFile(packsFile, atomically:true)
-                print("write packs ok=\(ok)")
+                data.writeToFile(packsFile, atomically:true)
+                // print("write packs ok=\(ok)")
             }
             AppDelegate.excludeFromBackup(packsFile)
             
             let cyclesFile = cyclesPathname()
             if let data = try? cycles.rawData() {
-                let ok = data.writeToFile(cyclesFile, atomically:true)
-                print("write cycles ok=\(ok)")
+                data.writeToFile(cyclesFile, atomically:true)
+                // print("write cycles ok=\(ok)")
             }
             AppDelegate.excludeFromBackup(cyclesFile)
         }
@@ -111,7 +111,7 @@ class Cycle {
         
         let ok = cycles.validNrdbResponse && packs.validNrdbResponse
         if !ok {
-            print("cards/packs invalid")
+            // print("cards/packs invalid")
             return false
         }
         

@@ -115,18 +115,18 @@ class DataDownload: NSObject {
         }
         
         dispatch_group_notify(group, dispatch_get_main_queue()) {
-            print("dl finished. stopped=\(self.downloadStopped), \(results.count) results")
-            for a in results.keys {
-                print("  \(a)")
-            }
+            // print("dl finished. stopped=\(self.downloadStopped), \(results.count) results")
+            // for a in results.keys {
+            //    print("  \(a)")
+            // }
             
             var ok = !self.downloadStopped && results.count == requests.count
             if ok {
                 ok = PackManager.setupFromNetrunnerDb(results[.Cycles]!, results[.Packs]!, language: language)
-                print("packs setup ok=\(ok)")
+                // print("packs setup ok=\(ok)")
                 if ok {
                     ok = CardManager.setupFromNetrunnerDb(results[.Cards]!, language: language)
-                    print("cards setup ok=\(ok)")
+                    // print("cards setup ok=\(ok)")
                 }
                 CardManager.setNextDownloadDate()
             }
