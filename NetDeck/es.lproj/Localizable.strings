@@ -175,6 +175,7 @@
 "To use this app, you must first download card data." = "Para usar esta aplicación debes primero descargar los datos de las cartas.";
 "Not now" = "Ahora no";
 "Download" = "Descargar";
+"Net Deck needs to re-download card data from NetrunnerDB.com" = "Net Deck tiene que volver a descargar los datos de la tarjeta de NetrunnerDB.com";
 
 "Update cards" = "Actualizar Cartas";
 "Card data may be out of date. Download now?" = "Los datos de las cartas no están actualizados. ¿Descargar actualización ahora?";

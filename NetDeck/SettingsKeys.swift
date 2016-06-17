@@ -78,4 +78,5 @@
     static let USE_NAPD_MWL        = "useNapdMWL"
     
     static let FILES_MOVED         = "filesMoved"
+    static let UPDATE_2_11         = "update2.11"
 }

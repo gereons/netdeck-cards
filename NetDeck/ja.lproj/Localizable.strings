@@ -199,6 +199,7 @@
 "To use this app, you must first download card data." = "このアプリは、先にカードデータをダウンロードしてください。";
 "Not now" = "後ほど";
 "Download" = "ダウンロード";
+"Net Deck needs to re-download card data from NetrunnerDB.com" = "Net DeckはNetrunnerDB.comからカードデータを再度ダウンロードする必要があります";
 
 "Update cards" = "カードの更新";
 "Card data may be out of date. Download now?" = "カードデータが更新されています。ダウンロードしますか？";

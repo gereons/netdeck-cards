@@ -7,7 +7,6 @@
 //
 
 #import "ActionsTableViewController.h"
-#import "EmptyDetailViewController.h"
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "CardFilterViewController.h"

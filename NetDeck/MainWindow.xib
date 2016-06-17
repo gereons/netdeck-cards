@@ -43,7 +43,7 @@
                     <outlet property="detailViewController" destination="8" id="18"/>
                 </connections>
             </navigationController>
-            <viewController key="detailViewController" nibName="EmptyDetailView" id="8" customClass="EmptyDetailViewController">
+            <viewController key="detailViewController" nibName="EmptyDetailView" id="8" customClass="EmptyDetailViewController" customModule="NetDeck" customModuleProvider="target">
                 <extendedEdge key="edgesForExtendedLayout"/>
                 <toolbarItems/>
             </viewController>

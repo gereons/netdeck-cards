@@ -91,9 +91,9 @@ class DataDownload: NSObject {
         let cardsUrl = String(format: "https://%@/api/2.0/public/cards?_locale=%@", nrdbHost!, language)
         
         let requests: [ApiRequest: NSURLRequest] = [
-            .Cycles: NSURLRequest(URL:NSURL(string: cyclesUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 15),
-            .Packs: NSURLRequest(URL:NSURL(string: packsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 15),
-            .Cards: NSURLRequest(URL:NSURL(string: cardsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 15)
+            .Cycles: NSURLRequest(URL:NSURL(string: cyclesUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 20),
+            .Packs: NSURLRequest(URL:NSURL(string: packsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 20),
+            .Cards: NSURLRequest(URL:NSURL(string: cardsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 20)
         ]
         
         let group = dispatch_group_create()
@@ -116,6 +116,10 @@ class DataDownload: NSObject {
         
         dispatch_group_notify(group, dispatch_get_main_queue()) {
             print("dl finished. stopped=\(self.downloadStopped), \(results.count) results")
+            for a in results.keys {
+                print("  \(a)")
+            }
+            
             var ok = !self.downloadStopped && results.count == requests.count
             if ok {
                 ok = PackManager.setupFromNetrunnerDb(results[.Cycles]!, results[.Packs]!, language: language)
