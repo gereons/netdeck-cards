@@ -10,6 +10,8 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
+// TODO: nrdb publishing failure: display error message!
+// TODO: iphone card display: centered if it's only 1 card
 // TODO: browser: allow all know sets?
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time

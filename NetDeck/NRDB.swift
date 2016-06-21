@@ -443,9 +443,13 @@ class NRDB: NSObject {
     func updateDeckMap(decks: [Deck]) {
         self.deckMap = [String: String]()
         for deck in decks {
-            if let filename = deck.filename, nrdbId = deck.netrunnerDbId {
-                self.deckMap[nrdbId] = filename
-            }
+            addDeck(deck)
+        }
+    }
+    
+    func addDeck(deck: Deck) {
+        if let filename = deck.filename, nrdbId = deck.netrunnerDbId {
+            self.deckMap[nrdbId] = filename
         }
     }
     
