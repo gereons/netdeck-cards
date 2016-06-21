@@ -218,7 +218,7 @@
     {
         // NSLog(@"export deck %d", index);
         Deck* deck = [decks objectAtIndex:index];
-        [[NRDB sharedInstance] saveDeck:deck completion:^(BOOL ok, NSString* deckId) {
+        [[NRDB sharedInstance] saveDeck:deck completion:^(BOOL ok, NSString* deckId, NSString* msg) {
             // NSLog(@"saved %d, ok=%d id=%@", index, ok, deckId);
             if (ok && deckId)
             {

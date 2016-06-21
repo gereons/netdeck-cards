@@ -488,7 +488,7 @@
     
     [SVProgressHUD showWithStatus:l10n(@"Saving Deck...")];
     
-    [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId) {
+    [[NRDB sharedInstance] saveDeck:self.deck completion:^(BOOL ok, NSString* deckId, NSString* msg) {
         if (!ok)
         {
             [UIAlertController alertWithTitle:nil message:l10n(@"Saving the deck at NetrunnerDB.com failed.") button:l10n(@"OK")];
@@ -542,18 +542,21 @@
     {
         [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
 
-        [[NRDB sharedInstance] publishDeck:deck completion:^(BOOL ok, NSString *deckId) {
+        [[NRDB sharedInstance] publishDeck:deck completion:^(BOOL ok, NSString *deckId, NSString* errorMsg) {
+            [SVProgressHUD dismiss];
             if (!ok)
             {
-                [UIAlertController alertWithTitle:nil message:l10n(@"Publishing the deck at NetrunnerDB.com failed.") button:l10n(@"OK")];
+                NSString* failed = l10n(@"Publishing the deck at NetrunnerDB.com failed.");
+                if (errorMsg.length > 0) {
+                    failed = [NSString stringWithFormat:@"%@\n'%@'", failed, errorMsg];
+                }
+                [UIAlertController alertWithTitle:nil message:failed button:l10n(@"OK")];
             }
             if (ok && deckId)
             {
                 NSString* msg = [NSString stringWithFormat:l10n(@"Deck published with ID %@"), deckId];
                 [UIAlertController alertWithTitle:nil message:msg button:l10n(@"OK")];
             }
-            
-            [SVProgressHUD dismiss];
         }];
     }
     else

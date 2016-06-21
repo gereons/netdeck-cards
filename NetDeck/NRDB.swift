@@ -370,9 +370,9 @@ class NRDB: NSObject {
     
     // MARK: - save / publish
     
-    func saveDeck(deck: Deck, completion: (Bool, String?) -> Void) {
+    func saveDeck(deck: Deck, completion: (Bool, String?, String?) -> Void) {
         guard let accessToken = self.accessToken() else {
-            completion(false, nil)
+            completion(false, nil, nil)
             return
         }
         
@@ -400,9 +400,9 @@ class NRDB: NSObject {
         self.saveOrPublish(saveUrl, parameters: parameters, completion: completion)
     }
     
-    func publishDeck(deck: Deck, completion: (Bool, String?) -> Void) {
+    func publishDeck(deck: Deck, completion: (Bool, String?, String?) -> Void) {
         guard let accessToken = self.accessToken() else {
-            completion(false, nil)
+            completion(false, nil, nil)
             return
         }
         
@@ -416,7 +416,7 @@ class NRDB: NSObject {
         self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)
     }
 
-    func saveOrPublish(url: String, parameters: [String: AnyObject], completion: (Bool, String?)->Void) {
+    func saveOrPublish(url: String, parameters: [String: AnyObject], completion: (Bool, String?, String?)->Void) {
         Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON)
             .validate()
             .responseJSON { response in
@@ -427,14 +427,17 @@ class NRDB: NSObject {
                     if ok {
                         let deckId = json["data"][0]["id"].stringValue
                         if deckId != "" {
-                            completion(true, deckId)
+                            completion(true, deckId, nil)
                             return
                         }
+                    } else {
+                        completion(false, nil, json["msg"].stringValue)
+                        return
                     }
                 case .Failure:
                     break
                 }
-                completion(false, nil)
+                completion(false, nil, nil)
             }
     }
     
@@ -462,7 +465,7 @@ class NRDB: NSObject {
     }
 }
 
-// NRDB-specific JSON extension
+// MARK: - NRDB-specific JSON extension
 
 extension JSON {
     
