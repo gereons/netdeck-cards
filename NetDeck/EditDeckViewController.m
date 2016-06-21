@@ -347,10 +347,14 @@
     {
         [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
         
-        [[NRDB sharedInstance] publishDeck:self.deck completion:^(BOOL ok, NSString *deckId, NSString* msg) {
+        [[NRDB sharedInstance] publishDeck:self.deck completion:^(BOOL ok, NSString *deckId, NSString* errorMsg) {
             if (!ok)
             {
-                [UIAlertController alertWithTitle:nil message:l10n(@"Publishing the deck at NetrunnerDB.com failed.") button:l10n(@"OK")];
+                NSString* failed = l10n(@"Publishing the deck at NetrunnerDB.com failed.");
+                if (errorMsg.length > 0) {
+                    failed = [NSString stringWithFormat:@"%@\n'%@'", failed, errorMsg];
+                }
+                [UIAlertController alertWithTitle:nil message:failed button:l10n(@"OK")];
             }
             if (ok && deckId)
             {
