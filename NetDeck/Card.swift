@@ -175,7 +175,7 @@ import SwiftyJSON
     // special for Programs: return "Icebreaker" for icebreakers, "Program" for other programs
     var programType: String? {
         assert(self.type == .Program, "not a program")
-        if self.strength >= 0 {
+        if self.strength >= 0 || self.strength == Card.X {
             return self.subtypes[0]
         } else {
             return self.typeStr
