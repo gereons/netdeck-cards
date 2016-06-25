@@ -42,7 +42,7 @@ class DataDownload: NSObject {
     private var downloadStopped = false
     private var downloadErrors = 0
     
-    private var cards: [Card]!
+    private var cards = [Card]()
     
     // MARK: - card and sets download
     
@@ -244,7 +244,7 @@ class DataDownload: NSObject {
                     UIAlertController.alertWithTitle(nil, message:msg, button:"OK")
                 }
                 
-                self.cards = nil
+                self.cards.removeAll()
             }
         }
     }
