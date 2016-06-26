@@ -33,20 +33,22 @@ class CardList: NSObject {
     private var faction4inf: NRFaction = .None   // faction for influence filter
     
     private var sortType: NRBrowserSort = .ByType
+    private var packUsage: NRPackUsage
 
-    init(forRole role: NRRole) {
+    init(forRole role: NRRole, packUsage: NRPackUsage) {
         self.role = role
         self.sortType = .ByType
         self.faction4inf = .None
         self.initialCards = [Card]()
+        self.packUsage = packUsage
         super.init()
         
         self.resetInitialCards()
         self.clearFilters()
     }
     
-    class func browserInitForRole(role: NRRole) -> CardList {
-        let cl = CardList(forRole: role)
+    class func browserInitForRole(role: NRRole, packUsage: NRPackUsage) -> CardList {
+        let cl = CardList(forRole: role, packUsage: packUsage)
         
         var roles = [NRRole]()
         switch (role)
@@ -64,7 +66,7 @@ class CardList: NSObject {
             cl.initialCards.appendContentsOf(CardManager.allForRole(role))
             cl.initialCards.appendContentsOf(CardManager.identitiesForRole(role))
         }
-        cl.filterDeselectedSets()
+        cl.resetInitialCards()
         cl.clearFilters()
         
         return cl
@@ -72,7 +74,9 @@ class CardList: NSObject {
     
     func resetInitialCards() {
         self.initialCards = CardManager.allForRole(self.role)
-        self.filterDeselectedSets()
+        if self.packUsage == .Selected {
+            self.filterDeselectedSets()
+        }
     }
     
     func clearFilters() {

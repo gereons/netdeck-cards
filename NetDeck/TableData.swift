@@ -26,4 +26,19 @@ import Foundation
     convenience init(values: NSArray) {
         self.init(sections: [""], andValues: [values])
     }
+    
+    class func convertPacksData(rawPacks: TableData) -> TableData {
+        let strValues = NSMutableArray()
+        for packs in rawPacks.values as! [[Pack]] {
+            let strings = NSMutableArray()
+            for pack in packs {
+                strings.addObject(pack.name)
+            }
+            strValues.addObject(strings)
+        }
+        
+        let stringPacks = TableData(sections:rawPacks.sections, andValues:strValues)
+        stringPacks.collapsedSections = rawPacks.collapsedSections
+        return stringPacks
+    }
 }

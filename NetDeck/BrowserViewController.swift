@@ -73,7 +73,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func refresh() {
-        self.cardList = CardList.browserInitForRole(self.role)
+        let packUsage = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.BROWSER_PACKS)
+        self.cardList = CardList.browserInitForRole(self.role, packUsage: NRPackUsage(rawValue: packUsage) ?? .All)
         if self.searchText.length > 0 {
             self.cardList.filterByName(self.searchText)
         }
@@ -208,7 +209,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBAction func setButtonTapped(btn: UIButton) {
         let picker = BrowserValuePicker(title: "Set".localized())
-        picker.data = PackManager.allEnabledPacksForTableview()
+        let packUsage = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.BROWSER_PACKS)
+        picker.data = PackManager.packsForTableview(NRPackUsage(rawValue: packUsage) ?? .All)
         picker.preselected = self.sets
         picker.setResult = { result in
             self.sets = result

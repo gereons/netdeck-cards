@@ -10,6 +10,7 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
+// TODO: iphone card display: blank detailview until we actually need it
 // TODO: iphone card display: centered if it's only 1 card
 // TODO: browser: allow all know sets?
 // TODO: iphone: sorting like on ipad
@@ -162,8 +163,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             SettingsKeys.BROWSER_VIEW_SCALE: 1.0,
             SettingsKeys.BROWSER_SORT_TYPE: NRBrowserSort.ByType.rawValue,
             
-            SettingsKeys.BROWSER_SETS: NRSetUsage.Selected.rawValue,
-            SettingsKeys.DECKBUILDER_SETS: NRSetUsage.Selected.rawValue,
+            SettingsKeys.BROWSER_PACKS: NRPackUsage.Selected.rawValue,
+            SettingsKeys.DECKBUILDER_PACKS: NRPackUsage.Selected.rawValue,
             
             SettingsKeys.NUM_CORES: 3,
             

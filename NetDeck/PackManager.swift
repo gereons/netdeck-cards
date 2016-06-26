@@ -37,6 +37,12 @@ class Cycle {
     static var packsByCode = [String: Pack]()       // code -> pack
     static var allPacks = [Pack]()
     
+    static let anyPack: Pack = {
+        let p = Pack()
+        p.name = Constant.kANY
+        return p
+    }()
+    
     // caches
     static var disabledPacks: Set<String>?          // set of pack codes
     static var enabledPacks: TableData?
@@ -203,13 +209,17 @@ class Cycle {
         disabledPacks = nil
         enabledPacks = nil
     }
+    
+    class func packsForTableview(packs: NRPackUsage) -> TableData {
+        return packs == .All ? allKnownPacksForTableview() : allEnabledPacksForTableview()
+    }
 
-    class func allEnabledPacksForTableview() -> TableData {
+    private class func allEnabledPacksForTableview() -> TableData {
         var sections = [String]()
-        var values = [[String]]()
+        var values = [[Pack]]()
         
         sections.append("")
-        values.append([Constant.kANY])
+        values.append([PackManager.anyPack])
         
         let settings = NSUserDefaults.standardUserDefaults()
         
@@ -219,7 +229,7 @@ class Cycle {
             let packs = allPacks.filter{ $0.cycleCode == cycle.code && settings.boolForKey($0.settingsKey) }
             
             if packs.count > 0 {
-                values.append(packs.map({$0.name}))
+                values.append(packs)
             } else {
                 sections.removeLast()
             }
@@ -231,14 +241,18 @@ class Cycle {
         let count = sections.count
         var collapsedSections = [Bool](count: count, repeatedValue: true)
         collapsedSections[0] = false
-        if count-1 > 0 { collapsedSections[count-1] = false }
-        if count-2 > 0 { collapsedSections[count-2] = false }
+        if count-1 > 0 {
+            collapsedSections[count-1] = false
+        }
+        if count-2 > 0 {
+            collapsedSections[count-2] = false
+        }
         
         result.collapsedSections = collapsedSections
         return result
     }
 
-    class func allKnownPacksForTableview() -> TableData {
+    private class func allKnownPacksForTableview() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         

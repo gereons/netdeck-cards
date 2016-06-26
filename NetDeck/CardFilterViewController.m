@@ -122,7 +122,8 @@ static NSInteger viewMode = VIEW_LIST;
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
-    self.cardList = [[CardList alloc] initForRole:self.role];
+    NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECKBUILDER_PACKS];
+    self.cardList = [[CardList alloc] initForRole:self.role packUsage:packUsage];
     [self initCards];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -633,7 +634,10 @@ static NSInteger viewMode = VIEW_LIST;
 -(void) setClicked:(UIButton*)sender
 {
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
-    [CardFilterPopover showFromButton:sender inView:self entries:[PackManager allEnabledPacksForTableview] type:@"Set" selected:selected];
+    NRPackUsage usePacks = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECKBUILDER_PACKS];
+    TableData* rawPacks = [PackManager packsForTableview:usePacks];
+    TableData* stringPacks = [TableData convertPacksData:rawPacks];
+    [CardFilterPopover showFromButton:sender inView:self entries:stringPacks type:@"Set" selected:selected];
 }
 
 -(void) subtypeClicked:(UIButton*)sender

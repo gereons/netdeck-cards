@@ -92,7 +92,7 @@
     case Corp
 }
 
-@objc enum NRSetUsage: Int {
+@objc enum NRPackUsage: Int {
     case All
     case Selected
 }

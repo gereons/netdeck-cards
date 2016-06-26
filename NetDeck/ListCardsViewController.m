@@ -46,8 +46,8 @@ static NSString* kCancelButton = @"cancelButton";
     [self.view bringSubviewToFront:self.statusLabel];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"EditDeckCell" bundle:nil] forCellReuseIdentifier:@"cardCell"];
-    
-    self.cardList = [[CardList alloc] initForRole:self.deck.role];
+    NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECKBUILDER_PACKS];
+    self.cardList = [[CardList alloc] initForRole:self.deck.role packUsage:packUsage];
     
     if (self.deck.identity != nil)
     {

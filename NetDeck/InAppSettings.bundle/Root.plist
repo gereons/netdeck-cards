@@ -72,7 +72,7 @@
             <key>Title</key>
             <string>Sets used in Deck Builder</string>
             <key>Key</key>
-            <string>deckBuilderSets</string>
+            <string>deckBuilderPacks</string>
             <key>DefaultValue</key>
             <integer>1</integer>
             <key>Values</key>
@@ -85,8 +85,6 @@
                 <string>All</string>
                 <string>Selected</string>
             </array>
-            <key>Key</key>
-            <string>sets_hide_2</string>
         </dict>
         <dict>
             <key>Type</key>
@@ -94,7 +92,7 @@
             <key>Title</key>
             <string>Sets used in Browser</string>
             <key>Key</key>
-            <string>browserSets</string>
+            <string>browserPacks</string>
             <key>DefaultValue</key>
             <integer>1</integer>
             <key>Values</key>
@@ -107,8 +105,6 @@
                 <string>All</string>
                 <string>Selected</string>
             </array>
-            <key>Key</key>
-            <string>sets_hide_3</string>
         </dict>
 		<dict>
 			<key>Type</key>
@@ -120,7 +116,7 @@
             <key>IASKViewControllerSelector</key>
             <string>init</string>
             <key>Key</key>
-            <string>sets_hide_4</string>
+            <string>sets_hide_2</string>
 		</dict>
 		<dict>
 			<key>Title</key>

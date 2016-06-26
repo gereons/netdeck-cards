@@ -47,7 +47,8 @@ static NSMutableArray* subtypeCollapsedSections;
         self.navController = [[UINavigationController alloc] initWithRootViewController:self.browser];
         
         self.role = NRRoleNone;
-        self.cardList = [CardList browserInitForRole:self.role];
+        NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
+        self.cardList = [CardList browserInitForRole:self.role packUsage:packUsage];
     }
     return self;
 }
@@ -228,7 +229,9 @@ static NSMutableArray* subtypeCollapsedSections;
     self.uniqueSwitch.on = NO;
     self.limitedSwitch.on = NO;
     
-    self.cardList = [CardList browserInitForRole:self.role];
+    NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
+    
+    self.cardList = [CardList browserInitForRole:self.role packUsage:packUsage];
     [self.cardList clearFilters];
     [self updateResults];
     
@@ -286,7 +289,8 @@ static NSMutableArray* subtypeCollapsedSections;
     self.costSlider.maximumValue = 1+maxCost;
     self.costSlider.value = MIN(1+maxCost, round(self.costSlider.value));
     
-    self.cardList = [CardList browserInitForRole:self.role];
+    NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
+    self.cardList = [CardList browserInitForRole:self.role packUsage:packUsage];
     [self.cardList clearFilters];
     
     if (selectedSets)
@@ -345,7 +349,20 @@ static NSMutableArray* subtypeCollapsedSections;
 -(void) setClicked:(UIButton*)sender
 {
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
-    [CardFilterPopover showFromButton:sender inView:self entries:[PackManager allEnabledPacksForTableview] type:@"Set" selected:selected];
+
+    NRPackUsage usePacks = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
+    TableData* rawPacks = [PackManager packsForTableview:usePacks];
+//    NSMutableArray* strValues = [NSMutableArray array];
+//    for (NSArray* packs in rawPacks.values) {
+//        NSMutableArray* strings = [NSMutableArray array];
+//        for (Pack* pack in packs) {
+//            [strings addObject:pack.name];
+//        }
+//        [strValues addObject:strings];
+//    }
+//    TableData* stringPacks = [[TableData alloc] initWithSections:rawPacks.sections andValues:strValues];
+    TableData* stringPacks = [TableData convertPacksData:rawPacks];
+    [CardFilterPopover showFromButton:sender inView:self entries:stringPacks type:@"Set" selected:selected];
 }
 
 -(void) subtypeClicked:(UIButton*)sender

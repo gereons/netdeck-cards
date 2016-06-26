@@ -77,8 +77,8 @@
     
     static let USE_NAPD_MWL        = "useNapdMWL"
     
-    static let BROWSER_SETS        = "browserSets"
-    static let DECKBUILDER_SETS    = "deckBuilderSets"
+    static let BROWSER_PACKS       = "browserPacks"
+    static let DECKBUILDER_PACKS   = "deckBuilderPacks"
 
     static let FILES_MOVED         = "filesMoved"
     static let UPDATE_2_11         = "update2.11"
