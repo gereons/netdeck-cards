@@ -132,7 +132,7 @@
     
     CGPoint point = [gesture locationInView:self.tableView];
     NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:point];
-    if (indexPath == nil) {
+    if (indexPath == nil || self.selectedIdentity == nil) {
         return;
     }
     
