@@ -67,7 +67,11 @@
     {
         [hiddenKeys addObjectsFromArray:@[ SettingsKeys.NRDB_TOKEN_EXPIRY, SettingsKeys.REFRESH_AUTH_NOW ]];
     }
-    [self.iask setHiddenKeys:hiddenKeys];
+    
+    NSSet* currentlyHidden = self.iask.hiddenKeys;
+    if (![currentlyHidden isEqualToSet:hiddenKeys]) {
+        [self.iask setHiddenKeys:hiddenKeys];
+    }
 }
 
 - (void) cardsLoaded:(NSNotification*) notification

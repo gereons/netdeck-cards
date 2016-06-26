@@ -51,7 +51,7 @@ class DataDownload: NSObject {
             
         if nrdbHost?.length > 0 {
             self.showDownloadAlert()
-            self.performSelector(#selector(DataDownload.doDownloadCardData(_:)), withObject: nil, afterDelay: 0.0)
+            self.performSelector(#selector(DataDownload.doDownloadCardData(_:)), withObject: nil, afterDelay: 0.01)
         } else {
             UIAlertController.alertWithTitle(nil, message: "No known NetrunnerDB server".localized(), button: "OK".localized());
             return
@@ -59,7 +59,7 @@ class DataDownload: NSObject {
     }
 
     private func showDownloadAlert() {
-        let alert = AlertController(title: "Downloading Card Data".localized(), message:nil, preferredStyle:.Alert)
+        let alert = AlertController(title: "Downloading Card Data".localized(), message:nil, preferredStyle: .Alert)
         alert.visualStyle = CustomAlertVisualStyle(alertStyle: .Alert)
         self.sdcAlert = alert
         
@@ -78,7 +78,7 @@ class DataDownload: NSObject {
             self.stopDownload()
         })
         
-        alert.present(animated: false, completion:nil)
+        alert.present(animated: false, completion: nil)
     }
     
     @objc private func doDownloadCardData(dummy: AnyObject) {
@@ -132,7 +132,7 @@ class DataDownload: NSObject {
             }
             
             if let alert = self.sdcAlert {
-                alert.dismiss(animated:false)
+                alert.dismiss(animated: false)
                 if !ok {
                     let msg = "Unable to download cards at this time. Please try again later.".localized()
                     UIAlertController.alertWithTitle(nil, message: msg, button: "OK")
@@ -187,14 +187,14 @@ class DataDownload: NSObject {
         
         alert.contentView.addSubview(progressView)
         
-        progressView.sdc_pinWidthToWidthOfView(alert.contentView, offset:-20)
+        progressView.sdc_pinWidthToWidthOfView(alert.contentView, offset: -20)
         progressView.sdc_centerInSuperview()
         
-        alert.addAction(AlertAction(title:"Stop".localized(), style:.Default) { (action) -> Void in
+        alert.addAction(AlertAction(title: "Stop".localized(), style: .Default) { (action) -> Void in
             self.stopDownload()
         })
         
-        alert.present(animated:false, completion:nil)
+        alert.present(animated: false, completion: nil)
         
         self.downloadStopped = false
         self.downloadErrors = 0

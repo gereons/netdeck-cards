@@ -10,7 +10,6 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-// TODO: settings: gey button text after "update card data"
 // TODO: iphone card display: centered if it's only 1 card
 // TODO: browser: allow all know sets?
 // TODO: use icon font for special symbols, including rendererd html text
