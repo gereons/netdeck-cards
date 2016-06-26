@@ -7,8 +7,11 @@
 
 "Card Data" = "Karten-Daten";
 
-
 "Card Sets" = "Karten-Sets";
+"Sets used in Deck Builder" = "Sets für Deckbau";
+"Sets used in Browser" = "Sets für Browser";
+"All" = "Alle";
+"Selected" = "Ausgewählte";
 "Set/Datapack Selection" = "Set- und Datensatz-Auswahl";
 
 "Data Export" = "Daten-Export";
@@ -23,4 +26,5 @@
 "Use “NAPD Most Wanted List”" = "“NAPD Most Wanted List” gilt";
 
 "About Net Deck" = "Über Net Deck";
+
 

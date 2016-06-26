@@ -12,6 +12,7 @@ import SVProgressHUD
 
 // TODO: iphone card display: centered if it's only 1 card
 // TODO: browser: allow all know sets?
+// TODO: iphone: sorting like on ipad
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
@@ -63,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         SVProgressHUD.setBackgroundColor(UIColor(white: 0.9, alpha: 1.0))
         SVProgressHUD.setDefaultMaskType(.Black)
-        SVProgressHUD.setMinimumDismissTimeInterval(2.0)
+        SVProgressHUD.setMinimumDismissTimeInterval(1.0)
         
         CardImageViewPopover.monitorKeyboard()
         
@@ -160,6 +161,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             SettingsKeys.BROWSER_VIEW_STYLE: NRCardView.LargeTable.rawValue,
             SettingsKeys.BROWSER_VIEW_SCALE: 1.0,
             SettingsKeys.BROWSER_SORT_TYPE: NRBrowserSort.ByType.rawValue,
+            
+            SettingsKeys.BROWSER_SETS: NRSetUsage.Selected.rawValue,
+            SettingsKeys.DECKBUILDER_SETS: NRSetUsage.Selected.rawValue,
             
             SettingsKeys.NUM_CORES: 3,
             

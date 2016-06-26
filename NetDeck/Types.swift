@@ -91,3 +91,8 @@
     case Runner
     case Corp
 }
+
+@objc enum NRSetUsage: Int {
+    case All
+    case Selected
+}
