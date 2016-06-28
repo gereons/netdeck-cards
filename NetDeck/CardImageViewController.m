@@ -64,6 +64,16 @@
     // If we haven't done the initial scroll, do it once.
     if (!self.initialScrollDone)
     {
+        if (self.cardsArray.count == 1) {
+            // force the insets so that the card is centered
+            UIEdgeInsets oldInset = self.collectionView.contentInset;
+            CGFloat frameWidth = self.collectionView.frame.size.width;
+            UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
+            CGFloat offset = (frameWidth - layout.itemSize.width - layout.minimumLineSpacing * 2.0) / 2.0;
+            UIEdgeInsets newInset = UIEdgeInsetsMake(oldInset.top, offset, oldInset.bottom, offset);
+            self.collectionView.contentInset = newInset;
+        }
+        
         self.initialScrollDone = YES;
         
         NSInteger row;
@@ -101,20 +111,13 @@
     
     Card* card = self.cardsArray[indexPath.row];
     
-    if (self.countsArray == nil)
-    {
+    if (self.countsArray == nil) {
         [cell setCard:card];
-    }
-    else
-    {
+    } else {
         NSNumber* count = self.countsArray[indexPath.row];
         [cell setCard:card andCount:count.integerValue];
     }
     return cell;
 }
 
-- (CGSize)XcollectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return CGSizeMake(300, 436);
-}
 @end

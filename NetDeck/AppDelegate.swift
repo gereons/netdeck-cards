@@ -10,7 +10,6 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-// TODO: iphone card display: centered if it's only 1 card
 // TODO: iphone: sorting like on ipad
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
