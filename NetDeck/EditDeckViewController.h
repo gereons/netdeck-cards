@@ -21,5 +21,6 @@
 -(IBAction)drawClicked:(id)sender;
 -(IBAction)nrdbButtonClicked:(id)sender;
 -(IBAction)showCardList:(id)sender;
+-(IBAction)sortClicked:(id)sender;
 
 @end

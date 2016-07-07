@@ -31,6 +31,7 @@
 @property UIBarButtonItem* historyButton;
 
 @property ListCardsViewController* listCards;
+@property NRDeckSort sortType;
 
 @end
 
@@ -56,6 +57,8 @@
     
     self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelClicked:)];
     self.saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveClicked:)];
+    
+    self.sortType = [settings integerForKey:SettingsKeys.DECK_VIEW_SORT];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -94,6 +97,12 @@
     }
     
     [self refreshDeck];
+}
+
+-(void) viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    [settings setObject:@(self.sortType) forKey:SettingsKeys.DECK_VIEW_SORT];
 }
 
 -(void) setupNavigationButtons:(BOOL)modified
@@ -201,6 +210,41 @@
     IphoneDrawSimulator* draw = [[IphoneDrawSimulator alloc] initWithNibName:@"IphoneDrawSimulator" bundle:nil];
     draw.deck = self.deck;
     [self.navigationController pushViewController:draw animated:YES];
+}
+
+#pragma mark - sort
+
+-(void)sortClicked:(id)sender {
+    UIAlertController* actionSheet = [UIAlertController actionSheetWithTitle:l10n(@"Sort") message:nil];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Type"), self.sortType == NRDeckSortByType)
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction *action) {
+                                                      [self changeDeckSort:NRDeckSortByType];
+                                                  }]];
+    [actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Faction"), self.sortType == NRDeckSortByFactionType)
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction *action) {
+                                                      [self changeDeckSort:NRDeckSortByFactionType];
+                                                  }]];
+    [actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Set/Type"), self.sortType == NRDeckSortBySetType)
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction *action) {
+                                                      [self changeDeckSort:NRDeckSortBySetType];
+                                                  }]];
+    [actionSheet addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"by Set/Number"), self.sortType == NRDeckSortBySetNum)
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction *action) {
+                                                      [self changeDeckSort:NRDeckSortBySetNum];
+                                                  }]];
+    [actionSheet addAction:[UIAlertAction cancelAction:nil]];
+    
+    [self presentViewController:actionSheet animated:NO completion:nil];
+}
+
+-(void) changeDeckSort:(NRDeckSort) sort {
+    self.sortType = sort;
+    [self refreshDeck];
 }
 
 #pragma mark - netrunnerdb.com
@@ -395,7 +439,7 @@
 
 -(void) refreshDeck
 {
-    TableData* data = [self.deck dataForTableView:NRDeckSortByType];
+    TableData* data = [self.deck dataForTableView:self.sortType];
     self.cards = data.values;
     self.sections = data.sections;
     

@@ -10,7 +10,6 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-// TODO: iphone: sorting like on ipad
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
@@ -274,7 +273,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             NSLog("setResource error=\(error)")
         }
     }
-
+    
     // MARK: - bg fetch
     
     func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
