@@ -1054,14 +1054,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A3622931849320C007F2854 /* Build configuration list for PBXNativeTarget "NetDeck" */;
 			buildPhases = (
-				C62555A389DA66E9F987B229 /* 📦 Check Pods Manifest.lock */,
+				C62555A389DA66E9F987B229 /* [CP] Check Pods Manifest.lock */,
 				3A36225A1849320C007F2854 /* Sources */,
 				3A36225B1849320C007F2854 /* Frameworks */,
 				3A36225C1849320C007F2854 /* Resources */,
 				3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */,
 				3A814EC519ADBEEE008C3285 /* Crashlytics */,
-				5F030FDE434FC2961F4D20B9 /* 📦 Embed Pods Frameworks */,
-				C576FDA1A12A9ED691A68447 /* 📦 Copy Pods Resources */,
+				5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */,
+				C576FDA1A12A9ED691A68447 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1214,14 +1214,14 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" == \"xRelease\" ]; then\necho \"init crashlytics\"\n\"${PODS_ROOT}/Fabric/run\" fe0f0f5f919be6211c1de668d91332e311ddad9e fa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8\nfi";
 		};
-		5F030FDE434FC2961F4D20B9 /* 📦 Embed Pods Frameworks */ = {
+		5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1229,14 +1229,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C576FDA1A12A9ED691A68447 /* 📦 Copy Pods Resources */ = {
+		C576FDA1A12A9ED691A68447 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1244,14 +1244,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C62555A389DA66E9F987B229 /* 📦 Check Pods Manifest.lock */ = {
+		C62555A389DA66E9F987B229 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
