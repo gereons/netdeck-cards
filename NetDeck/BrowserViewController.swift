@@ -210,7 +210,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBAction func setButtonTapped(btn: UIButton) {
         let picker = BrowserValuePicker(title: "Set".localized())
         let packUsage = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.BROWSER_PACKS)
-        picker.data = PackManager.packsForTableview(NRPackUsage(rawValue: packUsage) ?? .All)
+        let data = PackManager.packsForTableview(NRPackUsage(rawValue: packUsage) ?? .All)
+        picker.data = TableData.convertPacksData(data)
         picker.preselected = self.sets
         picker.setResult = { result in
             self.sets = result

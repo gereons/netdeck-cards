@@ -34,10 +34,10 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewWillAppear(animated)
         
         for sec in 0 ..< data.sections.count {
-            let packs = data.values[sec] as! [Pack]
-            for row in 0 ..< packs.count {
-                let pack = packs[row]
-                if self.preselected.contains(pack.name) {
+            let strings = data.values[sec] as! [String]
+            for row in 0 ..< strings.count {
+                let str = strings[row]
+                if self.preselected.contains(str) {
                     let idx = NSIndexPath(forRow: row, inSection: sec)
                     self.selected.insert(idx)
                 }
@@ -59,9 +59,9 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
         
         var result = Set<String>()
         for idx in self.selected {
-            let packs = self.data.values[idx.section] as! [Pack]
-            let text = packs[idx.row].name
-            result.insert(text)
+            let strings = self.data.values[idx.section] as! [String]
+            let str = strings[idx.row]
+            result.insert(str)
         }
         
         self.setResult(result)
@@ -88,9 +88,9 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
             cell?.selectionStyle = .None
         }
         
-        let packs = self.data.values[indexPath.section] as! [Pack]
-        let pack = packs[indexPath.row]
-        cell!.textLabel?.text = pack.name
+        let strings = self.data.values[indexPath.section] as! [String]
+        let str = strings[indexPath.row]
+        cell!.textLabel?.text = str
         
         let sel = self.selected.contains(indexPath)
         cell?.accessoryType = sel ? .Checkmark : .None
@@ -100,9 +100,9 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // special case for "Any", which is always at section 0, row 0
-        let packs = self.data.values[indexPath.section] as! [Pack]
-        let text = packs[indexPath.row].name
-        if indexPath.section == 0 && indexPath.row == 0 && text == Constant.kANY {
+        let strings = self.data.values[indexPath.section] as! [String]
+        let str = strings[indexPath.row]
+        if indexPath.section == 0 && indexPath.row == 0 && str == Constant.kANY {
             self.selected.removeAll()
             self.tableView.reloadData()
             return
