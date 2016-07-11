@@ -358,10 +358,11 @@ static NSString* kCancelButton = @"cancelButton";
         cell.influenceLabel.text = @"";
     }
     
-    if (card.isMostWanted) {
+    BOOL mwl = [card isMostWanted:self.deck.legality];
+    if (mwl) {
         cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)MIN(-1, -cc.count)];
     }
-    cell.mwlLabel.hidden = !card.isMostWanted;
+    cell.mwlLabel.hidden = !mwl;
     
     NSString* subtype = card.subtype;
     if (subtype)

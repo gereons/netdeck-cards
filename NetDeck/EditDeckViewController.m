@@ -33,6 +33,8 @@
 @property ListCardsViewController* listCards;
 @property NRDeckSort sortType;
 
+@property UITapGestureRecognizer* tapRecognizer;
+
 @end
 
 @implementation EditDeckViewController
@@ -59,6 +61,10 @@
     self.saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveClicked:)];
     
     self.sortType = [settings integerForKey:SettingsKeys.DECK_VIEW_SORT];
+    
+    self.statusLabel.userInteractionEnabled = YES;
+    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(statusTapped:)];
+    [self.statusLabel addGestureRecognizer:self.tapRecognizer];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -637,10 +643,11 @@
             cell.influenceLabel.text = @"";
             cell.influenceLabel.hidden = YES;
         }
-        if (card.isMostWanted) {
+        BOOL mwl = [card isMostWanted:self.deck.legality];
+        if (mwl) {
             cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)-cc.count];
         }
-        cell.mwlLabel.hidden = !card.isMostWanted;
+        cell.mwlLabel.hidden = !mwl;
     }
     
     
@@ -695,6 +702,27 @@
 -(NSString*) tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return l10n(@"Remove");
+}
+
+#pragma mark - legality
+
+-(void) statusTapped:(UITapGestureRecognizer*)gesture {
+    if (gesture.state != UIGestureRecognizerStateEnded) {
+        return;
+    }
+        
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.legality == NRDeckLegalityCasual) handler:^(UIAlertAction * action) {
+        self.deck.legality = NRDeckLegalityCasual;
+        [self refreshDeck];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.0"), self.deck.legality == NRDeckLegalityMWL_v1_0) handler:^(UIAlertAction * action) {
+        self.deck.legality = NRDeckLegalityMWL_v1_0;
+        [self refreshDeck];
+    }]];
+    [alert addAction:[UIAlertAction cancelAction:nil]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

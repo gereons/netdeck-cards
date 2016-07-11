@@ -76,10 +76,19 @@ import SwiftyJSON
     static let NAPD_CONTRACT    = "04119"
     static let SANSAN_CITY_GRID = "01092"
     
+    private struct MWL {
+        let name: String
+        let cards: Set<String>
+    }
+    
     // MWL introduced in Tournament Rules 3.0.2, valid from 2016-02-01 onwards
-    private static let MOST_WANTED_LIST = Set<String>([
+    private static let MWLv1 = Set<String>([
         CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
         ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])
+    
+    private static let MWLVersions: [NRDeckLegality: MWL] = [
+        .MWL_v1_0: MWL(name: "MWL v1.0", cards: MWLv1)
+    ]
     
     private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
@@ -157,8 +166,10 @@ import SwiftyJSON
         return self === Card.nullInstance
     }
     
-    var isMostWanted: Bool {
-        return Card.MOST_WANTED_LIST.contains(self.code)
+    func isMostWanted(legal: NRDeckLegality) -> Bool {
+        guard legal != .Casual else { return false }
+        let mwl = Card.MWLVersions[legal]!
+        return mwl.cards.contains(self.code)
     }
     
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"

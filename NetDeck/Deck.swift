@@ -25,7 +25,10 @@ import Foundation
     private var lastChanges = DeckChangeSet()
     
     override init() {
-        self.state = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.CREATE_DECK_ACTIVE) ? NRDeckState.Active : NRDeckState.Testing
+        let settings = NSUserDefaults.standardUserDefaults()
+        self.state = settings.boolForKey(SettingsKeys.CREATE_DECK_ACTIVE) ? NRDeckState.Active : NRDeckState.Testing
+        let mwlVersion = settings.integerForKey(SettingsKeys.MWL_VERSION)
+        self.legality = NRDeckLegality(rawValue: mwlVersion) ?? .Casual
     }
     
     var allCards: [CardCounter] {
@@ -60,6 +63,10 @@ import Foundation
         willSet { modified = true }
     }
     
+    var legality: NRDeckLegality {
+        willSet { modified = true }
+    }
+    
     var size: Int {
         return cards.reduce(0) { $0 + $1.count }
     }
@@ -77,7 +84,8 @@ import Foundation
             return 0
         }
         
-        if NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_NAPD_MWL) {
+        let useMwl = self.legality != NRDeckLegality.Casual
+        if useMwl {
             let limit = self.identity!.influenceLimit
             return max(1, limit - self.mwlPenalty)
         } else {
@@ -87,7 +95,7 @@ import Foundation
     
     /// how many cards in this deck are on the MWL?
     var cardsFromMWL: Int {
-        return cards.filter({ $0.card.isMostWanted }).reduce(0) { $0 + $1.count }
+        return cards.filter({ $0.card.isMostWanted(self.legality) }).reduce(0) { $0 + $1.count }
     }
     
     /// what's the influence penalty incurred through MWL cards?
@@ -553,6 +561,12 @@ import Foundation
 
         let revisions = decoder.decodeObjectForKey("revisions") as? [DeckChangeSet]
         self.revisions = revisions ?? [DeckChangeSet]()
+        
+        let legality = decoder.containsValueForKey("legality") ?
+            decoder.decodeIntegerForKey("legality") :
+            NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.MWL_VERSION)
+        
+        self.legality = NRDeckLegality(rawValue: legality) ?? .Casual
 
         self.modified = false
     }
@@ -571,5 +585,6 @@ import Foundation
         coder.encodeObject(self.tags, forKey:"tags")
         coder.encodeObject(self.lastChanges, forKey:"lastChanges")
         coder.encodeObject(self.revisions, forKey:"revisions")
+        coder.encodeInteger(self.legality.rawValue, forKey: "legality")
     }
 }

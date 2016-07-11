@@ -113,7 +113,7 @@ enum ExportFormat {
             s += eol
         }
         
-        let useMWL = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_NAPD_MWL)
+        let useMWL = deck.legality != NRDeckLegality.Casual
         for i in 0..<sections.count {
             let cards = cardsArray[i]
             let cc = cards[0]
@@ -135,7 +135,7 @@ enum ExportFormat {
                 if inf > 0 {
                     s += " " + self.color(self.dots(inf), cc.card.factionHexColor, fmt)
                 }
-                if useMWL && cc.card.isMostWanted {
+                if useMWL && cc.card.isMostWanted(deck.legality) {
                     s += " " + self.color(self.stars(cc.count), cc.card.factionHexColor, fmt)
                 }
                 s += eol

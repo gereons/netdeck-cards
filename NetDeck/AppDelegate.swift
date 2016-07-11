@@ -10,6 +10,8 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
+// TODO: support for multiple MWL versions, store legality option as property of deck. iphone also?
+// TODO: jinteki.net deck upload?
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
@@ -167,7 +169,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             SettingsKeys.SHOW_ALL_FILTERS: true,
             SettingsKeys.IDENTITY_TABLE: true,
             
-            SettingsKeys.USE_NAPD_MWL: true
+            // SettingsKeys.USE_NAPD_MWL: true
+            SettingsKeys.MWL_VERSION: NRDeckLegality.MWL_v1_0.rawValue
         ]
         
         NSUserDefaults.standardUserDefaults().registerDefaults(defaults)
