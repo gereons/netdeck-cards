@@ -97,7 +97,8 @@
     case Selected
 }
 
-@objc enum NRDeckLegality: Int {
-    case Casual
-    case MWL_v1_0   // as of 2016-02-01
+@objc enum NRMWL: Int {
+    case None
+    case v1_0   // as of 2016-02-01
+    case v1_1   // as of 2016-08-01
 }

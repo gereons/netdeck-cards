@@ -175,8 +175,8 @@
         }
     }
     
-    NRDeckLegality legality = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.MWL_VERSION];
-    if ([card isMostWanted:legality]) {
+    NRMWL mwl = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.MWL_VERSION];
+    if ([card isMostWanted:mwl]) {
         for (UIView* pip in self.pips) {
             // find the first non-hidden pip, and draw it as a black circle
             if (!pip.hidden) {

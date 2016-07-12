@@ -643,7 +643,7 @@
             cell.influenceLabel.text = @"";
             cell.influenceLabel.hidden = YES;
         }
-        BOOL mwl = [card isMostWanted:self.deck.legality];
+        BOOL mwl = [card isMostWanted:self.deck.mwl];
         if (mwl) {
             cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)-cc.count];
         }
@@ -710,14 +710,18 @@
     if (gesture.state != UIGestureRecognizerStateEnded) {
         return;
     }
-        
+    
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.legality == NRDeckLegalityCasual) handler:^(UIAlertAction * action) {
-        self.deck.legality = NRDeckLegalityCasual;
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.mwl == NRMWLNone) handler:^(UIAlertAction * action) {
+        self.deck.mwl = NRMWLNone;
         [self refreshDeck];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.0"), self.deck.legality == NRDeckLegalityMWL_v1_0) handler:^(UIAlertAction * action) {
-        self.deck.legality = NRDeckLegalityMWL_v1_0;
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.0"), self.deck.mwl == NRMWLv1_0) handler:^(UIAlertAction * action) {
+        self.deck.mwl = NRMWLv1_0;
+        [self refreshDeck];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.1"), self.deck.mwl == NRMWLv1_1) handler:^(UIAlertAction * action) {
+        self.deck.mwl = NRMWLv1_1;
         [self refreshDeck];
     }]];
     [alert addAction:[UIAlertAction cancelAction:nil]];

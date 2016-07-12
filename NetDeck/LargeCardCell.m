@@ -45,6 +45,8 @@
     [super setCardCounter:cc];
     Card* card = cc.card;
     
+    NSAssert(self.deck != nil, @"no deck");
+    
     if (card.type == NRCardTypeIdentity)
     {
         self.name.text = card.name;
@@ -77,11 +79,7 @@
         self.type.text = [NSString stringWithFormat:@"%@ · %@", factionName, typeName];
     }
 
-    if (self.deck) {
-        [self setInfluence:[self.deck influenceFor:cc] andCard:cc];
-    } else {
-        [self setInfluence:card.influence andCard:cc];
-    }
+    [self setInfluence:[self.deck influenceFor:cc] andCard:cc];
     
     self.copiesLabel.hidden = card.type == NRCardTypeIdentity;
     self.copiesStepper.hidden = card.type == NRCardTypeIdentity;
@@ -219,8 +217,7 @@
         }
     }
     
-    NRDeckLegality legality = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.MWL_VERSION];
-    if ([cc.card isMostWanted:legality]) {
+    if ([cc.card isMostWanted:self.deck.mwl]) {
         for (UIView* pip in self.pips) {
             // find the first non-hidden pip, and draw it as a black circle
             if (!pip.hidden) {

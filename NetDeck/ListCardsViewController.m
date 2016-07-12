@@ -358,7 +358,7 @@ static NSString* kCancelButton = @"cancelButton";
         cell.influenceLabel.text = @"";
     }
     
-    BOOL mwl = [card isMostWanted:self.deck.legality];
+    BOOL mwl = [card isMostWanted:self.deck.mwl];
     if (mwl) {
         cell.mwlLabel.text = [NSString stringWithFormat:@"%ld", (long)MIN(-1, -cc.count)];
     }

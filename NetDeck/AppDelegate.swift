@@ -11,6 +11,9 @@ import Crashlytics
 import SVProgressHUD
 
 // TODO: support for multiple MWL versions, store legality option as property of deck. iphone also?
+// TODO: operations with trash cost
+// TODO: auto-switch to mwl v1.1 on 2016-08-01? 
+
 // TODO: jinteki.net deck upload?
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
@@ -170,7 +173,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             SettingsKeys.IDENTITY_TABLE: true,
             
             // SettingsKeys.USE_NAPD_MWL: true
-            SettingsKeys.MWL_VERSION: NRDeckLegality.MWL_v1_0.rawValue
+            SettingsKeys.MWL_VERSION: NRMWL.v1_0.rawValue
         ]
         
         NSUserDefaults.standardUserDefaults().registerDefaults(defaults)

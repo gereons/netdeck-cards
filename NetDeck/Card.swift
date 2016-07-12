@@ -69,25 +69,33 @@ import SwiftyJSON
     static let PARASITE         = "01012"
     static let PREPAID_VOICEPAD = "04029"
     static let YOG_0            = "01014"
+    static let D4V1D            = "06033"
+    static let FAUST            = "08061"
+    static let WYLDSIDE         = "01016"
     
     static let ARCHITECT        = "06061"
     static let ASTROSCRIPT      = "01081"
     static let ELI_1            = "02110"
     static let NAPD_CONTRACT    = "04119"
     static let SANSAN_CITY_GRID = "01092"
+    static let BREAKING_NEWS    = "010082"
+    
     
     private struct MWL {
         let name: String
         let cards: Set<String>
     }
     
-    // MWL introduced in Tournament Rules 3.0.2, valid from 2016-02-01 onwards
-    private static let MWLv1 = Set<String>([
-        CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
-        ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])
-    
-    private static let MWLVersions: [NRDeckLegality: MWL] = [
-        .MWL_v1_0: MWL(name: "MWL v1.0", cards: MWLv1)
+    private static let MostWantedLists: [NRMWL: MWL] = [
+        // MWL introduced in Tournament Rules 3.0.2, valid from 2016-02-01 onwards
+        .v1_0: MWL(name: "MWL v1.0", cards: Set<String>([
+            CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
+            ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])),
+        
+        // MWL introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
+        .v1_1: MWL(name: "MWL v1.1", cards: Set<String>([
+            CERBERUS_H1, CLONE_CHIP, D4V1D, DESPERADO, FAUST, PARASITE, PREPAID_VOICEPAD, WYLDSIDE, YOG_0,
+            ARCHITECT, BREAKING_NEWS, ELI_1, MUMBA_TEMPLE, NAPD_CONTRACT, SANSAN_CITY_GRID ]))
     ]
     
     private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
@@ -166,10 +174,10 @@ import SwiftyJSON
         return self === Card.nullInstance
     }
     
-    func isMostWanted(legal: NRDeckLegality) -> Bool {
-        guard legal != .Casual else { return false }
-        let mwl = Card.MWLVersions[legal]!
-        return mwl.cards.contains(self.code)
+    func isMostWanted(mwl: NRMWL) -> Bool {
+        guard mwl != .None else { return false }
+        let cards = Card.MostWantedLists[mwl]!.cards
+        return cards.contains(self.code)
     }
     
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"

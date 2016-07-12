@@ -28,7 +28,7 @@ import Foundation
         let settings = NSUserDefaults.standardUserDefaults()
         self.state = settings.boolForKey(SettingsKeys.CREATE_DECK_ACTIVE) ? NRDeckState.Active : NRDeckState.Testing
         let mwlVersion = settings.integerForKey(SettingsKeys.MWL_VERSION)
-        self.legality = NRDeckLegality(rawValue: mwlVersion) ?? .Casual
+        self.mwl = NRMWL(rawValue: mwlVersion) ?? .None
     }
     
     var allCards: [CardCounter] {
@@ -63,7 +63,7 @@ import Foundation
         willSet { modified = true }
     }
     
-    var legality: NRDeckLegality {
+    var mwl: NRMWL {
         willSet { modified = true }
     }
     
@@ -84,7 +84,7 @@ import Foundation
             return 0
         }
         
-        let useMwl = self.legality != NRDeckLegality.Casual
+        let useMwl = self.mwl != NRMWL.None
         if useMwl {
             let limit = self.identity!.influenceLimit
             return max(1, limit - self.mwlPenalty)
@@ -95,7 +95,7 @@ import Foundation
     
     /// how many cards in this deck are on the MWL?
     var cardsFromMWL: Int {
-        return cards.filter({ $0.card.isMostWanted(self.legality) }).reduce(0) { $0 + $1.count }
+        return cards.filter({ $0.card.isMostWanted(self.mwl) }).reduce(0) { $0 + $1.count }
     }
     
     /// what's the influence penalty incurred through MWL cards?
@@ -562,11 +562,11 @@ import Foundation
         let revisions = decoder.decodeObjectForKey("revisions") as? [DeckChangeSet]
         self.revisions = revisions ?? [DeckChangeSet]()
         
-        let legality = decoder.containsValueForKey("legality") ?
-            decoder.decodeIntegerForKey("legality") :
+        let mwl = decoder.containsValueForKey("mwl") ?
+            decoder.decodeIntegerForKey("mwl") :
             NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.MWL_VERSION)
         
-        self.legality = NRDeckLegality(rawValue: legality) ?? .Casual
+        self.mwl = NRMWL(rawValue: mwl) ?? .None
 
         self.modified = false
     }
@@ -585,6 +585,6 @@ import Foundation
         coder.encodeObject(self.tags, forKey:"tags")
         coder.encodeObject(self.lastChanges, forKey:"lastChanges")
         coder.encodeObject(self.revisions, forKey:"revisions")
-        coder.encodeInteger(self.legality.rawValue, forKey: "legality")
+        coder.encodeInteger(self.mwl.rawValue, forKey: "mwl")
     }
 }

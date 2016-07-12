@@ -113,7 +113,7 @@ enum ExportFormat {
             s += eol
         }
         
-        let useMWL = deck.legality != NRDeckLegality.Casual
+        let useMWL = deck.mwl != NRMWL.None
         for i in 0..<sections.count {
             let cards = cardsArray[i]
             let cc = cards[0]
@@ -135,7 +135,7 @@ enum ExportFormat {
                 if inf > 0 {
                     s += " " + self.color(self.dots(inf), cc.card.factionHexColor, fmt)
                 }
-                if useMWL && cc.card.isMostWanted(deck.legality) {
+                if useMWL && cc.card.isMostWanted(deck.mwl) {
                     s += " " + self.color(self.stars(cc.count), cc.card.factionHexColor, fmt)
                 }
                 s += eol

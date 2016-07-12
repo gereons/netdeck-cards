@@ -90,7 +90,7 @@
         self.influenceLabel.text = @"";
     }
     
-    BOOL mwl = [card isMostWanted:self.deck.legality];
+    BOOL mwl = [card isMostWanted:self.deck.mwl];
     self.mwlMarker.hidden = !mwl;
     self.factionLabel.text = card.factionStr;
 }
