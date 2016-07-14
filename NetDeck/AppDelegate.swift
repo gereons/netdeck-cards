@@ -10,10 +10,6 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-// TODO: support for multiple MWL versions, store legality option as property of deck. iphone also?
-// TODO: operations with trash cost
-// TODO: auto-switch to mwl v1.1 on 2016-08-01? 
-
 // TODO: jinteki.net deck upload?
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
