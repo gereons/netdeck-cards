@@ -218,6 +218,10 @@
     [self.collectionView addGestureRecognizer:pinch];
     
     self.footerLabel.font = [UIFont monospacedDigitSystemFontOfSize:15 weight:UIFontWeightRegular];
+    
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(statusTapped:)];
+    [self.footerLabel addGestureRecognizer:tap];
+    self.footerLabel.userInteractionEnabled = YES;
 
     [self refresh];
 }
@@ -1500,6 +1504,31 @@
 -(void)printInteractionControllerDidDismissPrinterOptions:(UIPrintInteractionController *)printInteractionController
 {
     self.printController = nil;
+}
+
+#pragma mark - MWL selection
+
+-(void) statusTapped:(UITapGestureRecognizer*)gesture {
+    if (gesture.state != UIGestureRecognizerStateEnded) {
+        return;
+    }
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.mwl == NRMWLNone) handler:^(UIAlertAction * action) {
+        self.deck.mwl = NRMWLNone;
+        [self refresh];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.0"), self.deck.mwl == NRMWLv1_0) handler:^(UIAlertAction * action) {
+        self.deck.mwl = NRMWLv1_0;
+        [self refresh];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.1"), self.deck.mwl == NRMWLv1_1) handler:^(UIAlertAction * action) {
+        self.deck.mwl = NRMWLv1_1;
+        [self refresh];
+    }]];
+    [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

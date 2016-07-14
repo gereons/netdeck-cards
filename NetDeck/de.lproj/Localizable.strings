@@ -338,3 +338,9 @@
 
 // iphone specific
 "Swipe up to go back" = "Nach oben wischen um zurückzugehen";
+
+// MWL selection
+"Deck Legality" = "Deck-Legalität";
+"Casual" = "Ohne MWL";
+"MWL v1.0" = "MWL v1.0";
+"MWL v1.1" = "MWL v1.1";

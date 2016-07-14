@@ -289,3 +289,9 @@
 "Revert" = "Revenir";
 "History" = "Histoire";
 "Initial Version" = "Version initiale";
+
+// MWL selection
+"Deck Legality" = "Deck  légalité";
+"Casual" = "Sans MWL";
+"MWL v1.0" = "MWL v1.0";
+"MWL v1.1" = "MWL v1.1";

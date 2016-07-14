@@ -341,6 +341,12 @@
 // iphone specific
 "Swipe up to go back" = "上にスワイプで戻る";
 
+// MWL selection
+"Deck Legality" = "デッキの合法性";
+"Casual" = "MWLなし";
+"MWL v1.0" = "MWL v1.0";
+"MWL v1.1" = "MWL v1.1";
+
 
 
 

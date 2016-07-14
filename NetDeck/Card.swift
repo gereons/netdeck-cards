@@ -78,7 +78,7 @@ import SwiftyJSON
     static let ELI_1            = "02110"
     static let NAPD_CONTRACT    = "04119"
     static let SANSAN_CITY_GRID = "01092"
-    static let BREAKING_NEWS    = "010082"
+    static let BREAKING_NEWS    = "01082"
     
     
     private struct MWL {
