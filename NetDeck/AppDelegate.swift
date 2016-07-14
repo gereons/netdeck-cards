@@ -133,6 +133,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     
     func setBuiltinUserDefaults() {
         let usingNrdb = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_NRDB)
+        
+        let fmt: NSDateFormatter = {
+            let f = NSDateFormatter()
+            f.dateFormat = "yyyyMMdd"
+            return f
+        }()
+        let today = fmt.stringFromDate(NSDate())
+        
+        // MWL v1.1 goes into effect 2016-08-01
+        let defaultMWL = today >= "20160801" ? NRMWL.v1_1 : NRMWL.v1_0;
+        
         let defaults: [String: AnyObject] = [
             SettingsKeys.LAST_DOWNLOAD: "never".localized(),
             SettingsKeys.NEXT_DOWNLOAD: "never".localized(),
@@ -172,8 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             SettingsKeys.SHOW_ALL_FILTERS: true,
             SettingsKeys.IDENTITY_TABLE: true,
             
-            // SettingsKeys.USE_NAPD_MWL: true
-            SettingsKeys.MWL_VERSION: NRMWL.v1_0.rawValue
+            SettingsKeys.MWL_VERSION: defaultMWL.rawValue
         ]
         
         NSUserDefaults.standardUserDefaults().registerDefaults(defaults)

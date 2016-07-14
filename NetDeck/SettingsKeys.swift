@@ -75,7 +75,6 @@
     
     static let IDENTITY_TABLE      = "identityTable"
     
-    // static let USE_NAPD_MWL        = "useNapdMWL"
     static let MWL_VERSION         = "mwlVersion"
     
     static let BROWSER_PACKS       = "browserPacks"
