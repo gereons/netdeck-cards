@@ -66,7 +66,9 @@ class CardList: NSObject {
             cl.initialCards.appendContentsOf(CardManager.allForRole(role))
             cl.initialCards.appendContentsOf(CardManager.identitiesForRole(role))
         }
-        cl.resetInitialCards()
+        if packUsage == .Selected {
+            cl.filterDeselectedSets()
+        }
         cl.clearFilters()
         
         return cl
