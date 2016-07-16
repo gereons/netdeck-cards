@@ -13,6 +13,7 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet DecklistCollectionView* collectionView;
 
+@property IBOutlet UIButton* mwlButton;
 @property IBOutlet UILabel* footerLabel;
 @property IBOutlet UILabel* deckNameLabel;
 @property IBOutlet UILabel* lastSetLabel;

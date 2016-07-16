@@ -222,6 +222,8 @@
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(statusTapped:)];
     [self.footerLabel addGestureRecognizer:tap];
     self.footerLabel.userInteractionEnabled = YES;
+    
+    [self.mwlButton addTarget:self action:@selector(mwlTapped:) forControlEvents:UIControlEventTouchUpInside];
 
     [self refresh];
 }
@@ -1508,27 +1510,38 @@
 
 #pragma mark - MWL selection
 
+-(void) mwlTapped:(id) sender {
+    [self showMwlSelection];
+}
+
 -(void) statusTapped:(UITapGestureRecognizer*)gesture {
     if (gesture.state != UIGestureRecognizerStateEnded) {
         return;
     }
-    
+    [self showMwlSelection];
+}
+
+-(void) showMwlSelection {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.mwl == NRMWLNone) handler:^(UIAlertAction * action) {
-        self.deck.mwl = NRMWLNone;
-        [self refresh];
+        [self setMwl:NRMWLNone];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.0"), self.deck.mwl == NRMWLv1_0) handler:^(UIAlertAction * action) {
-        self.deck.mwl = NRMWLv1_0;
-        [self refresh];
+        [self setMwl:NRMWLv1_0];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.1"), self.deck.mwl == NRMWLv1_1) handler:^(UIAlertAction * action) {
-        self.deck.mwl = NRMWLv1_1;
-        [self refresh];
+        [self setMwl:NRMWLv1_1];
     }]];
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];
     
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void) setMwl:(NRMWL) newMwl {
+    if (self.deck.mwl != newMwl) {
+        self.deck.mwl = newMwl;
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
+    }
 }
 
 @end

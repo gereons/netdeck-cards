@@ -14,6 +14,7 @@
                 <outlet property="footerLabel" destination="GWd-jM-hnr" id="pvI-l7-f8z"/>
                 <outlet property="historyButton" destination="nDr-mi-Br2" id="yNf-SN-hhh"/>
                 <outlet property="lastSetLabel" destination="Gyb-FN-lQv" id="BSf-TL-qw8"/>
+                <outlet property="mwlButton" destination="nTK-jc-idI" id="1Ql-ys-54U"/>
                 <outlet property="notesButton" destination="0IP-7H-enu" id="K2G-zc-SZU"/>
                 <outlet property="tableView" destination="TkI-yZ-OZS" id="gri-lb-5ag"/>
                 <outlet property="toolBar" destination="3wr-bR-riV" id="0Xn-Hg-HpA"/>
@@ -80,11 +81,16 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.70000000000000018" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWd-jM-hnr">
-                                        <rect key="frame" x="0.0" y="6" width="380" height="21"/>
+                                        <rect key="frame" x="18" y="6" width="352" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nTK-jc-idI">
+                                        <rect key="frame" x="0.0" y="1" width="10" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="§"/>
+                                    </button>
                                 </subviews>
                             </view>
                         </barButtonItem>
