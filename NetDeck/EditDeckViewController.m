@@ -62,6 +62,7 @@
     
     self.sortType = [settings integerForKey:SettingsKeys.DECK_VIEW_SORT];
     
+    self.statusLabel.textColor = self.view.tintColor;
     self.statusLabel.userInteractionEnabled = YES;
     self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(statusTapped:)];
     [self.statusLabel addGestureRecognizer:self.tapRecognizer];
@@ -477,7 +478,7 @@
     }
 
     self.statusLabel.text = footer;
-    self.statusLabel.textColor = reasons.count == 0 ? [UIColor darkGrayColor] : [UIColor redColor];
+    self.statusLabel.textColor = reasons.count == 0 ? self.view.tintColor : [UIColor redColor];
     
     self.drawButton.enabled = self.deck.size > 0;
     
@@ -711,7 +712,7 @@
         return;
     }
     
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.mwl == NRMWLNone) handler:^(UIAlertAction * action) {
         self.deck.mwl = NRMWLNone;
         [self refreshDeck];

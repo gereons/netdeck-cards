@@ -1522,7 +1522,7 @@
 }
 
 -(void) showMwlSelection {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.mwl == NRMWLNone) handler:^(UIAlertAction * action) {
         [self setMwl:NRMWLNone];
     }]];
@@ -1533,6 +1533,9 @@
         [self setMwl:NRMWLv1_1];
     }]];
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+    
+    alert.popoverPresentationController.sourceView = self.mwlButton;
+    alert.popoverPresentationController.sourceRect = self.mwlButton.frame;
     
     [self presentViewController:alert animated:YES completion:nil];
 }

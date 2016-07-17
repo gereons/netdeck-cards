@@ -90,7 +90,8 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
         
         let strings = self.data.values[indexPath.section] as! [String]
         let str = strings[indexPath.row]
-        cell!.textLabel?.text = str
+        let first = indexPath.section == 0 && indexPath.row == 0 // the "any" cell
+        cell!.textLabel?.text = first ? str.localized() : str
         
         let sel = self.selected.contains(indexPath)
         cell?.accessoryType = sel ? .Checkmark : .None
@@ -100,9 +101,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // special case for "Any", which is always at section 0, row 0
-        let strings = self.data.values[indexPath.section] as! [String]
-        let str = strings[indexPath.row]
-        if indexPath.section == 0 && indexPath.row == 0 && str == Constant.kANY {
+        if indexPath.section == 0 && indexPath.row == 0 {
             self.selected.removeAll()
             self.tableView.reloadData()
             return
