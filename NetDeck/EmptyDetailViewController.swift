@@ -35,25 +35,6 @@ class EmptyDetailViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        let settings = NSUserDefaults.standardUserDefaults()
-        if settings.boolForKey(SettingsKeys.UPDATE_2_11) || settings.stringForKey(SettingsKeys.LAST_DOWNLOAD) == "never".localized() {
-            return
-        }
-        
-        settings.setBool(true, forKey: SettingsKeys.UPDATE_2_11)
-        
-        let msg = "Net Deck needs to re-download card data from NetrunnerDB.com".localized()
-        let alert = UIAlertController(title: "Welcome to Net Deck v2.11", message: msg, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Not now".localized(), style: .Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Download".localized(), style: .Default) { action in
-            DataDownload.downloadCardData()
-        })
-        self.presentViewController(alert, animated: false, completion: nil)
-    }
-    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         

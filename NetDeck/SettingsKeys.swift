@@ -79,7 +79,4 @@
     
     static let BROWSER_PACKS       = "browserPacks"
     static let DECKBUILDER_PACKS   = "deckBuilderPacks"
-
-    static let FILES_MOVED         = "filesMoved"
-    static let UPDATE_2_11         = "update2.11"
 }
