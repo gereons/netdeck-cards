@@ -82,18 +82,18 @@ import SwiftyJSON
     
     
     private struct MWL {
-        let name: String
+        let code: String
         let cards: Set<String>
     }
     
     private static let MostWantedLists: [NRMWL: MWL] = [
-        // MWL introduced in Tournament Rules 3.0.2, valid from 2016-02-01 onwards
-        .v1_0: MWL(name: "MWL v1.0", cards: Set<String>([
+        // MWL introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
+        .v1_0: MWL(code: "NAPD_MWL_1.0", cards: Set<String>([
             CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
             ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])),
         
         // MWL introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
-        .v1_1: MWL(name: "MWL v1.1", cards: Set<String>([
+        .v1_1: MWL(code: "NAPD_MWL_1.1", cards: Set<String>([
             CERBERUS_H1, CLONE_CHIP, D4V1D, DESPERADO, FAUST, PARASITE, PREPAID_VOICEPAD, WYLDSIDE, YOG_0,
             ARCHITECT, BREAKING_NEWS, ELI_1, MUMBA_TEMPLE, NAPD_CONTRACT, SANSAN_CITY_GRID ]))
     ]
