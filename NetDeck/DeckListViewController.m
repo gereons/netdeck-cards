@@ -858,7 +858,7 @@
                                                                [DeckExport asBBCode:self.deck];
                                                                self.actionSheet = nil;
                                                            }]];
-        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Markdown")
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox:  ")
                                                            handler:^(UIAlertAction *action) {
                                                                LOG_EVENT(@"Export MD", nil);
                                                                [DeckExport asMarkdown:self.deck];
@@ -908,6 +908,15 @@
                                                            handler:^(UIAlertAction *action) {
                                                                LOG_EVENT(@"Print Deck", nil);
                                                                [self printDeck:self.exportButton];
+                                                               self.actionSheet = nil;
+                                                           }]];
+    }
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_JNET])
+    {
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Upload to Jinteki.net")
+                                                           handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Upload Jinteki.net", nil);
+                                                               [[JintekiNet sharedInstance] uploadDeck:self.deck];
                                                                self.actionSheet = nil;
                                                            }]];
     }

@@ -14,48 +14,48 @@
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Auto-save history</string>
-            <key>Key</key>
-            <string>autoHistory</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Create new Decks as 'Active'</string>
-            <key>Key</key>
-            <string>createDeckActive</string>
-            <key>DefaultValue</key>
-            <false/>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSMultiValueSpecifier</string>
-            <key>Title</key>
-            <string>Default Legality</string>
-            <key>Key</key>
-            <string>mwlVersion</string>
-            <key>DefaultValue</key>
-            <integer>1</integer>
-            <key>Values</key>
-            <array>
-                <integer>0</integer>
-                <integer>1</integer>
-                <integer>2</integer>
-            </array>
-            <key>Titles</key>
-            <array>
-                <string>Casual</string>
-                <string>MWL v1.0</string>
-                <string>MWL v1.1</string>
-            </array>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Auto-save history</string>
+			<key>Key</key>
+			<string>autoHistory</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Create new Decks as &apos;Active&apos;</string>
+			<key>Key</key>
+			<string>createDeckActive</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Default Legality</string>
+			<key>Key</key>
+			<string>mwlVersion</string>
+			<key>DefaultValue</key>
+			<integer>1</integer>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>Casual</string>
+				<string>MWL v1.0</string>
+				<string>MWL v1.1</string>
+			</array>
+		</dict>
 		<dict>
 			<key>Title</key>
 			<string>Card Data</string>
@@ -75,78 +75,78 @@
 			<string>Card Sets</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
-            <key>Key</key>
-            <string>sets_hide_1</string>
+			<key>Key</key>
+			<string>sets_hide_1</string>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSMultiValueSpecifier</string>
-            <key>Title</key>
-            <string>Sets used in Deck Builder</string>
-            <key>Key</key>
-            <string>deckBuilderPacks</string>
-            <key>DefaultValue</key>
-            <integer>1</integer>
-            <key>Values</key>
-            <array>
-                <integer>0</integer>
-                <integer>1</integer>
-            </array>
-            <key>Titles</key>
-            <array>
-                <string>All</string>
-                <string>Selected</string>
-            </array>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSMultiValueSpecifier</string>
-            <key>Title</key>
-            <string>Sets used in Browser</string>
-            <key>Key</key>
-            <string>browserPacks</string>
-            <key>DefaultValue</key>
-            <integer>1</integer>
-            <key>Values</key>
-            <array>
-                <integer>0</integer>
-                <integer>1</integer>
-            </array>
-            <key>Titles</key>
-            <array>
-                <string>All</string>
-                <string>Selected</string>
-            </array>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Sets used in Deck Builder</string>
+			<key>Key</key>
+			<string>deckBuilderPacks</string>
+			<key>DefaultValue</key>
+			<integer>1</integer>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>All</string>
+				<string>Selected</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Sets used in Browser</string>
+			<key>Key</key>
+			<string>browserPacks</string>
+			<key>DefaultValue</key>
+			<integer>1</integer>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>All</string>
+				<string>Selected</string>
+			</array>
+		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
 			<string>Set/Datapack Selection</string>
-            <key>IASKViewControllerClass</key>
-            <string>SetSelectionViewController</string>
-            <key>IASKViewControllerSelector</key>
-            <string>init</string>
-            <key>Key</key>
-            <string>sets_hide_2</string>
+			<key>IASKViewControllerClass</key>
+			<string>SetSelectionViewController</string>
+			<key>IASKViewControllerSelector</key>
+			<string>init</string>
+			<key>Key</key>
+			<string>sets_hide_2</string>
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>NetrunnerDB.com</string>
+			<string>Web Accounts</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
-            <key>Key</key>
-            <string>nrdb_hide_1</string>
+			<key>Key</key>
+			<string>nrdb_hide_1</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-			<string>NetrunnerDB.com Account</string>
+			<string>Web Accounts</string>
 			<key>File</key>
-			<string>NetrunnerDBAccount</string>
-            <key>Key</key>
-            <string>nrdb_hide_2</string>
+			<string>WebAccount</string>
+			<key>Key</key>
+			<string>nrdb_hide_2</string>
 		</dict>
 		<dict>
 			<key>Title</key>
@@ -176,26 +176,26 @@
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
-        <dict>
-            <key>Title</key>
-            <string>About Net Deck</string>
-            <key>Type</key>
-            <string>PSGroupSpecifier</string>
-            <key>Key</key>
-            <string>about_hide_1</string>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSChildPaneSpecifier</string>
-            <key>Title</key>
-            <string>About Net Deck</string>
-            <key>IASKViewControllerClass</key>
-            <string>AboutViewController</string>
-            <key>IASKViewControllerSelector</key>
-            <string>init</string>
-            <key>Key</key>
-            <string>about_hide_2</string>
-        </dict>
+		<dict>
+			<key>Title</key>
+			<string>About Net Deck</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Key</key>
+			<string>about_hide_1</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>About Net Deck</string>
+			<key>IASKViewControllerClass</key>
+			<string>AboutViewController</string>
+			<key>IASKViewControllerSelector</key>
+			<string>init</string>
+			<key>Key</key>
+			<string>about_hide_2</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

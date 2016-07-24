@@ -1,0 +1,170 @@
+//
+//  JinetkiNet.swift
+//  NetDeck
+//
+//  Created by Gereon Steffens on 24.07.16.
+//  Copyright © 2016 Gereon Steffens. All rights reserved.
+//
+
+import Alamofire
+import SwiftKeychainWrapper
+import SVProgressHUD
+import SwiftyJSON
+
+class JintekiNet: NSObject {
+    static let sharedInstance = JintekiNet()
+    
+    private let manager: Alamofire.Manager
+    private let cookieJar: NSHTTPCookieStorage
+    
+    let loginUrl = "http://www.jinteki.net/login"
+    let deckUrl = "http://www.jinteki.net/data/decks"
+    
+    override private init() {
+        self.cookieJar = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        let cfg = NSURLSessionConfiguration.defaultSessionConfiguration()
+        cfg.HTTPCookieStorage = self.cookieJar
+        cfg.HTTPShouldSetCookies = true
+        self.manager = Alamofire.Manager(configuration: cfg)
+    }
+    
+    func clearCredentials() {
+        KeychainWrapper.removeObjectForKey(SettingsKeys.JNET_USERNAME)
+        KeychainWrapper.removeObjectForKey(SettingsKeys.JNET_PASSWORD)
+    }
+    
+    func clearCookies() {
+        // make sure we're not reusing an old session
+        if let cookies = self.cookieJar.cookies {
+            for cookie in cookies {
+                if cookie.name == "connect.sid" {
+                    self.cookieJar.deleteCookie(cookie)
+                    break
+                }
+            }
+        }
+    }
+    
+    func enterCredentialsAndLogin() {
+        let alert = UIAlertController(title: "Jinteki.net Login".localized(), message: nil, preferredStyle: .Alert)
+        alert.addTextFieldWithConfigurationHandler { textField in
+            textField.placeholder = "Username".localized()
+            textField.autocorrectionType = .No
+            textField.returnKeyType = .Next
+            textField.enablesReturnKeyAutomatically = true
+        }
+        
+        alert.addTextFieldWithConfigurationHandler { textField in
+            textField.placeholder = "Password".localized()
+            textField.autocorrectionType = .No
+            textField.returnKeyType = .Done
+            textField.secureTextEntry = true
+            textField.enablesReturnKeyAutomatically = true
+        }
+        
+        alert.addAction(UIAlertAction(title: "Login".localized(), style: .Default) { action in
+            let username = alert.textFields?[0].text ?? ""
+            let password = alert.textFields?[1].text ?? ""
+            self.testLogin(username, password: password)
+            })
+        
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .Cancel, handler: nil))
+        
+        alert.show()
+    }
+    
+    func testLogin(username: String, password: String) {
+        self.clearCookies()
+        let parameters = [
+            "username": username,
+            "password": password
+        ]
+
+        manager.request(.POST, loginUrl, parameters: parameters).validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                if let _ = response.result.value {
+                    SVProgressHUD.showErrorWithStatus("Logged in".localized())
+                    KeychainWrapper.setString(username, forKey: SettingsKeys.JNET_USERNAME)
+                    KeychainWrapper.setString(password, forKey: SettingsKeys.JNET_PASSWORD)
+                } else {
+                    fallthrough
+                }
+            default:
+                SVProgressHUD.showErrorWithStatus("Login failed".localized())
+                self.clearCredentials()
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: SettingsKeys.USE_JNET)
+            }
+        }
+    }
+    
+    func uploadDeck(deck: Deck) {
+        
+        guard let
+            username = KeychainWrapper.stringForKey(SettingsKeys.JNET_USERNAME),
+            password = KeychainWrapper.stringForKey(SettingsKeys.JNET_PASSWORD) else {
+                return
+        }
+
+        self.clearCookies()
+        
+        let parameters = [
+            "username": username,
+            "password": password
+        ]
+        
+        manager.request(.POST, loginUrl, parameters: parameters).validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                if let _ = response.result.value {
+                    self.postDeckData(deck)
+                } else {
+                    fallthrough
+                }
+            default:
+                SVProgressHUD.showErrorWithStatus("Upload failed".localized())
+            }
+        }
+    }
+    
+    func postDeckData(deck: Deck) {
+        let cards = NSMutableArray()
+        for cc in deck.cards {
+            let c = NSMutableDictionary()
+            c["qty"] = cc.count
+            c["card"] = cc.card.englishName
+            cards.addObject(c)
+        }
+        
+        let identity = NSMutableDictionary()
+        identity["title"] = deck.identity?.englishName
+        identity["code"] = deck.identity?.code
+        identity["side"] = deck.identity?.role == NRRole.Runner ? "Runner" : "Corp"
+        identity["faction"] = deck.identity?.factionStr
+        FIXME("test weyland")
+        
+        let fmt = NSDateFormatter()
+        fmt.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+        fmt.timeZone = NSTimeZone(abbreviation: "UTC")
+        // 2016-07-19T06:05:52.404Z
+        let date = fmt.stringFromDate(deck.lastModified ?? NSDate())
+        
+        let parameters: [String: AnyObject] = [
+            "name": deck.name ?? "",
+            "cards": cards,
+            "identity": identity,
+            "date": date
+        ]
+        
+        manager.request(.POST, deckUrl, parameters: parameters, encoding: .JSON).validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                SVProgressHUD.showSuccessWithStatus("Deck uploaded".localized())
+                break
+            default:
+                SVProgressHUD.showErrorWithStatus("Upload failed".localized())
+                break
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-/* NetrunnerDBAccount.strings - de */
+/* WebAccount.strings - de */
 
 "Account" = "Konto";
 "Saving" = "Speichern";
@@ -10,3 +10,5 @@
 "Authentication valid until" = "Autorisierung gültig bis";
 "Last Refresh" = "Letzter Refresh";
 "Refresh Authentication" = "Autorisierung erneuern";
+
+"Connect to Jinteki.net Account" = "App mit deinem Jinteki.net-Konto verbinden";
