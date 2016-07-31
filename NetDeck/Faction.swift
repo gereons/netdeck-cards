@@ -99,5 +99,15 @@ import Foundation
         default: return Faction.name(faction)!
         }
     }
+    
+    // needed for the jinteki.net uploader
+    class func fullName(faction: NRFaction) -> String {
+        switch faction {
+        case .Weyland:
+            return "Weyland Consortium"
+        default:
+            return Faction.name(faction)!
+        }
+    }
 }
 

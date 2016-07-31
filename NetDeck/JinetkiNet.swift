@@ -117,7 +117,7 @@ class JintekiNet: NSObject {
             switch response.result {
             case .Success:
                 if let _ = response.result.value {
-                    self.postDeckData(deck)
+                    self.postDeckData(deck, username: username)
                 } else {
                     fallthrough
                 }
@@ -127,7 +127,7 @@ class JintekiNet: NSObject {
         }
     }
     
-    func postDeckData(deck: Deck) {
+    func postDeckData(deck: Deck, username: String) {
         let cards = NSMutableArray()
         for cc in deck.cards {
             let c = NSMutableDictionary()
@@ -136,12 +136,20 @@ class JintekiNet: NSObject {
             cards.addObject(c)
         }
         
-        let identity = NSMutableDictionary()
-        identity["title"] = deck.identity?.englishName
-        identity["code"] = deck.identity?.code
-        identity["side"] = deck.identity?.role == NRRole.Runner ? "Runner" : "Corp"
-        identity["faction"] = deck.identity?.factionStr
-        FIXME("test weyland")
+        var id = [String: AnyObject]()
+        let identity = deck.identity ?? Card.null()
+        
+        id["title"] = identity.englishName
+        FIXME("needs full name :(")
+        
+        id["code"] = identity.code
+        id["side"] = identity.role == .Runner ? "Runner" : "Corp"
+        id["influencelimit"] = identity.influenceLimit
+        id["minimumdecksize"] = identity.minimumDecksize
+        if identity.role == .Runner {
+            id["baselink"] = identity.baseLink
+        }
+        id["faction"] = Faction.fullName(identity.faction)
         
         let fmt = NSDateFormatter()
         fmt.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
@@ -152,8 +160,9 @@ class JintekiNet: NSObject {
         let parameters: [String: AnyObject] = [
             "name": deck.name ?? "",
             "cards": cards,
-            "identity": identity,
-            "date": date
+            "identity": id,
+            "date": date,
+            "username": username
         ]
         
         manager.request(.POST, deckUrl, parameters: parameters, encoding: .JSON).validate().responseJSON { response in
