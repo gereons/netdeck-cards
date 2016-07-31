@@ -101,4 +101,14 @@
     case None
     case v1_0   // as of 2016-02-01
     case v1_1   // as of 2016-08-01
+    
+    // map from "mwl_code" values we get from the NRDB API
+    static let codeMap: [String: NRMWL] = [
+        "NAPD_MWL_1.0": .v1_0,
+        "NAPD_MWL_1.1": .v1_1
+    ]
+    
+    static func byCode(code: String) -> NRMWL {
+        return NRMWL.codeMap[code] ?? .None
+    }
 }

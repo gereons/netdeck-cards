@@ -309,6 +309,9 @@ class NRDB: NSObject {
         deck.lastModified = NRDB.dateFormatter.dateFromString(json["date_update"].stringValue)
         deck.dateCreated = NRDB.dateFormatter.dateFromString(json["date_creation"].stringValue)
         
+        let mwlCode = json["mwl_code"].stringValue
+        deck.mwl = NRMWL.byCode(mwlCode)
+        
         for (code, qty) in json["cards"].dictionaryValue {
             if let card = CardManager.cardByCode(code) {
                 deck.addCard(card, copies:qty.intValue, history: false)

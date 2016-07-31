@@ -58,7 +58,7 @@ import SwiftyJSON
     static let MAX_1_PER_DECK           = Set<String>([ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
                                             UTOPIA_SHARD, UTOPIA_FRAGMENT, HADES_SHARD,
                                             HADES_FRAGMENT, EDEN_SHARD, EDEN_FRAGMENT,
-                                            GOVERNMENT_TAKEOVER, _15_MINUTES, REBIRTH, BLACK_FILE ])
+                                            GOVERNMENT_TAKEOVER, _15_MINUTES, REBIRTH, BLACK_FILE, ASTROSCRIPT ])
     
     static let OCTGN_PREFIX = "bc0f047c-01b1-427f-a439-d451eda"
     
@@ -80,22 +80,16 @@ import SwiftyJSON
     static let SANSAN_CITY_GRID = "01092"
     static let BREAKING_NEWS    = "01082"
     
-    
-    private struct MWL {
-        let code: String
-        let cards: Set<String>
-    }
-    
-    private static let MostWantedLists: [NRMWL: MWL] = [
-        // MWL introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
-        .v1_0: MWL(code: "NAPD_MWL_1.0", cards: Set<String>([
+    private static let MostWantedLists: [NRMWL: Set<String>] = [
+        // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
+        .v1_0: Set<String>([
             CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
-            ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ])),
+            ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ]),
         
-        // MWL introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
-        .v1_1: MWL(code: "NAPD_MWL_1.1", cards: Set<String>([
+        // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
+        .v1_1: Set<String>([
             CERBERUS_H1, CLONE_CHIP, D4V1D, DESPERADO, FAUST, PARASITE, PREPAID_VOICEPAD, WYLDSIDE, YOG_0,
-            ARCHITECT, BREAKING_NEWS, ELI_1, MUMBA_TEMPLE, NAPD_CONTRACT, SANSAN_CITY_GRID ]))
+            ARCHITECT, BREAKING_NEWS, ELI_1, MUMBA_TEMPLE, NAPD_CONTRACT, SANSAN_CITY_GRID ])
     ]
     
     private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
@@ -176,7 +170,7 @@ import SwiftyJSON
     
     func isMostWanted(mwl: NRMWL) -> Bool {
         guard mwl != .None else { return false }
-        let cards = Card.MostWantedLists[mwl]!.cards
+        let cards = Card.MostWantedLists[mwl]!
         return cards.contains(self.code)
     }
     
