@@ -14,7 +14,6 @@ import SVProgressHUD
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
-// TODO: remove 2.11 update note in 2.13(?)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {

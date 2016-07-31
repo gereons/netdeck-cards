@@ -72,7 +72,11 @@
     
     static let NRDB_USERNAME       = "nrdbUsername"
     static let NRDB_PASSWORD       = "nrdbPassword"
-    
+
+    static let USE_JNET            = "useJnet"
+    static let JNET_USERNAME       = "jnetUsername"
+    static let JNET_PASSWORD       = "jnetPassword"
+
     static let IDENTITY_TABLE      = "identityTable"
     
     static let MWL_VERSION         = "mwlVersion"

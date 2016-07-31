@@ -43,7 +43,7 @@ class NRDBHack: NSObject {
         
         alert.addAction(UIAlertAction(title: "Login".localized(), style: .Default) { action in
             self.username = alert.textFields?[0].text
-            self.password = alert.textFields?[1].text!
+            self.password = alert.textFields?[1].text
             self.hackedLogin(self.manualLoginCompletion)
             SVProgressHUD.showWithStatus("Logging in...".localized())
         })

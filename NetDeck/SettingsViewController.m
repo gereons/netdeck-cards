@@ -88,8 +88,7 @@
     NSString* key = notification.userInfo.allKeys.firstObject;
     // NSLog(@"changing %@ to %@", key, notification.userInfo);
     
-    if ([key isEqualToString:SettingsKeys.USE_DROPBOX])
-    {
+    if ([key isEqualToString:SettingsKeys.USE_DROPBOX]) {
         BOOL useDropbox = [[notification.userInfo objectForKey:SettingsKeys.USE_DROPBOX] boolValue];
         
         if (useDropbox) {
@@ -101,8 +100,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DROPBOX_CHANGED object:self];
         [self refresh];
     }
-    else if ([key isEqualToString:SettingsKeys.USE_NRDB])
-    {
+    else if ([key isEqualToString:SettingsKeys.USE_NRDB]) {
         BOOL useNrdb = [[notification.userInfo objectForKey:SettingsKeys.USE_NRDB] boolValue];
         
         if (useNrdb) {
@@ -110,6 +108,16 @@
         } else {
             [NRDB clearSettings];
             [NRDBHack clearCredentials];
+        }
+        [self refresh];
+    }
+    else if ([key isEqualToString:SettingsKeys.USE_JNET]) {
+        BOOL useJnet = [[notification.userInfo objectForKey:SettingsKeys.USE_JNET] boolValue];
+        
+        if (useJnet) {
+            [self jnetLogin];
+        } else {
+            [[JintekiNet sharedInstance] clearCredentials];
         }
         [self refresh];
     }
@@ -159,6 +167,19 @@
         [NRDBAuthPopupViewController pushOn:self.iask.navigationController];
     }
 }
+
+- (void)jnetLogin {
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    
+    if (!Reachability.online) {
+        [self showOfflineAlert];
+        [settings setObject:@NO forKey:SettingsKeys.USE_JNET];
+        return;
+    }
+    
+    [[JintekiNet sharedInstance] enterCredentialsAndLogin];
+}
+
 
 - (void)settingsViewController:(id)sender buttonTappedForSpecifier:(IASKSpecifier *)specifier
 {

@@ -65,7 +65,8 @@
 "Enter Name" = "Nommer";
 "Deck Name" = "Nom du deck";
 "Dropbox: Plain Text" = "Dropbox: format texte";
-"Clipboard: Plain Text" = "Presse Papier : format texte";
+"Clipboard: Plain Text" = "Presse Papier: format texte";
+"Upload to Jinteki.net" = "Télécharger sur Jinteki.net";
 "Connect to your Dropbox account first." = "Connectez-vous à votre compte Dropbox";
 "Deck needs to have an Identity." = "Ce deck a besoin d'une identité.";
 "Deck needs cards." = "Ce deck a besoin dd cartes";

@@ -911,6 +911,15 @@
                                                                self.actionSheet = nil;
                                                            }]];
     }
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_JNET])
+    {
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Upload to Jinteki.net")
+                                                           handler:^(UIAlertAction *action) {
+                                                               LOG_EVENT(@"Upload Jinteki.net", nil);
+                                                               [[JintekiNet sharedInstance] uploadDeck:self.deck];
+                                                               self.actionSheet = nil;
+                                                           }]];
+    }
     [self.actionSheet addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
                                                            self.actionSheet = nil;
                                                        }]];

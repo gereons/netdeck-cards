@@ -92,6 +92,7 @@ import SwiftyJSON
             ARCHITECT, BREAKING_NEWS, ELI_1, MUMBA_TEMPLE, NAPD_CONTRACT, SANSAN_CITY_GRID ])
     ]
     
+    private(set) static var fullNames = [String: String]()
     private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
     private(set) var code = ""
@@ -288,6 +289,7 @@ import SwiftyJSON
         c.type = Codes.typeForCode(c.typeCode)
         
         if c.type == .Identity {
+            Card.fullNames[c.code] = c.englishName
             c.name = c.shortIdentityName(c.name, forRole: c.role, andFaction: c.factionStr)
         }
         
@@ -395,7 +397,7 @@ import SwiftyJSON
     }
     
     // manipulate identity name
-    func shortIdentityName(name: String, forRole: NRRole, andFaction faction: String) -> String {
+    func shortIdentityName(name: String, forRole role: NRRole, andFaction faction: String) -> String {
         if let colon = name.rangeOfString(": ") {
             // runner: remove stuff after the colon ("Andromeda: Disposessed Ristie" becomes "Andromeda")
             if role == .Runner {
