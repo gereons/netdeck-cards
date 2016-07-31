@@ -858,7 +858,7 @@
                                                                [DeckExport asBBCode:self.deck];
                                                                self.actionSheet = nil;
                                                            }]];
-        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox:  ")
+        [self.actionSheet addAction:[UIAlertAction actionWithTitle:l10n(@"Dropbox: Markdown")
                                                            handler:^(UIAlertAction *action) {
                                                                LOG_EVENT(@"Export MD", nil);
                                                                [DeckExport asMarkdown:self.deck];

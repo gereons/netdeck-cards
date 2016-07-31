@@ -71,6 +71,7 @@
 "Deck Name" = "Deck-Name";
 "Dropbox: Plain Text" = "Dropbox: Reiner Text";
 "Clipboard: Plain Text" = "Clipboard: Reiner Text";
+"Upload to Jinteki.net" = "Upload bei Jinteki.net";
 "Connect to your Dropbox account first." = "Dropbox-Verbindung nicht eingerichtet.";
 "Deck needs to have an Identity." = "Das Deck hat keine Identität.";
 "Deck needs cards." = "Das Deck hat keine Karten";
@@ -284,6 +285,7 @@
 "Authorization at NetrunnerDB.com failed" = "Autorisierung bei NetrunnerDB.com fehlgeschlagen";
 
 "NetrunnerDB.com Login" = "Login bei NetrunnerDB.com";
+"Jinteki.net Login" = "Login bei Jinteki.net";
 "Logging in..." = "Einloggen...";
 "Login failed" = "Login fehlgeschlagen";
 "Username" = "Benutzername";

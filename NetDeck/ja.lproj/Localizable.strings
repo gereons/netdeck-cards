@@ -286,6 +286,7 @@
 "Authorization at NetrunnerDB.com failed" = "NetrunnerDB.comの認証に失敗しました";
 
 "NetrunnerDB.com Login" = "NetrunnerDB.comログイン";
+"Jinteki.net Login" = "Jinteki.netログイン";
 "Logging in..." = "ログイン中……";
 "Login failed" = "ログインに失敗しました";
 "Username" = "ユーザー名";

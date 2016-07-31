@@ -139,9 +139,7 @@ class JintekiNet: NSObject {
         var id = [String: AnyObject]()
         let identity = deck.identity ?? Card.null()
         
-        id["title"] = identity.englishName
-        FIXME("needs full name :(")
-        
+        id["title"] = Card.fullNames[identity.code] ?? identity.englishName
         id["code"] = identity.code
         id["side"] = identity.role == .Runner ? "Runner" : "Corp"
         id["influencelimit"] = identity.influenceLimit
