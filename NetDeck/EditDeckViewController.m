@@ -183,6 +183,15 @@
         }]];
     }
     
+    if ([settings boolForKey:SettingsKeys.USE_JNET])
+    {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To Jinteki.net") handler:^(UIAlertAction *action) {
+            LOG_EVENT(@"Upload Jinteki.net", nil);
+            [self saveToJintekiNet];
+        }]];
+    }
+
+    
     if ([MFMailComposeViewController canSendMail])
     {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"As Email") handler:^(UIAlertAction *action) {
@@ -358,6 +367,18 @@
         [SVProgressHUD dismiss];
     }];
 }
+
+-(void) saveToJintekiNet
+{
+    if (!Reachability.online)
+    {
+        [self showOfflineAlert];
+        return;
+    }
+
+    [[JintekiNet sharedInstance] uploadDeck:self.deck];
+}
+
 
 -(void) reImportDeckFromNetrunnerDb
 {

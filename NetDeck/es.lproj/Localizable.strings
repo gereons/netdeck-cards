@@ -250,6 +250,7 @@
 "Export all currently visible decks" = "Exportar todos los mazos visibles actualmente";
 "To Dropbox" = "A Dropbox";
 "To NetrunnerDB.com" = "A NetrunnerDB.com";
+"To Jinteki.net" = "A Jinteki.net";
 "Import all decks from Dropbox?" = "¿Importar todos los mazos desde Dropbox?";
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "¿Importar todos los mazos desde NetrunnerDB.com? Los mazos enlazados existentes serán sobrescritos.";
 "Imported decks" = "Mazos importados";

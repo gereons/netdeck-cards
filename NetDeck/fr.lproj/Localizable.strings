@@ -251,6 +251,7 @@
 "Export all currently visible decks" = "Exporter tous les Decks visibles";
 "To Dropbox" = "À Dropbox";
 "To NetrunnerDB.com" = "À NetrunnerDB.com";
+"To Jinteki.net" = "À Jinteki.net";
 "Import all decks from Dropbox?" = "Importer tous les Decks de Dropbox?";
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Importer tous les Decks de NetrunnerDB.com? Des Decks existants et attachés vont être récrits.";
 "Imported decks" = "Des Decks importés";

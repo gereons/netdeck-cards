@@ -280,6 +280,7 @@
 "Export all currently visible decks" = "現在確認できる全デッキをエクスポート";
 "To Dropbox" = "Dropboxへ";
 "To NetrunnerDB.com" = "NetrunnerDB.comへ";
+"To Jinteki.net" = "Jinteki.netへ";
 "Import all decks from Dropbox?" = "Dropboxから全デッキをインポートしますか？";
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "NetrunnerDB.comから全デッキをインポートしますか？現在リンクされているデッキは上書きされます";
 "Imported decks" = "インポートされたデッキ";

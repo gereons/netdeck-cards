@@ -122,7 +122,7 @@ class JintekiNet: NSObject {
                     fallthrough
                 }
             default:
-                SVProgressHUD.showErrorWithStatus("Upload failed".localized())
+                SVProgressHUD.showErrorWithStatus("Login failed".localized())
             }
         }
     }

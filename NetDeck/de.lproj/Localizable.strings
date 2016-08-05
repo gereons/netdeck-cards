@@ -83,6 +83,8 @@
 "by Faction" = "nach Fraktion";
 "by Set/Type" = "nach Set/Typ";
 "by Set/Number" = "nach Set/Nummer";
+"Deck uploaded" = "Deck hochgeladen";
+"Upload failed" = "Upload fehlgeschlagen";
 
 // deck invalidity reasons
 "No Identity" = "Keine Identität";
@@ -279,6 +281,7 @@
 "Export all currently visible decks" = "Exportiere alle gerade angezeigten Decks";
 "To Dropbox" = "Zu Dropbox";
 "To NetrunnerDB.com" = "Zu NetrunnerDB.com";
+"To Jinteki.net" = "Zu Jinteki.net";
 "Import all decks from Dropbox?" = "Alle Decks von Dropbox importieren?";
 "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "Alle Decks von NetrunnerDB.com importieren? Existierende verknüpfte Decks werden überschrieben.";
 "Imported decks" = "Decks importiert";
