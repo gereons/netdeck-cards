@@ -46,6 +46,8 @@ class Codes {
         "sunny-lebeau": .SunnyLebeau,
         
         "neutral": .Neutral,
+        "neutral-runner": .Neutral,
+        "neutral-corp": .Neutral
     ]
     
     class func typeForCode(code: String) -> NRCardType {
