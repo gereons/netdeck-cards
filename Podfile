@@ -14,7 +14,6 @@ target 'NetDeck' do
     pod 'Alamofire'
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
-    pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftyJSON'
     pod 'SwiftyDropbox'
     pod 'SDCAlertView'
