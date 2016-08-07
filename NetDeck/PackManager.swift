@@ -15,7 +15,7 @@ class Cycle {
 }
 
 // TODO: make this swift-only
-@objc class Pack: NSObject {
+class Pack: NSObject {
     var name = ""
     var code = ""
     var cycleCode = ""
@@ -24,7 +24,7 @@ class Cycle {
     var settingsKey = ""
 }
 
-@objc class PackManager: NSObject {
+class PackManager: NSObject {
     static let DRAFT_SET_CODE = "draft"
     static let CORE_SET_CODE = "core"
     static let UNKNOWN_SET = "unknown"

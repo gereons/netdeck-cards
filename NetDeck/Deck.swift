@@ -318,7 +318,7 @@ import Foundation
         let isApex = self.identity?.code == Card.APEX
         var limitError = false, jintekiError = false, agendaError = false, apexError = false
         
-        // check max 1 per deck restrictions
+        // check max 1 per deck restrictions and other spcial rules
         for cc in self.cards {
             let card = cc.card
             
@@ -346,6 +346,79 @@ import Foundation
             }
         }
         
+        if BuildConfig.debug {
+            let checkOnesiesRules = true
+            if checkOnesiesRules {
+                let onesiesReasons = self.checkOnesiesRules()
+                if onesiesReasons.count > 0 {
+                    reasons.append("Invalid Onesies")
+                    reasons.appendContentsOf(onesiesReasons)
+                }
+            }
+            
+            if reasons.count > 0 { print("\(reasons)") }
+        }
+        
+        return reasons
+    }
+    
+    // check if this is a valid "Onesies" deck - 1 Core Set, 1 Deluxe, 1 Data Pack, 1 playset of a Card
+    // (which may be 3x of a Core card like Desperado, or a 6x of e.g. Spy Camera
+    func checkOnesiesRules() -> [String] {
+        
+        var reasons = [String]()
+        
+        var coreCardsOverQuantity = 0
+        var draftUsed = false
+        
+        var deluxesUsed = Set<String>()
+        var cardsFromPack = [String: Int]()
+        
+        for cc in self.cards {
+            let card = cc.card
+            
+            if card.packCode == "core" {
+                if cc.count > card.quantity {
+                    coreCardsOverQuantity += 1
+                }
+            }
+            switch card.packCode {
+            case "core":
+                if cc.count > card.quantity {
+                    coreCardsOverQuantity += 1
+                }
+            case "cac", "hap", "oac", "dad":
+                deluxesUsed.insert(card.packCode)
+            case "draft":
+                draftUsed = true
+            default:
+                let c = cardsFromPack[card.packCode] ?? 0
+                cardsFromPack[card.packCode] = c + 1
+            }
+        }
+        
+        let min = cardsFromPack.values.minElement()
+        
+        let packsUsed = cardsFromPack.count
+        
+        if packsUsed < 2 && deluxesUsed.count < 2 && coreCardsOverQuantity < 2 {
+            return reasons
+        }
+        if packsUsed == 2 && coreCardsOverQuantity == 0 && min == 1 {
+            return reasons
+        }
+        if draftUsed {
+            reasons.append("Uses draft cards")
+        }
+        if deluxesUsed.count > 1 {
+            reasons.append("Uses >1 Deluxe")
+        }
+        if packsUsed > 2 {
+            reasons.append("Uses >2 Datapacks")
+        }
+        if coreCardsOverQuantity > 1 && packsUsed > 1 {
+            reasons.append("Uses >1 Core")
+        }
         return reasons
     }
     
