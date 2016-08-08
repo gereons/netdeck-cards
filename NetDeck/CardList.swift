@@ -66,9 +66,12 @@ class CardList: NSObject {
             cl.initialCards.appendContentsOf(CardManager.allForRole(role))
             cl.initialCards.appendContentsOf(CardManager.identitiesForRole(role))
         }
-        if packUsage == .Selected {
-            cl.filterDeselectedSets()
+        switch packUsage {
+        case .Selected: cl.filterDeselectedSets()
+        case .AllAfterRotation: cl.filterRotatedSets()
+        case .All: break
         }
+
         cl.clearFilters()
         
         return cl
@@ -76,8 +79,10 @@ class CardList: NSObject {
     
     func resetInitialCards() {
         self.initialCards = CardManager.allForRole(self.role)
-        if self.packUsage == .Selected {
-            self.filterDeselectedSets()
+        switch self.packUsage {
+        case .Selected: self.filterDeselectedSets()
+        case .AllAfterRotation: self.filterRotatedSets()
+        case .All: break
         }
     }
     
@@ -106,6 +111,12 @@ class CardList: NSObject {
     func filterDeselectedSets() {
         let disabledPackCodes = PackManager.disabledPackCodes()
         let predicate = NSPredicate(format: "!(packCode in %@)", disabledPackCodes)
+        applyPredicate(predicate)
+    }
+    
+    func filterRotatedSets() {
+        let rotatedPackCodes = PackManager.rotatedPackCodes()
+        let predicate = NSPredicate(format: "!(packCode in %@)", rotatedPackCodes)
         applyPredicate(predicate)
     }
     

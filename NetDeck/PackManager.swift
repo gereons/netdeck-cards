@@ -37,6 +37,14 @@ class PackManager: NSObject {
     static var packsByCode = [String: Pack]()       // code -> pack
     static var allPacks = [Pack]()
     
+    static let rotatedCycles = [
+        "genesis", "spin"
+    ]
+    static let rotatedPacks = [
+        "wla", "ta", "ce", "asis", "hs", "fp",  // genesis
+        "om", "st", "mt", "tc", "fal", "dt"     // spin
+    ]
+    
     static let anyPack: Pack = {
         let p = Pack()
         p.name = Constant.kANY
@@ -205,13 +213,24 @@ class PackManager: NSObject {
         return disabledPacks!
     }
     
+    class func rotatedPackCodes() -> Set<String> {
+        return Set<String>(PackManager.rotatedPacks)
+    }
+    
     class func clearDisabledPacks() {
         disabledPacks = nil
         enabledPacks = nil
     }
     
     class func packsForTableview(packs: NRPackUsage) -> TableData {
-        return packs == .All ? allKnownPacksForTableview() : allEnabledPacksForTableview()
+        switch packs {
+        case .All:
+            return allKnownPacksForTableview()
+        case .Selected:
+            return allEnabledPacksForTableview()
+        case .AllAfterRotation:
+            return allPacksAfterRotationForTableview()
+        }
     }
 
     private class func allEnabledPacksForTableview() -> TableData {
@@ -266,6 +285,22 @@ class PackManager: NSObject {
         return TableData(sections: sections, andValues: values)
     }
     
+    private class func allPacksAfterRotationForTableview() -> TableData {
+        var sections = [String]()
+        var values = [[Pack]]()
+        
+        for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
+            if !rotatedCycles.contains(cycle.code) {
+                sections.append(cycle.name)
+                
+                let packs = allPacks.filter{ $0.cycleCode == cycle.code }
+                values.append(packs)
+            }
+        }
+        
+        return TableData(sections: sections, andValues: values)
+    }
+
     class func packsUsedInDeck(deck: Deck) -> [String] {
         var packsUsed = [String: Int]() // pack code -> number of times used
         var cardsUsed = [String: Int]() // pack code -> number of cards used

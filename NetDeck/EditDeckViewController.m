@@ -736,14 +736,22 @@
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.mwl == NRMWLNone) handler:^(UIAlertAction * action) {
         self.deck.mwl = NRMWLNone;
+        self.deck.onesies = NO;
         [self refreshDeck];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.0"), self.deck.mwl == NRMWLv1_0) handler:^(UIAlertAction * action) {
         self.deck.mwl = NRMWLv1_0;
+        self.deck.onesies = NO;
         [self refreshDeck];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.1"), self.deck.mwl == NRMWLv1_1) handler:^(UIAlertAction * action) {
         self.deck.mwl = NRMWLv1_1;
+        self.deck.onesies = NO;
+        [self refreshDeck];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Onesies"), self.deck.onesies) handler:^(UIAlertAction * action) {
+        self.deck.mwl = NRMWLNone;
+        self.deck.onesies = YES;
         [self refreshDeck];
     }]];
     [alert addAction:[UIAlertAction cancelAction:nil]];

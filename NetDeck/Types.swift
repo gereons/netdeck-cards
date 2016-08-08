@@ -95,6 +95,7 @@
 @objc enum NRPackUsage: Int {
     case All
     case Selected
+    case AllAfterRotation
 }
 
 @objc enum NRMWL: Int {

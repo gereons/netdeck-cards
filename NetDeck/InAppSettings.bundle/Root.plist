@@ -91,11 +91,13 @@
 			<array>
 				<integer>0</integer>
 				<integer>1</integer>
+                <integer>2</integer>
 			</array>
 			<key>Titles</key>
 			<array>
 				<string>All</string>
 				<string>Selected</string>
+                <string>All after Rotation</string>
 			</array>
 		</dict>
 		<dict>
@@ -111,11 +113,13 @@
 			<array>
 				<integer>0</integer>
 				<integer>1</integer>
+                <integer>2</integer>
 			</array>
 			<key>Titles</key>
 			<array>
 				<string>All</string>
 				<string>Selected</string>
+                <string>All after Rotation</string>
 			</array>
 		</dict>
 		<dict>

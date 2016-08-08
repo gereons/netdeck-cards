@@ -67,6 +67,10 @@ import Foundation
         willSet { modified = true }
     }
     
+    var onesies: Bool = false {
+        willSet { modified = true }
+    }
+    
     var size: Int {
         return cards.reduce(0) { $0 + $1.count }
     }
@@ -346,17 +350,12 @@ import Foundation
             }
         }
         
-        if BuildConfig.debug {
-            let checkOnesiesRules = true
-            if checkOnesiesRules {
-                let onesiesReasons = self.checkOnesiesRules()
-                if onesiesReasons.count > 0 {
-                    reasons.append("Invalid Onesies")
-                    reasons.appendContentsOf(onesiesReasons)
-                }
+        if self.onesies {
+            let onesiesReasons = self.checkOnesiesRules()
+            if onesiesReasons.count > 0 {
+                reasons.append("Invalid for 1.1.1.1")
+                reasons.appendContentsOf(onesiesReasons)
             }
-            
-            if reasons.count > 0 { print("\(reasons)") }
         }
         
         return reasons
@@ -483,41 +482,42 @@ import Foundation
         var newIdentity: Card?
         
         for (code, qty) in cards {
-            let card = CardManager.cardByCode(code)
-            
-            if card?.type != .Identity {
-                let cc = CardCounter(card: card!, count: qty)
-                newCards.append(cc)
-            } else {
-                assert(newIdentity == nil, "new identity already set")
-                newIdentity = card!
+            if let card = CardManager.cardByCode(code) {
+                if card.type != .Identity {
+                    let cc = CardCounter(card: card, count: qty)
+                    newCards.append(cc)
+                } else {
+                    assert(newIdentity == nil, "new identity already set")
+                    newIdentity = card
+                }
             }
         }
         
         // figure out changes between this and the last saved state
         if self.revisions.count > 0 {
             let dcs = self.revisions[0]
-            let lastSavedCards = dcs.cards
-            let lastSavedCodes = dcs.cards?.keys
             
-            for code in lastSavedCodes! {
-                let oldQty = lastSavedCards![code]!
-                let newQty = cards[code]
-                
-                if newQty == nil {
-                    self.lastChanges.addCardCode(code, copies: -oldQty)
-                } else {
-                    let diff = oldQty - newQty!
-                    if diff != 0 {
-                        self.lastChanges.addCardCode(code, copies: diff)
+            if let lastSavedCards = dcs.cards {
+                let lastSavedCodes = lastSavedCards.keys
+                for code in lastSavedCodes {
+                    let oldQty = lastSavedCards[code]!
+                    let newQty = cards[code]
+                    
+                    if newQty == nil {
+                        self.lastChanges.addCardCode(code, copies: -oldQty)
+                    } else {
+                        let diff = oldQty - newQty!
+                        if diff != 0 {
+                            self.lastChanges.addCardCode(code, copies: diff)
+                        }
                     }
                 }
-            }
-            
-            for code in cards.keys {
-                if !lastSavedCodes!.contains(code) {
-                    let newQty = cards[code]
-                    self.lastChanges.addCardCode(code, copies: newQty!)
+                
+                for code in cards.keys {
+                    if !lastSavedCodes.contains(code) {
+                        let newQty = cards[code]
+                        self.lastChanges.addCardCode(code, copies: newQty!)
+                    }
                 }
             }
         }
@@ -640,7 +640,9 @@ import Foundation
             NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.MWL_VERSION)
         
         self.mwl = NRMWL(rawValue: mwl) ?? .None
-
+        
+        self.onesies = decoder.decodeBoolForKey("onesies")
+        
         self.modified = false
     }
     
@@ -659,5 +661,6 @@ import Foundation
         coder.encodeObject(self.lastChanges, forKey:"lastChanges")
         coder.encodeObject(self.revisions, forKey:"revisions")
         coder.encodeInteger(self.mwl.rawValue, forKey: "mwl")
+        coder.encodeBool(self.onesies, forKey: "onesies")
     }
 }

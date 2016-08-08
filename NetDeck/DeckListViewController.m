@@ -1533,13 +1533,16 @@
 -(void) showMwlSelection {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.mwl == NRMWLNone) handler:^(UIAlertAction * action) {
-        [self setMwl:NRMWLNone];
+        [self setMwl:NRMWLNone andOnesies:NO];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.0"), self.deck.mwl == NRMWLv1_0) handler:^(UIAlertAction * action) {
-        [self setMwl:NRMWLv1_0];
+        [self setMwl:NRMWLv1_0 andOnesies:NO];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.1"), self.deck.mwl == NRMWLv1_1) handler:^(UIAlertAction * action) {
-        [self setMwl:NRMWLv1_1];
+        [self setMwl:NRMWLv1_1 andOnesies:NO];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Onesies"), self.deck.onesies) handler:^(UIAlertAction * action) {
+        [self setMwl:NRMWLNone andOnesies:YES];
     }]];
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];
     
@@ -1549,9 +1552,10 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void) setMwl:(NRMWL) newMwl {
-    if (self.deck.mwl != newMwl) {
+-(void) setMwl:(NRMWL)newMwl andOnesies:(BOOL)onesies {
+    if (self.deck.mwl != newMwl || self.deck.onesies != onesies) {
         self.deck.mwl = newMwl;
+        self.deck.onesies = onesies;
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
     }
 }
