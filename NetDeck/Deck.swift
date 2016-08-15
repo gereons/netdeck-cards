@@ -353,7 +353,7 @@ import Foundation
         if self.onesies {
             let onesiesReasons = self.checkOnesiesRules()
             if onesiesReasons.count > 0 {
-                reasons.append("Invalid for 1.1.1.1")
+                reasons.append("Invalid for 1.1.1.1".localized())
                 reasons.appendContentsOf(onesiesReasons)
             }
         }
@@ -364,7 +364,6 @@ import Foundation
     // check if this is a valid "Onesies" deck - 1 Core Set, 1 Deluxe, 1 Data Pack, 1 playset of a Card
     // (which may be 3x of a Core card like Desperado, or a 6x of e.g. Spy Camera
     func checkOnesiesRules() -> [String] {
-        
         var reasons = [String]()
         
         var coreCardsOverQuantity = 0
@@ -375,12 +374,6 @@ import Foundation
         
         for cc in self.cards {
             let card = cc.card
-            
-            if card.packCode == "core" {
-                if cc.count > card.quantity {
-                    coreCardsOverQuantity += 1
-                }
-            }
             switch card.packCode {
             case "draft":
                 draftUsed = true
@@ -422,7 +415,7 @@ import Foundation
         if packsUsed > 1 && minCards != 1 {
             reasons.append("Uses >1 Datapack".localized())
         }
-        if coreCardsOverQuantity > 1 && (packsUsed > 1 || deluxesUsed > 1) {
+        if coreCardsOverQuantity > 1 || (coreCardsOverQuantity == 1 && (packsUsed > 1 || deluxesUsed > 1)) {
             reasons.append("Uses >1 Core".localized())
         }
         return reasons

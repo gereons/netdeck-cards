@@ -734,7 +734,7 @@
     }
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:l10n(@"Deck Legality") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.mwl == NRMWLNone) handler:^(UIAlertAction * action) {
+    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Casual"), self.deck.mwl == NRMWLNone && !self.deck.onesies) handler:^(UIAlertAction * action) {
         self.deck.mwl = NRMWLNone;
         self.deck.onesies = NO;
         [self refreshDeck];
