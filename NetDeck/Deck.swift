@@ -370,7 +370,7 @@ import Foundation
         var coreCardsOverQuantity = 0
         var draftUsed = false
         
-        var deluxesUsed = Set<String>()
+        var cardsFromDeluxe = [String: Int]()
         var cardsFromPack = [String: Int]()
         
         for cc in self.cards {
@@ -382,41 +382,48 @@ import Foundation
                 }
             }
             switch card.packCode {
+            case "draft":
+                draftUsed = true
             case "core":
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
             case "cac", "hap", "oac", "dad":
-                deluxesUsed.insert(card.packCode)
-            case "draft":
-                draftUsed = true
+                let c = cardsFromDeluxe[card.packCode] ?? 0
+                cardsFromDeluxe[card.packCode] = c + 1
             default:
                 let c = cardsFromPack[card.packCode] ?? 0
                 cardsFromPack[card.packCode] = c + 1
             }
         }
         
-        let min = cardsFromPack.values.minElement()
+        let minCards = cardsFromPack.values.minElement()
+        let minDeluxe = cardsFromDeluxe.values.minElement()
         
         let packsUsed = cardsFromPack.count
+        let deluxesUsed = cardsFromDeluxe.count
         
-        if packsUsed < 2 && deluxesUsed.count < 2 && coreCardsOverQuantity < 2 {
+        if packsUsed < 2 && deluxesUsed < 2 && coreCardsOverQuantity < 2 {
             return reasons
         }
-        if packsUsed == 2 && coreCardsOverQuantity == 0 && min == 1 {
+        if packsUsed == 2 && coreCardsOverQuantity == 0 && minCards == 1 && deluxesUsed < 2 {
             return reasons
         }
+        if deluxesUsed == 2 && coreCardsOverQuantity == 0 && minDeluxe == 1 && packsUsed < 2 {
+            return reasons
+        }
+        
         if draftUsed {
-            reasons.append("Uses draft cards")
+            reasons.append("Uses draft cards".localized())
         }
-        if deluxesUsed.count > 1 {
-            reasons.append("Uses >1 Deluxe")
+        if deluxesUsed > 1 {
+            reasons.append("Uses >1 Deluxe".localized())
         }
-        if packsUsed > 2 {
-            reasons.append("Uses >2 Datapacks")
+        if packsUsed > 1 && minCards != 1 {
+            reasons.append("Uses >1 Datapack".localized())
         }
-        if coreCardsOverQuantity > 1 && packsUsed > 1 {
-            reasons.append("Uses >1 Core")
+        if coreCardsOverQuantity > 1 && (packsUsed > 1 || deluxesUsed > 1) {
+            reasons.append("Uses >1 Core".localized())
         }
         return reasons
     }
