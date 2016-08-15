@@ -1,4 +1,4 @@
-    //
+//
 //  ImportDecksViewController.m
 //  Net Deck
 //
@@ -578,27 +578,33 @@ static NSString* filterText;
 {
     Deck* deck = [self.filteredDecks objectAtIndexPath:indexPath];
     
-    NSString* filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];    
-    if (filename)
-    {
-        NSString* msg = l10n(@"A local copy of this deck already exists.");
-        UIAlertController* alert = [UIAlertController alertWithTitle:nil message:msg];
-        
-        [alert addAction:[UIAlertAction cancelAlertAction:nil]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Overwrite") handler:^(UIAlertAction * action) {
-            [self importDeckFromNRDB:deck.netrunnerDbId filename:filename];
-        }]];
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Import as new") handler:^(UIAlertAction * action) {
+    if (self.source == NRImportSourceNetrunnerDb) {
+        NSString* filename = [[NRDB sharedInstance] filenameForId:deck.netrunnerDbId];
+        if (filename)
+        {
+            NSString* msg = l10n(@"A local copy of this deck already exists.");
+            UIAlertController* alert = [UIAlertController alertWithTitle:nil message:msg];
+            
+            [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+            [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Overwrite") handler:^(UIAlertAction * action) {
+                [self importDeckFromNRDB:deck.netrunnerDbId filename:filename];
+            }]];
+            [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Import as new") handler:^(UIAlertAction * action) {
+                [self importDeckFromNRDB:deck.netrunnerDbId filename:nil];
+            }]];
+            
+            [alert show];
+        }
+        else
+        {
+            // [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
+            // [deck updateOnDisk];
             [self importDeckFromNRDB:deck.netrunnerDbId filename:nil];
-        }]];
-        
-        [alert show];
-    }
-    else
-    {
-        // [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
-        // [deck updateOnDisk];
-        [self importDeckFromNRDB:deck.netrunnerDbId filename:nil];
+        }
+    } else {
+        // import from dropbox
+        [deck updateOnDisk];
+        [SVProgressHUD showSuccessWithStatus:l10n(@"Deck imported")];
     }
 }
 
