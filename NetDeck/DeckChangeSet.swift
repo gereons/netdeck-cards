@@ -62,7 +62,9 @@ import Foundation
         self.changes.sortInPlace { (dc1, dc2) -> Bool in
             if dc1.count > 0 && dc2.count < 0 { return true }
             if dc1.count < 0 && dc2.count > 0 { return false }
-            return dc1.card!.name < dc2.card!.name
+            let n1 = dc1.card?.name ?? ""
+            let n2 = dc2.card?.name ?? ""
+            return n1 < n2
         }
     }
     
