@@ -390,8 +390,8 @@ import Foundation
             }
         }
         
-        let minCards = cardsFromPack.values.minElement()
-        let minDeluxe = cardsFromDeluxe.values.minElement()
+        let minPackCards = cardsFromPack.values.minElement()
+        let minDeluxeCards = cardsFromDeluxe.values.minElement()
         
         let packsUsed = cardsFromPack.count
         let deluxesUsed = cardsFromDeluxe.count
@@ -399,10 +399,10 @@ import Foundation
         if packsUsed < 2 && deluxesUsed < 2 && coreCardsOverQuantity < 2 {
             return reasons
         }
-        if packsUsed == 2 && coreCardsOverQuantity == 0 && minCards == 1 && deluxesUsed < 2 {
+        if packsUsed == 2 && coreCardsOverQuantity == 0 && minPackCards == 1 && deluxesUsed < 2 {
             return reasons
         }
-        if deluxesUsed == 2 && coreCardsOverQuantity == 0 && minDeluxe == 1 && packsUsed < 2 {
+        if deluxesUsed == 2 && coreCardsOverQuantity == 0 && minDeluxeCards == 1 && packsUsed < 2 {
             return reasons
         }
         
@@ -412,7 +412,7 @@ import Foundation
         if deluxesUsed > 1 {
             reasons.append("Uses >1 Deluxe".localized())
         }
-        if packsUsed > 1 && minCards != 1 {
+        if (packsUsed > 1 && minPackCards != 1) || packsUsed > 2 {
             reasons.append("Uses >1 Datapack".localized())
         }
         if coreCardsOverQuantity > 1 || (coreCardsOverQuantity == 1 && (packsUsed > 1 || deluxesUsed > 1)) {
