@@ -22,7 +22,7 @@
 {
     if ((self = [super init]))
     {
-        TableData* td = [PackManager packsForTableview:NRPackUsageAll];
+        TableData* td = [PackManager allKnownPacksForSettings];
         self.sections = td.sections.mutableCopy;
         self.values = td.values.mutableCopy;
         

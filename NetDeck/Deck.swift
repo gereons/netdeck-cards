@@ -375,9 +375,9 @@ import Foundation
         for cc in self.cards {
             let card = cc.card
             switch card.packCode {
-            case "draft":
+            case PackManager.DRAFT_SET_CODE:
                 draftUsed = true
-            case "core":
+            case PackManager.CORE_SET_CODE:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
@@ -390,34 +390,44 @@ import Foundation
             }
         }
         
+        if draftUsed {
+            reasons.append("Uses draft cards".localized())
+        }
+        
         let minPackCards = cardsFromPack.values.minElement()
         let minDeluxeCards = cardsFromDeluxe.values.minElement()
         
         let packsUsed = cardsFromPack.count
         let deluxesUsed = cardsFromDeluxe.count
         
-        if packsUsed < 2 && deluxesUsed < 2 && coreCardsOverQuantity < 2 {
+        // 1 pack, 1 deluxe, 1 extra from core
+        if packsUsed <= 1 && deluxesUsed <= 1 && coreCardsOverQuantity <= 1 {
             return reasons
         }
-        if packsUsed == 2 && coreCardsOverQuantity == 0 && minPackCards == 1 && deluxesUsed < 2 {
+        // 2 packs, 1 deluxe, extra card from 2nd pack
+        if packsUsed == 2 && coreCardsOverQuantity == 0 && minPackCards == 1 && deluxesUsed <= 1 {
             return reasons
         }
-        if deluxesUsed == 2 && coreCardsOverQuantity == 0 && minDeluxeCards == 1 && packsUsed < 2 {
+        // 1 pack, 2 deluxes: extra card from 2md deluxe
+        if deluxesUsed == 2 && coreCardsOverQuantity == 0 && minDeluxeCards == 1 && packsUsed <= 1 {
             return reasons
         }
-        
-        if draftUsed {
-            reasons.append("Uses draft cards".localized())
-        }
-        if deluxesUsed > 1 {
-            reasons.append("Uses >1 Deluxe".localized())
-        }
-        if (packsUsed > 1 && minPackCards != 1) || packsUsed > 2 {
-            reasons.append("Uses >1 Datapack".localized())
-        }
+       
+        // more than 1 extra card from core, or extra card is from pack or deluxe
         if coreCardsOverQuantity > 1 || (coreCardsOverQuantity == 1 && (packsUsed > 1 || deluxesUsed > 1)) {
             reasons.append("Uses >1 Core".localized())
         }
+
+        // more than 1 deluxe used
+        if deluxesUsed > 1 {
+            reasons.append("Uses >1 Deluxe".localized())
+        }
+        
+        // more than 2 datapacks used - 2 is only allowed if one of them has the extra card
+        if (packsUsed > 1 && minPackCards != 1) || packsUsed > 2 {
+            reasons.append("Uses >1 Datapack".localized())
+        }
+        
         return reasons
     }
     

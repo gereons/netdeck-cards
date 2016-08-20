@@ -232,6 +232,21 @@ class PackManager: NSObject {
             return allPacksAfterRotationForTableview()
         }
     }
+    
+    class func allKnownPacksForSettings() -> TableData {
+        var sections = [String]()
+        var values = [[Pack]]()
+        
+        for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
+            sections.append(cycle.name)
+            
+            let packs = allPacks.filter{ $0.cycleCode == cycle.code }
+            values.append(packs)
+        }
+        
+        return TableData(sections: sections, andValues: values)
+    }
+
 
     private class func allEnabledPacksForTableview() -> TableData {
         var sections = [String]()
@@ -258,6 +273,8 @@ class PackManager: NSObject {
         
         let result = TableData(sections: sections, andValues: values)
         let count = sections.count
+        
+        // collapse everything but the two last cycles
         var collapsedSections = [Bool](count: count, repeatedValue: true)
         collapsedSections[0] = false
         if count-1 > 0 {
@@ -275,7 +292,16 @@ class PackManager: NSObject {
         var sections = [String]()
         var values = [[Pack]]()
         
+        sections.append("")
+        values.append([PackManager.anyPack])
+        
+        let useDraft = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_DRAFT)
+        
         for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
+            
+            if cycle.code == DRAFT_SET_CODE && !useDraft {
+                continue
+            }
             sections.append(cycle.name)
             
             let packs = allPacks.filter{ $0.cycleCode == cycle.code }
@@ -288,6 +314,9 @@ class PackManager: NSObject {
     private class func allPacksAfterRotationForTableview() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
+        
+        sections.append("")
+        values.append([PackManager.anyPack])
         
         for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
             if !rotatedCycles.contains(cycle.code) {
