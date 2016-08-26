@@ -8,44 +8,57 @@
 
 import SwiftyJSON
 
-class Prebuilt: NSObject {
+class Prebuilt {
     var name = ""
     var settingsKey = ""
     var cards = [CardCounter]()
-    var codes = [String]()
 }
 
 class PrebuiltManager: NSObject {
     
     static var allPrebuilts = [Prebuilt]()
     
+    private static var prebuiltCards: [CardCounter]?
+    private static var prebuiltCodes: [String]?
+    
     // array of card codes in selected prebuilt decks
-    class func availableCards() -> [String]? {
-        let settings = NSUserDefaults.standardUserDefaults()
-        
-        var codes = [String]()
-        for prebuilt in allPrebuilts {
-            if settings.boolForKey(prebuilt.settingsKey) {
-                codes.appendContentsOf(prebuilt.codes)
-            }
-        }
-        
+    class func availableCodes() -> [String]? {
+        setPrebuiltCards()
+        guard let codes = prebuiltCodes where codes.count > 0 else { return nil }
         return codes
     }
     
     // array of identity card code for role in selected prebuilt decks
     class func identities(role: NRRole) -> [String]? {
-        let settings = NSUserDefaults.standardUserDefaults()
-        
-        var codes = [String]()
-        for prebuilt in allPrebuilts {
-            if settings.boolForKey(prebuilt.settingsKey) {
-                let identities = prebuilt.cards.filter{ $0.card.role == role && $0.card.type == .Identity }.map{ $0.card.code }
-                codes.appendContentsOf(identities)
+        setPrebuiltCards()
+        guard let cards = prebuiltCards else { return nil }
+        return cards.filter{ $0.card.role == role && $0.card.type == .Identity }.map{ $0.card.code }
+    }
+    
+    class func quantityFor(card: Card) -> Int {
+        setPrebuiltCards()
+        guard let cards = prebuiltCards else { return 0 }
+        return cards.filter { $0.card == card }.reduce(0) { $0 + $1.count }
+    }
+    
+    class func resetSelected() {
+        prebuiltCards = nil
+        prebuiltCodes = nil
+    }
+    
+    private class func setPrebuiltCards() {
+        if prebuiltCards == nil {
+            prebuiltCards = [CardCounter]()
+            prebuiltCodes = [String]()
+            let settings = NSUserDefaults.standardUserDefaults()
+            
+            for prebuilt in allPrebuilts {
+                if settings.boolForKey(prebuilt.settingsKey) {
+                    prebuiltCards?.appendContentsOf(prebuilt.cards)
+                    prebuiltCodes?.appendContentsOf(prebuilt.cards.map { $0.card.code })
+                }
             }
         }
-        
-        return codes
     }
     
     // MARK: - persistence
@@ -115,7 +128,6 @@ class PrebuiltManager: NSObject {
                 if let card = CardManager.cardByCode(code) where qty.intValue > 0 {
                     let cc = CardCounter(card: card, count: qty.intValue)
                     pb.cards.append(cc)
-                    pb.codes.append(code)
                 }
             }
             

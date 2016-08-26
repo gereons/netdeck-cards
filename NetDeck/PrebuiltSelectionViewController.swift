@@ -32,6 +32,7 @@ class PrebuiltSelectionViewController: UIViewController, UITableViewDataSource, 
 
         let settings = NSUserDefaults.standardUserDefaults()
         let sw = NRSwitch(handler: {
+            PrebuiltManager.resetSelected()
             settings.setBool($0, forKey: prebuilt.settingsKey)
         })
         sw.on = settings.boolForKey(prebuilt.settingsKey)

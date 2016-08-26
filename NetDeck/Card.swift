@@ -230,13 +230,16 @@ import SwiftyJSON
     
     // how many copies owned
     var owned: Int {
+        let prebuiltOwned = PrebuiltManager.quantityFor(self)
+        
         if self.isCore {
             let cores = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.NUM_CORES)
-            return cores * self.quantity
+            return (cores * self.quantity) + prebuiltOwned
         }
+        
         let disabledPacks = PackManager.disabledPackCodes()
         if disabledPacks.contains(self.packCode) {
-            return 0
+            return prebuiltOwned
         }
         return self.quantity
     }
