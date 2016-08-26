@@ -66,7 +66,8 @@ class NRDBHack: NSObject {
     }
     
     func silentlyLogin() {
-        if let username = KeychainWrapper.stringForKey(SettingsKeys.NRDB_USERNAME), password = KeychainWrapper.stringForKey(SettingsKeys.NRDB_PASSWORD) {
+        let keychain = KeychainWrapper.defaultKeychainWrapper()
+        if let username = keychain.stringForKey(SettingsKeys.NRDB_USERNAME), password = keychain.stringForKey(SettingsKeys.NRDB_PASSWORD) {
             self.username = username
             self.password = password
             self.hackedLogin(self.silentLoginCompletion)
@@ -87,8 +88,9 @@ class NRDBHack: NSObject {
             if verbose {
                 SVProgressHUD.dismiss()
             }
-            KeychainWrapper.setString(self.username!, forKey: SettingsKeys.NRDB_USERNAME)
-            KeychainWrapper.setString(self.password!, forKey: SettingsKeys.NRDB_PASSWORD)
+            let keychain = KeychainWrapper.defaultKeychainWrapper()
+            keychain.setString(self.username!, forKey: SettingsKeys.NRDB_USERNAME)
+            keychain.setString(self.password!, forKey: SettingsKeys.NRDB_PASSWORD)
             
             NRDB.sharedInstance.startAuthorizationRefresh()
         } else {
@@ -101,8 +103,9 @@ class NRDBHack: NSObject {
     }
         
     class func clearCredentials() {
-        KeychainWrapper.removeObjectForKey(SettingsKeys.NRDB_USERNAME)
-        KeychainWrapper.removeObjectForKey(SettingsKeys.NRDB_PASSWORD)
+        let keychain = KeychainWrapper.defaultKeychainWrapper()
+        keychain.removeObjectForKey(SettingsKeys.NRDB_USERNAME)
+        keychain.removeObjectForKey(SettingsKeys.NRDB_PASSWORD)
     }
 
     func hackedLogin(completion: (Bool) -> Void) {

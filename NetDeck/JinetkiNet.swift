@@ -29,8 +29,9 @@ class JintekiNet: NSObject {
     }
     
     func clearCredentials() {
-        KeychainWrapper.removeObjectForKey(SettingsKeys.JNET_USERNAME)
-        KeychainWrapper.removeObjectForKey(SettingsKeys.JNET_PASSWORD)
+        let keychain = KeychainWrapper.defaultKeychainWrapper()
+        keychain.removeObjectForKey(SettingsKeys.JNET_USERNAME)
+        keychain.removeObjectForKey(SettingsKeys.JNET_PASSWORD)
     }
     
     func clearCookies() {
@@ -85,8 +86,9 @@ class JintekiNet: NSObject {
             case .Success:
                 if let _ = response.result.value {
                     SVProgressHUD.showErrorWithStatus("Logged in".localized())
-                    KeychainWrapper.setString(username, forKey: SettingsKeys.JNET_USERNAME)
-                    KeychainWrapper.setString(password, forKey: SettingsKeys.JNET_PASSWORD)
+                    let keychain = KeychainWrapper.defaultKeychainWrapper()
+                    keychain.setString(username, forKey: SettingsKeys.JNET_USERNAME)
+                    keychain.setString(password, forKey: SettingsKeys.JNET_PASSWORD)
                 } else {
                     fallthrough
                 }
@@ -99,10 +101,10 @@ class JintekiNet: NSObject {
     }
     
     func uploadDeck(deck: Deck) {
-        
+        let keychain = KeychainWrapper.defaultKeychainWrapper()
         guard let
-            username = KeychainWrapper.stringForKey(SettingsKeys.JNET_USERNAME),
-            password = KeychainWrapper.stringForKey(SettingsKeys.JNET_PASSWORD) else {
+            username = keychain.stringForKey(SettingsKeys.JNET_USERNAME),
+            password = keychain.stringForKey(SettingsKeys.JNET_PASSWORD) else {
                 return
         }
 
