@@ -134,6 +134,18 @@
 			<key>Key</key>
 			<string>sets_hide_2</string>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSChildPaneSpecifier</string>
+            <key>Title</key>
+            <string>Prebuilt Decks Selection</string>
+            <key>IASKViewControllerClass</key>
+            <string>PrebuiltSelectionViewController</string>
+            <key>IASKViewControllerSelector</key>
+            <string>init</string>
+            <key>Key</key>
+            <string>sets_hide_3</string>
+        </dict>
 		<dict>
 			<key>Title</key>
 			<string>Web Accounts</string>

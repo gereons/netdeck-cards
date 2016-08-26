@@ -43,7 +43,7 @@
     NSMutableSet* hiddenKeys = [NSMutableSet set];
     if (![CardManager cardsAvailable] || ![PackManager packsAvailable])
     {
-        [hiddenKeys addObjectsFromArray:@[ @"sets_hide_1", @"sets_hide_2", SettingsKeys.BROWSER_PACKS, SettingsKeys.DECKBUILDER_PACKS ]];
+        [hiddenKeys addObjectsFromArray:@[ @"sets_hide_1", @"sets_hide_2", @"sets_hide_3", SettingsKeys.BROWSER_PACKS, SettingsKeys.DECKBUILDER_PACKS ]];
     }
     if (Device.isIphone)
     {
