@@ -41,6 +41,7 @@
 		3A36227D1849320C007F2854 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A36227C1849320C007F2854 /* Images.xcassets */; };
 		3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */; };
 		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
+		3A3798B31D709B0C00F94658 /* PrebuiltManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3798B21D709B0C00F94658 /* PrebuiltManager.swift */; };
 		3A3844FB1B77859E007C76F2 /* MainWindow~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */; };
 		3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */; };
 		3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845001B77BA89007C76F2 /* EditDeckViewController.m */; };
@@ -250,6 +251,7 @@
 		3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPipsView.xib; sourceTree = "<group>"; };
 		3A36A0FC1974F79300D8D26A /* SmallPipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallPipsView.h; sourceTree = "<group>"; };
 		3A36A0FD1974F79300D8D26A /* SmallPipsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallPipsView.m; sourceTree = "<group>"; };
+		3A3798B21D709B0C00F94658 /* PrebuiltManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrebuiltManager.swift; sourceTree = "<group>"; };
 		3A38091C1B0F8AE300042A67 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow~iPhone.xib"; sourceTree = "<group>"; };
 		3A3844FC1B77879B007C76F2 /* IphoneStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IphoneStartViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -849,6 +851,7 @@
 				3AC4F7851BFD2659008E42F7 /* Card.swift */,
 				3AEEBB661C00C9FF00CB6053 /* CardManager.swift */,
 				3A41DA861BF8785C003CB7E1 /* PackManager.swift */,
+				3A3798B21D709B0C00F94658 /* PrebuiltManager.swift */,
 				3AA4088D1C038F480046922C /* CardList.swift */,
 				3AA50F351C0A2FC8007D5296 /* Deck.swift */,
 				3A3C1E1E1BF79A71000311FA /* DeckState.swift */,
@@ -1369,6 +1372,7 @@
 				3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */,
 				3AF6978D1C1DF96400D254CE /* DrawSimulatorCollectionView.swift in Sources */,
 				3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */,
+				3A3798B31D709B0C00F94658 /* PrebuiltManager.swift in Sources */,
 				3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */,
 				3A9204C318B1630800AF5285 /* IceTypeStats.m in Sources */,
 				3AB34E5F1939AA7A000A43BB /* CardFilterThumbView.m in Sources */,

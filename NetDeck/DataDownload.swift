@@ -19,6 +19,7 @@ private enum ApiRequest {
     case Cycles
     case Packs
     case Cards
+    case PrebuiltDecks
 }
 
 class DataDownload: NSObject {
@@ -89,11 +90,13 @@ class DataDownload: NSObject {
         let cyclesUrl = String(format: "https://%@/api/2.0/public/cycles?_locale=%@", nrdbHost!, language)
         let packsUrl = String(format: "https://%@/api/2.0/public/packs?_locale=%@", nrdbHost!, language)
         let cardsUrl = String(format: "https://%@/api/2.0/public/cards?_locale=%@", nrdbHost!, language)
+        let prebuiltUrl = String(format: "https://%@/api/2.0/public/prebuilts?_locale=%@", nrdbHost!, language)
         
         let requests: [ApiRequest: NSURLRequest] = [
             .Cycles: NSURLRequest(URL:NSURL(string: cyclesUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 20),
             .Packs: NSURLRequest(URL:NSURL(string: packsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 20),
-            .Cards: NSURLRequest(URL:NSURL(string: cardsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 20)
+            .Cards: NSURLRequest(URL:NSURL(string: cardsUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 20),
+            .PrebuiltDecks: NSURLRequest(URL:NSURL(string: prebuiltUrl)!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 20)
         ]
         
         let group = dispatch_group_create()
@@ -127,6 +130,10 @@ class DataDownload: NSObject {
                 if ok {
                     ok = CardManager.setupFromNetrunnerDb(results[.Cards]!, language: language)
                     // print("cards setup ok=\(ok)")
+                }
+                if ok {
+                    ok = PrebuiltManager.setupFromNetrunnerDb(results[.PrebuiltDecks]!, language: language)
+                    // print("prebuilt setup ok = \(ok)")
                 }
                 CardManager.setNextDownloadDate()
             }

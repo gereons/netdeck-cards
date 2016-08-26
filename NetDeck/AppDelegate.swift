@@ -45,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             cardsOk = CardManager.setupFromFiles(language)
             // print("app start, cardsOk=\(cardsOk)")
         }
+        if setsOk && cardsOk {
+            PrebuiltManager.setupFromFiles(language)
+        }
                 
         let settings = NSUserDefaults.standardUserDefaults()
         let useNrdb = settings.boolForKey(SettingsKeys.USE_NRDB)

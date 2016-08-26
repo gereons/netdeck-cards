@@ -83,7 +83,7 @@ class PackManager: NSObject {
     
         let fileMgr = NSFileManager.defaultManager()
         
-        if fileMgr.fileExistsAtPath(packsFile) && fileMgr.fileExistsAtPath(cyclesFile){
+        if fileMgr.fileExistsAtPath(packsFile) && fileMgr.fileExistsAtPath(cyclesFile) {
             let packsStr = try? NSString(contentsOfFile: packsFile, encoding: NSUTF8StringEncoding)
             let cyclesStr = try? NSString(contentsOfFile: cyclesFile, encoding: NSUTF8StringEncoding)
             

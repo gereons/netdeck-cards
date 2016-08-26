@@ -239,6 +239,7 @@
             [[ImageCache sharedInstance] clearCache];
             [CardManager removeFiles];
             [PackManager removeFiles];
+            [PrebuiltManager removeFiles];
             [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.LAST_DOWNLOAD];
             [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.NEXT_DOWNLOAD];
             [self refresh];
