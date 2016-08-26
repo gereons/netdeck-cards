@@ -31,7 +31,6 @@ class PrebuiltSelectionViewController: UIViewController, UITableViewDataSource, 
         cell.textLabel?.text = prebuilt.name
 
         let settings = NSUserDefaults.standardUserDefaults()
-        
         let sw = NRSwitch(handler: {
             settings.setBool($0, forKey: prebuilt.settingsKey)
         })

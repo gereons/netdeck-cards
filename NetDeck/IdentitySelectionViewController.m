@@ -204,7 +204,8 @@
     self.selectedIndexPath = nil;
     NSSet* disabledPackCodes = [PackManager disabledPackCodes];
     
-    NSArray* identities = [CardManager identitiesForRole:self.role];
+    NSArray<NSString*>* prebuiltIdentities = [PrebuiltManager identities:self.role];
+    NSArray<Card*>* identities = [CardManager identitiesForRole:self.role];
     for (int i=0; i<factions.count; ++i)
     {
         [self.identities addObject:[NSMutableArray array]];
@@ -212,7 +213,7 @@
         for (int j=0; j<identities.count; ++j)
         {
             Card* card = identities[j];
-            if ([disabledPackCodes containsObject:card.packCode])
+            if ([disabledPackCodes containsObject:card.packCode] && ![prebuiltIdentities containsObject:card.code])
             {
                 continue;
             }

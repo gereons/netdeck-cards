@@ -51,14 +51,10 @@ class CardList: NSObject {
         let cl = CardList(forRole: role, packUsage: packUsage)
         
         var roles = [NRRole]()
-        switch (role)
-        {
-        case .None:
-            roles = [ .Runner, .Corp ]
-        case .Corp:
-            roles = [ .Corp ]
-        case .Runner:
-            roles = [ .Runner ]
+        switch (role) {
+        case .None: roles = [ .Runner, .Corp ]
+        case .Corp: roles = [ .Corp ]
+        case .Runner: roles = [ .Runner ]
         }
         
         cl.initialCards = [Card]()
@@ -110,7 +106,14 @@ class CardList: NSObject {
     
     func filterDeselectedSets() {
         let disabledPackCodes = PackManager.disabledPackCodes()
-        let predicate = NSPredicate(format: "!(packCode in %@)", disabledPackCodes)
+        let packPredicate = NSPredicate(format: "!(packCode in %@)", disabledPackCodes)
+        var predicate = packPredicate
+        
+        if let cards = PrebuiltManager.availableCards() {
+            let decksPredicate = NSPredicate(format: "code in %@", cards)
+            predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [packPredicate, decksPredicate])
+        }
+        
         applyPredicate(predicate)
     }
     

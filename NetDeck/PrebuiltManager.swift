@@ -12,12 +12,43 @@ class Prebuilt: NSObject {
     var name = ""
     var settingsKey = ""
     var cards = [CardCounter]()
+    var codes = [String]()
 }
 
 class PrebuiltManager: NSObject {
     
     static var allPrebuilts = [Prebuilt]()
     
+    // array of card codes in selected prebuilt decks
+    class func availableCards() -> [String]? {
+        let settings = NSUserDefaults.standardUserDefaults()
+        
+        var codes = [String]()
+        for prebuilt in allPrebuilts {
+            if settings.boolForKey(prebuilt.settingsKey) {
+                codes.appendContentsOf(prebuilt.codes)
+            }
+        }
+        
+        return codes
+    }
+    
+    // array of identity card code for role in selected prebuilt decks
+    class func identities(role: NRRole) -> [String]? {
+        let settings = NSUserDefaults.standardUserDefaults()
+        
+        var codes = [String]()
+        for prebuilt in allPrebuilts {
+            if settings.boolForKey(prebuilt.settingsKey) {
+                let identities = prebuilt.cards.filter{ $0.card.role == role && $0.card.type == .Identity }.map{ $0.card.code }
+                codes.appendContentsOf(identities)
+            }
+        }
+        
+        return codes
+    }
+    
+    // MARK: - persistence
     class func filename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]
@@ -84,6 +115,7 @@ class PrebuiltManager: NSObject {
                 if let card = CardManager.cardByCode(code) where qty.intValue > 0 {
                     let cc = CardCounter(card: card, count: qty.intValue)
                     pb.cards.append(cc)
+                    pb.codes.append(code)
                 }
             }
             

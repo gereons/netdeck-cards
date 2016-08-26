@@ -133,70 +133,6 @@ import SwiftyJSON
         return allKnownCards.count > 0
     }
     
-    class func setupFromFiles(language: String) -> Bool {
-        let filename = CardManager.filename()
-        
-        if let str = try? NSString(contentsOfFile: filename, encoding: NSUTF8StringEncoding) {
-            let cardsJson = JSON.parse(str as String)
-            return setupFromJson(cardsJson, language: language)
-        }
-        // print("app start: missing card file")
-        return false
-    }
-    
-    class func setupFromNetrunnerDb(cards: JSON, language: String) -> Bool {
-        let ok = setupFromJson(cards, language: language)
-        if ok {
-            let filename = CardManager.filename()
-            if let data = try? cards.rawData() {
-                data.writeToFile(filename, atomically:true)
-                // print("write cards ok=\(ok)")
-            }
-            AppDelegate.excludeFromBackup(filename)
-        }
-        return ok
-    }
-    
-    class func setupFromJson(cards: JSON, language: String) -> Bool {
-        if !cards.validNrdbResponse {
-            return false
-        }
-        
-        CardManager.initialize()
-        
-        // parse data
-        let parsedCards = Card.cardsFromJson(cards, language: language)
-        for card in parsedCards {
-            CardManager.addCard(card)
-        }
-        
-        let cards = Array(allKnownCards.values)
-        if cards.count == 0 {
-            return false
-        }
-        
-        CardManager.setSubtypes()
-        CardManager.addCardAliases()
-        
-        if !Faction.initializeFactionNames(cards) {
-            return false
-        }
-        if !CardType.initializeCardTypes(cards) {
-            return false
-        }
-        
-        // sort identities by faction and name
-        for var arr in [ allIdentitiesByRole[.Runner]!, allIdentitiesByRole[.Corp]! ] {
-            arr.sortInPlace({ (c1, c2) -> Bool in
-                if c1.faction.rawValue < c2.faction.rawValue { return true }
-                if c1.faction.rawValue > c2.faction.rawValue { return false }
-                return c1.name < c2.name
-            })
-        }
-        
-        return true
-    }
-    
     private class func setSubtypes() {
         // fill subtypes per role
         for card in allKnownCards.values {
@@ -316,7 +252,73 @@ import SwiftyJSON
         
         settings.setObject(nextDownload, forKey:SettingsKeys.NEXT_DOWNLOAD)
     }
-
+    
+    // MARK: - persistence 
+    
+    class func setupFromFiles(language: String) -> Bool {
+        let filename = CardManager.filename()
+        
+        if let str = try? NSString(contentsOfFile: filename, encoding: NSUTF8StringEncoding) {
+            let cardsJson = JSON.parse(str as String)
+            return setupFromJson(cardsJson, language: language)
+        }
+        // print("app start: missing card file")
+        return false
+    }
+    
+    class func setupFromNetrunnerDb(cards: JSON, language: String) -> Bool {
+        let ok = setupFromJson(cards, language: language)
+        if ok {
+            let filename = CardManager.filename()
+            if let data = try? cards.rawData() {
+                data.writeToFile(filename, atomically:true)
+                // print("write cards ok=\(ok)")
+            }
+            AppDelegate.excludeFromBackup(filename)
+        }
+        return ok
+    }
+    
+    class func setupFromJson(cards: JSON, language: String) -> Bool {
+        if !cards.validNrdbResponse {
+            return false
+        }
+        
+        CardManager.initialize()
+        
+        // parse data
+        let parsedCards = Card.cardsFromJson(cards, language: language)
+        for card in parsedCards {
+            CardManager.addCard(card)
+        }
+        
+        let cards = Array(allKnownCards.values)
+        if cards.count == 0 {
+            return false
+        }
+        
+        CardManager.setSubtypes()
+        CardManager.addCardAliases()
+        
+        if !Faction.initializeFactionNames(cards) {
+            return false
+        }
+        if !CardType.initializeCardTypes(cards) {
+            return false
+        }
+        
+        // sort identities by faction and name
+        for var arr in [ allIdentitiesByRole[.Runner]!, allIdentitiesByRole[.Corp]! ] {
+            arr.sortInPlace({ (c1, c2) -> Bool in
+                if c1.faction.rawValue < c2.faction.rawValue { return true }
+                if c1.faction.rawValue > c2.faction.rawValue { return false }
+                return c1.name < c2.name
+            })
+        }
+        
+        return true
+    }
+    
     private class func filename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
         let supportDirectory = paths[0]

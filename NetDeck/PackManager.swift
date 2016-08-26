@@ -55,117 +55,6 @@ class PackManager: NSObject {
     static var disabledPacks: Set<String>?          // set of pack codes
     static var enabledPacks: TableData?
         
-    class func packsPathname() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
-        let supportDirectory = paths[0]
-        
-        return supportDirectory.stringByAppendingPathComponent(PackManager.packsFilename)
-    }
-    
-    class func cyclesPathname() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
-        let supportDirectory = paths[0]
-        
-        return supportDirectory.stringByAppendingPathComponent(PackManager.cyclesFilename)
-    }
-    
-    class func removeFiles() {
-        let fileMgr = NSFileManager.defaultManager()
-        _ = try? fileMgr.removeItemAtPath(packsPathname())
-        _ = try? fileMgr.removeItemAtPath(cyclesPathname())
-    
-        CardManager.initialize()
-    }
-    
-    class func setupFromFiles(language: String) -> Bool {
-        let packsFile = packsPathname()
-        let cyclesFile = cyclesPathname()
-    
-        let fileMgr = NSFileManager.defaultManager()
-        
-        if fileMgr.fileExistsAtPath(packsFile) && fileMgr.fileExistsAtPath(cyclesFile) {
-            let packsStr = try? NSString(contentsOfFile: packsFile, encoding: NSUTF8StringEncoding)
-            let cyclesStr = try? NSString(contentsOfFile: cyclesFile, encoding: NSUTF8StringEncoding)
-            
-            if packsStr != nil && cyclesStr != nil {
-                let packsJson = JSON.parse(packsStr! as String)
-                let cyclesJson = JSON.parse(cyclesStr! as String)
-                return setupFromJsonData(cyclesJson, packsJson, language: language)
-            }
-        }
-        // print("app start: missing pack/cycles files")
-        return false
-    }
-    
-    class func setupFromNetrunnerDb(cycles: JSON, _ packs: JSON, language: String) -> Bool {
-        let ok = setupFromJsonData(cycles, packs, language: language)
-        if ok {
-            let packsFile = packsPathname()
-            if let data = try? packs.rawData() {
-                data.writeToFile(packsFile, atomically:true)
-                // print("write packs ok=\(ok)")
-            }
-            AppDelegate.excludeFromBackup(packsFile)
-            
-            let cyclesFile = cyclesPathname()
-            if let data = try? cycles.rawData() {
-                data.writeToFile(cyclesFile, atomically:true)
-                // print("write cycles ok=\(ok)")
-            }
-            AppDelegate.excludeFromBackup(cyclesFile)
-        }
-        return ok
-    }
-
-    class func setupFromJsonData(cycles: JSON, _ packs: JSON, language: String) -> Bool {
-        cyclesByCode = [String: Cycle]()     // code -> cycle
-        allCycles = [Int: Cycle]()           // position -> cycles
-        packsByCode = [String: Pack]()       // code -> pack
-        allPacks = [Pack]()
-        
-        let ok = cycles.validNrdbResponse && packs.validNrdbResponse
-        if !ok {
-            // print("cards/packs invalid")
-            return false
-        }
-        
-        for cycle in cycles["data"].arrayValue {
-            let c = Cycle()
-            c.name = cycle.localized("name", language)
-            c.position = cycle["position"].intValue
-            c.code = cycle["code"].stringValue
-            
-            cyclesByCode[c.code] = c
-            allCycles[c.position] = c
-        }
-        
-        for pack in packs["data"].arrayValue {
-            let p = Pack()
-            p.name = pack.localized("name", language)
-            p.code = pack["code"].stringValue
-            p.position = pack["position"].intValue
-            p.cycleCode = pack["cycle_code"].stringValue
-            p.settingsKey = "use_" + p.code
-            p.released = pack["date_release"].string != nil
-            
-            packsByCode[p.code] = p
-            allPacks.append(p)
-        }
-        
-        // sort packs in release order
-        allPacks.sortInPlace { p1, p2 in
-            let c1 = cyclesByCode[p1.cycleCode]?.position ?? -1
-            let c2 = cyclesByCode[p2.cycleCode]?.position ?? -1
-            if c1 == c2 {
-                return p1.position < p2.position
-            } else {
-                return c1 < c2
-            }
-        }
-
-        NSUserDefaults.standardUserDefaults().registerDefaults(PackManager.settingsDefaults())
-        return true
-    }
     
     class func packsAvailable() -> Bool {
         return allPacks.count > 0
@@ -377,5 +266,120 @@ class PackManager: NSObject {
         
         return allPacks[maxIndex].name
     }
+    
+    // MARK: - persistence
+    
+    class func packsPathname() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+        let supportDirectory = paths[0]
+        
+        return supportDirectory.stringByAppendingPathComponent(PackManager.packsFilename)
+    }
+    
+    class func cyclesPathname() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+        let supportDirectory = paths[0]
+        
+        return supportDirectory.stringByAppendingPathComponent(PackManager.cyclesFilename)
+    }
+    
+    class func removeFiles() {
+        let fileMgr = NSFileManager.defaultManager()
+        _ = try? fileMgr.removeItemAtPath(packsPathname())
+        _ = try? fileMgr.removeItemAtPath(cyclesPathname())
+        
+        CardManager.initialize()
+    }
+    
+    class func setupFromFiles(language: String) -> Bool {
+        let packsFile = packsPathname()
+        let cyclesFile = cyclesPathname()
+        
+        let fileMgr = NSFileManager.defaultManager()
+        
+        if fileMgr.fileExistsAtPath(packsFile) && fileMgr.fileExistsAtPath(cyclesFile) {
+            let packsStr = try? NSString(contentsOfFile: packsFile, encoding: NSUTF8StringEncoding)
+            let cyclesStr = try? NSString(contentsOfFile: cyclesFile, encoding: NSUTF8StringEncoding)
+            
+            if packsStr != nil && cyclesStr != nil {
+                let packsJson = JSON.parse(packsStr! as String)
+                let cyclesJson = JSON.parse(cyclesStr! as String)
+                return setupFromJsonData(cyclesJson, packsJson, language: language)
+            }
+        }
+        // print("app start: missing pack/cycles files")
+        return false
+    }
+    
+    class func setupFromNetrunnerDb(cycles: JSON, _ packs: JSON, language: String) -> Bool {
+        let ok = setupFromJsonData(cycles, packs, language: language)
+        if ok {
+            let packsFile = packsPathname()
+            if let data = try? packs.rawData() {
+                data.writeToFile(packsFile, atomically:true)
+                // print("write packs ok=\(ok)")
+            }
+            AppDelegate.excludeFromBackup(packsFile)
+            
+            let cyclesFile = cyclesPathname()
+            if let data = try? cycles.rawData() {
+                data.writeToFile(cyclesFile, atomically:true)
+                // print("write cycles ok=\(ok)")
+            }
+            AppDelegate.excludeFromBackup(cyclesFile)
+        }
+        return ok
+    }
+    
+    class func setupFromJsonData(cycles: JSON, _ packs: JSON, language: String) -> Bool {
+        cyclesByCode = [String: Cycle]()     // code -> cycle
+        allCycles = [Int: Cycle]()           // position -> cycles
+        packsByCode = [String: Pack]()       // code -> pack
+        allPacks = [Pack]()
+        
+        let ok = cycles.validNrdbResponse && packs.validNrdbResponse
+        if !ok {
+            // print("cards/packs invalid")
+            return false
+        }
+        
+        for cycle in cycles["data"].arrayValue {
+            let c = Cycle()
+            c.name = cycle.localized("name", language)
+            c.position = cycle["position"].intValue
+            c.code = cycle["code"].stringValue
+            
+            cyclesByCode[c.code] = c
+            allCycles[c.position] = c
+        }
+        
+        for pack in packs["data"].arrayValue {
+            let p = Pack()
+            p.name = pack.localized("name", language)
+            p.code = pack["code"].stringValue
+            p.position = pack["position"].intValue
+            p.cycleCode = pack["cycle_code"].stringValue
+            p.settingsKey = "use_" + p.code
+            p.released = pack["date_release"].string != nil
+            
+            packsByCode[p.code] = p
+            allPacks.append(p)
+        }
+        
+        // sort packs in release order
+        allPacks.sortInPlace { p1, p2 in
+            let c1 = cyclesByCode[p1.cycleCode]?.position ?? -1
+            let c2 = cyclesByCode[p2.cycleCode]?.position ?? -1
+            if c1 == c2 {
+                return p1.position < p2.position
+            } else {
+                return c1 < c2
+            }
+        }
+        
+        NSUserDefaults.standardUserDefaults().registerDefaults(PackManager.settingsDefaults())
+        return true
+    }
+
 }
 
