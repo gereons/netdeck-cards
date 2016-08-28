@@ -18,25 +18,27 @@ class PrebuiltManager: NSObject {
     
     static var allPrebuilts = [Prebuilt]()
     
+    // caches
     private static var prebuiltCards: [CardCounter]?
     private static var prebuiltCodes: [String]?
     
     // array of card codes in selected prebuilt decks
     class func availableCodes() -> [String]? {
-        setPrebuiltCards()
+        prepareCaches()
         guard let codes = prebuiltCodes where codes.count > 0 else { return nil }
         return codes
     }
     
-    // array of identity card code for role in selected prebuilt decks
+    // array of identity card codes for role in selected prebuilt decks
     class func identities(role: NRRole) -> [String]? {
-        setPrebuiltCards()
+        prepareCaches()
         guard let cards = prebuiltCards else { return nil }
         return cards.filter{ $0.card.role == role && $0.card.type == .Identity }.map{ $0.card.code }
     }
     
+    // quantity of card owned from prebuilt decks
     class func quantityFor(card: Card) -> Int {
-        setPrebuiltCards()
+        prepareCaches()
         guard let cards = prebuiltCards else { return 0 }
         return cards.filter { $0.card == card }.reduce(0) { $0 + $1.count }
     }
@@ -46,7 +48,7 @@ class PrebuiltManager: NSObject {
         prebuiltCodes = nil
     }
     
-    private class func setPrebuiltCards() {
+    private class func prepareCaches() {
         if prebuiltCards == nil {
             prebuiltCards = [CardCounter]()
             prebuiltCodes = [String]()
