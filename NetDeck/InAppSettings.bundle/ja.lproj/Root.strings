@@ -1,4 +1,4 @@
-﻿/* Settings Root.strings - ja */
+/* Settings Root.strings - ja */
 
 "Number of Core Sets" = "基本セットの数";
 "Auto-save decks" = "デッキの自動セーブ";
@@ -8,6 +8,7 @@
 
 "Card Sets" = "カードセット";
 "Set/Datapack Selection" = "セット/データパック選択";
+"Prebuilt Decks Selection" = "構築されたデッキの選択を事前";
 
 "Data Export" = "データのエクスポート";
 "Use Dropbox" = "Dropboxの使用";
