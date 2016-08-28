@@ -22,8 +22,9 @@ class DeckEmail: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     func sendAsEmail(deck: Deck, fromViewController: UIViewController) {
+        guard DeckEmail.canSendMail() else { return }
         let mailer = MFMailComposeViewController()
-    
+        
         mailer.mailComposeDelegate = self
         let emailBody = DeckExport.asPlaintextString(deck)
         mailer.setMessageBody(emailBody, isHTML:false)
