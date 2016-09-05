@@ -1547,7 +1547,9 @@
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];
     
     alert.popoverPresentationController.sourceView = self.mwlButton;
-    alert.popoverPresentationController.sourceRect = self.mwlButton.frame;
+    CGRect rect = self.footerLabel.frame;
+    rect.size = CGSizeMake(1, 1);
+    alert.popoverPresentationController.sourceRect = rect;
     
     [self presentViewController:alert animated:YES completion:nil];
 }
