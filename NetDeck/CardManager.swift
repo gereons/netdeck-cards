@@ -48,6 +48,7 @@ import SwiftyJSON
         "09007": "Kitty",     // quantum predictive model
         "10043": "Polop",     // political operative
         "10108": "FIRS",      // Full Immersion RecStudio
+        "11024": "Clippy",    // Paperclip
     ]
     
     override class func initialize() {

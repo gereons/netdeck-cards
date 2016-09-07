@@ -10,6 +10,7 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
+// TODO: investigate OOMs - memory warnings?
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
