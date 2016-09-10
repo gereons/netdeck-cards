@@ -176,8 +176,7 @@
 
 -(void) createNewDeck:(id)sender
 {
-    UIAlertController* alert = [UIAlertController actionSheetWithTitle:l10n(@"New Deck")
-                                                                   message:nil];
+    UIAlertController* alert = [UIAlertController actionSheetWithTitle:l10n(@"New Deck") message:nil];
     
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") handler:^(UIAlertAction *action) {
         [self addNewDeck:NRRoleRunner];
@@ -186,8 +185,6 @@
         [self addNewDeck:NRRoleCorp];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Cancel") handler:nil]];
-    
-    [alert.view layoutIfNeeded];
     
     [self presentViewController:alert animated:YES completion:nil];
 }
@@ -209,8 +206,7 @@
     
     if (useNrdb && useDropbox)
     {
-        UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Import Decks")
-                                                                       message:nil];
+        UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Import Decks") message:nil];
         
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"From Dropbox") handler:^(UIAlertAction *action) {
             [self importDecksFrom:NRImportSourceDropbox];
@@ -233,7 +229,7 @@
     else
     {
         UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Import Decks")
-                                                                       message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")];
+                                                             message:l10n(@"Connect to your Dropbox and/or NetrunnerDB.com account first.")];
         
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:nil]];
         

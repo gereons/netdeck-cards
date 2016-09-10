@@ -410,7 +410,7 @@ import SwiftyJSON
             // corp: if faction name is part of the title, remove it ("NBN: The World is Yours*" becomes "The World is Yours*")
             // otherwise, remove stuff after the colon ("Harmony Medtech: Biomedical Pioneer" becomes "Harmony Medtech")
             if role == .Corp {
-                if name.hasPrefix(faction) {
+                if name.hasPrefix(faction + ":") {
                     return name.substringFromIndex(colon.startIndex.advancedBy(2)) // bump to after the ": "
                 } else {
                     return name.substringToIndex(colon.startIndex)
