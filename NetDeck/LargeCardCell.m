@@ -27,7 +27,7 @@
         pip.layer.cornerRadius = diameter/2;
     }
     
-    self.name.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightMedium];
+    self.name.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightRegular];
     
     for (UILabel* lbl in @[ self.label1, self.label2, self.label3 ]) {
         lbl.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightRegular];

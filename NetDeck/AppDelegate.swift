@@ -11,6 +11,12 @@ import Crashlytics
 import SVProgressHUD
 
 // TODO: support iPad pro native resolution?
+/// comparison
+/// saved decks
+/// import
+/// filter less/more
+
+
 // TODO: investigate OOMs - memory warnings?
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
