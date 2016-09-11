@@ -6,6 +6,10 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@interface ActionsTableViewController : UITableViewController
+@interface ActionsTableViewController : UIViewController
+
+@property IBOutlet UITableView* tableView;
+@property IBOutlet UIToolbar* footer;
+@property IBOutlet UIBarButtonItem* version;
 
 @end
