@@ -13,6 +13,7 @@
 
 @property IBOutlet UILabel* nameLabel;
 @property IBOutlet UILabel* factionLabel;
+@property IBOutlet UIView* pipsView;
 
 @property SmallPipsView* pips;
 

@@ -12,9 +12,9 @@
 
 - (void)awakeFromNib
 {
-    self.pips = [SmallPipsView createWithFrame:CGRectMake(10, 3, 38, 38)];
+    self.pips = [SmallPipsView createWithFrame:CGRectMake(0, 0, 38, 38)];
     
-    [self.contentView addSubview:self.pips];
+    [self.pipsView addSubview:self.pips];
 }
 
 -(void) setCard:(Card *)card

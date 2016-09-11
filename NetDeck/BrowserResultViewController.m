@@ -263,7 +263,7 @@ static BrowserResultViewController* instance;
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.largeCells ? 83 : 40;
+    return self.largeCells ? 82 : 40;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
