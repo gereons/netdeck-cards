@@ -10,11 +10,7 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-// TODO: support iPad pro native resolution?
-
-/// filter less/more
-/// filter table cells
-
+// TODO: test iPad pro native resolution, test regular iPad w/ and w/o ext keyboard
 
 // TODO: investigate OOMs - memory warnings?
 // TODO: use icon font for special symbols, including rendererd html text

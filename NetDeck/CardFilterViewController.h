@@ -48,6 +48,11 @@
 @property IBOutlet UIView* buttonContainer;
 @property IBOutlet UIView* bottomSeparator; // the 1px "line" view between the filters and the results table
 
+@property IBOutlet NSLayoutConstraint* tableViewTopMargin;
+@property IBOutlet NSLayoutConstraint* tableViewBottomMargin;
+@property IBOutlet NSLayoutConstraint* collectionViewTopMargin;
+@property IBOutlet NSLayoutConstraint* collectionViewBottomMargin;
+
 @property IBOutlet UITableView* tableView;
 @property IBOutlet CardFilterCollectionView* collectionView;
 
