@@ -60,6 +60,8 @@
     
     UIGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     [self.tableView addGestureRecognizer:longPress];
+    
+    self.toolBarHeight.constant = 0;
 }
 
 // WTF is this necessary? if we don't do this, the import/export/add buttons will appear inactive after we return here from

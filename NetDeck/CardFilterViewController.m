@@ -1073,6 +1073,7 @@ static NSInteger viewMode = VIEW_LIST;
         cell.accessoryView = button;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+#warning
         SmallPipsView* pips = [SmallPipsView createWithFrame:CGRectMake(230, 0, 38, 38)];
         [cell.contentView addSubview:pips];
         

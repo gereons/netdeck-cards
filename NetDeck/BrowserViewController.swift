@@ -122,7 +122,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             cell!.selectionStyle = .None
             cell!.accessoryType = .DisclosureIndicator
             
-            let pips = SmallPipsView.createWithFrame(CGRectMake(0,0,38,38))
+            let pips = SmallPipsView.createWithFrame(CGRectMake(0, 0, 38, 38))
             cell!.accessoryView = pips
         }
     

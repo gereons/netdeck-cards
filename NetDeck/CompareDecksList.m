@@ -16,8 +16,7 @@
 @property NSMutableArray* names;
 
 @property UIBarButtonItem* diffButton;
-@property UIToolbar* toolbar;
-@property UILabel* footerLabel;
+@property UIBarButtonItem* footerButton;
 
 @property NRRole selectedRole;
 
@@ -38,22 +37,12 @@
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.rightBarButtonItems = @[ self.diffButton ];
 
-    // add toolbar as footer
-    self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 728, 703, 40)];
-    self.footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 683, 40)];
-    self.footerLabel.font = [UIFont systemFontOfSize:15];
-    [self.toolbar addSubview:self.footerLabel];
-    self.footerLabel.text = l10n(@"Select two decks to compare them");
-    self.footerLabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(footerClicked:)];
-    [self.footerLabel addGestureRecognizer:tap];
-    [self.view addSubview:self.toolbar];
+    self.footerButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Select two decks to compare them") style:UIBarButtonItemStylePlain target:self action:@selector(footerClicked:)];
+    self.footerButton.tintColor = [UIColor blackColor];
+    NSDictionary* attributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:15] };
+    [self.footerButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
-    // adjust tableview
-    UIEdgeInsets insets = self.tableView.contentInset;
-    insets.bottom = 40;
-    self.tableView.contentInset = insets;
-    self.tableView.scrollIndicatorInsets = insets;
+    self.toolBar.items = @[ self.footerButton ];
 }
 
 -(void) diffDecks:(id)sender
@@ -144,16 +133,16 @@
     switch (self.decksToDiff.count)
     {
         case 0:
-            self.footerLabel.text = l10n(@"Select two decks to compare them");
-            self.footerLabel.textColor = [UIColor blackColor];
+            self.footerButton.title = l10n(@"Select two decks to compare them");
+            self.footerButton.tintColor = [UIColor blackColor];
             break;
         case 1:
-            self.footerLabel.text = [NSString stringWithFormat:l10n(@"Selected ‘%@’, select one more to compare"), self.names[0]];
-            self.footerLabel.textColor = [UIColor blackColor];
+            self.footerButton.title = [NSString stringWithFormat:l10n(@"Selected ‘%@’, select one more to compare"), self.names[0]];
+            self.footerButton.tintColor = [UIColor blackColor];
             break;
         case 2:
-            self.footerLabel.text = [NSString stringWithFormat:l10n(@"Selected ‘%@’ and ‘%@’, tap to compare"), self.names[0], self.names[1]];
-            self.footerLabel.textColor = [UIColor colorWithRGB:0x007aff];
+            self.footerButton.title = [NSString stringWithFormat:l10n(@"Selected ‘%@’ and ‘%@’, tap to compare"), self.names[0], self.names[1]];
+            self.footerButton.tintColor = [UIColor colorWithRGB:0x007aff];
             break;
     }
     

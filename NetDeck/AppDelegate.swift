@@ -11,10 +11,9 @@ import Crashlytics
 import SVProgressHUD
 
 // TODO: support iPad pro native resolution?
-/// comparison
-/// saved decks
-/// import
+
 /// filter less/more
+/// filter table cells
 
 
 // TODO: investigate OOMs - memory warnings?
