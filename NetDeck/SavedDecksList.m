@@ -167,17 +167,17 @@
     }
     
     UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Export Decks")
-                                                                   message:l10n(@"Export all currently visible decks")];
+                                                         message:l10n(@"Export all currently visible decks")];
     
     [alert addAction:[UIAlertAction cancelAlertAction:nil]];
     if (useDropbox) {
-        [alert addAction:[UIAlertAction actionWithTitle:@"To Dropbox" handler:^(UIAlertAction * action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To Dropbox") handler:^(UIAlertAction * action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
             [self performSelector:@selector(exportAllToDropbox) withObject:nil afterDelay:0.0];
         }]];
     }
     if (useNetrunnerdb) {
-        [alert addAction:[UIAlertAction actionWithTitle:@"To NetrunnerDB.com" handler:^(UIAlertAction * action) {
+        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction * action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
             [self performSelector:@selector(exportAllToNetrunnerDB) withObject:nil afterDelay:0.0];
         }]];
@@ -249,7 +249,6 @@
     Deck* deck = [self.decks objectAtIndexPath:indexPath];
     
     UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    CGRect frame = [cell.contentView convertRect:sender.frame toView:self.view];
     
     self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     
@@ -266,10 +265,7 @@
         self.popup = nil;
     }]];
     
-    // fudge the frame so the popup appears to the left of the (I)
-    frame.origin.y -= 990;
-    frame.size.height = 2000;
-    frame.size.width = 500;
+    CGRect frame = [cell.contentView convertRect:sender.frame toView:self.view];
 
     UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
     popover.sourceView = self.view;
