@@ -55,18 +55,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     UIView* tableFoot = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setTableFooterView:tableFoot];
     
-    UIToolbar* footer = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 664, 320, 40)];
-    // footer.text = @"footer";
-    [self.view addSubview:footer];
-    
-    UILabel* footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 320, 40)];
-    
-    footerLabel.text = [AppDelegate appVersion];
-    footerLabel.textAlignment = NSTextAlignmentCenter;
-    footerLabel.backgroundColor = [UIColor clearColor];
-    footerLabel.font = [UIFont systemFontOfSize:14];
-    [footer addSubview:footerLabel];
-    
+    [self.version setTitle:[AppDelegate appVersion]];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(loadDeck:) name:Notifications.LOAD_DECK object:nil];

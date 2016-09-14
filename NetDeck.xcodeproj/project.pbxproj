@@ -32,6 +32,8 @@
 		3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B78F1ACD81BC0039A18A /* BrowserCollectionView.m */; };
 		3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7921ACD83DF0039A18A /* DecklistCollectionView.m */; };
 		3A19B7961ACD841E0039A18A /* IdentityCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */; };
+		3A1B32241D87229800155454 /* CardFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1B32221D87229800155454 /* CardFilterCell.m */; };
+		3A1B32251D87229800155454 /* CardFilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1B32231D87229800155454 /* CardFilterCell.xib */; };
 		3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */; };
 		3A2221DE1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2221DD1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m */; };
 		3A285BA11D109A54007EC30F /* EmptyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A285BA01D109A54007EC30F /* EmptyDetailViewController.swift */; };
@@ -78,6 +80,8 @@
 		3A6CD8041CF7864C0090CEDB /* DetailViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CD8031CF7864C0090CEDB /* DetailViewManager.swift */; };
 		3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D51D31A2284540004951E /* DeckHistoryPopup.m */; };
 		3A6D51D61A2284540004951E /* DeckHistoryPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */; };
+		3A6ECD2A1D85BDE7008FBF38 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6ECD291D85BDE7008FBF38 /* LaunchScreen.xib */; };
+		3A6ECD2C1D85BF3B008FBF38 /* ActionsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6ECD2B1D85BF3B008FBF38 /* ActionsTableViewController.xib */; };
 		3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71628E197289E7001755BF /* DeckDiffViewController.m */; };
 		3A716291197289E7001755BF /* DeckDiffViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71628F197289E7001755BF /* DeckDiffViewController.xib */; };
 		3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71FFC71930BA6500C71C54 /* CardThumbView.xib */; };
@@ -228,6 +232,9 @@
 		3A19B7921ACD83DF0039A18A /* DecklistCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DecklistCollectionView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A19B7941ACD841E0039A18A /* IdentityCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IdentityCollectionView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IdentityCollectionView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3A1B32211D87229800155454 /* CardFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardFilterCell.h; sourceTree = "<group>"; };
+		3A1B32221D87229800155454 /* CardFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardFilterCell.m; sourceTree = "<group>"; };
+		3A1B32231D87229800155454 /* CardFilterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterCell.xib; sourceTree = "<group>"; };
 		3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSmallThumbView.xib; sourceTree = "<group>"; };
 		3A2221DC1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterCellCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		3A2221DD1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterCellCollectionViewFlowLayout.m; sourceTree = "<group>"; };
@@ -304,6 +311,8 @@
 		3A6D51D21A2284540004951E /* DeckHistoryPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckHistoryPopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A6D51D31A2284540004951E /* DeckHistoryPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckHistoryPopup.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckHistoryPopup.xib; sourceTree = "<group>"; };
+		3A6ECD291D85BDE7008FBF38 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		3A6ECD2B1D85BF3B008FBF38 /* ActionsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActionsTableViewController.xib; sourceTree = "<group>"; };
 		3A71628D197289E7001755BF /* DeckDiffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckDiffViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A71628E197289E7001755BF /* DeckDiffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckDiffViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A71628F197289E7001755BF /* DeckDiffViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffViewController.xib; sourceTree = "<group>"; };
@@ -570,6 +579,7 @@
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
 				3A36226F1849320C007F2854 /* NetDeck-Prefix.pch */,
 				3A904FCB1BF73722001C075A /* NetDeck-Bridging-Header.h */,
+				3A6ECD291D85BDE7008FBF38 /* LaunchScreen.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -624,6 +634,9 @@
 				3AB2CF561938952600CCBE64 /* CardFilterViewController.h */,
 				3AB2CF571938952600CCBE64 /* CardFilterViewController.m */,
 				3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */,
+				3A1B32211D87229800155454 /* CardFilterCell.h */,
+				3A1B32221D87229800155454 /* CardFilterCell.m */,
+				3A1B32231D87229800155454 /* CardFilterCell.xib */,
 				3AF2E8B91883075500F6306B /* CardFilterPopover.h */,
 				3AF2E8BA1883075500F6306B /* CardFilterPopover.m */,
 				3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */,
@@ -874,6 +887,7 @@
 			children = (
 				3AA440E31854DA4C0051D4B0 /* ActionsTableViewController.h */,
 				3AA440E41854DA4C0051D4B0 /* ActionsTableViewController.m */,
+				3A6ECD2B1D85BF3B008FBF38 /* ActionsTableViewController.xib */,
 				3AA440E51854DA4C0051D4B0 /* MainWindow.xib */,
 			);
 			name = "Actions View";
@@ -1138,6 +1152,7 @@
 				3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */,
 				3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */,
 				3A843A931B8A0114000CC60D /* DeckCell~iphone.xib in Resources */,
+				3A6ECD2C1D85BF3B008FBF38 /* ActionsTableViewController.xib in Resources */,
 				3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */,
 				3A3798B71D70A54B00F94658 /* PrebuiltSelectionViewController.xib in Resources */,
 				3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */,
@@ -1147,6 +1162,7 @@
 				3AD860E61B7939E500EEF8AC /* CardImageViewCell.xib in Resources */,
 				3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
+				3A1B32251D87229800155454 /* CardFilterCell.xib in Resources */,
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
 				3AA8EC2B1CC3A05E00370A26 /* DeckHistoryViewController.xib in Resources */,
 				3A531B271A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib in Resources */,
@@ -1183,6 +1199,7 @@
 				3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */,
 				3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */,
 				3AD860DC1B792B6700EEF8AC /* ListCardsViewController.xib in Resources */,
+				3A6ECD2A1D85BDE7008FBF38 /* LaunchScreen.xib in Resources */,
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
 				3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */,
 				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
@@ -1304,6 +1321,7 @@
 				3A85328218550ACE00507B9A /* AboutViewController.m in Sources */,
 				3A2221DE1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m in Sources */,
 				3A5794DA19157A2D005DA4B2 /* CardDetailView.m in Sources */,
+				3A1B32241D87229800155454 /* CardFilterCell.m in Sources */,
 				3AC4F7861BFD2659008E42F7 /* Card.swift in Sources */,
 				3AB2CF591938952600CCBE64 /* CardFilterViewController.m in Sources */,
 				3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */,
@@ -1537,7 +1555,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1571,7 +1588,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1642,7 +1658,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

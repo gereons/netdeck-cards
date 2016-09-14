@@ -12,7 +12,7 @@
 #import "CardImageViewPopover.h"
 #import "CardFilterThumbView.h"
 #import "CardFilterSectionHeaderView.h"
-#import "SmallPipsView.h"
+#import "CardFilterCell.h"
 
 @interface CardFilterViewController ()
 
@@ -28,8 +28,6 @@
 @property BOOL sendNotifications;
 @property NSString* selectedType;
 @property NSSet* selectedTypes;
-@property CGRect smallResultFrame;
-@property CGRect largeResultFrame;
 @property NSMutableDictionary* selectedValues;
 @property BOOL searchFieldActive;
 @property int influenceValue;
@@ -126,6 +124,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.cardList = [[CardList alloc] initForRole:self.role packUsage:packUsage];
     [self initCards];
     
+    [self.tableView registerNib:[UINib nibWithNibName:@"CardFilterCell" bundle:nil] forCellReuseIdentifier:@"cardCell"];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
@@ -142,13 +141,6 @@ static NSInteger viewMode = VIEW_LIST;
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
     layout.minimumInteritemSpacing = 3;
     layout.minimumLineSpacing = 3;
-
-    CGRect rect = [self.sliderContainer convertRect:self.influenceSeparator.frame toView:self.view];
-    CGFloat buttonBoxHeight = self.bottomSeparator.frame.origin.y - rect.origin.y;
-    
-    rect = self.tableView.frame;
-    self.smallResultFrame = rect;
-    self.largeResultFrame = CGRectMake(rect.origin.x, rect.origin.y-buttonBoxHeight, rect.size.width, rect.size.height+buttonBoxHeight);
     
     NSString* moreLess = showAllFilters ? l10n(@"Less △") : l10n(@"More ▽");
     [self.moreLessButton setTitle:moreLess forState:UIControlStateNormal];
@@ -236,13 +228,10 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) setResultFrames
 {
-    if (viewMode == VIEW_LIST)
-    {
-        self.tableView.frame = showAllFilters ? self.smallResultFrame : self.largeResultFrame;
-    }
-    else
-    {
-        self.collectionView.frame = showAllFilters ? self.smallResultFrame : self.largeResultFrame;
+    if (viewMode == VIEW_LIST) {
+        self.tableViewTopMargin.constant = showAllFilters ? 0 : -129;
+    } else {
+        self.collectionViewTopMargin.constant = showAllFilters ? 0 : -129;
     }
 }
 
@@ -450,30 +439,22 @@ static NSInteger viewMode = VIEW_LIST;
         return;
     }
     self.searchFieldActive = YES;
-    
-    CGFloat topY = self.searchSeparator.frame.origin.y;
+    self.moreLessButton.hidden = YES;
     
     CGRect keyboardFrame = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat kbHeight = keyboardFrame.size.height;
-    
-    CGRect keyboardRect = [self.view convertRect:keyboardFrame fromView:self.view.window];
-    CGFloat viewHeight = self.view.frame.size.height;
-    
-    if ((keyboardRect.origin.y + keyboardRect.size.height) > viewHeight) {
-        // external keyboard present, virtual kb is offscreen
-        kbHeight = 768 - keyboardFrame.origin.y;
-    }
-    
-    float tableHeight = 768 - kbHeight - topY - 64; // screen height - kbd height - height of visible filter - height of status/nav bar
-    
-    CGRect newFrame = self.tableView.frame;
-    newFrame.origin.y = topY + 1;
-    newFrame.size.height = tableHeight;
+    CGFloat screenHeight = self.view.superview.frame.size.height;
+    CGFloat kbHeight = screenHeight - keyboardFrame.origin.y;
     
     float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    
+    self.tableViewBottomMargin.constant = kbHeight;
+    self.collectionViewBottomMargin.constant = kbHeight;
+    self.tableViewTopMargin.constant = -242;
+    self.collectionViewTopMargin.constant = -242;
+    
     [UIView animateWithDuration:animDuration animations:^{
-        self.tableView.frame = newFrame;
-        self.collectionView.frame = newFrame;
+        [self.tableView layoutIfNeeded];
+        [self.collectionView layoutIfNeeded];
     }];
 }
 
@@ -485,11 +466,18 @@ static NSInteger viewMode = VIEW_LIST;
         [self.searchField resignFirstResponder];
     }
     self.searchFieldActive = NO;
+    self.moreLessButton.hidden = NO;
     
     NSTimeInterval animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
+    [self setResultFrames];
+    self.tableViewBottomMargin.constant = 0;
+    self.collectionViewBottomMargin.constant = 0;
+    self.tableViewTopMargin.constant = 0;
+    self.collectionViewTopMargin.constant = 0;
     [UIView animateWithDuration:animDuration animations:^{
-        [self setResultFrames];
+        [self.tableView layoutIfNeeded];
+        [self.collectionView layoutIfNeeded];
     }];
 }
 
@@ -1061,49 +1049,23 @@ static NSInteger viewMode = VIEW_LIST;
     
     Card *card = [self.cards objectAtIndexPath:indexPath];
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
-        
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeContactAdd];
-        button.frame = CGRectMake(0, 0, 30, 30);
-        button.tag = ADD_BUTTON_TABLE;
-        
-        cell.accessoryView = button;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        SmallPipsView* pips = [SmallPipsView createWithFrame:CGRectMake(230, 0, 38, 38)];
-        [cell.contentView addSubview:pips];
-        
-        [button addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];
+    CardFilterCell *cell = (CardFilterCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.addButton.tag = ADD_BUTTON_TABLE;
+    [cell.addButton addTarget:self action:@selector(addCardToDeck:) forControlEvents:UIControlEventTouchUpInside];
+    
+    Card* identity = self.deckListViewController.deck.identity;
+
+    NSInteger influence = card.influence;
+    if (identity && card.faction == identity.faction) {
+        influence = 0;
     }
+    [cell.pips setValue:influence];
+    [cell.pips setColor:card.factionColor];
     
-    for (UIView* v in [cell.contentView subviews])
-    {
-        if ([v isKindOfClass:[SmallPipsView class]])
-        {
-            SmallPipsView* pips = (SmallPipsView*)v;
-            
-            Card* identity = self.deckListViewController.deck.identity;
-            
-            NSInteger influence = card.influence;
-            if (identity && card.faction == identity.faction)
-            {
-                influence = 0;
-            }
-            [pips setValue:influence];
-            [pips setColor:card.factionColor];
-            break;
-        }
-    }
-    
-    cell.textLabel.font = [UIFont systemFontOfSize:17];
-    
-    cell.textLabel.text = card.name;
+    cell.nameLabel.text = card.name;
     
     CardCounter* cc = [self.deckListViewController.deck findCard:card];
-    cell.detailTextLabel.text = cc.count > 0 ? [@(cc.count) stringValue] : @"";
+    cell.countLabel.text = cc.count > 0 ? [@(cc.count) stringValue] : @ "";
     
     return cell;
 }

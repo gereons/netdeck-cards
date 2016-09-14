@@ -13,6 +13,9 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UISearchBar* searchBar;
 
+@property IBOutlet UIToolbar* toolBar;
+@property IBOutlet NSLayoutConstraint* toolBarHeight;
+
 @property UIBarButtonItem* stateFilterButton;
 @property UIBarButtonItem* sideFilterButton;
 @property UIBarButtonItem* sortButton;

@@ -10,6 +10,8 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
+// TODO: test iPad pro native resolution, test regular iPad w/ and w/o ext keyboard
+
 // TODO: investigate OOMs - memory warnings?
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
