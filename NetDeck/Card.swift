@@ -293,7 +293,9 @@ import SwiftyJSON
         
         if c.type == .Identity {
             Card.fullNames[c.code] = c.englishName
-            c.name = c.shortIdentityName(c.name, forRole: c.role, andFaction: c.factionStr)
+            let factionName = c.faction == .Weyland ? Faction.WeylandConsortium : c.factionStr
+            let shortName = c.shortIdentityName(c.name, forRole: c.role, andFaction: factionName)
+            c.name = shortName
         }
         
         c.text = json.localized("text", language)
@@ -368,19 +370,6 @@ import SwiftyJSON
         
         return c
     }
-    
-//    func setLocalPropertiesFrom(localCard: Card) {
-//        self.name = localCard.name
-//        self.typeStr = localCard.typeStr
-//        self.subtype = localCard.subtype
-//        self.subtypes = localCard.subtypes
-//        self.factionStr = localCard.factionStr
-//        self.text = localCard.text
-//        self.flavor = localCard.flavor
-//        if let localImg = localCard.imageSrc {
-//            self.imageSrc = localImg
-//        }
-//    }
     
     private class func subtypeSplit(subtype: String) -> (subtype: String, subtypes: [String]) {
         let s = subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")

@@ -23,6 +23,8 @@ import Foundation
     private static var allFactions: TableData!
     private static var allFactionsPreDAD: TableData!
     
+    static let WeylandConsortium = "Weyland Consortium"
+    
     override class func initialize() {
         faction2name[.None] = Constant.kANY
         faction2name[.Neutral] = "Neutral".localized()
@@ -104,7 +106,7 @@ import Foundation
     class func fullName(faction: NRFaction) -> String {
         switch faction {
         case .Weyland:
-            return "Weyland Consortium"
+            return Faction.WeylandConsortium
         default:
             return Faction.name(faction)!
         }
