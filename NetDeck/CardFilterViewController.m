@@ -442,7 +442,7 @@ static NSInteger viewMode = VIEW_LIST;
     self.moreLessButton.hidden = YES;
     
     CGRect keyboardFrame = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat screenHeight = self.view.superview.frame.size.height;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat kbHeight = screenHeight - keyboardFrame.origin.y;
     
     float animDuration = [[sender.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];

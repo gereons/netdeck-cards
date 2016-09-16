@@ -462,8 +462,9 @@ static BrowserResultViewController* instance;
 -(void) willShowKeyboard:(NSNotification*)sender
 {
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    float kbHeight = kbRect.size.height;
-    
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    CGFloat kbHeight = screenHeight - kbRect.origin.y;
+
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight, 0.0);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;

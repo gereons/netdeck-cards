@@ -553,7 +553,7 @@ static NRFilter _filterType = NRFilterAll;
 -(void) willShowKeyboard:(NSNotification*)sender
 {
     CGRect kbRect = [[sender.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat screenHeight = self.view.window.bounds.size.height;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat kbHeight = screenHeight - kbRect.origin.y - self.toolBarHeight.constant;
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, kbHeight, 0.0);
