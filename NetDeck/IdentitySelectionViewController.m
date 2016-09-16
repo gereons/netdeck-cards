@@ -174,7 +174,10 @@
 
 - (void)initIdentities
 {
-    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    BOOL useDraft = [settings boolForKey:SettingsKeys.USE_DRAFT];
+    NRPackUsage packs = (NRPackUsage)[settings integerForKey:SettingsKeys.DECKBUILDER_PACKS];
+    
     NSMutableArray* factions;
     
     if (self.selectedFaction == NRFactionNone)
@@ -202,7 +205,19 @@
     self.factionNames = [NSArray arrayWithArray:factions];
     
     self.selectedIndexPath = nil;
-    NSSet* disabledPackCodes = [PackManager disabledPackCodes];
+    NSSet<NSString*>* disabledPackCodes = nil;
+    switch (packs) {
+        case NRPackUsageAll:
+            disabledPackCodes = [NSSet set];
+            break;
+        case NRPackUsageSelected:
+            disabledPackCodes = [PackManager disabledPackCodes];
+            break;
+        case NRPackUsageAllAfterRotation:
+            disabledPackCodes = [PackManager rotatedPackCodes];
+            break;
+    }
+    NSAssert(disabledPackCodes != nil, @"no packs");
     
     NSArray<NSString*>* prebuiltIdentities = [PrebuiltManager identities:self.role];
     NSArray<Card*>* identities = [CardManager identitiesForRole:self.role];

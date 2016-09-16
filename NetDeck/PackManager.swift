@@ -37,10 +37,10 @@ class PackManager: NSObject {
     static var packsByCode = [String: Pack]()       // code -> pack
     static var allPacks = [Pack]()
     
-    static let rotatedCycles = [
+    private static let rotatedCycles = [
         "genesis", "spin"
     ]
-    static let rotatedPacks = [
+    private static let rotatedPacks = [
         "wla", "ta", "ce", "asis", "hs", "fp",  // genesis
         "om", "st", "mt", "tc", "fal", "dt"     // spin
     ]
@@ -55,7 +55,6 @@ class PackManager: NSObject {
     static var disabledPacks: Set<String>?          // set of pack codes
     static var enabledPacks: TableData?
         
-    
     class func packsAvailable() -> Bool {
         return allPacks.count > 0
     }

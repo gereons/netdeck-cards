@@ -66,7 +66,10 @@
 
 - (void)initIdentities
 {
-    BOOL useDraft = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DRAFT];
+    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+    BOOL useDraft = [settings boolForKey:SettingsKeys.USE_DRAFT];
+    NRPackUsage packs = (NRPackUsage)[settings integerForKey:SettingsKeys.DECKBUILDER_PACKS];
+    
     NSMutableArray* factions = [[Faction factionsForRole:self.role] mutableCopy];
     // remove entries for "none" and "neutral"
     [factions removeObject:[Faction name:NRFactionNone]];
@@ -83,7 +86,19 @@
     self.factionNames = [NSArray arrayWithArray:factions];
     
     self.selectedIndexPath = nil;
-    NSSet* disabledPackCodes = [PackManager disabledPackCodes];
+    NSSet<NSString*>* disabledPackCodes = nil;
+    switch (packs) {
+        case NRPackUsageAll:
+            disabledPackCodes = [NSSet set];
+            break;
+        case NRPackUsageSelected:
+            disabledPackCodes = [PackManager disabledPackCodes];
+            break;
+        case NRPackUsageAllAfterRotation:
+            disabledPackCodes = [PackManager rotatedPackCodes];
+            break;
+    }
+    NSAssert(disabledPackCodes != nil, @"no packs");
     
     NSArray* identities = [CardManager identitiesForRole:self.role];
     for (int i=0; i<factions.count; ++i)
