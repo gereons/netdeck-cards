@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc(CardCounter) class CardCounter: NSObject, NSCoding {
+@objc(CardCounter) class CardCounter: NSObject, NSCoding, NSCopying {
     private(set) var card: Card
     var count: Int
     
@@ -39,5 +39,9 @@ import Foundation
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeInteger(self.count, forKey: "count")
         aCoder.encodeObject(self.card.code, forKey: "card")
+    }
+    
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        return CardCounter(card: self.card, count: self.count)
     }
 }

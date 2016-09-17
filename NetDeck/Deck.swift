@@ -456,13 +456,13 @@ import Foundation
             newDeck.identityCc = CardCounter(card: self.identity!, count: 1)
         }
         newDeck.isDraft = self.isDraft
-        newDeck.cards = self.cards
+        newDeck.cards = self.cards.map({ $0.copy() as! CardCounter })
         newDeck.role = self.role
         newDeck.filename = nil
         newDeck.state = self.state
         newDeck.notes = self.notes
-        newDeck.lastChanges = self.lastChanges
-        newDeck.revisions = self.revisions
+        newDeck.lastChanges = self.lastChanges.copy() as! DeckChangeSet
+        newDeck.revisions = self.revisions.map({ $0.copy() as! DeckChangeSet })
         newDeck.modified = true
         
         return newDeck

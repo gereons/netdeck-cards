@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc(DeckChangeSet) class DeckChangeSet: NSObject, NSCoding {
+@objc(DeckChangeSet) class DeckChangeSet: NSObject, NSCoding, NSCopying {
     var timestamp: NSDate?
     var changes = [DeckChange]()
     var initial: Bool = false
@@ -93,5 +93,16 @@ import Foundation
         aCoder.encodeObject(self.changes, forKey:"changes")
         aCoder.encodeBool(self.initial, forKey:"initial")
         aCoder.encodeObject(self.cards, forKey:"cards")
+    }
+    
+    // MARK: NSCopying
+    
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        let dc = DeckChangeSet()
+        dc.timestamp = self.timestamp
+        dc.initial = self.initial
+        dc.cards = self.cards
+        dc.changes = self.changes.map({ $0.copy() as! DeckChange })
+        return dc
     }
 }

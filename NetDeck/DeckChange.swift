@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc(DeckChange) class DeckChange: NSObject, NSCoding {
+@objc(DeckChange) class DeckChange: NSObject, NSCoding, NSCopying {
     private(set) var code: String
     private(set) var count: Int
     
@@ -33,5 +33,11 @@ import Foundation
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(self.code, forKey:"code")
         aCoder.encodeInteger(self.count, forKey:"count")
+    }
+    
+    // MARK: NSCopying
+    
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        return DeckChange(code: self.code, count: self.count)
     }
 }
