@@ -159,6 +159,11 @@
         }
     }
     self.factionSelector.center = oldCenter;
+    
+    /// FIXME sticky layout hack
+    if ([UICollectionView instancesRespondToSelector:@selector(isPrefetchingEnabled)]) {
+        self.collectionView.prefetchingEnabled = NO;
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
