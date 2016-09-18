@@ -73,14 +73,12 @@ extension NSRange {
     }
 }
 
-/*
 class CustomAlertVisualStyle: AlertVisualStyle {
     override init(alertStyle: AlertControllerStyle) {
         super.init(alertStyle: alertStyle)
         self.backgroundColor = UIColor.white
     }
 }
-*/
 
 @available(iOS, deprecated: 1.0, message: "I'm not deprecated, please **FIXME**")
 public func FIXME(_ msg: String="") {}

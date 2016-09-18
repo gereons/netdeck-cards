@@ -59,7 +59,7 @@ class DataDownload: NSObject {
 
     fileprivate func showDownloadAlert() {
         let alert = AlertController(title: "Downloading Card Data".localized(), message:nil, preferredStyle: .alert)
-        // alert.visualStyle = CustomAlertVisualStyle(alertStyle: .alert)
+        alert.visualStyle = CustomAlertVisualStyle(alertStyle: .alert)
         self.sdcAlert = alert
         
         let act = UIActivityIndicatorView(activityIndicatorStyle: .gray)
