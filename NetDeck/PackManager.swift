@@ -38,7 +38,7 @@ class PackManager: NSObject {
     static var allPacks = [Pack]()
     
     fileprivate static let rotatedCycles = [
-        "genesis", "spin"
+        "genesis", "spin"       // 1st rotation, mid-2017
     ]
     fileprivate static let rotatedPacks = [
         "wla", "ta", "ce", "asis", "hs", "fp",  // genesis
@@ -102,7 +102,17 @@ class PackManager: NSObject {
     }
     
     class func rotatedPackCodes() -> Set<String> {
-        return Set<String>(PackManager.rotatedPacks)
+        var packs = Set<String>(PackManager.rotatedPacks)
+        packs.insert(DRAFT_SET_CODE)
+        return packs
+    }
+    
+    class func draftPackCode() -> Set<String> {
+        if UserDefaults.standard.bool(forKey: SettingsKeys.USE_DRAFT) {
+            return Set<String>()
+        } else {
+            return Set<String>([DRAFT_SET_CODE])
+        }
     }
     
     class func clearDisabledPacks() {

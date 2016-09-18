@@ -65,7 +65,7 @@ class CardList: NSObject {
         switch packUsage {
         case .selected: cl.filterDeselectedSets()
         case .allAfterRotation: cl.filterRotatedSets()
-        case .all: break
+        case .all: cl.filterDraft()
         }
 
         cl.clearFilters()
@@ -121,6 +121,14 @@ class CardList: NSObject {
         let rotatedPackCodes = PackManager.rotatedPackCodes()
         let predicate = NSPredicate(format: "!(packCode in %@)", rotatedPackCodes)
         applyPredicate(predicate)
+    }
+    
+    func filterDraft() {
+        let draft = PackManager.draftPackCode()
+        if draft.count > 0 {
+            let predicate = NSPredicate(format: "!(packCode in %@)", draft)
+            applyPredicate(predicate)
+        }
     }
     
     func preFilterForCorp(_ identity: Card) {

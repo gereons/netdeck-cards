@@ -213,7 +213,7 @@
     NSSet<NSString*>* disabledPackCodes = nil;
     switch (packs) {
         case NRPackUsageAll:
-            disabledPackCodes = [NSSet set];
+            disabledPackCodes = [PackManager draftPackCode];
             break;
         case NRPackUsageSelected:
             disabledPackCodes = [PackManager disabledPackCodes];
