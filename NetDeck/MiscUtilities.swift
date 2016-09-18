@@ -22,25 +22,25 @@ extension String {
         return self.characters.count
     }
     
-    func stringByAppendingPathComponent(component: String) -> String {
-        return (self as NSString).stringByAppendingPathComponent(component)
+    func stringByAppendingPathComponent(_ component: String) -> String {
+        return (self as NSString).appendingPathComponent(component)
     }
     
     func trim() -> String {
-        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        return self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
 }
 
-extension CollectionType {
+extension Collection {
     /// Return a copy of `self` with its elements shuffled
-    func shuffle() -> [Generator.Element] {
+    func shuffle() -> [Iterator.Element] {
         var list = Array(self)
         list.shuffleInPlace()
         return list
     }
 }
 
-extension MutableCollectionType where Index == Int {
+extension MutableCollection where Index == Int, IndexDistance == Int {
     /// Shuffle the elements of `self` in-place.
     mutating func shuffleInPlace() {
         // empty and single-element collections don't shuffle
@@ -48,7 +48,7 @@ extension MutableCollectionType where Index == Int {
             return
         }
         
-        for i in 0..<count - 1 {
+        for i in 0 ..< count - 1 {
             let j = Int(arc4random_uniform(UInt32(count - i))) + i
             guard i != j else { continue }
             swap(&self[i], &self[j])
@@ -57,7 +57,7 @@ extension MutableCollectionType where Index == Int {
 }
 
 extension UIColor {
-    class func colorWithRGB(rgb: UInt) -> UIColor! {
+    class func colorWithRGB(_ rgb: UInt) -> UIColor! {
         let r = CGFloat((rgb & 0xFF0000) >> 16)
         let g = CGFloat((rgb & 0x00FF00) >> 8)
         let b = CGFloat((rgb & 0x0000FF) >> 0)
@@ -66,20 +66,22 @@ extension UIColor {
 }
 
 extension NSRange {
-    func stringRangeForText(string: String) -> Range<String.Index> {
-        let start = string.startIndex.advancedBy(self.location)
-        let end = start.advancedBy(self.length)
-        // return Range<String.Index>(start: start, end: end)
+    func stringRangeForText(_ string: String) -> Range<String.Index> {
+        let start = string.characters.index(string.startIndex, offsetBy: self.location)
+        let end = string.characters.index(start, offsetBy: self.length)
+        // 7return Range<String.Index>(start: start, end: end)
         return start ..< end
     }
 }
 
+/*
 class CustomAlertVisualStyle: AlertVisualStyle {
     override init(alertStyle: AlertControllerStyle) {
         super.init(alertStyle: alertStyle)
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
     }
 }
+*/
 
-@available(iOS, deprecated=1.0, message="I'm not deprecated, please **FIXME**")
-func FIXME(msg: String="") {}
+@available(iOS, deprecated: 1.0, message: "I'm not deprecated, please **FIXME**")
+func FIXME(_ msg: String="") {}

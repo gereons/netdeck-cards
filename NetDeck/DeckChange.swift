@@ -9,8 +9,8 @@
 import Foundation
 
 @objc(DeckChange) class DeckChange: NSObject, NSCoding, NSCopying {
-    private(set) var code: String
-    private(set) var count: Int
+    fileprivate(set) var code: String
+    fileprivate(set) var count: Int
     
     init(code: String, count: Int) {
         // assert(count != 0, "count can't be 0")
@@ -25,19 +25,19 @@ import Foundation
     //MARK: NSCoding
     
     convenience required init?(coder aDecoder: NSCoder) {
-        let count = aDecoder.decodeIntegerForKey("count")
-        let code = aDecoder.decodeObjectForKey("code") as! String
+        let count = aDecoder.decodeInteger(forKey: "count")
+        let code = aDecoder.decodeObject(forKey: "code") as! String
         self.init(code: code, count: count)
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.code, forKey:"code")
-        aCoder.encodeInteger(self.count, forKey:"count")
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.code, forKey:"code")
+        aCoder.encode(self.count, forKey:"count")
     }
     
     // MARK: NSCopying
     
-    func copyWithZone(zone: NSZone) -> AnyObject {
+    func copy(with zone: NSZone?) -> Any {
         return DeckChange(code: self.code, count: self.count)
     }
 }

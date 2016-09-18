@@ -9,24 +9,24 @@
 import UIKit
 
 class NROutlineLabel: UILabel {
-    private let outlineWidth: CGFloat = 2.0
-    private let outlineColor = UIColor.whiteColor()
+    fileprivate let outlineWidth: CGFloat = 2.0
+    fileprivate let outlineColor = UIColor.white
     
-    override func drawTextInRect(rect: CGRect) {
+    override func drawText(in rect: CGRect) {
         let textColor = self.textColor
         let shadowOffset = self.shadowOffset
         
         let ctx = UIGraphicsGetCurrentContext()
-        CGContextSetLineWidth(ctx, self.outlineWidth)
-        CGContextSetLineJoin(ctx, .Round)
-        CGContextSetTextDrawingMode(ctx, .Stroke)
+        ctx?.setLineWidth(self.outlineWidth)
+        ctx?.setLineJoin(.round)
+        ctx?.setTextDrawingMode(.stroke)
         self.textColor = self.outlineColor
-        super.drawTextInRect(rect)
+        super.drawText(in: rect)
         
-        CGContextSetTextDrawingMode(ctx, .Fill)
+        ctx?.setTextDrawingMode(.fill)
         self.textColor = textColor
         self.shadowOffset = CGSize.zero
-        super.drawTextInRect(rect)
+        super.drawText(in: rect)
         
         self.shadowOffset = shadowOffset
     }

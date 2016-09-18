@@ -13,12 +13,12 @@ class Reachability: NSObject {
     static var manager: NetworkReachabilityManager?
     
     class func start() {
-        let host = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_HOST) ?? "www.apple.com"
+        let host = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_HOST) ?? "www.apple.com"
         Reachability.manager = NetworkReachabilityManager(host: host)
         Reachability.manager?.listener = { status in
             // print("Network Status Changed: \(status)")
             switch status {
-            case .NotReachable:
+            case .notReachable:
                 NRDB.sharedInstance.stopAuthorizationRefresh()
             default:
                 NRDB.sharedInstance.startAuthorizationRefresh()
@@ -27,8 +27,8 @@ class Reachability: NSObject {
     
         Reachability.manager?.startListening()
         
-        NetworkActivityIndicatorManager.sharedManager.isEnabled = true
-        NetworkActivityIndicatorManager.sharedManager.startDelay = 0.2
+        NetworkActivityIndicatorManager.shared.isEnabled = true
+        NetworkActivityIndicatorManager.shared.startDelay = 0.2
     }
     
     class func online() -> Bool {

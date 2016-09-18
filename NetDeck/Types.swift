@@ -7,99 +7,99 @@
 //
 
 @objc enum NRCardType: Int {
-    case None = -1
-    case Identity
+    case none = -1
+    case identity
 
     // corp
-    case Agenda, Asset, Upgrade, Operation, Ice
+    case agenda, asset, upgrade, operation, ice
 
     // runner
-    case Event, Hardware, Resource, Program
+    case event, hardware, resource, program
 }
 
 @objc(NRRole) enum NRRole: Int {
-    case None = -1
-    case Runner, Corp
+    case none = -1
+    case runner, corp
 }
 
 @objc enum NRFaction: Int {
-    case None = -1
-    case Neutral
+    case none = -1
+    case neutral
     
-    case HaasBioroid, Weyland, NBN, Jinteki
+    case haasBioroid, weyland, nbn, jinteki
     
-    case Anarch, Shaper, Criminal
+    case anarch, shaper, criminal
     
-    case Adam, Apex, SunnyLebeau
+    case adam, apex, sunnyLebeau
 }
 
 @objc enum NRDeckState: Int {
-    case None = -1
-    case Active, Testing, Retired
+    case none = -1
+    case active, testing, retired
 }
 
 @objc enum NRDeckSort: Int {
-    case ByType           // sort by type, then alpha
-    case ByFactionType    // sort by faction, then type, then alpha
-    case BySetType        // sort by set, then type, then alpha
-    case BySetNum         // sort by set, then number in set
+    case byType           // sort by type, then alpha
+    case byFactionType    // sort by faction, then type, then alpha
+    case bySetType        // sort by set, then type, then alpha
+    case bySetNum         // sort by set, then number in set
 }
 
 @objc enum NRSearchScope: Int {
-    case All
-    case Name
-    case Text
+    case all
+    case name
+    case text
 }
 
 @objc enum NRDeckSearchScope: Int {
-    case All
-    case Name
-    case Identity
-    case Card
+    case all
+    case name
+    case identity
+    case card
 }
 
 @objc enum NRDeckListSort: Int {
-    case ByDate
-    case ByFaction
-    case ByName
+    case byDate
+    case byFaction
+    case byName
 }
 
 @objc enum NRCardView: Int {
-    case Image
-    case LargeTable
-    case SmallTable
+    case image
+    case largeTable
+    case smallTable
 }
 
 @objc enum NRBrowserSort: Int {
-    case ByType
-    case ByFaction
-    case ByTypeFaction
-    case BySet
-    case BySetFaction
-    case BySetType
-    case BySetNumber
+    case byType
+    case byFaction
+    case byTypeFaction
+    case bySet
+    case bySetFaction
+    case bySetType
+    case bySetNumber
 }
 
 @objc enum NRImportSource: Int {
-    case None
-    case Dropbox
-    case NetrunnerDb
+    case none
+    case dropbox
+    case netrunnerDb
 }
 
 @objc enum NRFilter: Int {
-    case All
-    case Runner
-    case Corp
+    case all
+    case runner
+    case corp
 }
 
 @objc enum NRPackUsage: Int {
-    case All
-    case Selected
-    case AllAfterRotation
+    case all
+    case selected
+    case allAfterRotation
 }
 
 @objc enum NRMWL: Int {
-    case None
+    case none
     case v1_0   // as of 2016-02-01
     case v1_1   // as of 2016-08-01
     
@@ -109,7 +109,7 @@
         "NAPD_MWL_1.1": .v1_1
     ]
     
-    static func byCode(code: String) -> NRMWL {
-        return NRMWL.codeMap[code] ?? .None
+    static func by(code: String) -> NRMWL {
+        return NRMWL.codeMap[code] ?? .none
     }
 }

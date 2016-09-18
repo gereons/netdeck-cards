@@ -7,34 +7,54 @@
 //
 
 import Foundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 @objc(Deck) class Deck: NSObject, NSCoding {
 
     var filename: String?
     var tags: [String]?
     var revisions = [DeckChangeSet]()
-    var lastModified: NSDate?
-    var dateCreated: NSDate?
+    var lastModified: Date?
+    var dateCreated: Date?
 
-    private(set) var cards = [CardCounter]()
-    private(set) var identityCc: CardCounter?
-    private(set) var modified = false
-    private(set) var isDraft = false
+    fileprivate(set) var cards = [CardCounter]()
+    fileprivate(set) var identityCc: CardCounter?
+    fileprivate(set) var modified = false
+    fileprivate(set) var isDraft = false
     
-    private var sortType: NRDeckSort = .ByType
-    private var lastChanges = DeckChangeSet()
+    fileprivate var sortType: NRDeckSort = .byType
+    fileprivate var lastChanges = DeckChangeSet()
     
     override init() {
-        let settings = NSUserDefaults.standardUserDefaults()
-        self.state = settings.boolForKey(SettingsKeys.CREATE_DECK_ACTIVE) ? NRDeckState.Active : NRDeckState.Testing
-        let mwlVersion = settings.integerForKey(SettingsKeys.MWL_VERSION)
-        self.mwl = NRMWL(rawValue: mwlVersion) ?? .None
+        let settings = UserDefaults.standard
+        self.state = settings.bool(forKey: SettingsKeys.CREATE_DECK_ACTIVE) ? NRDeckState.active : NRDeckState.testing
+        let mwlVersion = settings.integer(forKey: SettingsKeys.MWL_VERSION)
+        self.mwl = (NRMWL(rawValue: mwlVersion) ?? .none)!
     }
     
     var allCards: [CardCounter] {
         var all = self.cards
         if let id = self.identityCc {
-            all.insert(id, atIndex: 0)
+            all.insert(id, at: 0)
         }
         return all
     }
@@ -47,7 +67,7 @@ import Foundation
         willSet { modified = true }
     }
     
-    var state = NRDeckState.None {
+    var state = NRDeckState.none {
         willSet { modified = true }
     }
     
@@ -59,7 +79,7 @@ import Foundation
         willSet { modified = true }
     }
     
-    var role = NRRole.None {
+    var role = NRRole.none {
         willSet { modified = true }
     }
     
@@ -76,7 +96,7 @@ import Foundation
     }
     
     var agendaPoints: Int {
-        return cards.filter({ $0.card.type == .Agenda}).reduce(0) { $0 + $1.card.agendaPoints * $1.count }
+        return cards.filter({ $0.card.type == .agenda}).reduce(0) { $0 + $1.card.agendaPoints * $1.count }
     }
     
     var influence: Int {
@@ -88,7 +108,7 @@ import Foundation
             return 0
         }
         
-        let useMwl = self.mwl != NRMWL.None
+        let useMwl = self.mwl != NRMWL.none
         if useMwl {
             let limit = self.identity!.influenceLimit
             return max(1, limit - self.mwlPenalty)
@@ -108,7 +128,7 @@ import Foundation
         return self.cardsFromMWL
     }
     
-    func influenceFor(cardcounter: CardCounter?) -> Int {
+    func influenceFor(_ cardcounter: CardCounter?) -> Int {
         guard let cc = cardcounter else { return 0 }
 
         if self.identity?.faction == cc.card.faction || cc.card.influence == -1 {
@@ -116,12 +136,12 @@ import Foundation
         }
         
         var count = cc.count
-        if cc.card.type == .Program && self.identity?.code == Card.THE_PROFESSOR {
+        if cc.card.type == .program && self.identity?.code == Card.THE_PROFESSOR {
             count -= 1
         }
         
         // alliance rules for corp
-        if self.role == .Corp {
+        if self.role == .corp {
             // mumba temple: 0 inf if 15 or fewer ICE
             if cc.card.code == Card.MUMBA_TEMPLE && self.iceCount() <= 15 {
                 return 0
@@ -147,7 +167,7 @@ import Foundation
         return count * cc.card.influence
     }
     
-    func nonAllianceOfFaction(faction: NRFaction) -> Int {
+    func nonAllianceOfFaction(_ faction: NRFaction) -> Int {
         var count = 0
         for cc in cards {
             if cc.card.faction == faction && !cc.card.isAlliance {
@@ -166,28 +186,28 @@ import Foundation
     }
     
     func iceCount() -> Int {
-        return self.typeCount(.Ice)
+        return self.typeCount(.ice)
     }
     
     func assetCount() -> Int {
-        return self.typeCount(.Asset)
+        return self.typeCount(.asset)
     }
     
-    func typeCount(type: NRCardType) -> Int {
+    func typeCount(_ type: NRCardType) -> Int {
         return cards.filter({ $0.card.type == type}).reduce(0) { $0 + $1.count }
     }
     
-    func addCard(card: Card, copies: Int) {
+    func addCard(_ card: Card, copies: Int) {
         self.addCard(card, copies: copies, history: true)
     }
     
     // add (copies>0) or remove (copies<0) a copy of a card from the deck
     // if copies==0, removes ALL copies of the card
-    func addCard(card: Card, copies: Int, history: Bool) {
+    func addCard(_ card: Card, copies: Int, history: Bool) {
         
         var changed = false
         var copies = copies
-        if card.type == .Identity {
+        if card.type == .identity {
             self.modified = true
             self.setIdentity(card, copies: copies, history: history)
             return
@@ -200,7 +220,7 @@ import Foundation
             if copies < 1 {
                 // remove N (or all) copies of card
                 if copies == 0 || abs(copies) >= cc.count {
-                    cards.removeAtIndex(cardIndex)
+                    cards.remove(at: cardIndex)
                     copies = -cc.count
                 } else {
                     cc.count -= abs(copies)
@@ -233,18 +253,18 @@ import Foundation
         self.sort()
     }
     
-    func setIdentity(identity: Card?, copies: Int, history: Bool) {
+    func setIdentity(_ identity: Card?, copies: Int, history: Bool) {
         if self.identityCc != nil && history {
             // record removal of existing identity
             self.lastChanges.addCardCode(self.identityCc!.card.code, copies: -1)
         }
-        if let id = identity where copies > 0 {
+        if let id = identity , copies > 0 {
             if history {
                 self.lastChanges.addCardCode(id.code, copies: 1)
             }
             
             self.identityCc = CardCounter(card: id, count: 1)
-            if self.role != .None {
+            if self.role != .none {
                 assert(self.role == id.role, "role mismatch")
             }
             self.role = id.role
@@ -254,41 +274,41 @@ import Foundation
         self.isDraft = identity?.packCode == PackManager.DRAFT_SET_CODE
     }
     
-    func indexOfCardCode(code: String) -> Int? {
-        return cards.indexOf { $0.card.code == code }
+    func indexOfCardCode(_ code: String) -> Int? {
+        return cards.index { $0.card.code == code }
     }
     
-    func findCard(card: Card?) -> CardCounter? {
-        if let c = card, index = self.indexOfCardCode(c.code) {
+    func findCard(_ card: Card?) -> CardCounter? {
+        if let c = card, let index = self.indexOfCardCode(c.code) {
             return cards[index]
         }
         return nil
     }
     
     func sort() {
-        cards.sortInPlace { (cc1, cc2) -> Bool in
+        cards.sort { (cc1, cc2) -> Bool in
             let c1 = cc1.card
             let c2 = cc2.card
             
-            if self.sortType == .BySetType || self.sortType == .BySetNum {
+            if self.sortType == .bySetType || self.sortType == .bySetNum {
                 if c1.packNumber != c2.packNumber { return c1.packNumber < c2.packNumber }
             }
-            if self.sortType == .ByFactionType {
+            if self.sortType == .byFactionType {
                 if c1.faction != c2.faction { return c1.faction.rawValue < c2.faction.rawValue }
             }
-            if self.sortType == .BySetNum {
+            if self.sortType == .bySetNum {
                 return c1.number < c2.number
             }
             if c1.type != c2.type {
                 return c1.type.rawValue < c2.type.rawValue
             }
-            if c1.type == .Ice && c2.type == .Ice {
+            if c1.type == .ice && c2.type == .ice {
                 return c1.iceType < c2.iceType
             }
-            if c1.type == .Program && c2.type == .Program {
+            if c1.type == .program && c2.type == .program {
                 return c1.programType < c2.programType
             }
-            return c1.name.lowercaseString < c2.name.lowercaseString
+            return c1.name.lowercased() < c2.name.lowercased()
         }
     }
     
@@ -310,7 +330,7 @@ import Foundation
         }
         
         let role = self.identity?.role
-        if role == .Corp {
+        if role == .corp {
             let apRequired = ((self.size / 5) + 1) * 2
             let ap = self.agendaPoints
             if ap != apRequired && ap != apRequired+1 {
@@ -331,19 +351,19 @@ import Foundation
                 reasons.append("Card limit exceeded".localized())
             }
             
-            if role == .Corp {
-                if noJintekiAllowed && card.faction == .Jinteki && !jintekiError {
+            if role == .corp {
+                if noJintekiAllowed && card.faction == .jinteki && !jintekiError {
                     jintekiError = true
                     reasons.append("Faction not allowed".localized())
                 }
                 
-                if !self.isDraft && card.type == .Agenda && card.faction != .Neutral && card.faction != self.identity?.faction && !agendaError {
+                if !self.isDraft && card.type == .agenda && card.faction != .neutral && card.faction != self.identity?.faction && !agendaError {
                     agendaError = true
                     reasons.append("Has out-of-faction agendas".localized())
                 }
             }
-            else if role == .Runner {
-                if isApex && card.type == .Resource && !card.isVirtual && !apexError {
+            else if role == .runner {
+                if isApex && card.type == .resource && !card.isVirtual && !apexError {
                     apexError = true
                     reasons.append("Has non-virtual resources".localized())
                 }
@@ -354,7 +374,7 @@ import Foundation
             let onesiesReasons = self.checkOnesiesRules()
             if onesiesReasons.count > 0 {
                 reasons.append("Invalid for 1.1.1.1".localized())
-                reasons.appendContentsOf(onesiesReasons)
+                reasons.append(contentsOf: onesiesReasons)
             }
         }
         
@@ -394,8 +414,8 @@ import Foundation
             reasons.append("Uses draft cards".localized())
         }
         
-        let minPackCards = cardsFromPack.values.minElement()
-        let minDeluxeCards = cardsFromDeluxe.values.minElement()
+        let minPackCards = cardsFromPack.values.min()
+        let minDeluxeCards = cardsFromDeluxe.values.min()
         
         let packsUsed = cardsFromPack.count
         let deluxesUsed = cardsFromDeluxe.count
@@ -440,14 +460,14 @@ import Foundation
         let regexPattern = "\\d+$"
         let regex = try! NSRegularExpression(pattern:regexPattern, options:[])
         
-        let matches = regex.matchesInString(oldName, options: [], range: NSMakeRange(0, oldName.length))
+        let matches = regex.matches(in: oldName, options: [], range: NSMakeRange(0, oldName.length))
         if matches.count > 0 {
             let match = matches[0]
             let range = match.range.stringRangeForText(oldName)
-            let numberStr = oldName.substringWithRange(range)
+            let numberStr = oldName.substring(with: range)
             let number = 1 + Int(numberStr)!
             
-            newName = oldName.substringToIndex(oldName.startIndex.advancedBy(match.range.location))
+            newName = oldName.substring(to: oldName.characters.index(oldName.startIndex, offsetBy: match.range.location))
             newName += "\(number)"
         }
         
@@ -481,19 +501,19 @@ import Foundation
                 self.lastChanges.initial = true
             }
             
-            self.revisions.insert(self.lastChanges, atIndex: 0)
+            self.revisions.insert(self.lastChanges, at: 0)
             
             self.lastChanges = DeckChangeSet()
         }
     }
     
-    func resetToCards(cards: [String: Int]) {
+    func resetToCards(_ cards: [String: Int]) {
         var newCards = [CardCounter]()
         var newIdentity: Card?
         
         for (code, qty) in cards {
             if let card = CardManager.cardByCode(code) {
-                if card.type != .Identity {
+                if card.type != .identity {
                     let cc = CardCounter(card: card, count: qty)
                     newCards.append(cc)
                 } else {
@@ -537,7 +557,7 @@ import Foundation
         self.modified = true
     }
     
-    func dataForTableView(sortType: NRDeckSort) -> TableData {
+    func dataForTableView(_ sortType: NRDeckSort) -> TableData {
         self.sortType = sortType
         
         var sections = [String]()
@@ -545,7 +565,7 @@ import Foundation
         
         self.sort()
         
-        sections.append(CardType.name(.Identity))
+        sections.append(CardType.name(.identity))
         if self.identityCc != nil {
             cards.append([self.identityCc!])
         } else {
@@ -570,17 +590,17 @@ import Foundation
             var section: String
             
             switch self.sortType {
-            case .ByType:
+            case .byType:
                 section = cc.card.typeStr
-                if cc.card.type == .Ice {
+                if cc.card.type == .ice {
                     section = cc.card.iceType!
                 }
-                if cc.card.type == .Program {
+                if cc.card.type == .program {
                     section = cc.card.programType!
                 }
-            case .BySetType, .BySetNum:
+            case .bySetType, .bySetNum:
                 section = cc.card.packName
-            case .ByFactionType:
+            case .byFactionType:
                 section = cc.card.factionStr
             }
             
@@ -601,7 +621,7 @@ import Foundation
         
         assert(sections.count == cards.count, "count mismatch")
         
-        return TableData(sections: sections, andValues: cards)
+        return TableData(sections: sections as NSArray, andValues: cards as NSArray)
     }
     
     func saveToDisk() {
@@ -618,59 +638,59 @@ import Foundation
     convenience required init?(coder decoder: NSCoder) {
         self.init()
         
-        self.cards = decoder.decodeObjectForKey("cards") as! [CardCounter]
+        self.cards = decoder.decodeObject(forKey: "cards") as! [CardCounter]
         
         // kill cards that we couldn't deserialize
         self.cards = self.cards.filter{ !$0.isNull && $0.count > 0 }
         
-        self.netrunnerDbId = decoder.decodeObjectForKey("netrunnerDbId") as? String
+        self.netrunnerDbId = decoder.decodeObject(forKey: "netrunnerDbId") as? String
         
-        self.name = decoder.decodeObjectForKey("name") as? String
-        self.role = NRRole(rawValue: decoder.decodeIntegerForKey("role"))!
-        self.state = NRDeckState(rawValue: decoder.decodeIntegerForKey("state"))!
-        self.isDraft = decoder.decodeBoolForKey("draft")
-        if let identityCode = decoder.decodeObjectForKey("identity") as? String {
+        self.name = decoder.decodeObject(forKey: "name") as? String
+        self.role = NRRole(rawValue: decoder.decodeInteger(forKey: "role"))!
+        self.state = NRDeckState(rawValue: decoder.decodeInteger(forKey: "state"))!
+        self.isDraft = decoder.decodeBool(forKey: "draft")
+        if let identityCode = decoder.decodeObject(forKey: "identity") as? String {
             if let identity = CardManager.cardByCode(identityCode) {
                 self.identityCc = CardCounter(card:identity, count:1)
             }
         }
         self.lastModified = nil
-        self.notes = decoder.decodeObjectForKey("notes") as? String
-        self.tags = decoder.decodeObjectForKey("tags") as? [String]
-        self.sortType = .ByType
+        self.notes = decoder.decodeObject(forKey: "notes") as? String
+        self.tags = decoder.decodeObject(forKey: "tags") as? [String]
+        self.sortType = .byType
         
-        let lastChanges = decoder.decodeObjectForKey("lastChanges") as? DeckChangeSet
+        let lastChanges = decoder.decodeObject(forKey: "lastChanges") as? DeckChangeSet
         self.lastChanges = lastChanges ?? DeckChangeSet()
 
-        let revisions = decoder.decodeObjectForKey("revisions") as? [DeckChangeSet]
+        let revisions = decoder.decodeObject(forKey: "revisions") as? [DeckChangeSet]
         self.revisions = revisions ?? [DeckChangeSet]()
         
-        let mwl = decoder.containsValueForKey("mwl") ?
-            decoder.decodeIntegerForKey("mwl") :
-            NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.MWL_VERSION)
+        let mwl = decoder.containsValue(forKey: "mwl") ?
+            decoder.decodeInteger(forKey: "mwl") :
+            UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)
         
-        self.mwl = NRMWL(rawValue: mwl) ?? .None
+        self.mwl = (NRMWL(rawValue: mwl) ?? .none)!
         
-        self.onesies = decoder.decodeBoolForKey("onesies")
+        self.onesies = decoder.decodeBool(forKey: "onesies")
         
         self.modified = false
     }
     
-    func encodeWithCoder(coder: NSCoder) {
-        coder.encodeObject(self.netrunnerDbId, forKey:"netrunnerDbId")
-        coder.encodeObject(self.cards, forKey:"cards")
-        coder.encodeObject(self.name, forKey:"name")
-        coder.encodeInteger(self.role.rawValue, forKey:"role")
-        coder.encodeInteger(self.state.rawValue, forKey:"state")
-        coder.encodeBool(self.isDraft, forKey:"draft")
+    func encode(with coder: NSCoder) {
+        coder.encode(self.netrunnerDbId, forKey:"netrunnerDbId")
+        coder.encode(self.cards, forKey:"cards")
+        coder.encode(self.name, forKey:"name")
+        coder.encode(self.role.rawValue, forKey:"role")
+        coder.encode(self.state.rawValue, forKey:"state")
+        coder.encode(self.isDraft, forKey:"draft")
         if let idCode = self.identityCc?.card.code {
-            coder.encodeObject(idCode, forKey:"identity")
+            coder.encode(idCode, forKey:"identity")
         }
-        coder.encodeObject(self.notes, forKey:"notes")
-        coder.encodeObject(self.tags, forKey:"tags")
-        coder.encodeObject(self.lastChanges, forKey:"lastChanges")
-        coder.encodeObject(self.revisions, forKey:"revisions")
-        coder.encodeInteger(self.mwl.rawValue, forKey: "mwl")
-        coder.encodeBool(self.onesies, forKey: "onesies")
+        coder.encode(self.notes, forKey:"notes")
+        coder.encode(self.tags, forKey:"tags")
+        coder.encode(self.lastChanges, forKey:"lastChanges")
+        coder.encode(self.revisions, forKey:"revisions")
+        coder.encode(self.mwl.rawValue, forKey: "mwl")
+        coder.encode(self.onesies, forKey: "onesies")
     }
 }

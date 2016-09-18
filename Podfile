@@ -10,15 +10,24 @@ target 'NetDeck' do
     pod 'CSStickyHeaderFlowLayout'
     pod 'InAppSettingsKit'
     pod 'MultiSelectSegmentedControl'
-    pod 'CorePlot'
+    pod 'CorePlot', :git => 'https://github.com/core-plot/core-plot.git', :branch => 'release-2.2'
+    pod 'DZNEmptyDataSet'
+
     pod 'Alamofire'
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
-    pod 'SwiftyJSON'
+    pod 'SwiftKeychainWrapper', :git => 'https://github.com/jrendel/SwiftKeychainWrapper.git', :branch => 'master'
+    pod 'SwiftyJSON', :git => 'https://github.com/IBM-Swift/SwiftyJSON'
     pod 'SwiftyDropbox'
     pod 'SDCAlertView'
-    pod 'SwiftKeychainWrapper'
-    pod 'DZNEmptyDataSet'
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |configuration|
+      configuration.build_settings['SWIFT_VERSION'] = "3.0"
+    end
+  end
 end
 
 post_install do | installer |

@@ -10,31 +10,31 @@ import Foundation
 
 @objc class Faction: NSObject {
     
-    private static var faction2name = [NRFaction: String]()
+    fileprivate static var faction2name = [NRFaction: String]()
     
-    private static let runnerFactions: [NRFaction] = [ .Anarch, .Criminal, .Shaper, .Adam, .Apex, .SunnyLebeau ]
-    private static let runnerFactionsPreDAD: [NRFaction] = [ .Anarch, .Criminal, .Shaper ]
-    private static let corpFactions: [NRFaction] = [ .HaasBioroid, .Jinteki, .NBN, .Weyland ]
+    fileprivate static let runnerFactions: [NRFaction] = [ .anarch, .criminal, .shaper, .adam, .apex, .sunnyLebeau ]
+    fileprivate static let runnerFactionsPreDAD: [NRFaction] = [ .anarch, .criminal, .shaper ]
+    fileprivate static let corpFactions: [NRFaction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
     
-    private static var runnerFactionNames = [String]()
-    private static var runnerFactionNamesPreDAD = [String]()
-    private static var corpFactionNames = [String]()
+    fileprivate static var runnerFactionNames = [String]()
+    fileprivate static var runnerFactionNamesPreDAD = [String]()
+    fileprivate static var corpFactionNames = [String]()
     
-    private static var allFactions: TableData!
-    private static var allFactionsPreDAD: TableData!
+    fileprivate static var allFactions: TableData!
+    fileprivate static var allFactionsPreDAD: TableData!
     
     static let WeylandConsortium = "Weyland Consortium"
     
     override class func initialize() {
-        faction2name[.None] = Constant.kANY
-        faction2name[.Neutral] = "Neutral".localized()
+        faction2name[.none] = Constant.kANY
+        faction2name[.neutral] = "Neutral".localized()
     }
     
-    class func name(faction: NRFaction) -> String? {
+    class func name(_ faction: NRFaction) -> String? {
         return Faction.faction2name[faction]
     }
     
-    class func initializeFactionNames(cards: [Card]) -> Bool {
+    class func initializeFactionNames(_ cards: [Card]) -> Bool {
         runnerFactionNames = [String]()
         runnerFactionNamesPreDAD = [String]()
         corpFactionNames = [String]()
@@ -47,7 +47,7 @@ import Foundation
             return false
         }
         
-        let common = [ Faction.name(.None)!, Faction.name(.Neutral)! ]
+        let common = [ Faction.name(.none)!, Faction.name(.neutral)! ]
         
         for faction in runnerFactions
         {
@@ -66,46 +66,46 @@ import Foundation
         let factions = [ common, runnerFactionNames, corpFactionNames ]
         let factionsPreDAD = [ common, runnerFactionNamesPreDAD, corpFactionNames ]
 
-        allFactions = TableData(sections: factionSections, andValues: factions)
-        allFactionsPreDAD = TableData(sections: factionSections, andValues: factionsPreDAD)
+        allFactions = TableData(sections: factionSections as NSArray, andValues: factions as NSArray)
+        allFactionsPreDAD = TableData(sections: factionSections as NSArray, andValues: factionsPreDAD as NSArray)
         
-        runnerFactionNames.insertContentsOf(common, at: 0)
-        runnerFactionNamesPreDAD.insertContentsOf(common, at: 0)
-        corpFactionNames.insertContentsOf(common, at: 0)
+        runnerFactionNames.insert(contentsOf: common, at: 0)
+        runnerFactionNamesPreDAD.insert(contentsOf: common, at: 0)
+        corpFactionNames.insert(contentsOf: common, at: 0)
         
         return true
     }
     
-    class func factionsForRole(role: NRRole) -> [String] {
-        assert(role != .None, "no role")
+    class func factionsForRole(_ role: NRRole) -> [String] {
+        assert(role != .none, "no role")
         
-        if (role == .Runner)
+        if (role == .runner)
         {
-            let dataDestinyAllowed = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_DATA_DESTINY)
+            let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
             return dataDestinyAllowed ? runnerFactionNames : runnerFactionNamesPreDAD
         }
         return corpFactionNames
     }
     
     class func factionsForBrowser() -> TableData {
-        let dataDestinyAllowed = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_DATA_DESTINY)
+        let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
         
         return dataDestinyAllowed ? allFactions : allFactionsPreDAD
     }
     
-    class func shortName(faction: NRFaction) -> String {
+    class func shortName(_ faction: NRFaction) -> String {
         switch faction {
-        case .HaasBioroid: return "H-B"
-        case .Weyland: return "Weyland".localized()
-        case .SunnyLebeau: return "Sunny"
+        case .haasBioroid: return "H-B"
+        case .weyland: return "Weyland".localized()
+        case .sunnyLebeau: return "Sunny"
         default: return Faction.name(faction)!
         }
     }
     
     // needed for the jinteki.net uploader
-    class func fullName(faction: NRFaction) -> String {
+    class func fullName(_ faction: NRFaction) -> String {
         switch faction {
-        case .Weyland:
+        case .weyland:
             return Faction.WeylandConsortium
         default:
             return Faction.name(faction)!

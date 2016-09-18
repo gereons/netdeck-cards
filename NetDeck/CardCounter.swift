@@ -9,10 +9,10 @@
 import Foundation
 
 @objc(CardCounter) class CardCounter: NSObject, NSCoding, NSCopying {
-    private(set) var card: Card
+    fileprivate(set) var card: Card
     var count: Int
     
-    private static let nullInstance = CardCounter(card: Card.null(), count: 0)
+    fileprivate static let nullInstance = CardCounter(card: Card.null(), count: 0)
     
     init(card: Card, count: Int) {
         self.card = card
@@ -29,19 +29,19 @@ import Foundation
     
     // MARK: NSCoding
     convenience required init?(coder aDecoder: NSCoder) {
-        let code = aDecoder.decodeObjectForKey("card") as! String
-        let count = aDecoder.decodeIntegerForKey("count")
+        let code = aDecoder.decodeObject(forKey: "card") as! String
+        let count = aDecoder.decodeInteger(forKey: "count")
         let card = CardManager.cardByCode(code) ?? Card.null()
         
         self.init(card: card, count: card.isNull ? 0 : count)
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeInteger(self.count, forKey: "count")
-        aCoder.encodeObject(self.card.code, forKey: "card")
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.count, forKey: "count")
+        aCoder.encode(self.card.code, forKey: "card")
     }
     
-    func copyWithZone(zone: NSZone) -> AnyObject {
+    func copy(with zone: NSZone?) -> Any {
         return CardCounter(card: self.card, count: self.count)
     }
 }

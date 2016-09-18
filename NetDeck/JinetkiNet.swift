@@ -14,24 +14,24 @@ import SwiftyJSON
 class JintekiNet: NSObject {
     static let sharedInstance = JintekiNet()
     
-    private let manager: Alamofire.Manager
-    private let cookieJar: NSHTTPCookieStorage
+    fileprivate let manager: Alamofire.SessionManager
+    fileprivate let cookieJar: HTTPCookieStorage
     
     let loginUrl = "http://www.jinteki.net/login"
     let deckUrl = "http://www.jinteki.net/data/decks"
     
-    override private init() {
-        self.cookieJar = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-        let cfg = NSURLSessionConfiguration.defaultSessionConfiguration()
-        cfg.HTTPCookieStorage = self.cookieJar
-        cfg.HTTPShouldSetCookies = true
-        self.manager = Alamofire.Manager(configuration: cfg)
+    override fileprivate init() {
+        self.cookieJar = HTTPCookieStorage.shared
+        let cfg = URLSessionConfiguration.default
+        cfg.httpCookieStorage = self.cookieJar
+        cfg.httpShouldSetCookies = true
+        self.manager = Alamofire.SessionManager(configuration: cfg)
     }
     
     func clearCredentials() {
-        let keychain = KeychainWrapper.defaultKeychainWrapper()
-        keychain.removeObjectForKey(SettingsKeys.JNET_USERNAME)
-        keychain.removeObjectForKey(SettingsKeys.JNET_PASSWORD)
+        let keychain = KeychainWrapper.defaultKeychainWrapper
+        keychain.remove(key: SettingsKeys.JNET_USERNAME)
+        keychain.remove(key: SettingsKeys.JNET_PASSWORD)
     }
     
     func clearCookies() {
@@ -47,64 +47,64 @@ class JintekiNet: NSObject {
     }
     
     func enterCredentialsAndLogin() {
-        let alert = UIAlertController(title: "Jinteki.net Login".localized(), message: nil, preferredStyle: .Alert)
-        alert.addTextFieldWithConfigurationHandler { textField in
+        let alert = UIAlertController(title: "Jinteki.net Login".localized(), message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
             textField.placeholder = "Username".localized()
-            textField.autocorrectionType = .No
-            textField.returnKeyType = .Next
+            textField.autocorrectionType = .no
+            textField.returnKeyType = .next
             textField.enablesReturnKeyAutomatically = true
         }
         
-        alert.addTextFieldWithConfigurationHandler { textField in
+        alert.addTextField { textField in
             textField.placeholder = "Password".localized()
-            textField.autocorrectionType = .No
-            textField.returnKeyType = .Done
-            textField.secureTextEntry = true
+            textField.autocorrectionType = .no
+            textField.returnKeyType = .done
+            textField.isSecureTextEntry = true
             textField.enablesReturnKeyAutomatically = true
         }
         
-        alert.addAction(UIAlertAction(title: "Login".localized(), style: .Default) { action in
+        alert.addAction(UIAlertAction(title: "Login".localized(), style: .default) { action in
             let username = alert.textFields?[0].text ?? ""
             let password = alert.textFields?[1].text ?? ""
             self.testLogin(username, password: password)
             })
         
-        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         
         alert.show()
     }
     
-    func testLogin(username: String, password: String) {
+    func testLogin(_ username: String, password: String) {
         self.clearCookies()
         let parameters = [
             "username": username,
             "password": password
         ]
 
-        manager.request(.POST, loginUrl, parameters: parameters).validate().responseJSON { response in
+        manager.request(loginUrl, method: .post, parameters: parameters).validate().responseJSON { response in
             switch response.result {
-            case .Success:
+            case .success:
                 if let _ = response.result.value {
-                    SVProgressHUD.showErrorWithStatus("Logged in".localized())
-                    let keychain = KeychainWrapper.defaultKeychainWrapper()
-                    keychain.setString(username, forKey: SettingsKeys.JNET_USERNAME)
-                    keychain.setString(password, forKey: SettingsKeys.JNET_PASSWORD)
+                    SVProgressHUD.showError(withStatus: "Logged in".localized())
+                    let keychain = KeychainWrapper.defaultKeychainWrapper
+                    keychain.set(username, forKey: SettingsKeys.JNET_USERNAME)
+                    keychain.set(password, forKey: SettingsKeys.JNET_PASSWORD)
                 } else {
                     fallthrough
                 }
             default:
-                SVProgressHUD.showErrorWithStatus("Login failed".localized())
+                SVProgressHUD.showError(withStatus: "Login failed".localized())
                 self.clearCredentials()
-                NSUserDefaults.standardUserDefaults().setBool(false, forKey: SettingsKeys.USE_JNET)
+                UserDefaults.standard.set(false, forKey: SettingsKeys.USE_JNET)
             }
         }
     }
     
-    func uploadDeck(deck: Deck) {
-        let keychain = KeychainWrapper.defaultKeychainWrapper()
+    func uploadDeck(_ deck: Deck) {
+        let keychain = KeychainWrapper.defaultKeychainWrapper
         guard let
-            username = keychain.stringForKey(SettingsKeys.JNET_USERNAME),
-            password = keychain.stringForKey(SettingsKeys.JNET_PASSWORD) else {
+            username = keychain.string(forKey: SettingsKeys.JNET_USERNAME),
+            let password = keychain.string(forKey: SettingsKeys.JNET_PASSWORD) else {
                 return
         }
 
@@ -115,49 +115,49 @@ class JintekiNet: NSObject {
             "password": password
         ]
         
-        manager.request(.POST, loginUrl, parameters: parameters).validate().responseJSON { response in
+        manager.request(loginUrl, method: .post, parameters: parameters).validate().responseJSON { response in
             switch response.result {
-            case .Success:
+            case .success:
                 if let _ = response.result.value {
                     self.postDeckData(deck, username: username)
                 } else {
                     fallthrough
                 }
             default:
-                SVProgressHUD.showErrorWithStatus("Login failed".localized())
+                SVProgressHUD.showError(withStatus: "Login failed".localized())
             }
         }
     }
     
-    func postDeckData(deck: Deck, username: String) {
+    func postDeckData(_ deck: Deck, username: String) {
         let cards = NSMutableArray()
         for cc in deck.cards {
             let c = NSMutableDictionary()
             c["qty"] = cc.count
             c["card"] = cc.card.englishName
-            cards.addObject(c)
+            cards.add(c)
         }
         
         var id = [String: AnyObject]()
         let identity = deck.identity ?? Card.null()
         
-        id["title"] = Card.fullNames[identity.code] ?? identity.englishName
-        id["code"] = identity.code
-        id["side"] = identity.role == .Runner ? "Runner" : "Corp"
-        id["influencelimit"] = identity.influenceLimit
-        id["minimumdecksize"] = identity.minimumDecksize
-        if identity.role == .Runner {
-            id["baselink"] = identity.baseLink
+        id["title"] = Card.fullNames[identity.code] as AnyObject?? ?? identity.englishName as AnyObject?
+        id["code"] = identity.code as AnyObject?
+        id["side"] = (identity.role == .runner ? "Runner" : "Corp") as NSString
+        id["influencelimit"] = identity.influenceLimit as AnyObject?
+        id["minimumdecksize"] = identity.minimumDecksize as AnyObject?
+        if identity.role == .runner {
+            id["baselink"] = identity.baseLink as AnyObject?
         }
-        id["faction"] = Faction.fullName(identity.faction)
+        id["faction"] = Faction.fullName(identity.faction) as NSString
         
-        let fmt = NSDateFormatter()
+        let fmt = DateFormatter()
         fmt.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
-        fmt.timeZone = NSTimeZone(abbreviation: "UTC")
+        fmt.timeZone = TimeZone(abbreviation: "UTC")
         // 2016-07-19T06:05:52.404Z
-        let date = fmt.stringFromDate(deck.lastModified ?? NSDate())
+        let date = fmt.string(from: deck.lastModified as Date? ?? Date())
         
-        let parameters: [String: AnyObject] = [
+        let parameters: [String: Any] = [
             "name": deck.name ?? "",
             "cards": cards,
             "identity": id,
@@ -165,13 +165,13 @@ class JintekiNet: NSObject {
             "username": username
         ]
         
-        manager.request(.POST, deckUrl, parameters: parameters, encoding: .JSON).validate().responseJSON { response in
+        self.manager.request(deckUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
-            case .Success:
-                SVProgressHUD.showSuccessWithStatus("Deck uploaded".localized())
+            case .success:
+                SVProgressHUD.showSuccess(withStatus: "Deck uploaded".localized())
                 break
             default:
-                SVProgressHUD.showErrorWithStatus("Upload failed".localized())
+                SVProgressHUD.showError(withStatus: "Upload failed".localized())
                 break
             }
         }

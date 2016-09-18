@@ -14,6 +14,8 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+    
     UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popupCard1:)];
     [self.deck1Card addGestureRecognizer:tap1];
     self.deck1Card.userInteractionEnabled = YES;

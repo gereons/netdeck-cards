@@ -13,6 +13,8 @@
 
 -(void) awakeFromNib
 {
+    [super awakeFromNib];
+    
     // remove all constraints IB has generated
     self.translatesAutoresizingMaskIntoConstraints = NO;
     [self removeConstraints:self.constraints];

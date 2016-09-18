@@ -1,13 +1,13 @@
 PODS:
-  - Alamofire (3.4.1)
-  - AlamofireImage (2.4.1):
-    - Alamofire (~> 3.3)
-  - AlamofireNetworkActivityIndicator (1.0.1):
-    - Alamofire (~> 3.3)
-  - CorePlot (2.1)
-  - Crashlytics (3.7.3):
+  - Alamofire (4.0.0)
+  - AlamofireImage (3.0.0):
+    - Alamofire (~> 4.0)
+  - AlamofireNetworkActivityIndicator (2.0.0):
+    - Alamofire (~> 4.0)
+  - CorePlot (2.2)
+  - Crashlytics (3.8.1):
     - Fabric (~> 1.6.3)
-  - CSStickyHeaderFlowLayout (0.2.10)
+  - CSStickyHeaderFlowLayout (0.2.11)
   - DTCoreText (1.6.17):
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
@@ -21,20 +21,20 @@ PODS:
     - DTFoundation/Core
   - DZNEmptyDataSet (1.8.1)
   - Fabric (1.6.8)
-  - InAppSettingsKit (2.7.1)
+  - InAppSettingsKit (2.8)
   - MultiSelectSegmentedControl (1.1.0)
-  - SDCAlertView (5.1.1)
+  - SDCAlertView (7.0.1)
   - SVProgressHUD (2.0.3)
-  - SwiftKeychainWrapper (2.0.0)
-  - SwiftyDropbox (3.0.0):
-    - Alamofire (~> 3.1)
+  - SwiftKeychainWrapper (2.2.0)
+  - SwiftyDropbox (4.0.2):
+    - Alamofire (~> 4.0.0)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
   - Alamofire
   - AlamofireImage
   - AlamofireNetworkActivityIndicator
-  - CorePlot
+  - CorePlot (from `https://github.com/core-plot/core-plot.git`, branch `release-2.2`)
   - Crashlytics
   - CSStickyHeaderFlowLayout
   - DTCoreText
@@ -44,29 +44,50 @@ DEPENDENCIES:
   - MultiSelectSegmentedControl
   - SDCAlertView
   - SVProgressHUD
-  - SwiftKeychainWrapper
+  - SwiftKeychainWrapper (from `https://github.com/jrendel/SwiftKeychainWrapper.git`, branch `master`)
   - SwiftyDropbox
-  - SwiftyJSON
+  - SwiftyJSON (from `https://github.com/IBM-Swift/SwiftyJSON`)
+
+EXTERNAL SOURCES:
+  CorePlot:
+    :branch: release-2.2
+    :git: https://github.com/core-plot/core-plot.git
+  SwiftKeychainWrapper:
+    :branch: master
+    :git: https://github.com/jrendel/SwiftKeychainWrapper.git
+  SwiftyJSON:
+    :git: https://github.com/IBM-Swift/SwiftyJSON
+
+CHECKOUT OPTIONS:
+  CorePlot:
+    :commit: 485c56240df03ef5f0bbf79bf4cb3489a651ad0c
+    :git: https://github.com/core-plot/core-plot.git
+  SwiftKeychainWrapper:
+    :commit: f369c9b92bb13806ccc902533a2ded90ef10fd1c
+    :git: https://github.com/jrendel/SwiftKeychainWrapper.git
+  SwiftyJSON:
+    :commit: 73b523a107b798021ca9af74b5f7c20e435c8809
+    :git: https://github.com/IBM-Swift/SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
-  AlamofireImage: 3ccf3347d9ea24580dc11fb892770a0be6a29826
-  AlamofireNetworkActivityIndicator: 49a6e39afb947136f7b1872bae2d684957c26697
-  CorePlot: ab9898c79b94999018e9634ab0aa4c21480c8552
-  Crashlytics: 76f6beaff70acf226139582c09c78461597c2b98
-  CSStickyHeaderFlowLayout: 5366582779d8b7c9ba9b9cc729c218cc23888776
+  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
+  AlamofireImage: 6594aa1139a67dcd36cde6da79ea4e5b318e60fb
+  AlamofireNetworkActivityIndicator: ba9f481748d954318dd99636abff028cd3fcdc07
+  CorePlot: 628031b4a771b05b35c284d907ddacee97a91c0a
+  Crashlytics: 4391d8df0b125345e9f209c5db6e7f40a6a8435d
+  CSStickyHeaderFlowLayout: e9bcb1762413f49d7d09e5bd0ae5efd1100116b7
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
-  InAppSettingsKit: 2b9fcdb82cdff2f99c51cae544e9f4df0df7afbf
+  InAppSettingsKit: fe3e73f8f9530cdd6270065cd7df7b3773f557e6
   MultiSelectSegmentedControl: 54fb23c997b971eff621cfcf965ff1613d99c3d2
-  SDCAlertView: 90ea78aee0ce1cef883e1127861bd076711837f7
+  SDCAlertView: e04c5a8985e4490768cc9608bf0a13c44215fcf2
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
-  SwiftKeychainWrapper: 3575838215fa36c816899c301a7afe370bd94814
-  SwiftyDropbox: e0d4aa3166082ec07ed942e94edb8c732b3376e4
+  SwiftKeychainWrapper: a61d8ec21f07ba70e393f8572b2d46a25effc7b3
+  SwiftyDropbox: 4458bb0c2d62d7714b7d2cddec107e392f3645d8
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: a7d03159428bb0a22e4c59e053f335a8bd32244d
+PODFILE CHECKSUM: 106c0ad809eda8f1792cd2e46f94a7827e2d88ec
 
 COCOAPODS: 1.0.1

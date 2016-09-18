@@ -13,6 +13,8 @@
 
 -(void) awakeFromNib
 {
+    [super awakeFromNib];
+    
     // rounded corners for images
     self.image.layer.masksToBounds = YES;
     self.image.layer.cornerRadius = 10;

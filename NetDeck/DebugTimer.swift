@@ -11,22 +11,22 @@ import Foundation
 
 class DebugTimer: NSObject {
    
-    private struct Timer {
+    fileprivate struct Timer {
         var count = 0
         var time = 0.0
     }
     
-    private static var timers = [String: Timer]()
-    private var name = ""
-    private var start: NSTimeInterval = 0.0
+    fileprivate static var timers = [String: Timer]()
+    fileprivate var name = ""
+    fileprivate var start: TimeInterval = 0.0
     
     init(name: String) {
         self.name = name
-        self.start = NSDate().timeIntervalSinceReferenceDate
+        self.start = Date().timeIntervalSinceReferenceDate
     }
     
     func stop() {
-        let now = NSDate().timeIntervalSinceReferenceDate
+        let now = Date().timeIntervalSinceReferenceDate
         let elapsed = now - self.start
         
         if var t = DebugTimer.timers[name] {
@@ -45,12 +45,12 @@ class DebugTimer: NSObject {
         }
     }
     
-    static func reset(names: [String]? = nil) {
+    static func reset(_ names: [String]? = nil) {
         if names == nil {
             self.timers.removeAll()
         } else {
             for n in names! {
-                self.timers.removeValueForKey(n)
+                self.timers.removeValue(forKey: n)
             }
         }
     }

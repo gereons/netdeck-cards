@@ -16,8 +16,8 @@ import UIKit
     @IBOutlet weak var revertButton: UIButton!
     
     class func initFromNib() -> DeckHistorySectionHeaderView {
-        let views = NSBundle.mainBundle().loadNibNamed("DeckHistorySectionHeaderView", owner: self, options: nil)
-        let header = views.first as! DeckHistorySectionHeaderView
+        let views = Bundle.main.loadNibNamed("DeckHistorySectionHeaderView", owner: self, options: nil)
+        let header = views?.first as! DeckHistorySectionHeaderView
         return header
     }
 

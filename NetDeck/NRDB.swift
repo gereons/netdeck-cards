@@ -18,42 +18,42 @@ class NRDB: NSObject {
     static let AUTH_URL =       PROVIDER_HOST + "/oauth/v2/auth?client_id=" + CLIENT_ID + "&response_type=code&redirect_uri=" + CLIENT_HOST
     static let TOKEN_URL =      PROVIDER_HOST + "/oauth/v2/token"
     
-    static let FIVE_MINUTES: NSTimeInterval = 300 // in seconds
+    static let FIVE_MINUTES: TimeInterval = 300 // in seconds
     
     static let sharedInstance = NRDB()
-    override private init() {}
+    override fileprivate init() {}
     
-    private static let dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+    fileprivate static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ'"
                             // "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
-        formatter.timeZone = NSTimeZone(name: "GMT")
+        formatter.timeZone = TimeZone(identifier: "GMT")
         return formatter
     }()
     
-    private var timer: NSTimer?
-    private var deckMap = [String: String]()
+    fileprivate var timer: Timer?
+    fileprivate var deckMap = [String: String]()
     
     class func clearSettings() {
-        let settings = NSUserDefaults.standardUserDefaults()
-        settings.setBool(false, forKey: SettingsKeys.USE_NRDB)
+        let settings = UserDefaults.standard
+        settings.set(false, forKey: SettingsKeys.USE_NRDB)
         NRDB.clearCredentials()
         
         NRDB.sharedInstance.stopAuthorizationRefresh()
     }
     
     class func clearCredentials() {
-        let settings = NSUserDefaults.standardUserDefaults()
+        let settings = UserDefaults.standard
         
-        settings.removeObjectForKey(SettingsKeys.NRDB_ACCESS_TOKEN)
-        settings.removeObjectForKey(SettingsKeys.NRDB_REFRESH_TOKEN)
-        settings.removeObjectForKey(SettingsKeys.NRDB_TOKEN_EXPIRY)
-        settings.removeObjectForKey(SettingsKeys.NRDB_TOKEN_TTL)
+        settings.removeObject(forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
+        settings.removeObject(forKey: SettingsKeys.NRDB_REFRESH_TOKEN)
+        settings.removeObject(forKey: SettingsKeys.NRDB_TOKEN_EXPIRY)
+        settings.removeObject(forKey: SettingsKeys.NRDB_TOKEN_TTL)
     }
     
     // MARK: - authorization
     
-    func authorizeWithCode(code: String, completion: (Bool) -> Void) {
+    func authorizeWithCode(_ code: String, completion: @escaping (Bool) -> Void) {
         // NSLog("NRDB authWithCode")
         let parameters = [
             "client_id": NRDB.CLIENT_ID,
@@ -66,14 +66,14 @@ class NRDB: NSObject {
         self.getAuthorization(parameters, isRefresh: false, completion: completion)
     }
     
-    private func refreshToken(completion: (Bool) -> Void) {
+    fileprivate func refreshToken(_ completion: @escaping (Bool) -> Void) {
         // NSLog("NRDB refreshToken")
-        guard let token = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_REFRESH_TOKEN) else {
+        guard let token = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_REFRESH_TOKEN) else {
             completion(false)
             return
         }
         
-        NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: SettingsKeys.LAST_REFRESH)
+        UserDefaults.standard.set(Date(), forKey: SettingsKeys.LAST_REFRESH)
         
         let parameters = [
             "client_id": NRDB.CLIENT_ID,
@@ -86,193 +86,193 @@ class NRDB: NSObject {
         self.getAuthorization(parameters, isRefresh: true, completion: completion)
     }
     
-    private func getAuthorization(parameters: [String: String], isRefresh: Bool, completion: (Bool) -> Void) {
+    fileprivate func getAuthorization(_ parameters: [String: String], isRefresh: Bool, completion: @escaping (Bool) -> Void) {
         
         // NSLog("NRDB get Auth")
-        let foreground = UIApplication.sharedApplication().applicationState == .Active
+        let foreground = UIApplication.shared.applicationState == .active
         if foreground && !Reachability.online() {
             completion(false)
             return
         }
 
-        Alamofire.request(.GET, NRDB.TOKEN_URL, parameters: parameters)
+        Alamofire.request(NRDB.TOKEN_URL, parameters: parameters)
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .Success:
+                case .success:
                     if let value = response.result.value {
                         let json = JSON(value)
-                        let settings = NSUserDefaults.standardUserDefaults()
+                        let settings = UserDefaults.standard
                         var ok = true
                         
                         if let token = json["access_token"].string {
-                            settings.setObject(token, forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
+                            settings.set(token, forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
                         } else {
                             ok = false
                         }
                         
                         if let token = json["refresh_token"].string {
-                            settings.setObject(token, forKey: SettingsKeys.NRDB_REFRESH_TOKEN)
+                            settings.set(token, forKey: SettingsKeys.NRDB_REFRESH_TOKEN)
                         } else {
                             ok = false
                         }
                         
                         let exp = json["expires_in"].doubleValue
-                        settings.setDouble(exp, forKey: SettingsKeys.NRDB_TOKEN_TTL)
+                        settings.set(exp, forKey: SettingsKeys.NRDB_TOKEN_TTL)
                         let expiry = NSDate(timeIntervalSinceNow: exp)
-                        settings.setObject(expiry, forKey: SettingsKeys.NRDB_TOKEN_EXPIRY)
+                        settings.set(expiry, forKey: SettingsKeys.NRDB_TOKEN_EXPIRY)
                         
                         if ok {
-                            if !settings.boolForKey(SettingsKeys.KEEP_NRDB_CREDENTIALS) {
-                                UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+                            if !settings.bool(forKey: SettingsKeys.KEEP_NRDB_CREDENTIALS) {
+                                UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
                             }
                             completion(ok)
                         } else {
                             self.handleAuthorizationFailure(isRefresh, completion: completion)
                         }
                     }
-                case .Failure:
+                case .failure:
                     self.handleAuthorizationFailure(isRefresh, completion: completion)
                 }
             }
     }
     
-    private func handleAuthorizationFailure(isRefresh: Bool, completion: (Bool) -> Void) {
+    fileprivate func handleAuthorizationFailure(_ isRefresh: Bool, completion: (Bool) -> Void) {
         if !isRefresh {
             NRDB.clearSettings()
-            UIAlertController.alertWithTitle(nil, message: "Authorization at NetrunnerDB.com failed".localized(), button: "OK")
+            UIAlertController.alert(withTitle: nil, message: "Authorization at NetrunnerDB.com failed".localized(), button: "OK")
             
-            UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+            UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
             completion(false)
             return
         }
         
-        if NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.KEEP_NRDB_CREDENTIALS) {
+        if UserDefaults.standard.bool(forKey: SettingsKeys.KEEP_NRDB_CREDENTIALS) {
             NRDBHack.sharedInstance.silentlyLogin()
         }
     }
     
     func startAuthorizationRefresh() {
         // NSLog("NRDB startAuthRefresh timer=\(self.timer)")
-        let settings = NSUserDefaults.standardUserDefaults()
+        let settings = UserDefaults.standard
         
-        if !settings.boolForKey(SettingsKeys.USE_NRDB) || self.timer != nil {
+        if !settings.bool(forKey: SettingsKeys.USE_NRDB) || self.timer != nil {
             return
         }
         
-        if settings.stringForKey(SettingsKeys.NRDB_REFRESH_TOKEN) == nil {
+        if settings.string(forKey: SettingsKeys.NRDB_REFRESH_TOKEN) == nil {
             NRDB.clearSettings()
             return
         }
         
-        let expiry = settings.objectForKey(SettingsKeys.NRDB_TOKEN_EXPIRY) as? NSDate ?? NSDate()
-        let now = NSDate()
-        let diff = expiry.timeIntervalSinceDate(now) - NRDB.FIVE_MINUTES
+        let expiry = settings.object(forKey: SettingsKeys.NRDB_TOKEN_EXPIRY) as? Date ?? Date()
+        let now = Date()
+        let diff = expiry.timeIntervalSince(now) - NRDB.FIVE_MINUTES
         // NSLog("start nrdb auth refresh in %f seconds", diff);
         
         self.timer?.invalidate()
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(diff, target: self, selector: #selector(NRDB.timedRefresh(_:)), userInfo: nil, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: diff, target: self, selector: #selector(NRDB.timedRefresh(_:)), userInfo: nil, repeats: false)
     }
     
     func stopAuthorizationRefresh() {
         // NSLog("NRDB stopAuthRefresh")
         self.timer?.invalidate()
         self.timer = nil
-        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
     }
     
-    func timedRefresh(timer: NSTimer?) {
+    func timedRefresh(_ timer: Timer?) {
         // NSLog("NRDB refresh timer callback")
         self.timer = nil
         self.refreshToken { ok in
             if (ok) {
                 // schedule next run at 5 minutes before expiry
-                let ti = NSUserDefaults.standardUserDefaults().doubleForKey(SettingsKeys.NRDB_TOKEN_TTL) as NSTimeInterval - NRDB.FIVE_MINUTES
+                let ti = UserDefaults.standard.double(forKey: SettingsKeys.NRDB_TOKEN_TTL) as TimeInterval - NRDB.FIVE_MINUTES
                 // NSLog("next refresh in %f seconds", ti)
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(ti, target: self, selector: #selector(NRDB.timedRefresh(_:)), userInfo: nil, repeats: false)
+                self.timer = Timer.scheduledTimer(timeInterval: ti, target: self, selector: #selector(NRDB.timedRefresh(_:)), userInfo: nil, repeats: false)
             }
         }
     }
     
-    func backgroundRefreshAuthentication(completion: (UIBackgroundFetchResult) -> Void) {
+    func backgroundRefreshAuthentication(_ completion: @escaping (UIBackgroundFetchResult) -> Void) {
         // NSLog("NRDB background Refresh")
-        let settings = NSUserDefaults.standardUserDefaults()
-        if !settings.boolForKey(SettingsKeys.USE_NRDB) {
+        let settings = UserDefaults.standard
+        if !settings.bool(forKey: SettingsKeys.USE_NRDB) {
             // NSLog("no nrdb account");
-            completion(.NoData)
+            completion(.noData)
             return
         }
         
-        if settings.stringForKey(SettingsKeys.NRDB_REFRESH_TOKEN) == nil {
+        if settings.string(forKey: SettingsKeys.NRDB_REFRESH_TOKEN) == nil {
             // NSLog("no token");
             NRDB.clearSettings()
-            completion(.NoData)
+            completion(.noData)
             return
         }
         
         self.refreshToken { ok in
             // NSLog("refresh: %d", ok);
-            completion(ok ? .NewData : .Failed)
+            completion(ok ? .newData : .failed)
         }
     }
     
 
-    private func accessToken() -> String? {
-        return NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NRDB_ACCESS_TOKEN)
+    fileprivate func accessToken() -> String? {
+        return UserDefaults.standard.string(forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
     }
     
     // MARK: - deck lists
     
-    func decklist(completion: ([Deck]?) -> Void) {
+    func decklist(_ completion: @escaping ([Deck]?) -> Void) {
         let accessToken = self.accessToken() ?? ""
-        let decksUrl = NSURL(string: "https://netrunnerdb.com/api/2.0/private/decks?access_token=" + accessToken)!
+        let decksUrl = URL(string: "https://netrunnerdb.com/api/2.0/private/decks?access_token=" + accessToken)!
     
-        let request = NSMutableURLRequest(URL: decksUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let request = URLRequest(url: decksUrl, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
 
         Alamofire.request(request).validate().responseJSON { response in
             var decks: [Deck]?
             switch response.result {
-            case .Success:
+            case .success:
                 if let value = response.result.value {
                     let json = JSON(value)
                     decks = self.parseDecksFromJson(json)
                     completion(decks)
                 }
-            case .Failure:
+            case .failure:
                 completion(nil)
             }
             
             if decks == nil {
-                UIAlertController.alertWithTitle(nil, message:"Loading decks from NetrunnerDB.com failed".localized(), button:"OK")
+                UIAlertController.alert(withTitle: nil, message:"Loading decks from NetrunnerDB.com failed".localized(), button:"OK".localized())
             }
         }
     }
     
-    func loadDeck(deckId: String, completion: (Deck?) -> Void) {
+    func loadDeck(_ deckId: String, completion: @escaping (Deck?) -> Void) {
         guard let accessToken = self.accessToken() else {
             completion(nil)
             return
         }
         
-        let loadUrl = NSURL(string: "https://netrunnerdb.com/api/2.0/private/deck/" + deckId + "?include_history=1&access_token=" + accessToken)!
+        let loadUrl = URL(string: "https://netrunnerdb.com/api/2.0/private/deck/" + deckId + "?include_history=1&access_token=" + accessToken)!
         
-        let request = NSMutableURLRequest(URL: loadUrl, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let request = URLRequest(url: loadUrl, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         
         Alamofire.request(request).validate().responseJSON { response in
             switch response.result {
-            case .Success:
+            case .success:
                 if let value = response.result.value {
                     let json = JSON(value)
                     let deck = self.parseDeckFromJson(json)
                     completion(deck)
                 }
-            case .Failure:
+            case .failure:
                 completion(nil)
             }
         }
     }
     
-    private func parseDecksFromJson(json: JSON) -> [Deck] {
+    fileprivate func parseDecksFromJson(_ json: JSON) -> [Deck] {
         var decks = [Deck]()
         
         if !json.validNrdbResponse {
@@ -288,7 +288,7 @@ class NRDB: NSObject {
         return decks
     }
     
-    private func parseDeckFromJson(json: JSON) -> Deck? {
+    fileprivate func parseDeckFromJson(_ json: JSON) -> Deck? {
         if !json.validNrdbResponse {
             return nil
         }
@@ -297,7 +297,7 @@ class NRDB: NSObject {
         return self.parseDeckFromData(data)
     }
     
-    private func parseDeckFromData(json: JSON) -> Deck? {
+    fileprivate func parseDeckFromData(_ json: JSON) -> Deck? {
         let deck = Deck()
         
         deck.name = json["name"].string
@@ -306,11 +306,11 @@ class NRDB: NSObject {
         deck.netrunnerDbId = "\(json["id"].intValue)"
         
         // parse last update '2014-06-19T13:52:24+00:00'
-        deck.lastModified = NRDB.dateFormatter.dateFromString(json["date_update"].stringValue)
-        deck.dateCreated = NRDB.dateFormatter.dateFromString(json["date_creation"].stringValue)
+        deck.lastModified = NRDB.dateFormatter.date(from: json["date_update"].stringValue)
+        deck.dateCreated = NRDB.dateFormatter.date(from: json["date_creation"].stringValue)
         
         let mwlCode = json["mwl_code"].stringValue
-        deck.mwl = NRMWL.byCode(mwlCode)
+        deck.mwl = NRMWL.by(code: mwlCode)
         
         for (code, qty) in json["cards"].dictionaryValue {
             if let card = CardManager.cardByCode(code) {
@@ -321,12 +321,12 @@ class NRDB: NSObject {
         var revisions = [DeckChangeSet]()
         if let history = json["history"].dictionary {
             for (date, changes) in history {
-                if let timestamp = NRDB.dateFormatter.dateFromString(date) {
+                if let timestamp = NRDB.dateFormatter.date(from: date) {
                     let dcs = DeckChangeSet()
                     dcs.timestamp = timestamp
                     
                     for (code, amount) in changes.dictionaryValue {
-                        if let card = CardManager.cardByCode(code), amount = amount.int {
+                        if let card = CardManager.cardByCode(code), let amount = amount.int {
                             dcs.addCardCode(card.code, copies: amount)
                         }
                     }
@@ -337,7 +337,7 @@ class NRDB: NSObject {
             }
         }
         
-        revisions.sortInPlace { $0.timestamp?.timeIntervalSince1970 ?? 0 < $1.timestamp?.timeIntervalSinceNow ?? 0 }
+        revisions.sort { $0.timestamp?.timeIntervalSince1970 ?? 0 < $1.timestamp?.timeIntervalSinceNow ?? 0 }
         
         let initial = DeckChangeSet()
         initial.initial = true
@@ -358,7 +358,7 @@ class NRDB: NSObject {
             for dc in prev.changes {
                 let qty = (cards[dc.code] ?? 0) - dc.count
                 if qty == 0 {
-                    cards.removeValueForKey(dc.code)
+                    cards.removeValue(forKey: dc.code)
                 } else {
                     cards[dc.code] = qty
                 }
@@ -373,7 +373,7 @@ class NRDB: NSObject {
     
     // MARK: - save / publish
     
-    func saveDeck(deck: Deck, completion: (Bool, String?, String?) -> Void) {
+    func saveDeck(_ deck: Deck, completion: @escaping (Bool, String?, String?) -> Void) {
         guard let accessToken = self.accessToken() else {
             completion(false, nil, nil)
             return
@@ -389,21 +389,22 @@ class NRDB: NSObject {
         
         var tags = ""
         if deck.tags != nil {
-            tags = (deck.tags! as NSArray).componentsJoinedByString(" ")
+            tags = (deck.tags! as NSArray).componentsJoined(by: " ")
         }
         let saveUrl = "https://netrunnerdb.com/api/2.0/private/deck/save?access_token=" + accessToken
+        let deckId = (deck.netrunnerDbId ?? "0") as AnyObject
         let parameters: [String: AnyObject] = [
-            "deck_id": deck.netrunnerDbId ?? "0",
-            "name": deck.name ?? "Deck",
-            "tags": tags,
-            "description": deck.notes ?? "",
-            "content": cards
+            "deck_id": deckId,
+            "name": (deck.name ?? "Deck") as AnyObject,
+            "tags": tags as AnyObject,
+            "description": (deck.notes ?? "") as AnyObject,
+            "content": cards as AnyObject
         ]
         
         self.saveOrPublish(saveUrl, parameters: parameters, completion: completion)
     }
     
-    func publishDeck(deck: Deck, completion: (Bool, String?, String?) -> Void) {
+    func publishDeck(_ deck: Deck, completion: @escaping (Bool, String?, String?) -> Void) {
         guard let accessToken = self.accessToken() else {
             completion(false, nil, nil)
             return
@@ -416,15 +417,15 @@ class NRDB: NSObject {
             "name": deck.name ?? "Deck"
         ]
         
-        self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)
+        self.saveOrPublish(publishUrl, parameters:parameters as [String : AnyObject], completion: completion)
     }
 
-    func saveOrPublish(url: String, parameters: [String: AnyObject], completion: (Bool, String?, String?)->Void) {
-        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON)
+    func saveOrPublish(_ url: String, parameters: [String: AnyObject], completion: @escaping (Bool, String?, String?)->Void) {
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .Success(let value):
+                case .success(let value):
                     let json = JSON(value)
                     let ok = json.validNrdbResponse
                     if ok {
@@ -437,7 +438,7 @@ class NRDB: NSObject {
                         completion(false, nil, json["msg"].stringValue)
                         return
                     }
-                case .Failure:
+                case .failure:
                     break
                 }
                 completion(false, nil, nil)
@@ -446,25 +447,25 @@ class NRDB: NSObject {
     
     // MARK: - mapping of nrdb ids to filenames
     
-    func updateDeckMap(decks: [Deck]) {
+    func updateDeckMap(_ decks: [Deck]) {
         self.deckMap = [String: String]()
         for deck in decks {
             addDeck(deck)
         }
     }
     
-    func addDeck(deck: Deck) {
-        if let filename = deck.filename, nrdbId = deck.netrunnerDbId {
+    func addDeck(_ deck: Deck) {
+        if let filename = deck.filename, let nrdbId = deck.netrunnerDbId {
             self.deckMap[nrdbId] = filename
         }
     }
     
-    func filenameForId(deckId: String?) -> String? {
+    func filenameForId(_ deckId: String?) -> String? {
         return self.deckMap[deckId ?? ""]
     }
     
-    func deleteDeck(deckId: String?) {
-        self.deckMap.removeValueForKey(deckId ?? "")
+    func deleteDeck(_ deckId: String?) {
+        self.deckMap.removeValue(forKey: deckId ?? "")
     }
 }
 
@@ -472,7 +473,7 @@ class NRDB: NSObject {
 
 extension JSON {
     
-    static private let supportedNrdbApiVersion = 2
+    static fileprivate let supportedNrdbApiVersion = 2
     
     // check if this is a valid API response
     var validNrdbResponse: Bool {
@@ -482,8 +483,8 @@ extension JSON {
     }
     
     // get a localized property from a "data" object
-    func localized(property: String, _ language: String) -> String {
-        if let localized = self["_locale"][language][property].string where localized.length > 0 {
+    func localized(_ property: String, _ language: String) -> String {
+        if let localized = self["_locale"][language][property].string , localized.length > 0 {
             return localized
         } else {
             return self[property].stringValue

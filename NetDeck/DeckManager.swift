@@ -10,69 +10,69 @@ import Foundation
 
 @objc class DeckManager: NSObject {
     
-    static let cache = { () -> NSCache in
-        let c = NSCache()
+    static let cache = { () -> NSCache<NSString, Deck> in
+        let c = NSCache<NSString, Deck>()
         c.name = "deckCache"
         return c
     }()
     
-    class func saveDeck(deck: Deck, keepLastModified: Bool) {
+    class func saveDeck(_ deck: Deck, keepLastModified: Bool) {
         if deck.filename == nil {
             deck.filename = DeckManager.pathForRole(deck.role)
         }
         
         let filename = deck.filename!
         let data = NSMutableData()
-        let encoder = NSKeyedArchiver(forWritingWithMutableData: data)
+        let encoder = NSKeyedArchiver(forWritingWith: data)
         
-        encoder.encodeObject(deck, forKey: "deck")
+        encoder.encode(deck, forKey: "deck")
         encoder.finishEncoding()
         
-        let saveOk = data.writeToFile(filename, atomically: true)
+        let saveOk = data.write(toFile: filename, atomically: true)
         if !saveOk {
             DeckManager.removeFile(filename)
             return
         }
         
-        let fileMgr = NSFileManager.defaultManager()
+        let fileMgr = FileManager.default
         if let date = deck.dateCreated {
-            let attrs = [ NSFileCreationDate: date ]
+            let attrs = [ FileAttributeKey.creationDate: date ]
             
             _ = try? fileMgr.setAttributes(attrs, ofItemAtPath: filename)
         }
         
         if keepLastModified && deck.lastModified != nil {
-            let attrs = [ NSFileModificationDate: deck.lastModified! ]
-            _ = try? NSFileManager.defaultManager().setAttributes(attrs, ofItemAtPath: deck.filename!)
+            let attrs = [ FileAttributeKey.modificationDate: deck.lastModified! ]
+            _ = try? FileManager.default.setAttributes(attrs, ofItemAtPath: deck.filename!)
         } else {
             // update the in-memory lastModified date
-            deck.lastModified = NSDate()
+            deck.lastModified = Date()
         }
 
         // store the deck in our cache
-        DeckManager.cache.setObject(deck, forKey: filename)
+        DeckManager.cache.setObject(deck, forKey: filename as NSString)
     }
     
-    class func removeFile(pathname: String) {
-        DeckManager.cache.removeObjectForKey(pathname)
-        _ = try? NSFileManager.defaultManager().removeItemAtPath(pathname)
+    class func removeFile(_ pathname: String) {
+        DeckManager.cache.removeObject(forKey: pathname as NSString)
+        _ = try? FileManager.default.removeItem(atPath: pathname)
     }
     
-    class func decksForRole(role: NRRole) -> [Deck] {
-        if role == .None {
+    class func decksForRole(_ role: NRRole) -> [Deck] {
+        if role == .none {
             var decks = [Deck]()
-            decks.appendContentsOf(loadDecksForRole(.Runner))
-            decks.appendContentsOf(loadDecksForRole(.Corp))
+            decks.append(contentsOf: loadDecksForRole(.runner))
+            decks.append(contentsOf: loadDecksForRole(.corp))
             return decks
         }
         return loadDecksForRole(role)
     }
     
-    class func loadDecksForRole(role: NRRole) -> [Deck] {
+    class func loadDecksForRole(_ role: NRRole) -> [Deck] {
         var decks = [Deck]()
         
         let dir = directoryForRole(role)
-        let dirContents = try? NSFileManager.defaultManager().contentsOfDirectoryAtPath(dir)
+        let dirContents = try? FileManager.default.contentsOfDirectory(atPath: dir)
         if dirContents == nil {
             return decks
         }
@@ -87,52 +87,52 @@ import Foundation
         return decks
     }
     
-    class func loadDeckFromPath(path: String) -> Deck? {
+    class func loadDeckFromPath(_ path: String) -> Deck? {
         return loadDeckFromPath(path, useCache: true)
     }
     
-    class func loadDeckFromPath(path: String, useCache: Bool) -> Deck? {
+    class func loadDeckFromPath(_ path: String, useCache: Bool) -> Deck? {
         if useCache {
-            if let cachedDeck = DeckManager.cache.objectForKey(path) as? Deck {
+            if let cachedDeck = DeckManager.cache.object(forKey: path as NSString) {
                 return cachedDeck
             }
         }
         
-        let data = NSData(contentsOfFile: path)
+        let data = try? Data(contentsOf: URL(fileURLWithPath: path))
         if data == nil {
             return nil
         }
         
-        let decoder = NSKeyedUnarchiver(forReadingWithData: data!)
-        if let deck = decoder.decodeObjectForKey("deck") as? Deck {
+        let decoder = NSKeyedUnarchiver(forReadingWith: data!)
+        if let deck = decoder.decodeObject(forKey: "deck") as? Deck {
             deck.filename = path
             
-            if let attrs = try? NSFileManager.defaultManager().attributesOfItemAtPath(path) {
-                deck.lastModified = attrs[NSFileModificationDate] as? NSDate
-                deck.dateCreated = attrs[NSFileCreationDate] as? NSDate
+            if let attrs = try? FileManager.default.attributesOfItem(atPath: path) {
+                deck.lastModified = attrs[FileAttributeKey.modificationDate] as? Date
+                deck.dateCreated = attrs[FileAttributeKey.creationDate] as? Date
             }
             
-            DeckManager.cache.setObject(deck, forKey: path)
+            DeckManager.cache.setObject(deck, forKey: path as NSString)
             return deck
         }
         return nil
     }
     
-    class func directoryForRole(role: NRRole) -> String {
-        assert(role != .None, "wrong role")
+    class func directoryForRole(_ role: NRRole) -> String {
+        assert(role != .none, "wrong role")
         
-        let roleDir = role == .Runner ? "runnerDecks" : "corpDecks"
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let roleDir = role == .runner ? "runnerDecks" : "corpDecks"
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let dir = paths[0].stringByAppendingPathComponent(roleDir)
         
-        let fileMgr = NSFileManager.defaultManager()
-        if !fileMgr.fileExistsAtPath(dir) {
-            _ = try? fileMgr.createDirectoryAtPath(dir, withIntermediateDirectories: true, attributes: nil)
+        let fileMgr = FileManager.default
+        if !fileMgr.fileExists(atPath: dir) {
+            _ = try? fileMgr.createDirectory(atPath: dir, withIntermediateDirectories: true, attributes: nil)
         }
         return dir
     }
     
-    class func pathForRole(role: NRRole) -> String {
+    class func pathForRole(_ role: NRRole) -> String {
         let dir = directoryForRole(role)
         let file = String(format:"deck-%d.anr", nextFileId())
         let path = dir.stringByAppendingPathComponent(file)
@@ -141,9 +141,9 @@ import Foundation
     }
     
     class func nextFileId() -> Int {
-        let settings = NSUserDefaults.standardUserDefaults()
-        let fileId = settings.integerForKey(SettingsKeys.FILE_SEQ)
-        settings.setInteger(fileId+1, forKey: SettingsKeys.FILE_SEQ)
+        let settings = UserDefaults.standard
+        let fileId = settings.integer(forKey: SettingsKeys.FILE_SEQ)
+        settings.set(fileId+1, forKey: SettingsKeys.FILE_SEQ)
         return fileId
     }
     

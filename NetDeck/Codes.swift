@@ -12,53 +12,53 @@ import Foundation
 class Codes {
     
     static let code2Type: [String: NRCardType] = [
-        "identity": .Identity,
+        "identity": .identity,
         
-        "asset": .Asset,
-        "agenda": .Agenda,
-        "ice": .Ice,
-        "upgrade": .Upgrade,
-        "operation": .Operation,
+        "asset": .asset,
+        "agenda": .agenda,
+        "ice": .ice,
+        "upgrade": .upgrade,
+        "operation": .operation,
         
-        "program": .Program,
-        "hardware": .Hardware,
-        "resource": .Resource,
-        "event": .Event,
+        "program": .program,
+        "hardware": .hardware,
+        "resource": .resource,
+        "event": .event,
     ]
     
     static let code2Role: [String: NRRole] = [
-        "runner": .Runner,
-        "corp": .Corp,
+        "runner": .runner,
+        "corp": .corp,
     ]
     
     static let code2Faction: [String: NRFaction] = [
-        "anarch": .Anarch,
-        "criminal": .Criminal,
-        "shaper": .Shaper,
+        "anarch": .anarch,
+        "criminal": .criminal,
+        "shaper": .shaper,
         
-        "weyland-consortium": .Weyland,
-        "haas-bioroid": .HaasBioroid,
-        "nbn": .NBN,
-        "jinteki": .Jinteki,
+        "weyland-consortium": .weyland,
+        "haas-bioroid": .haasBioroid,
+        "nbn": .nbn,
+        "jinteki": .jinteki,
         
-        "adam": .Adam,
-        "apex": .Apex,
-        "sunny-lebeau": .SunnyLebeau,
+        "adam": .adam,
+        "apex": .apex,
+        "sunny-lebeau": .sunnyLebeau,
         
-        "neutral": .Neutral,
-        "neutral-runner": .Neutral,
-        "neutral-corp": .Neutral
+        "neutral": .neutral,
+        "neutral-runner": .neutral,
+        "neutral-corp": .neutral
     ]
     
-    class func typeForCode(code: String) -> NRCardType {
-        return code2Type[code] ?? .None
+    class func typeForCode(_ code: String) -> NRCardType {
+        return (code2Type[code] ?? .none)!
     }
     
-    class func roleForCode(code: String) -> NRRole {
-        return code2Role[code] ?? .None
+    class func roleForCode(_ code: String) -> NRRole {
+        return (code2Role[code] ?? .none)!
     }
     
-    class func factionForCode(code: String) -> NRFaction {
-        return code2Faction[code] ?? .None
+    class func factionForCode(_ code: String) -> NRFaction {
+        return (code2Faction[code] ?? .none)!
     }
 }

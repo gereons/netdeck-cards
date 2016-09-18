@@ -15,27 +15,27 @@ class PrebuiltSelectionViewController: UIViewController, UITableViewDataSource, 
     
     // MARK: - table view
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return PrebuiltManager.allPrebuilts.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = "cellIdentifier"
-        let cell = tableView.dequeueReusableCellWithIdentifier(identifier) ?? {
-            let c = UITableViewCell(style: .Default, reuseIdentifier: identifier)
-            c.selectionStyle = .None
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) ?? {
+            let c = UITableViewCell(style: .default, reuseIdentifier: identifier)
+            c.selectionStyle = .none
             return c
         }()
         
-        let prebuilt = PrebuiltManager.allPrebuilts[indexPath.row]
+        let prebuilt = PrebuiltManager.allPrebuilts[(indexPath as NSIndexPath).row]
         cell.textLabel?.text = prebuilt.name
 
-        let settings = NSUserDefaults.standardUserDefaults()
+        let settings = UserDefaults.standard
         let sw = NRSwitch(handler: {
             PrebuiltManager.resetSelected()
-            settings.setBool($0, forKey: prebuilt.settingsKey)
+            settings.set($0, forKey: prebuilt.settingsKey)
         })
-        sw.on = settings.boolForKey(prebuilt.settingsKey)
+        sw?.isOn = settings.bool(forKey: prebuilt.settingsKey)
         
         cell.accessoryView = sw
         
@@ -43,7 +43,7 @@ class PrebuiltSelectionViewController: UIViewController, UITableViewDataSource, 
     }
  
     // MARK: - empty state
-    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         return NSAttributedString(string: "Please reload card data".localized())
     }
 }

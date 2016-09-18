@@ -10,18 +10,18 @@ import UIKit
 import MessageUI
 
 class DeckEmail: NSObject, MFMailComposeViewControllerDelegate {
-    private var viewController: UIViewController!
-    private static let instance = DeckEmail()
+    fileprivate var viewController: UIViewController!
+    fileprivate static let instance = DeckEmail()
     
     class func canSendMail() -> Bool {
         return MFMailComposeViewController.canSendMail()
     }
     
-    class func emailDeck(deck: Deck, fromViewController: UIViewController) {
+    class func emailDeck(_ deck: Deck, fromViewController: UIViewController) {
         instance.sendAsEmail(deck, fromViewController: fromViewController)
     }
     
-    func sendAsEmail(deck: Deck, fromViewController: UIViewController) {
+    func sendAsEmail(_ deck: Deck, fromViewController: UIViewController) {
         guard DeckEmail.canSendMail() else { return }
         let mailer = MFMailComposeViewController()
         
@@ -31,11 +31,11 @@ class DeckEmail: NSObject, MFMailComposeViewControllerDelegate {
     
         mailer.setSubject(deck.name ?? "")
         self.viewController = fromViewController
-        self.viewController.presentViewController(mailer, animated:false, completion:nil)
+        self.viewController.present(mailer, animated:false, completion:nil)
     }
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        self.viewController.dismissViewControllerAnimated(false, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        self.viewController.dismiss(animated: false, completion: nil)
         self.viewController = nil
     }
 }

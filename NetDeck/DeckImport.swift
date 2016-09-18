@@ -15,10 +15,10 @@ import SwiftyJSON
 class DeckImport: NSObject {
     
     enum DeckBuilderSource {
-        case None
-        case NRDBList
-        case NRDBShared
-        case Meteor
+        case none
+        case nrdbList
+        case nrdbShared
+        case meteor
     }
 
     struct DeckSource {
@@ -38,8 +38,8 @@ class DeckImport: NSObject {
     var request: Request?
  
     class func updateCount() {
-        let c = UIPasteboard.generalPasteboard().changeCount
-        NSUserDefaults.standardUserDefaults().setInteger(c, forKey: SettingsKeys.CLIP_CHANGE_COUNT)
+        let c = UIPasteboard.general.changeCount
+        UserDefaults.standard.set(c, forKey: SettingsKeys.CLIP_CHANGE_COUNT)
     }
     
     class func checkClipboardForDeck() {
@@ -53,19 +53,19 @@ class DeckImport: NSObject {
             let always = false
         #endif
         
-        let pasteboard = UIPasteboard.generalPasteboard()
-        let lastChange = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.CLIP_CHANGE_COUNT)
+        let pasteboard = UIPasteboard.general
+        let lastChange = UserDefaults.standard.integer(forKey: SettingsKeys.CLIP_CHANGE_COUNT)
         if lastChange == pasteboard.changeCount && !always {
             return;
         }
-        NSUserDefaults.standardUserDefaults().setInteger(pasteboard.changeCount, forKey: SettingsKeys.CLIP_CHANGE_COUNT)
+        UserDefaults.standard.set(pasteboard.changeCount, forKey: SettingsKeys.CLIP_CHANGE_COUNT)
         
         guard let clip = pasteboard.string else { return }
         if clip.length == 0 {
             return
         }
 
-        let lines = clip.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        let lines = clip.components(separatedBy: CharacterSet.newlines)
         
         self.deck = nil;
         
@@ -77,13 +77,13 @@ class DeckImport: NSObject {
         self.uiAlert = nil
         if let deckSource = self.deckSource {
             switch deckSource.source {
-            case .NRDBList, .NRDBShared:
+            case .nrdbList, .nrdbShared:
                 let msg = "Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?".localized()
-                self.uiAlert = UIAlertController(title: nil, message: msg, preferredStyle: .Alert)
+                self.uiAlert = UIAlertController(title: nil, message: msg, preferredStyle: .alert)
                 
-            case .Meteor:
+            case .meteor:
                 let msg = "Detected a Meteor deck list URL in your clipboard. Download and import this deck?".localized()
-                self.uiAlert = UIAlertController(title: nil, message: msg, preferredStyle: .Alert)
+                self.uiAlert = UIAlertController(title: nil, message: msg, preferredStyle: .alert)
                 
             default:
                 break
@@ -95,16 +95,16 @@ class DeckImport: NSObject {
             
             if self.deck != nil {
                 let msg = "Detected a deck list in your clipboard. Import this deck?".localized()
-                self.uiAlert = UIAlertController(title: nil, message: msg, preferredStyle: .Alert)
+                self.uiAlert = UIAlertController(title: nil, message: msg, preferredStyle: .alert)
             }
         }
         
         if let alert = self.uiAlert {
-            alert.addAction(UIAlertAction(title:"No".localized(), style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title:"Yes".localized(), style: .Default) { (UIAlertAction) -> Void in
+            alert.addAction(UIAlertAction(title:"No".localized(), style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title:"Yes".localized(), style: .default) { (UIAlertAction) -> Void in
                 Analytics.logEvent("Import from Clipboard", attributes: nil)
                 if self.deck != nil {
-                    NSNotificationCenter.defaultCenter().postNotificationName(Notifications.IMPORT_DECK, object:self, userInfo:["deck": self.deck!])
+                    NotificationCenter.default.post(name: Notifications.IMPORT_DECK, object:self, userInfo:["deck": self.deck!])
                 }
                 else if self.deckSource != nil {
                     self.downloadDeck(self.deckSource!)
@@ -117,7 +117,7 @@ class DeckImport: NSObject {
         }
     }
     
-    func checkForNetrunnerDbDeckURL(lines: [String]) -> DeckSource? {
+    func checkForNetrunnerDbDeckURL(_ lines: [String]) -> DeckSource? {
         // a netrunnerdb.com decklist url looks like this:
         // https://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
         // or like this:
@@ -127,17 +127,17 @@ class DeckImport: NSObject {
         let shared = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../deck/view/(\\d*)", options:[])
         
         let dict = [
-            DeckBuilderSource.NRDBShared: shared,
-            DeckBuilderSource.NRDBList: list
+            DeckBuilderSource.nrdbShared: shared,
+            DeckBuilderSource.nrdbList: list
         ]
         
         for source in dict.keys {
             let regEx = dict[source]!
             
             for line in lines {
-                if let match = regEx.firstMatchInString(line, options:[], range:NSMakeRange(0, line.length)) where match.numberOfRanges == 2 {
+                if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length)) , match.numberOfRanges == 2 {
                     let l = line as NSString
-                    let src = DeckSource(deckId: l.substringWithRange(match.rangeAtIndex(1)), source: source)
+                    let src = DeckSource(deckId: l.substring(with: match.rangeAt(1)), source: source)
                     return src
                 }
             }
@@ -146,7 +146,7 @@ class DeckImport: NSObject {
         return nil
     }
     
-    func checkForMeteorDeckURL(lines: [String]) -> DeckSource? {
+    func checkForMeteorDeckURL(_ lines: [String]) -> DeckSource? {
         // a meteor.stimhack.com decklist url looks like this:
         // http://meteor.stimhack.com/decks/yBMJ3GL6FPozt9nkQ/
         // or like this (no slash)
@@ -155,9 +155,9 @@ class DeckImport: NSObject {
         let regEx = try! NSRegularExpression(pattern:"http://meteor.stimhack.com/decks/(.*)/?", options:[])
         
         for line in lines {
-            if let match = regEx.firstMatchInString(line, options:[], range:NSMakeRange(0, line.length)) where match.numberOfRanges == 2 {
+            if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length)) , match.numberOfRanges == 2 {
                 let l = line as NSString
-                let src = DeckSource(deckId: l.substringWithRange(match.rangeAtIndex(1)), source: .Meteor)
+                let src = DeckSource(deckId: l.substring(with: match.rangeAt(1)), source: .meteor)
                 return src
             }
         }
@@ -165,7 +165,7 @@ class DeckImport: NSObject {
         return nil
     }
     
-    func checkForTextDeck(lines: [String]) -> Deck? {
+    func checkForTextDeck(_ lines: [String]) -> Deck? {
         let cards = CardManager.allCards()
         let regex1 = try! NSRegularExpression(pattern:"^([0-9])x", options:[]) // start with "1x ..."
         let regex2 = try! NSRegularExpression(pattern:" x([0-9])", options:[]) // end with "... x3"
@@ -173,7 +173,7 @@ class DeckImport: NSObject {
         
         var name: String?
         let deck = Deck()
-        var role = NRRole.None
+        var role = NRRole.none
         for line in lines {
             if name == nil {
                 name = line
@@ -181,37 +181,37 @@ class DeckImport: NSObject {
             
             for c in cards {
                 // don't bother checking cards of the opposite role (as soon as we know this deck's role)
-                let roleOk = role == .None || role == c.role;
+                let roleOk = role == .none || role == c.role;
                 if !roleOk {
                     continue
                 }
                 
-                var range = line.rangeOfString(c.englishName, options:[.CaseInsensitiveSearch,.DiacriticInsensitiveSearch])
+                var range = line.range(of: c.englishName, options:[.caseInsensitive,.diacriticInsensitive])
                 if range == nil {
-                    range = line.rangeOfString(c.name, options:[.CaseInsensitiveSearch,.DiacriticInsensitiveSearch])
+                    range = line.range(of: c.name, options:[.caseInsensitive,.diacriticInsensitive])
                 }
                 
                 if range != nil {
-                    if c.type == .Identity {
+                    if c.type == .identity {
                         deck.addCard(c, copies:1)
                         role = c.role
                         // NSLog(@"found identity %@", c.name);
                     } else {
-                        var match = regex1.firstMatchInString(line, options:[], range:NSMakeRange(0, line.length))
+                        var match = regex1.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length))
                         if match == nil {
-                            match = regex2.firstMatchInString(line, options:[], range:NSMakeRange(0, line.length))
+                            match = regex2.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length))
                         }
                         if match == nil {
-                            match = regex3.firstMatchInString(line, options:[], range:NSMakeRange(0, line.length))
+                            match = regex3.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length))
                         }
                         
-                        if let m = match where m.numberOfRanges == 2 {
+                        if let m = match , m.numberOfRanges == 2 {
                             let l = line as NSString
-                            let count = l.substringWithRange(m.rangeAtIndex(1))
+                            let count = l.substring(with: m.rangeAt(1))
                             // NSLog(@"found card %@ x %@", count, c.name);
                             
                             let max = deck.isDraft ? 100 : 4;
-                            if let cnt = Int(count) where cnt > 0 && cnt < max {
+                            if let cnt = Int(count) , cnt > 0 && cnt < max {
                                 deck.addCard(c, copies:cnt)
                             }
                             
@@ -230,23 +230,23 @@ class DeckImport: NSObject {
         }
     }
     
-    func downloadDeck(source: DeckSource) {
+    func downloadDeck(_ source: DeckSource) {
         
-        let alert = AlertController(title: "Downloading Deck".localized(), message: nil, preferredStyle: .Alert)
-        alert.visualStyle = CustomAlertVisualStyle(alertStyle: .Alert)
+        let alert = AlertController(title: "Downloading Deck".localized(), message: nil, preferredStyle: .alert)
+        // alert.visualStyle = CustomAlertVisualStyle(alertStyle: .alert)
         self.sdcAlert = alert
         
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimating()
         
         alert.contentView.addSubview(spinner)
         
-        spinner.centerXAnchor.constraintEqualToAnchor(alert.contentView.centerXAnchor).active = true
-        spinner.topAnchor.constraintEqualToAnchor(alert.contentView.topAnchor).active = true
-        spinner.bottomAnchor.constraintEqualToAnchor(alert.contentView.bottomAnchor).active = true
+        spinner.centerXAnchor.constraint(equalTo: alert.contentView.centerXAnchor).isActive = true
+        spinner.topAnchor.constraint(equalTo: alert.contentView.topAnchor).isActive = true
+        spinner.bottomAnchor.constraint(equalTo: alert.contentView.bottomAnchor).isActive = true
         
-        alert.addAction(AlertAction(title: "Stop".localized(), style: .Default, handler: { (action) -> Void in
+        alert.add(AlertAction(title: "Stop".localized(), style: .normal, handler: { (action) -> Void in
             self.downloadStopped = true
             self.sdcAlert = nil
             if let req = self.request {
@@ -257,48 +257,48 @@ class DeckImport: NSObject {
         alert.present()
         
         switch source.source {
-        case .NRDBList:
-            self.performSelector(#selector(DeckImport.doDownloadDeckFromNetrunnerDbList(_:)), withObject:source.deckId, afterDelay:0.0)
+        case .nrdbList:
+            self.perform(#selector(DeckImport.doDownloadDeckFromNetrunnerDbList(_:)), with:source.deckId, afterDelay:0.0)
         
-        case .NRDBShared:
-            self.performSelector(#selector(DeckImport.doDownloadDeckFromNetrunnerDbShared(_:)), withObject:source.deckId, afterDelay:0.0)
+        case .nrdbShared:
+            self.perform(#selector(DeckImport.doDownloadDeckFromNetrunnerDbShared(_:)), with:source.deckId, afterDelay:0.0)
         
         default:
-            self.performSelector(#selector(DeckImport.doDownloadDeckFromMeteor(_:)), withObject:source.deckId, afterDelay:0.0)
+            self.perform(#selector(DeckImport.doDownloadDeckFromMeteor(_:)), with:source.deckId, afterDelay:0.0)
         }
     }
     
-    func doDownloadDeckFromNetrunnerDbList(deckId: String) {
+    func doDownloadDeckFromNetrunnerDbList(_ deckId: String) {
         let deckUrl = "https://netrunnerdb.com/api/2.0/public/decklist/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     
     }
-    func doDownloadDeckFromNetrunnerDbShared(deckId: String) {
+    func doDownloadDeckFromNetrunnerDbShared(_ deckId: String) {
         let deckUrl = "https://netrunnerdb.com/api/2.0/public/deck/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     }
     
-    func doDownloadDeckFromNetrunnerDb(deckUrl: String) {
+    func doDownloadDeckFromNetrunnerDb(_ deckUrl: String) {
         var ok = false
         self.downloadStopped = false
         
-        self.request = Alamofire.request(.GET, deckUrl).validate().responseJSON { response in
+        self.request = Alamofire.request(deckUrl).validate().responseJSON { response in
             switch response.result {
-            case .Success:
-                if let value = response.result.value where !self.downloadStopped {
+            case .success:
+                if let value = response.result.value , !self.downloadStopped {
                     let json = JSON(value)
                     // print("JSON: \(json)")
                     ok = self.parseJsonDeckList(json)
                 }
                 self.downloadFinished(ok)
-            case .Failure(let error):
+            case .failure(let error):
                 print(error)
                 self.downloadFinished(false)
             }
         }
     }
     
-    func parseJsonDeckList(json: JSON) -> Bool {
+    func parseJsonDeckList(_ json: JSON) -> Bool {
         let deck = Deck()
         
         if !json.validNrdbResponse {
@@ -310,50 +310,50 @@ class DeckImport: NSObject {
         deck.name = data["name"].stringValue
         var notes = data["description"].stringValue
         if notes.length > 0 {
-            notes = notes.stringByReplacingOccurrencesOfString("<p>", withString: "")
-            notes = notes.stringByReplacingOccurrencesOfString("</p>", withString: "")
+            notes = notes.replacingOccurrences(of: "<p>", with: "")
+            notes = notes.replacingOccurrences(of: "</p>", with: "")
             deck.notes = notes
         }
         
         for (code, qty) in data["cards"].dictionaryValue {
-            if let card = CardManager.cardByCode(code) where qty.intValue > 0 {
+            if let card = CardManager.cardByCode(code) , qty.intValue > 0 {
                 deck.addCard(card, copies: qty.intValue)
             }
         }
         
         if deck.identity != nil && deck.cards.count > 0 {
-            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
+            NotificationCenter.default.post(name: Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
             return true
         }
         return false
     }
 
-    func doDownloadDeckFromMeteor(deckId: String) {
+    func doDownloadDeckFromMeteor(_ deckId: String) {
         let deckUrl = "http://meteor.stimhack.com/deckexport/octgn/" + deckId
         var ok = false
         self.downloadStopped = false
         
-        self.request = Alamofire.request(.GET, deckUrl).responseData(completionHandler: { (response) in
+        self.request = Alamofire.request(deckUrl).responseData(completionHandler: { (response) in
             switch response.result {
-            case .Success:
+            case .success:
                 if let value = response.result.value {
                     var filename: NSString = ""
-                    if let disposition = response.response?.allHeaderFields["Content-Disposition"] {
-                        var range = disposition.rangeOfString("filename=", options: .CaseInsensitiveSearch)
+                    if let disposition = response.response?.allHeaderFields["Content-Disposition"] as? NSString {
+                        var range = disposition.range(of: "filename=", options: .caseInsensitive)
                         if range.location != NSNotFound {
-                            filename = disposition.substringFromIndex(range.location+9)
-                            range = filename.rangeOfString(".o8d")
+                            filename = disposition.substring(from: range.location+9) as NSString
+                            range = filename.range(of: ".o8d")
                             if range.location != NSNotFound {
-                                filename = filename.substringToIndex(range.location)
+                                filename = filename.substring(to: range.location) as NSString
                             }
-                            filename = filename.stringByRemovingPercentEncoding!
+                            filename = filename.removingPercentEncoding! as NSString
                         }
                     }
                     ok = self.importOctgnDeck(value, name: filename as String)
                     
                     self.downloadFinished(ok)
                 }
-            case .Failure(let error):
+            case .failure(let error):
                 print(error)
                 self.downloadFinished(false)
             }
@@ -361,44 +361,44 @@ class DeckImport: NSObject {
         
      }
 
-    func importOctgnDeck(data: NSData, name: String) -> Bool {
+    func importOctgnDeck(_ data: Data, name: String) -> Bool {
         let importer = OctgnImport()
         if let deck = importer.parseOctgnDeckFromData(data) {
             if deck.identity != nil && deck.cards.count > 0 {
                 deck.name = name
-                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
+                NotificationCenter.default.post(name: Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
                 return true
             }
         }
         return false
     }
 
-    func downloadFinished(ok: Bool) {
+    func downloadFinished(_ ok: Bool) {
         if let alert = self.sdcAlert {
             alert.dismiss()
         }
         self.request = nil
     }
 
-    class func importDeckFromLocalUrl(url: NSURL) {
+    class func importDeckFromLocalUrl(_ url: URL) {
         Analytics.logEvent("Import from URL", attributes: nil)
-        let path = url.path!
-        let b64 = path.substringFromIndex(path.startIndex.advancedBy(1)) // strip off the leading "/" character
-        let data = NSData(base64EncodedString: b64, options: [])
+        let path = url.path
+        let b64 = path.substring(from: path.characters.index(path.startIndex, offsetBy: 1)) // strip off the leading "/" character
+        let data = Data(base64Encoded: b64, options: [])
         let uncompressed = GZip.gzipDeflate(data)
-        let deckStr = NSString(data: uncompressed, encoding: NSUTF8StringEncoding)
+        let deckStr = NSString(data: uncompressed!, encoding: String.Encoding.utf8.rawValue)
         
         let deck = Deck()
-        if let parts = deckStr?.componentsSeparatedByString("&") {
+        if let parts = deckStr?.components(separatedBy: "&") {
             for card in parts {
-                let arr = card.componentsSeparatedByString("=")
+                let arr = card.components(separatedBy: "=")
                 let code = arr[0]
                 let qty = arr[1]
                 
                 if code == "name" {
                     deck.name = qty
                 } else {
-                    if let card = CardManager.cardByCode(code), q = Int(qty) where q > 0 {
+                    if let card = CardManager.cardByCode(code), let q = Int(qty) , q > 0 {
                         deck.addCard(card, copies: q)
                     }
                 }
@@ -406,7 +406,7 @@ class DeckImport: NSObject {
         }
         
         if deck.identity != nil && deck.cards.count > 0 {
-            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
+            NotificationCenter.default.post(name: Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
         }
     }
 }

@@ -12,6 +12,8 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+    
     self.pips = [SmallPipsView createWithFrame:CGRectMake(0, 0, 38, 38)];
     
     [self.pipsView addSubview:self.pips];

@@ -8,6 +8,17 @@
 
 import Alamofire
 import AlamofireImage
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class ImageCache: NSObject {
     static let imagesDirectory = "images"
@@ -29,77 +40,77 @@ class ImageCache: NSObject {
     static let runnerPlaceholder = UIImage(named: "RunnerPlaceholder")!
     static let corpPlaceholder = UIImage(named: "CorpPlaceholder")!
     
-    class func placeholderFor(role: NRRole) -> UIImage {
-        return role == .Runner ? self.runnerPlaceholder : self.corpPlaceholder
+    class func placeholderFor(_ role: NRRole) -> UIImage {
+        return role == .runner ? self.runnerPlaceholder : self.corpPlaceholder
     }
 
     static let IMAGE_WIDTH = 300
     static let IMAGE_HEIGHT = 418
     
-    private static let debugLog = false
-    private static let SEC_PER_DAY = 24 * 60 * 60
-    private static let SUCCESS_INTERVAL = NSTimeInterval(30 * SEC_PER_DAY)
-    private static let ERROR_INTERVAL = NSTimeInterval(1 * SEC_PER_DAY)
+    fileprivate static let debugLog = false
+    fileprivate static let SEC_PER_DAY = 24 * 60 * 60
+    fileprivate static let SUCCESS_INTERVAL = TimeInterval(30 * SEC_PER_DAY)
+    fileprivate static let ERROR_INTERVAL = TimeInterval(1 * SEC_PER_DAY)
     
-    private let memCache: NSCache = {
-        let c = NSCache()
+    fileprivate let memCache: NSCache<NSString, UIImage> = {
+        let c = NSCache<NSString, UIImage>()
         c.name = "imgCache"
         return c
     }()
     
     // img keys we know aren't downloadable (yet)
-    private var unavailableImages = Set<String>()
+    fileprivate var unavailableImages = Set<String>()
     
     // Last-Modified date of each image
-    private var lastModifiedDates = [String: String]()  // code -> last-modified
+    fileprivate var lastModifiedDates = [String: String]()  // code -> last-modified
     
     // when to next check if an img was updated
-    private var nextCheckDates = [String: NSDate]()     // code -> date
+    fileprivate var nextCheckDates = [String: Date]()     // code -> date
     
-    private override init() {
+    fileprivate override init() {
         super.init()
         
-        let settings = NSUserDefaults.standardUserDefaults()
+        let settings = UserDefaults.standard
         
-        if let lastMod = settings.dictionaryForKey(SettingsKeys.LAST_MOD_CACHE) as? [String: String] {
+        if let lastMod = settings.dictionary(forKey: SettingsKeys.LAST_MOD_CACHE) as? [String: String] {
             self.lastModifiedDates = lastMod
         }
         
-        if let nextCheck = settings.dictionaryForKey(SettingsKeys.NEXT_CHECK) as? [String: NSDate] {
+        if let nextCheck = settings.dictionary(forKey: SettingsKeys.NEXT_CHECK) as? [String: Date] {
             self.nextCheckDates = nextCheck
         }
         
-        if let imgs = settings.arrayForKey(SettingsKeys.UNAVAILABLE_IMAGES) as? [String] {
-            self.unavailableImages.unionInPlace(imgs)
+        if let imgs = settings.array(forKey: SettingsKeys.UNAVAILABLE_IMAGES) as? [String] {
+            self.unavailableImages.formUnion(imgs)
         }
         
-        let now = NSDate.timeIntervalSinceReferenceDate()
-        let lastCheck = settings.doubleForKey(SettingsKeys.UNAVAIL_IMG_DATE) ?? now + 3600.0
+        let now = Date.timeIntervalSinceReferenceDate
+        let lastCheck = settings.object(forKey: SettingsKeys.UNAVAIL_IMG_DATE) as? Double ?? now + 3600.0
         
         if lastCheck < now {
             unavailableImages.removeAll()
-            settings.setDouble(now + 48*3600, forKey:SettingsKeys.UNAVAIL_IMG_DATE)
-            settings.setObject(Array(self.unavailableImages), forKey:SettingsKeys.UNAVAILABLE_IMAGES)
+            settings.set(now + 48*3600, forKey:SettingsKeys.UNAVAIL_IMG_DATE)
+            settings.set(Array(self.unavailableImages), forKey:SettingsKeys.UNAVAILABLE_IMAGES)
         }
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) {
+        DispatchQueue.global(qos: .background).async {
             self.initializeMemCache()
         }
     }
     
     func saveData() {
-        let settings = NSUserDefaults.standardUserDefaults()
+        let settings = UserDefaults.standard
         
-        settings.setObject(self.lastModifiedDates, forKey: SettingsKeys.LAST_MOD_CACHE)
-        settings.setObject(self.nextCheckDates, forKey: SettingsKeys.NEXT_CHECK)
-        settings.setObject(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
+        settings.set(self.lastModifiedDates, forKey: SettingsKeys.LAST_MOD_CACHE)
+        settings.set(self.nextCheckDates, forKey: SettingsKeys.NEXT_CHECK)
+        settings.set(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
         settings.synchronize()
     }
     
-    func getImageFor(card: Card, completion: (Card, UIImage, Bool) -> Void) {
+    func getImageFor(_ card: Card, completion: @escaping (Card, UIImage, Bool) -> Void) {
         let key = card.code
         
-        if let img = memCache.objectForKey(key) as? UIImage {
+        if let img = memCache.object(forKey: key as NSString) {
             completion(card, img, false)
             return
         }
@@ -110,7 +121,7 @@ class ImageCache: NSObject {
             return
         }
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) {
+        DispatchQueue.global(qos: .background).async {
             // get image from our on-disk cache
             if let img = self.getDecodedImageFor(key)
             {
@@ -118,8 +129,8 @@ class ImageCache: NSObject {
                     self.checkForImageUpdate(card, key: key)
                 }
                 
-                self.memCache.setObject(img, forKey: key)
-                dispatch_async(dispatch_get_main_queue()) {
+                self.memCache.setObject(img, forKey: key as NSString)
+                DispatchQueue.main.async {
                     completion(card, img, false)
                 }
             }
@@ -128,12 +139,12 @@ class ImageCache: NSObject {
                 // image is not in on-disk cache
                 if Reachability.online() {
                     self.downloadImageFor(card, key: key) { (card, image, placeholder) in
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             completion(card, image, placeholder)
                         }
                     }
                 } else {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         completion(card, ImageCache.placeholderFor(card.role), true)
                     }
                 }
@@ -141,7 +152,7 @@ class ImageCache: NSObject {
         }
     }
     
-    func updateMissingImageFor(card: Card, completion: (Bool) -> Void) {
+    func updateMissingImageFor(_ card: Card, completion: @escaping (Bool) -> Void) {
         if let _ = self.getImageFor(card.code) {
             completion(true)
         } else {
@@ -149,19 +160,19 @@ class ImageCache: NSObject {
         }
     }
     
-    func updateImageFor(card: Card, completion: (Bool) -> Void) {
+    func updateImageFor(_ card: Card, completion: @escaping (Bool) -> Void) {
         guard Reachability.online() else {
             completion(false)
             return
         }
-        guard let url = NSURL(string: card.imageSrc) else {
+        guard let url = URL(string: card.imageSrc) else {
             completion(false)
             return
         }
         
         let key = card.code
         
-        let request = NSMutableURLRequest(URL:url, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 10)
+        var request = URLRequest(url:url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
         let lastModDate = self.lastModifiedDates[key]
         if lastModDate != nil {
             request.setValue(lastModDate, forHTTPHeaderField: "If-Modified-Since")
@@ -170,20 +181,20 @@ class ImageCache: NSObject {
         Alamofire.request(request).responseImage { response in
             if let img = response.result.value {
                 let lastModified = response.response?.allHeaderFields["Last-Modified"] as? String
-                self.NLOG("up: GOT %@ If-Modified-Since %@: status 200", url, lastModified ?? "n/a");
+                self.NLOG("up: GOT %@ If-Modified-Since %@: status 200", url.absoluteString, lastModified ?? "n/a");
                 self.storeInCache(img, lastModified: lastModified, key: key)
                 completion(true)
             } else {
-                self.NLOG("up: GOT %@ If-Modified-Since %@: status %ld", url, lastModDate ?? "n/a", response.response?.statusCode ?? 999)
+                self.NLOG("up: GOT %@ If-Modified-Since %@: status %ld", url.absoluteString, lastModDate ?? "n/a", response.response?.statusCode ?? 999)
                 completion(response.response?.statusCode == 304)
             }
         }
     }
     
-    func imageAvailableFor(card: Card) -> Bool {
+    func imageAvailableFor(_ card: Card) -> Bool {
         let key = card.code
         
-        if let _ = self.memCache.objectForKey(key) {
+        if let _ = self.memCache.object(forKey: key as NSString) {
             return true
         }
         
@@ -195,34 +206,34 @@ class ImageCache: NSObject {
         let dir = self.directoryForImages()
         let file = dir.stringByAppendingPathComponent(key)
         
-        return NSFileManager.defaultManager().fileExistsAtPath(file)
+        return FileManager.default.fileExists(atPath: file)
     }
 
-    func croppedImage(img: UIImage, forCard card: Card) -> UIImage? {
+    func croppedImage(_ img: UIImage, forCard card: Card) -> UIImage? {
         var scale = 1.0
         if img.size.width * img.scale > 300 {
             scale = 1.436
         }
         let key = String(format: "%@:crop", card.code)
         
-        var cropped = self.memCache.objectForKey(key) as? UIImage
+        var cropped = self.memCache.object(forKey: key as NSString)
         if cropped == nil {
             let rect = CGRect(x: Int(10.0*scale), y: Int(card.cropY*scale), width: Int(280.0*scale), height: Int(209.0*scale))
-            let imageRef = CGImageCreateWithImageInRect(img.CGImage, rect)
-            cropped = UIImage(CGImage: imageRef!)
-            if (cropped != nil) {
-                self.memCache.setObject(cropped!, forKey:key)
+            let imageRef = img.cgImage?.cropping(to: rect)
+            cropped = UIImage(cgImage: imageRef!)
+            if cropped != nil {
+                self.memCache.setObject(cropped!, forKey:key as NSString)
             }
         }
         return cropped
     }
     
     func clearLastModifiedInfo() {
-        let settings = NSUserDefaults.standardUserDefaults()
+        let settings = UserDefaults.standard
         self.lastModifiedDates.removeAll()
         self.nextCheckDates.removeAll()
-        settings.setObject(self.lastModifiedDates, forKey: SettingsKeys.LAST_MOD_CACHE)
-        settings.setObject(self.nextCheckDates, forKey: SettingsKeys.NEXT_CHECK)
+        settings.set(self.lastModifiedDates, forKey: SettingsKeys.LAST_MOD_CACHE)
+        settings.set(self.nextCheckDates, forKey: SettingsKeys.NEXT_CHECK)
         
         self.memCache.removeAllObjects()
     }
@@ -231,20 +242,20 @@ class ImageCache: NSObject {
         self.clearLastModifiedInfo()
         
         self.unavailableImages.removeAll()
-        let settings = NSUserDefaults.standardUserDefaults()
-        settings.setObject(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
+        let settings = UserDefaults.standard
+        settings.set(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
         
         self.removeCacheDirectory()
     }
     
-    private func NLOG(format: String, _ args: CVarArgType...) {
+    fileprivate func NLOG(_ format: String, _ args: CVarArg...) {
         if ImageCache.debugLog {
             let x = String(format: format, arguments: args)
             NSLog(x)
         }
     }
     
-    private func storeInCache(img: UIImage, lastModified: String?, key: String) {
+    fileprivate func storeInCache(_ img: UIImage, lastModified: String?, key: String) {
         var interval = ImageCache.SUCCESS_INTERVAL
         if lastModified != nil {
             self.lastModifiedDates[key] = lastModified!
@@ -252,14 +263,14 @@ class ImageCache: NSObject {
             interval = ImageCache.ERROR_INTERVAL
         }
         
-        self.nextCheckDates[key] = NSDate(timeIntervalSinceNow: interval)
+        self.nextCheckDates[key] = Date(timeIntervalSinceNow: interval)
         
         if !self.saveImage(img, key: key) {
-            self.lastModifiedDates.removeValueForKey(key)
+            self.lastModifiedDates.removeValue(forKey: key)
         }
     }
     
-    private func saveImage(image: UIImage, key: String) -> Bool {
+    fileprivate func saveImage(_ image: UIImage, key: String) -> Bool {
         let dir = self.directoryForImages()
         let file = dir.stringByAppendingPathComponent(key)
         
@@ -273,88 +284,88 @@ class ImageCache: NSObject {
             }
         }
         
-        self.memCache.setObject(img, forKey:key)
+        self.memCache.setObject(img, forKey:key as NSString)
         
         if let data = UIImagePNGRepresentation(img) {
-            data.writeToFile(file, atomically: true)
+            try? data.write(to: URL(fileURLWithPath: file), options: [.atomic])
             AppDelegate.excludeFromBackup(file)
             return true
         }
         return false
     }
     
-    private func scaleImage(img: UIImage, toSize size: CGSize) -> UIImage? {
+    fileprivate func scaleImage(_ img: UIImage, toSize size: CGSize) -> UIImage? {
         UIGraphicsBeginImageContext(size)
         
-        img.drawInRect(CGRectMake(0.0, 0.0, size.width, size.height))
+        img.draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         return newImage
     }
     
-    private func removeCacheDirectory() {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+    fileprivate func removeCacheDirectory() {
+        let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths.first!
         
         let directory = supportDirectory.stringByAppendingPathComponent(ImageCache.imagesDirectory)
         
-        let _ = try? NSFileManager.defaultManager().removeItemAtPath(directory)
+        let _ = try? FileManager.default.removeItem(atPath: directory)
     }
     
-    private func initializeMemCache() {
+    fileprivate func initializeMemCache() {
         // NSLog("start initMemCache")
         let dir = self.directoryForImages()
-        guard let files = try? NSFileManager.defaultManager().contentsOfDirectoryAtPath(dir) else {
+        guard let files = try? FileManager.default.contentsOfDirectory(atPath: dir) else {
             return
         }
         
         for file in files {
             let imgFile = dir.stringByAppendingPathComponent(file)
             
-            if let imgData = NSData(contentsOfFile: imgFile) {
+            if let imgData = try? Data(contentsOf: URL(fileURLWithPath: imgFile)) {
                 if let img = self.decodedImage(UIImage(data: imgData)) {
-                    self.memCache.setObject(img, forKey:file)
+                    self.memCache.setObject(img, forKey:file as NSString)
                 }
             }
         }
         // NSLog("end initMemCache")
     }
     
-    private func getImageFor(key: String) -> UIImage? {
-        if let img = self.memCache.objectForKey(key) as? UIImage {
+    fileprivate func getImageFor(_ key: String) -> UIImage? {
+        if let img = self.memCache.object(forKey: key as NSString) {
             return img
         }
         
         let img = self.getDecodedImageFor(key)
         if img != nil  {
-            memCache.setObject(img!, forKey: key)
+            memCache.setObject(img!, forKey: key as NSString)
         }
         return img
     }
     
-    private func getDecodedImageFor(key: String) -> UIImage? {
+    fileprivate func getDecodedImageFor(_ key: String) -> UIImage? {
         let dir = self.directoryForImages()
         let file = dir.stringByAppendingPathComponent(key)
         
         var img: UIImage?
-        if let imgData = NSData(contentsOfFile: file) {
+        if let imgData = try? Data(contentsOf: URL(fileURLWithPath: file)) {
             img = self.decodedImage(UIImage(data: imgData))
         }
         
         if img == nil || img?.size.width < 200 {
             // image is broken - remove it
             img = nil
-            let _ = try? NSFileManager.defaultManager().removeItemAtPath(file)
-            self.lastModifiedDates.removeValueForKey(key)
+            let _ = try? FileManager.default.removeItem(atPath: file)
+            self.lastModifiedDates.removeValue(forKey: key)
         }
         
         return img
     }
     
-    private func checkForImageUpdate(card: Card, key: String) {
+    fileprivate func checkForImageUpdate(_ card: Card, key: String) {
         if let checkDate = self.nextCheckDates[key] {
-            let now = NSDate()
+            let now = Date()
             if now.timeIntervalSinceReferenceDate < checkDate.timeIntervalSinceReferenceDate {
                 // no need to check
                 return
@@ -362,8 +373,8 @@ class ImageCache: NSObject {
         }
         
         self.NLOG("check for %@", key)
-        let url = NSURL(string: card.imageSrc)
-        let request = NSMutableURLRequest(URL: url!, cachePolicy: .ReloadIgnoringCacheData, timeoutInterval: 10)
+        let url = URL(string: card.imageSrc)
+        var request = URLRequest(url: url!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
         let lastModDate = self.lastModifiedDates[key]
         if lastModDate != nil {
             request.setValue(lastModDate, forHTTPHeaderField: "If-Modified-Since")
@@ -377,21 +388,21 @@ class ImageCache: NSObject {
                 self.storeInCache(img, lastModified: lastModified, key: key)
             } else if response.response?.statusCode == 304 {
                 self.NLOG("GOT %@ status 304")
-                self.nextCheckDates[key] = NSDate(timeIntervalSinceNow: ImageCache.SUCCESS_INTERVAL)
+                self.nextCheckDates[key] = Date(timeIntervalSinceNow: ImageCache.SUCCESS_INTERVAL)
             } else {
                 self.NLOG("GOT %@ failure")
-                self.nextCheckDates[key] = NSDate(timeIntervalSinceNow: ImageCache.ERROR_INTERVAL)
+                self.nextCheckDates[key] = Date(timeIntervalSinceNow: ImageCache.ERROR_INTERVAL)
             }
         }
     }
     
-    private func downloadImageFor(card: Card, key: String, completion: (Card, UIImage, Bool) -> Void) {
+    fileprivate func downloadImageFor(_ card: Card, key: String, completion: @escaping (Card, UIImage, Bool) -> Void) {
         let src = card.imageSrc
-        Alamofire.request(.GET, src)
+        Alamofire.request(src)
             .validate()
             .responseImage { response in
                 switch response.result {
-                case .Success:
+                case .success:
                     self.NLOG("dl: GET %@: status 200", src)
                     if let img = response.result.value {
                         completion(card, img, false)
@@ -403,59 +414,59 @@ class ImageCache: NSObject {
                         return
                     }
                     fallthrough
-                case .Failure:
+                case .failure:
                     self.NLOG("dl: GET %@ for %@: error %ld", src, card.name, response.response?.statusCode ?? 999)
                     let img = ImageCache.placeholderFor(card.role)
                     completion(card, img, true)
                     self.unavailableImages.insert(key)
-                    self.lastModifiedDates.removeValueForKey(key)
+                    self.lastModifiedDates.removeValue(forKey: key)
                 }
             }
     }
     
-    private func directoryForImages() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+    fileprivate func directoryForImages() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths.first!
         
         let directory = supportDirectory.stringByAppendingPathComponent(ImageCache.imagesDirectory)
         
-        let fileMgr = NSFileManager.defaultManager()
-        if !fileMgr.fileExistsAtPath(directory) {
-            let _ = try? fileMgr.createDirectoryAtPath(directory, withIntermediateDirectories: true, attributes: nil)
+        let fileMgr = FileManager.default
+        if !fileMgr.fileExists(atPath: directory) {
+            let _ = try? fileMgr.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: nil)
         }
         
         return directory
     }
     
-    private func decodedImage(img: UIImage?) -> UIImage? {
+    fileprivate func decodedImage(_ img: UIImage?) -> UIImage? {
         if img == nil {
             return nil
         }
-        let imageRef = img!.CGImage
+        let imageRef = img!.cgImage
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
         // Makes system don't need to do extra conversion when displayed.
-        let bitmapInfo = CGImageAlphaInfo.PremultipliedFirst.rawValue | CGBitmapInfo.ByteOrder32Little.rawValue
-        let width = CGImageGetWidth(imageRef)
-        let height = CGImageGetHeight(imageRef)
+        let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
+        let width = imageRef?.width
+        let height = imageRef?.height
         
-        let context = CGBitmapContextCreate(nil,
-            width,
-            height,
-            8, // bits per component
-            width * 4, // Just always return width * 4 will be enough
-            colorSpace, // System only supports RGB, set explicitly
-            bitmapInfo)
+        let context = CGContext(data: nil,
+            width: width!,
+            height: height!,
+            bitsPerComponent: 8, // bits per component
+            bytesPerRow: width! * 4, // Just always return width * 4 will be enough
+            space: colorSpace, // System only supports RGB, set explicitly
+            bitmapInfo: bitmapInfo)
 
         if context == nil {
             return nil
         }
         
-        let rect = CGRect(x: 0, y: 0, width: width, height: height)
-        CGContextDrawImage(context, rect, imageRef)
+        let rect = CGRect(x: 0, y: 0, width: width!, height: height!)
+        context?.draw(imageRef!, in: rect)
         
-        if let decompressedImageRef = CGBitmapContextCreateImage(context) {
-            return UIImage(CGImage: decompressedImageRef, scale: img!.scale, orientation: img!.imageOrientation)
+        if let decompressedImageRef = context?.makeImage() {
+            return UIImage(cgImage: decompressedImageRef, scale: img!.scale, orientation: img!.imageOrientation)
         }
         return nil
     }

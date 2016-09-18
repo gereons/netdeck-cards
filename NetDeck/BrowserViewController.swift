@@ -17,16 +17,16 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var factionButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     
-    private var role = NRRole.None
-    private var cardList: CardList!
-    private var cards = [[Card]]()
-    private var sections = [String]()
+    fileprivate var role = NRRole.none
+    fileprivate var cardList: CardList!
+    fileprivate var cards = [[Card]]()
+    fileprivate var sections = [String]()
     
     // filter criteria
-    private var searchText = ""
-    private var types = Set<String>()
-    private var sets = Set<String>()
-    private var factions = Set<String>()
+    fileprivate var searchText = ""
+    fileprivate var types = Set<String>()
+    fileprivate var sets = Set<String>()
+    fileprivate var factions = Set<String>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,20 +36,20 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.tableFooterView = UIView(frame:CGRect.zero)
-        self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.backgroundColor = UIColor.clear
         
         self.searchBar.scopeButtonTitles = [ "Both".localized(), "Runner".localized(), "Corp".localized() ]
         self.searchBar.showsCancelButton = false
         self.searchBar.showsScopeBar = true
         
-        self.typeButton.setTitle("Type".localized(), forState: .Normal)
-        self.setButton.setTitle("Set".localized(), forState: .Normal)
-        self.factionButton.setTitle("Faction".localized(), forState: .Normal)
-        self.clearButton.setTitle("Clear".localized(), forState: .Normal)
+        self.typeButton.setTitle("Type".localized(), for: UIControlState())
+        self.setButton.setTitle("Set".localized(), for: UIControlState())
+        self.factionButton.setTitle("Faction".localized(), for: UIControlState())
+        self.clearButton.setTitle("Clear".localized(), for: UIControlState())
         
-        let nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self, selector:#selector(BrowserViewController.showKeyboard(_:)), name:UIKeyboardWillShowNotification, object:nil)
-        nc.addObserver(self, selector:#selector(BrowserViewController.hideKeyboard(_:)), name:UIKeyboardWillHideNotification, object:nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector:#selector(BrowserViewController.showKeyboard(_:)), name:NSNotification.Name.UIKeyboardWillShow, object:nil)
+        nc.addObserver(self, selector:#selector(BrowserViewController.hideKeyboard(_:)), name:NSNotification.Name.UIKeyboardWillHide, object:nil)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(BrowserViewController.longPress(_:)))
         self.tableView.addGestureRecognizer(longPress)
@@ -57,24 +57,24 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.refresh()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let filtersActive = CardManager.cardsAvailable() && PackManager.packsAvailable()
         
-        self.typeButton.enabled = filtersActive
-        self.setButton.enabled = filtersActive
-        self.factionButton.enabled = filtersActive
-        self.clearButton.enabled = filtersActive
+        self.typeButton.isEnabled = filtersActive
+        self.setButton.isEnabled = filtersActive
+        self.factionButton.isEnabled = filtersActive
+        self.clearButton.isEnabled = filtersActive
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func refresh() {
-        let packUsage = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.BROWSER_PACKS)
-        self.cardList = CardList.browserInitForRole(self.role, packUsage: NRPackUsage(rawValue: packUsage) ?? .All)
+        let packUsage = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
+        self.cardList = CardList.browserInitForRole(self.role, packUsage: NRPackUsage(rawValue: packUsage) ?? .all)
         if self.searchText.length > 0 {
             self.cardList.filterByName(self.searchText)
         }
@@ -99,43 +99,43 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     // MARK: table view
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return self.sections.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let arr = self.cards[section]
         return arr.count
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let arr = self.cards[section]
     
         return String(format:"%@ (%ld)", self.sections[section], arr.count)
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "browserCell"
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         if cell == nil {
-            cell = UITableViewCell(style: .Subtitle, reuseIdentifier:cellIdentifier)
-            cell!.selectionStyle = .None
-            cell!.accessoryType = .DisclosureIndicator
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier:cellIdentifier)
+            cell!.selectionStyle = .none
+            cell!.accessoryType = .disclosureIndicator
             
-            let pips = SmallPipsView.createWithFrame(CGRectMake(0, 0, 38, 38))
+            let pips = SmallPipsView.create(withFrame: CGRect(x: 0, y: 0, width: 38, height: 38))
             cell!.accessoryView = pips
         }
     
-        let card = self.cards[indexPath.section][indexPath.row]
+        let card = self.cards[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
         cell!.textLabel?.text = card.name
     
         switch card.type {
         
-        case .Identity:
+        case .identity:
             let inf = card.influenceLimit == -1 ? "∞" : "\(card.influenceLimit)"
             cell!.detailTextLabel?.text = String(format: "%@ · %ld/%@", card.factionStr, card.minimumDecksize, inf)
         
-        case .Agenda:
+        case .agenda:
             cell!.detailTextLabel?.text = String(format: "%@ · %ld/%ld", card.factionStr, card.advancementCost, card.agendaPoints)
             
         default:
@@ -149,15 +149,15 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         return cell!
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let card = self.cards[indexPath.section][indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let card = self.cards[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
     
         let img = CardImageViewController(nibName: "CardImageViewController", bundle: nil)
     
         // flatten our 2d cards array into a single list
         var cards = [Card]()
         for c in self.cards {
-            cards.appendContentsOf(c)
+            cards.append(contentsOf: c)
         }
         img.setCards(cards)
         img.selectedCard = card
@@ -167,34 +167,34 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK: - search bar
     
-    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         self.role = NRRole(rawValue: selectedScope - 1)!
         self.refresh()
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.searchText = searchText
         self.refresh()
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = true
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = false
         self.searchBar.resignFirstResponder()
     }
     
     // MARK: type, factio & set buttons
-    @IBAction func typeButtonTapped(btn: UIButton) {
+    @IBAction func typeButtonTapped(_ btn: UIButton) {
         
         let picker = BrowserValuePicker(title: "Type".localized())
-        if role == .None {
+        if role == .none {
             picker.data = CardType.allTypes
         } else {
             let types = CardType.typesForRole(role)
-            picker.data = TableData(values: types)
+            picker.data = TableData(values: types as NSArray)
         }
         
         picker.preselected = self.types
@@ -207,10 +207,10 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     
-    @IBAction func setButtonTapped(btn: UIButton) {
+    @IBAction func setButtonTapped(_ btn: UIButton) {
         let picker = BrowserValuePicker(title: "Set".localized())
-        let packUsage = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.BROWSER_PACKS)
-        let data = PackManager.packsForTableview(NRPackUsage(rawValue: packUsage) ?? .All)
+        let packUsage = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
+        let data = PackManager.packsForTableview(NRPackUsage(rawValue: packUsage) ?? .all)
         picker.data = TableData.convertPacksData(data)
         picker.preselected = self.sets
         picker.setResult = { result in
@@ -221,7 +221,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.navigationController?.pushViewController(picker, animated: true)
     }
     
-    @IBAction func factionButtonTapped(btn: UIButton) {
+    @IBAction func factionButtonTapped(_ btn: UIButton) {
         let picker = BrowserValuePicker(title: "Faction".localized())
         picker.data = Faction.factionsForBrowser()
         picker.preselected = self.factions
@@ -235,7 +235,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK: clear button
     
-    @IBAction func clearButtonTapped(btn: UIButton) {
+    @IBAction func clearButtonTapped(_ btn: UIButton) {
         self.sets.removeAll()
         self.types.removeAll()
         self.factions.removeAll()
@@ -245,9 +245,9 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     // MARK: keyboard show/hide
-    @objc func showKeyboard(notification: NSNotification) {
-        let kbRect = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        let kbHeight = kbRect.CGRectValue().size.height
+    @objc func showKeyboard(_ notification: Notification) {
+        let kbRect = (notification as NSNotification).userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        let kbHeight = kbRect.cgRectValue.size.height
         
         var inset = self.tableView.contentInset
         inset.bottom = kbHeight
@@ -255,7 +255,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.tableView.scrollIndicatorInsets = inset
     }
     
-    @objc func hideKeyboard(nta: NSNotification) {
+    @objc func hideKeyboard(_ nta: Notification) {
         var inset = self.tableView.contentInset
         inset.bottom = 0
         self.tableView.contentInset = inset
@@ -263,29 +263,29 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     // MARK: long press
-    @objc func longPress(gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .Began {
-            let point = gesture.locationInView(self.tableView)
-            if let indexPath = self.tableView.indexPathForRowAtPoint(point) {
-                let card = self.cards[indexPath.section][indexPath.row]
+    @objc func longPress(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            let point = gesture.location(in: self.tableView)
+            if let indexPath = self.tableView.indexPathForRow(at: point) {
+                let card = self.cards[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
                 
                 let msg = String(format:"Open web page for\n%@?".localized(), card.name)
                 
-                let alert = UIAlertController.alertWithTitle(nil, message: msg)
+                let alert = UIAlertController.alert(withTitle: nil, message: msg)
                 alert.addAction(UIAlertAction(title:"ANCUR".localized()) { action in
-                    if let url = NSURL(string: card.ancurLink) {
-                        UIApplication.sharedApplication().openURL(url)
+                    if let url = URL(string: card.ancurLink) {
+                        UIApplication.shared.openURL(url)
                     }
                 })
                 alert.addAction(UIAlertAction(title:"NetrunnerDB".localized()) { action in
-                    if let url = NSURL(string: card.nrdbLink) {
-                        UIApplication.sharedApplication().openURL(url)
+                    if let url = URL(string: card.nrdbLink) {
+                        UIApplication.shared.openURL(url)
                     }
                 })
                 
-                alert.addAction(UIAlertAction.cancelAlertAction(nil))
+                alert.addAction(UIAlertAction(title:"Cancel".localized(), handler: nil))
                 
-                self.presentViewController(alert, animated:false, completion:nil)
+                self.present(alert, animated:false, completion:nil)
             }
         }
     }

@@ -144,7 +144,7 @@
     {
         [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
         [self.factionSelector setTitle:[Faction shortName:NRFactionHaasBioroid] forSegmentAtIndex:1];
-        [self.factionSelector setTitle:[Faction shortName:NRFactionNBN] forSegmentAtIndex:2];
+        [self.factionSelector setTitle:[Faction shortName:NRFactionNbn] forSegmentAtIndex:2];
         [self.factionSelector setTitle:[Faction shortName:NRFactionJinteki] forSegmentAtIndex:3];
         [self.factionSelector setTitle:[Faction shortName:NRFactionWeyland] forSegmentAtIndex:4];
 
@@ -332,7 +332,7 @@
             self.selectedFaction = self.role == NRRoleRunner ? NRFactionAnarch : NRFactionHaasBioroid;
             break;
         case 2:
-            self.selectedFaction = self.role == NRRoleRunner ? NRFactionCriminal : NRFactionNBN;
+            self.selectedFaction = self.role == NRRoleRunner ? NRFactionCriminal : NRFactionNbn;
             break;
         case 3:
             self.selectedFaction = self.role == NRRoleRunner ? NRFactionShaper : NRFactionJinteki;

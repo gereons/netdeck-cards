@@ -13,6 +13,8 @@
 
 -(void) awakeFromNib
 {
+    [super awakeFromNib];
+    
     self.name.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightRegular];
     
     NSInteger diameter = 8;

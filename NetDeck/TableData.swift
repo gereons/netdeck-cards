@@ -26,14 +26,14 @@ import Foundation
         self.init(sections: [""], andValues: [values])
     }
     
-    class func convertPacksData(rawPacks: TableData) -> TableData {
+    class func convertPacksData(_ rawPacks: TableData) -> TableData {
         let strValues = NSMutableArray()
         for packs in rawPacks.values as! [[Pack]] {
             let strings = NSMutableArray()
             for pack in packs {
-                strings.addObject(pack.name)
+                strings.add(pack.name)
             }
-            strValues.addObject(strings)
+            strValues.add(strings)
         }
         
         let stringPacks = TableData(sections:rawPacks.sections, andValues:strValues)

@@ -10,22 +10,22 @@ import Foundation
 
 @objc class DeckState: NSObject {
 
-    private static let states: [NRDeckState: String] = [
-        .None: "All",
-        .Retired: "Retired",
-        .Testing: "Testing",
-        .Active: "Active"
+    fileprivate static let states: [NRDeckState: String] = [
+        .none: "All",
+        .retired: "Retired",
+        .testing: "Testing",
+        .active: "Active"
     ]
     
-    class func rawLabelFor(state: NRDeckState) -> String {
+    class func rawLabelFor(_ state: NRDeckState) -> String {
         return states[state]!
     }
     
-    class func labelFor(state: NRDeckState) -> String {
+    class func labelFor(_ state: NRDeckState) -> String {
         return rawLabelFor(state).localized()
     }
     
-    class func buttonLabelFor(state: NRDeckState) -> String {
+    class func buttonLabelFor(_ state: NRDeckState) -> String {
         return labelFor(state) + " ▾"
     }
 }

@@ -10,9 +10,9 @@ import Foundation
 import SVProgressHUD
 
 enum ExportFormat {
-    case PlainText
-    case Markdown
-    case BBCode
+    case plainText
+    case markdown
+    case bbCode
 }
 
 @objc class DeckExport: NSObject {
@@ -20,37 +20,37 @@ enum ExportFormat {
     static let APP_NAME = "Net Deck"
     static let APP_URL = "http://appstore.com/netdeck"
 
-    class func asPlaintextString(deck: Deck) -> String {
-        return self.textExport(deck, .PlainText)
+    class func asPlaintextString(_ deck: Deck) -> String {
+        return self.textExport(deck, .plainText)
     }
     
-    class func asPlaintext(deck: Deck) {
+    class func asPlaintext(_ deck: Deck) {
         let s = self.asPlaintextString(deck)
         let filename = (deck.name ?? "deck") + ".txt"
         self.writeToDropbox(s, filename:filename, deckType:"Plain Text Deck".localized(), autoSave:false)
     }
     
-    class func asMarkdownString(deck: Deck) -> String {
-        return self.textExport(deck, .Markdown)
+    class func asMarkdownString(_ deck: Deck) -> String {
+        return self.textExport(deck, .markdown)
     }
     
-    class func asMarkdown(deck: Deck) {
+    class func asMarkdown(_ deck: Deck) {
         let s = self.asMarkdownString(deck)
         let filename = (deck.name ?? "deck") + ".md"
         self.writeToDropbox(s, filename:filename, deckType:"Markdown Deck".localized(), autoSave:false)
     }
     
-    class func asBBCodeString(deck: Deck) -> String {
-        return self.textExport(deck, .BBCode)
+    class func asBBCodeString(_ deck: Deck) -> String {
+        return self.textExport(deck, .bbCode)
     }
     
-    class func asBBCode(deck: Deck) {
+    class func asBBCode(_ deck: Deck) {
         let s = self.asBBCodeString(deck)
         let filename = (deck.name ?? "deck") + ".bbc"
         self.writeToDropbox(s, filename:filename, deckType:"BBCode Deck".localized(), autoSave:false)
     }
     
-    class func asOctgn(deck: Deck, autoSave: Bool) {
+    class func asOctgn(_ deck: Deck, autoSave: Bool) {
         if let identity = deck.identity {
             let name = self.xmlEscape(identity.name)
             var xml = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n" +
@@ -66,7 +66,7 @@ enum ExportFormat {
             }
             xml += "</section>\n"
             
-            if let notes = deck.notes where notes.length > 0 {
+            if let notes = deck.notes , notes.length > 0 {
                 xml += "<notes><![CDATA[\(notes)]]></notes>\n"
             }
             xml += "</deck>\n"
@@ -76,35 +76,35 @@ enum ExportFormat {
         }
     }
     
-    class func xmlEscape(s: String) -> String {
+    class func xmlEscape(_ s: String) -> String {
         return s
-            .stringByReplacingOccurrencesOfString("&", withString: "&amp;")
-            .stringByReplacingOccurrencesOfString("<", withString: "&lt;")
-            .stringByReplacingOccurrencesOfString(">", withString: "&gt;")
-            .stringByReplacingOccurrencesOfString("'", withString: "&#39;")
-            .stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "'", with: "&#39;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
     }
 
-    class func writeToDropbox(content: String, filename: String, deckType: String, autoSave: Bool) {
+    class func writeToDropbox(_ content: String, filename: String, deckType: String, autoSave: Bool) {
         DropboxWrapper.saveFileToDropbox(content, filename: filename) { ok in
             if autoSave {
                 return
             }
             
             if ok {
-                SVProgressHUD.showSuccessWithStatus(String(format: "%@ exported".localized(), deckType))
+                SVProgressHUD.showSuccess(withStatus: String(format: "%@ exported".localized(), deckType))
             } else {
-                SVProgressHUD.showErrorWithStatus(String(format:"Error exporting %@".localized(), deckType))
+                SVProgressHUD.showError(withStatus: String(format:"Error exporting %@".localized(), deckType))
             }
         }
     }
     
-    class func textExport(deck: Deck, _ fmt: ExportFormat) -> String {
-        let data = deck.dataForTableView(.ByType)
+    class func textExport(_ deck: Deck, _ fmt: ExportFormat) -> String {
+        let data = deck.dataForTableView(.byType)
         let cardsArray = data.values as! [[CardCounter]]
         let sections = data.sections as! [String]
         
-        let eol = fmt == .Markdown ? "  \n" : "\n"
+        let eol = fmt == .markdown ? "  \n" : "\n"
         
         var s = (deck.name ?? "") + eol + eol
         if let identity = deck.identity {
@@ -113,11 +113,11 @@ enum ExportFormat {
             s += eol
         }
         
-        let useMWL = deck.mwl != NRMWL.None
+        let useMWL = deck.mwl != NRMWL.none
         for i in 0..<sections.count {
             let cards = cardsArray[i]
             let cc = cards[0]
-            if cc.isNull || cc.card.type == .Identity {
+            if cc.isNull || cc.card.type == .identity {
                 continue
             }
             
@@ -152,7 +152,7 @@ enum ExportFormat {
             s += "\(deck.influence)/\(deck.influenceLimit) influence used" + eol
         }
         
-        if deck.identity?.role == .Corp {
+        if deck.identity?.role == .corp {
             s += "\(deck.agendaPoints) agenda points" + eol
         }
         let set = PackManager.mostRecentPackUsedInDeck(deck)
@@ -160,7 +160,7 @@ enum ExportFormat {
         
         s += eol + "Deck built with " + self.link(APP_NAME, APP_URL, fmt) + eol
         
-        if let notes = deck.notes where notes.length > 0 {
+        if let notes = deck.notes , notes.length > 0 {
             s += eol + notes + eol
         }
         
@@ -169,15 +169,15 @@ enum ExportFormat {
         return s;
     }
     
-    class func stars(count: Int) -> String {
+    class func stars(_ count: Int) -> String {
         return nTimes("☆", count)
     }
     
-    class func dots(count: Int) -> String {
+    class func dots(_ count: Int) -> String {
         return nTimes("•", count)
     }
     
-    class func nTimes(str: String, _ count: Int) -> String {
+    class func nTimes(_ str: String, _ count: Int) -> String {
         var s = ""
         
         for i in 0..<count {
@@ -189,7 +189,7 @@ enum ExportFormat {
         return s
     }
     
-    class func localUrlForDeck(deck: Deck) -> String {
+    class func localUrlForDeck(_ deck: Deck) -> String {
         var dict = [String: String]()
         if let id = deck.identity {
             dict[id.code] = "1"
@@ -197,11 +197,11 @@ enum ExportFormat {
         for cc in deck.cards {
             dict[cc.card.code] = "\(cc.count)"
         }
-        if let name = deck.name where name.length > 0 {
-            dict["name"] = name.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        if let name = deck.name , name.length > 0 {
+            dict["name"] = name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         }
         
-        let keys = dict.keys.sort{ $0 < $1 }
+        let keys = dict.keys.sorted{ $0 < $1 }
         var url = ""
         var sep = ""
         for k in keys {
@@ -210,40 +210,40 @@ enum ExportFormat {
             sep = "&"
         }
         
-        let compressed = GZip.gzipDeflate(url.dataUsingEncoding(NSUTF8StringEncoding))
-        let base64url = compressed.base64EncodedStringWithOptions([])
+        let compressed = GZip.gzipDeflate(url.data(using: String.Encoding.utf8))
+        let base64url = compressed?.base64EncodedString(options: [])
         
-        return "netdeck://load/" + base64url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet())!
+        return "netdeck://load/" + base64url!.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)!
     }
 
-    class func italics(s: String, _ format: ExportFormat) -> String {
+    class func italics(_ s: String, _ format: ExportFormat) -> String {
         switch format {
-        case .PlainText: return s
-        case .Markdown: return "_" + s + "_"
-        case .BBCode: return "[i]" + s + "[/i]"
+        case .plainText: return s
+        case .markdown: return "_" + s + "_"
+        case .bbCode: return "[i]" + s + "[/i]"
         }
     }
     
-    class func bold(s: String, _ format: ExportFormat) -> String {
+    class func bold(_ s: String, _ format: ExportFormat) -> String {
         switch format {
-        case .PlainText: return s
-        case .Markdown: return "**" + s + "**"
-        case .BBCode: return "[b]" + s + "[/b]"
+        case .plainText: return s
+        case .markdown: return "**" + s + "**"
+        case .bbCode: return "[b]" + s + "[/b]"
         }
     }
     
-    class func color(s: String, _ color: UInt, _ format: ExportFormat) -> String {
+    class func color(_ s: String, _ color: UInt, _ format: ExportFormat) -> String {
         switch format {
-        case .PlainText, .Markdown: return s
-        case .BBCode: return "[color=#\(color)]" + s + "[/color]"
+        case .plainText, .markdown: return s
+        case .bbCode: return "[color=#\(color)]" + s + "[/color]"
         }
     }
     
-    class func link(s: String, _ target: String, _ format: ExportFormat) -> String {
+    class func link(_ s: String, _ target: String, _ format: ExportFormat) -> String {
         switch format {
-        case .PlainText: return s + " " + target
-        case .Markdown: return "[\(s)](\(target))"
-        case .BBCode: return "[url=\(target)]" + s + "[/url]"
+        case .plainText: return s + " " + target
+        case .markdown: return "[\(s)](\(target))"
+        case .bbCode: return "[url=\(target)]" + s + "[/url]"
         }
     }
 
