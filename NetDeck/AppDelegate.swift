@@ -10,8 +10,6 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-// TODO: test iPad pro native resolution, test regular iPad w/ and w/o ext keyboard
-
 // TODO: investigate OOMs - memory warnings?
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
@@ -20,6 +18,8 @@ import SVProgressHUD
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var window: UIWindow?
+
+    FIXME("draft in browser when 'all' is selected")
     
     // root controller on ipad
     @IBOutlet var splitViewController: UISplitViewController?
