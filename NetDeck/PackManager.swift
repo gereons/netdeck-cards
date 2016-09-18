@@ -37,10 +37,10 @@ class PackManager: NSObject {
     static var packsByCode = [String: Pack]()       // code -> pack
     static var allPacks = [Pack]()
     
-    private static let rotatedCycles = [
+    fileprivate static let rotatedCycles = [
         "genesis", "spin"
     ]
-    private static let rotatedPacks = [
+    fileprivate static let rotatedPacks = [
         "wla", "ta", "ce", "asis", "hs", "fp",  // genesis
         "om", "st", "mt", "tc", "fal", "dt"     // spin
     ]
@@ -59,8 +59,8 @@ class PackManager: NSObject {
         return allPacks.count > 0
     }
     
-    class func nameForKey(key: String) -> String? {
-        if let index = allPacks.indexOf({$0.settingsKey == key}) {
+    class func nameForKey(_ key: String) -> String? {
+        if let index = allPacks.index(where: {$0.settingsKey == key}) {
             return allPacks[index].name
         }
         return nil
@@ -74,8 +74,8 @@ class PackManager: NSObject {
         return defaults
     }
     
-    class func packNumberForCode(code: String) -> Int {
-        if let pack = packsByCode[code], cycle = cyclesByCode[pack.cycleCode] {
+    class func packNumberForCode(_ code: String) -> Int {
+        if let pack = packsByCode[code], let cycle = cyclesByCode[pack.cycleCode] {
             return cycle.position * 1000 + pack.position
         }
         return 0
@@ -84,14 +84,14 @@ class PackManager: NSObject {
     class func disabledPackCodes() -> Set<String> {
         if disabledPacks == nil {
             var disabled = Set<String>()
-            let settings = NSUserDefaults.standardUserDefaults()
+            let settings = UserDefaults.standard
             for pack in allPacks {
-                if !settings.boolForKey(pack.settingsKey) {
+                if !settings.bool(forKey: pack.settingsKey) {
                     disabled.insert(pack.code)
                 }
             }
     
-            if !settings.boolForKey(SettingsKeys.USE_DRAFT) {
+            if !settings.bool(forKey: SettingsKeys.USE_DRAFT) {
                 disabled.insert(DRAFT_SET_CODE)
             }
     
@@ -110,13 +110,13 @@ class PackManager: NSObject {
         enabledPacks = nil
     }
     
-    class func packsForTableview(packs: NRPackUsage) -> TableData {
+    class func packsForTableview(_ packs: NRPackUsage) -> TableData {
         switch packs {
-        case .All:
+        case .all:
             return allKnownPacksForTableview()
-        case .Selected:
+        case .selected:
             return allEnabledPacksForTableview()
-        case .AllAfterRotation:
+        case .allAfterRotation:
             return allPacksAfterRotationForTableview()
         }
     }
@@ -125,30 +125,30 @@ class PackManager: NSObject {
         var sections = [String]()
         var values = [[Pack]]()
         
-        for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
+        for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             sections.append(cycle.name)
             
             let packs = allPacks.filter{ $0.cycleCode == cycle.code }
             values.append(packs)
         }
         
-        return TableData(sections: sections, andValues: values)
+        return TableData(sections: sections as NSArray, andValues: values as NSArray)
     }
 
 
-    private class func allEnabledPacksForTableview() -> TableData {
+    fileprivate class func allEnabledPacksForTableview() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         
         sections.append("")
         values.append([PackManager.anyPack])
         
-        let settings = NSUserDefaults.standardUserDefaults()
+        let settings = UserDefaults.standard
         
-        for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
+        for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             sections.append(cycle.name)
             
-            let packs = allPacks.filter{ $0.cycleCode == cycle.code && settings.boolForKey($0.settingsKey) }
+            let packs = allPacks.filter{ $0.cycleCode == cycle.code && settings.bool(forKey: $0.settingsKey) }
             
             if packs.count > 0 {
                 values.append(packs)
@@ -159,11 +159,11 @@ class PackManager: NSObject {
         
         assert(values.count == sections.count, "count mismatch")
         
-        let result = TableData(sections: sections, andValues: values)
+        let result = TableData(sections: sections as NSArray, andValues: values as NSArray)
         let count = sections.count
         
         // collapse everything but the two last cycles
-        var collapsedSections = [Bool](count: count, repeatedValue: true)
+        var collapsedSections = [Bool](repeating: true, count: count)
         collapsedSections[0] = false
         if count-1 > 0 {
             collapsedSections[count-1] = false
@@ -176,16 +176,16 @@ class PackManager: NSObject {
         return result
     }
 
-    private class func allKnownPacksForTableview() -> TableData {
+    fileprivate class func allKnownPacksForTableview() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         
         sections.append("")
         values.append([PackManager.anyPack])
         
-        let useDraft = NSUserDefaults.standardUserDefaults().boolForKey(SettingsKeys.USE_DRAFT)
+        let useDraft = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DRAFT)
         
-        for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
+        for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             
             if cycle.code == DRAFT_SET_CODE && !useDraft {
                 continue
@@ -196,17 +196,17 @@ class PackManager: NSObject {
             values.append(packs)
         }
         
-        return TableData(sections: sections, andValues: values)
+        return TableData(sections: sections as NSArray, andValues: values as NSArray)
     }
     
-    private class func allPacksAfterRotationForTableview() -> TableData {
+    fileprivate class func allPacksAfterRotationForTableview() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         
         sections.append("")
         values.append([PackManager.anyPack])
         
-        for (_, cycle) in allCycles.sort({ $0.0 < $1.0 }) {
+        for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             if !rotatedCycles.contains(cycle.code) {
                 sections.append(cycle.name)
                 
@@ -215,10 +215,10 @@ class PackManager: NSObject {
             }
         }
         
-        return TableData(sections: sections, andValues: values)
+        return TableData(sections: sections as NSArray, andValues: values as NSArray)
     }
 
-    class func packsUsedInDeck(deck: Deck) -> [String] {
+    class func packsUsedInDeck(_ deck: Deck) -> [String] {
         var packsUsed = [String: Int]() // pack code -> number of times used
         var cardsUsed = [String: Int]() // pack code -> number of cards used
             
@@ -241,7 +241,7 @@ class PackManager: NSObject {
         
         var result = [String]()
         for pack in allPacks {
-            if let used = cardsUsed[pack.code], needed = packsUsed[pack.code] {
+            if let used = cardsUsed[pack.code], let needed = packsUsed[pack.code] {
                 let cards = used == 1 ? "Card".localized() : "Cards".localized()
                 if needed > 1 {
                     result.append(String(format:"%d×%@ - %d %@", needed, pack.name, used, cards))
@@ -254,11 +254,11 @@ class PackManager: NSObject {
         return result
     }
     
-    class func mostRecentPackUsedInDeck(deck: Deck) -> String {
+    class func mostRecentPackUsedInDeck(_ deck: Deck) -> String {
         var maxIndex = 0
         
         for cc in deck.allCards {
-            if let index = allPacks.indexOf({ $0.code == cc.card.packCode}) {
+            if let index = allPacks.index(where: { $0.code == cc.card.packCode}) {
                 maxIndex = max(index, maxIndex)
             }
         }
@@ -269,40 +269,40 @@ class PackManager: NSObject {
     // MARK: - persistence
     
     class func packsPathname() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+        let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
         
         return supportDirectory.stringByAppendingPathComponent(PackManager.packsFilename)
     }
     
     class func cyclesPathname() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+        let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
         
         return supportDirectory.stringByAppendingPathComponent(PackManager.cyclesFilename)
     }
     
     class func removeFiles() {
-        let fileMgr = NSFileManager.defaultManager()
-        _ = try? fileMgr.removeItemAtPath(packsPathname())
-        _ = try? fileMgr.removeItemAtPath(cyclesPathname())
+        let fileMgr = FileManager.default
+        _ = try? fileMgr.removeItem(atPath: packsPathname())
+        _ = try? fileMgr.removeItem(atPath: cyclesPathname())
         
         CardManager.initialize()
     }
     
-    class func setupFromFiles(language: String) -> Bool {
+    class func setupFromFiles(_ language: String) -> Bool {
         let packsFile = packsPathname()
         let cyclesFile = cyclesPathname()
         
-        let fileMgr = NSFileManager.defaultManager()
+        let fileMgr = FileManager.default
         
-        if fileMgr.fileExistsAtPath(packsFile) && fileMgr.fileExistsAtPath(cyclesFile) {
-            let packsStr = try? NSString(contentsOfFile: packsFile, encoding: NSUTF8StringEncoding)
-            let cyclesStr = try? NSString(contentsOfFile: cyclesFile, encoding: NSUTF8StringEncoding)
+        if fileMgr.fileExists(atPath: packsFile) && fileMgr.fileExists(atPath: cyclesFile) {
+            let packsStr = try? NSString(contentsOfFile: packsFile, encoding: String.Encoding.utf8.rawValue)
+            let cyclesStr = try? NSString(contentsOfFile: cyclesFile, encoding: String.Encoding.utf8.rawValue)
             
             if packsStr != nil && cyclesStr != nil {
-                let packsJson = JSON.parse(packsStr! as String)
-                let cyclesJson = JSON.parse(cyclesStr! as String)
+                let packsJson = JSON.parse(string: packsStr! as String)
+                let cyclesJson = JSON.parse(string: cyclesStr! as String)
                 return setupFromJsonData(cyclesJson, packsJson, language: language)
             }
         }
@@ -310,19 +310,28 @@ class PackManager: NSObject {
         return false
     }
     
-    class func setupFromNetrunnerDb(cycles: JSON, _ packs: JSON, language: String) -> Bool {
-        let ok = setupFromJsonData(cycles, packs, language: language)
+    class func setupFromNetrunnerDb(_ cycles: JSON, _ packs: JSON, language: String) -> Bool {
+        var ok = setupFromJsonData(cycles, packs, language: language)
         if ok {
             let packsFile = packsPathname()
             if let data = try? packs.rawData() {
-                data.writeToFile(packsFile, atomically:true)
+                do {
+                    try data.write(to: URL(fileURLWithPath: packsFile), options: .atomic)
+                } catch {
+                    ok = false
+                }
+                // data.write(packsFile, atomically:true)
                 // print("write packs ok=\(ok)")
             }
             AppDelegate.excludeFromBackup(packsFile)
             
             let cyclesFile = cyclesPathname()
             if let data = try? cycles.rawData() {
-                data.writeToFile(cyclesFile, atomically:true)
+                do {
+                    try data.write(to: URL(fileURLWithPath: cyclesFile), options: .atomic)
+                } catch {
+                    ok = false
+                }
                 // print("write cycles ok=\(ok)")
             }
             AppDelegate.excludeFromBackup(cyclesFile)
@@ -330,7 +339,7 @@ class PackManager: NSObject {
         return ok
     }
     
-    class func setupFromJsonData(cycles: JSON, _ packs: JSON, language: String) -> Bool {
+    class func setupFromJsonData(_ cycles: JSON, _ packs: JSON, language: String) -> Bool {
         cyclesByCode = [String: Cycle]()     // code -> cycle
         allCycles = [Int: Cycle]()           // position -> cycles
         packsByCode = [String: Pack]()       // code -> pack
@@ -366,7 +375,7 @@ class PackManager: NSObject {
         }
         
         // sort packs in release order
-        allPacks.sortInPlace { p1, p2 in
+        allPacks.sort { p1, p2 in
             let c1 = cyclesByCode[p1.cycleCode]?.position ?? -1
             let c2 = cyclesByCode[p2.cycleCode]?.position ?? -1
             if c1 == c2 {
@@ -376,7 +385,7 @@ class PackManager: NSObject {
             }
         }
         
-        NSUserDefaults.standardUserDefaults().registerDefaults(PackManager.settingsDefaults())
+        UserDefaults.standard.register(defaults: PackManager.settingsDefaults())
         return true
     }
 

@@ -30,6 +30,8 @@
 
 -(void) awakeFromNib
 {
+    [super awakeFromNib];
+    
     [self.identityButton setTitle:l10n(@"Switch Identity") forState:UIControlStateNormal];
 }
 

@@ -156,6 +156,11 @@ static NSInteger viewMode = VIEW_LIST;
                                                         action:@selector(revertDeck:)];
     
     [self resetAllButtons];
+    
+    /// FIXME sticky layout hack
+    if ([UICollectionView instancesRespondToSelector:@selector(isPrefetchingEnabled)]) {
+        self.collectionView.prefetchingEnabled = NO;
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated

@@ -12,10 +12,10 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBOutlet weak var tableView: UITableView!
     var deck: Deck?
-    var dateFormatter: NSDateFormatter = {
-        let fmt = NSDateFormatter()
-        fmt.dateStyle = .MediumStyle
-        fmt.timeStyle = .MediumStyle
+    var dateFormatter: DateFormatter = {
+        let fmt = DateFormatter()
+        fmt.dateStyle = .medium
+        fmt.timeStyle = .medium
         return fmt
     }()
 
@@ -27,15 +27,15 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         Analytics.logEvent("Deck History", attributes: ["Device": "iPhone"])
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.backgroundColor = UIColor.clear
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)        
     }
     
-    func revertTapped(sender: UIButton) {
+    func revertTapped(_ sender: UIButton) {
         guard let deck = self.deck else { return }
         
         assert(sender.tag < deck.revisions.count, "invalid tag")
@@ -46,38 +46,38 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         if let cards = dcs.cards {
             deck.resetToCards(cards)
         
-            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.DECK_CHANGED, object:self)
-            self.navigationController?.popViewControllerAnimated(true)
+            NotificationCenter.default.post(name: Notifications.DECK_CHANGED, object:self)
+            let _ = self.navigationController?.popViewController(animated: true)
         }
     }
 
     // MARK: table view
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return self.deck?.revisions.count ?? 0
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let deck = self.deck else { return 0 }
         let dcs = deck.revisions[section]
         return dcs.initial ? 1 : dcs.changes.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "historyCell"
         
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
-            cell?.selectionStyle = .None
+            cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            cell?.selectionStyle = .none
         }
         cell?.textLabel?.text = ""
         
-        if let dcs = self.deck?.revisions[indexPath.section] {
+        if let dcs = self.deck?.revisions[(indexPath as NSIndexPath).section] {
             if dcs.initial {
                 cell?.textLabel?.text = "Initial Version".localized()
-            } else if indexPath.row < dcs.changes.count {
-                let dc = dcs.changes[indexPath.row]
+            } else if (indexPath as NSIndexPath).row < dcs.changes.count {
+                let dc = dcs.changes[(indexPath as NSIndexPath).row]
                 cell?.textLabel?.text = String(format: "%+ld %@", dc.count, dc.card?.name ?? "")
             }
         }
@@ -85,29 +85,29 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         return cell!
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = DeckHistorySectionHeaderView.initFromNib()
         
         if let dcs = self.deck?.revisions[section] {
             if let timestamp = dcs.timestamp {
-                header.dateLabel.text = self.dateFormatter.stringFromDate(timestamp)
+                header.dateLabel.text = self.dateFormatter.string(from: timestamp as Date)
             } else {
                 header.dateLabel.text = "n/a"
             }
         }
         
-        header.revertButton.setTitle("Revert".localized(), forState: .Normal)
+        header.revertButton.setTitle("Revert".localized(), for: UIControlState())
         header.revertButton.tag = section
-        header.revertButton.addTarget(self, action: #selector(DeckHistoryViewController.revertTapped(_:)), forControlEvents: .TouchUpInside)
+        header.revertButton.addTarget(self, action: #selector(DeckHistoryViewController.revertTapped(_:)), for: .touchUpInside)
         
         return header
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let dcs = self.deck?.revisions[indexPath.section] else { return }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let dcs = self.deck?.revisions[(indexPath as NSIndexPath).section] else { return }
         
         if !dcs.initial {
-            if indexPath.row < dcs.changes.count {
+            if (indexPath as NSIndexPath).row < dcs.changes.count {
                 
                 var ccs = [CardCounter]()
                 for dc in dcs.changes {
@@ -117,7 +117,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
                     }
                 }
                 assert(ccs.count == dcs.changes.count)
-                if let selectedCard = dcs.changes[indexPath.row].card {
+                if let selectedCard = dcs.changes[(indexPath as NSIndexPath).row].card {
                 
                     let imgController = CardImageViewController()
                     imgController.setCardCounters(ccs)

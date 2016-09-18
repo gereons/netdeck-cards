@@ -57,7 +57,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     }
     else
     {
-        self.factionNames = @[ [Faction name:NRFactionHaasBioroid], [Faction name:NRFactionNBN], [Faction name:NRFactionJinteki], [Faction name:NRFactionWeyland], [Faction name:NRFactionNeutral]];
+        self.factionNames = @[ [Faction name:NRFactionHaasBioroid], [Faction name:NRFactionNbn], [Faction name:NRFactionJinteki], [Faction name:NRFactionWeyland], [Faction name:NRFactionNeutral]];
         factionLimit = self.factionNames.count;
         
         self.typeNames = @[ [CardType name:NRCardTypeAgenda], [CardType name:NRCardTypeAsset], [CardType name:NRCardTypeUpgrade], [CardType name:NRCardTypeOperation], [CardType name:NRCardTypeIce]];

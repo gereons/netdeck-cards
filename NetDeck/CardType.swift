@@ -11,15 +11,15 @@ import Foundation
 @objc class CardType: NSObject {
     
     // NB: Card diff depends on ICE/Program being the last entries!
-    private static let runnerTypes: [NRCardType] = [ .Event, .Hardware, .Resource, .Program ]
-    private static let corpTypes: [NRCardType] = [ .Agenda, .Asset, .Upgrade, .Operation, .Ice ]
+    fileprivate static let runnerTypes: [NRCardType] = [ .event, .hardware, .resource, .program ]
+    fileprivate static let corpTypes: [NRCardType] = [ .agenda, .asset, .upgrade, .operation, .ice ]
     
-    private static var type2name = [NRCardType: String]()
-    private static var runnerTypeNames = [String]()
-    private static var corpTypeNames = [String]()
-    private(set) static var allTypes: TableData!
+    fileprivate static var type2name = [NRCardType: String]()
+    fileprivate static var runnerTypeNames = [String]()
+    fileprivate static var corpTypeNames = [String]()
+    fileprivate(set) static var allTypes: TableData!
     
-    class func initializeCardTypes(cards: [Card]) -> Bool {
+    class func initializeCardTypes(_ cards: [Card]) -> Bool {
         runnerTypeNames = [String]()
         corpTypeNames = [String]()
         
@@ -29,7 +29,7 @@ import Foundation
         }
         
         type2name.removeAll()
-        type2name[.None] = Constant.kANY
+        type2name[.none] = Constant.kANY
         for card in cards {
             type2name[card.type] = card.typeStr
         }
@@ -47,25 +47,25 @@ import Foundation
         
         let typeSections = [ "", "Runner".localized(), "Corp".localized() ]
         let types = [
-            [CardType.name(.None), CardType.name(.Identity)],
+            [CardType.name(.none), CardType.name(.identity)],
             runnerTypeNames,
             corpTypeNames
         ]
         
-        allTypes = TableData(sections:typeSections, andValues:types)
+        allTypes = TableData(sections:typeSections as NSArray, andValues:types as NSArray)
         
-        runnerTypeNames.insert(Constant.kANY, atIndex: 0)
-        corpTypeNames.insert(Constant.kANY, atIndex: 0)
+        runnerTypeNames.insert(Constant.kANY, at: 0)
+        corpTypeNames.insert(Constant.kANY, at: 0)
         
         return true
     }
     
-    class func name(type: NRCardType) -> String {
+    class func name(_ type: NRCardType) -> String {
         return type2name[type] ?? "n/a"
     }
     
-    class func typesForRole(role: NRRole) -> [String] {
-        assert(role != .None, "no role")
-        return role == .Runner ? runnerTypeNames : corpTypeNames
+    class func typesForRole(_ role: NRRole) -> [String] {
+        assert(role != .none, "no role")
+        return role == .runner ? runnerTypeNames : corpTypeNames
     }
 }

@@ -12,46 +12,46 @@ import SwiftyJSON
 
 class AppUpdateCheck: NSObject {
     
-    static let WEEK: NSTimeInterval = 7*24*60*60 // one week in seconds
+    static let WEEK: TimeInterval = 7*24*60*60 // one week in seconds
     static let forceTest = false
     
     class func checkUpdate() {
         
-        let settings = NSUserDefaults.standardUserDefaults()
+        let settings = UserDefaults.standard
         
-        guard let nextCheck = settings.objectForKey(SettingsKeys.NEXT_UPDATE_CHECK) as? NSDate else {
-            let nextCheck = NSDate(timeIntervalSinceNow: WEEK)
-            settings.setObject(nextCheck, forKey: SettingsKeys.NEXT_UPDATE_CHECK)
+        guard let nextCheck = settings.object(forKey: SettingsKeys.NEXT_UPDATE_CHECK) as? Date else {
+            let nextCheck = Date(timeIntervalSinceNow: WEEK)
+            settings.set(nextCheck, forKey: SettingsKeys.NEXT_UPDATE_CHECK)
             return
         }
         
         let force = forceTest && BuildConfig.debug
-        let now = NSDate()
+        let now = Date()
         if (now.timeIntervalSince1970 > nextCheck.timeIntervalSince1970 && Reachability.online()) || force {
             self.checkForUpdate { version in
                 if let v = version {
                     let msg = String(format: "Version %@ is available on the App Store".localized(), v)
-                    let alert = UIAlertController.alertWithTitle("Update available".localized(), message: msg)
+                    let alert = UIAlertController.alert(withTitle: "Update available".localized(), message: msg)
                     
-                    alert.addAction(UIAlertAction(title: "Update".localized(), style: .Cancel) { action in
+                    alert.addAction(UIAlertAction(title: "Update".localized(), style: .cancel) { action in
                         let url = "itms-apps://itunes.apple.com/app/id865963530"
-                        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+                        UIApplication.shared.openURL(URL(string: url)!)
                     })
                     
-                    alert.addAction(UIAlertAction(title: "Not now".localized(), style: .Default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Not now".localized(), style: .default, handler: nil))
 
                     alert.show()
                 }
             }
             
-            settings.setObject(now.dateByAddingTimeInterval(WEEK), forKey: SettingsKeys.NEXT_UPDATE_CHECK)
+            settings.set(now.addingTimeInterval(WEEK), forKey: SettingsKeys.NEXT_UPDATE_CHECK)
         }
     }
     
     
-    private class func checkForUpdate(completion: (String?) -> Void)  {
+    fileprivate class func checkForUpdate(_ completion: @escaping (String?) -> Void)  {
         guard
-            let dict = NSBundle.mainBundle().infoDictionary,
+            let dict = Bundle.main.infoDictionary,
             let bundleId = dict["CFBundleIdentifier"] as? String,
             let currentVersion = dict["CFBundleShortVersionString"] as? String else {
             completion(nil)
@@ -60,18 +60,18 @@ class AppUpdateCheck: NSObject {
         
         let url = "https://itunes.apple.com/lookup?bundleId=" + bundleId
         
-        Alamofire.request(.GET, url).responseJSON { response in
+        Alamofire.request(url).responseJSON { response in
             switch response.result {
-            case .Success:
+            case .success:
                 if let value = response.result.value {
                     let json = JSON(value)
                     if let appstoreVersion = json["results"][0]["version"].string {
-                        let cmp = appstoreVersion.compare(currentVersion, options: .NumericSearch)
-                        completion(cmp == .OrderedDescending ? appstoreVersion : nil)
+                        let cmp = appstoreVersion.compare(currentVersion, options: .numeric)
+                        completion(cmp == .orderedDescending ? appstoreVersion : nil)
                     }
                 }
                 fallthrough
-            case .Failure:
+            case .failure:
                 completion(nil)
             }
         }

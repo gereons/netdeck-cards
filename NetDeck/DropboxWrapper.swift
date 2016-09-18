@@ -13,20 +13,23 @@ import SwiftyDropbox
 class DropboxWrapper: NSObject {
     
     class func setup() {
-        Dropbox.setupWithAppKey("4mhw6piwd9wqti3")
+        DropboxClientsManager.setupWithAppKey("4mhw6piwd9wqti3")
         
         // let clientOk = Dropbox.authorizedClient != nil
         // print("dropbox setup, clientOk=\(clientOk)")
     }
 
-    class func handleURL(url: NSURL) -> Bool {
-        if let authResult = Dropbox.handleRedirectURL(url) {
+    class func handleURL(_ url: URL) -> Bool {
+        if let authResult = DropboxClientsManager.handleRedirectURL(url) {
             switch authResult {
-            case .Success:
+            case .success:
                 print("Success! User is logged into Dropbox.")
                 return true
-            case .Error(let error, let description):
+            case .error(let error, let description):
                 print("Error: \(error) \(description)")
+                return false
+            case .cancel:
+                print("Cancelled")
                 return false
             }
         }
@@ -34,22 +37,25 @@ class DropboxWrapper: NSObject {
         return false
     }
     
-    class func authorizeFromController(controller: UIViewController) {
-        if (Dropbox.authorizedClient == nil) {
-            Dropbox.authorizeFromController(controller)
+    class func authorizeFromController(_ controller: UIViewController) {
+        if (DropboxClientsManager.authorizedClient == nil) {
+            DropboxClientsManager.authorizeFromController(UIApplication.shared,
+                                                          controller: controller,
+                                                          openURL: { url in UIApplication.shared.openURL(url) },
+                                                          browserAuth: false)
         } else {
             print("User is already authorized!")
         }
     }
     
     class func unlinkClient() {
-        Dropbox.unlinkClient()
+        DropboxClientsManager.unlinkClient()
     }
     
-    class func listDropboxFiles(completion: ([String])->() ) {
-        guard let client = Dropbox.authorizedClient else { return }
+    class func listDropboxFiles(_ completion: @escaping ([String])->() ) {
+        guard let client = DropboxClientsManager.authorizedClient else { return }
         
-        client.files.listFolder(path: "").response { response, error in
+        let _ = client.files.listFolder(path: "").response { response, error in
             if let result = response {
                 var names = [String]()
                 for entry in result.entries {
@@ -60,14 +66,14 @@ class DropboxWrapper: NSObject {
         }
     }
     
-    class func downloadDropboxFiles(names: [String], toDirectory: String, completion: ()->() ) {
-        guard let client = Dropbox.authorizedClient else { return }
+    class func downloadDropboxFiles(_ names: [String], toDirectory: String, completion: @escaping ()->() ) {
+        guard let client = DropboxClientsManager.authorizedClient else { return }
         
         var count = 0
         for name in names {
-            client.files.download(path: "/" + name, destination: { (url, response) -> NSURL in
+            let _ = client.files.download(path: "/" + name, destination: { (url, response) -> URL in
                 let path = toDirectory.stringByAppendingPathComponent(name)
-                let destination = NSURL(fileURLWithPath: path)
+                let destination = URL(fileURLWithPath: path)
                 return destination
             }).response { response, error in
                 count += 1
@@ -75,19 +81,20 @@ class DropboxWrapper: NSObject {
                     completion()
                 }
                 if let (metadata, _) = response {
-                    let attrs = [ NSFileModificationDate: metadata.serverModified ]
+                    let attrs = [ FileAttributeKey.modificationDate: metadata.serverModified ]
                     let path = toDirectory.stringByAppendingPathComponent(name)
-                    _ = try? NSFileManager.defaultManager().setAttributes(attrs, ofItemAtPath: path)
+                    _ = try? FileManager.default.setAttributes(attrs, ofItemAtPath: path)
                 }
             }
         }
     }
     
-    class func saveFileToDropbox(content: String, filename: String, completion: (Bool)->() ) {
-        guard let client = Dropbox.authorizedClient else { return }
+    class func saveFileToDropbox(_ content: String, filename: String, completion: @escaping (Bool)->() ) {
+        guard let client = DropboxClientsManager.authorizedClient else { return }
         
-        if let data = content.dataUsingEncoding(NSUTF8StringEncoding) {
-            client.files.upload(path: "/" + filename, mode: .Overwrite, autorename: false, clientModified: nil, mute: false, body: data).response { response, error in
+        if let data = content.data(using: String.Encoding.utf8) {
+            print("\(data)")
+            let _ = client.files.upload(path: "/" + filename, mode: .overwrite, autorename: false, clientModified: nil, mute: false, input: data).response { response, error in
                 completion(error == nil)
             }
         } else {

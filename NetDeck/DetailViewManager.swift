@@ -32,7 +32,7 @@ import Foundation
         }
     }
     
-    func splitViewController(svc: UISplitViewController, shouldHideViewController vc: UIViewController, inOrientation orientation: UIInterfaceOrientation) -> Bool {
+    func splitViewController(_ svc: UISplitViewController, shouldHide vc: UIViewController, in orientation: UIInterfaceOrientation) -> Bool {
         return UIInterfaceOrientationIsPortrait(orientation)
     }
 }

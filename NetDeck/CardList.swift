@@ -9,36 +9,36 @@
 import Foundation
 
 class CardList: NSObject {
-    private var role: NRRole = .None
-    private var initialCards: [Card]
+    fileprivate var role: NRRole = .none
+    fileprivate var initialCards: [Card]
     
-    private var cost: Int = -1
-    private var type: String?
-    private var types: Set<String>?
-    private var subtype: String?
-    private var subtypes: Set<String>?
-    private var strength: Int = -1
-    private var mu: Int = -1
-    private var trash: Int = -1
-    private var faction: String?
-    private var factions: Set<String>?
-    private var influence: Int = -1
-    private var set: String?
-    private var sets: Set<String>?
-    private var agendaPoints: Int = -1
-    private var text: String?
-    private var searchScope: NRSearchScope = .All
-    private var unique: Bool = false
-    private var limited: Bool = false
-    private var faction4inf: NRFaction = .None   // faction for influence filter
+    fileprivate var cost: Int = -1
+    fileprivate var type: String?
+    fileprivate var types: Set<String>?
+    fileprivate var subtype: String?
+    fileprivate var subtypes: Set<String>?
+    fileprivate var strength: Int = -1
+    fileprivate var mu: Int = -1
+    fileprivate var trash: Int = -1
+    fileprivate var faction: String?
+    fileprivate var factions: Set<String>?
+    fileprivate var influence: Int = -1
+    fileprivate var set: String?
+    fileprivate var sets: Set<String>?
+    fileprivate var agendaPoints: Int = -1
+    fileprivate var text: String?
+    fileprivate var searchScope: NRSearchScope = .all
+    fileprivate var unique: Bool = false
+    fileprivate var limited: Bool = false
+    fileprivate var faction4inf: NRFaction = .none   // faction for influence filter
     
-    private var sortType: NRBrowserSort = .ByType
-    private var packUsage: NRPackUsage
+    fileprivate var sortType: NRBrowserSort = .byType
+    fileprivate var packUsage: NRPackUsage
 
     init(forRole role: NRRole, packUsage: NRPackUsage) {
         self.role = role
-        self.sortType = .ByType
-        self.faction4inf = .None
+        self.sortType = .byType
+        self.faction4inf = .none
         self.initialCards = [Card]()
         self.packUsage = packUsage
         super.init()
@@ -47,25 +47,25 @@ class CardList: NSObject {
         self.clearFilters()
     }
     
-    class func browserInitForRole(role: NRRole, packUsage: NRPackUsage) -> CardList {
+    class func browserInitForRole(_ role: NRRole, packUsage: NRPackUsage) -> CardList {
         let cl = CardList(forRole: role, packUsage: packUsage)
         
         var roles = [NRRole]()
         switch (role) {
-        case .None: roles = [ .Runner, .Corp ]
-        case .Corp: roles = [ .Corp ]
-        case .Runner: roles = [ .Runner ]
+        case .none: roles = [ .runner, .corp ]
+        case .corp: roles = [ .corp ]
+        case .runner: roles = [ .runner ]
         }
         
         cl.initialCards = [Card]()
         for role in roles {
-            cl.initialCards.appendContentsOf(CardManager.allForRole(role))
-            cl.initialCards.appendContentsOf(CardManager.identitiesForRole(role))
+            cl.initialCards.append(contentsOf: CardManager.allForRole(role))
+            cl.initialCards.append(contentsOf: CardManager.identitiesForRole(role))
         }
         switch packUsage {
-        case .Selected: cl.filterDeselectedSets()
-        case .AllAfterRotation: cl.filterRotatedSets()
-        case .All: break
+        case .selected: cl.filterDeselectedSets()
+        case .allAfterRotation: cl.filterRotatedSets()
+        case .all: break
         }
 
         cl.clearFilters()
@@ -76,9 +76,9 @@ class CardList: NSObject {
     func resetInitialCards() {
         self.initialCards = CardManager.allForRole(self.role)
         switch self.packUsage {
-        case .Selected: self.filterDeselectedSets()
-        case .AllAfterRotation: self.filterRotatedSets()
-        case .All: break
+        case .selected: self.filterDeselectedSets()
+        case .allAfterRotation: self.filterRotatedSets()
+        case .all: break
         }
     }
     
@@ -98,10 +98,10 @@ class CardList: NSObject {
         self.sets = nil
         self.agendaPoints = -1
         self.text = ""
-        self.searchScope = .All
+        self.searchScope = .all
         self.unique = false
         self.limited = false
-        self.faction4inf = .None
+        self.faction4inf = .none
     }
     
     func filterDeselectedSets() {
@@ -123,155 +123,156 @@ class CardList: NSObject {
         applyPredicate(predicate)
     }
     
-    func preFilterForCorp(identity: Card) {
+    func preFilterForCorp(_ identity: Card) {
         self.resetInitialCards()
         
-        if (identity.faction != .Neutral)
+        if (identity.faction != .neutral)
         {
-            let factions: NSArray = [ NRFaction.Neutral.rawValue, identity.faction.rawValue ]
-            let predicate = NSPredicate(format:"type != %d OR (type = %d AND faction in %@)", NRCardType.Agenda.rawValue, NRCardType.Agenda.rawValue, factions)
+            let factions: NSArray = [ NRFaction.neutral.rawValue, identity.faction.rawValue ]
+            let predicate = NSPredicate(format:"type != %d OR (type = %d AND faction in %@)", NRCardType.agenda.rawValue, NRCardType.agenda.rawValue, factions)
             
             applyPredicate(predicate)
         }
         
         if identity.code == Card.CUSTOM_BIOTICS {
-            let predicate = NSPredicate(format:"faction != %d", NRFaction.Jinteki.rawValue)
+            let predicate = NSPredicate(format:"faction != %d", NRFaction.jinteki.rawValue)
             applyPredicate(predicate)
         }
         
-        self.applyFilters()
+        let _ = self.applyFilters()
     }
     
-    func preFilterForRunner(identity: Card) {
+    func preFilterForRunner(_ identity: Card) {
         self.resetInitialCards()
         
-        if identity.faction == .Apex {
-            let predicate = NSPredicate(format:"type != %d OR (type = %d AND isVirtual = 1)", NRCardType.Resource.rawValue, NRCardType.Resource.rawValue)
+        if identity.faction == .apex {
+            let predicate = NSPredicate(format:"type != %d OR (type = %d AND isVirtual = 1)", NRCardType.resource.rawValue, NRCardType.resource.rawValue)
             applyPredicate(predicate)
         }
         
-        self.applyFilters()
+        let _ = self.applyFilters()
     }
     
-    func filterByType(type: String)
+    func filterByType(_ type: String)
     {
         self.type = type
         self.types = nil
     }
     
-    func filterByTypes(types: Set<String>) {
+    func filterByTypes(_ types: Set<String>) {
         self.type = ""
         self.types = types
     }
     
-    func filterByFaction(faction: String) {
+    func filterByFaction(_ faction: String) {
         self.faction = faction
         self.factions = nil
     }
     
-    func filterByFactions(factions: Set<String>) {
+    func filterByFactions(_ factions: Set<String>) {
         self.faction = ""
         self.factions = factions
     }
     
-    func filterByText(text: String) {
+    func filterByText(_ text: String) {
         self.text = text
-        self.searchScope = .Text
+        self.searchScope = .text
     }
     
-    func filterByTextOrName(text: String) {
+    func filterByTextOrName(_ text: String) {
         self.text = text
-        self.searchScope = .All
+        self.searchScope = .all
     }
     
-    func filterByName(name: String) {
+    func filterByName(_ name: String) {
         self.text = name
-        self.searchScope = .Name
+        self.searchScope = .name
     }
     
-    func filterBySet(set: String) {
+    func filterBySet(_ set: String) {
         self.set = set
         self.sets = nil
     }
     
-    func filterBySets(sets: Set<String>) {
+    func filterBySets(_ sets: Set<String>) {
         self.set = ""
         self.sets = sets
     }
     
-    func filterByInfluence(influence: Int) {
+    func filterByInfluence(_ influence: Int) {
         self.influence = influence
-        self.faction4inf = .None
+        self.faction4inf = .none
     }
     
-    func filterByInfluence(influence: Int, forFaction faction : NRFaction) {
+    func filterByInfluence(_ influence: Int, forFaction faction : NRFaction) {
         self.influence = influence
         self.faction4inf = faction
     }
     
-    func filterByMU(mu: Int) {
+    func filterByMU(_ mu: Int) {
         self.mu = mu
     }
     
-    func filterByTrash(trash: Int) {
+    func filterByTrash(_ trash: Int) {
         self.trash = trash
     }
     
-    func filterByCost(cost: Int) {
+    func filterByCost(_ cost: Int) {
         self.cost = cost
     }
     
-    func filterBySubtype(subtype: String) {
+    func filterBySubtype(_ subtype: String) {
         self.subtype = subtype
         self.subtypes = nil
     }
     
-    func filterBySubtypes(subtypes: Set<String>) {
+    func filterBySubtypes(_ subtypes: Set<String>) {
         self.subtype = ""
         self.subtypes = subtypes
     }
     
-    func filterByStrength(strength: Int) {
+    func filterByStrength(_ strength: Int) {
         self.strength = strength
     }
     
-    func filterByAgendaPoints(ap: Int) {
+    func filterByAgendaPoints(_ ap: Int) {
         self.agendaPoints = ap
     }
     
-    func filterByUniqueness(unique: Bool) {
+    func filterByUniqueness(_ unique: Bool) {
         self.unique = unique
     }
     
-    func filterByLimited(limited: Bool) {
+    func filterByLimited(_ limited: Bool) {
         self.limited = limited
     }
     
-    func sortBy(sortType: NRBrowserSort) {
+    func sortBy(_ sortType: NRBrowserSort) {
         self.sortType = sortType
     }
     
-    func applyPredicate(predicate: NSPredicate) {
-        self.initialCards = self.initialCards.filter { predicate.evaluateWithObject($0) }
+    func applyPredicate(_ predicate: NSPredicate) {
+        self.initialCards = self.initialCards.filter { predicate.evaluate(with: $0) }
     }
     
     func applyFilters() -> [Card] {
         var filteredCards = self.initialCards
         var predicates = [NSPredicate]()
         
-        if self.faction?.length > 0 && self.faction != Constant.kANY {
+        
+        if let f = self.faction, f.length > 0 && f != Constant.kANY {
             let predicate = NSPredicate(format:"factionStr LIKE[cd] %@", self.faction!)
             predicates.append(predicate)
         }
-        if self.factions?.count > 0 {
+        if let f = self.factions, f.count > 0 {
             let predicate = NSPredicate(format:"factionStr IN %@", self.factions!)
             predicates.append(predicate)
         }
-        if self.type?.length > 0 && self.type != Constant.kANY {
+        if let t = self.type, t.length > 0 && t != Constant.kANY {
             let predicate = NSPredicate(format:"typeStr LIKE[cd] %@", self.type!)
             predicates.append(predicate)
         }
-        if self.types?.count > 0 {
+        if let t = self.types, t.count > 0 {
             let predicate = NSPredicate(format:"typeStr IN %@", self.types!)
             predicates.append(predicate)
         }
@@ -288,7 +289,7 @@ class CardList: NSObject {
             predicates.append(predicate)
         }
         if self.influence != -1 {
-            if (self.faction4inf == .None) {
+            if (self.faction4inf == .none) {
                 let predicate = NSPredicate(format:"influence == %d", self.influence)
                 predicates.append(predicate)
             } else {
@@ -296,11 +297,11 @@ class CardList: NSObject {
                 predicates.append(predicate)
             }
         }
-        if self.set?.length > 0 && self.set != Constant.kANY {
+        if let s = self.set, s.length > 0 && s != Constant.kANY {
             let predicate = NSPredicate(format:"packName LIKE[cd] %@", self.set!)
             predicates.append(predicate)
         }
-        if self.sets?.count > 0 {
+        if let s = self.sets, s.count > 0 {
             let predicate = NSPredicate(format:"packName IN %@", self.sets!)
             predicates.append(predicate)
         }
@@ -308,11 +309,11 @@ class CardList: NSObject {
             let predicate = NSPredicate(format:"cost == %d || advancementCost == %d", self.cost, self.cost)
             predicates.append(predicate)
         }
-        if self.subtype?.length > 0 && self.subtype != Constant.kANY {
+        if let s = self.subtype, s.length > 0 && s != Constant.kANY {
             let predicate = NSPredicate(format:"%@ IN subtypes", self.subtype!)
             predicates.append(predicate)
         }
-        if self.subtypes?.count > 0 {
+        if let s = self.subtypes, s.count > 0 {
             var subPredicates = [NSPredicate]()
             for subtype in self.subtypes! {
                 subPredicates.append(NSPredicate(format:"%@ IN subtypes", subtype))
@@ -324,13 +325,13 @@ class CardList: NSObject {
             let predicate = NSPredicate(format:"agendaPoints == %d", self.agendaPoints)
             predicates.append(predicate)
         }
-        if let text = self.text where text.length > 0 {
+        if let text = self.text , text.length > 0 {
             var predicate: NSPredicate
             switch (self.searchScope) {
-            case .All:
+            case .all:
                 predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (alias CONTAINS[cd] %@)",
                                         text, text, text, text)
-            case .Name:
+            case .name:
                 predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (alias CONTAINS[cd] %@)",
                                         text, text, text)
                 let ch = text.characters[text.startIndex]
@@ -339,7 +340,7 @@ class CardList: NSObject {
                     let codePredicate = NSPredicate(format:"code BEGINSWITH %@", text)
                     predicate = NSCompoundPredicate(orPredicateWithSubpredicates:[ predicate, codePredicate ])
                 }
-            case .Text:
+            case .text:
                 predicate = NSPredicate(format:"text CONTAINS[cd] %@", text)
             }
             predicates.append(predicate)
@@ -349,48 +350,48 @@ class CardList: NSObject {
             predicates.append(predicate)
         }
         if self.limited {
-            let predicate = NSPredicate(format:"type != %d AND maxPerDeck == 1", NRCardType.Identity.rawValue)
+            let predicate = NSPredicate(format:"type != %d AND maxPerDeck == 1", NRCardType.identity.rawValue)
             predicates.append(predicate)
         }
         
         if predicates.count > 0 {
             let allPredicates = NSCompoundPredicate(andPredicateWithSubpredicates:predicates)
-            filteredCards = filteredCards.filter { allPredicates.evaluateWithObject($0) }
+            filteredCards = filteredCards.filter { allPredicates.evaluate(with: $0) }
         }
         
         return filteredCards
     }
     
-    func sort(inout cards: [Card]) {
+    func sort(_ cards: inout [Card]) {
         
-        cards.sortInPlace { (c1, c2) -> Bool in
+        cards.sort { (c1, c2) -> Bool in
             switch (self.sortType) {
-            case .ByType, .ByTypeFaction:
+            case .byType, .byTypeFaction:
                 if c1.type.rawValue < c2.type.rawValue { return true }
                 if c1.type.rawValue > c2.type.rawValue { return false }
-            case .ByFaction:
+            case .byFaction:
                 if c1.factionStr < c2.factionStr { return true }
                 if c1.factionStr > c2.factionStr { return false }
-            case .BySet, .BySetType, .BySetFaction:
+            case .bySet, .bySetType, .bySetFaction:
                 if c1.packNumber < c2.packNumber { return true }
                 if c1.packNumber > c2.packNumber { return false }
-            case .BySetNumber:
+            case .bySetNumber:
                 if c1.code < c2.code { return true }
                 if c1.code > c2.code { return false }
             }
             
             switch (self.sortType)
             {
-            case .ByTypeFaction, .BySetFaction:
+            case .byTypeFaction, .bySetFaction:
                 if c1.factionStr < c2.factionStr { return true }
                 if c1.factionStr > c2.factionStr { return false }
-            case .BySetType, .ByFaction:
+            case .bySetType, .byFaction:
                 if c1.type.rawValue < c2.type.rawValue { return true }
                 if c1.type.rawValue > c2.type.rawValue { return false }
             default: break
             }
             
-            return c1.name.lowercaseString < c2.name.lowercaseString
+            return c1.name.lowercased() < c2.name.lowercased()
         }
     }
     
@@ -417,9 +418,9 @@ class CardList: NSObject {
         for card in filteredCards {
             var section = ""
             switch (self.sortType) {
-            case .ByType, .ByTypeFaction:
+            case .byType, .byTypeFaction:
                 section = card.typeStr
-            case .ByFaction:
+            case .byFaction:
                 section = card.factionStr
             default:
                 section = card.packName
@@ -437,12 +438,12 @@ class CardList: NSObject {
             prevSection = section
         }
         
-        if (arr?.count > 0) {
-            cards.append(arr!)
+        if let arr = arr, arr.count > 0 {
+            cards.append(arr)
         }
         
         assert(sections.count == cards.count, "count mismatch")
         
-        return TableData(sections:sections, andValues:cards)
+        return TableData(sections:sections as NSArray, andValues:cards as NSArray)
     }
 }

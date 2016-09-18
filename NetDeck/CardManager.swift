@@ -13,24 +13,24 @@ import SwiftyJSON
     
     static let cardsFilename = "nrcards2.json"
     
-    private(set) static var allCardsByRole = [NRRole: [Card] ]()    // non-id cards
-    private static var allIdentitiesByRole = [NRRole: [Card] ]()    // ids
+    fileprivate(set) static var allCardsByRole = [NRRole: [Card] ]()    // non-id cards
+    fileprivate static var allIdentitiesByRole = [NRRole: [Card] ]()    // ids
     
-    private static var allSubtypes = [NRRole: [String: Set<String> ] ]()
-    private static var identitySubtypes = [ NRRole : Set<String> ]()
-    private static var identityKey: String!
+    fileprivate static var allSubtypes = [NRRole: [String: Set<String> ] ]()
+    fileprivate static var identitySubtypes = [ NRRole : Set<String> ]()
+    fileprivate static var identityKey: String!
     
-    private static var allKnownCards = [ String: Card ]()
+    fileprivate static var allKnownCards = [ String: Card ]()
     
-    private(set) static var maxMU: Int = -1
-    private(set) static var maxInfluence: Int = -1
-    private(set) static var maxStrength: Int = -1
-    private(set) static var maxAgendaPoints: Int = -1
-    private(set) static var maxRunnerCost: Int = -1
-    private(set) static var maxCorpCost: Int = -1
-    private(set) static var maxTrash: Int = -1
+    fileprivate(set) static var maxMU: Int = -1
+    fileprivate(set) static var maxInfluence: Int = -1
+    fileprivate(set) static var maxStrength: Int = -1
+    fileprivate(set) static var maxAgendaPoints: Int = -1
+    fileprivate(set) static var maxRunnerCost: Int = -1
+    fileprivate(set) static var maxCorpCost: Int = -1
+    fileprivate(set) static var maxTrash: Int = -1
     
-    private static let cardAliases = [
+    fileprivate static let cardAliases = [
         "08034": "Franklin",  // crick
         "02085": "HQI",       // hq interface
         "02107": "RDI",       // r&d interface
@@ -56,17 +56,17 @@ import SwiftyJSON
         
         allKnownCards.removeAll()
         
-        allCardsByRole[.Runner] = [Card]()
-        allCardsByRole[.Corp] = [Card]()
+        allCardsByRole[.runner] = [Card]()
+        allCardsByRole[.corp] = [Card]()
         
-        allIdentitiesByRole[.Runner] = [Card]()
-        allIdentitiesByRole[.Corp] = [Card]()
+        allIdentitiesByRole[.runner] = [Card]()
+        allIdentitiesByRole[.corp] = [Card]()
         
-        identitySubtypes[.Runner] = Set<String>()
-        identitySubtypes[.Corp] = Set<String>()
+        identitySubtypes[.runner] = Set<String>()
+        identitySubtypes[.corp] = Set<String>()
         
-        allSubtypes[.Runner] = [String: Set<String>]()
-        allSubtypes[.Corp] = [String: Set<String>]()
+        allSubtypes[.runner] = [String: Set<String>]()
+        allSubtypes[.corp] = [String: Set<String>]()
         
         maxMU = -1
         maxInfluence = -1
@@ -77,72 +77,72 @@ import SwiftyJSON
         maxTrash = -1
     }
 
-    class func cardByCode(code: String) -> Card? {
+    class func cardByCode(_ code: String) -> Card? {
         return allKnownCards[code]
     }
     
     class func allCards() -> [Card] {
         let cards = allKnownCards.values
         
-        return cards.sort({
+        return cards.sorted(by: {
             return $0.name.length > $1.name.length
         })
     }
     
-    class func allForRole(role: NRRole) -> [Card]
+    class func allForRole(_ role: NRRole) -> [Card]
     {
-        if role != .None {
+        if role != .none {
             return allCardsByRole[role]!
         }
         else {
-            var cards = allCardsByRole[.Runner]!
-            cards.appendContentsOf(allCardsByRole[.Corp]!)
+            var cards = allCardsByRole[.runner]!
+            cards.append(contentsOf: allCardsByRole[.corp]!)
             return cards
         }
     }
     
-    class func identitiesForRole(role: NRRole) -> [Card]
+    class func identitiesForRole(_ role: NRRole) -> [Card]
     {
-        assert(role != .None)
+        assert(role != .none)
         return allIdentitiesByRole[role]!
     }
     
-    class func subtypesForRole(role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {
+    class func subtypesForRole(_ role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {
         var subtypes = allSubtypes[role]?[type] ?? Set<String>()
         
         let includeIds = includeIdentities && (type == Constant.kANY || type == identityKey)
         if (includeIds) {
             if let set = identitySubtypes[role] {
-                subtypes.unionInPlace(set)
+                subtypes.formUnion(set)
             }
         }
     
-        return subtypes.sort({ $0.lowercaseString < $1.lowercaseString })
+        return subtypes.sorted(by: { $0.lowercased() < $1.lowercased() })
     }
     
-    class func subtypesForRole(role: NRRole, andTypes types: Set<String>, includeIdentities: Bool) -> [String] {
+    class func subtypesForRole(_ role: NRRole, andTypes types: Set<String>, includeIdentities: Bool) -> [String] {
         var subtypes = Set<String>()
         for type in types {
             let arr = subtypesForRole(role, andType: type, includeIdentities: includeIdentities)
-            subtypes.unionInPlace(arr)
+            subtypes.formUnion(arr)
         }
     
-        return subtypes.sort({ $0.lowercaseString < $1.lowercaseString })
+        return subtypes.sorted(by: { $0.lowercased() < $1.lowercased() })
     }
     
     class func cardsAvailable() -> Bool {
         return allKnownCards.count > 0
     }
     
-    private class func setSubtypes() {
+    fileprivate class func setSubtypes() {
         // fill subtypes per role
         for card in allKnownCards.values {
             if (card.subtypes.count > 0) {
                 // NSLog(@"%@", card.subtype)
-                if (card.type == .Identity)
+                if (card.type == .identity)
                 {
                     identityKey = card.typeStr
-                    identitySubtypes[card.role]?.unionInPlace(card.subtypes)
+                    identitySubtypes[card.role]?.formUnion(card.subtypes)
                 }
                 else
                 {
@@ -158,26 +158,26 @@ import SwiftyJSON
                         dict![Constant.kANY] = Set<String>()
                     }
                     
-                    dict![card.typeStr]?.unionInPlace(card.subtypes)
-                    dict![Constant.kANY]?.unionInPlace(card.subtypes)
+                    dict![card.typeStr]?.formUnion(card.subtypes)
+                    dict![Constant.kANY]?.formUnion(card.subtypes)
                     allSubtypes[card.role] = dict
                 }
             }
         }
     }
     
-    private class func addCardAliases() {
+    fileprivate class func addCardAliases() {
         // add automatic aliases like "Self Modifying Code" -> "SMC"
         for card in allKnownCards.values {
             if (card.name.length > 2) {
-                let words = card.name.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: " -"))
+                let words = card.name.components(separatedBy: CharacterSet(charactersIn: " -"))
                 if words.count > 1 {
                     var alias = ""
                     for word in words {
                         if word.length > 0 {
                             var c = word.characters[word.startIndex]
                             if c == "\"" {
-                                c = word.characters[word.startIndex.advancedBy(1)]
+                                c = word.characters[word.characters.index(word.startIndex, offsetBy: 1)]
                             }
                             alias.append(c)
                         }
@@ -196,7 +196,7 @@ import SwiftyJSON
         }
     }
     
-    private class func addCard(card: Card) {
+    fileprivate class func addCard(_ card: Card) {
         guard card.isValid else {
             print("invalid card: \(card.code) \(card.name)")
             return
@@ -204,7 +204,7 @@ import SwiftyJSON
         
         allKnownCards[card.code] = card
         
-        if (card.type == .Identity) {
+        if (card.type == .identity) {
             allIdentitiesByRole[card.role]!.append(card)
         } else {
             allCardsByRole[card.role]!.append(card)
@@ -217,7 +217,7 @@ import SwiftyJSON
         maxInfluence = max(card.influence, maxInfluence)
         maxAgendaPoints = max(card.agendaPoints, maxAgendaPoints)
         
-        if card.role == .Runner
+        if card.role == .runner
         {
             maxRunnerCost = max(card.cost, maxRunnerCost)
         }
@@ -228,51 +228,55 @@ import SwiftyJSON
     }
     
     class func setNextDownloadDate() {
-        let fmt = NSDateFormatter()
-        fmt.dateStyle = .ShortStyle // e.g. 08.10.2008 for locale=de
-        fmt.timeStyle = .NoStyle
-        let now = NSDate()
+        let fmt = DateFormatter()
+        fmt.dateStyle = .short // e.g. 08.10.2008 for locale=de
+        fmt.timeStyle = .none
+        let now = Date()
         
-        let settings = NSUserDefaults.standardUserDefaults()
-        settings.setObject(fmt.stringFromDate(now), forKey:SettingsKeys.LAST_DOWNLOAD)
+        let settings = UserDefaults.standard
+        settings.set(fmt.string(from: now), forKey:SettingsKeys.LAST_DOWNLOAD)
         
-        let interval = settings.integerForKey(SettingsKeys.UPDATE_INTERVAL)
+        let interval = settings.integer(forKey: SettingsKeys.UPDATE_INTERVAL)
         
         var nextDownload: String
         switch (interval) {
         case 30:
-            let cal = NSCalendar.currentCalendar()
-            let next = cal.dateByAddingUnit(.Month, value:1, toDate:now, options:[])
-            nextDownload = fmt.stringFromDate(next!)
+            let cal = Calendar.current
+            let next = (cal as NSCalendar).date(byAdding: .month, value:1, to:now, options:[])
+            nextDownload = fmt.string(from: next!)
         case 0:
             nextDownload = "never".localized()
         default:
-            let next = NSDate(timeIntervalSinceNow:NSTimeInterval(interval*24*60*60))
-            nextDownload = fmt.stringFromDate(next)
+            let next = Date(timeIntervalSinceNow:TimeInterval(interval*24*60*60))
+            nextDownload = fmt.string(from: next)
         }
         
-        settings.setObject(nextDownload, forKey:SettingsKeys.NEXT_DOWNLOAD)
+        settings.set(nextDownload, forKey:SettingsKeys.NEXT_DOWNLOAD)
     }
     
     // MARK: - persistence 
     
-    class func setupFromFiles(language: String) -> Bool {
+    class func setupFromFiles(_ language: String) -> Bool {
         let filename = CardManager.filename()
         
-        if let str = try? NSString(contentsOfFile: filename, encoding: NSUTF8StringEncoding) {
-            let cardsJson = JSON.parse(str as String)
+        if let str = try? NSString(contentsOfFile: filename, encoding: String.Encoding.utf8.rawValue) {
+            let cardsJson = JSON.parse(string: str as String)
             return setupFromJson(cardsJson, language: language)
         }
         // print("app start: missing card file")
         return false
     }
     
-    class func setupFromNetrunnerDb(cards: JSON, language: String) -> Bool {
-        let ok = setupFromJson(cards, language: language)
+    class func setupFromNetrunnerDb(_ cards: JSON, language: String) -> Bool {
+        var ok = setupFromJson(cards, language: language)
         if ok {
             let filename = CardManager.filename()
             if let data = try? cards.rawData() {
-                data.writeToFile(filename, atomically:true)
+                do {
+                    try data.write(to: URL(fileURLWithPath: filename), options: .atomic)
+                } catch {
+                    ok = false
+                }
                 // print("write cards ok=\(ok)")
             }
             AppDelegate.excludeFromBackup(filename)
@@ -280,7 +284,7 @@ import SwiftyJSON
         return ok
     }
     
-    class func setupFromJson(cards: JSON, language: String) -> Bool {
+    class func setupFromJson(_ cards: JSON, language: String) -> Bool {
         if !cards.validNrdbResponse {
             return false
         }
@@ -309,8 +313,8 @@ import SwiftyJSON
         }
         
         // sort identities by faction and name
-        for var arr in [ allIdentitiesByRole[.Runner]!, allIdentitiesByRole[.Corp]! ] {
-            arr.sortInPlace({ (c1, c2) -> Bool in
+        for var arr in [ allIdentitiesByRole[.runner]!, allIdentitiesByRole[.corp]! ] {
+            arr.sort(by: { (c1, c2) -> Bool in
                 if c1.faction.rawValue < c2.faction.rawValue { return true }
                 if c1.faction.rawValue > c2.faction.rawValue { return false }
                 return c1.name < c2.name
@@ -320,16 +324,16 @@ import SwiftyJSON
         return true
     }
     
-    private class func filename() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+    fileprivate class func filename() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
     
         return supportDirectory.stringByAppendingPathComponent(CardManager.cardsFilename)
     }
     
     class func removeFiles() {
-        let fileMgr = NSFileManager.defaultManager()
-        _ = try? fileMgr.removeItemAtPath(filename())
+        let fileMgr = FileManager.default
+        _ = try? fileMgr.removeItem(atPath: filename())
     
         CardManager.initialize()
     }

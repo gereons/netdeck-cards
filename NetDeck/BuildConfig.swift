@@ -22,14 +22,14 @@ struct BuildConfig {
 
 class Device: NSObject {
     static var isIphone: Bool {
-        return UIDevice.currentDevice().userInterfaceIdiom == .Phone
+        return UIDevice.current.userInterfaceIdiom == .phone
     }
 
     static var isIpad: Bool {
-        return UIDevice.currentDevice().userInterfaceIdiom == .Pad
+        return UIDevice.current.userInterfaceIdiom == .pad
     }
     
-    static let screenSize = UIScreen.mainScreen().bounds.size
+    static let screenSize = UIScreen.main.bounds.size
     static let maxSize = max(screenSize.width, screenSize.height)
     
     static var isIphone4: Bool {

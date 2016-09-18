@@ -23,6 +23,8 @@
 
 -(void)awakeFromNib
 {
+    [super awakeFromNib];
+    
     self.views = @[ self.pipNW, self.pipNE, self.pipCenter, self.pipSW, self.pipSE ];
     for (UIView* v in self.views)
     {

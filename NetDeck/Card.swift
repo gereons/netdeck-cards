@@ -80,7 +80,7 @@ import SwiftyJSON
     static let SANSAN_CITY_GRID = "01092"
     static let BREAKING_NEWS    = "01082"
     
-    private static let MostWantedLists: [NRMWL: Set<String>] = [
+    fileprivate static let MostWantedLists: [NRMWL: Set<String>] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
         .v1_0: Set<String>([
             CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
@@ -92,47 +92,47 @@ import SwiftyJSON
             ARCHITECT, BREAKING_NEWS, ELI_1, MUMBA_TEMPLE, NAPD_CONTRACT, SANSAN_CITY_GRID ])
     ]
     
-    private(set) static var fullNames = [String: String]()
-    private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
+    fileprivate(set) static var fullNames = [String: String]()
+    fileprivate static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
-    private(set) var code = ""
-    private(set) var name = ""                  // localized name of card, used for display
-    private(set) var englishName = ""           // english name of card, used for searches
-    private(set) var alias: String?
-    private(set) var text = ""
-    private(set) var flavor = ""
-    private(set) var type = NRCardType.None
-    private(set) var subtype = ""               // full subtype string like "Fracter - Icebreaker - AI"
-    private(set) var subtypes = [String]()      // array of subtypes like [ "Fracter", "Icebreaker", "AI" ]
-    private(set) var faction = NRFaction.None
-    private(set) var role = NRRole.None
-    private(set) var influenceLimit = -1        // for id
-    private(set) var minimumDecksize = -1       // for id
-    private(set) var baseLink = -1              // for runner id
-    private(set) var influence = -1
-    private(set) var mu = -1
-    private(set) var strength = -1
-    private(set) var cost = -1
-    private(set) var advancementCost = -1       // agenda
-    private(set) var agendaPoints = -1          // agenda
-    private(set) var trash = -1
-    private(set) var quantity = -1              // number of cards in set
-    private(set) var number = -1                // card no. in set
-    private(set) var packCode = ""
-    private(set) var packNumber = -1            // our own internal pack number, for sorting by pack release
-    private(set) var unique = false
-    private(set) var maxPerDeck = -1            // how many may be in deck? currently either 1, 3 or 6
+    fileprivate(set) var code = ""
+    fileprivate(set) var name = ""                  // localized name of card, used for display
+    fileprivate(set) var englishName = ""           // english name of card, used for searches
+    fileprivate(set) var alias: String?
+    fileprivate(set) var text = ""
+    fileprivate(set) var flavor = ""
+    fileprivate(set) var type = NRCardType.none
+    fileprivate(set) var subtype = ""               // full subtype string like "Fracter - Icebreaker - AI"
+    fileprivate(set) var subtypes = [String]()      // array of subtypes like [ "Fracter", "Icebreaker", "AI" ]
+    fileprivate(set) var faction = NRFaction.none
+    fileprivate(set) var role = NRRole.none
+    fileprivate(set) var influenceLimit = -1        // for id
+    fileprivate(set) var minimumDecksize = -1       // for id
+    fileprivate(set) var baseLink = -1              // for runner id
+    fileprivate(set) var influence = -1
+    fileprivate(set) var mu = -1
+    fileprivate(set) var strength = -1
+    fileprivate(set) var cost = -1
+    fileprivate(set) var advancementCost = -1       // agenda
+    fileprivate(set) var agendaPoints = -1          // agenda
+    fileprivate(set) var trash = -1
+    fileprivate(set) var quantity = -1              // number of cards in set
+    fileprivate(set) var number = -1                // card no. in set
+    fileprivate(set) var packCode = ""
+    fileprivate(set) var packNumber = -1            // our own internal pack number, for sorting by pack release
+    fileprivate(set) var unique = false
+    fileprivate(set) var maxPerDeck = -1            // how many may be in deck? currently either 1, 3 or 6
     
-    private(set) var isAlliance = false
-    private(set) var isVirtual = false
-    private(set) var isCore = false             // card is from core set
+    fileprivate(set) var isAlliance = false
+    fileprivate(set) var isVirtual = false
+    fileprivate(set) var isCore = false             // card is from core set
     
-    private static var multiIce = [String]()
+    fileprivate static var multiIce = [String]()
     
-    private static let nullInstance = Card()
+    fileprivate static let nullInstance = Card()
     
-    private var factionCode = ""
-    private var typeCode = ""
+    fileprivate var factionCode = ""
+    fileprivate var typeCode = ""
     
     var typeStr: String { return Translation.forTerm(self.typeCode, language: Card.currentLanguage) }
     var factionStr: String { return Translation.forTerm(self.factionCode, language: Card.currentLanguage) }
@@ -143,14 +143,14 @@ import SwiftyJSON
     
     var imageSrc: String {
         return Card.imgSrcTemplate
-            .stringByReplacingOccurrencesOfString("{locale}", withString: Card.currentLanguage)
-            .stringByReplacingOccurrencesOfString("{code}", withString: self.code)
+            .replacingOccurrences(of: "{locale}", with: Card.currentLanguage)
+            .replacingOccurrences(of: "{code}", with: self.code)
     }
     
     var ancurLink: String {
         let wikiName = self.englishName
-            .stringByReplacingOccurrencesOfString(" ", withString: "_")
-            .stringByAddingPercentEncodingWithAllowedCharacters(.URLPathAllowedCharacterSet()) ?? self.englishName
+            .replacingOccurrences(of: " ", with: "_")
+            .addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? self.englishName
         return "http://ancur.wikia.com/wiki/" + wikiName
     }
     
@@ -158,8 +158,8 @@ import SwiftyJSON
         return "https://netrunnerdb.com/" + Card.currentLanguage + "/card/" + self.code
     }
     
-    static private var imgSrcTemplate = ""
-    static private var currentLanguage = ""
+    static fileprivate var imgSrcTemplate = ""
+    static fileprivate var currentLanguage = ""
     
     class func null() -> Card {
         return nullInstance
@@ -169,15 +169,15 @@ import SwiftyJSON
         return self === Card.nullInstance
     }
     
-    func isMostWanted(mwl: NRMWL) -> Bool {
-        guard mwl != .None else { return false }
+    func isMostWanted(_ mwl: NRMWL) -> Bool {
+        guard mwl != .none else { return false }
         let cards = Card.MostWantedLists[mwl]!
         return cards.contains(self.code)
     }
     
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
     var iceType: String? {
-        assert(self.type == .Ice, "not an ice")
+        assert(self.type == .ice, "not an ice")
         
         if Card.multiIce.contains(self.code) {
             return "Multi".localized()
@@ -188,7 +188,7 @@ import SwiftyJSON
     
     // special for Programs: return "Icebreaker" for icebreakers, "Program" for other programs
     var programType: String? {
-        assert(self.type == .Program, "not a program")
+        assert(self.type == .program, "not a program")
         if self.strength >= 0 || self.strength == Card.X {
             return self.subtypes[0]
         } else {
@@ -201,17 +201,17 @@ import SwiftyJSON
     }
     
     var factionHexColor: UInt {
-        assert(self.faction != .None)
+        assert(self.faction != .none)
         return Card.factionColors[self.faction]!
     }
     
-    private var _attributedText: NSAttributedString?
+    fileprivate var _attributedText: NSAttributedString?
     // html rendered
     var attributedText: NSAttributedString! {
         if self._attributedText == nil {
-            let str = self.text.stringByReplacingOccurrencesOfString("\n", withString: "<br/>")
-            let data = str.dataUsingEncoding(NSUTF8StringEncoding)
-            self._attributedText = NSAttributedString(HTMLData: data, options: Card.coreTextOptions, documentAttributes: nil)
+            let str = self.text.replacingOccurrences(of: "\n", with: "<br/>")
+            let data = str.data(using: String.Encoding.utf8)
+            self._attributedText = NSAttributedString(htmlData: data, options: Card.coreTextOptions, documentAttributes: nil)
             if self._attributedText == nil {
                 self._attributedText = NSAttributedString(string: "")
             }
@@ -224,7 +224,7 @@ import SwiftyJSON
     }
     
     var cropY: Double {
-        assert(self.type != .None)
+        assert(self.type != .none)
         return Card.cropValues[self.type]!
     }
     
@@ -233,7 +233,7 @@ import SwiftyJSON
         let prebuiltOwned = PrebuiltManager.quantityFor(self)
         
         if self.isCore {
-            let cores = NSUserDefaults.standardUserDefaults().integerForKey(SettingsKeys.NUM_CORES)
+            let cores = UserDefaults.standard.integer(forKey: SettingsKeys.NUM_CORES)
             return (cores * self.quantity) + prebuiltOwned
         }
         
@@ -245,7 +245,7 @@ import SwiftyJSON
     }
     
     var isValid: Bool {
-        return self.role != .None && self.faction != .None && self.type != .None
+        return self.role != .none && self.faction != .none && self.type != .none
     }
     
     var costString: String {
@@ -256,7 +256,7 @@ import SwiftyJSON
         return xStringify(self.strength)
     }
     
-    private func xStringify(x: Int) -> String {
+    fileprivate func xStringify(_ x: Int) -> String {
         switch x {
         case -1: return ""
         case Card.X: return "X"
@@ -264,7 +264,7 @@ import SwiftyJSON
         }
     }
     
-    class func cardsFromJson(json: JSON, language: String) -> [Card] {
+    class func cardsFromJson(_ json: JSON, language: String) -> [Card] {
         var cards = [Card]()
         imgSrcTemplate = json["imageUrlTemplate"].stringValue
         currentLanguage = language
@@ -275,7 +275,7 @@ import SwiftyJSON
         return cards
     }
     
-    private class func cardFromJson(json: JSON, language: String) -> Card {
+    fileprivate class func cardFromJson(_ json: JSON, language: String) -> Card {
         let c = Card()
         
         c.code = json["code"].stringValue
@@ -291,9 +291,9 @@ import SwiftyJSON
         c.typeCode = json["type_code"].stringValue
         c.type = Codes.typeForCode(c.typeCode)
         
-        if c.type == .Identity {
+        if c.type == .identity {
             Card.fullNames[c.code] = c.englishName
-            let factionName = c.faction == .Weyland ? Faction.WeylandConsortium : c.factionStr
+            let factionName = c.faction == .weyland ? Faction.WeylandConsortium : c.factionStr
             let shortName = c.shortIdentityName(c.name, forRole: c.role, andFaction: factionName)
             c.name = shortName
         }
@@ -307,7 +307,7 @@ import SwiftyJSON
             c.packCode = PackManager.UNKNOWN_SET
         }
         if c.packCode == PackManager.DRAFT_SET_CODE {
-            c.faction = .Neutral
+            c.faction = .neutral
         }
         
         c.packNumber = PackManager.packNumberForCode(c.packCode)
@@ -324,12 +324,12 @@ import SwiftyJSON
         c.quantity = json["quantity"].int ?? -1
         c.unique = json["uniqueness"].boolValue
         
-        if c.type == .Identity {
+        if c.type == .identity {
             c.influenceLimit = json["influence_limit"].int ?? -1
             c.minimumDecksize = json["minimum_deck_size"].int ?? -1
             c.baseLink = json["base_link"].int ?? -1
         }
-        if c.type == .Agenda {
+        if c.type == .agenda {
             c.advancementCost = json["advancement_cost"].int ?? -1
             c.agendaPoints = json["agenda_points"].int ?? -1
         }
@@ -352,13 +352,13 @@ import SwiftyJSON
         c.trash = json["trash_cost"].int ?? -1
         
         c.maxPerDeck = json["deck_limit"].int ?? -1
-        if Card.MAX_1_PER_DECK.contains(c.code) || c.type == .Identity {
+        if Card.MAX_1_PER_DECK.contains(c.code) || c.type == .identity {
             c.maxPerDeck = 1
         }
         
-        c.isAlliance = c.subtype.lowercaseString.containsString("alliance")
-        c.isVirtual = c.subtype.lowercaseString.containsString("virtual")
-        if c.type == .Ice {
+        c.isAlliance = c.subtype.lowercased().contains("alliance")
+        c.isVirtual = c.subtype.lowercased().contains("virtual")
+        if c.type == .ice {
             let barrier = c.subtypes.contains("Barrier")
             let sentry = c.subtypes.contains("Sentry")
             let codeGate = c.subtypes.contains("Code Gate")
@@ -371,77 +371,77 @@ import SwiftyJSON
         return c
     }
     
-    private class func subtypeSplit(subtype: String) -> (subtype: String, subtypes: [String]) {
-        let s = subtype.stringByReplacingOccurrencesOfString("G-Mod", withString: "G-mod")
-        let t = s.stringByReplacingOccurrencesOfString(" – ", withString: " - ") // fix dashes in german subtypes
+    fileprivate class func subtypeSplit(_ subtype: String) -> (subtype: String, subtypes: [String]) {
+        let s = subtype.replacingOccurrences(of: "G-Mod", with: "G-mod")
+        let t = s.replacingOccurrences(of: " – ", with: " - ") // fix dashes in german subtypes
         if s != t {
             print("dashes found!")
         }
-        var subtypes = t.componentsSeparatedByString(" - ")
+        var subtypes = t.components(separatedBy: " - ")
         for i in 0 ..< subtypes.count {
             subtypes[i] = subtypes[i].trim()
         }
         return (subtype, subtypes)
     }
     
-    func setCardAlias(alias: String) {
+    func setCardAlias(_ alias: String) {
         self.alias = alias
     }
     
     // manipulate identity name
-    func shortIdentityName(name: String, forRole role: NRRole, andFaction faction: String) -> String {
-        if let colon = name.rangeOfString(": ") {
+    func shortIdentityName(_ name: String, forRole role: NRRole, andFaction faction: String) -> String {
+        if let colon = name.range(of: ": ") {
             // runner: remove stuff after the colon ("Andromeda: Disposessed Ristie" becomes "Andromeda")
-            if role == .Runner {
-                return name.substringToIndex(colon.startIndex)
+            if role == .runner {
+                return name.substring(to: colon.lowerBound)
             }
         
             // corp: if faction name is part of the title, remove it ("NBN: The World is Yours*" becomes "The World is Yours*")
             // otherwise, remove stuff after the colon ("Harmony Medtech: Biomedical Pioneer" becomes "Harmony Medtech")
-            if role == .Corp {
-                if name.hasPrefix(faction + ":") {
-                    return name.substringFromIndex(colon.startIndex.advancedBy(2)) // bump to after the ": "
+            if role == .corp {
+                if name.hasPrefix(faction + ": ") {
+                    return name.substring(from: name.index(colon.lowerBound, offsetBy: 2)) // bump to after the ": "
                 } else {
-                    return name.substringToIndex(colon.startIndex)
+                    return name.substring(to: colon.lowerBound)
                 }
             }
         }
         return name
     }
     
-    private static let factionColors: [NRFaction: UInt] = [
-        .Jinteki:      0x940c00,
-        .NBN:          0xd7a32d,
-        .Weyland:      0x2d7868,
-        .HaasBioroid:  0x6b2b8a,
-        .Shaper:       0x6ab545,
-        .Criminal:     0x4f67b0,
-        .Anarch:       0xf47c28,
-        .Adam:         0xae9543,
-        .Apex:         0xa8403d,
-        .SunnyLebeau:  0x776e6f,
-        .Neutral:      0x000000
+    fileprivate static let factionColors: [NRFaction: UInt] = [
+        .jinteki:      0x940c00,
+        .nbn:          0xd7a32d,
+        .weyland:      0x2d7868,
+        .haasBioroid:  0x6b2b8a,
+        .shaper:       0x6ab545,
+        .criminal:     0x4f67b0,
+        .anarch:       0xf47c28,
+        .adam:         0xae9543,
+        .apex:         0xa8403d,
+        .sunnyLebeau:  0x776e6f,
+        .neutral:      0x000000
     ]
     
-    private static let cropValues: [NRCardType: Double] = [
-        .Agenda: 15,
-        .Asset: 20,
-        .Event: 10,
-        .Identity: 12,
-        .Operation: 10,
-        .Hardware: 18,
-        .Ice: 209,
-        .Program: 8,
-        .Resource: 11,
-        .Upgrade: 22
+    fileprivate static let cropValues: [NRCardType: Double] = [
+        .agenda: 15,
+        .asset: 20,
+        .event: 10,
+        .identity: 12,
+        .operation: 10,
+        .hardware: 18,
+        .ice: 209,
+        .program: 8,
+        .resource: 11,
+        .upgrade: 22
     ]
     
-    static let fontFamily = UIFont.systemFontOfSize(13).familyName
+    static let fontFamily = UIFont.systemFont(ofSize: 13).familyName
     static let coreTextOptions = [
         DTUseiOS6Attributes: true,
         DTDefaultFontFamily: NSString(string: fontFamily),
         DTDefaultFontSize: 13
-    ]
+    ] as [String : Any]
     
     override var hashValue: Int {
         return code.hashValue

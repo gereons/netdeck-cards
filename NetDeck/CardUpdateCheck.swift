@@ -8,35 +8,35 @@
 
 class CardUpdateCheck: NSObject {
     
-    class func checkCardUpdateAvailable(vc: UIViewController) -> Bool {
-        let next = NSUserDefaults.standardUserDefaults().stringForKey(SettingsKeys.NEXT_DOWNLOAD)
+    class func checkCardUpdateAvailable(_ vc: UIViewController) -> Bool {
+        let next = UserDefaults.standard.string(forKey: SettingsKeys.NEXT_DOWNLOAD)
         
-        let fmt = NSDateFormatter()
-        fmt.dateStyle = .ShortStyle
-        fmt.timeStyle = .NoStyle
+        let fmt = DateFormatter()
+        fmt.dateStyle = .short
+        fmt.timeStyle = .none
         
-        guard let scheduled = fmt.dateFromString(next ?? "") else {
+        guard let scheduled = fmt.date(from: next ?? "") else {
             return false
         }
 
-        let now = NSDate()
+        let now = Date()
         
         if Reachability.online() && scheduled.timeIntervalSince1970 < now.timeIntervalSince1970 {
             let msg = "Card data may be out of date. Download now?".localized()
-            let alert = UIAlertController.alertWithTitle("Update cards".localized(), message:msg)
+            let alert = UIAlertController.alert(withTitle: "Update cards".localized(), message:msg)
             
             alert.addAction(UIAlertAction(title: "Later".localized()) { (action) -> Void in
                 // ask again tomorrow
-                let next = NSDate(timeIntervalSinceNow:24*60*60)
+                let next = Date(timeIntervalSinceNow:24*60*60)
                 
-                NSUserDefaults.standardUserDefaults().setObject(fmt.stringFromDate(next), forKey:SettingsKeys.NEXT_DOWNLOAD)
+                UserDefaults.standard.set(fmt.string(from: next), forKey:SettingsKeys.NEXT_DOWNLOAD)
             })
             
-            alert.addAction(UIAlertAction(title:"OK".localized(), style:.Cancel) { (action) -> Void in
+            alert.addAction(UIAlertAction(title:"OK".localized(), style:.cancel) { (action) -> Void in
                 DataDownload.downloadCardData()
             })
             
-            vc.presentViewController(alert, animated:false, completion:nil)
+            vc.present(alert, animated:false, completion:nil)
             return true
         }
         

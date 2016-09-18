@@ -20,28 +20,28 @@ class EmptyDetailViewController: UIViewController {
         
         self.titleLabel.text = "No Card Data".localized()
         self.textLabel.text = "To use this app, you must first download card data.".localized()
-        self.downloadButton.setTitle("Download".localized(), forState: .Normal)
+        self.downloadButton.setTitle("Download".localized(), for: UIControlState())
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTileLight)
         
         let cardsAvailable = CardManager.cardsAvailable() && PackManager.packsAvailable()
-        self.emptyDataSetView.hidden = cardsAvailable
-        self.spinner.hidden = !cardsAvailable
+        self.emptyDataSetView.isHidden = cardsAvailable
+        self.spinner.isHidden = !cardsAvailable
         
         if (cardsAvailable) {
             self.spinner.startAnimating()
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         self.spinner.stopAnimating()
     }
     
-    @IBAction func downloadTapped(sender: UIButton) {
+    @IBAction func downloadTapped(_ sender: UIButton) {
         DataDownload.downloadCardData()
     }
 }

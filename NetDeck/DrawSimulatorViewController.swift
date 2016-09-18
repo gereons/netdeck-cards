@@ -27,11 +27,11 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     
     static var viewMode = 0
     
-    class func showForDeck(deck: Deck, inViewController vc: UIViewController) {
+    class func showForDeck(_ deck: Deck, inViewController vc: UIViewController) {
         let dvw = DrawSimulatorViewController()
         dvw.deck = deck
-        dvw.modalPresentationStyle = .FormSheet
-        vc.presentViewController(dvw, animated: false, completion: nil)
+        dvw.modalPresentationStyle = .formSheet
+        vc.present(dvw, animated: false, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -41,19 +41,19 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         self.initCards(true)
         
         self.titleLabel.text = "Draw Simulator".localized()
-        self.clearButton.setTitle("Clear".localized(), forState: .Normal)
-        self.doneButton.setTitle("Done".localized(), forState: .Normal)
+        self.clearButton.setTitle("Clear".localized(), for: UIControlState())
+        self.doneButton.setTitle("Done".localized(), for: UIControlState())
         
-        self.selector.setTitle("All".localized(), forSegmentAtIndex:6)
+        self.selector.setTitle("All".localized(), forSegmentAt:6)
         self.selector.apportionsSegmentWidthsByContent = true
         
         self.viewModeControl.selectedSegmentIndex = DrawSimulatorViewController.viewMode
         
-        self.tableView.tableFooterView = UIView(frame:CGRectZero)
-        self.tableView.hidden = DrawSimulatorViewController.viewMode == 0
+        self.tableView.tableFooterView = UIView(frame:CGRect.zero)
+        self.tableView.isHidden = DrawSimulatorViewController.viewMode == 0
         
-        self.collectionView.registerNib(UINib(nibName:"CardThumbView", bundle:nil),forCellWithReuseIdentifier:"cardThumb")
-        self.collectionView.hidden = DrawSimulatorViewController.viewMode == 1
+        self.collectionView.register(UINib(nibName:"CardThumbView", bundle:nil),forCellWithReuseIdentifier:"cardThumb")
+        self.collectionView.isHidden = DrawSimulatorViewController.viewMode == 1
         
         // each view needs its own long press recognizer
         self.tableView.addGestureRecognizer(UILongPressGestureRecognizer(target:self, action:#selector(DrawSimulatorViewController.longPress(_:))))
@@ -62,11 +62,11 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         
-        self.oddsLabel.font = UIFont.monospacedDigitSystemFontOfSize(17, weight: UIFontWeightRegular)
-        self.drawnLabel.font = UIFont.monospacedDigitSystemFontOfSize(15, weight: UIFontWeightRegular)
+        self.oddsLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightRegular)
+        self.drawnLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
     }
     
-    func initCards(drawInitialHand: Bool) {
+    func initCards(_ drawInitialHand: Bool) {
         self.drawn = [Card]()
         self.cards = [Card]()
         self.played = [Bool]()
@@ -93,7 +93,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         }
     }
     
-    func drawCards(numCards: Int) {
+    func drawCards(_ numCards: Int) {
         for _ in 0..<numCards {
             if self.cards.count > 0 {
                 let card = self.cards[0]
@@ -114,9 +114,9 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         
         // scroll down if not all cards were drawn
         if numCards != self.deck.size && self.drawn.count > 0 {
-            let indexPath = NSIndexPath(forRow: self.drawn.count-1, inSection: 0)
-            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: false)
-            self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: false)
+            let indexPath = IndexPath(row: self.drawn.count-1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: false)
         }
         
         // calculate drawing odds
@@ -125,105 +125,105 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         self.oddsLabel.text = odds
     }
     
-    func oddsFor(cards: Int) -> Double {
+    func oddsFor(_ cards: Int) -> Double {
         let odds = 100.0 * Hypergeometric.getProbabilityFor(1, cardsInDeck:self.deck.size, desiredCardsInDeck:min(self.deck.size, cards), cardsDrawn:self.drawn.count)
         return odds
     }
     
     // MARK: table view
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.drawn.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "drawCell"
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
-            cell!.selectionStyle = .None
+            cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            cell!.selectionStyle = .none
         }
         
-        let card = self.drawn[indexPath.row]
+        let card = self.drawn[(indexPath as NSIndexPath).row]
         cell!.textLabel?.text = card.name
-        cell!.textLabel?.textColor = self.played[indexPath.row] ? UIColor.lightGrayColor() : UIColor.blackColor()
+        cell!.textLabel?.textColor = self.played[(indexPath as NSIndexPath).row] ? UIColor.lightGray : UIColor.black
         
         return cell!
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let card = self.drawn[indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let card = self.drawn[(indexPath as NSIndexPath).row]
         
-        let rect = self.tableView.rectForRowAtIndexPath(indexPath)
+        let rect = self.tableView.rectForRow(at: indexPath)
         
-        CardImageViewPopover.showForCard(card, fromRect: rect, inViewController:self, subView:self.tableView)
+        CardImageViewPopover.show(for: card, from: rect, in:self, subView:self.tableView)
     }
     
     // MARK: collection view
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.drawn.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cardThumb", forIndexPath: indexPath) as! CardThumbView
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardThumb", for: indexPath) as! CardThumbView
         
-        let card = self.drawn[indexPath.row]
+        let card = self.drawn[(indexPath as NSIndexPath).row]
         cell.card = card
-        cell.imageView.layer.opacity = self.played[indexPath.row] ? 0.5 : 1
+        cell.imageView.layer.opacity = self.played[(indexPath as NSIndexPath).row] ? 0.5 : 1
         
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(160, 119)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 160, height: 119)
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let card = self.drawn[indexPath.row]
-        let cell = collectionView.cellForItemAtIndexPath(indexPath)
-        let rect = collectionView.convertRect(cell!.frame, toView: collectionView)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let card = self.drawn[(indexPath as NSIndexPath).row]
+        let cell = collectionView.cellForItem(at: indexPath)
+        let rect = collectionView.convert(cell!.frame, to: collectionView)
         
-        CardImageViewPopover.showForCard(card, fromRect: rect, inViewController:self, subView:self.collectionView)
+        CardImageViewPopover.show(for: card, from: rect, in:self, subView:self.collectionView)
     }
     
     // MARK: long press
     
-    func longPress(gesture: UIGestureRecognizer) {
-        if gesture.state == .Began {
-            var indexPath: NSIndexPath?
-            if self.tableView.hidden {
-                let point = gesture.locationInView(self.collectionView)
-                indexPath = self.collectionView.indexPathForItemAtPoint(point)
+    func longPress(_ gesture: UIGestureRecognizer) {
+        if gesture.state == .began {
+            var indexPath: IndexPath?
+            if self.tableView.isHidden {
+                let point = gesture.location(in: self.collectionView)
+                indexPath = self.collectionView.indexPathForItem(at: point)
             } else {
-                let point = gesture.locationInView(self.tableView)
-                indexPath = self.tableView.indexPathForRowAtPoint(point)
+                let point = gesture.location(in: self.tableView)
+                indexPath = self.tableView.indexPathForRow(at: point)
             }
             
             if indexPath != nil {
-                let played = self.played[indexPath!.row]
-                self.played[indexPath!.row] = !played
+                let played = self.played[(indexPath! as NSIndexPath).row]
+                self.played[(indexPath! as NSIndexPath).row] = !played
                 let paths = [ indexPath! ]
                 
-                self.tableView.reloadRowsAtIndexPaths(paths, withRowAnimation: .None)
-                self.collectionView.reloadItemsAtIndexPaths(paths)
+                self.tableView.reloadRows(at: paths, with: .none)
+                self.collectionView.reloadItems(at: paths)
             }
         }
     }
     
     // MARK: button actions
     
-    @IBAction func done(sender: UIButton) {
-        self.dismissViewControllerAnimated(false, completion: nil)
+    @IBAction func done(_ sender: UIButton) {
+        self.dismiss(animated: false, completion: nil)
     }
     
-    @IBAction func clear(sender: UIButton) {
+    @IBAction func clear(_ sender: UIButton) {
         self.initCards(false)
         self.tableView.reloadData()
         self.collectionView.reloadData()
     }
     
-    @IBAction func draw(sender: UISegmentedControl) {
+    @IBAction func draw(_ sender: UISegmentedControl) {
         // segments are: 0=1, 1=2, 2=3, 3=4, 4=5, 5=9, 6=All
         var numCards = 0
         switch (sender.selectedSegmentIndex) {
@@ -238,9 +238,9 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         self.drawCards(numCards)
     }
     
-    @IBAction func viewModeChange(sender: UISegmentedControl) {
+    @IBAction func viewModeChange(_ sender: UISegmentedControl) {
         DrawSimulatorViewController.viewMode = sender.selectedSegmentIndex
-        self.tableView.hidden = DrawSimulatorViewController.viewMode == 0
-        self.collectionView.hidden = DrawSimulatorViewController.viewMode == 1
+        self.tableView.isHidden = DrawSimulatorViewController.viewMode == 0
+        self.collectionView.isHidden = DrawSimulatorViewController.viewMode == 1
     }
 }

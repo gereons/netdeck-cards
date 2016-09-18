@@ -9,11 +9,11 @@
 import Foundation
 
 class Translation {
-    class func forTerm(term: String, language: String) -> String {
-        return data[language]?[term] ?? term.capitalizedString
+    class func forTerm(_ term: String, language: String) -> String {
+        return data[language]?[term] ?? term.capitalized
     }
     
-    private static let data = [
+    fileprivate static let data = [
         "en": [
             "adam": "Adam",
             "anarch": "Anarch",

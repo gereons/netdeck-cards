@@ -8,36 +8,36 @@
 
 import Foundation
 
-class OctgnImport: NSObject, NSXMLParserDelegate {
+class OctgnImport: NSObject, XMLParserDelegate {
     
-    var parser: NSXMLParser!
+    var parser: XMLParser!
     var deck: Deck!
     var notes: String?
     
-    func parseOctgnDeckFromData(data: NSData) -> Deck? {
-        self.parser = NSXMLParser(data: data)
+    func parseOctgnDeckFromData(_ data: Data) -> Deck? {
+        self.parser = XMLParser(data: data)
         self.parser.delegate = self
         
         self.deck = Deck()
         
         let ok = self.parser.parse()
-        if ok && self.deck.role != .None {
+        if ok && self.deck.role != .none {
             return self.deck
         } else {
             return nil
         }
     }
     
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
         
         self.notes = nil
         
         if elementName == "card" {
-            if let qty = attributeDict["qty"], id = attributeDict["id"] {
+            if let qty = attributeDict["qty"], let id = attributeDict["id"] {
             
                 if id.hasPrefix(Card.OCTGN_PREFIX) && id.length > 32 {
 
-                    let code = (id as NSString).substringFromIndex(31)
+                    let code = (id as NSString).substring(from: 31)
                     let card = CardManager.cardByCode(code)
                     let copies = Int(qty)
                     
@@ -54,13 +54,13 @@ class OctgnImport: NSObject, NSXMLParserDelegate {
         }
     }
     
-    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "notes" {
             self.deck.notes = self.notes
         }
     }
     
-    func parser(parser: NSXMLParser, foundCharacters string: String) {
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
         if self.notes != nil {
             self.notes! += string
         }
