@@ -138,18 +138,18 @@ class JintekiNet: NSObject {
             cards.add(c)
         }
         
-        var id = [String: AnyObject]()
+        var id = [String: Any]()
         let identity = deck.identity ?? Card.null()
         
-        id["title"] = Card.fullNames[identity.code] as AnyObject?? ?? identity.englishName as AnyObject?
-        id["code"] = identity.code as AnyObject?
-        id["side"] = (identity.role == .runner ? "Runner" : "Corp") as NSString
-        id["influencelimit"] = identity.influenceLimit as AnyObject?
-        id["minimumdecksize"] = identity.minimumDecksize as AnyObject?
+        id["title"] = Card.fullNames[identity.code] ?? identity.englishName
+        id["code"] = identity.code
+        id["side"] = identity.role == .runner ? "Runner" : "Corp"
+        id["influencelimit"] = identity.influenceLimit
+        id["minimumdecksize"] = identity.minimumDecksize
         if identity.role == .runner {
-            id["baselink"] = identity.baseLink as AnyObject?
+            id["baselink"] = identity.baseLink
         }
-        id["faction"] = Faction.fullName(identity.faction) as NSString
+        id["faction"] = Faction.fullName(identity.faction)
         
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"

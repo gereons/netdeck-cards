@@ -392,13 +392,13 @@ class NRDB: NSObject {
             tags = (deck.tags! as NSArray).componentsJoined(by: " ")
         }
         let saveUrl = "https://netrunnerdb.com/api/2.0/private/deck/save?access_token=" + accessToken
-        let deckId = (deck.netrunnerDbId ?? "0") as AnyObject
-        let parameters: [String: AnyObject] = [
+        let deckId = deck.netrunnerDbId ?? "0"
+        let parameters: [String: Any] = [
             "deck_id": deckId,
-            "name": (deck.name ?? "Deck") as AnyObject,
-            "tags": tags as AnyObject,
-            "description": (deck.notes ?? "") as AnyObject,
-            "content": cards as AnyObject
+            "name": (deck.name ?? "Deck"),
+            "tags": tags,
+            "description": deck.notes ?? "",
+            "content": cards
         ]
         
         self.saveOrPublish(saveUrl, parameters: parameters, completion: completion)
@@ -417,10 +417,10 @@ class NRDB: NSObject {
             "name": deck.name ?? "Deck"
         ]
         
-        self.saveOrPublish(publishUrl, parameters:parameters as [String : AnyObject], completion: completion)
+        self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)
     }
 
-    func saveOrPublish(_ url: String, parameters: [String: AnyObject], completion: @escaping (Bool, String?, String?)->Void) {
+    func saveOrPublish(_ url: String, parameters: [String: Any], completion: @escaping (Bool, String?, String?)->Void) {
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate()
             .responseJSON { response in

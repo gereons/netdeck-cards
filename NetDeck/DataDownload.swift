@@ -9,26 +9,6 @@
 import SDCAlertView
 import Alamofire
 import SwiftyJSON
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 private enum DownloadScope: Int {
     case all
@@ -68,9 +48,7 @@ class DataDownload: NSObject {
     // MARK: - card and sets download
     
     fileprivate func downloadCardAndSetsData() {
-        let nrdbHost = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_HOST)
-            
-        if nrdbHost?.length > 0 {
+        if let nrdbHost = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_HOST), nrdbHost.length > 0 {
             self.showDownloadAlert()
             self.perform(#selector(DataDownload.doDownloadCardData(_:)), with: nil, afterDelay: 0.01)
         } else {

@@ -8,17 +8,6 @@
 
 import Alamofire
 import AlamofireImage
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
 
 class ImageCache: NSObject {
     static let imagesDirectory = "images"
@@ -353,7 +342,8 @@ class ImageCache: NSObject {
             img = self.decodedImage(UIImage(data: imgData))
         }
         
-        if img == nil || img?.size.width < 200 {
+        let width = img?.size.width ?? 0.0
+        if img == nil || width < 200.0 {
             // image is broken - remove it
             img = nil
             let _ = try? FileManager.default.removeItem(atPath: file)

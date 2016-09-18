@@ -7,26 +7,6 @@
 //
 
 import Foundation
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 @objc(Deck) class Deck: NSObject, NSCoding {
 
@@ -303,10 +283,10 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
                 return c1.type.rawValue < c2.type.rawValue
             }
             if c1.type == .ice && c2.type == .ice {
-                return c1.iceType < c2.iceType
+                return c1.iceType! < c2.iceType!
             }
             if c1.type == .program && c2.type == .program {
-                return c1.programType < c2.programType
+                return c1.programType! < c2.programType!
             }
             return c1.name.lowercased() < c2.name.lowercased()
         }
@@ -325,7 +305,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
             reasons.append("Too much influence used".localized())
         }
         
-        if self.size < self.identity?.minimumDecksize {
+        if let id = self.identity, self.size < id.minimumDecksize {
             reasons.append("Not enough cards".localized())
         }
         
@@ -615,8 +595,8 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
             prevSection = section
         }
         
-        if arr?.count > 0 {
-            cards.append(arr!)
+        if let arr = arr, arr.count > 0 {
+            cards.append(arr)
         }
         
         assert(sections.count == cards.count, "count mismatch")

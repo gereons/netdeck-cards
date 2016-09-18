@@ -69,7 +69,6 @@ extension NSRange {
     func stringRangeForText(_ string: String) -> Range<String.Index> {
         let start = string.characters.index(string.startIndex, offsetBy: self.location)
         let end = string.characters.index(start, offsetBy: self.length)
-        // 7return Range<String.Index>(start: start, end: end)
         return start ..< end
     }
 }
@@ -84,4 +83,4 @@ class CustomAlertVisualStyle: AlertVisualStyle {
 */
 
 @available(iOS, deprecated: 1.0, message: "I'm not deprecated, please **FIXME**")
-func FIXME(_ msg: String="") {}
+public func FIXME(_ msg: String="") {}

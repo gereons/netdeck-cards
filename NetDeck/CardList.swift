@@ -7,26 +7,6 @@
 //
 
 import Foundation
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 class CardList: NSObject {
     fileprivate var role: NRRole = .none
@@ -279,19 +259,20 @@ class CardList: NSObject {
         var filteredCards = self.initialCards
         var predicates = [NSPredicate]()
         
-        if self.faction?.length > 0 && self.faction != Constant.kANY {
+        
+        if let f = self.faction, f.length > 0 && f != Constant.kANY {
             let predicate = NSPredicate(format:"factionStr LIKE[cd] %@", self.faction!)
             predicates.append(predicate)
         }
-        if self.factions?.count > 0 {
+        if let f = self.factions, f.count > 0 {
             let predicate = NSPredicate(format:"factionStr IN %@", self.factions!)
             predicates.append(predicate)
         }
-        if self.type?.length > 0 && self.type != Constant.kANY {
+        if let t = self.type, t.length > 0 && t != Constant.kANY {
             let predicate = NSPredicate(format:"typeStr LIKE[cd] %@", self.type!)
             predicates.append(predicate)
         }
-        if self.types?.count > 0 {
+        if let t = self.types, t.count > 0 {
             let predicate = NSPredicate(format:"typeStr IN %@", self.types!)
             predicates.append(predicate)
         }
@@ -316,11 +297,11 @@ class CardList: NSObject {
                 predicates.append(predicate)
             }
         }
-        if self.set?.length > 0 && self.set != Constant.kANY {
+        if let s = self.set, s.length > 0 && s != Constant.kANY {
             let predicate = NSPredicate(format:"packName LIKE[cd] %@", self.set!)
             predicates.append(predicate)
         }
-        if self.sets?.count > 0 {
+        if let s = self.sets, s.count > 0 {
             let predicate = NSPredicate(format:"packName IN %@", self.sets!)
             predicates.append(predicate)
         }
@@ -328,11 +309,11 @@ class CardList: NSObject {
             let predicate = NSPredicate(format:"cost == %d || advancementCost == %d", self.cost, self.cost)
             predicates.append(predicate)
         }
-        if self.subtype?.length > 0 && self.subtype != Constant.kANY {
+        if let s = self.subtype, s.length > 0 && s != Constant.kANY {
             let predicate = NSPredicate(format:"%@ IN subtypes", self.subtype!)
             predicates.append(predicate)
         }
-        if self.subtypes?.count > 0 {
+        if let s = self.subtypes, s.count > 0 {
             var subPredicates = [NSPredicate]()
             for subtype in self.subtypes! {
                 subPredicates.append(NSPredicate(format:"%@ IN subtypes", subtype))
@@ -457,8 +438,8 @@ class CardList: NSObject {
             prevSection = section
         }
         
-        if (arr?.count > 0) {
-            cards.append(arr!)
+        if let arr = arr, arr.count > 0 {
+            cards.append(arr)
         }
         
         assert(sections.count == cards.count, "count mismatch")

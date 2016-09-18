@@ -28,9 +28,7 @@ post_install do |installer|
       configuration.build_settings['SWIFT_VERSION'] = "3.0"
     end
   end
-end
 
-post_install do | installer |
   require 'fileutils'
   system("awk -f ackhtml.awk <'Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-acknowledgements.markdown' >NetDeck/Acknowledgements.html")
 end

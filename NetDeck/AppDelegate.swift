@@ -15,12 +15,9 @@ import SVProgressHUD
 // TODO: improve startup time
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var window: UIWindow?
-
-    FIXME("draft in browser when 'all' is selected")
     
     // root controller on ipad
     @IBOutlet var splitViewController: UISplitViewController?
@@ -32,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var launchShortcutItem: UIApplicationShortcutItem?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        FIXME("draft in browser when 'all' is selected")
+        
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self]);
