@@ -363,10 +363,10 @@ static BrowserResultViewController* instance;
     UIAlertController* sheet = [UIAlertController actionSheetWithTitle:nil message:nil];
     
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"Find decks using this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.BROWSER_FIND object:self userInfo:@{ @"code": card.code }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.browserFind object:self userInfo:@{ @"code": card.code }];
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"New deck with this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.BROWSER_NEW object:self userInfo:@{ @"code": card.code }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.browserNew object:self userInfo:@{ @"code": card.code }];
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:l10n(@"ANCUR page for this card") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         LOG_EVENT(@"Open ANCUR", @{@"Card": card.name});

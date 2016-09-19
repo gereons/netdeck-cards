@@ -116,30 +116,30 @@ import Foundation
         }
         
         var count = cc.count
-        if cc.card.type == .program && self.identity?.code == Card.THE_PROFESSOR {
+        if cc.card.type == .program && self.identity?.code == Card.theProfessor {
             count -= 1
         }
         
         // alliance rules for corp
         if self.role == .corp {
             // mumba temple: 0 inf if 15 or fewer ICE
-            if cc.card.code == Card.MUMBA_TEMPLE && self.iceCount() <= 15 {
+            if cc.card.code == Card.mumbaTemple && self.iceCount() <= 15 {
                 return 0
             }
             // pad factory: 0 inf if 3 PAD Campaigns in deck
-            if cc.card.code == Card.PAD_FACTORY && self.padCampaignCount() == 3 {
+            if cc.card.code == Card.padFactory && self.padCampaignCount() == 3 {
                 return 0
             }
             // mumbad virtual tour: 0 inf if 7 or more assets
-            if cc.card.code == Card.MUMBAD_VIRTUAL_TOUR && self.assetCount() >= 7 {
+            if cc.card.code == Card.mumbadVirtualTour && self.assetCount() >= 7 {
                 return 0
             }
             // museum of history: 0 inf if >= 50 cards in deck
-            if cc.card.code == Card.MUSEUM_OF_HISTORY && self.size >= 50 {
+            if cc.card.code == Card.museumOfHistory && self.size >= 50 {
                 return 0
             }
             // alliance-based cards: 0 inf if >=6 non-alliance cards of same faction in deck
-            if Card.ALLIANCE_6.contains(cc.card.code) && self.nonAllianceOfFaction(cc.card.faction) >= 6 {
+            if Card.alliance6.contains(cc.card.code) && self.nonAllianceOfFaction(cc.card.faction) >= 6 {
                 return 0
             }
         }
@@ -158,7 +158,7 @@ import Foundation
     }
     
     func padCampaignCount() -> Int {
-        if let padIndex = self.indexOfCardCode(Card.PAD_CAMPAIGN) {
+        if let padIndex = self.indexOfCardCode(Card.padCampaign) {
             let pad = cards[padIndex]
             return pad.count
         }
@@ -251,7 +251,7 @@ import Foundation
         } else {
             self.identityCc = nil
         }
-        self.isDraft = identity?.packCode == PackManager.DRAFT_SET_CODE
+        self.isDraft = identity?.packCode == PackManager.draftSetCode
     }
     
     func indexOfCardCode(_ code: String) -> Int? {
@@ -318,8 +318,8 @@ import Foundation
             }
         }
         
-        let noJintekiAllowed = self.identity?.code == Card.CUSTOM_BIOTICS
-        let isApex = self.identity?.code == Card.APEX
+        let noJintekiAllowed = self.identity?.code == Card.customBiotics
+        let isApex = self.identity?.code == Card.apex
         var limitError = false, jintekiError = false, agendaError = false, apexError = false
         
         // check max 1 per deck restrictions and other spcial rules
@@ -375,9 +375,9 @@ import Foundation
         for cc in self.cards {
             let card = cc.card
             switch card.packCode {
-            case PackManager.DRAFT_SET_CODE:
+            case PackManager.draftSetCode:
                 draftUsed = true
-            case PackManager.CORE_SET_CODE:
+            case PackManager.coreSetCode:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }

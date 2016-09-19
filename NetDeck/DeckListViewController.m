@@ -200,11 +200,11 @@
     self.historyButton.enabled = self.deck.filename != nil && self.deck.revisions.count > 0;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(identitySelected:) name:Notifications.SELECT_IDENTITY object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:Notifications.DECK_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(identitySelected:) name:Notifications.selectIdentity object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:Notifications.deckChanged object:nil];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(notesChanged:) name:Notifications.NOTES_CHANGED object:nil];
+    [nc addObserver:self selector:@selector(notesChanged:) name:Notifications.notesChanged object:nil];
     
     [nc addObserver:self selector:@selector(stopHistoryTimer:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [nc addObserver:self selector:@selector(startHistoryTimer:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -235,7 +235,7 @@
     if (self.deck.cards.count > 0 || self.deck.identity != nil)
     {
         // so that CardFilterViewController gets a chance to reload
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil userInfo:@{@"initialLoad": @(YES)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.deckChanged object:nil userInfo:@{@"initialLoad": @(YES)}];
     }
     self.initializing = NO;
     
@@ -361,7 +361,7 @@
 -(void) saveDeckClicked:(id)sender
 {
     [self saveDeckManually:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_SAVED object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.deckSaved object:nil];
 }
 
 -(void) saveDeckManually:(BOOL)manually
@@ -729,12 +729,12 @@
         }
         else
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.deckChanged object:nil];
         }
         [self refresh];
     }]];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NAME_ALERT object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.nameAlert object:nil];
     [nameAlert show];
 }
 
@@ -766,7 +766,7 @@
         [self.deck addCard:card copies:1];
         [self refresh];
     
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.deckChanged object:nil];
     }
 }
 
@@ -1243,7 +1243,7 @@
             [self.deck addCard:cc.card copies:0];
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.deckChanged object:nil];
     }
 }
 
@@ -1558,7 +1558,7 @@
     if (self.deck.mwl != newMwl || self.deck.onesies != onesies) {
         self.deck.mwl = newMwl;
         self.deck.onesies = onesies;
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.deckChanged object:nil];
     }
 }
 

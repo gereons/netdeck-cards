@@ -24,7 +24,7 @@
         self.iask.showDoneButton = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:kIASKAppSettingChanged object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:Notifications.LOAD_CARDS object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cardsLoaded:) name:Notifications.loadCards object:nil];
         
         [self refresh];
     }
@@ -97,7 +97,7 @@
             [DropboxWrapper unlinkClient];
         }
     
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DROPBOX_CHANGED object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.dropboxChanged object:self];
         [self refresh];
     }
     else if ([key isEqualToString:SettingsKeys.USE_NRDB]) {
@@ -244,7 +244,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:l10n(@"never") forKey:SettingsKeys.NEXT_DOWNLOAD];
             [self refresh];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_CARDS object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.loadCards object:self];
         }]];
         
         [self.iask presentViewController:alert animated:NO completion:nil];

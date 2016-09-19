@@ -151,8 +151,8 @@ static NSMutableArray* subtypeCollapsedSections;
     self.subtypeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(dismissKeyboard:) name:Notifications.BROWSER_FIND object:nil];
-    [nc addObserver:self selector:@selector(dismissKeyboard:) name:Notifications.BROWSER_NEW object:nil];
+    [nc addObserver:self selector:@selector(dismissKeyboard:) name:Notifications.browserFind object:nil];
+    [nc addObserver:self selector:@selector(dismissKeyboard:) name:Notifications.browserNew object:nil];
     
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
     detailViewManager.detailViewController = self.navController;

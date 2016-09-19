@@ -40,8 +40,8 @@
     self.tableViewController.title = @"Net Deck";
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.LOAD_CARDS object:nil];
-    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:Notifications.IMPORT_DECK object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.loadCards object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:Notifications.importDeck object:nil];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[ImageCache hexTile]];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];

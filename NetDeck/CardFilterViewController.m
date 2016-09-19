@@ -189,10 +189,10 @@ static NSInteger viewMode = VIEW_LIST;
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [nc addObserver:self selector:@selector(addTopCard:) name:Notifications.ADD_TOP_CARD object:nil];
-    [nc addObserver:self selector:@selector(deckChanged:) name:Notifications.DECK_CHANGED object:nil];
-    [nc addObserver:self selector:@selector(deckSaved:) name:Notifications.DECK_SAVED object:nil];
-    [nc addObserver:self selector:@selector(nameAlertWillAppear:) name:Notifications.NAME_ALERT object:nil];
+    [nc addObserver:self selector:@selector(addTopCard:) name:Notifications.addTopCard object:nil];
+    [nc addObserver:self selector:@selector(deckChanged:) name:Notifications.deckChanged object:nil];
+    [nc addObserver:self selector:@selector(deckSaved:) name:Notifications.deckSaved object:nil];
+    [nc addObserver:self selector:@selector(nameAlertWillAppear:) name:Notifications.nameAlert object:nil];
     
     [self initFilters];
 }
@@ -873,7 +873,7 @@ static NSInteger viewMode = VIEW_LIST;
     if (self.searchText.length > 0)
     {
         [textField setSelectedTextRange:[textField textRangeFromPosition:textField.beginningOfDocument toPosition:textField.endOfDocument]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.ADD_TOP_CARD object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.addTopCard object:self];
     }
     else
     {

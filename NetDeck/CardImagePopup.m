@@ -108,7 +108,7 @@ static CardImagePopup* popover;
         
         if (self.cc.card.type == NRCardTypeIdentity)
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.SELECT_IDENTITY object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.selectIdentity object:self];
             return;
         }
     }
@@ -123,7 +123,7 @@ static CardImagePopup* popover;
         self.copiesLabel.textColor = [UIColor redColor];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.deckChanged object:self];
 }
 
 @end

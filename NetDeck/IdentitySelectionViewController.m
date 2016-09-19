@@ -273,7 +273,7 @@
 {
     if (self.selectedIdentity)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.SELECT_IDENTITY object:self userInfo:@{ @"code": self.selectedIdentity.code }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.selectIdentity object:self userInfo:@{ @"code": self.selectedIdentity.code }];
     }
     [self cancelClicked:sender];
 }

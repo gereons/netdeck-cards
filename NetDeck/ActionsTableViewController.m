@@ -58,13 +58,13 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     [self.version setTitle:[AppDelegate appVersion]];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(loadDeck:) name:Notifications.LOAD_DECK object:nil];
-    [nc addObserver:self selector:@selector(newDeck:) name:Notifications.NEW_DECK object:nil];
-    [nc addObserver:self selector:@selector(newDeck:) name:Notifications.BROWSER_NEW object:nil];
-    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:Notifications.IMPORT_DECK object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.LOAD_CARDS object:nil];
-    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.DROPBOX_CHANGED object:nil];
-    [nc addObserver:self selector:@selector(listDecks:) name:Notifications.BROWSER_FIND object:nil];
+    [nc addObserver:self selector:@selector(loadDeck:) name:Notifications.loadDeck object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:Notifications.newDeck object:nil];
+    [nc addObserver:self selector:@selector(newDeck:) name:Notifications.browserNew object:nil];
+    [nc addObserver:self selector:@selector(importDeckFromClipboard:) name:Notifications.importDeck object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.loadCards object:nil];
+    [nc addObserver:self selector:@selector(loadCards:) name:Notifications.dropboxChanged object:nil];
+    [nc addObserver:self selector:@selector(listDecks:) name:Notifications.browserFind object:nil];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     NSDictionary* userInfo = notification.userInfo;
     CardFilterViewController* filter;
     
-    if ([notification.name isEqualToString:Notifications.BROWSER_NEW])
+    if ([notification.name isEqualToString:Notifications.browserNew])
     {
         Card* card = [CardManager cardByCode:[userInfo objectForKey:@"code"]];
         Deck* deck = [[Deck alloc] init];

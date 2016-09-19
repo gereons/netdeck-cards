@@ -96,7 +96,7 @@
     if (drawInitialHand)
     {
         int handSize = 5;
-        if ([self.deck.identity.code isEqualToString:Card.ANDROMEDA])
+        if ([self.deck.identity.code isEqualToString:Card.andromeda])
         {
             handSize = 9;
         }

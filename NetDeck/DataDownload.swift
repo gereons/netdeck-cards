@@ -144,7 +144,7 @@ class DataDownload: NSObject {
                 }
             }
             self.sdcAlert = nil
-            NotificationCenter.default.post(name: Notifications.LOAD_CARDS, object:self, userInfo:["success": ok])
+            NotificationCenter.default.post(name: Notifications.loadCards, object:self, userInfo:["success": ok])
         }
     }
     

@@ -25,7 +25,7 @@
     }
     self.cardCounter.count = copies;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.deckChanged object:self];
 }
 
 -(void) awakeFromNib

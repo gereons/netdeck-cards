@@ -35,7 +35,7 @@ class OctgnImport: NSObject, XMLParserDelegate {
         if elementName == "card" {
             if let qty = attributeDict["qty"], let id = attributeDict["id"] {
             
-                if id.hasPrefix(Card.OCTGN_PREFIX) && id.length > 32 {
+                if id.hasPrefix(Card.octgnPrefix) && id.length > 32 {
 
                     let code = (id as NSString).substring(from: 31)
                     let card = CardManager.cardByCode(code)

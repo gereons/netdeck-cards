@@ -104,7 +104,7 @@ class DeckImport: NSObject {
             alert.addAction(UIAlertAction(title:"Yes".localized(), style: .default) { (UIAlertAction) -> Void in
                 Analytics.logEvent("Import from Clipboard", attributes: nil)
                 if self.deck != nil {
-                    NotificationCenter.default.post(name: Notifications.IMPORT_DECK, object:self, userInfo:["deck": self.deck!])
+                    NotificationCenter.default.post(name: Notifications.importDeck, object:self, userInfo:["deck": self.deck!])
                 }
                 else if self.deckSource != nil {
                     self.downloadDeck(self.deckSource!)
@@ -322,7 +322,7 @@ class DeckImport: NSObject {
         }
         
         if deck.identity != nil && deck.cards.count > 0 {
-            NotificationCenter.default.post(name: Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
+            NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
             return true
         }
         return false
@@ -366,7 +366,7 @@ class DeckImport: NSObject {
         if let deck = importer.parseOctgnDeckFromData(data) {
             if deck.identity != nil && deck.cards.count > 0 {
                 deck.name = name
-                NotificationCenter.default.post(name: Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
+                NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
                 return true
             }
         }
@@ -406,7 +406,7 @@ class DeckImport: NSObject {
         }
         
         if deck.identity != nil && deck.cards.count > 0 {
-            NotificationCenter.default.post(name: Notifications.IMPORT_DECK, object: self, userInfo: ["deck": deck])
+            NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
         }
     }
 }

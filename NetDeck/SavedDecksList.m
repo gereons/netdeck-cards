@@ -302,7 +302,7 @@
     }
     if (role)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": role}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.newDeck object:self userInfo:@{ @"role": role}];
         return;
     }
     
@@ -315,11 +315,11 @@
 
     self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": @(NRRoleRunner)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.newDeck object:self userInfo:@{ @"role": @(NRRoleRunner)}];
         self.popup = nil;
     }]];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Corp Deck") handler:^(UIAlertAction *action) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NEW_DECK object:self userInfo:@{ @"role": @(NRRoleCorp)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.newDeck object:self userInfo:@{ @"role": @(NRRoleCorp)}];
         self.popup = nil;
     }]];
     [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
@@ -535,7 +535,7 @@
                                    @"filename" : deck.filename,
                                    @"role" : @(deck.role)
                                    };
-        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.LOAD_DECK object:self userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.loadDeck object:self userInfo:userInfo];
     }
 }
 

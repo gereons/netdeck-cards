@@ -68,7 +68,7 @@
 
     [self.deck resetToCards:dcs.cards];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.DECK_CHANGED object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.deckChanged object:self];
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 

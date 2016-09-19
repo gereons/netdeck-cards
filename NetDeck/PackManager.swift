@@ -25,9 +25,9 @@ class Pack: NSObject {
 }
 
 class PackManager: NSObject {
-    static let DRAFT_SET_CODE = "draft"
-    static let CORE_SET_CODE = "core"
-    static let UNKNOWN_SET = "unknown"
+    static let draftSetCode = "draft"
+    static let coreSetCode = "core"
+    static let unknownSet = "unknown"
     
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
@@ -92,7 +92,7 @@ class PackManager: NSObject {
             }
     
             if !settings.bool(forKey: SettingsKeys.USE_DRAFT) {
-                disabled.insert(DRAFT_SET_CODE)
+                disabled.insert(draftSetCode)
             }
     
             disabledPacks = disabled
@@ -103,7 +103,7 @@ class PackManager: NSObject {
     
     class func rotatedPackCodes() -> Set<String> {
         var packs = Set<String>(PackManager.rotatedPacks)
-        packs.insert(DRAFT_SET_CODE)
+        packs.insert(draftSetCode)
         return packs
     }
     
@@ -111,7 +111,7 @@ class PackManager: NSObject {
         if UserDefaults.standard.bool(forKey: SettingsKeys.USE_DRAFT) {
             return Set<String>()
         } else {
-            return Set<String>([DRAFT_SET_CODE])
+            return Set<String>([draftSetCode])
         }
     }
     
@@ -197,7 +197,7 @@ class PackManager: NSObject {
         
         for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             
-            if cycle.code == DRAFT_SET_CODE && !useDraft {
+            if cycle.code == draftSetCode && !useDraft {
                 continue
             }
             sections.append(cycle.name)

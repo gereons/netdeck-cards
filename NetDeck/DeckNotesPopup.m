@@ -60,7 +60,7 @@
 {
     self.deck.notes = self.textView.text;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.NOTES_CHANGED object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.notesChanged object:nil];
     [self cancelClicked:sender];
 }
 

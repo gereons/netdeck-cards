@@ -86,7 +86,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         
         if drawInitialHand {
             var handSize = 5
-            if self.deck.identity?.code == Card.ANDROMEDA {
+            if self.deck.identity?.code == Card.andromeda {
                 handSize = 9
             }
             self.drawCards(handSize)

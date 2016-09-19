@@ -13,83 +13,83 @@ import SwiftyJSON
 @objc class Card: NSObject {
     
     // identities we need to handle
-    static let CUSTOM_BIOTICS           = "03002"    // no jinteki cards
-    static let THE_PROFESSOR            = "03029"    // first copy of each program has influence 0
-    static let ANDROMEDA                = "02083"    // 9 card starting hand
-    static let APEX                     = "09029"    // no non-virtual resources
+    static let customBiotics            = "03002"    // no jinteki cards
+    static let theProfessor             = "03029"    // first copy of each program has influence 0
+    static let andromeda                = "02083"    // 9 card starting hand
+    static let apex                     = "09029"    // no non-virtual resources
     
     // alliance cards with special influence rules
-    static let MUMBA_TEMPLE             = "10018"    // 0 inf if <= 15 ice in deck
-    static let MUSEUM_OF_HISTORY        = "10019"    // 0 inf if >= 50 cards in deck
-    static let PAD_FACTORY              = "10038"    // 0 inf if 3 pad campaigns in deck
-    static let MUMBAD_VIRTUAL_TOUR      = "10076"    // 0 inf if >= 7 assets in deck
+    static let mumbaTemple              = "10018"    // 0 inf if <= 15 ice in deck
+    static let museumOfHistory          = "10019"    // 0 inf if >= 50 cards in deck
+    static let padFactory               = "10038"    // 0 inf if 3 pad campaigns in deck
+    static let mumbadVirtualTour        = "10076"    // 0 inf if >= 7 assets in deck
     
     // alliance-based: 0 inf if >= 6 non-alliance cards of same faction in deck
-    static let PRODUCT_RECALL           = "10029"    // 0 inf if >= 6 non-alliance HB cards in deck
-    static let JEEVES_MODEL_BIOROID     = "10067"    // 0 inf if >= 6 non-alliance HB cards in deck
-    static let RAMAN_RAI                = "10068"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
-    static let HERITAGE_COMMITTEE       = "10013"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
-    static let SALEMS_HOSPITALITY       = "10071"    // 0 inf if >= 6 non-alliance NBN cards in deck
-    static let IBRAHIM_SALEM            = "10109"    // 0 inf if >= 6 non-alliance NBN cards in deck
-    static let EXECUTIVE_SEARCH_FIRM    = "10072"    // 0 inf if >= 6 non-alliance Weyland cards in deck
-    static let CONSULTING_VISIT         = "10094"    // 0 inf if >= 6 non-alliance Weyland cards in deck
+    static let productRecall            = "10029"    // 0 inf if >= 6 non-alliance HB cards in deck
+    static let jeevesModelBioroid       = "10067"    // 0 inf if >= 6 non-alliance HB cards in deck
+    static let ramanRai                 = "10068"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
+    static let heritageCommittee        = "10013"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
+    static let salemsHospitality        = "10071"    // 0 inf if >= 6 non-alliance NBN cards in deck
+    static let ibrahimSalem             = "10109"    // 0 inf if >= 6 non-alliance NBN cards in deck
+    static let executiveSearchFirm      = "10072"    // 0 inf if >= 6 non-alliance Weyland cards in deck
+    static let consultingVisit          = "10094"    // 0 inf if >= 6 non-alliance Weyland cards in deck
 
-    static let ALLIANCE_6 = Set<String>([
-        PRODUCT_RECALL, JEEVES_MODEL_BIOROID,
-        RAMAN_RAI, HERITAGE_COMMITTEE,
-        SALEMS_HOSPITALITY, IBRAHIM_SALEM,
-        EXECUTIVE_SEARCH_FIRM, CONSULTING_VISIT ])
+    static let alliance6 = Set<String>([
+        productRecall, jeevesModelBioroid,
+        ramanRai, heritageCommittee,
+        salemsHospitality, ibrahimSalem,
+        executiveSearchFirm, consultingVisit ])
     
-    static let PAD_CAMPAIGN             = "01109"    // needed for pad factory
+    static let padCampaign              = "01109"    // needed for pad factory
     
     // "limit 1 per deck" cards
-    static let DIRECTOR_HAAS_PET_PROJ   = "03004"
-    static let PHILOTIC_ENTANGLEMENT    = "05006"
-    static let UTOPIA_SHARD             = "06100"
-    static let HADES_SHARD              = "06059"
-    static let EDEN_SHARD               = "06020"
-    static let EDEN_FRAGMENT            = "06030"
-    static let HADES_FRAGMENT           = "06071"
-    static let UTOPIA_FRAGMENT          = "06110"
-    static let GOVERNMENT_TAKEOVER      = "07006"
-    static let _15_MINUTES              = "09004"
-    static let REBIRTH                  = "10083"
-    static let BLACK_FILE               = "10099"
-    static let MAX_1_PER_DECK           = Set<String>([ DIRECTOR_HAAS_PET_PROJ, PHILOTIC_ENTANGLEMENT,
-                                            UTOPIA_SHARD, UTOPIA_FRAGMENT, HADES_SHARD,
-                                            HADES_FRAGMENT, EDEN_SHARD, EDEN_FRAGMENT,
-                                            GOVERNMENT_TAKEOVER, _15_MINUTES, REBIRTH, BLACK_FILE, ASTROSCRIPT ])
+    static let directorHaasPetProject   = "03004"
+    static let philoticEntanglement     = "05006"
+    static let utopiaShard              = "06100"
+    static let hadesShard               = "06059"
+    static let edenShard                = "06020"
+    static let edenFragment             = "06030"
+    static let hadesFragment            = "06071"
+    static let utopiaFragment           = "06110"
+    static let governmentTakeover       = "07006"
+    static let _15minutes               = "09004"
+    static let rebirth                  = "10083"
+    static let blackFile                = "10099"
+    static let max1perDeck              = Set<String>([ directorHaasPetProject, philoticEntanglement,
+                                            utopiaShard, utopiaFragment, hadesShard,
+                                            hadesFragment, edenShard, edenFragment,
+                                            governmentTakeover, _15minutes, rebirth, blackFile, astroscript ])
     
-    static let OCTGN_PREFIX = "bc0f047c-01b1-427f-a439-d451eda"
+    static let octgnPrefix = "bc0f047c-01b1-427f-a439-d451eda"
     
     // "most wanted" list
-    static let CERBERUS_H1      = "06099"
-    static let CLONE_CHIP       = "03038"
-    static let DESPERADO        = "01024"
-    static let PARASITE         = "01012"
-    static let PREPAID_VOICEPAD = "04029"
-    static let YOG_0            = "01014"
-    static let D4V1D            = "06033"
-    static let FAUST            = "08061"
-    static let WYLDSIDE         = "01016"
+    static let cerberusH1       = "06099"
+    static let cloneChip        = "03038"
+    static let desperado        = "01024"
+    static let parasite         = "01012"
+    static let prepaidVoicepad  = "04029"
+    static let yog_0            = "01014"
+    static let d4v1d            = "06033"
+    static let faust            = "08061"
+    static let wyldside         = "01016"
     
-    static let ARCHITECT        = "06061"
-    static let ASTROSCRIPT      = "01081"
-    static let ELI_1            = "02110"
-    static let NAPD_CONTRACT    = "04119"
-    static let SANSAN_CITY_GRID = "01092"
-    static let BREAKING_NEWS    = "01082"
+    static let architect        = "06061"
+    static let astroscript      = "01081"
+    static let eli_1            = "02110"
+    static let napdContract     = "04119"
+    static let sansanCityGrid   = "01092"
+    static let breakingNews     = "01082"
     
     fileprivate static let MostWantedLists: [NRMWL: Set<String>] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
         .v1_0: Set<String>([
-            CERBERUS_H1, CLONE_CHIP, DESPERADO, PARASITE, PREPAID_VOICEPAD, YOG_0,
-            ARCHITECT, ASTROSCRIPT, ELI_1, NAPD_CONTRACT, SANSAN_CITY_GRID ]),
+            cerberusH1, cloneChip, desperado, parasite, prepaidVoicepad, yog_0,
+            architect, astroscript, eli_1, napdContract, sansanCityGrid ]),
         
         // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
         .v1_1: Set<String>([
-            CERBERUS_H1, CLONE_CHIP, D4V1D, DESPERADO, FAUST, PARASITE, PREPAID_VOICEPAD, WYLDSIDE, YOG_0,
-            ARCHITECT, BREAKING_NEWS, ELI_1, MUMBA_TEMPLE, NAPD_CONTRACT, SANSAN_CITY_GRID ])
+            cerberusH1, cloneChip, d4v1d, desperado, faust, parasite, prepaidVoicepad, wyldside, yog_0,
+            architect, breakingNews, eli_1, mumbaTemple, napdContract, sansanCityGrid ])
     ]
     
     fileprivate(set) static var fullNames = [String: String]()
@@ -220,7 +220,7 @@ import SwiftyJSON
     }
 
     var octgnCode: String {
-        return Card.OCTGN_PREFIX + self.code
+        return Card.octgnPrefix + self.code
     }
     
     var cropY: Double {
@@ -303,15 +303,15 @@ import SwiftyJSON
         
         c.packCode = json["pack_code"].stringValue
         if c.packCode == "" {
-            c.packCode = PackManager.UNKNOWN_SET
-            c.packCode = PackManager.UNKNOWN_SET
+            c.packCode = PackManager.unknownSet
+            c.packCode = PackManager.unknownSet
         }
-        if c.packCode == PackManager.DRAFT_SET_CODE {
+        if c.packCode == PackManager.draftSetCode {
             c.faction = .neutral
         }
         
         c.packNumber = PackManager.packNumberForCode(c.packCode)
-        c.isCore = c.packCode == PackManager.CORE_SET_CODE
+        c.isCore = c.packCode == PackManager.coreSetCode
         
         c.subtype = json.localized("keywords", language)
         if c.subtype.length > 0 {
@@ -352,7 +352,7 @@ import SwiftyJSON
         c.trash = json["trash_cost"].int ?? -1
         
         c.maxPerDeck = json["deck_limit"].int ?? -1
-        if Card.MAX_1_PER_DECK.contains(c.code) || c.type == .identity {
+        if Card.max1perDeck.contains(c.code) || c.type == .identity {
             c.maxPerDeck = 1
         }
         

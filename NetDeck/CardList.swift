@@ -142,7 +142,7 @@ class CardList: NSObject {
             applyPredicate(predicate)
         }
         
-        if identity.code == Card.CUSTOM_BIOTICS {
+        if identity.code == Card.customBiotics {
             let predicate = NSPredicate(format:"faction != %d", NRFaction.jinteki.rawValue)
             applyPredicate(predicate)
         }
