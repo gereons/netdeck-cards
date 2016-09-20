@@ -59,8 +59,8 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
         
         var result = Set<String>()
         for idx in self.selected {
-            let strings = self.data.values[(idx as NSIndexPath).section] as! [String]
-            let str = strings[(idx as NSIndexPath).row]
+            let strings = self.data.values[idx.section] as! [String]
+            let str = strings[idx.row]
             result.insert(str)
         }
         
@@ -89,9 +89,9 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
             cell?.selectionStyle = .none
         }
         
-        let strings = self.data.values[(indexPath as NSIndexPath).section] as! [String]
-        let str = strings[(indexPath as NSIndexPath).row]
-        let first = (indexPath as NSIndexPath).section == 0 && (indexPath as NSIndexPath).row == 0 // the "any" cell
+        let strings = self.data.values[indexPath.section] as! [String]
+        let str = strings[indexPath.row]
+        let first = indexPath.section == 0 && indexPath.row == 0 // the "any" cell
         cell!.textLabel?.text = first ? str.localized() : str
         
         let sel = self.selected.contains(indexPath)
@@ -102,7 +102,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // special case for "Any", which is always at section 0, row 0
-        if (indexPath as NSIndexPath).section == 0 && (indexPath as NSIndexPath).row == 0 {
+        if indexPath.section == 0 && indexPath.row == 0 {
             self.selected.removeAll()
             self.tableView.reloadData()
             return

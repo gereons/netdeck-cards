@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc class DeckState: NSObject {
+class DeckState: NSObject {
 
     fileprivate static let states: [NRDeckState: String] = [
         .none: "All",

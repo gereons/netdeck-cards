@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc class DeckManager: NSObject {
+class DeckManager: NSObject {
     
     static let cache = { () -> NSCache<NSString, Deck> in
         let c = NSCache<NSString, Deck>()

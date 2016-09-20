@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc class DrawSimulatorCollectionView: UICollectionView {
+class DrawSimulatorCollectionView: UICollectionView {
     override func layoutSubviews() {
         super.layoutSubviews()
     }

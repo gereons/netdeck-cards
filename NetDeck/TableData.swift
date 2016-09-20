@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc class TableData: NSObject {
+class TableData: NSObject {
 
     var sections: NSArray
     var values: NSArray

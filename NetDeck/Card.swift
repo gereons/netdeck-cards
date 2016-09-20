@@ -10,7 +10,7 @@ import Foundation
 import DTCoreText
 import SwiftyJSON
 
-@objc class Card: NSObject {
+class Card: NSObject {
     
     // identities we need to handle
     static let customBiotics            = "03002"    // no jinteki cards
@@ -269,15 +269,17 @@ import SwiftyJSON
         imgSrcTemplate = json["imageUrlTemplate"].stringValue
         currentLanguage = language
         for cardJson in json["data"].arrayValue {
-            let card = Card.cardFromJson(cardJson, language: language)
+            let card = Card(json: cardJson, language: language)
             cards.append(card)
         }
         return cards
     }
     
-    fileprivate class func cardFromJson(_ json: JSON, language: String) -> Card {
-        let c = Card()
-        
+    override fileprivate init() {}
+    
+    fileprivate init(json: JSON, language: String) {
+        super.init()
+        let c = self
         c.code = json["code"].stringValue
         c.englishName = json["title"].stringValue
         c.name = json.localized("title", language)
@@ -294,7 +296,7 @@ import SwiftyJSON
         if c.type == .identity {
             Card.fullNames[c.code] = c.englishName
             let factionName = c.faction == .weyland ? Faction.WeylandConsortium : c.factionStr
-            let shortName = c.shortIdentityName(c.name, forRole: c.role, andFaction: factionName)
+            let shortName = Card.shortIdentityName(c.name, forRole: c.role, andFaction: factionName)
             c.name = shortName
         }
         
@@ -315,7 +317,7 @@ import SwiftyJSON
         
         c.subtype = json.localized("keywords", language)
         if c.subtype.length > 0 {
-            let split = self.subtypeSplit(c.subtype)
+            let split = Card.subtypeSplit(c.subtype)
             c.subtype = split.subtype
             c.subtypes = split.subtypes
         }
@@ -367,8 +369,6 @@ import SwiftyJSON
                 Card.multiIce.append(c.code)
             }
         }
-        
-        return c
     }
     
     fileprivate class func subtypeSplit(_ subtype: String) -> (subtype: String, subtypes: [String]) {
@@ -389,7 +389,7 @@ import SwiftyJSON
     }
     
     // manipulate identity name
-    func shortIdentityName(_ name: String, forRole role: NRRole, andFaction faction: String) -> String {
+    class func shortIdentityName(_ name: String, forRole role: NRRole, andFaction faction: String) -> String {
         if let colon = name.range(of: ": ") {
             // runner: remove stuff after the colon ("Andromeda: Disposessed Ristie" becomes "Andromeda")
             if role == .runner {

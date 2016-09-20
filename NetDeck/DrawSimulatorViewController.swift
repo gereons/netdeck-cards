@@ -144,15 +144,15 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
             cell!.selectionStyle = .none
         }
         
-        let card = self.drawn[(indexPath as NSIndexPath).row]
+        let card = self.drawn[indexPath.row]
         cell!.textLabel?.text = card.name
-        cell!.textLabel?.textColor = self.played[(indexPath as NSIndexPath).row] ? UIColor.lightGray : UIColor.black
+        cell!.textLabel?.textColor = self.played[indexPath.row] ? UIColor.lightGray : UIColor.black
         
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let card = self.drawn[(indexPath as NSIndexPath).row]
+        let card = self.drawn[indexPath.row]
         
         let rect = self.tableView.rectForRow(at: indexPath)
         
@@ -168,9 +168,9 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardThumb", for: indexPath) as! CardThumbView
         
-        let card = self.drawn[(indexPath as NSIndexPath).row]
+        let card = self.drawn[indexPath.row]
         cell.card = card
-        cell.imageView.layer.opacity = self.played[(indexPath as NSIndexPath).row] ? 0.5 : 1
+        cell.imageView.layer.opacity = self.played[indexPath.row] ? 0.5 : 1
         
         return cell
     }
@@ -180,7 +180,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let card = self.drawn[(indexPath as NSIndexPath).row]
+        let card = self.drawn[indexPath.row]
         let cell = collectionView.cellForItem(at: indexPath)
         let rect = collectionView.convert(cell!.frame, to: collectionView)
         
@@ -200,10 +200,10 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
                 indexPath = self.tableView.indexPathForRow(at: point)
             }
             
-            if indexPath != nil {
-                let played = self.played[(indexPath! as NSIndexPath).row]
-                self.played[(indexPath! as NSIndexPath).row] = !played
-                let paths = [ indexPath! ]
+            if let indexPath = indexPath {
+                let played = self.played[indexPath.row]
+                self.played[indexPath.row] = !played
+                let paths = [ indexPath ]
                 
                 self.tableView.reloadRows(at: paths, with: .none)
                 self.collectionView.reloadItems(at: paths)

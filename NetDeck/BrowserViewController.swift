@@ -126,7 +126,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             cell!.accessoryView = pips
         }
     
-        let card = self.cards[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
+        let card = self.cards[indexPath.section][indexPath.row]
         cell!.textLabel?.text = card.name
     
         switch card.type {
@@ -150,7 +150,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let card = self.cards[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
+        let card = self.cards[indexPath.section][indexPath.row]
     
         let img = CardImageViewController(nibName: "CardImageViewController", bundle: nil)
     
@@ -245,8 +245,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     // MARK: keyboard show/hide
-    @objc func showKeyboard(_ notification: Notification) {
-        let kbRect = (notification as NSNotification).userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+    func showKeyboard(_ notification: Notification) {
+        guard let kbRect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
         let kbHeight = kbRect.cgRectValue.size.height
         
         var inset = self.tableView.contentInset
@@ -255,7 +255,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.tableView.scrollIndicatorInsets = inset
     }
     
-    @objc func hideKeyboard(_ nta: Notification) {
+    func hideKeyboard(_ nta: Notification) {
         var inset = self.tableView.contentInset
         inset.bottom = 0
         self.tableView.contentInset = inset
@@ -263,11 +263,11 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     // MARK: long press
-    @objc func longPress(_ gesture: UILongPressGestureRecognizer) {
+    func longPress(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             let point = gesture.location(in: self.tableView)
             if let indexPath = self.tableView.indexPathForRow(at: point) {
-                let card = self.cards[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
+                let card = self.cards[indexPath.section][indexPath.row]
                 
                 let msg = String(format:"Open web page for\n%@?".localized(), card.name)
                 

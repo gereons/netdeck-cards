@@ -27,7 +27,7 @@ class PrebuiltSelectionViewController: UIViewController, UITableViewDataSource, 
             return c
         }()
         
-        let prebuilt = PrebuiltManager.allPrebuilts[(indexPath as NSIndexPath).row]
+        let prebuilt = PrebuiltManager.allPrebuilts[indexPath.row]
         cell.textLabel?.text = prebuilt.name
 
         let settings = UserDefaults.standard

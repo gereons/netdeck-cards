@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc class Faction: NSObject {
+class Faction: NSObject {
     
     fileprivate static var faction2name = [NRFaction: String]()
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc class CardType: NSObject {
+class CardType: NSObject {
     
     // NB: Card diff depends on ICE/Program being the last entries!
     fileprivate static let runnerTypes: [NRCardType] = [ .event, .hardware, .resource, .program ]

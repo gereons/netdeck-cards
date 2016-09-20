@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc class DetailViewManager: NSObject, UISplitViewControllerDelegate {
+class DetailViewManager: NSObject, UISplitViewControllerDelegate {
 
     // Things for IB
     // The split view this class will be managing.

@@ -15,7 +15,7 @@ enum ExportFormat {
     case bbCode
 }
 
-@objc class DeckExport: NSObject {
+class DeckExport: NSObject {
     
     static let APP_NAME = "Net Deck"
     static let APP_URL = "http://appstore.com/netdeck"

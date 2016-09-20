@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-@objc class CardManager: NSObject {
+class CardManager: NSObject {
     
     static let cardsFilename = "nrcards2.json"
     
@@ -242,7 +242,7 @@ import SwiftyJSON
         switch (interval) {
         case 30:
             let cal = Calendar.current
-            let next = (cal as NSCalendar).date(byAdding: .month, value:1, to:now, options:[])
+            let next = cal.date(byAdding: .month, value: 1, to: now)
             nextDownload = fmt.string(from: next!)
         case 0:
             nextDownload = "never".localized()

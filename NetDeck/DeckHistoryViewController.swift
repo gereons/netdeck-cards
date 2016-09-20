@@ -73,11 +73,11 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         }
         cell?.textLabel?.text = ""
         
-        if let dcs = self.deck?.revisions[(indexPath as NSIndexPath).section] {
+        if let dcs = self.deck?.revisions[indexPath.section] {
             if dcs.initial {
                 cell?.textLabel?.text = "Initial Version".localized()
-            } else if (indexPath as NSIndexPath).row < dcs.changes.count {
-                let dc = dcs.changes[(indexPath as NSIndexPath).row]
+            } else if indexPath.row < dcs.changes.count {
+                let dc = dcs.changes[indexPath.row]
                 cell?.textLabel?.text = String(format: "%+ld %@", dc.count, dc.card?.name ?? "")
             }
         }
@@ -104,10 +104,10 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let dcs = self.deck?.revisions[(indexPath as NSIndexPath).section] else { return }
+        guard let dcs = self.deck?.revisions[indexPath.section] else { return }
         
         if !dcs.initial {
-            if (indexPath as NSIndexPath).row < dcs.changes.count {
+            if indexPath.row < dcs.changes.count {
                 
                 var ccs = [CardCounter]()
                 for dc in dcs.changes {
@@ -117,7 +117,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
                     }
                 }
                 assert(ccs.count == dcs.changes.count)
-                if let selectedCard = dcs.changes[(indexPath as NSIndexPath).row].card {
+                if let selectedCard = dcs.changes[indexPath.row].card {
                 
                     let imgController = CardImageViewController()
                     imgController.setCardCounters(ccs)
