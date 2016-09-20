@@ -149,7 +149,7 @@ class JintekiNet: NSObject {
         if identity.role == .runner {
             id["baselink"] = identity.baseLink
         }
-        id["faction"] = Faction.fullName(identity.faction)
+        id["faction"] = Faction.fullName(for: identity.faction)
         
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"

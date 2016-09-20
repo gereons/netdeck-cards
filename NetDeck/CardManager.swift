@@ -77,37 +77,36 @@ class CardManager: NSObject {
         maxTrash = -1
     }
 
-    class func cardByCode(_ code: String) -> Card? {
+    class func cardBy(code: String) -> Card? {
         return allKnownCards[code]
     }
     
     class func allCards() -> [Card] {
         let cards = allKnownCards.values
         
-        return cards.sorted(by: {
+        return cards.sorted {
             return $0.name.length > $1.name.length
-        })
+        }
     }
     
-    class func allForRole(_ role: NRRole) -> [Card]
+    class func allFor(role: NRRole) -> [Card]
     {
         if role != .none {
             return allCardsByRole[role]!
-        }
-        else {
+        } else {
             var cards = allCardsByRole[.runner]!
             cards.append(contentsOf: allCardsByRole[.corp]!)
             return cards
         }
     }
     
-    class func identitiesForRole(_ role: NRRole) -> [Card]
+    class func identitiesFor(role: NRRole) -> [Card]
     {
         assert(role != .none)
         return allIdentitiesByRole[role]!
     }
     
-    class func subtypesForRole(_ role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {
+    class func subtypesFor(role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {
         var subtypes = allSubtypes[role]?[type] ?? Set<String>()
         
         let includeIds = includeIdentities && (type == Constant.kANY || type == identityKey)
@@ -117,20 +116,20 @@ class CardManager: NSObject {
             }
         }
     
-        return subtypes.sorted(by: { $0.lowercased() < $1.lowercased() })
+        return subtypes.sorted { $0.lowercased() < $1.lowercased() }
     }
     
-    class func subtypesForRole(_ role: NRRole, andTypes types: Set<String>, includeIdentities: Bool) -> [String] {
+    class func subtypesFor(role: NRRole, andTypes types: Set<String>, includeIdentities: Bool) -> [String] {
         var subtypes = Set<String>()
         for type in types {
-            let arr = subtypesForRole(role, andType: type, includeIdentities: includeIdentities)
+            let arr = subtypesFor(role: role, andType: type, includeIdentities: includeIdentities)
             subtypes.formUnion(arr)
         }
     
         return subtypes.sorted(by: { $0.lowercased() < $1.lowercased() })
     }
     
-    class func cardsAvailable() -> Bool {
+    class var cardsAvailable: Bool {
         return allKnownCards.count > 0
     }
     
@@ -190,7 +189,7 @@ class CardManager: NSObject {
         
         // add hard-coded aliases
         for code in cardAliases.keys {
-            if let card = CardManager.cardByCode(code) {
+            if let card = CardManager.cardBy(code: code) {
                 card.setCardAlias(cardAliases[code]!)
             }
         }

@@ -79,7 +79,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         
         assert(self.cards.count == self.deck.size, "oops")
         
-        self.cards.shuffleInPlace()
+        self.cards.shuffle()
         
         self.oddsLabel.text = ""
         self.drawnLabel.text = ""

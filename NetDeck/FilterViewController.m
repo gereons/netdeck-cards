@@ -42,14 +42,25 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     NSInteger factionLimit;
     if (self.role == NRRoleRunner)
     {
-        self.factionNames = @[ [Faction name:NRFactionAnarch], [Faction name:NRFactionCriminal], [Faction name:NRFactionShaper], [Faction name:NRFactionNeutral]];
-        self.typeNames = @[ [CardType name:NRCardTypeEvent], [CardType name:NRCardTypeHardware], [CardType name:NRCardTypeResource], [CardType name:NRCardTypeProgram] ];
+        self.factionNames = @[ [Faction nameFor:NRFactionAnarch],
+                               [Faction nameFor:NRFactionCriminal],
+                               [Faction nameFor:NRFactionShaper],
+                               [Faction nameFor:NRFactionNeutral]];
+        self.typeNames = @[ [CardType nameFor:NRCardTypeEvent],
+                            [CardType nameFor:NRCardTypeHardware],
+                            [CardType nameFor:NRCardTypeResource],
+                            [CardType nameFor:NRCardTypeProgram] ];
         factionLimit = self.factionNames.count;
         
         if (self.dataDestinyAllowed)
         {
-            self.factionNames = @[ [Faction name:NRFactionAnarch], [Faction name:NRFactionCriminal], [Faction name:NRFactionShaper], [Faction name:NRFactionNeutral],
-                                   [Faction name:NRFactionAdam], [Faction name:NRFactionApex], [Faction name:NRFactionSunnyLebeau] ];
+            self.factionNames = @[ [Faction nameFor:NRFactionAnarch],
+                                   [Faction nameFor:NRFactionCriminal],
+                                   [Faction nameFor:NRFactionShaper],
+                                   [Faction nameFor:NRFactionNeutral],
+                                   [Faction nameFor:NRFactionAdam],
+                                   [Faction nameFor:NRFactionApex],
+                                   [Faction nameFor:NRFactionSunnyLebeau] ];
             
             self.miniFactionControl.hidden = NO;
             self.typeVerticalDistance.constant = 50;
@@ -57,10 +68,18 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     }
     else
     {
-        self.factionNames = @[ [Faction name:NRFactionHaasBioroid], [Faction name:NRFactionNbn], [Faction name:NRFactionJinteki], [Faction name:NRFactionWeyland], [Faction name:NRFactionNeutral]];
+        self.factionNames = @[ [Faction nameFor:NRFactionHaasBioroid],
+                               [Faction nameFor:NRFactionNbn],
+                               [Faction nameFor:NRFactionJinteki],
+                               [Faction nameFor:NRFactionWeyland],
+                               [Faction nameFor:NRFactionNeutral]];
         factionLimit = self.factionNames.count;
         
-        self.typeNames = @[ [CardType name:NRCardTypeAgenda], [CardType name:NRCardTypeAsset], [CardType name:NRCardTypeUpgrade], [CardType name:NRCardTypeOperation], [CardType name:NRCardTypeIce]];
+        self.typeNames = @[ [CardType nameFor:NRCardTypeAgenda],
+                            [CardType nameFor:NRCardTypeAsset],
+                            [CardType nameFor:NRCardTypeUpgrade],
+                            [CardType nameFor:NRCardTypeOperation],
+                            [CardType nameFor:NRCardTypeIce]];
     }
     
     self.factionControl.delegate = self;

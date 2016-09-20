@@ -650,7 +650,7 @@
     
     cell.nameLabel.font = [UIFont monospacedDigitSystemFontOfSize:16 weight:UIFontWeightRegular];
     
-    NSString* type = [Faction name:card.faction];;
+    NSString* type = [Faction nameFor:card.faction];
     
     if (card.type != NRCardTypeIdentity) {
         NSInteger influence = [self.deck influenceFor:cc];

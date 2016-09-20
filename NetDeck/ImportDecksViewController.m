@@ -391,8 +391,8 @@ static NSString* filterText;
             break;
         case NRDeckListSortByFaction:
             decks = [decksToSort sortedArrayUsingComparator:^NSComparisonResult(Deck* d1, Deck* d2) {
-                NSString* faction1 = [Faction name:d1.identity.faction];
-                NSString* faction2 = [Faction name:d2.identity.faction];
+                NSString* faction1 = [Faction nameFor:d1.identity.faction];
+                NSString* faction2 = [Faction nameFor:d2.identity.faction];
                 NSComparisonResult cmp = [faction1 compare:faction2];
                 if (cmp == NSOrderedSame)
                 {

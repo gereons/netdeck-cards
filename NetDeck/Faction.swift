@@ -23,14 +23,14 @@ class Faction: NSObject {
     fileprivate static var allFactions: TableData!
     fileprivate static var allFactionsPreDAD: TableData!
     
-    static let WeylandConsortium = "Weyland Consortium"
+    static let weylandConsortium = "Weyland Consortium"
     
     override class func initialize() {
         faction2name[.none] = Constant.kANY
         faction2name[.neutral] = "Neutral".localized()
     }
     
-    class func name(_ faction: NRFaction) -> String? {
+    class func name(for faction: NRFaction) -> String? {
         return Faction.faction2name[faction]
     }
     
@@ -47,19 +47,19 @@ class Faction: NSObject {
             return false
         }
         
-        let common = [ Faction.name(.none)!, Faction.name(.neutral)! ]
+        let common = [ Faction.name(for: .none)!, Faction.name(for: .neutral)! ]
         
         for faction in runnerFactions
         {
-            runnerFactionNames.append(Faction.name(faction)!)
+            runnerFactionNames.append(Faction.name(for: faction)!)
         }
         for faction in runnerFactionsPreDAD
         {
-            runnerFactionNamesPreDAD.append(Faction.name(faction)!)
+            runnerFactionNamesPreDAD.append(Faction.name(for: faction)!)
         }
         for faction in corpFactions
         {
-            corpFactionNames.append(Faction.name(faction)!)
+            corpFactionNames.append(Faction.name(for: faction)!)
         }
         
         let factionSections = [ "", "Runner".localized(), "Corp".localized() ]
@@ -76,7 +76,7 @@ class Faction: NSObject {
         return true
     }
     
-    class func factionsForRole(_ role: NRRole) -> [String] {
+    class func factionsFor(role: NRRole) -> [String] {
         assert(role != .none, "no role")
         
         if (role == .runner)
@@ -93,22 +93,22 @@ class Faction: NSObject {
         return dataDestinyAllowed ? allFactions : allFactionsPreDAD
     }
     
-    class func shortName(_ faction: NRFaction) -> String {
+    class func shortName(for faction: NRFaction) -> String {
         switch faction {
         case .haasBioroid: return "H-B"
         case .weyland: return "Weyland".localized()
         case .sunnyLebeau: return "Sunny"
-        default: return Faction.name(faction)!
+        default: return Faction.name(for: faction)!
         }
     }
     
     // needed for the jinteki.net uploader
-    class func fullName(_ faction: NRFaction) -> String {
+    class func fullName(for faction: NRFaction) -> String {
         switch faction {
         case .weyland:
-            return Faction.WeylandConsortium
+            return Faction.weylandConsortium
         default:
-            return Faction.name(faction)!
+            return Faction.name(for: faction)!
         }
     }
 }

@@ -313,7 +313,7 @@ class NRDB: NSObject {
         deck.mwl = NRMWL.by(code: mwlCode)
         
         for (code, qty) in json["cards"].dictionaryValue {
-            if let card = CardManager.cardByCode(code) {
+            if let card = CardManager.cardBy(code: code) {
                 deck.addCard(card, copies:qty.intValue, history: false)
             }
         }
@@ -326,7 +326,7 @@ class NRDB: NSObject {
                     dcs.timestamp = timestamp
                     
                     for (code, amount) in changes.dictionaryValue {
-                        if let card = CardManager.cardByCode(code), let amount = amount.int {
+                        if let card = CardManager.cardBy(code: code), let amount = amount.int {
                             dcs.addCardCode(card.code, copies: amount)
                         }
                     }

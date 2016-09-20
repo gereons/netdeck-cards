@@ -38,7 +38,7 @@ class OctgnImport: NSObject, XMLParserDelegate {
                 if id.hasPrefix(Card.octgnPrefix) && id.length > 32 {
 
                     let code = (id as NSString).substring(from: 31)
-                    let card = CardManager.cardByCode(code)
+                    let card = CardManager.cardBy(code: code)
                     let copies = Int(qty)
                     
                     if card != nil && copies != nil {

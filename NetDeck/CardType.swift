@@ -39,15 +39,15 @@ class CardType: NSObject {
         }
         
         for type in runnerTypes {
-            runnerTypeNames.append(CardType.name(type))
+            runnerTypeNames.append(CardType.name(for: type))
         }
         for type in corpTypes {
-            corpTypeNames.append(CardType.name(type))
+            corpTypeNames.append(CardType.name(for: type))
         }
         
         let typeSections = [ "", "Runner".localized(), "Corp".localized() ]
         let types = [
-            [CardType.name(.none), CardType.name(.identity)],
+            [CardType.name(for: .none), CardType.name(for: .identity)],
             runnerTypeNames,
             corpTypeNames
         ]
@@ -60,11 +60,11 @@ class CardType: NSObject {
         return true
     }
     
-    class func name(_ type: NRCardType) -> String {
+    class func name(for type: NRCardType) -> String {
         return type2name[type] ?? "n/a"
     }
     
-    class func typesForRole(_ role: NRRole) -> [String] {
+    class func typesFor(role: NRRole) -> [String] {
         assert(role != .none, "no role")
         return role == .runner ? runnerTypeNames : corpTypeNames
     }

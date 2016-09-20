@@ -72,10 +72,10 @@
     
     NSMutableArray* factions = [[Faction factionsForRole:self.role] mutableCopy];
     // remove entries for "none" and "neutral"
-    [factions removeObject:[Faction name:NRFactionNone]];
+    [factions removeObject:[Faction nameFor:NRFactionNone]];
     
     // move 'neutral' to the end
-    NSString* neutral = [Faction name:NRFactionNeutral];
+    NSString* neutral = [Faction nameFor:NRFactionNeutral];
     [factions removeObject:neutral];
     if (useDraft)
     {
@@ -113,7 +113,7 @@
                 continue;
             }
             
-            if ([[factions objectAtIndex:i] isEqualToString:[Faction name:card.faction]])
+            if ([[factions objectAtIndex:i] isEqualToString:[Faction nameFor:card.faction]])
             {
                 NSMutableArray* arr = self.identities[i];
                 [arr addObject:card];

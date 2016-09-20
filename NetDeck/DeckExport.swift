@@ -155,7 +155,7 @@ class DeckExport: NSObject {
         if deck.identity?.role == .corp {
             s += "\(deck.agendaPoints) agenda points" + eol
         }
-        let set = PackManager.mostRecentPackUsedInDeck(deck)
+        let set = PackManager.mostRecentPackUsedIn(deck: deck)
         s += "Cards up to \(set)" + eol
         
         s += eol + "Deck built with " + self.link(APP_NAME, APP_URL, fmt) + eol

@@ -338,7 +338,7 @@ static NSMutableArray* subtypeCollapsedSections;
     else
     {
         NSMutableArray* types = [NSMutableArray arrayWithArray:[CardType typesForRole:self.role]];
-        [types insertObject:[CardType name:NRCardTypeIdentity] atIndex:1];
+        [types insertObject:[CardType nameFor:NRCardTypeIdentity] atIndex:1];
         data = [[TableData alloc] initWithValues:types];
     }
     id selected = [self.selectedValues objectForKey:@(TYPE_BUTTON)];
@@ -351,16 +351,7 @@ static NSMutableArray* subtypeCollapsedSections;
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
 
     NRPackUsage usePacks = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
-    TableData* rawPacks = [PackManager packsForTableview:usePacks];
-//    NSMutableArray* strValues = [NSMutableArray array];
-//    for (NSArray* packs in rawPacks.values) {
-//        NSMutableArray* strings = [NSMutableArray array];
-//        for (Pack* pack in packs) {
-//            [strings addObject:pack.name];
-//        }
-//        [strValues addObject:strings];
-//    }
-//    TableData* stringPacks = [[TableData alloc] initWithSections:rawPacks.sections andValues:strValues];
+    TableData* rawPacks = [PackManager packsForTableviewWithPacks:usePacks];
     TableData* stringPacks = [TableData convertPacksData:rawPacks];
     [CardFilterPopover showFromButton:sender inView:self entries:stringPacks type:@"Set" selected:selected];
 }

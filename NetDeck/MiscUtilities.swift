@@ -26,23 +26,23 @@ extension String {
         return (self as NSString).appendingPathComponent(component)
     }
     
-    func trim() -> String {
+    func trimmed() -> String {
         return self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
 }
 
 extension Collection {
     /// Return a copy of `self` with its elements shuffled
-    func shuffle() -> [Iterator.Element] {
+    func shuffled() -> [Iterator.Element] {
         var list = Array(self)
-        list.shuffleInPlace()
+        list.shuffle()
         return list
     }
 }
 
 extension MutableCollection where Index == Int, IndexDistance == Int {
     /// Shuffle the elements of `self` in-place.
-    mutating func shuffleInPlace() {
+    mutating func shuffle() {
         // empty and single-element collections don't shuffle
         if count < 2 {
             return
@@ -57,11 +57,15 @@ extension MutableCollection where Index == Int, IndexDistance == Int {
 }
 
 extension UIColor {
-    class func colorWithRGB(_ rgb: UInt) -> UIColor! {
+    convenience init(rgb: UInt) {
         let r = CGFloat((rgb & 0xFF0000) >> 16)
         let g = CGFloat((rgb & 0x00FF00) >> 8)
         let b = CGFloat((rgb & 0x0000FF) >> 0)
-        return UIColor(red: r/255.0, green: g/255.0, blue: b/255.0, alpha: 1.0)
+        self.init(red: r/255.0, green: g/255.0, blue: b/255.0, alpha: 1.0)
+    }
+    
+    class func colorWithRGB(_ rgb : UInt) -> UIColor {
+        return UIColor(rgb: rgb)
     }
 }
 

@@ -492,7 +492,7 @@ import Foundation
         var newIdentity: Card?
         
         for (code, qty) in cards {
-            if let card = CardManager.cardByCode(code) {
+            if let card = CardManager.cardBy(code: code) {
                 if card.type != .identity {
                     let cc = CardCounter(card: card, count: qty)
                     newCards.append(cc)
@@ -545,7 +545,7 @@ import Foundation
         
         self.sort()
         
-        sections.append(CardType.name(.identity))
+        sections.append(CardType.name(for: .identity))
         if self.identityCc != nil {
             cards.append([self.identityCc!])
         } else {
@@ -630,7 +630,7 @@ import Foundation
         self.state = NRDeckState(rawValue: decoder.decodeInteger(forKey: "state"))!
         self.isDraft = decoder.decodeBool(forKey: "draft")
         if let identityCode = decoder.decodeObject(forKey: "identity") as? String {
-            if let identity = CardManager.cardByCode(identityCode) {
+            if let identity = CardManager.cardBy(code: identityCode) {
                 self.identityCc = CardCounter(card:identity, count:1)
             }
         }

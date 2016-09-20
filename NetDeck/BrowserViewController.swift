@@ -59,7 +59,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let filtersActive = CardManager.cardsAvailable() && PackManager.packsAvailable()
+        let filtersActive = CardManager.cardsAvailable && PackManager.packsAvailable
         
         self.typeButton.isEnabled = filtersActive
         self.setButton.isEnabled = filtersActive
@@ -193,7 +193,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         if role == .none {
             picker.data = CardType.allTypes
         } else {
-            let types = CardType.typesForRole(role)
+            let types = CardType.typesFor(role: role)
             picker.data = TableData(values: types as NSArray)
         }
         
@@ -210,7 +210,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBAction func setButtonTapped(_ btn: UIButton) {
         let picker = BrowserValuePicker(title: "Set".localized())
         let packUsage = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        let data = PackManager.packsForTableview(NRPackUsage(rawValue: packUsage) ?? .all)
+        let data = PackManager.packsForTableview(packs: NRPackUsage(rawValue: packUsage) ?? .all)
         picker.data = TableData.convertPacksData(data)
         picker.preselected = self.sets
         picker.setResult = { result in

@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         FIXME("network activity indicator when using dropbox")
+        FIXME("iphone: long empty state text wrapping?")
         
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
@@ -107,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
     
-        let cardsOk = CardManager.cardsAvailable() && PackManager.packsAvailable()
+        let cardsOk = CardManager.cardsAvailable && PackManager.packsAvailable
         if !cardsOk || !Device.isIphone {
             return false
         }
@@ -283,9 +284,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     
     // utility method: set the excludeFromBackup flag on the specified path
     class func excludeFromBackup(_ path: String) {
-        let url = URL(fileURLWithPath:path)
+        let url = NSURL(fileURLWithPath:path)
         do {
-            try (url as NSURL).setResourceValue(true, forKey:URLResourceKey.isExcludedFromBackupKey)
+            try url.setResourceValue(true, forKey:URLResourceKey.isExcludedFromBackupKey)
         } catch let error {
             NSLog("setResource error=\(error)")
         }

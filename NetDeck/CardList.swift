@@ -59,8 +59,8 @@ class CardList: NSObject {
         
         cl.initialCards = [Card]()
         for role in roles {
-            cl.initialCards.append(contentsOf: CardManager.allForRole(role))
-            cl.initialCards.append(contentsOf: CardManager.identitiesForRole(role))
+            cl.initialCards.append(contentsOf: CardManager.allFor(role: role))
+            cl.initialCards.append(contentsOf: CardManager.identitiesFor(role: role))
         }
         switch packUsage {
         case .selected: cl.filterDeselectedSets()
@@ -74,7 +74,7 @@ class CardList: NSObject {
     }
     
     func resetInitialCards() {
-        self.initialCards = CardManager.allForRole(self.role)
+        self.initialCards = CardManager.allFor(role: self.role)
         switch self.packUsage {
         case .selected: self.filterDeselectedSets()
         case .allAfterRotation: self.filterRotatedSets()

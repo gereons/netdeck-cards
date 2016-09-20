@@ -316,7 +316,7 @@ class DeckImport: NSObject {
         }
         
         for (code, qty) in data["cards"].dictionaryValue {
-            if let card = CardManager.cardByCode(code) , qty.intValue > 0 {
+            if let card = CardManager.cardBy(code: code) , qty.intValue > 0 {
                 deck.addCard(card, copies: qty.intValue)
             }
         }
@@ -398,7 +398,7 @@ class DeckImport: NSObject {
                 if code == "name" {
                     deck.name = qty
                 } else {
-                    if let card = CardManager.cardByCode(code), let q = Int(qty) , q > 0 {
+                    if let card = CardManager.cardBy(code: code), let q = Int(qty) , q > 0 {
                         deck.addCard(card, copies: q)
                     }
                 }

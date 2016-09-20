@@ -25,7 +25,7 @@
             NSUInteger inf = [deck influenceFor:cc];
             if (inf > 0)
             {
-                NSString* faction = [Faction name:cc.card.faction];
+                NSString* faction = [Faction nameFor:cc.card.faction];
                 
                 NSNumber* n = [influence objectForKey:faction];
                 int prev = n == nil ? 0 : [n intValue];

@@ -26,7 +26,7 @@ class EmptyDetailViewController: UIViewController {
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTileLight)
         
-        let cardsAvailable = CardManager.cardsAvailable() && PackManager.packsAvailable()
+        let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
         self.emptyDataSetView.isHidden = cardsAvailable
         self.spinner.isHidden = !cardsAvailable
         

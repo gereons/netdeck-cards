@@ -197,7 +197,7 @@ class Card: NSObject {
     }
 
     var factionColor: UIColor {
-        return UIColor.colorWithRGB(self.factionHexColor)
+        return UIColor(rgb: self.factionHexColor)
     }
     
     var factionHexColor: UInt {
@@ -230,7 +230,7 @@ class Card: NSObject {
     
     // how many copies owned
     var owned: Int {
-        let prebuiltOwned = PrebuiltManager.quantityFor(self)
+        let prebuiltOwned = PrebuiltManager.quantity(for: self)
         
         if self.isCore {
             let cores = UserDefaults.standard.integer(forKey: SettingsKeys.NUM_CORES)
@@ -285,17 +285,17 @@ class Card: NSObject {
         c.name = json.localized("title", language)
         
         c.factionCode = json["faction_code"].stringValue
-        c.faction = Codes.factionForCode(c.factionCode)
+        c.faction = Codes.factionFor(code: c.factionCode)
         
         let roleCode = json["side_code"].stringValue
-        c.role = Codes.roleForCode(roleCode)
+        c.role = Codes.roleFor(code: roleCode)
         
         c.typeCode = json["type_code"].stringValue
-        c.type = Codes.typeForCode(c.typeCode)
+        c.type = Codes.typeFor(code: c.typeCode)
         
         if c.type == .identity {
             Card.fullNames[c.code] = c.englishName
-            let factionName = c.faction == .weyland ? Faction.WeylandConsortium : c.factionStr
+            let factionName = c.faction == .weyland ? Faction.weylandConsortium : c.factionStr
             let shortName = Card.shortIdentityName(c.name, forRole: c.role, andFaction: factionName)
             c.name = shortName
         }
@@ -312,7 +312,7 @@ class Card: NSObject {
             c.faction = .neutral
         }
         
-        c.packNumber = PackManager.packNumberForCode(c.packCode)
+        c.packNumber = PackManager.packNumberFor(code: c.packCode)
         c.isCore = c.packCode == PackManager.coreSetCode
         
         c.subtype = json.localized("keywords", language)
@@ -379,7 +379,7 @@ class Card: NSObject {
         }
         var subtypes = t.components(separatedBy: " - ")
         for i in 0 ..< subtypes.count {
-            subtypes[i] = subtypes[i].trim()
+            subtypes[i] = subtypes[i].trimmed()
         }
         return (subtype, subtypes)
     }

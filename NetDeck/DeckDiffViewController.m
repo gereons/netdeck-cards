@@ -118,7 +118,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     // all possible types for this role
     NSMutableArray* allTypes = [[CardType typesForRole:self.deck1.role] mutableCopy];
     // overwrite None/Any entry with "identity"
-    allTypes[0] = [CardType name:NRCardTypeIdentity];
+    allTypes[0] = [CardType nameFor:NRCardTypeIdentity];
     
     // remove "ICE" / "Program"
     [allTypes removeLastObject];

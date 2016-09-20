@@ -119,8 +119,8 @@
     self.cardText.textContainerInset = UIEdgeInsetsZero;
     self.cardText.attributedText = card.attributedText;
     
-    NSString* factionName = [Faction name:card.faction];
-    NSString* typeName = [CardType name:card.type];
+    NSString* factionName = [Faction nameFor:card.faction];
+    NSString* typeName = [CardType nameFor:card.type];
     NSString* subtype = card.subtype;
     if (subtype)
     {

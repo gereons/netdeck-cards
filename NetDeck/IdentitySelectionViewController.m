@@ -118,9 +118,9 @@
         [self.factionSelector removeSegmentAtIndex:5 animated:NO];
         
         [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
-        [self.factionSelector setTitle:[Faction name:NRFactionAnarch] forSegmentAtIndex:1];
-        [self.factionSelector setTitle:[Faction name:NRFactionCriminal] forSegmentAtIndex:2];
-        [self.factionSelector setTitle:[Faction name:NRFactionShaper] forSegmentAtIndex:3];
+        [self.factionSelector setTitle:[Faction nameFor:NRFactionAnarch] forSegmentAtIndex:1];
+        [self.factionSelector setTitle:[Faction nameFor:NRFactionCriminal] forSegmentAtIndex:2];
+        [self.factionSelector setTitle:[Faction nameFor:NRFactionShaper] forSegmentAtIndex:3];
         if (includeDraft)
         {
             // [self.factionSelector setTitle:[Faction name:NRFactionNeutral] forSegmentAtIndex:4];
@@ -133,9 +133,9 @@
         
         if (dataDestinyAllowed)
         {
-            [self.factionSelector insertSegmentWithTitle:[Faction name:NRFactionAdam] atIndex:4 animated:NO];
-            [self.factionSelector insertSegmentWithTitle:[Faction name:NRFactionApex] atIndex:5 animated:NO];
-            [self.factionSelector insertSegmentWithTitle:[Faction shortName:NRFactionSunnyLebeau] atIndex:6 animated:NO];
+            [self.factionSelector insertSegmentWithTitle:[Faction nameFor:NRFactionAdam] atIndex:4 animated:NO];
+            [self.factionSelector insertSegmentWithTitle:[Faction nameFor:NRFactionApex] atIndex:5 animated:NO];
+            [self.factionSelector insertSegmentWithTitle:[Faction shortNameFor:NRFactionSunnyLebeau] atIndex:6 animated:NO];
 
             self.factionSelectorWidth.constant += 100;
         }
@@ -143,10 +143,10 @@
     else
     {
         [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
-        [self.factionSelector setTitle:[Faction shortName:NRFactionHaasBioroid] forSegmentAtIndex:1];
-        [self.factionSelector setTitle:[Faction shortName:NRFactionNbn] forSegmentAtIndex:2];
-        [self.factionSelector setTitle:[Faction shortName:NRFactionJinteki] forSegmentAtIndex:3];
-        [self.factionSelector setTitle:[Faction shortName:NRFactionWeyland] forSegmentAtIndex:4];
+        [self.factionSelector setTitle:[Faction shortNameFor:NRFactionHaasBioroid] forSegmentAtIndex:1];
+        [self.factionSelector setTitle:[Faction shortNameFor:NRFactionNbn] forSegmentAtIndex:2];
+        [self.factionSelector setTitle:[Faction shortNameFor:NRFactionJinteki] forSegmentAtIndex:3];
+        [self.factionSelector setTitle:[Faction shortNameFor:NRFactionWeyland] forSegmentAtIndex:4];
 
         if (includeDraft)
         {
@@ -190,10 +190,10 @@
         factions = [[Faction factionsForRole:self.role] mutableCopy];
         
         // remove entries for "none" and "neutral"
-        [factions removeObject:[Faction name:NRFactionNone]];
+        [factions removeObject:[Faction nameFor:NRFactionNone]];
 
         // move 'neutral' to the end
-        NSString* neutral = [Faction name:NRFactionNeutral];
+        NSString* neutral = [Faction nameFor:NRFactionNeutral];
         [factions removeObject:neutral];
         if (useDraft)
         {
@@ -203,7 +203,7 @@
     else
     {
         factions = [NSMutableArray array];
-        [factions addObject:[Faction name:self.selectedFaction]];
+        [factions addObject:[Faction nameFor:self.selectedFaction]];
     }
     
     self.identities = [NSMutableArray array];
@@ -224,7 +224,7 @@
     }
     NSAssert(disabledPackCodes != nil, @"no packs");
     
-    NSArray<NSString*>* prebuiltIdentities = [PrebuiltManager identities:self.role];
+    NSArray<NSString*>* prebuiltIdentities = [PrebuiltManager identitiesFor:self.role];
     NSArray<Card*>* identities = [CardManager identitiesForRole:self.role];
     for (int i=0; i<factions.count; ++i)
     {
@@ -242,7 +242,7 @@
                 continue;
             }
             
-            if ([[factions objectAtIndex:i] isEqualToString:[Faction name:card.faction]])
+            if ([[factions objectAtIndex:i] isEqualToString:[Faction nameFor:card.faction]])
             {
                 NSMutableArray* arr = self.identities[i];
                 [arr addObject:card];

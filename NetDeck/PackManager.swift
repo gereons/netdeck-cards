@@ -55,11 +55,11 @@ class PackManager: NSObject {
     static var disabledPacks: Set<String>?          // set of pack codes
     static var enabledPacks: TableData?
         
-    class func packsAvailable() -> Bool {
+    class var packsAvailable: Bool {
         return allPacks.count > 0
     }
     
-    class func nameForKey(_ key: String) -> String? {
+    class func nameFor(key: String) -> String? {
         if let index = allPacks.index(where: {$0.settingsKey == key}) {
             return allPacks[index].name
         }
@@ -74,7 +74,7 @@ class PackManager: NSObject {
         return defaults
     }
     
-    class func packNumberForCode(_ code: String) -> Int {
+    class func packNumberFor(code: String) -> Int {
         if let pack = packsByCode[code], let cycle = cyclesByCode[pack.cycleCode] {
             return cycle.position * 1000 + pack.position
         }
@@ -120,7 +120,7 @@ class PackManager: NSObject {
         enabledPacks = nil
     }
     
-    class func packsForTableview(_ packs: NRPackUsage) -> TableData {
+    class func packsForTableview(packs: NRPackUsage) -> TableData {
         switch packs {
         case .all:
             return allKnownPacksForTableview()
@@ -228,7 +228,7 @@ class PackManager: NSObject {
         return TableData(sections: sections as NSArray, andValues: values as NSArray)
     }
 
-    class func packsUsedInDeck(_ deck: Deck) -> [String] {
+    class func packsUsedIn(deck: Deck) -> [String] {
         var packsUsed = [String: Int]() // pack code -> number of times used
         var cardsUsed = [String: Int]() // pack code -> number of cards used
             
@@ -264,7 +264,7 @@ class PackManager: NSObject {
         return result
     }
     
-    class func mostRecentPackUsedInDeck(_ deck: Deck) -> String {
+    class func mostRecentPackUsedIn(deck: Deck) -> String {
         var maxIndex = 0
         
         for cc in deck.allCards {

@@ -628,7 +628,7 @@ static NSInteger viewMode = VIEW_LIST;
 {
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
     NRPackUsage usePacks = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECKBUILDER_PACKS];
-    TableData* rawPacks = [PackManager packsForTableview:usePacks];
+    TableData* rawPacks = [PackManager packsForTableviewWithPacks:usePacks];
     TableData* stringPacks = [TableData convertPacksData:rawPacks];
     [CardFilterPopover showFromButton:sender inView:self entries:stringPacks type:@"Set" selected:selected];
 }

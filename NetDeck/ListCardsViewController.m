@@ -340,7 +340,7 @@ static NSString* kCancelButton = @"cancelButton";
     }
     
     
-    NSString* type = [Faction name:card.faction];;
+    NSString* type = [Faction nameFor:card.faction];;
     
     NSInteger influence = [self.deck influenceFor:cc];
     if (cc.count == 0 && self.deck.identity.faction != card.faction)

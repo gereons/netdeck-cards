@@ -30,14 +30,14 @@ class PrebuiltManager: NSObject {
     }
     
     // array of identity card codes for role in selected prebuilt decks
-    class func identities(_ role: NRRole) -> [String]? {
+    class func identities(for role: NRRole) -> [String]? {
         prepareCaches()
         guard let cards = prebuiltCards else { return nil }
         return cards.filter{ $0.card.role == role && $0.card.type == .identity }.map{ $0.card.code }
     }
     
     // quantity of card owned from prebuilt decks
-    class func quantityFor(_ card: Card) -> Int {
+    class func quantity(for card: Card) -> Int {
         prepareCaches()
         guard let cards = prebuiltCards else { return 0 }
         return cards.filter { $0.card == card }.reduce(0) { $0 + $1.count }
@@ -131,7 +131,7 @@ class PrebuiltManager: NSObject {
             pb.name = prebuilt["name"].stringValue
             pb.settingsKey = "use_" + prebuilt["code"].stringValue
             for (code, qty) in prebuilt["cards"].dictionaryValue {
-                if let card = CardManager.cardByCode(code) , qty.intValue > 0 {
+                if let card = CardManager.cardBy(code: code) , qty.intValue > 0 {
                     let cc = CardCounter(card: card, count: qty.intValue)
                     pb.cards.append(cc)
                 }
