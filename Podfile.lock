@@ -5,7 +5,7 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.0.0):
     - Alamofire (~> 4.0)
   - CorePlot (2.2)
-  - Crashlytics (3.8.1):
+  - Crashlytics (3.8.2):
     - Fabric (~> 1.6.3)
   - CSStickyHeaderFlowLayout (0.2.11)
   - DTCoreText (1.6.17):
@@ -26,7 +26,7 @@ PODS:
   - SDCAlertView (7.0.1)
   - SVProgressHUD (2.0.3)
   - SwiftKeychainWrapper (2.2.0)
-  - SwiftyDropbox (4.0.2):
+  - SwiftyDropbox (4.0.3):
     - Alamofire (~> 4.0.0)
   - SwiftyJSON (2.3.2)
 
@@ -74,7 +74,7 @@ SPEC CHECKSUMS:
   AlamofireImage: 6594aa1139a67dcd36cde6da79ea4e5b318e60fb
   AlamofireNetworkActivityIndicator: ba9f481748d954318dd99636abff028cd3fcdc07
   CorePlot: 628031b4a771b05b35c284d907ddacee97a91c0a
-  Crashlytics: 4391d8df0b125345e9f209c5db6e7f40a6a8435d
+  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
   CSStickyHeaderFlowLayout: e9bcb1762413f49d7d09e5bd0ae5efd1100116b7
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
@@ -85,9 +85,9 @@ SPEC CHECKSUMS:
   SDCAlertView: e04c5a8985e4490768cc9608bf0a13c44215fcf2
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftKeychainWrapper: a61d8ec21f07ba70e393f8572b2d46a25effc7b3
-  SwiftyDropbox: 4458bb0c2d62d7714b7d2cddec107e392f3645d8
+  SwiftyDropbox: 11b896e6b534085a8eb7f679e38eda64ec422409
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 4f448d8bf09e7f318ee80e5166c8d5c16500be38
+PODFILE CHECKSUM: 9b177456a2a97974b44f566af58f6a6f972ec3d2
 
 COCOAPODS: 1.1.0.rc.2

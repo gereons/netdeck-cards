@@ -34,4 +34,5 @@ class Reachability: NSObject {
     class func online() -> Bool {
         return manager?.isReachable ?? true
     }
+
 }
