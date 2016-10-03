@@ -66,6 +66,29 @@
     self.statusLabel.userInteractionEnabled = YES;
     self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(statusTapped:)];
     [self.statusLabel addGestureRecognizer:self.tapRecognizer];
+    
+    // right button
+    self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"]
+                                                         style:UIBarButtonItemStylePlain
+                                                        target:self
+                                                        action:@selector(exportDeck:)];
+    
+    self.historyButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"718-timer-1"]
+                                                          style:UIBarButtonItemStylePlain
+                                                         target:self
+                                                         action:@selector(showEditHistory:)];
+    
+    self.titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.titleButton addTarget:self action:@selector(titleTapped:) forControlEvents:UIControlEventTouchUpInside];
+    self.titleButton.titleLabel.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightMedium];
+    self.titleButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.titleButton.titleLabel.minimumScaleFactor = 0.5;
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self setDeckName];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -74,26 +97,9 @@
     
     NSAssert(self.navigationController.viewControllers.count == 2, @"nav oops");
     
-    // right button
-    self.exportButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share"]
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(exportDeck:)];
-    
-    self.historyButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"718-timer-1"]
-                                                          style:UIBarButtonItemStylePlain
-                                                         target:self
-                                                         action:@selector(showEditHistory:)];
-    
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.rightBarButtonItems = @[ self.exportButton, self.historyButton ];
 
-    self.titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.titleButton addTarget:self action:@selector(titleTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.titleButton.titleLabel.font = [UIFont monospacedDigitSystemFontOfSize:17 weight:UIFontWeightMedium];
-    self.titleButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    self.titleButton.titleLabel.minimumScaleFactor = 0.5;
-    
     [self setDeckName];
     topItem.titleView = self.titleButton;
     
@@ -108,6 +114,7 @@
 
 -(void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    
     NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
     [settings setObject:@(self.sortType) forKey:SettingsKeys.DECK_VIEW_SORT];
 }
