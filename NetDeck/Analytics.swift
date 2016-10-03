@@ -10,7 +10,7 @@ import Crashlytics
 
 class Analytics: NSObject {
     
-    class func logEvent(_ name: String, attributes: [String: Any]?) {
+    class func logEvent(_ name: String, attributes: [String: Any]? = nil) {
         if BuildConfig.useCrashlytics {
             Answers.logCustomEvent(withName: name, customAttributes: attributes)
         }

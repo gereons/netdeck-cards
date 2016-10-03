@@ -364,7 +364,6 @@ import Foundation
     // check if this is a valid "Onesies" deck - 1 Core Set, 1 Deluxe, 1 Data Pack, 1 playset of a Card
     // (which may be 3x of a Core card like Desperado, or a 6x of e.g. Spy Camera
     func checkOnesiesRules() -> [String] {
-        var reasons = [String]()
         
         var coreCardsOverQuantity = 0
         var draftUsed = false
@@ -390,6 +389,7 @@ import Foundation
             }
         }
         
+        var reasons = [String]()
         if draftUsed {
             reasons.append("Uses draft cards".localized())
         }

@@ -55,7 +55,11 @@ class ImageCache: NSObject {
     
     // when to next check if an img was updated
     fileprivate var nextCheckDates = [String: Date]()     // code -> date
-    
+
+    // log of all current in-flight requests
+    typealias ImageCallback = (Card, UIImage, Bool) -> Void
+    private var imagesInFlight = [String: [ImageCallback] ]()
+
     fileprivate override init() {
         super.init()
         
@@ -127,9 +131,24 @@ class ImageCache: NSObject {
             {
                 // image is not in on-disk cache
                 if Reachability.online() {
+                    // currently in-flight?
+                    if var inFlight = self.imagesInFlight[key] {
+                        inFlight.append(completion)
+                        self.imagesInFlight[key] = inFlight
+                        return
+                    } else {
+                        self.imagesInFlight[key] = [completion]
+                    }
+                    
                     self.downloadImageFor(card, key: key) { (card, image, placeholder) in
                         DispatchQueue.main.async {
-                            completion(card, image, placeholder)
+                            // completion(card, image, placeholder)
+                            if let callbacks = self.imagesInFlight[key] {
+                                for cb in callbacks {
+                                    cb(card, image, placeholder)
+                                }
+                            }
+                            self.imagesInFlight.removeValue(forKey: key)
                         }
                     }
                 } else {

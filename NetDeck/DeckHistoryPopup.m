@@ -63,6 +63,7 @@
 -(void) revertTo:(UIButton*)sender
 {
     NSAssert(sender.tag < self.deck.revisions.count, @"invalid tag");
+    LOG_EVENT(@"Revert", nil);
     DeckChangeSet* dcs = self.deck.revisions[sender.tag];
     // NSLog(@"revert to %d %@", sender.tag, [self.dateFormatter stringFromDate:dcs.timestamp]);
 

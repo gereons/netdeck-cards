@@ -38,6 +38,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
     func revertTapped(_ sender: UIButton) {
         guard let deck = self.deck else { return }
         
+        Analytics.logEvent("Revert")
         assert(sender.tag < deck.revisions.count, "invalid tag")
         
         let dcs = deck.revisions[sender.tag]

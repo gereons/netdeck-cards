@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         FIXME("network activity indicator when using dropbox")
         FIXME("iphone: long empty state text wrapping?")
+        FIXME("activity indicator for dropbox accesses?")
         
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
