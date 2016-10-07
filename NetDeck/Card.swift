@@ -279,94 +279,94 @@ class Card: NSObject {
     
     fileprivate init(json: JSON, language: String) {
         super.init()
-        let c = self
-        c.code = json["code"].stringValue
-        c.englishName = json["title"].stringValue
-        c.name = json.localized("title", language)
         
-        c.factionCode = json["faction_code"].stringValue
-        c.faction = Codes.factionFor(code: c.factionCode)
+        self.code = json["code"].stringValue
+        self.englishName = json["title"].stringValue
+        self.name = json.localized("title", language)
+        
+        self.factionCode = json["faction_code"].stringValue
+        self.faction = Codes.factionFor(code: self.factionCode)
         
         let roleCode = json["side_code"].stringValue
-        c.role = Codes.roleFor(code: roleCode)
+        self.role = Codes.roleFor(code: roleCode)
         
-        c.typeCode = json["type_code"].stringValue
-        c.type = Codes.typeFor(code: c.typeCode)
+        self.typeCode = json["type_code"].stringValue
+        self.type = Codes.typeFor(code: self.typeCode)
         
-        if c.type == .identity {
-            Card.fullNames[c.code] = c.englishName
-            let factionName = c.faction == .weyland ? Faction.weylandConsortium : c.factionStr
-            let shortName = Card.shortIdentityName(c.name, forRole: c.role, andFaction: factionName)
-            c.name = shortName
+        if self.type == .identity {
+            Card.fullNames[self.code] = self.englishName
+            let factionName = self.faction == .weyland ? Faction.weylandConsortium : self.factionStr
+            let shortName = Card.shortIdentityName(self.name, forRole: self.role, andFaction: factionName)
+            self.name = shortName
         }
         
-        c.text = json.localized("text", language)
-        c.flavor = json.localized("flavor", language)
+        self.text = json.localized("text", language)
+        self.flavor = json.localized("flavor", language)
         
-        c.packCode = json["pack_code"].stringValue
-        if c.packCode == "" {
-            c.packCode = PackManager.unknownSet
-            c.packCode = PackManager.unknownSet
+        self.packCode = json["pack_code"].stringValue
+        if self.packCode == "" {
+            self.packCode = PackManager.unknownSet
+            self.packCode = PackManager.unknownSet
         }
-        if c.packCode == PackManager.draftSetCode {
-            c.faction = .neutral
-        }
-        
-        c.packNumber = PackManager.packNumberFor(code: c.packCode)
-        c.isCore = c.packCode == PackManager.coreSetCode
-        
-        c.subtype = json.localized("keywords", language)
-        if c.subtype.length > 0 {
-            let split = Card.subtypeSplit(c.subtype)
-            c.subtype = split.subtype
-            c.subtypes = split.subtypes
+        if self.packCode == PackManager.draftSetCode {
+            self.faction = .neutral
         }
         
-        c.number = json["position"].int ?? -1
-        c.quantity = json["quantity"].int ?? -1
-        c.unique = json["uniqueness"].boolValue
+        self.packNumber = PackManager.packNumberFor(code: self.packCode)
+        self.isCore = self.packCode == PackManager.coreSetCode
         
-        if c.type == .identity {
-            c.influenceLimit = json["influence_limit"].int ?? -1
-            c.minimumDecksize = json["minimum_deck_size"].int ?? -1
-            c.baseLink = json["base_link"].int ?? -1
-        }
-        if c.type == .agenda {
-            c.advancementCost = json["advancement_cost"].int ?? -1
-            c.agendaPoints = json["agenda_points"].int ?? -1
+        self.subtype = json.localized("keywords", language)
+        if self.subtype.length > 0 {
+            let split = Card.subtypeSplit(self.subtype)
+            self.subtype = split.subtype
+            self.subtypes = split.subtypes
         }
         
-        c.mu = json["memory_cost"].int ?? -1
+        self.number = json["position"].int ?? -1
+        self.quantity = json["quantity"].int ?? -1
+        self.unique = json["uniqueness"].boolValue
+        
+        if self.type == .identity {
+            self.influenceLimit = json["influence_limit"].int ?? -1
+            self.minimumDecksize = json["minimum_deck_size"].int ?? -1
+            self.baseLink = json["base_link"].int ?? -1
+        }
+        if self.type == .agenda {
+            self.advancementCost = json["advancement_cost"].int ?? -1
+            self.agendaPoints = json["agenda_points"].int ?? -1
+        }
+        
+        self.mu = json["memory_cost"].int ?? -1
         
         if json["strength"].stringValue == "X" {
-            c.strength = Card.X
+            self.strength = Card.X
         } else {
-            c.strength = json["strength"].int ?? -1
+            self.strength = json["strength"].int ?? -1
         }
         
         if json["cost"].stringValue == "X" {
-            c.cost = Card.X
+            self.cost = Card.X
         } else {
-            c.cost = json["cost"].int ?? -1
+            self.cost = json["cost"].int ?? -1
         }
         
-        c.influence = json["faction_cost"].int ?? -1
-        c.trash = json["trash_cost"].int ?? -1
+        self.influence = json["faction_cost"].int ?? -1
+        self.trash = json["trash_cost"].int ?? -1
         
-        c.maxPerDeck = json["deck_limit"].int ?? -1
-        if Card.max1perDeck.contains(c.code) || c.type == .identity {
-            c.maxPerDeck = 1
+        self.maxPerDeck = json["deck_limit"].int ?? -1
+        if Card.max1perDeck.contains(self.code) || self.type == .identity {
+            self.maxPerDeck = 1
         }
         
-        c.isAlliance = c.subtype.lowercased().contains("alliance")
-        c.isVirtual = c.subtype.lowercased().contains("virtual")
-        if c.type == .ice {
-            let barrier = c.subtypes.contains("Barrier")
-            let sentry = c.subtypes.contains("Sentry")
-            let codeGate = c.subtypes.contains("Code Gate")
+        self.isAlliance = self.subtype.lowercased().contains("alliance")
+        self.isVirtual = self.subtype.lowercased().contains("virtual")
+        if self.type == .ice {
+            let barrier = self.subtypes.contains("Barrier")
+            let sentry = self.subtypes.contains("Sentry")
+            let codeGate = self.subtypes.contains("Code Gate")
             if barrier && sentry && codeGate {
-                // print("multi: \(c.name)")
-                Card.multiIce.append(c.code)
+                // print("multi: \(self.name)")
+                Card.multiIce.append(self.code)
             }
         }
     }

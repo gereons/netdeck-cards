@@ -32,6 +32,12 @@
 @property BOOL searchFieldActive;
 @property int influenceValue;
 
+@property int prevAp;
+@property int prevMu;
+@property int prevStr;
+@property int prevCost;
+@property int prevInf;
+
 @end
 
 @implementation CardFilterViewController
@@ -68,6 +74,8 @@ static NSInteger viewMode = VIEW_LIST;
         self.deckListViewController.role = role;
         
         self.navController = [[UINavigationController alloc] initWithRootViewController:self.deckListViewController];
+        
+        self.influenceValue = -1;
     }
     return self;
 }
@@ -397,18 +405,24 @@ static NSInteger viewMode = VIEW_LIST;
     
     self.costSlider.value = 0;
     [self costValueChanged:nil];
+    self.prevCost = 0;
     
     self.muSlider.value = 0;
     [self muValueChanged:nil];
+    self.prevMu = 0;
     
     self.influenceSlider.value = 0;
     [self influenceValueChanged:nil];
+    self.prevInf = 0;
+    self.influenceValue = -1;
     
     self.strengthSlider.value = 0;
     [self strengthValueChanged:nil];
+    self.prevStr = 0;
     
     self.apSlider.value = 0;
     [self apValueChanged:nil];
+    self.prevAp = 0;
     
     [self resetAllButtons];
     self.selectedType = Constant.kANY;
@@ -741,8 +755,11 @@ static NSInteger viewMode = VIEW_LIST;
     int value = round(sender.value);
     // NSLog(@"str: %f %d", sender.value, value);
     sender.value = value--;
-    self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self updateFilter:@"strength" value:@(value)];
+    if (value != self.prevStr) {
+        self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self updateFilter:@"strength" value:@(value)];
+        self.prevStr = value;
+    }
 }
 
 -(void) muValueChanged:(UISlider*)sender
@@ -750,8 +767,11 @@ static NSInteger viewMode = VIEW_LIST;
     int value = round(sender.value);
     // NSLog(@"mu: %f %d", sender.value, value);
     sender.value = value--;
-    self.muLabel.text = [NSString stringWithFormat:l10n(@"MU: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self updateFilter:@"mu" value:@(value)];
+    if (value != self.prevMu) {
+        self.muLabel.text = [NSString stringWithFormat:l10n(@"MU: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self updateFilter:@"mu" value:@(value)];
+        self.prevMu = value;
+    }
 }
 
 -(void) costValueChanged:(UISlider*)sender
@@ -759,8 +779,11 @@ static NSInteger viewMode = VIEW_LIST;
     int value = round(sender.value);
     // NSLog(@"cost: %f %d", sender.value, value);
     sender.value = value--;
-    self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self updateFilter:@"card cost" value:@(value)];
+    if (value != self.prevCost) {
+        self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self updateFilter:@"card cost" value:@(value)];
+        self.prevCost = value;
+    }
 }
 
 -(void) influenceValueChanged:(UISlider*)sender
@@ -768,9 +791,12 @@ static NSInteger viewMode = VIEW_LIST;
     int value = round(sender.value);
     // NSLog(@"inf: %f %d", sender.value, value);
     sender.value = value--;
-    self.influenceValue = value;
-    self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self updateFilter:@"influence" value:@(value)];
+    if (value != self.prevInf) {
+        self.influenceValue = value;
+        self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self updateFilter:@"influence" value:@(value)];
+        self.prevInf = value;
+    }
 }
 
 -(void) apValueChanged:(UISlider*)sender
@@ -778,8 +804,11 @@ static NSInteger viewMode = VIEW_LIST;
     int value = round(sender.value);
     // NSLog(@"ap: %f %d", sender.value, value);
     sender.value = value--;
-    self.apLabel.text = [NSString stringWithFormat:l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self updateFilter:@"agendaPoints" value:@(value)];
+    if (value != self.prevAp) {
+        self.apLabel.text = [NSString stringWithFormat:l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self updateFilter:@"agendaPoints" value:@(value)];
+        self.prevAp = value;
+    }
 }
 
 #pragma mark scope

@@ -131,24 +131,34 @@ class ImageCache: NSObject {
             {
                 // image is not in on-disk cache
                 if Reachability.online() {
-                    // currently in-flight?
-                    if var inFlight = self.imagesInFlight[key] {
-                        inFlight.append(completion)
-                        self.imagesInFlight[key] = inFlight
+                    
+                    // check if the request is currently in-flight, and if so, add its completion block to our list of callbacks
+                    objc_sync_enter(self)
+                    if self.imagesInFlight[key] != nil {
+                        print("queueing for \(key)")
+                        self.imagesInFlight[key]?.append(completion)
+                        objc_sync_exit(self)
                         return
-                    } else {
-                        self.imagesInFlight[key] = [completion]
                     }
                     
+                    // not in flight - store in list
+                    self.imagesInFlight[key] = [completion]
+                    objc_sync_exit(self)
+                    print("start req for \(key)")
                     self.downloadImageFor(card, key: key) { (card, image, placeholder) in
                         DispatchQueue.main.async {
-                            // completion(card, image, placeholder)
+                            // call all pending callbacks for this image
+                            objc_sync_enter(self)
                             if let callbacks = self.imagesInFlight[key] {
-                                for cb in callbacks {
-                                    cb(card, image, placeholder)
+                                print("result for \(key) q=\(callbacks.count)")
+                                for callback in callbacks {
+                                    callback(card, image, placeholder)
                                 }
+                            } else {
+                                print("no q for \(key)")
                             }
                             self.imagesInFlight.removeValue(forKey: key)
+                            objc_sync_exit(self)
                         }
                     }
                 } else {

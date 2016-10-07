@@ -28,6 +28,13 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
 @property BOOL initializing;
 
+@property int prevAp;
+@property int prevMu;
+@property int prevTrash;
+@property int prevCost;
+@property int prevStr;
+@property int prevInf;
+
 @end
 
 @implementation BrowserFilterViewController
@@ -49,6 +56,13 @@ static NSMutableArray* subtypeCollapsedSections;
         self.role = NRRoleNone;
         NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
         self.cardList = [CardList browserInitForRole:self.role packUsage:packUsage];
+        
+        self.prevAp = 0;
+        self.prevMu = 0;
+        self.prevTrash = 0;
+        self.prevCost = 0;
+        self.prevStr = 0;
+        self.prevInf = 0;
     }
     return self;
 }
@@ -96,27 +110,21 @@ static NSMutableArray* subtypeCollapsedSections;
     }
     self.costSlider.maximumValue = 1+maxCost;
     self.costSlider.minimumValue = 0;
-    [self costChanged:nil];
     
     self.muSlider.maximumValue = 1+[CardManager maxMU];
     self.muSlider.minimumValue = 0;
-    [self muChanged:nil];
     
     self.strengthSlider.maximumValue = 1+[CardManager maxStrength];
     self.strengthSlider.minimumValue = 0;
-    [self strengthChanged:nil];
     
     self.influenceSlider.maximumValue = 1+[CardManager maxInfluence];
     self.influenceSlider.minimumValue = 0;
-    [self influenceChanged:nil];
     
     self.apSlider.maximumValue = 1+[CardManager maxAgendaPoints];
     self.apSlider.minimumValue = 0;
-    [self apChanged:nil];
     
     self.trashSlider.maximumValue = 1+[CardManager maxTrash];
     self.trashSlider.minimumValue = 0;
-    [self trashChanged:nil];
     
     [self.costSlider setThumbImage:[UIImage imageNamed:@"credit_slider"] forState:UIControlStateNormal];
     [self.muSlider setThumbImage:[UIImage imageNamed:@"mem_slider"] forState:UIControlStateNormal];
@@ -214,16 +222,27 @@ static NSMutableArray* subtypeCollapsedSections;
     // reset sliders
     self.apSlider.value = 0;
     [self apChanged:nil];
+    self.prevAp = 0;
+    
     self.muSlider.value = 0;
     [self muChanged:nil];
+    self.prevMu = 0;
+    
     self.influenceSlider.value = 0;
     [self influenceChanged:nil];
+    self.prevInf = 0;
+    
     self.strengthSlider.value = 0;
     [self strengthChanged:nil];
+    self.prevStr = 0;
+    
     self.costSlider.value = 0;
     [self costChanged:nil];
+    self.prevCost = 0;
+    
     self.trashSlider.value = 0;
     [self trashChanged:nil];
+    self.prevTrash = 0;
     
     // reset switches
     self.uniqueSwitch.on = NO;
@@ -253,13 +272,16 @@ static NSMutableArray* subtypeCollapsedSections;
         case 1:
             self.role = NRRoleRunner;
             self.apSlider.value = 0;
+            self.prevAp = 0;
             [self apChanged:nil];
             self.trashSlider.value = 0;
+            self.prevTrash = 0;
             [self trashChanged:nil];
             break;
         case 2:
             self.role = NRRoleCorp;
             self.muSlider.value = 0;
+            self.prevMu = 0;
             [self muChanged:nil];
             break;
     }
@@ -288,6 +310,7 @@ static NSMutableArray* subtypeCollapsedSections;
     }
     self.costSlider.maximumValue = 1+maxCost;
     self.costSlider.value = MIN(1+maxCost, round(self.costSlider.value));
+    self.prevCost = self.costSlider.value;
     
     NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
     self.cardList = [CardList browserInitForRole:self.role packUsage:packUsage];
@@ -605,9 +628,12 @@ static NSMutableArray* subtypeCollapsedSections;
     int value = round(sender.value);
     // NSLog(@"inf: %f %d", sender.value, value);
     sender.value = value--;
-    self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self.cardList filterByInfluence:value];
-    [self updateResults];
+    if (value != self.prevInf) {
+        self.influenceLabel.text = [NSString stringWithFormat:l10n(@"Influence: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self.cardList filterByInfluence:value];
+        [self updateResults];
+        self.prevInf = value;
+    }
 }
 
 -(IBAction)costChanged:(UISlider*)sender
@@ -615,9 +641,12 @@ static NSMutableArray* subtypeCollapsedSections;
     int value = round(sender.value);
     // NSLog(@"cost: %f %d", sender.value, value);
     sender.value = value--;
-    self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self.cardList filterByCost:value];
-    [self updateResults];
+    if (value != self.prevCost) {
+        self.costLabel.text = [NSString stringWithFormat:l10n(@"Cost: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self.cardList filterByCost:value];
+        [self updateResults];
+        self.prevCost = value;
+    }
 }
 
 -(IBAction)strengthChanged:(UISlider*)sender
@@ -625,9 +654,12 @@ static NSMutableArray* subtypeCollapsedSections;
     int value = round(sender.value);
     // NSLog(@"str: %f %d", sender.value, value);
     sender.value = value--;
-    self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self.cardList filterByStrength:value];
-    [self updateResults];
+    if (value != self.prevStr) {
+        self.strengthLabel.text = [NSString stringWithFormat:l10n(@"Strength: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self.cardList filterByStrength:value];
+        [self updateResults];
+        self.prevStr = value;
+    }
 }
 
 -(IBAction)apChanged:(UISlider*)sender
@@ -635,9 +667,12 @@ static NSMutableArray* subtypeCollapsedSections;
     int value = round(sender.value);
     // NSLog(@"ap: %f %d", sender.value, value);
     sender.value = value--;
-    self.apLabel.text = [NSString stringWithFormat:l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self.cardList filterByAgendaPoints:value];
-    [self updateResults];
+    if (value != self.prevAp) {
+        self.apLabel.text = [NSString stringWithFormat:l10n(@"AP: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self.cardList filterByAgendaPoints:value];
+        [self updateResults];
+        self.prevAp = value;
+    }
 }
 
 -(IBAction)muChanged:(UISlider*)sender
@@ -645,9 +680,12 @@ static NSMutableArray* subtypeCollapsedSections;
     int value = round(sender.value);
     // NSLog(@"mu: %f %d", sender.value, value);
     sender.value = value--;
-    self.muLabel.text = [NSString stringWithFormat:l10n(@"MU: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self.cardList filterByMU:value];
-    [self updateResults];
+    if (value != self.prevMu) {
+        self.muLabel.text = [NSString stringWithFormat:l10n(@"MU: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self.cardList filterByMU:value];
+        [self updateResults];
+        self.prevMu = value;
+    }
 }
 
 -(IBAction)trashChanged:(UISlider*)sender
@@ -655,9 +693,12 @@ static NSMutableArray* subtypeCollapsedSections;
     int value = round(sender.value);
     // NSLog(@"trash: %f %d", sender.value, value);
     sender.value = value--;
-    self.trashLabel.text = [NSString stringWithFormat:l10n(@"Trash: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
-    [self.cardList filterByTrash:value];
-    [self updateResults];
+    if (value != self.prevTrash) {
+        self.trashLabel.text = [NSString stringWithFormat:l10n(@"Trash: %@"), value == -1 ? l10n(@"All") : [@(value) stringValue]];
+        [self.cardList filterByTrash:value];
+        [self updateResults];
+        self.prevTrash = value;
+    }
 }
 
 #pragma mark - switches
