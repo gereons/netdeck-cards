@@ -17,8 +17,6 @@
 
 @property IBOutlet UISearchBar* searchBar;
 
--(IBAction)createNewDeck:(id)sender;
--(IBAction)openSettings:(id)sender;
 -(IBAction)titleButtonTapped:(id)sender;
 
 // support for 3d touch shortcuts

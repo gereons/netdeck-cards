@@ -46,7 +46,6 @@
 		3A3798B31D709B0C00F94658 /* PrebuiltManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3798B21D709B0C00F94658 /* PrebuiltManager.swift */; };
 		3A3798B61D70A54B00F94658 /* PrebuiltSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */; };
 		3A3798B71D70A54B00F94658 /* PrebuiltSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */; };
-		3A3844FB1B77859E007C76F2 /* MainWindow~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */; };
 		3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */; };
 		3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845001B77BA89007C76F2 /* EditDeckViewController.m */; };
 		3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */; };
@@ -76,6 +75,7 @@
 		3A56371419954B28006AD431 /* LargeBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A56371219954B28006AD431 /* LargeBrowserCell.xib */; };
 		3A563717199552BA006AD431 /* BrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A563716199552BA006AD431 /* BrowserCell.m */; };
 		3A5794DA19157A2D005DA4B2 /* CardDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5794D919157A2D005DA4B2 /* CardDetailView.m */; };
+		3A6131551DA82A6800474B91 /* MainWindow~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6131541DA82A6800474B91 /* MainWindow~iPhone.xib */; };
 		3A6228141C1456F400FBF041 /* SettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6228131C1456F400FBF041 /* SettingsKeys.swift */; };
 		3A6CD8041CF7864C0090CEDB /* DetailViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CD8031CF7864C0090CEDB /* DetailViewManager.swift */; };
 		3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D51D31A2284540004951E /* DeckHistoryPopup.m */; };
@@ -264,7 +264,6 @@
 		3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrebuiltSelectionViewController.swift; sourceTree = "<group>"; };
 		3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrebuiltSelectionViewController.xib; sourceTree = "<group>"; };
 		3A38091C1B0F8AE300042A67 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow~iPhone.xib"; sourceTree = "<group>"; };
 		3A3844FC1B77879B007C76F2 /* IphoneStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IphoneStartViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IphoneStartViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A3844FF1B77BA89007C76F2 /* EditDeckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = EditDeckViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -306,6 +305,7 @@
 		3A5794D919157A2D005DA4B2 /* CardDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardDetailView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A595423186ED61C0074B3B1 /* CGRectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGRectUtils.h; sourceTree = "<group>"; };
 		3A5BC3ED1849326B00E792F7 /* NRTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NRTypes.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3A6131541DA82A6800474B91 /* MainWindow~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow~iPhone.xib"; sourceTree = "<group>"; };
 		3A6228131C1456F400FBF041 /* SettingsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingsKeys.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3A6CD8031CF7864C0090CEDB /* DetailViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewManager.swift; sourceTree = "<group>"; };
 		3A6D51D21A2284540004951E /* DeckHistoryPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckHistoryPopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -607,7 +607,7 @@
 		3A3844F91B77858B007C76F2 /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
-				3A3844FA1B77859E007C76F2 /* MainWindow~iPhone.xib */,
+				3A6131541DA82A6800474B91 /* MainWindow~iPhone.xib */,
 				3A3844FC1B77879B007C76F2 /* IphoneStartViewController.h */,
 				3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */,
 				3AA463CF1BC003EF00591647 /* Identity Selection */,
@@ -1193,7 +1193,7 @@
 				3AD860D71B79154100EEF8AC /* EditDeckCell.xib in Resources */,
 				3A1EB581193A3AC20048E2E2 /* CardFilterSmallThumbView.xib in Resources */,
 				3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */,
-				3A3844FB1B77859E007C76F2 /* MainWindow~iPhone.xib in Resources */,
+				3A6131551DA82A6800474B91 /* MainWindow~iPhone.xib in Resources */,
 				3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */,
 				3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,

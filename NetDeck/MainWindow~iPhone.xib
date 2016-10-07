@@ -1,79 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIApplication">
             <connections>
-                <outlet property="delegate" destination="GmV-Rg-dZJ" id="5Nr-RT-0De"/>
+                <outlet property="delegate" destination="83l-lp-LqC" id="Mh3-96-6eo"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <customObject id="GmV-Rg-dZJ" customClass="AppDelegate" customModule="NetDeck" customModuleProvider="target">
+        <customObject id="83l-lp-LqC" customClass="AppDelegate" customModule="NetDeck" customModuleProvider="target">
             <connections>
-                <outlet property="navigationController" destination="h1F-hJ-4M0" id="oug-xS-u43"/>
+                <outlet property="navigationController" destination="S3N-Zt-T9x" id="KDz-Ei-JR1"/>
             </connections>
         </customObject>
-        <navigationController id="h1F-hJ-4M0" customClass="IphoneStartViewController">
-            <navigationBar key="navigationBar" contentMode="scaleToFill" id="OZo-nO-ixK">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <navigationController id="S3N-Zt-T9x" customClass="IphoneStartViewController">
+            <navigationBar key="navigationBar" contentMode="scaleToFill" id="1Ys-gR-a9h">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
             </navigationBar>
             <viewControllers>
-                <tableViewController id="SRF-LE-fIS">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Tqh-6R-5NU">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <tableViewController id="RPk-jg-E1F" userLabel="Table View Controller">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="38k-Ua-KcR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" backgroundImage="searchbar-bg" scopeBarBackgroundImage="searchbar-bg" id="4Lv-UM-pNb">
-                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" backgroundImage="searchbar-bg" id="uqm-CO-rjm">
+                            <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="t4O-1A-mn6"/>
-                            </connections>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
                         </searchBar>
-                        <connections>
-                            <outlet property="dataSource" destination="h1F-hJ-4M0" id="qdB-QQ-GWs"/>
-                            <outlet property="delegate" destination="h1F-hJ-4M0" id="6zh-3o-khn"/>
-                        </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="0zN-BK-DHK">
+                    <navigationItem key="navigationItem" id="fYa-cx-sez">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="740-gear" id="YwH-Ql-xeP">
-                            <connections>
-                                <action selector="openSettings:" destination="h1F-hJ-4M0" id="Yvy-OK-eGT"/>
-                            </connections>
-                        </barButtonItem>
-                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ad9-oo-yEr">
-                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WDd-XP-1w3">
+                            <rect key="frame" x="112.5" y="7" width="150" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <state key="normal" title="Net Deck"/>
                             <connections>
-                                <action selector="titleButtonTapped:" destination="h1F-hJ-4M0" eventType="touchUpInside" id="Jj8-cP-wui"/>
+                                <action selector="titleButtonTapped:" destination="S3N-Zt-T9x" eventType="touchUpInside" id="owD-g7-JTO"/>
                             </connections>
                         </button>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="MVw-OT-XDQ">
-                            <connections>
-                                <action selector="createNewDeck:" destination="h1F-hJ-4M0" id="RwD-7v-bfl"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
             </viewControllers>
             <connections>
-                <outlet property="searchBar" destination="4Lv-UM-pNb" id="AlJ-eG-TLS"/>
-                <outlet property="tableView" destination="Tqh-6R-5NU" id="Jvg-3Y-Iuf"/>
-                <outlet property="tableViewController" destination="SRF-LE-fIS" id="mHC-bL-eQ9"/>
-                <outlet property="titleButton" destination="ad9-oo-yEr" id="r6c-h2-6mG"/>
+                <outlet property="searchBar" destination="uqm-CO-rjm" id="yaO-Jd-MlX"/>
+                <outlet property="tableView" destination="38k-Ua-KcR" id="1Qg-9M-M8B"/>
+                <outlet property="tableViewController" destination="RPk-jg-E1F" id="aAr-z5-DtJ"/>
+                <outlet property="titleButton" destination="WDd-XP-1w3" id="KmC-8z-3wh"/>
             </connections>
+            <point key="canvasLocation" x="33.5" y="54.5"/>
         </navigationController>
     </objects>
     <resources>
-        <image name="740-gear" width="28" height="28"/>
         <image name="searchbar-bg" width="1" height="1"/>
     </resources>
 </document>

@@ -47,6 +47,8 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
     
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
     
@@ -58,15 +60,9 @@
     self.importButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-import"] style:UIBarButtonItemStylePlain target:self action:@selector(importDecks:)];
     self.importButton.enabled = cardsAvailable;
 
-    UINavigationItem* topItem = self.navigationBar.topItem;
-    topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
-    
     self.settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"740-gear"] style:UIBarButtonItemStylePlain target:self action:@selector(openSettings:)];
     self.sortButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"890-sort-ascending-toolbar"] style:UIBarButtonItemStylePlain target:self action:@selector(changeSort:)];
     self.sortButton.enabled = cardsAvailable;
-    
-    topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
-    topItem.leftBarButtonItems = @[ self.settingsButton, self.sortButton ];
     
     self.deckListSort = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECK_FILTER_SORT];
     
@@ -76,8 +72,8 @@
     }
     
     self.tableView.contentInset = UIEdgeInsetsZero; // wtf is this needed since iOS9?
-    
-    [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
+//    
+//    [self.tableView setContentOffset:CGPointMake(0, self.searchBar.frame.size.height) animated:NO];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -107,6 +103,10 @@
     }
     
     [self.tableView reloadData];
+    
+    UINavigationItem* topItem = self.navigationBar.topItem;
+    topItem.leftBarButtonItems = @[ self.settingsButton, self.sortButton ];
+    topItem.rightBarButtonItems = @[ self.addButton, self.importButton ];
 }
 
 -(void) initializeDecks
@@ -410,27 +410,21 @@
 
 #pragma mark search bar
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     self.filterText = searchText;
     [self initializeDecks];
     [self.tableView reloadData];
 }
 
--(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
+-(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar {
     searchBar.showsCancelButton = NO;
-    self.tableView.tableHeaderView = self.searchBar;
 }
 
--(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-{
+-(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     searchBar.showsCancelButton = YES;
-    self.tableView.tableHeaderView = self.searchBar;
 }
 
--(void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
+-(void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
 }
 
@@ -444,6 +438,10 @@
 
 -(NSAttributedString*) titleForEmptyDataSet:(UIScrollView *)scrollView
 {
+    if (self.filterText.length > 0) {
+        return nil;
+    }
+    
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:21.0f],
                                  NSForegroundColorAttributeName: [UIColor lightGrayColor]};
     
@@ -455,6 +453,10 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
+    if (self.filterText.length > 0) {
+        return nil;
+    }
+    
     BOOL cardsAvailable = [CardManager cardsAvailable] && [PackManager packsAvailable];
     NSString *text = cardsAvailable ? @"Your decks will be shown here" : @"To use this app, you must first download card data.";
     
@@ -466,6 +468,10 @@
 }
 
 - (NSAttributedString*) buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    if (self.filterText.length > 0) {
+        return nil;
+    }
+    
     UIColor* color = self.tableView.tintColor;
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName: color };
     BOOL cardsAvailable = [CardManager cardsAvailable] && [PackManager packsAvailable];
