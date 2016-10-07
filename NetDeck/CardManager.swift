@@ -259,7 +259,7 @@ class CardManager: NSObject {
         let filename = CardManager.filename()
         
         if let str = try? NSString(contentsOfFile: filename, encoding: String.Encoding.utf8.rawValue) {
-            let cardsJson = JSON.parse(string: str as String)
+            let cardsJson = JSON.parse(str as String)
             return setupFromJson(cardsJson, language: language)
         }
         // print("app start: missing card file")

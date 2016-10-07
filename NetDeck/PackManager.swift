@@ -307,12 +307,10 @@ class PackManager: NSObject {
         let fileMgr = FileManager.default
         
         if fileMgr.fileExists(atPath: packsFile) && fileMgr.fileExists(atPath: cyclesFile) {
-            let packsStr = try? NSString(contentsOfFile: packsFile, encoding: String.Encoding.utf8.rawValue)
-            let cyclesStr = try? NSString(contentsOfFile: cyclesFile, encoding: String.Encoding.utf8.rawValue)
-            
-            if packsStr != nil && cyclesStr != nil {
-                let packsJson = JSON.parse(string: packsStr! as String)
-                let cyclesJson = JSON.parse(string: cyclesStr! as String)
+            if let packsStr = try? NSString(contentsOfFile: packsFile, encoding: String.Encoding.utf8.rawValue),
+                let cyclesStr = try? NSString(contentsOfFile: cyclesFile, encoding: String.Encoding.utf8.rawValue) {
+                let packsJson = JSON.parse(packsStr as String)
+                let cyclesJson = JSON.parse(cyclesStr as String)
                 return setupFromJsonData(cyclesJson, packsJson, language: language)
             }
         }

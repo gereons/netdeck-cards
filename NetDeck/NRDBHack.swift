@@ -66,7 +66,7 @@ class NRDBHack: NSObject {
     }
     
     func silentlyLogin() {
-        let keychain = KeychainWrapper.defaultKeychainWrapper
+        let keychain = KeychainWrapper.standard
         if let username = keychain.string(forKey: SettingsKeys.NRDB_USERNAME), let password = keychain.string(forKey: SettingsKeys.NRDB_PASSWORD) {
             self.username = username
             self.password = password
@@ -88,7 +88,7 @@ class NRDBHack: NSObject {
             if verbose {
                 SVProgressHUD.dismiss()
             }
-            let keychain = KeychainWrapper.defaultKeychainWrapper
+            let keychain = KeychainWrapper.standard
             keychain.set(self.username!, forKey: SettingsKeys.NRDB_USERNAME)
             keychain.set(self.password!, forKey: SettingsKeys.NRDB_PASSWORD)
             
@@ -103,9 +103,9 @@ class NRDBHack: NSObject {
     }
         
     class func clearCredentials() {
-        let keychain = KeychainWrapper.defaultKeychainWrapper
-        keychain.remove(key: SettingsKeys.NRDB_USERNAME)
-        keychain.remove(key: SettingsKeys.NRDB_PASSWORD)
+        let keychain = KeychainWrapper.standard
+        keychain.removeObject(forKey: SettingsKeys.NRDB_USERNAME)
+        keychain.removeObject(forKey: SettingsKeys.NRDB_PASSWORD)
     }
 
     func hackedLogin(_ completion: @escaping (Bool) -> Void) {

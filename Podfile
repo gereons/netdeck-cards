@@ -10,14 +10,14 @@ target 'NetDeck' do
     pod 'CSStickyHeaderFlowLayout'
     pod 'InAppSettingsKit'
     pod 'MultiSelectSegmentedControl'
-    pod 'CorePlot', :git => 'https://github.com/core-plot/core-plot.git', :branch => 'release-2.2'
+    pod 'CorePlot'
     pod 'DZNEmptyDataSet'
 
     pod 'Alamofire'
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
-    pod 'SwiftKeychainWrapper', :git => 'https://github.com/jrendel/SwiftKeychainWrapper.git', :branch => 'master'
-    pod 'SwiftyJSON', :git => 'https://github.com/IBM-Swift/SwiftyJSON'
+    pod 'SwiftKeychainWrapper' # , :git => 'https://github.com/jrendel/SwiftKeychainWrapper.git', :branch => 'master'
+    pod 'SwiftyJSON'
     pod 'SwiftyDropbox'
     pod 'SDCAlertView'
 end

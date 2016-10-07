@@ -82,10 +82,8 @@ class PrebuiltManager: NSObject {
         let fileMgr = FileManager.default
         
         if fileMgr.fileExists(atPath: filename) {
-            let str = try? NSString(contentsOfFile: filename, encoding: String.Encoding.utf8.rawValue)
-            
-            if str != nil {
-                let prebuiltJson = JSON.parse(string: str! as String)
+            if let str = try? NSString(contentsOfFile: filename, encoding: String.Encoding.utf8.rawValue) {
+                let prebuiltJson = JSON.parse(str as String)
                 return setupFromJsonData(prebuiltJson, language: language)
             }
         }

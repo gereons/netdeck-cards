@@ -52,7 +52,7 @@ class DropboxWrapper: NSObject {
     }
     
     class func unlinkClient() {
-        DropboxClientsManager.unlinkClient()
+        DropboxClientsManager.unlinkClients()
     }
     
     class func listDropboxFiles(_ completion: @escaping ([String])->() ) {
