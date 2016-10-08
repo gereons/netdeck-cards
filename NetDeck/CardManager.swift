@@ -31,24 +31,25 @@ class CardManager: NSObject {
     fileprivate(set) static var maxTrash: Int = -1
     
     fileprivate static let cardAliases = [
-        "08034": "Franklin",  // crick
-        "02085": "HQI",       // hq interface
-        "02107": "RDI",       // r&d interface
-        "06033": "David",     // d4v1d
-        "05039": "SW35",      // unreg. s&w '35
-        "03035": "LARLA",     // levy ar lab access
-        "04029": "PPVP",      // prepaid voicepad
-        "01092": "SSCG",      // sansan city grid
-        "03049": "Proco",     // professional contacts
-        "02079": "OAI",       // oversight AI
-        "08009": "Baby",      // symmetrical visage
-        "08003": "Pancakes",  // adjusted chronotype
-        "08086": "Anita",     // film critic
-        "01044": "Mopus",     // magnum opus
-        "09007": "Kitty",     // quantum predictive model
-        "10043": "Polop",     // political operative
+        "08034": "Franklin",  // Crick
+        "02085": "HQI",       // HQ Interface
+        "02107": "RDI",       // R&D Interface
+        "06033": "David",     // D4v1d
+        "05039": "SW35",      // Unreg. s&w '35
+        "03035": "LARLA",     // Levy AR Lab Access
+        "04029": "PPVP",      // Prepaid Voicepad
+        "01092": "SSCG",      // Sansan City Grid
+        "03049": "Proco",     // Professional Contacts
+        "02079": "OAI",       // Oversight AI
+        "08009": "Baby",      // Symmetrical Visage
+        "08003": "Pancakes",  // Adjusted Chronotype
+        "08086": "Anita",     // Film Critic
+        "01044": "Mopus",     // Magnum Opus
+        "09007": "Kitty",     // Quantum Predictive Model
+        "10043": "Polop",     // Political Operative
         "10108": "FIRS",      // Full Immersion RecStudio
         "11024": "Clippy",    // Paperclip
+        "11036": "CIF",       // C.I. Funds
     ]
     
     override class func initialize() {

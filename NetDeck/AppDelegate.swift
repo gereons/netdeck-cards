@@ -30,8 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        FIXME("iphone: long empty state text wrapping?")
-        
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self]);

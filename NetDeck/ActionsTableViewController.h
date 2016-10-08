@@ -9,7 +9,6 @@
 @interface ActionsTableViewController : UIViewController
 
 @property IBOutlet UITableView* tableView;
-@property IBOutlet UIToolbar* footer;
 @property IBOutlet UIBarButtonItem* version;
 
 @end
