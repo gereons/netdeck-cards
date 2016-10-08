@@ -573,6 +573,10 @@
 #pragma mark - empty set
 
 - (NSAttributedString*) buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    if (self.filterText.length > 0) {
+        return nil;
+    }
+    
     UIColor* color = self.tableView.tintColor;
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName: color };
     

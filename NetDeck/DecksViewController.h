@@ -23,6 +23,7 @@
 @property UIAlertController* popup;
 @property NSArray<NSMutableArray<Deck*>*>* decks;
 
+@property NSString* filterText;
 @property NRFilter filterType;
 
 -(id) initWithCardFilter:(Card*)card;

@@ -16,7 +16,6 @@
 @property NSDateFormatter *dateFormatter;
 
 @property NRDeckSearchScope searchScope;
-@property NSString* filterText;
 
 @property NRDeckState filterState;
 @property NRDeckListSort sortType;
@@ -573,6 +572,10 @@ static NRFilter _filterType = NRFilterAll;
 
 -(NSAttributedString*) titleForEmptyDataSet:(UIScrollView *)scrollView
 {
+    if (self.filterText.length > 0 ) {
+        return nil;
+    }
+    
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:21.0f],
                                  NSForegroundColorAttributeName: [UIColor lightGrayColor]};
     
@@ -581,7 +584,11 @@ static NRFilter _filterType = NRFilterAll;
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
-   NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0f],
+    if (self.filterText.length > 0 ) {
+        return nil;
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0f],
                                  NSForegroundColorAttributeName: [UIColor lightGrayColor],
                                  };
     
