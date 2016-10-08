@@ -21,7 +21,7 @@ class CardUpdateCheck: NSObject {
 
         let now = Date()
         
-        if Reachability.online() && scheduled.timeIntervalSince1970 < now.timeIntervalSince1970 {
+        if Reachability.online && scheduled.timeIntervalSince1970 < now.timeIntervalSince1970 {
             let msg = "Card data may be out of date. Download now?".localized()
             let alert = UIAlertController.alert(withTitle: "Update cards".localized(), message:msg)
             

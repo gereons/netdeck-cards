@@ -90,7 +90,7 @@ class NRDB: NSObject {
         
         // NSLog("NRDB get Auth")
         let foreground = UIApplication.shared.applicationState == .active
-        if foreground && !Reachability.online() {
+        if foreground && !Reachability.online {
             completion(false)
             return
         }

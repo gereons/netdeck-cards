@@ -118,7 +118,7 @@ class ImageCache: NSObject {
             // get image from our on-disk cache
             if let img = self.getDecodedImageFor(key)
             {
-                if Reachability.online() {
+                if Reachability.online {
                     self.checkForImageUpdate(card, key: key)
                 }
                 
@@ -130,7 +130,7 @@ class ImageCache: NSObject {
             else
             {
                 // image is not in on-disk cache
-                if Reachability.online() {
+                if Reachability.online {
                     
                     // check if the request is currently in-flight, and if so, add its completion block to our list of callbacks
                     objc_sync_enter(self)
@@ -179,7 +179,7 @@ class ImageCache: NSObject {
     }
     
     func updateImageFor(_ card: Card, completion: @escaping (Bool) -> Void) {
-        guard Reachability.online() else {
+        guard Reachability.online else {
             completion(false)
             return
         }

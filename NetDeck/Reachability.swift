@@ -31,7 +31,7 @@ class Reachability: NSObject {
         NetworkActivityIndicatorManager.shared.startDelay = 0.2
     }
     
-    class func online() -> Bool {
+    class var online: Bool {
         return manager?.isReachable ?? true
     }
 
