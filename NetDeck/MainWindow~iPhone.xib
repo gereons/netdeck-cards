@@ -37,9 +37,9 @@
                     <navigationItem key="navigationItem" id="fYa-cx-sez">
                         <nil key="title"/>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WDd-XP-1w3">
-                            <rect key="frame" x="112.5" y="7" width="150" height="30"/>
+                            <rect key="frame" x="113" y="7" width="150" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                             <state key="normal" title="Net Deck"/>
                             <connections>
                                 <action selector="titleButtonTapped:" destination="S3N-Zt-T9x" eventType="touchUpInside" id="owD-g7-JTO"/>
