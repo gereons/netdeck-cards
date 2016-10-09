@@ -425,16 +425,16 @@ class Card: NSObject {
     ]
     
     fileprivate static let cropValues: [NRCardType: Double] = [
-        .agenda: 15,
-        .asset: 20,
-        .event: 10,
-        .identity: 12,
-        .operation: 10,
-        .hardware: 18,
-        .ice: 209,
-        .program: 8,
-        .resource: 11,
-        .upgrade: 22
+        .agenda: 15.0,
+        .asset: 20.0,
+        .event: 10.0,
+        .identity: 12.0,
+        .operation: 10.0,
+        .hardware: 18.0,
+        .ice: 209.0,
+        .program: 8.0,
+        .resource: 11.0,
+        .upgrade: 22.0
     ]
     
     static let fontFamily = UIFont.systemFont(ofSize: 13).familyName

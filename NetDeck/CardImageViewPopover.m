@@ -43,7 +43,7 @@ static CGFloat popoverScale = 1.0;
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat kbHeight = screenHeight - kbRect.origin.y;
     
-    popoverScale = (screenHeight - kbHeight - POPOVER_MARGIN) / ImageCache.IMAGE_HEIGHT;
+    popoverScale = (screenHeight - kbHeight - POPOVER_MARGIN) / ImageCache.height;
     popoverScale = MIN(1.0, popoverScale);
 }
 
@@ -55,7 +55,7 @@ static CGFloat popoverScale = 1.0;
     if (popover)
     {
         popover.view.transform = CGAffineTransformIdentity;
-        popover.preferredContentSize = CGSizeMake(ImageCache.IMAGE_WIDTH, ImageCache.IMAGE_HEIGHT);
+        popover.preferredContentSize = CGSizeMake(ImageCache.width, ImageCache.height);
     }
 }
 
@@ -76,7 +76,7 @@ static CGFloat popoverScale = 1.0;
     popover.popoverPresentationController.sourceView = view;
     popover.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight;
     popover.popoverPresentationController.delegate = popover;
-    popover.preferredContentSize = CGSizeMake((int)(ImageCache.IMAGE_WIDTH*popoverScale), (int)(ImageCache.IMAGE_HEIGHT*popoverScale));
+    popover.preferredContentSize = CGSizeMake((int)(ImageCache.width*popoverScale), (int)(ImageCache.height*popoverScale));
     
     [vc presentViewController:popover animated:NO completion:nil];
 }

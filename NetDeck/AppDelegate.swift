@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var launchShortcutItem: UIApplicationShortcutItem?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        FIXME("card filter initially shows out-of-faction agendas")
         
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
