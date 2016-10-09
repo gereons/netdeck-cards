@@ -250,13 +250,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (void) initCards
 {
-    TableData* data = [self.cardList dataForTableView];
-    self.cards = data.values;
-    self.sections = data.sections;
-}
-
--(void) deckChanged:(NSNotification*)notification
-{
     Deck* deck = self.deckListViewController.deck;
     Card* identity = deck.identity;
     if (identity != nil)
@@ -267,11 +260,22 @@ static NSInteger viewMode = VIEW_LIST;
         else if (self.role == NRRoleRunner) {
             [self.cardList preFilterForRunner:identity];
         }
-        [self initCards];
     }
+    
+    TableData* data = [self.cardList dataForTableView];
+    self.cards = data.values;
+    self.sections = data.sections;
+}
 
+-(void) deckChanged:(NSNotification*)notification
+{
+    [self initCards];
+
+    Deck* deck = self.deckListViewController.deck;
     if (self.influenceValue != -1)
     {
+        Card* identity = deck.identity;
+        
         if (identity)
         {
             [self.cardList filterByInfluence:self.influenceValue forFaction:identity.faction];
