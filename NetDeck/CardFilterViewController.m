@@ -1098,7 +1098,8 @@ static NSInteger viewMode = VIEW_LIST;
     
     cell.nameLabel.text = card.name;
     
-    CardCounter* cc = [self.deckListViewController.deck findCard:card];
+    Deck* deck = self.deckListViewController.deck;
+    CardCounter* cc = [deck findCard:card];
     cell.countLabel.text = cc.count > 0 ? [@(cc.count) stringValue] : @ "";
     
     return cell;

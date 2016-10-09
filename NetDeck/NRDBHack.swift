@@ -48,7 +48,9 @@ class NRDBHack: NSObject {
             SVProgressHUD.show(withStatus: "Logging in...".localized())
         })
             
-        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel) { action in
+            UserDefaults.standard.set(false, forKey: SettingsKeys.USE_NRDB)
+        })
         
         alert.show()
     }

@@ -86,12 +86,13 @@
     CGFloat scale = [settings floatForKey:SettingsKeys.DECK_VIEW_SCALE];
     self.scale = scale == 0 ? 1.0 : scale;
     
-    if (self.filename)
+    if (self.filename && self.deck == nil)
     {
         self.deck = [DeckManager loadDeckFromPath:self.filename];
         NSAssert(self.role == self.deck.role, @"role mismatch");
-        self.deckNameLabel.text = self.deck.name;
     }
+    
+    self.deckNameLabel.text = self.deck.name;
     
     if (self.deck == nil)
     {
@@ -356,6 +357,8 @@
 -(void) loadDeckFromFile:(NSString *)filename
 {
     self.filename = filename;
+    self.deck = [DeckManager loadDeckFromPath:self.filename];
+    NSAssert(self.role == self.deck.role, @"role mismatch");
 }
 
 -(void) saveDeckClicked:(id)sender

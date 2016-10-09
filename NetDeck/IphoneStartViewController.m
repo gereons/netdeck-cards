@@ -9,7 +9,6 @@
 #import "IphoneStartViewController.h"
 #import "EditDeckViewController.h"
 #import "IphoneIdentityViewController.h"
-#import "SettingsViewController.h"
 #import "ImportDecksViewController.h"
 
 @interface IphoneStartViewController ()

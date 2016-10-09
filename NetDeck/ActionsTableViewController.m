@@ -7,7 +7,6 @@
 //
 
 #import "ActionsTableViewController.h"
-#import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "CardFilterViewController.h"
 #import "BrowserFilterViewController.h"
@@ -129,7 +128,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andFile:filename];
     
     UINavigationController* nc = self.navigationController;
-    [nc pushViewController:filter animated:NO];
+    [nc pushViewController:filter animated:YES];
 }
 
 -(void)newDeck:(NSNotification*) notification
@@ -299,7 +298,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         {
             UINavigationController* nc = self.navigationController;
             BrowserFilterViewController* browser = [[BrowserFilterViewController alloc] init];
-            [nc pushViewController:browser animated:NO];
+            [nc pushViewController:browser animated:YES];
             break;
         }
             

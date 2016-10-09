@@ -22,10 +22,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ql0-Na-qgw">
-                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="37" id="nwd-g0-pby"/>
-                            <constraint firstAttribute="width" constant="38" id="v26-zF-A89"/>
+                            <constraint firstAttribute="height" constant="12" id="nwd-g0-pby"/>
+                            <constraint firstAttribute="width" constant="12" id="v26-zF-A89"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91H-pf-3nl">
@@ -45,9 +44,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="91H-pf-3nl" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="5gG-1u-iXo"/>
-                    <constraint firstItem="91H-pf-3nl" firstAttribute="leading" secondItem="ql0-Na-qgw" secondAttribute="trailing" id="8er-vV-fmL"/>
+                    <constraint firstItem="91H-pf-3nl" firstAttribute="leading" secondItem="ql0-Na-qgw" secondAttribute="trailing" constant="4" id="8er-vV-fmL"/>
                     <constraint firstItem="4al-ff-BcV" firstAttribute="leading" secondItem="91H-pf-3nl" secondAttribute="trailing" constant="4" id="T8p-Ir-B4m"/>
                     <constraint firstItem="wDR-LC-Jvb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="VIj-mD-ecx"/>
+                    <constraint firstItem="ql0-Na-qgw" firstAttribute="leading" secondItem="wDR-LC-Jvb" secondAttribute="trailing" constant="4" id="ZYw-nE-DyT"/>
                     <constraint firstAttribute="trailingMargin" secondItem="4al-ff-BcV" secondAttribute="trailing" constant="4" id="dCn-zp-ETz"/>
                     <constraint firstItem="4al-ff-BcV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="e8b-O7-CHm"/>
                     <constraint firstItem="wDR-LC-Jvb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jst-xw-ENY"/>

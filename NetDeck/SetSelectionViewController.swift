@@ -58,14 +58,6 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: table view
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 33
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.sections.count
     }
