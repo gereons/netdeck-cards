@@ -222,7 +222,7 @@ class ImageCache: NSObject {
         }
         
         let dir = self.directoryForImages()
-        let file = dir.stringByAppendingPathComponent(key)
+        let file = dir.appendPathComponent(key)
         
         return FileManager.default.fileExists(atPath: file)
     }
@@ -290,7 +290,7 @@ class ImageCache: NSObject {
     
     fileprivate func saveImage(_ image: UIImage, key: String) -> Bool {
         let dir = self.directoryForImages()
-        let file = dir.stringByAppendingPathComponent(key)
+        let file = dir.appendPathComponent(key)
         
         var img = image
         self.NLOG("save img for %@", key)
@@ -326,7 +326,7 @@ class ImageCache: NSObject {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths.first!
         
-        let directory = supportDirectory.stringByAppendingPathComponent(ImageCache.imagesDirectory)
+        let directory = supportDirectory.appendPathComponent(ImageCache.imagesDirectory)
         
         let _ = try? FileManager.default.removeItem(atPath: directory)
     }
@@ -339,7 +339,7 @@ class ImageCache: NSObject {
         }
         
         for file in files {
-            let imgFile = dir.stringByAppendingPathComponent(file)
+            let imgFile = dir.appendPathComponent(file)
             
             if let imgData = try? Data(contentsOf: URL(fileURLWithPath: imgFile)) {
                 if let img = self.decodedImage(UIImage(data: imgData)) {
@@ -364,7 +364,7 @@ class ImageCache: NSObject {
     
     fileprivate func getDecodedImageFor(_ key: String) -> UIImage? {
         let dir = self.directoryForImages()
-        let file = dir.stringByAppendingPathComponent(key)
+        let file = dir.appendPathComponent(key)
         
         var img: UIImage?
         if let imgData = try? Data(contentsOf: URL(fileURLWithPath: file)) {
@@ -447,7 +447,7 @@ class ImageCache: NSObject {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths.first!
         
-        let directory = supportDirectory.stringByAppendingPathComponent(ImageCache.imagesDirectory)
+        let directory = supportDirectory.appendPathComponent(ImageCache.imagesDirectory)
         
         let fileMgr = FileManager.default
         if !fileMgr.fileExists(atPath: directory) {

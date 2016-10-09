@@ -51,14 +51,14 @@ class Codes {
     ]
     
     class func typeFor(code: String) -> NRCardType {
-        return (code2Type[code] ?? .none)!
+        return code2Type[code] ?? .none
     }
     
     class func roleFor(code: String) -> NRRole {
-        return (code2Role[code] ?? .none)!
+        return code2Role[code] ?? .none
     }
     
     class func factionFor(code: String) -> NRFaction {
-        return (code2Faction[code] ?? .none)!
+        return code2Faction[code] ?? .none
     }
 }

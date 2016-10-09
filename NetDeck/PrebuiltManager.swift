@@ -68,7 +68,7 @@ class PrebuiltManager: NSObject {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
         
-        return supportDirectory.stringByAppendingPathComponent("prebuilts.json")
+        return supportDirectory.appendPathComponent("prebuilts.json")
     }
     
     class func removeFiles() {

@@ -14,8 +14,7 @@ class Cycle {
     var position = 0
 }
 
-// TODO: make this swift-only
-class Pack: NSObject {
+class Pack {
     var name = ""
     var code = ""
     var cycleCode = ""
@@ -282,14 +281,14 @@ class PackManager: NSObject {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
         
-        return supportDirectory.stringByAppendingPathComponent(PackManager.packsFilename)
+        return supportDirectory.appendPathComponent(PackManager.packsFilename)
     }
     
     class func cyclesPathname() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
         
-        return supportDirectory.stringByAppendingPathComponent(PackManager.cyclesFilename)
+        return supportDirectory.appendPathComponent(PackManager.cyclesFilename)
     }
     
     class func removeFiles() {

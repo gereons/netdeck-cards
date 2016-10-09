@@ -196,7 +196,7 @@ class CardManager: NSObject {
         }
     }
     
-    fileprivate class func addCard(_ card: Card) {
+    fileprivate class func add(card: Card) {
         guard card.isValid else {
             print("invalid card: \(card.code) \(card.name)")
             return
@@ -294,7 +294,7 @@ class CardManager: NSObject {
         // parse data
         let parsedCards = Card.cardsFromJson(cards, language: language)
         for card in parsedCards {
-            CardManager.addCard(card)
+            CardManager.add(card: card)
         }
         
         let cards = Array(allKnownCards.values)
@@ -328,7 +328,7 @@ class CardManager: NSObject {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
     
-        return supportDirectory.stringByAppendingPathComponent(CardManager.cardsFilename)
+        return supportDirectory.appendPathComponent(CardManager.cardsFilename)
     }
     
     class func removeFiles() {

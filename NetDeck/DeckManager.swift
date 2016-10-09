@@ -78,7 +78,7 @@ class DeckManager: NSObject {
         }
         
         for file in dirContents! {
-            let path = dir.stringByAppendingPathComponent(file)
+            let path = dir.appendPathComponent(file)
             if let deck = loadDeckFromPath(path) {
                 decks.append(deck)
             }
@@ -123,7 +123,7 @@ class DeckManager: NSObject {
         
         let roleDir = role == .runner ? "runnerDecks" : "corpDecks"
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let dir = paths[0].stringByAppendingPathComponent(roleDir)
+        let dir = paths[0].appendPathComponent(roleDir)
         
         let fileMgr = FileManager.default
         if !fileMgr.fileExists(atPath: dir) {
@@ -135,7 +135,7 @@ class DeckManager: NSObject {
     class func pathForRole(_ role: NRRole) -> String {
         let dir = directoryForRole(role)
         let file = String(format:"deck-%d.anr", nextFileId())
-        let path = dir.stringByAppendingPathComponent(file)
+        let path = dir.appendPathComponent(file)
         
         return path
     }

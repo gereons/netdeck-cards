@@ -38,7 +38,8 @@ class Card: NSObject {
         productRecall, jeevesModelBioroid,
         ramanRai, heritageCommittee,
         salemsHospitality, ibrahimSalem,
-        executiveSearchFirm, consultingVisit ])
+        executiveSearchFirm, consultingVisit
+    ])
     
     static let padCampaign              = "01109"    // needed for pad factory
     

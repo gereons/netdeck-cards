@@ -22,7 +22,7 @@ extension String {
         return self.characters.count
     }
     
-    func stringByAppendingPathComponent(_ component: String) -> String {
+    func appendPathComponent(_ component: String) -> String {
         return (self as NSString).appendingPathComponent(component)
     }
     
