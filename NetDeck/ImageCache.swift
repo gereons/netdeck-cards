@@ -37,7 +37,7 @@ class ImageCache: NSObject {
     static let height = 418
     
     fileprivate static let debugLog = false
-    fileprivate static let secondsPerDay = 1 // 24 * 60 * 60
+    fileprivate static let secondsPerDay = 24 * 60 * 60
     fileprivate static let successInterval = TimeInterval(30 * secondsPerDay)
     fileprivate static let errorInterval = TimeInterval(1 * secondsPerDay)
     

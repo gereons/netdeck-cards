@@ -179,20 +179,6 @@ static NSInteger viewMode = VIEW_LIST;
     
     DetailViewManager *detailViewManager = (DetailViewManager*)self.splitViewController.delegate;
     detailViewManager.detailViewController = self.navController;
-}
-
--(void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [self setResultFrames];
-    
-    UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.title = l10n(@"Filter");
-    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear")
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:@selector(clearFiltersClicked:)];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
@@ -202,7 +188,20 @@ static NSInteger viewMode = VIEW_LIST;
     [nc addObserver:self selector:@selector(deckSaved:) name:Notifications.deckSaved object:nil];
     [nc addObserver:self selector:@selector(nameAlertWillAppear:) name:Notifications.nameAlert object:nil];
     
+    [self setResultFrames];
     [self initFilters];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
+    topItem.title = l10n(@"Filter");
+    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear")
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(clearFiltersClicked:)];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
@@ -250,18 +249,6 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (void) initCards
 {
-    Deck* deck = self.deckListViewController.deck;
-    Card* identity = deck.identity;
-    if (identity != nil)
-    {
-        if (self.role == NRRoleCorp) {
-            [self.cardList preFilterForCorp:identity];
-        }
-        else if (self.role == NRRoleRunner) {
-            [self.cardList preFilterForRunner:identity];
-        }
-    }
-    
     TableData* data = [self.cardList dataForTableView];
     self.cards = data.values;
     self.sections = data.sections;
@@ -269,9 +256,22 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) deckChanged:(NSNotification*)notification
 {
+    NSLog(@"deckChanged nta");
+    Deck* deck = self.deckListViewController.deck;
+    Card* identity = deck.identity;
+    if (identity != nil)
+    {
+        NSLog(@"pre-filtering");
+        if (self.role == NRRoleCorp) {
+            [self.cardList preFilterForCorp:identity];
+        }
+        else if (self.role == NRRoleRunner) {
+            [self.cardList preFilterForRunner:identity];
+        }
+    }
+
     [self initCards];
 
-    Deck* deck = self.deckListViewController.deck;
     if (self.influenceValue != -1)
     {
         Card* identity = deck.identity;
