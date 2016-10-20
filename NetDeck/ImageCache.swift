@@ -54,7 +54,7 @@ class ImageCache: NSObject {
     fileprivate var lastModifiedDates = [String: String]()  // code -> last-modified
     
     // when to next check if an img was updated
-    fileprivate var nextCheckDates = [String: Date]()     // code -> date
+    fileprivate var nextCheckDates = [String: Date]()       // code -> date
 
     // log of all current in-flight requests
     typealias ImageCallback = (Card, UIImage, Bool) -> Void
@@ -401,14 +401,14 @@ class ImageCache: NSObject {
             .validate()
             .responseImage(imageScale: 1.0) { response in
                 if let img = response.result.value {
-                    self.NLOG("GOT %@ status 200")
+                    self.NLOG("GOT %@ status 200", card.imageSrc)
                     let lastModified = response.response?.allHeaderFields["Last-Modified"] as? String
                     self.storeInCache(img, lastModified: lastModified, key: key)
                 } else if response.response?.statusCode == 304 {
-                    self.NLOG("GOT %@ status 304")
+                    self.NLOG("GOT %@ status 304", card.imageSrc)
                     self.nextCheckDates[key] = Date(timeIntervalSinceNow: ImageCache.successInterval)
                 } else {
-                    self.NLOG("GOT %@ failure")
+                    self.NLOG("GOT %@ failure", card.imageSrc)
                     self.nextCheckDates[key] = Date(timeIntervalSinceNow: ImageCache.errorInterval)
                 }
             }

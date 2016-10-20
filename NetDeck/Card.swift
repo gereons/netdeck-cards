@@ -302,6 +302,7 @@ class Card: NSObject {
         }
         
         self.text = json.localized("text", language)
+        
         self.flavor = json.localized("flavor", language)
         
         self.packCode = json["pack_code"].stringValue
@@ -407,6 +408,7 @@ class Card: NSObject {
                 }
             }
         }
+        
         return name
     }
     

@@ -14,6 +14,7 @@ import SVProgressHUD
 // TODO: use icon font for special symbols, including rendererd html text
 // TODO: improve startup time
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
+// TODO: ImageCache: rework the whole memcache/if-modified-since updating stuff - atm, we never check for updates.
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {

@@ -16,7 +16,7 @@ target 'NetDeck' do
     pod 'Alamofire'
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
-    pod 'SwiftKeychainWrapper' # , :git => 'https://github.com/jrendel/SwiftKeychainWrapper.git', :branch => 'master'
+    pod 'SwiftKeychainWrapper'
     pod 'SwiftyJSON'
     pod 'SwiftyDropbox'
     pod 'SDCAlertView'

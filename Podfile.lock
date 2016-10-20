@@ -5,16 +5,16 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.0.1):
     - Alamofire (~> 4.0)
   - CorePlot (2.2)
-  - Crashlytics (3.8.2):
+  - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
   - CSStickyHeaderFlowLayout (0.2.11)
-  - DTCoreText (1.6.18):
-    - DTCoreText/Core (= 1.6.18)
+  - DTCoreText (1.6.19):
+    - DTCoreText/Core (= 1.6.19)
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTCoreText/Core (1.6.18):
+  - DTCoreText/Core (1.6.19):
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
@@ -26,7 +26,7 @@ PODS:
   - DTFoundation/UIKit (1.7.11):
     - DTFoundation/Core
   - DZNEmptyDataSet (1.8.1)
-  - Fabric (1.6.9)
+  - Fabric (1.6.10)
   - InAppSettingsKit (2.8)
   - MultiSelectSegmentedControl (1.1.0)
   - SDCAlertView (7.0.1)
@@ -59,12 +59,12 @@ SPEC CHECKSUMS:
   AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
   AlamofireNetworkActivityIndicator: 3e55069ada3e1ff7703665156429eedcdfea0bc1
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
-  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
+  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   CSStickyHeaderFlowLayout: e9bcb1762413f49d7d09e5bd0ae5efd1100116b7
-  DTCoreText: 04b4d14e11c18fd95163108887feb39638cca4fe
+  DTCoreText: 184cc2f460c2177108e8700dfb0eb1b1cb72c99d
   DTFoundation: 0ef29c70a9814e15518694862bd739347abe2a50
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
+  Fabric: c73f371ee543e3f0b80608f2674750e4910d1669
   InAppSettingsKit: fe3e73f8f9530cdd6270065cd7df7b3773f557e6
   MultiSelectSegmentedControl: 54fb23c997b971eff621cfcf965ff1613d99c3d2
   SDCAlertView: e04c5a8985e4490768cc9608bf0a13c44215fcf2
@@ -73,6 +73,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: 0893e21982678ed69237c7c964a00c7a6f7079bb
   SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
 
-PODFILE CHECKSUM: 6ebf8d237c8f759d9939cb1bdd7811a82b55bd7a
+PODFILE CHECKSUM: fc5e416f09979999f2264255878f12070578882f
 
 COCOAPODS: 1.1.0.rc.2
