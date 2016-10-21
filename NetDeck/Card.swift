@@ -210,7 +210,20 @@ class Card: NSObject {
     // html rendered
     var attributedText: NSAttributedString! {
         if self._attributedText == nil {
-            let str = self.text.replacingOccurrences(of: "\n", with: "<br/>")
+            let str = self.text
+                .replacingOccurrences(of: "\n", with: "<br/>")
+                .replacingOccurrences(of: "[subroutine]", with: "<span class='icon'>\u{e900}</span>")
+                .replacingOccurrences(of: "[trash]", with: "<span class='icon'>\u{e905}</span>")
+                .replacingOccurrences(of: "[click]", with: "<span class='icon'>\u{e909}</span>")
+                .replacingOccurrences(of: "[credit]", with: "<span class='icon'>\u{e90b}</span>")
+                .replacingOccurrences(of: "[recurring-credit]", with: "<span class='icon'>\u{e90a}</span>")
+                .replacingOccurrences(of: "[link]", with: "<span class='icon'>\u{e908}</span>")
+                .replacingOccurrences(of: "[mu]", with: "<span class='icon'>\u{e904}</span>")
+                .replacingOccurrences(of: "<errata>", with: "<em>")
+                .replacingOccurrences(of: "</errata>", with: "</em>")
+                .replacingOccurrences(of: "<trace>", with: "<strong>")
+                .replacingOccurrences(of: "</trace>", with: "</strong>-")
+
             let data = str.data(using: String.Encoding.utf8)
             self._attributedText = NSAttributedString(htmlData: data, options: Card.coreTextOptions, documentAttributes: nil)
             if self._attributedText == nil {
@@ -440,11 +453,15 @@ class Card: NSObject {
     ]
     
     static let fontFamily = UIFont.systemFont(ofSize: 13).familyName
-    static let coreTextOptions = [
+    static let styleSheet = DTCSSStylesheet(styleBlock:
+        ".icon { font-family: 'netrunner' !important; font-style: normal; font-variant: normal; font-weight: normal; line-height: 1; text-transform: none; }")
+    
+    static let coreTextOptions: [String: Any] = [
         DTUseiOS6Attributes: true,
         DTDefaultFontFamily: NSString(string: fontFamily),
-        DTDefaultFontSize: 13
-    ] as [String : Any]
+        DTDefaultFontSize: 13,
+        DTDefaultStyleSheet: styleSheet!,
+    ]
     
     override var hashValue: Int {
         return code.hashValue

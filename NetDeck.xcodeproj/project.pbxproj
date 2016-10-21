@@ -70,6 +70,7 @@
 		3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */; };
 		3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4866E5193B85560045C927 /* DeckNotesPopup.m */; };
 		3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A4866E6193B85560045C927 /* DeckNotesPopup.xib */; };
+		3A4E0F911DBAA56E00C49FD4 /* netrunner.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */; };
 		3A529E631CA57BF70061E065 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A529E621CA57BF70061E065 /* Reachability.swift */; };
 		3A531B271A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A531B261A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib */; };
 		3A56371319954B28006AD431 /* LargeBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A56371119954B28006AD431 /* LargeBrowserCell.m */; };
@@ -293,6 +294,7 @@
 		3A4866E4193B85560045C927 /* DeckNotesPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckNotesPopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A4866E5193B85560045C927 /* DeckNotesPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckNotesPopup.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A4866E6193B85560045C927 /* DeckNotesPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckNotesPopup.xib; sourceTree = "<group>"; };
+		3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = netrunner.ttf; sourceTree = "<group>"; };
 		3A529E621CA57BF70061E065 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		3A531B261A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckHistorySectionHeaderView.xib; sourceTree = "<group>"; };
 		3A531B281A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DeckHistorySectionHeaderView.swift; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 		3A3622681849320C007F2854 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */,
 				3AAD7D781D930154001821F5 /* NetDeck.entitlements */,
 				3AA0504919589F9B00DBDED6 /* Acknowledgements.html */,
 				3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */,
@@ -1163,6 +1166,7 @@
 				3A56371419954B28006AD431 /* LargeBrowserCell.xib in Resources */,
 				3AD860E61B7939E500EEF8AC /* CardImageViewCell.xib in Resources */,
 				3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */,
+				3A4E0F911DBAA56E00C49FD4 /* netrunner.ttf in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
 				3A1B32251D87229800155454 /* CardFilterCell.xib in Resources */,
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
