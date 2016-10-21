@@ -16,7 +16,7 @@ class DropboxWrapper: NSObject {
         DropboxClientsManager.setupWithAppKey("4mhw6piwd9wqti3")
         
         let clientOk = DropboxClientsManager.authorizedClient != nil
-        print("dropbox setup, clientOk=\(clientOk)")
+        // print("dropbox setup, clientOk=\(clientOk)")
         if !clientOk {
             UserDefaults.standard.set(false, forKey: SettingsKeys.USE_DROPBOX)
         }

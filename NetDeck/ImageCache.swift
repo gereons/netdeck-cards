@@ -9,6 +9,34 @@
 import Alamofire
 import AlamofireImage
 
+private func synchronized<T>(_ lock: Any, closure: ()->T) -> T {
+    objc_sync_enter(lock)
+    defer { objc_sync_exit(lock) }
+    return closure()
+}
+
+private class ImageMemCache {
+    private var memory = [String: UIImage]()
+    
+    func set(_ img: UIImage, forKey key: String) {
+        synchronized(self) {
+            memory[key] = img
+        }
+    }
+    
+    func object(forKey key: String) -> UIImage? {
+        return synchronized(self) {
+            return memory[key]
+        }
+    }
+    
+    func removeAllObjects() {
+        synchronized(self) {
+            memory.removeAll()
+        }
+    }
+}
+
 class ImageCache: NSObject {
     static let imagesDirectory = "images"
     static let sharedInstance = ImageCache()
@@ -36,16 +64,12 @@ class ImageCache: NSObject {
     static let width = 300
     static let height = 418
     
-    fileprivate static let debugLog = false
+    fileprivate static let debugLog = BuildConfig.debug && true
     fileprivate static let secondsPerDay = 24 * 60 * 60
     fileprivate static let successInterval = TimeInterval(30 * secondsPerDay)
     fileprivate static let errorInterval = TimeInterval(1 * secondsPerDay)
     
-    fileprivate let memCache: NSCache<NSString, UIImage> = {
-        let c = NSCache<NSString, UIImage>()
-        c.name = "imgCache"
-        return c
-    }()
+    fileprivate let memCache = ImageMemCache()
     
     // img keys we know aren't downloadable (yet)
     fileprivate var unavailableImages = Set<String>()
@@ -91,6 +115,7 @@ class ImageCache: NSObject {
         }
     }
     
+    /// called when we move to the background
     func saveData() {
         let settings = UserDefaults.standard
         
@@ -103,8 +128,11 @@ class ImageCache: NSObject {
     func getImage(for card: Card, completion: @escaping (Card, UIImage, Bool) -> Void) {
         let key = card.code
         
-        if let img = memCache.object(forKey: key as NSString) {
+        if let img = memCache.object(forKey: key) {
             completion(card, img, false)
+            if Reachability.online {
+                self.checkForImageUpdate(for: card, key: key)
+            }
             return
         }
         
@@ -122,7 +150,7 @@ class ImageCache: NSObject {
                     self.checkForImageUpdate(for: card, key: key)
                 }
                 
-                self.memCache.setObject(img, forKey: key as NSString)
+                self.memCache.set(img, forKey: key)
                 DispatchQueue.main.async {
                     completion(card, img, false)
                 }
@@ -132,30 +160,34 @@ class ImageCache: NSObject {
                 // image is not in on-disk cache
                 if Reachability.online {
                     
-                    // check if the request is currently in-flight, and if so, add its completion block to our list of callbacks
-                    objc_sync_enter(self)
-                    if self.imagesInFlight[key] != nil {
-                        self.imagesInFlight[key]?.append(completion)
-                        objc_sync_exit(self)
+                    let requestInFlight: Bool = synchronized(self) {
+                        // check if the request is currently in-flight, and if so, add its completion block to our list of callbacks
+                        if self.imagesInFlight[key] != nil {
+                            self.imagesInFlight[key]?.append(completion)
+                            return true
+                        } else {
+                            // not in flight - store in list
+                            self.imagesInFlight[key] = [completion]
+                            return false
+                        }
+                    }
+                    if requestInFlight {
                         return
                     }
                     
-                    // not in flight - store in list
-                    self.imagesInFlight[key] = [completion]
-                    objc_sync_exit(self)
                     self.downloadImage(for: card, key: key) { (card, image, placeholder) in
                         DispatchQueue.main.async {
                             // call all pending callbacks for this image
-                            objc_sync_enter(self)
-                            if let callbacks = self.imagesInFlight[key] {
-                                for callback in callbacks {
-                                    callback(card, image, placeholder)
+                            synchronized(self) {
+                                if let callbacks = self.imagesInFlight[key] {
+                                    for callback in callbacks {
+                                        callback(card, image, placeholder)
+                                    }
+                                } else {
+                                    assert(false, "no queue for \(key)")
                                 }
-                            } else {
-                                assert(false, "no queue for \(key)")
+                                self.imagesInFlight.removeValue(forKey: key)
                             }
-                            self.imagesInFlight.removeValue(forKey: key)
-                            objc_sync_exit(self)
                         }
                     }
                 } else {
@@ -212,7 +244,7 @@ class ImageCache: NSObject {
     func imageAvailable(for card: Card) -> Bool {
         let key = card.code
         
-        if let _ = self.memCache.object(forKey: key as NSString) {
+        if let _ = self.memCache.object(forKey: key) {
             return true
         }
         
@@ -230,37 +262,31 @@ class ImageCache: NSObject {
     func croppedImage(_ image: UIImage, forCard card: Card) -> UIImage? {
         let key = "\(card.code):crop"
         
-        if let cropped = self.memCache.object(forKey: key as NSString) {
+        if let cropped = self.memCache.object(forKey: key) {
             return cropped
         }
         
         let rect = CGRect(x: 10.0, y: card.cropY, width: 280.0, height: 209.0)
         if let imageRef = image.cgImage?.cropping(to: rect) {
             let cropped = UIImage(cgImage: imageRef)
-            self.memCache.setObject(cropped, forKey:key as NSString)
+            self.memCache.set(cropped, forKey:key)
             return cropped
         }
         return nil
     }
     
-    func clearLastModifiedInfo() {
-        let settings = UserDefaults.standard
+    func clearCache() {
         self.lastModifiedDates.removeAll()
         self.nextCheckDates.removeAll()
+        self.unavailableImages.removeAll()
+        
+        let settings = UserDefaults.standard
         settings.set(self.lastModifiedDates, forKey: SettingsKeys.LAST_MOD_CACHE)
         settings.set(self.nextCheckDates, forKey: SettingsKeys.NEXT_CHECK)
-        
-        self.memCache.removeAllObjects()
-    }
-    
-    func clearCache() {
-        self.clearLastModifiedInfo()
-        
-        self.unavailableImages.removeAll()
-        let settings = UserDefaults.standard
         settings.set(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
         
         self.removeCacheDirectory()
+        self.memCache.removeAllObjects()
     }
     
     fileprivate func NLOG(_ format: String, _ args: CVarArg...) {
@@ -298,7 +324,7 @@ class ImageCache: NSObject {
             }
         }
         
-        self.memCache.setObject(img, forKey: key as NSString)
+        self.memCache.set(img, forKey: key)
         
         if let data = UIImagePNGRepresentation(img) {
             try? data.write(to: URL(fileURLWithPath: file), options: [.atomic])
@@ -328,7 +354,7 @@ class ImageCache: NSObject {
     }
     
     fileprivate func initializeMemCache() {
-        // NSLog("start initMemCache")
+        // print("start initMemCache")
         let dir = self.directoryForImages()
         guard let files = try? FileManager.default.contentsOfDirectory(atPath: dir) else {
             return
@@ -339,21 +365,21 @@ class ImageCache: NSObject {
             
             if let imgData = try? Data(contentsOf: URL(fileURLWithPath: imgFile)) {
                 if let img = self.decode(image: UIImage(data: imgData)) {
-                    self.memCache.setObject(img, forKey: file as NSString)
+                    self.memCache.set(img, forKey: file)
                 }
             }
         }
-        // NSLog("end initMemCache")
+        // print("end initMemCache")
     }
     
     fileprivate func getImage(for key: String) -> UIImage? {
-        if let img = self.memCache.object(forKey: key as NSString) {
+        if let img = self.memCache.object(forKey: key) {
             return img
         }
         
         let img = self.decodedImage(for: key)
         if img != nil  {
-            memCache.setObject(img!, forKey: key as NSString)
+            memCache.set(img!, forKey: key)
         }
         return img
     }
