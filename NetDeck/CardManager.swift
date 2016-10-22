@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import Marshal
 
 class CardManager: NSObject {
     
@@ -259,32 +260,52 @@ class CardManager: NSObject {
     class func setupFromFiles(_ language: String) -> Bool {
         let filename = CardManager.filename()
         
-        if let str = try? NSString(contentsOfFile: filename, encoding: String.Encoding.utf8.rawValue) {
-            let cardsJson = JSON.parse(str as String)
-            return setupFromJson(cardsJson, language: language)
+        let t = DebugTimer(named: "card setup")
+        defer {
+            t.stop(verbose: true)
+        }
+//        if let str = try? NSString(contentsOfFile: filename, encoding: String.Encoding.utf8.rawValue) {
+//            t.elapsed(verbose: true)
+//            let cardsJson = JSON.parse(str as String)
+//            t.elapsed(verbose: true)
+//            return setupFromJson(cardsJson, language: language)
+//        }
+        
+        if let data = FileManager.default.contents(atPath: filename) {
+            do {
+                let cardsJson = try JSONParser.JSONObjectWithData(data)
+                return setupFromJson(cardsJson, language: language)
+            } catch {
+                return false
+            }
         }
         // print("app start: missing card file")
         return false
     }
     
     class func setupFromNetrunnerDb(_ cards: JSON, language: String) -> Bool {
-        var ok = setupFromJson(cards, language: language)
-        if ok {
-            let filename = CardManager.filename()
-            if let data = try? cards.rawData() {
-                do {
-                    try data.write(to: URL(fileURLWithPath: filename), options: .atomic)
-                } catch {
-                    ok = false
-                }
-                // print("write cards ok=\(ok)")
-            }
-            AppDelegate.excludeFromBackup(filename)
-        }
-        return ok
+//        var ok = setupFromJson(cards, language: language)
+//        if ok {
+//            let filename = CardManager.filename()
+//            if let data = try? cards.rawData() {
+//                do {
+//                    try data.write(to: URL(fileURLWithPath: filename), options: .atomic)
+//                } catch {
+//                    ok = false
+//                }
+//                // print("write cards ok=\(ok)")
+//            }
+//            AppDelegate.excludeFromBackup(filename)
+//        }
+//        return ok
+        return false
     }
     
-    class func setupFromJson(_ cards: JSON, language: String) -> Bool {
+    class func setupFromJson(_ cards: JSONObject, language: String) -> Bool {
+        let t = DebugTimer(named: "setup")
+        defer {
+            t.stop(verbose: true)
+        }
         if !cards.validNrdbResponse {
             return false
         }
@@ -296,6 +317,7 @@ class CardManager: NSObject {
         for card in parsedCards {
             CardManager.add(card: card)
         }
+        t.elapsed(verbose: true)
         
         let cards = Array(allKnownCards.values)
         if cards.count == 0 {

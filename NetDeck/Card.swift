@@ -6,9 +6,9 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-import SwiftyJSON
+import Marshal
 
-class Card: NSObject {
+class Card: NSObject, Unmarshaling {
     
     // identities we need to handle
     static let customBiotics            = "03002"    // no jinteki cards
@@ -250,33 +250,32 @@ class Card: NSObject {
         }
     }
     
-    class func cardsFromJson(_ json: JSON, language: String) -> [Card] {
+    class func cardsFromJson(_ json: JSONObject, language: String) -> [Card] {
         var cards = [Card]()
-        imgSrcTemplate = json["imageUrlTemplate"].stringValue
+        
+        imgSrcTemplate = try! json.value(for: "imageUrlTemplate")
         currentLanguage = language
-        for cardJson in json["data"].arrayValue {
-            let card = Card(json: cardJson, language: language)
-            cards.append(card)
-        }
+        cards = try! json.value(for: "data")
+        
         return cards
     }
     
     override private init() {}
     
-    private init(json: JSON, language: String) {
+    required init(object: MarshaledObject) throws {
         super.init()
         
-        self.code = json["code"].stringValue
-        self.englishName = json["title"].stringValue
-        self.name = json.localized("title", language)
+        self.code = try object.value(for: "code")
+        self.englishName = try object.value(for: "title")
+        self.name = try object.localized(for: "title", language: Card.currentLanguage)
         
-        self.factionCode = json["faction_code"].stringValue
+        self.factionCode = try object.value(for: "faction_code")
         self.faction = Codes.factionFor(code: self.factionCode)
         
-        let roleCode = json["side_code"].stringValue
+        let roleCode: String = try object.value(for: "side_code")
         self.role = Codes.roleFor(code: roleCode)
         
-        self.typeCode = json["type_code"].stringValue
+        self.typeCode = try object.value(for: "type_code")
         self.type = Codes.typeFor(code: self.typeCode)
         
         if self.type == .identity {
@@ -286,13 +285,12 @@ class Card: NSObject {
             self.name = shortName
         }
         
-        self.text = json.localized("text", language)
+        self.text = try object.localized(for: "text", language: Card.currentLanguage)
         
-        self.flavor = json.localized("flavor", language)
+        self.flavor = try object.localized(for: "flavor", language: Card.currentLanguage)
         
-        self.packCode = json["pack_code"].stringValue
+        self.packCode = try object.value(for: "pack_code")
         if self.packCode == "" {
-            self.packCode = PackManager.unknownSet
             self.packCode = PackManager.unknownSet
         }
         if self.packCode == PackManager.draftSetCode {
@@ -302,45 +300,52 @@ class Card: NSObject {
         self.packNumber = PackManager.packNumberFor(code: self.packCode)
         self.isCore = self.packCode == PackManager.coreSetCode
         
-        self.subtype = json.localized("keywords", language)
+        self.subtype = try object.localized(for: "keywords", language: Card.currentLanguage)
         if self.subtype.length > 0 {
             let split = Card.subtypeSplit(self.subtype)
             self.subtype = split.subtype
             self.subtypes = split.subtypes
         }
         
-        self.number = json["position"].int ?? -1
-        self.quantity = json["quantity"].int ?? -1
-        self.unique = json["uniqueness"].boolValue
+        self.number = try object.value(for: "position") ?? -1
+        self.quantity = try object.value(for: "quantity") ?? -1
+        self.unique = try object.value(for: "uniqueness")
         
         if self.type == .identity {
-            self.influenceLimit = json["influence_limit"].int ?? -1
-            self.minimumDecksize = json["minimum_deck_size"].int ?? -1
-            self.baseLink = json["base_link"].int ?? -1
+            self.influenceLimit = try object.value(for: "influence_limit") ?? -1
+            self.minimumDecksize = try object.value(for: "minimum_deck_size") ?? -1
+            self.baseLink = try object.value(for: "base_link") ?? -1
         }
         if self.type == .agenda {
-            self.advancementCost = json["advancement_cost"].int ?? -1
-            self.agendaPoints = json["agenda_points"].int ?? -1
+            self.advancementCost = try object.value(for: "advancement_cost") ?? -1
+            self.agendaPoints = try object.value(for: "agenda_points") ?? -1
         }
         
-        self.mu = json["memory_cost"].int ?? -1
+        self.mu = try object.value(for: "memory_cost") ?? -1
         
-        if json["strength"].stringValue == "X" {
-            self.strength = Card.X
-        } else {
-            self.strength = json["strength"].int ?? -1
+        do {
+            let str: String? = try object.value(for: "strength")
+            if let s = str, s == "X" {
+                self.strength = Card.X
+            }
+        } catch {
+            self.strength = try object.value(for: "strength") ?? -1
         }
         
-        if json["cost"].stringValue == "X" {
-            self.cost = Card.X
-        } else {
-            self.cost = json["cost"].int ?? -1
+        do {
+            let cost: String? = try object.value(for: "cost")
+            if let c = cost, c == "X" {
+                self.cost = Card.X
+            }
+        }
+        catch {
+            self.cost = try object.value(for: "cost") ?? -1
         }
         
-        self.influence = json["faction_cost"].int ?? -1
-        self.trash = json["trash_cost"].int ?? -1
+        self.influence = try object.value(for: "faction_cost") ?? -1
+        self.trash = try object.value(for: "trash_cost") ?? -1
         
-        self.maxPerDeck = json["deck_limit"].int ?? -1
+        self.maxPerDeck = try object.value(for: "deck_limit") ?? -1
         if Card.max1perDeck.contains(self.code) || self.type == .identity {
             self.maxPerDeck = 1
         }

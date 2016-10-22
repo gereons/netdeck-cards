@@ -110,9 +110,9 @@ class ImageCache: NSObject {
             settings.set(Array(self.unavailableImages), forKey:SettingsKeys.UNAVAILABLE_IMAGES)
         }
         
-        DispatchQueue.global(qos: .background).async {
-            self.initializeMemCache()
-        }
+//        DispatchQueue.global(qos: .background).async {
+//            self.initializeMemCache()
+//        }
     }
     
     /// called when we move to the background

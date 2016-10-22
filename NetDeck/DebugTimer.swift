@@ -20,25 +20,37 @@ class DebugTimer: NSObject {
     private var name = ""
     private var start: TimeInterval = 0.0
     
-    init(name: String) {
+    init(named name: String) {
         self.name = name
-        self.start = Date().timeIntervalSinceReferenceDate
+        self.start = Date.timeIntervalSinceReferenceDate
     }
     
-    func stop() {
-        let now = Date().timeIntervalSinceReferenceDate
+    @discardableResult
+    func elapsed(verbose: Bool = false) -> TimeInterval {
+        let now = Date.timeIntervalSinceReferenceDate
         let elapsed = now - self.start
+        if verbose {
+            print("- \(self.name): \(elapsed)s")
+        }
+        return elapsed
+    }
+    
+    func stop(verbose: Bool = false) {
+        let elapsed = self.elapsed()
         
-        if var t = DebugTimer.timers[name] {
+        if var t = DebugTimer.timers[self.name] {
             t.count += 1
             t.time += elapsed
-            DebugTimer.timers[name] = t
+            DebugTimer.timers[self.name] = t
         } else {
-            DebugTimer.timers[name] = Timer(count: 1, time: elapsed)
+            DebugTimer.timers[self.name] = Timer(count: 1, time: elapsed)
+        }
+        if verbose {
+            print("stopped \(self.name) after \(elapsed)s")
         }
     }
     
-    static func print() {
+    static func printAll() {
         for (key, value) in DebugTimer.timers {
             let avg = value.time / Double(value.count)
             NSLog("\(key): \(value.count) \(value.time) \(avg)")
@@ -46,12 +58,12 @@ class DebugTimer: NSObject {
     }
     
     static func reset(_ names: [String]? = nil) {
-        if names == nil {
-            self.timers.removeAll()
-        } else {
-            for n in names! {
+        if let names = names {
+            for n in names {
                 self.timers.removeValue(forKey: n)
             }
+        } else {
+            self.timers.removeAll()
         }
     }
 

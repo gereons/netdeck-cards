@@ -8,6 +8,7 @@
 
 import Alamofire
 import SwiftyJSON
+import Marshal
 
 class NRDB: NSObject {
     static let CLIENT_HOST =    "netdeck://oauth2"
@@ -489,5 +490,18 @@ extension JSON {
         } else {
             return self[property].stringValue
         }
+    }
+}
+
+extension Dictionary {
+    var validNrdbResponse: Bool {
+        FIXME()
+        return true
+    }
+}
+
+extension MarshaledObject {
+    func localized(for key: KeyType, language: String) throws -> String {
+        return ""
     }
 }
