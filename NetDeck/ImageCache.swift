@@ -64,27 +64,27 @@ class ImageCache: NSObject {
     static let width = 300
     static let height = 418
     
-    fileprivate static let debugLog = BuildConfig.debug && true
-    fileprivate static let secondsPerDay = 24 * 60 * 60
-    fileprivate static let successInterval = TimeInterval(30 * secondsPerDay)
-    fileprivate static let errorInterval = TimeInterval(1 * secondsPerDay)
+    private static let debugLog = BuildConfig.debug && true
+    private static let secondsPerDay = 24 * 60 * 60
+    private static let successInterval = TimeInterval(30 * secondsPerDay)
+    private static let errorInterval = TimeInterval(1 * secondsPerDay)
     
-    fileprivate let memCache = ImageMemCache()
+    private let memCache = ImageMemCache()
     
     // img keys we know aren't downloadable (yet)
-    fileprivate var unavailableImages = Set<String>()
+    private var unavailableImages = Set<String>()
     
     // Last-Modified date of each image
-    fileprivate var lastModifiedDates = [String: String]()  // code -> last-modified
+    private var lastModifiedDates = [String: String]()  // code -> last-modified
     
     // when to next check if an img was updated
-    fileprivate var nextCheckDates = [String: Date]()       // code -> date
+    private var nextCheckDates = [String: Date]()       // code -> date
 
     // log of all current in-flight requests
     typealias ImageCallback = (Card, UIImage, Bool) -> Void
     private var imagesInFlight = [String: [ImageCallback] ]()
 
-    fileprivate override init() {
+    private override init() {
         super.init()
         
         let settings = UserDefaults.standard
@@ -294,14 +294,14 @@ class ImageCache: NSObject {
         self.memCache.removeAllObjects()
     }
     
-    fileprivate func NLOG(_ format: String, _ args: CVarArg...) {
+    private func NLOG(_ format: String, _ args: CVarArg...) {
         if ImageCache.debugLog {
             let x = String(format: format, arguments: args)
             NSLog(x)
         }
     }
     
-    fileprivate func storeInCache(_ img: UIImage, lastModified: String?, key: String) {
+    private func storeInCache(_ img: UIImage, lastModified: String?, key: String) {
         var interval = ImageCache.successInterval
         if lastModified != nil {
             self.lastModifiedDates[key] = lastModified!
@@ -316,7 +316,7 @@ class ImageCache: NSObject {
         }
     }
     
-    fileprivate func save(image: UIImage, forKey key: String) -> Bool {
+    private func save(image: UIImage, forKey key: String) -> Bool {
         let dir = self.directoryForImages()
         let file = dir.appendPathComponent(key)
         
@@ -339,7 +339,7 @@ class ImageCache: NSObject {
         return false
     }
     
-    fileprivate func scale(image: UIImage, toSize size: CGSize) -> UIImage? {
+    private func scale(image: UIImage, toSize size: CGSize) -> UIImage? {
         UIGraphicsBeginImageContext(size)
         
         image.draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
@@ -349,7 +349,7 @@ class ImageCache: NSObject {
         return newImage
     }
     
-    fileprivate func removeCacheDirectory() {
+    private func removeCacheDirectory() {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths.first!
         
@@ -358,7 +358,7 @@ class ImageCache: NSObject {
         let _ = try? FileManager.default.removeItem(atPath: directory)
     }
     
-    fileprivate func initializeMemCache() {
+    private func initializeMemCache() {
         // print("start initMemCache")
         let dir = self.directoryForImages()
         guard let files = try? FileManager.default.contentsOfDirectory(atPath: dir) else {
@@ -377,7 +377,7 @@ class ImageCache: NSObject {
         // print("end initMemCache")
     }
     
-    fileprivate func getImage(for key: String) -> UIImage? {
+    private func getImage(for key: String) -> UIImage? {
         if let img = self.memCache.object(forKey: key) {
             return img
         }
@@ -389,7 +389,7 @@ class ImageCache: NSObject {
         return img
     }
     
-    fileprivate func decodedImage(for key: String) -> UIImage? {
+    private func decodedImage(for key: String) -> UIImage? {
         let dir = self.directoryForImages()
         let file = dir.appendPathComponent(key)
         
@@ -409,7 +409,7 @@ class ImageCache: NSObject {
         return img
     }
     
-    fileprivate func checkForImageUpdate(for card: Card, key: String) {
+    private func checkForImageUpdate(for card: Card, key: String) {
         if let checkDate = self.nextCheckDates[key] {
             let now = Date()
             if now.timeIntervalSinceReferenceDate < checkDate.timeIntervalSinceReferenceDate {
@@ -445,7 +445,7 @@ class ImageCache: NSObject {
             }
     }
     
-    fileprivate func downloadImage(for card: Card, key: String, completion: @escaping (Card, UIImage, Bool) -> Void) {
+    private func downloadImage(for card: Card, key: String, completion: @escaping (Card, UIImage, Bool) -> Void) {
         let src = card.imageSrc
         Alamofire
             .request(src)
@@ -474,7 +474,7 @@ class ImageCache: NSObject {
             }
     }
     
-    fileprivate func directoryForImages() -> String {
+    private func directoryForImages() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths.first!
         
@@ -488,7 +488,7 @@ class ImageCache: NSObject {
         return directory
     }
     
-    fileprivate func decode(image: UIImage?) -> UIImage? {
+    private func decode(image: UIImage?) -> UIImage? {
         guard let img = image, let imgRef = img.cgImage else {
             return nil
         }

@@ -36,18 +36,18 @@ class DataDownload: NSObject {
         self.instance.doDownloadImages(.missing)
     }
     
-    static fileprivate let instance = DataDownload()
+    static private let instance = DataDownload()
     
-    fileprivate var sdcAlert: AlertController?
-    fileprivate var progressView: UIProgressView?
-    fileprivate var downloadStopped = false
-    fileprivate var downloadErrors = 0
+    private var sdcAlert: AlertController?
+    private var progressView: UIProgressView?
+    private var downloadStopped = false
+    private var downloadErrors = 0
     
-    fileprivate var cards = [Card]()
+    private var cards = [Card]()
     
     // MARK: - card and sets download
     
-    fileprivate func downloadCardAndSetsData() {
+    private func downloadCardAndSetsData() {
         if let nrdbHost = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_HOST), nrdbHost.length > 0 {
             self.showDownloadAlert()
             self.perform(#selector(DataDownload.doDownloadCardData(_:)), with: nil, afterDelay: 0.01)
@@ -57,7 +57,7 @@ class DataDownload: NSObject {
         }
     }
 
-    fileprivate func showDownloadAlert() {
+    private func showDownloadAlert() {
         let alert = AlertController(title: "Downloading Card Data".localized(), message:nil, preferredStyle: .alert)
         alert.visualStyle = CustomAlertVisualStyle(alertStyle: .alert)
         self.sdcAlert = alert
@@ -80,7 +80,7 @@ class DataDownload: NSObject {
         alert.present(animated: false, completion: nil)
     }
     
-    @objc fileprivate func doDownloadCardData(_ dummy: AnyObject) {
+    @objc private func doDownloadCardData(_ dummy: AnyObject) {
         let settings = UserDefaults.standard
         let nrdbHost = settings.string(forKey: SettingsKeys.NRDB_HOST)
         let language = settings.string(forKey: SettingsKeys.LANGUAGE) ?? "en"
@@ -151,7 +151,7 @@ class DataDownload: NSObject {
     
     // MARK: - image download
     
-    fileprivate func doDownloadImages(_ scope: DownloadScope) {
+    private func doDownloadImages(_ scope: DownloadScope) {
         self.cards = CardManager.allCards()
         
         if scope == .missing {
@@ -207,7 +207,7 @@ class DataDownload: NSObject {
         self.downloadImageForCard(0, scope: scope)
     }
     
-    fileprivate func downloadImageForCard(_ index: Int, scope: DownloadScope) {
+    private func downloadImageForCard(_ index: Int, scope: DownloadScope) {
         if self.downloadStopped {
             return
         }
@@ -256,7 +256,7 @@ class DataDownload: NSObject {
     
     // MARK: - stop downloads
     
-    fileprivate func stopDownload() {
+    private func stopDownload() {
         self.downloadStopped = true
         self.progressView = nil
         self.sdcAlert = nil

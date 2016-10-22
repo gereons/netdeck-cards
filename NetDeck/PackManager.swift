@@ -36,10 +36,10 @@ class PackManager: NSObject {
     static var packsByCode = [String: Pack]()       // code -> pack
     static var allPacks = [Pack]()
     
-    fileprivate static let rotatedCycles = [
+    private static let rotatedCycles = [
         "genesis", "spin"       // 1st rotation, mid-2017
     ]
-    fileprivate static let rotatedPacks = [
+    private static let rotatedPacks = [
         "wla", "ta", "ce", "asis", "hs", "fp",  // genesis
         "om", "st", "mt", "tc", "fal", "dt"     // spin
     ]
@@ -145,7 +145,7 @@ class PackManager: NSObject {
     }
 
 
-    fileprivate class func allEnabledPacksForTableview() -> TableData {
+    private class func allEnabledPacksForTableview() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -185,7 +185,7 @@ class PackManager: NSObject {
         return result
     }
 
-    fileprivate class func allKnownPacksForTableview() -> TableData {
+    private class func allKnownPacksForTableview() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -208,7 +208,7 @@ class PackManager: NSObject {
         return TableData(sections: sections as NSArray, andValues: values as NSArray)
     }
     
-    fileprivate class func allPacksAfterRotationForTableview() -> TableData {
+    private class func allPacksAfterRotationForTableview() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         

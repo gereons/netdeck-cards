@@ -245,7 +245,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         return false
     }
     
-    fileprivate func logStartup() {
+    private func logStartup() {
         let settings = UserDefaults.standard
         
         let cardLanguage = settings.string(forKey: SettingsKeys.LANGUAGE) ?? ""

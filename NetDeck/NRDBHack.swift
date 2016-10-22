@@ -15,12 +15,12 @@ class NRDBHack: NSObject {
     static let AUTH_URL = NRDB.PROVIDER_HOST + "/oauth/v2/auth"
     static let CHECK_URL = NRDB.PROVIDER_HOST + "/oauth/v2/auth_login_check"
     
-    fileprivate var cookieJar = HTTPCookieStorage.shared
-    fileprivate var manager: Alamofire.SessionManager!
-    fileprivate var authCompletion: ((Bool) -> Void)!
+    private var cookieJar = HTTPCookieStorage.shared
+    private var manager: Alamofire.SessionManager!
+    private var authCompletion: ((Bool) -> Void)!
     
-    fileprivate var username: String?
-    fileprivate var password: String?
+    private var username: String?
+    private var password: String?
     
     static let sharedInstance = NRDBHack()
     
@@ -174,7 +174,7 @@ class NRDBHack: NSObject {
         }
     }
     
-    fileprivate func redirectHandler(_ session: URLSession!, task: URLSessionTask!, response: HTTPURLResponse!, request: URLRequest!) -> URLRequest {
+    private func redirectHandler(_ session: URLSession!, task: URLSessionTask!, response: HTTPURLResponse!, request: URLRequest!) -> URLRequest {
         // NSLog("redirecting to \(request.URL)")
         
         if let url = request.url?.absoluteString , url.hasPrefix(NRDB.CLIENT_HOST) {
@@ -194,7 +194,7 @@ class NRDBHack: NSObject {
     }
 
     
-    fileprivate func findToken(_ body: String) -> String? {
+    private func findToken(_ body: String) -> String? {
         
         let regex = try! NSRegularExpression(pattern: "id=\"fos_oauth_server_authorize_form__token\".*value=\"(.*)\"", options:[])
         

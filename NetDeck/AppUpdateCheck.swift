@@ -49,7 +49,7 @@ class AppUpdateCheck: NSObject {
     }
     
     
-    fileprivate class func checkForUpdate(_ completion: @escaping (String?) -> Void)  {
+    private class func checkForUpdate(_ completion: @escaping (String?) -> Void)  {
         guard
             let dict = Bundle.main.infoDictionary,
             let bundleId = dict["CFBundleIdentifier"] as? String,

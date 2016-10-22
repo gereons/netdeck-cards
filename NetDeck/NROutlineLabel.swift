@@ -9,8 +9,8 @@
 import UIKit
 
 class NROutlineLabel: UILabel {
-    fileprivate let outlineWidth: CGFloat = 2.0
-    fileprivate let outlineColor = UIColor.white
+    private let outlineWidth: CGFloat = 2.0
+    private let outlineColor = UIColor.white
     
     override func drawText(in rect: CGRect) {
         let textColor = self.textColor

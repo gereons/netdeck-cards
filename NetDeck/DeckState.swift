@@ -10,7 +10,7 @@ import Foundation
 
 class DeckState: NSObject {
 
-    fileprivate static let states: [NRDeckState: String] = [
+    private static let states: [NRDeckState: String] = [
         .none: "All",
         .retired: "Retired",
         .testing: "Testing",

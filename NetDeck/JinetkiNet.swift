@@ -14,13 +14,13 @@ import SwiftyJSON
 class JintekiNet: NSObject {
     static let sharedInstance = JintekiNet()
     
-    fileprivate let manager: Alamofire.SessionManager
-    fileprivate let cookieJar: HTTPCookieStorage
+    private let manager: Alamofire.SessionManager
+    private let cookieJar: HTTPCookieStorage
     
     let loginUrl = "http://www.jinteki.net/login"
     let deckUrl = "http://www.jinteki.net/data/decks"
     
-    override fileprivate init() {
+    override private init() {
         self.cookieJar = HTTPCookieStorage.shared
         let cfg = URLSessionConfiguration.default
         cfg.httpCookieStorage = self.cookieJar

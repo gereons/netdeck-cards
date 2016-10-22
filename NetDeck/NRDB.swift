@@ -21,9 +21,9 @@ class NRDB: NSObject {
     static let FIVE_MINUTES: TimeInterval = 300 // in seconds
     
     static let sharedInstance = NRDB()
-    override fileprivate init() {}
+    override private init() {}
     
-    fileprivate static let dateFormatter: DateFormatter = {
+    private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ'"
                             // "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
@@ -31,8 +31,8 @@ class NRDB: NSObject {
         return formatter
     }()
     
-    fileprivate var timer: Timer?
-    fileprivate var deckMap = [String: String]()
+    private var timer: Timer?
+    private var deckMap = [String: String]()
     
     class func clearSettings() {
         let settings = UserDefaults.standard
@@ -66,7 +66,7 @@ class NRDB: NSObject {
         self.getAuthorization(parameters, isRefresh: false, completion: completion)
     }
     
-    fileprivate func refreshToken(_ completion: @escaping (Bool) -> Void) {
+    private func refreshToken(_ completion: @escaping (Bool) -> Void) {
         // NSLog("NRDB refreshToken")
         guard let token = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_REFRESH_TOKEN) else {
             completion(false)
@@ -86,7 +86,7 @@ class NRDB: NSObject {
         self.getAuthorization(parameters, isRefresh: true, completion: completion)
     }
     
-    fileprivate func getAuthorization(_ parameters: [String: String], isRefresh: Bool, completion: @escaping (Bool) -> Void) {
+    private func getAuthorization(_ parameters: [String: String], isRefresh: Bool, completion: @escaping (Bool) -> Void) {
         
         // NSLog("NRDB get Auth")
         let foreground = UIApplication.shared.applicationState == .active
@@ -137,7 +137,7 @@ class NRDB: NSObject {
             }
     }
     
-    fileprivate func handleAuthorizationFailure(_ isRefresh: Bool, completion: (Bool) -> Void) {
+    private func handleAuthorizationFailure(_ isRefresh: Bool, completion: (Bool) -> Void) {
         if !isRefresh {
             NRDB.clearSettings()
             UIAlertController.alert(withTitle: nil, message: "Authorization at NetrunnerDB.com failed".localized(), button: "OK")
@@ -217,7 +217,7 @@ class NRDB: NSObject {
     }
     
 
-    fileprivate func accessToken() -> String? {
+    private func accessToken() -> String? {
         return UserDefaults.standard.string(forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
     }
     
@@ -272,7 +272,7 @@ class NRDB: NSObject {
         }
     }
     
-    fileprivate func parseDecksFromJson(_ json: JSON) -> [Deck] {
+    private func parseDecksFromJson(_ json: JSON) -> [Deck] {
         var decks = [Deck]()
         
         if !json.validNrdbResponse {
@@ -288,7 +288,7 @@ class NRDB: NSObject {
         return decks
     }
     
-    fileprivate func parseDeckFromJson(_ json: JSON) -> Deck? {
+    private func parseDeckFromJson(_ json: JSON) -> Deck? {
         if !json.validNrdbResponse {
             return nil
         }
@@ -297,7 +297,7 @@ class NRDB: NSObject {
         return self.parseDeckFromData(data)
     }
     
-    fileprivate func parseDeckFromData(_ json: JSON) -> Deck? {
+    private func parseDeckFromData(_ json: JSON) -> Deck? {
         let deck = Deck()
         
         deck.name = json["name"].string
@@ -473,7 +473,7 @@ class NRDB: NSObject {
 
 extension JSON {
     
-    static fileprivate let supportedNrdbApiVersion = 2
+    static private let supportedNrdbApiVersion = 2
     
     // check if this is a valid API response
     var validNrdbResponse: Bool {

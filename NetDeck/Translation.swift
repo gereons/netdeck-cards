@@ -13,7 +13,7 @@ class Translation {
         return data[language]?[term] ?? term.capitalized
     }
     
-    fileprivate static let data = [
+    private static let data = [
         "en": [
             "adam": "Adam",
             "anarch": "Anarch",

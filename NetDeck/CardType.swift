@@ -11,13 +11,13 @@ import Foundation
 class CardType: NSObject {
     
     // NB: Card diff depends on ICE/Program being the last entries!
-    fileprivate static let runnerTypes: [NRCardType] = [ .event, .hardware, .resource, .program ]
-    fileprivate static let corpTypes: [NRCardType] = [ .agenda, .asset, .upgrade, .operation, .ice ]
+    private static let runnerTypes: [NRCardType] = [ .event, .hardware, .resource, .program ]
+    private static let corpTypes: [NRCardType] = [ .agenda, .asset, .upgrade, .operation, .ice ]
     
-    fileprivate static var type2name = [NRCardType: String]()
-    fileprivate static var runnerTypeNames = [String]()
-    fileprivate static var corpTypeNames = [String]()
-    fileprivate(set) static var allTypes: TableData!
+    private static var type2name = [NRCardType: String]()
+    private static var runnerTypeNames = [String]()
+    private static var corpTypeNames = [String]()
+    private(set) static var allTypes: TableData!
     
     class func initializeCardTypes(_ cards: [Card]) -> Bool {
         runnerTypeNames = [String]()

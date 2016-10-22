@@ -79,7 +79,7 @@ class Card: NSObject {
     static let sansanCityGrid   = "01092"
     static let breakingNews     = "01082"
     
-    fileprivate static let mostWantedLists: [NRMWL: Set<String>] = [
+    private static let mostWantedLists: [NRMWL: Set<String>] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
         .v1_0: Set<String>([
             cerberusH1, cloneChip, desperado, parasite, prepaidVoicepad, yog_0,
@@ -91,47 +91,47 @@ class Card: NSObject {
             architect, breakingNews, eli_1, mumbaTemple, napdContract, sansanCityGrid ])
     ]
     
-    fileprivate(set) static var fullNames = [String: String]()
-    fileprivate static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
+    private(set) static var fullNames = [String: String]()
+    private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
-    fileprivate(set) var code = ""
-    fileprivate(set) var name = ""                  // localized name of card, used for display
-    fileprivate(set) var englishName = ""           // english name of card, used for searches
-    fileprivate(set) var alias: String?
-    fileprivate(set) var text = ""
-    fileprivate(set) var flavor = ""
-    fileprivate(set) var type = NRCardType.none
-    fileprivate(set) var subtype = ""               // full subtype string like "Fracter - Icebreaker - AI"
-    fileprivate(set) var subtypes = [String]()      // array of subtypes like [ "Fracter", "Icebreaker", "AI" ]
-    fileprivate(set) var faction = NRFaction.none
-    fileprivate(set) var role = NRRole.none
-    fileprivate(set) var influenceLimit = -1        // for id
-    fileprivate(set) var minimumDecksize = -1       // for id
-    fileprivate(set) var baseLink = -1              // for runner id
-    fileprivate(set) var influence = -1
-    fileprivate(set) var mu = -1
-    fileprivate(set) var strength = -1
-    fileprivate(set) var cost = -1
-    fileprivate(set) var advancementCost = -1       // agenda
-    fileprivate(set) var agendaPoints = -1          // agenda
-    fileprivate(set) var trash = -1
-    fileprivate(set) var quantity = -1              // number of cards in set
-    fileprivate(set) var number = -1                // card no. in set
-    fileprivate(set) var packCode = ""
-    fileprivate(set) var packNumber = -1            // our own internal pack number, for sorting by pack release
-    fileprivate(set) var unique = false
-    fileprivate(set) var maxPerDeck = -1            // how many may be in deck? currently either 1, 3 or 6
+    private(set) var code = ""
+    private(set) var name = ""                  // localized name of card, used for display
+    private(set) var englishName = ""           // english name of card, used for searches
+    private(set) var alias: String?
+    private(set) var text = ""
+    private(set) var flavor = ""
+    private(set) var type = NRCardType.none
+    private(set) var subtype = ""               // full subtype string like "Fracter - Icebreaker - AI"
+    private(set) var subtypes = [String]()      // array of subtypes like [ "Fracter", "Icebreaker", "AI" ]
+    private(set) var faction = NRFaction.none
+    private(set) var role = NRRole.none
+    private(set) var influenceLimit = -1        // for id
+    private(set) var minimumDecksize = -1       // for id
+    private(set) var baseLink = -1              // for runner id
+    private(set) var influence = -1
+    private(set) var mu = -1
+    private(set) var strength = -1
+    private(set) var cost = -1
+    private(set) var advancementCost = -1       // agenda
+    private(set) var agendaPoints = -1          // agenda
+    private(set) var trash = -1
+    private(set) var quantity = -1              // number of cards in set
+    private(set) var number = -1                // card no. in set
+    private(set) var packCode = ""
+    private(set) var packNumber = -1            // our own internal pack number, for sorting by pack release
+    private(set) var unique = false
+    private(set) var maxPerDeck = -1            // how many may be in deck? currently either 1, 3 or 6
     
-    fileprivate(set) var isAlliance = false
-    fileprivate(set) var isVirtual = false
-    fileprivate(set) var isCore = false             // card is from core set
+    private(set) var isAlliance = false
+    private(set) var isVirtual = false
+    private(set) var isCore = false             // card is from core set
     
-    fileprivate static var multiIce = [String]()
+    private static var multiIce = [String]()
     
-    fileprivate static let nullInstance = Card()
+    private static let nullInstance = Card()
     
-    fileprivate var factionCode = ""
-    fileprivate var typeCode = ""
+    private var factionCode = ""
+    private var typeCode = ""
     
     var typeStr: String { return Translation.forTerm(self.typeCode, language: Card.currentLanguage) }
     var factionStr: String { return Translation.forTerm(self.factionCode, language: Card.currentLanguage) }
@@ -157,8 +157,8 @@ class Card: NSObject {
         return "https://netrunnerdb.com/" + Card.currentLanguage + "/card/" + self.code
     }
     
-    static fileprivate var imgSrcTemplate = ""
-    static fileprivate var currentLanguage = ""
+    static private var imgSrcTemplate = ""
+    static private var currentLanguage = ""
     
     class func null() -> Card {
         return nullInstance
@@ -242,7 +242,7 @@ class Card: NSObject {
         return xStringify(self.strength)
     }
     
-    fileprivate func xStringify(_ x: Int) -> String {
+    private func xStringify(_ x: Int) -> String {
         switch x {
         case -1: return ""
         case Card.X: return "X"
@@ -261,9 +261,9 @@ class Card: NSObject {
         return cards
     }
     
-    override fileprivate init() {}
+    override private init() {}
     
-    fileprivate init(json: JSON, language: String) {
+    private init(json: JSON, language: String) {
         super.init()
         
         self.code = json["code"].stringValue
@@ -358,7 +358,7 @@ class Card: NSObject {
         }
     }
     
-    fileprivate class func subtypeSplit(_ subtype: String) -> (subtype: String, subtypes: [String]) {
+    private class func subtypeSplit(_ subtype: String) -> (subtype: String, subtypes: [String]) {
         let s = subtype.replacingOccurrences(of: "G-Mod", with: "G-mod")
         let t = s.replacingOccurrences(of: " – ", with: " - ") // fix dashes in german subtypes
         if s != t {
@@ -397,7 +397,7 @@ class Card: NSObject {
         return name
     }
     
-    fileprivate static let factionColors: [NRFaction: UInt] = [
+    private static let factionColors: [NRFaction: UInt] = [
         .jinteki:      0x940c00,
         .nbn:          0xd7a32d,
         .weyland:      0x2d7868,
@@ -411,7 +411,7 @@ class Card: NSObject {
         .neutral:      0x000000
     ]
     
-    fileprivate static let cropValues: [NRCardType: Double] = [
+    private static let cropValues: [NRCardType: Double] = [
         .agenda: 15.0,
         .asset: 20.0,
         .event: 10.0,

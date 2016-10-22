@@ -11,14 +11,14 @@ import Foundation
 
 class DebugTimer: NSObject {
    
-    fileprivate struct Timer {
+    private struct Timer {
         var count = 0
         var time = 0.0
     }
     
-    fileprivate static var timers = [String: Timer]()
-    fileprivate var name = ""
-    fileprivate var start: TimeInterval = 0.0
+    private static var timers = [String: Timer]()
+    private var name = ""
+    private var start: TimeInterval = 0.0
     
     init(name: String) {
         self.name = name

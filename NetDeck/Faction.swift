@@ -10,18 +10,18 @@ import Foundation
 
 class Faction: NSObject {
     
-    fileprivate static var faction2name = [NRFaction: String]()
+    private static var faction2name = [NRFaction: String]()
     
-    fileprivate static let runnerFactions: [NRFaction] = [ .anarch, .criminal, .shaper, .adam, .apex, .sunnyLebeau ]
-    fileprivate static let runnerFactionsPreDAD: [NRFaction] = [ .anarch, .criminal, .shaper ]
-    fileprivate static let corpFactions: [NRFaction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
+    private static let runnerFactions: [NRFaction] = [ .anarch, .criminal, .shaper, .adam, .apex, .sunnyLebeau ]
+    private static let runnerFactionsPreDAD: [NRFaction] = [ .anarch, .criminal, .shaper ]
+    private static let corpFactions: [NRFaction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
     
-    fileprivate static var runnerFactionNames = [String]()
-    fileprivate static var runnerFactionNamesPreDAD = [String]()
-    fileprivate static var corpFactionNames = [String]()
+    private static var runnerFactionNames = [String]()
+    private static var runnerFactionNamesPreDAD = [String]()
+    private static var corpFactionNames = [String]()
     
-    fileprivate static var allFactions: TableData!
-    fileprivate static var allFactionsPreDAD: TableData!
+    private static var allFactions: TableData!
+    private static var allFactionsPreDAD: TableData!
     
     static let weylandConsortium = "Weyland Consortium"
     

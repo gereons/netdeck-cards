@@ -16,13 +16,13 @@ import Foundation
     var lastModified: Date?
     var dateCreated: Date?
 
-    fileprivate(set) var cards = [CardCounter]()
-    fileprivate(set) var identityCc: CardCounter?
-    fileprivate(set) var modified = false
-    fileprivate(set) var isDraft = false
+    private(set) var cards = [CardCounter]()
+    private(set) var identityCc: CardCounter?
+    private(set) var modified = false
+    private(set) var isDraft = false
     
-    fileprivate var sortType: NRDeckSort = .byType
-    fileprivate var lastChanges = DeckChangeSet()
+    private var sortType: NRDeckSort = .byType
+    private var lastChanges = DeckChangeSet()
     
     override init() {
         let settings = UserDefaults.standard

@@ -9,31 +9,31 @@
 import Foundation
 
 class CardList: NSObject {
-    fileprivate var role: NRRole = .none
-    fileprivate var initialCards: [Card]
+    private var role: NRRole = .none
+    private var initialCards: [Card]
     
-    fileprivate var cost: Int = -1
-    fileprivate var type: String?
-    fileprivate var types: Set<String>?
-    fileprivate var subtype: String?
-    fileprivate var subtypes: Set<String>?
-    fileprivate var strength: Int = -1
-    fileprivate var mu: Int = -1
-    fileprivate var trash: Int = -1
-    fileprivate var faction: String?
-    fileprivate var factions: Set<String>?
-    fileprivate var influence: Int = -1
-    fileprivate var set: String?
-    fileprivate var sets: Set<String>?
-    fileprivate var agendaPoints: Int = -1
-    fileprivate var text: String?
-    fileprivate var searchScope: NRSearchScope = .all
-    fileprivate var unique: Bool = false
-    fileprivate var limited: Bool = false
-    fileprivate var faction4inf: NRFaction = .none   // faction for influence filter
+    private var cost: Int = -1
+    private var type: String?
+    private var types: Set<String>?
+    private var subtype: String?
+    private var subtypes: Set<String>?
+    private var strength: Int = -1
+    private var mu: Int = -1
+    private var trash: Int = -1
+    private var faction: String?
+    private var factions: Set<String>?
+    private var influence: Int = -1
+    private var set: String?
+    private var sets: Set<String>?
+    private var agendaPoints: Int = -1
+    private var text: String?
+    private var searchScope: NRSearchScope = .all
+    private var unique: Bool = false
+    private var limited: Bool = false
+    private var faction4inf: NRFaction = .none   // faction for influence filter
     
-    fileprivate var sortType: NRBrowserSort = .byType
-    fileprivate var packUsage: NRPackUsage
+    private var sortType: NRBrowserSort = .byType
+    private var packUsage: NRPackUsage
 
     init(forRole role: NRRole, packUsage: NRPackUsage) {
         self.role = role

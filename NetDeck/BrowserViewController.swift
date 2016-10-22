@@ -17,16 +17,16 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var factionButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     
-    fileprivate var role = NRRole.none
-    fileprivate var cardList: CardList!
-    fileprivate var cards = [[Card]]()
-    fileprivate var sections = [String]()
+    private var role = NRRole.none
+    private var cardList: CardList!
+    private var cards = [[Card]]()
+    private var sections = [String]()
     
     // filter criteria
-    fileprivate var searchText = ""
-    fileprivate var types = Set<String>()
-    fileprivate var sets = Set<String>()
-    fileprivate var factions = Set<String>()
+    private var searchText = ""
+    private var types = Set<String>()
+    private var sets = Set<String>()
+    private var factions = Set<String>()
     
     override func viewDidLoad() {
         super.viewDidLoad()

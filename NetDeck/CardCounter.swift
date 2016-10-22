@@ -12,7 +12,7 @@ import Foundation
     let card: Card
     var count: Int
     
-    fileprivate static let nullInstance = CardCounter(card: Card.null(), count: 0)
+    private static let nullInstance = CardCounter(card: Card.null(), count: 0)
     
     init(card: Card, count: Int) {
         self.card = card

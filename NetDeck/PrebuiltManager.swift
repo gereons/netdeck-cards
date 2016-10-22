@@ -19,8 +19,8 @@ class PrebuiltManager: NSObject {
     static var allPrebuilts = [Prebuilt]()
     
     // caches
-    fileprivate static var prebuiltCards: [CardCounter]?
-    fileprivate static var prebuiltCodes: [String]?
+    private static var prebuiltCards: [CardCounter]?
+    private static var prebuiltCodes: [String]?
     
     // array of card codes in selected prebuilt decks
     class func availableCodes() -> [String]? {
@@ -48,7 +48,7 @@ class PrebuiltManager: NSObject {
         prebuiltCodes = nil
     }
     
-    fileprivate class func prepareCaches() {
+    private class func prepareCaches() {
         if prebuiltCards == nil {
             prebuiltCards = [CardCounter]()
             prebuiltCodes = [String]()

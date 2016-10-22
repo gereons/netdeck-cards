@@ -10,8 +10,8 @@ import UIKit
 import MessageUI
 
 class DeckEmail: NSObject, MFMailComposeViewControllerDelegate {
-    fileprivate var viewController: UIViewController!
-    fileprivate static let instance = DeckEmail()
+    private var viewController: UIViewController!
+    private static let instance = DeckEmail()
     
     class func canSendMail() -> Bool {
         return MFMailComposeViewController.canSendMail()

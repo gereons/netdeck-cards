@@ -13,24 +13,24 @@ class CardManager: NSObject {
     
     static let cardsFilename = "nrcards2.json"
     
-    fileprivate(set) static var allCardsByRole = [NRRole: [Card] ]()    // non-id cards
-    fileprivate static var allIdentitiesByRole = [NRRole: [Card] ]()    // ids
+    private(set) static var allCardsByRole = [NRRole: [Card] ]()    // non-id cards
+    private static var allIdentitiesByRole = [NRRole: [Card] ]()    // ids
     
-    fileprivate static var allSubtypes = [NRRole: [String: Set<String> ] ]()
-    fileprivate static var identitySubtypes = [ NRRole : Set<String> ]()
-    fileprivate static var identityKey: String!
+    private static var allSubtypes = [NRRole: [String: Set<String> ] ]()
+    private static var identitySubtypes = [ NRRole : Set<String> ]()
+    private static var identityKey: String!
     
-    fileprivate static var allKnownCards = [ String: Card ]()
+    private static var allKnownCards = [ String: Card ]()
     
-    fileprivate(set) static var maxMU: Int = -1
-    fileprivate(set) static var maxInfluence: Int = -1
-    fileprivate(set) static var maxStrength: Int = -1
-    fileprivate(set) static var maxAgendaPoints: Int = -1
-    fileprivate(set) static var maxRunnerCost: Int = -1
-    fileprivate(set) static var maxCorpCost: Int = -1
-    fileprivate(set) static var maxTrash: Int = -1
+    private(set) static var maxMU: Int = -1
+    private(set) static var maxInfluence: Int = -1
+    private(set) static var maxStrength: Int = -1
+    private(set) static var maxAgendaPoints: Int = -1
+    private(set) static var maxRunnerCost: Int = -1
+    private(set) static var maxCorpCost: Int = -1
+    private(set) static var maxTrash: Int = -1
     
-    fileprivate static let cardAliases = [
+    private static let cardAliases = [
         "08034": "Franklin",  // Crick
         "02085": "HQI",       // HQ Interface
         "02107": "RDI",       // R&D Interface
@@ -134,7 +134,7 @@ class CardManager: NSObject {
         return allKnownCards.count > 0
     }
     
-    fileprivate class func setSubtypes() {
+    private class func setSubtypes() {
         // fill subtypes per role
         for card in allKnownCards.values {
             if (card.subtypes.count > 0) {
@@ -166,7 +166,7 @@ class CardManager: NSObject {
         }
     }
     
-    fileprivate class func addCardAliases() {
+    private class func addCardAliases() {
         // add automatic aliases like "Self Modifying Code" -> "SMC"
         for card in allKnownCards.values {
             if (card.name.length > 2) {
@@ -196,7 +196,7 @@ class CardManager: NSObject {
         }
     }
     
-    fileprivate class func add(card: Card) {
+    private class func add(card: Card) {
         guard card.isValid else {
             print("invalid card: \(card.code) \(card.name)")
             return
@@ -324,7 +324,7 @@ class CardManager: NSObject {
         return true
     }
     
-    fileprivate class func filename() -> String {
+    private class func filename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
     
