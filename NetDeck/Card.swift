@@ -6,8 +6,6 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-import Foundation
-import DTCoreText
 import SwiftyJSON
 
 class Card: NSObject {
@@ -81,7 +79,7 @@ class Card: NSObject {
     static let sansanCityGrid   = "01092"
     static let breakingNews     = "01082"
     
-    fileprivate static let MostWantedLists: [NRMWL: Set<String>] = [
+    fileprivate static let mostWantedLists: [NRMWL: Set<String>] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
         .v1_0: Set<String>([
             cerberusH1, cloneChip, desperado, parasite, prepaidVoicepad, yog_0,
@@ -171,8 +169,9 @@ class Card: NSObject {
     }
     
     func isMostWanted(_ mwl: NRMWL) -> Bool {
-        guard mwl != .none else { return false }
-        let cards = Card.MostWantedLists[mwl]!
+        guard let cards = Card.mostWantedLists[mwl] else {
+            return false
+        }
         return cards.contains(self.code)
     }
     
@@ -206,33 +205,6 @@ class Card: NSObject {
         return Card.factionColors[self.faction]!
     }
     
-    fileprivate var _attributedText: NSAttributedString?
-    // html rendered
-    var attributedText: NSAttributedString! {
-        if self._attributedText == nil {
-            let str = self.text
-                .replacingOccurrences(of: "\n", with: "<br/>")
-                .replacingOccurrences(of: "[subroutine]", with: "<span class='icon'>\u{e900}</span>")
-                .replacingOccurrences(of: "[trash]", with: "<span class='icon'>\u{e905}</span>")
-                .replacingOccurrences(of: "[click]", with: "<span class='icon'>\u{e909}</span>")
-                .replacingOccurrences(of: "[credit]", with: "<span class='icon'>\u{e90b}</span>")
-                .replacingOccurrences(of: "[recurring-credit]", with: "<span class='icon'>\u{e90a}</span>")
-                .replacingOccurrences(of: "[link]", with: "<span class='icon'>\u{e908}</span>")
-                .replacingOccurrences(of: "[mu]", with: "<span class='icon'>\u{e904}</span>")
-                .replacingOccurrences(of: "<errata>", with: "<em>")
-                .replacingOccurrences(of: "</errata>", with: "</em>")
-                .replacingOccurrences(of: "<trace>", with: "<strong>")
-                .replacingOccurrences(of: "</trace>", with: "</strong>-")
-
-            let data = str.data(using: String.Encoding.utf8)
-            self._attributedText = NSAttributedString(htmlData: data, options: Card.coreTextOptions, documentAttributes: nil)
-            if self._attributedText == nil {
-                self._attributedText = NSAttributedString(string: "")
-            }
-        }
-        return self._attributedText!
-    }
-
     var octgnCode: String {
         return Card.octgnPrefix + self.code
     }
@@ -452,22 +424,17 @@ class Card: NSObject {
         .upgrade: 22.0
     ]
     
-    static let fontFamily = UIFont.systemFont(ofSize: 13).familyName
-    static let styleSheet = DTCSSStylesheet(styleBlock:
-        ".icon { font-family: 'netrunner' !important; font-style: normal; font-variant: normal; font-weight: normal; line-height: 1; text-transform: none; }")
+    // implement Hashable & Equatable to allow Card objects as dictionary keys
+    override var hash: Int {
+        return code.hash
+    }
     
-    static let coreTextOptions: [String: Any] = [
-        DTUseiOS6Attributes: true,
-        DTDefaultFontFamily: NSString(string: fontFamily),
-        DTDefaultFontSize: 13,
-        DTDefaultStyleSheet: styleSheet!,
-    ]
-    
-    override var hashValue: Int {
-        return code.hashValue
+    override func isEqual(_ object: Any?) -> Bool {
+        if let other = object as? Card {
+            return self.code == other.code
+        } else {
+            return false
+        }
     }
 }
 
-func == (lhs: Card, rhs: Card) -> Bool {
-    return lhs.code == rhs.code
-}
