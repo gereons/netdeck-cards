@@ -256,12 +256,10 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) deckChanged:(NSNotification*)notification
 {
-    NSLog(@"deckChanged nta");
     Deck* deck = self.deckListViewController.deck;
     Card* identity = deck.identity;
     if (identity != nil)
     {
-        NSLog(@"pre-filtering");
         if (self.role == NRRoleCorp) {
             [self.cardList preFilterForCorp:identity];
         }

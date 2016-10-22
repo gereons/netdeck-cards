@@ -126,8 +126,13 @@ class ImageCache: NSObject {
     }
     
     func getImage(for card: Card, completion: @escaping (Card, UIImage, Bool) -> Void) {
-        let key = card.code
+        // uncomment to fake "no image available" for all cards
+//        if true {
+//            completion(card, ImageCache.placeholder(for: card.role), true)
+//            return
+//        }
         
+        let key = card.code
         if let img = memCache.object(forKey: key) {
             completion(card, img, false)
             if Reachability.online {
