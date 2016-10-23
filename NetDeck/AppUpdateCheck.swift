@@ -6,13 +6,12 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-import Foundation
 import Alamofire
-import SwiftyJSON
+import Marshal
 
 class AppUpdateCheck: NSObject {
     
-    static let WEEK: TimeInterval = 7*24*60*60 // one week in seconds
+    static let week: TimeInterval = 7*24*60*60 // one week in seconds
     static let forceTest = false
     
     class func checkUpdate() {
@@ -20,7 +19,7 @@ class AppUpdateCheck: NSObject {
         let settings = UserDefaults.standard
         
         guard let nextCheck = settings.object(forKey: SettingsKeys.NEXT_UPDATE_CHECK) as? Date else {
-            let nextCheck = Date(timeIntervalSinceNow: WEEK)
+            let nextCheck = Date(timeIntervalSinceNow: week)
             settings.set(nextCheck, forKey: SettingsKeys.NEXT_UPDATE_CHECK)
             return
         }
@@ -44,10 +43,17 @@ class AppUpdateCheck: NSObject {
                 }
             }
             
-            settings.set(now.addingTimeInterval(WEEK), forKey: SettingsKeys.NEXT_UPDATE_CHECK)
+            settings.set(now.addingTimeInterval(week), forKey: SettingsKeys.NEXT_UPDATE_CHECK)
         }
     }
     
+    private struct AppStoreResult: Unmarshaling {
+        let version: String
+        
+        init(object: MarshaledObject) throws {
+            self.version = try object.value(for: "version")
+        }
+    }
     
     private class func checkForUpdate(_ completion: @escaping (String?) -> Void)  {
         guard
@@ -63,12 +69,16 @@ class AppUpdateCheck: NSObject {
         Alamofire.request(url).responseJSON { response in
             switch response.result {
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    if let appstoreVersion = json["results"][0]["version"].string {
-                        let cmp = appstoreVersion.compare(currentVersion, options: .numeric)
-                        completion(cmp == .orderedDescending ? appstoreVersion : nil)
-                    }
+                if let data = response.data {
+                    do {
+                        let json = try JSONParser.JSONObjectWithData(data)
+                        
+                        let results: [AppStoreResult] = try json.value(for: "results")
+                        if let appstoreVersion = results.first?.version {
+                            let cmp = appstoreVersion.compare(currentVersion, options: .numeric)
+                            completion(cmp == .orderedDescending ? appstoreVersion : nil)
+                        }
+                    } catch {}
                 }
                 fallthrough
             case .failure:

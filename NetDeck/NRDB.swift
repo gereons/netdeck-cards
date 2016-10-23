@@ -7,7 +7,7 @@
 //
 
 import Alamofire
-import SwiftyJSON
+import Marshal
 
 class NRDB: NSObject {
     static let CLIENT_HOST =    "netdeck://oauth2"
@@ -22,14 +22,6 @@ class NRDB: NSObject {
     
     static let sharedInstance = NRDB()
     override private init() {}
-    
-    private static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ'"
-                            // "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
-        formatter.timeZone = TimeZone(identifier: "GMT")
-        return formatter
-    }()
     
     private var timer: Timer?
     private var deckMap = [String: String]()
@@ -100,28 +92,25 @@ class NRDB: NSObject {
             .responseJSON { response in
                 switch response.result {
                 case .success:
-                    if let value = response.result.value {
-                        let json = JSON(value)
-                        let settings = UserDefaults.standard
+                    if let data = response.data {
                         var ok = true
-                        
-                        if let token = json["access_token"].string {
-                            settings.set(token, forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
-                        } else {
+                        let settings = UserDefaults.standard
+                        do {
+                            let json = try JSONParser.JSONObjectWithData(data)
+                            
+                            let accessToken: String = try json.value(for: "access_token")
+                            settings.set(accessToken, forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
+                            
+                            let refreshToken: String = try json.value(for: "refresh_token")
+                            settings.set(refreshToken, forKey: SettingsKeys.NRDB_REFRESH_TOKEN)
+                            
+                            let exp: Double = try json.value(for: "expires_in")
+                            settings.set(exp, forKey: SettingsKeys.NRDB_TOKEN_TTL)
+                            let expiry = NSDate(timeIntervalSinceNow: exp)
+                            settings.set(expiry, forKey: SettingsKeys.NRDB_TOKEN_EXPIRY)
+                        } catch {
                             ok = false
                         }
-                        
-                        if let token = json["refresh_token"].string {
-                            settings.set(token, forKey: SettingsKeys.NRDB_REFRESH_TOKEN)
-                        } else {
-                            ok = false
-                        }
-                        
-                        let exp = json["expires_in"].doubleValue
-                        settings.set(exp, forKey: SettingsKeys.NRDB_TOKEN_TTL)
-                        let expiry = NSDate(timeIntervalSinceNow: exp)
-                        settings.set(expiry, forKey: SettingsKeys.NRDB_TOKEN_EXPIRY)
-                        
                         if ok {
                             if !settings.bool(forKey: SettingsKeys.KEEP_NRDB_CREDENTIALS) {
                                 UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
@@ -233,10 +222,14 @@ class NRDB: NSObject {
             var decks: [Deck]?
             switch response.result {
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    decks = self.parseDecksFromJson(json)
-                    completion(decks)
+                if let data = response.data {
+                    do {
+                        let json = try JSONParser.JSONObjectWithData(data)
+                        decks = self.parseDecksFromJson(json)
+                        completion(decks)
+                    } catch {
+                        completion(nil)
+                    }
                 }
             case .failure:
                 completion(nil)
@@ -261,10 +254,14 @@ class NRDB: NSObject {
         Alamofire.request(request).validate().responseJSON { response in
             switch response.result {
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    let deck = self.parseDeckFromJson(json)
-                    completion(deck)
+                if let data = response.data {
+                    do {
+                        let json = try JSONParser.JSONObjectWithData(data)
+                        let deck = self.parseDeckFromJson(json)
+                        completion(deck)
+                    } catch {
+                        completion(nil)
+                    }
                 }
             case .failure:
                 completion(nil)
@@ -272,103 +269,31 @@ class NRDB: NSObject {
         }
     }
     
-    private func parseDecksFromJson(_ json: JSON) -> [Deck] {
+    private func parseDecksFromJson(_ json: JSONObject) -> [Deck] {
         var decks = [Deck]()
         
-        if !json.validNrdbResponse {
+        if !NRDB.validJsonResponse(json: json) {
             return decks
         }
         
-        let data = json["data"]
-        for d in data.arrayValue {
-            if let deck = self.parseDeckFromData(d) {
-                decks.append(deck)
-            }
+        do {
+            decks = try json.value(for: "data")
+        } catch let error {
+            print("caught \(error)")
         }
         return decks
     }
     
-    private func parseDeckFromJson(_ json: JSON) -> Deck? {
-        if !json.validNrdbResponse {
+    private func parseDeckFromJson(_ json: JSONObject) -> Deck? {
+        if !NRDB.validJsonResponse(json: json) {
             return nil
         }
+        do {
+            let decks: [Deck] = try json.value(for: "data")
+            return decks.first
+        } catch {}
     
-        let data = json["data"][0]
-        return self.parseDeckFromData(data)
-    }
-    
-    private func parseDeckFromData(_ json: JSON) -> Deck? {
-        let deck = Deck()
-        
-        deck.name = json["name"].string
-        deck.notes = json["description"].string
-        deck.tags = json["tags"].arrayObject as? [String]
-        deck.netrunnerDbId = "\(json["id"].intValue)"
-        
-        // parse last update '2014-06-19T13:52:24+00:00'
-        deck.lastModified = NRDB.dateFormatter.date(from: json["date_update"].stringValue)
-        deck.dateCreated = NRDB.dateFormatter.date(from: json["date_creation"].stringValue)
-        
-        let mwlCode = json["mwl_code"].stringValue
-        deck.mwl = NRMWL.by(code: mwlCode)
-        
-        for (code, qty) in json["cards"].dictionaryValue {
-            if let card = CardManager.cardBy(code: code) {
-                deck.addCard(card, copies:qty.intValue, history: false)
-            }
-        }
-        
-        var revisions = [DeckChangeSet]()
-        if let history = json["history"].dictionary {
-            for (date, changes) in history {
-                if let timestamp = NRDB.dateFormatter.date(from: date) {
-                    let dcs = DeckChangeSet()
-                    dcs.timestamp = timestamp
-                    
-                    for (code, amount) in changes.dictionaryValue {
-                        if let card = CardManager.cardBy(code: code), let amount = amount.int {
-                            dcs.addCardCode(card.code, copies: amount)
-                        }
-                    }
-                    
-                    dcs.sort()
-                    revisions.append(dcs)
-                }
-            }
-        }
-        
-        revisions.sort { $0.timestamp?.timeIntervalSince1970 ?? 0 < $1.timestamp?.timeIntervalSinceNow ?? 0 }
-        
-        let initial = DeckChangeSet()
-        initial.initial = true
-        initial.timestamp = deck.dateCreated
-        revisions.append(initial)
-        deck.revisions = revisions
-        
-        let newest = deck.revisions.first
-        var cards = [String: Int]()
-        for cc in deck.allCards {
-            cards[cc.card.code] = cc.count
-        }
-        newest?.cards = cards
-        
-        // walk through the deck's history and pre-compute a card list for every revision
-        for i in 0..<deck.revisions.count-1 {
-            let prev = deck.revisions[i]
-            for dc in prev.changes {
-                let qty = (cards[dc.code] ?? 0) - dc.count
-                if qty == 0 {
-                    cards.removeValue(forKey: dc.code)
-                } else {
-                    cards[dc.code] = qty
-                }
-            }
-            
-            let dcs = deck.revisions[i+1]
-            dcs.cards = cards
-        }
-        
-        return deck
+        return nil
     }
     
     // MARK: - save / publish
@@ -387,16 +312,11 @@ class NRDB: NSObject {
             cards[cc.card.code] = cc.count
         }
         
-        var tags = ""
-        if deck.tags != nil {
-            tags = (deck.tags! as NSArray).componentsJoined(by: " ")
-        }
         let saveUrl = "https://netrunnerdb.com/api/2.0/private/deck/save?access_token=" + accessToken
         let deckId = deck.netrunnerDbId ?? "0"
         let parameters: [String: Any] = [
             "deck_id": deckId,
-            "name": (deck.name ?? "Deck"),
-            "tags": tags,
+            "name": deck.name ?? "Deck",
             "description": deck.notes ?? "",
             "content": cards
         ]
@@ -425,18 +345,26 @@ class NRDB: NSObject {
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .success(let value):
-                    let json = JSON(value)
-                    let ok = json.validNrdbResponse
-                    if ok {
-                        let deckId = json["data"][0]["id"].stringValue
-                        if deckId != "" {
-                            completion(true, deckId, nil)
-                            return
+                case .success:
+                    if let data = response.data {
+                        do {
+                            let json = try JSONParser.JSONObjectWithData(data)
+                            let ok = NRDB.validJsonResponse(json: json)
+                            if ok {
+                                let decks: [Deck] = try json.value(for: "data")
+                                
+                                if let deck = decks.first, deck.netrunnerDbId != "" {
+                                    completion(true, deck.netrunnerDbId, nil)
+                                    return
+                                }
+                            } else {
+                                let msg: String = try json.value(for: "msg")
+                                completion(false, nil, msg)
+                                return
+                            }
+                        } catch {
+                            break
                         }
-                    } else {
-                        completion(false, nil, json["msg"].stringValue)
-                        return
                     }
                 case .failure:
                     break
@@ -467,27 +395,29 @@ class NRDB: NSObject {
     func deleteDeck(_ deckId: String?) {
         self.deckMap.removeValue(forKey: deckId ?? "")
     }
+    
+    static private let supportedNrdbApiVersion = "2.0"
+    class func validJsonResponse(json: JSONObject) -> Bool {
+        do {
+            let version: String = try json.value(for: "version_number")
+            let success: Bool = try json.value(for: "success")
+            let total: Int = try json.value(for: "total")
+            return success && version == supportedNrdbApiVersion && total > 0
+        } catch {
+            return false
+        }
+    }
 }
 
 // MARK: - NRDB-specific JSON extension
 
-extension JSON {
-    
-    static private let supportedNrdbApiVersion = 2
-    
-    // check if this is a valid API response
-    var validNrdbResponse: Bool {
-        let version = self["version_number"].intValue
-        let success = self["success"].boolValue
-        return success && version == JSON.supportedNrdbApiVersion
-    }
-    
-    // get a localized property from a "data" object
-    func localized(_ property: String, _ language: String) -> String {
-        if let localized = self["_locale"][language][property].string , localized.length > 0 {
-            return localized
+extension MarshaledObject {
+    /// try to get a localized property for `key`
+    func localized(for key: KeyType, language: String) throws -> String {
+        if let loc: String = try self.value(for: "_locale." + language + "." + key.stringValue), loc.length > 0 {
+            return loc
         } else {
-            return self[property].stringValue
+            return try self.value(for: key) ?? ""
         }
     }
 }

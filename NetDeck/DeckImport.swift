@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SDCAlertView
 import Alamofire
-import SwiftyJSON
+import Marshal
 
 class DeckImport: NSObject {
     
@@ -285,10 +285,12 @@ class DeckImport: NSObject {
         self.request = Alamofire.request(deckUrl).validate().responseJSON { response in
             switch response.result {
             case .success:
-                if let value = response.result.value , !self.downloadStopped {
-                    let json = JSON(value)
-                    // print("JSON: \(json)")
-                    ok = self.parseJsonDeckList(json)
+                if let data = response.data, !self.downloadStopped {
+                    do {
+                        let json = try JSONParser.JSONObjectWithData(data)
+                        // print("JSON: \(json)")
+                        ok = self.parseJsonDeckList(json)
+                    } catch {}
                 }
                 self.downloadFinished(ok)
             case .failure(let error):
@@ -298,33 +300,21 @@ class DeckImport: NSObject {
         }
     }
     
-    func parseJsonDeckList(_ json: JSON) -> Bool {
-        let deck = Deck()
+    func parseJsonDeckList(_ json: JSONObject) -> Bool {
         
-        if !json.validNrdbResponse {
+        if !NRDB.validJsonResponse(json: json) {
             return false
         }
         
-        let data = json["data"][0]
-        
-        deck.name = data["name"].stringValue
-        var notes = data["description"].stringValue
-        if notes.length > 0 {
-            notes = notes.replacingOccurrences(of: "<p>", with: "")
-            notes = notes.replacingOccurrences(of: "</p>", with: "")
-            deck.notes = notes
-        }
-        
-        for (code, qty) in data["cards"].dictionaryValue {
-            if let card = CardManager.cardBy(code: code) , qty.intValue > 0 {
-                deck.addCard(card, copies: qty.intValue)
+        do {
+            let decks: [Deck] = try json.value(for: "data")
+            
+            if let deck = decks.first, deck.identity != nil, deck.cards.count > 0 {
+                NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
+                return true
             }
-        }
+        } catch {}
         
-        if deck.identity != nil && deck.cards.count > 0 {
-            NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
-            return true
-        }
         return false
     }
 

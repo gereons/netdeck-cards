@@ -9,7 +9,6 @@
 import Alamofire
 import SwiftKeychainWrapper
 import SVProgressHUD
-import SwiftyJSON
 
 class JintekiNet: NSObject {
     static let sharedInstance = JintekiNet()

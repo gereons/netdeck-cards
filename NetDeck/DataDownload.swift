@@ -8,7 +8,7 @@
 
 import SDCAlertView
 import Alamofire
-import SwiftyJSON
+import Marshal
 
 private enum DownloadScope: Int {
     case all
@@ -98,15 +98,15 @@ class DataDownload: NSObject {
         ]
         
         let group = DispatchGroup()
-        var results = [ApiRequest: JSON]()
+        var results = [ApiRequest: Data]()
         
         for (key, req) in requests {
             group.enter()
-            Alamofire.request(req).responseJSON { response in
+            Alamofire.request(req).validate().responseJSON { response in
                 switch response.result {
-                case .success(let value):
-                    if !self.downloadStopped {
-                        results[key] = JSON(value)
+                case .success:
+                    if let data = response.data, !self.downloadStopped {
+                        results[key] = data
                     }
                 case .failure:
                     break
@@ -267,16 +267,16 @@ class DataDownload: NSObject {
     class func checkNrdbApi(_ url: String, completion: @escaping (Bool) -> Void) {
         Alamofire.request(url)
             .validate()
-            .responseJSON { (response) in
+            .responseJSON { response in
                 switch response.result {
                 case .success:
                     var ok = false
-                    if let value = response.result.value {
-                        let json = JSON(value)
-                        let code = json["data"][0]["code"].stringValue
-                        if json.validNrdbResponse && code == "01001" {
-                            ok = true
-                        }
+                    if let data = response.data {
+                        do {
+                            let json = try JSONParser.JSONObjectWithData(data)
+                            let total: Int = try json.value(for: "total")
+                            ok = NRDB.validJsonResponse(json: json) && total == 1
+                        } catch {}
                     }
                     completion(ok)
                 case .failure:

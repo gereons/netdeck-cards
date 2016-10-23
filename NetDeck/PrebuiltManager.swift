@@ -6,12 +6,28 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-import SwiftyJSON
+import Marshal
 
-class Prebuilt {
-    var name = ""
-    var settingsKey = ""
-    var cards = [CardCounter]()
+struct Prebuilt: Unmarshaling {
+    let name: String
+    let settingsKey: String
+    let cards: [CardCounter]
+    
+    init(object: MarshaledObject) throws {
+        self.name = try object.value(for: "name")
+        let code: String = try object.value(for: "code")
+        self.settingsKey = "use_" + code
+    
+        var cc = [CardCounter]()
+        if let cards = object.optionalAny(for: "cards") as? [String: Int] {
+            for (code, qty) in cards {
+                if let card = CardManager.cardBy(code: code) {
+                    cc.append(CardCounter(card: card, count: qty))
+                }
+            }
+        }
+        self.cards = cc
+    }
 }
 
 class PrebuiltManager: NSObject {
@@ -77,34 +93,35 @@ class PrebuiltManager: NSObject {
     }
     
     class func setupFromFiles(_ language: String) -> Bool {
-        let filename = self.filename()
-        
-        let fileMgr = FileManager.default
-        
-        if fileMgr.fileExists(atPath: filename) {
-            if let str = try? NSString(contentsOfFile: filename, encoding: String.Encoding.utf8.rawValue) {
-                let prebuiltJson = JSON.parse(str as String)
+        if let data = FileManager.default.contents(atPath: self.filename()) {
+            do {
+                let prebuiltJson = try JSONParser.JSONObjectWithData(data)
                 return setupFromJsonData(prebuiltJson, language: language)
+            } catch {
+                return false
             }
         }
+        
         // print("app start: missing pack/cycles files")
         return false
     }
     
-    class func setupFromNetrunnerDb(_ prebuilts: JSON, language: String) -> Bool {
-        var ok = setupFromJsonData(prebuilts, language: language)
-        if ok {
-            let filename = self.filename()
-            if let data = try? prebuilts.rawData() {
-                do {
-                    try data.write(to: URL(fileURLWithPath: filename), options: .atomic)
-                } catch {
-                    ok = false
-                }
-                // print("write prebuilts ok=\(ok)")
+    class func setupFromNetrunnerDb(_ data: Data, language: String) -> Bool {
+        var ok = false
+        do {
+            let prebuiltJson = try JSONParser.JSONObjectWithData(data)
+            ok = setupFromJsonData(prebuiltJson, language: language)
+            if !ok {
+                return false
             }
+            
+            let filename = self.filename()
+            try data.write(to: URL(fileURLWithPath: filename), options: .atomic)
             AppDelegate.excludeFromBackup(filename)
+        } catch {
+            ok = false
         }
+        
         return ok
     }
     
@@ -116,26 +133,18 @@ class PrebuiltManager: NSObject {
         return defaults
     }
     
-    class func setupFromJsonData(_ prebuilts: JSON, language: String) -> Bool {
-        let ok = prebuilts.validNrdbResponse
+    class func setupFromJsonData(_ prebuilts: JSONObject, language: String) -> Bool {
+        let ok = NRDB.validJsonResponse(json: prebuilts)
         if !ok {
             // print("prebuilts invalid")
             return false
         }
         
-        for prebuilt in prebuilts["data"].arrayValue {
-            let pb = Prebuilt()
-            
-            pb.name = prebuilt["name"].stringValue
-            pb.settingsKey = "use_" + prebuilt["code"].stringValue
-            for (code, qty) in prebuilt["cards"].dictionaryValue {
-                if let card = CardManager.cardBy(code: code) , qty.intValue > 0 {
-                    let cc = CardCounter(card: card, count: qty.intValue)
-                    pb.cards.append(cc)
-                }
-            }
-            
-            PrebuiltManager.allPrebuilts.append(pb)
+        do {
+            PrebuiltManager.allPrebuilts = try prebuilts.value(for: "data")
+        }
+        catch {
+            return false
         }
         
         UserDefaults.standard.register(defaults: PrebuiltManager.settingsDefaults())
