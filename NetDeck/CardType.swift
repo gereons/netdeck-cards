@@ -30,11 +30,15 @@ class CardType: NSObject {
         
         type2name.removeAll()
         type2name[.none] = Constant.kANY
+        let expectedTypes = Codes.code2Type.count + 1 // +1 for "Any"
         for card in cards {
             type2name[card.type] = card.typeStr
+            if type2name.count == expectedTypes {
+                break
+            }
         }
-        assert(type2name.count == Codes.code2Type.count + 1) // +1 for "Any"
-        if type2name.count != Codes.code2Type.count + 1 {
+        assert(type2name.count == expectedTypes)
+        if type2name.count != expectedTypes {
             return false
         }
         

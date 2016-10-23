@@ -18,10 +18,10 @@ class CardManager: NSObject {
     private static var allIdentitiesByRole = [NRRole: [Card] ]()    // ids
     
     private static var allSubtypes = [NRRole: [String: Set<String> ] ]()
-    private static var identitySubtypes = [ NRRole : Set<String> ]()
-    private static var identityKey: String!
+    private static var identitySubtypes = [ NRRole: Set<String> ]()
+    private static var identityKey = ""
     
-    private static var allKnownCards = [ String: Card ]()
+    private static var allKnownCards = [ String: Card ](minimumCapacity: 2000)
     
     private(set) static var maxMU: Int = -1
     private(set) static var maxInfluence: Int = -1
@@ -50,7 +50,7 @@ class CardManager: NSObject {
         "10043": "Polop",     // Political Operative
         "10108": "FIRS",      // Full Immersion RecStudio
         "11024": "Clippy",    // Paperclip
-        "11036": "CIF",       // C.I. Funds
+        "11094": "IPB",       // IP Block
     ]
     
     override class func initialize() {
@@ -58,11 +58,11 @@ class CardManager: NSObject {
         
         allKnownCards.removeAll()
         
-        allCardsByRole[.runner] = [Card]()
-        allCardsByRole[.corp] = [Card]()
+        allCardsByRole[.runner] = { var c = [Card](); c.reserveCapacity(800); return c }()
+        allCardsByRole[.corp] = { var c = [Card](); c.reserveCapacity(800); return c }()
         
-        allIdentitiesByRole[.runner] = [Card]()
-        allIdentitiesByRole[.corp] = [Card]()
+        allIdentitiesByRole[.runner] = { var c = [Card](); c.reserveCapacity(50); return c }()
+        allIdentitiesByRole[.corp] = { var c = [Card](); c.reserveCapacity(50); return c }()
         
         identitySubtypes[.runner] = Set<String>()
         identitySubtypes[.corp] = Set<String>()
@@ -135,43 +135,38 @@ class CardManager: NSObject {
         return allKnownCards.count > 0
     }
     
-    private class func setSubtypes() {
+    private class func setSubtypes(_ cards: [Card]) {
         // fill subtypes per role
-        for card in allKnownCards.values {
-            if (card.subtypes.count > 0) {
+        for card in cards {
+            if card.subtypes.count > 0 {
                 // NSLog(@"%@", card.subtype)
-                if (card.type == .identity)
-                {
+                if card.type == .identity {
                     identityKey = card.typeStr
                     identitySubtypes[card.role]?.formUnion(card.subtypes)
-                }
-                else
-                {
-                    var dict = allSubtypes[card.role]
-                    if (dict == nil) {
-                        dict = [String: Set<String>]()
+                } else {
+                    var dict = allSubtypes[card.role] ?? [String: Set<String>]()
+                    
+                    if dict[card.typeStr] == nil {
+                        dict[card.typeStr] = Set<String>()
+                    }
+                    if dict[Constant.kANY] == nil {
+                        dict[Constant.kANY] = Set<String>()
                     }
                     
-                    if dict![card.typeStr] == nil {
-                        dict![card.typeStr] = Set<String>()
-                    }
-                    if (dict![Constant.kANY] == nil) {
-                        dict![Constant.kANY] = Set<String>()
-                    }
-                    
-                    dict![card.typeStr]?.formUnion(card.subtypes)
-                    dict![Constant.kANY]?.formUnion(card.subtypes)
+                    dict[card.typeStr]?.formUnion(card.subtypes)
+                    dict[Constant.kANY]?.formUnion(card.subtypes)
                     allSubtypes[card.role] = dict
                 }
             }
         }
     }
     
-    private class func addCardAliases() {
+    private class func addCardAliases(_ cards: [Card]) {
         // add automatic aliases like "Self Modifying Code" -> "SMC"
-        for card in allKnownCards.values {
-            if (card.name.length > 2) {
-                let words = card.name.components(separatedBy: CharacterSet(charactersIn: " -"))
+        let split = CharacterSet(charactersIn: " -.")
+        for card in cards {
+            if card.name.length > 2 {
+                let words = card.name.components(separatedBy: split)
                 if words.count > 1 {
                     var alias = ""
                     for word in words {
@@ -205,7 +200,7 @@ class CardManager: NSObject {
         
         allKnownCards[card.code] = card
         
-        if (card.type == .identity) {
+        if card.type == .identity {
             allIdentitiesByRole[card.role]!.append(card)
         } else {
             allCardsByRole[card.role]!.append(card)
@@ -218,12 +213,9 @@ class CardManager: NSObject {
         maxInfluence = max(card.influence, maxInfluence)
         maxAgendaPoints = max(card.agendaPoints, maxAgendaPoints)
         
-        if card.role == .runner
-        {
+        if card.role == .runner {
             maxRunnerCost = max(card.cost, maxRunnerCost)
-        }
-        else
-        {
+        } else {
             maxCorpCost = max(card.cost, maxCorpCost)
         }
     }
@@ -259,17 +251,6 @@ class CardManager: NSObject {
     
     class func setupFromFiles(_ language: String) -> Bool {
         let filename = CardManager.filename()
-        
-        let t = DebugTimer(named: "card setup")
-        defer {
-            t.stop(verbose: true)
-        }
-//        if let str = try? NSString(contentsOfFile: filename, encoding: String.Encoding.utf8.rawValue) {
-//            t.elapsed(verbose: true)
-//            let cardsJson = JSON.parse(str as String)
-//            t.elapsed(verbose: true)
-//            return setupFromJson(cardsJson, language: language)
-//        }
         
         if let data = FileManager.default.contents(atPath: filename) {
             do {
@@ -314,25 +295,29 @@ class CardManager: NSObject {
         
         // parse data
         let parsedCards = Card.cardsFromJson(cards, language: language)
+        t.elapsed("parser")
         for card in parsedCards {
             CardManager.add(card: card)
         }
-        t.elapsed(verbose: true)
+        t.elapsed("adder")
         
         let cards = Array(allKnownCards.values)
         if cards.count == 0 {
             return false
         }
         
-        CardManager.setSubtypes()
-        CardManager.addCardAliases()
-        
+        t.elapsed("check count")
+        CardManager.setSubtypes(cards)
+        t.elapsed("subtypes")
+        CardManager.addCardAliases(cards)
+        t.elapsed("aliases")
         if !Faction.initializeFactionNames(cards) {
             return false
         }
         if !CardType.initializeCardTypes(cards) {
             return false
         }
+        t.elapsed("faction & types")
         
         // sort identities by faction and name
         for var arr in [ allIdentitiesByRole[.runner]!, allIdentitiesByRole[.corp]! ] {

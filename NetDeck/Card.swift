@@ -252,10 +252,12 @@ class Card: NSObject, Unmarshaling {
     
     class func cardsFromJson(_ json: JSONObject, language: String) -> [Card] {
         var cards = [Card]()
-        
+
         imgSrcTemplate = try! json.value(for: "imageUrlTemplate")
         currentLanguage = language
-        cards = try! json.value(for: "data")
+        do {
+            cards = try json.value(for: "data")
+        } catch {}
         
         return cards
     }

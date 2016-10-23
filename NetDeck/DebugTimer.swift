@@ -35,6 +35,14 @@ class DebugTimer: NSObject {
         return elapsed
     }
     
+    @discardableResult
+    func elapsed(_ str: String) -> TimeInterval {
+        let now = Date.timeIntervalSinceReferenceDate
+        let elapsed = now - self.start
+        print("- \(self.name): \(str) \(elapsed)s")
+        return elapsed
+    }
+    
     func stop(verbose: Bool = false) {
         let elapsed = self.elapsed()
         

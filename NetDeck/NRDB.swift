@@ -502,6 +502,10 @@ extension Dictionary {
 
 extension MarshaledObject {
     func localized(for key: KeyType, language: String) throws -> String {
-        return ""
+        if let loc: String = try self.value(for: "_locale." + language + "." + key.stringValue), loc.length > 0 {
+            return loc
+        } else {
+            return try self.value(for: key) ?? ""
+        }
     }
 }

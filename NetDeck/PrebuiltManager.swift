@@ -91,9 +91,6 @@ class PrebuiltManager: NSObject {
     }
     
     class func setupFromFiles(_ language: String) -> Bool {
-        let t = DebugTimer(named: "prebuilt")
-        defer { t.stop(verbose: true) }
-        
         if let data = FileManager.default.contents(atPath: self.filename()) {
             do {
                 let prebuiltJson = try JSONParser.JSONObjectWithData(data)

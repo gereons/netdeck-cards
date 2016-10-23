@@ -35,30 +35,31 @@ class Faction: NSObject {
     }
     
     class func initializeFactionNames(_ cards: [Card]) -> Bool {
+        let expectedNames = runnerFactions.count + corpFactions.count + 2 // +2 for "neutral-corp" and "neutral-runner"
         runnerFactionNames = [String]()
         runnerFactionNamesPreDAD = [String]()
         corpFactionNames = [String]()
         
         for card in cards {
             faction2name[card.faction] = card.factionStr
+            if faction2name.count == expectedNames {
+                break
+            }
         }
-        assert(faction2name.count == runnerFactions.count + corpFactions.count + 2)
-        if faction2name.count != runnerFactions.count + corpFactions.count + 2 {
+        assert(faction2name.count == expectedNames)
+        if faction2name.count != expectedNames {
             return false
         }
         
         let common = [ Faction.name(for: .none)!, Faction.name(for: .neutral)! ]
         
-        for faction in runnerFactions
-        {
+        for faction in runnerFactions {
             runnerFactionNames.append(Faction.name(for: faction)!)
         }
-        for faction in runnerFactionsPreDAD
-        {
+        for faction in runnerFactionsPreDAD {
             runnerFactionNamesPreDAD.append(Faction.name(for: faction)!)
         }
-        for faction in corpFactions
-        {
+        for faction in corpFactions {
             corpFactionNames.append(Faction.name(for: faction)!)
         }
         
