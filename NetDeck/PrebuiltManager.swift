@@ -9,22 +9,24 @@
 import Marshal
 
 struct Prebuilt: Unmarshaling {
-    private(set) var name = ""
-    private(set) var settingsKey = ""
-    private(set) var cards = [CardCounter]()
+    let name: String
+    let settingsKey: String
+    let cards: [CardCounter]
     
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
         let code: String = try object.value(for: "code")
         self.settingsKey = "use_" + code
     
-        if let cards = try object.any(for: "cards") as? [String: Int] {
+        var cc = [CardCounter]()
+        if let cards = object.optionalAny(for: "cards") as? [String: Int] {
             for (code, qty) in cards {
                 if let card = CardManager.cardBy(code: code) {
-                    self.cards.append(CardCounter(card: card, count: qty))
+                    cc.append(CardCounter(card: card, count: qty))
                 }
             }
         }
+        self.cards = cc
     }
 }
 
@@ -104,22 +106,23 @@ class PrebuiltManager: NSObject {
         return false
     }
     
-    class func setupFromNetrunnerDb(_ prebuilts: Any, language: String) -> Bool {
-//        var ok = setupFromJsonData(prebuilts, language: language)
-//        if ok {
-//            let filename = self.filename()
-//            if let data = try? prebuilts.rawData() {
-//                do {
-//                    try data.write(to: URL(fileURLWithPath: filename), options: .atomic)
-//                } catch {
-//                    ok = false
-//                }
-//                // print("write prebuilts ok=\(ok)")
-//            }
-//            AppDelegate.excludeFromBackup(filename)
-//        }
-//        return ok
-        return false
+    class func setupFromNetrunnerDb(_ data: Data, language: String) -> Bool {
+        var ok = false
+        do {
+            let prebuiltJson = try JSONParser.JSONObjectWithData(data)
+            ok = setupFromJsonData(prebuiltJson, language: language)
+            if !ok {
+                return false
+            }
+            
+            let filename = self.filename()
+            try data.write(to: URL(fileURLWithPath: filename), options: .atomic)
+            AppDelegate.excludeFromBackup(filename)
+        } catch {
+            ok = false
+        }
+        
+        return ok
     }
     
     class func settingsDefaults() -> [String: Bool] {
@@ -131,7 +134,7 @@ class PrebuiltManager: NSObject {
     }
     
     class func setupFromJsonData(_ prebuilts: JSONObject, language: String) -> Bool {
-        let ok = prebuilts.validNrdbResponse
+        let ok = NRDB.validJsonResponse(json: prebuilts)
         if !ok {
             // print("prebuilts invalid")
             return false

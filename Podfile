@@ -18,7 +18,6 @@ target 'NetDeck' do
     pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftKeychainWrapper'
     pod 'Marshal'
-    pod 'SwiftyJSON'
     pod 'SwiftyDropbox'
     pod 'SDCAlertView'
 end

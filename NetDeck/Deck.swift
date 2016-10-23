@@ -7,11 +7,11 @@
 //
 
 import Foundation
+import Marshal
 
-@objc(Deck) class Deck: NSObject, NSCoding {
+@objc(Deck) class Deck: NSObject, NSCoding, Unmarshaling {
 
     var filename: String?
-    var tags: [String]?
     var revisions = [DeckChangeSet]()
     var lastModified: Date?
     var dateCreated: Date?
@@ -28,7 +28,7 @@ import Foundation
         let settings = UserDefaults.standard
         self.state = settings.bool(forKey: SettingsKeys.CREATE_DECK_ACTIVE) ? NRDeckState.active : NRDeckState.testing
         let mwlVersion = settings.integer(forKey: SettingsKeys.MWL_VERSION)
-        self.mwl = (NRMWL(rawValue: mwlVersion) ?? .none)!
+        self.mwl = NRMWL(rawValue: mwlVersion) ?? .none
     }
     
     var allCards: [CardCounter] {
@@ -614,6 +614,90 @@ import Foundation
         self.modified = false
     }
     
+    // MARK: create deck from JSON
+    
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ'"
+        formatter.timeZone = TimeZone(identifier: "GMT")
+        return formatter
+    }()
+
+    convenience required init(object: MarshaledObject) throws {
+        self.init()
+        
+        self.name = try object.value(for: "name")
+        self.notes = try object.value(for: "description")
+        let id: Int = try object.value(for: "id")
+        self.netrunnerDbId = "\(id)"
+        
+        // parse last update '2014-06-19T13:52:24+00:00'
+        self.lastModified = Deck.dateFormatter.date(from: try object.value(for: "date_update"))
+        self.dateCreated = Deck.dateFormatter.date(from: try object.value(for: "date_creation"))
+        
+        let mwlCode: String = try object.value(for: "mwl_code") ?? ""
+        self.mwl = NRMWL.by(code: mwlCode)
+        
+        if let cards = object.optionalAny(for: "cards") as? [String: Int] {
+            for (code, qty) in cards {
+                if let card = CardManager.cardBy(code: code) {
+                    self.addCard(card, copies:qty, history: false)
+                }
+            }
+        }
+        
+        typealias HistoryData = [String: [String: Int]]
+        let history: HistoryData = object.optionalAny(for: "history") as? HistoryData ?? HistoryData()
+        
+        var revisions = [DeckChangeSet]()
+        for (date, changes) in history {
+            if let timestamp = Deck.dateFormatter.date(from: date) {
+                let dcs = DeckChangeSet()
+                dcs.timestamp = timestamp
+                
+                for (code, amount) in changes {
+                    if let card = CardManager.cardBy(code: code) {
+                        dcs.addCardCode(card.code, copies: amount)
+                    }
+                }
+                
+                dcs.sort()
+                revisions.append(dcs)
+            }
+        }
+        
+        revisions.sort { $0.timestamp?.timeIntervalSince1970 ?? 0 < $1.timestamp?.timeIntervalSinceNow ?? 0 }
+        
+        let initial = DeckChangeSet()
+        initial.initial = true
+        initial.timestamp = self.dateCreated
+        revisions.append(initial)
+        self.revisions = revisions
+        
+        let newest = self.revisions.first
+        var cards = [String: Int]()
+        for cc in self.allCards {
+            cards[cc.card.code] = cc.count
+        }
+        newest?.cards = cards
+        
+        // walk through the deck's history and pre-compute a card list for every revision
+        for i in 0..<self.revisions.count-1 {
+            let prev = self.revisions[i]
+            for dc in prev.changes {
+                let qty = (cards[dc.code] ?? 0) - dc.count
+                if qty == 0 {
+                    cards.removeValue(forKey: dc.code)
+                } else {
+                    cards[dc.code] = qty
+                }
+            }
+            
+            let dcs = self.revisions[i+1]
+            dcs.cards = cards
+        }
+    }
+    
     // MARK: NSCoding
     convenience required init?(coder decoder: NSCoder) {
         self.init()
@@ -636,7 +720,6 @@ import Foundation
         }
         self.lastModified = nil
         self.notes = decoder.decodeObject(forKey: "notes") as? String
-        self.tags = decoder.decodeObject(forKey: "tags") as? [String]
         self.sortType = .byType
         
         let lastChanges = decoder.decodeObject(forKey: "lastChanges") as? DeckChangeSet
@@ -649,7 +732,7 @@ import Foundation
             decoder.decodeInteger(forKey: "mwl") :
             UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)
         
-        self.mwl = (NRMWL(rawValue: mwl) ?? .none)!
+        self.mwl = NRMWL(rawValue: mwl) ?? .none
         
         self.onesies = decoder.decodeBool(forKey: "onesies")
         
@@ -667,7 +750,6 @@ import Foundation
             coder.encode(idCode, forKey:"identity")
         }
         coder.encode(self.notes, forKey:"notes")
-        coder.encode(self.tags, forKey:"tags")
         coder.encode(self.lastChanges, forKey:"lastChanges")
         coder.encode(self.revisions, forKey:"revisions")
         coder.encode(self.mwl.rawValue, forKey: "mwl")

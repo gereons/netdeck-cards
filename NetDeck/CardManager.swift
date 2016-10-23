@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 import Marshal
 
 class CardManager: NSObject {
@@ -264,30 +263,27 @@ class CardManager: NSObject {
         return false
     }
     
-    class func setupFromNetrunnerDb(_ cards: JSON, language: String) -> Bool {
-//        var ok = setupFromJson(cards, language: language)
-//        if ok {
-//            let filename = CardManager.filename()
-//            if let data = try? cards.rawData() {
-//                do {
-//                    try data.write(to: URL(fileURLWithPath: filename), options: .atomic)
-//                } catch {
-//                    ok = false
-//                }
-//                // print("write cards ok=\(ok)")
-//            }
-//            AppDelegate.excludeFromBackup(filename)
-//        }
-//        return ok
-        return false
+    class func setupFromNetrunnerDb(_ cardsData: Data, language: String) -> Bool {
+        var ok = false
+        do {
+            let cardsJson = try JSONParser.JSONObjectWithData(cardsData)
+            ok = setupFromJson(cardsJson, language: language)
+            if !ok {
+                return false
+            }
+            
+            let filename = self.filename()
+            try cardsData.write(to: URL(fileURLWithPath: filename), options: .atomic)
+            AppDelegate.excludeFromBackup(filename)
+        } catch {
+            ok = false
+        }
+        
+        return ok
     }
     
     class func setupFromJson(_ cards: JSONObject, language: String) -> Bool {
-        let t = DebugTimer(named: "setup")
-        defer {
-            t.stop(verbose: true)
-        }
-        if !cards.validNrdbResponse {
+        if !NRDB.validJsonResponse(json: cards) {
             return false
         }
         
@@ -295,29 +291,24 @@ class CardManager: NSObject {
         
         // parse data
         let parsedCards = Card.cardsFromJson(cards, language: language)
-        t.elapsed("parser")
         for card in parsedCards {
             CardManager.add(card: card)
         }
-        t.elapsed("adder")
         
         let cards = Array(allKnownCards.values)
         if cards.count == 0 {
             return false
         }
         
-        t.elapsed("check count")
         CardManager.setSubtypes(cards)
-        t.elapsed("subtypes")
         CardManager.addCardAliases(cards)
-        t.elapsed("aliases")
+        
         if !Faction.initializeFactionNames(cards) {
             return false
         }
         if !CardType.initializeCardTypes(cards) {
             return false
         }
-        t.elapsed("faction & types")
         
         // sort identities by faction and name
         for var arr in [ allIdentitiesByRole[.runner]!, allIdentitiesByRole[.corp]! ] {

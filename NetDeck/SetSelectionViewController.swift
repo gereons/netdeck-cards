@@ -23,9 +23,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         
         if self.values.count > 1 {
             // add "number of core sets" fake entry
-            let numCores = Pack()
-            numCores.name = "Number of Core Sets".localized()
-            numCores.settingsKey = SettingsKeys.NUM_CORES
+            let numCores = Pack(named: "Number of Core Sets".localized(), key: SettingsKeys.NUM_CORES)
             self.values[1].insert(numCores, at: 1)
         }
     }
