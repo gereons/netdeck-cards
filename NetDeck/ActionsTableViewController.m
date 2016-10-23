@@ -298,7 +298,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
         {
             UINavigationController* nc = self.navigationController;
             BrowserFilterViewController* browser = [[BrowserFilterViewController alloc] init];
-            [nc pushViewController:browser animated:YES];
+            [nc pushViewController:browser animated:NO];
             break;
         }
             

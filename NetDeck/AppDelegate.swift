@@ -10,7 +10,6 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-// TODO: improve startup time
 // TODO: investigate OOMs - memory warnings?
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
 // TODO: ImageCache: when Haneke is at Swift 3, test it as a replacement
@@ -214,6 +213,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             let _ = self.handleShortcutItem(shortCut)
             self.launchShortcutItem = nil
         }
+    }
+    
+    func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
+        print("got mem warning")
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
