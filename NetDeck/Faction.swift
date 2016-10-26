@@ -25,17 +25,17 @@ class Faction: NSObject {
     
     static let weylandConsortium = "Weyland Consortium"
     
-    override class func initialize() {
-        faction2name[.none] = Constant.kANY
-        faction2name[.neutral] = "Neutral".localized()
-    }
-    
     class func name(for faction: NRFaction) -> String? {
         return Faction.faction2name[faction]
     }
     
     class func initializeFactionNames(_ cards: [Card]) -> Bool {
-        let expectedNames = runnerFactions.count + corpFactions.count + 2 // +2 for "neutral-corp" and "neutral-runner"
+        faction2name = [NRFaction: String]()
+        faction2name[.none] = Constant.kANY
+        faction2name[.neutral] = "Neutral".localized()
+        
+        let expectedNames = runnerFactions.count + corpFactions.count + 2 // +2 for "any" and "neutral"
+        
         runnerFactionNames = [String]()
         runnerFactionNamesPreDAD = [String]()
         corpFactionNames = [String]()
