@@ -21,6 +21,8 @@
 }
 
 -(void) prepareForReuse {
+    [super prepareForReuse];
+    
     self.influenceLabel.textColor = [UIColor blackColor];
 }
 

@@ -22,6 +22,8 @@
 
 -(void) prepareForReuse
 {
+    [super prepareForReuse];
+    
     self.image.image = nil;
     self->_card = nil;
     self.detailView.hidden = YES;

@@ -28,6 +28,8 @@
 
 -(void) prepareForReuse
 {
+    [super prepareForReuse];
+    
     self.image1.image = nil;
     self.image2.image = nil;
     self.image3.image = nil;

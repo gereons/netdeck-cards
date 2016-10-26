@@ -35,6 +35,8 @@
 }
 
 -(void) prepareForReuse {
+    [super prepareForReuse];
+    
     for (UIView* pip in self.pips) {
         pip.layer.borderWidth = 0;
     }
