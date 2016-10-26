@@ -58,7 +58,7 @@
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     topItem.title = title;
-    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Feedback" style:UIBarButtonItemStylePlain target:self action:@selector(leaveFeedback:)];
+    topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Feedback") style:UIBarButtonItemStylePlain target:self action:@selector(leaveFeedback:)];
 }
 
 #pragma mark buttons

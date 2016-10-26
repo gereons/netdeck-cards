@@ -38,7 +38,7 @@
     
     self.diffSelection = NO;
     
-    self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEdit:)];
+    self.editButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Edit") style:UIBarButtonItemStylePlain target:self action:@selector(toggleEdit:)];
     self.editButton.possibleTitles = [NSSet setWithArray:@[ l10n(@"Edit"), l10n(@"Done") ]];
     self.editButton.title = l10n(@"Edit");
     

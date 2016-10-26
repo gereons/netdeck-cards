@@ -27,7 +27,7 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
 {
     [super viewDidLoad];
     
-    self.title = @"Filter";
+    self.title = l10n(@"Filter");
     
     self.dataDestinyAllowed = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.USE_DATA_DESTINY];
     self.factionLabel.text = l10n(@"Faction");

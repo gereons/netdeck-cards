@@ -222,10 +222,10 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(NSArray*) keyCommands {
     return @[
-        KEYCMD(@"F", UIKeyModifierCommand, startTextSearch:, @"Find Cards"),
-        KEYCMD(@"A", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: All"),
-        KEYCMD(@"N", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Name"),
-        KEYCMD(@"T", UIKeyModifierCommand, changeScopeKeyCmd:, @"Scope: Text"),
+        KEYCMD(@"F", UIKeyModifierCommand, startTextSearch:, l10n(@"Find Cards")),
+        KEYCMD(@"A", UIKeyModifierCommand, changeScopeKeyCmd:, l10n(@"Scope: All")),
+        KEYCMD(@"N", UIKeyModifierCommand, changeScopeKeyCmd:, l10n(@"Scope: Name")),
+        KEYCMD(@"T", UIKeyModifierCommand, changeScopeKeyCmd:, l10n(@"Scope: Text")),
         [UIKeyCommand keyCommandWithInput:UIKeyInputEscape modifierFlags:0 action:@selector(escKeyPressed:)]
     ];
 }
