@@ -7,7 +7,6 @@
 //
 
 #import "CardImagePopup.h"
-#import "CardImageCell.h"
 
 @interface CardImagePopup ()
 
@@ -64,6 +63,8 @@ static CardImagePopup* popover;
     
     self.copiesStepper.maximumValue = self.deck.isDraft ? 100 : self.cc.card.maxPerDeck;
     self.copiesStepper.value = self.cc.count;
+    
+    self.copiesLabel.font = [UIFont monospacedDigitSystemFontOfSize:15 weight:UIFontWeightSemibold];
     self.copiesLabel.text = [NSString stringWithFormat:@"×%lu", (unsigned long)self.cc.count];
     self.nameLabel.text = self.cc.card.name;
     

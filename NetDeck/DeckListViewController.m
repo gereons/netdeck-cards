@@ -16,7 +16,6 @@
 #import "CardImagePopup.h"
 
 #import "CardCell.h"
-#import "CardImageCell.h"
 #import "CGRectUtils.h"
 
 @interface DeckListViewController ()
@@ -1425,22 +1424,24 @@
         }
     }
     
-    if (![cell.cc.card isEqual:cc.card])
-    {
-        cell.image1.image = nil;
-        cell.image2.image = nil;
-        cell.image2.image = nil;
-    }
-    cell.cc = cc;
+    [cell loadImageFor:cc];
     
-    if (cc.card)
-    {
-        [cell loadImage];
-    }
-    else
-    {
-        [cell setImageStack:[ImageCache placeholderFor:self.role]];
-    }
+//    if (![cell.cc.card isEqual:cc.card])
+//    {
+//        cell.image1.image = nil;
+//        cell.image2.image = nil;
+//        cell.image2.image = nil;
+//    }
+//    cell.cc = cc;
+//    
+//    if (cc.card)
+//    {
+//        [cell loadImage];
+//    }
+//    else
+//    {
+//        [cell setImageStack:[ImageCache placeholderFor:self.role]];
+//    }
     
     return cell;
 }
