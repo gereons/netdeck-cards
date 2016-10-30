@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */; };
 		3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */; };
-		3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A08DE6B1996175400F2025E /* BrowserImageCell.m */; };
 		3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */; };
 		3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A09184918B2925400DBE590 /* InfluenceStats.m */; };
 		3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E8D18BBC49C00C99FED /* Localizable.strings */; };
@@ -137,6 +136,7 @@
 		3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB357D5186CC2010027D5FC /* IdentitySelectionViewController.xib */; };
 		3AB357DA186DC1E50027D5FC /* IdentityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */; };
 		3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */; };
+		3AB838611DC684EB0047B7DB /* BrowserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB838601DC684EB0047B7DB /* BrowserImageCell.swift */; };
 		3AB9BD5918FADB51004EAF10 /* DecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5718FADB51004EAF10 /* DecksViewController.m */; };
 		3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */; };
 		3AB9BD5E18FADC01004EAF10 /* DeckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5C18FADC01004EAF10 /* DeckCell.m */; };
@@ -194,8 +194,6 @@
 		1177AECC149D5AD3422387E3 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdateCheck.swift; sourceTree = "<group>"; };
 		3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewReminder.txt; sourceTree = "<group>"; };
-		3A08DE6A1996175400F2025E /* BrowserImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserImageCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A08DE6B1996175400F2025E /* BrowserImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserImageCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserImageCell.xib; sourceTree = "<group>"; };
 		3A09184818B2925400DBE590 /* InfluenceStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = InfluenceStats.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A09184918B2925400DBE590 /* InfluenceStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = InfluenceStats.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -398,6 +396,7 @@
 		3AB357D8186DC1E50027D5FC /* IdentityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IdentityViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IdentityViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCell.xib; sourceTree = "<group>"; };
+		3AB838601DC684EB0047B7DB /* BrowserImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserImageCell.swift; sourceTree = "<group>"; };
 		3AB9BD5618FADB51004EAF10 /* DecksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DecksViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AB9BD5718FADB51004EAF10 /* DecksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DecksViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DecksViewController.xib; sourceTree = "<group>"; };
@@ -707,8 +706,7 @@
 				3ADE909E18775A77006E187F /* CardImageViewPopover.xib */,
 				3A2BF9D91DC6564B00AFA36E /* CardImageCell.swift */,
 				3A7FD6B0188172C100F0926F /* CardImageCell.xib */,
-				3A08DE6A1996175400F2025E /* BrowserImageCell.h */,
-				3A08DE6B1996175400F2025E /* BrowserImageCell.m */,
+				3AB838601DC684EB0047B7DB /* BrowserImageCell.swift */,
 				3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */,
 				3A5794D819157A2D005DA4B2 /* CardDetailView.h */,
 				3A5794D919157A2D005DA4B2 /* CardDetailView.m */,
@@ -1296,7 +1294,6 @@
 				3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */,
 				3AA8EC2C1CC3AA8200370A26 /* DeckHistorySectionHeaderView.swift in Sources */,
 				3A18B2561B8B7C650065EC4A /* FilterViewController.m in Sources */,
-				3A08DE6C1996175400F2025E /* BrowserImageCell.m in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3A3D4D4B1DAA6ADA004028A7 /* SettingsViewController.swift in Sources */,
 				3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */,
@@ -1332,6 +1329,7 @@
 				3A84F8DC1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift in Sources */,
 				3A6CD8041CF7864C0090CEDB /* DetailViewManager.swift in Sources */,
 				3AD860D61B79154100EEF8AC /* EditDeckCell.m in Sources */,
+				3AB838611DC684EB0047B7DB /* BrowserImageCell.swift in Sources */,
 				3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */,
 				3A65016F1DC6286600815965 /* NRSwitch.swift in Sources */,
 				3A11342219AC5C580012494E /* IdentityCardView.m in Sources */,

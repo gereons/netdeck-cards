@@ -7,7 +7,6 @@
 //
 
 #import "CardDetailView.h"
-#import "BrowserImageCell.h"
 #import "CardImageViewCell.h"
 
 @implementation CardDetailView

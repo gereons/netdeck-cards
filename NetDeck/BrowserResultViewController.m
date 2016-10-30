@@ -8,7 +8,6 @@
 
 #import "BrowserResultViewController.h"
 #import "BrowserCell.h"
-#import "BrowserImageCell.h"
 #import "BrowserSectionHeaderView.h"
 
 @interface BrowserResultViewController ()
