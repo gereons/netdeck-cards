@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardDetailView: NSObject {
+class CardDetailView {
 
     var detailView: UIView!
     var cardName: UILabel!
@@ -24,7 +24,6 @@ class CardDetailView: NSObject {
     
     var card = Card.null()
     
-    @nonobjc
     static func setup(from: CardImageViewPopover, card: Card) {
         let cdv = CardDetailView()
         
@@ -43,7 +42,6 @@ class CardDetailView: NSObject {
         cdv.setup()
     }
     
-    @nonobjc
     static func setup(from: CardImageCell, card: Card) {
         let cdv = CardDetailView()
         
@@ -62,7 +60,6 @@ class CardDetailView: NSObject {
         cdv.setup()
     }
     
-    @nonobjc
     static func setup(from: BrowserImageCell, card: Card) {
         let cdv = CardDetailView()
         
@@ -186,6 +183,5 @@ class CardDetailView: NSObject {
         case .none:
             assert(false, "this can't happen")
         }
-
     }
 }
