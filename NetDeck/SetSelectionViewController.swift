@@ -92,11 +92,12 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             button.addTarget(self, action: #selector(self.coresAlert(_:)), for: .touchUpInside)
             cell.accessoryView = button
         } else {
-            let sw = NRSwitch(handler: { on in
+            let on = settings.bool(forKey: pack.settingsKey)
+            let sw = NRSwitch(initial: on) { on in
                 settings.set(on, forKey: pack.settingsKey)
                 PackManager.clearDisabledPacks()
-            })
-            sw?.isOn = settings.bool(forKey: pack.settingsKey)
+            }
+            
             cell.accessoryView = sw
         }
         

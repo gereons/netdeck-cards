@@ -31,11 +31,11 @@ class PrebuiltSelectionViewController: UIViewController, UITableViewDataSource, 
         cell.textLabel?.text = prebuilt.name
 
         let settings = UserDefaults.standard
-        let sw = NRSwitch(handler: {
+        let on = settings.bool(forKey: prebuilt.settingsKey)
+        let sw = NRSwitch(initial: on) {
             PrebuiltManager.resetSelected()
             settings.set($0, forKey: prebuilt.settingsKey)
-        })
-        sw?.isOn = settings.bool(forKey: prebuilt.settingsKey)
+        }
         
         cell.accessoryView = sw
         

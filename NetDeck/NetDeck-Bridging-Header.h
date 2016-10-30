@@ -13,4 +13,3 @@
 #import "CardImageViewPopover.h"
 #import "CardImageViewController.h"
 #import "IphoneStartViewController.h"
-#import "NRSwitch.h"
