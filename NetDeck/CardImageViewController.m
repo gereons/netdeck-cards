@@ -9,7 +9,6 @@
 @import SVProgressHUD;
 
 #import "CardImageViewController.h"
-#import "CardImageViewCell.h"
 
 @interface CardImageViewController ()
 

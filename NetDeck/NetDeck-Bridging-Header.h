@@ -10,7 +10,5 @@
 @class Card;
 @class CardCounter;
 
-#import "CardImageViewCell.h"
-
 #import "IphoneStartViewController.h"
 #import "CardImageViewController.h"
