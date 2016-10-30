@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SmallPipsView.h"
-
 @interface CardFilterCell : UITableViewCell
 
 @property IBOutlet UIButton* addButton;

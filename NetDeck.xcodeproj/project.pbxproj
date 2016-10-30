@@ -41,7 +41,6 @@
 		3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A36226A1849320C007F2854 /* InfoPlist.strings */; };
 		3A36227D1849320C007F2854 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A36227C1849320C007F2854 /* Images.xcassets */; };
 		3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */; };
-		3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36A0FD1974F79300D8D26A /* SmallPipsView.m */; };
 		3A3798B31D709B0C00F94658 /* PrebuiltManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3798B21D709B0C00F94658 /* PrebuiltManager.swift */; };
 		3A3798B61D70A54B00F94658 /* PrebuiltSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */; };
 		3A3798B71D70A54B00F94658 /* PrebuiltSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */; };
@@ -150,6 +149,7 @@
 		3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */; };
 		3AC32DDA1B67F63300DFD98D /* GZip.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC32DD91B67F63300DFD98D /* GZip.m */; };
 		3AC4F7861BFD2659008E42F7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC4F7851BFD2659008E42F7 /* Card.swift */; };
+		3ACC9A5B1DC60E2400C54EF3 /* SmallPipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACC9A5A1DC60E2400C54EF3 /* SmallPipsView.swift */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
 		3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACCEE221869A25500CC3537 /* LargeCardCell.m */; };
 		3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */; };
@@ -257,8 +257,6 @@
 		3A36228D1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A36228F1849320C007F2854 /* NetDeckTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NetDeckTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPipsView.xib; sourceTree = "<group>"; };
-		3A36A0FC1974F79300D8D26A /* SmallPipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmallPipsView.h; sourceTree = "<group>"; };
-		3A36A0FD1974F79300D8D26A /* SmallPipsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmallPipsView.m; sourceTree = "<group>"; };
 		3A3798B21D709B0C00F94658 /* PrebuiltManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrebuiltManager.swift; sourceTree = "<group>"; };
 		3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrebuiltSelectionViewController.swift; sourceTree = "<group>"; };
 		3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrebuiltSelectionViewController.xib; sourceTree = "<group>"; };
@@ -423,6 +421,7 @@
 		3AC32DD81B67F63300DFD98D /* GZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GZip.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AC32DD91B67F63300DFD98D /* GZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GZip.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AC4F7851BFD2659008E42F7 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		3ACC9A5A1DC60E2400C54EF3 /* SmallPipsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallPipsView.swift; sourceTree = "<group>"; };
 		3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargeCardCell.xib; sourceTree = "<group>"; };
 		3ACCEE211869A25500CC3537 /* LargeCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LargeCardCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3ACCEE221869A25500CC3537 /* LargeCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LargeCardCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -651,8 +650,7 @@
 				3AF2235C194364A80072FD9F /* CardFilterSectionHeaderView.h */,
 				3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */,
 				3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */,
-				3A36A0FC1974F79300D8D26A /* SmallPipsView.h */,
-				3A36A0FD1974F79300D8D26A /* SmallPipsView.m */,
+				3ACC9A5A1DC60E2400C54EF3 /* SmallPipsView.swift */,
 				3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */,
 				3A11B1131ADE364300E5A410 /* CardFilterCollectionView.h */,
 				3A11B1141ADE364300E5A410 /* CardFilterCollectionView.m */,
@@ -1350,7 +1348,6 @@
 				3ABAD2FD1B83A6D7009E81F3 /* IphoneIdentityViewController.m in Sources */,
 				3A41DA871BF8785C003CB7E1 /* PackManager.swift in Sources */,
 				3A3798B61D70A54B00F94658 /* PrebuiltSelectionViewController.swift in Sources */,
-				3A36A0FE1974F79300D8D26A /* SmallPipsView.m in Sources */,
 				3A92DFD81CBA59EE0043F2F6 /* BrowserValuePicker.swift in Sources */,
 				3A904FCD1BF73723001C075A /* Types.swift in Sources */,
 				3A058B1919D334660090F53A /* NRSwitch.m in Sources */,
@@ -1387,6 +1384,7 @@
 				3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */,
 				3A9752211C1F6E310070E39B /* MiscUtilities.swift in Sources */,
 				3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */,
+				3ACC9A5B1DC60E2400C54EF3 /* SmallPipsView.swift in Sources */,
 				3AEF52011CCD53B300A831E0 /* NROutlineLabel.swift in Sources */,
 				3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */,
 				3AD860DB1B792B6700EEF8AC /* ListCardsViewController.m in Sources */,

@@ -1095,8 +1095,8 @@ static NSInteger viewMode = VIEW_LIST;
     if (identity && card.faction == identity.faction) {
         influence = 0;
     }
-    [cell.pips setValue:influence];
-    [cell.pips setColor:card.factionColor];
+
+    [cell.pips setWithValue:influence color:card.factionColor];
     
     cell.nameLabel.text = card.name;
     

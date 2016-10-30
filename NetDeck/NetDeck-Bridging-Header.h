@@ -12,7 +12,6 @@
 @class CardCounter;
 #import "CardImageViewPopover.h"
 #import "CardThumbView.h"
-#import "SmallPipsView.h"
 #import "CardImageViewController.h"
 #import "IphoneStartViewController.h"
 #import "NRSwitch.h"

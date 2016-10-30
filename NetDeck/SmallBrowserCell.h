@@ -7,7 +7,6 @@
 //
 
 #import "BrowserCell.h"
-#import "SmallPipsView.h"
 
 @interface SmallBrowserCell : BrowserCell
 

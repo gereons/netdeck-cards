@@ -122,7 +122,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             cell!.selectionStyle = .none
             cell!.accessoryType = .disclosureIndicator
             
-            let pips = SmallPipsView.create(withFrame: CGRect(x: 0, y: 0, width: 12, height: 12))
+            let pips = SmallPipsView.create()
             cell!.accessoryView = pips
         }
     
@@ -143,8 +143,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     
         let pips = cell!.accessoryView as! SmallPipsView
-        pips.setValue(card.influence)
-        pips.setColor(card.factionColor)
+        pips.set(value: card.influence, color: card.factionColor)
     
         return cell!
     }
