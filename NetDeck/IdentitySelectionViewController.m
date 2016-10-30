@@ -8,7 +8,6 @@
 
 #import "IdentitySelectionViewController.h"
 #import "IdentityViewCell.h"
-#import "CardImageViewPopover.h"
 
 #import "CGRectUtils.h"
 #import "IdentityCardView.h"
@@ -376,7 +375,8 @@
     
     CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
     rect.origin.x = sender.frame.origin.x;
-    [CardImageViewPopover showForCard:card fromRect:rect inViewController:self subView:self.tableView];
+
+    [CardImageViewPopover showFor:card from:rect in:self subView:self.tableView];
 }
 
 #pragma mark table view
@@ -501,7 +501,7 @@
     // convert to on-screen coordinates
     CGRect rect = [collectionView convertRect:cell.frame toView:self.collectionView];
 
-    [CardImageViewPopover showForCard:card fromRect:rect inViewController:self subView:self.collectionView];
+    [CardImageViewPopover showFor:card from:rect in:self subView:self.collectionView];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

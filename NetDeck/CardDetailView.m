@@ -7,7 +7,6 @@
 //
 
 #import "CardDetailView.h"
-#import "CardImageViewPopover.h"
 #import "CardImageCell.h"
 #import "BrowserImageCell.h"
 #import "CardImageViewCell.h"

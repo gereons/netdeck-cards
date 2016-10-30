@@ -7,7 +7,6 @@
 //
 
 #import "BrowserResultViewController.h"
-#import "CardImageViewPopover.h"
 #import "BrowserCell.h"
 #import "BrowserImageCell.h"
 #import "BrowserSectionHeaderView.h"
@@ -306,7 +305,7 @@ static BrowserResultViewController* instance;
     Card* card = [self.values objectAtIndexPath:indexPath];
     
     CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-    [CardImageViewPopover showForCard:card fromRect:rect inViewController:self subView:self.tableView];
+    [CardImageViewPopover showFor:card from:rect in:self subView:self.tableView];
 }
 
 #pragma mark collectionview
@@ -415,7 +414,7 @@ static BrowserResultViewController* instance;
             
             Card* card = [self.values objectAtIndexPath:indexPath];
             
-            [CardImageViewPopover showForCard:card fromRect:cell.frame inViewController:self subView:self.collectionView];
+            [CardImageViewPopover showFor:card from:cell.frame in:self subView:self.collectionView];
         }
     }
 }

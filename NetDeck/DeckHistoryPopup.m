@@ -7,7 +7,6 @@
 //
 
 #import "DeckHistoryPopup.h"
-#import "CardImageViewPopover.h"
 
 @interface DeckHistoryPopup ()
 
@@ -141,7 +140,7 @@
             DeckChange* dc = dcs.changes[indexPath.row];
             
             CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-            [CardImageViewPopover showForCard:dc.card fromRect:rect inViewController:self subView:self.tableView];
+            [CardImageViewPopover showFor:dc.card from:rect in:self subView:self.tableView];
         }
     }
 }

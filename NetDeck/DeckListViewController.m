@@ -9,7 +9,6 @@
 @import SVProgressHUD;
 
 #import "DeckListViewController.h"
-#import "CardImageViewPopover.h"
 #import "IdentitySelectionViewController.h"
 #import "DeckAnalysisViewController.h"
 #import "DeckNotesPopup.h"
@@ -1257,7 +1256,7 @@
     if (!cc.isNull)
     {
         CGRect rect = [self.tableView rectForRowAtIndexPath:indexPath];
-        [CardImageViewPopover showForCard:cc.card fromRect:rect inViewController:self subView:self.tableView];
+        [CardImageViewPopover showFor:cc.card from:rect in:self subView:self.tableView];
     }
 }
 

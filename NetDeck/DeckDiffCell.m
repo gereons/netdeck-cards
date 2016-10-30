@@ -8,7 +8,6 @@
 
 #import "DeckDiffCell.h"
 #import "DeckDiffViewController.h"
-#import "CardImageViewPopover.h"
 
 @implementation DeckDiffCell
 
@@ -35,7 +34,7 @@
         NSIndexPath* idx = [tableView indexPathForRowAtPoint:[sender locationInView:tableView]];
         CGRect rect = [tableView rectForRowAtIndexPath:idx];
         rect.size.width = 330;
-        [CardImageViewPopover showForCard:self.card1 fromRect:rect inViewController:self.vc subView:tableView];
+        [CardImageViewPopover showFor:self.card1 from:rect in:self.vc subView:tableView];
     }
 }
 
@@ -48,7 +47,7 @@
         CGRect rect = [tableView rectForRowAtIndexPath:idx];
         rect.origin.x = 400;
         rect.size.width = 310;
-        [CardImageViewPopover showForCard:self.card2 fromRect:rect inViewController:self.vc subView:tableView];
+        [CardImageViewPopover showFor:self.card2 from:rect in:self.vc subView:tableView];
     }
 }
 

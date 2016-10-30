@@ -10,6 +10,9 @@
 
 @class Card;
 @class CardCounter;
-#import "CardImageViewPopover.h"
-#import "CardImageViewController.h"
+
+#import "CardDetailView.h"
+
 #import "IphoneStartViewController.h"
+
+#import "CardImageViewController.h"

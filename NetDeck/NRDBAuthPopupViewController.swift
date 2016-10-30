@@ -20,7 +20,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
     class func show(in viewController: UIViewController) {
         assert(Device.isIpad, "iPad only!")
         
-        let popup = NRDBAuthPopupViewController() // nibName: "NRDBAuthPopupViewController", bundle: nil)
+        let popup = NRDBAuthPopupViewController()
         viewController.present(popup, animated: false, completion: nil)
         popup.preferredContentSize = CGSize(width: 850, height: 466)
         

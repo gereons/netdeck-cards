@@ -35,6 +35,7 @@
 		3A1FD36A1DA956CA00DF50F1 /* SetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1FD3691DA956CA00DF50F1 /* SetSelectionViewController.swift */; };
 		3A2221DE1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2221DD1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m */; };
 		3A285BA11D109A54007EC30F /* EmptyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A285BA01D109A54007EC30F /* EmptyDetailViewController.swift */; };
+		3A2BF9D81DC64BF400AFA36E /* CardImageViewPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BF9D71DC64BF400AFA36E /* CardImageViewPopover.swift */; };
 		3A2F4ADC1C8C716400B711BD /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2F4ADB1C8C716400B711BD /* ImageCache.swift */; };
 		3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A33AE2F1C7272ED00453C33 /* DeckEmail.swift */; };
 		3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A36226A1849320C007F2854 /* InfoPlist.strings */; };
@@ -170,8 +171,7 @@
 		3AD860E11B79383500EEF8AC /* CardImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860DF1B79383500EEF8AC /* CardImageViewController.xib */; };
 		3AD860E51B7939E500EEF8AC /* CardImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD860E31B7939E500EEF8AC /* CardImageViewCell.m */; };
 		3AD860E61B7939E500EEF8AC /* CardImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */; };
-		3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE909D18775A77006E187F /* CardImageViewPopover.m */; };
-		3ADE90A118775A77006E187F /* CardImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageView.xib */; };
+		3ADE90A118775A77006E187F /* CardImageViewPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageViewPopover.xib */; };
 		3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */; };
 		3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADFB17818817AA200AC8F3E /* CardImagePopup.m */; };
 		3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */; };
@@ -236,6 +236,7 @@
 		3A2221DC1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterCellCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		3A2221DD1BEA9FBB00CEA946 /* CenterCellCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterCellCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		3A285BA01D109A54007EC30F /* EmptyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = EmptyDetailViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3A2BF9D71DC64BF400AFA36E /* CardImageViewPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardImageViewPopover.swift; sourceTree = "<group>"; };
 		3A2F4ADB1C8C716400B711BD /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		3A3293DF1CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.html; lineEnding = 0; name = ja; path = ja.lproj/About.html; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.html; };
 		3A3293E11CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -450,9 +451,7 @@
 		3AD860E21B7939E500EEF8AC /* CardImageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardImageViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AD860E31B7939E500EEF8AC /* CardImageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardImageViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewCell.xib; sourceTree = "<group>"; };
-		3ADE909D18775A77006E187F /* CardImageViewPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardImageViewPopover.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3ADE909E18775A77006E187F /* CardImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageView.xib; sourceTree = "<group>"; };
-		3ADE909F18775A77006E187F /* CardImageViewPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardImageViewPopover.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3ADE909E18775A77006E187F /* CardImageViewPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewPopover.xib; sourceTree = "<group>"; };
 		3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DTCoreTextFontOverrides.plist; sourceTree = "<group>"; };
 		3ADFB17718817AA200AC8F3E /* CardImagePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardImagePopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3ADFB17818817AA200AC8F3E /* CardImagePopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardImagePopup.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -705,9 +704,8 @@
 		3A595425186EE7C40074B3B1 /* Card Image Display */ = {
 			isa = PBXGroup;
 			children = (
-				3ADE909F18775A77006E187F /* CardImageViewPopover.h */,
-				3ADE909D18775A77006E187F /* CardImageViewPopover.m */,
-				3ADE909E18775A77006E187F /* CardImageView.xib */,
+				3A2BF9D71DC64BF400AFA36E /* CardImageViewPopover.swift */,
+				3ADE909E18775A77006E187F /* CardImageViewPopover.xib */,
 				3A7FD6B21881737700F0926F /* CardImageCell.h */,
 				3A7FD6B31881737700F0926F /* CardImageCell.m */,
 				3A7FD6B0188172C100F0926F /* CardImageCell.xib */,
@@ -1203,7 +1201,7 @@
 				3A6ECD2A1D85BDE7008FBF38 /* LaunchScreen.xib in Resources */,
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
 				3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */,
-				3ADE90A118775A77006E187F /* CardImageView.xib in Resources */,
+				3ADE90A118775A77006E187F /* CardImageViewPopover.xib in Resources */,
 				3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */,
 				3AB2CF5A1938952600CCBE64 /* CardFilterViewController.xib in Resources */,
 				3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */,
@@ -1381,6 +1379,7 @@
 				3A9752211C1F6E310070E39B /* MiscUtilities.swift in Sources */,
 				3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */,
 				3ACC9A5B1DC60E2400C54EF3 /* SmallPipsView.swift in Sources */,
+				3A2BF9D81DC64BF400AFA36E /* CardImageViewPopover.swift in Sources */,
 				3AEF52011CCD53B300A831E0 /* NROutlineLabel.swift in Sources */,
 				3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */,
 				3AD860DB1B792B6700EEF8AC /* ListCardsViewController.m in Sources */,
@@ -1397,7 +1396,6 @@
 				3A7FD6B41881737700F0926F /* CardImageCell.m in Sources */,
 				3A126E901D0320ED00CDF580 /* Translation.swift in Sources */,
 				3A563717199552BA006AD431 /* BrowserCell.m in Sources */,
-				3ADE90A018775A77006E187F /* CardImageViewPopover.m in Sources */,
 				3AF6978D1C1DF96400D254CE /* DrawSimulatorCollectionView.swift in Sources */,
 				3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */,
 				3A3798B31D709B0C00F94658 /* PrebuiltManager.swift in Sources */,

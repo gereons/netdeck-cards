@@ -61,8 +61,8 @@ class ImageCache: NSObject {
         return role == .runner ? self.runnerPlaceholder : self.corpPlaceholder
     }
 
-    static let width = 300
-    static let height = 418
+    static let width: CGFloat = 300
+    static let height: CGFloat = 418
     
     private static let debugLog = BuildConfig.debug && false
     private static let secondsPerDay = 24 * 60 * 60
