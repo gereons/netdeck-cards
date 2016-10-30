@@ -99,7 +99,8 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
         case SettingsKeys.UPDATE_INTERVAL:
             CardManager.setNextDownloadDate()
         case SettingsKeys.LANGUAGE:
-            Analytics.logEvent("Change Language", attributes: ["Language": value as? String])
+            let language = value as? String ?? "n/a"
+            Analytics.logEvent("Change Language", attributes: ["Language": language])
         case SettingsKeys.KEEP_NRDB_CREDENTIALS:
             let keep = value as? Bool ?? false
             
@@ -134,7 +135,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
         if Device.isIpad {
             NRDBAuthPopupViewController.show(in: self.iask)
         } else {
-            NRDBAuthPopupViewController.push(on: self.iask.navigationController)
+            NRDBAuthPopupViewController.push(on: self.iask.navigationController!)
         }
     }
     
@@ -149,7 +150,8 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
     }
     
     func settingsViewController(_ sender: IASKAppSettingsViewController!, buttonTappedFor specifier: IASKSpecifier!) {
-        switch specifier.key() {
+        let key = specifier.key() ?? ""
+        switch key {
         case SettingsKeys.DOWNLOAD_DATA_NOW:
             if Reachability.online {
                 DataDownload.downloadCardData()

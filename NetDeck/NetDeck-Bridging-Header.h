@@ -15,5 +15,4 @@
 #import "SmallPipsView.h"
 #import "CardImageViewController.h"
 #import "IphoneStartViewController.h"
-#import "NRDBAuthPopupViewController.h"
 #import "NRSwitch.h"

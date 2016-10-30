@@ -228,7 +228,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         if scheme == "netdeck" {
             if url.host == "oauth2" {
-                NRDBAuthPopupViewController.handleOpen(url)
+                NRDBAuthPopupViewController.handleOpen(url: url)
             } else if url.host == "load" {
                 DeckImport.importDeckFromLocalUrl(url)
             }
