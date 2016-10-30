@@ -39,7 +39,7 @@
          if ([self.card.code isEqual:card.code])
          {
              [self.activityIndicator stopAnimating];
-             
+              
              self.imageView.image = [[ImageCache sharedInstance] croppedImage:img forCard:card];
              self.nameLabel.text = placeholder ? card.name : nil;
          }
