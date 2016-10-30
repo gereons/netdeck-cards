@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,6 +32,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Zk2-4C-1CS" customClass="DecklistCollectionView">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="0.0" id="saz-um-e0l">
                         <size key="itemSize" width="225" height="350"/>
@@ -43,17 +47,20 @@
                     </connections>
                 </collectionView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TkI-yZ-OZS">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <view key="tableHeaderView" contentMode="scaleToFill" id="tmQ-iY-CgT" userLabel="Table Header">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="30"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JY5-GK-UJa" userLabel="Deck Name">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cards up to What Lies Ahead" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gyb-FN-lQv" userLabel="Last Set">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="177" id="boX-M7-KQR"/>
                                 </constraints>
@@ -77,23 +84,24 @@
                     </connections>
                 </tableView>
                 <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wr-bR-riV">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Cn6-78-MNM"/>
                     </constraints>
                     <items>
                         <barButtonItem style="plain" id="Lqj-2d-9Ad">
                             <view key="customView" contentMode="scaleToFill" id="BYV-ac-1L1">
-                                <rect key="frame" x="20" y="1" width="380" height="42"/>
+                                <rect key="frame" x="20" y="479" width="380" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nTK-jc-idI">
-                                        <frame key="frameInset" minX="-11" width="30" height="42"/>
+                                        <rect key="frame" x="-11" y="0.0" width="30" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="§"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.70000000000000018" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWd-jM-hnr">
-                                        <frame key="frameInset" minX="14" width="352" height="42"/>
+                                        <rect key="frame" x="14" y="0.0" width="352" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -105,7 +113,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="rXz-mh-ll6"/>
                         <barButtonItem style="plain" id="QMf-Yo-25G">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nDr-mi-Br2">
-                                <rect key="frame" x="478" y="7" width="60" height="30"/>
+                                <rect key="frame" x="710" y="485" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="History">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -117,7 +125,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" id="ZwH-Ij-eY0">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0IP-7H-enu">
-                                <rect key="frame" x="548" y="5.5" width="60" height="33"/>
+                                <rect key="frame" x="780" y="484" width="60" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Notes">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -129,7 +137,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" id="yfE-uo-jcW" userLabel="Bar Button Item">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ptD-Cs-H63">
-                                <rect key="frame" x="618" y="5.5" width="60" height="33"/>
+                                <rect key="frame" x="850" y="484" width="60" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Draw">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -141,7 +149,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" id="REx-R3-U7x">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZM9-wm-D2z">
-                                <rect key="frame" x="688" y="5.5" width="60" height="33"/>
+                                <rect key="frame" x="920" y="484" width="60" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Analysis">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

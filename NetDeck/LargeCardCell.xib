@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -39,7 +43,7 @@
                             <constraint firstAttribute="width" constant="94" id="paR-uY-a0V"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AR8-Jc-YmL" userLabel="Label 1">
@@ -77,7 +81,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSS-Gt-da0" userLabel="Pip 1">
                                 <rect key="frame" x="0.0" y="6" width="8" height="8"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="YF5-n0-giv"/>
                                     <constraint firstAttribute="width" constant="8" id="izD-jz-YO9"/>
@@ -85,7 +89,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D19-2f-jBu" userLabel="Pip 2">
                                 <rect key="frame" x="0.0" y="16" width="8" height="8"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="hib-qP-BtH"/>
                                     <constraint firstAttribute="height" constant="8" id="jO3-wL-5Se"/>
@@ -93,7 +97,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBH-SU-RUC" userLabel="Pip 3">
                                 <rect key="frame" x="0.0" y="26" width="8" height="8"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="3Rk-in-siN"/>
                                     <constraint firstAttribute="height" constant="8" id="yx6-Tk-PmZ"/>
@@ -101,7 +105,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6rU-nK-OqS" userLabel="Pip 4">
                                 <rect key="frame" x="0.0" y="36" width="8" height="8"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="dHG-gc-ddx"/>
                                     <constraint firstAttribute="height" constant="8" id="ikr-m7-Leb"/>
@@ -109,14 +113,14 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lbC-yc-jmr" userLabel="Pip 5">
                                 <rect key="frame" x="0.0" y="46" width="8" height="8"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="bcP-Fr-C5L"/>
                                     <constraint firstAttribute="height" constant="8" id="vyL-d0-Ucb"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wBH-SU-RUC" firstAttribute="leading" secondItem="KkZ-vK-r1B" secondAttribute="leading" id="0RB-KT-h5W"/>
                             <constraint firstItem="6rU-nK-OqS" firstAttribute="leading" secondItem="KkZ-vK-r1B" secondAttribute="leading" id="907-ML-kOs"/>
@@ -146,7 +150,7 @@
                             <constraint firstAttribute="width" constant="102" id="nu8-GU-obV"/>
                         </constraints>
                         <state key="normal" title="Identität ändern">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
                             <action selector="selectIdentity:" destination="J3f-8X-7gb" eventType="touchUpInside" id="nVY-5A-VeE"/>
@@ -219,4 +223,9 @@
             </connections>
         </tableViewCell>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
 </document>

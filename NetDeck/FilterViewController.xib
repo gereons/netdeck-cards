@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,6 +37,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="LaJ-nX-B9U" customClass="MultiSelectSegmentedControl">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <segments>
                         <segment title="H-B"/>
                         <segment title="NBN"/>
@@ -43,6 +47,7 @@
                     </segments>
                 </segmentedControl>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uug-sU-t5X" customClass="MultiSelectSegmentedControl">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <segments>
                         <segment title="Agenda"/>
                         <segment title="Asset"/>
@@ -52,6 +57,7 @@
                     </segments>
                 </segmentedControl>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Einfluss" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mJu-wk-ICe">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="pfl-gj-2Jo"/>
                     </constraints>
@@ -60,11 +66,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="eFJ-7Q-ATE">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <connections>
                         <action selector="strengthChanged:" destination="-1" eventType="valueChanged" id="YZW-J7-P2K"/>
                     </connections>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stärke" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5UZ-p6-xQh">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="FO3-JF-Xkn"/>
                     </constraints>
@@ -73,11 +81,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="MCe-42-MiL">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <connections>
                         <action selector="muApChanged:" destination="-1" eventType="valueChanged" id="bfq-7Y-Rrk"/>
                     </connections>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MU/AP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFu-UA-OF1">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="8fV-Xg-j8b"/>
                     </constraints>
@@ -86,11 +96,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="LH6-VQ-4lb">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <connections>
                         <action selector="costChanged:" destination="-1" eventType="valueChanged" id="fTo-ht-myM"/>
                     </connections>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kosten" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bse-g8-64T">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="hWg-Zp-kdU"/>
                     </constraints>
@@ -99,27 +111,32 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fraktion" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvs-Au-reC">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Typ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiB-hy-NZA">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fj9-WE-DoF">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <color key="backgroundColor" red="0.65490196078431373" green="0.65490196078431373" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="FJz-7B-27Q"/>
                     </constraints>
                 </view>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y3P-ru-JeF">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <connections>
                         <action selector="influenceChanged:" destination="-1" eventType="valueChanged" id="DNp-Ue-Rd6"/>
                     </connections>
                 </slider>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KAs-bn-k3H" customClass="MultiSelectSegmentedControl">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <segments>
                         <segment title="Adam"/>
                         <segment title="Apex"/>
@@ -127,12 +144,14 @@
                     </segments>
                 </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Tv-uM-JrX">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <color key="backgroundColor" red="0.65490196079999996" green="0.65490196079999996" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="7Jk-bx-rCR"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="neE-TO-hgS">
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3AS-er-vAr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="21"/>
