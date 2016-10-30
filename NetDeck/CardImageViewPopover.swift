@@ -135,7 +135,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
                 
                 self.detailView.isHidden = true
                 if placeholder {
-                    CardDetailView.setupDetailView(from: self, card: self.card)
+                    CardDetailView.setup(from: self, card: self.card)
                 }
             } else {
                 self.loadCardImage(self.card)

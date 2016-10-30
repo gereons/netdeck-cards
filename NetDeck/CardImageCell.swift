@@ -62,7 +62,7 @@ class CardImageCell: UICollectionViewCell {
                 
                 self.detailView.isHidden = !placeholder
                 if placeholder {
-                    CardDetailView.setupDetailView(from: self, card: self.cc.card)
+                    CardDetailView.setup(from: self, card: self.cc.card)
                 }
             } else {
                 self.loadImage(card: self.cc.card)

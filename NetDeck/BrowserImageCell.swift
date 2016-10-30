@@ -56,7 +56,7 @@ class   BrowserImageCell: UICollectionViewCell {
                 
                 self.detailView.isHidden = !placeholder
                 if placeholder {
-                    CardDetailView.setupDetailView(fromBrowser: self, card: card)
+                    CardDetailView.setup(from: self, card: card)
                 }
             } else {
                 self.loadImage(for: self.card)

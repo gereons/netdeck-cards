@@ -4,15 +4,13 @@
 
 @import UIKit;
 
-#import "NRTypes.h"
 #import "GZip.h"
 #import "UIAlert+NetDeck.h"
 
 @class Card;
 @class CardCounter;
 
-#import "CardDetailView.h"
+#import "CardImageViewCell.h"
 
 #import "IphoneStartViewController.h"
-
 #import "CardImageViewController.h"
