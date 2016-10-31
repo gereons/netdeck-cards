@@ -22,7 +22,7 @@
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" indicatorStyle="white" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="0Kt-da-MSy">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Qs0-1c-ufP" customClass="CenterCellCollectionViewFlowLayout">
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Qs0-1c-ufP" customClass="CenterCellCollectionViewFlowLayout" customModule="NetDeck">
                         <size key="itemSize" width="300" height="436"/>
                         <size key="headerReferenceSize" width="10" height="0.0"/>
                         <size key="footerReferenceSize" width="10" height="0.0"/>
