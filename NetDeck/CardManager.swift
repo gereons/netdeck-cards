@@ -107,6 +107,50 @@ class CardManager: NSObject {
         return allIdentitiesByRole[role]!
     }
     
+    class func identitiesForSelection(_ role: NRRole) -> TableData {
+        var factionNames = Faction.factionsFor(role: role)
+        factionNames.removeFirst(2) // remove "any" and "neutral"
+        
+        let settings = UserDefaults.standard
+        let packs = settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)
+        let packUsage = NRPackUsage(rawValue: packs) ?? .all
+        
+        let disabledPackCodes: Set<String>
+        switch packUsage {
+        case .all:
+            disabledPackCodes = PackManager.draftPackCode()
+        case .selected:
+            disabledPackCodes = PackManager.disabledPackCodes()
+        case .allAfterRotation:
+            disabledPackCodes = PackManager.rotatedPackCodes()
+        }
+        
+        if !disabledPackCodes.contains(PackManager.draftSetCode) {
+            factionNames.append(Faction.name(for: .neutral)!)
+        }
+        
+        var identities = [[Card]]()
+        factionNames.forEach { str in
+            identities.append([Card]())
+        }
+        
+        for identity in identitiesFor(role: role).sorted(by: { $0.code < $1.code }) {
+            let faction = Faction.name(for: identity.faction)
+            if let index = factionNames.index(where: { $0 == faction }), !disabledPackCodes.contains(identity.packCode) {
+                identities[index].append(identity)
+            }
+        }
+        
+        if !disabledPackCodes.contains(PackManager.draftSetCode) {
+            factionNames.removeLast()
+            factionNames.append("Draft".localized())
+        }
+
+        assert(factionNames.count == identities.count)
+        
+        return TableData(sections: factionNames as NSArray, andValues: identities as NSArray)
+    }
+    
     class func subtypesFor(role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {
         var subtypes = allSubtypes[role]?[type] ?? Set<String>()
         

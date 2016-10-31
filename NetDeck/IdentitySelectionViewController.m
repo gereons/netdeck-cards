@@ -17,8 +17,10 @@
 
 @property NRRole role;
 
+@property NSArray<NSString*>* allFactionNames;
+@property NSArray<NSArray<Card*>*>* allIdentities;
 @property NSArray<NSString*>* factionNames;
-@property NSMutableArray<NSMutableArray<Card*>*>* identities;
+@property NSArray<NSArray<Card*>*>* identities;
 @property Card* initialIdentity;
 @property Card* selectedIdentity;
 @property NSIndexPath* selectedIndexPath;
@@ -48,7 +50,13 @@
         self.selectedFaction = NRFactionNone;
         self.viewTable = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.IDENTITY_TABLE];
         
-        [self initIdentities];
+        TableData* identities = [CardManager identitiesForSelection:self.role];
+        
+        self.allFactionNames = identities.sections;
+        self.allIdentities = identities.values;
+        
+        self.factionNames = self.allFactionNames;
+        self.identities = self.allIdentities;
     }
     return self;
 }
@@ -148,7 +156,6 @@
 
         if (includeDraft)
         {
-            // [self.factionSelector setTitle:[Faction name:NRFactionNeutral] forSegmentAtIndex:5];
             [self.factionSelector setTitle:l10n(@"Draft") forSegmentAtIndex:5];
         }
         else
@@ -162,6 +169,8 @@
     if ([UICollectionView instancesRespondToSelector:@selector(isPrefetchingEnabled)]) {
         self.collectionView.prefetchingEnabled = NO;
     }
+    
+    [self setupSelectedIdentity];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -175,94 +184,18 @@
     }
 }
 
-- (void)initIdentities
-{
-    NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
-    BOOL useDraft = [settings boolForKey:SettingsKeys.USE_DRAFT];
-    NRPackUsage packs = (NRPackUsage)[settings integerForKey:SettingsKeys.DECKBUILDER_PACKS];
-    
-    NSMutableArray* factions;
-    
-    if (self.selectedFaction == NRFactionNone)
-    {
-        factions = [[Faction factionsForRole:self.role] mutableCopy];
-        
-        // remove entries for "none" and "neutral"
-        [factions removeObject:[Faction nameFor:NRFactionNone]];
-
-        // move 'neutral' to the end
-        NSString* neutral = [Faction nameFor:NRFactionNeutral];
-        [factions removeObject:neutral];
-        if (useDraft)
-        {
-            [factions addObject:neutral];
-        }
-    }
-    else
-    {
-        factions = [NSMutableArray array];
-        [factions addObject:[Faction nameFor:self.selectedFaction]];
-    }
-    
-    self.identities = [NSMutableArray array];
-    self.factionNames = [NSArray arrayWithArray:factions];
-    
+-(void) setupSelectedIdentity {
     self.selectedIndexPath = nil;
-    NSSet<NSString*>* disabledPackCodes = nil;
-    switch (packs) {
-        case NRPackUsageAll:
-            disabledPackCodes = [PackManager draftPackCode];
-            break;
-        case NRPackUsageSelected:
-            disabledPackCodes = [PackManager disabledPackCodes];
-            break;
-        case NRPackUsageAllAfterRotation:
-            disabledPackCodes = [PackManager rotatedPackCodes];
-            break;
-    }
-    NSAssert(disabledPackCodes != nil, @"no packs");
-    
-    NSArray<NSString*>* prebuiltIdentities = [PrebuiltManager identitiesFor:self.role];
-    NSArray<Card*>* identities = [CardManager identitiesForRole:self.role];
-    for (int i=0; i<factions.count; ++i)
-    {
-        [self.identities addObject:[NSMutableArray array]];
-        
-        for (int j=0; j<identities.count; ++j)
-        {
-            Card* card = identities[j];
-            if ([disabledPackCodes containsObject:card.packCode] && ![prebuiltIdentities containsObject:card.code])
-            {
-                continue;
-            }
-            if (self.selectedFaction != NRFactionNone && card.faction != self.selectedFaction)
-            {
-                continue;
-            }
-            
-            if ([[factions objectAtIndex:i] isEqualToString:[Faction nameFor:card.faction]])
-            {
-                NSMutableArray<Card*>* arr = self.identities[i];
-                [arr addObject:card];
-                
-                if ([self.selectedIdentity isEqual:card])
-                {
-                    self.selectedIndexPath = [NSIndexPath indexPathForRow:arr.count-1 inSection:i];
-                }
+    for (NSInteger i=0; i<self.identities.count; ++i) {
+        NSArray<Card*>* arr = self.identities[i];
+        for (NSInteger j=0; j<arr.count; ++j) {
+            Card* card = arr[j];
+            if ([self.selectedIdentity.code isEqual:card.code]) {
+                self.selectedIndexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                break;
             }
         }
     }
-    
-    if (useDraft)
-    {
-        // rename "Neutral" section to "Draft"
-        NSMutableArray* tmp = self.factionNames.mutableCopy;
-        [tmp removeLastObject];
-        [tmp addObject:l10n(@"Draft")];
-        self.factionNames = tmp;
-    }
-    
-    NSAssert(self.identities.count == self.factionNames.count, @"count mismatch");
 }
 
 #pragma mark buttons
@@ -356,7 +289,16 @@
             break;
     }
     
-    [self initIdentities];
+    if (self.selectedFaction == NRFactionNone) {
+        self.factionNames = self.allFactionNames;
+        self.identities = self.allIdentities;
+    } else {
+        self.factionNames = @[ [Faction nameFor:self.selectedFaction] ];
+        self.identities = @[ self.allIdentities[sender.selectedSegmentIndex-1] ];
+    }
+    
+    [self setupSelectedIdentity];
+    
     [self.tableView reloadData];
     [self.collectionView reloadData];
 }

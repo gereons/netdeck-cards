@@ -84,8 +84,9 @@ class Faction: NSObject {
         {
             let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
             return dataDestinyAllowed ? runnerFactionNames : runnerFactionNamesPreDAD
+        } else {
+            return corpFactionNames
         }
-        return corpFactionNames
     }
     
     class func factionsForBrowser() -> TableData {

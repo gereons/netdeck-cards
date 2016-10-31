@@ -40,7 +40,6 @@ class CardThumbView: UICollectionViewCell {
                 self.loadImageFor(self.card)
             }
         }
-        
     }
 
 }
