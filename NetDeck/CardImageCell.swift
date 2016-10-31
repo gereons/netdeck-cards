@@ -46,6 +46,7 @@ class CardImageCell: UICollectionViewCell {
             img!.image = nil
         }
         self.detailView.isHidden = true
+        self.cc = CardCounter.null()
     }
     
     func loadImage(for cc: CardCounter) {
@@ -70,7 +71,7 @@ class CardImageCell: UICollectionViewCell {
         }
     }
     
-    private func setImageStack(_ image: UIImage) {
+    func setImageStack(_ image: UIImage) {
         self.image1.image = image
         self.image2.image = self.cc.count > 1 ? image : nil
         self.image3.image = self.cc.count > 2 ? image : nil

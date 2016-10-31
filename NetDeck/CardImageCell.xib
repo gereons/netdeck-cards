@@ -19,13 +19,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L7o-k4-OnI" userLabel="Image View 1">
-                        <rect key="frame" x="0.0" y="0.0" width="215" height="298"/>
+                        <rect key="frame" x="0.0" y="0.0" width="215" height="303"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5rw-t7-wUK" userLabel="Image View 2">
-                        <rect key="frame" x="5" y="5" width="215" height="298"/>
+                        <rect key="frame" x="5" y="5" width="215" height="303"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LFo-GU-rPr" userLabel="Image View 3">
-                        <rect key="frame" x="10" y="15" width="215" height="298"/>
+                        <rect key="frame" x="10" y="10" width="215" height="303"/>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 Copies" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdx-G8-l4k">
                         <rect key="frame" x="8" y="313" width="209" height="20"/>
@@ -137,7 +137,7 @@
                 <constraint firstAttribute="trailing" secondItem="5rw-t7-wUK" secondAttribute="trailing" constant="5" id="CPm-F2-1rF"/>
                 <constraint firstItem="X4K-su-7YN" firstAttribute="centerX" secondItem="15q-CW-OmF" secondAttribute="centerX" id="ECi-1Y-4hI"/>
                 <constraint firstItem="Shv-7g-5Lh" firstAttribute="leading" secondItem="15q-CW-OmF" secondAttribute="leading" id="FPt-vI-Yzi"/>
-                <constraint firstItem="LFo-GU-rPr" firstAttribute="top" secondItem="15q-CW-OmF" secondAttribute="top" constant="15" id="H7h-n7-MTF"/>
+                <constraint firstItem="LFo-GU-rPr" firstAttribute="top" secondItem="15q-CW-OmF" secondAttribute="top" constant="10" id="H7h-n7-MTF"/>
                 <constraint firstItem="LFo-GU-rPr" firstAttribute="height" secondItem="L7o-k4-OnI" secondAttribute="height" id="HH3-7W-cBe"/>
                 <constraint firstItem="Shv-7g-5Lh" firstAttribute="top" secondItem="15q-CW-OmF" secondAttribute="top" id="NJp-Ey-6Xd"/>
                 <constraint firstAttribute="trailing" secondItem="fdx-G8-l4k" secondAttribute="trailing" constant="8" id="Pvj-vy-tEr"/>

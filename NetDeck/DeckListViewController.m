@@ -1426,9 +1426,10 @@
     
     if (cc != nil) {
         [cell loadImageFor:cc];
+    } else {
+        [cell setImageStack:[ImageCache placeholderFor:self.role]];
     }
-    
-    
+
     return cell;
 }
 
