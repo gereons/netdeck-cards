@@ -1424,24 +1424,10 @@
         }
     }
     
-    [cell loadImageFor:cc];
+    if (cc != nil) {
+        [cell loadImageFor:cc];
+    }
     
-//    if (![cell.cc.card isEqual:cc.card])
-//    {
-//        cell.image1.image = nil;
-//        cell.image2.image = nil;
-//        cell.image2.image = nil;
-//    }
-//    cell.cc = cc;
-//    
-//    if (cc.card)
-//    {
-//        [cell loadImage];
-//    }
-//    else
-//    {
-//        [cell setImageStack:[ImageCache placeholderFor:self.role]];
-//    }
     
     return cell;
 }

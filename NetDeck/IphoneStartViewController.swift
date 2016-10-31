@@ -146,7 +146,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         
         deck.saveToDisk()
         
-        let edit = EditDeckViewController(nibName: "EditDeckViewController", bundle: nil)
+        let edit = EditDeckViewController()
         edit.deck = deck
         
         if self.viewControllers.count > 1 {
@@ -334,7 +334,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let deck = self.decks[indexPath.section][indexPath.row]
         
-        let edit = EditDeckViewController(nibName: "EditDeckViewController", bundle: nil)
+        let edit = EditDeckViewController()
         edit.deck = deck
         
         self.pushViewController(edit, animated: true)

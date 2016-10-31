@@ -46,7 +46,6 @@
 		3A3798B31D709B0C00F94658 /* PrebuiltManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3798B21D709B0C00F94658 /* PrebuiltManager.swift */; };
 		3A3798B61D70A54B00F94658 /* PrebuiltSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */; };
 		3A3798B71D70A54B00F94658 /* PrebuiltSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */; };
-		3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */; };
 		3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845001B77BA89007C76F2 /* EditDeckViewController.m */; };
 		3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */; };
 		3A3881D81CA5D73200DFF1BA /* NRDBHack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */; };
@@ -77,6 +76,7 @@
 		3A56371319954B28006AD431 /* LargeBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A56371119954B28006AD431 /* LargeBrowserCell.m */; };
 		3A56371419954B28006AD431 /* LargeBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A56371219954B28006AD431 /* LargeBrowserCell.xib */; };
 		3A563717199552BA006AD431 /* BrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A563716199552BA006AD431 /* BrowserCell.m */; };
+		3A6109321DC78074007C73D5 /* IphoneIdentityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6109311DC78074007C73D5 /* IphoneIdentityViewController.swift */; };
 		3A6131551DA82A6800474B91 /* MainWindow~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6131541DA82A6800474B91 /* MainWindow~iPhone.xib */; };
 		3A6228141C1456F400FBF041 /* SettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6228131C1456F400FBF041 /* SettingsKeys.swift */; };
 		3A65016F1DC6286600815965 /* NRSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A65016E1DC6286600815965 /* NRSwitch.swift */; };
@@ -261,8 +261,6 @@
 		3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrebuiltSelectionViewController.swift; sourceTree = "<group>"; };
 		3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrebuiltSelectionViewController.xib; sourceTree = "<group>"; };
 		3A38091C1B0F8AE300042A67 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		3A3844FC1B77879B007C76F2 /* IphoneStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IphoneStartViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IphoneStartViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A3844FF1B77BA89007C76F2 /* EditDeckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = EditDeckViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A3845001B77BA89007C76F2 /* EditDeckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = EditDeckViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDeckViewController.xib; sourceTree = "<group>"; };
@@ -303,6 +301,7 @@
 		3A563716199552BA006AD431 /* BrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A595423186ED61C0074B3B1 /* CGRectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGRectUtils.h; sourceTree = "<group>"; };
 		3A5BC3ED1849326B00E792F7 /* NRTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NRTypes.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3A6109311DC78074007C73D5 /* IphoneIdentityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IphoneIdentityViewController.swift; sourceTree = "<group>"; };
 		3A6131541DA82A6800474B91 /* MainWindow~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow~iPhone.xib"; sourceTree = "<group>"; };
 		3A6228131C1456F400FBF041 /* SettingsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingsKeys.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3A65016E1DC6286600815965 /* NRSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRSwitch.swift; sourceTree = "<group>"; };
@@ -603,8 +602,6 @@
 			children = (
 				3A6131541DA82A6800474B91 /* MainWindow~iPhone.xib */,
 				3A19426B1DC744DB00EB9CE5 /* IphoneStartViewController.swift */,
-				3A3844FC1B77879B007C76F2 /* IphoneStartViewController.h */,
-				3A3844FD1B77879B007C76F2 /* IphoneStartViewController.m */,
 				3AA463CF1BC003EF00591647 /* Identity Selection */,
 				3AA463D01BC0040B00591647 /* Browser */,
 				3AA463CD1BC003CC00591647 /* Image Display */,
@@ -922,6 +919,7 @@
 			children = (
 				3ABAD2FA1B83A6D7009E81F3 /* IphoneIdentityViewController.h */,
 				3ABAD2FB1B83A6D7009E81F3 /* IphoneIdentityViewController.m */,
+				3A6109311DC78074007C73D5 /* IphoneIdentityViewController.swift */,
 				3ABAD2FC1B83A6D7009E81F3 /* IphoneIdentityViewController.xib */,
 			);
 			name = "Identity Selection";
@@ -1368,7 +1366,6 @@
 				3A3C1E161BF7525B000311FA /* Faction.swift in Sources */,
 				3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */,
 				3AEEBB671C00C9FF00CB6053 /* CardManager.swift in Sources */,
-				3A3844FE1B77879B007C76F2 /* IphoneStartViewController.m in Sources */,
 				3A9752211C1F6E310070E39B /* MiscUtilities.swift in Sources */,
 				3A843A901B89D97F000CC60D /* IphoneDrawSimulator.m in Sources */,
 				3ACC9A5B1DC60E2400C54EF3 /* SmallPipsView.swift in Sources */,
@@ -1385,6 +1382,7 @@
 				3A1FD36A1DA956CA00DF50F1 /* SetSelectionViewController.swift in Sources */,
 				3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */,
 				3A3CE0F01C79EE31003BF8D9 /* DeckImport.swift in Sources */,
+				3A6109321DC78074007C73D5 /* IphoneIdentityViewController.swift in Sources */,
 				3A9204C618B16B9B00AF5285 /* Stats.m in Sources */,
 				3A126E901D0320ED00CDF580 /* Translation.swift in Sources */,
 				3A563717199552BA006AD431 /* BrowserCell.m in Sources */,

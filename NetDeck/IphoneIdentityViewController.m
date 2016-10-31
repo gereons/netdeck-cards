@@ -13,8 +13,8 @@
 
 @property Card* selectedIdentity;
 @property NSIndexPath* selectedIndexPath;
-@property NSMutableArray* identities;
-@property NSArray* factionNames;
+@property NSMutableArray<NSMutableArray<Card*>*>* identities;
+@property NSArray<NSString*>* factionNames;
 
 @end
 

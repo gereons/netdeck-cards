@@ -17,9 +17,8 @@
 
 @property NRRole role;
 
-@property NSArray* factions;
-@property NSArray* factionNames;
-@property NSMutableArray* identities;
+@property NSArray<NSString*>* factionNames;
+@property NSMutableArray<NSMutableArray<Card*>*>* identities;
 @property Card* initialIdentity;
 @property Card* selectedIdentity;
 @property NSIndexPath* selectedIndexPath;
@@ -243,7 +242,7 @@
             
             if ([[factions objectAtIndex:i] isEqualToString:[Faction nameFor:card.faction]])
             {
-                NSMutableArray* arr = self.identities[i];
+                NSMutableArray<Card*>* arr = self.identities[i];
                 [arr addObject:card];
                 
                 if ([self.selectedIdentity isEqual:card])
