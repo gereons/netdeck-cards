@@ -8,7 +8,6 @@
 
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
-#import "CardImageViewController.h"
 #import "IphoneIdentityViewController.h"
 #import "IphoneDrawSimulator.h"
 #import "EditDeckCell.h"

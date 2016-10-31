@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var launchShortcutItem: UIApplicationShortcutItem?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self]);
@@ -103,7 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     }
     
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-    
         let cardsOk = CardManager.cardsAvailable && PackManager.packsAvailable
         if !cardsOk || !Device.isIphone {
             return false

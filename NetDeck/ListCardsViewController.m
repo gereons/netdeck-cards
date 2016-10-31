@@ -7,7 +7,6 @@
 //
 
 #import "ListCardsViewController.h"
-#import "CardImageViewController.h"
 #import "FilterViewController.h"
 #import "EditDeckCell.h"
 

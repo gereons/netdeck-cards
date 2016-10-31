@@ -25,6 +25,7 @@
 		3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */; };
 		3A18B2561B8B7C650065EC4A /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A18B2541B8B7C650065EC4A /* FilterViewController.m */; };
 		3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A18B2551B8B7C650065EC4A /* FilterViewController.xib */; };
+		3A1942681DC7337A00EB9CE5 /* CardImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1942671DC7337A00EB9CE5 /* CardImageViewController.swift */; };
 		3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B78F1ACD81BC0039A18A /* BrowserCollectionView.m */; };
 		3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7921ACD83DF0039A18A /* DecklistCollectionView.m */; };
 		3A19B7961ACD841E0039A18A /* IdentityCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A19B7951ACD841E0039A18A /* IdentityCollectionView.m */; };
@@ -168,7 +169,6 @@
 		3AD860D71B79154100EEF8AC /* EditDeckCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860D51B79154100EEF8AC /* EditDeckCell.xib */; };
 		3AD860DB1B792B6700EEF8AC /* ListCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD860D91B792B6700EEF8AC /* ListCardsViewController.m */; };
 		3AD860DC1B792B6700EEF8AC /* ListCardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860DA1B792B6700EEF8AC /* ListCardsViewController.xib */; };
-		3AD860E01B79383500EEF8AC /* CardImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD860DE1B79383500EEF8AC /* CardImageViewController.m */; };
 		3AD860E11B79383500EEF8AC /* CardImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860DF1B79383500EEF8AC /* CardImageViewController.xib */; };
 		3AD860E61B7939E500EEF8AC /* CardImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */; };
 		3ADE90A118775A77006E187F /* CardImageViewPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageViewPopover.xib */; };
@@ -220,6 +220,7 @@
 		3A18B2531B8B7C650065EC4A /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FilterViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A18B2541B8B7C650065EC4A /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FilterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A18B2551B8B7C650065EC4A /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
+		3A1942671DC7337A00EB9CE5 /* CardImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardImageViewController.swift; sourceTree = "<group>"; };
 		3A19B78E1ACD81BC0039A18A /* BrowserCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserCollectionView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A19B78F1ACD81BC0039A18A /* BrowserCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserCollectionView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A19B7911ACD83DF0039A18A /* DecklistCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DecklistCollectionView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -443,8 +444,6 @@
 		3AD860D81B792B6700EEF8AC /* ListCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListCardsViewController.h; sourceTree = "<group>"; };
 		3AD860D91B792B6700EEF8AC /* ListCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListCardsViewController.m; sourceTree = "<group>"; };
 		3AD860DA1B792B6700EEF8AC /* ListCardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListCardsViewController.xib; sourceTree = "<group>"; };
-		3AD860DD1B79383500EEF8AC /* CardImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardImageViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3AD860DE1B79383500EEF8AC /* CardImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardImageViewController.m; sourceTree = "<group>"; };
 		3AD860DF1B79383500EEF8AC /* CardImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewController.xib; sourceTree = "<group>"; };
 		3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewCell.xib; sourceTree = "<group>"; };
 		3ADE909E18775A77006E187F /* CardImageViewPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewPopover.xib; sourceTree = "<group>"; };
@@ -897,8 +896,7 @@
 		3AA463CD1BC003CC00591647 /* Image Display */ = {
 			isa = PBXGroup;
 			children = (
-				3AD860DD1B79383500EEF8AC /* CardImageViewController.h */,
-				3AD860DE1B79383500EEF8AC /* CardImageViewController.m */,
+				3A1942671DC7337A00EB9CE5 /* CardImageViewController.swift */,
 				3AD860DF1B79383500EEF8AC /* CardImageViewController.xib */,
 				3AC4685B1DC6979D00DE8788 /* CardImageViewCell.swift */,
 				3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */,
@@ -1290,6 +1288,7 @@
 				3A19B7931ACD83DF0039A18A /* DecklistCollectionView.m in Sources */,
 				3AA8EC2C1CC3AA8200370A26 /* DeckHistorySectionHeaderView.swift in Sources */,
 				3A18B2561B8B7C650065EC4A /* FilterViewController.m in Sources */,
+				3A1942681DC7337A00EB9CE5 /* CardImageViewController.swift in Sources */,
 				3A167BD218B1E9C90023DF8A /* CardTypeStats.m in Sources */,
 				3A3D4D4B1DAA6ADA004028A7 /* SettingsViewController.swift in Sources */,
 				3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */,
@@ -1397,7 +1396,6 @@
 				3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */,
 				3AF2235E194364A80072FD9F /* CardFilterSectionHeaderView.m in Sources */,
 				3A56371319954B28006AD431 /* LargeBrowserCell.m in Sources */,
-				3AD860E01B79383500EEF8AC /* CardImageViewController.m in Sources */,
 				3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */,
 				3A11C5FA19715BE8003F2093 /* IdentitySectionHeaderView.m in Sources */,
 				3AD796871C6B52E600D5B24C /* DeckExport.swift in Sources */,
