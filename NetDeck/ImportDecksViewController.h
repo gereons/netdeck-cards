@@ -11,6 +11,6 @@
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UISearchBar* searchBar;
 
-@property NRImportSource source;
+@property NSInteger source; // actually NRDeckImportSource
 
 @end

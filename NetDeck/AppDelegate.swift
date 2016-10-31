@@ -112,10 +112,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             
             switch shortcutItem.type {
             case "org.steffens.NRDB.newRunner":
-                start.addNewDeck(NRRole.runner.rawValue)
+                start.addNewDeck(.runner)
                 return true
             case "org.steffens.NRDB.newCorp":
-                start.addNewDeck(NRRole.corp.rawValue)
+                start.addNewDeck(.corp)
                 return true
             case "org.steffens.NRDB.cardBrowswer":
                 start.openBrowser()

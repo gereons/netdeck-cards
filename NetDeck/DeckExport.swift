@@ -26,7 +26,7 @@ class DeckExport: NSObject {
     
     class func asPlaintext(_ deck: Deck) {
         let s = self.asPlaintextString(deck)
-        let filename = (deck.name ?? "deck") + ".txt"
+        let filename = deck.name + ".txt"
         self.writeToDropbox(s, filename:filename, deckType:"Plain Text Deck".localized(), autoSave:false)
     }
     
@@ -36,7 +36,7 @@ class DeckExport: NSObject {
     
     class func asMarkdown(_ deck: Deck) {
         let s = self.asMarkdownString(deck)
-        let filename = (deck.name ?? "deck") + ".md"
+        let filename = deck.name + ".md"
         self.writeToDropbox(s, filename:filename, deckType:"Markdown Deck".localized(), autoSave:false)
     }
     
@@ -46,7 +46,7 @@ class DeckExport: NSObject {
     
     class func asBBCode(_ deck: Deck) {
         let s = self.asBBCodeString(deck)
-        let filename = (deck.name ?? "deck") + ".bbc"
+        let filename = deck.name + ".bbc"
         self.writeToDropbox(s, filename:filename, deckType:"BBCode Deck".localized(), autoSave:false)
     }
     
@@ -71,7 +71,7 @@ class DeckExport: NSObject {
             }
             xml += "</deck>\n"
             
-            let filename = (deck.name ?? "") + ".o8d"
+            let filename = deck.name + ".o8d"
             self.writeToDropbox(xml, filename: filename, deckType: "OCTGN Deck".localized(), autoSave:autoSave)
         }
     }
@@ -106,7 +106,7 @@ class DeckExport: NSObject {
         
         let eol = fmt == .markdown ? "  \n" : "\n"
         
-        var s = (deck.name ?? "") + eol + eol
+        var s = deck.name + eol + eol
         if let identity = deck.identity {
             s += identity.name
             s += " " + self.italics("(" + identity.packName + ")", fmt)
@@ -197,8 +197,8 @@ class DeckExport: NSObject {
         for cc in deck.cards {
             dict[cc.card.code] = "\(cc.count)"
         }
-        if let name = deck.name , name.length > 0 {
-            dict["name"] = name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        if deck.name.length > 0 {
+            dict["name"] = deck.name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         }
         
         let keys = dict.keys.sorted{ $0 < $1 }

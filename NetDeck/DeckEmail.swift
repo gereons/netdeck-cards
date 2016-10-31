@@ -29,7 +29,7 @@ class DeckEmail: NSObject, MFMailComposeViewControllerDelegate {
         let emailBody = DeckExport.asPlaintextString(deck)
         mailer.setMessageBody(emailBody, isHTML:false)
     
-        mailer.setSubject(deck.name ?? "")
+        mailer.setSubject(deck.name)
         self.viewController = fromViewController
         self.viewController.present(mailer, animated:false, completion:nil)
     }

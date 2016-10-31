@@ -223,7 +223,7 @@ class DeckImport: NSObject {
         }
         
         if deck.identity != nil && deck.cards.count > 0 {
-            deck.name = name
+            deck.name = name ?? ""
             return deck
         } else {
             return nil

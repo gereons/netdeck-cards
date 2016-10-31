@@ -7,7 +7,10 @@
 #import "GZip.h"
 #import "UIAlert+NetDeck.h"
 
-@class Card;
-@class CardCounter;
+//@class Card;
+//@class CardCounter;
+@class Deck;
 
-#import "IphoneStartViewController.h"
+#import "EditDeckViewController.h"
+#import "IphoneIdentityViewController.h"
+#import "ImportDecksViewController.h"

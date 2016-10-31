@@ -17,7 +17,7 @@
 -(IBAction)okClicked:(id)sender;
 -(IBAction)cancelClicked:(id)sender;
 
-@property NRRole role;
+@property NSInteger role; // actually NRRole
 @property Deck* deck;
 
 @end

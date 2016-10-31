@@ -8,7 +8,7 @@
 
 @import DZNEmptyDataSet;
 
-@interface IphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
+@interface xIphoneStartViewController : UINavigationController<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
 
 @property IBOutlet UITableViewController* tableViewController;
 @property IBOutlet UITableView* tableView;

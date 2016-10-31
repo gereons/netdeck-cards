@@ -11,7 +11,7 @@
 #import "IphoneIdentityViewController.h"
 #import "ImportDecksViewController.h"
 
-@interface IphoneStartViewController ()
+@interface xIphoneStartViewController ()
 
 @property NSMutableArray* runnerDecks;
 @property NSMutableArray* corpDecks;
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation IphoneStartViewController
+@implementation xIphoneStartViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

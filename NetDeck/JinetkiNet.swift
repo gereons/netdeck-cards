@@ -157,7 +157,7 @@ class JintekiNet: NSObject {
         let date = fmt.string(from: deck.lastModified as Date? ?? Date())
         
         let parameters: [String: Any] = [
-            "name": deck.name ?? "",
+            "name": deck.name,
             "cards": cards,
             "identity": id,
             "date": date,

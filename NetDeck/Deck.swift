@@ -43,7 +43,7 @@ import Marshal
         return identityCc?.card
     }
     
-    var name: String? {
+    var name: String = "" {
         willSet { modified = true }
     }
     
@@ -434,7 +434,7 @@ import Marshal
     func duplicate() -> Deck {
         let newDeck = Deck()
         
-        let oldName = self.name ?? ""
+        let oldName = self.name
         var newName = oldName + " " + "(Copy)".localized()
         
         let regexPattern = "\\d+$"
@@ -709,7 +709,7 @@ import Marshal
         
         self.netrunnerDbId = decoder.decodeObject(forKey: "netrunnerDbId") as? String
         
-        self.name = decoder.decodeObject(forKey: "name") as? String
+        self.name = (decoder.decodeObject(forKey: "name") as? String) ?? ""
         self.role = NRRole(rawValue: decoder.decodeInteger(forKey: "role"))!
         self.state = NRDeckState(rawValue: decoder.decodeInteger(forKey: "state"))!
         self.isDraft = decoder.decodeBool(forKey: "draft")

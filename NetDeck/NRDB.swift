@@ -316,7 +316,7 @@ class NRDB: NSObject {
         let deckId = deck.netrunnerDbId ?? "0"
         let parameters: [String: Any] = [
             "deck_id": deckId,
-            "name": deck.name ?? "Deck",
+            "name": deck.name,
             "description": deck.notes ?? "",
             "content": cards
         ]
@@ -334,7 +334,7 @@ class NRDB: NSObject {
         
         let parameters = [
             "deck_id": deck.netrunnerDbId ?? "0",
-            "name": deck.name ?? "Deck"
+            "name": deck.name
         ]
         
         self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)

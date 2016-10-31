@@ -20,7 +20,7 @@
                 <outlet property="navigationController" destination="S3N-Zt-T9x" id="KDz-Ei-JR1"/>
             </connections>
         </customObject>
-        <navigationController id="S3N-Zt-T9x" customClass="IphoneStartViewController">
+        <navigationController id="S3N-Zt-T9x" customClass="IphoneStartViewController" customModule="NetDeck">
             <navigationBar key="navigationBar" contentMode="scaleToFill" id="1Ys-gR-a9h">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
