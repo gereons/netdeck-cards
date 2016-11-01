@@ -7,7 +7,6 @@
 //
 
 #import "CompareDecksList.h"
-#import "DeckCell.h"
 #import "DeckDiffViewController.h"
 
 @interface CompareDecksList ()

@@ -9,7 +9,6 @@
 @import SVProgressHUD;
 
 #import "ImportDecksViewController.h"
-#import "DeckCell.h"
 
 static NRDeckSearchScope searchScope = NRDeckSearchScopeAll;
 static NSString* filterText;
