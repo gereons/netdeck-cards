@@ -13,12 +13,12 @@
 static NRDeckSearchScope searchScope = NRDeckSearchScopeAll;
 static NSString* filterText;
 
-@interface ImportDecksViewController ()
+@interface xImportDecksViewController ()
 
 @property NSMutableArray<Deck*>* runnerDecks;
 @property NSMutableArray<Deck*>* corpDecks;
 
-@property NSArray* filteredDecks;
+@property NSArray<NSArray<Deck*>*>* filteredDecks;
 
 @property UIBarButtonItem* importButton;
 @property UIBarButtonItem* spacer;
@@ -31,7 +31,7 @@ static NSString* filterText;
 
 @end
 
-@implementation ImportDecksViewController
+@implementation xImportDecksViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

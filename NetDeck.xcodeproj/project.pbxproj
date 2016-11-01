@@ -65,6 +65,7 @@
 		3A3D8CA71CA1C6EF002C73E3 /* Codes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D8CA61CA1C6EF002C73E3 /* Codes.swift */; };
 		3A3E26E81A005042000C6D32 /* UIAlert+NetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */; };
 		3A3F04DE1DC8D6E2003B3E25 /* DeckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */; };
+		3A3F04E01DC8DF70003B3E25 /* ImportDecksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */; };
 		3A41DA871BF8785C003CB7E1 /* PackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A41DA861BF8785C003CB7E1 /* PackManager.swift */; };
 		3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */; };
 		3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */; };
@@ -282,6 +283,7 @@
 		3A3E26E61A004FD7000C6D32 /* UIAlert+NetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlert+NetDeck.h"; sourceTree = "<group>"; };
 		3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlert+NetDeck.m"; sourceTree = "<group>"; };
 		3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckCell.swift; sourceTree = "<group>"; };
+		3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportDecksViewController.swift; sourceTree = "<group>"; };
 		3A41DA861BF8785C003CB7E1 /* PackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackManager.swift; sourceTree = "<group>"; };
 		3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserSectionHeaderView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserSectionHeaderView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -968,6 +970,7 @@
 				3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */,
 				3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */,
 				3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */,
+				3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */,
 				3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */,
 				3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */,
 				3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */,
@@ -1380,6 +1383,7 @@
 				3A563717199552BA006AD431 /* BrowserCell.m in Sources */,
 				3AF6978D1C1DF96400D254CE /* DrawSimulatorCollectionView.swift in Sources */,
 				3AB838631DC689C00047B7DB /* CardDetailView.swift in Sources */,
+				3A3F04E01DC8DF70003B3E25 /* ImportDecksViewController.swift in Sources */,
 				3AD0667E1896D0F100FF1666 /* SmallCardCell.m in Sources */,
 				3A3798B31D709B0C00F94658 /* PrebuiltManager.swift in Sources */,
 				3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */,

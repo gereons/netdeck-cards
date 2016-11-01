@@ -217,7 +217,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     
     func importDecksFrom(_ importSource: NRImportSource) {
         let importVc = ImportDecksViewController()
-        importVc.source = importSource.rawValue
+        importVc.source = importSource
         self.pushViewController(importVc, animated: true)
     }
     
