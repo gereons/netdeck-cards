@@ -48,8 +48,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.clearButton.setTitle("Clear".localized(), for: UIControlState())
         
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector:#selector(BrowserViewController.showKeyboard(_:)), name:NSNotification.Name.UIKeyboardWillShow, object:nil)
-        nc.addObserver(self, selector:#selector(BrowserViewController.hideKeyboard(_:)), name:NSNotification.Name.UIKeyboardWillHide, object:nil)
+        nc.addObserver(self, selector:#selector(BrowserViewController.showKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object:nil)
+        nc.addObserver(self, selector:#selector(BrowserViewController.hideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object:nil)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(BrowserViewController.longPress(_:)))
         self.tableView.addGestureRecognizer(longPress)

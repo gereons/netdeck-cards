@@ -39,8 +39,8 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     static func monitorKeyboard() {
         let nc = NotificationCenter.default
         
-        nc.addObserver(self, selector:#selector(self.showKeyboard(_:)), name:NSNotification.Name.UIKeyboardDidShow, object:nil)
-        nc.addObserver(self, selector:#selector(self.hideKeyboard(_:)), name:NSNotification.Name.UIKeyboardWillHide, object:nil)
+        nc.addObserver(self, selector:#selector(self.showKeyboard(_:)), name: Notification.Name.UIKeyboardDidShow, object:nil)
+        nc.addObserver(self, selector:#selector(self.hideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object:nil)
     }
     
     static func showKeyboard(_ notification: Notification) {
