@@ -8,6 +8,22 @@
 
 import UIKit
 
+extension Array where Element: Equatable {
+    func contains(_ obj: Element) -> Bool {
+        return self.index(of: obj) != nil
+    }
+    
+    @discardableResult
+    mutating func remove(_ obj: Element) -> Bool {
+        if let index = self.index(of: obj) {
+            self.remove(at: index)
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
 class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
@@ -96,12 +112,8 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
             deck.addCard(identity, copies: 1)
             self.close()
         } else {
-            let deck = Deck()
-            deck.role = self.role
+            let deck = Deck(role: self.role)
             deck.addCard(identity, copies: 1)
-            
-            let seq = UserDefaults.standard.integer(forKey: SettingsKeys.FILE_SEQ) + 1
-            deck.name = "Deck #\(seq)"
             
             let edit = EditDeckViewController()
             edit.deck = deck

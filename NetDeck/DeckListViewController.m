@@ -94,19 +94,10 @@
     
     if (self.deck == nil)
     {
-        self.deck = [[Deck alloc] init];
-        self.deck.role = self.role;
+        self.deck = [[Deck alloc] initWithRole:self.role];
     }
     
-    if (self.deck.filename == nil)
-    {
-        if (self.deck.name == nil)
-        {
-            NSInteger seq = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.FILE_SEQ] + 1;
-            self.deck.name = [NSString stringWithFormat:@"Deck #%ld", (long)seq];
-        }
-        self.deckNameLabel.text = self.deck.name;
-    }
+    self.deckNameLabel.text = self.deck.name;
     
     [self initCards];
     

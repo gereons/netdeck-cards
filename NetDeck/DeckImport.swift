@@ -172,8 +172,7 @@ class DeckImport: NSObject {
         let regex3 = try! NSRegularExpression(pattern:"^([0-9]) ", options:[]) // start with "1 ..."
         
         var name: String?
-        let deck = Deck()
-        var role = NRRole.none
+        let deck = Deck(role: .none)
         for line in lines {
             if name == nil {
                 name = line
@@ -181,7 +180,7 @@ class DeckImport: NSObject {
             
             for c in cards {
                 // don't bother checking cards of the opposite role (as soon as we know this deck's role)
-                let roleOk = role == .none || role == c.role;
+                let roleOk = deck.role == .none || deck.role == c.role
                 if !roleOk {
                     continue
                 }
@@ -194,7 +193,6 @@ class DeckImport: NSObject {
                 if range != nil {
                     if c.type == .identity {
                         deck.addCard(c, copies:1)
-                        role = c.role
                         // NSLog(@"found identity %@", c.name);
                     } else {
                         var match = regex1.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length))
@@ -301,7 +299,6 @@ class DeckImport: NSObject {
     }
     
     func parseJsonDeckList(_ json: JSONObject) -> Bool {
-        
         if !NRDB.validJsonResponse(json: json) {
             return false
         }
@@ -378,7 +375,7 @@ class DeckImport: NSObject {
         let uncompressed = GZip.gzipDeflate(data)
         let deckStr = NSString(data: uncompressed!, encoding: String.Encoding.utf8.rawValue)
         
-        let deck = Deck()
+        let deck = Deck(role: .none)
         if let parts = deckStr?.components(separatedBy: "&") {
             for card in parts {
                 let arr = card.components(separatedBy: "=")

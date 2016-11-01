@@ -134,17 +134,22 @@ class DeckManager: NSObject {
     
     class func pathForRole(_ role: NRRole) -> String {
         let dir = directoryForRole(role)
-        let file = String(format:"deck-%d.anr", nextFileId())
+        let file = String(format:"deck-%d.anr", nextFileSequence())
         let path = dir.appendPathComponent(file)
         
         return path
     }
     
-    class func nextFileId() -> Int {
+    class func fileSequence() -> Int {
         let settings = UserDefaults.standard
-        let fileId = settings.integer(forKey: SettingsKeys.FILE_SEQ)
-        settings.set(fileId+1, forKey: SettingsKeys.FILE_SEQ)
-        return fileId
+        return settings.integer(forKey: SettingsKeys.FILE_SEQ)
+    }
+    
+    private class func nextFileSequence() -> Int {
+        let settings = UserDefaults.standard
+        let seq = settings.integer(forKey: SettingsKeys.FILE_SEQ)
+        settings.set(seq + 1, forKey: SettingsKeys.FILE_SEQ)
+        return seq
     }
     
     class func flushCache() {

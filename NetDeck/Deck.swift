@@ -24,11 +24,16 @@ import Marshal
     private var sortType: NRDeckSort = .byType
     private var lastChanges = DeckChangeSet()
     
-    override init() {
+    override private init() {}
+    
+    init(role: NRRole) {
         let settings = UserDefaults.standard
-        self.state = settings.bool(forKey: SettingsKeys.CREATE_DECK_ACTIVE) ? NRDeckState.active : NRDeckState.testing
+        self.state = settings.bool(forKey: SettingsKeys.CREATE_DECK_ACTIVE) ? .active : .testing
         let mwlVersion = settings.integer(forKey: SettingsKeys.MWL_VERSION)
+        let seq = DeckManager.fileSequence() + 1
+        self.name = "Deck #\(seq)"
         self.mwl = NRMWL(rawValue: mwlVersion) ?? .none
+        self.role = role
     }
     
     var allCards: [CardCounter] {
@@ -59,11 +64,11 @@ import Marshal
         willSet { modified = true }
     }
     
-    var role = NRRole.none {
+    private(set) var role = NRRole.none {
         willSet { modified = true }
     }
     
-    var mwl: NRMWL {
+    var mwl = NRMWL.none {
         willSet { modified = true }
     }
     
@@ -84,16 +89,14 @@ import Marshal
     }
     
     var influenceLimit: Int {
-        if self.identity == nil {
-            return 0
-        }
-        
-        let useMwl = self.mwl != NRMWL.none
-        if useMwl {
-            let limit = self.identity!.influenceLimit
-            return max(1, limit - self.mwlPenalty)
+        if let identity = self.identity {
+            if self.mwl != .none {
+                return max(1, identity.influenceLimit - self.mwlPenalty)
+            } else {
+                return identity.influenceLimit
+            }
         } else {
-            return self.identity!.influenceLimit
+            return 0
         }
     }
     

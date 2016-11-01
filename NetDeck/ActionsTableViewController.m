@@ -141,8 +141,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     if ([notification.name isEqualToString:Notifications.browserNew])
     {
         Card* card = [CardManager cardByCode:[userInfo objectForKey:@"code"]];
-        Deck* deck = [[Deck alloc] init];
-        deck.role = card.role;
+        Deck* deck = [[Deck alloc] initWithRole:card.role];
         [deck addCard:card copies:1];
         
         filter = [[CardFilterViewController alloc] initWithRole:deck.role andDeck:deck];

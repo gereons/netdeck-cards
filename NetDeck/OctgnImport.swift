@@ -10,17 +10,15 @@ import Foundation
 
 class OctgnImport: NSObject, XMLParserDelegate {
     
-    var parser: XMLParser!
-    var deck: Deck!
-    var notes: String?
+    private let deck = Deck(role: .none)
+    private var notes: String?
     
     func parseOctgnDeckFromData(_ data: Data) -> Deck? {
-        self.parser = XMLParser(data: data)
-        self.parser.delegate = self
+        FIXME("test me")
+        let parser = XMLParser(data: data)
+        parser.delegate = self
         
-        self.deck = Deck()
-        
-        let ok = self.parser.parse()
+        let ok = parser.parse()
         if ok && self.deck.role != .none {
             return self.deck
         } else {
@@ -29,22 +27,15 @@ class OctgnImport: NSObject, XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
-        
-        self.notes = nil
-        
         if elementName == "card" {
             if let qty = attributeDict["qty"], let id = attributeDict["id"] {
-            
                 if id.hasPrefix(Card.octgnPrefix) && id.length > 32 {
-
-                    let code = (id as NSString).substring(from: 31)
-                    let card = CardManager.cardBy(code: code)
-                    let copies = Int(qty)
                     
-                    if card != nil && copies != nil {
+                    let index = id.index(id.startIndex, offsetBy: 31)
+                    let code = id.substring(from: index)
+                    if let card = CardManager.cardBy(code: code), let copies = Int(qty) {
                         // NSLog(@"card: %d %@", copies, card.name);
-                        self.deck.addCard(card!, copies: copies!)
-                        self.deck.role = card!.role
+                        self.deck.addCard(card, copies: copies)
                     }
                 }
             }

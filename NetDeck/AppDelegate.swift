@@ -33,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             Fabric.with([Crashlytics.self]);
         }
         
+        FIXME("test deck imports: dropbox, meteor, nrdb, clipboard")
+        
         self.setBuiltinUserDefaults()
         
         var setsOk = false
