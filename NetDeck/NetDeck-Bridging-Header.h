@@ -12,5 +12,4 @@
 @class Deck;
 
 #import "EditDeckViewController.h"
-#import "IphoneIdentityViewController.h"
 #import "ImportDecksViewController.h"

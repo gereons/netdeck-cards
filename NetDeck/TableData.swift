@@ -12,7 +12,11 @@ class TableData: NSObject {
 
     var sections: NSArray
     var values: NSArray
-    var collapsedSections: [Bool]?
+    var collapsedSections: [Bool]? {
+        willSet {
+            assert(newValue == nil || newValue?.count == sections.count, "count mismatch")
+        }
+    }
     
     init(sections: NSArray, andValues values: NSArray) {
         assert(sections.count == values.count, "sections/values count mismatch")
@@ -39,5 +43,27 @@ class TableData: NSObject {
         let stringPacks = TableData(sections:rawPacks.sections, andValues:strValues)
         stringPacks.collapsedSections = rawPacks.collapsedSections
         return stringPacks
+    }
+}
+
+// strongly-typed variant, where both producer and consumer are Swift
+class TypedTableData<T> {
+    var sections: [String]
+    var values: [[T]]
+    var collapsedSections: [Bool]? {
+        willSet {
+            assert(newValue == nil || newValue?.count == sections.count, "count mismatch")
+        }
+    }
+    
+    init(sections: [String], values: [[T]]) {
+        assert(sections.count == values.count, "sections/values count mismatch")
+        self.sections = sections
+        self.values = values
+        self.collapsedSections = nil
+    }
+    
+    convenience init(values: [T]) {
+        self.init(sections: [""], values: [values])
     }
 }

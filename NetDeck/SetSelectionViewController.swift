@@ -18,8 +18,8 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
         let tableData = PackManager.allKnownPacksForSettings()
-        self.sections = tableData.sections as! [String]
-        self.values = tableData.values as! [[Pack]]
+        self.sections = tableData.sections 
+        self.values = tableData.values
         
         if self.values.count > 1 {
             // add "number of core sets" fake entry

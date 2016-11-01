@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IphoneIdentityViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IphoneIdentityViewController" customModule="NetDeck">
             <connections>
                 <outlet property="cancelButton" destination="dTH-ya-Zb3" id="KnU-gn-0LB"/>
                 <outlet property="okButton" destination="Akb-DO-Vp8" id="cg2-JJ-sFB"/>
@@ -24,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ou5-D6-bVf">
-                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="yVh-d3-jpp"/>
@@ -32,17 +32,17 @@
                     </connections>
                 </tableView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3KF-Sm-gFT">
-                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                    <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                     <items>
                         <barButtonItem title="Abbrechen" id="dTH-ya-Zb3" userLabel="Cancel Button">
                             <connections>
-                                <action selector="cancelClicked:" destination="-1" id="E5d-Bd-5K3"/>
+                                <action selector="cancelTapped:" destination="-1" id="sWw-66-IKx"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="noG-4N-6ww"/>
                         <barButtonItem title="OK" id="Akb-DO-Vp8">
                             <connections>
-                                <action selector="okClicked:" destination="-1" id="094-7N-x8b"/>
+                                <action selector="okTapped:" destination="-1" id="NtB-Ht-wB2"/>
                             </connections>
                         </barButtonItem>
                     </items>

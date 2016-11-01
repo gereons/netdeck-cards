@@ -152,7 +152,7 @@ class PackManager: NSObject {
         }
     }
     
-    class func allKnownPacksForSettings() -> TableData {
+    class func allKnownPacksForSettings() -> TypedTableData<Pack> {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -163,7 +163,7 @@ class PackManager: NSObject {
             values.append(packs)
         }
         
-        return TableData(sections: sections as NSArray, andValues: values as NSArray)
+        return TypedTableData(sections: sections, values: values)
     }
 
 

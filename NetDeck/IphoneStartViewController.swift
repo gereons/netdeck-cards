@@ -176,8 +176,8 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     }
     
     func addNewDeck(_ role: NRRole) {
-        let idvc = IphoneIdentityViewController(nibName: "IphoneIdentityViewController", bundle: nil)
-        idvc.role = role.rawValue
+        let idvc = IphoneIdentityViewController()
+        idvc.role = role
         self.pushViewController(idvc, animated: true)
     }
     
