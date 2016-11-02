@@ -29,8 +29,8 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     private var dateFormatter = DateFormatter()
     private var deckListSort = NRDeckListSort.byDate
     
-    private static var filterText = ""
-    private static var searchScope = NRDeckSearchScope.all
+    private var filterText = ""
+    private var searchScope = NRDeckSearchScope.all
     
     override init(nibName: String?, bundle: Bundle?) {
         super.init(nibName: nibName, bundle: bundle)
@@ -61,11 +61,11 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         
         self.searchBar.placeholder = "Search for decks, identities or cards".localized()
-        if ImportDecksViewController.filterText.length > 0 {
-            self.searchBar.text = ImportDecksViewController.filterText
+        if self.filterText.length > 0 {
+            self.searchBar.text = self.filterText
         }
         self.searchBar.scopeButtonTitles = [ "All".localized(), "Name".localized(), "Identity".localized(), "Card".localized() ];
-        self.searchBar.selectedScopeButtonIndex = ImportDecksViewController.searchScope.rawValue
+        self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue
         self.searchBar.showsScopeBar = false
         self.searchBar.showsCancelButton = false
         // needed on iOS8
@@ -287,8 +287,9 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         let files = try? fileManager.contentsOfDirectory(atPath: directory)
         
         for file in files! {
-            if let data = try? Data(contentsOf: URL.init(fileURLWithPath: file)),
-                let attrs = try? fileManager.attributesOfItem(atPath: file),
+            let path = directory.appendPathComponent(file)
+            if let data = fileManager.contents(atPath: path),
+                let attrs = try? fileManager.attributesOfItem(atPath: path),
                 let lastModified = attrs[FileAttributeKey.modificationDate] as? Date {
             
                 let importer = OctgnImport()
@@ -364,15 +365,14 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             self.corpDecks = self.sortDecks(self.corpDecks)
         }
         
-        let filterText = ImportDecksViewController.filterText
-        if (filterText.length > 0) {
+        if self.filterText.length > 0 {
             let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", filterText)
             let identityPredicate = NSPredicate(format: "(identity.name CONTAINS[cd] %@) or (identity.englishName CONTAINS[cd] %@)",
             filterText, filterText)
             let cardPredicate = NSPredicate(format: "(ANY cards.card.name CONTAINS[cd] %@) OR (ANY cards.card.englishName CONTAINS[cd] %@)", filterText, filterText)
             
             let predicate: NSPredicate
-            switch ImportDecksViewController.searchScope {
+            switch self.searchScope {
             case .all:
                 predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [ namePredicate, identityPredicate, cardPredicate ])
             case .name:
@@ -403,13 +403,13 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - search bar
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        ImportDecksViewController.filterText = searchText
+        self.filterText = searchText
         self.filterDecks()
         self.tableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        ImportDecksViewController.searchScope = NRDeckSearchScope(rawValue: selectedScope) ?? .all
+        self.searchScope = NRDeckSearchScope(rawValue: selectedScope) ?? .all
         self.filterDecks()
         self.tableView.reloadData()
     }
