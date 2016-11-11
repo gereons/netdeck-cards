@@ -77,24 +77,29 @@ class Faction: NSObject {
         return true
     }
     
-    class func factionsFor(role: NRRole) -> [String] {
+    class func factionsFor(role: NRRole, packUsage: NRPackUsage) -> [String] {
         assert(role != .none, "no role")
         
         if (role == .runner)
         {
-            FIXME("packUsage!")
-            let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
-            return dataDestinyAllowed ? runnerFactionNames : runnerFactionNamesPreDAD
+            if packUsage == .selected {
+                let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
+                return dataDestinyAllowed ? runnerFactionNames : runnerFactionNamesPreDAD
+            } else {
+                return runnerFactionNames
+            }
         } else {
             return corpFactionNames
         }
     }
     
-    class func factionsForBrowser() -> TableData {
-        FIXME("packUsage!")
-        let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
-        
-        return dataDestinyAllowed ? allFactions : allFactionsPreDAD
+    class func factionsForBrowser(packUsage: NRPackUsage) -> TableData {
+        if packUsage == .selected {
+            let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
+            return dataDestinyAllowed ? allFactions : allFactionsPreDAD
+        } else {
+            return allFactions
+        }
     }
     
     class func shortName(for faction: NRFaction) -> String {

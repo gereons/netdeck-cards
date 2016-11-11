@@ -642,8 +642,8 @@ static NSInteger viewMode = VIEW_LIST;
 -(void) setClicked:(UIButton*)sender
 {
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
-    NRPackUsage usePacks = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECKBUILDER_PACKS];
-    TableData* rawPacks = [PackManager packsForTableviewWithPacks:usePacks];
+    NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECKBUILDER_PACKS];
+    TableData* rawPacks = [PackManager packsForTableviewWithPackUsage:packUsage];
     TableData* stringPacks = [TableData convertPacksData:rawPacks];
     [CardFilterPopover showFromButton:sender inView:self entries:stringPacks type:@"Set" selected:selected];
 }
@@ -668,7 +668,8 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) factionClicked:(UIButton*)sender
 {
-    TableData* data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role]];
+    NRPackUsage usePacks = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECKBUILDER_PACKS];
+    TableData* data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role packUsage:usePacks]];
     id selected = [self.selectedValues objectForKey:@(FACTION_BUTTON)];
     
     [CardFilterPopover showFromButton:sender inView:self entries:data type:@"Faction" selected:selected];

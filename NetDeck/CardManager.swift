@@ -107,8 +107,8 @@ class CardManager: NSObject {
         return allIdentitiesByRole[role]!
     }
     
-    class func identitiesForSelection(_ role: NRRole) -> TableData {
-        var factionNames = Faction.factionsFor(role: role)
+    class func identitiesForSelection(_ role: NRRole, packUsage: NRPackUsage) -> TableData {
+        var factionNames = Faction.factionsFor(role: role, packUsage: packUsage)
         factionNames.removeFirst(2) // remove "any" and "neutral"
         
         let settings = UserDefaults.standard

@@ -373,8 +373,8 @@ static NSMutableArray* subtypeCollapsedSections;
 {
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
 
-    NRPackUsage usePacks = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
-    TableData* rawPacks = [PackManager packsForTableviewWithPacks:usePacks];
+    NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
+    TableData* rawPacks = [PackManager packsForTableviewWithPackUsage:packUsage];
     TableData* stringPacks = [TableData convertPacksData:rawPacks];
     [CardFilterPopover showFromButton:sender inView:self entries:stringPacks type:@"Set" selected:selected];
 }
@@ -437,13 +437,14 @@ static NSMutableArray* subtypeCollapsedSections;
 {
     TableData* data;
     
+    NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
     if (self.role == NRRoleNone)
     {
-        data = [Faction factionsForBrowser];
+        data = [Faction factionsForBrowserWithPackUsage:packUsage];
     }
     else
     {
-        data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role]];
+        data = [[TableData alloc] initWithValues:[Faction factionsForRole:self.role packUsage:packUsage]];
     }
     id selected = [self.selectedValues objectForKey:@(FACTION_BUTTON)];
     

@@ -141,8 +141,8 @@ class PackManager: NSObject {
         enabledPacks = nil
     }
     
-    class func packsForTableview(packs: NRPackUsage) -> TableData {
-        switch packs {
+    class func packsForTableview(packUsage: NRPackUsage) -> TableData {
+        switch packUsage {
         case .all:
             return allKnownPacksForTableview()
         case .selected:

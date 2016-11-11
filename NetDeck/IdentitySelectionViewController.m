@@ -50,7 +50,8 @@
         self.selectedFaction = NRFactionNone;
         self.viewTable = [[NSUserDefaults standardUserDefaults] boolForKey:SettingsKeys.IDENTITY_TABLE];
         
-        TableData* identities = [CardManager identitiesForSelection:self.role];
+        NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.DECKBUILDER_PACKS];
+        TableData* identities = [CardManager identitiesForSelection:self.role packUsage:packUsage];
         
         self.allFactionNames = identities.sections;
         self.allIdentities = identities.values;

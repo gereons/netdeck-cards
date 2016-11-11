@@ -208,9 +208,9 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBAction func setButtonTapped(_ btn: UIButton) {
         let picker = BrowserValuePicker(title: "Set".localized())
-        let packUsage = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        let data = PackManager.packsForTableview(packs: NRPackUsage(rawValue: packUsage) ?? .all)
-        picker.data = TableData.convertPacksData(data)
+        let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
+        let packUsage = NRPackUsage(rawValue: packs) ?? .all
+        picker.data = TableData.convertPacksData(PackManager.packsForTableview(packUsage: packUsage))
         picker.preselected = self.sets
         picker.setResult = { result in
             self.sets = result
@@ -221,8 +221,10 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func factionButtonTapped(_ btn: UIButton) {
+        let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
+        let packUsage = NRPackUsage(rawValue: packs) ?? .all
         let picker = BrowserValuePicker(title: "Faction".localized())
-        picker.data = Faction.factionsForBrowser()
+        picker.data = Faction.factionsForBrowser(packUsage: packUsage)
         picker.preselected = self.factions
         picker.setResult = { result in
             self.factions = result

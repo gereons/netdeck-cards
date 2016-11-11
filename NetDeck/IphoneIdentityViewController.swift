@@ -61,7 +61,9 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
         
         self.selectedIdentity = self.deck?.identity
         
-        let identities = CardManager.identitiesForSelection(self.role)
+        let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
+        let packUsage = NRPackUsage(rawValue: packs) ?? .all
+        let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage)
         self.factionNames = identities.sections as! [String]
         self.identities = identities.values as! [[Card]]
         
