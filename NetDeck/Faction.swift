@@ -82,6 +82,7 @@ class Faction: NSObject {
         
         if (role == .runner)
         {
+            FIXME("packUsage!")
             let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
             return dataDestinyAllowed ? runnerFactionNames : runnerFactionNamesPreDAD
         } else {
@@ -90,6 +91,7 @@ class Faction: NSObject {
     }
     
     class func factionsForBrowser() -> TableData {
+        FIXME("packUsage!")
         let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
         
         return dataDestinyAllowed ? allFactions : allFactionsPreDAD

@@ -7,8 +7,6 @@
 #import "GZip.h"
 #import "UIAlert+NetDeck.h"
 
-//@class Card;
-//@class CardCounter;
 @class Deck;
 
 #import "EditDeckViewController.h"

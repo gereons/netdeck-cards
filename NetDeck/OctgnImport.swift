@@ -14,7 +14,6 @@ class OctgnImport: NSObject, XMLParserDelegate {
     private var notes: String?
     
     func parseOctgnDeckFromData(_ data: Data) -> Deck? {
-        FIXME("test me")
         let parser = XMLParser(data: data)
         parser.delegate = self
         

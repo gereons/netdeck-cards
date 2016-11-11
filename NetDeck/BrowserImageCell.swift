@@ -8,7 +8,7 @@
 
 import UIKit
 
-class   BrowserImageCell: UICollectionViewCell {
+class BrowserImageCell: UICollectionViewCell {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -24,10 +24,12 @@ class   BrowserImageCell: UICollectionViewCell {
     @IBOutlet weak var icon2: UIImageView!
     @IBOutlet weak var icon3: UIImageView!
     
-    var card = Card.null() {
+    var card: Card? {
         didSet {
-            self.activityIndicator.startAnimating()
-            self.loadImage(for: card)
+            if card != nil {
+                self.activityIndicator.startAnimating()
+                self.loadImage(for: card)
+            }
         }
     }
     
@@ -43,14 +45,17 @@ class   BrowserImageCell: UICollectionViewCell {
         super.prepareForReuse()
     
         self.image.image = nil
-        self.card = Card.null()
+        self.card = nil
         self.detailView.isHidden = true
     }
     
-    private func loadImage(for card: Card) {
+    private func loadImage(for card: Card?) {
+        guard let card = card, let myCard = self.card else {
+            return
+        }
         
         ImageCache.sharedInstance.getImage(for: card) { (card, img, placeholder) in
-            if self.card.code == card.code {
+            if myCard.code == card.code {
                 self.activityIndicator.stopAnimating()
                 self.image.image = img
                 
