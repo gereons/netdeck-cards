@@ -128,15 +128,20 @@ enum { TAG_FACTION, TAG_MINI_FACTION, TAG_TYPE };
     self.previewHeader.font = [UIFont monospacedDigitSystemFontOfSize:15 weight:UIFontWeightRegular];
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self clearFilters:nil];
+}
+
 -(void) viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     NSAssert(self.navigationController.viewControllers.count == 4, @"nav oops");
     
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     UIBarButtonItem* clearButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Clear") style:UIBarButtonItemStylePlain target:self action:@selector(clearFilters:)];
     topItem.rightBarButtonItem = clearButton;
-    
-    [super viewDidAppear:animated];
 }
 
 -(void) clearFilters:(id)sender

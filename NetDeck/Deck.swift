@@ -21,7 +21,6 @@ import Marshal
     private(set) var modified = false
     private(set) var isDraft = false
     
-    private var sortType: NRDeckSort = .byType
     private var lastChanges = DeckChangeSet()
     
     override private init() {}
@@ -232,8 +231,6 @@ import Marshal
         }
         
         self.modified = self.modified || changed
-        
-        self.sort()
     }
     
     func setIdentity(_ identity: Card?, copies: Int, history: Bool) {
@@ -268,28 +265,36 @@ import Marshal
         return nil
     }
     
-    func sort() {
+    private func sort(by sortOrder: NRDeckSort) {
         cards.sort { (cc1, cc2) -> Bool in
             let c1 = cc1.card
             let c2 = cc2.card
             
-            if self.sortType == .bySetType || self.sortType == .bySetNum {
-                if c1.packNumber != c2.packNumber { return c1.packNumber < c2.packNumber }
+            if sortOrder == .bySetType || sortOrder == .bySetNum {
+                if c1.packNumber != c2.packNumber {
+                    return c1.packNumber < c2.packNumber
+                }
             }
-            if self.sortType == .byFactionType {
-                if c1.faction != c2.faction { return c1.faction.rawValue < c2.faction.rawValue }
+            if sortOrder == .byFactionType {
+                if c1.faction != c2.faction {
+                    return c1.faction.rawValue < c2.faction.rawValue
+                }
             }
-            if self.sortType == .bySetNum {
+            if sortOrder == .bySetNum {
                 return c1.number < c2.number
             }
             if c1.type != c2.type {
                 return c1.type.rawValue < c2.type.rawValue
             }
             if c1.type == .ice && c2.type == .ice {
-                return c1.iceType! < c2.iceType!
+                if c1.iceType != c2.iceType {
+                    return c1.iceType < c2.iceType
+                }
             }
             if c1.type == .program && c2.type == .program {
-                return c1.programType! < c2.programType!
+                if c1.programType != c2.programType {
+                    return c1.programType < c2.programType
+                }
             }
             return c1.name.lowercased() < c2.name.lowercased()
         }
@@ -540,13 +545,11 @@ import Marshal
         self.modified = true
     }
     
-    func dataForTableView(_ sortType: NRDeckSort) -> TableData {
-        self.sortType = sortType
-        
+    func dataForTableView(_ sortOrder: NRDeckSort) -> TableData {
         var sections = [String]()
         var cards = [[CardCounter]]()
         
-        self.sort()
+        self.sort(by: sortOrder)
         
         sections.append(CardType.name(for: .identity))
         if self.identityCc != nil {
@@ -572,14 +575,14 @@ import Marshal
         for cc in self.cards {
             var section: String
             
-            switch self.sortType {
+            switch sortOrder {
             case .byType:
                 section = cc.card.typeStr
                 if cc.card.type == .ice {
-                    section = cc.card.iceType!
+                    section = cc.card.iceType
                 }
                 if cc.card.type == .program {
-                    section = cc.card.programType!
+                    section = cc.card.programType
                 }
             case .bySetType, .bySetNum:
                 section = cc.card.packName
@@ -723,7 +726,6 @@ import Marshal
         }
         self.lastModified = nil
         self.notes = decoder.decodeObject(forKey: "notes") as? String
-        self.sortType = .byType
         
         let lastChanges = decoder.decodeObject(forKey: "lastChanges") as? DeckChangeSet
         self.lastChanges = lastChanges ?? DeckChangeSet()

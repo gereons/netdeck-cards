@@ -176,7 +176,7 @@ class Card: NSObject, Unmarshaling {
     }
     
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
-    var iceType: String? {
+    var iceType: String {
         assert(self.type == .ice, "not an ice")
         
         if Card.multiIce.contains(self.code) {
@@ -187,9 +187,10 @@ class Card: NSObject, Unmarshaling {
     }
     
     // special for Programs: return "Icebreaker" for icebreakers, "Program" for other programs
-    var programType: String? {
+    var programType: String {
         assert(self.type == .program, "not a program")
-        if self.strength >= 0 || self.strength == Card.X {
+        
+        if self.subtypes.count > 0 && (self.strength >= 0 || self.strength == Card.X) {
             return self.subtypes[0]
         } else {
             return self.typeStr
