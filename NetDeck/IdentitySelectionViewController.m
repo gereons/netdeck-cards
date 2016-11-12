@@ -110,6 +110,7 @@
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
     layout.minimumInteritemSpacing = 3;
     layout.minimumLineSpacing = 3;
+    layout.sectionHeadersPinToVisibleBounds = YES;
     
     self.tableView.hidden = !self.viewTable;
     self.collectionView.hidden = self.viewTable;
@@ -165,11 +166,6 @@
         }
     }
     self.factionSelector.center = oldCenter;
-    
-    /// FIXME sticky layout hack
-    if ([UICollectionView instancesRespondToSelector:@selector(isPrefetchingEnabled)]) {
-        self.collectionView.prefetchingEnabled = NO;
-    }
     
     [self setupSelectedIdentity];
 }

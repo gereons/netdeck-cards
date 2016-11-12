@@ -7,7 +7,6 @@ PODS:
   - CorePlot (2.2)
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
-  - CSStickyHeaderFlowLayout (0.2.11)
   - DTCoreText (1.6.19):
     - DTCoreText/Core (= 1.6.19)
     - DTFoundation/Core (~> 1.7.5)
@@ -26,15 +25,15 @@ PODS:
   - DTFoundation/UIKit (1.7.11):
     - DTFoundation/Core
   - DZNEmptyDataSet (1.8.1)
-  - Fabric (1.6.10)
+  - Fabric (1.6.11)
   - InAppSettingsKit (2.8)
   - Marshal (1.0.0)
   - MultiSelectSegmentedControl (1.1.0)
-  - SDCAlertView (7.0.1)
+  - SDCAlertView (7.1)
   - SVProgressHUD (2.0.3)
-  - SwiftKeychainWrapper (3.0.0)
-  - SwiftyDropbox (4.1.0):
-    - Alamofire (~> 4.0.0)
+  - SwiftKeychainWrapper (3.0.1)
+  - SwiftyDropbox (4.1.1):
+    - Alamofire (~> 4.0.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -42,7 +41,6 @@ DEPENDENCIES:
   - AlamofireNetworkActivityIndicator
   - CorePlot
   - Crashlytics
-  - CSStickyHeaderFlowLayout
   - DTCoreText
   - DZNEmptyDataSet
   - Fabric
@@ -60,19 +58,18 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 3e55069ada3e1ff7703665156429eedcdfea0bc1
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
-  CSStickyHeaderFlowLayout: e9bcb1762413f49d7d09e5bd0ae5efd1100116b7
   DTCoreText: 184cc2f460c2177108e8700dfb0eb1b1cb72c99d
   DTFoundation: 0ef29c70a9814e15518694862bd739347abe2a50
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  Fabric: c73f371ee543e3f0b80608f2674750e4910d1669
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   InAppSettingsKit: fe3e73f8f9530cdd6270065cd7df7b3773f557e6
   Marshal: a3c5c5dbd388112edf3cdabb718f2b4cfe48658a
   MultiSelectSegmentedControl: 54fb23c997b971eff621cfcf965ff1613d99c3d2
-  SDCAlertView: e04c5a8985e4490768cc9608bf0a13c44215fcf2
+  SDCAlertView: b92fd1f00e522e18a062005e15a16c1e8295c5b5
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
-  SwiftKeychainWrapper: aa69884eb623a6f7d644921bbf58c8cee416a9e6
-  SwiftyDropbox: 0893e21982678ed69237c7c964a00c7a6f7079bb
+  SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
+  SwiftyDropbox: dfcd4d308d32d74729255b48833db61acdfb9c23
 
-PODFILE CHECKSUM: 941dcc0cdd5ed01cc1ce73259e79af6e3f43b68d
+PODFILE CHECKSUM: 979de8882797d111bef54f0b9303e5ad0a637f16
 
 COCOAPODS: 1.1.1

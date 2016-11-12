@@ -7,7 +7,6 @@ target 'NetDeck' do
     pod 'Crashlytics'
     pod 'DTCoreText'
     pod 'SVProgressHUD'
-    pod 'CSStickyHeaderFlowLayout'
     pod 'InAppSettingsKit'
     pod 'MultiSelectSegmentedControl'
     pod 'CorePlot'

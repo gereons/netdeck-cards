@@ -148,6 +148,7 @@ static NSInteger viewMode = VIEW_LIST;
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2);
     layout.minimumInteritemSpacing = 3;
     layout.minimumLineSpacing = 3;
+    layout.sectionHeadersPinToVisibleBounds = YES;
     
     NSString* moreLess = showAllFilters ? l10n(@"Less △") : l10n(@"More ▽");
     [self.moreLessButton setTitle:moreLess forState:UIControlStateNormal];
@@ -163,11 +164,6 @@ static NSInteger viewMode = VIEW_LIST;
                                                         action:@selector(revertDeck:)];
     
     [self resetAllButtons];
-    
-    /// FIXME sticky layout hack
-    if ([UICollectionView instancesRespondToSelector:@selector(isPrefetchingEnabled)]) {
-        self.collectionView.prefetchingEnabled = NO;
-    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -606,22 +602,19 @@ static NSInteger viewMode = VIEW_LIST;
     
     if (scrollToPath)
     {
-        if (!self.collectionView.hidden)
-        {
+        if (!self.collectionView.hidden) {
+            // sadly,
+            [self.collectionView scrollToItemAtIndexPath:scrollToPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
             // doesn't work, card images are below the sticky header
-            // [self.collectionView scrollToItemAtIndexPath:scrollToPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
             
             // calculate scroll offset manually
             CGFloat y;
-            if (viewMode == VIEW_IMG_2)
-            {
+            if (viewMode == VIEW_IMG_2) {
                 y = (scrollToPath.row / 2) * (LARGE_CELL_HEIGHT + 3);
-            }
-            else
-            {
+            } else {
                 y = (scrollToPath.row / 3) * (SMALL_CELL_HEIGHT + 3);
-                
             }
+                
             [self.collectionView setContentOffset:CGPointMake(0, y) animated:NO];
         }
         if (!self.tableView.hidden)

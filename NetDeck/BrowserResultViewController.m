@@ -135,11 +135,7 @@ static BrowserResultViewController* instance;
     layout.sectionInset = UIEdgeInsetsMake(2, 2, 2, 2);
     layout.minimumInteritemSpacing = 3;
     layout.minimumLineSpacing = 3;
-    
-    /// FIXME sticky layout hack
-    if ([UICollectionView instancesRespondToSelector:@selector(isPrefetchingEnabled)]) {
-        self.collectionView.prefetchingEnabled = NO;
-    }
+    layout.sectionHeadersPinToVisibleBounds = YES;
 }
 
 -(void) viewDidAppear:(BOOL)animated

@@ -30,7 +30,7 @@ private class ImageMemCache {
         }
     }
     
-    func removeAllObjects() {
+    func removeAll() {
         synchronized(self) {
             memory.removeAll()
         }
@@ -109,10 +109,6 @@ class ImageCache: NSObject {
             settings.set(now + 48*3600, forKey:SettingsKeys.UNAVAIL_IMG_DATE)
             settings.set(Array(self.unavailableImages), forKey:SettingsKeys.UNAVAILABLE_IMAGES)
         }
-        
-        DispatchQueue.global(qos: .background).async {
-            self.initializeMemCache()
-        }
     }
     
     /// called when we move to the background
@@ -122,7 +118,8 @@ class ImageCache: NSObject {
         settings.set(self.lastModifiedDates, forKey: SettingsKeys.LAST_MOD_CACHE)
         settings.set(self.nextCheckDates, forKey: SettingsKeys.NEXT_CHECK)
         settings.set(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
-        settings.synchronize()
+        
+        self.memCache.removeAll()
     }
     
     func getImage(for card: Card, completion: @escaping (Card, UIImage, Bool) -> Void) {
@@ -291,7 +288,7 @@ class ImageCache: NSObject {
         settings.set(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
         
         self.removeCacheDirectory()
-        self.memCache.removeAllObjects()
+        self.memCache.removeAll()
     }
     
     private func NLOG(_ format: String, _ args: CVarArg...) {
@@ -356,25 +353,6 @@ class ImageCache: NSObject {
         let directory = supportDirectory.appendPathComponent(ImageCache.imagesDirectory)
         
         let _ = try? FileManager.default.removeItem(atPath: directory)
-    }
-    
-    private func initializeMemCache() {
-        // print("start initMemCache")
-        let dir = self.directoryForImages()
-        guard let files = try? FileManager.default.contentsOfDirectory(atPath: dir) else {
-            return
-        }
-        
-        for file in files {
-            let imgFile = dir.appendPathComponent(file)
-            
-            if let imgData = try? Data(contentsOf: URL(fileURLWithPath: imgFile)) {
-                if let img = self.decode(image: UIImage(data: imgData)) {
-                    self.memCache.set(img, forKey: file)
-                }
-            }
-        }
-        // print("end initMemCache")
     }
     
     private func getImage(for key: String) -> UIImage? {
