@@ -148,11 +148,11 @@ class DeckImport: NSObject {
     
     func checkForMeteorDeckURL(_ lines: [String]) -> DeckSource? {
         // a meteor.stimhack.com decklist url looks like this:
-        // http://meteor.stimhack.com/decks/yBMJ3GL6FPozt9nkQ/
+        // https://meteor.stimhack.com/decks/yBMJ3GL6FPozt9nkQ/
         // or like this (no slash)
-        // http://meteor.stimhack.com/decks/i6sLkn5cYZ3633WAu
+        // https://meteor.stimhack.com/decks/i6sLkn5cYZ3633WAu
         
-        let regEx = try! NSRegularExpression(pattern:"http://meteor.stimhack.com/decks/(.*)/?", options:[])
+        let regEx = try! NSRegularExpression(pattern:"https://meteor.stimhack.com/decks/(.*)/?", options:[])
         
         for line in lines {
             if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length)) , match.numberOfRanges == 2 {
@@ -316,7 +316,7 @@ class DeckImport: NSObject {
     }
 
     func doDownloadDeckFromMeteor(_ deckId: String) {
-        let deckUrl = "http://meteor.stimhack.com/deckexport/octgn/" + deckId
+        let deckUrl = "https://meteor.stimhack.com/deckexport/octgn/" + deckId
         var ok = false
         self.downloadStopped = false
         
