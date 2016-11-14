@@ -12,6 +12,7 @@ class CardImageViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var packLabel: InsetLabel!
     
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var cardName: UILabel!
@@ -65,6 +66,10 @@ class CardImageViewCell: UICollectionViewCell {
             if self.card.code == card.code {
                 self.activityIndicator.stopAnimating()
                 self.imageView.image = img
+                
+                self.packLabel.text = card.packName
+                self.packLabel.layer.cornerRadius = 2
+                self.packLabel.layer.masksToBounds = true
                 
                 if self.showAsDifferences {
                     self.countLabel.text = String(format: "%+ld", self.count)

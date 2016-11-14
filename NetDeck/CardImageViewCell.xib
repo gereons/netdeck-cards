@@ -21,6 +21,27 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LWc-ws-ArR">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="418"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAi-YN-zHB" customClass="InsetLabel" customModule="NetDeck" customModuleProvider="target">
+                        <rect key="frame" x="134" y="403" width="32.5" height="15"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="9"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZR9-4a-0PQ">
                         <rect key="frame" x="140" y="208" width="20" height="20"/>
                     </activityIndicatorView>
@@ -136,12 +157,14 @@
                 <constraint firstAttribute="trailing" secondItem="VYX-sp-N5d" secondAttribute="trailing" constant="8" id="QBE-Bo-lT6"/>
                 <constraint firstItem="LWc-ws-ArR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="S4J-lF-sz6"/>
                 <constraint firstAttribute="bottom" secondItem="VYX-sp-N5d" secondAttribute="bottom" id="TXa-RZ-qBI"/>
+                <constraint firstItem="VYX-sp-N5d" firstAttribute="top" secondItem="fAi-YN-zHB" secondAttribute="bottom" id="aoP-5Z-8zB"/>
                 <constraint firstItem="ZR9-4a-0PQ" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="ged-JU-R98"/>
                 <constraint firstItem="LWc-ws-ArR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ggZ-LM-e1u"/>
                 <constraint firstItem="tSh-5W-bgP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="n1b-fd-cHi"/>
                 <constraint firstItem="ZR9-4a-0PQ" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="nXE-TB-IkE"/>
                 <constraint firstAttribute="centerX" secondItem="ZR9-4a-0PQ" secondAttribute="centerX" id="r62-ad-fpo"/>
                 <constraint firstItem="tSh-5W-bgP" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="rkD-AG-zMn"/>
+                <constraint firstItem="fAi-YN-zHB" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="zZj-O1-AZ2"/>
             </constraints>
             <size key="customSize" width="300" height="582"/>
             <connections>
@@ -158,6 +181,7 @@
                 <outlet property="label1" destination="5Fz-mf-I5P" id="1oZ-zT-4Oq"/>
                 <outlet property="label2" destination="SNd-Tt-RpY" id="fh4-JA-M2C"/>
                 <outlet property="label3" destination="ZxX-Cb-fnr" id="rHp-je-gGG"/>
+                <outlet property="packLabel" destination="fAi-YN-zHB" id="3mr-SK-11x"/>
             </connections>
             <point key="canvasLocation" x="257" y="260"/>
         </collectionViewCell>

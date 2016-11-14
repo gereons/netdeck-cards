@@ -172,6 +172,7 @@
 		3AD860DC1B792B6700EEF8AC /* ListCardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860DA1B792B6700EEF8AC /* ListCardsViewController.xib */; };
 		3AD860E11B79383500EEF8AC /* CardImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860DF1B79383500EEF8AC /* CardImageViewController.xib */; };
 		3AD860E61B7939E500EEF8AC /* CardImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */; };
+		3ADBCA961DDA372800D988A5 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBCA951DDA372800D988A5 /* InsetLabel.swift */; };
 		3ADE90A118775A77006E187F /* CardImageViewPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageViewPopover.xib */; };
 		3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */; };
 		3ADFB17918817AA200AC8F3E /* CardImagePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADFB17818817AA200AC8F3E /* CardImagePopup.m */; };
@@ -444,6 +445,7 @@
 		3AD860DA1B792B6700EEF8AC /* ListCardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListCardsViewController.xib; sourceTree = "<group>"; };
 		3AD860DF1B79383500EEF8AC /* CardImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewController.xib; sourceTree = "<group>"; };
 		3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewCell.xib; sourceTree = "<group>"; };
+		3ADBCA951DDA372800D988A5 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		3ADE909E18775A77006E187F /* CardImageViewPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewPopover.xib; sourceTree = "<group>"; };
 		3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DTCoreTextFontOverrides.plist; sourceTree = "<group>"; };
 		3ADFB17718817AA200AC8F3E /* CardImagePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardImagePopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -653,12 +655,14 @@
 				3A822F6D1CC2C13500305789 /* BuildConfig.swift */,
 				3A6228131C1456F400FBF041 /* SettingsKeys.swift */,
 				3AF697881C1DAC7300D254CE /* Notifications.swift */,
+				3A9752201C1F6E310070E39B /* MiscUtilities.swift */,
 				3A529E621CA57BF70061E065 /* Reachability.swift */,
 				3ABAD2F71B8275F8009E81F3 /* NSArray+TwoD.h */,
 				3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */,
 				3A595423186ED61C0074B3B1 /* CGRectUtils.h */,
 				3A6CD8031CF7864C0090CEDB /* DetailViewManager.swift */,
 				3AEF52001CCD53B300A831E0 /* NROutlineLabel.swift */,
+				3ADBCA951DDA372800D988A5 /* InsetLabel.swift */,
 				3A65016E1DC6286600815965 /* NRSwitch.swift */,
 				3A3E26E61A004FD7000C6D32 /* UIAlert+NetDeck.h */,
 				3A3E26E71A005042000C6D32 /* UIAlert+NetDeck.m */,
@@ -843,7 +847,6 @@
 			children = (
 				3A5BC3ED1849326B00E792F7 /* NRTypes.h */,
 				3A904FCC1BF73723001C075A /* Types.swift */,
-				3A9752201C1F6E310070E39B /* MiscUtilities.swift */,
 				3A3C1E131BF74DAF000311FA /* TableData.swift */,
 				3A3C1E151BF7525B000311FA /* Faction.swift */,
 				3A3D8CA61CA1C6EF002C73E3 /* Codes.swift */,
@@ -1374,6 +1377,7 @@
 				3A9795361CF63EE100479ADF /* AppDelegate.swift in Sources */,
 				3A3D8CA71CA1C6EF002C73E3 /* Codes.swift in Sources */,
 				3A19B7901ACD81BC0039A18A /* BrowserCollectionView.m in Sources */,
+				3ADBCA961DDA372800D988A5 /* InsetLabel.swift in Sources */,
 				3A1FD36A1DA956CA00DF50F1 /* SetSelectionViewController.swift in Sources */,
 				3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */,
 				3A3CE0F01C79EE31003BF8D9 /* DeckImport.swift in Sources */,

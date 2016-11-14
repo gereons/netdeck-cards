@@ -24,6 +24,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var icon1: UIImageView!
     @IBOutlet weak var icon2: UIImageView!
     @IBOutlet weak var icon3: UIImageView!
+    @IBOutlet weak var packLabel: InsetLabel!
     
     private var card: Card!
     
@@ -132,6 +133,9 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
             if self.card.code == card.code {
                 self.activityIndicator.stopAnimating()
                 self.imageView.image = img
+                self.packLabel.text = card.packName
+                self.packLabel.layer.cornerRadius = 3
+                self.packLabel.layer.masksToBounds = true
                 
                 self.detailView.isHidden = true
                 if placeholder {
