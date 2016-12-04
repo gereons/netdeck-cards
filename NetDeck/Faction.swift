@@ -14,7 +14,7 @@ class Faction: NSObject {
     
     private static let runnerFactions: [NRFaction] = [ .anarch, .criminal, .shaper, .adam, .apex, .sunnyLebeau ]
     private static let runnerFactionsPreDAD: [NRFaction] = [ .anarch, .criminal, .shaper ]
-    private static let corpFactions: [NRFaction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
+    private static let corpFactions: [NRFaction] = [ .haasBioroid, .nbn, .jinteki, .weyland ]
     
     private static var runnerFactionNames = [String]()
     private static var runnerFactionNamesPreDAD = [String]()

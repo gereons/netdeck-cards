@@ -109,16 +109,22 @@ class ImageCache: NSObject {
             settings.set(now + 48*3600, forKey:SettingsKeys.UNAVAIL_IMG_DATE)
             settings.set(Array(self.unavailableImages), forKey:SettingsKeys.UNAVAILABLE_IMAGES)
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.clearMemoryCache(_:)), name: Notification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
     }
     
     /// called when we move to the background
-    func saveData() {
+    func resignActive() {
         let settings = UserDefaults.standard
         
         settings.set(self.lastModifiedDates, forKey: SettingsKeys.LAST_MOD_CACHE)
         settings.set(self.nextCheckDates, forKey: SettingsKeys.NEXT_CHECK)
         settings.set(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
         
+        self.memCache.removeAll()
+    }
+    
+    func clearMemoryCache(_ notification: Notification) {
         self.memCache.removeAll()
     }
     
