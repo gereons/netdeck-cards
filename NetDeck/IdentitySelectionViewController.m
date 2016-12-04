@@ -152,8 +152,8 @@
     {
         [self.factionSelector setTitle:l10n(@"All") forSegmentAtIndex:0];
         [self.factionSelector setTitle:[Faction shortNameFor:NRFactionHaasBioroid] forSegmentAtIndex:1];
-        [self.factionSelector setTitle:[Faction shortNameFor:NRFactionNbn] forSegmentAtIndex:2];
-        [self.factionSelector setTitle:[Faction shortNameFor:NRFactionJinteki] forSegmentAtIndex:3];
+        [self.factionSelector setTitle:[Faction shortNameFor:NRFactionJinteki] forSegmentAtIndex:2];
+        [self.factionSelector setTitle:[Faction shortNameFor:NRFactionNbn] forSegmentAtIndex:3];
         [self.factionSelector setTitle:[Faction shortNameFor:NRFactionWeyland] forSegmentAtIndex:4];
 
         if (includeDraft)
@@ -265,10 +265,10 @@
             self.selectedFaction = self.role == NRRoleRunner ? NRFactionAnarch : NRFactionHaasBioroid;
             break;
         case 2:
-            self.selectedFaction = self.role == NRRoleRunner ? NRFactionCriminal : NRFactionNbn;
+            self.selectedFaction = self.role == NRRoleRunner ? NRFactionCriminal : NRFactionJinteki;
             break;
         case 3:
-            self.selectedFaction = self.role == NRRoleRunner ? NRFactionShaper : NRFactionJinteki;
+            self.selectedFaction = self.role == NRRoleRunner ? NRFactionShaper : NRFactionNbn;
             break;
         case 4:
             self.selectedFaction = self.role == NRRoleRunner ? faction4 : NRFactionWeyland;
@@ -343,6 +343,7 @@
     [cell.infoButton addTarget:self action:@selector(showImage:) forControlEvents:UIControlEventTouchUpInside];
     
     cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.titleLabel.font = [UIFont systemFontOfSize:17];
     
     Card* card = [self.identities objectAtIndexPath:indexPath];
     
@@ -350,6 +351,7 @@
     {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         cell.selected = YES;
+        cell.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         self.selectedIndexPath = indexPath;
     }
     
