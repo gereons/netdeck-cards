@@ -332,7 +332,8 @@ class PackManager: NSObject {
                 let packs = try JSONParser.JSONObjectWithData(packsData)
                 let cycles = try JSONParser.JSONObjectWithData(cyclesData)
                 return setupFromJsonData(cycles, packs, language: language)
-            } catch {
+            } catch let error {
+                print("\(error)")
                 return false
             }
         }
@@ -358,7 +359,8 @@ class PackManager: NSObject {
             let packsFile = self.packsPathname()
             try packsData.write(to: URL(fileURLWithPath: packsFile), options: .atomic)
             AppDelegate.excludeFromBackup(packsFile)
-        } catch {
+        } catch let error {
+            print("\(error)")
             ok = false
         }
         
@@ -390,7 +392,8 @@ class PackManager: NSObject {
                 packsByCode[p.code] = p
                 allPacks.append(p)
             }
-        } catch {
+        } catch let error {
+            print("\(error)")
             return false
         }
         

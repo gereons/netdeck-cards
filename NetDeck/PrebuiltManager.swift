@@ -97,7 +97,8 @@ class PrebuiltManager: NSObject {
             do {
                 let prebuiltJson = try JSONParser.JSONObjectWithData(data)
                 return setupFromJsonData(prebuiltJson, language: language)
-            } catch {
+            } catch let error {
+                print("\(error)")
                 return false
             }
         }
@@ -118,7 +119,8 @@ class PrebuiltManager: NSObject {
             let filename = self.filename()
             try data.write(to: URL(fileURLWithPath: filename), options: .atomic)
             AppDelegate.excludeFromBackup(filename)
-        } catch {
+        } catch let error {
+            print("\(error)")
             ok = false
         }
         
@@ -142,8 +144,8 @@ class PrebuiltManager: NSObject {
         
         do {
             PrebuiltManager.allPrebuilts = try prebuilts.value(for: "data")
-        }
-        catch {
+        } catch let error {
+            print("\(error)")
             return false
         }
         

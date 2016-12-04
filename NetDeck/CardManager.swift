@@ -299,7 +299,8 @@ class CardManager: NSObject {
             do {
                 let cardsJson = try JSONParser.JSONObjectWithData(data)
                 return setupFromJson(cardsJson, language: language)
-            } catch {
+            } catch let error {
+                print("\(error)")
                 return false
             }
         }
@@ -319,7 +320,8 @@ class CardManager: NSObject {
             let filename = self.filename()
             try cardsData.write(to: URL(fileURLWithPath: filename), options: .atomic)
             AppDelegate.excludeFromBackup(filename)
-        } catch {
+        } catch let error {
+            print("\(error)")
             ok = false
         }
         

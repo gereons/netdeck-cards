@@ -137,7 +137,7 @@ class DataDownload: NSObject {
             }
             
             if let alert = self.sdcAlert {
-                alert.dismiss(animated: false)
+                alert.dismiss(animated: false) 
                 if !ok {
                     let msg = "Unable to download cards at this time. Please try again later.".localized()
                     UIAlertController.alert(withTitle: nil, message: msg, button: "OK")
@@ -276,7 +276,9 @@ class DataDownload: NSObject {
                             let json = try JSONParser.JSONObjectWithData(data)
                             let total: Int = try json.value(for: "total")
                             ok = NRDB.validJsonResponse(json: json) && total == 1
-                        } catch {}
+                        } catch let error {
+                            print("\(error)")
+                        }
                     }
                     completion(ok)
                 case .failure:

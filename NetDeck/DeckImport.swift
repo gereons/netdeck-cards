@@ -288,7 +288,9 @@ class DeckImport: NSObject {
                         let json = try JSONParser.JSONObjectWithData(data)
                         // print("JSON: \(json)")
                         ok = self.parseJsonDeckList(json)
-                    } catch {}
+                    } catch let error {
+                        print("\(error)")
+                    }
                 }
                 self.downloadFinished(ok)
             case .failure(let error):
@@ -310,7 +312,9 @@ class DeckImport: NSObject {
                 NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
                 return true
             }
-        } catch {}
+        } catch let error {
+            print("\(error)")
+        }
         
         return false
     }

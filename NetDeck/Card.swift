@@ -258,7 +258,9 @@ class Card: NSObject, Unmarshaling {
         currentLanguage = language
         do {
             cards = try json.value(for: "data")
-        } catch {}
+        } catch let error {
+            print("\(error)")
+        }
         
         return cards
     }
