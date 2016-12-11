@@ -25,8 +25,8 @@ class Faction: NSObject {
     
     static let weylandConsortium = "Weyland Consortium"
     
-    class func name(for faction: NRFaction) -> String? {
-        return Faction.faction2name[faction]
+    class func name(for faction: NRFaction) -> String {
+        return Faction.faction2name[faction] ?? "n/a"
     }
     
     class func initializeFactionNames(_ cards: [Card]) -> Bool {
@@ -51,16 +51,16 @@ class Faction: NSObject {
             return false
         }
         
-        let common = [ Faction.name(for: .none)!, Faction.name(for: .neutral)! ]
+        let common = [ Faction.name(for: .none), Faction.name(for: .neutral) ]
         
         for faction in runnerFactions {
-            runnerFactionNames.append(Faction.name(for: faction)!)
+            runnerFactionNames.append(Faction.name(for: faction))
         }
         for faction in runnerFactionsPreDAD {
-            runnerFactionNamesPreDAD.append(Faction.name(for: faction)!)
+            runnerFactionNamesPreDAD.append(Faction.name(for: faction))
         }
         for faction in corpFactions {
-            corpFactionNames.append(Faction.name(for: faction)!)
+            corpFactionNames.append(Faction.name(for: faction))
         }
         
         let factionSections = [ "", "Runner".localized(), "Corp".localized() ]
@@ -107,7 +107,7 @@ class Faction: NSObject {
         case .haasBioroid: return "H-B"
         case .weyland: return "Weyland".localized()
         case .sunnyLebeau: return "Sunny"
-        default: return Faction.name(for: faction)!
+        default: return Faction.name(for: faction)
         }
     }
     
@@ -117,7 +117,7 @@ class Faction: NSObject {
         case .weyland:
             return Faction.weylandConsortium
         default:
-            return Faction.name(for: faction)!
+            return Faction.name(for: faction)
         }
     }
 }

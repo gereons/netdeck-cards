@@ -126,7 +126,7 @@ class CardManager: NSObject {
         }
         
         if !disabledPackCodes.contains(PackManager.draftSetCode) {
-            factionNames.append(Faction.name(for: .neutral)!)
+            factionNames.append(Faction.name(for: .neutral))
         }
         
         var identities = [[Card]]()

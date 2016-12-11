@@ -115,7 +115,7 @@ class CardDetailView {
         self.cardText.textContainerInset = UIEdgeInsets.zero
         self.cardText.attributedText = card.attributedText
         
-        let factionName = Faction.name(for: card.faction) ?? ""
+        let factionName = Faction.name(for: card.faction)
         let typeName = CardType.name(for: card.type)
         let subtype = card.subtype
         if subtype.length > 0 {

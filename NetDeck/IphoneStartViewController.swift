@@ -266,8 +266,8 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
             }
         case .byFaction:
             result = decks.sorted {
-                let faction1 = Faction.name(for: $0.identity?.faction ?? .none) ?? ""
-                let faction2 = Faction.name(for: $1.identity?.faction ?? .none) ?? ""
+                let faction1 = Faction.name(for: $0.identity?.faction ?? .none) 
+                let faction2 = Faction.name(for: $1.identity?.faction ?? .none)
                 if faction1 == faction2 {
                     return $1.name.lowercased() > $0.name.lowercased()
                 } else {
