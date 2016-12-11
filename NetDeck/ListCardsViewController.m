@@ -7,7 +7,6 @@
 //
 
 #import "ListCardsViewController.h"
-#import "EditDeckCell.h"
 
 @interface ListCardsViewController ()
 

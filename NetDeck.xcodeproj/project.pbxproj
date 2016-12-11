@@ -166,12 +166,12 @@
 		3AD3249218A93FA300D7AE5D /* DeckAnalysisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD3249018A93FA300D7AE5D /* DeckAnalysisViewController.m */; };
 		3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */; };
 		3AD796871C6B52E600D5B24C /* DeckExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD796861C6B52E600D5B24C /* DeckExport.swift */; };
-		3AD860D61B79154100EEF8AC /* EditDeckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD860D41B79154100EEF8AC /* EditDeckCell.m */; };
 		3AD860D71B79154100EEF8AC /* EditDeckCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860D51B79154100EEF8AC /* EditDeckCell.xib */; };
 		3AD860DB1B792B6700EEF8AC /* ListCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD860D91B792B6700EEF8AC /* ListCardsViewController.m */; };
 		3AD860DC1B792B6700EEF8AC /* ListCardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860DA1B792B6700EEF8AC /* ListCardsViewController.xib */; };
 		3AD860E11B79383500EEF8AC /* CardImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860DF1B79383500EEF8AC /* CardImageViewController.xib */; };
 		3AD860E61B7939E500EEF8AC /* CardImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */; };
+		3ADADEE51DFDD4040051BD92 /* EditDeckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADADEE41DFDD4040051BD92 /* EditDeckCell.swift */; };
 		3ADBCA961DDA372800D988A5 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBCA951DDA372800D988A5 /* InsetLabel.swift */; };
 		3ADE90A118775A77006E187F /* CardImageViewPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageViewPopover.xib */; };
 		3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */; };
@@ -435,14 +435,13 @@
 		3AD3249018A93FA300D7AE5D /* DeckAnalysisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckAnalysisViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckAnalysisViewController.xib; sourceTree = "<group>"; };
 		3AD796861C6B52E600D5B24C /* DeckExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckExport.swift; sourceTree = "<group>"; };
-		3AD860D31B79154100EEF8AC /* EditDeckCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = EditDeckCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3AD860D41B79154100EEF8AC /* EditDeckCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = EditDeckCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AD860D51B79154100EEF8AC /* EditDeckCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDeckCell.xib; sourceTree = "<group>"; };
 		3AD860D81B792B6700EEF8AC /* ListCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListCardsViewController.h; sourceTree = "<group>"; };
 		3AD860D91B792B6700EEF8AC /* ListCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListCardsViewController.m; sourceTree = "<group>"; };
 		3AD860DA1B792B6700EEF8AC /* ListCardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListCardsViewController.xib; sourceTree = "<group>"; };
 		3AD860DF1B79383500EEF8AC /* CardImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewController.xib; sourceTree = "<group>"; };
 		3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewCell.xib; sourceTree = "<group>"; };
+		3ADADEE41DFDD4040051BD92 /* EditDeckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDeckCell.swift; sourceTree = "<group>"; };
 		3ADBCA951DDA372800D988A5 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		3ADE909E18775A77006E187F /* CardImageViewPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewPopover.xib; sourceTree = "<group>"; };
 		3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DTCoreTextFontOverrides.plist; sourceTree = "<group>"; };
@@ -938,8 +937,7 @@
 				3A3844FF1B77BA89007C76F2 /* EditDeckViewController.h */,
 				3A3845001B77BA89007C76F2 /* EditDeckViewController.m */,
 				3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */,
-				3AD860D31B79154100EEF8AC /* EditDeckCell.h */,
-				3AD860D41B79154100EEF8AC /* EditDeckCell.m */,
+				3ADADEE41DFDD4040051BD92 /* EditDeckCell.swift */,
 				3AD860D51B79154100EEF8AC /* EditDeckCell.xib */,
 				3AD860D81B792B6700EEF8AC /* ListCardsViewController.h */,
 				3AD860D91B792B6700EEF8AC /* ListCardsViewController.m */,
@@ -1315,7 +1313,6 @@
 				3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */,
 				3A84F8DC1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift in Sources */,
 				3A6CD8041CF7864C0090CEDB /* DetailViewManager.swift in Sources */,
-				3AD860D61B79154100EEF8AC /* EditDeckCell.m in Sources */,
 				3AB838611DC684EB0047B7DB /* BrowserImageCell.swift in Sources */,
 				3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */,
 				3A65016F1DC6286600815965 /* NRSwitch.swift in Sources */,
@@ -1343,6 +1340,7 @@
 				3AF04BB91D44DD8200CB859D /* JinetkiNet.swift in Sources */,
 				3A09184A18B2925400DBE590 /* InfluenceStats.m in Sources */,
 				3A529E631CA57BF70061E065 /* Reachability.swift in Sources */,
+				3ADADEE51DFDD4040051BD92 /* EditDeckCell.swift in Sources */,
 				3A78EAE11DF4A2B80063A5A0 /* IphoneDrawSimulator.swift in Sources */,
 				3AA0B3021C8C2C7E007B4983 /* CardUpdateCheck.swift in Sources */,
 				3A9742AC18AF7DA900F83520 /* CostStats.m in Sources */,

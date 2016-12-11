@@ -8,7 +8,6 @@
 
 #import "EditDeckViewController.h"
 #import "ListCardsViewController.h"
-#import "EditDeckCell.h"
 #import "SVProgressHud.h"
 
 @interface EditDeckViewController ()
