@@ -286,7 +286,7 @@ class PackManager: NSObject {
     }
     
     class func mostRecentPackUsedIn(deck: Deck) -> String {
-        var maxIndex = 0
+        var maxIndex = -1
         
         for cc in deck.allCards {
             if let index = allPacks.index(where: { $0.code == cc.card.packCode}) {
@@ -294,7 +294,7 @@ class PackManager: NSObject {
             }
         }
         
-        return allPacks[maxIndex].name
+        return maxIndex == -1 ? "n/a" : allPacks[maxIndex].name
     }
     
     // MARK: - persistence

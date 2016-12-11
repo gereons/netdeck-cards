@@ -17,7 +17,7 @@ target 'NetDeck' do
     pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftKeychainWrapper'
     pod 'Marshal'
-    pod 'SwiftyDropbox'
+    pod 'SwiftyDropbox', '~> 4.0'
     pod 'SDCAlertView'
 end
 
