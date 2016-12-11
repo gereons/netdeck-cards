@@ -337,7 +337,7 @@ static BrowserResultViewController* instance;
     
     Card* card = [self.values objectAtIndexPath:indexPath];
     
-    cell.card = card;
+    [cell loadImageFor:card];
     
     return cell;
 }

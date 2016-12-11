@@ -18,7 +18,7 @@ class CardThumbView: UICollectionViewCell {
         didSet {
             self.imageView.image = nil
             self.activityIndicator.startAnimating()
-            self.loadImageFor(self.card)
+            self.loadImage(for: self.card)
         }
     }
     
@@ -30,14 +30,14 @@ class CardThumbView: UICollectionViewCell {
         self.nameLabel.text = nil
     }
     
-    func loadImageFor(_ card: Card) {
+    func loadImage(for card: Card) {
         ImageCache.sharedInstance.getImage(for: card) { (card, img, placerholder) in
             if self.card.code == card.code {
                 self.activityIndicator.stopAnimating()
                 self.imageView.image = ImageCache.sharedInstance.croppedImage(img, forCard: card)
                 self.nameLabel.text = placerholder ? card.name : nil
             } else {
-                self.loadImageFor(self.card)
+                self.loadImage(for: self.card)
             }
         }
     }

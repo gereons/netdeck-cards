@@ -24,14 +24,7 @@ class BrowserImageCell: UICollectionViewCell {
     @IBOutlet weak var icon2: UIImageView!
     @IBOutlet weak var icon3: UIImageView!
     
-    var card: Card? {
-        didSet {
-            if card != nil {
-                self.activityIndicator.startAnimating()
-                self.loadImage(for: card)
-            }
-        }
-    }
+    private var card = Card.null() 
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,17 +38,19 @@ class BrowserImageCell: UICollectionViewCell {
         super.prepareForReuse()
     
         self.image.image = nil
-        self.card = nil
+        self.card = Card.null()
         self.detailView.isHidden = true
     }
     
-    private func loadImage(for card: Card?) {
-        guard let card = card, let myCard = self.card else {
-            return
-        }
-        
+    func loadImage(for card: Card) {
+        self.card = card
+        self.activityIndicator.startAnimating()
+        self.doLoadImage(for: card)
+    }
+    
+    private func doLoadImage(for card: Card) {
         ImageCache.sharedInstance.getImage(for: card) { (card, img, placeholder) in
-            if myCard.code == card.code {
+            if self.card.code == card.code {
                 self.activityIndicator.stopAnimating()
                 self.image.image = img
                 
@@ -64,7 +59,7 @@ class BrowserImageCell: UICollectionViewCell {
                     CardDetailView.setup(from: self, card: card)
                 }
             } else {
-                self.loadImage(for: self.card)
+                self.doLoadImage(for: self.card)
             }
         }
         
