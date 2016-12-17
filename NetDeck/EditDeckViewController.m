@@ -6,9 +6,8 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+@import SVProgressHUD;
 #import "EditDeckViewController.h"
-#import "ListCardsViewController.h"
-#import "SVProgressHud.h"
 
 @interface EditDeckViewController ()
 

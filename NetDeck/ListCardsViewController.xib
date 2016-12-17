@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListCardsViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListCardsViewController" customModule="NetDeck">
             <connections>
                 <outlet property="searchBar" destination="TZs-Fd-YyB" id="Vu7-PO-Iag"/>
                 <outlet property="statusLabel" destination="ep5-6L-l4Q" id="RNo-yp-wUE"/>
@@ -23,23 +23,11 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1gg-UV-xfc">
-                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                    <items/>
-                </toolbar>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ep5-6L-l4Q">
-                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                    <string key="text">49 Cards - 15/15 Inf - 22 AP
-Not enough Cards</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5aW-WV-tIP">
-                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <searchBar key="tableHeaderView" contentMode="redraw" backgroundImage="searchbar-bg" scopeBarBackgroundImage="searchbar-bg" id="TZs-Fd-YyB">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" enablesReturnKeyAutomatically="YES"/>
                         <connections>
@@ -51,6 +39,18 @@ Not enough Cards</string>
                         <outlet property="delegate" destination="-1" id="YbK-5O-c3I"/>
                     </connections>
                 </tableView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1gg-UV-xfc">
+                    <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                    <items/>
+                </toolbar>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ep5-6L-l4Q">
+                    <rect key="frame" x="10" y="629" width="170" height="32"/>
+                    <string key="text">49 Cards - 15/15 Inf - 22 AP
+Not enough Cards</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
