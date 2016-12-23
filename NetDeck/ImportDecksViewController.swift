@@ -451,7 +451,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         let cell = tableView.dequeueReusableCell(withIdentifier: "deckCell", for: indexPath) as! DeckCell
         
         cell.accessoryType = .none
-        cell.infoButton.isHidden = true
+        cell.infoButton?.isHidden = true
         
         let deck = self.filteredDecks[indexPath.section][indexPath.row]
         
@@ -471,12 +471,12 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             summary = String(format: "%d Cards · %d Influence · %d AP".localized(), deck.size, deck.influence, deck.agendaPoints)
         }
         
-        cell.summaryLabel.text = summary
+        cell.summaryLabel?.text = summary
         let valid = deck.checkValidity().count == 0
-        cell.summaryLabel.textColor = valid ? UIColor.black : UIColor.red
+        cell.summaryLabel?.textColor = valid ? UIColor.black : UIColor.red
         
         cell.dateLabel.text = self.dateFormatter.string(from: deck.lastModified!)
-        cell.nrdbIcon.isHidden = self.source == .dropbox
+        cell.nrdbIcon?.isHidden = self.source == .dropbox
         
         return cell
     }

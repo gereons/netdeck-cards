@@ -153,7 +153,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - export
     
     func exportDeck(_ sender: Any) {
-        let alert = UIAlertController.actionSheet(title: "Eport".localized(), message: nil)
+        let alert = UIAlertController.actionSheet(title: "Export".localized(), message: nil)
         let settings = UserDefaults.standard
         
         if settings.bool(forKey: SettingsKeys.USE_DROPBOX) {
@@ -214,20 +214,24 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - sort
     
     @IBAction func sortClicked(_ sender: Any) {
-        let actionSheet = UIAlertController.actionSheet(title: "Sort".localized(), message: nil)
+        let actionSheet = UIAlertController.actionSheet(title: "Sort by".localized(), message: nil)
         
-        actionSheet.addAction(UIAlertAction(title: "by Type".localized().checked(self.sortType == .byType)) { action in
+        actionSheet.addAction(UIAlertAction(title: "Type".localized().checked(self.sortType == .byType)) { action in
             self.changeDeckSort(.byType)
         })
-        actionSheet.addAction(UIAlertAction(title: "by Faction".localized().checked(self.sortType == .byFactionType)) { action in
+        actionSheet.addAction(UIAlertAction(title: "Faction".localized().checked(self.sortType == .byFactionType)) { action in
             self.changeDeckSort(.byFactionType)
         })
-        actionSheet.addAction(UIAlertAction(title: "by Set/Type".localized().checked(self.sortType == .bySetType)) { action in
+        actionSheet.addAction(UIAlertAction(title: "Set/Type".localized().checked(self.sortType == .bySetType)) { action in
             self.changeDeckSort(.bySetType)
         })
-        actionSheet.addAction(UIAlertAction(title: "by Set/Number".localized().checked(self.sortType == .bySetNum)) { action in
+        actionSheet.addAction(UIAlertAction(title: "Set/Number".localized().checked(self.sortType == .bySetNum)) { action in
             self.changeDeckSort(.bySetNum)
         })
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     func changeDeckSort(_ sortType: NRDeckSort) {

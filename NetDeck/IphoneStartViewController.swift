@@ -189,7 +189,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         let useDropbox = settings.bool(forKey: SettingsKeys.USE_DROPBOX)
         
         if useNrdb && useDropbox {
-            let alert = UIAlertController.alert(title: "Import Decks".localized(), message:nil)
+            let alert = UIAlertController.actionSheet(title: "Import Decks".localized(), message:nil)
             
             alert.addAction(UIAlertAction(title: "From Dropbox".localized()) { action in
                 self.importDecksFrom(.dropbox)
@@ -200,7 +200,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
             
             alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
             
-            self.present(alert, animated:false, completion:nil)
+            self.present(alert, animated: true, completion: nil)
         } else if useNrdb {
             self.importDecksFrom(.netrunnerDb)
         } else if useDropbox {
@@ -211,7 +211,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
             
             alert.addAction(UIAlertAction(title: "OK".localized(), handler: nil))
             
-            self.present(alert, animated:false, completion:nil)
+            self.present(alert, animated: true, completion:nil)
         }
     }
     
@@ -224,7 +224,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     // MARK: - sort
     
     func changeSort(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController.alert(title: "Sort by".localized(), message:nil)
+        let alert = UIAlertController.actionSheet(title: "Sort by".localized(), message:nil)
         
         alert.addAction(UIAlertAction(title: "Date".localized()) { action in
             self.changeSortType(.byDate)
@@ -238,7 +238,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         
         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         
-        self.present(alert, animated:false, completion:nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func changeSortType(_ sort: NRDeckListSort) {

@@ -12,9 +12,9 @@ class DeckCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var identityLabel: UILabel!
-    @IBOutlet weak var summaryLabel: UILabel!
+    @IBOutlet weak var summaryLabel: UILabel?   // ipad only
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var infoButton: UIButton!
-    @IBOutlet weak var nrdbIcon: UIImageView!
+    @IBOutlet weak var infoButton: UIButton?    // ipad only
+    @IBOutlet weak var nrdbIcon: UIImageView?   // ipad only
 
 }
