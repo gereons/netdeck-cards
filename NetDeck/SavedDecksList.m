@@ -108,7 +108,7 @@
         [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Import from NetrunnerDB.com") handler:^(UIAlertAction *action) {
             [self importFromSource:NRImportSourceNetrunnerDb];
         }]];
-        [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+        [self.popup addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
             self.popup = nil;
         }]];
         
@@ -167,7 +167,7 @@
     UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Export Decks")
                                                          message:l10n(@"Export all currently visible decks")];
     
-    [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+    [alert addAction:[UIAlertAction alertCancel:nil]];
     if (useDropbox) {
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To Dropbox") handler:^(UIAlertAction * action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
@@ -259,7 +259,7 @@
     [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Retired"), deck.state == NRDeckStateRetired) handler:^(UIAlertAction *action) {
         [self changeState:deck newState:NRDeckStateRetired];
     }]];
-    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     
@@ -320,7 +320,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.newDeck object:self userInfo:@{ @"role": @(NRRoleCorp)}];
         self.popup = nil;
     }]];
-    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     
@@ -388,7 +388,7 @@
                     textField.clearButtonMode = UITextFieldViewModeAlways;
                     textField.returnKeyType = UIReturnKeyDone;
                 }];
-                [nameAlert addAction:[UIAlertAction cancelAlertAction:nil]];
+                [nameAlert addAction:[UIAlertAction alertCancel:nil]];
                 [nameAlert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * action) {
                     deck.name = nameAlert.textFields[0].text;
                     [deck saveToDisk];
@@ -419,7 +419,7 @@
                 [self.tableView reloadData];
                 self.popup = nil;
             }]];
-            [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+            [self.popup addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
                 self.popup = nil;
             }]];
             

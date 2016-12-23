@@ -211,7 +211,7 @@ static NRFilter _filterType = NRFilterAll;
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortByName];
     }]];
-    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     
@@ -250,7 +250,7 @@ static NRFilter _filterType = NRFilterAll;
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Corp") handler:^(UIAlertAction *action) {
         [self changeSide:NRFilterCorp];
     }]];
-    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     
@@ -292,7 +292,7 @@ static NRFilter _filterType = NRFilterAll;
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Retired") handler:^(UIAlertAction *action) {
         [self changeState:NRDeckStateRetired];
     }]];
-    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     

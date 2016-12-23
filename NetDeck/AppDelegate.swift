@@ -312,9 +312,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     func showAlert() {
         let msg = "Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.".localized()
         
-        let alert = UIAlertController.alert(withTitle: "Oops, we crashed :(".localized(), message:msg)
+        let alert = UIAlertController.alert(title: "Oops, we crashed :(".localized(), message:msg)
         
-        alert.addAction(UIAlertAction(title: "Not now".localized(), handler:nil))
+        alert.addAction(UIAlertAction(title: "Not now".localized(), handler: nil))
         alert.addAction(UIAlertAction(title: "OK".localized()) { action in
             let subject = "Bug in Net Deck " + AppDelegate.appVersion()
             let body = "If possible, please describe what caused the crash. Thanks!"

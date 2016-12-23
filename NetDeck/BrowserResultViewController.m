@@ -206,7 +206,7 @@ static BrowserResultViewController* instance;
         [self changeSortType:NRBrowserSortBySetNumber];
     }]];
     
-    [self.popup addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+    [self.popup addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
         self.popup = nil;
     }]];
     

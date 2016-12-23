@@ -124,7 +124,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - sorting
     
     func changeSort(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController.actionSheet(withTitle: "Sort by".localized(), message:nil)
+        let alert = UIAlertController.actionSheet(title: "Sort by".localized(), message:nil)
         
         alert.addAction(UIAlertAction(title: "Date".localized()) { action in
             self.changeSortType(.byDate)
@@ -179,7 +179,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             msg = "Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten."
         }
         
-        let alert = UIAlertController.alert(withTitle: "Import All".localized(), message: msg.localized())
+        let alert = UIAlertController.alert(title: "Import All".localized(), message: msg.localized())
         
         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "OK".localized()) { action in
@@ -488,7 +488,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             if let filename = NRDB.sharedInstance.filenameForId(deck.netrunnerDbId) {
                 let msg = "A local copy of this deck already exists.".localized()
                 
-                let alert = UIAlertController.alert(withTitle: nil, message: msg)
+                let alert = UIAlertController.alert(title: nil, message: msg)
                 
                 alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: "Overwrite".localized()) { action in

@@ -30,7 +30,7 @@ class AppUpdateCheck: NSObject {
             self.checkForUpdate { version in
                 if let v = version {
                     let msg = String(format: "Version %@ is available on the App Store".localized(), v)
-                    let alert = UIAlertController.alert(withTitle: "Update available".localized(), message: msg)
+                    let alert = UIAlertController.alert(title: "Update available".localized(), message: msg)
                     
                     alert.addAction(UIAlertAction(title: "Update".localized(), style: .cancel) { action in
                         let url = "itms-apps://itunes.apple.com/app/id865963530"

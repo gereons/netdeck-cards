@@ -4,8 +4,5 @@
 
 @import UIKit;
 
-#import "UIAlert+NetDeck.h"
-
 @class Deck;
-
 #import "EditDeckViewController.h"

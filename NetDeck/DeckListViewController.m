@@ -434,10 +434,9 @@
     else
     {
         NSString* msg = [NSString stringWithFormat:l10n(@"This deck is linked to deck %@ on NetrunnerDB.com"), self.deck.netrunnerDbId ];
-        UIAlertController* alert = [UIAlertController alertWithTitle:nil
-                                                             message:msg];
+        UIAlertController* alert = [UIAlertController alertWithTitle:nil message:msg];
         
-        [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+        [alert addAction:[UIAlertAction alertCancel:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Open in Safari") handler:^(UIAlertAction * action) {
             if (Reachability.online) {
                 LOG_EVENT(@"Open in Safari", nil);
@@ -658,7 +657,7 @@
                                                        handler:^(UIAlertAction *action) {
                                                            [self changeDeckState:NRDeckStateRetired];
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+    [self.actionSheet addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
                                                            self.actionSheet = nil;
                                                        }]];
     
@@ -699,8 +698,7 @@
         return;
     }
     
-    UIAlertController* nameAlert = [UIAlertController alertWithTitle:l10n(@"Enter Name")
-                                                         message:nil];
+    UIAlertController* nameAlert = [UIAlertController alertWithTitle:l10n(@"Enter Name") message:nil];
     
     [nameAlert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
         textField.placeholder = l10n(@"Deck Name");
@@ -711,7 +709,7 @@
         textField.returnKeyType = UIReturnKeyDone;
     }];
     
-    [nameAlert addAction:[UIAlertAction cancelAlertAction:nil]];
+    [nameAlert addAction:[UIAlertAction alertCancel:nil]];
     [nameAlert addAction:[UIAlertAction actionWithTitle:l10n(@"OK") handler:^(UIAlertAction * action) {
         self.deck.name = nameAlert.textFields[0].text;
         self.deckNameLabel.text = self.deck.name;
@@ -800,7 +798,7 @@
                                                        handler:^(UIAlertAction *action) {
                                                            [self changeDeckSort:NRDeckSortBySetNum];
                                                        }]];
-    [self.actionSheet addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+    [self.actionSheet addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
                                                            self.actionSheet = nil;
                                                        }]];
     
@@ -912,7 +910,7 @@
                                                                self.actionSheet = nil;
                                                            }]];
     }
-    [self.actionSheet addAction:[UIAlertAction cancelAction:^(UIAlertAction *action) {
+    [self.actionSheet addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
                                                            self.actionSheet = nil;
                                                        }]];
     
@@ -1525,7 +1523,7 @@
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"1.1.1.1"), self.deck.onesies) handler:^(UIAlertAction * action) {
         [self setMwl:NRMWLNone andOnesies:YES];
     }]];
-    [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+    [alert addAction:[UIAlertAction actionSheetCancel:nil]];
     
     alert.popoverPresentationController.sourceView = self.mwlButton;
     CGRect rect = self.footerLabel.frame;

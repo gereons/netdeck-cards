@@ -181,7 +181,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
                 self.showOfflineAlert()
             }
         case SettingsKeys.CLEAR_CACHE:
-            let alert = UIAlertController.alert(withTitle: nil, message: "Clear Cache? You will need to re-download all data.".localized())
+            let alert = UIAlertController.alert(title: nil, message: "Clear Cache? You will need to re-download all data.".localized())
             alert.addAction(UIAlertAction(title: "No".localized(), style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes".localized(), style: .default) { action in
                 ImageCache.sharedInstance.clearCache()

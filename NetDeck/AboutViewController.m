@@ -81,7 +81,7 @@
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Contact Developers") handler:^(UIAlertAction * action) {
         [self sendEmail];
     }]];
-    [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+    [alert addAction:[UIAlertAction alertCancel:nil]];
 
     [self presentViewController:alert animated:NO completion:nil];
 }

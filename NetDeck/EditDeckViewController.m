@@ -156,7 +156,7 @@
         self.deck.name = textField.text;
         [self setDeckName];
     }]];
-    [alert addAction:[UIAlertAction cancelAction:nil]];
+    [alert addAction:[UIAlertAction alertCancel:nil]];
     
     [self presentViewController:alert animated:NO completion:nil];
 }
@@ -208,7 +208,7 @@
         [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:l10n(@"Copy saved as %@"), newDeck.name]];
     }]];
     
-    [alert addAction:[UIAlertAction cancelAction:nil]];
+    [alert addAction:[UIAlertAction actionSheetCancel:nil]];
     [alert.view layoutIfNeeded];
     
     [self presentViewController:alert animated:NO completion:nil];
@@ -255,7 +255,7 @@
                                                   handler:^(UIAlertAction *action) {
                                                       [self changeDeckSort:NRDeckSortBySetNum];
                                                   }]];
-    [actionSheet addAction:[UIAlertAction cancelAction:nil]];
+    [actionSheet addAction:[UIAlertAction actionSheetCancel:nil]];
     
     [self presentViewController:actionSheet animated:NO completion:nil];
 }
@@ -294,7 +294,7 @@
         }]];
     }
     
-    [alert addAction:[UIAlertAction cancelAction:nil]];
+    [alert addAction:[UIAlertAction actionSheetCancel:nil]];
     [alert.view layoutIfNeeded];
     
     [self presentViewController:alert animated:NO completion:nil];
@@ -756,7 +756,7 @@
         self.deck.onesies = YES;
         [self refreshDeck];
     }]];
-    [alert addAction:[UIAlertAction cancelAction:nil]];
+    [alert addAction:[UIAlertAction actionSheetCancel:nil]];
     
     [self presentViewController:alert animated:YES completion:nil];
 }

@@ -162,7 +162,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     }
     
     func createNewDeck() {
-        let alert = UIAlertController.actionSheet(withTitle: "New Deck".localized(), message: nil)
+        let alert = UIAlertController.actionSheet(title: "New Deck".localized(), message: nil)
         
         alert.addAction(UIAlertAction(title: "New Runner Deck".localized()) { action in
             self.addNewDeck(.runner)
@@ -189,7 +189,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         let useDropbox = settings.bool(forKey: SettingsKeys.USE_DROPBOX)
         
         if useNrdb && useDropbox {
-            let alert = UIAlertController.alert(withTitle: "Import Decks".localized(), message:nil)
+            let alert = UIAlertController.alert(title: "Import Decks".localized(), message:nil)
             
             alert.addAction(UIAlertAction(title: "From Dropbox".localized()) { action in
                 self.importDecksFrom(.dropbox)
@@ -206,7 +206,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         } else if useDropbox {
             self.importDecksFrom(.dropbox)
         } else {
-            let alert = UIAlertController.alert(withTitle: "Import Decks".localized(),
+            let alert = UIAlertController.alert(title: "Import Decks".localized(),
                 message: "Connect to your Dropbox and/or NetrunnerDB.com account first.".localized())
             
             alert.addAction(UIAlertAction(title: "OK".localized(), handler: nil))
@@ -224,7 +224,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     // MARK: - sort
     
     func changeSort(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController.alert(withTitle: "Sort by".localized(), message:nil)
+        let alert = UIAlertController.alert(title: "Sort by".localized(), message:nil)
         
         alert.addAction(UIAlertAction(title: "Date".localized()) { action in
             self.changeSortType(.byDate)

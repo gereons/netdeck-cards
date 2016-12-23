@@ -148,7 +148,7 @@ static NSString* filterText;
     [self.alert addAction:[UIAlertAction actionWithTitle:l10n(@"A-Z") handler:^(UIAlertAction *action) {
         [self changeSortType:NRDeckListSortByName];
     }]];
-    [self.alert addAction:[UIAlertAction cancelAction:^(UIAlertAction* action) {
+    [self.alert addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction* action) {
         self.alert = nil;
     }]];
     
@@ -199,7 +199,7 @@ static NSString* filterText;
     UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Import All")
                                                                    message:msg];
 
-    [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+    [alert addAction:[UIAlertAction alertCancel:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:l10n(@"OK")  handler:^(UIAlertAction * action) {
         [SVProgressHUD showSuccessWithStatus:l10n(@"Imported decks")];
         [self performSelector:@selector(doImportAll) withObject:nil afterDelay:0.0];
@@ -584,7 +584,7 @@ static NSString* filterText;
             NSString* msg = l10n(@"A local copy of this deck already exists.");
             UIAlertController* alert = [UIAlertController alertWithTitle:nil message:msg];
             
-            [alert addAction:[UIAlertAction cancelAlertAction:nil]];
+            [alert addAction:[UIAlertAction alertCancel:nil]];
             [alert addAction:[UIAlertAction actionWithTitle:l10n(@"Overwrite") handler:^(UIAlertAction * action) {
                 [self importDeckFromNRDB:deck.netrunnerDbId filename:filename];
             }]];
