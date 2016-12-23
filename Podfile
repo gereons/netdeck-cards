@@ -12,12 +12,12 @@ target 'NetDeck' do
     pod 'CorePlot'
     pod 'DZNEmptyDataSet'
 
+    pod 'SwiftyDropbox', '~> 4.0'
     pod 'Alamofire'
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftKeychainWrapper'
     pod 'Marshal'
-    pod 'SwiftyDropbox', '~> 4.0'
     pod 'SDCAlertView'
 end
 

@@ -164,8 +164,6 @@ class DeckExport: NSObject {
             s += eol + notes + eol
         }
         
-        s += self.localUrlForDeck(deck) + eol
-        
         return s;
     }
     
@@ -189,33 +187,6 @@ class DeckExport: NSObject {
         return s
     }
     
-    class func localUrlForDeck(_ deck: Deck) -> String {
-        var dict = [String: String]()
-        if let id = deck.identity {
-            dict[id.code] = "1"
-        }
-        for cc in deck.cards {
-            dict[cc.card.code] = "\(cc.count)"
-        }
-        if deck.name.length > 0 {
-            dict["name"] = deck.name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-        }
-        
-        let keys = dict.keys.sorted{ $0 < $1 }
-        var url = ""
-        var sep = ""
-        for k in keys {
-            let v = dict[k]!
-            url += sep + k + "=" + v
-            sep = "&"
-        }
-        
-        let compressed = GZip.gzipDeflate(url.data(using: String.Encoding.utf8))
-        let base64url = compressed?.base64EncodedString(options: [])
-        
-        return "netdeck://load/" + base64url!.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)!
-    }
-
     class func italics(_ s: String, _ format: ExportFormat) -> String {
         switch format {
         case .plainText: return s

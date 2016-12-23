@@ -371,33 +371,4 @@ class DeckImport: NSObject {
         self.request = nil
     }
 
-    class func importDeckFromLocalUrl(_ url: URL) {
-        Analytics.logEvent("Import from URL")
-        let path = url.path
-        let b64 = path.substring(from: path.characters.index(path.startIndex, offsetBy: 1)) // strip off the leading "/" character
-        let data = Data(base64Encoded: b64, options: [])
-        let uncompressed = GZip.gzipInflate(data)
-        let deckStr = NSString(data: uncompressed!, encoding: String.Encoding.utf8.rawValue)
-        
-        let deck = Deck(role: .none)
-        if let parts = deckStr?.components(separatedBy: "&") {
-            for card in parts {
-                let arr = card.components(separatedBy: "=")
-                let code = arr[0]
-                let qty = arr[1]
-                
-                if code == "name" {
-                    deck.name = qty.removingPercentEncoding ?? qty
-                } else {
-                    if let card = CardManager.cardBy(code: code), let q = Int(qty) , q > 0 {
-                        deck.addCard(card, copies: q)
-                    }
-                }
-            }
-        }
-        
-        if deck.identity != nil && deck.cards.count > 0 {
-            NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
-        }
-    }
 }

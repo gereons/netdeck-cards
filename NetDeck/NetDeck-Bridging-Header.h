@@ -4,7 +4,6 @@
 
 @import UIKit;
 
-#import "GZip.h"
 #import "UIAlert+NetDeck.h"
 
 @class Deck;
