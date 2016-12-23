@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@interface EditDeckViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface xEditDeckViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UILabel* statusLabel;

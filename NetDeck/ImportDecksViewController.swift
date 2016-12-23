@@ -136,7 +136,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             self.changeSortType(.byName)
         })
         
-        alert.addAction(UIAlertAction(title: "Cancel".localized()) { action in
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel) { action in
             self.alert = nil
         })
         
@@ -521,48 +521,10 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         self.tableView.scrollIndicatorInsets = insets
     }
     
-    func willHideKeyboard(_ notificatin: Notification) {
+    func willHideKeyboard(_ notification: Notification) {
         let insets = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
         self.tableView.contentInset = insets
         self.tableView.scrollIndicatorInsets = insets
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

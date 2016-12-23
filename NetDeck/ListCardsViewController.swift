@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ListCardsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     @IBOutlet weak var tableView: UITableView!

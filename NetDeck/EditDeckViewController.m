@@ -9,7 +9,7 @@
 @import SVProgressHUD;
 #import "EditDeckViewController.h"
 
-@interface EditDeckViewController ()
+@interface xEditDeckViewController ()
 
 @property BOOL autoSave;
 @property BOOL autoSaveDropbox;
@@ -32,7 +32,7 @@
 
 @end
 
-@implementation EditDeckViewController
+@implementation xEditDeckViewController
 
 - (void)viewDidLoad
 {

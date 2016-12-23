@@ -29,6 +29,10 @@ extension String {
     func trimmed() -> String {
         return self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
+    
+    func checked(_ checked: Bool) -> String {
+        return checked ? self + " ✓" : self
+    }
 }
 
 extension Collection {

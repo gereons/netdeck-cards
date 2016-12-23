@@ -6,6 +6,8 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+import UIKit
+
 struct BuildConfig {
     #if RELEASE
     static let release = true

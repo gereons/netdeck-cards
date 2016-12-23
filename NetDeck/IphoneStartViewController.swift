@@ -170,7 +170,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         alert.addAction(UIAlertAction(title: "New Corp Deck".localized()) { action in
             self.addNewDeck(.corp)
         })
-        alert.addAction(UIAlertAction(title: "Cancel".localized(), handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -198,7 +198,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
                 self.importDecksFrom(.netrunnerDb)
             })
             
-            alert.addAction(UIAlertAction(title: "Cancel".localized(), handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
             
             self.present(alert, animated:false, completion:nil)
         } else if useNrdb {
@@ -236,7 +236,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
             self.changeSortType(.byName)
         })
         
-        alert.addAction(UIAlertAction(title: "Cancel".localized(), handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         
         self.present(alert, animated:false, completion:nil)
     }

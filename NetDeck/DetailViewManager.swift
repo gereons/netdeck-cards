@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class DetailViewManager: NSObject, UISplitViewControllerDelegate {
 

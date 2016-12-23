@@ -6,6 +6,8 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+import Foundation
+
 @objc enum NRCardType: Int {
     case none = -1
     case identity

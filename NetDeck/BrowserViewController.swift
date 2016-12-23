@@ -284,7 +284,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
                     }
                 })
                 
-                alert.addAction(UIAlertAction(title:"Cancel".localized(), handler: nil))
+                alert.addAction(UIAlertAction(title:"Cancel".localized(), style: .cancel, handler: nil))
                 
                 self.present(alert, animated:false, completion:nil)
             }

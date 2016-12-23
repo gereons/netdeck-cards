@@ -6,6 +6,8 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+import UIKit
+
 class EmptyDetailViewController: UIViewController {
     @IBOutlet weak var emptyDataSetView: UIView!
     

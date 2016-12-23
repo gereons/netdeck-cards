@@ -6,6 +6,8 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+import UIKit
+
 @objc(SetSelectionViewController) // need for IASK
 class SetSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     

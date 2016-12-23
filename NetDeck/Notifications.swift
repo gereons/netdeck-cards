@@ -6,6 +6,8 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+import Foundation
+
 class Notifications: NSObject {
     static let addTopCard       = Notification.Name("addTopCard")       // card filter: return pressed, add top card, no userInfo
     static let selectIdentity   = Notification.Name("selectIdentity")   // identity selection, userInfo contains = "code"
