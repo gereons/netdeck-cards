@@ -101,7 +101,7 @@
     
     if (useDropbox && useNetrunnerdb)
     {
-        self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
+        self.popup = [UIAlertController actionSheetWithTitle:l10n(@"Import Decks") message:nil];
         [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Import from Dropbox") handler:^(UIAlertAction *action) {
             [self importFromSource:NRImportSourceDropbox];
         }]];
@@ -164,24 +164,33 @@
         return;
     }
     
-    UIAlertController* alert = [UIAlertController alertWithTitle:l10n(@"Export Decks")
-                                                         message:l10n(@"Export all currently visible decks")];
+    self.popup = [UIAlertController actionSheetWithTitle:l10n(@"Export Decks") message:l10n(@"Export all currently visible decks")];
     
-    [alert addAction:[UIAlertAction alertCancel:nil]];
     if (useDropbox) {
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To Dropbox") handler:^(UIAlertAction * action) {
+        [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"To Dropbox") handler:^(UIAlertAction * action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
+            self.popup = nil;
             [self performSelector:@selector(exportAllToDropbox) withObject:nil afterDelay:0.0];
         }]];
     }
     if (useNetrunnerdb) {
-        [alert addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction * action) {
+        [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"To NetrunnerDB.com") handler:^(UIAlertAction * action) {
             [SVProgressHUD showWithStatus:l10n(@"Exporting Decks...")];
+            self.popup = nil;
             [self performSelector:@selector(exportAllToNetrunnerDB) withObject:nil afterDelay:0.0];
         }]];
     }
+    [self.popup addAction:[UIAlertAction actionSheetCancel:^(UIAlertAction *action) {
+        self.popup = nil;
+    }]];
     
-    [alert show];
+    UIPopoverPresentationController* popover = self.popup.popoverPresentationController;
+    popover.barButtonItem = sender;
+    popover.sourceView = self.view;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    [self.popup.view layoutIfNeeded];
+    
+    [self presentViewController:self.popup animated:NO completion:nil];
 }
 
 -(void) exportAllToDropbox
@@ -248,7 +257,7 @@
     
     UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
-    self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
+    self.popup = [UIAlertController actionSheetWithTitle:l10n(@"State") message:nil];
     
     [self.popup addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"Active"), deck.state == NRDeckStateActive) handler:^(UIAlertAction *action) {
         [self changeState:deck newState:NRDeckStateActive];
@@ -311,7 +320,7 @@
         return;
     }
 
-    self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
+    self.popup = [UIAlertController actionSheetWithTitle:l10n(@"New Deck") message:nil];
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"New Runner Deck") handler:^(UIAlertAction *action) {
         [[NSNotificationCenter defaultCenter] postNotificationName:Notifications.newDeck object:self userInfo:@{ @"role": @(NRRoleRunner)}];
         self.popup = nil;

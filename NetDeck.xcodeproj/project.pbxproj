@@ -533,6 +533,7 @@
 				3A9795351CF63EE100479ADF /* AppDelegate.swift */,
 				3A2F4ADB1C8C716400B711BD /* ImageCache.swift */,
 				3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */,
+				3AFBA1601E0D9288003F6CD8 /* ObjC Utils */,
 				3A3BDD9E1930F36E00DEFD57 /* Utility Classes / Headers */,
 				3AA440DF1854DA0D0051D4B0 /* Data / Models */,
 				3A3845041B77CB34007C76F2 /* Update Check */,
@@ -649,15 +650,11 @@
 				3AF697881C1DAC7300D254CE /* Notifications.swift */,
 				3A9752201C1F6E310070E39B /* MiscUtilities.swift */,
 				3A529E621CA57BF70061E065 /* Reachability.swift */,
-				3ABAD2F71B8275F8009E81F3 /* NSArray+TwoD.h */,
-				3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */,
-				3A595423186ED61C0074B3B1 /* CGRectUtils.h */,
 				3A6CD8031CF7864C0090CEDB /* DetailViewManager.swift */,
 				3AEF52001CCD53B300A831E0 /* NROutlineLabel.swift */,
 				3ADBCA951DDA372800D988A5 /* InsetLabel.swift */,
 				3A65016E1DC6286600815965 /* NRSwitch.swift */,
 				3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */,
-				3A8309861AE8C22D00FED08A /* NRCrashlytics.h */,
 				3AAE4C4A1CA7105A0039F822 /* Analytics.swift */,
 				3A3AA9A81CE13011003F21EE /* DebugTimer.swift */,
 			);
@@ -834,7 +831,6 @@
 		3AA440DF1854DA0D0051D4B0 /* Data / Models */ = {
 			isa = PBXGroup;
 			children = (
-				3A5BC3ED1849326B00E792F7 /* NRTypes.h */,
 				3A904FCC1BF73723001C075A /* Types.swift */,
 				3A3C1E131BF74DAF000311FA /* TableData.swift */,
 				3A3C1E151BF7525B000311FA /* Faction.swift */,
@@ -1028,6 +1024,18 @@
 				3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */,
 			);
 			name = "Deck Analysis";
+			sourceTree = "<group>";
+		};
+		3AFBA1601E0D9288003F6CD8 /* ObjC Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3A5BC3ED1849326B00E792F7 /* NRTypes.h */,
+				3A8309861AE8C22D00FED08A /* NRCrashlytics.h */,
+				3A595423186ED61C0074B3B1 /* CGRectUtils.h */,
+				3ABAD2F71B8275F8009E81F3 /* NSArray+TwoD.h */,
+				3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */,
+			);
+			name = "ObjC Utils";
 			sourceTree = "<group>";
 		};
 		EF2B273DAF9123ABF9F266E8 /* Pods */ = {

@@ -182,7 +182,7 @@ static BrowserResultViewController* instance;
         return;
     }
     
-    self.popup = [UIAlertController actionSheetWithTitle:nil message:nil];
+    self.popup = [UIAlertController actionSheetWithTitle:l10n(@"Sort by") message:nil];
     
     [self.popup addAction:[UIAlertAction actionWithTitle:l10n(@"Type") handler:^(UIAlertAction *action) {
         [self changeSortType:NRBrowserSortByType];

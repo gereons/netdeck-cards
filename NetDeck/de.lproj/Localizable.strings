@@ -159,8 +159,10 @@
 "Copy to Clipboard" = "Ins Clipboard kopieren";
 "Send via Email" = "Als E-Mail senden";
 "Sort" = "Sortierung";
+"Show Side" = "Seite wählen";
 "Side" = "Seite";
 "Status" = "Status";
+"Show Status" = "Status wählen";
 "Active" = "Aktiv";
 "Testing" = "Test";
 "Retired" = "Inaktiv";

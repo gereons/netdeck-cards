@@ -132,7 +132,9 @@
 "Send via Email" = "Email";
 "Sort" = "Triage";
 "Side" = "Partie";
+"Show Side" = "Partie";
 "Status" = "Status";
+"Show Status" = "Status";
 "Active" = "Active";
 "Testing" = "Evaluation";
 "Retired" = "Retiré";

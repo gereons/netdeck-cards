@@ -154,7 +154,9 @@
 "Send via Email" = "メールで送付";
 "Sort" = "並べ替え";
 "Side" = "サイド";
+"Show Side" = "サイド";
 "Status" = "状況";
+"Show Status" = "状況";
 "Active" = "アクティブ";
 "Testing" = "テスト中";
 "Retired" = "引退";

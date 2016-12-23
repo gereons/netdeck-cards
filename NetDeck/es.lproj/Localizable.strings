@@ -131,7 +131,9 @@
 "Send via Email" = "Enviar Email";
 "Sort" = "Ordenación";
 "Side" = "Partido";
+"Show Side" = "Partido";
 "Status" = "Estado";
+"Show Status" = "Estado";
 "Active" = "Activo";
 "Testing" = "A prueba";
 "Retired" = "Retirado";
