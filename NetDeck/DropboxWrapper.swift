@@ -79,14 +79,14 @@ class DropboxWrapper: NSObject {
                 let destination = URL(fileURLWithPath: path)
                 return destination
             }).response { response, error in
+                if let (metadata, _) = response {
+                    let attrs = [ FileAttributeKey.modificationDate: metadata.clientModified ]
+                    let path = toDirectory.appendPathComponent(name)
+                    _ = try? FileManager.default.setAttributes(attrs, ofItemAtPath: path)
+                }
                 count += 1
                 if count == names.count {
                     completion()
-                }
-                if let (metadata, _) = response {
-                    let attrs = [ FileAttributeKey.modificationDate: metadata.serverModified ]
-                    let path = toDirectory.appendPathComponent(name)
-                    _ = try? FileManager.default.setAttributes(attrs, ofItemAtPath: path)
                 }
             }
         }

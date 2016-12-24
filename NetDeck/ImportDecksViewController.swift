@@ -92,15 +92,16 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         }
         
         let title = Device.isIphone ? "All".localized() : "Import All".localized()
-        self.importButton = UIBarButtonItem(title: title, style:.plain, target: self, action:#selector(self.importAll(_:)))
+        self.importButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(self.importAll(_:)))
         
         if Device.isIphone {
-            self.sortButton = UIBarButtonItem(image: UIImage(named: "890-sort-ascending-toolbar"), style:.plain, target:self, action:#selector(self.changeSort(_:)))
+            self.sortButton = UIBarButtonItem(image: UIImage(named: "890-sort-ascending-toolbar"), style: .plain, target: self, action: #selector(self.changeSort(_:)))
         } else {
-            self.sortButton = UIBarButtonItem(title: "Sort".localized(), style: .plain, target:self, action:#selector(self.changeSort(_:)))
+            self.sortButton = UIBarButtonItem(title: "Sort".localized(), style: .plain, target: self, action: #selector(self.changeSort(_:)))
         }
 
-        self.spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target:nil, action:nil)
+        self.spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        self.spacer.width = 15
         self.barButtons = Device.isIphone ? [ self.importButton, self.sortButton ] : [ self.importButton, self.spacer, self.sortButton ]
     }
     
@@ -111,8 +112,8 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController?.navigationBar.topItem?.title = Device.isIphone ? "Import".localized() : "Import Deck".localized()
         
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector:#selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object:nil)
-        nc.addObserver(self, selector:#selector(self.willHideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object:nil)
+        nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object:nil)
+        nc.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object:nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -126,13 +127,13 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     func changeSort(_ sender: UIBarButtonItem) {
         let alert = UIAlertController.actionSheet(title: "Sort by".localized(), message:nil)
         
-        alert.addAction(UIAlertAction(title: "Date".localized()) { action in
+        alert.addAction(UIAlertAction(title: "Date".localized().checked(self.deckListSort == .byDate)) { action in
             self.changeSortType(.byDate)
         })
-        alert.addAction(UIAlertAction(title: "Faction".localized()) { action in
+        alert.addAction(UIAlertAction(title: "Faction".localized().checked(self.deckListSort == .byFaction)) { action in
             self.changeSortType(.byFaction)
         })
-        alert.addAction(UIAlertAction(title: "A-Z".localized()) { action in
+        alert.addAction(UIAlertAction(title: "A-Z".localized().checked(self.deckListSort == .byName)) { action in
             self.changeSortType(.byName)
         })
         
@@ -151,7 +152,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func changeSortType(_ sort: NRDeckListSort) {
-        UserDefaults.standard.set(sort, forKey:SettingsKeys.DECK_FILTER_SORT)
+        UserDefaults.standard.set(sort.rawValue, forKey:SettingsKeys.DECK_FILTER_SORT)
         self.deckListSort = sort
     
         self.filterDecks()

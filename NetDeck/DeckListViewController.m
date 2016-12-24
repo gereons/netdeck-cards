@@ -1530,7 +1530,9 @@
     alert.popoverPresentationController.sourceView = self.mwlButton;
     CGRect rect = self.footerLabel.frame;
     rect.size = CGSizeMake(1, 1);
+    
     alert.popoverPresentationController.sourceRect = rect;
+    [alert.view layoutIfNeeded];
     
     [self presentViewController:alert animated:YES completion:nil];
 }
