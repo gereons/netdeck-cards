@@ -67,7 +67,7 @@ class DeckImport: NSObject {
 
         let lines = clip.components(separatedBy: CharacterSet.newlines)
         
-        self.deck = nil;
+        self.deck = nil
         
         self.deckSource = self.checkForNetrunnerDbDeckURL(lines)
         if self.deckSource == nil {
@@ -277,7 +277,6 @@ class DeckImport: NSObject {
     }
     
     func doDownloadDeckFromNetrunnerDb(_ deckUrl: String) {
-        var ok = false
         self.downloadStopped = false
         
         self.request = Alamofire.request(deckUrl).validate().responseJSON { response in
@@ -287,41 +286,40 @@ class DeckImport: NSObject {
                     do {
                         let json = try JSONParser.JSONObjectWithData(data)
                         // print("JSON: \(json)")
-                        ok = self.parseJsonDeckList(json)
+                        let deck = self.parseJsonDeckList(json)
+                        self.downloadFinished(deck)
                     } catch let error {
                         print("\(error)")
+                        self.downloadFinished(nil)
                     }
                 }
-                self.downloadFinished(ok)
             case .failure(let error):
                 print(error)
-                self.downloadFinished(false)
+                self.downloadFinished(nil)
             }
         }
     }
     
-    func parseJsonDeckList(_ json: JSONObject) -> Bool {
+    func parseJsonDeckList(_ json: JSONObject) -> Deck? {
         if !NRDB.validJsonResponse(json: json) {
-            return false
+            return nil
         }
         
         do {
             let decks: [Deck] = try json.value(for: "data")
             
             if let deck = decks.first, deck.identity != nil, deck.cards.count > 0 {
-                NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
-                return true
+                return deck
             }
         } catch let error {
             print("\(error)")
         }
         
-        return false
+        return nil
     }
 
     func doDownloadDeckFromMeteor(_ deckId: String) {
         let deckUrl = "https://meteor.stimhack.com/deckexport/octgn/" + deckId
-        var ok = false
         self.downloadStopped = false
         
         self.request = Alamofire.request(deckUrl).responseData(completionHandler: { (response) in
@@ -340,35 +338,44 @@ class DeckImport: NSObject {
                             filename = filename.removingPercentEncoding! as NSString
                         }
                     }
-                    ok = self.importOctgnDeck(value, name: filename as String)
+                    let deck = self.importOctgnDeck(value, name: filename as String)
                     
-                    self.downloadFinished(ok)
+                    self.downloadFinished(deck)
                 }
             case .failure(let error):
                 print(error)
-                self.downloadFinished(false)
+                self.downloadFinished(nil)
             }
         })
         
      }
 
-    func importOctgnDeck(_ data: Data, name: String) -> Bool {
+    func importOctgnDeck(_ data: Data, name: String) -> Deck? {
         let importer = OctgnImport()
         if let deck = importer.parseOctgnDeckFromData(data) {
             if deck.identity != nil && deck.cards.count > 0 {
                 deck.name = name
-                NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
-                return true
+                return deck
             }
         }
-        return false
+        return nil
     }
 
-    func downloadFinished(_ ok: Bool) {
-        if let alert = self.sdcAlert {
-            alert.dismiss()
-        }
+    private func downloadFinished(_ deck: Deck?) {
         self.request = nil
+        if let alert = self.sdcAlert {
+            alert.dismiss(animated: true) {
+                // send notification when dismissal is done
+                self.postImportNotification(deck)
+            }
+        } else {
+            self.postImportNotification(deck)
+        }
     }
 
+    private func postImportNotification(_ deck: Deck?) {
+        if let deck = deck {
+            NotificationCenter.default.post(name: Notifications.importDeck, object: self, userInfo: ["deck": deck])
+        }
+    }
 }

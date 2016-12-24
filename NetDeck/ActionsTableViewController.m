@@ -159,20 +159,11 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     NSDictionary* userInfo = notification.userInfo;
     Deck* deck = [userInfo objectForKey:@"deck"];
-    
-    // add a delay to insure the dismissal of the "downloading" alert is finished before we attempt pushing a new VC
-    [self performSelector:@selector(openImportedDeck:) withObject:deck afterDelay:.15];
-}
-
--(void) openImportedDeck:(Deck*)deck {
-    NRRole role = deck.identity.role;
-    
     [deck saveToDisk];
     
-    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:role andDeck:deck];
+    CardFilterViewController *filter = [[CardFilterViewController alloc] initWithRole:deck.identity.role andDeck:deck];
     
-    UINavigationController* nc = self.navigationController;
-    
+    UINavigationController* nc = self.navigationController;    
     if (nc.viewControllers.count > 1) {
         [nc popToRootViewControllerAnimated:NO];
     }
