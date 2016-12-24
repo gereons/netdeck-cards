@@ -6,6 +6,8 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+#import "NRTypes.h"
+#import "NSArray+TwoD.h"
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
 #import "CardFilterPopover.h"

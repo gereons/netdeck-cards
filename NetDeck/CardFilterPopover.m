@@ -6,6 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+#import "NSArray+TwoD.h"
 #import "CardFilterPopover.h"
 #import "CGRectUtils.h"
 #import "CardFilterViewController.h"

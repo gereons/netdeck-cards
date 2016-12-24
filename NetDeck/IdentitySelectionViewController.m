@@ -6,6 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+#import "NSArray+TwoD.h"
 #import "IdentitySelectionViewController.h"
 #import "IdentityViewCell.h"
 

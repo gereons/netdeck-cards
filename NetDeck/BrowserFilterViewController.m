@@ -6,6 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
+#import "NRTypes.h"
 #import "BrowserFilterViewController.h"
 #import "BrowserResultViewController.h"
 #import "CardFilterPopover.h"

@@ -12,12 +12,9 @@
 
 #ifdef __OBJC__
     @import UIKit;
-    @import Foundation;
 #endif
 
 #define l10n(str)   NSLocalizedString(str, nil)
 
 #import "NetDeck-Swift.h"
-#import "NRTypes.h"
-#import "NSArray+TwoD.h"
 #import "NRCrashlytics.h"
