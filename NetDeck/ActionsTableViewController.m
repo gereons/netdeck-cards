@@ -133,27 +133,22 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 
 -(void)newDeck:(NSNotification*) notification
 {
-    UINavigationController* nc = self.navigationController;
-
     NSDictionary* userInfo = notification.userInfo;
     CardFilterViewController* filter;
     
-    if ([notification.name isEqualToString:Notifications.browserNew])
-    {
+    if ([notification.name isEqualToString:Notifications.browserNew]) {
         Card* card = [CardManager cardByCode:[userInfo objectForKey:@"code"]];
         Deck* deck = [[Deck alloc] initWithRole:card.role];
         [deck addCard:card copies:1];
         
         filter = [[CardFilterViewController alloc] initWithRole:deck.role andDeck:deck];
-    }
-    else
-    {
+    } else {
         NRRole role = [[userInfo objectForKey:@"role"] intValue];
         filter = [[CardFilterViewController alloc] initWithRole:role];
     }
     
-    if (nc.viewControllers.count > 1)
-    {
+    UINavigationController* nc = self.navigationController;
+    if (nc.viewControllers.count > 1) {
         [nc popToRootViewControllerAnimated:NO];
     }
     
@@ -164,6 +159,12 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
 {
     NSDictionary* userInfo = notification.userInfo;
     Deck* deck = [userInfo objectForKey:@"deck"];
+    
+    // add a delay to insure the dismissal of the "downloading" alert is finished before we attempt pushing a new VC
+    [self performSelector:@selector(openImportedDeck:) withObject:deck afterDelay:.15];
+}
+
+-(void) openImportedDeck:(Deck*)deck {
     NRRole role = deck.identity.role;
     
     [deck saveToDisk];
@@ -172,10 +173,10 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
     
     UINavigationController* nc = self.navigationController;
     
-    if (nc.viewControllers.count > 1)
-    {
+    if (nc.viewControllers.count > 1) {
         [nc popToRootViewControllerAnimated:NO];
     }
+    
     [nc pushViewController:filter animated:NO];
 }
 

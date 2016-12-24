@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             Fabric.with([Crashlytics.self]);
         }
         
-        FIXME("test deck imports: meteor, nrdb, clipboard")
+        FIXME("test deck imports: nrdb, clipboard")
         
         self.setBuiltinUserDefaults()
         
