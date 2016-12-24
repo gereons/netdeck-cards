@@ -34,9 +34,6 @@
 {
     [super viewDidLoad];
     
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.topItem.title = l10n(@"About");
-    
     self.backButton = [[UIBarButtonItem alloc] initWithTitle:@"◁" style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
     
     self.webView.delegate = self;
@@ -56,8 +53,13 @@
         title = [NSString stringWithFormat:l10n(@"Net Deck %@"), [AppDelegate appVersion]];
     }
     
+    self.title = title;
+}
+
+-(void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
-    topItem.title = title;
     topItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Feedback") style:UIBarButtonItemStylePlain target:self action:@selector(leaveFeedback:)];
 }
 

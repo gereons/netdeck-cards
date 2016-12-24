@@ -86,7 +86,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         assert(self.navigationController?.viewControllers.count == 3, "nav oops")
         
         if let topItem = self.navigationController?.navigationBar.topItem {
-            let filterButton = UIBarButtonItem(image: UIImage(named: "98-filter-toolbar"), style: .plain, target: self, action: #selector(self.showFilters(_:)))
+            let filterButton = UIBarButtonItem(image: UIImage(named: "798-filter-toolbar"), style: .plain, target: self, action: #selector(self.showFilters(_:)))
             
             topItem.rightBarButtonItem = filterButton
         }
