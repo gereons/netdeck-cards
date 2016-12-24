@@ -47,7 +47,6 @@
 		3A3798B31D709B0C00F94658 /* PrebuiltManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3798B21D709B0C00F94658 /* PrebuiltManager.swift */; };
 		3A3798B61D70A54B00F94658 /* PrebuiltSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */; };
 		3A3798B71D70A54B00F94658 /* PrebuiltSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */; };
-		3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3845001B77BA89007C76F2 /* EditDeckViewController.m */; };
 		3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */; };
 		3A3881D81CA5D73200DFF1BA /* NRDBHack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */; };
 		3A38BA071C8ADCC700F957D4 /* DataDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A38BA061C8ADCC700F957D4 /* DataDownload.swift */; };
@@ -156,7 +155,6 @@
 		3ACC9A5D1DC61B7B00C54EF3 /* CardThumbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACC9A5C1DC61B7B00C54EF3 /* CardThumbView.swift */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
 		3ACCEE231869A25500CC3537 /* LargeCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACCEE221869A25500CC3537 /* LargeCardCell.m */; };
-		3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */; };
 		3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */; };
 		3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */; };
 		3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */; };
@@ -262,8 +260,6 @@
 		3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrebuiltSelectionViewController.swift; sourceTree = "<group>"; };
 		3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrebuiltSelectionViewController.xib; sourceTree = "<group>"; };
 		3A38091C1B0F8AE300042A67 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		3A3844FF1B77BA89007C76F2 /* EditDeckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = EditDeckViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A3845001B77BA89007C76F2 /* EditDeckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = EditDeckViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDeckViewController.xib; sourceTree = "<group>"; };
 		3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDBHack.swift; sourceTree = "<group>"; };
 		3A38BA061C8ADCC700F957D4 /* DataDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDownload.swift; sourceTree = "<group>"; };
@@ -418,8 +414,6 @@
 		3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargeCardCell.xib; sourceTree = "<group>"; };
 		3ACCEE211869A25500CC3537 /* LargeCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LargeCardCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3ACCEE221869A25500CC3537 /* LargeCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LargeCardCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportDecksViewController.h; sourceTree = "<group>"; };
-		3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ImportDecksViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportDecksViewController.xib; sourceTree = "<group>"; };
 		3ACF259B198D485F00E6267E /* BrowserFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserFilterViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserFilterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -925,8 +919,6 @@
 			isa = PBXGroup;
 			children = (
 				3AFBA1611E0D9CAF003F6CD8 /* EditDeckViewController.swift */,
-				3A3844FF1B77BA89007C76F2 /* EditDeckViewController.h */,
-				3A3845001B77BA89007C76F2 /* EditDeckViewController.m */,
 				3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */,
 				3ADADEE41DFDD4040051BD92 /* EditDeckCell.swift */,
 				3AD860D51B79154100EEF8AC /* EditDeckCell.xib */,
@@ -955,8 +947,6 @@
 				3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */,
 				3ABC2EE0197598E9007BBE3A /* SavedDecksList.h */,
 				3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */,
-				3ACE038F1882CEC600F22B87 /* ImportDecksViewController.h */,
-				3ACE03901882CEC600F22B87 /* ImportDecksViewController.m */,
 				3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */,
 				3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */,
 				3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */,
@@ -1315,7 +1305,6 @@
 				3A84F8DC1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift in Sources */,
 				3A6CD8041CF7864C0090CEDB /* DetailViewManager.swift in Sources */,
 				3AB838611DC684EB0047B7DB /* BrowserImageCell.swift in Sources */,
-				3ACE03921882CEC600F22B87 /* ImportDecksViewController.m in Sources */,
 				3A65016F1DC6286600815965 /* NRSwitch.swift in Sources */,
 				3A11342219AC5C580012494E /* IdentityCardView.m in Sources */,
 				3A11B1151ADE364300E5A410 /* CardFilterCollectionView.m in Sources */,
@@ -1364,7 +1353,6 @@
 				3ACC9A5B1DC60E2400C54EF3 /* SmallPipsView.swift in Sources */,
 				3A2BF9D81DC64BF400AFA36E /* CardImageViewPopover.swift in Sources */,
 				3AEF52011CCD53B300A831E0 /* NROutlineLabel.swift in Sources */,
-				3A3845021B77BA89007C76F2 /* EditDeckViewController.m in Sources */,
 				3ABC2EE61975A647007BBE3A /* CompareDecksList.m in Sources */,
 				3A47F1901DBB7E9500058294 /* Card+html.swift in Sources */,
 				3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */,
