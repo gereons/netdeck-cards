@@ -15,8 +15,8 @@ class CardType: NSObject {
     private static let corpTypes: [NRCardType] = [ .agenda, .asset, .upgrade, .operation, .ice ]
     
     private static var type2name = [NRCardType: String]()
-    private static var runnerTypeNames = [String]()
-    private static var corpTypeNames = [String]()
+    static var runnerTypeNames = [String]()
+    static var corpTypeNames = [String]()
     private(set) static var allTypes: TableData!
     
     class func initializeCardTypes(_ cards: [Card]) -> Bool {

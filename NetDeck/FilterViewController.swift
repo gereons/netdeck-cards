@@ -45,7 +45,6 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
     
     private var factionNames = [String]()
     private var typeNames = [String]()
-    private var dataDestinyAllowed = true
     
     private var cards = [Card]()
     private var showPreviewTable = true
@@ -55,7 +54,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         
         self.title = "Filter".localized()
         
-        self.dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
+        
         self.factionLabel.text = "Faction".localized()
         self.typeLabel.text = "Type".localized()
         
@@ -63,65 +62,50 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.miniFactionControl.isHidden = true
         self.miniFactionControl.tag = Tags.miniFaction.rawValue
         self.miniFactionControl.delegate = self
-        self.miniFactionControl.selectAllSegments(self.dataDestinyAllowed)
+        self.miniFactionControl.selectAllSegments(false)
+        
+        let settings = UserDefaults.standard
+        let useDaD = settings.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
+        let packUsage = NRPackUsage(rawValue: settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)) ?? .all
+        let miniFactions = packUsage == .all || useDaD
         
         let factionLimit: Int
         if self.role == .runner {
-            self.factionNames = [ Faction.name(for: .anarch),
-                                  Faction.name(for: .criminal),
-                                  Faction.name(for: .shaper),
-                                  Faction.name(for: .neutral) ]
-            self.typeNames = [ CardType.name(for: .event),
-                               CardType.name(for: .hardware),
-                               CardType.name(for: .resource),
-                               CardType.name(for: .program),
-            ]
+            self.factionNames = (Faction.runnerFactionsCore + [ NRFaction.neutral ]).map { Faction.name(for: $0) }
+            self.typeNames = CardType.runnerTypeNames
             factionLimit = factionNames.count
-            if self.dataDestinyAllowed {
-                self.factionNames = [ Faction.name(for: .anarch),
-                                      Faction.name(for: .criminal),
-                                      Faction.name(for: .shaper),
-                                      Faction.name(for: .neutral),
-                                      Faction.name(for: .adam),
-                                      Faction.name(for: .apex),
-                                      Faction.name(for: .sunnyLebeau),]
+            if miniFactions {
+                self.factionNames = (Faction.runnerFactionsCore + [ NRFaction.neutral ] + Faction.runnerMiniFactions).map { Faction.name(for: $0) }
                 self.miniFactionControl.isHidden = false
                 self.typeVerticalDistance.constant = 50
             }
         } else {
-            self.factionNames = [ Faction.name(for: .haasBioroid),
-                                  Faction.name(for: .nbn),
-                                  Faction.name(for: .jinteki),
-                                  Faction.name(for: .weyland),
-                                  Faction.name(for: .neutral) ]
+            self.factionNames = (Faction.corpFactions + [ NRFaction.neutral ]).map { Faction.name(for: $0) }
             factionLimit = factionNames.count
-            self.typeNames = [ CardType.name(for: .agenda),
-                               CardType.name(for: .asset),
-                               CardType.name(for: .upgrade),
-                               CardType.name(for: .operation),
-                               CardType.name(for: .ice),
-            ]
+            self.typeNames = CardType.corpTypeNames
         }
         
+        // faction control
         self.factionControl.delegate = self
         self.factionControl.tag = Tags.faction.rawValue
         
         self.factionControl .removeAllSegments()
-        
         for i in 0 ..< factionLimit {
             self.factionControl.insertSegment(withTitle: self.factionNames[i], at: i, animated: false)
         }
-        self.factionControl.selectAllSegments(true)
+        self.factionControl.selectAllSegments(false)
         
+        // type control
         self.typeControl.delegate = self
         self.typeControl.tag = Tags.type.rawValue
-        self.typeControl.removeAllSegments()
         
+        self.typeControl.removeAllSegments()
         for i in 0 ..< self.typeNames.count {
             self.typeControl.insertSegment(withTitle: self.typeNames[i], at: i, animated: false)
         }
-        self.typeControl.selectAllSegments(true)
+        self.typeControl.selectAllSegments(false)
         
+        // sliders
         self.costSlider.maximumValue = Float(1 + (self.role == .runner ? CardManager.maxRunnerCost : CardManager.maxCorpCost))
         self.muApSlider.maximumValue = Float(1 + (self.role == .runner ? CardManager.maxMU : CardManager.maxAgendaPoints))
         self.strengthSlider.maximumValue = Float(1 + CardManager.maxStrength)
@@ -133,7 +117,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.strengthSlider.setThumbImage(UIImage(named: "strength_slider"), for: .normal)
         self.influenceSlider.setThumbImage(UIImage(named: "influence_slider"), for: .normal)
         
-        self.clearFilters(self)
+        self.clearFilters()
         
         self.previewHeader.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
         self.previewTable.rowHeight = 30
@@ -149,7 +133,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.clearFilters(self)
+        self.clearFilters()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -157,16 +141,20 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         assert(self.navigationController?.viewControllers.count == 4, "nav oops")
         
         let topItem = self.navigationController?.navigationBar.topItem
-        let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFilters(_:)))
+        let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersTapped(_:)))
         topItem?.rightBarButtonItem = clearButton
     }
     
-    func clearFilters(_ sender: Any) {
+    func clearFiltersTapped(_ sender: Any) {
+        self.clearFilters()
+    }
+    
+    func clearFilters() {
         self.cardList?.clearFilters()
         
-        self.factionControl.selectAllSegments(true)
-        self.miniFactionControl.selectAllSegments(self.dataDestinyAllowed)
-        self.typeControl.selectAllSegments(true)
+        self.factionControl.selectAllSegments(false)
+        self.miniFactionControl.selectAllSegments(false)
+        self.typeControl.selectAllSegments(false)
         
         self.influenceSlider.value = 0.0
         self.strengthSlider.value = 0
@@ -177,6 +165,9 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.strengthChanged(nil)
         self.muApChanged(nil)
         self.costChanged(nil)
+        
+        let firstIndex = IndexPath(row: 0, section: 0)
+        self.previewTable.scrollToRow(at: firstIndex, at: .middle, animated: false)
     }
     
     @IBAction func strengthChanged(_ slider: UISlider?) {

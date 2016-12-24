@@ -12,16 +12,18 @@ class Faction: NSObject {
     
     private static var faction2name = [NRFaction: String]()
     
-    private static let runnerFactions: [NRFaction] = [ .anarch, .criminal, .shaper, .adam, .apex, .sunnyLebeau ]
-    private static let runnerFactionsPreDAD: [NRFaction] = [ .anarch, .criminal, .shaper ]
-    private static let corpFactions: [NRFaction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
+    static let runnerFactionsCore: [NRFaction] = [ .anarch, .criminal, .shaper ]
+    static let runnerMiniFactions: [NRFaction] = [ .adam, .apex, .sunnyLebeau ]
+    static let runnerFactionsAll = runnerFactionsCore + runnerMiniFactions
     
-    private static var runnerFactionNames = [String]()
-    private static var runnerFactionNamesPreDAD = [String]()
+    private static var runnerFactionNamesAll = [String]()
+    private static var runnerFactionNamesCore = [String]()
+    
+    static let corpFactions: [NRFaction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
     private static var corpFactionNames = [String]()
     
     private static var allFactions: TableData!
-    private static var allFactionsPreDAD: TableData!
+    private static var allFactionsCore: TableData!
     
     static let weylandConsortium = "Weyland Consortium"
     
@@ -34,10 +36,10 @@ class Faction: NSObject {
         faction2name[.none] = Constant.kANY
         faction2name[.neutral] = "Neutral".localized()
         
-        let expectedNames = runnerFactions.count + corpFactions.count + 2 // +2 for "any" and "neutral"
+        let expectedNames = runnerFactionsAll.count + corpFactions.count + 2 // +2 for "any" and "neutral"
         
-        runnerFactionNames = [String]()
-        runnerFactionNamesPreDAD = [String]()
+        runnerFactionNamesAll = [String]()
+        runnerFactionNamesCore = [String]()
         corpFactionNames = [String]()
         
         for card in cards {
@@ -53,25 +55,25 @@ class Faction: NSObject {
         
         let common = [ Faction.name(for: .none), Faction.name(for: .neutral) ]
         
-        for faction in runnerFactions {
-            runnerFactionNames.append(Faction.name(for: faction))
+        for faction in runnerFactionsAll {
+            runnerFactionNamesAll.append(Faction.name(for: faction))
         }
-        for faction in runnerFactionsPreDAD {
-            runnerFactionNamesPreDAD.append(Faction.name(for: faction))
+        for faction in runnerFactionsCore {
+            runnerFactionNamesCore.append(Faction.name(for: faction))
         }
         for faction in corpFactions {
             corpFactionNames.append(Faction.name(for: faction))
         }
         
         let factionSections = [ "", "Runner".localized(), "Corp".localized() ]
-        let factions = [ common, runnerFactionNames, corpFactionNames ]
-        let factionsPreDAD = [ common, runnerFactionNamesPreDAD, corpFactionNames ]
+        let factionsAll = [ common, runnerFactionNamesAll, corpFactionNames ]
+        let factionsCore = [ common, runnerFactionNamesCore, corpFactionNames ]
 
-        allFactions = TableData(sections: factionSections as NSArray, andValues: factions as NSArray)
-        allFactionsPreDAD = TableData(sections: factionSections as NSArray, andValues: factionsPreDAD as NSArray)
+        allFactions = TableData(sections: factionSections as NSArray, andValues: factionsAll as NSArray)
+        allFactionsCore = TableData(sections: factionSections as NSArray, andValues: factionsCore as NSArray)
         
-        runnerFactionNames.insert(contentsOf: common, at: 0)
-        runnerFactionNamesPreDAD.insert(contentsOf: common, at: 0)
+        runnerFactionNamesAll.insert(contentsOf: common, at: 0)
+        runnerFactionNamesCore.insert(contentsOf: common, at: 0)
         corpFactionNames.insert(contentsOf: common, at: 0)
         
         return true
@@ -84,9 +86,9 @@ class Faction: NSObject {
         {
             if packUsage == .selected {
                 let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
-                return dataDestinyAllowed ? runnerFactionNames : runnerFactionNamesPreDAD
+                return dataDestinyAllowed ? runnerFactionNamesAll : runnerFactionNamesCore
             } else {
-                return runnerFactionNames
+                return runnerFactionNamesAll
             }
         } else {
             return corpFactionNames
@@ -96,7 +98,7 @@ class Faction: NSObject {
     class func factionsForBrowser(packUsage: NRPackUsage) -> TableData {
         if packUsage == .selected {
             let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
-            return dataDestinyAllowed ? allFactions : allFactionsPreDAD
+            return dataDestinyAllowed ? allFactions : allFactionsCore
         } else {
             return allFactions
         }
