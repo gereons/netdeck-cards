@@ -8,7 +8,9 @@
 
 @import CorePlot;
 
-@interface Stats : NSObject
+NS_ASSUME_NONNULL_BEGIN
+
+@interface xStats : NSObject
 
 @property TableData* tableData;
 @property (readonly) CGFloat height;
@@ -22,3 +24,5 @@
 #define CREDITS(x)  ((x)==1?l10n(@"credit"):l10n(@"credits"))
 
 @end
+
+NS_ASSUME_NONNULL_END

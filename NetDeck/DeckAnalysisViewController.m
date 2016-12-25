@@ -7,11 +7,6 @@
 //
 
 #import "DeckAnalysisViewController.h"
-#import "CostStats.h"
-#import "StrengthStats.h"
-#import "IceTypeStats.h"
-#import "CardTypeStats.h"
-#import "InfluenceStats.h"
 
 @interface DeckAnalysisViewController ()
 

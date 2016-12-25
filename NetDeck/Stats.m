@@ -8,7 +8,7 @@
 
 #import "Stats.h"
 
-@implementation Stats
+@implementation xStats
 
 #define RGB_COLOR(R,G,B) [UIColor colorWithRed:(R/255.0) green:(G/255.0) blue:(B/255.0) alpha:.8]
 
@@ -50,7 +50,7 @@ static NSArray* colors;
 
 #pragma mark - CPTPlotDataSource methods
 
--(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
+-(NSUInteger)numberOfRecordsForPlot:(nonnull CPTPlot *)plot
 {
     return self.tableData.sections.count;
 }
