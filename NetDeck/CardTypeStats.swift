@@ -33,7 +33,7 @@ class CardTypeStats: Stats {
     }
     
     var hostingView: CPTGraphHostingView {
-        return self.hostingView(forDelegate: self, identifier: "Card Type")
+        return self.hostingView(for: self, identifier: "Card Type")
     }
     
     func dataLabel(for plot: CPTPlot, record index: UInt) -> CPTLayer? {

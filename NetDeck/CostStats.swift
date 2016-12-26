@@ -28,7 +28,7 @@ class CostStats: Stats {
     }
     
     var hostingView: CPTGraphHostingView {
-        return self.hostingView(forDelegate: self, identifier: "Cost")
+        return self.hostingView(for: self, identifier: "Cost")
     }
     
     func dataLabel(for plot: CPTPlot, record index: UInt) -> CPTLayer? {

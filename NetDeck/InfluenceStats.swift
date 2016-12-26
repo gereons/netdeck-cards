@@ -35,10 +35,10 @@ class InfluenceStats: Stats {
     }
     
     var hostingView: CPTGraphHostingView {
-        return self.hostingView(forDelegate: self, identifier: "Influence")
+        return self.hostingView(for: self, identifier: "Influence")
     }
     
-    override func sliceFill(for pieChart: CPTPieChart, record index: UInt) -> CPTFill {
+    override func sliceFill(for pieChart: CPTPieChart, record index: UInt) -> CPTFill? {
         let faction = self.tableData.sections[Int(index)] as! String
         let color = self.colors[faction]!
         

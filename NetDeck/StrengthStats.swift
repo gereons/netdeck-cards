@@ -28,7 +28,7 @@ class StrengthStats: Stats {
     }
     
     var hostingView: CPTGraphHostingView {
-        return self.hostingView(forDelegate: self, identifier: "Strength")
+        return self.hostingView(for: self, identifier: "Strength")
     }
     
     func dataLabel(for plot: CPTPlot, record index: UInt) -> CPTLayer? {

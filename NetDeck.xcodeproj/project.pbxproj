@@ -110,7 +110,6 @@
 		3A85328218550ACE00507B9A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A85328018550ACE00507B9A /* AboutViewController.m */; };
 		3A85328318550ACE00507B9A /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328118550ACE00507B9A /* AboutView.xib */; };
 		3A904FCD1BF73723001C075A /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A904FCC1BF73723001C075A /* Types.swift */; };
-		3A9204C618B16B9B00AF5285 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9204C518B16B9B00AF5285 /* Stats.m */; };
 		3A92DFD81CBA59EE0043F2F6 /* BrowserValuePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A92DFD61CBA59EE0043F2F6 /* BrowserValuePicker.swift */; };
 		3A92DFD91CBA59EE0043F2F6 /* BrowserValuePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A92DFD71CBA59EE0043F2F6 /* BrowserValuePicker.xib */; };
 		3A9752211C1F6E310070E39B /* MiscUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9752201C1F6E310070E39B /* MiscUtilities.swift */; };
@@ -337,8 +336,6 @@
 		3A85328118550ACE00507B9A /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
 		3A904FCB1BF73722001C075A /* NetDeck-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NetDeck-Bridging-Header.h"; sourceTree = "<group>"; };
 		3A904FCC1BF73723001C075A /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
-		3A9204C418B16B9B00AF5285 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
-		3A9204C518B16B9B00AF5285 /* Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stats.m; sourceTree = "<group>"; };
 		3A92DFD61CBA59EE0043F2F6 /* BrowserValuePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserValuePicker.swift; sourceTree = "<group>"; };
 		3A92DFD71CBA59EE0043F2F6 /* BrowserValuePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserValuePicker.xib; sourceTree = "<group>"; };
 		3A94492818FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; lineEnding = 0; name = fr; path = fr.lproj/About.html; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.html; };
@@ -805,8 +802,6 @@
 		3A9742AD18AF7DAE00F83520 /* Stats */ = {
 			isa = PBXGroup;
 			children = (
-				3A9204C418B16B9B00AF5285 /* Stats.h */,
-				3A9204C518B16B9B00AF5285 /* Stats.m */,
 				3A5EBE9E1E0FFACC0096E2F5 /* Stats.swift */,
 				3A5EBE9C1E0FF6EC0096E2F5 /* InfluenceStats.swift */,
 				3A5EBE9A1E0FF5530096E2F5 /* CostStats.swift */,
@@ -1359,7 +1354,6 @@
 				3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */,
 				3A3CE0F01C79EE31003BF8D9 /* DeckImport.swift in Sources */,
 				3A6109321DC78074007C73D5 /* IphoneIdentityViewController.swift in Sources */,
-				3A9204C618B16B9B00AF5285 /* Stats.m in Sources */,
 				3A126E901D0320ED00CDF580 /* Translation.swift in Sources */,
 				3A563717199552BA006AD431 /* BrowserCell.m in Sources */,
 				3AF6978D1C1DF96400D254CE /* DrawSimulatorCollectionView.swift in Sources */,

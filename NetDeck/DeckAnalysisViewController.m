@@ -196,15 +196,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* cellIdentifier = [NSString stringWithFormat:@"analysisCell%ld", (long)indexPath.section];
+    NSString* cellIdentifier = [NSString stringWithFormat:@"analysisCell%ld%ld", (long)indexPath.section, (long)indexPath.row];
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    cell.accessoryType = UITableViewCellAccessoryNone;
     
     switch (indexPath.section)
     {

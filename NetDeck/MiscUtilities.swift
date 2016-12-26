@@ -61,6 +61,10 @@ extension MutableCollection where Index == Int, IndexDistance == Int {
 }
 
 extension UIColor {
+    convenience init(r: Int, g: Int, b: Int) {
+        self.init(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1.0)
+    }
+    
     convenience init(rgb: UInt) {
         let r = CGFloat((rgb & 0xFF0000) >> 16)
         let g = CGFloat((rgb & 0x00FF00) >> 8)
