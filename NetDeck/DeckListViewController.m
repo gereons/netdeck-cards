@@ -1522,6 +1522,9 @@
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.1"), self.deck.mwl == NRMWLV1_1) handler:^(UIAlertAction * action) {
         [self setMwl:NRMWLV1_1 andOnesies:NO];
     }]];
+//    [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"MWL v1.2"), self.deck.mwl == NRMWLV1_2) handler:^(UIAlertAction * action) {
+//        [self setMwl:NRMWLV1_2 andOnesies:NO];
+//    }]];
     [alert addAction:[UIAlertAction actionWithTitle:CHECKED_TITLE(l10n(@"1.1.1.1"), self.deck.onesies) handler:^(UIAlertAction * action) {
         [self setMwl:NRMWLNone andOnesies:YES];
     }]];

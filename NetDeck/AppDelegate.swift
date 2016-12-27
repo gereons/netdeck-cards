@@ -139,6 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         // MWL v1.1 goes into effect 2016-08-01
         let defaultMWL = today >= "20160801" ? NRMWL.v1_1 : NRMWL.v1_0;
+//        let defaultMWL = today >= "20170201" ? NRMWL.v1_2 : NRMWL.v1_1;
         
         let defaults: [String: Any] = [
             SettingsKeys.LAST_DOWNLOAD: "never".localized(),

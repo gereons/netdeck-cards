@@ -104,11 +104,13 @@ import Foundation
     case none
     case v1_0   // as of 2016-02-01
     case v1_1   // as of 2016-08-01
+//    case v1_2   // as of 2017-02-01 (?)
     
     // map from "mwl_code" values we get from the NRDB API
     static let codeMap: [String: NRMWL] = [
         "NAPD_MWL_1.0": .v1_0,
-        "NAPD_MWL_1.1": .v1_1
+        "NAPD_MWL_1.1": .v1_1,
+//        "NAPD_MWL_1.2": .v1_2
     ]
     
     static func by(code: String) -> NRMWL {

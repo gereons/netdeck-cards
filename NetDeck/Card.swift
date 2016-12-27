@@ -88,7 +88,9 @@ class Card: NSObject, Unmarshaling {
         // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
         .v1_1: Set<String>([
             cerberusH1, cloneChip, d4v1d, desperado, faust, parasite, prepaidVoicepad, wyldside, yog_0,
-            architect, breakingNews, eli_1, mumbaTemple, napdContract, sansanCityGrid ])
+            architect, breakingNews, eli_1, mumbaTemple, napdContract, sansanCityGrid ]),
+        
+//        .v1_2: Set<String>([])
     ]
     
     private(set) static var fullNames = [String: String]()
