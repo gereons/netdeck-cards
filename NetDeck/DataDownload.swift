@@ -144,10 +144,13 @@ class DataDownload: NSObject {
                 }
             }
             self.sdcAlert = nil
-            NotificationCenter.default.post(name: Notifications.loadCards, object:self, userInfo:["success": ok])
+            self.perform(#selector(self.postLoadCardsNotification(_:)), with: ok, afterDelay: 0.001)
         }
     }
     
+    func postLoadCardsNotification(_ ok: Bool) {
+        NotificationCenter.default.post(name: Notifications.loadCards, object:self, userInfo:["success": ok])
+    }
     
     // MARK: - image download
     

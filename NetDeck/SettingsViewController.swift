@@ -195,7 +195,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
                 NotificationCenter.default.post(name: Notifications.loadCards, object: nil)
             })
             
-            self.iask.present(alert, animated: false, completion: nil)
+            alert.show()
         case SettingsKeys.TEST_API:
             if Reachability.online {
                 self.testApiSettings()
