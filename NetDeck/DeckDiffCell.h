@@ -6,11 +6,11 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@class DeckDiffViewController;
+@class xDeckDiffViewController;
 
-@interface DeckDiffCell : UITableViewCell
+@interface xDeckDiffCell : UITableViewCell
 
-@property (weak) DeckDiffViewController* vc;
+@property (weak) xDeckDiffViewController* vc;
 @property Card* card1;
 @property Card* card2;
 

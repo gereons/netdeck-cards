@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
     Overlap,            // cards that are in both decks
 };
 
-@interface DeckDiffViewController ()
+@interface xDeckDiffViewController ()
 @property Deck* deck1;
 @property Deck* deck2;
 
@@ -40,12 +40,12 @@ typedef NS_ENUM(NSInteger, DiffMode) {
 @implementation CardDiff
 @end
 
-@implementation DeckDiffViewController
+@implementation xDeckDiffViewController
 
 +(void) showForDecks:(Deck*)deck1 deck2:(Deck*)deck2 inViewController:(UIViewController*)vc
 {
     LOG_EVENT(@"Compare Decks", nil);
-    DeckDiffViewController* ddvc = [[DeckDiffViewController alloc] initWithDecks:deck1 deck2:deck2];
+    xDeckDiffViewController* ddvc = [[xDeckDiffViewController alloc] initWithDecks:deck1 deck2:deck2];
     
     [vc presentViewController:ddvc animated:NO completion:nil];
     ddvc.preferredContentSize = CGSizeMake(768, 728);
@@ -409,7 +409,7 @@ typedef NS_ENUM(NSInteger, DiffMode) {
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DeckDiffCell* cell = [tableView dequeueReusableCellWithIdentifier:@"diffCell" forIndexPath:indexPath];
+    xDeckDiffCell* cell = [tableView dequeueReusableCellWithIdentifier:@"diffCell" forIndexPath:indexPath];
 
     NSArray* arr;
     

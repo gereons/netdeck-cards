@@ -9,7 +9,7 @@
 #import "DeckDiffCell.h"
 #import "DeckDiffViewController.h"
 
-@implementation DeckDiffCell
+@implementation xDeckDiffCell
 
 - (void)awakeFromNib
 {

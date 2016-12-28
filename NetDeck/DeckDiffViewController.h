@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-@interface DeckDiffViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface xDeckDiffViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property IBOutlet UILabel* titleLabel;
 @property IBOutlet UILabel* deck1Name;
