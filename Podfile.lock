@@ -27,7 +27,7 @@ PODS:
   - DZNEmptyDataSet (1.8.1)
   - Fabric (1.6.11)
   - InAppSettingsKit (2.8.1)
-  - Marshal (1.0.0)
+  - Marshal (1.2.3)
   - MultiSelectSegmentedControl (1.1.0)
   - SDCAlertView (7.1)
   - SVProgressHUD (2.1.2)
@@ -45,12 +45,21 @@ DEPENDENCIES:
   - DZNEmptyDataSet
   - Fabric
   - InAppSettingsKit
-  - Marshal
+  - Marshal (from `https://github.com/utahiosmac/Marshal.git`)
   - MultiSelectSegmentedControl
   - SDCAlertView
   - SVProgressHUD
   - SwiftKeychainWrapper
   - SwiftyDropbox (~> 4.0)
+
+EXTERNAL SOURCES:
+  Marshal:
+    :git: https://github.com/utahiosmac/Marshal.git
+
+CHECKOUT OPTIONS:
+  Marshal:
+    :commit: 86d6b401d7ef3b8bed4d2d43749cdc25c8439c50
+    :git: https://github.com/utahiosmac/Marshal.git
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
@@ -63,13 +72,13 @@ SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   InAppSettingsKit: 94d2fba3ccd700fc4e32c6d09fabcc0af2426744
-  Marshal: a3c5c5dbd388112edf3cdabb718f2b4cfe48658a
+  Marshal: c09ebea320674086780cee1b6db5aa3ce6cedacf
   MultiSelectSegmentedControl: 54fb23c997b971eff621cfcf965ff1613d99c3d2
   SDCAlertView: b92fd1f00e522e18a062005e15a16c1e8295c5b5
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
   SwiftyDropbox: dfcd4d308d32d74729255b48833db61acdfb9c23
 
-PODFILE CHECKSUM: b9f68adec5fa4743f1c81bcc69b3ab1896d7b4bb
+PODFILE CHECKSUM: 86e9eca5eadcd9ff8b21c9e24dc69981f50bf599
 
 COCOAPODS: 1.1.1

@@ -12,7 +12,6 @@
 #import "NSArray+TwoD.h"
 #import "DeckListViewController.h"
 #import "IdentitySelectionViewController.h"
-#import "DeckAnalysisViewController.h"
 #import "DeckNotesPopup.h"
 #import "DeckHistoryPopup.h"
 #import "CardImagePopup.h"

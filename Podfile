@@ -17,7 +17,7 @@ target 'NetDeck' do
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftKeychainWrapper'
-    pod 'Marshal'
+    pod 'Marshal', :git => 'https://github.com/utahiosmac/Marshal.git'
     pod 'SDCAlertView'
 end
 
