@@ -61,7 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         DropboxWrapper.setup()
         
-        SVProgressHUD.setBackgroundColor(UIColor(white: 0.9, alpha: 1.0))
         SVProgressHUD.setDefaultMaskType(.black)
         SVProgressHUD.setMinimumDismissTimeInterval(1.0)
         

@@ -83,12 +83,6 @@ class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
         pieChart.startAngle = CGFloat(M_PI_2)
         pieChart.sliceDirection = .clockwise
         
-//        let gradient = CPTGradient()
-//            .addColorStop(CPTColor.black().withAlphaComponent(0.0), atPosition: 0.9)
-//            .addColorStop(CPTColor.black().withAlphaComponent(0.2), atPosition: 1.0)
-//        gradient.gradientType = .radial
-//        pieChart.overlayFill = CPTFill(gradient: gradient)
-        
         graph.add(pieChart)
         
         return hostView
