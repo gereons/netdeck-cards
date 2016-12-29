@@ -414,6 +414,10 @@ class CardList: NSObject {
         return filteredCards
     }
     
+    func typedDataForTableView() -> TypedTableData<Card> {
+        return TypedTableData(untyped: dataForTableView())
+    }
+    
     func dataForTableView() -> TableData {
         var sections = [String]()
         var cards = [[Card]]()

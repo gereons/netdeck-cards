@@ -403,9 +403,9 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func refreshDeck() {
-        let data = self.deck.dataForTableView(self.sortType)
+        let data = self.deck.typedDataForTableView(self.sortType)
         self.sections = data.sections
-        self.cards = data.values as! [[CardCounter]]
+        self.cards = data.values
         
         self.tableView.reloadData()
         

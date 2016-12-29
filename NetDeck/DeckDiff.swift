@@ -26,14 +26,14 @@ struct DeckDiff {
     private(set) var overlapRows = [[CardDiff]]()
 
     init(deck1: Deck, deck2: Deck) {
-        let data1 = deck1.dataForTableView(.byType)
-        let data2 = deck2.dataForTableView(.byType)
+        let data1 = deck1.typedDataForTableView(.byType)
+        let data2 = deck2.typedDataForTableView(.byType)
         
         let types1 = data1.sections
-        let cards1 = data1.values as! [[CardCounter]]
+        let cards1 = data1.values
         
         let types2 = data2.sections
-        let cards2 = data2.values as! [[CardCounter]]
+        let cards2 = data2.values
         
         // get all possible types for this role
         var allTypes = CardType.typesFor(role: deck1.role)

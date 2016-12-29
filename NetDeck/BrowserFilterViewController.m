@@ -375,7 +375,7 @@ static NSMutableArray<NSNumber*>* subtypeCollapsedSections;
     id selected = [self.selectedValues objectForKey:@(SET_BUTTON)];
 
     NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
-    TableData* rawPacks = [PackManager packsForTableviewWithPackUsage:packUsage];
+    TableData* rawPacks = [PackManager packsForTableViewWithPackUsage:packUsage];
     TableData* stringPacks = [TableData convertPacksData:rawPacks];
     [CardFilterPopover showFromButton:sender inView:self entries:stringPacks type:@"Set" selected:selected];
 }

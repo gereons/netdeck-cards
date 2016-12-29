@@ -10,7 +10,7 @@ import Foundation
 
 class TableData: NSObject {
 
-    var sections: [String] // NSArray
+    var sections: [String]
     var values: NSArray
     var collapsedSections: [Bool]? {
         willSet {
@@ -65,5 +65,9 @@ class TypedTableData<T> {
     
     convenience init(values: [T]) {
         self.init(sections: [""], values: [values])
+    }
+    
+    convenience init(untyped: TableData) {
+        self.init(sections: untyped.sections, values: untyped.values as! [[T]])
     }
 }

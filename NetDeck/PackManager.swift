@@ -141,14 +141,14 @@ class PackManager: NSObject {
         enabledPacks = nil
     }
     
-    class func packsForTableview(packUsage: NRPackUsage) -> TableData {
+    class func packsForTableView(packUsage: NRPackUsage) -> TableData {
         switch packUsage {
         case .all:
-            return allKnownPacksForTableview()
+            return allKnownPacksForTableView()
         case .selected:
-            return allEnabledPacksForTableview()
+            return allEnabledPacksForTableView()
         case .allAfterRotation:
-            return allPacksAfterRotationForTableview()
+            return allPacksAfterRotationForTableView()
         }
     }
     
@@ -167,7 +167,7 @@ class PackManager: NSObject {
     }
 
 
-    private class func allEnabledPacksForTableview() -> TableData {
+    private class func allEnabledPacksForTableView() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -207,7 +207,7 @@ class PackManager: NSObject {
         return result
     }
 
-    private class func allKnownPacksForTableview() -> TableData {
+    private class func allKnownPacksForTableView() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -230,7 +230,7 @@ class PackManager: NSObject {
         return TableData(sections: sections, andValues: values as NSArray)
     }
     
-    private class func allPacksAfterRotationForTableview() -> TableData {
+    private class func allPacksAfterRotationForTableView() -> TableData {
         var sections = [String]()
         var values = [[Pack]]()
         

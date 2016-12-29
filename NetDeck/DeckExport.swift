@@ -100,9 +100,9 @@ class DeckExport: NSObject {
     }
     
     class func textExport(_ deck: Deck, _ fmt: ExportFormat) -> String {
-        let data = deck.dataForTableView(.byType)
+        let data = deck.typedDataForTableView(.byType)
         let sections = data.sections
-        let cardsArray = data.values as! [[CardCounter]]
+        let cardsArray = data.values
         
         let eol = fmt == .markdown ? "  \n" : "\n"
         

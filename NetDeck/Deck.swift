@@ -545,6 +545,10 @@ import Marshal
         self.modified = true
     }
     
+    func typedDataForTableView(_ sortOrder: NRDeckSort) -> TypedTableData<CardCounter> {
+        return TypedTableData(untyped: dataForTableView(sortOrder))
+    }
+    
     func dataForTableView(_ sortOrder: NRDeckSort) -> TableData {
         var sections = [String]()
         var cards = [[CardCounter]]()

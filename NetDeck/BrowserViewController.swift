@@ -91,9 +91,9 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             self.cardList.filterByFactions(self.factions)
         }
         
-        let data = self.cardList.dataForTableView()
+        let data = self.cardList.typedDataForTableView()
         self.sections = data.sections
-        self.cards = data.values as! [[Card]]
+        self.cards = data.values
         
         self.tableView.reloadData()
     }
@@ -210,7 +210,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         let picker = BrowserValuePicker(title: "Set".localized())
         let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
         let packUsage = NRPackUsage(rawValue: packs) ?? .all
-        picker.data = TableData.convertPacksData(PackManager.packsForTableview(packUsage: packUsage))
+        picker.data = TableData.convertPacksData(PackManager.packsForTableView(packUsage: packUsage))
         picker.preselected = self.sets
         picker.setResult = { result in
             self.sets = result

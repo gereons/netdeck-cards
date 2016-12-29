@@ -72,9 +72,9 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let data = self.cardList.dataForTableView()
+        let data = self.cardList.typedDataForTableView()
         self.sections = data.sections
-        self.cards = data.values as! [[Card]]
+        self.cards = data.values
         
         self.tableView.reloadData()
         self.updateFooter()
@@ -143,9 +143,9 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
     func updateCards() {
         self.cardList.filterByName(self.filterText)
         
-        let data = self.cardList.dataForTableView()
+        let data = self.cardList.typedDataForTableView()
         self.sections = data.sections
-        self.cards = data.values as! [[Card]]
+        self.cards = data.values
         
         self.tableView.reloadData()
         self.updateFooter()
