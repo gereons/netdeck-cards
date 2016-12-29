@@ -69,8 +69,8 @@ class Faction: NSObject {
         let factionsAll = [ common, runnerFactionNamesAll, corpFactionNames ]
         let factionsCore = [ common, runnerFactionNamesCore, corpFactionNames ]
 
-        allFactions = TableData(sections: factionSections as NSArray, andValues: factionsAll as NSArray)
-        allFactionsCore = TableData(sections: factionSections as NSArray, andValues: factionsCore as NSArray)
+        allFactions = TableData(sections: factionSections, andValues: factionsAll as NSArray)
+        allFactionsCore = TableData(sections: factionSections, andValues: factionsCore as NSArray)
         
         runnerFactionNamesAll.insert(contentsOf: common, at: 0)
         runnerFactionNamesCore.insert(contentsOf: common, at: 0)

@@ -126,7 +126,7 @@
     UINavigationItem* topItem = self.navigationController.navigationBar.topItem;
     
     // left buttons
-    NSArray* selections = @[
+    NSArray<UIImage*>* selections = @[
         [UIImage imageNamed:@"deckview_card"],   // NRCardViewImage
         [UIImage imageNamed:@"deckview_table"],  // NRCardViewLargeTable
         [UIImage imageNamed:@"deckview_list"]    // NRCardViewSmallTable
@@ -166,7 +166,7 @@
     UIBarButtonItem* sortButton = [[UIBarButtonItem alloc] initWithTitle:l10n(@"Sort") style:UIBarButtonItemStylePlain target:self action:@selector(sortPopup:)];
     
     // add from right to left!
-    NSMutableArray* rightButtons = [NSMutableArray array];
+    NSMutableArray<UIBarButtonItem*>* rightButtons = [NSMutableArray array];
     [rightButtons addObject:self.exportButton];
     [rightButtons addObject:sortButton];
     [rightButtons addObject:dupButton];
@@ -535,7 +535,7 @@
 
 -(void) publishDeck:(Deck*)deck
 {
-    NSArray* errors = [deck checkValidity];
+    NSArray<NSString*>* errors = [deck checkValidity];
     if (errors.count == 0)
     {
         [SVProgressHUD showWithStatus:l10n(@"Publishing Deck...")];
@@ -1040,7 +1040,7 @@
         [footer appendString:[NSString stringWithFormat:@" · %ld %@", (long)self.deck.agendaPoints, l10n(@"AP")]];
     }
     
-    NSArray* reasons = [self.deck checkValidity];
+    NSArray<NSString*>* reasons = [self.deck checkValidity];
     if (reasons.count > 0)
     {
         [footer appendString:@" · "];
@@ -1080,7 +1080,7 @@
     int i=0;
     for (int section = 0; indexPath == nil && section < self.cards.count; ++section)
     {
-        NSArray* arr = self.cards[section];
+        NSArray<CardCounter*>* arr = self.cards[section];
         for (int row = 0; row < arr.count; ++row)
         {
             CardCounter* cc = arr[row];
@@ -1166,14 +1166,14 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray* arr = self.cards[section];
+    NSArray<CardCounter*>* arr = self.cards[section];
     return arr.count;
 }
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString* name = [self.sections objectAtIndex:section];
-    NSArray* arr = self.cards[section];
+    NSArray<CardCounter*>* arr = self.cards[section];
     int cnt = 0;
     for (CardCounter* cc in arr)
     {

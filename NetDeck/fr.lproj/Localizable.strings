@@ -119,7 +119,7 @@
 "Card Type Distribution" = "Répartition du type de carte";
 "Influence Distribution" = "Répartition de l'influence";
 "ICE Type Distribution" = "Répartition du type de glace";
-"Strength %d\n%d %@" = "Force %d\n%d %@";
+"Strength %@\n%d %@" = "Force %@\n%d %@";
 
 // charger un deck
 "Load Runner Deck" = "Charger un deck runner";

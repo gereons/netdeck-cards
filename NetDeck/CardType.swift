@@ -56,7 +56,7 @@ class CardType: NSObject {
             corpTypeNames
         ]
         
-        allTypes = TableData(sections:typeSections as NSArray, andValues:types as NSArray)
+        allTypes = TableData(sections: typeSections, andValues: types as NSArray)
         
         runnerTypeNames.insert(Constant.kANY, at: 0)
         corpTypeNames.insert(Constant.kANY, at: 0)

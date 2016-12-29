@@ -86,4 +86,12 @@ class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
         return hostView
     }
     
+    func cardsString(_ c: Int) -> String {
+        return c == 1 ? "Card".localized() : "Cards".localized()
+    }
+    
+    func credString(_ c: String) -> String {
+        return c == "1" ? "Credit".localized() : "Credits".localized()
+    }
+
 }

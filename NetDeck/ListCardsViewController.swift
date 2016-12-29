@@ -73,8 +73,8 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewWillAppear(animated)
         
         let data = self.cardList.dataForTableView()
+        self.sections = data.sections
         self.cards = data.values as! [[Card]]
-        self.sections = data.sections as! [String]
         
         self.tableView.reloadData()
         self.updateFooter()
@@ -144,8 +144,8 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         self.cardList.filterByName(self.filterText)
         
         let data = self.cardList.dataForTableView()
+        self.sections = data.sections
         self.cards = data.values as! [[Card]]
-        self.sections = data.sections as! [String]
         
         self.tableView.reloadData()
         self.updateFooter()

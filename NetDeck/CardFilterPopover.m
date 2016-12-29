@@ -13,14 +13,14 @@
 
 @interface CardFilterPopover ()
 
-@property NSArray* sections;
-@property NSArray* values;
+@property NSArray<NSString*>* sections;
+@property NSArray<NSArray<NSString*>*>* values;
 @property UIButton* button;
 @property NSString* type;
 @property UIViewController<FilterCallback>* headerView;
 @property NSMutableSet* selectedValues;
-@property NSMutableArray* sectionToggles;
-@property NSMutableArray* collapsedSections;
+@property NSMutableArray<NSNumber*>* sectionToggles;
+@property NSMutableArray<NSNumber*>* collapsedSections;
 
 @property int sectionCount; // number of non-empty section headers
 @property NSUInteger totalEntries; // total number of selectable entries
@@ -67,7 +67,7 @@ static CardFilterPopover* popover;
     }
     
     popover.totalEntries = 0;
-    for (NSArray* arr in entries.values)
+    for (NSArray<NSString*>* arr in entries.values)
     {
         popover.totalEntries += arr.count;
     }
@@ -131,7 +131,7 @@ static CardFilterPopover* popover;
 -(void) setTableHeight
 {
     int h = 0;
-    for (NSArray* arr in self.values)
+    for (NSArray<NSString*>* arr in self.values)
     {
         h += CELL_HEIGHT * arr.count;
     }
@@ -152,7 +152,7 @@ static CardFilterPopover* popover;
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray* arr = self.values[section];
+    NSArray<NSString*>* arr = self.values[section];
     BOOL collapsed = [self.collapsedSections[section] boolValue];
     return collapsed ? 0 : arr.count;
 }

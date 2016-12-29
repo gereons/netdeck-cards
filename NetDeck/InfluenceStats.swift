@@ -31,7 +31,7 @@ class InfluenceStats: Stats {
         
         assert(sections.count == values.count)
         
-        self.tableData = TableData(sections: sections as NSArray, andValues: values as NSArray)
+        self.tableData = TableData(sections: sections, andValues: values as NSArray)
     }
     
     var hostingView: CPTGraphHostingView {
@@ -39,14 +39,14 @@ class InfluenceStats: Stats {
     }
     
     override func sliceFill(for pieChart: CPTPieChart, record index: UInt) -> CPTFill? {
-        let faction = self.tableData.sections[Int(index)] as! String
+        let faction = self.tableData.sections[Int(index)] 
         let color = self.colors[faction]!
         
         return CPTFill(color: CPTColor(cgColor: color.cgColor))
     }
     
     func dataLabel(for plot: CPTPlot, record index: UInt) -> CPTLayer? {
-        let faction = self.tableData.sections[Int(index)] as! String
+        let faction = self.tableData.sections[Int(index)] 
         let influence = self.tableData.values[Int(index)] as! Int
         
         let str = String(format: "%@: %d", faction, influence)

@@ -24,7 +24,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 @property NSString* searchText;
 
 @property NSString* selectedType;
-@property NSSet* selectedTypes;
+@property NSSet<NSString*>* selectedTypes;
 @property NSMutableDictionary* selectedValues;
 
 @property BOOL initializing;
@@ -40,7 +40,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
 @implementation BrowserFilterViewController
 
-static NSMutableArray* subtypeCollapsedSections;
+static NSMutableArray<NSNumber*>* subtypeCollapsedSections;
 
 +(void) initialize
 {
@@ -182,7 +182,7 @@ static NSMutableArray* subtypeCollapsedSections;
     return YES;
 }
 
--(NSArray*) keyCommands {
+-(NSArray<UIKeyCommand*>*) keyCommands {
     return @[
         KEYCMD(@"F", UIKeyModifierCommand, startTextSearch:, l10n(@"Find Cards")),
         KEYCMD(@"A", UIKeyModifierCommand, changeScopeKeyCmd:, l10n(@"Scope: All")),
@@ -288,8 +288,8 @@ static NSMutableArray* subtypeCollapsedSections;
     }
 
     // enable/disable sliders depending on role
-    NSArray* runnerEnabled = @[ self.muLabel, self.muSlider ];
-    NSArray* corpEnabled = @[ self.apLabel, self.apSlider, self.trashLabel, self.trashSlider ];
+    NSArray<UILabel*>* runnerEnabled = @[ self.muLabel, self.muSlider ];
+    NSArray<UILabel*>* corpEnabled = @[ self.apLabel, self.apSlider, self.trashLabel, self.trashSlider ];
     for (UIControl* v in runnerEnabled)
     {
         v.enabled = self.role != NRRoleCorp;
@@ -361,7 +361,7 @@ static NSMutableArray* subtypeCollapsedSections;
     }
     else
     {
-        NSMutableArray* types = [NSMutableArray arrayWithArray:[CardType typesForRole:self.role]];
+        NSMutableArray<NSString*>* types = [NSMutableArray arrayWithArray:[CardType typesForRole:self.role]];
         [types insertObject:[CardType nameFor:NRCardTypeIdentity] atIndex:1];
         data = [[TableData alloc] initWithValues:types];
     }
@@ -385,8 +385,8 @@ static NSMutableArray* subtypeCollapsedSections;
     TableData* data;
     if (self.role == NRRoleNone)
     {
-        NSArray* runner;
-        NSArray* corp;
+        NSArray<NSString*>* runner;
+        NSArray<NSString*>* corp;
         if (self.selectedTypes)
         {
             runner = [CardManager subtypesForRole:NRRoleRunner andTypes:self.selectedTypes includeIdentities:YES];
@@ -397,8 +397,8 @@ static NSMutableArray* subtypeCollapsedSections;
             runner = [CardManager subtypesForRole:NRRoleRunner andType:self.selectedType includeIdentities:YES];
             corp = [CardManager subtypesForRole:NRRoleCorp andType:self.selectedType includeIdentities:YES];
         }
-        NSMutableArray* sections = [NSMutableArray array];
-        NSMutableArray* values = [NSMutableArray array];
+        NSMutableArray<NSString*>* sections = [NSMutableArray array];
+        NSMutableArray<NSArray<NSString*>*>* values = [NSMutableArray array];
         [values addObject:@[ Constant.kANY ]];
         [sections addObject:@""];
         if (runner.count > 1)
@@ -417,7 +417,7 @@ static NSMutableArray* subtypeCollapsedSections;
     }
     else
     {
-        NSMutableArray* arr;
+        NSMutableArray<NSString*>* arr;
         if (self.selectedTypes)
         {
             arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:YES].mutableCopy;

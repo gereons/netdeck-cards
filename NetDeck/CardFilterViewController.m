@@ -21,14 +21,14 @@
 @property (nonatomic) NRRole role;
 @property UINavigationController* navController;
 @property CardList* cardList;
-@property NSArray* cards;
-@property NSArray* sections;
+@property NSArray<NSArray<Card*>*>* cards;
+@property NSArray<NSString*>* sections;
 
 @property NSString* searchText;
 @property NRSearchScope scope;
 @property BOOL sendNotifications;
 @property NSString* selectedType;
-@property NSSet* selectedTypes;
+@property NSSet<NSString*>* selectedTypes;
 @property NSMutableDictionary* selectedValues;
 @property BOOL searchFieldActive;
 @property int influenceValue;
@@ -50,8 +50,8 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 enum { VIEW_LIST, VIEW_IMG_2, VIEW_IMG_3 };
 enum { ADD_BUTTON_TABLE, ADD_BUTTON_COLLECTION };
 
-static NSArray* scopes;
-static NSDictionary* scopeLabels;
+static NSArray<NSString*>* scopes;
+static NSDictionary<NSNumber*, NSString*>* scopeLabels;
 static BOOL showAllFilters = YES;
 static NSInteger viewMode = VIEW_LIST;
 
@@ -217,7 +217,7 @@ static NSInteger viewMode = VIEW_LIST;
     return YES;
 }
 
--(NSArray*) keyCommands {
+-(NSArray<UIKeyCommand*>*) keyCommands {
     return @[
         KEYCMD(@"F", UIKeyModifierCommand, startTextSearch:, l10n(@"Find Cards")),
         KEYCMD(@"A", UIKeyModifierCommand, changeScopeKeyCmd:, l10n(@"Scope: All")),
@@ -436,7 +436,7 @@ static NSInteger viewMode = VIEW_LIST;
 {
     if (self.cards.count > 0)
     {
-        NSArray* arr = self.cards[0];
+        NSArray<Card*>* arr = self.cards[0];
         if (arr.count > 0)
         {
             Card* card = arr[0];
@@ -560,7 +560,7 @@ static NSInteger viewMode = VIEW_LIST;
     {
         // remember the top-left visible card
         
-        NSArray* cells = [self.collectionView indexPathsForVisibleItems]; // wtf is this unordered?
+        NSArray<NSIndexPath*>* cells = [self.collectionView indexPathsForVisibleItems]; // wtf is this unordered?
         NSArray *sortedIndexPaths = [cells sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath* ip1, NSIndexPath* ip2) {
             return [ip1 compare:ip2];
         }];
@@ -580,7 +580,7 @@ static NSInteger viewMode = VIEW_LIST;
     }
     else
     {
-        NSArray* cells = [self.tableView indexPathsForVisibleRows];
+        NSArray<NSIndexPath*>* cells = [self.tableView indexPathsForVisibleRows];
         // find the first cell that's completely visible
         for (NSIndexPath* indexPath in cells)
         {
@@ -645,7 +645,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(void) subtypeClicked:(UIButton*)sender
 {
-    NSMutableArray* arr;
+    NSMutableArray<NSString*>* arr;
     if (self.selectedTypes)
     {
         arr = [CardManager subtypesForRole:self.role andTypes:self.selectedTypes includeIdentities:NO].mutableCopy;
@@ -915,7 +915,7 @@ static NSInteger viewMode = VIEW_LIST;
 {
     // NSLog(@"update filter %@ %@", type, valueObject);
     NSString* value;
-    NSSet* values;
+    NSSet<NSString*>* values;
     NSNumber* num;
     
     if ([valueObject isKindOfClass:[NSString class]])
@@ -1059,7 +1059,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSArray* cards = self.cards[section];
+    NSArray<Card*>* cards = self.cards[section];
     return [NSString stringWithFormat:@"%@ (%ld)", self.sections[section], (long)cards.count];
 }
 
@@ -1070,7 +1070,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray* cards = self.cards[section];
+    NSArray<Card*>* cards = self.cards[section];
     return cards.count;
 }
 
@@ -1202,7 +1202,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSArray* cards = self.cards[section];
+    NSArray<Card*>* cards = self.cards[section];
     return cards.count;
 }
 
@@ -1218,7 +1218,7 @@ static NSInteger viewMode = VIEW_LIST;
     {
         header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
         
-        NSArray* cards = self.cards[indexPath.section];
+        NSArray<Card*>* cards = self.cards[indexPath.section];
         header.titleLabel.text = [NSString stringWithFormat:@"%@ (%ld)", self.sections[indexPath.section], (long)cards.count];
     }
     

@@ -21,8 +21,8 @@
 
 @property UIBarButtonItem* diffCancelButton;
 
-@property NSArray* normalRightButtons;
-@property NSArray* diffRightButtons;
+@property NSArray<UIBarButtonItem*>* normalRightButtons;
+@property NSArray<UIBarButtonItem*>* diffRightButtons;
 
 @property BOOL diffSelection;
 @property NSString* diffDeck;
@@ -196,7 +196,7 @@
 
 -(void) exportAllToDropbox
 {
-    for (NSArray* arr in self.decks)
+    for (NSArray<Deck*>* arr in self.decks)
     {
         for (Deck* deck in arr)
         {
@@ -211,8 +211,8 @@
 
 -(void) exportAllToNetrunnerDB
 {
-    NSMutableArray* decks = [NSMutableArray array];
-    for (NSArray* arr in self.decks)
+    NSMutableArray<Deck*>* decks = [NSMutableArray array];
+    for (NSArray<Deck*>* arr in self.decks)
     {
         for (Deck* deck in arr)
         {
@@ -553,7 +553,7 @@
     {
         Deck* deck = [self.decks objectAtIndexPath:indexPath];
         
-        NSMutableArray* decks = self.decks[indexPath.section];
+        NSMutableArray<Deck*>* decks = self.decks[indexPath.section];
         [decks removeObjectAtIndex:indexPath.row];
         
         [[NRDB sharedInstance] deleteDeck:deck.netrunnerDbId];

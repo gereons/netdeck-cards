@@ -190,7 +190,7 @@ class PackManager: NSObject {
         
         assert(values.count == sections.count, "count mismatch")
         
-        let result = TableData(sections: sections as NSArray, andValues: values as NSArray)
+        let result = TableData(sections: sections, andValues: values as NSArray)
         let count = sections.count
         
         // collapse everything but the two last cycles
@@ -227,7 +227,7 @@ class PackManager: NSObject {
             values.append(packs)
         }
         
-        return TableData(sections: sections as NSArray, andValues: values as NSArray)
+        return TableData(sections: sections, andValues: values as NSArray)
     }
     
     private class func allPacksAfterRotationForTableview() -> TableData {
@@ -246,7 +246,7 @@ class PackManager: NSObject {
             }
         }
         
-        return TableData(sections: sections as NSArray, andValues: values as NSArray)
+        return TableData(sections: sections, andValues: values as NSArray)
     }
 
     class func packsUsedIn(deck: Deck) -> [String] {

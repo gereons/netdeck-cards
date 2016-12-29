@@ -11,8 +11,8 @@
 
 @interface CompareDecksList ()
 
-@property NSMutableArray* decksToDiff;
-@property NSMutableArray* names;
+@property NSMutableArray<NSString*>* decksToDiff;
+@property NSMutableArray<NSString*>* names;
 
 @property UIBarButtonItem* diffButton;
 @property UIBarButtonItem* footerButton;

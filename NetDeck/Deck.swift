@@ -607,7 +607,7 @@ import Marshal
         
         assert(sections.count == cards.count, "count mismatch")
         
-        return TableData(sections: sections as NSArray, andValues: cards as NSArray)
+        return TableData(sections: sections, andValues: cards as NSArray)
     }
     
     func saveToDisk() {

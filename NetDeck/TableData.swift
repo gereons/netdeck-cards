@@ -10,7 +10,7 @@ import Foundation
 
 class TableData: NSObject {
 
-    var sections: NSArray
+    var sections: [String] // NSArray
     var values: NSArray
     var collapsedSections: [Bool]? {
         willSet {
@@ -18,7 +18,7 @@ class TableData: NSObject {
         }
     }
     
-    init(sections: NSArray, andValues values: NSArray) {
+    init(sections: [String], andValues values: NSArray) {
         assert(sections.count == values.count, "sections/values count mismatch")
         self.sections = sections
         self.values = values

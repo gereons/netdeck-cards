@@ -29,10 +29,10 @@ struct DeckDiff {
         let data1 = deck1.dataForTableView(.byType)
         let data2 = deck2.dataForTableView(.byType)
         
-        let types1 = data1.sections as! [String]
+        let types1 = data1.sections
         let cards1 = data1.values as! [[CardCounter]]
         
-        let types2 = data2.sections as! [String]
+        let types2 = data2.sections
         let cards2 = data2.values as! [[CardCounter]]
         
         // get all possible types for this role

@@ -148,7 +148,7 @@ class CardManager: NSObject {
 
         assert(factionNames.count == identities.count)
         
-        return TableData(sections: factionNames as NSArray, andValues: identities as NSArray)
+        return TableData(sections: factionNames, andValues: identities as NSArray)
     }
     
     class func subtypesFor(role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {

@@ -118,7 +118,7 @@
 "Card Type Distribution" = "Distribución por tipo de carta";
 "Influence Distribution" = "Distribución por influencia";
 "ICE Type Distribution" = "Distribución por tipo de hielos";
-"Strength %d\n%d %@" = "Fuerza %d\n%d %@";
+"Strength %@\n%d %@" = "Fuerza %@\n%d %@";
 
 // load deck
 "Load Runner Deck" = "Cargar Mazo de Runner";

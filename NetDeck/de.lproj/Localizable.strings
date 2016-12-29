@@ -145,7 +145,7 @@
 "Card Type Distribution" = "Typ-Verteilung";
 "Influence Distribution" = "Einfluss-Verteilung";
 "ICE Type Distribution" = "ICE-Typ-Verteilung";
-"Strength %d\n%d %@" = "Stärke %d\n%d %@";
+"Strength %@\n%d %@" = "Stärke %@\n%d %@";
 
 // load deck
 "Load Runner Deck" = "Runner-Deck laden";

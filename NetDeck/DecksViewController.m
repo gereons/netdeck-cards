@@ -11,8 +11,8 @@
 
 @interface DecksViewController ()
 
-@property NSMutableArray* runnerDecks;
-@property NSMutableArray* corpDecks;
+@property NSMutableArray<Deck*>* runnerDecks;
+@property NSMutableArray<Deck*>* corpDecks;
 @property NSDateFormatter *dateFormatter;
 
 @property NRDeckSearchScope searchScope;
@@ -24,8 +24,8 @@
 
 @implementation DecksViewController
 
-static NSDictionary* sortStr;
-static NSDictionary* sideStr;
+static NSDictionary<NSNumber*, NSString*>* sortStr;
+static NSDictionary<NSNumber*, NSString*>* sideStr;
 
 // filterState, sortType and filterType look like normal properties, but are backed
 // by statics so that whenever we switch between views of subclasses, the filters

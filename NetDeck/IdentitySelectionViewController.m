@@ -327,7 +327,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray* arr = self.identities[section];
+    NSArray<Card*>* arr = self.identities[section];
     return arr.count;
 }
 
@@ -462,7 +462,7 @@
 
 -(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSArray* arr = self.identities[section];
+    NSArray<Card*>* arr = self.identities[section];
     return arr.count;
 }
 

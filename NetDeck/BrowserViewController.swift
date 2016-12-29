@@ -92,8 +92,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         let data = self.cardList.dataForTableView()
+        self.sections = data.sections
         self.cards = data.values as! [[Card]]
-        self.sections = data.sections as! [String]
         
         self.tableView.reloadData()
     }

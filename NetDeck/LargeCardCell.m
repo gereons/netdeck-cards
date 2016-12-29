@@ -10,8 +10,9 @@
 #import "CGRectUtils.h"
 
 @interface LargeCardCell()
-@property NSArray* pips;
+@property NSArray<UIView*>* pips;
 @end
+
 @implementation LargeCardCell
 
 -(void) awakeFromNib

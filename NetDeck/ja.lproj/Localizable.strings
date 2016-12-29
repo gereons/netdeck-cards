@@ -139,7 +139,7 @@
 "Card Type Distribution" = "カードタイプ配分";
 "Influence Distribution" = "影響値配分";
 "ICE Type Distribution" = "アイスタイプ配分";
-"Strength %d\n%d %@" = "強度 %d\n%d %@";
+"Strength %@\n%d %@" = "強度 %@\n%d %@";
 
 // load deck
 "Load Runner Deck" = "ランナーデッキのロード";

@@ -13,9 +13,9 @@ class StrengthStats: Stats {
     init(deck: Deck) {
         super.init()
         
-        var strengths = [Int: Int]()
+        var strengths = [String: Int]()
         for cc in deck.cards.filter({ $0.card.strength >= 0 }) {
-            let str = cc.card.strength
+            let str = "\(cc.card.strength)"
             strengths[str] = (strengths[str] ?? 0) + cc.count
         }
         
@@ -24,7 +24,7 @@ class StrengthStats: Stats {
         
         assert(sections.count == values.count)
         
-        self.tableData = TableData(sections: sections as NSArray, andValues: values as NSArray)
+        self.tableData = TableData(sections: sections, andValues: values as NSArray)
     }
     
     var hostingView: CPTGraphHostingView {
@@ -32,14 +32,10 @@ class StrengthStats: Stats {
     }
     
     func dataLabel(for plot: CPTPlot, record index: UInt) -> CPTLayer? {
-        let strength = self.tableData.sections[Int(index)] as! Int
+        let strength = self.tableData.sections[Int(index)]
         let cards = self.tableData.values[Int(index)] as! Int
     
-        let str = String(format: "Strength %d\n%d %@".localized(), strength, cards, cardsString(cards))
+        let str = String(format: "Strength %@\n%d %@".localized(), strength, cards, cardsString(cards))
         return CPTTextLayer(text: str)
-    }
-    
-    func cardsString(_ c: Int) -> String {
-        return c == 1 ? "Card".localized() : "Cards".localized()
     }
 }

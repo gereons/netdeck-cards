@@ -15,8 +15,8 @@
 
 @property NRBrowserSort sortType;
 @property CardList* cardList;
-@property NSArray* sections;
-@property NSArray* values;
+@property NSArray<NSString*>* sections;
+@property NSArray<NSArray<Card*>*>* values;
 
 @property UIBarButtonItem* toggleViewButton;
 @property UIBarButtonItem* sortButton;
@@ -28,7 +28,7 @@
 
 @end
 
-static NSDictionary* sortStr;
+static NSDictionary<NSNumber*, NSString*>* sortStr;
 
 @implementation BrowserResultViewController
 
@@ -74,7 +74,7 @@ static BrowserResultViewController* instance;
     self.sortType = [settings integerForKey:SettingsKeys.BROWSER_SORT_TYPE];
     
     // left buttons
-    NSArray* selections = @[
+    NSArray<UIImage*>* selections = @[
         [UIImage imageNamed:@"deckview_card"],   // NRCardViewImage
         [UIImage imageNamed:@"deckview_table"],  // NRCardViewLargeTable
         [UIImage imageNamed:@"deckview_list"]    // NRCardViewSmallTable
@@ -268,7 +268,7 @@ static BrowserResultViewController* instance;
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray* arr = [self.values objectAtIndex:section];
+    NSArray<Card*>* arr = [self.values objectAtIndex:section];
     return arr.count;
 }
 
@@ -279,7 +279,7 @@ static BrowserResultViewController* instance;
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSArray* arr = [self.values objectAtIndex:section];
+    NSArray<Card*>* arr = [self.values objectAtIndex:section];
     return [NSString stringWithFormat:@"%@ (%lu)", [self.sections objectAtIndex:section], (unsigned long)arr.count];
 }
 
@@ -326,7 +326,7 @@ static BrowserResultViewController* instance;
 
 -(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSArray* arr = self.values[section];
+    NSArray<Card*>* arr = self.values[section];
     return arr.count;
 }
 
@@ -388,7 +388,7 @@ static BrowserResultViewController* instance;
     {
         header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
         
-        NSArray* arr = self.values[indexPath.section];
+        NSArray<Card*>* arr = self.values[indexPath.section];
         header.header.text = [NSString stringWithFormat:@"%@ (%lu)", self.sections[indexPath.section], (unsigned long)arr.count ];
     }
     
@@ -441,7 +441,7 @@ static BrowserResultViewController* instance;
             BOOL ok = startIndex.section < self.values.count;
             if (ok)
             {
-                NSArray* arr = self.values[startIndex.section];
+                NSArray<Card*>* arr = self.values[startIndex.section];
                 ok = startIndex.row < arr.count;
             }
             
