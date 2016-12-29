@@ -14,6 +14,7 @@ class InfluenceStats: Stats {
     
     init(deck: Deck) {
         super.init()
+        self.useBlues = false
         
         var influence = [String: Int]()
         for cc in deck.cards {

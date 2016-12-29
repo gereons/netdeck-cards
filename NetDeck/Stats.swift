@@ -10,25 +10,32 @@ import CorePlot
 
 class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
     
-    static let colors = [
-        UIColor(r: 231, g: 13, b: 0),
-        UIColor(r: 240, g: 9, b: 254),
-        UIColor(r: 60, g: 2, b: 243),
-        UIColor(r: 0, g: 250, b: 214),
-        UIColor(r: 8, g: 227, b: 34),
-        UIColor(r: 192, g: 253, b: 2),
-        UIColor(r: 243, g: 183, b: 8),
-        UIColor(r: 254, g: 118, b: 13),
-        UIColor(r: 235, g: 80, b: 71),
-        UIColor(r: 204, g: 72, b: 212),
-        UIColor(r: 114, g: 74, b: 246),
-        UIColor(r: 75, g: 143, b: 223),
-        UIColor(r: 76, g: 251, b: 224),
-        UIColor(r: 77, g: 228, b: 94),
-        UIColor(r: 212, g: 253, b: 77),
-        UIColor(r: 246, g: 198, b: 62),
-        UIColor(r: 212, g: 122, b: 53)
+    // color swatches from http://colorbrewer2.org
+    static let paired = [
+        UIColor.colorWithRGB(0xa6cee3),
+        UIColor.colorWithRGB(0x1f78b4),
+        UIColor.colorWithRGB(0xb2df8a),
+        UIColor.colorWithRGB(0x33a02c),
+        UIColor.colorWithRGB(0xfdbf6f),
+        UIColor.colorWithRGB(0xff7f00),
+        UIColor.colorWithRGB(0xe31a1c),
+        UIColor.colorWithRGB(0xfb9a99)
     ]
+    
+    static let blues = [
+        // UIColor.colorWithRGB(0xf7fbff), // too bright
+        UIColor.colorWithRGB(0xdeebf7),
+        UIColor.colorWithRGB(0xc6dbef),
+        UIColor.colorWithRGB(0x9ecae1),
+        UIColor.colorWithRGB(0x6baed6),
+        UIColor.colorWithRGB(0x4292c6),
+        UIColor.colorWithRGB(0x2171b5),
+        UIColor.colorWithRGB(0x08519c),
+        UIColor.colorWithRGB(0x08306b)
+    ]
+    
+    var useBlues = false
+    
     var tableData: TableData!
     
     var height: CGFloat {
@@ -36,7 +43,8 @@ class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
     }
     
     func sliceFill(for pieChart: CPTPieChart, record index: UInt) -> CPTFill? {
-        let color = Stats.colors[Int(index) % Stats.colors.count]
+        let colors = self.useBlues ? Stats.blues : Stats.paired
+        let color = colors[Int(index) % colors.count]
         return CPTFill(color: CPTColor(cgColor: color.cgColor))
     }
     
@@ -75,11 +83,11 @@ class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
         pieChart.startAngle = CGFloat(M_PI_2)
         pieChart.sliceDirection = .clockwise
         
-        let gradient = CPTGradient()
-            .addColorStop(CPTColor.black().withAlphaComponent(0.0), atPosition: 0.9)
-            .addColorStop(CPTColor.black().withAlphaComponent(0.2), atPosition: 1.0)
-        gradient.gradientType = .radial
-        pieChart.overlayFill = CPTFill(gradient: gradient)
+//        let gradient = CPTGradient()
+//            .addColorStop(CPTColor.black().withAlphaComponent(0.0), atPosition: 0.9)
+//            .addColorStop(CPTColor.black().withAlphaComponent(0.2), atPosition: 1.0)
+//        gradient.gradientType = .radial
+//        pieChart.overlayFill = CPTFill(gradient: gradient)
         
         graph.add(pieChart)
         

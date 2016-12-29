@@ -12,6 +12,7 @@ class StrengthStats: Stats {
     
     init(deck: Deck) {
         super.init()
+        self.useBlues = true
         
         var strengths = [String: Int]()
         for cc in deck.cards.filter({ $0.card.strength >= 0 }) {

@@ -12,6 +12,7 @@ class CostStats: Stats {
     
     init(deck: Deck) {
         super.init()
+        self.useBlues = true
         
         var costs = [String: Int]()
         for cc in deck.cards.filter({ $0.card.cost >= 0 }) {
