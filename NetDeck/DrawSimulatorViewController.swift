@@ -12,7 +12,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var viewModeControl: UISegmentedControl!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var collectionView: DrawSimulatorCollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var drawnLabel: UILabel!
     @IBOutlet weak var oddsLabel: UILabel!
     

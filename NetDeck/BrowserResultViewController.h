@@ -6,12 +6,10 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "BrowserCollectionView.h"
-
 @interface BrowserResultViewController : UIViewController <UITabBarControllerDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property IBOutlet UITableView* tableView;
-@property IBOutlet BrowserCollectionView* collectionView;
+@property IBOutlet UICollectionView* collectionView;
 
 -(void)updateDisplay:(CardList*)cardList;
 

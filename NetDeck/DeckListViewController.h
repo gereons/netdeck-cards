@@ -6,12 +6,11 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "DecklistCollectionView.h"
 
 @interface DeckListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate>
 
 @property IBOutlet UITableView* tableView;
-@property IBOutlet DecklistCollectionView* collectionView;
+@property IBOutlet UICollectionView* collectionView;
 
 @property IBOutlet UIButton* mwlButton;
 @property IBOutlet UILabel* footerLabel;

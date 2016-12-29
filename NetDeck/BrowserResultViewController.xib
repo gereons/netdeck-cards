@@ -29,7 +29,7 @@
                         <outlet property="delegate" destination="-1" id="33K-ya-xem"/>
                     </connections>
                 </tableView>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="TQM-Pq-KAH" customClass="BrowserCollectionView">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="TQM-Pq-KAH">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="2" id="xqh-5A-bqN">
                         <size key="itemSize" width="225" height="350"/>

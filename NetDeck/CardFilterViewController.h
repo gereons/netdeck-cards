@@ -7,7 +7,6 @@
 //
 
 #import "FilterCallback.h"
-#import "CardFilterCollectionView.h"
 #import "DeckListViewController.h"
 
 @interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilterCallback>
@@ -54,7 +53,7 @@
 @property IBOutlet NSLayoutConstraint* collectionViewBottomMargin;
 
 @property IBOutlet UITableView* tableView;
-@property IBOutlet CardFilterCollectionView* collectionView;
+@property IBOutlet UICollectionView* collectionView;
 
 -(IBAction)strengthValueChanged:(id)sender;
 -(IBAction)costValueChanged:(id)sender;
