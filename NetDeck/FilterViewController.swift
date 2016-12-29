@@ -72,7 +72,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         let factionLimit: Int
         if self.role == .runner {
             self.factionNames = (Faction.runnerFactionsCore + [ NRFaction.neutral ]).map { Faction.name(for: $0) }
-            self.typeNames = CardType.runnerTypeNames
+            self.typeNames = Array(CardType.runnerTypeNames.dropFirst()) // remove "Any"
             factionLimit = factionNames.count
             if miniFactions {
                 self.factionNames = (Faction.runnerFactionsCore + [ NRFaction.neutral ] + Faction.runnerMiniFactions).map { Faction.name(for: $0) }
@@ -82,7 +82,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         } else {
             self.factionNames = (Faction.corpFactions + [ NRFaction.neutral ]).map { Faction.name(for: $0) }
             factionLimit = factionNames.count
-            self.typeNames = CardType.corpTypeNames
+            self.typeNames = Array(CardType.corpTypeNames.dropFirst()) // remove "Any"
         }
         
         // faction control
