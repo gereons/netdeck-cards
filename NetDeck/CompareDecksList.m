@@ -8,7 +8,6 @@
 
 #import "NSArray+TwoD.h"
 #import "CompareDecksList.h"
-#import "DeckDiffViewController.h"
 
 @interface CompareDecksList ()
 

@@ -72,6 +72,7 @@
 		3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4866E5193B85560045C927 /* DeckNotesPopup.m */; };
 		3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A4866E6193B85560045C927 /* DeckNotesPopup.xib */; };
 		3A4BDFD51DFD9F74002CC166 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4BDFD41DFD9F74002CC166 /* FilterViewController.swift */; };
+		3A4C03581E1424400095809F /* DeckDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C03571E1424400095809F /* DeckDiff.swift */; };
 		3A4E0F911DBAA56E00C49FD4 /* netrunner.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */; };
 		3A529E631CA57BF70061E065 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A529E621CA57BF70061E065 /* Reachability.swift */; };
 		3A531B271A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A531B261A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib */; };
@@ -94,14 +95,12 @@
 		3A6D51D61A2284540004951E /* DeckHistoryPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */; };
 		3A6ECD2A1D85BDE7008FBF38 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6ECD291D85BDE7008FBF38 /* LaunchScreen.xib */; };
 		3A6ECD2C1D85BF3B008FBF38 /* ActionsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6ECD2B1D85BF3B008FBF38 /* ActionsTableViewController.xib */; };
-		3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71628E197289E7001755BF /* DeckDiffViewController.m */; };
 		3A716291197289E7001755BF /* DeckDiffViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71628F197289E7001755BF /* DeckDiffViewController.xib */; };
 		3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71FFC71930BA6500C71C54 /* CardThumbView.xib */; };
 		3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A733B991C8DF801005B1F9B /* NRDB.swift */; };
 		3A78EAE11DF4A2B80063A5A0 /* IphoneDrawSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78EAE01DF4A2B80063A5A0 /* IphoneDrawSimulator.swift */; };
 		3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B0188172C100F0926F /* CardImageCell.xib */; };
 		3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */; };
-		3A8061E71972990E003ACF44 /* DeckDiffCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8061E51972990E003ACF44 /* DeckDiffCell.m */; };
 		3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8061E61972990E003ACF44 /* DeckDiffCell.xib */; };
 		3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A818EEA198E3A0900126495 /* BrowserResultViewController.m */; };
 		3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */; };
@@ -288,6 +287,7 @@
 		3A4866E5193B85560045C927 /* DeckNotesPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckNotesPopup.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A4866E6193B85560045C927 /* DeckNotesPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckNotesPopup.xib; sourceTree = "<group>"; };
 		3A4BDFD41DFD9F74002CC166 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		3A4C03571E1424400095809F /* DeckDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckDiff.swift; sourceTree = "<group>"; };
 		3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = netrunner.ttf; sourceTree = "<group>"; };
 		3A529E621CA57BF70061E065 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		3A531B261A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckHistorySectionHeaderView.xib; sourceTree = "<group>"; };
@@ -316,16 +316,12 @@
 		3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckHistoryPopup.xib; sourceTree = "<group>"; };
 		3A6ECD291D85BDE7008FBF38 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		3A6ECD2B1D85BF3B008FBF38 /* ActionsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActionsTableViewController.xib; sourceTree = "<group>"; };
-		3A71628D197289E7001755BF /* DeckDiffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckDiffViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A71628E197289E7001755BF /* DeckDiffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckDiffViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A71628F197289E7001755BF /* DeckDiffViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffViewController.xib; sourceTree = "<group>"; };
 		3A71FFC71930BA6500C71C54 /* CardThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardThumbView.xib; sourceTree = "<group>"; };
 		3A733B991C8DF801005B1F9B /* NRDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDB.swift; sourceTree = "<group>"; };
 		3A78EAE01DF4A2B80063A5A0 /* IphoneDrawSimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IphoneDrawSimulator.swift; sourceTree = "<group>"; };
 		3A7FD6B0188172C100F0926F /* CardImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageCell.xib; sourceTree = "<group>"; };
 		3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImagePopup.xib; sourceTree = "<group>"; };
-		3A8061E41972990E003ACF44 /* DeckDiffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckDiffCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A8061E51972990E003ACF44 /* DeckDiffCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckDiffCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A8061E61972990E003ACF44 /* DeckDiffCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffCell.xib; sourceTree = "<group>"; };
 		3A818EE9198E3A0900126495 /* BrowserResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserResultViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A818EEA198E3A0900126495 /* BrowserResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserResultViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -696,13 +692,10 @@
 			isa = PBXGroup;
 			children = (
 				3A0AD1E21E14010400194AFF /* DeckDiffViewController.swift */,
-				3A71628D197289E7001755BF /* DeckDiffViewController.h */,
-				3A71628E197289E7001755BF /* DeckDiffViewController.m */,
 				3A71628F197289E7001755BF /* DeckDiffViewController.xib */,
-				3A8061E41972990E003ACF44 /* DeckDiffCell.h */,
-				3A8061E51972990E003ACF44 /* DeckDiffCell.m */,
 				3A0AD1E41E140B9B00194AFF /* DeckDiffCell.swift */,
 				3A8061E61972990E003ACF44 /* DeckDiffCell.xib */,
+				3A4C03571E1424400095809F /* DeckDiff.swift */,
 			);
 			name = "Deck Diff";
 			sourceTree = "<group>";
@@ -1277,7 +1270,6 @@
 				3A39FBC81CB96F6B000F1B23 /* BrowserViewController.swift in Sources */,
 				3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */,
 				3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */,
-				3A8061E71972990E003ACF44 /* DeckDiffCell.m in Sources */,
 				3A114EBF1C6F7FDB00BF8C3C /* DropboxWrapper.swift in Sources */,
 				3A822F6E1CC2C13500305789 /* BuildConfig.swift in Sources */,
 				3A85328218550ACE00507B9A /* AboutViewController.m in Sources */,
@@ -1288,7 +1280,6 @@
 				3A3F04DE1DC8D6E2003B3E25 /* DeckCell.swift in Sources */,
 				3AB2CF591938952600CCBE64 /* CardFilterViewController.m in Sources */,
 				3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */,
-				3A716290197289E7001755BF /* DeckDiffViewController.m in Sources */,
 				3AB9BD5918FADB51004EAF10 /* DecksViewController.m in Sources */,
 				3A0AD1E51E140B9B00194AFF /* DeckDiffCell.swift in Sources */,
 				3A2F4ADC1C8C716400B711BD /* ImageCache.swift in Sources */,
@@ -1314,6 +1305,7 @@
 				3A19426A1DC7397800EB9CE5 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				3A3C1E1D1BF77F10000311FA /* CardCounter.swift in Sources */,
 				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
+				3A4C03581E1424400095809F /* DeckDiff.swift in Sources */,
 				3A3881D81CA5D73200DFF1BA /* NRDBHack.swift in Sources */,
 				3A5EBE971E0FF1250096E2F5 /* IceTypeStats.swift in Sources */,
 				3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */,

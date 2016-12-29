@@ -11,7 +11,6 @@
 #import "NRTypes.h"
 #import "NSArray+TwoD.h"
 #import "SavedDecksList.h"
-#import "DeckDiffViewController.h"
 
 @interface SavedDecksList ()
 
