@@ -114,7 +114,7 @@
 		3A9795361CF63EE100479ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9795351CF63EE100479ADF /* AppDelegate.swift */; };
 		3A98964219953AAD0023880B /* SmallBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A98964019953AAD0023880B /* SmallBrowserCell.m */; };
 		3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A98964119953AAD0023880B /* SmallBrowserCell.xib */; };
-		3A9CE56518E0B6C0007A26CD /* IdentityViewCellSubtitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */; };
+		3A9CE56518E0B6C0007A26CD /* IdentityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9CE56418E0B6C0007A26CD /* IdentityViewCell.xib */; };
 		3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */ = {isa = PBXBuildFile; fileRef = 3AA0504919589F9B00DBDED6 /* Acknowledgements.html */; };
 		3AA0B3021C8C2C7E007B4983 /* CardUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0B3011C8C2C7E007B4983 /* CardUpdateCheck.swift */; };
 		3AA4088E1C038F480046922C /* CardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4088D1C038F480046922C /* CardList.swift */; };
@@ -136,7 +136,6 @@
 		3AB357D6186CC2010027D5FC /* IdentitySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB357D4186CC2010027D5FC /* IdentitySelectionViewController.m */; };
 		3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB357D5186CC2010027D5FC /* IdentitySelectionViewController.xib */; };
 		3AB357DA186DC1E50027D5FC /* IdentityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */; };
-		3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */; };
 		3AB838611DC684EB0047B7DB /* BrowserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB838601DC684EB0047B7DB /* BrowserImageCell.swift */; };
 		3AB838631DC689C00047B7DB /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB838621DC689C00047B7DB /* CardDetailView.swift */; };
 		3AB9BD5918FADB51004EAF10 /* DecksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5718FADB51004EAF10 /* DecksViewController.m */; };
@@ -344,7 +343,7 @@
 		3A9CDFF118FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A9CDFF218FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A9CDFF318FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCellSubtitle.xib; sourceTree = "<group>"; };
+		3A9CE56418E0B6C0007A26CD /* IdentityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCell.xib; sourceTree = "<group>"; };
 		3A9CE56618E0CA2A007A26CD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		3AA0504919589F9B00DBDED6 /* Acknowledgements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Acknowledgements.html; sourceTree = "<group>"; };
 		3AA0B3011C8C2C7E007B4983 /* CardUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardUpdateCheck.swift; sourceTree = "<group>"; };
@@ -373,7 +372,6 @@
 		3AB357D5186CC2010027D5FC /* IdentitySelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentitySelectionViewController.xib; sourceTree = "<group>"; };
 		3AB357D8186DC1E50027D5FC /* IdentityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IdentityViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = IdentityViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCell.xib; sourceTree = "<group>"; };
 		3AB838601DC684EB0047B7DB /* BrowserImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserImageCell.swift; sourceTree = "<group>"; };
 		3AB838621DC689C00047B7DB /* CardDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
 		3AB9BD5618FADB51004EAF10 /* DecksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DecksViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -642,8 +640,7 @@
 				3AB357D5186CC2010027D5FC /* IdentitySelectionViewController.xib */,
 				3AB357D8186DC1E50027D5FC /* IdentityViewCell.h */,
 				3AB357D9186DC1E50027D5FC /* IdentityViewCell.m */,
-				3A9CE56418E0B6C0007A26CD /* IdentityViewCellSubtitle.xib */,
-				3AB357DB186DC1F80027D5FC /* IdentityViewCell.xib */,
+				3A9CE56418E0B6C0007A26CD /* IdentityViewCell.xib */,
 				3A11342019AC5C580012494E /* IdentityCardView.h */,
 				3A11342119AC5C580012494E /* IdentityCardView.m */,
 				3A11341E19AC5B5A0012494E /* IdentityCardView.xib */,
@@ -1079,7 +1076,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A9CE56518E0B6C0007A26CD /* IdentityViewCellSubtitle.xib in Resources */,
+				3A9CE56518E0B6C0007A26CD /* IdentityViewCell.xib in Resources */,
 				3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */,
 				3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */,
 				3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */,
@@ -1143,7 +1140,6 @@
 				3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */,
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
 				3A85328318550ACE00507B9A /* AboutView.xib in Resources */,
-				3AB357DC186DC1F80027D5FC /* IdentityViewCell.xib in Resources */,
 				3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -85,7 +85,7 @@
     [self.cancelButton setTitle:l10n(@"Cancel") forState:UIControlStateNormal];
     
     // setup tableview
-    UINib* nib = [UINib nibWithNibName:@"IdentityViewCellSubtitle" bundle:nil];
+    UINib* nib = [UINib nibWithNibName:@"IdentityViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"identityCell"];
     
     UITapGestureRecognizer* tableTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];

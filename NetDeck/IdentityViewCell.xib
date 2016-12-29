@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,50 +18,67 @@
                 <rect key="frame" x="0.0" y="0.0" width="461" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kate &quot;Mac&quot; McCaffrey: Digital Tinker" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000027" adjustsLetterSpacingToFitWidth="YES" id="QJs-dT-g6j">
-                        <rect key="frame" x="20" y="11" width="328" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kate &quot;Mac&quot; McCaffrey: Digital Tinker" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000027" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QJs-dT-g6j">
+                        <rect key="frame" x="16" y="3" width="411" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="45" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ozR-ow-Vg3" userLabel="Card Limit">
-                        <rect key="frame" x="386" y="1" width="28" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozR-ow-Vg3" userLabel="Card Limit">
+                        <rect key="frame" x="16" y="25" width="16" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gZa-Cm-5aA" userLabel="Influence Limit">
-                        <rect key="frame" x="386" y="20" width="28" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZa-Cm-5aA" userLabel="Influence Limit">
+                        <rect key="frame" x="52" y="25" width="16" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rqE-MG-SLf" userLabel="Link">
-                        <rect key="frame" x="350" y="10" width="20" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqE-MG-SLf" userLabel="Link">
+                        <rect key="frame" x="88" y="25" width="8" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ogr-nY-GIp" userLabel="Image Button">
-                        <rect key="frame" x="438" y="8" width="22" height="28"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ogr-nY-GIp" userLabel="Image Button">
+                        <rect key="frame" x="435" y="8" width="22" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="V4i-d2-DbW"/>
+                            <constraint firstAttribute="width" constant="22" id="l2c-6e-GkP"/>
+                        </constraints>
                         <state key="normal" image="altarttoggle_on"/>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardstats_decksize" id="i40-cm-WYS" userLabel="Card Icon">
-                        <rect key="frame" x="410" y="0.0" width="20" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardstats_identity_decksize" translatesAutoresizingMaskIntoConstraints="NO" id="i40-cm-WYS" userLabel="Card Icon">
+                        <rect key="frame" x="32" y="27.5" width="10" height="10"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardstats_influence" id="Umd-qa-HXv" userLabel="Influence Icon">
-                        <rect key="frame" x="410" y="21" width="20" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardstats_identity_influence" translatesAutoresizingMaskIntoConstraints="NO" id="Umd-qa-HXv" userLabel="Influence Icon">
+                        <rect key="frame" x="68" y="27.5" width="10" height="10"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardstats_link" id="1NA-tc-TVO" userLabel="Link Icon">
-                        <rect key="frame" x="366" y="10" width="20" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardstats_identity_link" translatesAutoresizingMaskIntoConstraints="NO" id="1NA-tc-TVO" userLabel="Link Icon">
+                        <rect key="frame" x="96" y="27.5" width="10" height="10"/>
                     </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="Umd-qa-HXv" firstAttribute="centerY" secondItem="ozR-ow-Vg3" secondAttribute="centerY" id="6ZB-AR-75R"/>
+                    <constraint firstItem="gZa-Cm-5aA" firstAttribute="centerY" secondItem="ozR-ow-Vg3" secondAttribute="centerY" id="6ga-Fp-Nkh"/>
+                    <constraint firstItem="i40-cm-WYS" firstAttribute="centerY" secondItem="ozR-ow-Vg3" secondAttribute="centerY" id="AT7-Vd-BcJ"/>
+                    <constraint firstItem="QJs-dT-g6j" firstAttribute="leading" secondItem="Dov-ib-GdF" secondAttribute="leading" constant="16" id="FaS-Lc-yD8"/>
+                    <constraint firstItem="rqE-MG-SLf" firstAttribute="leading" secondItem="Umd-qa-HXv" secondAttribute="trailing" constant="10" id="MTY-qb-E6F"/>
+                    <constraint firstItem="ozR-ow-Vg3" firstAttribute="leading" secondItem="Dov-ib-GdF" secondAttribute="leading" constant="16" id="R3s-YF-8kW"/>
+                    <constraint firstItem="QJs-dT-g6j" firstAttribute="top" secondItem="Dov-ib-GdF" secondAttribute="top" constant="3" id="S4a-IQ-Xnt"/>
+                    <constraint firstItem="1NA-tc-TVO" firstAttribute="centerY" secondItem="ozR-ow-Vg3" secondAttribute="centerY" id="S9q-Tt-Wly"/>
+                    <constraint firstItem="i40-cm-WYS" firstAttribute="leading" secondItem="ozR-ow-Vg3" secondAttribute="trailing" id="Ssb-jd-bcd"/>
+                    <constraint firstItem="Ogr-nY-GIp" firstAttribute="centerY" secondItem="Dov-ib-GdF" secondAttribute="centerY" id="Ub2-LD-vEA"/>
+                    <constraint firstItem="gZa-Cm-5aA" firstAttribute="leading" secondItem="i40-cm-WYS" secondAttribute="trailing" constant="10" id="WYC-ht-NLt"/>
+                    <constraint firstItem="Ogr-nY-GIp" firstAttribute="leading" secondItem="QJs-dT-g6j" secondAttribute="trailing" constant="8" id="bO3-Wb-flf"/>
+                    <constraint firstAttribute="bottom" secondItem="ozR-ow-Vg3" secondAttribute="bottom" constant="4" id="cNJ-Pi-Amu"/>
+                    <constraint firstItem="1NA-tc-TVO" firstAttribute="leading" secondItem="rqE-MG-SLf" secondAttribute="trailing" id="hb6-iT-S1S"/>
+                    <constraint firstItem="Umd-qa-HXv" firstAttribute="leading" secondItem="gZa-Cm-5aA" secondAttribute="trailing" id="reZ-C9-SCc"/>
+                    <constraint firstItem="rqE-MG-SLf" firstAttribute="centerY" secondItem="ozR-ow-Vg3" secondAttribute="centerY" id="v3h-Hm-Cxm"/>
+                </constraints>
             </tableViewCellContentView>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Ogr-nY-GIp" secondAttribute="trailing" constant="43" id="HKv-XK-D6o"/>
+            </constraints>
             <connections>
                 <outlet property="deckSizeIcon" destination="i40-cm-WYS" id="8Tr-I8-kkj"/>
                 <outlet property="deckSizeLabel" destination="ozR-ow-Vg3" id="gj5-cN-6Ht"/>
@@ -76,9 +93,9 @@
     </objects>
     <resources>
         <image name="altarttoggle_on" width="22" height="28"/>
-        <image name="cardstats_decksize" width="20" height="20"/>
-        <image name="cardstats_influence" width="20" height="20"/>
-        <image name="cardstats_link" width="20" height="20"/>
+        <image name="cardstats_identity_decksize" width="10" height="10"/>
+        <image name="cardstats_identity_influence" width="10" height="10"/>
+        <image name="cardstats_identity_link" width="10" height="10"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

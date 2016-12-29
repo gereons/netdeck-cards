@@ -10,13 +10,12 @@
 
 @implementation IdentityViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        //
-    }
-    return self;
+-(void) awakeFromNib {
+    [super awakeFromNib];
+    
+    UIFont* font = [UIFont monospacedDigitSystemFontOfSize:12 weight:UIFontWeightRegular];
+    self.deckSizeLabel.font = font;
+    self.influenceLimitLabel.font = font;
+    self.linkLabel.font = font;
 }
-
 @end
