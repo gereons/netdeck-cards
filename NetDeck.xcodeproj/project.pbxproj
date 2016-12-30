@@ -117,7 +117,7 @@
 		3AA4088E1C038F480046922C /* CardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4088D1C038F480046922C /* CardList.swift */; };
 		3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440E41854DA4C0051D4B0 /* ActionsTableViewController.m */; };
 		3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440E51854DA4C0051D4B0 /* MainWindow.xib */; };
-		3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440E81854DA580051D4B0 /* EmptyDetailView.xib */; };
+		3AA440EB1854DA580051D4B0 /* EmptyDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440E81854DA580051D4B0 /* EmptyDetailViewController.xib */; };
 		3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440F61854EF720051D4B0 /* DeckListViewController.m */; };
 		3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440F71854EF720051D4B0 /* DeckListViewController.xib */; };
 		3AA463D51BC0042600591647 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA463D31BC0042600591647 /* BrowserViewController.xib */; };
@@ -339,7 +339,7 @@
 		3AA440E31854DA4C0051D4B0 /* ActionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ActionsTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AA440E41854DA4C0051D4B0 /* ActionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ActionsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AA440E51854DA4C0051D4B0 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		3AA440E81854DA580051D4B0 /* EmptyDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyDetailView.xib; sourceTree = "<group>"; };
+		3AA440E81854DA580051D4B0 /* EmptyDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyDetailViewController.xib; sourceTree = "<group>"; };
 		3AA440F51854EF720051D4B0 /* DeckListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AA440F61854EF720051D4B0 /* DeckListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AA440F71854EF720051D4B0 /* DeckListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckListViewController.xib; sourceTree = "<group>"; };
@@ -675,7 +675,7 @@
 		3A8532361854F8D300507B9A /* Empty Detail */ = {
 			isa = PBXGroup;
 			children = (
-				3AA440E81854DA580051D4B0 /* EmptyDetailView.xib */,
+				3AA440E81854DA580051D4B0 /* EmptyDetailViewController.xib */,
 				3A285BA01D109A54007EC30F /* EmptyDetailViewController.swift */,
 			);
 			name = "Empty Detail";
@@ -1073,7 +1073,7 @@
 				3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */,
 				3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */,
 				3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */,
-				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
+				3AA440EB1854DA580051D4B0 /* EmptyDetailViewController.xib in Resources */,
 				3A11C5FC19715C0A003F2093 /* CollectionViewSectionHeader.xib in Resources */,
 				3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */,
 				3A716291197289E7001755BF /* DeckDiffViewController.xib in Resources */,
