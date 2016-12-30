@@ -12,44 +12,67 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="bxE-mE-CaA" customClass="CardFilterThumbView" customModule="NetDeck">
-            <rect key="frame" x="0.0" y="0.0" width="156" height="140"/>
+            <rect key="frame" x="0.0" y="0.0" width="622" height="471"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="156" height="140"/>
+                <rect key="frame" x="0.0" y="0.0" width="622" height="471"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WnK-k9-pZI">
-                        <rect key="frame" x="0.0" y="0.0" width="156" height="114"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ceE-M9-FlE">
-                        <rect key="frame" x="69" y="48" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </activityIndicatorView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000000000000009" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSP-ns-kbR" userLabel="Name Label" customClass="NROutlineLabel" customModule="NetDeck">
-                        <rect key="frame" x="10" y="47" width="136" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="x3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f27-wc-01r" userLabel="Count Label">
-                        <rect key="frame" x="66" y="116" width="25" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sS0-vr-oAc" userLabel="Wrapper">
+                        <rect key="frame" x="0.0" y="0.0" width="622" height="445"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WnK-k9-pZI">
+                                <rect key="frame" x="0.0" y="0.0" width="622" height="445"/>
+                            </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ceE-M9-FlE">
+                                <rect key="frame" x="301" y="212.5" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000000000000009" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSP-ns-kbR" userLabel="Name Label" customClass="NROutlineLabel" customModule="NetDeck">
+                                <rect key="frame" x="292.5" y="213.5" width="37.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="WnK-k9-pZI" secondAttribute="bottom" id="8RM-96-fva"/>
+                            <constraint firstItem="XSP-ns-kbR" firstAttribute="centerX" secondItem="sS0-vr-oAc" secondAttribute="centerX" id="Nu1-nI-EmG"/>
+                            <constraint firstItem="WnK-k9-pZI" firstAttribute="leading" secondItem="sS0-vr-oAc" secondAttribute="leading" id="TvY-0G-B6m"/>
+                            <constraint firstItem="WnK-k9-pZI" firstAttribute="top" secondItem="sS0-vr-oAc" secondAttribute="top" id="eKW-Ww-MbX"/>
+                            <constraint firstItem="ceE-M9-FlE" firstAttribute="centerY" secondItem="sS0-vr-oAc" secondAttribute="centerY" id="f4r-Du-fDj"/>
+                            <constraint firstAttribute="trailing" secondItem="WnK-k9-pZI" secondAttribute="trailing" id="flz-Fb-iCt"/>
+                            <constraint firstItem="XSP-ns-kbR" firstAttribute="centerY" secondItem="sS0-vr-oAc" secondAttribute="centerY" id="hs3-ns-XGy"/>
+                            <constraint firstItem="ceE-M9-FlE" firstAttribute="centerX" secondItem="sS0-vr-oAc" secondAttribute="centerX" id="riR-ia-0ie"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f27-wc-01r" userLabel="Count Label">
+                        <rect key="frame" x="303.5" y="447" width="15" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="MSm-Fh-ass"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbD-LA-eCG">
-                        <rect key="frame" x="130" y="117" width="22" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbD-LA-eCG">
+                        <rect key="frame" x="596" y="448" width="22" height="22"/>
                         <state key="normal">
                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
                 </subviews>
             </view>
-            <size key="customSize" width="156" height="142"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="f27-wc-01r" secondAttribute="bottom" constant="3" id="949-l3-cHG"/>
+                <constraint firstItem="f27-wc-01r" firstAttribute="top" secondItem="sS0-vr-oAc" secondAttribute="bottom" constant="2" id="GHK-LY-Ste"/>
+                <constraint firstAttribute="trailing" secondItem="fbD-LA-eCG" secondAttribute="trailing" constant="4" id="Mvq-o4-Iin"/>
+                <constraint firstItem="f27-wc-01r" firstAttribute="centerX" secondItem="bxE-mE-CaA" secondAttribute="centerX" id="U65-Rs-GFo"/>
+                <constraint firstAttribute="trailing" secondItem="sS0-vr-oAc" secondAttribute="trailing" id="abi-vx-WZ7"/>
+                <constraint firstAttribute="bottom" secondItem="fbD-LA-eCG" secondAttribute="bottom" constant="1" id="axL-y9-WW3"/>
+                <constraint firstItem="sS0-vr-oAc" firstAttribute="top" secondItem="bxE-mE-CaA" secondAttribute="top" id="chM-51-fPZ"/>
+                <constraint firstItem="sS0-vr-oAc" firstAttribute="leading" secondItem="bxE-mE-CaA" secondAttribute="leading" id="y9v-lf-twQ"/>
+            </constraints>
+            <size key="customSize" width="622" height="473"/>
             <connections>
                 <outlet property="activityIndicator" destination="ceE-M9-FlE" id="bbw-p3-IYJ"/>
                 <outlet property="addButton" destination="fbD-LA-eCG" id="t8d-ld-gNC"/>
@@ -57,6 +80,7 @@
                 <outlet property="imageView" destination="WnK-k9-pZI" id="Bx3-db-hVT"/>
                 <outlet property="nameLabel" destination="XSP-ns-kbR" id="gE3-HK-75f"/>
             </connections>
+            <point key="canvasLocation" x="-25" y="-93.5"/>
         </collectionViewCell>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

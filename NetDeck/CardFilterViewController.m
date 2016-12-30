@@ -134,7 +134,6 @@ static NSInteger viewMode = VIEW_LIST;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSmallThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardSmallThumb"];
     [self.collectionView registerNib:CollectionViewSectionHeader.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     self.collectionView.alwaysBounceVertical = YES;
    
@@ -1159,7 +1158,7 @@ static NSInteger viewMode = VIEW_LIST;
 
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* cellIdentifier = viewMode == VIEW_IMG_3 ? @"cardSmallThumb" : @"cardThumb";
+    NSString* cellIdentifier = @"cardThumb";
     
     Card *card = [self.cards objectAtIndexPath:indexPath];
     CardCounter* cc = [self.deckListViewController.deck findCard:card];
