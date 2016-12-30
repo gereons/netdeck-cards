@@ -11,8 +11,6 @@
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
 #import "CardFilterPopover.h"
-#import "CardFilterThumbView.h"
-#import "CardFilterCell.h"
 
 @interface CardFilterViewController ()
 
