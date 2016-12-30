@@ -17,7 +17,7 @@
 		3A0AD1E51E140B9B00194AFF /* DeckDiffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0AD1E41E140B9B00194AFF /* DeckDiffCell.swift */; };
 		3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11341E19AC5B5A0012494E /* IdentityCardView.xib */; };
 		3A114EBF1C6F7FDB00BF8C3C /* DropboxWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */; };
-		3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */; };
+		3A11C5FC19715C0A003F2093 /* CollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */; };
 		3A126E901D0320ED00CDF580 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A126E8F1D0320ED00CDF580 /* Translation.swift */; };
 		3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */; };
 		3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */; };
@@ -60,8 +60,6 @@
 		3A3F04DE1DC8D6E2003B3E25 /* DeckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */; };
 		3A3F04E01DC8DF70003B3E25 /* ImportDecksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */; };
 		3A41DA871BF8785C003CB7E1 /* PackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A41DA861BF8785C003CB7E1 /* PackManager.swift */; };
-		3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */; };
-		3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */; };
 		3A47F1901DBB7E9500058294 /* Card+html.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47F18F1DBB7E9500058294 /* Card+html.swift */; };
 		3A4866E7193B85560045C927 /* DeckNotesPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4866E5193B85560045C927 /* DeckNotesPopup.m */; };
 		3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A4866E6193B85560045C927 /* DeckNotesPopup.xib */; };
@@ -94,7 +92,7 @@
 		3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A733B991C8DF801005B1F9B /* NRDB.swift */; };
 		3A78D3D31E164CC400E91584 /* IdentityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D21E164CC400E91584 /* IdentityViewCell.swift */; };
 		3A78D3D51E164E9600E91584 /* IdentityCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D41E164E9600E91584 /* IdentityCardView.swift */; };
-		3A78D3D71E16513100E91584 /* IdentitySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D61E16513100E91584 /* IdentitySectionHeaderView.swift */; };
+		3A78D3D71E16513100E91584 /* CollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */; };
 		3A78EAE11DF4A2B80063A5A0 /* IphoneDrawSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78EAE01DF4A2B80063A5A0 /* IphoneDrawSimulator.swift */; };
 		3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B0188172C100F0926F /* CardImageCell.xib */; };
 		3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */; };
@@ -174,8 +172,6 @@
 		3AEF52011CCD53B300A831E0 /* NROutlineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF52001CCD53B300A831E0 /* NROutlineLabel.swift */; };
 		3AF04BB91D44DD8200CB859D /* JinetkiNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */; };
 		3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */; };
-		3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */; };
-		3AF2235E194364A80072FD9F /* CardFilterSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */; };
 		3AF2E8BC1883075500F6306B /* CardFilterPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BA1883075500F6306B /* CardFilterPopover.m */; };
 		3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */; };
 		3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF697881C1DAC7300D254CE /* Notifications.swift */; };
@@ -201,7 +197,7 @@
 		3A0AD1E41E140B9B00194AFF /* DeckDiffCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckDiffCell.swift; sourceTree = "<group>"; };
 		3A11341E19AC5B5A0012494E /* IdentityCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityCardView.xib; sourceTree = "<group>"; };
 		3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropboxWrapper.swift; sourceTree = "<group>"; };
-		3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentitySectionHeaderView.xib; sourceTree = "<group>"; };
+		3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		3A126E8F1D0320ED00CDF580 /* Translation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
 		3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NRDBAuthPopupViewController.xib; sourceTree = "<group>"; };
 		3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionViewController.xib; sourceTree = "<group>"; };
@@ -261,9 +257,6 @@
 		3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckCell.swift; sourceTree = "<group>"; };
 		3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportDecksViewController.swift; sourceTree = "<group>"; };
 		3A41DA861BF8785C003CB7E1 /* PackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackManager.swift; sourceTree = "<group>"; };
-		3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserSectionHeaderView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserSectionHeaderView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserSectionHeaderView.xib; sourceTree = "<group>"; };
 		3A47F18F1DBB7E9500058294 /* Card+html.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Card+html.swift"; sourceTree = "<group>"; };
 		3A4866E4193B85560045C927 /* DeckNotesPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckNotesPopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3A4866E5193B85560045C927 /* DeckNotesPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckNotesPopup.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -303,7 +296,7 @@
 		3A733B991C8DF801005B1F9B /* NRDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDB.swift; sourceTree = "<group>"; };
 		3A78D3D21E164CC400E91584 /* IdentityViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityViewCell.swift; sourceTree = "<group>"; };
 		3A78D3D41E164E9600E91584 /* IdentityCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityCardView.swift; sourceTree = "<group>"; };
-		3A78D3D61E16513100E91584 /* IdentitySectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentitySectionHeaderView.swift; sourceTree = "<group>"; };
+		3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionHeader.swift; sourceTree = "<group>"; };
 		3A78EAE01DF4A2B80063A5A0 /* IphoneDrawSimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IphoneDrawSimulator.swift; sourceTree = "<group>"; };
 		3A7FD6B0188172C100F0926F /* CardImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageCell.xib; sourceTree = "<group>"; };
 		3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImagePopup.xib; sourceTree = "<group>"; };
@@ -418,9 +411,6 @@
 		3AEF52001CCD53B300A831E0 /* NROutlineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NROutlineLabel.swift; sourceTree = "<group>"; };
 		3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JinetkiNet.swift; sourceTree = "<group>"; };
 		3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "NRDBAuthPopupViewController~iphone.xib"; sourceTree = "<group>"; };
-		3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterSectionHeaderView.xib; sourceTree = "<group>"; };
-		3AF2235C194364A80072FD9F /* CardFilterSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardFilterSectionHeaderView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardFilterSectionHeaderView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AF2E8B91883075500F6306B /* CardFilterPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CardFilterPopover.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AF2E8BA1883075500F6306B /* CardFilterPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardFilterPopover.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterPopover.xib; sourceTree = "<group>"; };
@@ -504,7 +494,7 @@
 				3A2F4ADB1C8C716400B711BD /* ImageCache.swift */,
 				3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */,
 				3AFBA1601E0D9288003F6CD8 /* ObjC Utils */,
-				3A3BDD9E1930F36E00DEFD57 /* Utility Classes / Headers */,
+				3A3BDD9E1930F36E00DEFD57 /* Utility Classes */,
 				3AA440DF1854DA0D0051D4B0 /* Data / Models */,
 				3A3845041B77CB34007C76F2 /* Update Check */,
 				3A9742AD18AF7DAE00F83520 /* Stats */,
@@ -601,16 +591,13 @@
 				3AB34E5E1939AA7A000A43BB /* CardFilterThumbView.m */,
 				3AB34E601939AA8D000A43BB /* CardFilterThumbView.xib */,
 				3A1EB580193A3AC20048E2E2 /* CardFilterSmallThumbView.xib */,
-				3AF2235C194364A80072FD9F /* CardFilterSectionHeaderView.h */,
-				3AF2235D194364A80072FD9F /* CardFilterSectionHeaderView.m */,
-				3AF2235A19434F080072FD9F /* CardFilterSectionHeaderView.xib */,
 				3ACC9A5A1DC60E2400C54EF3 /* SmallPipsView.swift */,
 				3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */,
 			);
 			name = "Filtered Cards";
 			sourceTree = "<group>";
 		};
-		3A3BDD9E1930F36E00DEFD57 /* Utility Classes / Headers */ = {
+		3A3BDD9E1930F36E00DEFD57 /* Utility Classes */ = {
 			isa = PBXGroup;
 			children = (
 				3A822F6D1CC2C13500305789 /* BuildConfig.swift */,
@@ -625,8 +612,10 @@
 				3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */,
 				3AAE4C4A1CA7105A0039F822 /* Analytics.swift */,
 				3A3AA9A81CE13011003F21EE /* DebugTimer.swift */,
+				3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */,
+				3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */,
 			);
-			name = "Utility Classes / Headers";
+			name = "Utility Classes";
 			sourceTree = "<group>";
 		};
 		3A595424186EDCED0074B3B1 /* Identity Selection Form */ = {
@@ -639,8 +628,6 @@
 				3A9CE56418E0B6C0007A26CD /* IdentityViewCell.xib */,
 				3A78D3D41E164E9600E91584 /* IdentityCardView.swift */,
 				3A11341E19AC5B5A0012494E /* IdentityCardView.xib */,
-				3A78D3D61E16513100E91584 /* IdentitySectionHeaderView.swift */,
-				3A11C5FB19715C0A003F2093 /* IdentitySectionHeaderView.xib */,
 			);
 			name = "Identity Selection Form";
 			sourceTree = "<group>";
@@ -946,9 +933,6 @@
 				3A56371019954B28006AD431 /* LargeBrowserCell.h */,
 				3A56371119954B28006AD431 /* LargeBrowserCell.m */,
 				3A56371219954B28006AD431 /* LargeBrowserCell.xib */,
-				3A45446A199629D90037FEB1 /* BrowserSectionHeaderView.h */,
-				3A45446B199629D90037FEB1 /* BrowserSectionHeaderView.m */,
-				3A45446D199629EF0037FEB1 /* BrowserSectionHeaderView.xib */,
 			);
 			name = "Card Browser";
 			sourceTree = "<group>";
@@ -1097,7 +1081,7 @@
 				3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */,
 				3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailView.xib in Resources */,
-				3A11C5FC19715C0A003F2093 /* IdentitySectionHeaderView.xib in Resources */,
+				3A11C5FC19715C0A003F2093 /* CollectionViewSectionHeader.xib in Resources */,
 				3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */,
 				3A716291197289E7001755BF /* DeckDiffViewController.xib in Resources */,
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
@@ -1115,7 +1099,6 @@
 				3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */,
 				3A6131551DA82A6800474B91 /* MainWindow~iPhone.xib in Resources */,
 				3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */,
-				3AF2235B19434F080072FD9F /* CardFilterSectionHeaderView.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
 				3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */,
 				3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */,
@@ -1129,7 +1112,6 @@
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
 				3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */,
 				3ADE90A118775A77006E187F /* CardImageViewPopover.xib in Resources */,
-				3A45446E199629EF0037FEB1 /* BrowserSectionHeaderView.xib in Resources */,
 				3AB2CF5A1938952600CCBE64 /* CardFilterViewController.xib in Resources */,
 				3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */,
 				3AB357D7186CC2010027D5FC /* IdentitySelectionViewController.xib in Resources */,
@@ -1224,7 +1206,6 @@
 				3AA8EC2C1CC3AA8200370A26 /* DeckHistorySectionHeaderView.swift in Sources */,
 				3A1942681DC7337A00EB9CE5 /* CardImageViewController.swift in Sources */,
 				3A3D4D4B1DAA6ADA004028A7 /* SettingsViewController.swift in Sources */,
-				3A45446C199629D90037FEB1 /* BrowserSectionHeaderView.m in Sources */,
 				3AB357D6186CC2010027D5FC /* IdentitySelectionViewController.m in Sources */,
 				3A3C1E1F1BF79A71000311FA /* DeckState.swift in Sources */,
 				3AA8EC2A1CC3A05E00370A26 /* DeckHistoryViewController.swift in Sources */,
@@ -1268,7 +1249,7 @@
 				3AA4088E1C038F480046922C /* CardList.swift in Sources */,
 				3A19426A1DC7397800EB9CE5 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				3A3C1E1D1BF77F10000311FA /* CardCounter.swift in Sources */,
-				3A78D3D71E16513100E91584 /* IdentitySectionHeaderView.swift in Sources */,
+				3A78D3D71E16513100E91584 /* CollectionViewSectionHeader.swift in Sources */,
 				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
 				3A4C03581E1424400095809F /* DeckDiff.swift in Sources */,
 				3A3881D81CA5D73200DFF1BA /* NRDBHack.swift in Sources */,
@@ -1327,7 +1308,6 @@
 				3AB34E5F1939AA7A000A43BB /* CardFilterThumbView.m in Sources */,
 				3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */,
 				3A4BDFD51DFD9F74002CC166 /* FilterViewController.swift in Sources */,
-				3AF2235E194364A80072FD9F /* CardFilterSectionHeaderView.m in Sources */,
 				3A56371319954B28006AD431 /* LargeBrowserCell.m in Sources */,
 				3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */,
 				3AD796871C6B52E600D5B24C /* DeckExport.swift in Sources */,

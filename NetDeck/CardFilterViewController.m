@@ -12,7 +12,6 @@
 #import "DeckListViewController.h"
 #import "CardFilterPopover.h"
 #import "CardFilterThumbView.h"
-#import "CardFilterSectionHeaderView.h"
 #import "CardFilterCell.h"
 
 @interface CardFilterViewController ()
@@ -138,8 +137,7 @@ static NSInteger viewMode = VIEW_LIST;
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSmallThumbView" bundle:nil] forCellWithReuseIdentifier:@"cardSmallThumb"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CardFilterSectionHeaderView" bundle:nil]
-          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
+    [self.collectionView registerNib:CollectionViewSectionHeader.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     self.collectionView.alwaysBounceVertical = YES;
    
     self.collectionView.dataSource = self;
@@ -1213,13 +1211,13 @@ static NSInteger viewMode = VIEW_LIST;
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    CardFilterSectionHeaderView* header = nil;
+    CollectionViewSectionHeader* header = nil;
     if (kind == UICollectionElementKindSectionHeader)
     {
         header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
         
         NSArray<Card*>* cards = self.cards[indexPath.section];
-        header.titleLabel.text = [NSString stringWithFormat:@"%@ (%ld)", self.sections[indexPath.section], (long)cards.count];
+        header.title.text = [NSString stringWithFormat:@"%@ (%ld)", self.sections[indexPath.section], (long)cards.count];
     }
     
     NSAssert(header != nil, @"no header?");

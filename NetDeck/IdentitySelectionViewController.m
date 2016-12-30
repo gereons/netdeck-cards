@@ -93,7 +93,7 @@
     
     // setup collectionview
     [self.collectionView registerNib:[UINib nibWithNibName:@"IdentityCardView" bundle:nil] forCellWithReuseIdentifier:@"cardThumb"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"IdentitySectionHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
+    [self.collectionView registerNib:CollectionViewSectionHeader.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
     UITapGestureRecognizer* collectionTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
     collectionTap.numberOfTapsRequired = 2;
@@ -465,20 +465,20 @@
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    IdentitySectionHeaderView* header = nil;
+    CollectionViewSectionHeader* header = nil;
     if (kind == UICollectionElementKindSectionHeader)
     {
         header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
-        header.titleLabel.text = self.factionNames[indexPath.section];
+        header.title.text = self.factionNames[indexPath.section];
         
         Card* card = [self.identities objectAtIndexPath:indexPath];
         if (card != nil)
         {
-            header.titleLabel.textColor = card.factionColor;
+            header.title.textColor = card.factionColor;
         }
         else
         {
-            header.titleLabel.textColor = [UIColor blackColor];
+            header.title.textColor = [UIColor blackColor];
         }
     }
     

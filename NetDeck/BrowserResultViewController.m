@@ -9,7 +9,6 @@
 #import "NSArray+TwoD.h"
 #import "BrowserResultViewController.h"
 #import "BrowserCell.h"
-#import "BrowserSectionHeaderView.h"
 
 @interface BrowserResultViewController ()
 
@@ -115,8 +114,7 @@ static BrowserResultViewController* instance;
     [self.tableView registerNib:[UINib nibWithNibName:@"LargeBrowserCell" bundle:nil] forCellReuseIdentifier:@"largeBrowserCell"];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"BrowserImageCell" bundle:nil] forCellWithReuseIdentifier:@"browserImageCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"BrowserSectionHeaderView" bundle:nil]
-          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
+    [self.collectionView registerNib:CollectionViewSectionHeader.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeader"];
     
     self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 0, 0);
@@ -383,13 +381,13 @@ static BrowserResultViewController* instance;
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    BrowserSectionHeaderView* header = nil;
+    CollectionViewSectionHeader* header = nil;
     if (kind == UICollectionElementKindSectionHeader)
     {
         header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"sectionHeader" forIndexPath:indexPath];
         
         NSArray<Card*>* arr = self.values[indexPath.section];
-        header.header.text = [NSString stringWithFormat:@"%@ (%lu)", self.sections[indexPath.section], (unsigned long)arr.count ];
+        header.title.text = [NSString stringWithFormat:@"%@ (%lu)", self.sections[indexPath.section], (unsigned long)arr.count ];
     }
     
     NSAssert(header != nil, @"no header?");
