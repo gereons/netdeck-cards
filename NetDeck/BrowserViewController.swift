@@ -205,7 +205,6 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.navigationController?.pushViewController(picker, animated: true)
     }
     
-    
     @IBAction func setButtonTapped(_ btn: UIButton) {
         let picker = BrowserValuePicker(title: "Set".localized())
         let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)

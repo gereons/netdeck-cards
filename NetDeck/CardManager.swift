@@ -107,6 +107,11 @@ class CardManager: NSObject {
         return allIdentitiesByRole[role]!
     }
     
+    class func typedIdentitiesForSelection(_ role: NRRole, packUsage: NRPackUsage) -> TypedTableData<Card> {
+        let untyped = identitiesForSelection(role, packUsage: packUsage)
+        return TypedTableData(sections: untyped.sections, values: untyped.values as! [[Card]])
+    }
+    
     class func identitiesForSelection(_ role: NRRole, packUsage: NRPackUsage) -> TableData {
         var factionNames = Faction.factionsFor(role: role, packUsage: packUsage)
         factionNames.removeFirst(2) // remove "any" and "neutral"

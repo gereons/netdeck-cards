@@ -8,11 +8,8 @@
 
 #import "NSArray+TwoD.h"
 #import "IdentitySelectionViewController.h"
-#import "IdentityViewCell.h"
 
 #import "CGRectUtils.h"
-#import "IdentityCardView.h"
-#import "IdentitySectionHeaderView.h"
 
 @interface IdentitySelectionViewController ()
 
