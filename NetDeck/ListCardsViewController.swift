@@ -128,12 +128,8 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         let count = cc?.count ?? 0
         
         let copies = Int(stepper.value)
-        let diff = abs(count - copies)
-        if copies < count {
-            self.deck.addCard(card, copies: -diff)
-        } else {
-            self.deck.addCard(card, copies: diff)
-        }
+        let diff = copies - count
+        self.deck.addCard(card, copies: diff)
         
         self.selectTextInSearchBar()
         self.tableView.reloadData()

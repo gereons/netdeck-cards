@@ -76,7 +76,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
                 DropboxWrapper.unlinkClient()
             }
             
-            NotificationCenter.default.post(name: Notifications.dropboxChanged, object: nil)
+            NotificationCenter.default.post(name: Notifications.dropboxChanged, object: self)
             self.refresh()
             
         case SettingsKeys.USE_NRDB:
@@ -192,7 +192,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
                 UserDefaults.standard.set("Never".localized(), forKey: SettingsKeys.NEXT_DOWNLOAD)
                 self.refresh()
                 
-                NotificationCenter.default.post(name: Notifications.loadCards, object: nil)
+                NotificationCenter.default.post(name: Notifications.loadCards, object: self)
             })
             
             alert.show()

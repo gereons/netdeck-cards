@@ -442,13 +442,9 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         let cc = self.cards[section][row]
         
-        let copies = Int(stepper.value)
-        let diff = abs(cc.count - copies)
-        if copies < cc.count {
-            self.deck.addCard(cc.card, copies: -diff)
-        } else {
-            self.deck.addCard(cc.card, copies: diff)
-        }
+        let count = Int(stepper.value)
+        let diff = count - cc.count
+        self.deck.addCard(cc.card, copies: diff)
         
         self.doAutoSave()
         self.refreshDeck()
