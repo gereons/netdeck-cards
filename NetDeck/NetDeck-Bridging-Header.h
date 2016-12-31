@@ -6,5 +6,7 @@
 
 @class Card;
 @class CardList;
+@class Deck;
 
 #import "BrowserResultViewController.h"
+#import "DeckListViewController.h"

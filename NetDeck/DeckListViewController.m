@@ -16,7 +16,6 @@
 #import "DeckHistoryPopup.h"
 #import "CardImagePopup.h"
 
-#import "CardCell.h"
 #import "CGRectUtils.h"
 
 @interface DeckListViewController ()

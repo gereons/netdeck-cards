@@ -25,7 +25,7 @@
 
 @property IBOutlet NSLayoutConstraint *toolbarBottomMargin;
 
-@property NRRole role;
+@property NSInteger role; // actually NRRole
 @property (nonatomic) Deck* deck;
 
 -(void) addCard:(Card*)card;

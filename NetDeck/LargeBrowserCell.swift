@@ -35,18 +35,10 @@ class LargeBrowserCell: BrowserCell {
         self.labels = [ self.label1, self.label2, self.label3 ]
         self.icons = [ self.icon1, self.icon2, self.icon3 ]
         
-        let radius: CGFloat = 4.0
-        for pip in pips {
-            var frame = pip.frame
-            frame.size = CGSize(width: radius, height: radius)
-            pip.frame = frame
-            pip.layer.cornerRadius = radius
-        }
+        self.pips.forEach { $0.layer.cornerRadius = $0.frame.width / 2 }
         
         self.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightMedium)
-        for lbl in [ self.label1, self.label2, self.label3 ] {
-            lbl?.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightRegular)
-        }
+        self.labels.forEach { $0.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightRegular) }
         
         self.prepareForReuse()
     }
@@ -78,71 +70,11 @@ class LargeBrowserCell: BrowserCell {
             self.type.text = String(format: "%@ · %@", factionName, typeName)
         }
         
-        self.setInfluence()
-        
-        switch card.type {
-        case .identity:
-            self.label1.text = "\(card.minimumDecksize)"
-            self.icon1.image = ImageCache.cardIcon
-            self.label2.text = card.influenceLimit == -1 ? "∞" : "\(card.influenceLimit)"
-            self.icon2.image = ImageCache.influenceIcon
-            if card.role == .runner {
-                self.label3.text = "\(card.baseLink)"
-                self.icon3.image = ImageCache.linkIcon
-            }
-        case .program, .resource, .event, .hardware:
-            let cost = card.costString
-            let str = card.strengthString
-            self.label1.text = cost
-            self.icon1.image = cost.length > 0 ? ImageCache.creditIcon : nil
-            self.label2.text = str
-            self.icon2.image = str.length > 0 ? ImageCache.strengthIcon : nil
-            self.label3.text = card.mu != -1 ? "\(card.mu)" : nil
-            self.icon3.image = card.mu != -1 ? ImageCache.muIcon : nil
-        case .ice:
-            let cost = card.costString
-            let str = card.strengthString
-            self.label1.text = cost
-            self.icon1.image = cost.length > 0 ? ImageCache.creditIcon : nil
-            self.label2.text = card.trash != -1 ? "\(card.trash)" : nil
-            self.icon2.image = card.trash != -1 ? ImageCache.trashIcon : nil
-            self.label3.text = str
-            self.icon3.image = str.length > 0 ? ImageCache.strengthIcon : nil
-        case .agenda:
-            self.label1.text = "\(card.advancementCost)"
-            self.icon1.image = ImageCache.difficultyIcon
-            self.label3.text = "\(card.agendaPoints)"
-            self.icon3.image = ImageCache.apIcon
-        case .asset, .operation, .upgrade:
-            let cost = card.costString
-            self.label1.text = cost
-            self.icon1.image = cost.length > 0 ? ImageCache.creditIcon : nil
-            self.label3.text = card.trash != -1 ? "\(card.trash)" : nil
-            self.icon3.image = card.trash != -1 ? ImageCache.trashIcon : nil
-        case .none:
-            fatalError("this can't happen")
-        }
-    }
-    
-    private func setInfluence() {
-        for i in stride(from: 0, to: self.card.influence, by: 1) {
-            let pip = self.pips[i]
-            pip.layer.backgroundColor = self.card.factionColor.cgColor
-            pip.isHidden = false
-        }
-        
         let mwlVersion = UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)
         let mwl = NRMWL(rawValue: mwlVersion) ?? .none
+        LargeCardCell.setInfluencePips(self.pips, influence: self.card.influence, card: self.card, mwl: mwl)
         
-        let influence = max(0, self.card.influence) // needed for agendas
-        if self.card.isMostWanted(mwl) && influence < self.pips.count {
-            let pip = self.pips[influence]
-            
-            pip.layer.backgroundColor = UIColor.white.cgColor
-            pip.layer.borderWidth = 1
-            pip.layer.borderColor = UIColor.black.cgColor
-            pip.isHidden = false
-        }
+        LargeCardCell.setLabels(for: card, labels: self.labels, icons: self.icons)
     }
- 
+    
 }
