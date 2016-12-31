@@ -8,7 +8,6 @@
 
 #import "NSArray+TwoD.h"
 #import "BrowserResultViewController.h"
-#import "BrowserCell.h"
 
 @interface BrowserResultViewController ()
 
