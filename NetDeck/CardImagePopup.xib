@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardImagePopup">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardImagePopup" customModule="NetDeck">
             <connections>
                 <outlet property="copiesLabel" destination="P9A-9Y-2u3" id="1Mc-iP-twF"/>
                 <outlet property="copiesStepper" destination="JnG-5a-C7l" id="4dl-cT-k3q"/>

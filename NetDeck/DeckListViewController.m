@@ -12,9 +12,7 @@
 #import "NSArray+TwoD.h"
 #import "DeckListViewController.h"
 #import "IdentitySelectionViewController.h"
-#import "DeckNotesPopup.h"
 #import "DeckHistoryPopup.h"
-#import "CardImagePopup.h"
 
 #import "CGRectUtils.h"
 
@@ -576,7 +574,7 @@
         [self dismissActionSheet];
         return;
     }
-    [DeckNotesPopup showForDeck:self.deck inViewController:self];
+    [DeckNotesPopup showForDeck:self.deck in:self];
 }
 
 -(void) historyButtonClicked:(id)sender
@@ -1355,8 +1353,7 @@
     
     if (cc && cc.card.type != NRCardTypeIdentity)
     {
-        CardImagePopup* cip = [CardImagePopup showForCard:cc inDeck:self.deck fromRect:popupOrigin inViewController:self subView:self.collectionView direction:direction];
-        cip.cell = cell;
+        [CardImagePopup showForCc:cc inDeck:self.deck from:popupOrigin inViewController:self subView:self.collectionView direction:direction];
     }
     else
     {
