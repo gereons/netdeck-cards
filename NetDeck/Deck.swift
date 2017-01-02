@@ -210,7 +210,7 @@ import Marshal
                 changed = true
             } else {
                 // add N copies
-                let max = cc.card.maxPerDeck
+                let max = self.isDraft ? 100 : cc.card.maxPerDeck
                 let maxAdd = max - cc.count
                 copies = min(copies, maxAdd)
                 cc.count += copies
@@ -334,7 +334,8 @@ import Marshal
         for cc in self.cards {
             let card = cc.card
             
-            if cc.count > card.maxPerDeck && !limitError {
+            let limitExceeded = self.isDraft ? cc.count > 1 && card.maxPerDeck == 1 : cc.count > card.maxPerDeck
+            if limitExceeded && !limitError {
                 limitError = true
                 reasons.append("Card limit exceeded".localized())
             }
