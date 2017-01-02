@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeckHistoryPopup">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeckHistoryPopup" customModule="NetDeck">
             <connections>
                 <outlet property="closeButton" destination="uwu-gH-1tX" id="G2C-Fm-B5w"/>
                 <outlet property="tableView" destination="9ZQ-6x-qK9" id="59J-lH-Q6N"/>

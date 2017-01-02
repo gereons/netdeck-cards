@@ -12,7 +12,6 @@
 #import "NSArray+TwoD.h"
 #import "DeckListViewController.h"
 #import "IdentitySelectionViewController.h"
-#import "DeckHistoryPopup.h"
 
 #import "CGRectUtils.h"
 
@@ -586,7 +585,7 @@
     }
     
     [self.deck mergeRevisions];
-    [DeckHistoryPopup showForDeck:self.deck inViewController:self];
+    [DeckHistoryPopup showForDeck:self.deck in:self];
 }
 
 #pragma mark duplicate deck

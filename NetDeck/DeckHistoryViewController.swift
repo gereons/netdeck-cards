@@ -44,12 +44,10 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         let dcs = deck.revisions[sender.tag]
         // NSLog(@"revert to %d %@", sender.tag, [self.dateFormatter stringFromDate:dcs.timestamp]);
         
-        if let cards = dcs.cards {
-            deck.resetToCards(cards)
+        deck.resetToCards(dcs.cards)
         
-            NotificationCenter.default.post(name: Notifications.deckChanged, object:self)
-            let _ = self.navigationController?.popViewController(animated: true)
-        }
+        NotificationCenter.default.post(name: Notifications.deckChanged, object:self)
+        let _ = self.navigationController?.popViewController(animated: true)
     }
 
     // MARK: table view
@@ -79,7 +77,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
                 cell?.textLabel?.text = "Initial Version".localized()
             } else if indexPath.row < dcs.changes.count {
                 let dc = dcs.changes[indexPath.row]
-                cell?.textLabel?.text = String(format: "%+ld %@", dc.count, dc.card?.name ?? "")
+                cell?.textLabel?.text = String(format: "%+ld %@", dc.count, dc.card.name)
             }
         }
         
@@ -112,14 +110,14 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
                 
                 var ccs = [CardCounter]()
                 for dc in dcs.changes {
-                    if let card = dc.card {
-                        let cc = CardCounter(card: card, count: dc.count)
+                    if !dc.card.isNull {
+                        let cc = CardCounter(card: dc.card, count: dc.count)
                         ccs.append(cc)
                     }
                 }
                 assert(ccs.count == dcs.changes.count)
-                if let selectedCard = dcs.changes[indexPath.row].card {
-                
+                let selectedCard = dcs.changes[indexPath.row].card
+                if !selectedCard.isNull {
                     let imgController = CardImageViewController()
                     imgController.setCardCounters(ccs)
                     imgController.selectedCard = selectedCard

@@ -12,7 +12,7 @@ import Foundation
     var timestamp: Date?
     var changes = [DeckChange]()
     var initial: Bool = false
-    var cards: [String: Int]?       // code -> qty
+    var cards = [String: Int]()       // code -> qty
     
     func addCardCode(_ code: String, copies:Int) {
         assert(copies != 0, "changing 0 copies?")
@@ -62,8 +62,8 @@ import Foundation
         self.changes.sort { (dc1, dc2) -> Bool in
             if dc1.count > 0 && dc2.count < 0 { return true }
             if dc1.count < 0 && dc2.count > 0 { return false }
-            let n1 = dc1.card?.name ?? ""
-            let n2 = dc2.card?.name ?? ""
+            let n1 = dc1.card.name
+            let n2 = dc2.card.name
             return n1 < n2
         }
     }
@@ -73,7 +73,7 @@ import Foundation
         for dc in self.changes {
             NSLog("%@ %ld %@", dc.count > 0 ? "add" : "rem",
                 dc.count,
-                dc.card!.name)
+                dc.card.name)
         }
         NSLog("---end---")
     }
@@ -83,9 +83,11 @@ import Foundation
     convenience required init?(coder aDecoder: NSCoder) {
         self.init()
         self.timestamp = aDecoder.decodeObject(forKey: "timestamp") as? Date
-        self.changes = aDecoder.decodeObject(forKey: "changes") as! [DeckChange]
+        let changes = aDecoder.decodeObject(forKey: "changes") as? [DeckChange]
+        self.changes = changes ?? [DeckChange]()
         self.initial = aDecoder.decodeBool(forKey: "initial")
-        self.cards = aDecoder.decodeObject(forKey: "cards") as? [String: Int]
+        let cards = aDecoder.decodeObject(forKey: "cards") as? [String: Int]
+        self.cards = cards ?? [String: Int]()
     }
     
     func encode(with aCoder: NSCoder) {

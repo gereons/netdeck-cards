@@ -32,6 +32,7 @@
 		3A2BF9D81DC64BF400AFA36E /* CardImageViewPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BF9D71DC64BF400AFA36E /* CardImageViewPopover.swift */; };
 		3A2BF9DA1DC6564B00AFA36E /* CardImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BF9D91DC6564B00AFA36E /* CardImageCell.swift */; };
 		3A2F4ADC1C8C716400B711BD /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2F4ADB1C8C716400B711BD /* ImageCache.swift */; };
+		3A3375561E1ACDAA002E3B6E /* DeckHistoryPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3375551E1ACDAA002E3B6E /* DeckHistoryPopup.swift */; };
 		3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A33AE2F1C7272ED00453C33 /* DeckEmail.swift */; };
 		3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A36226A1849320C007F2854 /* InfoPlist.strings */; };
 		3A36227D1849320C007F2854 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A36227C1849320C007F2854 /* Images.xcassets */; };
@@ -85,7 +86,6 @@
 		3A65016F1DC6286600815965 /* NRSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A65016E1DC6286600815965 /* NRSwitch.swift */; };
 		3A6507DB1E13E11400231D68 /* DeckAnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6507DA1E13E11400231D68 /* DeckAnalysisViewController.swift */; };
 		3A6CD8041CF7864C0090CEDB /* DetailViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CD8031CF7864C0090CEDB /* DetailViewManager.swift */; };
-		3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D51D31A2284540004951E /* DeckHistoryPopup.m */; };
 		3A6D51D61A2284540004951E /* DeckHistoryPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */; };
 		3A6ECD2A1D85BDE7008FBF38 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6ECD291D85BDE7008FBF38 /* LaunchScreen.xib */; };
 		3A6ECD2C1D85BF3B008FBF38 /* ActionsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6ECD2B1D85BF3B008FBF38 /* ActionsTableViewController.xib */; };
@@ -215,6 +215,7 @@
 		3A3293E11CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A3293E21CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A3293E31CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3A3375551E1ACDAA002E3B6E /* DeckHistoryPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckHistoryPopup.swift; sourceTree = "<group>"; };
 		3A33AE2F1C7272ED00453C33 /* DeckEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckEmail.swift; sourceTree = "<group>"; };
 		3A36225E1849320C007F2854 /* NetDeck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetDeck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3622611849320C007F2854 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -283,8 +284,6 @@
 		3A65016E1DC6286600815965 /* NRSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRSwitch.swift; sourceTree = "<group>"; };
 		3A6507DA1E13E11400231D68 /* DeckAnalysisViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckAnalysisViewController.swift; sourceTree = "<group>"; };
 		3A6CD8031CF7864C0090CEDB /* DetailViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewManager.swift; sourceTree = "<group>"; };
-		3A6D51D21A2284540004951E /* DeckHistoryPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckHistoryPopup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A6D51D31A2284540004951E /* DeckHistoryPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckHistoryPopup.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckHistoryPopup.xib; sourceTree = "<group>"; };
 		3A6ECD291D85BDE7008FBF38 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		3A6ECD2B1D85BF3B008FBF38 /* ActionsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActionsTableViewController.xib; sourceTree = "<group>"; };
@@ -688,8 +687,7 @@
 				3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */,
 				3A6205201E19695000073BF8 /* DeckNotesPopup.swift */,
 				3A4866E6193B85560045C927 /* DeckNotesPopup.xib */,
-				3A6D51D21A2284540004951E /* DeckHistoryPopup.h */,
-				3A6D51D31A2284540004951E /* DeckHistoryPopup.m */,
+				3A3375551E1ACDAA002E3B6E /* DeckHistoryPopup.swift */,
 				3A6D51D41A2284540004951E /* DeckHistoryPopup.xib */,
 				3A531B281A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.swift */,
 				3A531B261A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib */,
@@ -1195,6 +1193,7 @@
 				3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */,
 				3A114EBF1C6F7FDB00BF8C3C /* DropboxWrapper.swift in Sources */,
 				3A78D3D31E164CC400E91584 /* IdentityViewCell.swift in Sources */,
+				3A3375561E1ACDAA002E3B6E /* DeckHistoryPopup.swift in Sources */,
 				3A822F6E1CC2C13500305789 /* BuildConfig.swift in Sources */,
 				3A85328218550ACE00507B9A /* AboutViewController.m in Sources */,
 				3AC4F7861BFD2659008E42F7 /* Card.swift in Sources */,
@@ -1254,7 +1253,6 @@
 				3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */,
 				3AAE4C4B1CA7105A0039F822 /* Analytics.swift in Sources */,
 				3A3AA9A91CE13011003F21EE /* DebugTimer.swift in Sources */,
-				3A6D51D51A2284540004951E /* DeckHistoryPopup.m in Sources */,
 				3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */,
 				3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */,
 				3A3C1E161BF7525B000311FA /* Faction.swift in Sources */,

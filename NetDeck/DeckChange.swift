@@ -18,8 +18,8 @@ import Foundation
         self.count = count
     }
 
-    var card: Card? {
-        return CardManager.cardBy(code: code)
+    var card: Card {
+        return CardManager.cardBy(code: code) ?? Card.null()
     }
 
     //MARK: NSCoding

@@ -483,7 +483,7 @@ import Marshal
             self.lastChanges.cards = [String: Int]()
             
             for cc in self.allCards {
-                self.lastChanges.cards![cc.card.code] = cc.count
+                self.lastChanges.cards[cc.card.code] = cc.count
             }
             
             if self.revisions.count == 0 {
@@ -516,27 +516,23 @@ import Marshal
         if self.revisions.count > 0 {
             let dcs = self.revisions[0]
             
-            if let lastSavedCards = dcs.cards {
-                let lastSavedCodes = lastSavedCards.keys
-                for code in lastSavedCodes {
-                    let oldQty = lastSavedCards[code]!
-                    let newQty = cards[code]
-                    
-                    if newQty == nil {
-                        self.lastChanges.addCardCode(code, copies: -oldQty)
-                    } else {
-                        let diff = oldQty - newQty!
-                        if diff != 0 {
-                            self.lastChanges.addCardCode(code, copies: diff)
-                        }
+            for (code, oldQty) in dcs.cards {
+                let newQty = cards[code]
+                
+                if newQty == nil {
+                    self.lastChanges.addCardCode(code, copies: -oldQty)
+                } else {
+                    let diff = oldQty - newQty!
+                    if diff != 0 {
+                        self.lastChanges.addCardCode(code, copies: diff)
                     }
                 }
-                
-                for code in cards.keys {
-                    if !lastSavedCodes.contains(code) {
-                        let newQty = cards[code]
-                        self.lastChanges.addCardCode(code, copies: newQty!)
-                    }
+            }
+            
+            for code in cards.keys {
+                if !dcs.cards.keys.contains(code) {
+                    let newQty = cards[code]
+                    self.lastChanges.addCardCode(code, copies: newQty!)
                 }
             }
         }
