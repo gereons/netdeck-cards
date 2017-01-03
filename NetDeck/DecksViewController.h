@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gereon Steffens. All rights reserved.
 //
 
-#import "UIScrollView+EmptyDataSet.h"
+@import DZNEmptyDataSet;
 
 @interface DecksViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
@@ -24,7 +24,7 @@
 @property NSArray<NSMutableArray<Deck*>*>* decks;
 
 @property NSString* filterText;
-@property NRFilter filterType;
+@property NSInteger filterType; // actually NRFilter
 
 -(id) initWithCardFilter:(Card*)card;
 

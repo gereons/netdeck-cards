@@ -10,3 +10,4 @@
 
 #import "BrowserResultViewController.h"
 #import "DeckListViewController.h"
+#import "DecksViewController.h"

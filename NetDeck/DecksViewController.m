@@ -34,8 +34,8 @@ static NRDeckState _filterState = NRDeckStateNone;
 static NRDeckListSort _sortType = NRDeckListSortByName;
 static NRFilter _filterType = NRFilterAll;
 
--(NRFilter) filterType { return _filterType; }
--(void) setFilterType:(NRFilter)filterType { _filterType = filterType; }
+-(NSInteger) filterType { return _filterType; } // actually NRFilter
+-(void) setFilterType:(NSInteger)filterType { _filterType = filterType; } // actually NRFilter
 -(NRDeckListSort) sortType { return _sortType; }
 -(void) setSortType:(NRDeckListSort)sortType { _sortType = sortType; }
 -(NRDeckState) filterState { return _filterState; }
