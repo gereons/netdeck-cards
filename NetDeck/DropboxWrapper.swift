@@ -3,7 +3,7 @@
 //  NetDeck
 //
 //  Created by Gereon Steffens on 13.02.16.
-//  Copyright © 2016 Gereon Steffens. All rights reserved.
+//  Copyright © 2017 Gereon Steffens. All rights reserved.
 //
 
 // obj-c callable interface to the new swift-based dropbox API

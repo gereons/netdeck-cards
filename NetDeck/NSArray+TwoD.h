@@ -3,7 +3,7 @@
 //  Net Deck
 //
 //  Created by Gereon Steffens on 17.08.15.
-//  Copyright © 2016 Gereon Steffens. All rights reserved.
+//  Copyright © 2017 Gereon Steffens. All rights reserved.
 //
 
 // convenience class for "2D" NSArrays of NSArrays

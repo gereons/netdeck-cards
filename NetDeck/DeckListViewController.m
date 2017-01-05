@@ -3,7 +3,7 @@
 //  Net Deck
 //
 //  Created by Gereon Steffens on 08.12.13.
-//  Copyright © 2016 Gereon Steffens. All rights reserved.
+//  Copyright © 2017 Gereon Steffens. All rights reserved.
 //
 
 @import SVProgressHUD;
