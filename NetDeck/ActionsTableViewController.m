@@ -7,7 +7,6 @@
 //
 
 #import "ActionsTableViewController.h"
-#import "AboutViewController.h"
 #import "CardFilterViewController.h"
 #import "BrowserFilterViewController.h"
 #import "SavedDecksList.h"
@@ -302,7 +301,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             
         case NRMenuAbout:
         {
-            AboutViewController* about = [[AboutViewController alloc] initWithNibName:@"AboutView" bundle:nil];
+            AboutViewController* about = [[AboutViewController alloc] init];
             
             self.navController = [[UINavigationController alloc] initWithRootViewController:about];
             detailViewManager.detailViewController = self.navController;
