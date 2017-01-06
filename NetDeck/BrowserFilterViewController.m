@@ -9,7 +9,6 @@
 #import "NRTypes.h"
 #import "BrowserFilterViewController.h"
 #import "BrowserResultViewController.h"
-#import "CardFilterPopover.h"
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 

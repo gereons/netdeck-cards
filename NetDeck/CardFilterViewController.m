@@ -10,7 +10,6 @@
 #import "NSArray+TwoD.h"
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
-#import "CardFilterPopover.h"
 
 @interface CardFilterViewController ()
 

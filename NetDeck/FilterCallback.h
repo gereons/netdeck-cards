@@ -8,6 +8,6 @@
 
 @protocol FilterCallback <NSObject>
 
--(void) filterCallback:(UIButton*)button type:(NSString*)type value:(NSObject*)value;
+-(void) filterCallback:(UIButton*)button type:(NSString*)type value:(id)value;
 
 @end
