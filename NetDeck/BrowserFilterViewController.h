@@ -46,6 +46,9 @@
 @property IBOutlet UILabel* limitedLabel;
 @property IBOutlet UISwitch* limitedSwitch;
 
+@property IBOutlet UILabel* mwlLabel;
+@property IBOutlet UISwitch* mwlSwitch;
+
 @property IBOutlet UILabel* summaryLabel;
 
 -(IBAction)sideSelected:(id)sender;
@@ -62,5 +65,6 @@
 -(IBAction)trashChanged:(id)sender;
 -(IBAction)uniqueChanged:(id)sender;
 -(IBAction)limitedChanged:(id)sender;
+-(IBAction)mwlChanged:(id)sender;
 
 @end

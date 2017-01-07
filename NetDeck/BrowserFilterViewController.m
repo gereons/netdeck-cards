@@ -136,6 +136,7 @@ static NSMutableArray<NSNumber*>* subtypeCollapsedSections;
     // switches
     self.uniqueLabel.text = l10n(@"Unique");
     self.limitedLabel.text = l10n(@"Limited");
+    self.mwlLabel.text = l10n(@"MWL");
 
     // buttons
     self.typeButton.tag = TYPE_BUTTON;
@@ -247,6 +248,7 @@ static NSMutableArray<NSNumber*>* subtypeCollapsedSections;
     // reset switches
     self.uniqueSwitch.on = NO;
     self.limitedSwitch.on = NO;
+    self.mwlSwitch.on = NO;
     
     NRPackUsage packUsage = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.BROWSER_PACKS];
     
@@ -343,6 +345,7 @@ static NSMutableArray<NSNumber*>* subtypeCollapsedSections;
     
     [self.cardList filterByLimited:self.limitedSwitch.on];
     [self.cardList filterByUniqueness:self.uniqueSwitch.on];
+    [self.cardList filterByMWL:self.mwlSwitch.on];
     
     [self filterWithText];
     
@@ -713,6 +716,12 @@ static NSMutableArray<NSNumber*>* subtypeCollapsedSections;
 -(IBAction)limitedChanged:(UISwitch*)sender
 {
     [self.cardList filterByLimited:sender.on];
+    [self updateResults];
+}
+
+-(IBAction)mwlChanged:(UISwitch*)sender
+{
+    [self.cardList filterByMWL:sender.on];
     [self updateResults];
 }
 

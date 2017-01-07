@@ -30,6 +30,7 @@ class CardList: NSObject {
     private var searchScope: NRSearchScope = .all
     private var unique: Bool = false
     private var limited: Bool = false
+    private var mwl: Bool = false
     private var faction4inf: NRFaction = .none   // faction for influence filter
     
     private var sortType: NRBrowserSort = .byType
@@ -101,6 +102,7 @@ class CardList: NSObject {
         self.searchScope = .all
         self.unique = false
         self.limited = false
+        self.mwl = false
         self.faction4inf = .none
     }
     
@@ -255,6 +257,10 @@ class CardList: NSObject {
         self.limited = limited
     }
     
+    func filterByMWL(_ mwl: Bool) {
+        self.mwl = mwl
+    }
+    
     func sortBy(_ sortType: NRBrowserSort) {
         self.sortType = sortType
     }
@@ -365,6 +371,13 @@ class CardList: NSObject {
         if predicates.count > 0 {
             let allPredicates = NSCompoundPredicate(andPredicateWithSubpredicates:predicates)
             filteredCards = filteredCards.filter { allPredicates.evaluate(with: $0) }
+        }
+        
+        if self.mwl {
+            let mwl = NRMWL(rawValue: UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)) ?? .none
+            if mwl != .none {
+                filteredCards = filteredCards.filter { $0.isMostWanted(mwl) }
+            }
         }
         
         return filteredCards
