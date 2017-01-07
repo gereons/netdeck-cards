@@ -96,10 +96,10 @@
 		3A78D3D51E164E9600E91584 /* IdentityCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D41E164E9600E91584 /* IdentityCardView.swift */; };
 		3A78D3D71E16513100E91584 /* CollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */; };
 		3A78EAE11DF4A2B80063A5A0 /* IphoneDrawSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78EAE01DF4A2B80063A5A0 /* IphoneDrawSimulator.swift */; };
+		3A7D9C3D1E20F7AB00D1410A /* BrowserResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D9C3C1E20F7AB00D1410A /* BrowserResultViewController.swift */; };
 		3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B0188172C100F0926F /* CardImageCell.xib */; };
 		3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */; };
 		3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8061E61972990E003ACF44 /* DeckDiffCell.xib */; };
-		3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A818EEA198E3A0900126495 /* BrowserResultViewController.m */; };
 		3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */; };
 		3A822F6E1CC2C13500305789 /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A822F6D1CC2C13500305789 /* BuildConfig.swift */; };
 		3A843A911B89D97F000CC60D /* IphoneDrawSimulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */; };
@@ -294,11 +294,10 @@
 		3A78D3D41E164E9600E91584 /* IdentityCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityCardView.swift; sourceTree = "<group>"; };
 		3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionHeader.swift; sourceTree = "<group>"; };
 		3A78EAE01DF4A2B80063A5A0 /* IphoneDrawSimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IphoneDrawSimulator.swift; sourceTree = "<group>"; };
+		3A7D9C3C1E20F7AB00D1410A /* BrowserResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserResultViewController.swift; sourceTree = "<group>"; };
 		3A7FD6B0188172C100F0926F /* CardImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageCell.xib; sourceTree = "<group>"; };
 		3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImagePopup.xib; sourceTree = "<group>"; };
 		3A8061E61972990E003ACF44 /* DeckDiffCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffCell.xib; sourceTree = "<group>"; };
-		3A818EE9198E3A0900126495 /* BrowserResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserResultViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A818EEA198E3A0900126495 /* BrowserResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserResultViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserResultViewController.xib; sourceTree = "<group>"; };
 		3A822F6D1CC2C13500305789 /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
 		3A8309861AE8C22D00FED08A /* NRCrashlytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRCrashlytics.h; sourceTree = "<group>"; };
@@ -894,8 +893,7 @@
 		3ACF2599198D47EE00E6267E /* Card Browser */ = {
 			isa = PBXGroup;
 			children = (
-				3A818EE9198E3A0900126495 /* BrowserResultViewController.h */,
-				3A818EEA198E3A0900126495 /* BrowserResultViewController.m */,
+				3A7D9C3C1E20F7AB00D1410A /* BrowserResultViewController.swift */,
 				3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */,
 				3A64B2511E17B0D800067049 /* BrowserCell.swift */,
 				3A64B24F1E17AD0A00067049 /* SmallBrowserCell.swift */,
@@ -1206,6 +1204,7 @@
 				3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */,
 				3A48BE8A1E17E16000B5DD3F /* LargeCardCell.swift in Sources */,
 				3A5EBE991E0FF3430096E2F5 /* StrengthStats.swift in Sources */,
+				3A7D9C3D1E20F7AB00D1410A /* BrowserResultViewController.swift in Sources */,
 				3A84F8DC1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift in Sources */,
 				3A6CD8041CF7864C0090CEDB /* DetailViewManager.swift in Sources */,
 				3AB838611DC684EB0047B7DB /* BrowserImageCell.swift in Sources */,
@@ -1224,7 +1223,6 @@
 				3A19426A1DC7397800EB9CE5 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				3A3C1E1D1BF77F10000311FA /* CardCounter.swift in Sources */,
 				3A78D3D71E16513100E91584 /* CollectionViewSectionHeader.swift in Sources */,
-				3A818EEC198E3A0900126495 /* BrowserResultViewController.m in Sources */,
 				3A4C03581E1424400095809F /* DeckDiff.swift in Sources */,
 				3A3881D81CA5D73200DFF1BA /* NRDBHack.swift in Sources */,
 				3A5EBE971E0FF1250096E2F5 /* IceTypeStats.swift in Sources */,
@@ -1456,6 +1454,7 @@
 				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";

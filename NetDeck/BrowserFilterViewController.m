@@ -8,7 +8,7 @@
 
 #import "NRTypes.h"
 #import "BrowserFilterViewController.h"
-#import "BrowserResultViewController.h"
+// #import "BrowserResultViewController.h"
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
@@ -50,7 +50,7 @@ static NSMutableArray<NSNumber*>* subtypeCollapsedSections;
 {
     if ((self = [super initWithNibName:@"BrowserFilterViewController" bundle:nil]))
     {
-        self.browser = [[BrowserResultViewController alloc] initWithNibName:@"BrowserResultViewController" bundle:nil];
+        self.browser = [[BrowserResultViewController alloc] init];
         self.navController = [[UINavigationController alloc] initWithRootViewController:self.browser];
         
         self.role = NRRoleNone;

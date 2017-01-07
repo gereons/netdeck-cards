@@ -18,6 +18,11 @@ class BrowserCell: UITableViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.selectionStyle = .none
+    }
+    
     @IBAction func moreClicked(_ sender: UIButton) {
         BrowserResultViewController.showPopup(for: self.card, in: self, from: sender.frame)
     }

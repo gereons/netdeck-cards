@@ -8,7 +8,6 @@
 @class CardList;
 @class Deck;
 
-#import "BrowserResultViewController.h"
 #import "DeckListViewController.h"
 #import "DecksViewController.h"
 #import "FilterCallback.h"
