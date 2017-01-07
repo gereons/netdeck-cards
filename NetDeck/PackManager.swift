@@ -191,20 +191,7 @@ class PackManager: NSObject {
         assert(values.count == sections.count, "count mismatch")
         
         let result = TableData(sections: sections, andValues: values as NSArray)
-        let count = sections.count
-        
-        // collapse everything but the two last cycles
-        var collapsedSections = [Bool](repeating: true, count: count)
-        collapsedSections[0] = false
-        if count-1 > 0 {
-            collapsedSections[count-1] = false
-        }
-        if count-2 > 0 {
-            collapsedSections[count-2] = false
-        }
-        
-        result.collapsedSections = collapsedSections
-        return result
+        return collapseOldCycles(result)
     }
 
     private class func allKnownPacksForTableView() -> TableData {
@@ -227,7 +214,8 @@ class PackManager: NSObject {
             values.append(packs)
         }
         
-        return TableData(sections: sections, andValues: values as NSArray)
+        let result = TableData(sections: sections, andValues: values as NSArray)
+        return collapseOldCycles(result)
     }
     
     private class func allPacksAfterRotationForTableView() -> TableData {
@@ -246,7 +234,25 @@ class PackManager: NSObject {
             }
         }
         
-        return TableData(sections: sections, andValues: values as NSArray)
+        let result = TableData(sections: sections, andValues: values as NSArray)
+        return collapseOldCycles(result)
+    }
+    
+    private class func collapseOldCycles(_ data: TableData) -> TableData {
+        let count = data.sections.count
+        
+        // collapse everything but the two last cycles
+        var collapsedSections = [Bool](repeating: true, count: count)
+        collapsedSections[0] = false
+        if count-1 > 0 {
+            collapsedSections[count-1] = false
+        }
+        if count-2 > 0 {
+            collapsedSections[count-2] = false
+        }
+        
+        data.collapsedSections = collapsedSections
+        return data
     }
 
     class func packsUsedIn(deck: Deck) -> [String] {

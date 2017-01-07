@@ -158,14 +158,14 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.didSelectSection(_:)))
         view.addGestureRecognizer(tap)
         
-        let collapseButton = UIButton(type: .system)
-        collapseButton.frame = CGRect(x: 0, y: 0, width: 30, height: headerHeight)
-        collapseButton.tag = section
-        collapseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19)
-        collapseButton.addTarget(self, action: #selector(self.collapseSection(_:)), for: .touchUpInside)
-        view.addSubview(collapseButton)
-        
         if self.collapsedSections != nil {
+            let collapseButton = UIButton(type: .system)
+            collapseButton.frame = CGRect(x: 0, y: 0, width: 30, height: headerHeight)
+            collapseButton.tag = section
+            collapseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19)
+            collapseButton.addTarget(self, action: #selector(self.collapseSection(_:)), for: .touchUpInside)
+            view.addSubview(collapseButton)
+        
             let collapsed = self.collapsedSections![section]
             UIView.performWithoutAnimation {
                 collapseButton.setTitle(collapsed ? "▹" : "▿", for: .normal)

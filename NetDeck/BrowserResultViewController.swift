@@ -291,7 +291,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         }
         let card = self.values[indexPath.section][indexPath.row]
         
-        BrowserResultViewController.showPopup(for: card, in: self.view, from: cell.frame)
+        BrowserResultViewController.showPopup(for: card, in: collectionView, from: cell.frame)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
