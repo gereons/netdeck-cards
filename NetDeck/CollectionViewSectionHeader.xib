@@ -15,15 +15,20 @@
             <rect key="frame" x="0.0" y="0.0" width="500" height="22"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfy-NG-haR">
-                    <rect key="frame" x="5" y="1" width="486" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfy-NG-haR">
+                    <rect key="frame" x="15" y="1" width="470" height="21"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="0.96055269241333008" green="0.96052390336990356" blue="0.96054017543792725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Xfy-NG-haR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="1dr-t6-xSw"/>
+                <constraint firstItem="Xfy-NG-haR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="1" id="YD8-fF-qC4"/>
+                <constraint firstAttribute="trailing" secondItem="Xfy-NG-haR" secondAttribute="trailing" constant="15" id="vyL-eS-1BU"/>
+                <constraint firstAttribute="bottom" secondItem="Xfy-NG-haR" secondAttribute="bottom" id="y0x-Xs-4Ch"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

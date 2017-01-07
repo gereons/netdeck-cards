@@ -403,6 +403,14 @@
     return self.factionNames[section];
 }
 
+-(void) tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    UITableViewHeaderFooterView* header = (UITableViewHeaderFooterView*)view;
+    header.contentView.backgroundColor = [UIColor colorWithRGB:0xEBEBEC];
+    
+    Card* card = self.identities[section][0];
+    header.textLabel.textColor = card.factionColor;
+}
+
 #pragma mark collectionview
 
 -(UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

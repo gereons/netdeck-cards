@@ -145,7 +145,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableWidth, height: headerHeight))
-        view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+        view.backgroundColor = UIColor(rgb: 0xEBEBEC)
         view.tag = section
         view.isUserInteractionEnabled = true
         
