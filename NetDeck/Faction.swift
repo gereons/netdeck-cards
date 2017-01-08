@@ -16,11 +16,11 @@ class Faction: NSObject {
     static let runnerMiniFactions: [NRFaction] = [ .adam, .apex, .sunnyLebeau ]
     static let runnerFactionsAll = runnerFactionsCore + runnerMiniFactions
     
-    private static var runnerFactionNamesAll = [String]()
-    private static var runnerFactionNamesCore = [String]()
+    private(set) static var runnerFactionNamesAll = [String]()
+    private(set) static var runnerFactionNamesCore = [String]()
     
     static let corpFactions: [NRFaction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
-    private static var corpFactionNames = [String]()
+    private(set) static var corpFactionNames = [String]()
     
     private static var allFactions: TableData!
     private static var allFactionsCore: TableData!

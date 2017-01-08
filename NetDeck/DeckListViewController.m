@@ -11,7 +11,6 @@
 #import "NRTypes.h"
 #import "NSArray+TwoD.h"
 #import "DeckListViewController.h"
-#import "IdentitySelectionViewController.h"
 
 #import "CGRectUtils.h"
 

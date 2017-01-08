@@ -18,7 +18,6 @@ import SVProgressHUD
 /*
  remaining obj-c classes, rewrite in this order:
  
- 516 IdentitySelectionViewController.m
  598 SavedDecksList.m
  606 DecksViewController.m (base class for SavedDecksList and CompareDecksList)
  313 ActionsTableViewController.m
