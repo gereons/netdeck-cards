@@ -8,7 +8,6 @@
 
 #import "NRTypes.h"
 #import "BrowserFilterViewController.h"
-// #import "BrowserResultViewController.h"
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
@@ -145,6 +144,10 @@ static NSMutableArray<NSNumber*>* subtypeCollapsedSections;
     self.subtypeButton.tag = SUBTYPE_BUTTON;
     
     self.summaryLabel.font = [UIFont monospacedDigitSystemFontOfSize:15 weight:UIFontWeightRegular];
+    
+    NSInteger mwl = [[NSUserDefaults standardUserDefaults] integerForKey:SettingsKeys.MWL_VERSION];
+    self.mwlLabel.hidden = mwl == NRMWLNone;
+    self.mwlSwitch.hidden = mwl == NRMWLNone;
     
     [self resetAllButtons];
 }

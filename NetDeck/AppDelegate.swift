@@ -14,6 +14,19 @@ import SVProgressHUD
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
 // TODO: ImageCache: when Haneke is at Swift 3, test it as a replacement
 
+
+/*
+ remaining obj-c classes, rewrite in this order:
+ 
+ 516 IdentitySelectionViewController.m
+ 598 SavedDecksList.m
+ 606 DecksViewController.m (base class for SavedDecksList and CompareDecksList)
+ 313 ActionsTableViewController.m
+ 741 BrowserFilterViewController.m
+ 1223 CardFilterViewController.m
+ 1545 DeckListViewController.m
+*/
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var window: UIWindow?
