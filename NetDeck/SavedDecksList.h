@@ -8,6 +8,6 @@
 
 #import "DecksViewController.h"
 
-@interface SavedDecksList : DecksViewController
+@interface xSavedDecksList : DecksViewController
 
 @end

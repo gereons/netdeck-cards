@@ -12,7 +12,7 @@
 #import "NSArray+TwoD.h"
 #import "SavedDecksList.h"
 
-@interface SavedDecksList ()
+@interface xSavedDecksList ()
 
 @property UIBarButtonItem* editButton;
 @property UIBarButtonItem* importButton;
@@ -29,7 +29,7 @@
 
 @end
 
-@implementation SavedDecksList
+@implementation xSavedDecksList
 
 -(void) viewDidLoad
 {

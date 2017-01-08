@@ -143,6 +143,7 @@
 		3ABAD2F91B8275F8009E81F3 /* NSArray+TwoD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */; };
 		3ABAD2FE1B83A6D7009E81F3 /* IphoneIdentityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABAD2FC1B83A6D7009E81F3 /* IphoneIdentityViewController.xib */; };
 		3ABBE8041E2264AA00A1B583 /* IdentitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABBE8031E2264AA00A1B583 /* IdentitySelectionViewController.swift */; };
+		3ABBE8061E22B67A00A1B583 /* SavedDecksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABBE8051E22B67A00A1B583 /* SavedDecksList.swift */; };
 		3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */; };
 		3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */; };
 		3AC4685C1DC6979D00DE8788 /* CardImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC4685B1DC6979D00DE8788 /* CardImageViewCell.swift */; };
@@ -363,6 +364,7 @@
 		3ABAD2F81B8275F8009E81F3 /* NSArray+TwoD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+TwoD.m"; sourceTree = "<group>"; };
 		3ABAD2FC1B83A6D7009E81F3 /* IphoneIdentityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IphoneIdentityViewController.xib; sourceTree = "<group>"; };
 		3ABBE8031E2264AA00A1B583 /* IdentitySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentitySelectionViewController.swift; sourceTree = "<group>"; };
+		3ABBE8051E22B67A00A1B583 /* SavedDecksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedDecksList.swift; sourceTree = "<group>"; };
 		3ABC2EE0197598E9007BBE3A /* SavedDecksList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedDecksList.h; sourceTree = "<group>"; };
 		3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SavedDecksList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawSimulatorViewController.xib; sourceTree = "<group>"; };
@@ -859,6 +861,7 @@
 				3AB9BD5618FADB51004EAF10 /* DecksViewController.h */,
 				3AB9BD5718FADB51004EAF10 /* DecksViewController.m */,
 				3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */,
+				3ABBE8051E22B67A00A1B583 /* SavedDecksList.swift */,
 				3ABC2EE0197598E9007BBE3A /* SavedDecksList.h */,
 				3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */,
 				3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */,
@@ -1241,6 +1244,7 @@
 				3AE0C8111E168FC70046376F /* CardFilterThumbView.swift in Sources */,
 				3A6507DB1E13E11400231D68 /* DeckAnalysisViewController.swift in Sources */,
 				3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */,
+				3ABBE8061E22B67A00A1B583 /* SavedDecksList.swift in Sources */,
 				3AAE4C4B1CA7105A0039F822 /* Analytics.swift in Sources */,
 				3A3AA9A91CE13011003F21EE /* DebugTimer.swift in Sources */,
 				3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */,
