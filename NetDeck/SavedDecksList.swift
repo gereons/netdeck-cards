@@ -64,9 +64,7 @@ class SavedDecksList: DecksViewController {
     
     func importDecks(_ sender: UIBarButtonItem) {
         if self.popup != nil {
-            self.popup.dismiss(animated: false, completion: nil)
-            self.popup = nil
-            return
+            return self.dismissPopup()
         }
         
         let settings = UserDefaults.standard
@@ -112,9 +110,7 @@ class SavedDecksList: DecksViewController {
     
     func exportDecks(_ sender: UIBarButtonItem) {
         if self.popup != nil {
-            self.popup.dismiss(animated: false, completion: nil)
-            self.popup = nil
-            return
+            return self.dismissPopup()
         }
         
         let settings = UserDefaults.standard
@@ -161,7 +157,6 @@ class SavedDecksList: DecksViewController {
     func exportAllToDropbox() {
         for arr in self.decks {
             for deck in arr {
-                let deck = deck as! Deck
                 if deck.identity != nil {
                     DeckExport.asOctgn(deck, autoSave: true)
                 }
@@ -175,7 +170,6 @@ class SavedDecksList: DecksViewController {
         var decks = [Deck]()
         for arr in self.decks {
             for deck in arr {
-                let deck = deck as! Deck
                 decks.append(deck)
             }
         }
@@ -204,7 +198,7 @@ class SavedDecksList: DecksViewController {
         let section = sender.tag & 1
         let indexPath = IndexPath(row: row, section: section)
         
-        let deck = self.decks[section][row] as! Deck
+        let deck = self.decks[section][row]
         
         let cell = self.tableView.cellForRow(at: indexPath)
     
@@ -244,15 +238,13 @@ class SavedDecksList: DecksViewController {
     
     func newDeck(_ sender: Any) {
         if self.popup != nil {
-            self.popup.dismiss(animated: false, completion: nil)
-            self.popup = nil
-            return
+            return self.dismissPopup()
         }
 
         var role = NRRole.none
-        if self.filterType == NRFilter.runner.rawValue {
+        if self.filterType == .runner {
             role = .runner
-        } else if self.filterType == NRFilter.corp.rawValue {
+        } else if self.filterType == .corp {
             role = .corp
         }
         
@@ -302,7 +294,7 @@ class SavedDecksList: DecksViewController {
             return
         }
         
-        let deck = self.decks[indexPath.section][indexPath.row] as! Deck
+        let deck = self.decks[indexPath.section][indexPath.row]
         
         self.popup = UIAlertController.actionSheet(title: nil, message: nil)
         self.popup.addAction(UIAlertAction(title: "Duplicate".localized()) { action in
@@ -384,9 +376,7 @@ class SavedDecksList: DecksViewController {
     // MARK: - edit toggle
     func toggleEdit(_ sender: UIButton) {
         if self.popup != nil {
-            self.popup.dismiss(animated: false, completion: nil)
-            self.popup = nil
-            return
+            return self.dismissPopup()
         }
         
         let editing = !self.tableView.isEditing
@@ -420,7 +410,7 @@ class SavedDecksList: DecksViewController {
         cell.infoButton?.tag = indexPath.row * 10 + indexPath.section
         cell.infoButton?.addTarget(self, action: #selector(self.statePopup(_:)), for: .touchUpInside)
         
-        let deck = self.decks[indexPath.section][indexPath.row] as! Deck
+        let deck = self.decks[indexPath.section][indexPath.row] 
         
         let icon: String
         switch deck.state {
@@ -439,8 +429,8 @@ class SavedDecksList: DecksViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let deck = self.decks[indexPath.section][indexPath.row] as! Deck
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let deck = self.decks[indexPath.section][indexPath.row]
         
         if self.diffSelection {
             assert(self.diffDeck != nil, "no diff deck")
@@ -457,11 +447,11 @@ class SavedDecksList: DecksViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let deck = self.decks[indexPath.section][indexPath.row] as! Deck
+            let deck = self.decks[indexPath.section][indexPath.row]
             
-            self.decks[indexPath.section].removeObject(at: indexPath.row)
+            self.decks[indexPath.section].remove(at: indexPath.row)
             
             NRDB.sharedInstance.deleteDeck(deck.netrunnerDbId)
             if let filename = deck.filename {
@@ -476,17 +466,17 @@ class SavedDecksList: DecksViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return .delete
     }
     
     // MARK: - empty set
     
-    override func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
         if self.filterText.length > 0 {
             return nil
         }
@@ -496,7 +486,7 @@ class SavedDecksList: DecksViewController {
         return NSAttributedString(string: "New Deck".localized(), attributes: attrs)
     }
     
-    override func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
         self.newDeck(button)
     }
     

@@ -10,6 +10,7 @@ import Foundation
 
 class DeckState: NSObject {
 
+    static let arrow = " ▾"
     private static let states: [NRDeckState: String] = [
         .none: "All",
         .retired: "Retired",
@@ -26,6 +27,10 @@ class DeckState: NSObject {
     }
     
     class func buttonLabelFor(_ state: NRDeckState) -> String {
-        return labelFor(state) + " ▾"
+        return labelFor(state) + arrow
+    }
+    
+    class func possibleTitles() -> [String] {
+        return states.keys.map { DeckState.buttonLabelFor($0) }
     }
 }

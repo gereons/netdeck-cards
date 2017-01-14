@@ -65,8 +65,9 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         topItem?.leftBarButtonItem = self.toggeViewButton
         
         // right buttons
-        self.sortButton = UIBarButtonItem(title: self.sortStr[self.sortType]! + " ▾", style: .plain, target: self, action: #selector(self.sortPopup(_:)))
-        let titles = self.sortStr.values.map { $0 + " ▾" }
+        let arrow = DeckState.arrow
+        self.sortButton = UIBarButtonItem(title: self.sortStr[self.sortType]! + arrow, style: .plain, target: self, action: #selector(self.sortPopup(_:)))
+        let titles = self.sortStr.values.map { $0 + arrow }
         self.sortButton.possibleTitles = Set<String>(titles)
         
         topItem?.rightBarButtonItem = self.sortButton
@@ -182,7 +183,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     func changeSortType(_ sort: NRBrowserSort) {
         self.sortType = sort
         
-        self.sortButton.title = self.sortStr[sort]! + " ▾"
+        self.sortButton.title = self.sortStr[sort]! + DeckState.arrow
         self.updateDisplay(self.cardList)
         self.popup = nil
     }

@@ -267,7 +267,7 @@ typedef NS_ENUM(NSInteger, NRMenuItem)
             }
             else
             {
-                decks = [[SavedDecksList alloc] initWithCardFilter:self.searchForCard];
+                decks = [[SavedDecksList alloc] initWithCard:self.searchForCard];
                 self.searchForCard = nil;
             }
             self.navController = [[UINavigationController alloc] initWithRootViewController:decks];

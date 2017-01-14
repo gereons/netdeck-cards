@@ -5,9 +5,7 @@
 @import UIKit;
 
 @class Card;
-@class CardList;
 @class Deck;
 
 #import "DeckListViewController.h"
-#import "DecksViewController.h"
 #import "FilterCallback.h"

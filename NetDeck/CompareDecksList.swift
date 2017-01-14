@@ -34,6 +34,10 @@ class CompareDecksList: DecksViewController {
     }
     
     func diffDecks(_ sender: UIBarButtonItem) {
+        if self.popup != nil {
+            return self.dismissPopup()
+        }
+        
         assert(self.decksToDiff.count == 2, "count must be 2")
         
         let d1 = DeckManager.loadDeckFromPath(self.decksToDiff[0])
@@ -62,7 +66,7 @@ class CompareDecksList: DecksViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath) as! DeckCell
         
-        let deck = self.decks[indexPath.section][indexPath.row] as! Deck
+        let deck = self.decks[indexPath.section][indexPath.row]
         
         cell.infoButton?.isHidden = true
         cell.accessoryType = .none
@@ -78,8 +82,8 @@ class CompareDecksList: DecksViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let deck = self.decks[indexPath.section][indexPath.row] as! Deck
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let deck = self.decks[indexPath.section][indexPath.row]
         let filename = deck.filename!
         
         if self.selectedRole != deck.role {
@@ -125,7 +129,7 @@ class CompareDecksList: DecksViewController {
         self.tableView.reloadData()
     }
     
-    override func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
         return nil
     }
     

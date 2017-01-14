@@ -10,9 +10,6 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-// TODO: crashlytics #193 https://fabric.io/none11111111111409123905/ios/apps/org.steffens.nrdb/issues/58789ace0aeb16625b0f9250
-// - multiple pushes of FilterViewController on iPhone?
-
 // TODO: investigate OOMs - memory warnings?
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
 // TODO: ImageCache: when Haneke is at Swift 3, test it as a replacement
