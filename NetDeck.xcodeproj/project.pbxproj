@@ -144,7 +144,6 @@
 		3ABAD2FE1B83A6D7009E81F3 /* IphoneIdentityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABAD2FC1B83A6D7009E81F3 /* IphoneIdentityViewController.xib */; };
 		3ABBE8041E2264AA00A1B583 /* IdentitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABBE8031E2264AA00A1B583 /* IdentitySelectionViewController.swift */; };
 		3ABBE8061E22B67A00A1B583 /* SavedDecksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABBE8051E22B67A00A1B583 /* SavedDecksList.swift */; };
-		3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */; };
 		3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */; };
 		3AC4685C1DC6979D00DE8788 /* CardImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC4685B1DC6979D00DE8788 /* CardImageViewCell.swift */; };
 		3AC4F7861BFD2659008E42F7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC4F7851BFD2659008E42F7 /* Card.swift */; };
@@ -365,8 +364,6 @@
 		3ABAD2FC1B83A6D7009E81F3 /* IphoneIdentityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IphoneIdentityViewController.xib; sourceTree = "<group>"; };
 		3ABBE8031E2264AA00A1B583 /* IdentitySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentitySelectionViewController.swift; sourceTree = "<group>"; };
 		3ABBE8051E22B67A00A1B583 /* SavedDecksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedDecksList.swift; sourceTree = "<group>"; };
-		3ABC2EE0197598E9007BBE3A /* SavedDecksList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedDecksList.h; sourceTree = "<group>"; };
-		3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SavedDecksList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ABDE5A318AFC52C00AFEA88 /* DrawSimulatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawSimulatorViewController.xib; sourceTree = "<group>"; };
 		3AC4685B1DC6979D00DE8788 /* CardImageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardImageViewCell.swift; sourceTree = "<group>"; };
 		3AC4F7851BFD2659008E42F7 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -862,8 +859,6 @@
 				3AB9BD5718FADB51004EAF10 /* DecksViewController.m */,
 				3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */,
 				3ABBE8051E22B67A00A1B583 /* SavedDecksList.swift */,
-				3ABC2EE0197598E9007BBE3A /* SavedDecksList.h */,
-				3ABC2EE1197598E9007BBE3A /* SavedDecksList.m */,
 				3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */,
 				3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */,
 				3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */,
@@ -1182,7 +1177,6 @@
 				3A285BA11D109A54007EC30F /* EmptyDetailViewController.swift in Sources */,
 				3A39FBC81CB96F6B000F1B23 /* BrowserViewController.swift in Sources */,
 				3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */,
-				3ABC2EE2197598E9007BBE3A /* SavedDecksList.m in Sources */,
 				3A114EBF1C6F7FDB00BF8C3C /* DropboxWrapper.swift in Sources */,
 				3A78D3D31E164CC400E91584 /* IdentityViewCell.swift in Sources */,
 				3A3375561E1ACDAA002E3B6E /* DeckHistoryPopup.swift in Sources */,
