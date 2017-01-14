@@ -52,6 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         var setsOk = false
         var cardsOk = false
         
+        // make sure the Library/Application Support directory exists
+        self.ensureAppSupportDirectoryExists()
+        
         let language = UserDefaults.standard.string(forKey: SettingsKeys.LANGUAGE) ?? "en"
         setsOk = PackManager.setupFromFiles(language)
         // print("app start, setsOk=\(setsOk)")
@@ -290,6 +293,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             }
         }
         return version
+    }
+    
+    private func ensureAppSupportDirectoryExists() {
+        let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
+        let supportDirectory = paths[0]
+        let fileManager = FileManager.default
+        
+        if !fileManager.fileExists(atPath: supportDirectory) {
+            print("no app support dir - creating it")
+            try? fileManager.createDirectory(atPath: supportDirectory, withIntermediateDirectories: true, attributes: nil)
+        }
     }
     
     // utility method: set the excludeFromBackup flag on the specified path
