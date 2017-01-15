@@ -102,10 +102,6 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     func showFilters(_ sender: UIBarButtonItem) {
         if self.filterViewController == nil {
             self.filterViewController = FilterViewController()

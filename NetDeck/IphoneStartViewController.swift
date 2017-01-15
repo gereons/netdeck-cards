@@ -76,10 +76,6 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         let _ = CardUpdateCheck.checkCardUpdateAvailable(self)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     // this is my poor man's replacement for viewWillAppear - I can't figure out why this isn't called when this view is
     // back on top :(
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {

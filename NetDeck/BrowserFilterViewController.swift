@@ -391,7 +391,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
                 sections.append("Corp".localized())
             }
             
-            data = TableData(sections: sections, andValues: values as NSArray)
+            data = TableData(sections: sections, values: values)
             data.collapsedSections = [Bool](repeating: false, count: sections.count)
         } else {
             var arr: [String]
@@ -476,28 +476,28 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     }
     
     private func resetButton(_ tag: Button) {
-        let btn: UIButton
-        let pfx: String
+        let button: UIButton
+        let prefix: String
         switch tag {
         case .type:
-            btn = self.typeButton
-            pfx = "Type"
+            button = self.typeButton
+            prefix = "Type"
             self.selectedType = Constant.kANY
             self.selectedTypes = nil
             self.resetButton(.subtype)
         case .faction:
-            btn = self.factionButton
-            pfx = "Faction"
+            button = self.factionButton
+            prefix = "Faction"
         case .set:
-            btn = self.setButton
-            pfx = "Set"
+            button = self.setButton
+            prefix = "Set"
         case .subtype:
-            btn = self.subtypeButton
-            pfx = "Subtype"
+            button = self.subtypeButton
+            prefix = "Subtype"
         }
         
         self.selectedValues[tag] = Constant.kANY
-        btn.setTitle(pfx.localized() + ": " + Constant.kANY, for: .normal)
+        button.setTitle(prefix.localized() + ": " + Constant.kANY.localized(), for: .normal)
     }
     
     // MARK: - text search

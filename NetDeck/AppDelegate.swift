@@ -10,8 +10,6 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
-// TODO: remove deinit/removeObserver(self) where not needed
-
 // TODO: investigate OOMs - memory warnings?
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
 // TODO: ImageCache: when Haneke is at Swift 3, test it as a replacement

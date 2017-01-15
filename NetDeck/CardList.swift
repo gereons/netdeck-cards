@@ -406,13 +406,15 @@ class CardList: NSObject {
             case .byTypeFaction, .bySetFaction:
                 if c1.factionStr < c2.factionStr { return true }
                 if c1.factionStr > c2.factionStr { return false }
-            case .bySetType, .byFaction:
+            case .bySetType:
                 if c1.type.rawValue < c2.type.rawValue { return true }
                 if c1.type.rawValue > c2.type.rawValue { return false }
             default: break
             }
             
-            return c1.name.lowercased() < c2.name.lowercased()
+            let n1 = c1.name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
+            let n2 = c2.name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
+            return n1 < n2
         }
     }
     

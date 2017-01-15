@@ -30,21 +30,25 @@ class TableData: NSObject {
         self.init(sections: [""], andValues: [values])
     }
     
-    convenience init(strings: [String]) {
+    @nonobjc convenience init(strings: [String]) {
         self.init(sections: [""], andValues: [strings as NSArray])
     }
     
+    @nonobjc convenience init(sections: [String], values: [[String]]) {
+        self.init(sections: sections, andValues: values as NSArray)
+    }
+    
     class func convertPacksData(_ rawPacks: TableData) -> TableData {
-        let strValues = NSMutableArray()
+        var strValues = [[String]]()
         for packs in rawPacks.values as! [[Pack]] {
-            let strings = NSMutableArray()
+            var strings = [String]()
             for pack in packs {
-                strings.add(pack.name)
+                strings.append(pack.name)
             }
-            strValues.add(strings)
+            strValues.append(strings)
         }
         
-        let stringPacks = TableData(sections:rawPacks.sections, andValues:strValues)
+        let stringPacks = TableData(sections:rawPacks.sections, values: strValues)
         stringPacks.collapsedSections = rawPacks.collapsedSections
         return stringPacks
     }

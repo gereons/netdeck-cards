@@ -152,7 +152,6 @@
 		3ACC9A5D1DC61B7B00C54EF3 /* CardThumbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACC9A5C1DC61B7B00C54EF3 /* CardThumbView.swift */; };
 		3ACCEE2018699FCA00CC3537 /* LargeCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */; };
 		3ACE03931882CEC600F22B87 /* ImportDecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */; };
-		3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */; };
 		3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */; };
 		3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD066811896D5B800FF1666 /* SmallCardCell.xib */; };
 		3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */; };
@@ -372,8 +371,6 @@
 		3ACC9A5C1DC61B7B00C54EF3 /* CardThumbView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardThumbView.swift; sourceTree = "<group>"; };
 		3ACCEE1F18699FCA00CC3537 /* LargeCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargeCardCell.xib; sourceTree = "<group>"; };
 		3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportDecksViewController.xib; sourceTree = "<group>"; };
-		3ACF259B198D485F00E6267E /* BrowserFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserFilterViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserFilterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserFilterViewController.xib; sourceTree = "<group>"; };
 		3AD066811896D5B800FF1666 /* SmallCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallCardCell.xib; sourceTree = "<group>"; };
 		3AD3249118A93FA300D7AE5D /* DeckAnalysisViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckAnalysisViewController.xib; sourceTree = "<group>"; };
@@ -904,8 +901,6 @@
 			isa = PBXGroup;
 			children = (
 				3A500A741E2B8B3800FB4AC7 /* BrowserFilterViewController.swift */,
-				3ACF259B198D485F00E6267E /* BrowserFilterViewController.h */,
-				3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */,
 				3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */,
 			);
 			name = "Browser Filter";
@@ -1243,7 +1238,6 @@
 				3AAE4C4B1CA7105A0039F822 /* Analytics.swift in Sources */,
 				3A3AA9A91CE13011003F21EE /* DebugTimer.swift in Sources */,
 				3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */,
-				3ACF259E198D485F00E6267E /* BrowserFilterViewController.m in Sources */,
 				3A3C1E161BF7525B000311FA /* Faction.swift in Sources */,
 				3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */,
 				3AEEBB671C00C9FF00CB6053 /* CardManager.swift in Sources */,

@@ -296,7 +296,10 @@ import Marshal
                     return c1.programType < c2.programType
                 }
             }
-            return c1.name.lowercased() < c2.name.lowercased()
+            
+            let n1 = c1.name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
+            let n2 = c2.name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
+            return n1 < n2
         }
     }
     
