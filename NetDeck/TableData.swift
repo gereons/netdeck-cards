@@ -30,6 +30,10 @@ class TableData: NSObject {
         self.init(sections: [""], andValues: [values])
     }
     
+    convenience init(strings: [String]) {
+        self.init(sections: [""], andValues: [strings as NSArray])
+    }
+    
     class func convertPacksData(_ rawPacks: TableData) -> TableData {
         let strValues = NSMutableArray()
         for packs in rawPacks.values as! [[Pack]] {

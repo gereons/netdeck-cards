@@ -10,6 +10,8 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 
+// TODO: remove deinit/removeObserver(self) where not needed
+
 // TODO: investigate OOMs - memory warnings?
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
 // TODO: ImageCache: when Haneke is at Swift 3, test it as a replacement
@@ -18,7 +20,6 @@ import SVProgressHUD
 /*
  remaining obj-c classes, rewrite in this order:
  
- 741 BrowserFilterViewController.m
  313 ActionsTableViewController.m
  1223 CardFilterViewController.m
  1545 DeckListViewController.m
@@ -43,16 +44,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             Fabric.with([Crashlytics.self]);
         }
         
-        self.setBuiltinUserDefaults()
-        
-        var setsOk = false
-        var cardsOk = false
-        
         // make sure the Library/Application Support directory exists
         self.ensureAppSupportDirectoryExists()
         
-        let language = UserDefaults.standard.string(forKey: SettingsKeys.LANGUAGE) ?? "en"
-        setsOk = PackManager.setupFromFiles(language)
+        self.setBuiltinUserDefaults()
+        
+        let settings = UserDefaults.standard
+        let language = settings.string(forKey: SettingsKeys.LANGUAGE) ?? "en"
+        
+        var cardsOk = false
+        let setsOk = PackManager.setupFromFiles(language)
         // print("app start, setsOk=\(setsOk)")
         if setsOk {
             cardsOk = CardManager.setupFromFiles(language)
@@ -61,8 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         if setsOk && cardsOk {
             let _ = PrebuiltManager.setupFromFiles(language)
         }
-                
-        let settings = UserDefaults.standard
+        
         let useNrdb = settings.bool(forKey: SettingsKeys.USE_NRDB)
         let keepCredentials = settings.bool(forKey: SettingsKeys.KEEP_NRDB_CREDENTIALS)
         let fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever;

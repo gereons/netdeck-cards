@@ -68,6 +68,7 @@
 		3A4BDFD51DFD9F74002CC166 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4BDFD41DFD9F74002CC166 /* FilterViewController.swift */; };
 		3A4C03581E1424400095809F /* DeckDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C03571E1424400095809F /* DeckDiff.swift */; };
 		3A4E0F911DBAA56E00C49FD4 /* netrunner.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */; };
+		3A500A751E2B8B3800FB4AC7 /* BrowserFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A500A741E2B8B3800FB4AC7 /* BrowserFilterViewController.swift */; };
 		3A529E631CA57BF70061E065 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A529E621CA57BF70061E065 /* Reachability.swift */; };
 		3A531B271A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A531B261A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib */; };
 		3A56371419954B28006AD431 /* LargeBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A56371219954B28006AD431 /* LargeBrowserCell.xib */; };
@@ -263,6 +264,7 @@
 		3A4BDFD41DFD9F74002CC166 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		3A4C03571E1424400095809F /* DeckDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckDiff.swift; sourceTree = "<group>"; };
 		3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = netrunner.ttf; sourceTree = "<group>"; };
+		3A500A741E2B8B3800FB4AC7 /* BrowserFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserFilterViewController.swift; sourceTree = "<group>"; };
 		3A529E621CA57BF70061E065 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		3A531B261A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckHistorySectionHeaderView.xib; sourceTree = "<group>"; };
 		3A531B281A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DeckHistorySectionHeaderView.swift; sourceTree = "<group>"; };
@@ -901,6 +903,7 @@
 		3ACF259A198D482600E6267E /* Browser Filter */ = {
 			isa = PBXGroup;
 			children = (
+				3A500A741E2B8B3800FB4AC7 /* BrowserFilterViewController.swift */,
 				3ACF259B198D485F00E6267E /* BrowserFilterViewController.h */,
 				3ACF259C198D485F00E6267E /* BrowserFilterViewController.m */,
 				3ACF259D198D485F00E6267E /* BrowserFilterViewController.xib */,
@@ -1255,6 +1258,7 @@
 				3A9795361CF63EE100479ADF /* AppDelegate.swift in Sources */,
 				3A3D8CA71CA1C6EF002C73E3 /* Codes.swift in Sources */,
 				3AB219CD1E19868B00D8C75A /* CardImagePopup.swift in Sources */,
+				3A500A751E2B8B3800FB4AC7 /* BrowserFilterViewController.swift in Sources */,
 				3A6205211E19695000073BF8 /* DeckNotesPopup.swift in Sources */,
 				3ADBCA961DDA372800D988A5 /* InsetLabel.swift in Sources */,
 				3A1FD36A1DA956CA00DF50F1 /* SetSelectionViewController.swift in Sources */,

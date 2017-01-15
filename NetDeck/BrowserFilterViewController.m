@@ -11,7 +11,7 @@
 
 enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
-@interface BrowserFilterViewController ()
+@interface xBrowserFilterViewController ()
 
 @property BrowserResultViewController* browser;
 @property UINavigationController* navController;
@@ -36,7 +36,7 @@ enum { TYPE_BUTTON, FACTION_BUTTON, SET_BUTTON, SUBTYPE_BUTTON };
 
 @end
 
-@implementation BrowserFilterViewController
+@implementation xBrowserFilterViewController
 
 static NSMutableArray<NSNumber*>* subtypeCollapsedSections;
 

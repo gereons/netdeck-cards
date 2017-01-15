@@ -77,6 +77,14 @@ class CardManager: NSObject {
         maxCorpCost = -1
         maxTrash = -1
     }
+    
+    class func maxCost(for role: NRRole) -> Int {
+        switch role {
+        case .none: return max(maxCorpCost, maxRunnerCost)
+        case .runner: return maxRunnerCost
+        case .corp: return maxCorpCost
+        }
+    }
 
     class func cardBy(code: String) -> Card? {
         return allKnownCards[code]

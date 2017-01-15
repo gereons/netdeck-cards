@@ -8,7 +8,7 @@
 
 #import "ActionsTableViewController.h"
 #import "CardFilterViewController.h"
-#import "BrowserFilterViewController.h"
+// #import "BrowserFilterViewController.h"
 // #import "SavedDecksList.h"
 
 typedef NS_ENUM(NSInteger, NRMenuItem)
