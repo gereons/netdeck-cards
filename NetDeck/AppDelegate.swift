@@ -18,9 +18,8 @@ import SVProgressHUD
 /*
  remaining obj-c classes, rewrite in this order:
  
- 606 DecksViewController.m (base class for SavedDecksList and CompareDecksList)
- 313 ActionsTableViewController.m
  741 BrowserFilterViewController.m
+ 313 ActionsTableViewController.m
  1223 CardFilterViewController.m
  1545 DeckListViewController.m
 */
