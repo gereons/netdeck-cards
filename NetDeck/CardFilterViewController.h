@@ -9,7 +9,7 @@
 #import "FilterCallback.h"
 #import "DeckListViewController.h"
 
-@interface CardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilterCallback>
+@interface xCardFilterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilterCallback>
 
 @property DeckListViewController* deckListViewController;
 

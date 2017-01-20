@@ -11,7 +11,7 @@
 #import "CardFilterViewController.h"
 #import "DeckListViewController.h"
 
-@interface CardFilterViewController ()
+@interface xCardFilterViewController ()
 
 @property UIBarButtonItem* revertButton;
 @property (nonatomic) NRRole role;
@@ -37,7 +37,7 @@
 
 @end
 
-@implementation CardFilterViewController
+@implementation xCardFilterViewController
 
 #define LARGE_CELL_HEIGHT   140
 #define SMALL_CELL_HEIGHT   107

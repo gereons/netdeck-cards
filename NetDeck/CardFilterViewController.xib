@@ -42,7 +42,7 @@
                 <outlet property="tableViewTopMargin" destination="ZTc-IC-9Le" id="Flj-iO-9Kw"/>
                 <outlet property="typeButton" destination="mDZ-Vg-JNL" id="Wnu-5y-ILG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="Wru-pR-l5F"/>
-                <outlet property="viewMode" destination="nOt-DT-qaT" id="UqH-tX-Z4z"/>
+                <outlet property="viewModeControl" destination="nOt-DT-qaT" id="oIO-Q5-zRA"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

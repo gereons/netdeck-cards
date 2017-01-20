@@ -12,15 +12,13 @@ import SVProgressHUD
 
 // TODO: investigate OOMs - memory warnings?
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
-// TODO: ImageCache: when Haneke is at Swift 3, test it as a replacement
-
 
 /*
  remaining obj-c classes, rewrite in this order:
  
- 313 ActionsTableViewController.m
  1223 CardFilterViewController.m
  1545 DeckListViewController.m
+ 313 ActionsTableViewController.m
 */
 
 @UIApplicationMain
