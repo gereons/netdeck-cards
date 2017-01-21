@@ -235,11 +235,8 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func setResultFrames() {
-        if viewMode == .list {
-            self.tableViewTopMargin.constant = self.showAllFilters ? 0 : -129
-        } else {
-            self.collectionViewTopMargin.constant = self.showAllFilters ? 0 : -129
-        }
+        self.tableViewTopMargin.constant = self.showAllFilters ? 0 : -129
+        self.collectionViewTopMargin.constant = self.showAllFilters ? 0 : -129
     }
     
     func initCards() {
@@ -455,11 +452,11 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             return
         }
         
-        self.setResultFrames()
         self.tableViewBottomMargin.constant = 0
         self.collectionViewBottomMargin.constant = 0
-        self.tableViewTopMargin.constant = 0
-        self.collectionViewTopMargin.constant = 0
+        
+        self.setResultFrames()
+        
         UIView.animate(withDuration: animDuration) {
             self.tableView.layoutIfNeeded()
             self.collectionView.layoutIfNeeded()
@@ -543,17 +540,17 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView.isHidden = self.viewMode != .list
         
         self.reloadData()
-        self.setResultFrames()
         
         if let scrollTo = scrollToPath {
             if !self.tableView.isHidden {
                 self.tableView.scrollToRow(at: scrollTo, at: .top, animated: false)
             }
             if !self.collectionView.isHidden {
-                FIXME("test this:")
+                // sadly, this does not work:
                 // self.collectionView.scrollToItem(at: scrollTo, at: .top, animated: false)
+                // so we compute scroll offset manually
                 
-                var y = 0
+                let y: Int
                 if viewMode == .img2 {
                     y = scrollTo.row / 2 * (self.largeCellHeight + 3)
                 } else {

@@ -31,6 +31,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        FIXME("table height/keyboard after showing img is broken")
+        
         self.title = "Browser".localized()
         Analytics.logEvent("Browser", attributes: [ "Device": "iPhone" ])
         
