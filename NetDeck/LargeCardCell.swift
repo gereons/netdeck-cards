@@ -96,8 +96,8 @@ class LargeCardCell: CardCell {
         
         let influence = self.deck.influenceFor(cc)
         
-        if influence > 0 {
-            self.influenceLabel.text = "\(influence)"
+        if influence > 0 || card.isMostWanted(self.deck.mwl) {
+            self.influenceLabel.text = influence > 0 ? "\(influence)" : ""
             self.influenceLabel.textColor = cc.card.factionColor
             
             let inf = influence / cc.count

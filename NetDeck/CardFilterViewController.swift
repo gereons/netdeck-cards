@@ -112,7 +112,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         super.init(nibName: "CardFilterViewController", bundle: nil)
         
         self.role = role
-        self.deckListViewController.role = role.rawValue
+        self.deckListViewController.role = role
     }
     
     convenience init(role: NRRole, andFile file: String) {
@@ -403,7 +403,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             let cards = self.cards[0]
             if cards.count > 0 {
                 let card = cards[0]
-                self.deckListViewController.add(card)
+                self.deckListViewController.add(card: card)
                 let deck = self.deckListViewController.deck
                 self.setBackOrRevertButton(deck?.modified ?? false)
                 self.reloadData()
@@ -598,7 +598,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: "Faction", selected: selected)
     }
     
-    func filterCallback(_ button: UIButton!, type: String!, value object: Any!) {
+    func filterCallback(_ button: UIButton, type: String, value object: Any) {
         let value = object as? String
         let values = object as? Set<String>
         assert(value != nil || values != nil, "values")
@@ -815,7 +815,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             self.cardList.filterByStrength(num!)
         case "influence":
             assert(num != nil)
-            if let identity = self.deckListViewController.deck.identity {
+            if let identity = self.deckListViewController.deck?.identity {
                 self.cardList.filterByInfluence(num!, forFaction: identity.faction)
             } else {
                 self.cardList.filterByInfluence(num!)
@@ -943,7 +943,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         let card = self.cards[indexPath.section][indexPath.row]
-        self.deckListViewController.add(card)
+        self.deckListViewController.add(card: card)
         self.setBackOrRevertButton(self.deckListViewController.deck.modified)
         
         if viewMode == .list {

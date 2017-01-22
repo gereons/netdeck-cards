@@ -14,7 +14,7 @@
 
 #import "CGRectUtils.h"
 
-@interface DeckListViewController ()
+@interface xDeckListViewController ()
 
 @property NSArray<NSString*>* sections;
 @property NSArray<NSArray<CardCounter*>*>* cards;
@@ -46,7 +46,7 @@
 
 #define HISTORY_SAVE_INTERVAL   60
 
-@implementation DeckListViewController
+@implementation xDeckListViewController
 
 - (void) dealloc
 {
@@ -1192,7 +1192,7 @@
 {
     NSString* cellIdentifier = self.largeCells ? @"largeCardCell" : @"smallCardCell";
     CardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.delegate = self;
+    // cell.delegate = self;
     cell.separatorInset = UIEdgeInsetsZero;
     
     CardCounter* cc = [self.cards objectAtIndexPath:indexPath];

@@ -172,6 +172,8 @@
 		3AEF52011CCD53B300A831E0 /* NROutlineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF52001CCD53B300A831E0 /* NROutlineLabel.swift */; };
 		3AF04BB91D44DD8200CB859D /* JinetkiNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */; };
 		3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */; };
+		3AF23CB41E34DE6E007BF39C /* DeckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */; };
+		3AF23CB61E34E60C007BF39C /* FilterCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF23CB51E34E60C007BF39C /* FilterCallback.swift */; };
 		3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */; };
 		3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF697881C1DAC7300D254CE /* Notifications.swift */; };
 		3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */; };
@@ -386,11 +388,12 @@
 		3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OctgnImport.swift; sourceTree = "<group>"; };
 		3AE0C80E1E168ECA0046376F /* CardFilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterCell.swift; sourceTree = "<group>"; };
 		3AE0C8101E168FC70046376F /* CardFilterThumbView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterThumbView.swift; sourceTree = "<group>"; };
-		3AE9EA20198EA9E300DC867C /* FilterCallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FilterCallback.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AEEBB661C00C9FF00CB6053 /* CardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 		3AEF52001CCD53B300A831E0 /* NROutlineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NROutlineLabel.swift; sourceTree = "<group>"; };
 		3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JinetkiNet.swift; sourceTree = "<group>"; };
 		3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "NRDBAuthPopupViewController~iphone.xib"; sourceTree = "<group>"; };
+		3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckListViewController.swift; sourceTree = "<group>"; };
+		3AF23CB51E34E60C007BF39C /* FilterCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCallback.swift; sourceTree = "<group>"; };
 		3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterPopover.xib; sourceTree = "<group>"; };
 		3AF697881C1DAC7300D254CE /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hypergeometric.swift; sourceTree = "<group>"; };
@@ -555,7 +558,7 @@
 		3A3850CE1938826C00EB2EB0 /* Filtered Cards */ = {
 			isa = PBXGroup;
 			children = (
-				3AE9EA20198EA9E300DC867C /* FilterCallback.h */,
+				3AF23CB51E34E60C007BF39C /* FilterCallback.swift */,
 				3A37F4A81E2FE99A005D7456 /* CardFilterViewController.swift */,
 				3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */,
 				3AE0C80E1E168ECA0046376F /* CardFilterCell.swift */,
@@ -663,6 +666,7 @@
 		3A8532371854F8E200507B9A /* Deck List */ = {
 			isa = PBXGroup;
 			children = (
+				3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */,
 				3AA440F51854EF720051D4B0 /* DeckListViewController.h */,
 				3AA440F61854EF720051D4B0 /* DeckListViewController.m */,
 				3AA440F71854EF720051D4B0 /* DeckListViewController.xib */,
@@ -1201,6 +1205,7 @@
 				3A2BF9DA1DC6564B00AFA36E /* CardImageCell.swift in Sources */,
 				3ABAD2F91B8275F8009E81F3 /* NSArray+TwoD.m in Sources */,
 				3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */,
+				3AF23CB61E34E60C007BF39C /* FilterCallback.swift in Sources */,
 				3A41DA871BF8785C003CB7E1 /* PackManager.swift in Sources */,
 				3A3798B61D70A54B00F94658 /* PrebuiltSelectionViewController.swift in Sources */,
 				3A92DFD81CBA59EE0043F2F6 /* BrowserValuePicker.swift in Sources */,
@@ -1250,6 +1255,7 @@
 				3A9795361CF63EE100479ADF /* AppDelegate.swift in Sources */,
 				3A3D8CA71CA1C6EF002C73E3 /* Codes.swift in Sources */,
 				3AB219CD1E19868B00D8C75A /* CardImagePopup.swift in Sources */,
+				3AF23CB41E34DE6E007BF39C /* DeckListViewController.swift in Sources */,
 				3A500A751E2B8B3800FB4AC7 /* BrowserFilterViewController.swift in Sources */,
 				3A6205211E19695000073BF8 /* DeckNotesPopup.swift in Sources */,
 				3ADBCA961DDA372800D988A5 /* InsetLabel.swift in Sources */,

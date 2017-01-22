@@ -7,7 +7,7 @@
 //
 
 
-@interface DeckListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate>
+@interface xDeckListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate>
 
 @property IBOutlet UITableView* tableView;
 @property IBOutlet UICollectionView* collectionView;
