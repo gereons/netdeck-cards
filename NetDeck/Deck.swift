@@ -636,6 +636,7 @@ import Marshal
     convenience required init(object: MarshaledObject) throws {
         self.init()
         
+        self.state = UserDefaults.standard.bool(forKey: SettingsKeys.CREATE_DECK_ACTIVE) ? .active : .testing
         self.name = try object.value(for: "name")
         self.notes = try object.value(for: "description")
         let id: Int = try object.value(for: "id")

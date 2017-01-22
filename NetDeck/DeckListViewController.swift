@@ -78,8 +78,11 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             assert(self.role == deck.role, "role mismatch")
         }
         
-        self.deckNameLabel.text = self.deck?.name
+        if self.deck == nil {
+            self.deck = Deck(role: self.role)
+        }
         
+        self.deckNameLabel.text = self.deck.name
         self.initCards()
         
         self.parent?.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
@@ -123,7 +126,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let img = UIImage(named: "netrunnerdb_com")?.withRenderingMode(.alwaysOriginal)
         self.nrdbButton = UIBarButtonItem(image: img, style: .plain, target: self, action: #selector(self.nrdbButtonClicked(_:)))
         
-        self.stateButton = UIBarButtonItem(title: DeckState.buttonLabelFor(self.deck?.state ?? .none), style: .plain, target: self, action: #selector(self.changeState(_:)))
+        self.stateButton = UIBarButtonItem(title: DeckState.buttonLabelFor(self.deck.state), style: .plain, target: self, action: #selector(self.changeState(_:)))
         
         self.stateButton.possibleTitles = Set<String>(DeckState.possibleTitles())
         
@@ -151,9 +154,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.analysisButton.setTitle("Analysis".localized(), for: .normal)
         self.notesButton.setTitle("Notes".localized(), for: .normal)
         self.historyButton.setTitle("History".localized(), for: .normal)
-        if let deck = self.deck {
-            self.historyButton.isEnabled = deck.filename != nil && deck.revisions.count > 0
-        }
+        self.historyButton.isEnabled = deck.filename != nil && deck.revisions.count > 0
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.identitySelected(_:)), name: Notifications.selectIdentity, object: nil)
@@ -187,13 +188,13 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let deck = self.deck, deck.cards.count > 0 || deck.identity != nil {
+        if self.deck.cards.count > 0 || self.deck.identity != nil {
             NotificationCenter.default.post(name: Notifications.deckChanged, object: self, userInfo: [ "initialLoad": true])
         }
         
         self.initializing = false
         
-        if self.deck?.identity == nil && self.filename == nil && self.deck.cards.count == 0 {
+        if self.deck.identity == nil && self.filename == nil && self.deck.cards.count == 0 {
             self.selectIdentity(self)
         }
         
@@ -211,6 +212,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             self.progressView.isHidden = true
         }
+        
+        self.stateButton.title = DeckState.buttonLabelFor(self.deck.state)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -362,7 +365,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.showOfflineAlert()
                 }
             })
-            alert.addAction(UIAlertAction(title: "Publish Deck".localized()) { action in
+            alert.addAction(UIAlertAction(title: "Publish deck".localized()) { action in
                 if Reachability.online {
                     Analytics.logEvent("Publish Deck")
                     self.publishDeck(self.deck)
@@ -387,7 +390,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.saveDeckToNetrunnerDb()
             })
             
-            alert.show()
+            self.present(alert, animated: false, completion: nil)
         } else {
             let msg = "This deck is not (yet) linked to a deck on NetrunnerDB.com".localized()
             let alert = UIAlertController.alert(title: nil, message: msg)
@@ -397,7 +400,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
                 Analytics.logEvent("Save to NRDB")
                 self.saveDeckToNetrunnerDb()
             })
-            alert.show()
+            self.present(alert, animated: false, completion: nil)
         }
     }
     
@@ -500,12 +503,12 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - duplicate deck
     
-    func duplicateDeck(_ sender: Any) {
+    func duplicateDeck(_ sender: UIBarButtonItem) {
         if self.actionSheet != nil {
             return self.dismissActionSheet()
         }
         
-        let alert = UIAlertController.actionSheet(title: nil, message: "Duplicate this deck?".localized())
+        let alert = UIAlertController.alert(title: nil, message: "Duplicate this deck?".localized())
         
         alert.addAction(UIAlertAction(title: "No".localized(), style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes, switch to copy".localized()) { action in
@@ -527,7 +530,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
         })
-        alert.show()
+        
+        self.present(alert, animated: false, completion: nil)
     }
     
     // MARK: - deck state
@@ -606,7 +610,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         })
         
         NotificationCenter.default.post(name: Notifications.nameAlert, object: self)
-        nameAlert.show()
+        self.present(nameAlert, animated: false, completion: nil)
     }
     
     // MARK: - identity selection
@@ -855,7 +859,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         var footer = ""
         let card = self.deck.size == 1 ? "Card".localized() : "Cards".localized()
-        footer = "\(self.deck.size) \(card)"
+        footer = "\(deck.size) \(card)"
         if self.deck.identity != nil && !self.deck.isDraft {
             footer += String(format: " · %ld/%ld %@", self.deck.influence, self.deck.influenceLimit, "Influence".localized())
         } else {
@@ -878,6 +882,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.lastSetLabel.text = String(format: "Cards up to %@".localized(), set)
         
         self.deckNameLabel.text = self.deck.name
+        
+        self.stateButton.title = DeckState.buttonLabelFor(self.deck.state)
     }
     
     private func initCards() {
@@ -915,10 +921,10 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if !self.tableView.isHidden {
             self.tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
-            self.perform(#selector(self.flashTableCell(_:)), with: indexPath, afterDelay: 0.0)
+            self.perform(#selector(self.flashTableCell(_:)), with: indexPath, afterDelay: 0.01)
         } else {
             self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
-            self.perform(#selector(self.flashImageCell(_:)), with: indexPath, afterDelay: 0.0)
+            self.perform(#selector(self.flashImageCell(_:)), with: indexPath, afterDelay: 0.01)
         }
         
         if self.autoSave {
@@ -1038,15 +1044,14 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var index = indexPath.row
+        let index = indexPath.row
         var cc: CardCounter?
         if index == 0 {
             if self.deck.identity != nil {
                 cc = self.deck.identityCc
             }
         } else {
-            index -= 1
-            cc = self.deck.cards[index]
+            cc = self.deck.cards[index - 1]
         }
         
         guard let cell = collectionView.cellForItem(at: indexPath) else {
@@ -1059,9 +1064,10 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let popupHeight: CGFloat = 170 // full height (including the arrow) of the popup
         let labelHeight: CGFloat = 20 // height of the label underneath the image
-        var direction = UIPopoverArrowDirection.any
         
-        var popupOrigin = CGRect(origin: cell.center, size: CGSize(width: 1, height: 1))
+        var direction = UIPopoverArrowDirection.any
+        var popupOrigin = CGRect(x: cell.center.x, y: cell.frame.origin.y, width: 1, height: 1)
+        
         if topVisible && bottomVisible {
             direction = .up
         } else if topVisible {
@@ -1074,7 +1080,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         } else if bottomVisible {
             popupOrigin.origin.y += cell.frame.size.height - labelHeight
-            if rect.origin.y + rect.size.height >= 66 - popupHeight {
+            if rect.origin.y + rect.size.height >= 66 + popupHeight {
                 // bottom visible and enough space - show from bottom
                 direction = .down
             } else {
@@ -1095,7 +1101,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardImageCell", for: indexPath) as! CardImageCell
         
-        var index = indexPath.row
+        let index = indexPath.row
         var cc: CardCounter?
         
         if index == 0 {
@@ -1104,9 +1110,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             cell.copiesLabel.text = ""
         } else {
-            index -= 1
-            
-            let cc2 = self.deck.cards[index]
+            let cc2 = self.deck.cards[index - 1]
             cc = cc2
             
             if cc2.card.type == .agenda {
