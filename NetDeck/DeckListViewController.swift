@@ -65,8 +65,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FIXME("keyboard height weirdness?")
-        
         self.initializing = true
         let settings = UserDefaults.standard
         self.useNetrunnerDb = settings.bool(forKey: SettingsKeys.USE_NRDB)
@@ -267,12 +265,13 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: - keyboard show/hide
     
     func willShowKeyboard(_ notification: Notification) {
-        guard let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-            let animDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else {
-                return
-        }
+        guard
+            let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+            let animDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double
+        else { return }
 
-        let kbHeight = keyboardFrame.cgRectValue.height
+        let screenHeight = UIScreen.main.bounds.size.height
+        let kbHeight = screenHeight - keyboardFrame.cgRectValue.origin.y
         self.toolbarBottomMargin.constant = kbHeight
     
         UIView.animate(withDuration: animDuration) {

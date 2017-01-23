@@ -222,8 +222,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
             detailViewManager.detailViewController = self.navController
         case .browser:
             let browser = BrowserFilterViewController()
-            self.navController = UINavigationController(rootViewController: browser)
-            detailViewManager.detailViewController = self.navController
+            self.navigationController?.pushViewController(browser, animated: true)
         case .settings:
             self.settings = SettingsViewController()
             self.navController = UINavigationController(rootViewController: self.settings.iask)
