@@ -24,7 +24,7 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
-        self.collectionView.backgroundColor = UIColor.clear
+        self.collectionView.backgroundColor = .clear
         
         let nib = UINib(nibName: "CardImageViewCell", bundle: nil)
         self.collectionView.register(nib, forCellWithReuseIdentifier: "cardCell")

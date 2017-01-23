@@ -146,7 +146,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         
         let card = self.drawn[indexPath.row]
         cell!.textLabel?.text = card.name
-        cell!.textLabel?.textColor = self.played[indexPath.row] ? UIColor.lightGray : UIColor.black
+        cell!.textLabel?.textColor = self.played[indexPath.row] ? .lightGray : .black
         
         return cell!
     }

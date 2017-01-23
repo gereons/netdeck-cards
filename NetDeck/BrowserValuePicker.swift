@@ -26,7 +26,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.backgroundColor = .clear
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
     }
     

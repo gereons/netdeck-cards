@@ -481,7 +481,7 @@ class SavedDecksList: DecksViewController {
             return nil
         }
         
-        let color = self.tableView.tintColor ?? UIColor.blue
+        let color = self.tableView.tintColor ?? .blue
         let attrs: [String: Any] = [ NSFontAttributeName: UIFont.systemFont(ofSize: 17), NSForegroundColorAttributeName: color ]
         return NSAttributedString(string: "New Deck".localized(), attributes: attrs)
     }

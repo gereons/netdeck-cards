@@ -11,27 +11,27 @@ import CorePlot
 class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
     
     // color swatches from http://colorbrewer2.org
-    static let paired = [
-        UIColor.colorWithRGB(0xa6cee3),
-        UIColor.colorWithRGB(0x1f78b4),
-        UIColor.colorWithRGB(0xb2df8a),
-        UIColor.colorWithRGB(0x33a02c),
-        UIColor.colorWithRGB(0xfdbf6f),
-        UIColor.colorWithRGB(0xff7f00),
-        UIColor.colorWithRGB(0xe31a1c),
-        UIColor.colorWithRGB(0xfb9a99)
+    static let paired: [UIColor] = [
+        .colorWithRGB(0xa6cee3),
+        .colorWithRGB(0x1f78b4),
+        .colorWithRGB(0xb2df8a),
+        .colorWithRGB(0x33a02c),
+        .colorWithRGB(0xfdbf6f),
+        .colorWithRGB(0xff7f00),
+        .colorWithRGB(0xe31a1c),
+        .colorWithRGB(0xfb9a99)
     ]
     
-    static let blues = [
-        // UIColor.colorWithRGB(0xf7fbff), // too bright
-        UIColor.colorWithRGB(0xdeebf7),
-        UIColor.colorWithRGB(0xc6dbef),
-        UIColor.colorWithRGB(0x9ecae1),
-        UIColor.colorWithRGB(0x6baed6),
-        UIColor.colorWithRGB(0x4292c6),
-        UIColor.colorWithRGB(0x2171b5),
-        UIColor.colorWithRGB(0x08519c),
-        UIColor.colorWithRGB(0x08306b)
+    static let blues: [UIColor] = [
+        // .colorWithRGB(0xf7fbff), // too bright
+        .colorWithRGB(0xdeebf7),
+        .colorWithRGB(0xc6dbef),
+        .colorWithRGB(0x9ecae1),
+        .colorWithRGB(0x6baed6),
+        .colorWithRGB(0x4292c6),
+        .colorWithRGB(0x2171b5),
+        .colorWithRGB(0x08519c),
+        .colorWithRGB(0x08306b)
     ]
     
     var useBlues = false

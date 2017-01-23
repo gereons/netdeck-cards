@@ -31,7 +31,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewWillAppear(animated)
         
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.backgroundColor = .clear
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)        
     }
     

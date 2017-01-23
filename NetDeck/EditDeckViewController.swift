@@ -428,7 +428,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         self.statusLabel.text = footer
-        self.statusLabel.textColor = reasons.count == 0 ? self.view.tintColor : UIColor.red
+        self.statusLabel.textColor = reasons.count == 0 ? self.view.tintColor : .red
         
         self.drawButton.isEnabled = self.deck.size > 0
         

@@ -24,7 +24,7 @@ class EmptyDetailViewController: UIViewController {
         self.textLabel.text = "To use this app, you must first download card data.".localized()
         self.downloadButton.setTitle("Download".localized(), for: UIControlState())
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        self.navigationController?.navigationBar.barTintColor = .white
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTileLight)
         

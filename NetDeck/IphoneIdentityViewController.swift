@@ -43,7 +43,7 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.backgroundColor = .clear
         
         let tableTap = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap(_:)))
         tableTap.numberOfTapsRequired = 2
@@ -153,7 +153,7 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
-        cell.backgroundColor = UIColor.white
+        cell.backgroundColor = .white
         if indexPath == self.selectedIndexPath {
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
             cell.backgroundColor = UIColor(white: 0.97, alpha: 1.0)

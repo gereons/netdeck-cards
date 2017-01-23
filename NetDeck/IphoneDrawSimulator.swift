@@ -139,7 +139,7 @@ class IphoneDrawSimulator: UIViewController, UITableViewDelegate, UITableViewDat
         
         let card = self.drawn[indexPath.row]
         cell.textLabel?.text = card.name
-        cell.textLabel?.textColor = self.played[indexPath.row] ? UIColor.lightGray :  UIColor.black
+        cell.textLabel?.textColor = self.played[indexPath.row] ? .lightGray :  .black
         
         cell.card = card
         self.loadImageFor(cell: cell, card: card)

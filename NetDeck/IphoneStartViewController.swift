@@ -40,7 +40,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.backgroundColor = .clear
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -321,7 +321,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
             cell.detailTextLabel?.textColor = identity.factionColor
         } else {
             cell.detailTextLabel?.text = "No Identity".localized()
-            cell.detailTextLabel?.textColor = UIColor.black
+            cell.detailTextLabel?.textColor = .black
         }
         
         return cell
@@ -412,7 +412,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
             return nil
         }
         
-        let color = self.tableView.tintColor ?? UIColor.blue
+        let color = self.tableView.tintColor ?? .blue
         let attrs: [String: Any] = [ NSFontAttributeName: UIFont.systemFont(ofSize: 17.0), NSForegroundColorAttributeName: color ]
         
         let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable

@@ -34,7 +34,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.backgroundColor = .clear
         
         self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
         self.statusLabel.text = ""
@@ -165,7 +165,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         self.statusLabel.text = footer
-        self.statusLabel.textColor = reasons.count == 0 ? UIColor.darkGray : UIColor.red
+        self.statusLabel.textColor = reasons.count == 0 ? .darkGray : .red
     }
     
     // MARK: - search bar

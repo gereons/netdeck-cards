@@ -68,7 +68,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         self.searchBar.sizeToFit()
         
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.backgroundColor = .clear
         self.tableView.rowHeight = 44
         let nib = UINib(nibName: "DeckCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "deckCell")
@@ -104,7 +104,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        self.navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.navigationBar.topItem?.title = Device.isIphone ? "Import".localized() : "Import Deck".localized()
         
         let nc = NotificationCenter.default
@@ -458,7 +458,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             cell.identityLabel.textColor = identity.factionColor
         } else {
             cell.identityLabel.text = "No Identity".localized()
-            cell.identityLabel.textColor = UIColor.darkGray
+            cell.identityLabel.textColor = .darkGray
         }
         
         let summary: String
@@ -470,7 +470,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         
         cell.summaryLabel?.text = summary
         let valid = deck.checkValidity().count == 0
-        cell.summaryLabel?.textColor = valid ? UIColor.black : UIColor.red
+        cell.summaryLabel?.textColor = valid ? .black : .red
         
         cell.dateLabel.text = self.dateFormatter.string(from: deck.lastModified!)
         cell.nrdbIcon?.isHidden = self.source == .dropbox

@@ -88,7 +88,7 @@ extension NSRange {
 class CustomAlertVisualStyle: AlertVisualStyle {
     override init(alertStyle: AlertControllerStyle) {
         super.init(alertStyle: alertStyle)
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = .white
     }
 }
 
