@@ -65,6 +65,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        FIXME("keyboard height weirdness?")
+        
         self.initializing = true
         let settings = UserDefaults.standard
         self.useNetrunnerDb = settings.bool(forKey: SettingsKeys.USE_NRDB)

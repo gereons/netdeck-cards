@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -38,7 +38,7 @@
                     <autoresizingMask key="autoresizingMask"/>
                 </navigationBar>
                 <viewControllers>
-                    <tableViewController title="NRDB" clearsSelectionOnViewWillAppear="NO" id="9" customClass="ActionsTableViewController">
+                    <tableViewController title="NRDB" clearsSelectionOnViewWillAppear="NO" id="9" customClass="ActionsTableViewController" customModule="NetDeck">
                         <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                         <navigationItem key="navigationItem" title="Net Deck" id="11"/>
                     </tableViewController>

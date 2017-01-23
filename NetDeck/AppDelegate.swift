@@ -13,12 +13,6 @@ import SVProgressHUD
 // TODO: investigate OOMs - memory warnings?
 // TODO: make TableData type-safe (ie, rewrite all users in Swift)
 
-/*
- remaining obj-c classes, rewrite in this order:
- 
- 313 ActionsTableViewController.m
-*/
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var window: UIWindow?
