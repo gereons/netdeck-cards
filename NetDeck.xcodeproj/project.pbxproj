@@ -224,7 +224,6 @@
 		3A3622651849320C007F2854 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A3622691849320C007F2854 /* NetDeck-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetDeck-Info.plist"; sourceTree = "<group>"; };
 		3A36226B1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A36226F1849320C007F2854 /* NetDeck-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NetDeck-Prefix.pch"; sourceTree = "<group>"; };
 		3A36227C1849320C007F2854 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3A3622831849320C007F2854 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3A36228B1849320C007F2854 /* NetDeckTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetDeckTests-Info.plist"; sourceTree = "<group>"; };
@@ -307,7 +306,6 @@
 		3A84F8DB1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDBAuthPopupViewController.swift; sourceTree = "<group>"; };
 		3A8532781855084900507B9A /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		3A85328118550ACE00507B9A /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
-		3A904FCB1BF73722001C075A /* NetDeck-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NetDeck-Bridging-Header.h"; sourceTree = "<group>"; };
 		3A904FCC1BF73723001C075A /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		3A92DFD61CBA59EE0043F2F6 /* BrowserValuePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserValuePicker.swift; sourceTree = "<group>"; };
 		3A92DFD71CBA59EE0043F2F6 /* BrowserValuePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserValuePicker.xib; sourceTree = "<group>"; };
@@ -495,8 +493,6 @@
 				3A095E8D18BBC49C00C99FED /* Localizable.strings */,
 				3A3622691849320C007F2854 /* NetDeck-Info.plist */,
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
-				3A36226F1849320C007F2854 /* NetDeck-Prefix.pch */,
-				3A904FCB1BF73722001C075A /* NetDeck-Bridging-Header.h */,
 				3A6ECD291D85BDE7008FBF38 /* LaunchScreen.xib */,
 			);
 			name = "Supporting Files";
@@ -1426,7 +1422,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "NetDeck/NetDeck-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1462,7 +1458,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "NetDeck/NetDeck-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1542,7 +1538,7 @@
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "NetDeck/NetDeck-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
