@@ -34,6 +34,7 @@ class CardCell: UITableViewCell {
         super.prepareForReuse()
         
         self.name.text = nil
+        self.influenceLabel.text = nil
     }
 
     @IBAction func selectIdentity(_ sender: Any) {

@@ -1221,6 +1221,10 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(self.deck.mwl == .v1_1)) { action in
             self.setMwl(.v1_1, andOnesies: false)
         })
+        
+//        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
+//            self.setMwl(.v1_2, andOnesies: false)
+//        })
 
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
             self.setMwl(.none, andOnesies: true)

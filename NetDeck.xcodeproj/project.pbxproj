@@ -124,7 +124,6 @@
 		3AA440E61854DA4C0051D4B0 /* ActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440E41854DA4C0051D4B0 /* ActionsTableViewController.m */; };
 		3AA440E71854DA4C0051D4B0 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440E51854DA4C0051D4B0 /* MainWindow.xib */; };
 		3AA440EB1854DA580051D4B0 /* EmptyDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440E81854DA580051D4B0 /* EmptyDetailViewController.xib */; };
-		3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA440F61854EF720051D4B0 /* DeckListViewController.m */; };
 		3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440F71854EF720051D4B0 /* DeckListViewController.xib */; };
 		3AA463D51BC0042600591647 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA463D31BC0042600591647 /* BrowserViewController.xib */; };
 		3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA50F351C0A2FC8007D5296 /* Deck.swift */; };
@@ -341,8 +340,6 @@
 		3AA440E41854DA4C0051D4B0 /* ActionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ActionsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AA440E51854DA4C0051D4B0 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		3AA440E81854DA580051D4B0 /* EmptyDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyDetailViewController.xib; sourceTree = "<group>"; };
-		3AA440F51854EF720051D4B0 /* DeckListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DeckListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3AA440F61854EF720051D4B0 /* DeckListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DeckListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3AA440F71854EF720051D4B0 /* DeckListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckListViewController.xib; sourceTree = "<group>"; };
 		3AA463D31BC0042600591647 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
 		3AA50F351C0A2FC8007D5296 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
@@ -667,8 +664,6 @@
 			isa = PBXGroup;
 			children = (
 				3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */,
-				3AA440F51854EF720051D4B0 /* DeckListViewController.h */,
-				3AA440F61854EF720051D4B0 /* DeckListViewController.m */,
 				3AA440F71854EF720051D4B0 /* DeckListViewController.xib */,
 				3A48BE851E17D9A300B5DD3F /* CardCell.swift */,
 				3A48BE871E17DD3000B5DD3F /* SmallCardCell.swift */,
@@ -1220,7 +1215,6 @@
 				3A5EBE971E0FF1250096E2F5 /* IceTypeStats.swift in Sources */,
 				3A3C1E231BF7A131000311FA /* DeckChangeSet.swift in Sources */,
 				3A19426C1DC744DB00EB9CE5 /* IphoneStartViewController.swift in Sources */,
-				3AA440F81854EF720051D4B0 /* DeckListViewController.m in Sources */,
 				3AF04BB91D44DD8200CB859D /* JinetkiNet.swift in Sources */,
 				3A5EBE951E0FE7A00096E2F5 /* CardTypeStats.swift in Sources */,
 				3A529E631CA57BF70061E065 /* Reachability.swift in Sources */,
