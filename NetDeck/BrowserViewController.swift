@@ -31,8 +31,6 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FIXME("table height/keyboard after showing img is broken")
-        
         self.title = "Browser".localized()
         Analytics.logEvent("Browser", attributes: [ "Device": "iPhone" ])
         
@@ -53,7 +51,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         nc.addObserver(self, selector:#selector(BrowserViewController.showKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object:nil)
         nc.addObserver(self, selector:#selector(BrowserViewController.hideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object:nil)
         
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(BrowserViewController.longPress(_:)))
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(_:)))
         self.tableView.addGestureRecognizer(longPress)
 
         self.refresh()
@@ -71,7 +69,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
+        // NotificationCenter.default.removeObserver(self)
     }
     
     func refresh() {

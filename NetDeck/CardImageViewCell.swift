@@ -37,6 +37,7 @@ class CardImageViewCell: UICollectionViewCell {
         self.imageView.layer.masksToBounds = true
         self.detailView.isHidden = true
         self.countLabel.text = ""
+        self.packLabel.text = ""
     }
     
     override func prepareForReuse() {
@@ -44,6 +45,7 @@ class CardImageViewCell: UICollectionViewCell {
         
         self.detailView.isHidden = true
         self.countLabel.text = ""
+        self.packLabel.text = ""
         self.imageView.image = nil
     }
     
