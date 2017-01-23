@@ -36,7 +36,7 @@ class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
     
     var useBlues = false
     
-    var tableData: TableData!
+    var tableData: TableData<Int>!
     
     var height: CGFloat {
         return self.tableData.sections.count == 0 ? 0 : 300

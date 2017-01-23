@@ -545,11 +545,7 @@ import Marshal
         self.modified = true
     }
     
-    func typedDataForTableView(_ sortOrder: NRDeckSort) -> TypedTableData<CardCounter> {
-        return TypedTableData(untyped: dataForTableView(sortOrder))
-    }
-    
-    func dataForTableView(_ sortOrder: NRDeckSort) -> TableData {
+    func dataForTableView(_ sortOrder: NRDeckSort) -> TableData<CardCounter> {
         var sections = [String]()
         var cards = [[CardCounter]]()
         
@@ -611,7 +607,7 @@ import Marshal
         
         assert(sections.count == cards.count, "count mismatch")
         
-        return TableData(sections: sections, andValues: cards as NSArray)
+        return TableData(sections: sections, values: cards)
     }
     
     func saveToDisk() {

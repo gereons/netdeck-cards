@@ -429,11 +429,7 @@ class CardList: NSObject {
         return filteredCards
     }
     
-    func typedDataForTableView() -> TypedTableData<Card> {
-        return TypedTableData(untyped: dataForTableView())
-    }
-    
-    func dataForTableView() -> TableData {
+    func dataForTableView() -> TableData<Card> {
         var sections = [String]()
         var cards = [[Card]]()
         
@@ -471,6 +467,6 @@ class CardList: NSObject {
         
         assert(sections.count == cards.count, "count mismatch")
         
-        return TableData(sections: sections, andValues: cards as NSArray)
+        return TableData(sections: sections, values: cards)
     }
 }

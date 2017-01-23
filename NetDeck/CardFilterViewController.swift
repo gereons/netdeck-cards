@@ -240,7 +240,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func initCards() {
-        let data = self.cardList.typedDataForTableView()
+        let data = self.cardList.dataForTableView()
         self.cards = data.values
         self.sections = data.sections
     }
@@ -562,15 +562,14 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     @IBAction func typeClicked(_ sender: UIButton) {
-        let data = TableData(strings: CardType.typesFor(role: self.role))
+        let data = TableData(values: CardType.typesFor(role: self.role))
         let selected = self.selectedValues[.type]
         
         CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: "Type", selected: selected)
     }
     
     @IBAction func setClicked(_ sender: UIButton) {
-        let rawPacks = PackManager.packsForTableView(packUsage: self.packUsage)
-        let stringPacks = TableData.convertPacksData(rawPacks)
+        let stringPacks: TableData<String> = PackManager.packsForTableView(packUsage: self.packUsage)
         let selected = self.selectedValues[.set]
         
         CardFilterPopover.showFrom(button: sender, inView: self, entries: stringPacks, type: "Set", selected: selected)
@@ -585,14 +584,14 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         arr.insert(Constant.kANY, at: 0)
-        let data = TableData(strings: arr)
+        let data = TableData(values: arr)
         let selected = self.selectedValues[.subtype]
         
         CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: "Subtype", selected: selected)
     }
     
     @IBAction func factionClicked(_ sender: UIButton) {
-        let data = TableData(strings: Faction.factionsFor(role: self.role, packUsage: self.packUsage))
+        let data = TableData(values: Faction.factionsFor(role: self.role, packUsage: self.packUsage))
         let selected = self.selectedValues[.faction]
         
         CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: "Faction", selected: selected)

@@ -129,7 +129,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.cardList = cardList
         cardList.sortBy(self.sortType)
         
-        let data = cardList.typedDataForTableView()
+        let data = cardList.dataForTableView()
         self.sections = data.sections
         self.values = data.values
         

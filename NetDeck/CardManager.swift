@@ -115,12 +115,7 @@ class CardManager: NSObject {
         return allIdentitiesByRole[role]!
     }
     
-    class func typedIdentitiesForSelection(_ role: NRRole, packUsage: NRPackUsage) -> TypedTableData<Card> {
-        let untyped = identitiesForSelection(role, packUsage: packUsage)
-        return TypedTableData(sections: untyped.sections, values: untyped.values as! [[Card]])
-    }
-    
-    class func identitiesForSelection(_ role: NRRole, packUsage: NRPackUsage) -> TableData {
+    class func identitiesForSelection(_ role: NRRole, packUsage: NRPackUsage) -> TableData<Card> {
         var factionNames = Faction.factionsFor(role: role, packUsage: packUsage)
         factionNames.removeFirst(2) // remove "any" and "neutral"
         
@@ -161,7 +156,7 @@ class CardManager: NSObject {
 
         assert(factionNames.count == identities.count)
         
-        return TableData(sections: factionNames, andValues: identities as NSArray)
+        return TableData(sections: factionNames, values: identities)
     }
     
     class func subtypesFor(role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {

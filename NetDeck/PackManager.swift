@@ -74,7 +74,6 @@ class PackManager: NSObject {
     
     // caches
     static var disabledPacks: Set<String>?          // set of pack codes
-    static var enabledPacks: TableData?
         
     class var packsAvailable: Bool {
         return allPacks.count > 0
@@ -138,10 +137,26 @@ class PackManager: NSObject {
     
     class func clearDisabledPacks() {
         disabledPacks = nil
-        enabledPacks = nil
     }
     
-    class func packsForTableView(packUsage: NRPackUsage) -> TableData {
+    class func packsForTableView(packUsage: NRPackUsage) -> TableData<String> {
+        let rawPacks: TableData<Pack> = self.packsForTableView(packUsage: packUsage)
+        var strValues = [[String]]()
+        for packs in rawPacks.values {
+            var strings = [String]()
+            for pack in packs {
+                strings.append(pack.name)
+            }
+            strValues.append(strings)
+        }
+        
+        let stringPacks = TableData<String>(sections: rawPacks.sections, values: strValues)
+        stringPacks.collapsedSections = rawPacks.collapsedSections
+        
+        return stringPacks
+    }
+    
+    class func packsForTableView(packUsage: NRPackUsage) -> TableData<Pack> {
         switch packUsage {
         case .all:
             return allKnownPacksForTableView()
@@ -152,7 +167,7 @@ class PackManager: NSObject {
         }
     }
     
-    class func allKnownPacksForSettings() -> TypedTableData<Pack> {
+    class func allKnownPacksForSettings() -> TableData<Pack> {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -163,11 +178,11 @@ class PackManager: NSObject {
             values.append(packs)
         }
         
-        return TypedTableData(sections: sections, values: values)
+        return TableData(sections: sections, values: values)
     }
 
 
-    private class func allEnabledPacksForTableView() -> TableData {
+    private class func allEnabledPacksForTableView() -> TableData<Pack> {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -190,11 +205,11 @@ class PackManager: NSObject {
         
         assert(values.count == sections.count, "count mismatch")
         
-        let result = TableData(sections: sections, andValues: values as NSArray)
+        let result = TableData(sections: sections, values: values)
         return collapseOldCycles(result)
     }
 
-    private class func allKnownPacksForTableView() -> TableData {
+    private class func allKnownPacksForTableView() -> TableData<Pack> {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -214,11 +229,11 @@ class PackManager: NSObject {
             values.append(packs)
         }
         
-        let result = TableData(sections: sections, andValues: values as NSArray)
+        let result = TableData(sections: sections, values: values)
         return collapseOldCycles(result)
     }
     
-    private class func allPacksAfterRotationForTableView() -> TableData {
+    private class func allPacksAfterRotationForTableView() -> TableData<Pack> {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -234,11 +249,11 @@ class PackManager: NSObject {
             }
         }
         
-        let result = TableData(sections: sections, andValues: values as NSArray)
+        let result = TableData(sections: sections, values: values)
         return collapseOldCycles(result)
     }
     
-    private class func collapseOldCycles(_ data: TableData) -> TableData {
+    private class func collapseOldCycles(_ data: TableData<Pack>) -> TableData<Pack> {
         let count = data.sections.count
         
         // collapse everything but the two last cycles

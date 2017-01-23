@@ -53,7 +53,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage)
         
         self.allFactionNames = identities.sections
-        self.allIdentities = identities.values as! [[Card]]
+        self.allIdentities = identities.values 
         
         self.factionNames = self.allFactionNames
         self.identities = self.allIdentities

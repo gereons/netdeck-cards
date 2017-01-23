@@ -26,10 +26,10 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     
     static var popover: CardFilterPopover!
     
-    static func showFrom(button: UIButton, inView vc: UIViewController, entries: TableData, type: String, selected: Any?) {
+    static func showFrom(button: UIButton, inView vc: UIViewController, entries: TableData<String>, type: String, selected: Any?) {
         popover = CardFilterPopover(nibName: "CardFilterPopover", bundle: nil)
         popover.sections = entries.sections
-        popover.values = entries.values as! [[String]]
+        popover.values = entries.values
         popover.collapsedSections = entries.collapsedSections
         popover.button = button
         popover.type = type

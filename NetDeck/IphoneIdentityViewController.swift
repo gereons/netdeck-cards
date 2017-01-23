@@ -63,7 +63,7 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
         
         let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
         let packUsage = NRPackUsage(rawValue: packs) ?? .all
-        let identities = CardManager.typedIdentitiesForSelection(self.role, packUsage: packUsage)
+        let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage)
         self.factionNames = identities.sections 
         self.identities = identities.values
         

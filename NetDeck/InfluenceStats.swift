@@ -28,11 +28,11 @@ class InfluenceStats: Stats {
         }
         
         let sections = influence.keys.sorted { $0 < $1 }
-        let values = sections.map { influence[$0]! }
+        let values = sections.map { [influence[$0]!] }
         
         assert(sections.count == values.count)
         
-        self.tableData = TableData(sections: sections, andValues: values as NSArray)
+        self.tableData = TableData(sections: sections, values: values)
     }
     
     var hostingView: CPTGraphHostingView {
@@ -48,7 +48,7 @@ class InfluenceStats: Stats {
     
     func dataLabel(for plot: CPTPlot, record index: UInt) -> CPTLayer? {
         let faction = self.tableData.sections[Int(index)] 
-        let influence = self.tableData.values[Int(index)] as! Int
+        let influence = self.tableData.values[Int(index)][0]
         
         let str = String(format: "%@: %d", faction, influence)
         return CPTTextLayer(text: str)

@@ -25,11 +25,11 @@ class CardTypeStats: Stats {
         }
         
         let sections = types.keys.sorted { $0 < $1 }
-        let values = sections.map { types[$0]! }
+        let values = sections.map { [types[$0]!] }
         
         assert(sections.count == values.count)
         
-        self.tableData = TableData(sections: sections, andValues: values as NSArray)
+        self.tableData = TableData(sections: sections, values: values)
     }
     
     var hostingView: CPTGraphHostingView {
@@ -38,7 +38,7 @@ class CardTypeStats: Stats {
     
     func dataLabel(for plot: CPTPlot, record index: UInt) -> CPTLayer? {
         let type = self.tableData.sections[Int(index)]
-        let cards = self.tableData.values[Int(index)] as! Int
+        let cards = self.tableData.values[Int(index)][0]
         
         let pct = Float(cards) * 100.0 / Float(self.deckSize)
         

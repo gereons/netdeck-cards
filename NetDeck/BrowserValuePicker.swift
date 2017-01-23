@@ -11,7 +11,7 @@ import UIKit
 class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-    var data: TableData!
+    var data: TableData<String>!
     var selected = Set<IndexPath>()
 
     var preselected = Set<String>()
@@ -34,7 +34,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewWillAppear(animated)
         
         for sec in 0 ..< data.sections.count {
-            let strings = data.values[sec] as! [String]
+            let strings = data.values[sec]
             for row in 0 ..< strings.count {
                 let str = strings[row]
                 if self.preselected.contains(str) {
@@ -59,7 +59,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
         
         var result = Set<String>()
         for idx in self.selected {
-            let strings = self.data.values[idx.section] as! [String]
+            let strings = self.data.values[idx.section]
             let str = strings[idx.row]
             result.insert(str)
         }
@@ -72,8 +72,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let arr = self.data.values[section] as! NSArray
-        return arr.count
+        return self.data.values[section].count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -89,8 +88,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
             cell?.selectionStyle = .none
         }
         
-        let strings = self.data.values[indexPath.section] as! [String]
-        let str = strings[indexPath.row]
+        let str = self.data.values[indexPath.section][indexPath.row]
         let first = indexPath.section == 0 && indexPath.row == 0 // the "any" cell
         cell!.textLabel?.text = first ? str.localized() : str
         

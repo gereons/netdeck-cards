@@ -26,8 +26,8 @@ struct DeckDiff {
     private(set) var overlapRows = [[CardDiff]]()
 
     init(deck1: Deck, deck2: Deck) {
-        let data1 = deck1.typedDataForTableView(.byType)
-        let data2 = deck2.typedDataForTableView(.byType)
+        let data1 = deck1.dataForTableView(.byType)
+        let data2 = deck2.dataForTableView(.byType)
         
         let types1 = data1.sections
         let cards1 = data1.values

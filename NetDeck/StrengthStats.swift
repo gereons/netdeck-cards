@@ -21,11 +21,11 @@ class StrengthStats: Stats {
         }
         
         let sections = strengths.keys.sorted { $0 < $1 }
-        let values = sections.map { strengths[$0]! }
+        let values = sections.map { [strengths[$0]!] }
         
         assert(sections.count == values.count)
         
-        self.tableData = TableData(sections: sections, andValues: values as NSArray)
+        self.tableData = TableData(sections: sections, values: values)
     }
     
     var hostingView: CPTGraphHostingView {
@@ -34,7 +34,7 @@ class StrengthStats: Stats {
     
     func dataLabel(for plot: CPTPlot, record index: UInt) -> CPTLayer? {
         let strength = self.tableData.sections[Int(index)]
-        let cards = self.tableData.values[Int(index)] as! Int
+        let cards = self.tableData.values[Int(index)][0]
     
         let str = String(format: "Strength %@\n%d %@".localized(), strength, cards, cardsString(cards))
         return CPTTextLayer(text: str)

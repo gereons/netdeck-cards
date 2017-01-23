@@ -343,13 +343,13 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     // MARK: - buttons for popovers
     
     @IBAction func typeClicked(_ sender: UIButton) {
-        let data: TableData
+        let data: TableData<String>
         if self.role == .none {
             data = CardType.allTypes
         } else {
             var types = CardType.typesFor(role: self.role)
             types.insert(CardType.name(for: .identity), at: 1)
-            data = TableData(strings: types)
+            data = TableData(values: types)
         }
         let selected = self.selectedValues[.type]
         
@@ -358,15 +358,13 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     
     @IBAction func setClicked(_ sender: UIButton) {
         let selected = self.selectedValues[.set]
-        
-        let rawPacks = PackManager.packsForTableView(packUsage: self.packUsage)
-        let stringPacks = TableData.convertPacksData(rawPacks)
+        let stringPacks: TableData<String> = PackManager.packsForTableView(packUsage: self.packUsage)
         
         CardFilterPopover.showFrom(button: sender, inView: self, entries: stringPacks, type: "Set", selected: selected)
     }
     
     @IBAction func subtypeClicked(_ sender: UIButton) {
-        let data: TableData
+        let data: TableData<String>
         if self.role == .none {
             let runner: [String]
             let corp: [String]
@@ -401,7 +399,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
                 arr = CardManager.subtypesFor(role: self.role, andType: self.selectedType, includeIdentities: true)
             }
             arr.insert(Constant.kANY, at: 0)
-            data = TableData(strings: arr)
+            data = TableData(values: arr)
         }
         
         let selected = self.selectedValues[.subtype]
@@ -410,11 +408,11 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     }
     
     @IBAction func factionClicked(_ sender: UIButton) {
-        let data: TableData
+        let data: TableData<String>
         if self.role == .none {
             data = Faction.factionsForBrowser(packUsage: self.packUsage)
         } else {
-            data = TableData(strings: Faction.factionsFor(role: self.role, packUsage: self.packUsage))
+            data = TableData(values: Faction.factionsFor(role: self.role, packUsage: self.packUsage))
         }
         let selected = self.selectedValues[.faction]
         

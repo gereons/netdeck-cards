@@ -889,7 +889,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     private func initCards() {
         let data = self.deck.dataForTableView(self.sortType)
-        self.cards = data.values as! [[CardCounter]]
+        self.cards = data.values 
         self.sections = data.sections
     }
     

@@ -22,8 +22,8 @@ class Faction: NSObject {
     static let corpFactions: [NRFaction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
     private(set) static var corpFactionNames = [String]()
     
-    private static var allFactions: TableData!
-    private static var allFactionsCore: TableData!
+    private static var allFactions: TableData<String>!
+    private static var allFactionsCore: TableData<String>!
     
     static let weylandConsortium = "Weyland Consortium"
     
@@ -95,7 +95,7 @@ class Faction: NSObject {
         }
     }
     
-    class func factionsForBrowser(packUsage: NRPackUsage) -> TableData {
+    class func factionsForBrowser(packUsage: NRPackUsage) -> TableData<String> {
         if packUsage == .selected {
             let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
             return dataDestinyAllowed ? allFactions : allFactionsCore
