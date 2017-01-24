@@ -9,15 +9,15 @@
 import Foundation
 import Marshal
 
-class CardManager: NSObject {
+class CardManager {
     
     static let cardsFilename = "nrcards2.json"
     
-    private(set) static var allCardsByRole = [NRRole: [Card] ]()    // non-id cards
-    private static var allIdentitiesByRole = [NRRole: [Card] ]()    // ids
+    private(set) static var allCardsByRole = [Role: [Card] ]()    // non-id cards
+    private static var allIdentitiesByRole = [Role: [Card] ]()    // ids
     
-    private static var allSubtypes = [NRRole: [String: Set<String> ] ]()
-    private static var identitySubtypes = [ NRRole: Set<String> ]()
+    private static var allSubtypes = [Role: [String: Set<String> ] ]()
+    private static var identitySubtypes = [ Role: Set<String> ]()
     private static var identityKey = ""
     
     private static var allKnownCards = [ String: Card ](minimumCapacity: 2000)
@@ -52,9 +52,7 @@ class CardManager: NSObject {
         "11094": "IPB",       // IP Block
     ]
     
-    override class func initialize() {
-        super.initialize()
-        
+    static func initialize() {
         allKnownCards.removeAll()
         
         allCardsByRole[.runner] = { var c = [Card](); c.reserveCapacity(800); return c }()
@@ -78,7 +76,7 @@ class CardManager: NSObject {
         maxTrash = -1
     }
     
-    class func maxCost(for role: NRRole) -> Int {
+    class func maxCost(for role: Role) -> Int {
         switch role {
         case .none: return max(maxCorpCost, maxRunnerCost)
         case .runner: return maxRunnerCost
@@ -98,7 +96,7 @@ class CardManager: NSObject {
         }
     }
     
-    class func allFor(role: NRRole) -> [Card]
+    class func allFor(role: Role) -> [Card]
     {
         if role != .none {
             return allCardsByRole[role]!
@@ -109,19 +107,19 @@ class CardManager: NSObject {
         }
     }
     
-    class func identitiesFor(role: NRRole) -> [Card]
+    class func identitiesFor(role: Role) -> [Card]
     {
         assert(role != .none)
         return allIdentitiesByRole[role]!
     }
     
-    class func identitiesForSelection(_ role: NRRole, packUsage: NRPackUsage) -> TableData<Card> {
+    class func identitiesForSelection(_ role: Role, packUsage: PackUsage) -> TableData<Card> {
         var factionNames = Faction.factionsFor(role: role, packUsage: packUsage)
         factionNames.removeFirst(2) // remove "any" and "neutral"
         
         let settings = UserDefaults.standard
         let packs = settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)
-        let packUsage = NRPackUsage(rawValue: packs) ?? .all
+        let packUsage = PackUsage(rawValue: packs) ?? .all
         
         let disabledPackCodes: Set<String>
         switch packUsage {
@@ -159,7 +157,7 @@ class CardManager: NSObject {
         return TableData(sections: factionNames, values: identities)
     }
     
-    class func subtypesFor(role: NRRole, andType type: String, includeIdentities: Bool) -> [String] {
+    class func subtypesFor(role: Role, andType type: String, includeIdentities: Bool) -> [String] {
         var subtypes = allSubtypes[role]?[type] ?? Set<String>()
         
         let includeIds = includeIdentities && (type == Constant.kANY || type == identityKey)
@@ -172,7 +170,7 @@ class CardManager: NSObject {
         return subtypes.sorted { $0.lowercased() < $1.lowercased() }
     }
     
-    class func subtypesFor(role: NRRole, andTypes types: Set<String>, includeIdentities: Bool) -> [String] {
+    class func subtypesFor(role: Role, andTypes types: Set<String>, includeIdentities: Bool) -> [String] {
         var subtypes = Set<String>()
         for type in types {
             let arr = subtypesFor(role: role, andType: type, includeIdentities: includeIdentities)
@@ -360,7 +358,7 @@ class CardManager: NSObject {
         if !Faction.initializeFactionNames(cards) {
             return false
         }
-        if !CardType.initializeCardTypes(cards) {
+        if !CardType.initializeCardType(cards) {
             return false
         }
         

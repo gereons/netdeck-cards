@@ -27,7 +27,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     private var autoSave = false
     private var autoSaveDropbox = false
     private var autoSaveNrdb = false
-    private var sortType = NRDeckSort.byFactionType
+    private var sortType = DeckSort.byFactionType
     
     private var titleButton: UIButton!
     private var cancelButton: UIBarButtonItem!
@@ -58,7 +58,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelClicked(_:)))
         self.saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self.saveClicked(_:)))
         
-        self.sortType = NRDeckSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_VIEW_SORT)) ?? .byFactionType
+        self.sortType = DeckSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_VIEW_SORT)) ?? .byFactionType
         
         self.statusLabel.textColor = self.view.tintColor
         self.statusLabel.isUserInteractionEnabled = true
@@ -234,7 +234,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(actionSheet, animated: true, completion: nil)
     }
     
-    func changeDeckSort(_ sortType: NRDeckSort) {
+    func changeDeckSort(_ sortType: DeckSort) {
         self.sortType = sortType
         self.refreshDeck()
     }

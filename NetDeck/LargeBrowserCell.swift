@@ -71,7 +71,7 @@ class LargeBrowserCell: BrowserCell {
         }
         
         let mwlVersion = UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)
-        let mwl = NRMWL(rawValue: mwlVersion) ?? .none
+        let mwl = MWL(rawValue: mwlVersion) ?? .none
         LargeCardCell.setInfluencePips(self.pips, influence: self.card.influence, card: self.card, mwl: mwl)
         
         LargeCardCell.setLabels(for: card, labels: self.labels, icons: self.icons)

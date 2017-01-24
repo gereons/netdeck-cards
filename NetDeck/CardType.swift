@@ -8,18 +8,27 @@
 
 import Foundation
 
-class CardType: NSObject {
+enum CardType: Int {
+    
+    case none = -1
+    case identity
+        
+    // corp
+    case agenda, asset, upgrade, operation, ice
+        
+    // runner
+    case event, hardware, resource, program
     
     // NB: Card diff depends on ICE/Program being the last entries!
-    private static let runnerTypes: [NRCardType] = [ .event, .hardware, .resource, .program ]
-    private static let corpTypes: [NRCardType] = [ .agenda, .asset, .upgrade, .operation, .ice ]
+    private static let runnerTypes: [CardType] = [ .event, .hardware, .resource, .program ]
+    private static let corpTypes: [CardType] = [ .agenda, .asset, .upgrade, .operation, .ice ]
     
-    private static var type2name = [NRCardType: String]()
+    private static var type2name = [CardType: String]()
     static var runnerTypeNames = [String]()
     static var corpTypeNames = [String]()
     private(set) static var allTypes: TableData<String>!
     
-    class func initializeCardTypes(_ cards: [Card]) -> Bool {
+    static func initializeCardType(_ cards: [Card]) -> Bool {
         runnerTypeNames = [String]()
         corpTypeNames = [String]()
         
@@ -64,11 +73,11 @@ class CardType: NSObject {
         return true
     }
     
-    class func name(for type: NRCardType) -> String {
+    static func name(for type: CardType) -> String {
         return type2name[type] ?? "n/a"
     }
     
-    class func typesFor(role: NRRole) -> [String] {
+    static func typesFor(role: Role) -> [String] {
         assert(role != .none, "no role")
         return role == .runner ? runnerTypeNames : corpTypeNames
     }

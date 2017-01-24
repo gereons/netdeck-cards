@@ -8,29 +8,32 @@
 
 import Foundation
 
-class DeckState: NSObject {
+enum DeckState: Int {
+    
+    case none = -1
+    case active, testing, retired
 
     static let arrow = " ▾"
-    private static let states: [NRDeckState: String] = [
+    private static let states: [DeckState: String] = [
         .none: "All",
         .retired: "Retired",
         .testing: "Testing",
         .active: "Active"
     ]
     
-    class func rawLabelFor(_ state: NRDeckState) -> String {
+    static func rawLabelFor(_ state: DeckState) -> String {
         return states[state]!
     }
     
-    class func labelFor(_ state: NRDeckState) -> String {
+    static func labelFor(_ state: DeckState) -> String {
         return rawLabelFor(state).localized()
     }
     
-    class func buttonLabelFor(_ state: NRDeckState) -> String {
+    static func buttonLabelFor(_ state: DeckState) -> String {
         return labelFor(state) + arrow
     }
     
-    class func possibleTitles() -> [String] {
+    static func possibleTitles() -> [String] {
         return states.keys.map { DeckState.buttonLabelFor($0) }
     }
 }

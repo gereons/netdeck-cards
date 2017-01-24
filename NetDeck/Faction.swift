@@ -8,18 +8,27 @@
 
 import Foundation
 
-class Faction: NSObject {
+enum Faction: Int {
     
-    private static var faction2name = [NRFaction: String]()
+    case none = -1
+    case neutral
     
-    static let runnerFactionsCore: [NRFaction] = [ .anarch, .criminal, .shaper ]
-    static let runnerMiniFactions: [NRFaction] = [ .adam, .apex, .sunnyLebeau ]
+    case haasBioroid, weyland, nbn, jinteki
+    
+    case anarch, shaper, criminal
+    
+    case adam, apex, sunnyLebeau
+
+    private static var faction2name = [Faction: String]()
+    
+    static let runnerFactionsCore: [Faction] = [ .anarch, .criminal, .shaper ]
+    static let runnerMiniFactions: [Faction] = [ .adam, .apex, .sunnyLebeau ]
     static let runnerFactionsAll = runnerFactionsCore + runnerMiniFactions
     
     private(set) static var runnerFactionNamesAll = [String]()
     private(set) static var runnerFactionNamesCore = [String]()
     
-    static let corpFactions: [NRFaction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
+    static let corpFactions: [Faction] = [ .haasBioroid, .jinteki, .nbn, .weyland ]
     private(set) static var corpFactionNames = [String]()
     
     private static var allFactions: TableData<String>!
@@ -27,12 +36,12 @@ class Faction: NSObject {
     
     static let weylandConsortium = "Weyland Consortium"
     
-    class func name(for faction: NRFaction) -> String {
+    static func name(for faction: Faction) -> String {
         return Faction.faction2name[faction] ?? "n/a"
     }
     
-    class func initializeFactionNames(_ cards: [Card]) -> Bool {
-        faction2name = [NRFaction: String]()
+    static func initializeFactionNames(_ cards: [Card]) -> Bool {
+        faction2name = [Faction: String]()
         faction2name[.none] = Constant.kANY
         faction2name[.neutral] = "Neutral".localized()
         
@@ -79,7 +88,7 @@ class Faction: NSObject {
         return true
     }
     
-    class func factionsFor(role: NRRole, packUsage: NRPackUsage) -> [String] {
+    static func factionsFor(role: Role, packUsage: PackUsage) -> [String] {
         assert(role != .none, "no role")
         
         if (role == .runner)
@@ -95,7 +104,7 @@ class Faction: NSObject {
         }
     }
     
-    class func factionsForBrowser(packUsage: NRPackUsage) -> TableData<String> {
+    static func factionsForBrowser(packUsage: PackUsage) -> TableData<String> {
         if packUsage == .selected {
             let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
             return dataDestinyAllowed ? allFactions : allFactionsCore
@@ -104,7 +113,7 @@ class Faction: NSObject {
         }
     }
     
-    class func shortName(for faction: NRFaction) -> String {
+    static func shortName(for faction: Faction) -> String {
         switch faction {
         case .haasBioroid: return "H-B"
         case .weyland: return "Weyland".localized()
@@ -114,7 +123,7 @@ class Faction: NSObject {
     }
     
     // needed for the jinteki.net uploader
-    class func fullName(for faction: NRFaction) -> String {
+    static func fullName(for faction: Faction) -> String {
         switch faction {
         case .weyland:
             return Faction.weylandConsortium

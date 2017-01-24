@@ -9,7 +9,7 @@
 import Alamofire
 import Marshal
 
-class AppUpdateCheck: NSObject {
+class AppUpdateCheck {
     
     static let week: TimeInterval = 7*24*60*60 // one week in seconds
     static let forceTest = false

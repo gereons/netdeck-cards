@@ -52,14 +52,14 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
         self.iask.hiddenKeys = hiddenKeys
     }
     
-    @objc func cardsLoaded(_ notification: Notification) {
+    func cardsLoaded(_ notification: Notification) {
         if let success = notification.userInfo?["success"] as? Bool, success {
             self.refresh()
             DeckManager.flushCache()
         }
     }
     
-    @objc func settingsChanged(_ notification: Notification) {
+    func settingsChanged(_ notification: Notification) {
         guard
             let key = notification.userInfo?.keys.first as? String else {
             return

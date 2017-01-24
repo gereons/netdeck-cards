@@ -24,7 +24,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     private var importButton: UIBarButtonItem!
     private var settingsButton: UIBarButtonItem!
     private var sortButton: UIBarButtonItem!
-    private var deckListSort = NRDeckListSort.byName
+    private var deckListSort = DeckListSort.byName
     private var filterText = ""
 
     override func viewDidLoad() {
@@ -61,7 +61,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         self.sortButton = UIBarButtonItem(image: UIImage(named: "890-sort-ascending-toolbar"), style: .plain, target: self, action: #selector(self.changeSort(_:)))
         
         let sort = UserDefaults.standard.integer(forKey: SettingsKeys.DECK_FILTER_SORT)
-        self.deckListSort = NRDeckListSort(rawValue: sort) ?? .byName
+        self.deckListSort = DeckListSort(rawValue: sort) ?? .byName
         
         if cardsAvailable && PackManager.packsAvailable {
             self.initializeDecks()
@@ -171,7 +171,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         self.present(alert, animated: true, completion: nil)
     }
     
-    func addNewDeck(_ role: NRRole) {
+    func addNewDeck(_ role: Role) {
         let idvc = IphoneIdentityViewController()
         idvc.role = role
         self.pushViewController(idvc, animated: true)
@@ -211,7 +211,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         }
     }
     
-    func importDecksFrom(_ importSource: NRImportSource) {
+    func importDecksFrom(_ importSource: ImportSource) {
         let importVc = ImportDecksViewController()
         importVc.source = importSource
         self.pushViewController(importVc, animated: true)
@@ -237,7 +237,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         self.present(alert, animated: true, completion: nil)
     }
     
-    func changeSortType(_ sort: NRDeckListSort) {
+    func changeSortType(_ sort: DeckListSort) {
         UserDefaults.standard.set(sort.rawValue, forKey: SettingsKeys.DECK_FILTER_SORT)
         self.deckListSort = sort
         

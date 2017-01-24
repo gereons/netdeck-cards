@@ -46,7 +46,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.register(UINib(nibName: "EditDeckCell", bundle: nil), forCellReuseIdentifier: "cardCell")
         
         let packs = UserDefaults.standard.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)
-        let packUsage = NRPackUsage(rawValue: packs) ?? .all
+        let packUsage = PackUsage(rawValue: packs) ?? .all
         
         self.cardList = CardList(forRole: self.deck.role, packUsage: packUsage)
         

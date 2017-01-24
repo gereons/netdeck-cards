@@ -21,7 +21,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     @IBOutlet weak var factionSelectorWidth: NSLayoutConstraint!
     
-    private var role = NRRole.none
+    private var role = Role.none
     private var allFactionNames = [String]()
     private var allIdentities = [[Card]]()
     private var factionNames = [String]()
@@ -31,13 +31,13 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
     private var selectedIndexPath: IndexPath?
     private var viewTable = true
 
-    class func showFor(role: NRRole, inViewController vc: UIViewController, withIdentity identity: Card?) {
+    class func showFor(role: Role, inViewController vc: UIViewController, withIdentity identity: Card?) {
         let selection = IdentitySelectionViewController(role: role, identity: identity)
         
         vc.present(selection, animated: false, completion: nil)
     }
     
-    init(role: NRRole, identity: Card?) {
+    init(role: Role, identity: Card?) {
         super.init(nibName: "IdentitySelectionViewController", bundle: nil)
         
         self.modalPresentationStyle = .formSheet
@@ -49,7 +49,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         let settings = UserDefaults.standard
         self.viewTable = settings.bool(forKey: SettingsKeys.IDENTITY_TABLE)
         let packs = settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)
-        let packUsage = NRPackUsage(rawValue: packs) ?? .all
+        let packUsage = PackUsage(rawValue: packs) ?? .all
         let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage)
         
         self.allFactionNames = identities.sections

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DeckManager: NSObject {
+class DeckManager {
     
     static let cache = { () -> NSCache<NSString, Deck> in
         let c = NSCache<NSString, Deck>()
@@ -58,7 +58,7 @@ class DeckManager: NSObject {
         _ = try? FileManager.default.removeItem(atPath: pathname)
     }
     
-    class func decksForRole(_ role: NRRole) -> [Deck] {
+    class func decksForRole(_ role: Role) -> [Deck] {
         if role == .none {
             var decks = [Deck]()
             decks.append(contentsOf: loadDecksForRole(.runner))
@@ -68,7 +68,7 @@ class DeckManager: NSObject {
         return loadDecksForRole(role)
     }
     
-    class func loadDecksForRole(_ role: NRRole) -> [Deck] {
+    class func loadDecksForRole(_ role: Role) -> [Deck] {
         var decks = [Deck]()
         
         let dir = directoryForRole(role)
@@ -118,7 +118,7 @@ class DeckManager: NSObject {
         return nil
     }
     
-    class func directoryForRole(_ role: NRRole) -> String {
+    class func directoryForRole(_ role: Role) -> String {
         assert(role != .none, "wrong role")
         
         let roleDir = role == .runner ? "runnerDecks" : "corpDecks"
@@ -132,7 +132,7 @@ class DeckManager: NSObject {
         return dir
     }
     
-    class func pathForRole(_ role: NRRole) -> String {
+    class func pathForRole(_ role: Role) -> String {
         let dir = directoryForRole(role)
         let file = String(format:"deck-%d.anr", nextFileSequence())
         let path = dir.appendPathComponent(file)

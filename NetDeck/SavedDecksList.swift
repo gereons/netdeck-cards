@@ -101,7 +101,7 @@ class SavedDecksList: DecksViewController {
         }
     }
     
-    func importFrom(_ source: NRImportSource) {
+    func importFrom(_ source: ImportSource) {
         let importDecks = ImportDecksViewController()
         importDecks.source = source
         self.navigationController?.pushViewController(importDecks, animated: false)
@@ -227,7 +227,7 @@ class SavedDecksList: DecksViewController {
         self.present(self.popup, animated: false, completion: nil)
     }
     
-    func changeState(of deck: Deck, to state: NRDeckState) {
+    func changeState(of deck: Deck, to state: DeckState) {
         if deck.state != state {
             deck.state = state
             deck.updateOnDisk()
@@ -241,7 +241,7 @@ class SavedDecksList: DecksViewController {
             return self.dismissPopup()
         }
 
-        var role = NRRole.none
+        var role = Role.none
         if self.filterType == .runner {
             role = .runner
         } else if self.filterType == .corp {
@@ -255,11 +255,11 @@ class SavedDecksList: DecksViewController {
         
         self.popup = UIAlertController.actionSheet(title: "New Deck".localized(), message: nil)
         self.popup.addAction(UIAlertAction(title: "New Runner Deck".localized()) { action in
-            NotificationCenter.default.post(name: Notifications.newDeck, object: self, userInfo: [ "role": NRRole.runner.rawValue ])
+            NotificationCenter.default.post(name: Notifications.newDeck, object: self, userInfo: [ "role": Role.runner.rawValue ])
             self.popup = nil
         })
         self.popup.addAction(UIAlertAction(title: "New Corp Deck".localized()) { action in
-            NotificationCenter.default.post(name: Notifications.newDeck, object: self, userInfo: [ "role": NRRole.corp.rawValue ])
+            NotificationCenter.default.post(name: Notifications.newDeck, object: self, userInfo: [ "role": Role.corp.rawValue ])
             self.popup = nil
         })
         self.popup.addAction(UIAlertAction.actionSheetCancel() { action in

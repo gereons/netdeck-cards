@@ -25,13 +25,13 @@ import Marshal
     
     override private init() {}
     
-    init(role: NRRole) {
+    init(role: Role) {
         let settings = UserDefaults.standard
         self.state = settings.bool(forKey: SettingsKeys.CREATE_DECK_ACTIVE) ? .active : .testing
         let mwlVersion = settings.integer(forKey: SettingsKeys.MWL_VERSION)
         let seq = DeckManager.fileSequence() + 1
         self.name = "Deck #\(seq)"
-        self.mwl = NRMWL(rawValue: mwlVersion) ?? .none
+        self.mwl = MWL(rawValue: mwlVersion) ?? .none
         self.role = role
     }
     
@@ -51,7 +51,7 @@ import Marshal
         willSet { modified = true }
     }
     
-    var state = NRDeckState.none {
+    var state = DeckState.none {
         willSet { modified = true }
     }
     
@@ -63,11 +63,11 @@ import Marshal
         willSet { modified = true }
     }
     
-    private(set) var role = NRRole.none {
+    private(set) var role = Role.none {
         willSet { modified = true }
     }
     
-    var mwl = NRMWL.none {
+    var mwl = MWL.none {
         willSet { modified = true }
     }
     
@@ -149,7 +149,7 @@ import Marshal
         return count * cc.card.influence
     }
     
-    func nonAllianceOfFaction(_ faction: NRFaction) -> Int {
+    func nonAllianceOfFaction(_ faction: Faction) -> Int {
         var count = 0
         for cc in cards {
             if cc.card.faction == faction && !cc.card.isAlliance {
@@ -175,7 +175,7 @@ import Marshal
         return self.typeCount(.asset)
     }
     
-    func typeCount(_ type: NRCardType) -> Int {
+    func typeCount(_ type: CardType) -> Int {
         return cards.filter({ $0.card.type == type}).reduce(0) { $0 + $1.count }
     }
     
@@ -265,7 +265,7 @@ import Marshal
         return nil
     }
     
-    private func sort(by sortOrder: NRDeckSort) {
+    private func sort(by sortOrder: DeckSort) {
         cards.sort { (cc1, cc2) -> Bool in
             let c1 = cc1.card
             let c2 = cc2.card
@@ -545,7 +545,7 @@ import Marshal
         self.modified = true
     }
     
-    func dataForTableView(_ sortOrder: NRDeckSort) -> TableData<CardCounter> {
+    func dataForTableView(_ sortOrder: DeckSort) -> TableData<CardCounter> {
         var sections = [String]()
         var cards = [[CardCounter]]()
         
@@ -643,7 +643,7 @@ import Marshal
         self.dateCreated = Deck.dateFormatter.date(from: try object.value(for: "date_creation"))
         
         let mwlCode: String = try object.value(for: "mwl_code") ?? ""
-        self.mwl = NRMWL.by(code: mwlCode)
+        self.mwl = MWL.by(code: mwlCode)
         
         if let cards = object.optionalAny(for: "cards") as? [String: Int] {
             for (code, qty) in cards {
@@ -717,8 +717,8 @@ import Marshal
         self.netrunnerDbId = decoder.decodeObject(forKey: "netrunnerDbId") as? String
         
         self.name = (decoder.decodeObject(forKey: "name") as? String) ?? ""
-        self.role = NRRole(rawValue: decoder.decodeInteger(forKey: "role"))!
-        self.state = NRDeckState(rawValue: decoder.decodeInteger(forKey: "state"))!
+        self.role = Role(rawValue: decoder.decodeInteger(forKey: "role"))!
+        self.state = DeckState(rawValue: decoder.decodeInteger(forKey: "state"))!
         self.isDraft = decoder.decodeBool(forKey: "draft")
         if let identityCode = decoder.decodeObject(forKey: "identity") as? String {
             if let identity = CardManager.cardBy(code: identityCode) {
@@ -738,7 +738,7 @@ import Marshal
             decoder.decodeInteger(forKey: "mwl") :
             UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)
         
-        self.mwl = NRMWL(rawValue: mwl) ?? .none
+        self.mwl = MWL(rawValue: mwl) ?? .none
         
         self.onesies = decoder.decodeBool(forKey: "onesies")
         

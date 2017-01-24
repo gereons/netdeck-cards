@@ -78,7 +78,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     
     func loadDeck(_ notification: Notification) {
         guard let roleCode = notification.userInfo?["role"] as? Int,
-            let role = NRRole(rawValue: roleCode),
+            let role = Role(rawValue: roleCode),
             let filename = notification.userInfo?["filename"] as? String else {
                 return
         }
@@ -101,7 +101,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             guard
                 let roleCode = notification.userInfo?["role"] as? Int,
-                let role = NRRole(rawValue: roleCode)
+                let role = Role(rawValue: roleCode)
             else { return }
             filter = CardFilterViewController(role: role)
         }

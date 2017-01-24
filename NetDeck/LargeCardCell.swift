@@ -170,7 +170,7 @@ class LargeCardCell: CardCell {
         }
     }
     
-    static func setInfluencePips(_ pips: [UIView], influence: Int, card: Card, mwl: NRMWL) {
+    static func setInfluencePips(_ pips: [UIView], influence: Int, card: Card, mwl: MWL) {
         for i in stride(from: 0, to: influence, by: 1) {
             let pip = pips[i]
             pip.layer.backgroundColor = card.factionColor.cgColor

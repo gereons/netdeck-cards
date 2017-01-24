@@ -1,5 +1,5 @@
 //
-//  CardTypeStats.swift
+//  CardTypetats.swift
 //  NetDeck
 //
 //  Created by Gereon Steffens on 25.12.16.

@@ -49,7 +49,7 @@ struct Pack: Unmarshaling {
     }
 }
 
-class PackManager: NSObject {
+class PackManager {
     static let draftSetCode = "draft"
     static let coreSetCode = "core"
     static let unknownSet = "unknown"
@@ -139,7 +139,7 @@ class PackManager: NSObject {
         disabledPacks = nil
     }
     
-    class func packsForTableView(packUsage: NRPackUsage) -> TableData<String> {
+    class func packsForTableView(packUsage: PackUsage) -> TableData<String> {
         let rawPacks: TableData<Pack> = self.packsForTableView(packUsage: packUsage)
         var strValues = [[String]]()
         for packs in rawPacks.values {
@@ -156,7 +156,7 @@ class PackManager: NSObject {
         return stringPacks
     }
     
-    class func packsForTableView(packUsage: NRPackUsage) -> TableData<Pack> {
+    class func packsForTableView(packUsage: PackUsage) -> TableData<Pack> {
         switch packUsage {
         case .all:
             return allKnownPacksForTableView()

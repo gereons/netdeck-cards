@@ -32,7 +32,7 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
 
     @IBOutlet weak var toolbar: UIToolbar!
     
-    var role = NRRole.none
+    var role = Role.none
     var deck: Deck?
     
     private var selectedIdentity: Card?
@@ -62,7 +62,7 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
         self.selectedIdentity = self.deck?.identity
         
         let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        let packUsage = NRPackUsage(rawValue: packs) ?? .all
+        let packUsage = PackUsage(rawValue: packs) ?? .all
         let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage)
         self.factionNames = identities.sections 
         self.identities = identities.values

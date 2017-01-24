@@ -17,7 +17,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var factionButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     
-    private var role = NRRole.none
+    private var role = Role.none
     private var cardList: CardList!
     private var cards = [[Card]]()
     private var sections = [String]()
@@ -74,7 +74,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func refresh() {
         let packUsage = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        self.cardList = CardList.browserInitForRole(self.role, packUsage: NRPackUsage(rawValue: packUsage) ?? .all)
+        self.cardList = CardList.browserInitForRole(self.role, packUsage: PackUsage(rawValue: packUsage) ?? .all)
         if self.searchText.length > 0 {
             self.cardList.filterByName(self.searchText)
         }
@@ -167,7 +167,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - search bar
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        self.role = NRRole(rawValue: selectedScope - 1)!
+        self.role = Role(rawValue: selectedScope - 1)!
         self.refresh()
     }
     
@@ -208,7 +208,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBAction func setButtonTapped(_ btn: UIButton) {
         let picker = BrowserValuePicker(title: "Set".localized())
         let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        let packUsage = NRPackUsage(rawValue: packs) ?? .all
+        let packUsage = PackUsage(rawValue: packs) ?? .all
         picker.data = PackManager.packsForTableView(packUsage: packUsage)
         picker.preselected = self.sets
         picker.setResult = { result in
@@ -221,7 +221,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBAction func factionButtonTapped(_ btn: UIButton) {
         let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        let packUsage = NRPackUsage(rawValue: packs) ?? .all
+        let packUsage = PackUsage(rawValue: packs) ?? .all
         let picker = BrowserValuePicker(title: "Faction".localized())
         picker.data = Faction.factionsForBrowser(packUsage: packUsage)
         picker.preselected = self.factions

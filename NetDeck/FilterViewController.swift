@@ -39,7 +39,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
     @IBOutlet weak var previewTable: UITableView!
     @IBOutlet weak var previewHeader: UILabel!
     
-    var role = NRRole.none
+    var role = Role.none
     var identity: Card?
     var cardList: CardList!
     
@@ -66,21 +66,21 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         
         let settings = UserDefaults.standard
         let useDaD = settings.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
-        let packUsage = NRPackUsage(rawValue: settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)) ?? .all
+        let packUsage = PackUsage(rawValue: settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)) ?? .all
         let miniFactions = packUsage == .all || useDaD
         
         let factionLimit: Int
         if self.role == .runner {
-            self.factionNames = (Faction.runnerFactionsCore + [ NRFaction.neutral ]).map { Faction.name(for: $0) }
+            self.factionNames = (Faction.runnerFactionsCore + [ Faction.neutral ]).map { Faction.name(for: $0) }
             self.typeNames = Array(CardType.runnerTypeNames.dropFirst()) // remove "Any"
             factionLimit = factionNames.count
             if miniFactions {
-                self.factionNames = (Faction.runnerFactionsCore + [ NRFaction.neutral ] + Faction.runnerMiniFactions).map { Faction.name(for: $0) }
+                self.factionNames = (Faction.runnerFactionsCore + [ Faction.neutral ] + Faction.runnerMiniFactions).map { Faction.name(for: $0) }
                 self.miniFactionControl.isHidden = false
                 self.typeVerticalDistance.constant = 50
             }
         } else {
-            self.factionNames = (Faction.corpFactions + [ NRFaction.neutral ]).map { Faction.name(for: $0) }
+            self.factionNames = (Faction.corpFactions + [ Faction.neutral ]).map { Faction.name(for: $0) }
             factionLimit = factionNames.count
             self.typeNames = Array(CardType.corpTypeNames.dropFirst()) // remove "Any"
         }

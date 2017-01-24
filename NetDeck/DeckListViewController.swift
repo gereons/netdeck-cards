@@ -27,7 +27,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var toolbarBottomMargin: NSLayoutConstraint!
     
-    var role = NRRole.none
+    var role = Role.none
     var deck: Deck! {
         didSet {
             if oldValue != nil {
@@ -53,7 +53,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     private var useNetrunnerDb = false
     private var autoSaveNRDB = false
     
-    private var sortType = NRDeckSort.byFactionType
+    private var sortType = DeckSort.byFactionType
     private var scale: CGFloat = 0
     private var largeCells = false
     private var initializing = false
@@ -69,7 +69,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let settings = UserDefaults.standard
         self.useNetrunnerDb = settings.bool(forKey: SettingsKeys.USE_NRDB)
         self.autoSaveNRDB = settings.bool(forKey: SettingsKeys.NRDB_AUTOSAVE)
-        self.sortType = NRDeckSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_VIEW_SORT)) ?? .byFactionType
+        self.sortType = DeckSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_VIEW_SORT)) ?? .byFactionType
         let scale = settings.float(forKey: SettingsKeys.DECK_VIEW_SCALE)
         self.scale = CGFloat(scale == 0.0 ? 1.0 : scale)
         
@@ -107,7 +107,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             UIImage(named: "deckview_list") as Any
         ]
         let viewSelector = UISegmentedControl(items: selections)
-        let view = NRCardView(rawValue: settings.integer(forKey: SettingsKeys.DECK_VIEW_STYLE)) ?? .largeTable
+        let view = CardView(rawValue: settings.integer(forKey: SettingsKeys.DECK_VIEW_STYLE)) ?? .largeTable
         viewSelector.selectedSegmentIndex = view.rawValue
         viewSelector.addTarget(self, action: #selector(self.toggleView(_:)), for: .valueChanged)
         self.toggleViewButton = UIBarButtonItem(customView: viewSelector)
@@ -565,7 +565,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.present(self.actionSheet, animated: false, completion: nil)
     }
     
-    private func changeDeckState(_ newState: NRDeckState) {
+    private func changeDeckState(_ newState: DeckState) {
         let oldState = self.deck.state
         
         Analytics.logEvent("Change State", attributes: [ "From": DeckState.rawLabelFor(oldState), "To": DeckState.rawLabelFor(newState)])
@@ -679,7 +679,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.present(self.actionSheet, animated: false, completion: nil)
     }
     
-    private func changeDeckSort(_ sortType: NRDeckSort) {
+    private func changeDeckSort(_ sortType: DeckSort) {
         self.sortType = sortType
         self.actionSheet = nil
         self.refresh()
@@ -800,12 +800,12 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             return self.dismissActionSheet()
         }
         
-        let viewMode = NRCardView(rawValue: sender.selectedSegmentIndex) ?? .largeTable
+        let viewMode = CardView(rawValue: sender.selectedSegmentIndex) ?? .largeTable
         UserDefaults.standard.set(viewMode.rawValue, forKey: SettingsKeys.DECK_VIEW_STYLE)
         self.doToggleView(viewMode)
     }
     
-    private func doToggleView(_ viewMode: NRCardView) {
+    private func doToggleView(_ viewMode: CardView) {
         self.tableView.isHidden = viewMode == .image
         self.collectionView.isHidden = viewMode != .image
         
@@ -1243,7 +1243,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.present(alert, animated: false, completion: nil)
     }
     
-    private func setMwl(_ newMwl: NRMWL, andOnesies onesies: Bool) {
+    private func setMwl(_ newMwl: MWL, andOnesies onesies: Bool) {
         if self.deck.mwl != newMwl || self.deck.onesies != onesies {
             self.deck.mwl = newMwl
             self.deck.onesies = onesies

@@ -35,33 +35,33 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         return fmt
     }()
     
-    var searchScope = NRDeckSearchScope.all
+    var searchScope = DeckSearchScope.all
     
     // filterState, sortType and filterType look like normal properties, but are backed
     // by statics so that whenever we switch between views of subclasses, the filters
     // remain intact
-    private static var _filterState = NRDeckState.none
-    private static var _sortType = NRDeckListSort.byName
-    private static var _filterType = NRFilter.all
-    var filterState: NRDeckState {
+    private static var _filterState = DeckState.none
+    private static var _sortType = DeckListSort.byName
+    private static var _filterType = Filter.all
+    var filterState: DeckState {
         get { return DecksViewController._filterState }
         set { DecksViewController._filterState = newValue }
     }
-    var sortType: NRDeckListSort {
+    var sortType: DeckListSort {
         get { return DecksViewController._sortType }
         set { DecksViewController._sortType = newValue }
     }
-    var filterType: NRFilter {
+    var filterType: Filter {
         get { return DecksViewController._filterType }
         set { DecksViewController._filterType = newValue }
     }
     
-    private var sortStr: [NRDeckListSort: String] = [
+    private var sortStr: [DeckListSort: String] = [
         .byDate: "Date".localized(),
         .byFaction: "Faction".localized(),
         .byName: "A-Z".localized()
     ]
-    private var sideStr: [NRFilter: String] = [
+    private var sideStr: [Filter: String] = [
         .all: "Both".localized(),
         .runner: "Runner".localized(),
         .corp: "Corp".localized()
@@ -124,13 +124,13 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewWillAppear(animated)
         
         let settings = UserDefaults.standard
-        self.filterType = NRFilter(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_TYPE)) ?? .all
+        self.filterType = Filter(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_TYPE)) ?? .all
         self.sideFilterButton.title = sideStr[self.filterType]! + DeckState.arrow
         
-        self.filterState = NRDeckState(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_STATE)) ?? .none
+        self.filterState = DeckState(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_STATE)) ?? .none
         self.stateFilterButton.title = DeckState.buttonLabelFor(self.filterState)
         
-        self.sortType = NRDeckListSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_SORT)) ?? .byName
+        self.sortType = DeckListSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_SORT)) ?? .byName
         self.sortButton.title = sortStr[self.sortType]! + DeckState.arrow
         
         let nc = NotificationCenter.default
@@ -183,7 +183,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.present(self.popup, animated: false, completion: nil)
     }
     
-    func changeSortType(_ type: NRDeckListSort) {
+    func changeSortType(_ type: DeckListSort) {
         self.sortType = type
         self.popup = nil
         self.updateDecks()
@@ -217,7 +217,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.present(self.popup, animated: false, completion: nil)
     }
     
-    func changeSide(_ type: NRFilter) {
+    func changeSide(_ type: Filter) {
         self.filterType = type
         self.popup = nil
         self.updateDecks()
@@ -254,7 +254,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.present(self.popup, animated: false, completion: nil)
     }
     
-    func changeState(_ state: NRDeckState) {
+    func changeState(_ state: DeckState) {
         self.filterState = state
         self.popup = nil
         self.updateDecks()
@@ -361,7 +361,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        self.searchScope = NRDeckSearchScope(rawValue: selectedScope) ?? .all
+        self.searchScope = DeckSearchScope(rawValue: selectedScope) ?? .all
         self.updateDecks()
     }
     

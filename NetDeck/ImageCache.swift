@@ -57,7 +57,7 @@ class ImageCache: NSObject {
     static let runnerPlaceholder = UIImage(named: "RunnerPlaceholder")!
     static let corpPlaceholder = UIImage(named: "CorpPlaceholder")!
     
-    class func placeholder(for role: NRRole) -> UIImage {
+    class func placeholder(for role: Role) -> UIImage {
         return role == .runner ? self.runnerPlaceholder : self.corpPlaceholder
     }
 

@@ -56,14 +56,14 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     private var navController: UINavigationController
     
     private var revertButton: UIBarButtonItem!
-    private var role = NRRole.none
+    private var role = Role.none
     private var cardList: CardList!
     private var cards = [[Card]]()
     private var sections = [String]()
     
-    private var packUsage = NRPackUsage.all
+    private var packUsage = PackUsage.all
     private var searchText = ""
-    private var scope = NRSearchScope.all
+    private var scope = CardSearchScope.all
     private var sendNotification = false
     private var selectedType = ""
     private var selectedTypes: Set<String>?
@@ -92,12 +92,12 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         case table, collection
     }
     
-    private let scopes: [NRSearchScope: String] = [
+    private let scopes: [CardSearchScope: String] = [
         .all: "all text",
         .name: "card name",
         .text: "card text"
     ]
-    private let scopeLabels: [NRSearchScope: String] = [
+    private let scopeLabels: [CardSearchScope: String] = [
         .all: "All".localized(),
         .name: "Name".localized(),
         .text: "Text".localized()
@@ -105,7 +105,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     private var showAllFilters = true
     private var viewMode = View.list
     
-    init(role: NRRole) {
+    init(role: Role) {
         self.deckListViewController = DeckListViewController()
         self.navController = UINavigationController(rootViewController: self.deckListViewController)
         
@@ -115,13 +115,13 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.deckListViewController.role = role
     }
     
-    convenience init(role: NRRole, andFile file: String) {
+    convenience init(role: Role, andFile file: String) {
         self.init(role: role)
         
         self.deckListViewController.loadDeck(fromFile: file)
     }
     
-    convenience init(role: NRRole, andDeck deck: Deck) {
+    convenience init(role: Role, andDeck deck: Deck) {
         self.init(role: role)
         
         assert(role == deck.role, "role mismatch")
@@ -142,7 +142,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.backgroundColor = .white
         
-        self.packUsage = NRPackUsage(rawValue: settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)) ?? .all
+        self.packUsage = PackUsage(rawValue: settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)) ?? .all
         
         self.cardList = CardList(forRole: self.role, packUsage: packUsage)
         self.initCards()
@@ -329,7 +329,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.clearFilters()
     }
     
-    func setRole(_ role: NRRole) {
+    func setRole(_ role: Role) {
         self.role = role
         
         self.muLabel.isHidden = role == .corp
@@ -745,7 +745,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func changeScope(_ scope: NRSearchScope) {
+    func changeScope(_ scope: CardSearchScope) {
         self.scope = scope
         self.scopeButton.setTitle(self.scopeLabels[self.scope]! + DeckState.arrow, for: .normal)
         

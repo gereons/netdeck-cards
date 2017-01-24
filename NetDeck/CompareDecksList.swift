@@ -13,7 +13,7 @@ class CompareDecksList: DecksViewController {
     private var names = [String]()
     private var diffButton: UIBarButtonItem!
     private var footerButton: UIBarButtonItem!
-    private var selectedRole = NRRole.none
+    private var selectedRole = Role.none
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -138,8 +138,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         let today = fmt.string(from: Date())
         
         // MWL v1.1 goes into effect 2016-08-01
-        let defaultMWL = today >= "20160801" ? NRMWL.v1_1 : NRMWL.v1_0;
-//        let defaultMWL = today >= "20170201" ? NRMWL.v1_2 : NRMWL.v1_1;
+        let defaultMWL = today >= "20160801" ? MWL.v1_1 : MWL.v1_0;
+//        let defaultMWL = today >= "20170201" ? MWL.v1_2 : MWL.v1_1;
         
         let defaults: [String: Any] = [
             SettingsKeys.LAST_DOWNLOAD: "never".localized(),
@@ -159,21 +159,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             SettingsKeys.LAST_BG_FETCH: "never".localized(),
             SettingsKeys.LAST_REFRESH: "never".localized(),
             
-            SettingsKeys.DECK_FILTER_STATE: NRDeckState.none.rawValue,
-            SettingsKeys.DECK_VIEW_STYLE: NRCardView.largeTable.rawValue,
+            SettingsKeys.DECK_FILTER_STATE: DeckState.none.rawValue,
+            SettingsKeys.DECK_VIEW_STYLE: CardView.largeTable.rawValue,
             SettingsKeys.DECK_VIEW_SCALE: 1.0,
-            SettingsKeys.DECK_VIEW_SORT: NRDeckSort.byType.rawValue,
-            SettingsKeys.DECK_FILTER_SORT: NRDeckListSort.byName.rawValue,
-            SettingsKeys.DECK_FILTER_TYPE: NRFilter.all.rawValue,
+            SettingsKeys.DECK_VIEW_SORT: DeckSort.byType.rawValue,
+            SettingsKeys.DECK_FILTER_SORT: DeckListSort.byName.rawValue,
+            SettingsKeys.DECK_FILTER_TYPE: Filter.all.rawValue,
             
             SettingsKeys.CREATE_DECK_ACTIVE: false,
             
-            SettingsKeys.BROWSER_VIEW_STYLE: NRCardView.largeTable.rawValue,
+            SettingsKeys.BROWSER_VIEW_STYLE: CardView.largeTable.rawValue,
             SettingsKeys.BROWSER_VIEW_SCALE: 1.0,
-            SettingsKeys.BROWSER_SORT_TYPE: NRBrowserSort.byType.rawValue,
+            SettingsKeys.BROWSER_SORT_TYPE: BrowserSort.byType.rawValue,
             
-            SettingsKeys.BROWSER_PACKS: NRPackUsage.selected.rawValue,
-            SettingsKeys.DECKBUILDER_PACKS: NRPackUsage.selected.rawValue,
+            SettingsKeys.BROWSER_PACKS: PackUsage.selected.rawValue,
+            SettingsKeys.DECKBUILDER_PACKS: PackUsage.selected.rawValue,
             
             SettingsKeys.NUM_CORES: 3,
             

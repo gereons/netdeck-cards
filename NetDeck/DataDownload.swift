@@ -80,7 +80,7 @@ class DataDownload: NSObject {
         alert.present(animated: false, completion: nil)
     }
     
-    @objc private func doDownloadCardData(_ dummy: AnyObject) {
+    func doDownloadCardData(_ dummy: Any) {
         let settings = UserDefaults.standard
         let nrdbHost = settings.string(forKey: SettingsKeys.NRDB_HOST)
         let language = settings.string(forKey: SettingsKeys.LANGUAGE) ?? "en"

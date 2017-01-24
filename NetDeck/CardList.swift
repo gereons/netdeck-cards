@@ -8,50 +8,46 @@
 
 import Foundation
 
-class CardList: NSObject {
-    private var role: NRRole = .none
-    private var initialCards: [Card]
+class CardList {
+    private var role: Role
+    private var initialCards = [Card]()
     
-    private var cost: Int = -1
+    private var cost = -1
     private var type: String?
     private var types: Set<String>?
     private var subtype: String?
     private var subtypes: Set<String>?
-    private var strength: Int = -1
-    private var mu: Int = -1
-    private var trash: Int = -1
+    private var strength = -1
+    private var mu = -1
+    private var trash = -1
     private var faction: String?
     private var factions: Set<String>?
-    private var influence: Int = -1
+    private var influence = -1
     private var set: String?
     private var sets: Set<String>?
-    private var agendaPoints: Int = -1
+    private var agendaPoints = -1
     private var text: String?
-    private var searchScope: NRSearchScope = .all
-    private var unique: Bool = false
-    private var limited: Bool = false
-    private var mwl: Bool = false
-    private var faction4inf: NRFaction = .none   // faction for influence filter
+    private var searchScope = CardSearchScope.all
+    private var unique = false
+    private var limited = false
+    private var mwl = false
+    private var faction4inf = Faction.none   // faction for influence filter
     
-    private var sortType: NRBrowserSort = .byType
-    private var packUsage: NRPackUsage
+    private var sortType = BrowserSort.byType
+    private var packUsage: PackUsage
 
-    init(forRole role: NRRole, packUsage: NRPackUsage) {
+    init(forRole role: Role, packUsage: PackUsage) {
         self.role = role
-        self.sortType = .byType
-        self.faction4inf = .none
-        self.initialCards = [Card]()
         self.packUsage = packUsage
-        super.init()
         
         self.resetInitialCards()
         self.clearFilters()
     }
     
-    class func browserInitForRole(_ role: NRRole, packUsage: NRPackUsage) -> CardList {
+    class func browserInitForRole(_ role: Role, packUsage: PackUsage) -> CardList {
         let cl = CardList(forRole: role, packUsage: packUsage)
         
-        var roles = [NRRole]()
+        var roles = [Role]()
         switch (role) {
         case .none: roles = [ .runner, .corp ]
         case .corp: roles = [ .corp ]
@@ -138,14 +134,14 @@ class CardList: NSObject {
         
         if (identity.faction != .neutral)
         {
-            let factions: NSArray = [ NRFaction.neutral.rawValue, identity.faction.rawValue ]
-            let predicate = NSPredicate(format:"type != %d OR (type = %d AND faction in %@)", NRCardType.agenda.rawValue, NRCardType.agenda.rawValue, factions)
+            let factions: NSArray = [ Faction.neutral.rawValue, identity.faction.rawValue ]
+            let predicate = NSPredicate(format:"type != %d OR (type = %d AND faction in %@)", CardType.agenda.rawValue, CardType.agenda.rawValue, factions)
             
             applyPredicate(predicate)
         }
         
         if identity.code == Card.customBiotics {
-            let predicate = NSPredicate(format:"faction != %d", NRFaction.jinteki.rawValue)
+            let predicate = NSPredicate(format:"faction != %d", Faction.jinteki.rawValue)
             applyPredicate(predicate)
         }
         
@@ -156,7 +152,7 @@ class CardList: NSObject {
         self.resetInitialCards()
         
         if identity.faction == .apex {
-            let predicate = NSPredicate(format:"type != %d OR (type = %d AND isVirtual = 1)", NRCardType.resource.rawValue, NRCardType.resource.rawValue)
+            let predicate = NSPredicate(format:"type != %d OR (type = %d AND isVirtual = 1)", CardType.resource.rawValue, CardType.resource.rawValue)
             applyPredicate(predicate)
         }
         
@@ -214,7 +210,7 @@ class CardList: NSObject {
         self.faction4inf = .none
     }
     
-    func filterByInfluence(_ influence: Int, forFaction faction : NRFaction) {
+    func filterByInfluence(_ influence: Int, forFaction faction : Faction) {
         self.influence = influence
         self.faction4inf = faction
     }
@@ -261,7 +257,7 @@ class CardList: NSObject {
         self.mwl = mwl
     }
     
-    func sortBy(_ sortType: NRBrowserSort) {
+    func sortBy(_ sortType: BrowserSort) {
         self.sortType = sortType
     }
     
@@ -364,7 +360,7 @@ class CardList: NSObject {
             predicates.append(predicate)
         }
         if self.limited {
-            let predicate = NSPredicate(format:"type != %d AND maxPerDeck == 1", NRCardType.identity.rawValue)
+            let predicate = NSPredicate(format:"type != %d AND maxPerDeck == 1", CardType.identity.rawValue)
             predicates.append(predicate)
         }
         
@@ -374,7 +370,7 @@ class CardList: NSObject {
         }
         
         if self.mwl {
-            let mwl = NRMWL(rawValue: UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)) ?? .none
+            let mwl = MWL(rawValue: UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)) ?? .none
             if mwl != .none {
                 filteredCards = filteredCards.filter { $0.isMostWanted(mwl) }
             }

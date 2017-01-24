@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol FilterCallback: class {
+protocol FilterCallback: class {
 
     // -(void) filterCallback:(UIButton*)button type:(NSString*)type value:(id)value;
     

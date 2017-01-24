@@ -13,7 +13,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private var sortType = NRBrowserSort.byType
+    private var sortType = BrowserSort.byType
     private var cardList: CardList!
     private var sections = [String]()
     private var values = [[Card]]()
@@ -23,7 +23,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     private var largeCells = false
     private var scale = 1.0
     
-    private let sortStr: [ NRBrowserSort: String] = [
+    private let sortStr: [ BrowserSort: String] = [
         .byType: "Type".localized(),
         .byFaction: "Faction".localized(),
         .byTypeFaction: "Type/Faction".localized(),
@@ -44,7 +44,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.scale = scale == 0 ? 1.0 : scale
 
         let sortType = settings.integer(forKey: SettingsKeys.BROWSER_SORT_TYPE)
-        self.sortType = NRBrowserSort(rawValue: sortType) ?? .byType
+        self.sortType = BrowserSort(rawValue: sortType) ?? .byType
         
         // left buttons
         let selections = [
@@ -58,7 +58,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         viewSelector.addTarget(self, action: #selector(self.toggleView(_:)), for: .valueChanged)
         
         self.toggeViewButton = UIBarButtonItem(customView: viewSelector)
-        self.doToggleView(NRCardView(rawValue: viewStyle) ?? .largeTable)
+        self.doToggleView(CardView(rawValue: viewStyle) ?? .largeTable)
         
         self.navigationController?.navigationBar.barTintColor = .white
         let topItem = self.navigationController?.navigationBar.topItem
@@ -180,7 +180,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.present(self.popup, animated: false, completion: nil)
     }
     
-    func changeSortType(_ sort: NRBrowserSort) {
+    func changeSortType(_ sort: BrowserSort) {
         self.sortType = sort
         
         self.sortButton.title = self.sortStr[sort]! + DeckState.arrow
@@ -189,16 +189,16 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func toggleView(_ sender: UISegmentedControl) {
-        let viewStyle = NRCardView(rawValue: sender.selectedSegmentIndex) ?? .largeTable
+        let viewStyle = CardView(rawValue: sender.selectedSegmentIndex) ?? .largeTable
         UserDefaults.standard.set(viewStyle.rawValue, forKey: SettingsKeys.BROWSER_VIEW_STYLE)
         self.doToggleView(viewStyle)
     }
     
-    func doToggleView(_ style: NRCardView) {
-        self.tableView.isHidden = style == NRCardView.image
-        self.collectionView.isHidden = style != NRCardView.image
+    func doToggleView(_ style: CardView) {
+        self.tableView.isHidden = style == CardView.image
+        self.collectionView.isHidden = style != CardView.image
         
-        self.largeCells = style == NRCardView.largeTable
+        self.largeCells = style == CardView.largeTable
         
         self.reloadViews()
     }

@@ -59,9 +59,9 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     private var navController: UINavigationController
     private var cardList: CardList
     
-    private var role = NRRole.none
-    private var scope = NRSearchScope.all
-    private var packUsage = NRPackUsage.all
+    private var role = Role.none
+    private var scope = CardSearchScope.all
+    private var packUsage = PackUsage.all
     private var searchText = ""
     private var selectedType = ""
     private var selectedTypes: Set<String>?
@@ -78,7 +78,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.browser = BrowserResultViewController()
         self.navController = UINavigationController(rootViewController: self.browser)
         
-        self.packUsage = NRPackUsage(rawValue: UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)) ?? .all
+        self.packUsage = PackUsage(rawValue: UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)) ?? .all
         self.cardList = CardList.browserInitForRole(self.role, packUsage: self.packUsage)
 
         super.init(nibName: "BrowserFilterViewController", bundle: nil)
@@ -159,8 +159,8 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
         
         let mwl = UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)
-        self.mwlLabel.isHidden = mwl == NRMWL.none.rawValue
-        self.mwlSwitch.isHidden = mwl == NRMWL.none.rawValue
+        self.mwlLabel.isHidden = mwl == MWL.none.rawValue
+        self.mwlSwitch.isHidden = mwl == MWL.none.rawValue
         
         self.resetAllButtons()
     }

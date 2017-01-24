@@ -113,7 +113,7 @@ class DeckExport: NSObject {
             s += eol
         }
         
-        let useMWL = deck.mwl != NRMWL.none
+        let useMWL = deck.mwl != MWL.none
         for i in 0..<sections.count {
             let cards = cardsArray[i]
             let cc = cards[0]

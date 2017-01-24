@@ -14,7 +14,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
 
-    var source = NRImportSource.none
+    var source = ImportSource.none
     
     private var runnerDecks = [Deck]()
     private var corpDecks = [Deck]()
@@ -27,10 +27,10 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     private var alert: UIAlertController?
     
     private var dateFormatter = DateFormatter()
-    private var deckListSort = NRDeckListSort.byDate
+    private var deckListSort = DeckListSort.byDate
     
     private var filterText = ""
-    private var searchScope = NRDeckSearchScope.all
+    private var searchScope = DeckSearchScope.all
     
     override init(nibName: String?, bundle: Bundle?) {
         super.init(nibName: nibName, bundle: bundle)
@@ -52,7 +52,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLoad()
         
         let sort = UserDefaults.standard.integer(forKey: SettingsKeys.DECK_FILTER_SORT)
-        self.deckListSort = NRDeckListSort(rawValue: sort) ?? .byDate
+        self.deckListSort = DeckListSort(rawValue: sort) ?? .byDate
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         
@@ -147,7 +147,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         self.present(alert, animated:false, completion:nil)
     }
     
-    func changeSortType(_ sort: NRDeckListSort) {
+    func changeSortType(_ sort: DeckListSort) {
         UserDefaults.standard.set(sort.rawValue, forKey:SettingsKeys.DECK_FILTER_SORT)
         self.deckListSort = sort
     
@@ -406,7 +406,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        self.searchScope = NRDeckSearchScope(rawValue: selectedScope) ?? .all
+        self.searchScope = DeckSearchScope(rawValue: selectedScope) ?? .all
         self.filterDecks()
         self.tableView.reloadData()
     }

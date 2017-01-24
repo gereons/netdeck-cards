@@ -30,7 +30,7 @@ struct Prebuilt: Unmarshaling {
     }
 }
 
-class PrebuiltManager: NSObject {
+class PrebuiltManager {
     
     static var allPrebuilts = [Prebuilt]()
     
@@ -46,7 +46,7 @@ class PrebuiltManager: NSObject {
     }
     
     // array of identity card codes for role in selected prebuilt decks
-    class func identities(for role: NRRole) -> [String]? {
+    class func identities(for role: Role) -> [String]? {
         prepareCaches()
         guard let cards = prebuiltCards else { return nil }
         return cards.filter{ $0.card.role == role && $0.card.type == .identity }.map{ $0.card.code }

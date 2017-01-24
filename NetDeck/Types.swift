@@ -8,71 +8,44 @@
 
 import Foundation
 
-@objc enum NRCardType: Int {
-    case none = -1
-    case identity
-
-    // corp
-    case agenda, asset, upgrade, operation, ice
-
-    // runner
-    case event, hardware, resource, program
-}
-
-@objc enum NRRole: Int {
+enum Role: Int {
     case none = -1
     case runner, corp
 }
 
-@objc enum NRFaction: Int {
-    case none = -1
-    case neutral
-    
-    case haasBioroid, weyland, nbn, jinteki
-    
-    case anarch, shaper, criminal
-    
-    case adam, apex, sunnyLebeau
-}
-
-@objc enum NRDeckState: Int {
-    case none = -1
-    case active, testing, retired
-}
-
-@objc enum NRDeckSort: Int {
+enum DeckSort: Int {
     case byType           // sort by type, then alpha
     case byFactionType    // sort by faction, then type, then alpha
     case bySetType        // sort by set, then type, then alpha
     case bySetNum         // sort by set, then number in set
 }
 
-@objc enum NRSearchScope: Int {
+enum CardSearchScope: Int {
     case all
     case name
     case text
 }
 
-@objc enum NRDeckSearchScope: Int {
+enum DeckSearchScope: Int {
     case all
     case name
     case identity
     case card
 }
 
-@objc enum NRDeckListSort: Int {
+enum DeckListSort: Int {
     case byDate
     case byFaction
     case byName
 }
 
-@objc enum NRCardView: Int {
+enum CardView: Int {
     case image
     case largeTable
     case smallTable
 }
 
-@objc enum NRBrowserSort: Int {
+enum BrowserSort: Int {
     case byType
     case byFaction
     case byTypeFaction
@@ -82,38 +55,38 @@ import Foundation
     case bySetNumber
 }
 
-@objc enum NRImportSource: Int {
+enum ImportSource: Int {
     case none
     case dropbox
     case netrunnerDb
 }
 
-@objc enum NRFilter: Int {
+enum Filter: Int {
     case all
     case runner
     case corp
 }
 
-@objc enum NRPackUsage: Int {
+enum PackUsage: Int {
     case all
     case selected
     case allAfterRotation
 }
 
-@objc enum NRMWL: Int {
+enum MWL: Int {
     case none
     case v1_0   // as of 2016-02-01
     case v1_1   // as of 2016-08-01
 //    case v1_2   // as of 2017-02-01 (?)
     
     // map from "mwl_code" values we get from the NRDB API
-    static let codeMap: [String: NRMWL] = [
+    static let codeMap: [String: MWL] = [
         "NAPD_MWL_1.0": .v1_0,
         "NAPD_MWL_1.1": .v1_1,
 //        "NAPD_MWL_1.2": .v1_2
     ]
     
-    static func by(code: String) -> NRMWL {
-        return NRMWL.codeMap[code] ?? .none
+    static func by(code: String) -> MWL {
+        return MWL.codeMap[code] ?? .none
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardUpdateCheck: NSObject {
+class CardUpdateCheck {
     
     class func checkCardUpdateAvailable(_ vc: UIViewController) -> Bool {
         let next = UserDefaults.standard.string(forKey: SettingsKeys.NEXT_DOWNLOAD)

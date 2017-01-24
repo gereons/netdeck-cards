@@ -79,7 +79,7 @@ class Card: NSObject, Unmarshaling {
     static let sansanCityGrid   = "01092"
     static let breakingNews     = "01082"
     
-    private static let mostWantedLists: [NRMWL: Set<String>] = [
+    private static let mostWantedLists: [MWL: Set<String>] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
         .v1_0: Set<String>([
             cerberusH1, cloneChip, desperado, parasite, prepaidVoicepad, yog_0,
@@ -102,11 +102,11 @@ class Card: NSObject, Unmarshaling {
     private(set) var alias: String?
     private(set) var text = ""
     private(set) var flavor = ""
-    private(set) var type = NRCardType.none
+    private(set) var type = CardType.none
     private(set) var subtype = ""               // full subtype string like "Fracter - Icebreaker - AI"
     private(set) var subtypes = [String]()      // array of subtypes like [ "Fracter", "Icebreaker", "AI" ]
-    private(set) var faction = NRFaction.none
-    private(set) var role = NRRole.none
+    private(set) var faction = Faction.none
+    private(set) var role = Role.none
     private(set) var influenceLimit = -1        // for id
     private(set) var minimumDecksize = -1       // for id
     private(set) var baseLink = -1              // for runner id
@@ -170,7 +170,7 @@ class Card: NSObject, Unmarshaling {
         return self === Card.nullInstance
     }
     
-    func isMostWanted(_ mwl: NRMWL) -> Bool {
+    func isMostWanted(_ mwl: MWL) -> Bool {
         guard let cards = Card.mostWantedLists[mwl] else {
             return false
         }
@@ -388,7 +388,7 @@ class Card: NSObject, Unmarshaling {
     }
     
     // manipulate identity name
-    class func shortIdentityName(_ name: String, forRole role: NRRole, andFaction faction: String) -> String {
+    class func shortIdentityName(_ name: String, forRole role: Role, andFaction faction: String) -> String {
         if let colon = name.range(of: ": ") {
             // runner: remove stuff after the colon ("Andromeda: Disposessed Ristie" becomes "Andromeda")
             if role == .runner {
@@ -409,7 +409,7 @@ class Card: NSObject, Unmarshaling {
         return name
     }
     
-    private static let factionColors: [NRFaction: UInt] = [
+    private static let factionColors: [Faction: UInt] = [
         .jinteki:      0x940c00,
         .nbn:          0xd7a32d,
         .weyland:      0x2d7868,
@@ -423,7 +423,7 @@ class Card: NSObject, Unmarshaling {
         .neutral:      0x000000
     ]
     
-    private static let cropValues: [NRCardType: Double] = [
+    private static let cropValues: [CardType: Double] = [
         .agenda: 15.0,
         .asset: 20.0,
         .event: 10.0,

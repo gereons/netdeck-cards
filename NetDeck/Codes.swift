@@ -11,7 +11,7 @@ import Foundation
 
 class Codes {
     
-    static let code2Type: [String: NRCardType] = [
+    static let code2Type: [String: CardType] = [
         "identity": .identity,
         
         "asset": .asset,
@@ -26,12 +26,12 @@ class Codes {
         "event": .event,
     ]
     
-    static let code2Role: [String: NRRole] = [
+    static let code2Role: [String: Role] = [
         "runner": .runner,
         "corp": .corp,
     ]
     
-    static let code2Faction: [String: NRFaction] = [
+    static let code2Faction: [String: Faction] = [
         "anarch": .anarch,
         "criminal": .criminal,
         "shaper": .shaper,
@@ -50,15 +50,15 @@ class Codes {
         "neutral-corp": .neutral
     ]
     
-    class func typeFor(code: String) -> NRCardType {
+    class func typeFor(code: String) -> CardType {
         return code2Type[code] ?? .none
     }
     
-    class func roleFor(code: String) -> NRRole {
+    class func roleFor(code: String) -> Role {
         return code2Role[code] ?? .none
     }
     
-    class func factionFor(code: String) -> NRFaction {
+    class func factionFor(code: String) -> Faction {
         return code2Faction[code] ?? .none
     }
 }
