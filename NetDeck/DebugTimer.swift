@@ -9,7 +9,7 @@
 import Foundation
 
 
-class DebugTimer: NSObject {
+class DebugTimer {
    
     private struct Timer {
         var count = 0

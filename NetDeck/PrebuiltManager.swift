@@ -56,7 +56,7 @@ class PrebuiltManager {
     class func quantity(for card: Card) -> Int {
         prepareCaches()
         guard let cards = prebuiltCards else { return 0 }
-        return cards.filter { $0.card == card }.reduce(0) { $0 + $1.count }
+        return cards.filter { $0.card.code == card.code }.reduce(0) { $0 + $1.count }
     }
     
     class func resetSelected() {

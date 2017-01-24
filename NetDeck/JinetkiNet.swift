@@ -10,7 +10,7 @@ import Alamofire
 import SwiftKeychainWrapper
 import SVProgressHUD
 
-class JintekiNet: NSObject {
+class JintekiNet {
     static let sharedInstance = JintekiNet()
     
     private let manager: Alamofire.SessionManager
@@ -19,7 +19,7 @@ class JintekiNet: NSObject {
     let loginUrl = "http://www.jinteki.net/login"
     let deckUrl = "http://www.jinteki.net/data/decks"
     
-    override private init() {
+    private init() {
         self.cookieJar = HTTPCookieStorage.shared
         let cfg = URLSessionConfiguration.default
         cfg.httpCookieStorage = self.cookieJar

@@ -22,7 +22,7 @@ struct BuildConfig {
     static let useCrashlytics = release || debugCrashLytics
 }
 
-class Device: NSObject {
+class Device {
     static var isIphone: Bool {
         return UIDevice.current.userInterfaceIdiom == .phone
     }

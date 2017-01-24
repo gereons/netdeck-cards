@@ -8,7 +8,7 @@
 
 import Crashlytics
 
-class Analytics: NSObject {
+class Analytics {
     
     class func logEvent(_ name: String, attributes: [String: Any]? = nil) {
         if BuildConfig.useCrashlytics {

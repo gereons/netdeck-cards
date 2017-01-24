@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SettingsKeys: NSObject {
+class SettingsKeys {
     static let LAST_MOD_CACHE      = "lastModified"
     static let NEXT_CHECK          = "nextCheck"
     static let UNAVAILABLE_IMAGES  = "unavailableImages"

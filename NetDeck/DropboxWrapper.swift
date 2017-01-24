@@ -10,7 +10,7 @@
 
 import SwiftyDropbox
 
-class DropboxWrapper: NSObject {
+class DropboxWrapper {
     
     class func setup() {
         DropboxClientsManager.setupWithAppKey("4mhw6piwd9wqti3")

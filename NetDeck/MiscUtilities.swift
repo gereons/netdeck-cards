@@ -9,7 +9,7 @@
 import Foundation
 import SDCAlertView
 
-class Constant: NSObject {
+class Constant {
     static let kANY = "Any"
 }
 

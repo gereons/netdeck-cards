@@ -9,7 +9,7 @@
 import Alamofire
 import AlamofireNetworkActivityIndicator
 
-class Reachability: NSObject {
+class Reachability {
     static var manager: NetworkReachabilityManager?
     
     class func start() {

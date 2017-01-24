@@ -267,11 +267,9 @@ class Card: NSObject, Unmarshaling {
         return cards
     }
     
-    override private init() {}
+    private init() {}
     
-    required init(object: MarshaledObject) throws {
-        super.init()
-        
+    required init(object: MarshaledObject) throws {        
         self.code = try object.value(for: "code")
         self.englishName = try object.value(for: "title")
         self.name = try object.localized(for: "title", language: Card.currentLanguage)
@@ -435,18 +433,5 @@ class Card: NSObject, Unmarshaling {
         .resource: 11.0,
         .upgrade: 22.0
     ]
-    
-    // implement Hashable & Equatable to allow Card objects as dictionary keys
-    override var hash: Int {
-        return code.hash
-    }
-    
-    override func isEqual(_ object: Any?) -> Bool {
-        if let other = object as? Card {
-            return self.code == other.code
-        } else {
-            return false
-        }
-    }
 }
 

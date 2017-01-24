@@ -10,7 +10,7 @@ import Alamofire
 import SwiftKeychainWrapper
 import SVProgressHUD
 
-class NRDBHack: NSObject {
+class NRDBHack {
 
     static let AUTH_URL = NRDB.PROVIDER_HOST + "/oauth/v2/auth"
     static let CHECK_URL = NRDB.PROVIDER_HOST + "/oauth/v2/auth_login_check"
