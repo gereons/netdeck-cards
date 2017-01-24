@@ -9,8 +9,9 @@
 import Foundation
 import SDCAlertView
 
-class Constant {
+struct Constant {
     static let kANY = "Any"
+    static let arrow = " ▾"
 }
 
 extension String {

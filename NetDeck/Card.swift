@@ -267,9 +267,11 @@ class Card: NSObject, Unmarshaling {
         return cards
     }
     
-    private init() {}
+    override private init() {}
     
-    required init(object: MarshaledObject) throws {        
+    required init(object: MarshaledObject) throws {
+        super.init()
+        
         self.code = try object.value(for: "code")
         self.englishName = try object.value(for: "title")
         self.name = try object.localized(for: "title", language: Card.currentLanguage)

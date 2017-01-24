@@ -13,7 +13,6 @@ enum DeckState: Int {
     case none = -1
     case active, testing, retired
 
-    static let arrow = " ▾"
     private static let states: [DeckState: String] = [
         .none: "All",
         .retired: "Retired",
@@ -30,7 +29,7 @@ enum DeckState: Int {
     }
     
     static func buttonLabelFor(_ state: DeckState) -> String {
-        return labelFor(state) + arrow
+        return labelFor(state) + Constant.arrow
     }
     
     static func possibleTitles() -> [String] {

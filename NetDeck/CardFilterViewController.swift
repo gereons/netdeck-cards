@@ -361,7 +361,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.sendNotification = false
         
         self.scope = .name
-        self.scopeButton.setTitle(self.scopeLabels[self.scope]! + DeckState.arrow, for: .normal)
+        self.scopeButton.setTitle(self.scopeLabels[self.scope]! + Constant.arrow, for: .normal)
         self.scopeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         self.scopeButton.titleLabel?.minimumScaleFactor = 0.5
         
@@ -747,7 +747,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     func changeScope(_ scope: CardSearchScope) {
         self.scope = scope
-        self.scopeButton.setTitle(self.scopeLabels[self.scope]! + DeckState.arrow, for: .normal)
+        self.scopeButton.setTitle(self.scopeLabels[self.scope]! + Constant.arrow, for: .normal)
         
         self.updateFilter(self.scopes[self.scope]!, value: self.searchText)
     }

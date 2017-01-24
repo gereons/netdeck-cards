@@ -86,7 +86,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Decks".localized(), style: .plain, target: nil, action: nil)
         
-        let arrow = DeckState.arrow
+        let arrow = Constant.arrow
         self.sortButton = UIBarButtonItem(title: self.sortStr[self.sortType]! + arrow, style: .plain, target: self, action: #selector(self.changeSort(_:)))
         self.sortButton.possibleTitles = Set<String>(self.sortStr.values.map { $0 + arrow })
         
@@ -125,13 +125,13 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let settings = UserDefaults.standard
         self.filterType = Filter(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_TYPE)) ?? .all
-        self.sideFilterButton.title = sideStr[self.filterType]! + DeckState.arrow
+        self.sideFilterButton.title = sideStr[self.filterType]! + Constant.arrow
         
         self.filterState = DeckState(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_STATE)) ?? .none
         self.stateFilterButton.title = DeckState.buttonLabelFor(self.filterState)
         
         self.sortType = DeckListSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_SORT)) ?? .byName
-        self.sortButton.title = sortStr[self.sortType]! + DeckState.arrow
+        self.sortButton.title = sortStr[self.sortType]! + Constant.arrow
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
@@ -261,8 +261,8 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func updateDecks() {
-        self.sortButton.title = sortStr[self.sortType]! + DeckState.arrow
-        self.sideFilterButton.title = sideStr[self.filterType]! + DeckState.arrow
+        self.sortButton.title = sortStr[self.sortType]! + Constant.arrow
+        self.sideFilterButton.title = sideStr[self.filterType]! + Constant.arrow
         self.stateFilterButton.title = DeckState.buttonLabelFor(self.filterState)
         
         var runnerDecks = self.filterType != .corp ? DeckManager.decksForRole(.runner) : []
