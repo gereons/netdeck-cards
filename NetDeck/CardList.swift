@@ -379,9 +379,9 @@ class CardList {
         return filteredCards
     }
     
-    func sort(_ cards: inout [Card]) {
+    private func sort(_ cards: inout [Card]) {
         
-        cards.sort { (c1, c2) -> Bool in
+        cards.sort { c1, c2 in
             switch (self.sortType) {
             case .byType, .byTypeFaction:
                 if c1.type.rawValue < c2.type.rawValue { return true }
@@ -408,9 +408,7 @@ class CardList {
             default: break
             }
             
-            let n1 = c1.name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
-            let n2 = c2.name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
-            return n1 < n2
+            return c1.foldedName < c2.foldedName
         }
     }
     

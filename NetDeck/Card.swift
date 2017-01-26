@@ -98,6 +98,7 @@ class Card: NSObject, Unmarshaling {
     
     private(set) var code = ""
     private(set) var name = ""                  // localized name of card, used for display
+    private(set) var foldedName = ""            // lowercased, no diactics, for sorting (e.g. "Déjà vu" -> "deja vu")
     private(set) var englishName = ""           // english name of card, used for searches
     private(set) var alias: String?
     private(set) var text = ""
@@ -275,6 +276,7 @@ class Card: NSObject, Unmarshaling {
         self.code = try object.value(for: "code")
         self.englishName = try object.value(for: "title")
         self.name = try object.localized(for: "title", language: Card.currentLanguage)
+        self.foldedName = name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
         
         self.factionCode = try object.value(for: "faction_code")
         self.faction = Codes.factionFor(code: self.factionCode)

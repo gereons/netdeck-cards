@@ -297,9 +297,7 @@ import Marshal
                 }
             }
             
-            let n1 = c1.name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
-            let n2 = c2.name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
-            return n1 < n2
+            return c1.foldedName < c2.foldedName
         }
     }
     
