@@ -8,7 +8,9 @@
 
 import Foundation
 
-enum DeckState: Int {
+// @objc to make NSPredicates on deck.state work
+
+@objc enum DeckState: Int {
     
     case none = -1
     case active, testing, retired

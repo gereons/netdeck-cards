@@ -8,7 +8,9 @@
 
 import Foundation
 
-enum CardType: Int {
+// @objc to make NSPredicates on card.type work
+
+@objc enum CardType: Int {
     
     case none = -1
     case identity

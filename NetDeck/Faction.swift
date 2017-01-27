@@ -8,7 +8,9 @@
 
 import Foundation
 
-enum Faction: Int {
+// @objc to make NSPredicates on card.faction work
+
+@objc enum Faction: Int {
     
     case none = -1
     case neutral

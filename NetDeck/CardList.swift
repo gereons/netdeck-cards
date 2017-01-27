@@ -380,7 +380,6 @@ class CardList {
     }
     
     private func sort(_ cards: inout [Card]) {
-        
         cards.sort { c1, c2 in
             switch (self.sortType) {
             case .byType, .byTypeFaction:
@@ -424,43 +423,38 @@ class CardList {
     }
     
     func dataForTableView() -> TableData<Card> {
-        var sections = [String]()
-        var cards = [[Card]]()
-        
         var filteredCards = self.applyFilters()
         self.sort(&filteredCards)
         
-        var prevSection = ""
-        var arr: [Card]?
+        var sections = [String]()
+        var cards = [[Card]]()
+        var current = [Card]()
         for card in filteredCards {
-            var section = ""
-            switch (self.sortType) {
-            case .byType, .byTypeFaction:
-                section = card.typeStr
-            case .byFaction:
-                section = card.factionStr
-            default:
-                section = card.packName
+            if current.isEmpty || self.section(card) == self.section(current[0]) {
+                current.append(card)
+            } else {
+                sections.append(self.section(current[0]))
+                cards.append(current)
+                current = [card]
             }
-            
-            if section != prevSection {
-                sections.append(section)
-                if (arr != nil)
-                {
-                    cards.append(arr!)
-                }
-                arr = [Card]()
-            }
-            arr!.append(card)
-            prevSection = section
         }
-        
-        if let arr = arr, arr.count > 0 {
-            cards.append(arr)
+        if !current.isEmpty {
+            sections.append(self.section(current[0]))
+            cards.append(current)
         }
-        
-        assert(sections.count == cards.count, "count mismatch")
         
         return TableData(sections: sections, values: cards)
     }
+    
+    private func section(_ card: Card) -> String {
+        switch self.sortType {
+        case .byType, .byTypeFaction:
+            return card.typeStr
+        case .byFaction:
+            return card.factionStr
+        default: // .bySetXYZ
+            return card.factionStr
+        }
+    }
+    
 }

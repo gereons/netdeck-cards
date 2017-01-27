@@ -567,45 +567,41 @@ import Marshal
             self.addCard(card, copies: 0)
         }
         
-        var prevSection = ""
-        var arr: [CardCounter]?
-        
+        var current = [CardCounter]()
         for cc in self.cards {
-            var section: String
-            
-            switch sortOrder {
-            case .byType:
-                section = cc.card.typeStr
-                if cc.card.type == .ice {
-                    section = cc.card.iceType
-                }
-                if cc.card.type == .program {
-                    section = cc.card.programType
-                }
-            case .bySetType, .bySetNum:
-                section = cc.card.packName
-            case .byFactionType:
-                section = cc.card.factionStr
+            if current.isEmpty || self.section(cc, sortOrder) == self.section(current[0], sortOrder) {
+                current.append(cc)
+            } else {
+                sections.append(self.section(current[0], sortOrder))
+                cards.append(current)
+                current = [cc]
             }
-            
-            if section != prevSection {
-                sections.append(section)
-                if arr != nil {
-                    cards.append(arr!)
-                }
-                arr = [CardCounter]()
-            }
-            arr?.append(cc)
-            prevSection = section
         }
-        
-        if let arr = arr, arr.count > 0 {
-            cards.append(arr)
+        if !current.isEmpty {
+            sections.append(self.section(current[0], sortOrder))
+            cards.append(current)
         }
-        
-        assert(sections.count == cards.count, "count mismatch")
         
         return TableData(sections: sections, values: cards)
+    }
+    
+    private func section(_ cc: CardCounter, _ sortOrder: DeckSort) -> String {
+        let card = cc.card
+        switch sortOrder {
+        case .byType:
+            switch card.type {
+            case .ice:
+                return card.iceType
+            case .program:
+                return card.programType
+            default:
+                return card.typeStr
+            }
+        case .bySetType, .bySetNum:
+            return card.packName
+        case .byFactionType:
+            return card.factionStr
+        }
     }
     
     func saveToDisk() {

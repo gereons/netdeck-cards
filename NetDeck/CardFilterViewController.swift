@@ -170,8 +170,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView.isHidden = self.viewMode != .list
         
         self.revertButton = UIBarButtonItem(title: "Cancel".localized(), style: .plain, target: self, action: #selector(self.revertDeck(_:)))
-        
-        self.resetAllButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
