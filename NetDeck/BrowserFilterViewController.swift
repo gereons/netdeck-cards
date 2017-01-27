@@ -91,15 +91,14 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Cards".localized()
+        
         self.initializing = true
         Analytics.logEvent("Browser", attributes: ["Device": "iPad"])
         
         self.edgesForExtendedLayout = []
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.title = "Card".localized()
+
         
-        let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersClicked(_:)))
-        topItem?.rightBarButtonItem = clearButton
         
         // side
         self.sideSelector.setTitle("Both".localized(), forSegmentAt: 0)
@@ -184,6 +183,14 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         
         self.initializing = false
         self.updateResults()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let topItem = self.navigationController?.navigationBar.topItem
+        let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersClicked(_:)))
+        topItem?.rightBarButtonItem = clearButton
     }
     
     override func viewWillDisappear(_ animated: Bool) {
