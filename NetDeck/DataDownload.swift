@@ -241,19 +241,21 @@ class DataDownload: NSObject {
                 ImageCache.sharedInstance.updateMissingImage(for: card, completion: downloadNext)
             }
         } else {
-            DispatchQueue.main.async {
-                self.sdcAlert?.dismiss(animated:false, completion:nil)
-                self.progressView = nil
-                self.sdcAlert = nil
-                if self.downloadErrors > 0 {
-                    let msg = String(format:"%d of %d images could not be downloaded.".localized(),
-                                     self.downloadErrors, self.cards.count)
-                    
-                    UIAlertController.alert(withTitle: nil, message:msg, button:"OK")
-                }
-                
-                self.cards.removeAll()
-            }
+            self.sdcAlert?.dismiss(animated:false, completion:nil)
+            self.progressView = nil
+            self.sdcAlert = nil
+            self.cards.removeAll()
+            
+            self.perform(#selector(self.showMissingCardsAlert), with: nil, afterDelay: 0.05)
+        }
+    }
+    
+    func showMissingCardsAlert() {
+        if self.downloadErrors > 0 {
+            let msg = String(format:"%d of %d images could not be downloaded.".localized(),
+                             self.downloadErrors, self.cards.count)
+            
+            UIAlertController.alert(withTitle: nil, message:msg, button:"OK")
         }
     }
     
