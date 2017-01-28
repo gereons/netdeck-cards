@@ -132,11 +132,12 @@ class DeckExport {
                 s += " " + self.italics("(" + cc.card.packName + ")", fmt)
 
                 let inf = deck.influenceFor(cc)
+                let color = Faction.hexColor(for: cc.card.faction)
                 if inf > 0 {
-                    s += " " + self.color(self.dots(inf), cc.card.factionHexColor, fmt)
+                    s += " " + self.color(self.dots(inf), color, fmt)
                 }
                 if useMWL && cc.card.isMostWanted(deck.mwl) {
-                    s += " " + self.color(self.stars(cc.count), cc.card.factionHexColor, fmt)
+                    s += " " + self.color(self.stars(cc.count), color, fmt)
                 }
                 s += eol
             }
@@ -205,8 +206,11 @@ class DeckExport {
     
     class func color(_ s: String, _ color: UInt, _ format: ExportFormat) -> String {
         switch format {
-        case .plainText, .markdown: return s
-        case .bbCode: return "[color=#\(color)]" + s + "[/color]"
+        case .plainText, .markdown:
+            return s
+        case .bbCode:
+            let hexColor = String(color, radix: 16)
+            return "[color=#\(hexColor)]\(s)[/color]"
         }
     }
     
@@ -214,7 +218,7 @@ class DeckExport {
         switch format {
         case .plainText: return s + " " + target
         case .markdown: return "[\(s)](\(target))"
-        case .bbCode: return "[url=\(target)]" + s + "[/url]"
+        case .bbCode: return "[url=\(target)]\(s)[/url]"
         }
     }
 

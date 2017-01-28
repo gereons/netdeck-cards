@@ -30,28 +30,6 @@ class CardManager {
     private(set) static var maxCorpCost: Int = -1
     private(set) static var maxTrash: Int = -1
     
-    private static let cardAliases = [
-        "08034": "Franklin",  // Crick
-        "02085": "HQI",       // HQ Interface
-        "02107": "RDI",       // R&D Interface
-        "06033": "David",     // D4v1d
-        "05039": "SW35",      // Unreg. s&w '35
-        "03035": "LARLA",     // Levy AR Lab Access
-        "04029": "PPVP",      // Prepaid Voicepad
-        "01092": "SSCG",      // Sansan City Grid
-        "03049": "Proco",     // Professional Contacts
-        "02079": "OAI",       // Oversight AI
-        "08009": "Baby",      // Symmetrical Visage
-        "08003": "Pancakes",  // Adjusted Chronotype
-        "08086": "Anita",     // Film Critic
-        "01044": "Mopus",     // Magnum Opus
-        "09007": "Kitty",     // Quantum Predictive Model
-        "10043": "Polop",     // Political Operative
-        "10108": "FIRS",      // Full Immersion RecStudio
-        "11024": "Clippy",    // Paperclip
-        "11094": "IPB",       // IP Block
-    ]
-    
     static func initialize() {
         allKnownCards.removeAll()
         
@@ -234,9 +212,9 @@ class CardManager {
         }
         
         // add hard-coded aliases
-        for code in cardAliases.keys {
+        for (code, alias) in Card.aliases {
             if let card = CardManager.cardBy(code: code) {
-                card.setCardAlias(cardAliases[code]!)
+                card.setCardAlias(alias)
             }
         }
     }

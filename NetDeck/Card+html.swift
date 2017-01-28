@@ -10,9 +10,10 @@ import DTCoreText
 
 extension Card {
     
+    // @nonobjc to avoid "a declaration cannot be both 'final' and 'dynamic'"
     @nonobjc static var htmlCache = [String: NSAttributedString]()
     
-    @nonobjc static let replacements = [
+    static let replacements = [
         "\n": "<br/>",
         "[subroutine]": "<span class='icon'>\u{e900}</span>",
         "[trash]": "<span class='icon'>\u{e905}</span>",
@@ -37,11 +38,11 @@ extension Card {
         "</trace>": "</strong>-"
     ]
 
-    @nonobjc static let fontFamily = UIFont.systemFont(ofSize: 13).familyName
-    @nonobjc static let styleSheet = DTCSSStylesheet(styleBlock:
+    static let fontFamily = UIFont.systemFont(ofSize: 13).familyName
+    static let styleSheet = DTCSSStylesheet(styleBlock:
         ".icon { font-family: 'netrunner' !important; font-style: normal; font-variant: normal; font-weight: normal; line-height: 1; text-transform: none; }")
     
-    @nonobjc static let coreTextOptions: [String: Any] = [
+    static let coreTextOptions: [String: Any] = [
         DTUseiOS6Attributes: true,
         DTDefaultFontFamily: NSString(string: fontFamily),
         DTDefaultFontSize: 13,

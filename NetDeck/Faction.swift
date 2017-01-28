@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit.UIColor
 
 // @objc to make NSPredicates on card.faction work
 
@@ -133,5 +134,30 @@ import Foundation
             return Faction.name(for: faction)
         }
     }
+}
+
+extension Faction {
+    private static let colors: [Faction: UInt] = [
+        .jinteki:      0x940c00,
+        .nbn:          0xd7a32d,
+        .weyland:      0x2d7868,
+        .haasBioroid:  0x6b2b8a,
+        .shaper:       0x6ab545,
+        .criminal:     0x4f67b0,
+        .anarch:       0xf47c28,
+        .adam:         0xae9543,
+        .apex:         0xa8403d,
+        .sunnyLebeau:  0x776e6f,
+        .neutral:      0x000000
+    ]
+
+    static func color(for faction: Faction) -> UIColor {
+        return UIColor(rgb: hexColor(for: faction))
+    }
+    
+    static func hexColor(for faction: Faction) -> UInt {
+        return Faction.colors[faction] ?? 0x0
+    }
+    
 }
 

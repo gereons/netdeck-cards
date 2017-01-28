@@ -10,90 +10,7 @@ import Marshal
 
 class Card: NSObject, Unmarshaling {
     
-    // identities we need to handle
-    static let customBiotics            = "03002"    // no jinteki cards
-    static let theProfessor             = "03029"    // first copy of each program has influence 0
-    static let andromeda                = "02083"    // 9 card starting hand
-    static let apex                     = "09029"    // no non-virtual resources
-    
-    // alliance cards with special influence rules
-    static let mumbaTemple              = "10018"    // 0 inf if <= 15 ice in deck
-    static let museumOfHistory          = "10019"    // 0 inf if >= 50 cards in deck
-    static let padFactory               = "10038"    // 0 inf if 3 pad campaigns in deck
-    static let mumbadVirtualTour        = "10076"    // 0 inf if >= 7 assets in deck
-    
-    // alliance-based: 0 inf if >= 6 non-alliance cards of same faction in deck
-    static let productRecall            = "10029"    // 0 inf if >= 6 non-alliance HB cards in deck
-    static let jeevesModelBioroid       = "10067"    // 0 inf if >= 6 non-alliance HB cards in deck
-    static let ramanRai                 = "10068"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
-    static let heritageCommittee        = "10013"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
-    static let salemsHospitality        = "10071"    // 0 inf if >= 6 non-alliance NBN cards in deck
-    static let ibrahimSalem             = "10109"    // 0 inf if >= 6 non-alliance NBN cards in deck
-    static let executiveSearchFirm      = "10072"    // 0 inf if >= 6 non-alliance Weyland cards in deck
-    static let consultingVisit          = "10094"    // 0 inf if >= 6 non-alliance Weyland cards in deck
-
-    static let alliance6 = Set<String>([
-        productRecall, jeevesModelBioroid,
-        ramanRai, heritageCommittee,
-        salemsHospitality, ibrahimSalem,
-        executiveSearchFirm, consultingVisit
-    ])
-    
-    static let padCampaign              = "01109"    // needed for pad factory
-    
-    // "limit 1 per deck" cards
-    static let directorHaasPetProject   = "03004"
-    static let philoticEntanglement     = "05006"
-    static let utopiaShard              = "06100"
-    static let hadesShard               = "06059"
-    static let edenShard                = "06020"
-    static let edenFragment             = "06030"
-    static let hadesFragment            = "06071"
-    static let utopiaFragment           = "06110"
-    static let governmentTakeover       = "07006"
-    static let _15minutes               = "09004"
-    static let rebirth                  = "10083"
-    static let blackFile                = "10099"
-    static let max1perDeck              = Set<String>([ directorHaasPetProject, philoticEntanglement,
-                                            utopiaShard, utopiaFragment, hadesShard,
-                                            hadesFragment, edenShard, edenFragment,
-                                            governmentTakeover, _15minutes, rebirth, blackFile, astroscript ])
-    
-    static let octgnPrefix = "bc0f047c-01b1-427f-a439-d451eda"
-    
-    // "most wanted" list
-    static let cerberusH1       = "06099"
-    static let cloneChip        = "03038"
-    static let desperado        = "01024"
-    static let parasite         = "01012"
-    static let prepaidVoicepad  = "04029"
-    static let yog_0            = "01014"
-    static let d4v1d            = "06033"
-    static let faust            = "08061"
-    static let wyldside         = "01016"
-    
-    static let architect        = "06061"
-    static let astroscript      = "01081"
-    static let eli_1            = "02110"
-    static let napdContract     = "04119"
-    static let sansanCityGrid   = "01092"
-    static let breakingNews     = "01082"
-    
-    private static let mostWantedLists: [MWL: Set<String>] = [
-        // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
-        .v1_0: Set<String>([
-            cerberusH1, cloneChip, desperado, parasite, prepaidVoicepad, yog_0,
-            architect, astroscript, eli_1, napdContract, sansanCityGrid ]),
-        
-        // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
-        .v1_1: Set<String>([
-            cerberusH1, cloneChip, d4v1d, desperado, faust, parasite, prepaidVoicepad, wyldside, yog_0,
-            architect, breakingNews, eli_1, mumbaTemple, napdContract, sansanCityGrid ]),
-        
-//        .v1_2: Set<String>([])
-    ]
-    
-    private(set) static var fullNames = [String: String]()
+    private(set) static var fullNames = [String: String]() // code => full names of identities
     private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
     private(set) var code = ""
@@ -201,22 +118,14 @@ class Card: NSObject, Unmarshaling {
     }
 
     var factionColor: UIColor {
-        return UIColor(rgb: self.factionHexColor)
+        return Faction.color(for: self.faction)
     }
     
-    var factionHexColor: UInt {
-        assert(self.faction != .none)
-        return Card.factionColors[self.faction]!
-    }
-    
+    static let octgnPrefix = "bc0f047c-01b1-427f-a439-d451eda"
     var octgnCode: String {
         return Card.octgnPrefix + self.code
     }
     
-    var cropY: Double {
-        assert(self.type != .none)
-        return Card.cropValues[self.type]!
-    }
     
     // how many copies owned
     var owned: Int {
@@ -410,20 +319,118 @@ class Card: NSObject, Unmarshaling {
         
         return name
     }
+}
+
+extension Card {
+    // identities we need to handle
+    static let customBiotics            = "03002"    // no jinteki cards
+    static let theProfessor             = "03029"    // first copy of each program has influence 0
+    static let andromeda                = "02083"    // 9 card starting hand
+    static let apex                     = "09029"    // no non-virtual resources
     
-    private static let factionColors: [Faction: UInt] = [
-        .jinteki:      0x940c00,
-        .nbn:          0xd7a32d,
-        .weyland:      0x2d7868,
-        .haasBioroid:  0x6b2b8a,
-        .shaper:       0x6ab545,
-        .criminal:     0x4f67b0,
-        .anarch:       0xf47c28,
-        .adam:         0xae9543,
-        .apex:         0xa8403d,
-        .sunnyLebeau:  0x776e6f,
-        .neutral:      0x000000
+    // alliance cards with special influence rules
+    static let mumbaTemple              = "10018"    // 0 inf if <= 15 ice in deck
+    static let museumOfHistory          = "10019"    // 0 inf if >= 50 cards in deck
+    static let padFactory               = "10038"    // 0 inf if 3 pad campaigns in deck
+    static let mumbadVirtualTour        = "10076"    // 0 inf if >= 7 assets in deck
+    
+    // alliance-based: 0 inf if >= 6 non-alliance cards of same faction in deck
+    static let productRecall            = "10029"    // 0 inf if >= 6 non-alliance HB cards in deck
+    static let jeevesModelBioroid       = "10067"    // 0 inf if >= 6 non-alliance HB cards in deck
+    static let ramanRai                 = "10068"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
+    static let heritageCommittee        = "10013"    // 0 inf if >= 6 non-alliance Jinteki cards in deck
+    static let salemsHospitality        = "10071"    // 0 inf if >= 6 non-alliance NBN cards in deck
+    static let ibrahimSalem             = "10109"    // 0 inf if >= 6 non-alliance NBN cards in deck
+    static let executiveSearchFirm      = "10072"    // 0 inf if >= 6 non-alliance Weyland cards in deck
+    static let consultingVisit          = "10094"    // 0 inf if >= 6 non-alliance Weyland cards in deck
+    
+    static let alliance6 = Set<String>([
+        productRecall, jeevesModelBioroid,
+        ramanRai, heritageCommittee,
+        salemsHospitality, ibrahimSalem,
+        executiveSearchFirm, consultingVisit
+        ])
+    
+    static let padCampaign              = "01109"    // needed for pad factory
+    
+    // "limit 1 per deck" cards
+    static let directorHaasPetProject   = "03004"
+    static let philoticEntanglement     = "05006"
+    static let utopiaShard              = "06100"
+    static let hadesShard               = "06059"
+    static let edenShard                = "06020"
+    static let edenFragment             = "06030"
+    static let hadesFragment            = "06071"
+    static let utopiaFragment           = "06110"
+    static let governmentTakeover       = "07006"
+    static let _15minutes               = "09004"
+    static let rebirth                  = "10083"
+    static let blackFile                = "10099"
+    static let max1perDeck              = Set<String>([ directorHaasPetProject, philoticEntanglement,
+                                                        utopiaShard, utopiaFragment, hadesShard,
+                                                        hadesFragment, edenShard, edenFragment,
+                                                        governmentTakeover, _15minutes, rebirth, blackFile, astroscript ])
+    
+    // "most wanted" list
+    static let cerberusH1       = "06099"
+    static let cloneChip        = "03038"
+    static let desperado        = "01024"
+    static let parasite         = "01012"
+    static let prepaidVoicepad  = "04029"
+    static let yog_0            = "01014"
+    static let d4v1d            = "06033"
+    static let faust            = "08061"
+    static let wyldside         = "01016"
+    
+    static let architect        = "06061"
+    static let astroscript      = "01081"
+    static let eli_1            = "02110"
+    static let napdContract     = "04119"
+    static let sansanCityGrid   = "01092"
+    static let breakingNews     = "01082"
+    
+    fileprivate static let mostWantedLists: [MWL: Set<String>] = [
+        // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
+        .v1_0: Set<String>([
+            cerberusH1, cloneChip, desperado, parasite, prepaidVoicepad, yog_0,
+            architect, astroscript, eli_1, napdContract, sansanCityGrid ]),
+        
+        // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
+        .v1_1: Set<String>([
+            cerberusH1, cloneChip, d4v1d, desperado, faust, parasite, prepaidVoicepad, wyldside, yog_0,
+            architect, breakingNews, eli_1, mumbaTemple, napdContract, sansanCityGrid ]),
+        
+        // .v1_2: Set<String>([])
     ]
+    
+    static let aliases = [
+        "08034": "Franklin",  // Crick
+        "02085": "HQI",       // HQ Interface
+        "02107": "RDI",       // R&D Interface
+        "06033": "David",     // D4v1d
+        "05039": "SW35",      // Unreg. s&w '35
+        "03035": "LARLA",     // Levy AR Lab Access
+        "04029": "PPVP",      // Prepaid Voicepad
+        "01092": "SSCG",      // Sansan City Grid
+        "03049": "Proco",     // Professional Contacts
+        "02079": "OAI",       // Oversight AI
+        "08009": "Baby",      // Symmetrical Visage
+        "08003": "Pancakes",  // Adjusted Chronotype
+        "08086": "Anita",     // Film Critic
+        "01044": "Mopus",     // Magnum Opus
+        "09007": "Kitty",     // Quantum Predictive Model
+        "10043": "Polop",     // Political Operative
+        "10108": "FIRS",      // Full Immersion RecStudio
+        "11024": "Clippy",    // Paperclip
+        "11094": "IPB",       // IP Block
+    ]
+
+}
+
+extension Card {
+    var cropY: Double {
+        return Card.cropValues[self.type] ?? 0.0
+    }
     
     private static let cropValues: [CardType: Double] = [
         .agenda: 15.0,
@@ -437,5 +444,5 @@ class Card: NSObject, Unmarshaling {
         .resource: 11.0,
         .upgrade: 22.0
     ]
-}
 
+}
