@@ -345,12 +345,13 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            var decks = self.decks[indexPath.section]
-            let deck = decks[indexPath.row]
-            
-            decks.remove(at: indexPath.row)
+            let deck = self.decks[indexPath.section][indexPath.row]
             NRDB.sharedInstance.deleteDeck(deck.netrunnerDbId)
-            DeckManager.removeFile(deck.filename!)
+            if let filename = deck.filename {
+                DeckManager.removeFile(filename)
+            }
+            
+            self.decks[indexPath.section].remove(at: indexPath.row)
             
             self.tableView.beginUpdates()
             self.tableView.deleteRows(at: [ indexPath ], with: .left)

@@ -450,19 +450,16 @@ class SavedDecksList: DecksViewController {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let deck = self.decks[indexPath.section][indexPath.row]
-            
-            self.decks[indexPath.section].remove(at: indexPath.row)
-            
             NRDB.sharedInstance.deleteDeck(deck.netrunnerDbId)
             if let filename = deck.filename {
                 DeckManager.removeFile(filename)
             }
             
+            self.decks[indexPath.section].remove(at: indexPath.row)
+            
             self.tableView.beginUpdates()
             self.tableView.deleteRows(at: [indexPath], with: .left)
             self.tableView.endUpdates()
-            
-            self.tableView.reloadData()
         }
     }
     
