@@ -54,7 +54,7 @@ class DataDownload: NSObject {
             self.showDownloadAlert()
             self.perform(#selector(DataDownload.doDownloadCardData(_:)), with: nil, afterDelay: 0.01)
         } else {
-            UIAlertController.alert(withTitle: nil, message: "No known NetrunnerDB server".localized(), button: "OK".localized());
+            UIAlertController.alert(withTitle: nil, message: "No known NetrunnerDB server".localized(), button: "OK".localized())
             return
         }
     }
@@ -165,7 +165,7 @@ class DataDownload: NSObject {
                     missing.append(card)
                 }
             }
-            self.cards = missing;
+            self.cards = missing
         }
         
         if self.cards.count == 0 {

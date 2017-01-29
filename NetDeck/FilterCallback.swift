@@ -10,8 +10,6 @@ import UIKit
 
 protocol FilterCallback: class {
 
-    // -(void) filterCallback:(UIButton*)button type:(NSString*)type value:(id)value;
-    
     func filterCallback(_ button: UIButton, type: String, value: Any)
 
 }

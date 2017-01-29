@@ -236,7 +236,7 @@ class ImageCache: NSObject {
             .responseImage(imageScale: 1.0) { response in
                 if let img = response.result.value {
                     let lastModified = response.response?.allHeaderFields["Last-Modified"] as? String
-                    self.NLOG("up: GOT %@ If-Modified-Since %@: status 200", url.absoluteString, lastModified ?? "n/a");
+                    self.NLOG("up: GOT %@ If-Modified-Since %@: status 200", url.absoluteString, lastModified ?? "n/a")
                     self.storeInCache(img, lastModified: lastModified, key: key)
                     completion(true)
                 } else {
@@ -409,7 +409,7 @@ class ImageCache: NSObject {
             request.setValue(lastModDate, forHTTPHeaderField: "If-Modified-Since")
         }
         
-        self.NLOG("GET %@ If-Modified-Since %@", card.imageSrc, lastModDate ?? "n/a");
+        self.NLOG("GET %@ If-Modified-Since %@", card.imageSrc, lastModDate ?? "n/a")
         Alamofire
             .request(request)
             .validate()

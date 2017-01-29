@@ -60,7 +60,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         if self.filterText.length > 0 {
             self.searchBar.text = self.filterText
         }
-        self.searchBar.scopeButtonTitles = [ "All".localized(), "Name".localized(), "Identity".localized(), "Card".localized() ];
+        self.searchBar.scopeButtonTitles = [ "All".localized(), "Name".localized(), "Identity".localized(), "Card".localized() ]
         self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue
         self.searchBar.showsScopeBar = false
         self.searchBar.showsCancelButton = false

@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
-            Fabric.with([Crashlytics.self]);
+            Fabric.with([Crashlytics.self])
         }
         
         // make sure the Library/Application Support directory exists
@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         let useNrdb = Defaults[.useNrdb]
         let keepCredentials = Defaults[.keepNrdbCredentials]
-        let fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever;
+        let fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever
         UIApplication.shared.setMinimumBackgroundFetchInterval(fetchInterval)
         
         if useNrdb && keepCredentials {
@@ -139,8 +139,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         let today = fmt.string(from: Date())
         
         // MWL v1.1 goes into effect 2016-08-01
-        let defaultMWL = today >= "20160801" ? MWL.v1_1 : MWL.v1_0;
-//        let defaultMWL = today >= "20170201" ? MWL.v1_2 : MWL.v1_1;
+        let defaultMWL = today >= "20160801" ? MWL.v1_1 : MWL.v1_0
+//        let defaultMWL = today >= "20170201" ? MWL.v1_2 : MWL.v1_1
         
         let defaults: [String: Any] = [
             DefaultsKeys.lastDownload._key: "never".localized(),
@@ -306,7 +306,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         Defaults[.lastBackgroundFetch] = formatter.string(from: Date())
         
         NRDB.sharedInstance.backgroundRefreshAuthentication { result in
-            // NSLog(@"primary call %ld", (long)result);
+            // NSLog(@"primary call %ld", (long)result)
             completionHandler(result)
         }
     }

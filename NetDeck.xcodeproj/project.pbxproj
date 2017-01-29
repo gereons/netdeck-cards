@@ -83,7 +83,7 @@
 		3A6109321DC78074007C73D5 /* IphoneIdentityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6109311DC78074007C73D5 /* IphoneIdentityViewController.swift */; };
 		3A6131551DA82A6800474B91 /* MainWindow~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6131541DA82A6800474B91 /* MainWindow~iPhone.xib */; };
 		3A6205211E19695000073BF8 /* DeckNotesPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6205201E19695000073BF8 /* DeckNotesPopup.swift */; };
-		3A6228141C1456F400FBF041 /* SettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6228131C1456F400FBF041 /* SettingsKeys.swift */; };
+		3A6228141C1456F400FBF041 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6228131C1456F400FBF041 /* DefaultsKeys.swift */; };
 		3A64B2501E17AD0A00067049 /* SmallBrowserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A64B24F1E17AD0A00067049 /* SmallBrowserCell.swift */; };
 		3A64B2521E17B0D800067049 /* BrowserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A64B2511E17B0D800067049 /* BrowserCell.swift */; };
 		3A64B2541E17B35300067049 /* LargeBrowserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A64B2531E17B35300067049 /* LargeBrowserCell.swift */; };
@@ -271,7 +271,7 @@
 		3A6109311DC78074007C73D5 /* IphoneIdentityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IphoneIdentityViewController.swift; sourceTree = "<group>"; };
 		3A6131541DA82A6800474B91 /* MainWindow~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow~iPhone.xib"; sourceTree = "<group>"; };
 		3A6205201E19695000073BF8 /* DeckNotesPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckNotesPopup.swift; sourceTree = "<group>"; };
-		3A6228131C1456F400FBF041 /* SettingsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingsKeys.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3A6228131C1456F400FBF041 /* DefaultsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DefaultsKeys.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3A64B24F1E17AD0A00067049 /* SmallBrowserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallBrowserCell.swift; sourceTree = "<group>"; };
 		3A64B2511E17B0D800067049 /* BrowserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserCell.swift; sourceTree = "<group>"; };
 		3A64B2531E17B35300067049 /* LargeBrowserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeBrowserCell.swift; sourceTree = "<group>"; };
@@ -534,7 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				3A822F6D1CC2C13500305789 /* BuildConfig.swift */,
-				3A6228131C1456F400FBF041 /* SettingsKeys.swift */,
+				3A6228131C1456F400FBF041 /* DefaultsKeys.swift */,
 				3AF697881C1DAC7300D254CE /* Notifications.swift */,
 				3A9752201C1F6E310070E39B /* MiscUtilities.swift */,
 				3A529E621CA57BF70061E065 /* Reachability.swift */,
@@ -1171,7 +1171,7 @@
 				3AA0B3021C8C2C7E007B4983 /* CardUpdateCheck.swift in Sources */,
 				3A3A83891C135BE3004F6562 /* DeckManager.swift in Sources */,
 				3A0841901E0D6719000779C3 /* UIAlert+NetDeck.swift in Sources */,
-				3A6228141C1456F400FBF041 /* SettingsKeys.swift in Sources */,
+				3A6228141C1456F400FBF041 /* DefaultsKeys.swift in Sources */,
 				3AC4685C1DC6979D00DE8788 /* CardImageViewCell.swift in Sources */,
 				3AE0C8111E168FC70046376F /* CardFilterThumbView.swift in Sources */,
 				3A6507DB1E13E11400231D68 /* DeckAnalysisViewController.swift in Sources */,

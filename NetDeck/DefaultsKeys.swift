@@ -1,5 +1,5 @@
 //
-//  SettingsKeys.swift
+//  DefaultsKeys.swift
 //  NetDeck
 //
 //  Created by Gereon Steffens on 06.12.15.

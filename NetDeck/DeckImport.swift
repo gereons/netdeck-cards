@@ -28,14 +28,14 @@ class DeckImport: NSObject {
     
     static let sharedInstance = DeckImport()
     
-    static let DEBUG_IMPORT_ALWAYS = false // set to true for easier debugging
+    private let importAlways = false // set to true for easier debugging
     
-    var deck: Deck?
+    private var deck: Deck?
     private var deckSource: DeckSource?
-    var uiAlert: UIAlertController?
-    var sdcAlert: AlertController?
-    var downloadStopped: Bool!
-    var request: Request?
+    private var uiAlert: UIAlertController?
+    private var sdcAlert: AlertController?
+    private var downloadStopped: Bool!
+    private var request: Request?
  
     class func updateCount() {
         Defaults[.clipChangeCount] = UIPasteboard.general.changeCount
@@ -46,16 +46,12 @@ class DeckImport: NSObject {
     }
     
     func checkClipboardForDeck() {
-        #if DEBUG
-            let always = DeckImport.DEBUG_IMPORT_ALWAYS
-        #else
-            let always = false
-        #endif
+        let alwaysImport = BuildConfig.debug ? importAlways : false
         
         let pasteboard = UIPasteboard.general
         let lastChange = Defaults[.clipChangeCount]
-        if lastChange == pasteboard.changeCount && !always {
-            return;
+        if lastChange == pasteboard.changeCount && !alwaysImport {
+            return
         }
         Defaults[.clipChangeCount] = pasteboard.changeCount
         

@@ -106,8 +106,8 @@ struct DeckDiff {
             }
         }
         
-        assert(self.intersectSections.count == self.intersectRows.count, "count mismatch");
-        assert(self.overlapSections.count == self.overlapRows.count, "count mismatch");
+        assert(self.intersectSections.count == self.intersectRows.count, "count mismatch")
+        assert(self.overlapSections.count == self.overlapRows.count, "count mismatch")
         
         // remove empty intersecion sections
         for i in (0 ..< self.intersectRows.count).reversed() {
@@ -116,7 +116,7 @@ struct DeckDiff {
                 self.intersectRows.remove(at: i)
             }
         }
-        assert(self.intersectSections.count == self.intersectRows.count, "count mismatch");
+        assert(self.intersectSections.count == self.intersectRows.count, "count mismatch")
         
         // remove empty overlap sections
         for i in (0 ..< self.overlapRows.count).reversed() {
@@ -125,7 +125,7 @@ struct DeckDiff {
                 self.overlapRows.remove(at: i)
             }
         }
-        assert(self.overlapSections.count == self.overlapRows.count, "count mismatch");
+        assert(self.overlapSections.count == self.overlapRows.count, "count mismatch")
         
         // from the full diff, create the (potentially) smaller diff-only arrays
         for i in 0 ..< self.fullDiffRows.count {
@@ -139,7 +139,7 @@ struct DeckDiff {
             }
             self.smallDiffRows.append(arr)
         }
-        assert(self.smallDiffRows.count == self.fullDiffRows.count, "count mismatch");
+        assert(self.smallDiffRows.count == self.fullDiffRows.count, "count mismatch")
         
         for i in (0 ..< self.smallDiffRows.count).reversed() {
             let arr = self.smallDiffRows[i]
@@ -151,6 +151,6 @@ struct DeckDiff {
             }
         }
         
-        assert(self.smallDiffRows.count == self.smallDiffSections.count, "count mismatch");
+        assert(self.smallDiffRows.count == self.smallDiffSections.count, "count mismatch")
     }
 }

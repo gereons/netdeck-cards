@@ -106,7 +106,7 @@ class CardDetailView {
         if BuildConfig.debug {
             self.cardName.text = card.name + " (" + card.code + ")"
         } else {
-            self.cardName.text = card.name;
+            self.cardName.text = card.name
         }
         
         // hack: remove padding from the text view
@@ -146,7 +146,7 @@ class CardDetailView {
         case .program, .resource, .event, .hardware:
             let cost = card.costString
             let str = card.strengthString
-            self.label1.text = cost // card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @"";
+            self.label1.text = cost // card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @""
             self.icon1.image = cost.length > 0 ? ImageCache.creditIcon : nil
             self.label2.text = str
             self.icon2.image = str.length > 0 ? ImageCache.strengthIcon : nil
