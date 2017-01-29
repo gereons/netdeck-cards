@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Notifications {
+struct Notifications {
     static let addTopCard       = Notification.Name("addTopCard")       // card filter: return pressed, add top card, no userInfo
     static let selectIdentity   = Notification.Name("selectIdentity")   // identity selection, userInfo contains = "code"
     static let deckChanged      = Notification.Name("deckChanged")      // change to current deck, e.g. count stepper, userInfo may contain = "initialLoad"=YES/NO

@@ -865,7 +865,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.contentView.backgroundColor = .colorWithRGB(0xEBEBEC)
+        header.contentView.backgroundColor = UIColor(rgb: 0xEBEBEC)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

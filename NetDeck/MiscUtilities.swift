@@ -62,10 +62,7 @@ extension MutableCollection where Index == Int, IndexDistance == Int {
 }
 
 extension UIColor {
-    convenience init(r: Int, g: Int, b: Int) {
-        self.init(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1.0)
-    }
-    
+
     convenience init(rgb: UInt) {
         let r = CGFloat((rgb & 0xFF0000) >> 16)
         let g = CGFloat((rgb & 0x00FF00) >> 8)
@@ -73,9 +70,6 @@ extension UIColor {
         self.init(red: r/255.0, green: g/255.0, blue: b/255.0, alpha: 1.0)
     }
     
-    class func colorWithRGB(_ rgb : UInt) -> UIColor {
-        return UIColor(rgb: rgb)
-    }
 }
 
 extension NSRange {
@@ -93,5 +87,5 @@ class CustomAlertVisualStyle: AlertVisualStyle {
     }
 }
 
-@available(iOS, deprecated: 1.0, message: "I'm not deprecated, please **FIXME**")
+@available(*, deprecated: 1.0, message: "I'm not deprecated, please **FIXME**")
 public func FIXME(_ msg: String="") {}
