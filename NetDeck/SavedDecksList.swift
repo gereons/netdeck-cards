@@ -273,7 +273,7 @@ class SavedDecksList: DecksViewController {
         } else if let button = sender as? UIButton {
             popover?.sourceRect = button.superview!.convert(button.frame, to: self.tableView)
             popover?.sourceView = self.tableView
-            popover?.permittedArrowDirections = .up
+            popover?.permittedArrowDirections = .down
         }
         
         self.popup.view.layoutIfNeeded()
