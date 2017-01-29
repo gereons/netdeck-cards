@@ -8,6 +8,7 @@
 
 import Alamofire
 import AlamofireImage
+import SwiftyUserDefaults
 
 private func synchronized<T>(_ lock: Any, closure: ()->T) -> T {
     objc_sync_enter(lock)
@@ -86,28 +87,26 @@ class ImageCache: NSObject {
 
     private override init() {
         super.init()
-        
-        let settings = UserDefaults.standard
-        
-        if let lastMod = settings.dictionary(forKey: SettingsKeys.LAST_MOD_CACHE) as? [String: String] {
+    
+        if let lastMod = Defaults[.lastModifiedCache] {
             self.lastModifiedDates = lastMod
         }
         
-        if let nextCheck = settings.dictionary(forKey: SettingsKeys.NEXT_CHECK) as? [String: Date] {
+        if let nextCheck = Defaults[.nextCheck] {
             self.nextCheckDates = nextCheck
         }
         
-        if let imgs = settings.array(forKey: SettingsKeys.UNAVAILABLE_IMAGES) as? [String] {
+        if let imgs = Defaults[.unavailableImages] {
             self.unavailableImages.formUnion(imgs)
         }
         
         let now = Date.timeIntervalSinceReferenceDate
-        let lastCheck = settings.object(forKey: SettingsKeys.UNAVAIL_IMG_DATE) as? Double ?? now + 3600.0
+        let lastCheck = Defaults[.unavailableImagesDate] ?? now + 3600.0
         
         if lastCheck < now {
-            unavailableImages.removeAll()
-            settings.set(now + 48*3600, forKey:SettingsKeys.UNAVAIL_IMG_DATE)
-            settings.set(Array(self.unavailableImages), forKey:SettingsKeys.UNAVAILABLE_IMAGES)
+            self.unavailableImages.removeAll()
+            Defaults[.unavailableImagesDate] = now + 48 * 3600
+            Defaults[.unavailableImages] = Array(self.unavailableImages)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.clearMemoryCache(_:)), name: Notification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
@@ -115,11 +114,9 @@ class ImageCache: NSObject {
     
     /// called when we move to the background
     func resignActive() {
-        let settings = UserDefaults.standard
-        
-        settings.set(self.lastModifiedDates, forKey: SettingsKeys.LAST_MOD_CACHE)
-        settings.set(self.nextCheckDates, forKey: SettingsKeys.NEXT_CHECK)
-        settings.set(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
+        Defaults[.lastModifiedCache] = self.lastModifiedDates
+        Defaults[.nextCheck] = self.nextCheckDates
+        Defaults[.unavailableImages] = Array(self.unavailableImages)
         
         self.memCache.removeAll()
     }
@@ -245,6 +242,9 @@ class ImageCache: NSObject {
                 } else {
                     self.NLOG("up: GOT %@ If-Modified-Since %@: status %ld", url.absoluteString, lastModDate ?? "n/a", response.response?.statusCode ?? 999)
                     completion(response.response?.statusCode == 304)
+                    if response.response?.statusCode != 304 {
+                        self.unavailableImages.insert(card.code)
+                    }
                 }
             }
     }
@@ -288,10 +288,9 @@ class ImageCache: NSObject {
         self.nextCheckDates.removeAll()
         self.unavailableImages.removeAll()
         
-        let settings = UserDefaults.standard
-        settings.set(self.lastModifiedDates, forKey: SettingsKeys.LAST_MOD_CACHE)
-        settings.set(self.nextCheckDates, forKey: SettingsKeys.NEXT_CHECK)
-        settings.set(Array(self.unavailableImages), forKey: SettingsKeys.UNAVAILABLE_IMAGES)
+        Defaults[.lastModifiedCache] = self.lastModifiedDates
+        Defaults[.nextCheck] = self.nextCheckDates
+        Defaults[.unavailableImages] = Array(self.unavailableImages)
         
         self.removeCacheDirectory()
         self.memCache.removeAll()

@@ -9,6 +9,7 @@
 import SDCAlertView
 import Alamofire
 import Marshal
+import SwiftyUserDefaults
 
 private enum DownloadScope: Int {
     case all
@@ -48,7 +49,8 @@ class DataDownload: NSObject {
     // MARK: - card and sets download
     
     private func downloadCardAndSetsData() {
-        if let nrdbHost = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_HOST), nrdbHost.length > 0 {
+        let host = Defaults[.nrdbHost]
+        if host.length > 0 {
             self.showDownloadAlert()
             self.perform(#selector(DataDownload.doDownloadCardData(_:)), with: nil, afterDelay: 0.01)
         } else {
@@ -73,7 +75,7 @@ class DataDownload: NSObject {
         self.downloadStopped = false
         self.downloadErrors = 0
         
-        alert.add(AlertAction(title:"Stop".localized(), style: .normal) { (action) -> Void in
+        alert.add(AlertAction(title:"Stop".localized(), style: .normal) { action in
             self.stopDownload()
         })
         
@@ -81,14 +83,13 @@ class DataDownload: NSObject {
     }
     
     func doDownloadCardData(_ dummy: Any) {
-        let settings = UserDefaults.standard
-        let nrdbHost = settings.string(forKey: SettingsKeys.NRDB_HOST)
-        let language = settings.string(forKey: SettingsKeys.LANGUAGE) ?? "en"
+        let nrdbHost = Defaults[.nrdbHost]
+        let language = Defaults[.language]
         
-        let cyclesUrl = String(format: "https://%@/api/2.0/public/cycles?_locale=%@", nrdbHost!, language)
-        let packsUrl = String(format: "https://%@/api/2.0/public/packs?_locale=%@", nrdbHost!, language)
-        let cardsUrl = String(format: "https://%@/api/2.0/public/cards?_locale=%@", nrdbHost!, language)
-        let prebuiltUrl = String(format: "https://%@/api/2.0/public/prebuilts?_locale=%@", nrdbHost!, language)
+        let cyclesUrl = String(format: "https://%@/api/2.0/public/cycles?_locale=%@", nrdbHost, language)
+        let packsUrl = String(format: "https://%@/api/2.0/public/packs?_locale=%@", nrdbHost, language)
+        let cardsUrl = String(format: "https://%@/api/2.0/public/cards?_locale=%@", nrdbHost, language)
+        let prebuiltUrl = String(format: "https://%@/api/2.0/public/prebuilts?_locale=%@", nrdbHost, language)
         
         let requests: [ApiRequest: URLRequest] = [
             .cycles: URLRequest(url:URL(string: cyclesUrl)!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20),
@@ -198,7 +199,7 @@ class DataDownload: NSObject {
         progressView.sdc_pinWidth(toWidthOf: alert.contentView, offset: -20)
         progressView.sdc_centerInSuperview()
         
-        alert.add(AlertAction(title: "Stop".localized(), style: .normal) { (action) -> Void in
+        alert.add(AlertAction(title: "Stop".localized(), style: .normal) { action in
             self.stopDownload()
         })
         
@@ -244,7 +245,6 @@ class DataDownload: NSObject {
             self.sdcAlert?.dismiss(animated:false, completion:nil)
             self.progressView = nil
             self.sdcAlert = nil
-            self.cards.removeAll()
             
             self.perform(#selector(self.showMissingCardsAlert), with: nil, afterDelay: 0.05)
         }
@@ -257,6 +257,7 @@ class DataDownload: NSObject {
             
             UIAlertController.alert(withTitle: nil, message:msg, button:"OK")
         }
+        self.cards.removeAll()
     }
     
     // MARK: - stop downloads

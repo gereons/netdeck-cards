@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import SwiftyUserDefaults
 
 class ImportDecksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
@@ -51,8 +52,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let sort = UserDefaults.standard.integer(forKey: SettingsKeys.DECK_FILTER_SORT)
-        self.deckListSort = DeckListSort(rawValue: sort) ?? .byDate
+        self.deckListSort = Defaults[.deckFilterSort]
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         
@@ -148,7 +148,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func changeSortType(_ sort: DeckListSort) {
-        UserDefaults.standard.set(sort.rawValue, forKey:SettingsKeys.DECK_FILTER_SORT)
+        Defaults[.deckFilterSort] = sort
         self.deckListSort = sort
     
         self.filterDecks()

@@ -6,22 +6,22 @@
 //  Copyright © 2017 Gereon Steffens. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import SDCAlertView
 import Alamofire
 import Marshal
+import SwiftyUserDefaults
 
 class DeckImport: NSObject {
     
-    enum DeckBuilderSource {
+    private enum DeckBuilderSource {
         case none
         case nrdbList
         case nrdbShared
         case meteor
     }
 
-    struct DeckSource {
+    private struct DeckSource {
         var deckId: String
         var source: DeckBuilderSource
     }
@@ -31,15 +31,14 @@ class DeckImport: NSObject {
     static let DEBUG_IMPORT_ALWAYS = false // set to true for easier debugging
     
     var deck: Deck?
-    var deckSource: DeckSource?
+    private var deckSource: DeckSource?
     var uiAlert: UIAlertController?
     var sdcAlert: AlertController?
     var downloadStopped: Bool!
     var request: Request?
  
     class func updateCount() {
-        let c = UIPasteboard.general.changeCount
-        UserDefaults.standard.set(c, forKey: SettingsKeys.CLIP_CHANGE_COUNT)
+        Defaults[.clipChangeCount] = UIPasteboard.general.changeCount
     }
     
     class func checkClipboardForDeck() {
@@ -54,11 +53,11 @@ class DeckImport: NSObject {
         #endif
         
         let pasteboard = UIPasteboard.general
-        let lastChange = UserDefaults.standard.integer(forKey: SettingsKeys.CLIP_CHANGE_COUNT)
+        let lastChange = Defaults[.clipChangeCount]
         if lastChange == pasteboard.changeCount && !always {
             return;
         }
-        UserDefaults.standard.set(pasteboard.changeCount, forKey: SettingsKeys.CLIP_CHANGE_COUNT)
+        Defaults[.clipChangeCount] = pasteboard.changeCount
         
         guard let clip = pasteboard.string else { return }
         if clip.length == 0 {
@@ -117,7 +116,7 @@ class DeckImport: NSObject {
         }
     }
     
-    func checkForNetrunnerDbDeckURL(_ lines: [String]) -> DeckSource? {
+    private func checkForNetrunnerDbDeckURL(_ lines: [String]) -> DeckSource? {
         // a netrunnerdb.com decklist url looks like this:
         // https://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
         // or like this:
@@ -146,7 +145,7 @@ class DeckImport: NSObject {
         return nil
     }
     
-    func checkForMeteorDeckURL(_ lines: [String]) -> DeckSource? {
+    private func checkForMeteorDeckURL(_ lines: [String]) -> DeckSource? {
         // a meteor.stimhack.com decklist url looks like this:
         // https://meteor.stimhack.com/decks/yBMJ3GL6FPozt9nkQ/
         // or like this (no slash)
@@ -228,7 +227,7 @@ class DeckImport: NSObject {
         }
     }
     
-    func downloadDeck(_ source: DeckSource) {
+    private func downloadDeck(_ source: DeckSource) {
         
         let alert = AlertController(title: "Downloading Deck".localized(), message: nil, preferredStyle: .alert)
         alert.visualStyle = CustomAlertVisualStyle(alertStyle: .alert)
@@ -244,7 +243,7 @@ class DeckImport: NSObject {
         spinner.topAnchor.constraint(equalTo: alert.contentView.topAnchor).isActive = true
         spinner.bottomAnchor.constraint(equalTo: alert.contentView.bottomAnchor).isActive = true
         
-        alert.add(AlertAction(title: "Stop".localized(), style: .normal, handler: { (action) -> Void in
+        alert.add(AlertAction(title: "Stop".localized(), style: .normal, handler: { action in
             self.downloadStopped = true
             self.sdcAlert = nil
             if let req = self.request {

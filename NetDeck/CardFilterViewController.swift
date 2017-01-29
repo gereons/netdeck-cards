@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class CardFilterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilterCallback {
  
@@ -135,14 +136,13 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let settings = UserDefaults.standard
-        self.showAllFilters = settings.bool(forKey: SettingsKeys.SHOW_ALL_FILTERS)
-        self.viewMode = View(rawValue: settings.integer(forKey: SettingsKeys.FILTER_VIEW_MODE)) ?? .list
+        self.showAllFilters = Defaults[.showAllFilters]
+        self.viewMode = Defaults[.filterViewMode]
         
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.backgroundColor = .white
         
-        self.packUsage = PackUsage(rawValue: settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)) ?? .all
+        self.packUsage = Defaults[.deckbuilderPacks]
         
         self.cardList = CardList(forRole: self.role, packUsage: packUsage)
         self.initCards()
@@ -205,9 +205,8 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         
         NotificationCenter.default.removeObserver(self)
         
-        let settings = UserDefaults.standard
-        settings.set(self.showAllFilters, forKey: SettingsKeys.SHOW_ALL_FILTERS)
-        settings.set(self.viewMode.rawValue, forKey: SettingsKeys.FILTER_VIEW_MODE)
+        Defaults[.showAllFilters] = self.showAllFilters
+        Defaults[.filterViewMode] = self.viewMode
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -275,7 +274,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func setBackOrRevertButton(_ modified: Bool) {
-        let autoSave = UserDefaults.standard.bool(forKey: SettingsKeys.AUTO_SAVE)
+        let autoSave = Defaults[.autoSave]
         if autoSave {
             return
         }

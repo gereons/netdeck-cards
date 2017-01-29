@@ -8,6 +8,7 @@
 
 import Alamofire
 import Marshal
+import SwiftyUserDefaults
 
 class NRDB: NSObject {
     static let CLIENT_HOST =    "netdeck://oauth2"
@@ -18,7 +19,7 @@ class NRDB: NSObject {
     static let AUTH_URL =       PROVIDER_HOST + "/oauth/v2/auth?client_id=" + CLIENT_ID + "&response_type=code&redirect_uri=" + CLIENT_HOST
     static let TOKEN_URL =      PROVIDER_HOST + "/oauth/v2/token"
     
-    static let FIVE_MINUTES: TimeInterval = 300 // in seconds
+    static let fiveMinutes: TimeInterval = 300 // in seconds
     
     static let sharedInstance = NRDB()
     override private init() {}
@@ -27,20 +28,17 @@ class NRDB: NSObject {
     private var deckMap = [String: String]()
     
     class func clearSettings() {
-        let settings = UserDefaults.standard
-        settings.set(false, forKey: SettingsKeys.USE_NRDB)
+        Defaults[.useNrdb] = false
         NRDB.clearCredentials()
         
         NRDB.sharedInstance.stopAuthorizationRefresh()
     }
     
     class func clearCredentials() {
-        let settings = UserDefaults.standard
-        
-        settings.removeObject(forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
-        settings.removeObject(forKey: SettingsKeys.NRDB_REFRESH_TOKEN)
-        settings.removeObject(forKey: SettingsKeys.NRDB_TOKEN_EXPIRY)
-        settings.removeObject(forKey: SettingsKeys.NRDB_TOKEN_TTL)
+        Defaults.remove(.nrdbAccessToken)
+        Defaults.remove(.nrdbRefreshToken)
+        Defaults.remove(.nrdbTokenExpiry)
+        Defaults.remove(.nrdbTokenTTL)
     }
     
     // MARK: - authorization
@@ -60,12 +58,15 @@ class NRDB: NSObject {
     
     private func refreshToken(_ completion: @escaping (Bool) -> Void) {
         // NSLog("NRDB refreshToken")
-        guard let token = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_REFRESH_TOKEN) else {
+        
+        guard let token = Defaults[.nrdbRefreshToken] else {
             completion(false)
             return
         }
         
-        UserDefaults.standard.set(Date(), forKey: SettingsKeys.LAST_REFRESH)
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        Defaults[.lastRefresh] = formatter.string(from: Date())
         
         let parameters = [
             "client_id": NRDB.CLIENT_ID,
@@ -94,25 +95,24 @@ class NRDB: NSObject {
                 case .success:
                     if let data = response.data {
                         var ok = true
-                        let settings = UserDefaults.standard
                         do {
                             let json = try JSONParser.JSONObjectWithData(data)
                             
                             let accessToken: String = try json.value(for: "access_token")
-                            settings.set(accessToken, forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
+                            Defaults[.nrdbAccessToken] = accessToken
                             
                             let refreshToken: String = try json.value(for: "refresh_token")
-                            settings.set(refreshToken, forKey: SettingsKeys.NRDB_REFRESH_TOKEN)
+                            Defaults[.nrdbRefreshToken] = refreshToken
                             
                             let exp: Double = try json.value(for: "expires_in")
-                            settings.set(exp, forKey: SettingsKeys.NRDB_TOKEN_TTL)
-                            let expiry = NSDate(timeIntervalSinceNow: exp)
-                            settings.set(expiry, forKey: SettingsKeys.NRDB_TOKEN_EXPIRY)
+                            Defaults[.nrdbTokenTTL] = exp
+                            let expiry = Date(timeIntervalSinceNow: exp)
+                            Defaults[.nrdbTokenExpiry] = expiry
                         } catch {
                             ok = false
                         }
                         if ok {
-                            if !settings.bool(forKey: SettingsKeys.KEEP_NRDB_CREDENTIALS) {
+                            if !Defaults[.keepNrdbCredentials] {
                                 UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
                             }
                             completion(ok)
@@ -136,27 +136,26 @@ class NRDB: NSObject {
             return
         }
         
-        if UserDefaults.standard.bool(forKey: SettingsKeys.KEEP_NRDB_CREDENTIALS) {
+        if Defaults[.keepNrdbCredentials] {
             NRDBHack.sharedInstance.silentlyLogin()
         }
     }
     
     func startAuthorizationRefresh() {
         // NSLog("NRDB startAuthRefresh timer=\(self.timer)")
-        let settings = UserDefaults.standard
         
-        if !settings.bool(forKey: SettingsKeys.USE_NRDB) || self.timer != nil {
+        if !Defaults[.useNrdb] || self.timer != nil {
             return
         }
         
-        if settings.string(forKey: SettingsKeys.NRDB_REFRESH_TOKEN) == nil {
+        if Defaults[.nrdbRefreshToken] == nil {
             NRDB.clearSettings()
             return
         }
         
-        let expiry = settings.object(forKey: SettingsKeys.NRDB_TOKEN_EXPIRY) as? Date ?? Date()
+        let expiry = Defaults[.nrdbTokenExpiry] ?? Date()
         let now = Date()
-        let diff = expiry.timeIntervalSince(now) - NRDB.FIVE_MINUTES
+        let diff = expiry.timeIntervalSince(now) - NRDB.fiveMinutes
         // NSLog("start nrdb auth refresh in %f seconds", diff);
         
         self.timer?.invalidate()
@@ -176,7 +175,7 @@ class NRDB: NSObject {
         self.refreshToken { ok in
             if (ok) {
                 // schedule next run at 5 minutes before expiry
-                let ti = UserDefaults.standard.double(forKey: SettingsKeys.NRDB_TOKEN_TTL) as TimeInterval - NRDB.FIVE_MINUTES
+                let ti = Defaults[.nrdbTokenTTL] - NRDB.fiveMinutes
                 // NSLog("next refresh in %f seconds", ti)
                 self.timer = Timer.scheduledTimer(timeInterval: ti, target: self, selector: #selector(NRDB.timedRefresh(_:)), userInfo: nil, repeats: false)
             }
@@ -185,14 +184,13 @@ class NRDB: NSObject {
     
     func backgroundRefreshAuthentication(_ completion: @escaping (UIBackgroundFetchResult) -> Void) {
         // NSLog("NRDB background Refresh")
-        let settings = UserDefaults.standard
-        if !settings.bool(forKey: SettingsKeys.USE_NRDB) {
+        if !Defaults[.useNrdb] {
             // NSLog("no nrdb account");
             completion(.noData)
             return
         }
         
-        if settings.string(forKey: SettingsKeys.NRDB_REFRESH_TOKEN) == nil {
+        if Defaults[.nrdbRefreshToken] == "" {
             // NSLog("no token");
             NRDB.clearSettings()
             completion(.noData)
@@ -207,7 +205,7 @@ class NRDB: NSObject {
     
 
     private func accessToken() -> String? {
-        return UserDefaults.standard.string(forKey: SettingsKeys.NRDB_ACCESS_TOKEN)
+        return Defaults[.nrdbAccessToken]
     }
     
     // MARK: - deck lists

@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import SwiftyUserDefaults
 
 class DeckListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate {
     
@@ -54,7 +55,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     private var autoSaveNRDB = false
     
     private var sortType = DeckSort.byFactionType
-    private var scale: CGFloat = 0
+    private var scale = 1.0
     private var largeCells = false
     private var initializing = false
     private var historyTimer: Timer?
@@ -66,12 +67,12 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         
         self.initializing = true
-        let settings = UserDefaults.standard
-        self.useNetrunnerDb = settings.bool(forKey: SettingsKeys.USE_NRDB)
-        self.autoSaveNRDB = settings.bool(forKey: SettingsKeys.NRDB_AUTOSAVE)
-        self.sortType = DeckSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_VIEW_SORT)) ?? .byFactionType
-        let scale = settings.float(forKey: SettingsKeys.DECK_VIEW_SCALE)
-        self.scale = CGFloat(scale == 0.0 ? 1.0 : scale)
+
+        self.useNetrunnerDb = Defaults[.useNrdb]
+        self.autoSaveNRDB = Defaults[.nrdbAutosave]
+        self.sortType = Defaults[.deckViewSort]
+        let scale: Double = Defaults[.deckViewScale]
+        self.scale = scale == 0.0 ? 1.0 : scale
         
         if self.filename != nil && self.deck == nil {
             self.deck = DeckManager.loadDeckFromPath(self.filename!)
@@ -107,7 +108,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             UIImage(named: "deckview_list") as Any
         ]
         let viewSelector = UISegmentedControl(items: selections)
-        let view = CardView(rawValue: settings.integer(forKey: SettingsKeys.DECK_VIEW_STYLE)) ?? .largeTable
+        let view = Defaults[.deckViewStyle]
         viewSelector.selectedSegmentIndex = view.rawValue
         viewSelector.addTarget(self, action: #selector(self.toggleView(_:)), for: .valueChanged)
         self.toggleViewButton = UIBarButtonItem(customView: viewSelector)
@@ -115,8 +116,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         topItem?.leftBarButtonItem = self.toggleViewButton
         
-        self.autoSave = settings.bool(forKey: SettingsKeys.AUTO_SAVE)
-        self.autoSaveDropbox = self.autoSave && settings.bool(forKey: SettingsKeys.USE_DROPBOX) && settings.bool(forKey: SettingsKeys.AUTO_SAVE_DB)
+        self.autoSave = Defaults[.autoSave]
+        self.autoSaveDropbox = self.autoSave && Defaults[.useDropbox] && Defaults[.autoSaveDropbox]
         
         // right button
         self.exportButton = UIBarButtonItem(image: UIImage(named: "702-share"), style: .plain, target: self, action: #selector(self.exportDeck(_:)))
@@ -128,7 +129,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.stateButton = UIBarButtonItem(title: DeckState.buttonLabelFor(self.deck.state), style: .plain, target: self, action: #selector(self.changeState(_:)))
         
-        self.stateButton.possibleTitles = Set<String>(DeckState.possibleTitles())
+        self.stateButton.possibleTitles = Set(DeckState.possibleTitles())
         
         let dupButton = UIBarButtonItem(title: "Duplicate".localized(), style: .plain, target: self, action: #selector(self.duplicateDeck(_:)))
         let nameButton = UIBarButtonItem(title: "Name".localized(), style: .plain, target: self, action: #selector(self.enterName(_:)))
@@ -198,7 +199,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             self.selectIdentity(self)
         }
         
-        if UserDefaults.standard.bool(forKey: SettingsKeys.AUTO_HISTORY) {
+        if Defaults[.autoHistory] {
             let x = Int(self.view.center.x) - self.historySaveInterval
             let width = 2 * self.historySaveInterval
             self.progressView = UIProgressView(frame: CGRect(x: x, y: 40, width: width, height: 3))
@@ -221,9 +222,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         NotificationCenter.default.removeObserver(self)
         
-        let settings = UserDefaults.standard
-        settings.set(self.scale, forKey: SettingsKeys.DECK_VIEW_SCALE)
-        settings.set(self.sortType.rawValue, forKey: SettingsKeys.DECK_VIEW_SORT)
+        Defaults[.deckViewScale] = self.scale
+        Defaults[.deckViewSort] = self.sortType
         
         self.stopHistoryTimer(self)
     }
@@ -232,7 +232,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     func startHistoryTimer(_ notification: Any) {
         self.stopHistoryTimer(notification)
         
-        guard UserDefaults.standard.bool(forKey: SettingsKeys.AUTO_HISTORY) else {
+        guard Defaults[.autoHistory] else {
             return
         }
         
@@ -698,7 +698,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.actionSheet = UIAlertController.actionSheet(title: nil, message: nil)
         
-        if UserDefaults.standard.bool(forKey: SettingsKeys.USE_DROPBOX) {
+        if Defaults[.useDropbox] {
             self.actionSheet.addAction(UIAlertAction(title: "Dropbox: OCTGN".localized()) { action in
                 Analytics.logEvent("Export .o8d")
                 self.octgnExport()
@@ -755,7 +755,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             })
         }
         
-        if UserDefaults.standard.bool(forKey: SettingsKeys.USE_JNET) {
+        if Defaults[.useJintekiNet] {
             self.actionSheet.addAction(UIAlertAction(title: "Upload to Jinteki.net".localized()) { action in
                 Analytics.logEvent("Upload Jinteki.net")
                 JintekiNet.sharedInstance.uploadDeck(self.deck)
@@ -801,7 +801,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         let viewMode = CardView(rawValue: sender.selectedSegmentIndex) ?? .largeTable
-        UserDefaults.standard.set(viewMode.rawValue, forKey: SettingsKeys.DECK_VIEW_STYLE)
+        Defaults[.deckViewStyle] = viewMode
         self.doToggleView(viewMode)
     }
     
@@ -1025,8 +1025,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - collection view
     
-    private let cardWidth: CGFloat = 225
-    private let cardHeight: CGFloat = 333
+    private let cardWidth = 225.0
+    private let cardHeight = 333.0
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: Int(self.scale * self.cardWidth), height: Int(self.scale * self.cardHeight))
@@ -1140,7 +1140,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
     }
     
-    private var scaleStart: CGFloat = 0
+    private var scaleStart = 0.0
     private var startIndex: IndexPath?
     
     func pinchGesture(_ gesture: UIPinchGestureRecognizer) {
@@ -1149,7 +1149,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             let startPoint = gesture.location(in: self.collectionView)
             self.startIndex = self.collectionView.indexPathForItem(at: startPoint)
         } else if gesture.state == .changed {
-            self.scale = scaleStart * gesture.scale
+            self.scale = scaleStart * Double(gesture.scale)
             self.scale = max(self.scale, 0.5)
             self.scale = min(self.scale, 1.0)
             

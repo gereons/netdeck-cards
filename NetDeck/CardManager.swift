@@ -8,6 +8,7 @@
 
 import Foundation
 import Marshal
+import SwiftyUserDefaults
 
 class CardManager {
     
@@ -95,14 +96,13 @@ class CardManager {
         var factionNames = Faction.factionsFor(role: role, packUsage: packUsage)
         factionNames.removeFirst(2) // remove "any" and "neutral"
         
-        let settings = UserDefaults.standard
-        let packs = settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)
-        let packUsage = PackUsage(rawValue: packs) ?? .all
+        let packUsage = Defaults[.deckbuilderPacks]
         
         let disabledPackCodes: Set<String>
         switch packUsage {
         case .all:
-            disabledPackCodes = PackManager.draftPackCode()
+            let code = Defaults[.useDraft] ? "" : PackManager.draftSetCode
+            disabledPackCodes = Set([code])
         case .selected:
             disabledPackCodes = PackManager.disabledPackCodes()
         case .allAfterRotation:
@@ -253,10 +253,8 @@ class CardManager {
         fmt.timeStyle = .none
         let now = Date()
         
-        let settings = UserDefaults.standard
-        settings.set(fmt.string(from: now), forKey:SettingsKeys.LAST_DOWNLOAD)
-        
-        let interval = settings.integer(forKey: SettingsKeys.UPDATE_INTERVAL)
+        Defaults[.lastDownload] = fmt.string(from: now)
+        let interval = Defaults[.updateInterval]
         
         var nextDownload: String
         switch (interval) {
@@ -270,8 +268,8 @@ class CardManager {
             let next = Date(timeIntervalSinceNow:TimeInterval(interval*24*60*60))
             nextDownload = fmt.string(from: next)
         }
-        
-        settings.set(nextDownload, forKey:SettingsKeys.NEXT_DOWNLOAD)
+
+        Defaults[.nextDownload] = nextDownload
     }
     
     // MARK: - persistence 

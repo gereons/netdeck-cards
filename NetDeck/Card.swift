@@ -7,6 +7,7 @@
 //
 
 import Marshal
+import SwiftyUserDefaults
 
 class Card: NSObject, Unmarshaling {
     
@@ -132,7 +133,7 @@ class Card: NSObject, Unmarshaling {
         let prebuiltOwned = PrebuiltManager.quantity(for: self)
         
         if self.isCore {
-            let cores = UserDefaults.standard.integer(forKey: SettingsKeys.NUM_CORES)
+            let cores = Defaults[.numCores]
             return (cores * self.quantity) + prebuiltOwned
         }
         
@@ -344,7 +345,7 @@ extension Card {
     static let executiveSearchFirm      = "10072"    // 0 inf if >= 6 non-alliance Weyland cards in deck
     static let consultingVisit          = "10094"    // 0 inf if >= 6 non-alliance Weyland cards in deck
     
-    static let alliance6 = Set<String>([
+    static let alliance6 = Set([
         productRecall, jeevesModelBioroid,
         ramanRai, heritageCommittee,
         salemsHospitality, ibrahimSalem,
@@ -366,10 +367,10 @@ extension Card {
     static let _15minutes               = "09004"
     static let rebirth                  = "10083"
     static let blackFile                = "10099"
-    static let max1perDeck              = Set<String>([ directorHaasPetProject, philoticEntanglement,
-                                                        utopiaShard, utopiaFragment, hadesShard,
-                                                        hadesFragment, edenShard, edenFragment,
-                                                        governmentTakeover, _15minutes, rebirth, blackFile, astroscript ])
+    static let max1perDeck              = Set([ directorHaasPetProject, philoticEntanglement,
+                                                utopiaShard, utopiaFragment, hadesShard,
+                                                hadesFragment, edenShard, edenFragment,
+                                                governmentTakeover, _15minutes, rebirth, blackFile, astroscript ])
     
     // "most wanted" list
     static let cerberusH1       = "06099"
@@ -391,16 +392,16 @@ extension Card {
     
     fileprivate static let mostWantedLists: [MWL: Set<String>] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
-        .v1_0: Set<String>([
+        .v1_0: Set([
             cerberusH1, cloneChip, desperado, parasite, prepaidVoicepad, yog_0,
             architect, astroscript, eli_1, napdContract, sansanCityGrid ]),
         
         // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
-        .v1_1: Set<String>([
+        .v1_1: Set([
             cerberusH1, cloneChip, d4v1d, desperado, faust, parasite, prepaidVoicepad, wyldside, yog_0,
             architect, breakingNews, eli_1, mumbaTemple, napdContract, sansanCityGrid ]),
         
-        // .v1_2: Set<String>([])
+        // .v1_2: Set([])
     ]
     
     static let aliases = [

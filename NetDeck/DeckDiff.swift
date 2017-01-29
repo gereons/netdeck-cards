@@ -42,7 +42,7 @@ struct DeckDiff {
         // remove "ICE" / "Program"
         allTypes.removeLast()
         
-        let typesInDecks = Set<String>(types1 + types2)
+        let typesInDecks = Set(types1 + types2)
         // find every type that is not already in allTypes - i.e. the ice/program subtypes
         let additionalTypes = typesInDecks.filter { !allTypes.contains($0) }
         

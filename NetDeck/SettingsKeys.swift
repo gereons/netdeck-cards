@@ -7,82 +7,190 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
-class SettingsKeys {
-    static let LAST_MOD_CACHE      = "lastModified"
-    static let NEXT_CHECK          = "nextCheck"
-    static let UNAVAILABLE_IMAGES  = "unavailableImages"
-    static let UNAVAIL_IMG_DATE    = "unavailableImagesDate"
+extension DefaultsKeys {
+    // template: static let xyz = DefaultsKey<T>("")
     
-    static let NEXT_UPDATE_CHECK   = "nextUpdateCheck"
+    /// when to next check for app update
+    static let nextUpdateCheck = DefaultsKey<Date?>("nextUpdateCheck")
     
-    static let FILE_SEQ            = "fileSequence"
-    static let LAST_START_VERSION  = "lastStartVersion"
+    /// counter for deck names
+    static let fileSequence  = DefaultsKey<Int>("fileSequence")
     
-    static let LAST_DOWNLOAD       = "lastDownload"
-    static let NEXT_DOWNLOAD       = "nextDownload"
-    static let DOWNLOAD_DATA_NOW   = "downloadDataNow"
-    static let DOWNLOAD_IMG_NOW    = "downloadImagesNow"
-    static let DOWNLOAD_MISSING_IMG = "downloadMissingImagesNow"
-    static let UPDATE_INTERVAL     = "updateInterval"
-    static let CLEAR_CACHE         = "clearCache"
-    static let LANGUAGE            = "language"
+    /// last seen clipboard change count
+    static let clipChangeCount = DefaultsKey<Int>("clipChangeCount")
     
-    static let NUM_CORES           = "number_coresets"
-    static let USE_DRAFT           = "use_draft"
-    static let USE_DATA_DESTINY    = "use_dad"
+    // ImageCache settings
+    /// map of card code to Last-Modified
+    static let lastModifiedCache = DefaultsKey<[String: String]?>("lastModified")
+    /// map of card code to date (when to check for update)
+    static let nextCheck = DefaultsKey<[String: Date]?>("nextCheck")
+    /// list of known unavailable card images
+    static let unavailableImages = DefaultsKey<[String]?>("unavailableImages")
+    /// when next to check for these images
+    static let unavailableImagesDate = DefaultsKey<Double?>("unavailableImagesDate")
     
-    static let USE_DROPBOX         = "useDropbox"
+    // Card data
+    /// date of last download
+    static let lastDownload = DefaultsKey<String>("lastDownload")
+    /// date of next download
+    static let nextDownload = DefaultsKey<String>("nextDownload")
+    /// update interval in days
+    static let updateInterval = DefaultsKey<Int>("updateInterval")
+    /// card language
+    static let language = DefaultsKey<String>("language")
     
-    static let AUTO_SAVE           = "autoSave"
-    static let AUTO_SAVE_DB        = "autoSaveDropbox"
-    static let AUTO_HISTORY        = "autoHistory"
+    // Card selection
+    /// number of core sets
+    static let numCores = DefaultsKey<Int>("number_coresets")
+    /// is Data & Destiny selected/allowed?
+    static let useDataDestiny = DefaultsKey<Bool>("use_dad")
+    /// use Draft identities?
+    static let useDraft = DefaultsKey<Bool>("use_draft")
     
-    static let CREATE_DECK_ACTIVE  = "createDeckActive"
-    
-    static let CLIP_CHANGE_COUNT   = "clipChangeCount"
-    
-    static let SHOW_ALL_FILTERS    = "showAllFilters"
-    static let FILTER_VIEW_MODE    = "filterViewMode"
-    
-    static let DECK_FILTER_TYPE    = "deckFilterType"
-    static let DECK_FILTER_STATE   = "deckFilterState"
-    static let DECK_FILTER_SORT    = "deckFilterSort"
-    
-    static let DECK_VIEW_STYLE     = "deckViewStyle"
-    static let DECK_VIEW_SORT      = "deckSort"
-    static let DECK_VIEW_SCALE     = "deckViewScale"
-    
-    static let BROWSER_VIEW_SCALE  = "browserViewScale"
-    static let BROWSER_VIEW_STYLE  = "browserViewStyle"
-    static let BROWSER_SORT_TYPE   = "browserSortType"
-    
-    static let NRDB_HOST           = "nrdb_host"
-    static let TEST_API            = "test_api"
-    
-    static let USE_NRDB            = "useNrdb"
-    static let NRDB_ACCESS_TOKEN   = "nrdbAccessToken"
-    static let NRDB_REFRESH_TOKEN  = "nrdbRefreshToken"
-    static let NRDB_TOKEN_EXPIRY   = "nrdbTokenExpiry"
-    static let NRDB_TOKEN_TTL      = "nrdbTokenTTL"
-    static let NRDB_AUTOSAVE       = "nrdbAutoSave"
-    static let REFRESH_AUTH_NOW    = "refreshAuthNow"
-    static let LAST_BG_FETCH       = "lastBackgroundFetch"
-    static let LAST_REFRESH        = "lastRefresh"
-    
-    static let KEEP_NRDB_CREDENTIALS = "keepNrdbCredentials"
-    
-    static let NRDB_USERNAME       = "nrdbUsername"
-    static let NRDB_PASSWORD       = "nrdbPassword"
+    // Import/Export settings
+    /// Dropbox enabled?
+    static let useDropbox = DefaultsKey<Bool>("useDropbox")
+    /// NetrunnerDB.com enabled?
+    static let useNrdb = DefaultsKey<Bool>("useNrdb")
+    /// Jinteki.net enabled?
+    static let useJintekiNet = DefaultsKey<Bool>("useJnet")
 
-    static let USE_JNET            = "useJnet"
-    static let JNET_USERNAME       = "jnetUsername"
-    static let JNET_PASSWORD       = "jnetPassword"
+    // Saving options
+    /// auto-save on every change?
+    static let autoSave = DefaultsKey<Bool>("autoSave")
+    /// auto-save to dropbox?
+    static let autoSaveDropbox = DefaultsKey<Bool>("autoSaveDropbox")
+    /// track editing history?
+    static let autoHistory = DefaultsKey<Bool>("autoHistory")
+    /// when manually saving, upload to nrdb automatically?
+    static let nrdbAutosave = DefaultsKey<Bool>("nrdbAutoSave")
 
-    static let IDENTITY_TABLE      = "identityTable"
+    /// create new decks as "Active"?
+    static let createDeckActive = DefaultsKey<Bool>("createDeckActive")
     
-    static let MWL_VERSION         = "mwlVersion"
+    // filter and sorting for saved decks
+    static let deckFilterType = DefaultsKey<Filter>("deckFilterType")
+    static let deckFilterState = DefaultsKey<DeckState>("deckFilterState")
+    static let deckFilterSort = DefaultsKey<DeckListSort>("deckFilterSort")
     
-    static let BROWSER_PACKS       = "browserPacks"
-    static let DECKBUILDER_PACKS   = "deckBuilderPacks"
+    // display/sort/scale for deckbuilder
+    static let deckViewStyle = DefaultsKey<CardView>("deckViewStyle")
+    static let deckViewSort = DefaultsKey<DeckSort>("deckSort")
+    static let deckViewScale = DefaultsKey<Double>("deckViewScale")
+    
+    // deckbuilder card filer
+    /// show all filters?
+    static let showAllFilters = DefaultsKey<Bool>("showAllFilters")
+    /// display mode for filter
+    static let filterViewMode = DefaultsKey<CardFilterViewController.View>("filterViewMode")
+    
+    // display/sort/scale for browser
+    static let browserViewStyle = DefaultsKey<CardView>("browserViewStyle")
+    static let browserViewSort = DefaultsKey<BrowserSort>("browserSortType")
+    static let browserViewScale = DefaultsKey<Double>("browserViewScale")
+    
+    // NetrunnerDB.com
+    /// hostname
+    static let nrdbHost = DefaultsKey<String>("nrdb_host")
+    /// keep credentials locally in keychain?
+    static let keepNrdbCredentials = DefaultsKey<Bool>("keepNrdbCredentials")
+    // OAuth token stuff
+    static let nrdbAccessToken = DefaultsKey<String?>("nrdbAccessToken")
+    static let nrdbRefreshToken = DefaultsKey<String?>("nrdbRefreshToken")
+    static let nrdbTokenExpiry = DefaultsKey<Date?>("nrdbTokenExpiry")
+    static let nrdbTokenTTL = DefaultsKey<Double>("nrdbTokenTTL")
+    
+    /// date of last background fetch
+    static let lastBackgroundFetch = DefaultsKey<String>("lastBackgroundFetch")
+    /// date of last OAuth token refresh
+    static let lastRefresh = DefaultsKey<String>("lastRefresh")
+    
+    /// identity selection: show as table?
+    static let identityTable = DefaultsKey<Bool>("identityTable")
+    
+    /// which MWL to use?
+    static let defaultMwl = DefaultsKey<MWL>("mwlVersion")
+    
+    /// which packs to use in browser
+    static let browserPacks = DefaultsKey<PackUsage>("browserPacks")
+    /// which packs to use in deck builder
+    static let deckbuilderPacks = DefaultsKey<PackUsage>("deckBuilderPacks")
+}
+
+// add subscript methods for our enums and typed dictionaries
+extension UserDefaults {
+    subscript(key: DefaultsKey<PackUsage>) -> PackUsage {
+        get { return unarchive(key) ?? .all }
+        set { archive(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<Filter>) -> Filter {
+        get { return unarchive(key) ?? .all }
+        set { archive(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<DeckState>) -> DeckState {
+        get { return unarchive(key) ?? .none }
+        set { archive(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<DeckSort>) -> DeckSort {
+        get { return unarchive(key) ?? .byFactionType }
+        set { archive(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<DeckListSort>) -> DeckListSort {
+        get { return unarchive(key) ?? .byName }
+        set { archive(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<BrowserSort>) -> BrowserSort {
+        get { return unarchive(key) ?? .byType }
+        set { archive(key, newValue) }
+    }
+
+    subscript(key: DefaultsKey<MWL>) -> MWL {
+        get { return unarchive(key) ?? .none }
+        set { archive(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<CardView>) -> CardView {
+        get { return unarchive(key) ?? .largeTable }
+        set { archive(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<CardFilterViewController.View>) -> CardFilterViewController.View {
+        get { return unarchive(key) ?? .list }
+        set { archive(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<[String: String]?>) -> [String: String]? {
+        get { return dictionary(forKey: key._key) as? [String: String] ?? [:] }
+        set { set(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<[String: Date]?>) -> [String: Date]? {
+        get { return dictionary(forKey: key._key) as? [String: Date] ?? [:] }
+        set { set(key, newValue) }
+    }
+    
+}
+
+struct IASKButtons {
+    static let downloadDataNow = "downloadDataNow"
+    static let downloadImagesNow = "downloadImagesNow"
+    static let downloadMissingImages = "downloadMissingImagesNow"
+    static let clearCache = "clearCache"
+    static let refreshAuthNow = "refreshAuthNow"
+    static let testAPI = "test_api"
+}
+ 
+struct KeychainKeys {
+    static let nrdbUsername = "nrdbUsername"
+    static let nrdbPassword = "nrdbPassword"
+
+    static let jnetUsername = "jnetUsername"
+    static let jnetPassword = "jnetPassword"
 }

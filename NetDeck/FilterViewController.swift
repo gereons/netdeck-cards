@@ -8,6 +8,7 @@
 
 import UIKit
 import MultiSelectSegmentedControl
+import SwiftyUserDefaults
 
 private enum Tags: Int {
     case faction
@@ -64,9 +65,8 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.miniFactionControl.delegate = self
         self.miniFactionControl.selectAllSegments(false)
         
-        let settings = UserDefaults.standard
-        let useDaD = settings.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
-        let packUsage = PackUsage(rawValue: settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)) ?? .all
+        let useDaD = Defaults[.useDataDestiny]
+        let packUsage = Defaults[.deckbuilderPacks]
         let miniFactions = packUsage == .all || useDaD
         
         let factionLimit: Int

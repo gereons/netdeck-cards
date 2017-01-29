@@ -8,6 +8,7 @@
 
 import Foundation
 import Marshal
+import SwiftyUserDefaults
 
 @objc(Deck) class Deck: NSObject, NSCoding, Unmarshaling {
 
@@ -26,12 +27,10 @@ import Marshal
     override private init() {}
     
     init(role: Role) {
-        let settings = UserDefaults.standard
-        self.state = settings.bool(forKey: SettingsKeys.CREATE_DECK_ACTIVE) ? .active : .testing
-        let mwlVersion = settings.integer(forKey: SettingsKeys.MWL_VERSION)
+        self.state = Defaults[.createDeckActive] ? .active : .testing
         let seq = DeckManager.fileSequence() + 1
         self.name = "Deck #\(seq)"
-        self.mwl = MWL(rawValue: mwlVersion) ?? .none
+        self.mwl = Defaults[.defaultMwl]
         self.role = role
     }
     
@@ -626,7 +625,7 @@ import Marshal
     convenience required init(object: MarshaledObject) throws {
         self.init()
         
-        self.state = UserDefaults.standard.bool(forKey: SettingsKeys.CREATE_DECK_ACTIVE) ? .active : .testing
+        self.state = Defaults[.createDeckActive] ? .active : .testing
         self.name = try object.value(for: "name")
         self.notes = try object.value(for: "description")
         let id: Int = try object.value(for: "id")
@@ -728,11 +727,12 @@ import Marshal
         let revisions = decoder.decodeObject(forKey: "revisions") as? [DeckChangeSet]
         self.revisions = revisions ?? [DeckChangeSet]()
         
-        let mwl = decoder.containsValue(forKey: "mwl") ?
-            decoder.decodeInteger(forKey: "mwl") :
-            UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)
-        
-        self.mwl = MWL(rawValue: mwl) ?? .none
+        if decoder.containsValue(forKey: "mwl") {
+            let mwl = decoder.decodeInteger(forKey: "mwl")
+            self.mwl = MWL(rawValue: mwl) ?? .none
+        } else {
+            self.mwl = Defaults[.defaultMwl]
+        }
         
         self.onesies = decoder.decodeBool(forKey: "onesies")
         

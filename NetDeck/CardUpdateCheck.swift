@@ -7,17 +7,18 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class CardUpdateCheck {
     
     class func checkCardUpdateAvailable(_ vc: UIViewController) -> Bool {
-        let next = UserDefaults.standard.string(forKey: SettingsKeys.NEXT_DOWNLOAD)
+        let next = Defaults[.nextDownload]
         
         let fmt = DateFormatter()
         fmt.dateStyle = .short
         fmt.timeStyle = .none
         
-        guard let scheduled = fmt.date(from: next ?? "") else {
+        guard let scheduled = fmt.date(from: next) else {
             return false
         }
 
@@ -27,14 +28,14 @@ class CardUpdateCheck {
             let msg = "Card data may be out of date. Download now?".localized()
             let alert = UIAlertController.alert(title: "Update cards".localized(), message:msg)
             
-            alert.addAction(UIAlertAction(title: "Later".localized()) { (action) -> Void in
+            alert.addAction(UIAlertAction(title: "Later".localized()) { action in
                 // ask again tomorrow
-                let next = Date(timeIntervalSinceNow:24*60*60)
+                let next = Date(timeIntervalSinceNow: 24*60*60)
                 
-                UserDefaults.standard.set(fmt.string(from: next), forKey:SettingsKeys.NEXT_DOWNLOAD)
+                Defaults[.nextDownload] = fmt.string(from: next)
             })
             
-            alert.addAction(UIAlertAction(title:"OK".localized(), style:.cancel) { (action) -> Void in
+            alert.addAction(UIAlertAction(title:"OK".localized(), style:.cancel) { action in
                 DataDownload.downloadCardData()
             })
             

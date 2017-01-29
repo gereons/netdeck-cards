@@ -9,6 +9,7 @@
 import Alamofire
 import SwiftKeychainWrapper
 import SVProgressHUD
+import SwiftyUserDefaults
 
 class NRDBHack {
 
@@ -49,18 +50,16 @@ class NRDBHack {
         })
             
         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel) { action in
-            UserDefaults.standard.set(false, forKey: SettingsKeys.USE_NRDB)
+            Defaults[.useNrdb] = false
         })
         
         alert.show()
     }
     
     func silentlyLoginOnStartup() {
-        let settings = UserDefaults.standard
-        
-        let expiry = settings.object(forKey: SettingsKeys.NRDB_TOKEN_EXPIRY) as? Date ?? Date()
+        let expiry = Defaults[.nrdbTokenExpiry] ?? Date()
         let now = Date()
-        let diff = expiry.timeIntervalSince(now) - NRDB.FIVE_MINUTES
+        let diff = expiry.timeIntervalSince(now) - NRDB.fiveMinutes
         
         if diff < 0 {
             self.silentlyLogin()
@@ -69,7 +68,7 @@ class NRDBHack {
     
     func silentlyLogin() {
         let keychain = KeychainWrapper.standard
-        if let username = keychain.string(forKey: SettingsKeys.NRDB_USERNAME), let password = keychain.string(forKey: SettingsKeys.NRDB_PASSWORD) {
+        if let username = keychain.string(forKey: KeychainKeys.nrdbUsername), let password = keychain.string(forKey: KeychainKeys.nrdbPassword) {
             self.username = username
             self.password = password
             self.hackedLogin(self.silentLoginCompletion)
@@ -91,8 +90,8 @@ class NRDBHack {
                 SVProgressHUD.dismiss()
             }
             let keychain = KeychainWrapper.standard
-            keychain.set(self.username!, forKey: SettingsKeys.NRDB_USERNAME)
-            keychain.set(self.password!, forKey: SettingsKeys.NRDB_PASSWORD)
+            keychain.set(self.username!, forKey: KeychainKeys.nrdbUsername)
+            keychain.set(self.password!, forKey: KeychainKeys.nrdbPassword)
             
             NRDB.sharedInstance.startAuthorizationRefresh()
         } else {
@@ -100,14 +99,14 @@ class NRDBHack {
                 SVProgressHUD.showError(withStatus: "Login failed".localized())
             }
             NRDBHack.clearCredentials()
-            UserDefaults.standard.set(false, forKey: SettingsKeys.USE_NRDB)
+            Defaults[.useNrdb] = false
         }
     }
         
     class func clearCredentials() {
         let keychain = KeychainWrapper.standard
-        keychain.removeObject(forKey: SettingsKeys.NRDB_USERNAME)
-        keychain.removeObject(forKey: SettingsKeys.NRDB_PASSWORD)
+        keychain.removeObject(forKey: KeychainKeys.nrdbUsername)
+        keychain.removeObject(forKey: KeychainKeys.nrdbPassword)
     }
 
     func hackedLogin(_ completion: @escaping (Bool) -> Void) {

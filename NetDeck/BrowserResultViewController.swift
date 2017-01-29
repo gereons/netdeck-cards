@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class BrowserResultViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
@@ -39,12 +40,11 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         
         BrowserResultViewController.instance = self
-        let settings = UserDefaults.standard
-        let scale = settings.double(forKey: SettingsKeys.BROWSER_VIEW_SCALE)
+        
+        let scale: Double = Defaults[.browserViewScale]
         self.scale = scale == 0 ? 1.0 : scale
 
-        let sortType = settings.integer(forKey: SettingsKeys.BROWSER_SORT_TYPE)
-        self.sortType = BrowserSort(rawValue: sortType) ?? .byType
+        self.sortType = Defaults[.browserViewSort]
         
         // left buttons
         let selections = [
@@ -53,12 +53,12 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
             UIImage(named: "deckview_list") as Any
         ]
         let viewSelector = UISegmentedControl(items: selections)
-        let viewStyle = settings.integer(forKey: SettingsKeys.BROWSER_VIEW_STYLE)
-        viewSelector.selectedSegmentIndex = viewStyle
+        let viewStyle = Defaults[.browserViewStyle]
+        viewSelector.selectedSegmentIndex = viewStyle.rawValue
         viewSelector.addTarget(self, action: #selector(self.toggleView(_:)), for: .valueChanged)
         
         self.toggeViewButton = UIBarButtonItem(customView: viewSelector)
-        self.doToggleView(CardView(rawValue: viewStyle) ?? .largeTable)
+        self.doToggleView(viewStyle)
         
         self.navigationController?.navigationBar.barTintColor = .white
         let topItem = self.navigationController?.navigationBar.topItem
@@ -68,7 +68,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         let arrow = Constant.arrow
         self.sortButton = UIBarButtonItem(title: self.sortStr[self.sortType]! + arrow, style: .plain, target: self, action: #selector(self.sortPopup(_:)))
         let titles = self.sortStr.values.map { $0 + arrow }
-        self.sortButton.possibleTitles = Set<String>(titles)
+        self.sortButton.possibleTitles = Set(titles)
         
         topItem?.rightBarButtonItem = self.sortButton
         
@@ -118,9 +118,8 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         
         NotificationCenter.default.removeObserver(self)
         
-        let settings = UserDefaults.standard
-        settings.set(self.scale, forKey: SettingsKeys.BROWSER_VIEW_SCALE)
-        settings.set(self.sortType.rawValue, forKey: SettingsKeys.BROWSER_SORT_TYPE)
+        Defaults[.browserViewScale] = self.scale
+        Defaults[.browserViewSort] = self.sortType
         
         BrowserResultViewController.instance = nil
     }
@@ -190,15 +189,15 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     
     func toggleView(_ sender: UISegmentedControl) {
         let viewStyle = CardView(rawValue: sender.selectedSegmentIndex) ?? .largeTable
-        UserDefaults.standard.set(viewStyle.rawValue, forKey: SettingsKeys.BROWSER_VIEW_STYLE)
+        Defaults[.browserViewStyle] = viewStyle
         self.doToggleView(viewStyle)
     }
     
     func doToggleView(_ style: CardView) {
-        self.tableView.isHidden = style == CardView.image
-        self.collectionView.isHidden = style != CardView.image
+        self.tableView.isHidden = style == .image
+        self.collectionView.isHidden = style != .image
         
-        self.largeCells = style == CardView.largeTable
+        self.largeCells = style == .largeTable
         
         self.reloadViews()
     }

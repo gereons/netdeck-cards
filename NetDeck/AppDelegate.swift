@@ -9,9 +9,12 @@
 import Fabric
 import Crashlytics
 import SVProgressHUD
+import SwiftyUserDefaults
+
+// investigate:
+//   Realm for data & deck storage (including ImageCache's date dictionaries!)
 
 // TODO: investigate OOMs - memory warnings?
-// TODO: make TableData type-safe (ie, rewrite all users in Swift)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
@@ -37,9 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         self.setBuiltinUserDefaults()
         
-        let settings = UserDefaults.standard
-        let language = settings.string(forKey: SettingsKeys.LANGUAGE) ?? "en"
-        
+        let language = Defaults[.language]
         var cardsOk = false
         let setsOk = PackManager.setupFromFiles(language)
         // print("app start, setsOk=\(setsOk)")
@@ -51,8 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             let _ = PrebuiltManager.setupFromFiles(language)
         }
         
-        let useNrdb = settings.bool(forKey: SettingsKeys.USE_NRDB)
-        let keepCredentials = settings.bool(forKey: SettingsKeys.KEEP_NRDB_CREDENTIALS)
+        let useNrdb = Defaults[.useNrdb]
+        let keepCredentials = Defaults[.keepNrdbCredentials]
         let fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever;
         UIApplication.shared.setMinimumBackgroundFetchInterval(fetchInterval)
         
@@ -128,7 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     }
     
     func setBuiltinUserDefaults() {
-        let usingNrdb = UserDefaults.standard.bool(forKey: SettingsKeys.USE_NRDB)
+        let usingNrdb = Defaults[.useNrdb]
         
         let fmt: DateFormatter = {
             let f = DateFormatter()
@@ -142,45 +143,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
 //        let defaultMWL = today >= "20170201" ? MWL.v1_2 : MWL.v1_1;
         
         let defaults: [String: Any] = [
-            SettingsKeys.LAST_DOWNLOAD: "never".localized(),
-            SettingsKeys.NEXT_DOWNLOAD: "never".localized(),
+            DefaultsKeys.lastDownload._key: "never".localized(),
+            DefaultsKeys.nextDownload._key: "never".localized(),
             
-            SettingsKeys.USE_DRAFT: false,
-            SettingsKeys.AUTO_SAVE: false,
-            SettingsKeys.AUTO_HISTORY: true,
-            SettingsKeys.USE_DROPBOX: false,
-            SettingsKeys.AUTO_SAVE_DB: false,
-            SettingsKeys.USE_NRDB: false,
-            SettingsKeys.KEEP_NRDB_CREDENTIALS: !usingNrdb,
-            SettingsKeys.NRDB_AUTOSAVE: false,
-            SettingsKeys.NRDB_HOST: "netrunnerdb.com",
-            SettingsKeys.LANGUAGE: "en",
-            SettingsKeys.UPDATE_INTERVAL: 7,
-            SettingsKeys.LAST_BG_FETCH: "never".localized(),
-            SettingsKeys.LAST_REFRESH: "never".localized(),
+            DefaultsKeys.useDraft._key: false,
+            DefaultsKeys.autoSave._key: false,
+            DefaultsKeys.autoHistory._key: true,
+            DefaultsKeys.useDropbox._key: false,
+            DefaultsKeys.autoSaveDropbox._key: false,
+            DefaultsKeys.useNrdb._key: false,
+            DefaultsKeys.keepNrdbCredentials._key: !usingNrdb,
+            DefaultsKeys.nrdbAutosave._key: false,
+            DefaultsKeys.nrdbHost._key: "netrunnerdb.com",
+            DefaultsKeys.language._key: "en",
+            DefaultsKeys.updateInterval._key: 7,
+            DefaultsKeys.lastBackgroundFetch._key: "never".localized(),
+            DefaultsKeys.lastRefresh._key: "never".localized(),
             
-            SettingsKeys.DECK_FILTER_STATE: DeckState.none.rawValue,
-            SettingsKeys.DECK_VIEW_STYLE: CardView.largeTable.rawValue,
-            SettingsKeys.DECK_VIEW_SCALE: 1.0,
-            SettingsKeys.DECK_VIEW_SORT: DeckSort.byType.rawValue,
-            SettingsKeys.DECK_FILTER_SORT: DeckListSort.byName.rawValue,
-            SettingsKeys.DECK_FILTER_TYPE: Filter.all.rawValue,
+            DefaultsKeys.deckFilterState._key: DeckState.none.rawValue,
+            DefaultsKeys.deckViewStyle._key: CardView.largeTable.rawValue,
+            DefaultsKeys.deckViewScale._key: 1.0,
+            DefaultsKeys.deckViewSort._key: DeckSort.byType.rawValue,
+            DefaultsKeys.deckFilterSort._key: DeckListSort.byName.rawValue,
+            DefaultsKeys.deckFilterType._key: Filter.all.rawValue,
             
-            SettingsKeys.CREATE_DECK_ACTIVE: false,
+            DefaultsKeys.createDeckActive._key: false,
             
-            SettingsKeys.BROWSER_VIEW_STYLE: CardView.largeTable.rawValue,
-            SettingsKeys.BROWSER_VIEW_SCALE: 1.0,
-            SettingsKeys.BROWSER_SORT_TYPE: BrowserSort.byType.rawValue,
+            DefaultsKeys.browserViewStyle._key: CardView.largeTable.rawValue,
+            DefaultsKeys.browserViewScale._key: 1.0,
+            DefaultsKeys.browserViewSort._key: BrowserSort.byType.rawValue,
             
-            SettingsKeys.BROWSER_PACKS: PackUsage.selected.rawValue,
-            SettingsKeys.DECKBUILDER_PACKS: PackUsage.selected.rawValue,
+            DefaultsKeys.browserPacks._key: PackUsage.selected.rawValue,
+            DefaultsKeys.deckbuilderPacks._key: PackUsage.selected.rawValue,
             
-            SettingsKeys.NUM_CORES: 3,
+            DefaultsKeys.numCores._key: 3,
             
-            SettingsKeys.SHOW_ALL_FILTERS: true,
-            SettingsKeys.IDENTITY_TABLE: true,
+            DefaultsKeys.showAllFilters._key: true,
+            DefaultsKeys.identityTable._key: true,
             
-            SettingsKeys.MWL_VERSION: defaultMWL.rawValue
+            DefaultsKeys.defaultMwl._key: defaultMWL.rawValue,
         ]
         
         UserDefaults.standard.register(defaults: defaults)
@@ -232,8 +233,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             return true
         } else if (scheme?.hasPrefix("db-"))! {
             let ok = DropboxWrapper.handleURL(url)
-            UserDefaults.standard.set(ok, forKey:SettingsKeys.USE_DROPBOX)
-            
+            Defaults[.useDropbox] = ok
             if ok {
                 SVProgressHUD.showSuccess(withStatus: "Successfully connected to your Dropbox account".localized())
             }
@@ -245,9 +245,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     }
     
     private func logStartup() {
-        let settings = UserDefaults.standard
-        
-        let cardLanguage = settings.string(forKey: SettingsKeys.LANGUAGE) ?? ""
+        let cardLanguage = Defaults[.language]
         let appLanguage = Locale.preferredLanguages.first ?? ""
         let languageComponents = Locale.components(fromIdentifier: appLanguage)
         let languageFromComponents = languageComponents["foo"] ?? ""
@@ -255,8 +253,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             "cardLanguage": cardLanguage,
             "appLanguage": appLanguage,
             "Language": cardLanguage + "/" + languageFromComponents,
-            "useNrdb": settings.bool(forKey: SettingsKeys.USE_NRDB) ? "on" : "off",
-            "useDropbox": settings.bool(forKey: SettingsKeys.USE_DROPBOX) ? "on" : "off",
+            "useNrdb": Defaults[.useNrdb] ? "on" : "off",
+            "useDropbox": Defaults[.useDropbox] ? "on" : "off",
             "device": UIDevice.current.model,
             "os": UIDevice.current.systemVersion
         ]
@@ -303,7 +301,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     // MARK: - bg fetch
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        UserDefaults.standard.set(Date(), forKey: SettingsKeys.LAST_BG_FETCH)
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        Defaults[.lastBackgroundFetch] = formatter.string(from: Date())
         
         NRDB.sharedInstance.backgroundRefreshAuthentication { result in
             // NSLog(@"primary call %ld", (long)result);

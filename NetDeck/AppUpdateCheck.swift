@@ -8,6 +8,7 @@
 
 import Alamofire
 import Marshal
+import SwiftyUserDefaults
 
 class AppUpdateCheck {
     
@@ -16,11 +17,8 @@ class AppUpdateCheck {
     
     class func checkUpdate() {
         
-        let settings = UserDefaults.standard
-        
-        guard let nextCheck = settings.object(forKey: SettingsKeys.NEXT_UPDATE_CHECK) as? Date else {
-            let nextCheck = Date(timeIntervalSinceNow: week)
-            settings.set(nextCheck, forKey: SettingsKeys.NEXT_UPDATE_CHECK)
+        guard let nextCheck = Defaults[.nextUpdateCheck] else {
+            Defaults[.nextUpdateCheck] = Date(timeIntervalSinceNow: week)
             return
         }
         
@@ -43,7 +41,7 @@ class AppUpdateCheck {
                 }
             }
             
-            settings.set(now.addingTimeInterval(week), forKey: SettingsKeys.NEXT_UPDATE_CHECK)
+            Defaults[.nextUpdateCheck] = now.addingTimeInterval(week)
         }
     }
     

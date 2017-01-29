@@ -7,7 +7,8 @@
 //
 
 import Marshal
- 
+import SwiftyUserDefaults
+
 struct Cycle: Unmarshaling {
     let name: String
     let code: String
@@ -103,15 +104,15 @@ class PackManager {
     
     class func disabledPackCodes() -> Set<String> {
         if disabledPacks == nil {
-            var disabled = Set<String>()
             let settings = UserDefaults.standard
+            var disabled = Set<String>()
             for pack in allPacks {
                 if !settings.bool(forKey: pack.settingsKey) {
                     disabled.insert(pack.code)
                 }
             }
     
-            if !settings.bool(forKey: SettingsKeys.USE_DRAFT) {
+            if !Defaults[.useDraft] {
                 disabled.insert(draftSetCode)
             }
     
@@ -122,17 +123,9 @@ class PackManager {
     }
     
     class func rotatedPackCodes() -> Set<String> {
-        var packs = Set<String>(PackManager.rotatedPacks)
+        var packs = Set(PackManager.rotatedPacks)
         packs.insert(draftSetCode)
         return packs
-    }
-    
-    class func draftPackCode() -> Set<String> {
-        if UserDefaults.standard.bool(forKey: SettingsKeys.USE_DRAFT) {
-            return Set<String>()
-        } else {
-            return Set<String>([draftSetCode])
-        }
     }
     
     class func clearDisabledPacks() {
@@ -190,7 +183,6 @@ class PackManager {
         values.append([PackManager.anyPack])
         
         let settings = UserDefaults.standard
-        
         for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             sections.append(cycle.name)
             
@@ -216,7 +208,7 @@ class PackManager {
         sections.append("")
         values.append([PackManager.anyPack])
         
-        let useDraft = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DRAFT)
+        let useDraft = Defaults[.useDraft]
         
         for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             

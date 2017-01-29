@@ -19,6 +19,7 @@ target 'NetDeck' do
     pod 'SwiftKeychainWrapper'
     pod 'Marshal'
     pod 'SDCAlertView'
+    pod 'SwiftyUserDefaults'
 end
 
 post_install do |installer|

@@ -34,6 +34,7 @@ PODS:
   - SwiftKeychainWrapper (3.0.1)
   - SwiftyDropbox (4.1.1):
     - Alamofire (~> 4.0.1)
+  - SwiftyUserDefaults (3.0.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -51,6 +52,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwiftKeychainWrapper
   - SwiftyDropbox (~> 4.0)
+  - SwiftyUserDefaults
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
@@ -69,7 +71,8 @@ SPEC CHECKSUMS:
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
   SwiftyDropbox: dfcd4d308d32d74729255b48833db61acdfb9c23
+  SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
 
-PODFILE CHECKSUM: b9f68adec5fa4743f1c81bcc69b3ab1896d7b4bb
+PODFILE CHECKSUM: 464e207d91b8adfe65fb0221334424708e989ab0
 
 COCOAPODS: 1.1.1

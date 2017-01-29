@@ -39,7 +39,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         if let selectedSet = selected as? Set<String> {
             popover.selectedValues = selectedSet
         } else if let selectedStr = selected as? String, selectedStr != Constant.kANY {
-            popover.selectedValues = Set<String>([selectedStr])
+            popover.selectedValues = Set([selectedStr])
         }
         
         popover.sectionToggles.removeAll()

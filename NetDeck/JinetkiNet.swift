@@ -9,6 +9,7 @@
 import Alamofire
 import SwiftKeychainWrapper
 import SVProgressHUD
+import SwiftyUserDefaults
 
 class JintekiNet {
     static let sharedInstance = JintekiNet()
@@ -16,8 +17,8 @@ class JintekiNet {
     private let manager: Alamofire.SessionManager
     private let cookieJar: HTTPCookieStorage
     
-    let loginUrl = "http://www.jinteki.net/login"
-    let deckUrl = "http://www.jinteki.net/data/decks"
+    private let loginUrl = "http://www.jinteki.net/login"
+    private let deckUrl = "http://www.jinteki.net/data/decks"
     
     private init() {
         self.cookieJar = HTTPCookieStorage.shared
@@ -29,8 +30,8 @@ class JintekiNet {
     
     func clearCredentials() {
         let keychain = KeychainWrapper.standard
-        keychain.removeObject(forKey: SettingsKeys.JNET_USERNAME)
-        keychain.removeObject(forKey: SettingsKeys.JNET_PASSWORD)
+        keychain.removeObject(forKey: KeychainKeys.jnetUsername)
+        keychain.removeObject(forKey: KeychainKeys.jnetPassword)
     }
     
     func clearCookies() {
@@ -86,25 +87,26 @@ class JintekiNet {
                 if let _ = response.result.value {
                     SVProgressHUD.showError(withStatus: "Logged in".localized())
                     let keychain = KeychainWrapper.standard
-                    keychain.set(username, forKey: SettingsKeys.JNET_USERNAME)
-                    keychain.set(password, forKey: SettingsKeys.JNET_PASSWORD)
+                    keychain.set(username, forKey: KeychainKeys.jnetUsername)
+                    keychain.set(password, forKey: KeychainKeys.jnetPassword)
                 } else {
                     fallthrough
                 }
             default:
                 SVProgressHUD.showError(withStatus: "Login failed".localized())
                 self.clearCredentials()
-                UserDefaults.standard.set(false, forKey: SettingsKeys.USE_JNET)
+                Defaults[.useJintekiNet] = false
             }
         }
     }
     
     func uploadDeck(_ deck: Deck) {
         let keychain = KeychainWrapper.standard
-        guard let
-            username = keychain.string(forKey: SettingsKeys.JNET_USERNAME),
-            let password = keychain.string(forKey: SettingsKeys.JNET_PASSWORD) else {
-                return
+        guard
+            let username = keychain.string(forKey: KeychainKeys.jnetUsername),
+            let password = keychain.string(forKey: KeychainKeys.jnetPassword)
+        else {
+            return
         }
 
         self.clearCookies()

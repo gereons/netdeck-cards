@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 class CardList {
     private var role: Role
@@ -112,20 +113,19 @@ class CardList {
             predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [packPredicate, decksPredicate])
         }
         
-        applyPredicate(predicate)
+        self.applyPredicate(predicate)
     }
     
     func filterRotatedSets() {
         let rotatedPackCodes = PackManager.rotatedPackCodes()
         let predicate = NSPredicate(format: "!(packCode in %@)", rotatedPackCodes)
-        applyPredicate(predicate)
+        self.applyPredicate(predicate)
     }
     
     func filterDraft() {
-        let draft = PackManager.draftPackCode()
-        if draft.count > 0 {
-            let predicate = NSPredicate(format: "!(packCode in %@)", draft)
-            applyPredicate(predicate)
+        if !Defaults[.useDraft] {
+            let predicate = NSPredicate(format: "packCode != %@", PackManager.draftSetCode)
+            self.applyPredicate(predicate)
         }
     }
     
@@ -137,12 +137,12 @@ class CardList {
             let factions: NSArray = [ Faction.neutral.rawValue, identity.faction.rawValue ]
             let predicate = NSPredicate(format:"type != %d OR (type = %d AND faction in %@)", CardType.agenda.rawValue, CardType.agenda.rawValue, factions)
             
-            applyPredicate(predicate)
+            self.applyPredicate(predicate)
         }
         
         if identity.code == Card.customBiotics {
             let predicate = NSPredicate(format:"faction != %d", Faction.jinteki.rawValue)
-            applyPredicate(predicate)
+            self.applyPredicate(predicate)
         }
         
         let _ = self.applyFilters()
@@ -153,7 +153,7 @@ class CardList {
         
         if identity.faction == .apex {
             let predicate = NSPredicate(format:"type != %d OR (type = %d AND isVirtual = 1)", CardType.resource.rawValue, CardType.resource.rawValue)
-            applyPredicate(predicate)
+            self.applyPredicate(predicate)
         }
         
         let _ = self.applyFilters()
@@ -370,7 +370,7 @@ class CardList {
         }
         
         if self.mwl {
-            let mwl = MWL(rawValue: UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)) ?? .none
+            let mwl = Defaults[.defaultMwl]
             if mwl != .none {
                 filteredCards = filteredCards.filter { $0.isMostWanted(mwl) }
             }

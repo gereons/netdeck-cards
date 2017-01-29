@@ -8,12 +8,14 @@
 
 import Alamofire
 import AlamofireNetworkActivityIndicator
+import SwiftyUserDefaults
 
 class Reachability {
     static var manager: NetworkReachabilityManager?
     
     class func start() {
-        let host = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_HOST) ?? "www.apple.com"
+        let nrdbHost = Defaults[.nrdbHost]
+        let host = nrdbHost.length > 0 ? nrdbHost : "www.apple.com"
         Reachability.manager = NetworkReachabilityManager(host: host)
         Reachability.manager?.listener = { status in
             // print("Network Status Changed: \(status)")

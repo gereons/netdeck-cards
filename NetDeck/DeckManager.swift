@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 class DeckManager {
     
@@ -141,14 +142,12 @@ class DeckManager {
     }
     
     class func fileSequence() -> Int {
-        let settings = UserDefaults.standard
-        return settings.integer(forKey: SettingsKeys.FILE_SEQ)
+        return Defaults[.fileSequence]
     }
     
     private class func nextFileSequence() -> Int {
-        let settings = UserDefaults.standard
-        let seq = settings.integer(forKey: SettingsKeys.FILE_SEQ)
-        settings.set(seq + 1, forKey: SettingsKeys.FILE_SEQ)
+        let seq = Defaults[.fileSequence]
+        Defaults[.fileSequence] += 1
         return seq
     }
     

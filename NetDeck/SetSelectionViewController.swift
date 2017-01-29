@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 @objc(SetSelectionViewController) // need for IASK
 class SetSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -25,7 +26,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         
         if self.values.count > 1 {
             // add "number of core sets" fake entry
-            let numCores = Pack(named: "Number of Core Sets".localized(), key: SettingsKeys.NUM_CORES)
+            let numCores = Pack(named: "Number of Core Sets".localized(), key: DefaultsKeys.numCores._key)
             self.values[1].insert(numCores, at: 1)
         }
     }
@@ -52,7 +53,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func changeCoreSets(_ numCores: Int) {
-        UserDefaults.standard.set(numCores, forKey: SettingsKeys.NUM_CORES)
+        Defaults[.numCores] = numCores
         self.tableView.reloadData()
     }
     
@@ -84,9 +85,8 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         cell.textLabel?.text = pack.name
         cell.accessoryView = nil
         
-        let settings = UserDefaults.standard
-        if pack.settingsKey == SettingsKeys.NUM_CORES {
-            let numCores = settings.integer(forKey: SettingsKeys.NUM_CORES)
+        if pack.settingsKey == DefaultsKeys.numCores._key {
+            let numCores = Defaults[.numCores]
             let button = UIButton(type: .system)
             button.frame = CGRect(x: 0, y: 0, width: 40, height: 30)
             button.setTitle("\(numCores)", for: .normal)
@@ -94,6 +94,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             button.addTarget(self, action: #selector(self.coresAlert(_:)), for: .touchUpInside)
             cell.accessoryView = button
         } else {
+            let settings = UserDefaults.standard
             let on = settings.bool(forKey: pack.settingsKey)
             let sw = NRSwitch(initial: on) { on in
                 settings.set(on, forKey: pack.settingsKey)

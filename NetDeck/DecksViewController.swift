@@ -8,6 +8,7 @@
 
 import UIKit
 import DZNEmptyDataSet
+import SwiftyUserDefaults
 
 class DecksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
@@ -88,13 +89,13 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let arrow = Constant.arrow
         self.sortButton = UIBarButtonItem(title: self.sortStr[self.sortType]! + arrow, style: .plain, target: self, action: #selector(self.changeSort(_:)))
-        self.sortButton.possibleTitles = Set<String>(self.sortStr.values.map { $0 + arrow })
+        self.sortButton.possibleTitles = Set(self.sortStr.values.map { $0 + arrow })
         
         self.sideFilterButton = UIBarButtonItem(title: self.sideStr[self.filterType]! + arrow, style: .plain, target: self, action: #selector(self.changeSideFilter(_:)))
-        self.sideFilterButton.possibleTitles = Set<String>(self.sideStr.values.map { $0 + arrow })
+        self.sideFilterButton.possibleTitles = Set(self.sideStr.values.map { $0 + arrow })
         
         self.stateFilterButton = UIBarButtonItem(title: DeckState.buttonLabelFor(self.filterState), style: .plain, target: self, action: #selector(self.changeStateFilter(_:)))
-        self.stateFilterButton.possibleTitles = Set<String>(DeckState.possibleTitles())
+        self.stateFilterButton.possibleTitles = Set(DeckState.possibleTitles())
         
         let topItem = self.navigationController?.navigationBar.topItem
         topItem?.leftBarButtonItems = [ self.sortButton, self.sideFilterButton, self.stateFilterButton ]
@@ -123,14 +124,13 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let settings = UserDefaults.standard
-        self.filterType = Filter(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_TYPE)) ?? .all
+        self.filterType = Defaults[.deckFilterType]
         self.sideFilterButton.title = sideStr[self.filterType]! + Constant.arrow
         
-        self.filterState = DeckState(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_STATE)) ?? .none
+        self.filterState = Defaults[.deckFilterState]
         self.stateFilterButton.title = DeckState.buttonLabelFor(self.filterState)
         
-        self.sortType = DeckListSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_FILTER_SORT)) ?? .byName
+        self.sortType = Defaults[.deckFilterSort]
         self.sortButton.title = sortStr[self.sortType]! + Constant.arrow
         
         let nc = NotificationCenter.default
@@ -144,10 +144,10 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        let settings = UserDefaults.standard
-        settings.set(self.filterType.rawValue, forKey: SettingsKeys.DECK_FILTER_TYPE)
-        settings.set(self.filterState.rawValue, forKey: SettingsKeys.DECK_FILTER_STATE)
-        settings.set(self.sortType.rawValue, forKey: SettingsKeys.DECK_FILTER_SORT)
+        
+        Defaults[.deckFilterType] = self.filterType
+        Defaults[.deckFilterState] = self.filterState
+        Defaults[.deckFilterSort] = self.sortType
     }
     
     func dismissPopup() {

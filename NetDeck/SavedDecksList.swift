@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import MessageUI
+import SwiftyUserDefaults
 
 class SavedDecksList: DecksViewController {
     
@@ -28,7 +29,7 @@ class SavedDecksList: DecksViewController {
         self.diffSelection = false
         
         self.editButton = UIBarButtonItem(title: "Edit".localized(), style: .plain, target: self, action: #selector(self.toggleEdit(_:)))
-        self.editButton.possibleTitles = Set<String>(["Edit".localized(), "Done".localized()])
+        self.editButton.possibleTitles = Set(["Edit".localized(), "Done".localized()])
         
         self.diffCancelButton = UIBarButtonItem(title: "Cancel".localized(), style: .plain, target: self, action: #selector(self.diffCancel(_:)))
         self.diffRightButtons = [ self.diffCancelButton ]
@@ -67,9 +68,8 @@ class SavedDecksList: DecksViewController {
             return self.dismissPopup()
         }
         
-        let settings = UserDefaults.standard
-        let useDropbox = settings.bool(forKey: SettingsKeys.USE_DROPBOX)
-        let useNetrunnerDb = settings.bool(forKey: SettingsKeys.USE_NRDB)
+        let useDropbox = Defaults[.useDropbox]
+        let useNetrunnerDb = Defaults[.useNrdb]
         
         if !useDropbox && !useNetrunnerDb {
             UIAlertController.alert(withTitle: "Import Decks".localized(), message: "Connect to your Dropbox and/or NetrunnerDB.com account first.".localized()
@@ -113,9 +113,8 @@ class SavedDecksList: DecksViewController {
             return self.dismissPopup()
         }
         
-        let settings = UserDefaults.standard
-        let useDropbox = settings.bool(forKey: SettingsKeys.USE_DROPBOX)
-        let useNetrunnerDb = settings.bool(forKey: SettingsKeys.USE_NRDB)
+        let useDropbox = Defaults[.useDropbox]
+        let useNetrunnerDb = Defaults[.useNrdb]
         
         if !useDropbox && !useNetrunnerDb {
             UIAlertController.alert(withTitle: "Export Decks".localized(), message: "Connect to your Dropbox and/or NetrunnerDB.com account first.".localized()
@@ -301,8 +300,7 @@ class SavedDecksList: DecksViewController {
             let newDeck = deck.duplicate()
             newDeck.saveToDisk()
             
-            let settings = UserDefaults.standard
-            if settings.bool(forKey: SettingsKeys.USE_DROPBOX) && settings.bool(forKey: SettingsKeys.AUTO_SAVE_DB) {
+            if Defaults[.useDropbox] && Defaults[.autoSaveDropbox] {
                 if newDeck.identity != nil && newDeck.cards.count > 0 {
                     DeckExport.asOctgn(deck, autoSave: true)
                 }

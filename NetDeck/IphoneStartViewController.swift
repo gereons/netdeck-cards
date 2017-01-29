@@ -8,6 +8,7 @@
 
 import UIKit
 import DZNEmptyDataSet
+import SwiftyUserDefaults
 
 class IphoneStartViewController: UINavigationController, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
 
@@ -60,8 +61,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         
         self.sortButton = UIBarButtonItem(image: UIImage(named: "890-sort-ascending-toolbar"), style: .plain, target: self, action: #selector(self.changeSort(_:)))
         
-        let sort = UserDefaults.standard.integer(forKey: SettingsKeys.DECK_FILTER_SORT)
-        self.deckListSort = DeckListSort(rawValue: sort) ?? .byName
+        self.deckListSort = Defaults[.deckFilterSort]
         
         if cardsAvailable && PackManager.packsAvailable {
             self.initializeDecks()
@@ -180,9 +180,8 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     // MARK: - import
     
     func importDecks(_ sender: UIButton) {
-        let settings = UserDefaults.standard
-        let useNrdb = settings.bool(forKey: SettingsKeys.USE_NRDB)
-        let useDropbox = settings.bool(forKey: SettingsKeys.USE_DROPBOX)
+        let useNrdb = Defaults[.useNrdb]
+        let useDropbox = Defaults[.useDropbox]
         
         if useNrdb && useDropbox {
             let alert = UIAlertController.actionSheet(title: "Import Decks".localized(), message:nil)
@@ -238,7 +237,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     }
     
     func changeSortType(_ sort: DeckListSort) {
-        UserDefaults.standard.set(sort.rawValue, forKey: SettingsKeys.DECK_FILTER_SORT)
+        Defaults[.deckFilterSort] = sort
         self.deckListSort = sort
         
         self.initializeDecks()

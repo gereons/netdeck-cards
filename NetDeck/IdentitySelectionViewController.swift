@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -46,10 +47,8 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         self.initialIdentity = identity
         self.selectedIdentity = identity
         
-        let settings = UserDefaults.standard
-        self.viewTable = settings.bool(forKey: SettingsKeys.IDENTITY_TABLE)
-        let packs = settings.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)
-        let packUsage = PackUsage(rawValue: packs) ?? .all
+        self.viewTable = Defaults[.identityTable]
+        let packUsage = Defaults[.deckbuilderPacks]
         let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage)
         
         self.allFactionNames = identities.sections
@@ -102,9 +101,8 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         self.collectionView.isHidden = self.viewTable
         self.modeSelector.selectedSegmentIndex = self.viewTable ? 1 : 0
         
-        let settings = UserDefaults.standard
-        let includeDraft = settings.bool(forKey: SettingsKeys.USE_DRAFT)
-        let dataDestinyAllowed = settings.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
+        let includeDraft = Defaults[.useDraft]
+        let dataDestinyAllowed = Defaults[.useDataDestiny]
         
         var titles: [String]
         if self.role == .runner {
@@ -187,7 +185,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         self.tableView.isHidden = !self.viewTable
         self.collectionView.isHidden = self.viewTable
         
-        UserDefaults.standard.set(self.viewTable, forKey: SettingsKeys.IDENTITY_TABLE)
+        Defaults[.identityTable] = self.viewTable
         
         if let selected = self.selectedIndexPath {
             self.tableView.reloadData()

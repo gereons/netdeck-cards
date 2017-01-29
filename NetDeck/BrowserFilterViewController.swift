@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class BrowserFilterViewController: UIViewController, UITextFieldDelegate, FilterCallback {
 
@@ -78,7 +79,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.browser = BrowserResultViewController()
         self.navController = UINavigationController(rootViewController: self.browser)
         
-        self.packUsage = PackUsage(rawValue: UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)) ?? .all
+        self.packUsage = Defaults[.browserPacks]
         self.cardList = CardList.browserInitForRole(self.role, packUsage: self.packUsage)
 
         super.init(nibName: "BrowserFilterViewController", bundle: nil)
@@ -157,9 +158,9 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         
         self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
         
-        let mwl = UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)
-        self.mwlLabel.isHidden = mwl == MWL.none.rawValue
-        self.mwlSwitch.isHidden = mwl == MWL.none.rawValue
+        let mwl = Defaults[.defaultMwl]
+        self.mwlLabel.isHidden = mwl == MWL.none
+        self.mwlSwitch.isHidden = mwl == MWL.none
         
         self.resetAllButtons()
     }

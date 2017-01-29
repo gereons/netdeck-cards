@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class ListCardsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     @IBOutlet weak var tableView: UITableView!
@@ -45,9 +46,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.tableView.register(UINib(nibName: "EditDeckCell", bundle: nil), forCellReuseIdentifier: "cardCell")
         
-        let packs = UserDefaults.standard.integer(forKey: SettingsKeys.DECKBUILDER_PACKS)
-        let packUsage = PackUsage(rawValue: packs) ?? .all
-        
+        let packUsage = Defaults[.deckbuilderPacks]
         self.cardList = CardList(forRole: self.deck.role, packUsage: packUsage)
         
         if let identity = self.deck.identity {

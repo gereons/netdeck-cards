@@ -8,6 +8,7 @@
 
 import InAppSettingsKit
 import SVProgressHUD
+import SwiftyUserDefaults
 
 class SettingsViewController: NSObject, IASKSettingsDelegate {
  
@@ -31,22 +32,27 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
         var hiddenKeys = Set<String>()
         
         if !CardManager.cardsAvailable || !PackManager.packsAvailable {
-            hiddenKeys = Set<String>([ "sets_hide_1", "sets_hide_2", "sets_hide_3", SettingsKeys.BROWSER_PACKS, SettingsKeys.DECKBUILDER_PACKS ])
+            hiddenKeys = Set([
+                "sets_hide_1", "sets_hide_2", "sets_hide_3",
+                DefaultsKeys.browserPacks._key, DefaultsKeys.deckbuilderPacks._key
+            ])
         }
         if Device.isIphone {
-            hiddenKeys.formUnion([ SettingsKeys.AUTO_HISTORY, SettingsKeys.CREATE_DECK_ACTIVE ])
+            hiddenKeys.formUnion([ DefaultsKeys.autoHistory._key, DefaultsKeys.createDeckActive._key ])
         }
         if Device.isIpad {
             hiddenKeys.formUnion([ "about_hide_1", "about_hide_2" ])
         }
         
         if BuildConfig.release {
-            hiddenKeys.formUnion([ SettingsKeys.NRDB_TOKEN_EXPIRY, SettingsKeys.REFRESH_AUTH_NOW, SettingsKeys.LAST_BG_FETCH, SettingsKeys.LAST_REFRESH ])
+            hiddenKeys.formUnion([
+                DefaultsKeys.nrdbTokenExpiry._key, DefaultsKeys.lastBackgroundFetch._key, DefaultsKeys.lastRefresh._key,
+                IASKButtons.refreshAuthNow
+            ])
         }
-        
-        let settings = UserDefaults.standard
-        if !settings.bool(forKey: SettingsKeys.USE_DROPBOX) {
-            hiddenKeys.insert(SettingsKeys.AUTO_SAVE_DB)
+
+        if !Defaults[.useDropbox] {
+            hiddenKeys.insert(DefaultsKeys.autoSaveDropbox._key)
         }
         
         self.iask.hiddenKeys = hiddenKeys
@@ -67,7 +73,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
         let value = notification.userInfo?[key]
         
         switch key {
-        case SettingsKeys.USE_DROPBOX:
+        case DefaultsKeys.useDropbox._key:
             let useDropbox = value as? Bool ?? false
             
             if useDropbox {
@@ -79,7 +85,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
             NotificationCenter.default.post(name: Notifications.dropboxChanged, object: self)
             self.refresh()
             
-        case SettingsKeys.USE_NRDB:
+        case DefaultsKeys.useNrdb._key:
             let useNrdb = value as? Bool ?? false
             if useNrdb {
                 self.nrdbLogin()
@@ -88,7 +94,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
                 NRDBHack.clearCredentials()
             }
             self.refresh()
-        case SettingsKeys.USE_JNET:
+        case DefaultsKeys.useJintekiNet._key:
             let useJnet = value as? Bool ?? false
             if useJnet {
                 self.jnetLogin()
@@ -96,22 +102,22 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
                 JintekiNet.sharedInstance.clearCredentials()
             }
             self.refresh()
-        case SettingsKeys.UPDATE_INTERVAL:
+        case DefaultsKeys.updateInterval._key:
             CardManager.setNextDownloadDate()
-        case SettingsKeys.LANGUAGE:
+        case DefaultsKeys.language._key:
             let language = value as? String ?? "n/a"
             Analytics.logEvent("Change Language", attributes: ["Language": language])
-        case SettingsKeys.KEEP_NRDB_CREDENTIALS:
+        case DefaultsKeys.keepNrdbCredentials._key:
             let keep = value as? Bool ?? false
             
             NRDB.sharedInstance.stopAuthorizationRefresh()
             if keep {
-                if UserDefaults.standard.bool(forKey: SettingsKeys.USE_NRDB) {
+                if Defaults[.useNrdb] {
                     self.nrdbLogin()
                 }
             } else {
                 NRDBHack.clearCredentials()
-                UserDefaults.standard.set(false, forKey: SettingsKeys.USE_NRDB)
+                Defaults[.useNrdb] = false
             }
         default:
             break
@@ -119,15 +125,13 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
     }
     
     func nrdbLogin() {
-        let settings = UserDefaults.standard
-        
         if !Reachability.online {
             self.showOfflineAlert()
-            settings.set(false, forKey: SettingsKeys.USE_NRDB)
+            Defaults[.useNrdb] = false
             return
         }
         
-        if settings.bool(forKey: SettingsKeys.KEEP_NRDB_CREDENTIALS) {
+        if Defaults[.keepNrdbCredentials] {
             NRDBHack.sharedInstance.enterNrdbCredentialsAndLogin()
             return
         }
@@ -142,7 +146,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
     func jnetLogin() {
         if !Reachability.online {
             self.showOfflineAlert()
-            UserDefaults.standard.set(false, forKey: SettingsKeys.USE_JNET)
+            Defaults[.useJintekiNet] = false
             return
         }
         
@@ -152,13 +156,13 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
     func settingsViewController(_ sender: IASKAppSettingsViewController!, buttonTappedFor specifier: IASKSpecifier!) {
         let key = specifier.key() ?? ""
         switch key {
-        case SettingsKeys.DOWNLOAD_DATA_NOW:
+        case IASKButtons.downloadDataNow:
             if Reachability.online {
                 DataDownload.downloadCardData()
             } else {
                 self.showOfflineAlert()
             }
-        case SettingsKeys.REFRESH_AUTH_NOW:
+        case IASKButtons.refreshAuthNow:
             if Reachability.online {
                 SVProgressHUD.showInfo(withStatus: "re-authenticating")
                 NRDB.sharedInstance.backgroundRefreshAuthentication { result in
@@ -168,19 +172,19 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
             } else {
                 self.showOfflineAlert()
             }
-        case SettingsKeys.DOWNLOAD_IMG_NOW:
+        case IASKButtons.downloadImagesNow:
             if Reachability.online {
                 DataDownload.downloadAllImages()
             } else {
                 self.showOfflineAlert()
             }
-        case SettingsKeys.DOWNLOAD_MISSING_IMG:
+        case IASKButtons.downloadMissingImages:
             if Reachability.online {
                 DataDownload.downloadMissingImages()
             } else {
                 self.showOfflineAlert()
             }
-        case SettingsKeys.CLEAR_CACHE:
+        case IASKButtons.clearCache:
             let alert = UIAlertController.alert(title: nil, message: "Clear Cache? You will need to re-download all data.".localized())
             alert.addAction(UIAlertAction(title: "No".localized(), style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes".localized(), style: .default) { action in
@@ -188,15 +192,15 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
                 CardManager.removeFiles()
                 PackManager.removeFiles()
                 PrebuiltManager.removeFiles()
-                UserDefaults.standard.set("Never".localized(), forKey: SettingsKeys.LAST_DOWNLOAD)
-                UserDefaults.standard.set("Never".localized(), forKey: SettingsKeys.NEXT_DOWNLOAD)
+                Defaults[.lastDownload] = "Never".localized()
+                Defaults[.nextDownload] = "Never".localized()
                 self.refresh()
                 
                 NotificationCenter.default.post(name: Notifications.loadCards, object: self)
             })
             
             alert.show()
-        case SettingsKeys.TEST_API:
+        case IASKButtons.testAPI:
             if Reachability.online {
                 self.testApiSettings()
             } else {
@@ -208,7 +212,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
     }
     
     func testApiSettings() {
-        let host = UserDefaults.standard.string(forKey: SettingsKeys.NRDB_HOST) ?? ""
+        let host = Defaults[.nrdbHost]
         if host.length == 0 {
             UIAlertController.alert(withTitle: nil, message: "Please enter a Server Name".localized(), button: "OK".localized())
             return

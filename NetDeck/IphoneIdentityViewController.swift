@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 extension Array where Element: Equatable {
     func contains(_ obj: Element) -> Bool {
@@ -60,9 +61,8 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         self.selectedIdentity = self.deck?.identity
-        
-        let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        let packUsage = PackUsage(rawValue: packs) ?? .all
+
+        let packUsage = Defaults[.deckbuilderPacks]
         let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage)
         self.factionNames = identities.sections 
         self.identities = identities.values

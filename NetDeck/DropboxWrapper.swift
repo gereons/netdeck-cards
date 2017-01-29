@@ -9,6 +9,7 @@
 // obj-c callable interface to the new swift-based dropbox API
 
 import SwiftyDropbox
+import SwiftyUserDefaults
 
 class DropboxWrapper {
     
@@ -18,7 +19,7 @@ class DropboxWrapper {
         let clientOk = DropboxClientsManager.authorizedClient != nil
         // print("dropbox setup, clientOk=\(clientOk)")
         if !clientOk {
-            UserDefaults.standard.set(false, forKey: SettingsKeys.USE_DROPBOX)
+            Defaults[.useDropbox] = false
         }
     }
 

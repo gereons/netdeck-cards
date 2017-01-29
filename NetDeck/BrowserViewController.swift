@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SwiftyUserDefaults
 
 class BrowserViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     @IBOutlet weak var tableView: UITableView!
@@ -73,8 +73,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func refresh() {
-        let packUsage = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        self.cardList = CardList.browserInitForRole(self.role, packUsage: PackUsage(rawValue: packUsage) ?? .all)
+        let packUsage = Defaults[.browserPacks]
+        self.cardList = CardList.browserInitForRole(self.role, packUsage: packUsage)
         if self.searchText.length > 0 {
             self.cardList.filterByName(self.searchText)
         }
@@ -207,8 +207,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBAction func setButtonTapped(_ btn: UIButton) {
         let picker = BrowserValuePicker(title: "Set".localized())
-        let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        let packUsage = PackUsage(rawValue: packs) ?? .all
+        let packUsage = Defaults[.browserPacks]
         picker.data = PackManager.packsForTableView(packUsage: packUsage)
         picker.preselected = self.sets
         picker.setResult = { result in
@@ -220,8 +219,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func factionButtonTapped(_ btn: UIButton) {
-        let packs = UserDefaults.standard.integer(forKey: SettingsKeys.BROWSER_PACKS)
-        let packUsage = PackUsage(rawValue: packs) ?? .all
+        let packUsage = Defaults[.browserPacks]
         let picker = BrowserValuePicker(title: "Faction".localized())
         picker.data = Faction.factionsForBrowser(packUsage: packUsage)
         picker.preselected = self.factions

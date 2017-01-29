@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class LargeBrowserCell: BrowserCell {
 
@@ -70,8 +71,7 @@ class LargeBrowserCell: BrowserCell {
             self.type.text = String(format: "%@ · %@", factionName, typeName)
         }
         
-        let mwlVersion = UserDefaults.standard.integer(forKey: SettingsKeys.MWL_VERSION)
-        let mwl = MWL(rawValue: mwlVersion) ?? .none
+        let mwl = Defaults[.defaultMwl]
         LargeCardCell.setInfluencePips(self.pips, influence: self.card.influence, card: self.card, mwl: mwl)
         
         LargeCardCell.setLabels(for: card, labels: self.labels, icons: self.icons)

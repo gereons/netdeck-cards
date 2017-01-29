@@ -68,8 +68,8 @@ class PrebuiltManager {
         if prebuiltCards == nil {
             prebuiltCards = [CardCounter]()
             prebuiltCodes = [String]()
-            let settings = UserDefaults.standard
             
+            let settings = UserDefaults.standard
             for prebuilt in allPrebuilts {
                 if settings.bool(forKey: prebuilt.settingsKey) {
                     prebuiltCards?.append(contentsOf: prebuilt.cards)

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit.UIColor
+import SwiftyUserDefaults
 
 // @objc to make NSPredicates on card.faction work
 
@@ -97,7 +98,7 @@ import UIKit.UIColor
         if (role == .runner)
         {
             if packUsage == .selected {
-                let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
+                let dataDestinyAllowed = Defaults[.useDataDestiny]
                 return dataDestinyAllowed ? runnerFactionNamesAll : runnerFactionNamesCore
             } else {
                 return runnerFactionNamesAll
@@ -109,7 +110,7 @@ import UIKit.UIColor
     
     static func factionsForBrowser(packUsage: PackUsage) -> TableData<String> {
         if packUsage == .selected {
-            let dataDestinyAllowed = UserDefaults.standard.bool(forKey: SettingsKeys.USE_DATA_DESTINY)
+            let dataDestinyAllowed = Defaults[.useDataDestiny]
             return dataDestinyAllowed ? allFactions : allFactionsCore
         } else {
             return allFactions

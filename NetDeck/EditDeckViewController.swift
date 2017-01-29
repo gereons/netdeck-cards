@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import MessageUI
+import SwiftyUserDefaults
 
 class EditDeckViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
@@ -50,15 +51,14 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
         self.statusLabel.text = ""
         
-        let settings = UserDefaults.standard
-        self.autoSave = settings.bool(forKey: SettingsKeys.AUTO_SAVE)
-        self.autoSaveDropbox = settings.bool(forKey: SettingsKeys.AUTO_SAVE_DB)
-        self.autoSaveNrdb = settings.bool(forKey: SettingsKeys.NRDB_AUTOSAVE)
+        self.autoSave = Defaults[.autoSave]
+        self.autoSaveDropbox = Defaults[.autoSaveDropbox]
+        self.autoSaveNrdb = Defaults[.nrdbAutosave]
         
         self.cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelClicked(_:)))
         self.saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self.saveClicked(_:)))
         
-        self.sortType = DeckSort(rawValue: settings.integer(forKey: SettingsKeys.DECK_VIEW_SORT)) ?? .byFactionType
+        self.sortType = Defaults[.deckViewSort]
         
         self.statusLabel.textColor = self.view.tintColor
         self.statusLabel.isUserInteractionEnabled = true
@@ -93,7 +93,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.setDeckName()
         topItem?.titleView = self.titleButton
         
-        if !UserDefaults.standard.bool(forKey: SettingsKeys.USE_NRDB) {
+        if !Defaults[.useNrdb] {
             self.nrdbButton.customView = UIView(frame: CGRect.zero)
             self.nrdbButton.isEnabled = false
         }
@@ -103,8 +103,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
-        UserDefaults.standard.setValue(self.sortType.rawValue, forKey: SettingsKeys.DECK_VIEW_SORT)
+        Defaults[.deckViewSort] = self.sortType
     }
     
     func setupNavigationButtons(modified: Bool) {
@@ -154,21 +153,20 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     
     func exportDeck(_ sender: Any) {
         let alert = UIAlertController.actionSheet(title: "Export".localized(), message: nil)
-        let settings = UserDefaults.standard
         
-        if settings.bool(forKey: SettingsKeys.USE_DROPBOX) {
+        if Defaults[.useDropbox] {
             alert.addAction(UIAlertAction(title: "To Dropbox".localized()) { action in
                 Analytics.logEvent("Export .o8d", attributes: nil)
                 DeckExport.asOctgn(self.deck, autoSave: false)
             })
         }
-        if settings.bool(forKey: SettingsKeys.USE_NRDB) {
+        if Defaults[.useNrdb]  {
             alert.addAction(UIAlertAction(title: "To NetrunnerDB.com".localized()) { action in
                 Analytics.logEvent("Save to NRDB", attributes: nil)
                 self.saveToNrdb()
             })
         }
-        if settings.bool(forKey: SettingsKeys.USE_JNET) {
+        if Defaults[.useJintekiNet] {
             alert.addAction(UIAlertAction(title: "To Jinteki.net".localized()) { action in
                 Analytics.logEvent("Upload Jinteki.net", attributes: nil)
                 self.saveToJintekiNet()
