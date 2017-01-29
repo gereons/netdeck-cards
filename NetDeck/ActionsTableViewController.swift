@@ -69,7 +69,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     private func resetDetailView() {
-        let empty = EmptyDetailViewController(nibName: "EmptyDetailView", bundle: nil)
+        let empty = EmptyDetailViewController()
         self.navController = UINavigationController(rootViewController: empty)
         
         let detailManager = self.splitViewController?.delegate as! DetailViewManager
