@@ -129,9 +129,7 @@ class PrebuiltManager {
     
     class func settingsDefaults() -> [String: Bool] {
         var defaults = [String: Bool]()
-        for pack in allPrebuilts {
-            defaults[pack.settingsKey] = false
-        }
+        allPrebuilts.forEach { defaults[$0.settingsKey] = false }
         return defaults
     }
     

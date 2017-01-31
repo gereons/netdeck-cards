@@ -89,9 +89,7 @@ class PackManager {
 
     class func settingsDefaults() -> [String: Bool] {
         var defaults = [String: Bool]()
-        for pack in allPacks {
-            defaults[pack.settingsKey] = pack.released
-        }
+        allPacks.forEach { defaults[$0.settingsKey] = $0.released }
         return defaults
     }
     

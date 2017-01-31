@@ -42,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         let language = Defaults[.language]
         var cardsOk = false
+        let start = Date.timeIntervalSinceReferenceDate
         let setsOk = PackManager.setupFromFiles(language)
         // print("app start, setsOk=\(setsOk)")
         if setsOk {
@@ -51,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         if setsOk && cardsOk {
             let _ = PrebuiltManager.setupFromFiles(language)
         }
+        let end = Date.timeIntervalSinceReferenceDate
+        print("card init took \(end-start)s")
         
         let useNrdb = Defaults[.useNrdb]
         let keepCredentials = Defaults[.keepNrdbCredentials]
@@ -142,49 +145,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         let defaultMWL = today >= "20160801" ? MWL.v1_1 : MWL.v1_0
 //        let defaultMWL = today >= "20170201" ? MWL.v1_2 : MWL.v1_1
         
-        let defaults: [String: Any] = [
-            DefaultsKeys.lastDownload._key: "never".localized(),
-            DefaultsKeys.nextDownload._key: "never".localized(),
-            
-            DefaultsKeys.useDraft._key: false,
-            DefaultsKeys.autoSave._key: false,
-            DefaultsKeys.autoHistory._key: true,
-            DefaultsKeys.useDropbox._key: false,
-            DefaultsKeys.autoSaveDropbox._key: false,
-            DefaultsKeys.useNrdb._key: false,
-            DefaultsKeys.keepNrdbCredentials._key: !usingNrdb,
-            DefaultsKeys.nrdbAutosave._key: false,
-            DefaultsKeys.nrdbHost._key: "netrunnerdb.com",
-            DefaultsKeys.language._key: "en",
-            DefaultsKeys.updateInterval._key: 7,
-            DefaultsKeys.lastBackgroundFetch._key: "never".localized(),
-            DefaultsKeys.lastRefresh._key: "never".localized(),
-            
-            DefaultsKeys.deckFilterState._key: DeckState.none.rawValue,
-            DefaultsKeys.deckViewStyle._key: CardView.largeTable.rawValue,
-            DefaultsKeys.deckViewScale._key: 1.0,
-            DefaultsKeys.deckViewSort._key: DeckSort.byType.rawValue,
-            DefaultsKeys.deckFilterSort._key: DeckListSort.byName.rawValue,
-            DefaultsKeys.deckFilterType._key: Filter.all.rawValue,
-            
-            DefaultsKeys.createDeckActive._key: false,
-            
-            DefaultsKeys.browserViewStyle._key: CardView.largeTable.rawValue,
-            DefaultsKeys.browserViewScale._key: 1.0,
-            DefaultsKeys.browserViewSort._key: BrowserSort.byType.rawValue,
-            
-            DefaultsKeys.browserPacks._key: PackUsage.selected.rawValue,
-            DefaultsKeys.deckbuilderPacks._key: PackUsage.selected.rawValue,
-            
-            DefaultsKeys.numCores._key: 3,
-            
-            DefaultsKeys.showAllFilters._key: true,
-            DefaultsKeys.identityTable._key: true,
-            
-            DefaultsKeys.defaultMwl._key: defaultMWL.rawValue,
-        ]
+        Defaults.registerDefault(.lastDownload, "never".localized())
+        Defaults.registerDefault(.nextDownload, "never".localized())
         
-        UserDefaults.standard.register(defaults: defaults)
+        Defaults.registerDefault(.autoHistory, true)
+        Defaults.registerDefault(.keepNrdbCredentials, !usingNrdb)
+        Defaults.registerDefault(.nrdbHost, "netrunnerdb.com")
+        Defaults.registerDefault(.language, "en")
+        Defaults.registerDefault(.updateInterval, 7)
+        Defaults.registerDefault(.lastBackgroundFetch, "never".localized())
+        Defaults.registerDefault(.lastRefresh, "never".localized())
+        
+        Defaults.registerDefault(.deckFilterState, DeckState.none)
+        Defaults.registerDefault(.deckViewStyle, CardView.largeTable)
+        Defaults.registerDefault(.deckViewScale, 1.0)
+        Defaults.registerDefault(.deckViewSort, DeckSort.byType)
+        Defaults.registerDefault(.deckFilterSort, DeckListSort.byName)
+        Defaults.registerDefault(.deckFilterType, Filter.all)
+        
+        Defaults.registerDefault(.browserViewStyle, CardView.largeTable)
+        Defaults.registerDefault(.browserViewScale, 1.0)
+        Defaults.registerDefault(.browserViewSort, BrowserSort.byType)
+        
+        Defaults.registerDefault(.browserPacks, PackUsage.selected)
+        Defaults.registerDefault(.deckbuilderPacks, PackUsage.selected)
+        
+        Defaults.registerDefault(.numCores, 3)
+        
+        Defaults.registerDefault(.showAllFilters, true)
+        Defaults.registerDefault(.identityTable, true)
+        
+        Defaults.registerDefault(.defaultMwl, defaultMWL)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

@@ -10,8 +10,6 @@ import Foundation
 import SwiftyUserDefaults
 
 extension DefaultsKeys {
-    // template: static let xyz = DefaultsKey<T>("")
-    
     /// when to next check for app update
     static let nextUpdateCheck = DefaultsKey<Date?>("nextUpdateCheck")
     
@@ -117,6 +115,17 @@ extension DefaultsKeys {
     static let browserPacks = DefaultsKey<PackUsage>("browserPacks")
     /// which packs to use in deck builder
     static let deckbuilderPacks = DefaultsKey<PackUsage>("deckBuilderPacks")
+}
+
+// add type-safe registerDefault methods
+extension UserDefaults {
+    func registerDefault<T: RawRepresentable>(_ key: DefaultsKey<T>, _ value: T) {
+        Defaults.register(defaults: [ key._key: value.rawValue ])
+    }
+    
+    func registerDefault<T>(_ key: DefaultsKey<T>, _ value: T) {
+        Defaults.register(defaults: [ key._key: value ])
+    }
 }
 
 // add subscript methods for our enums and typed dictionaries
