@@ -1177,11 +1177,13 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let printInfo = UIPrintInfo.printInfo()
         printInfo.outputType = .general
         printInfo.jobName = self.deck.name
+        printInfo.outputType = .grayscale
         self.printController.printInfo = printInfo
         
+        let margin: CGFloat = 60 // 30 == 1 cm
         let formatter = UISimpleTextPrintFormatter(text: DeckExport.asPlaintextString(self.deck))
         formatter.startPage = 0
-        formatter.contentInsets = UIEdgeInsets.zero
+        formatter.perPageContentInsets = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
         formatter.font = UIFont.systemFont(ofSize: 10)
         self.printController.printFormatter = formatter
         self.printController.showsPageRange = true

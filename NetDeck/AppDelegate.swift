@@ -11,9 +11,6 @@ import Crashlytics
 import SVProgressHUD
 import SwiftyUserDefaults
 
-// investigate:
-//   Realm for data & deck storage (including ImageCache's date dictionaries!)
-
 // TODO: investigate OOMs - memory warnings?
 
 @UIApplicationMain
