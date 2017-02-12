@@ -167,7 +167,7 @@
 		3AE0C80F1E168ECA0046376F /* CardFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C80E1E168ECA0046376F /* CardFilterCell.swift */; };
 		3AE0C8111E168FC70046376F /* CardFilterThumbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C8101E168FC70046376F /* CardFilterThumbView.swift */; };
 		3AEEBB671C00C9FF00CB6053 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEBB661C00C9FF00CB6053 /* CardManager.swift */; };
-		3AEF52011CCD53B300A831E0 /* NROutlineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF52001CCD53B300A831E0 /* NROutlineLabel.swift */; };
+		3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */; };
 		3AF04BB91D44DD8200CB859D /* JinetkiNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */; };
 		3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */; };
 		3AF23CB41E34DE6E007BF39C /* DeckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */; };
@@ -363,7 +363,7 @@
 		3AE0C80E1E168ECA0046376F /* CardFilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterCell.swift; sourceTree = "<group>"; };
 		3AE0C8101E168FC70046376F /* CardFilterThumbView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterThumbView.swift; sourceTree = "<group>"; };
 		3AEEBB661C00C9FF00CB6053 /* CardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
-		3AEF52001CCD53B300A831E0 /* NROutlineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NROutlineLabel.swift; sourceTree = "<group>"; };
+		3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineLabel.swift; sourceTree = "<group>"; };
 		3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JinetkiNet.swift; sourceTree = "<group>"; };
 		3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "NRDBAuthPopupViewController~iphone.xib"; sourceTree = "<group>"; };
 		3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckListViewController.swift; sourceTree = "<group>"; };
@@ -434,7 +434,7 @@
 				3A9795351CF63EE100479ADF /* AppDelegate.swift */,
 				3A2F4ADB1C8C716400B711BD /* ImageCache.swift */,
 				3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */,
-				3A3BDD9E1930F36E00DEFD57 /* Utility Classes */,
+				3A3BDD9E1930F36E00DEFD57 /* Utilities */,
 				3AA440DF1854DA0D0051D4B0 /* Data / Models */,
 				3A3845041B77CB34007C76F2 /* Update Check */,
 				3A9742AD18AF7DAE00F83520 /* Stats */,
@@ -530,7 +530,7 @@
 			name = "Filtered Cards";
 			sourceTree = "<group>";
 		};
-		3A3BDD9E1930F36E00DEFD57 /* Utility Classes */ = {
+		3A3BDD9E1930F36E00DEFD57 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				3A822F6D1CC2C13500305789 /* BuildConfig.swift */,
@@ -539,7 +539,7 @@
 				3A9752201C1F6E310070E39B /* MiscUtilities.swift */,
 				3A529E621CA57BF70061E065 /* Reachability.swift */,
 				3A6CD8031CF7864C0090CEDB /* DetailViewManager.swift */,
-				3AEF52001CCD53B300A831E0 /* NROutlineLabel.swift */,
+				3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */,
 				3ADBCA951DDA372800D988A5 /* InsetLabel.swift */,
 				3A65016E1DC6286600815965 /* NRSwitch.swift */,
 				3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */,
@@ -548,7 +548,7 @@
 				3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */,
 				3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */,
 			);
-			name = "Utility Classes";
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		3A595424186EDCED0074B3B1 /* Identity Selection Form */ = {
@@ -1188,7 +1188,7 @@
 				3ACC9A5B1DC60E2400C54EF3 /* SmallPipsView.swift in Sources */,
 				3AE0C80F1E168ECA0046376F /* CardFilterCell.swift in Sources */,
 				3A2BF9D81DC64BF400AFA36E /* CardImageViewPopover.swift in Sources */,
-				3AEF52011CCD53B300A831E0 /* NROutlineLabel.swift in Sources */,
+				3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */,
 				3A47F1901DBB7E9500058294 /* Card+html.swift in Sources */,
 				3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */,
 				3ABBE8041E2264AA00A1B583 /* IdentitySelectionViewController.swift in Sources */,

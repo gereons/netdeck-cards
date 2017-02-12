@@ -1,5 +1,5 @@
 //
-//  NROutlineLabel.swift
+//  OutlineLabel.swift
 //  NetDeck
 //
 //  Created by Gereon Steffens on 24.04.16.
@@ -8,7 +8,8 @@
 
 import UIKit
 
-class NROutlineLabel: UILabel {
+@IBDesignable
+class OutlineLabel: UILabel {
     private let outlineWidth: CGFloat = 2.0
     private let outlineColor = UIColor.white
     
