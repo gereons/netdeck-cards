@@ -10,14 +10,23 @@ import Marshal
 import SwiftyUserDefaults
 
 struct Cycle: Unmarshaling {
+    
+    private static let rotatedCycles = [
+        "genesis", "spin"                       // 1st rotation, mid-2017
+    ]
+    
     let name: String
     let code: String
     let position: Int
+    let rotated: Bool
  
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
         self.code = try object.value(for: "code")
         self.position = try object.value(for: "position")
+        
+        FIXME("get rid of the fixed array")
+        self.rotated = Cycle.rotatedCycles.contains(self.code)
     }
 }
 
@@ -28,6 +37,7 @@ struct Pack: Unmarshaling {
     let position: Int
     let released: Bool
     let settingsKey: String
+    let rotated: Bool
     
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
@@ -38,6 +48,8 @@ struct Pack: Unmarshaling {
         self.settingsKey = "use_" + self.code
         let date: String = try object.value(for: "date_release") ?? ""
         self.released = date.length > 0
+        
+        self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
     }
     
     init(named: String, key: String = "") {
@@ -47,6 +59,7 @@ struct Pack: Unmarshaling {
         self.position = 0
         self.released = false
         self.settingsKey = key
+        self.rotated = false
     }
 }
 
@@ -63,14 +76,6 @@ class PackManager {
     static var packsByCode = [String: Pack]()       // code -> pack
     static var allPacks = [Pack]()
     
-    // FIXME get rid of these two arrays
-    private static let rotatedCycles = [
-        "genesis", "spin"                       // 1st rotation, mid-2017
-    ]
-    private static let rotatedPacks = [
-        "wla", "ta", "ce", "asis", "hs", "fp",  // genesis
-        "om", "st", "mt", "tc", "fal", "dt"     // spin
-    ]
     
     static let anyPack = Pack(named: Constant.kANY)
     
@@ -122,9 +127,8 @@ class PackManager {
     }
     
     class func rotatedPackCodes() -> Set<String> {
-        var packs = Set(PackManager.rotatedPacks)
-        packs.insert(draftSetCode)
-        return packs
+        let packs = self.allPacks.filter{ $0.rotated }.map{ $0.code }
+        return Set([packs, [draftSetCode]].joined())
     }
     
     class func clearDisabledPacks() {
@@ -232,9 +236,8 @@ class PackManager {
         values.append([PackManager.anyPack])
         
         for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
-            if !rotatedCycles.contains(cycle.code) {
+            if !cycle.rotated {
                 sections.append(cycle.name)
-                
                 let packs = allPacks.filter{ $0.cycleCode == cycle.code }
                 values.append(packs)
             }
@@ -341,8 +344,8 @@ class PackManager {
                 
         if let packsData = fileMgr.contents(atPath: packsFile), let cyclesData = fileMgr.contents(atPath: cyclesFile) {
             do {
-                let packs = try JSONParser.JSONObjectWithData(packsData)
                 let cycles = try JSONParser.JSONObjectWithData(cyclesData)
+                let packs = try JSONParser.JSONObjectWithData(packsData)
                 return setupFromJsonData(cycles, packs, language: language)
             } catch let error {
                 print("\(error)")

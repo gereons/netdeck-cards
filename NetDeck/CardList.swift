@@ -452,8 +452,8 @@ class CardList {
             return card.typeStr
         case .byFaction:
             return card.factionStr
-        default: // .bySetXYZ
-            return card.factionStr
+        case .bySet, .bySetType, .bySetNumber, .bySetFaction:
+            return card.packName
         }
     }
     
