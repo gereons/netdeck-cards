@@ -56,6 +56,16 @@
 				<string>MWL v1.1</string>
 			</array>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Rotation active</string>
+            <key>Key</key>
+            <string>rotationActive</string>
+            <key>DefaultValue</key>
+            <false/>
+        </dict>
 		<dict>
 			<key>Title</key>
 			<string>Card Data</string>
@@ -148,7 +158,7 @@
         </dict>
 		<dict>
 			<key>Title</key>
-			<string>Web Accounts</string>
+			<string>Accounts</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Key</key>
@@ -158,7 +168,7 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-			<string>Web Accounts</string>
+            <string>NetrunnerDB.com &amp; Jinteki.net</string>
 			<key>File</key>
 			<string>WebAccount</string>
 			<key>Key</key>

@@ -63,8 +63,9 @@ class PackManager {
     static var packsByCode = [String: Pack]()       // code -> pack
     static var allPacks = [Pack]()
     
+    // FIXME get rid of these two arrays
     private static let rotatedCycles = [
-        "genesis", "spin"       // 1st rotation, mid-2017
+        "genesis", "spin"                       // 1st rotation, mid-2017
     ]
     private static let rotatedPacks = [
         "wla", "ta", "ce", "asis", "hs", "fp",  // genesis

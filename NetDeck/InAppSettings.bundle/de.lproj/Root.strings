@@ -21,7 +21,8 @@
 "Auto-save decks to Dropbox" = "Decks automatisch in Dropbox speichern";
 "Connect to your Dropbox account to enable export and import of decks." = "Verbinde die App mit deiner Dropbox um Decks im- und exportieren zu können.";
 
-"Web Accounts" = "Webseiten-Accounts";
+"Accounts" = "Accounts";
+"Rotation active" = "Rotation beachten";
 
 "Create new Decks as 'Active'" = "Neue Decks als 'Aktiv' anlegen";
 

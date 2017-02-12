@@ -359,6 +359,14 @@ import SwiftyUserDefaults
             }
         }
         
+        if Defaults[.rotationActive] {
+            let packsUsed = Set(self.cards.map{ $0.card.packCode})
+            let rotatedPacks = PackManager.rotatedPackCodes()
+            if rotatedPacks.intersection(packsUsed).count > 0 {
+                reasons.append("Uses rotated-out cards".localized())
+            }
+        }
+        
         if self.onesies {
             let onesiesReasons = self.checkOnesiesRules()
             if onesiesReasons.count > 0 {

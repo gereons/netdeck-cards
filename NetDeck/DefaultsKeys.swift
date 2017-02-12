@@ -110,6 +110,8 @@ extension DefaultsKeys {
     
     /// which MWL to use?
     static let defaultMwl = DefaultsKey<MWL>("mwlVersion")
+    /// exclude rotated-out cards?
+    static let rotationActive = DefaultsKey<Bool>("rotationActive")
     
     /// which packs to use in browser
     static let browserPacks = DefaultsKey<PackUsage>("browserPacks")

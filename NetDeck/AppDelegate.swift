@@ -12,6 +12,7 @@ import SVProgressHUD
 import SwiftyUserDefaults
 
 // TODO: investigate OOMs - memory warnings?
+// TODO: post-rotation legality checks?
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
@@ -141,6 +142,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         // MWL v1.1 goes into effect 2016-08-01
         let defaultMWL = today >= "20160801" ? MWL.v1_1 : MWL.v1_0
 //        let defaultMWL = today >= "20170201" ? MWL.v1_2 : MWL.v1_1
+        
+        // Rotation happens when the first pack of the XYZ cycle is release
+        let rotationActive = false
+        FIXME("get a reasonable default")
+        Defaults.registerDefault(.rotationActive, rotationActive)
         
         Defaults.registerDefault(.lastDownload, "never".localized())
         Defaults.registerDefault(.nextDownload, "never".localized())
