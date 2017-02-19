@@ -17,8 +17,8 @@ class JintekiNet {
     private let manager: Alamofire.SessionManager
     private let cookieJar: HTTPCookieStorage
     
-    private let loginUrl = "http://www.jinteki.net/login"
-    private let deckUrl = "http://www.jinteki.net/data/decks"
+    private let loginUrl = "https://www.jinteki.net/login"
+    private let deckUrl = "https://www.jinteki.net/data/decks"
     
     private init() {
         self.cookieJar = HTTPCookieStorage.shared
@@ -85,7 +85,7 @@ class JintekiNet {
             switch response.result {
             case .success:
                 if let _ = response.result.value {
-                    SVProgressHUD.showError(withStatus: "Logged in".localized())
+                    SVProgressHUD.showSuccess(withStatus: "Logged in".localized())
                     let keychain = KeychainWrapper.standard
                     keychain.set(username, forKey: KeychainKeys.jnetUsername)
                     keychain.set(password, forKey: KeychainKeys.jnetPassword)
