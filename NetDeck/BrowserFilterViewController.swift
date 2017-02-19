@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class BrowserFilterViewController: UIViewController, UITextFieldDelegate, FilterCallback {
+class BrowserFilterViewController: UIViewController, UITextFieldDelegate, FilteringViewController {
 
     @IBOutlet weak var sideLabel: UILabel!
     @IBOutlet weak var sideSelector: UISegmentedControl!
@@ -62,7 +62,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     private var searchText = ""
     private var selectedType = ""
     private var selectedTypes: Set<String>?
-    private var selectedValues = [FilterCondition: Any]()
+    private var selectedValues = [FilterAttribute: Any]()
     private var initializing = true
     private var prevAp = 0
     private var prevMu = 0
@@ -145,13 +145,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.uniqueLabel.text = "Unique".localized()
         self.limitedLabel.text = "Limited".localized()
         self.mwlLabel.text = "MWL".localized()
-        
-        // buttons
-        self.typeButton.tag = FilterCondition.type.rawValue
-        self.setButton.tag = FilterCondition.set.rawValue
-        self.factionButton.tag = FilterCondition.faction.rawValue
-        self.subtypeButton.tag = FilterCondition.subtype.rawValue
-        
+                
         self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
         
         let mwl = Defaults[.defaultMwl]
@@ -357,14 +351,14 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         }
         let selected = self.selectedValues[.type]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: .type, selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, attribute: .type, selected: selected)
     }
     
     @IBAction func setClicked(_ sender: UIButton) {
         let selected = self.selectedValues[.set]
         let stringPacks: TableData<String> = PackManager.packsForTableView(packUsage: self.packUsage)
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: stringPacks, type: .set, selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: stringPacks, attribute: .set, selected: selected)
     }
     
     @IBAction func subtypeClicked(_ sender: UIButton) {
@@ -408,7 +402,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         
         let selected = self.selectedValues[.subtype]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: .subtype, selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, attribute: .subtype, selected: selected)
     }
     
     @IBAction func factionClicked(_ sender: UIButton) {
@@ -420,13 +414,13 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         }
         let selected = self.selectedValues[.faction]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: .faction, selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, attribute: .faction, selected: selected)
     }
     
-    func filterCallback(_ button: UIButton, type: FilterCondition, value: Any) {
+    func filterCallback(attribute: FilterAttribute, value: Any) {
         assert(value is String || value is Set<String>, "broken value object")
         
-        if button.tag == FilterCondition.type.rawValue {
+        if attribute == .type {
             if let v = value as? String {
                 self.selectedType = v
                 self.selectedTypes = nil
@@ -440,13 +434,9 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         }
         
         
-        guard let btn = FilterCondition(rawValue: button.tag) else {
-            preconditionFailure("invalid tag")
-        }
-        
-        self.selectedValues[btn] = value
+        self.selectedValues[attribute] = value
             
-        switch btn {
+        switch attribute {
         case .type where value is String:
             self.cardList.filterByType(value as! String)
         case .type where value is Set<String>:
@@ -477,31 +467,26 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.resetButton(.subtype)
     }
     
-    private func resetButton(_ tag: FilterCondition) {
+    private func resetButton(_ attribute: FilterAttribute) {
         let button: UIButton
-        let prefix: String
-        switch tag {
+        switch attribute {
         case .type:
             button = self.typeButton
-            prefix = "Type"
             self.selectedType = Constant.kANY
             self.selectedTypes = nil
             self.resetButton(.subtype)
         case .faction:
             button = self.factionButton
-            prefix = "Faction"
         case .set:
             button = self.setButton
-            prefix = "Set"
         case .subtype:
             button = self.subtypeButton
-            prefix = "Subtype"
         default:
             fatalError("invalid button")
         }
         
-        self.selectedValues[tag] = Constant.kANY
-        button.setTitle(prefix.localized() + ": " + Constant.kANY.localized(), for: .normal)
+        self.selectedValues[attribute] = Constant.kANY
+        button.setTitle(attribute.localized() + ": " + Constant.kANY.localized(), for: .normal)
     }
     
     // MARK: - text search

@@ -76,7 +76,7 @@ enum MWL: Int {
     case none
     case v1_0   // as of 2016-02-01
     case v1_1   // as of 2016-08-01
-//    case v1_2   // as of 2017-02-01 (?)
+//    case v1_2   // as of 2017-??-??
     
     // map from "mwl_code" values we get from the NRDB API
     static let codeMap: [String: MWL] = [
@@ -90,7 +90,7 @@ enum MWL: Int {
     }
 }
 
-enum FilterCondition: Int {
+enum FilterAttribute: Int {
     case mu
     case cost
     case agendaPoints
@@ -114,4 +114,3 @@ enum FilterCondition: Int {
         }
     }
 }
-

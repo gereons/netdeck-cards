@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class CardFilterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilterCallback {
+class CardFilterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilteringViewController {
  
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var scopeButton: UIButton!
@@ -68,7 +68,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     private var sendNotification = false
     private var selectedType = ""
     private var selectedTypes: Set<String>?
-    private var selectedValues = [Button: Any]()
+    private var selectedValues = [FilterAttribute: Any]()
     private var searchFieldActive = false
     private var influenceValue = -1
     
@@ -81,10 +81,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     private let largeCellHeight = 140
     private let smallCellHeight = 107
     
-    enum Button: Int {
-        case type, faction, set, subtype
-    }
-    
     enum View: Int {
         case list, img2, img3
     }
@@ -93,7 +89,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         case table, collection
     }
     
-    private let scopes: [CardSearchScope: FilterCondition] = [
+    private let scopes: [CardSearchScope: FilterAttribute] = [
         .all: .nameAndText,
         .name: .name,
         .text: .text
@@ -302,11 +298,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.setButton.titleLabel?.adjustsFontSizeToFitWidth = true
         self.factionButton.titleLabel?.adjustsFontSizeToFitWidth = true
         self.subtypeButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        
-        self.typeButton.tag = Button.type.rawValue
-        self.setButton.tag = Button.set.rawValue
-        self.factionButton.tag = Button.faction.rawValue
-        self.subtypeButton.tag = Button.subtype.rawValue
         
         self.costSlider.maximumValue = Float(1 + CardManager.maxCost(for: self.role))
         self.muSlider.maximumValue = Float(1 + CardManager.maxMU)
@@ -562,14 +553,14 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let data = TableData(values: CardType.typesFor(role: self.role))
         let selected = self.selectedValues[.type]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: .type, selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, attribute: .type, selected: selected)
     }
     
     @IBAction func setClicked(_ sender: UIButton) {
         let stringPacks: TableData<String> = PackManager.packsForTableView(packUsage: self.packUsage)
         let selected = self.selectedValues[.set]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: stringPacks, type: .set, selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: stringPacks, attribute: .set, selected: selected)
     }
     
     @IBAction func subtypeClicked(_ sender: UIButton) {
@@ -584,22 +575,22 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let data = TableData(values: arr)
         let selected = self.selectedValues[.subtype]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: .subtype, selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, attribute: .subtype, selected: selected)
     }
     
     @IBAction func factionClicked(_ sender: UIButton) {
         let data = TableData(values: Faction.factionsFor(role: self.role, packUsage: self.packUsage))
         let selected = self.selectedValues[.faction]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: .faction, selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, attribute: .faction, selected: selected)
     }
     
-    func filterCallback(_ button: UIButton, type: FilterCondition, value object: Any) {
+    func filterCallback(attribute: FilterAttribute, value object: Any) {
         let value = object as? String
         let values = object as? Set<String>
         assert(value != nil || values != nil, "values")
         
-        if button.tag == Button.type.rawValue {
+        if attribute == .type {
             if let v = value {
                 self.selectedType = v
                 self.selectedTypes = nil
@@ -610,11 +601,10 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             
             self.resetButton(.subtype)
         }
+    
+        self.selectedValues[attribute] = value == nil ? values : value
         
-        let tag = Button(rawValue: button.tag) ?? .type
-        self.selectedValues[tag] = value == nil ? values : value
-        
-        self.updateFilter(type, value: object)
+        self.updateFilter(attribute, value: object)
     }
     
     func resetAllButtons() {
@@ -624,34 +614,26 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.resetButton(.subtype)
     }
     
-    func resetButton(_ tag: Button) {
+    func resetButton(_ attribute: FilterAttribute) {
         let button: UIButton
-        let prefix: String
-        let type: FilterCondition
-        switch tag {
+        switch attribute {
         case .type:
             button = self.typeButton
-            prefix = "Type"
-            type = .type
             self.resetButton(.subtype)
         case .set:
             button = self.setButton
-            prefix = "Set"
-            type = .set
         case .subtype:
             button = self.subtypeButton
-            prefix = "Subtype"
-            type = .subtype
         case .faction:
             button = self.factionButton
-            prefix = "Faction"
-            type = .faction
+        default:
+            fatalError("invalid type")
         }
         
-        self.selectedValues[tag] = Constant.kANY
+        self.selectedValues[attribute] = Constant.kANY
         
-        self.updateFilter(type, value: Constant.kANY)
-        let title = prefix.localized() + ": " + Constant.kANY.localized()
+        self.updateFilter(attribute, value: Constant.kANY)
+        let title = attribute.localized() + ": " + Constant.kANY.localized()
         button.setTitle(title, for: .normal)
     }
     
@@ -794,14 +776,14 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     // MARK: - filter update
     
-    func updateFilter(_ type: FilterCondition, value object: Any) {
+    func updateFilter(_ attribute: FilterAttribute, value object: Any) {
         let value = object as? String
         let values = object as? Set<String>
         let num = object as? Int
         
         assert(value != nil || values != nil || num != nil, "invalid values")
         
-        switch type {
+        switch attribute {
         case .mu:
             assert(num != nil)
             self.cardList.filterByMU(num!)

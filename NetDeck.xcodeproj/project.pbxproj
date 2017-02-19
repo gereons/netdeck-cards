@@ -171,7 +171,6 @@
 		3AF04BB91D44DD8200CB859D /* JinetkiNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */; };
 		3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */; };
 		3AF23CB41E34DE6E007BF39C /* DeckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */; };
-		3AF23CB61E34E60C007BF39C /* FilterCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF23CB51E34E60C007BF39C /* FilterCallback.swift */; };
 		3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */; };
 		3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF697881C1DAC7300D254CE /* Notifications.swift */; };
 		3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */; };
@@ -367,7 +366,6 @@
 		3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JinetkiNet.swift; sourceTree = "<group>"; };
 		3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "NRDBAuthPopupViewController~iphone.xib"; sourceTree = "<group>"; };
 		3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckListViewController.swift; sourceTree = "<group>"; };
-		3AF23CB51E34E60C007BF39C /* FilterCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCallback.swift; sourceTree = "<group>"; };
 		3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterPopover.xib; sourceTree = "<group>"; };
 		3AF697881C1DAC7300D254CE /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hypergeometric.swift; sourceTree = "<group>"; };
@@ -515,7 +513,6 @@
 		3A3850CE1938826C00EB2EB0 /* Filtered Cards */ = {
 			isa = PBXGroup;
 			children = (
-				3AF23CB51E34E60C007BF39C /* FilterCallback.swift */,
 				3A37F4A81E2FE99A005D7456 /* CardFilterViewController.swift */,
 				3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */,
 				3AE0C80E1E168ECA0046376F /* CardFilterCell.swift */,
@@ -1146,7 +1143,6 @@
 				3A5EBE9D1E0FF6EC0096E2F5 /* InfluenceStats.swift in Sources */,
 				3A2BF9DA1DC6564B00AFA36E /* CardImageCell.swift in Sources */,
 				3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */,
-				3AF23CB61E34E60C007BF39C /* FilterCallback.swift in Sources */,
 				3A41DA871BF8785C003CB7E1 /* PackManager.swift in Sources */,
 				3A3798B61D70A54B00F94658 /* PrebuiltSelectionViewController.swift in Sources */,
 				3A92DFD81CBA59EE0043F2F6 /* BrowserValuePicker.swift in Sources */,

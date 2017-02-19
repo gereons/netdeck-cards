@@ -8,6 +8,15 @@
 
 import UIKit
 
+protocol FilteringViewController {
+    
+    func filterCallback(attribute: FilterAttribute, value: Any)
+    
+    var view: UIView! { get }
+    
+    func present(_ : UIViewController, animated: Bool, completion: (()->Void)?)
+}
+
 class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
@@ -15,8 +24,8 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     private var sections = [String]()
     private var values = [[String]]()
     private var button: UIButton!
-    private var type: FilterCondition!
-    private var headerView: UIViewController!
+    private var attribute: FilterAttribute!
+    private var filteringViewController: FilteringViewController!
     private var selectedValues = Set<String>()
     private var sectionToggles = [Bool]()
     private var collapsedSections: [Bool]?
@@ -26,14 +35,14 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     
     static var popover: CardFilterPopover!
     
-    static func showFrom(button: UIButton, inView vc: UIViewController, entries: TableData<String>, type: FilterCondition, selected: Any?) {
+    static func showFrom(button: UIButton, inView vc: FilteringViewController, entries: TableData<String>, attribute: FilterAttribute, selected: Any?) {
         popover = CardFilterPopover(nibName: "CardFilterPopover", bundle: nil)
         popover.sections = entries.sections
         popover.values = entries.values
         popover.collapsedSections = entries.collapsedSections
         popover.button = button
-        popover.type = type
-        popover.headerView = vc
+        popover.attribute = attribute
+        popover.filteringViewController = vc
         
         popover.selectedValues.removeAll()
         if let selectedSet = selected as? Set<String> {
@@ -214,12 +223,10 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         }
         
         if anyCell {
-            let title = self.type.localized() + ": " + value.localized()
+            let title = self.attribute.localized() + ": " + value.localized()
             self.button.setTitle(title, for: .normal)
             
-            if let filter = self.headerView as? FilterCallback {
-                filter.filterCallback(button, type: self.type, value: value)
-            }
+            self.filteringViewController.filterCallback(attribute: self.attribute, value: value)
             
             CardFilterPopover.dismiss()
         } else {
@@ -235,6 +242,22 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
             self.filterWithMultipleSelection()
         }
     }
+    
+    func filterWithMultipleSelection() {
+        let selected: String
+        switch selectedValues.count {
+        case 0: selected = Constant.kANY.localized()
+        case 1: selected = Array(self.selectedValues).first ?? ""
+        default: selected = "⋯"
+        }
+        
+        let title = self.attribute.localized() + ": " + selected
+        
+        self.button.setTitle(title, for: .normal)
+        
+        self.filteringViewController.filterCallback(attribute: self.attribute, value: self.selectedValues)
+    }
+    
     
     func collapseSection(_ sender: UIButton) {
         assert(self.collapsedSections != nil)
@@ -270,21 +293,4 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         self.filterWithMultipleSelection()
     }
     
-    func filterWithMultipleSelection() {
-        let selected: String
-        switch selectedValues.count {
-        case 0: selected = Constant.kANY.localized()
-        case 1: selected = Array(self.selectedValues).first ?? ""
-        default: selected = "⋯"
-        }
-        
-        let title = self.type.localized() + ": " + selected
-        
-        self.button.setTitle(title, for: .normal)
-        
-        if let filter = self.headerView as? FilterCallback {
-            filter.filterCallback(self.button, type: self.type, value: self.selectedValues)
-        }
-    }
-
 }
