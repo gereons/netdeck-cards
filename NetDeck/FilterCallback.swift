@@ -10,6 +10,6 @@ import UIKit
 
 protocol FilterCallback: class {
 
-    func filterCallback(_ button: UIButton, type: String, value: Any)
+    func filterCallback(_ button: UIButton, type: FilterCondition, value: Any)
 
 }

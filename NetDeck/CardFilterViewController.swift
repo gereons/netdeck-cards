@@ -93,10 +93,10 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         case table, collection
     }
     
-    private let scopes: [CardSearchScope: String] = [
-        .all: "all text",
-        .name: "card name",
-        .text: "card text"
+    private let scopes: [CardSearchScope: FilterCondition] = [
+        .all: .nameAndText,
+        .name: .name,
+        .text: .text
     ]
     private let scopeLabels: [CardSearchScope: String] = [
         .all: "All".localized(),
@@ -562,14 +562,14 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let data = TableData(values: CardType.typesFor(role: self.role))
         let selected = self.selectedValues[.type]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: "Type", selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: .type, selected: selected)
     }
     
     @IBAction func setClicked(_ sender: UIButton) {
         let stringPacks: TableData<String> = PackManager.packsForTableView(packUsage: self.packUsage)
         let selected = self.selectedValues[.set]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: stringPacks, type: "Set", selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: stringPacks, type: .set, selected: selected)
     }
     
     @IBAction func subtypeClicked(_ sender: UIButton) {
@@ -584,17 +584,17 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let data = TableData(values: arr)
         let selected = self.selectedValues[.subtype]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: "Subtype", selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: .subtype, selected: selected)
     }
     
     @IBAction func factionClicked(_ sender: UIButton) {
         let data = TableData(values: Faction.factionsFor(role: self.role, packUsage: self.packUsage))
         let selected = self.selectedValues[.faction]
         
-        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: "Faction", selected: selected)
+        CardFilterPopover.showFrom(button: sender, inView: self, entries: data, type: .faction, selected: selected)
     }
     
-    func filterCallback(_ button: UIButton, type: String, value object: Any) {
+    func filterCallback(_ button: UIButton, type: FilterCondition, value object: Any) {
         let value = object as? String
         let values = object as? Set<String>
         assert(value != nil || values != nil, "values")
@@ -627,25 +627,30 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     func resetButton(_ tag: Button) {
         let button: UIButton
         let prefix: String
+        let type: FilterCondition
         switch tag {
         case .type:
             button = self.typeButton
             prefix = "Type"
+            type = .type
             self.resetButton(.subtype)
         case .set:
             button = self.setButton
             prefix = "Set"
+            type = .set
         case .subtype:
             button = self.subtypeButton
             prefix = "Subtype"
+            type = .subtype
         case .faction:
             button = self.factionButton
             prefix = "Faction"
+            type = .faction
         }
         
         self.selectedValues[tag] = Constant.kANY
         
-        self.updateFilter(prefix.lowercased(), value: Constant.kANY)
+        self.updateFilter(type, value: Constant.kANY)
         let title = prefix.localized() + ": " + Constant.kANY.localized()
         button.setTitle(title, for: .normal)
     }
@@ -658,7 +663,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         value -= 1
         if value != self.prevStr {
             self.strengthLabel.text = String(format: "Strength: %@".localized(), value == -1 ? "All".localized() : "\(value)")
-            self.updateFilter("strength", value: value)
+            self.updateFilter(.strength, value: value)
             self.prevStr = value
         }
     }
@@ -669,7 +674,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         value -= 1
         if value != self.prevMu {
             self.muLabel.text = String(format: "MU: %@".localized(), value == -1 ? "All".localized() : "\(value)")
-            self.updateFilter("mu", value: value)
+            self.updateFilter(.mu, value: value)
             self.prevMu = value
         }
     }
@@ -680,7 +685,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         value -= 1
         if value != self.prevCost {
             self.costLabel.text = String(format: "Cost: %@".localized(), value == -1 ? "All".localized() : "\(value)")
-            self.updateFilter("cost", value: value)
+            self.updateFilter(.cost, value: value)
             self.prevCost = value
         }
     }
@@ -691,7 +696,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         value -= 1
         if value != self.prevInf {
             self.influenceLabel.text = String(format: "Influence: %@".localized(), value == -1 ? "All".localized() : "\(value)")
-            self.updateFilter("influence", value: value)
+            self.updateFilter(.influence, value: value)
             self.prevInf = value
         }
     }
@@ -702,7 +707,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         value -= 1
         if value != self.prevAp {
             self.apLabel.text = String(format: "AP: %@".localized(), value == -1 ? "All".localized() : "\(value)")
-            self.updateFilter("agendaPoints", value: value)
+            self.updateFilter(.agendaPoints, value: value)
             self.prevAp = value
         }
     }
@@ -789,7 +794,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     // MARK: - filter update
     
-    func updateFilter(_ type: String, value object: Any) {
+    func updateFilter(_ type: FilterCondition, value object: Any) {
         let value = object as? String
         let values = object as? Set<String>
         let num = object as? Int
@@ -797,19 +802,19 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         assert(value != nil || values != nil || num != nil, "invalid values")
         
         switch type {
-        case "mu":
+        case .mu:
             assert(num != nil)
             self.cardList.filterByMU(num!)
-        case "cost":
+        case .cost:
             assert(num != nil)
             self.cardList.filterByCost(num!)
-        case "agendaPoints":
+        case .agendaPoints:
             assert(num != nil)
             self.cardList.filterByAgendaPoints(num!)
-        case "strength":
+        case .strength:
             assert(num != nil)
             self.cardList.filterByStrength(num!)
-        case "influence":
+        case .influence:
             assert(num != nil)
             if let identity = self.deckListViewController.deck?.identity {
                 self.cardList.filterByInfluence(num!, forFaction: identity.faction)
@@ -817,42 +822,40 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
                 self.cardList.filterByInfluence(num!)
             }
         
-        case "card name":
+        case .name:
             assert(value != nil)
             self.cardList.filterByName(value!)
-        case "card text":
+        case .text:
             assert(value != nil)
             self.cardList.filterByText(value!)
-        case "all text":
+        case .nameAndText:
             assert(value != nil)
             self.cardList.filterByTextOrName(value!)
             
-        case "faction":
+        case .faction:
             if let v = value {
                 self.cardList.filterByFaction(v)
             } else {
                 self.cardList.filterByFactions(values!)
             }
-        case "set":
+        case .set:
             if let v = value {
                 self.cardList.filterBySet(v)
             } else {
                 self.cardList.filterBySets(values!)
             }
-        case "type":
+        case .type:
             if let v = value {
                 self.cardList.filterByType(v)
             } else {
                 self.cardList.filterByTypes(values!)
             }
-        case "subtype":
+        case .subtype:
             if let v = value {
                 self.cardList.filterBySubtype(v)
             } else {
                 self.cardList.filterBySubtypes(values!)
             }
-        default:
-            assert(false, "unknown filter \(type)")
         }
         
         self.initCards()

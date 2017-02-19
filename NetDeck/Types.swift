@@ -89,3 +89,29 @@ enum MWL: Int {
         return MWL.codeMap[code] ?? .none
     }
 }
+
+enum FilterCondition: Int {
+    case mu
+    case cost
+    case agendaPoints
+    case strength
+    case influence
+    case name
+    case text
+    case nameAndText
+    case faction
+    case set
+    case type
+    case subtype
+    
+    func localized() -> String {
+        switch self {
+        case .type: return "Type".localized()
+        case .subtype: return "Subtype".localized()
+        case .faction: return "Faction".localized()
+        case .set: return "Set".localized()
+        default: return "n/a"
+        }
+    }
+}
+

@@ -15,7 +15,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     private var sections = [String]()
     private var values = [[String]]()
     private var button: UIButton!
-    private var type = ""
+    private var type: FilterCondition!
     private var headerView: UIViewController!
     private var selectedValues = Set<String>()
     private var sectionToggles = [Bool]()
@@ -26,7 +26,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     
     static var popover: CardFilterPopover!
     
-    static func showFrom(button: UIButton, inView vc: UIViewController, entries: TableData<String>, type: String, selected: Any?) {
+    static func showFrom(button: UIButton, inView vc: UIViewController, entries: TableData<String>, type: FilterCondition, selected: Any?) {
         popover = CardFilterPopover(nibName: "CardFilterPopover", bundle: nil)
         popover.sections = entries.sections
         popover.values = entries.values
@@ -218,7 +218,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
             self.button.setTitle(title, for: .normal)
             
             if let filter = self.headerView as? FilterCallback {
-                filter.filterCallback(button, type: self.type.lowercased(), value: value)
+                filter.filterCallback(button, type: self.type, value: value)
             }
             
             CardFilterPopover.dismiss()
@@ -283,7 +283,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         self.button.setTitle(title, for: .normal)
         
         if let filter = self.headerView as? FilterCallback {
-            filter.filterCallback(self.button, type: self.type.lowercased(), value: self.selectedValues)
+            filter.filterCallback(self.button, type: self.type, value: self.selectedValues)
         }
     }
 
