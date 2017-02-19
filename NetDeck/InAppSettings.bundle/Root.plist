@@ -56,16 +56,16 @@
 				<string>MWL v1.1</string>
 			</array>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Rotation active</string>
-            <key>Key</key>
-            <string>rotationActive</string>
-            <key>DefaultValue</key>
-            <false/>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Rotation active</string>
+			<key>Key</key>
+			<string>rotationActive</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
 		<dict>
 			<key>Title</key>
 			<string>Card Data</string>
@@ -101,13 +101,11 @@
 			<array>
 				<integer>0</integer>
 				<integer>1</integer>
-                <integer>2</integer>
 			</array>
 			<key>Titles</key>
 			<array>
 				<string>All</string>
 				<string>Selected</string>
-                <string>All after Rotation</string>
 			</array>
 		</dict>
 		<dict>
@@ -123,13 +121,11 @@
 			<array>
 				<integer>0</integer>
 				<integer>1</integer>
-                <integer>2</integer>
 			</array>
 			<key>Titles</key>
 			<array>
 				<string>All</string>
 				<string>Selected</string>
-                <string>All after Rotation</string>
 			</array>
 		</dict>
 		<dict>
@@ -144,18 +140,18 @@
 			<key>Key</key>
 			<string>sets_hide_2</string>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSChildPaneSpecifier</string>
-            <key>Title</key>
-            <string>Prebuilt Decks Selection</string>
-            <key>IASKViewControllerClass</key>
-            <string>PrebuiltSelectionViewController</string>
-            <key>IASKViewControllerSelector</key>
-            <string>init</string>
-            <key>Key</key>
-            <string>sets_hide_3</string>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>Prebuilt Decks Selection</string>
+			<key>IASKViewControllerClass</key>
+			<string>PrebuiltSelectionViewController</string>
+			<key>IASKViewControllerSelector</key>
+			<string>init</string>
+			<key>Key</key>
+			<string>sets_hide_3</string>
+		</dict>
 		<dict>
 			<key>Title</key>
 			<string>Accounts</string>
@@ -168,7 +164,7 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-            <string>NetrunnerDB.com &amp; Jinteki.net</string>
+			<string>NetrunnerDB.com &amp; Jinteki.net</string>
 			<key>File</key>
 			<string>WebAccount</string>
 			<key>Key</key>

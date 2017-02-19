@@ -361,8 +361,8 @@ import SwiftyUserDefaults
         
         if Defaults[.rotationActive] {
             let packsUsed = Set(self.cards.map{ $0.card.packCode})
-            let rotatedPacks = PackManager.rotatedPackCodes()
-            if rotatedPacks.intersection(packsUsed).count > 0 {
+            let rotatedPacks = packsUsed.flatMap{ PackManager.packsByCode[$0] }.filter{ $0.rotated }
+            if rotatedPacks.count > 0 {
                 reasons.append("Uses rotated-out cards".localized())
             }
         }

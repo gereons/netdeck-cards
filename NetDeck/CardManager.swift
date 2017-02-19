@@ -105,8 +105,6 @@ class CardManager {
             disabledPackCodes = Set([code])
         case .selected:
             disabledPackCodes = PackManager.disabledPackCodes()
-        case .allAfterRotation:
-            disabledPackCodes = PackManager.rotatedPackCodes()
         }
         
         if !disabledPackCodes.contains(PackManager.draftSetCode) {

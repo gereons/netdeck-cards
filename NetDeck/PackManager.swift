@@ -11,9 +11,7 @@ import SwiftyUserDefaults
 
 struct Cycle: Unmarshaling {
     
-    private static let rotatedCycles = [
-        "genesis", "spin"                       // 1st rotation, mid-2017
-    ]
+    
     
     let name: String
     let code: String
@@ -24,9 +22,8 @@ struct Cycle: Unmarshaling {
         self.name = try object.value(for: "name")
         self.code = try object.value(for: "code")
         self.position = try object.value(for: "position")
-        
-        FIXME("get rid of the fixed array")
-        self.rotated = Cycle.rotatedCycles.contains(self.code)
+
+        self.rotated = try object.value(for: "rotated") ?? false
     }
 }
 
@@ -39,6 +36,8 @@ struct Pack: Unmarshaling {
     let settingsKey: String
     let rotated: Bool
     
+    private static let testRotation = true
+    
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
         self.code = try object.value(for: "code")
@@ -49,7 +48,14 @@ struct Pack: Unmarshaling {
         let date: String = try object.value(for: "date_release") ?? ""
         self.released = date.length > 0
         
-        self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
+        FIXME()
+        let rotated: Bool
+        if BuildConfig.debug && Pack.testRotation {
+            rotated = [ "genesis", "spin" ].contains(self.cycleCode)
+        } else {
+            rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
+        }
+        self.rotated = rotated
     }
     
     init(named: String, key: String = "") {
@@ -126,11 +132,6 @@ class PackManager {
         return disabledPacks!
     }
     
-    class func rotatedPackCodes() -> Set<String> {
-        let packs = self.allPacks.filter{ $0.rotated }.map{ $0.code }
-        return Set([packs, [draftSetCode]].joined())
-    }
-    
     class func clearDisabledPacks() {
         disabledPacks = nil
     }
@@ -158,8 +159,6 @@ class PackManager {
             return allKnownPacksForTableView()
         case .selected:
             return allEnabledPacksForTableView()
-        case .allAfterRotation:
-            return allPacksAfterRotationForTableView()
         }
     }
     
@@ -222,25 +221,6 @@ class PackManager {
             
             let packs = allPacks.filter{ $0.cycleCode == cycle.code }
             values.append(packs)
-        }
-        
-        let result = TableData(sections: sections, values: values)
-        return collapseOldCycles(result)
-    }
-    
-    private class func allPacksAfterRotationForTableView() -> TableData<Pack> {
-        var sections = [String]()
-        var values = [[Pack]]()
-        
-        sections.append("")
-        values.append([PackManager.anyPack])
-        
-        for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
-            if !cycle.rotated {
-                sections.append(cycle.name)
-                let packs = allPacks.filter{ $0.cycleCode == cycle.code }
-                values.append(packs)
-            }
         }
         
         let result = TableData(sections: sections, values: values)

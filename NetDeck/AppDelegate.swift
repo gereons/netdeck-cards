@@ -139,14 +139,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         }()
         let today = fmt.string(from: Date())
         
+        // fix PackUsage values from previous version
+        [ DefaultsKeys.deckbuilderPacks, DefaultsKeys.browserPacks ].forEach {
+            let packs = UserDefaults.standard.integer(forKey: $0._key)
+            if PackUsage(rawValue: packs) == nil {
+                Defaults[$0] = .all
+            }
+        }
+        
         // MWL v1.1 goes into effect 2016-08-01
         let defaultMWL = today >= "20160801" ? MWL.v1_1 : MWL.v1_0
 //        let defaultMWL = today >= "20170201" ? MWL.v1_2 : MWL.v1_1
         
-        // Rotation happens when the first pack of the XYZ cycle is release
-        let rotationActive = false
-        FIXME("get a reasonable default")
-        Defaults.registerDefault(.rotationActive, rotationActive)
+        Defaults.registerDefault(.rotationActive, true)
         
         Defaults.registerDefault(.lastDownload, "never".localized())
         Defaults.registerDefault(.nextDownload, "never".localized())

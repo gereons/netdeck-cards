@@ -70,7 +70,6 @@ enum Filter: Int {
 enum PackUsage: Int {
     case all
     case selected
-    case allAfterRotation
 }
 
 enum MWL: Int {
