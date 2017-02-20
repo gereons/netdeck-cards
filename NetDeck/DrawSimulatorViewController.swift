@@ -138,17 +138,17 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "drawCell"
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
-            cell!.selectionStyle = .none
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) ?? {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            cell.selectionStyle = .none
+            return cell
+        }()
         
         let card = self.drawn[indexPath.row]
-        cell!.textLabel?.text = card.name
-        cell!.textLabel?.textColor = self.played[indexPath.row] ? .lightGray : .black
+        cell.textLabel?.text = card.name
+        cell.textLabel?.textColor = self.played[indexPath.row] ? .lightGray : .black
         
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

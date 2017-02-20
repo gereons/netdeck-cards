@@ -86,20 +86,20 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "pickerCell"
         
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
-            cell?.selectionStyle = .none
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) ?? {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            cell.selectionStyle = .none
+            return cell
+        }()
         
         let str = self.data.values[indexPath.section][indexPath.row]
         let first = indexPath.section == 0 && indexPath.row == 0 // the "any" cell
-        cell!.textLabel?.text = first ? str.localized() : str
+        cell.textLabel?.text = first ? str.localized() : str
         
         let sel = self.selected.contains(indexPath)
-        cell?.accessoryType = sel ? .checkmark : .none
+        cell.accessoryType = sel ? .checkmark : .none
     
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

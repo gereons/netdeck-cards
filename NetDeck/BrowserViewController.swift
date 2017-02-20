@@ -116,36 +116,36 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "browserCell"
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        if cell == nil {
-            cell = UITableViewCell(style: .subtitle, reuseIdentifier:cellIdentifier)
-            cell!.selectionStyle = .none
-            cell!.accessoryType = .disclosureIndicator
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) ?? {
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier:cellIdentifier)
+            cell.selectionStyle = .none
+            cell.accessoryType = .disclosureIndicator
             
             let pips = SmallPipsView.create()
-            cell!.accessoryView = pips
-        }
+            cell.accessoryView = pips
+            return cell
+        }()
     
         let card = self.cards[indexPath.section][indexPath.row]
-        cell!.textLabel?.text = card.name
+        cell.textLabel?.text = card.name
     
         switch card.type {
         
         case .identity:
             let inf = card.influenceLimit == -1 ? "∞" : "\(card.influenceLimit)"
-            cell!.detailTextLabel?.text = String(format: "%@ · %ld/%@", card.factionStr, card.minimumDecksize, inf)
+            cell.detailTextLabel?.text = String(format: "%@ · %ld/%@", card.factionStr, card.minimumDecksize, inf)
         
         case .agenda:
-            cell!.detailTextLabel?.text = String(format: "%@ · %ld/%ld", card.factionStr, card.advancementCost, card.agendaPoints)
+            cell.detailTextLabel?.text = String(format: "%@ · %ld/%ld", card.factionStr, card.advancementCost, card.agendaPoints)
             
         default:
-            cell!.detailTextLabel?.text = String(format: "%@ · %l@ Cr", card.factionStr, card.costString)
+            cell.detailTextLabel?.text = String(format: "%@ · %l@ Cr", card.factionStr, card.costString)
         }
     
-        let pips = cell!.accessoryView as! SmallPipsView
+        let pips = cell.accessoryView as! SmallPipsView
         pips.set(value: card.influence, color: card.factionColor)
     
-        return cell!
+        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

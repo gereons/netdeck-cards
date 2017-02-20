@@ -65,23 +65,23 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "historyCell"
         
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
-            cell?.selectionStyle = .none
-        }
-        cell?.textLabel?.text = ""
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) ?? {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            cell.selectionStyle = .none
+            return cell
+        }()
+        cell.textLabel?.text = ""
         
         if let dcs = self.deck?.revisions[indexPath.section] {
             if dcs.initial {
-                cell?.textLabel?.text = "Initial Version".localized()
+                cell.textLabel?.text = "Initial Version".localized()
             } else if indexPath.row < dcs.changes.count {
                 let dc = dcs.changes[indexPath.row]
-                cell?.textLabel?.text = String(format: "%+ld %@", dc.count, dc.card.name)
+                cell.textLabel?.text = String(format: "%+ld %@", dc.count, dc.card.name)
             }
         }
         
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
