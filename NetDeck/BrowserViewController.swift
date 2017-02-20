@@ -24,9 +24,9 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // filter criteria
     private var searchText = ""
-    private var types: FilterValue!
-    private var sets: FilterValue!
-    private var factions: FilterValue!
+    private var types: FilterValue?
+    private var sets: FilterValue?
+    private var factions: FilterValue?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,16 +79,16 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             self.cardList.filterByName(self.searchText)
         }
         
-        if self.types != nil {
-            self.cardList.filterByType(self.types)
+        if let types = self.types {
+            self.cardList.filterByType(types)
         }
         
-        if self.sets != nil {
-            self.cardList.filterBySet(self.sets)
+        if let sets = self.sets {
+            self.cardList.filterBySet(sets)
         }
         
-        if self.factions != nil {
-            self.cardList.filterByFaction(self.factions)
+        if let factions = self.factions {
+            self.cardList.filterByFaction(factions)
         }
         
         let data = self.cardList.dataForTableView()

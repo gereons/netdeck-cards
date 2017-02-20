@@ -14,7 +14,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     var data: TableData<String>!
     var selected = Set<IndexPath>()
 
-    var preselected: FilterValue!
+    var preselected: FilterValue?
     var setResult: ((FilterValue) -> Void)!
     
     convenience init(title: String) {
@@ -33,11 +33,15 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        guard let preselectedSet = self.preselected?.strings else {
+            return
+        }
+        
         for sec in 0 ..< data.sections.count {
             let strings = data.values[sec]
             for row in 0 ..< strings.count {
                 let str = strings[row]
-                if self.preselected.strings!.contains(str) {
+                if preselectedSet.contains(str) {
                     let idx = IndexPath(row: row, section: sec)
                     self.selected.insert(idx)
                 }
