@@ -114,3 +114,41 @@ enum FilterAttribute: Int {
         }
     }
 }
+
+enum FilterValue {
+    case int(_: Int)
+    case strings(_: Set<String>)
+    
+    static func string(_ s: String) -> FilterValue {
+        return FilterValue.strings(Set([s]))
+    }
+    
+    var int: Int? {
+        switch self {
+        case .int(let v): return v
+        default: return nil
+        }
+    }
+    
+    var strings: Set<String>? {
+        switch self {
+        case .strings(let v): return v
+        default: return nil
+        }
+    }
+    
+    var string: String? {
+        switch self {
+        case .strings(let v): return Array(v)[0]
+        default: return nil
+        }
+    }
+    
+    var isAny: Bool {
+        if let set = self.strings {
+            return set.count == 0 || (set.count == 1 && Array(set)[0] == Constant.kANY)
+        } else {
+            return false
+        }
+    }
+}

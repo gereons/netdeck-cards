@@ -62,7 +62,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     private var searchText = ""
     private var selectedType = ""
     private var selectedTypes: Set<String>?
-    private var selectedValues = [FilterAttribute: Any]()
+    private var selectedValues = [FilterAttribute: FilterValue]()
     private var initializing = true
     private var prevAp = 0
     private var prevMu = 0
@@ -196,7 +196,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     override var keyCommands: [UIKeyCommand]? {
         return [
             UIKeyCommand(input: "F", modifierFlags: .command, action: #selector(self.startTextSearch(_:)), discoverabilityTitle: "Find Card".localized()),
-            UIKeyCommand(input: "A", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope All".localized()),
+            UIKeyCommand(input: "A", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope: All".localized()),
             UIKeyCommand(input: "N", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope: Name".localized()),
             UIKeyCommand(input: "T", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope: Text".localized()),
             UIKeyCommand(input: UIKeyInputEscape, modifierFlags: [], action: #selector(self.escKeyPressed(_:)))
@@ -299,7 +299,6 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.trashLabel.isEnabled = self.role != .runner
         self.trashSlider.isEnabled = self.role != .runner
         
-        
         self.resetAllButtons()
         
         let maxCost = CardManager.maxCost(for: self.role)
@@ -312,7 +311,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         
         let selectedSets = self.selectedValues[.set]
         var selected = ""
-        if let set = selectedSets as? Set<String> {
+        if let set = selectedSets?.strings {
             selected = set.count == 0 ? Constant.kANY.localized() : (set.count == 1 ? set.first! : "...")
         } else {
             selected = Constant.kANY.localized()
@@ -417,15 +416,14 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         CardFilterPopover.showFrom(button: sender, inView: self, entries: data, attribute: .faction, selected: selected)
     }
     
-    func filterCallback(attribute: FilterAttribute, value: Any) {
-        assert(value is String || value is Set<String>, "broken value object")
+    func filterCallback(attribute: FilterAttribute, value: FilterValue) {
         
         if attribute == .type {
-            if let v = value as? String {
+            if let v = value.string {
                 self.selectedType = v
                 self.selectedTypes = nil
             }
-            if let v = value as? Set<String> {
+            if let v = value.strings {
                 self.selectedType = ""
                 self.selectedTypes = v
             }
@@ -433,26 +431,17 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
             self.resetButton(.subtype)
         }
         
-        
         self.selectedValues[attribute] = value
             
         switch attribute {
-        case .type where value is String:
-            self.cardList.filterByType(value as! String)
-        case .type where value is Set<String>:
-            self.cardList.filterByTypes(value as! Set<String>)
-        case .subtype where value is String:
-            self.cardList.filterBySubtype(value as! String)
-        case .subtype where value is Set<String>:
-            self.cardList.filterBySubtypes(value as! Set<String>)
-        case .faction where value is String:
-            self.cardList.filterByFaction(value as! String)
-        case .faction where value is Set<String>:
-            self.cardList.filterByFactions(value as! Set<String>)
-        case .set where value is String:
-            self.cardList.filterBySet(value as! String)
-        case .set where value is Set<String>:
-            self.cardList.filterBySets(value as! Set<String>)
+        case .type:
+            self.cardList.filterByType(value)
+        case .subtype:
+            self.cardList.filterBySubtype(value)
+        case .faction:
+            self.cardList.filterByFaction(value)
+        case .set:
+            self.cardList.filterBySet(value)
         default:
             preconditionFailure("can't happen")
         }
@@ -469,23 +458,28 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     
     private func resetButton(_ attribute: FilterAttribute) {
         let button: UIButton
+        let any = FilterValue.string(Constant.kANY)
         switch attribute {
         case .type:
             button = self.typeButton
             self.selectedType = Constant.kANY
             self.selectedTypes = nil
             self.resetButton(.subtype)
+            self.cardList.filterByType(any)
         case .faction:
             button = self.factionButton
+            self.cardList.filterByFaction(any)
         case .set:
             button = self.setButton
+            self.cardList.filterBySet(any)
         case .subtype:
             button = self.subtypeButton
+            self.cardList.filterBySubtype(any)
         default:
             fatalError("invalid button")
         }
         
-        self.selectedValues[attribute] = Constant.kANY
+        self.selectedValues[attribute] = FilterValue.string(Constant.kANY)
         button.setTitle(attribute.localized() + ": " + Constant.kANY.localized(), for: .normal)
     }
     

@@ -227,7 +227,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
                 let type = self.typeNames[idx]
                 set.insert(type)
             }
-            self.cardList?.filterByTypes(set)
+            self.cardList?.filterByType(FilterValue.strings(set))
         } else {
             for idx in self.factionControl.selectedSegmentIndexes {
                 let faction = self.factionNames[idx]
@@ -240,7 +240,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
                 }
             }
             
-            self.cardList?.filterByFactions(set)
+            self.cardList?.filterByFaction(FilterValue.strings(set))
         }
         
         

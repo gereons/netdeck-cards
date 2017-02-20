@@ -14,24 +14,24 @@ class CardList {
     private var initialCards = [Card]()
     
     private var cost = -1
-    private var type: String?
+    private var strength = -1
+    private var mu = -1
+    private var influence = -1
+    private var trash = -1
+    private var agendaPoints = -1
+    
     private var types: Set<String>?
     private var subtype: String?
     private var subtypes: Set<String>?
-    private var strength = -1
-    private var mu = -1
-    private var trash = -1
-    private var faction: String?
     private var factions: Set<String>?
-    private var influence = -1
-    private var set: String?
     private var sets: Set<String>?
-    private var agendaPoints = -1
+    
     private var text: String?
     private var searchScope = CardSearchScope.all
     private var unique = false
     private var limited = false
     private var mwl = false
+    
     private var faction4inf = Faction.none   // faction for influence filter
     
     private var sortType = BrowserSort.byType
@@ -80,24 +80,25 @@ class CardList {
     
     func clearFilters() {
         self.cost = -1
-        self.type = ""
-        self.types = nil
-        self.subtype = ""
-        self.subtypes = nil
-        self.strength = -1
         self.mu = -1
+        self.strength = -1
         self.trash = -1
-        self.faction = ""
-        self.factions = nil
         self.influence = -1
-        self.set = ""
-        self.sets = nil
         self.agendaPoints = -1
+        
+        
+        self.types = nil
+        self.subtypes = nil
+        self.factions = nil
+        self.sets = nil
+        
         self.text = ""
         self.searchScope = .all
+        
         self.unique = false
         self.limited = false
         self.mwl = false
+        
         self.faction4inf = .none
     }
     
@@ -151,27 +152,22 @@ class CardList {
         let _ = self.applyFilters()
     }
     
-    func filterByType(_ type: String)
-    {
-        self.type = type
-        self.types = nil
+    func filterByType(_ types: FilterValue) {
+        self.types = types.isAny ? nil : types.strings!
     }
     
-    func filterByTypes(_ types: Set<String>) {
-        self.type = ""
-        self.types = types
+    func filterByFaction(_ factions: FilterValue) {
+        self.factions = factions.isAny ? nil : factions.strings!
     }
     
-    func filterByFaction(_ faction: String) {
-        self.faction = faction
-        self.factions = nil
+    func filterBySet(_ sets: FilterValue) {
+        self.sets = sets.isAny ? nil : sets.strings!
     }
     
-    func filterByFactions(_ factions: Set<String>) {
-        self.faction = ""
-        self.factions = factions
+    func filterBySubtype(_ subtypes: FilterValue) {
+        self.subtypes = subtypes.isAny ? nil : subtypes.strings!
     }
-    
+
     func filterByText(_ text: String) {
         self.text = text
         self.searchScope = .text
@@ -186,17 +182,7 @@ class CardList {
         self.text = name
         self.searchScope = .name
     }
-    
-    func filterBySet(_ set: String) {
-        self.set = set
-        self.sets = nil
-    }
-    
-    func filterBySets(_ sets: Set<String>) {
-        self.set = ""
-        self.sets = sets
-    }
-    
+
     func filterByInfluence(_ influence: Int) {
         self.influence = influence
         self.faction4inf = .none
@@ -217,16 +203,6 @@ class CardList {
     
     func filterByCost(_ cost: Int) {
         self.cost = cost
-    }
-    
-    func filterBySubtype(_ subtype: String) {
-        self.subtype = subtype
-        self.subtypes = nil
-    }
-    
-    func filterBySubtypes(_ subtypes: Set<String>) {
-        self.subtype = ""
-        self.subtypes = subtypes
     }
     
     func filterByStrength(_ strength: Int) {
@@ -262,22 +238,27 @@ class CardList {
         var predicates = [NSPredicate]()
         
         
-        if let f = self.faction, f.length > 0 && f != Constant.kANY {
-            let predicate = NSPredicate(format:"factionStr LIKE[cd] %@", self.faction!)
-            predicates.append(predicate)
-        }
         if let f = self.factions, f.count > 0 {
-            let predicate = NSPredicate(format:"factionStr IN %@", self.factions!)
-            predicates.append(predicate)
-        }
-        if let t = self.type, t.length > 0 && t != Constant.kANY {
-            let predicate = NSPredicate(format:"typeStr LIKE[cd] %@", self.type!)
+            let predicate = NSPredicate(format:"factionStr IN %@", f)
             predicates.append(predicate)
         }
         if let t = self.types, t.count > 0 {
-            let predicate = NSPredicate(format:"typeStr IN %@", self.types!)
+            let predicate = NSPredicate(format:"typeStr IN %@", t)
             predicates.append(predicate)
         }
+        if let s = self.sets, s.count > 0 {
+            let predicate = NSPredicate(format:"packName IN %@", s)
+            predicates.append(predicate)
+        }
+        if let s = self.subtypes, s.count > 0 {
+            var subPredicates = [NSPredicate]()
+            for subtype in s {
+                subPredicates.append(NSPredicate(format:"%@ IN subtypes", subtype))
+            }
+            let subtypePredicate = NSCompoundPredicate(orPredicateWithSubpredicates:subPredicates)
+            predicates.append(subtypePredicate)
+        }
+
         if self.mu != -1 {
             let predicate = NSPredicate(format:"mu == %d", self.mu)
             predicates.append(predicate)
@@ -299,34 +280,15 @@ class CardList {
                 predicates.append(predicate)
             }
         }
-        if let s = self.set, s.length > 0 && s != Constant.kANY {
-            let predicate = NSPredicate(format:"packName LIKE[cd] %@", self.set!)
-            predicates.append(predicate)
-        }
-        if let s = self.sets, s.count > 0 {
-            let predicate = NSPredicate(format:"packName IN %@", self.sets!)
-            predicates.append(predicate)
-        }
         if self.cost != -1 {
             let predicate = NSPredicate(format:"cost == %d || advancementCost == %d", self.cost, self.cost)
             predicates.append(predicate)
-        }
-        if let s = self.subtype, s.length > 0 && s != Constant.kANY {
-            let predicate = NSPredicate(format:"%@ IN subtypes", self.subtype!)
-            predicates.append(predicate)
-        }
-        if let s = self.subtypes, s.count > 0 {
-            var subPredicates = [NSPredicate]()
-            for subtype in self.subtypes! {
-                subPredicates.append(NSPredicate(format:"%@ IN subtypes", subtype))
-            }
-            let subtypePredicate = NSCompoundPredicate(orPredicateWithSubpredicates:subPredicates)
-            predicates.append(subtypePredicate)
         }
         if self.agendaPoints != -1 {
             let predicate = NSPredicate(format:"agendaPoints == %d", self.agendaPoints)
             predicates.append(predicate)
         }
+        
         if let text = self.text , text.length > 0 {
             var predicate: NSPredicate
             switch (self.searchScope) {
@@ -347,6 +309,7 @@ class CardList {
             }
             predicates.append(predicate)
         }
+        
         if self.unique {
             let predicate = NSPredicate(format:"unique == 1")
             predicates.append(predicate)

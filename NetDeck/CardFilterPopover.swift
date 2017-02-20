@@ -10,7 +10,7 @@ import UIKit
 
 protocol FilteringViewController {
     
-    func filterCallback(attribute: FilterAttribute, value: Any)
+    func filterCallback(attribute: FilterAttribute, value: FilterValue)
     
     var view: UIView! { get }
     
@@ -35,7 +35,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     
     static var popover: CardFilterPopover!
     
-    static func showFrom(button: UIButton, inView vc: FilteringViewController, entries: TableData<String>, attribute: FilterAttribute, selected: Any?) {
+    static func showFrom(button: UIButton, inView vc: FilteringViewController, entries: TableData<String>, attribute: FilterAttribute, selected: FilterValue?) {
         popover = CardFilterPopover(nibName: "CardFilterPopover", bundle: nil)
         popover.sections = entries.sections
         popover.values = entries.values
@@ -45,9 +45,9 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         popover.filteringViewController = vc
         
         popover.selectedValues.removeAll()
-        if let selectedSet = selected as? Set<String> {
+        if let selectedSet = selected?.strings, selectedSet.count > 1 {
             popover.selectedValues = selectedSet
-        } else if let selectedStr = selected as? String, selectedStr != Constant.kANY {
+        } else if let selectedStr = selected?.string, selectedStr != Constant.kANY {
             popover.selectedValues = Set([selectedStr])
         }
         
@@ -226,7 +226,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
             let title = self.attribute.localized() + ": " + value.localized()
             self.button.setTitle(title, for: .normal)
             
-            self.filteringViewController.filterCallback(attribute: self.attribute, value: value)
+            self.filteringViewController.filterCallback(attribute: self.attribute, value: FilterValue.string(value))
             
             CardFilterPopover.dismiss()
         } else {
@@ -245,19 +245,26 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     
     func filterWithMultipleSelection() {
         let selected: String
+        let value: FilterValue
         switch selectedValues.count {
-        case 0: selected = Constant.kANY.localized()
-        case 1: selected = Array(self.selectedValues).first ?? ""
-        default: selected = "⋯"
+        case 0:
+            selected = Constant.kANY.localized()
+            value = FilterValue.string(Constant.kANY)
+        case 1:
+            let str = Array(self.selectedValues)[0]
+            selected = str
+            value = FilterValue.string(str)
+        default:
+            selected = "⋯"
+            value = FilterValue.strings(selectedValues)
         }
         
         let title = self.attribute.localized() + ": " + selected
         
         self.button.setTitle(title, for: .normal)
         
-        self.filteringViewController.filterCallback(attribute: self.attribute, value: self.selectedValues)
+        self.filteringViewController.filterCallback(attribute: self.attribute, value: value)
     }
-    
     
     func collapseSection(_ sender: UIButton) {
         assert(self.collapsedSections != nil)

@@ -24,9 +24,9 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // filter criteria
     private var searchText = ""
-    private var types = Set<String>()
-    private var sets = Set<String>()
-    private var factions = Set<String>()
+    private var types: FilterValue!
+    private var sets: FilterValue!
+    private var factions: FilterValue!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,16 +79,16 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             self.cardList.filterByName(self.searchText)
         }
         
-        if self.types.count > 0 {
-            self.cardList.filterByTypes(self.types)
+        if self.types != nil {
+            self.cardList.filterByType(self.types)
         }
         
-        if self.sets.count > 0 {
-            self.cardList.filterBySets(self.sets)
+        if self.sets != nil {
+            self.cardList.filterBySet(self.sets)
         }
         
-        if self.factions.count > 0 {
-            self.cardList.filterByFactions(self.factions)
+        if self.factions != nil {
+            self.cardList.filterByFaction(self.factions)
         }
         
         let data = self.cardList.dataForTableView()
@@ -234,9 +234,9 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: clear button
     
     @IBAction func clearButtonTapped(_ btn: UIButton) {
-        self.sets.removeAll()
-        self.types.removeAll()
-        self.factions.removeAll()
+        self.sets = nil
+        self.types = nil
+        self.factions = nil
         self.searchText = ""
         
         self.refresh()

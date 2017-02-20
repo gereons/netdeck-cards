@@ -14,8 +14,8 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     var data: TableData<String>!
     var selected = Set<IndexPath>()
 
-    var preselected = Set<String>()
-    var setResult: ((Set<String>) -> Void)!
+    var preselected: FilterValue!
+    var setResult: ((FilterValue) -> Void)!
     
     convenience init(title: String) {
         self.init()
@@ -37,7 +37,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
             let strings = data.values[sec]
             for row in 0 ..< strings.count {
                 let str = strings[row]
-                if self.preselected.contains(str) {
+                if self.preselected.strings!.contains(str) {
                     let idx = IndexPath(row: row, section: sec)
                     self.selected.insert(idx)
                 }
@@ -64,7 +64,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
             result.insert(str)
         }
         
-        self.setResult(result)
+        self.setResult(FilterValue.strings(result))
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

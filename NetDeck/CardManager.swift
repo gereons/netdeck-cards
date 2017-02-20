@@ -137,7 +137,7 @@ class CardManager {
         var subtypes = allSubtypes[role]?[type] ?? Set<String>()
         
         let includeIds = includeIdentities && (type == Constant.kANY || type == identityKey)
-        if (includeIds) {
+        if includeIds {
             if let set = identitySubtypes[role] {
                 subtypes.formUnion(set)
             }
@@ -151,6 +151,9 @@ class CardManager {
         for type in types {
             let arr = subtypesFor(role: role, andType: type, includeIdentities: includeIdentities)
             subtypes.formUnion(arr)
+        }
+        if types.count == 0 {
+            subtypes = (allSubtypes[role]?[Constant.kANY])!
         }
     
         return subtypes.sorted(by: { $0.lowercased() < $1.lowercased() })
