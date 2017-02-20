@@ -184,16 +184,12 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         nc.addObserver(self, selector: #selector(self.deckSaved(_:)), name: Notifications.deckSaved, object: nil)
         nc.addObserver(self, selector: #selector(self.nameAlertWillAppear(_:)), name: Notifications.nameAlert, object: nil)
         
+        self.navigationItem.title = "Filter".localized()
+        let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersClicked(_:)))
+        self.navigationItem.rightBarButtonItem = clearButton
+        
         self.setResultFrames()
         self.initFilters()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.title = "Filter".localized()
-        topItem?.rightBarButtonItem = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersClicked(_:)))
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -275,8 +271,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             return
         }
         
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.leftBarButtonItem = modified ? self.revertButton : nil
+        self.navigationItem.leftBarButtonItem = modified ? self.revertButton : nil
     }
     
     func revertDeck(_ sender: UIBarButtonItem) {
@@ -286,7 +281,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             self.deckListViewController.deck = deck
             self.setBackOrRevertButton(false)
         } else {
-            self.navigationController?.navigationBar.topItem?.leftBarButtonItem = nil
+            self.navigationItem.leftBarButtonItem = nil
             let _ = self.navigationController?.popToRootViewController(animated: false)
         }
     }

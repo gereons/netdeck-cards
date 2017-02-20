@@ -172,16 +172,11 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         
         self.clearFiltersClicked(self)
         
+        let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersClicked(_:)))
+        self.navigationItem.rightBarButtonItem = clearButton
+        
         self.initializing = false
         self.updateResults()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        let topItem = self.navigationController?.navigationBar.topItem
-        let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersClicked(_:)))
-        topItem?.rightBarButtonItem = clearButton
     }
     
     override func viewWillDisappear(_ animated: Bool) {

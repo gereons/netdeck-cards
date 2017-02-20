@@ -61,8 +61,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.doToggleView(viewStyle)
         
         self.navigationController?.navigationBar.barTintColor = .white
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.leftBarButtonItem = self.toggeViewButton
+        self.navigationItem.leftBarButtonItem = self.toggeViewButton
         
         // right buttons
         let arrow = Constant.arrow
@@ -70,7 +69,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         let titles = self.sortStr.values.map { $0 + arrow }
         self.sortButton.possibleTitles = Set(titles)
         
-        topItem?.rightBarButtonItem = self.sortButton
+        self.navigationItem.rightBarButtonItem = self.sortButton
         
         self.parent?.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.backgroundColor = .clear

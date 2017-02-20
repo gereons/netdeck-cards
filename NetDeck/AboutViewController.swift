@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 
+@objc(AboutViewController)
 class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var webView: UIWebView!
@@ -37,18 +38,14 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
         let title = String(format: fmt.localized(), AppDelegate.appVersion())
         
         self.title = title
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.rightBarButtonItem = UIBarButtonItem(title: "Feedback".localized(), style: .plain, target: self, action: #selector(self.leaveFeedback(_:)))
+        let feedbackButton = UIBarButtonItem(title: "Feedback".localized(), style: .plain, target: self, action: #selector(self.leaveFeedback(_:)))
+        self.navigationItem.rightBarButtonItem = feedbackButton
     }
     
     func goBack(_ sender: Any) {
         self.webView.goBack()
-        self.navigationController?.navigationBar.topItem?.leftBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = nil
     }
     
     func leaveFeedback(_ sender: Any) {
@@ -106,7 +103,7 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
                 if let path = Bundle.main.path(forResource: "Acknowledgements", ofType: "html") {
                     let url = URL(fileURLWithPath: path)
                     self.webView.loadRequest(URLRequest(url: url))
-                    self.navigationController?.navigationBar.topItem?.leftBarButtonItem = self.backButton
+                    self.navigationItem.leftBarButtonItem = self.backButton
                     return true
                 }
             default:
