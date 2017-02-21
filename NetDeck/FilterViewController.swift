@@ -140,9 +140,8 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         super.viewDidAppear(animated)
         assert(self.navigationController?.viewControllers.count == 4, "nav oops")
         
-        let topItem = self.navigationController?.navigationBar.topItem
         let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersTapped(_:)))
-        topItem?.rightBarButtonItem = clearButton
+        self.navigationItem.rightBarButtonItem = clearButton
     }
     
     func clearFiltersTapped(_ sender: Any) {

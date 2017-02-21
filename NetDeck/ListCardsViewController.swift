@@ -77,20 +77,11 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.tableView.reloadData()
         self.updateFooter()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        assert(self.navigationController?.viewControllers.count == 3, "nav oops")
-        
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            let filterButton = UIBarButtonItem(image: UIImage(named: "798-filter-toolbar"), style: .plain, target: self, action: #selector(self.showFilters(_:)))
-            
-            topItem.rightBarButtonItem = filterButton
-        }
+        let filterButton = UIBarButtonItem(image: UIImage(named: "798-filter-toolbar"), style: .plain, target: self, action: #selector(self.showFilters(_:)))
+        self.navigationItem.rightBarButtonItem = filterButton
     }
-    
+        
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         

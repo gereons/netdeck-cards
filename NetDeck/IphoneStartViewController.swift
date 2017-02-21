@@ -90,9 +90,8 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         
         self.tableView.reloadData()
         
-        let topItem = self.navigationBar.topItem
-        topItem?.leftBarButtonItems = [ self.settingsButton, self.sortButton ]
-        topItem?.rightBarButtonItems = [ self.addButton, self.importButton ]
+        self.navigationItem.leftBarButtonItems = [ self.settingsButton, self.sortButton ]
+        self.navigationItem.rightBarButtonItems = [ self.addButton, self.importButton ]
     }
     
     func initializeDecks() {

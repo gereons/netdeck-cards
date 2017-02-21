@@ -105,7 +105,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidAppear(animated)
         
         self.navigationController?.navigationBar.barTintColor = .white
-        self.navigationController?.navigationBar.topItem?.title = Device.isIphone ? "Import".localized() : "Import Deck".localized()
+        self.navigationItem.title = Device.isIphone ? "Import".localized() : "Import Deck".localized()
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object:nil)
@@ -222,7 +222,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             
             self.filterDecks()
             self.tableView.reloadData()
-            self.navigationController?.navigationBar.topItem?.rightBarButtonItems = self.barButtons
+            self.navigationItem.rightBarButtonItems = self.barButtons
         }
     }
     
@@ -275,7 +275,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             SVProgressHUD.dismiss()
             
             self.readDecksFromDropbox(directory)
-            self.navigationController?.navigationBar.topItem?.rightBarButtonItems = self.barButtons
+            self.navigationItem.rightBarButtonItems = self.barButtons
         }
     }
     

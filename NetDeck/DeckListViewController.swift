@@ -100,7 +100,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.collectionView.alwaysBounceVertical = true
         
         self.navigationController?.navigationBar.barTintColor = .white
-        let topItem = self.navigationController?.navigationBar.topItem
         
         let selections = [
             UIImage(named: "deckview_card") as Any,
@@ -114,7 +113,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.toggleViewButton = UIBarButtonItem(customView: viewSelector)
         self.doToggleView(view)
         
-        topItem?.leftBarButtonItem = self.toggleViewButton
+        self.navigationItem.leftBarButtonItem = self.toggleViewButton
         
         self.autoSave = Defaults[.autoSave]
         self.autoSaveDropbox = self.autoSave && Defaults[.useDropbox] && Defaults[.autoSaveDropbox]
@@ -148,7 +147,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         rightButtons.append(nameButton)
         rightButtons.append(self.stateButton)
         
-        topItem?.rightBarButtonItems = rightButtons
+        self.navigationItem.rightBarButtonItems = rightButtons
         
         // setup bottom toolbar
         self.drawButton.setTitle("Draw".localized(), for: .normal)

@@ -87,11 +87,10 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         assert(self.navigationController?.viewControllers.count == 2, "oops")
         
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.rightBarButtonItems = [ self.exportButton, self.historyButton ]
+        self.navigationItem.rightBarButtonItems = [ self.exportButton, self.historyButton ]
         
         self.setDeckName()
-        topItem?.titleView = self.titleButton
+        self.navigationItem.titleView = self.titleButton
         
         if !Defaults[.useNrdb] {
             self.nrdbButton.customView = UIView(frame: CGRect.zero)
@@ -107,13 +106,13 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func setupNavigationButtons(modified: Bool) {
-        let topItem = self.navigationController?.navigationBar.topItem
+        let navItem = self.navigationItem
         if modified {
-            topItem?.leftBarButtonItem = self.cancelButton
-            topItem?.rightBarButtonItems = [ self.saveButton, self.historyButton ]
+            navItem.leftBarButtonItem = self.cancelButton
+            navItem.rightBarButtonItems = [ self.saveButton, self.historyButton ]
         } else {
-            topItem?.leftBarButtonItem = nil
-            topItem?.rightBarButtonItems = [ self.exportButton, self.historyButton ]
+            navItem.leftBarButtonItem = nil
+            navItem.rightBarButtonItems = [ self.exportButton, self.historyButton ]
         }
     }
     

@@ -97,8 +97,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.stateFilterButton = UIBarButtonItem(title: DeckState.buttonLabelFor(self.filterState), style: .plain, target: self, action: #selector(self.changeStateFilter(_:)))
         self.stateFilterButton.possibleTitles = Set(DeckState.possibleTitles())
         
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.leftBarButtonItems = [ self.sortButton, self.sideFilterButton, self.stateFilterButton ]
+        self.navigationItem.leftBarButtonItems = [ self.sortButton, self.sideFilterButton, self.stateFilterButton ]
         
         self.searchBar.placeholder = "Search for decks, identities or cards".localized()
         if self.filterText.length > 0 {

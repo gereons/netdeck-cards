@@ -33,6 +33,9 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearSelections(_:)))
+        self.navigationItem.rightBarButtonItem = clearButton
+        
         guard let preselectedSet = self.preselected?.strings else {
             return
         }
@@ -46,15 +49,6 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
                     self.selected.insert(idx)
                 }
             }
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            
-            let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(BrowserValuePicker.clearSelections(_:)))
-            topItem.rightBarButtonItem = clearButton
         }
     }
     

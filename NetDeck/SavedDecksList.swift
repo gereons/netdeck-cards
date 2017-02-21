@@ -39,9 +39,8 @@ class SavedDecksList: DecksViewController {
         self.importButton = UIBarButtonItem(image: UIImage(named: "702-import"), style: .plain, target: self, action: #selector(self.importDecks(_:)))
         self.exportButton = UIBarButtonItem(image: UIImage(named: "702-share"), style: .plain, target: self, action: #selector(self.exportDecks(_:)))
         
-        let topItem = self.navigationController?.navigationBar.topItem
         self.normalRightButtons = [ self.addDeckButton, self.exportButton, self.importButton, self.editButton ]
-        topItem?.rightBarButtonItems = self.normalRightButtons
+        self.navigationItem.rightBarButtonItems = self.normalRightButtons
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(_:)))
         self.tableView.addGestureRecognizer(longPress)
@@ -49,20 +48,11 @@ class SavedDecksList: DecksViewController {
         self.toolBarHeight.constant = 0
     }
     
-    // WTF is this necessary? if we don't do this, the import/export/add buttons will appear inactive after we return here from
-    // the import view
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.rightBarButtonItems = nil
+        self.navigationItem.rightBarButtonItems = self.normalRightButtons
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.rightBarButtonItems = self.normalRightButtons
-    }
-    
+        
     func importDecks(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             return self.dismissPopup()
@@ -354,7 +344,7 @@ class SavedDecksList: DecksViewController {
             self.diffDeck = deck.filename
             self.diffSelection = true
             
-            self.navigationController?.navigationBar.topItem?.rightBarButtonItems = self.diffRightButtons
+            self.navigationItem.rightBarButtonItems = self.diffRightButtons
             self.tableView.reloadData()
             self.popup = nil
         })
@@ -396,7 +386,7 @@ class SavedDecksList: DecksViewController {
         self.diffDeck = nil
         self.tableView.reloadData()
         
-        self.navigationController?.navigationBar.topItem?.rightBarButtonItems = self.normalRightButtons
+        self.navigationItem.rightBarButtonItems = self.normalRightButtons
     }
     
     // MARK: - table view

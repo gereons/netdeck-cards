@@ -21,8 +21,7 @@ class CompareDecksList: DecksViewController {
         self.diffButton = UIBarButtonItem(title: "Compare".localized(), style: .plain, target: self, action: #selector(self.diffDecks(_:)))
         self.diffButton.isEnabled = false
         
-        let topItem = self.navigationController?.navigationBar.topItem
-        topItem?.rightBarButtonItem = self.diffButton
+        self.navigationItem.rightBarButtonItem = self.diffButton
         
         let title = "Select two decks to compare them".localized()
         self.footerButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(self.footerClicked(_:)))
