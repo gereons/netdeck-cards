@@ -396,7 +396,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             let alert = UIAlertController.alert(title: nil, message: msg)
             
             alert.addAction(UIAlertAction(title: "OK".localized(), style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Save") { action in
+            alert.addAction(UIAlertAction(title: "Save".localized()) { action in
                 Analytics.logEvent("Save to NRDB")
                 self.saveDeckToNetrunnerDb()
             })
