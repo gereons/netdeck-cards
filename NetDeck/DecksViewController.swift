@@ -412,6 +412,9 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         let state = DeckState.labelFor(deck.state)
         let date = self.dateFormatter.string(from: deck.lastModified ?? Date())
         cell.dateLabel.text = state + " · " + date
+        
+        cell.nrdbIcon?.isHidden = deck.netrunnerDbId == nil
+        
         return cell
     }
     

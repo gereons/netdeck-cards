@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var launchShortcutItem: UIApplicationShortcutItem?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        FIXME("nrdb icon on every deck?")
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self])
@@ -50,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         self.setBuiltinUserDefaults()
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             initGroup.enter()
             self.initializeData()
             initGroup.leave()
@@ -118,12 +117,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         Reachability.start()
     
-//        if (Device.isIphone) {
-//            self.window!.rootViewController = self.navigationController
-//        } else {
-//            self.window!.rootViewController = self.splitViewController
-//        }
-//        self.window!.makeKeyAndVisible()
         self.replaceRootViewController(with: Device.isIphone ? self.navigationController : self.splitViewController)
         
         let cardsOk = CardManager.cardsAvailable && PackManager.packsAvailable

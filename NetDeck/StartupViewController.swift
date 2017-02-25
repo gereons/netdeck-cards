@@ -52,7 +52,7 @@ class StartupViewController: UIViewController {
             }
         }
         self.points.shuffle()
-        self.interval = min(0.0015, self.timeEstimate / Double(self.points.count))
+        self.interval = min(0.005, self.timeEstimate / Double(self.points.count))
         print("\(interval)")
     }
     
