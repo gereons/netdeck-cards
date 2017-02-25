@@ -10,9 +10,6 @@ import Marshal
 import SwiftyUserDefaults
 
 struct Cycle: Unmarshaling {
-    
-    
-    
     let name: String
     let code: String
     let position: Int
@@ -22,8 +19,7 @@ struct Cycle: Unmarshaling {
         self.name = try object.value(for: "name")
         self.code = try object.value(for: "code")
         self.position = try object.value(for: "position")
-
-        self.rotated = try object.value(for: "rotated") ?? false
+        self.rotated = try object.value(for: "rotated")
     }
 }
 
@@ -43,19 +39,11 @@ struct Pack: Unmarshaling {
         self.code = try object.value(for: "code")
         self.cycleCode = try object.value(for: "cycle_code")
         self.position = try object.value(for: "position")
-        
         self.settingsKey = "use_" + self.code
+        self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
+        
         let date: String = try object.value(for: "date_release") ?? ""
         self.released = date.length > 0
-        
-        FIXME()
-        let rotated: Bool
-        if BuildConfig.debug && Pack.testRotation {
-            rotated = [ "genesis", "spin" ].contains(self.cycleCode)
-        } else {
-            rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
-        }
-        self.rotated = rotated
     }
     
     init(named: String, key: String = "") {
@@ -293,6 +281,11 @@ class PackManager {
     }
     
     // MARK: - persistence
+    
+    class func filesExist() -> Bool {
+        let fm = FileManager.default
+        return fm.fileExists(atPath: packsPathname()) && fm.fileExists(atPath: cyclesPathname())
+    }
     
     class func packsPathname() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)

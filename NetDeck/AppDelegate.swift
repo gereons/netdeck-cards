@@ -28,16 +28,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var launchShortcutItem: UIApplicationShortcutItem?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        FIXME("nrdb icon on every deck?")
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self])
         }
         
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
         // make sure the Library/Application Support directory exists
         self.ensureAppSupportDirectoryExists()
+        let decks = DeckManager.numberOfDecks()
+        let filesExist = CardManager.fileExists() && PackManager.filesExist() && decks > 0
+        print("exist=\(filesExist)")
+        let initGroup = DispatchGroup()
+        
+        if filesExist {
+            self.window!.rootViewController = StartupViewController(initGroup, numberOfDecks: decks)
+            self.window!.makeKeyAndVisible()
+        }
         
         self.setBuiltinUserDefaults()
         
+        DispatchQueue.global(qos: .userInitiated).async {
+            initGroup.enter()
+            self.initializeData()
+            initGroup.leave()
+        }
+        
+        self.waitForInitialization(initGroup)
+        
+        let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem
+        if shortcutItem != nil {
+            self.launchShortcutItem = shortcutItem
+            return false
+        }
+        return true
+    }
+    
+    private func waitForInitialization(_ initGroup: DispatchGroup) {
+        print("wait for init")
+        initGroup.notify(queue: DispatchQueue.main) {
+            print("continue launch")
+            self.finializeLaunch()
+        }
+    }
+    
+    private func initializeData() {
         let language = Defaults[.language]
         var cardsOk = false
         let start = Date.timeIntervalSinceReferenceDate
@@ -53,6 +90,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         let end = Date.timeIntervalSinceReferenceDate
         print("card init took \(end-start)s")
         
+        let start2 = Date.timeIntervalSinceReferenceDate
+        let _ = DeckManager.decksForRole(.none)
+        let end2 = Date.timeIntervalSinceReferenceDate
+        print("deck init took \(end2-start2)s")
+    }
+    
+    private func finializeLaunch() {
         let useNrdb = Defaults[.useNrdb]
         let keepCredentials = Defaults[.keepNrdbCredentials]
         let fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever
@@ -73,29 +117,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         let _ = ImageCache.sharedInstance
         
         Reachability.start()
+    
+//        if (Device.isIphone) {
+//            self.window!.rootViewController = self.navigationController
+//        } else {
+//            self.window!.rootViewController = self.splitViewController
+//        }
+//        self.window!.makeKeyAndVisible()
+        self.replaceRootViewController(with: Device.isIphone ? self.navigationController : self.splitViewController)
         
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        
-        if (Device.isIphone) {
-            self.window!.rootViewController = self.navigationController
-        } else {
-            self.window!.rootViewController = self.splitViewController
-        }
-        self.window!.makeKeyAndVisible()
-        
+        let cardsOk = CardManager.cardsAvailable && PackManager.packsAvailable
         if cardsOk {
             DeckImport.checkClipboardForDeck()
         }
         
         self.logStartup()
-        
-        let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem
-        if shortcutItem != nil {
-            self.launchShortcutItem = shortcutItem
-            return false
+    }
+    
+    private func replaceRootViewController(with viewController: UIViewController?) {
+        if self.window!.rootViewController == nil {
+            self.window!.rootViewController = viewController
+            self.window!.makeKeyAndVisible()
+        } else {
+            let startup = self.window!.rootViewController as! StartupViewController
+            startup.stopSpinner()
+            
+            let snapshot = self.window!.snapshotView(afterScreenUpdates: true)!
+            viewController?.view.addSubview(snapshot)
+            
+            self.window!.rootViewController = viewController
+            
+            UIView.animate(withDuration: 0.2, animations: { _ in
+                snapshot.layer.opacity = 0
+                snapshot.layer.transform = CATransform3DMakeScale(2, 2, 2)
+            }, completion: { _ in
+                snapshot.removeFromSuperview()
+            })
         }
-        
-        return true
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {

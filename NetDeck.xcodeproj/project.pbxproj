@@ -19,6 +19,8 @@
 		3A114EBF1C6F7FDB00BF8C3C /* DropboxWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */; };
 		3A11C5FC19715C0A003F2093 /* CollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */; };
 		3A126E901D0320ED00CDF580 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A126E8F1D0320ED00CDF580 /* Translation.swift */; };
+		3A14E39F1E5F720600F0D4CB /* StartupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A14E39D1E5F720600F0D4CB /* StartupViewController.swift */; };
+		3A14E3A01E5F720600F0D4CB /* StartupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A14E39E1E5F720600F0D4CB /* StartupViewController.xib */; };
 		3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */; };
 		3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */; };
 		3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A18B2551B8B7C650065EC4A /* FilterViewController.xib */; };
@@ -196,6 +198,8 @@
 		3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropboxWrapper.swift; sourceTree = "<group>"; };
 		3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		3A126E8F1D0320ED00CDF580 /* Translation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
+		3A14E39D1E5F720600F0D4CB /* StartupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupViewController.swift; sourceTree = "<group>"; };
+		3A14E39E1E5F720600F0D4CB /* StartupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StartupViewController.xib; sourceTree = "<group>"; };
 		3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NRDBAuthPopupViewController.xib; sourceTree = "<group>"; };
 		3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionViewController.xib; sourceTree = "<group>"; };
 		3A18B2551B8B7C650065EC4A /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
@@ -432,6 +436,8 @@
 				3A9795351CF63EE100479ADF /* AppDelegate.swift */,
 				3A2F4ADB1C8C716400B711BD /* ImageCache.swift */,
 				3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */,
+				3A14E39D1E5F720600F0D4CB /* StartupViewController.swift */,
+				3A14E39E1E5F720600F0D4CB /* StartupViewController.xib */,
 				3A3BDD9E1930F36E00DEFD57 /* Utilities */,
 				3AA440DF1854DA0D0051D4B0 /* Data / Models */,
 				3A3845041B77CB34007C76F2 /* Update Check */,
@@ -970,6 +976,7 @@
 				3A56371419954B28006AD431 /* LargeBrowserCell.xib in Resources */,
 				3AD860E61B7939E500EEF8AC /* CardImageViewCell.xib in Resources */,
 				3A36A0FB1974F68800D8D26A /* SmallPipsView.xib in Resources */,
+				3A14E3A01E5F720600F0D4CB /* StartupViewController.xib in Resources */,
 				3A4E0F911DBAA56E00C49FD4 /* netrunner.ttf in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
 				3A1B32251D87229800155454 /* CardFilterCell.xib in Resources */,
@@ -1106,6 +1113,7 @@
 				3A1942681DC7337A00EB9CE5 /* CardImageViewController.swift in Sources */,
 				3A3D4D4B1DAA6ADA004028A7 /* SettingsViewController.swift in Sources */,
 				3A48BE881E17DD3000B5DD3F /* SmallCardCell.swift in Sources */,
+				3A14E39F1E5F720600F0D4CB /* StartupViewController.swift in Sources */,
 				3A3C1E1F1BF79A71000311FA /* DeckState.swift in Sources */,
 				3AA8EC2A1CC3A05E00370A26 /* DeckHistoryViewController.swift in Sources */,
 				3A38BA071C8ADCC700F957D4 /* DataDownload.swift in Sources */,

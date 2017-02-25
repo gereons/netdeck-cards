@@ -5,7 +5,7 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.0.1):
     - Alamofire (~> 4.0)
   - CorePlot (2.2)
-  - Crashlytics (3.8.3):
+  - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - DTCoreText (1.6.19):
     - DTCoreText/Core (= 1.6.19)
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
   AlamofireNetworkActivityIndicator: 3e55069ada3e1ff7703665156429eedcdfea0bc1
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
-  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   DTCoreText: 184cc2f460c2177108e8700dfb0eb1b1cb72c99d
   DTFoundation: 0ef29c70a9814e15518694862bd739347abe2a50
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7

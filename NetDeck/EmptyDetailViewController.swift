@@ -33,8 +33,10 @@ class EmptyDetailViewController: UIViewController {
         self.spinner.isHidden = !cardsAvailable
         
         if (cardsAvailable) {
-            self.spinner.startAnimating()
+            // self.spinner.startAnimating()
         }
+        self.spinner.stopAnimating()
+        self.spinner.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {

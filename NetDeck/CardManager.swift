@@ -351,6 +351,10 @@ class CardManager {
         return true
     }
     
+    class func fileExists() -> Bool {
+        return FileManager.default.fileExists(atPath: filename())
+    }
+    
     private class func filename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]

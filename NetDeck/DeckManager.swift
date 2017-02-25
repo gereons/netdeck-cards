@@ -69,7 +69,7 @@ class DeckManager {
         return loadDecksForRole(role)
     }
     
-    class func loadDecksForRole(_ role: Role) -> [Deck] {
+    private class func loadDecksForRole(_ role: Role) -> [Deck] {
         var decks = [Deck]()
         
         let dir = directoryForRole(role)
@@ -117,6 +117,18 @@ class DeckManager {
             return deck
         }
         return nil
+    }
+    
+    class func numberOfDecks() -> Int {
+        let roles = [Role.runner, .corp]
+        
+        let decks = roles.reduce(0) {
+            let dir = directoryForRole($1)
+            let files = try? FileManager.default.contentsOfDirectory(atPath: dir)
+            return $0 + (files?.count ?? 0)
+        }
+        
+        return decks
     }
     
     class func directoryForRole(_ role: Role) -> String {
