@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-@objc(SetSelectionViewController) // need for IASK
+@objc(SetSelectionViewController) // needed for IASK
 class SetSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
@@ -18,7 +18,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     var values = [[Pack]]()
     
     convenience init() {
-        self.init()
+        self.init(nibName: nil, bundle: nil)
 
         let tableData = PackManager.allKnownPacksForSettings()
         self.sections = tableData.sections 
