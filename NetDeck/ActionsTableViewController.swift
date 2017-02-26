@@ -24,7 +24,6 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         
         self.tableView.isScrollEnabled = false
-        self.navigationController?.navigationBar.barTintColor = .white
         
         self.title = "Net Deck"
         

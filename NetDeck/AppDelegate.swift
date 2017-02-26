@@ -103,12 +103,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         let root: UIViewController
         if Device.isIphone {
-            root = UINavigationController(rootViewController: IphoneStartViewController())
+            let navController = UINavigationController(rootViewController: IphoneStartViewController())
+            root = navController
         } else {
             let splitView = UISplitViewController()
             let masterNavigation = UINavigationController(rootViewController: ActionsTableViewController())
             splitView.viewControllers = [ masterNavigation, EmptyDetailViewController() ]
             root = splitView
+        }
+        UINavigationBar.appearance().barTintColor = .white
+        if Device.isIphone {
+            UINavigationBar.appearance().isTranslucent = false
         }
         self.replaceRootViewController(with: root)
         
@@ -152,26 +157,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         if !cardsOk || !Device.isIphone {
             return false
         }
-        
-        /*
-        if let start = self.navigationController as? IphoneStartViewController {
-            start.popToRootViewController(animated: false)
-            
-            switch shortcutItem.type {
-            case "org.steffens.NRDB.newRunner":
-                start.addNewDeck(.runner)
-                return true
-            case "org.steffens.NRDB.newCorp":
-                start.addNewDeck(.corp)
-                return true
-            case "org.steffens.NRDB.cardBrowswer":
-                start.openBrowser()
-                return true
-            default:
-                return false
+
+        FIXME("needs testing!")
+        if let nav = self.window!.rootViewController as? UINavigationController {
+            nav.popToRootViewController(animated: false)
+            if let start = nav.viewControllers.first as? IphoneStartViewController {
+                switch shortcutItem.type {
+                case "org.steffens.NRDB.newRunner":
+                    start.addNewDeck(.runner)
+                    return true
+                case "org.steffens.NRDB.newCorp":
+                    start.addNewDeck(.corp)
+                    return true
+                case "org.steffens.NRDB.cardBrowswer":
+                    start.openBrowser()
+                    return true
+                default:
+                    return false
+                }
             }
         }
-        */
+
         return false
     }
     
