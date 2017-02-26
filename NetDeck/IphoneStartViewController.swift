@@ -18,7 +18,6 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     private var runnerDecks = [Deck]()
     private var corpDecks = [Deck]()
     private var decks = [[Deck]]()
-    private var settings: SettingsViewController!
     
     private var addButton: UIBarButtonItem!
     private var importButton: UIBarButtonItem!
@@ -33,7 +32,6 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLoad()
         
         self.title = "Net Deck"
-        // self.tableViewController.title = "Net Deck"
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.loadCards(_:)), name: Notifications.loadCards, object: nil)
@@ -276,8 +274,8 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - settings
     
     func openSettings(_ sender: UIBarButtonItem) {
-        self.settings = SettingsViewController()
-        self.navigationController?.pushViewController(self.settings.iask, animated: true)
+        let settings = SettingsViewController()
+        self.navigationController?.pushViewController(settings, animated: true)
     }
     
     // MARK: - browser
@@ -287,7 +285,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func openBrowser() {
-        let browser = BrowserViewController(nibName: "BrowserViewController", bundle: nil)
+        let browser = BrowserViewController()
         self.navigationController?.pushViewController(browser, animated: true)
     }
     

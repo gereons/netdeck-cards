@@ -30,8 +30,8 @@ class CardImagePopup: UIViewController {
         vc.present(popup, animated: false, completion: nil)
     }
     
-    init(cc: CardCounter, deck: Deck) {
-        super.init(nibName: "CardImagePopup", bundle: nil)
+    required init(cc: CardCounter, deck: Deck) {
+        super.init(nibName: nil, bundle: nil)
         assert(cc.card.type != .identity)
         self.cc = cc
         self.deck = deck

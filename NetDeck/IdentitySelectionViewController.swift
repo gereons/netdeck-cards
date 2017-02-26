@@ -38,8 +38,8 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         vc.present(selection, animated: false, completion: nil)
     }
     
-    init(role: Role, identity: Card?) {
-        super.init(nibName: "IdentitySelectionViewController", bundle: nil)
+    convenience init(role: Role, identity: Card?) {
+        self.init()
         
         self.modalPresentationStyle = .formSheet
         
@@ -58,10 +58,6 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         self.identities = self.allIdentities
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         

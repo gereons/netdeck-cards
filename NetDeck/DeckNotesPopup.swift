@@ -24,9 +24,9 @@ class DeckNotesPopup: UIViewController {
         popup.preferredContentSize = CGSize(width: 540, height: 300)
     }
 
-    init(deck: Deck) {
+    required init(deck: Deck) {
         self.deck = deck
-        super.init(nibName: "DeckNotesPopup", bundle: nil)
+        super.init(nibName: nil, bundle: nil)
 
         self.modalPresentationStyle = .formSheet
     }

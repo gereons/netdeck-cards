@@ -70,7 +70,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     static func show(for card: Card, from rect: CGRect, in vc: UIViewController, subView view: UIView) {
         assert(CardImageViewPopover.popover == nil, "previous popover still visible?")
         
-        let popover = CardImageViewPopover(nibName: "CardImageViewPopover", bundle: nil)
+        let popover = CardImageViewPopover()
         popover.card = card
         
         popover.modalPresentationStyle = .popover

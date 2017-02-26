@@ -12,7 +12,6 @@ import SVProgressHUD
 import SwiftyUserDefaults
 
 // TODO: investigate OOMs - memory warnings?
-// TODO: fix VC init methods, initWithNibName?
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {

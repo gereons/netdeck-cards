@@ -17,8 +17,8 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     var sections = [String]()
     var values = [[Pack]]()
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    convenience init() {
+        self.init()
 
         let tableData = PackManager.allKnownPacksForSettings()
         self.sections = tableData.sections 
@@ -29,10 +29,6 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             let numCores = Pack(named: "Number of Core Sets".localized(), key: DefaultsKeys.numCores._key)
             self.values[1].insert(numCores, at: 1)
         }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func coresAlert(_ sender: UIButton) {

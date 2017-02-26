@@ -36,15 +36,11 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
         NRDBAuthPopupViewController.popup = popup
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    convenience init() {
+        self.init()
         if Device.isIpad {
             self.modalPresentationStyle = .formSheet
         }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {

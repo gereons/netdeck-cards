@@ -101,13 +101,12 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     private var showAllFilters = true
     private var viewMode = View.list
     
-    init(role: Role) {
+    required init(role: Role) {
         self.deckListViewController = DeckListViewController()
-        
-        super.init(nibName: nil, bundle: nil)
-        
         self.role = role
         self.deckListViewController.role = role
+        
+        super.init(nibName: nil, bundle: nil)
     }
     
     convenience init(role: Role, andFile file: String) {

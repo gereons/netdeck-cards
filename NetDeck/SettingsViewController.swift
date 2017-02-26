@@ -10,23 +10,23 @@ import InAppSettingsKit
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class SettingsViewController: NSObject, IASKSettingsDelegate {
+class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegate {
  
-    let iask: IASKAppSettingsViewController
-    
-    override init() {
-        FIXME("make this a real UIViewController")
-        self.iask = IASKAppSettingsViewController(style: .grouped)
-        super.init()
+    required init() {
+        super.init(style: .grouped)
         
-        self.iask.delegate = self
-        self.iask.showDoneButton = false
+        self.delegate = self
+        self.showDoneButton = false
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.settingsChanged(_:)), name: Notification.Name(kIASKAppSettingChanged), object: nil)
         nc.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
         
         self.refresh()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func refresh() {
@@ -56,7 +56,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
             hiddenKeys.insert(DefaultsKeys.autoSaveDropbox._key)
         }
         
-        self.iask.hiddenKeys = hiddenKeys
+        self.hiddenKeys = hiddenKeys
     }
     
     func cardsLoaded(_ notification: Notification) {
@@ -78,7 +78,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
             let useDropbox = value as? Bool ?? false
             
             if useDropbox {
-                DropboxWrapper.authorizeFromController(self.iask)
+                DropboxWrapper.authorizeFromController(self)
             } else {
                 DropboxWrapper.unlinkClient()
             }
@@ -138,9 +138,9 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
         }
         
         if Device.isIpad {
-            NRDBAuthPopupViewController.show(in: self.iask)
+            NRDBAuthPopupViewController.show(in: self)
         } else {
-            NRDBAuthPopupViewController.push(on: self.iask.navigationController!)
+            NRDBAuthPopupViewController.push(on: self.navigationController!)
         }
     }
     

@@ -18,7 +18,6 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var version: UIBarButtonItem!
     
-    private var settings: SettingsViewController!
     private var searchForCard: Card?
     
     override func viewDidLoad() {
@@ -189,8 +188,6 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
             return
         }
         
-        self.settings = nil
-        
         let menuItem = MenuItem(rawValue: indexPath.row) ?? .count
         
         switch menuItem {
@@ -210,8 +207,8 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
             let browser = BrowserFilterViewController()
             self.navigationController?.pushViewController(browser, animated: true)
         case .settings:
-            self.settings = SettingsViewController()
-            self.showAsDetailViewController(settings.iask)
+            let settings = SettingsViewController()
+            self.showAsDetailViewController(settings)
         case .about:
             let about = AboutViewController()
             self.showAsDetailViewController(about)

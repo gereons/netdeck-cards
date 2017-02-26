@@ -39,11 +39,12 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
         ddvc.preferredContentSize = CGSize(width: 768, height: 728)
     }
     
-    init(deck1: Deck, deck2: Deck) {
+    required  init(deck1: Deck, deck2: Deck) {
         self.deck1 = deck1
         self.deck2 = deck2
         self.diffMode = .diff
-        super.init(nibName: "DeckDiffViewController", bundle: nil)
+        
+        super.init(nibName: nil, bundle: nil)
         self.modalPresentationStyle = .formSheet
     }
     

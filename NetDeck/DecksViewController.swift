@@ -66,10 +66,6 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         .corp: "Corp".localized()
     ]
 
-    convenience init() {
-        self.init(nibName: "DecksViewController", bundle: nil)
-    }
-    
     convenience init(card: Card) {
         self.init()
         self.filterText = card.name

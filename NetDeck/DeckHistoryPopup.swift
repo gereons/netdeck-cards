@@ -26,7 +26,7 @@ class DeckHistoryPopup: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     convenience init(deck: Deck) {
-        self.init(nibName: "DeckHistoryPopup", bundle: nil)
+        self.init()
         self.deck = deck
         self.modalPresentationStyle = .formSheet
         

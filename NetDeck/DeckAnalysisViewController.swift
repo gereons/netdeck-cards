@@ -30,9 +30,10 @@ class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITab
         viewController.present(analysis, animated: false, completion: nil)
     }
     
-    init(deck: Deck) {
+    required init(deck: Deck) {
         self.deck = deck
-        super.init(nibName: "DeckAnalysisViewController", bundle: nil)
+        super.init(nibName: nil, bundle: nil)
+        
         self.modalPresentationStyle = .formSheet
         
         self.errors = deck.checkValidity()

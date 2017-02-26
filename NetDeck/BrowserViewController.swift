@@ -151,7 +151,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let card = self.cards[indexPath.section][indexPath.row]
     
-        let img = CardImageViewController(nibName: "CardImageViewController", bundle: nil)
+        let img = CardImageViewController()
     
         // flatten our 2d cards array into a single list
         var cards = [Card]()

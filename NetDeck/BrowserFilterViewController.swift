@@ -70,13 +70,12 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     private var prevStr = 0
     private var prevInf = 0
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    required init() {
         self.browser = BrowserResultViewController()
-        
         self.packUsage = Defaults[.browserPacks]
         self.cardList = CardList.browserInitForRole(self.role, packUsage: self.packUsage)
         
-        super.init(nibName: nibNameOrNil, bundle: nil)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
