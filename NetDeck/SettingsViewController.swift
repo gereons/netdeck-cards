@@ -15,6 +15,7 @@ class SettingsViewController: NSObject, IASKSettingsDelegate {
     let iask: IASKAppSettingsViewController
     
     override init() {
+        FIXME("make this a real UIViewController")
         self.iask = IASKAppSettingsViewController(style: .grouped)
         super.init()
         

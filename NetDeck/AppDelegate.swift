@@ -12,18 +12,11 @@ import SVProgressHUD
 import SwiftyUserDefaults
 
 // TODO: investigate OOMs - memory warnings?
-// TODO: post-rotation legality checks?
+// TODO: fix VC init methods, initWithNibName?
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var window: UIWindow?
-    
-    // root controller on ipad
-    @IBOutlet var splitViewController: UISplitViewController?
-    @IBOutlet var detailViewManager: DetailViewManager?
-    
-    // root controller on iphone
-    @IBOutlet var navigationController: UINavigationController?
     
     var launchShortcutItem: UIApplicationShortcutItem?
     
@@ -109,7 +102,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         Reachability.start()
         
-        let root = self.splitViewController ?? UINavigationController(rootViewController: IphoneStartViewController())
+        let root: UIViewController
+        if Device.isIphone {
+            root = UINavigationController(rootViewController: IphoneStartViewController())
+        } else {
+            let splitView = UISplitViewController()
+            let masterNavigation = UINavigationController(rootViewController: ActionsTableViewController())
+            splitView.viewControllers = [ masterNavigation, EmptyDetailViewController() ]
+            root = splitView
+        }
         self.replaceRootViewController(with: root)
         
         let cardsOk = CardManager.cardsAvailable && PackManager.packsAvailable

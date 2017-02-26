@@ -18,7 +18,6 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var version: UIBarButtonItem!
     
-    private var navController: UINavigationController!
     private var settings: SettingsViewController!
     private var searchForCard: Card?
     
@@ -70,10 +69,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
 
     private func resetDetailView() {
         let empty = EmptyDetailViewController()
-        self.navController = UINavigationController(rootViewController: empty)
-        
-        let detailManager = self.splitViewController?.delegate as! DetailViewManager
-        detailManager.detailViewController = self.navController
+        self.showAsDetailViewController(empty)
     }
     
     func loadDeck(_ notification: Notification) {
@@ -131,15 +127,8 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func loadCards(_ notification: Notification) {
-        self.tableView.reloadData()
-        
-        if let detailViewManager = self.splitViewController?.delegate as? DetailViewManager {
-            let detail = detailViewManager.detailViewController
-            
-            if detail?.childViewControllers.first is EmptyDetailViewController {
-                self.selectDecks()
-            }
-        }
+        self.tableView.reloadData()        
+        self.selectDecks()
     }
     
     func listDecks(_ notification: Notification) {
@@ -185,8 +174,8 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         case .browser:
             cell.textLabel?.text = "Card Browser".localized()
             cell.textLabel?.isEnabled = cardsAvailable
-        default:
-            break
+        case .count:
+            assert(false, "this can't happen")
         }
         
         return cell
@@ -202,7 +191,6 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         
         self.settings = nil
         
-        let detailViewManager = self.splitViewController?.delegate as! DetailViewManager
         let menuItem = MenuItem(rawValue: indexPath.row) ?? .count
         
         switch menuItem {
@@ -214,26 +202,28 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 decks = SavedDecksList()
             }
-            self.navController = UINavigationController(rootViewController: decks)
-            detailViewManager.detailViewController = self.navController
+            self.showAsDetailViewController(decks)
         case .deckDiff:
             let compare = CompareDecksList()
-            self.navController = UINavigationController(rootViewController: compare)
-            detailViewManager.detailViewController = self.navController
+            self.showAsDetailViewController(compare)
         case .browser:
             let browser = BrowserFilterViewController()
             self.navigationController?.pushViewController(browser, animated: true)
         case .settings:
             self.settings = SettingsViewController()
-            self.navController = UINavigationController(rootViewController: self.settings.iask)
-            detailViewManager.detailViewController = self.navController
+            self.showAsDetailViewController(settings.iask)
         case .about:
             let about = AboutViewController()
-            self.navController = UINavigationController(rootViewController: about)
-            detailViewManager.detailViewController = self.navController
-        default:
-            break
+            self.showAsDetailViewController(about)
+        case .count:
+            assert(false, "this can't happen")
         }
+    }
+    
+    private func showAsDetailViewController(_ vc: UIViewController) {
+        let navController = UINavigationController(rootViewController: vc)
+        navController.navigationBar.barTintColor = .white
+        self.showDetailViewController(navController, sender: self)
     }
     
 }

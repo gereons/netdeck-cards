@@ -53,7 +53,6 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     @IBOutlet weak var summaryLabel: UILabel!
 
     private var browser: BrowserResultViewController
-    private var navController: UINavigationController
     private var cardList: CardList
     
     private var role = Role.none
@@ -71,14 +70,13 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     private var prevStr = 0
     private var prevInf = 0
     
-    init() {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         self.browser = BrowserResultViewController()
-        self.navController = UINavigationController(rootViewController: self.browser)
         
         self.packUsage = Defaults[.browserPacks]
         self.cardList = CardList.browserInitForRole(self.role, packUsage: self.packUsage)
-
-        super.init(nibName: "BrowserFilterViewController", bundle: nil)
+        
+        super.init(nibName: nibNameOrNil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,8 +92,6 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         Analytics.logEvent("Browser", attributes: ["Device": "iPad"])
         
         self.edgesForExtendedLayout = []
-
-        
         
         // side
         self.sideSelector.setTitle("Both".localized(), forSegmentAt: 0)
@@ -167,8 +163,8 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         nc.addObserver(self, selector: #selector(self.dismissKeyboard(_:)), name: Notifications.browserNew, object: nil)
         nc.addObserver(self, selector: #selector(self.dismissKeyboard(_:)), name: Notifications.browserFind, object: nil)
         
-        let detailViewManager = self.splitViewController?.delegate as! DetailViewManager
-        detailViewManager.detailViewController = self.navController
+        let nav = UINavigationController(rootViewController: self.browser)
+        self.splitViewController?.showDetailViewController(nav, sender: self)
         
         self.clearFiltersClicked(self)
         

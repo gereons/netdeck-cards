@@ -486,9 +486,4 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         return UIColor(patternImage: ImageCache.hexTileLight)
     }
     
-    func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
-        return -64
-    }
-
 }
-

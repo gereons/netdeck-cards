@@ -64,8 +64,6 @@
 		<key>NSExceptionDomains</key>
 		<dict/>
 	</dict>
-	<key>NSMainNibFile~ipad</key>
-	<string>MainWindow</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>netrunner.ttf</string>

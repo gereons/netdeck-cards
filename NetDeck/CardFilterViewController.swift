@@ -54,7 +54,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var collectionView: UICollectionView!
     
     private var deckListViewController: DeckListViewController
-    private var navController: UINavigationController
     
     private var revertButton: UIBarButtonItem!
     private var role = Role.none
@@ -104,9 +103,8 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     init(role: Role) {
         self.deckListViewController = DeckListViewController()
-        self.navController = UINavigationController(rootViewController: self.deckListViewController)
         
-        super.init(nibName: "CardFilterViewController", bundle: nil)
+        super.init(nibName: nil, bundle: nil)
         
         self.role = role
         self.deckListViewController.role = role
@@ -173,9 +171,9 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         
         self.edgesForExtendedLayout = .bottom
         
-        let detailViewManager = self.splitViewController?.delegate as! DetailViewManager
-        detailViewManager.detailViewController = self.navController
-        
+        let nav = UINavigationController(rootViewController: self.deckListViewController)
+        self.splitViewController?.showDetailViewController(nav, sender: self)
+                
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
         nc.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
