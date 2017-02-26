@@ -76,3 +76,18 @@ class DebugTimer {
     }
 
 }
+
+class SimpleTimer {
+    let start: TimeInterval
+    let str: String
+    
+    init(_ str: String) {
+        self.start = Date.timeIntervalSinceReferenceDate
+        self.str = str
+    }
+    
+    func stop() {
+        let elapsed = Date.timeIntervalSinceReferenceDate - start
+        print("\(str) took \(elapsed)s")
+    }
+}

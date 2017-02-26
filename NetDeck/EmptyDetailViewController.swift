@@ -26,14 +26,12 @@ class EmptyDetailViewController: UIViewController {
         
         self.navigationController?.navigationBar.barTintColor = .white
         
-        self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTileLight)
-        
         let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
         self.emptyDataSetView.isHidden = cardsAvailable
         self.spinner.isHidden = !cardsAvailable
         
-        if (cardsAvailable) {
-            // self.spinner.startAnimating()
+        if !cardsAvailable {
+            self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTileLight)
         }
         self.spinner.stopAnimating()
         self.spinner.isHidden = true

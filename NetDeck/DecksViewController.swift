@@ -27,8 +27,6 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     var filterText = ""
     
-//    private var runnerDecks = [Deck]()
-//    private var corpDecks = [Deck]()
     private var dateFormatter: DateFormatter = {
         let fmt = DateFormatter()
         fmt.dateStyle = .medium
@@ -109,15 +107,6 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.searchBar.showsCancelButton = false
         self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue
         self.searchBar.sizeToFit()
-        
-        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        self.tableView.backgroundColor = .clear
-        self.tableView.rowHeight = 44
-        self.tableView.register(UINib(nibName: "DeckCell", bundle: nil), forCellReuseIdentifier: "deckCell")
-        self.tableView.contentOffset = CGPoint(x: 0, y: self.searchBar.frame.size.height)
-        
-        self.tableView.emptyDataSetSource = self
-        self.tableView.emptyDataSetDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +125,16 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
         nc.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
         
-        self.updateDecks()
+        self.loadDecks()
+        
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        self.tableView.backgroundColor = .clear
+        self.tableView.rowHeight = 44
+        self.tableView.register(UINib(nibName: "DeckCell", bundle: nil), forCellReuseIdentifier: "deckCell")
+        self.tableView.contentOffset = CGPoint(x: 0, y: self.searchBar.frame.size.height)
+        
+        self.tableView.emptyDataSetSource = self
+        self.tableView.emptyDataSetDelegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -264,6 +262,12 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.sideFilterButton.title = sideStr[self.filterType]! + Constant.arrow
         self.stateFilterButton.title = DeckState.buttonLabelFor(self.filterState)
         
+        self.loadDecks()
+        
+        self.tableView.reloadData()
+    }
+    
+    private func loadDecks() {
         var runnerDecks = self.filterType != .corp ? DeckManager.decksForRole(.runner) : []
         var corpDecks = self.filterType != .runner ? DeckManager.decksForRole(.corp) : []
         if BuildConfig.debug {
@@ -306,8 +310,6 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         self.decks = [ runnerDecks, corpDecks ]
-        
-        self.tableView.reloadData()
     }
     
     func checkDecks(decks: [Deck]) {

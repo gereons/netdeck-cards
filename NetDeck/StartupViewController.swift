@@ -13,89 +13,37 @@ class StartupViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     private let backgroundColor = UIColor(rgb: 0xefeff4)
-    private var dispatchGroup: DispatchGroup
-    private var points = [CGPoint]()
-    private var timeEstimate = 0.0
-    private var interval = 0.0
-    private let debugAnimation = true
     
     private let greys: [UIColor] = [
         UIColor(rgb: 0xefeff4),
         UIColor(rgb: 0xeeeef3),
         UIColor(rgb: 0xededf2),
         UIColor(rgb: 0xececf1),
-//        UIColor(rgb: 0xe6e6eb),
-//        UIColor(rgb: 0xdcdce0),
-//        UIColor(rgb: 0xcdcdd1)
+        UIColor(rgb: 0xebebf0),
+        UIColor(rgb: 0xeaeaef),
+        UIColor(rgb: 0xe9e9ee)
     ]
-    
-    required init(_ dispatchGroup: DispatchGroup, numberOfDecks: Int) {
-        self.dispatchGroup = dispatchGroup
-        self.dispatchGroup.enter()
-        self.timeEstimate = 0.01 * Double(numberOfDecks) + 0.5
-        print("\(self.timeEstimate)")
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = backgroundColor
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         let size = UIScreen.main.bounds.size
         for row in 0 ... Int(Double(size.height) / Hex.rowHeight) {
             for col in 0 ... Int(Double(size.width) / Hex.columnWidth) {
-                self.points.append(CGPoint(x: row, y: col))
+                self.addHexLayer(at: CGPoint(x: row, y: col))
             }
         }
-        self.points.shuffle()
-        self.interval = min(0.005, self.timeEstimate / Double(self.points.count))
-        print("\(interval)")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        if BuildConfig.debug && !self.debugAnimation {
-            self.drawAllHexes()
-        } else {
-            self.drawHexSequence()
-        }
+        self.view.bringSubview(toFront: spinner)
+        self.spinner.startAnimating()
     }
     
     func stopSpinner() {
         self.spinner.stopAnimating()
-    }
-    
-    private func drawHexSequence() {
-        print("draw hex sequence")
-        DispatchQueue.main.async {
-            self.drawNextHex()
-        }
-    }
-    
-    private func drawAllHexes() {
-        self.points.forEach {
-            self.addHexLayer(at: $0)
-        }
-        dispatchGroup.leave()
-    }
-    
-    private func drawNextHex() {
-        guard let point = self.points.popLast() else {
-            self.view.bringSubview(toFront: spinner)
-            self.spinner.startAnimating()
-            self.dispatchGroup.leave()
-            return
-        }
-        
-        self.addHexLayer(at: point)
-        DispatchQueue.main.asyncAfter(deadline: .now() + self.interval) {
-            self.drawNextHex()
-        }
     }
     
     private func addHexLayer(at point: CGPoint) {

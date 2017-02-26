@@ -50,6 +50,7 @@ class SavedDecksList: DecksViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.navigationItem.rightBarButtonItems = self.normalRightButtons
     }
         

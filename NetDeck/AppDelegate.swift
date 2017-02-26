@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var launchShortcutItem: UIApplicationShortcutItem?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self])
@@ -37,24 +38,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         // make sure the Library/Application Support directory exists
         self.ensureAppSupportDirectoryExists()
-        let decks = DeckManager.numberOfDecks()
-        let filesExist = CardManager.fileExists() && PackManager.filesExist() && decks > 0
-        print("exist=\(filesExist)")
+        let filesExist = CardManager.fileExists() && PackManager.filesExist()
         let initGroup = DispatchGroup()
         
         if filesExist {
-            self.window!.rootViewController = StartupViewController(initGroup, numberOfDecks: decks)
+            self.window!.rootViewController = StartupViewController()
             self.window!.makeKeyAndVisible()
         }
         
         self.setBuiltinUserDefaults()
-        
         DispatchQueue.global(qos: .userInteractive).async {
             initGroup.enter()
             self.initializeData()
             initGroup.leave()
         }
-        
         self.waitForInitialization(initGroup)
         
         let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem
@@ -66,9 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     }
     
     private func waitForInitialization(_ initGroup: DispatchGroup) {
-        print("wait for init")
         initGroup.notify(queue: DispatchQueue.main) {
-            print("continue launch")
             self.finializeLaunch()
         }
     }
@@ -86,13 +81,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         if setsOk && cardsOk {
             let _ = PrebuiltManager.setupFromFiles(language)
         }
-        let end = Date.timeIntervalSinceReferenceDate
-        print("card init took \(end-start)s")
-        
-        let start2 = Date.timeIntervalSinceReferenceDate
+
         let _ = DeckManager.decksForRole(.none)
-        let end2 = Date.timeIntervalSinceReferenceDate
-        print("deck init took \(end2-start2)s")
+        let end = Date.timeIntervalSinceReferenceDate
+        print ("init took \(end-start)s")
     }
     
     private func finializeLaunch() {
@@ -140,9 +132,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             
             self.window!.rootViewController = viewController
             
-            UIView.animate(withDuration: 0.2, animations: { _ in
+            UIView.animate(withDuration: 0.25, animations: { _ in
                 snapshot.layer.opacity = 0
-                snapshot.layer.transform = CATransform3DMakeScale(2, 2, 2)
+                snapshot.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
             }, completion: { _ in
                 snapshot.removeFromSuperview()
             })
