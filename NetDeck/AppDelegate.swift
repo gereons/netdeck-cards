@@ -108,8 +108,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         let _ = ImageCache.sharedInstance
         
         Reachability.start()
-    
-        self.replaceRootViewController(with: Device.isIphone ? self.navigationController : self.splitViewController)
+        
+        let root = self.splitViewController ?? UINavigationController(rootViewController: IphoneStartViewController())
+        self.replaceRootViewController(with: root)
         
         let cardsOk = CardManager.cardsAvailable && PackManager.packsAvailable
         if cardsOk {
@@ -119,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         self.logStartup()
     }
     
-    private func replaceRootViewController(with viewController: UIViewController?) {
+    private func replaceRootViewController(with viewController: UIViewController) {
         if self.window!.rootViewController == nil {
             self.window!.rootViewController = viewController
             self.window!.makeKeyAndVisible()
@@ -128,7 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             startup.stopSpinner()
             
             let snapshot = self.window!.snapshotView(afterScreenUpdates: true)!
-            viewController?.view.addSubview(snapshot)
+            viewController.view.addSubview(snapshot)
             
             self.window!.rootViewController = viewController
             
@@ -152,6 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             return false
         }
         
+        /*
         if let start = self.navigationController as? IphoneStartViewController {
             start.popToRootViewController(animated: false)
             
@@ -169,6 +171,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
                 return false
             }
         }
+        */
         return false
     }
     

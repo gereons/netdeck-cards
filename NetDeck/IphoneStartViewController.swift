@@ -10,30 +10,30 @@ import UIKit
 import DZNEmptyDataSet
 import SwiftyUserDefaults
 
-class IphoneStartViewController: UINavigationController, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
+class IphoneStartViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
 
-    @IBOutlet weak var tableViewController: UITableViewController!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var titleButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     
     private var runnerDecks = [Deck]()
     private var corpDecks = [Deck]()
     private var decks = [[Deck]]()
     private var settings: SettingsViewController!
+    
     private var addButton: UIBarButtonItem!
     private var importButton: UIBarButtonItem!
     private var settingsButton: UIBarButtonItem!
     private var sortButton: UIBarButtonItem!
+    private var titleButton: UIButton!
+    
     private var deckListSort = DeckListSort.byName
     private var filterText = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.delegate = self
         self.title = "Net Deck"
-        self.tableViewController.title = "Net Deck"
+        // self.tableViewController.title = "Net Deck"
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.loadCards(_:)), name: Notifications.loadCards, object: nil)
@@ -61,37 +61,35 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         
         self.sortButton = UIBarButtonItem(image: UIImage(named: "890-sort-ascending-toolbar"), style: .plain, target: self, action: #selector(self.changeSort(_:)))
         
-        self.deckListSort = Defaults[.deckFilterSort]
+        self.titleButton = UIButton(type: .system)
+        self.titleButton.setTitle("Net Deck", for: .normal)
+        self.titleButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        self.titleButton.addTarget(self, action: #selector(self.openBrowser), for: .touchUpInside)
         
-        if cardsAvailable && PackManager.packsAvailable {
-            self.initializeDecks()
-        }
+        self.deckListSort = Defaults[.deckFilterSort]
         
         self.tableView.contentInset = UIEdgeInsets.zero
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        let _ = CardUpdateCheck.checkCardUpdateAvailable(self)
-    }
-    
-    // this is my poor man's replacement for viewWillAppear - I can't figure out why this isn't called when this view is
-    // back on top :(
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        if viewController != self.tableViewController {
-            return
-        }
+        self.navigationItem.leftBarButtonItems = [ self.settingsButton, self.sortButton ]
+        self.navigationItem.rightBarButtonItems = [ self.addButton, self.importButton ]
         
-        assert(navigationController.viewControllers.count == 1, "nav oops")
+        self.navigationItem.titleView = self.titleButton
+        
         if CardManager.cardsAvailable && PackManager.packsAvailable {
             self.initializeDecks()
         }
         
         self.tableView.reloadData()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        self.navigationItem.leftBarButtonItems = [ self.settingsButton, self.sortButton ]
-        self.navigationItem.rightBarButtonItems = [ self.addButton, self.importButton ]
+        let _ = CardUpdateCheck.checkCardUpdateAvailable(self)
     }
     
     func initializeDecks() {
@@ -144,10 +142,12 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
         let edit = EditDeckViewController()
         edit.deck = deck
         
-        if self.viewControllers.count > 1 {
-            self.popToRootViewController(animated: false)
+        if let nav = self.navigationController {
+            if nav.viewControllers.count > 1 {
+                nav.popToRootViewController(animated: false)
+            }
+            nav.pushViewController(edit, animated: true)
         }
-        self.pushViewController(edit, animated: true)
     }
     
     // MARK: - add new deck
@@ -173,7 +173,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     func addNewDeck(_ role: Role) {
         let idvc = IphoneIdentityViewController()
         idvc.role = role
-        self.pushViewController(idvc, animated: true)
+        self.navigationController?.pushViewController(idvc, animated: true)
     }
     
     // MARK: - import
@@ -212,7 +212,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     func importDecksFrom(_ importSource: ImportSource) {
         let importVc = ImportDecksViewController()
         importVc.source = importSource
-        self.pushViewController(importVc, animated: true)
+        self.navigationController?.pushViewController(importVc, animated: true)
     }
     
     // MARK: - sort
@@ -277,7 +277,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     
     func openSettings(_ sender: UIBarButtonItem) {
         self.settings = SettingsViewController()
-        self.pushViewController(self.settings.iask, animated: true)
+        self.navigationController?.pushViewController(self.settings.iask, animated: true)
     }
     
     // MARK: - browser
@@ -288,7 +288,7 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     
     func openBrowser() {
         let browser = BrowserViewController(nibName: "BrowserViewController", bundle: nil)
-        self.pushViewController(browser, animated: true)
+        self.navigationController?.pushViewController(browser, animated: true)
     }
     
     // MARK: - table view
@@ -326,12 +326,10 @@ class IphoneStartViewController: UINavigationController, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let deck = self.decks[indexPath.section][indexPath.row]
-        
         let edit = EditDeckViewController()
-        edit.deck = deck
+        edit.deck = self.decks[indexPath.section][indexPath.row]
         
-        self.pushViewController(edit, animated: true)
+        self.navigationController?.pushViewController(edit, animated: true)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
