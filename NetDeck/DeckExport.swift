@@ -86,7 +86,7 @@ class DeckExport {
     }
 
     class func writeToDropbox(_ content: String, filename: String, deckType: String, autoSave: Bool) {
-        DropboxWrapper.saveFileToDropbox(content, filename: filename) { ok in
+        Dropbox.saveFile(content, filename: filename) { ok in
             if autoSave {
                 return
             }

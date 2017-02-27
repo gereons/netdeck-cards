@@ -1,17 +1,17 @@
 //
-//  DropboxWrapper
+//  Dropbox
 //  NetDeck
 //
 //  Created by Gereon Steffens on 13.02.16.
 //  Copyright © 2017 Gereon Steffens. All rights reserved.
 //
 
-// obj-c callable interface to the new swift-based dropbox API
+// wrapper class for Dropbox API calls
 
 import SwiftyDropbox
 import SwiftyUserDefaults
 
-class DropboxWrapper {
+class Dropbox {
     
     class func setup() {
         DropboxClientsManager.setupWithAppKey("4mhw6piwd9wqti3")
@@ -56,7 +56,7 @@ class DropboxWrapper {
         DropboxClientsManager.unlinkClients()
     }
     
-    class func listDropboxFiles(_ completion: @escaping ([String])->() ) {
+    class func listFiles(_ completion: @escaping ([String])->() ) {
         guard let client = DropboxClientsManager.authorizedClient else { return }
         
         let _ = client.files.listFolder(path: "").response { response, error in
@@ -70,7 +70,7 @@ class DropboxWrapper {
         }
     }
     
-    class func downloadDropboxFiles(_ names: [String], toDirectory: String, completion: @escaping ()->() ) {
+    class func downloadFiles(_ names: [String], toDirectory: String, completion: @escaping ()->() ) {
         guard let client = DropboxClientsManager.authorizedClient else { return }
         
         var count = 0
@@ -93,7 +93,7 @@ class DropboxWrapper {
         }
     }
     
-    class func saveFileToDropbox(_ content: String, filename: String, completion: @escaping (Bool)->() ) {
+    class func saveFile(_ content: String, filename: String, completion: @escaping (Bool)->() ) {
         guard let client = DropboxClientsManager.authorizedClient else { return }
         
         if let data = content.data(using: String.Encoding.utf8) {

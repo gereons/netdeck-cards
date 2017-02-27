@@ -78,9 +78,9 @@ class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegat
             let useDropbox = value as? Bool ?? false
             
             if useDropbox {
-                DropboxWrapper.authorizeFromController(self)
+                Dropbox.authorizeFromController(self)
             } else {
-                DropboxWrapper.unlinkClient()
+                Dropbox.unlinkClient()
             }
             
             NotificationCenter.default.post(name: Notifications.dropboxChanged, object: self)

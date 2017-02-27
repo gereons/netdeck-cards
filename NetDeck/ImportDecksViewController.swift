@@ -247,7 +247,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         self.runnerDecks.removeAll()
         self.corpDecks.removeAll()
         
-        DropboxWrapper.listDropboxFiles { names in
+        Dropbox.listFiles { names in
             var deckNames = [String]()
             for name in names {
                 if name.lowercased().hasSuffix(".o8d") {
@@ -267,7 +267,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         try? fileManager.removeItem(atPath: directory)
         try? fileManager.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: nil)
         
-        DropboxWrapper.downloadDropboxFiles(deckNames, toDirectory: directory) {
+        Dropbox.downloadFiles(deckNames, toDirectory: directory) {
             SVProgressHUD.dismiss()
             
             self.readDecksFromDropbox(directory)

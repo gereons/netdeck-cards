@@ -16,7 +16,7 @@
 		3A0AD1E31E14010400194AFF /* DeckDiffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0AD1E21E14010400194AFF /* DeckDiffViewController.swift */; };
 		3A0AD1E51E140B9B00194AFF /* DeckDiffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0AD1E41E140B9B00194AFF /* DeckDiffCell.swift */; };
 		3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11341E19AC5B5A0012494E /* IdentityCardView.xib */; };
-		3A114EBF1C6F7FDB00BF8C3C /* DropboxWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */; };
+		3A114EBF1C6F7FDB00BF8C3C /* Dropbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A114EBE1C6F7FDB00BF8C3C /* Dropbox.swift */; };
 		3A11C5FC19715C0A003F2093 /* CollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */; };
 		3A126E901D0320ED00CDF580 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A126E8F1D0320ED00CDF580 /* Translation.swift */; };
 		3A14E39F1E5F720600F0D4CB /* StartupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A14E39D1E5F720600F0D4CB /* StartupViewController.swift */; };
@@ -193,7 +193,7 @@
 		3A0AD1E21E14010400194AFF /* DeckDiffViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckDiffViewController.swift; sourceTree = "<group>"; };
 		3A0AD1E41E140B9B00194AFF /* DeckDiffCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckDiffCell.swift; sourceTree = "<group>"; };
 		3A11341E19AC5B5A0012494E /* IdentityCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityCardView.xib; sourceTree = "<group>"; };
-		3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropboxWrapper.swift; sourceTree = "<group>"; };
+		3A114EBE1C6F7FDB00BF8C3C /* Dropbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dropbox.swift; sourceTree = "<group>"; };
 		3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		3A126E8F1D0320ED00CDF580 /* Translation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
 		3A14E39D1E5F720600F0D4CB /* StartupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupViewController.swift; sourceTree = "<group>"; };
@@ -531,7 +531,7 @@
 			isa = PBXGroup;
 			children = (
 				3A2F4ADB1C8C716400B711BD /* ImageCache.swift */,
-				3A114EBE1C6F7FDB00BF8C3C /* DropboxWrapper.swift */,
+				3A114EBE1C6F7FDB00BF8C3C /* Dropbox.swift */,
 				3A822F6D1CC2C13500305789 /* BuildConfig.swift */,
 				3A6228131C1456F400FBF041 /* DefaultsKeys.swift */,
 				3AF697881C1DAC7300D254CE /* Notifications.swift */,
@@ -1115,7 +1115,7 @@
 				3A285BA11D109A54007EC30F /* EmptyDetailViewController.swift in Sources */,
 				3A3BBEAB1E36946800DFF6AE /* ActionsTableViewController.swift in Sources */,
 				3A39FBC81CB96F6B000F1B23 /* BrowserViewController.swift in Sources */,
-				3A114EBF1C6F7FDB00BF8C3C /* DropboxWrapper.swift in Sources */,
+				3A114EBF1C6F7FDB00BF8C3C /* Dropbox.swift in Sources */,
 				3A78D3D31E164CC400E91584 /* IdentityViewCell.swift in Sources */,
 				3A3375561E1ACDAA002E3B6E /* DeckHistoryPopup.swift in Sources */,
 				3A822F6E1CC2C13500305789 /* BuildConfig.swift in Sources */,

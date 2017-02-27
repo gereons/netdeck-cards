@@ -95,16 +95,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             NRDBHack.sharedInstance.silentlyLoginOnStartup()
         }
         
-        DropboxWrapper.setup()
+        Dropbox.setup()
         
         SVProgressHUD.setDefaultMaskType(.black)
         SVProgressHUD.setMinimumDismissTimeInterval(1.0)
         
         CardImageViewPopover.monitorKeyboard()
-        
-        // just so the initializer gets called
-        let _ = ImageCache.sharedInstance
-        
         Reachability.start()
         
         let root: UIViewController
@@ -286,7 +282,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             }
             return true
         } else if (scheme?.hasPrefix("db-"))! {
-            let ok = DropboxWrapper.handleURL(url)
+            let ok = Dropbox.handleURL(url)
             Defaults[.useDropbox] = ok
             if ok {
                 SVProgressHUD.showSuccess(withStatus: "Successfully connected to your Dropbox account".localized())
