@@ -13,11 +13,17 @@ import SwiftyUserDefaults
 
 // TODO: investigate OOMs - memory warnings?
 
+protocol StartViewController {
+    func addNewDeck(_ role: Role)
+    func openBrowser()
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     var window: UIWindow?
     
-    var launchShortcutItem: UIApplicationShortcutItem?
+    private var launchShortcutItem: UIApplicationShortcutItem?
+    private var navigationController: UINavigationController!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -103,12 +109,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         let root: UIViewController
         if Device.isIphone {
-            let navController = UINavigationController(rootViewController: IphoneStartViewController())
-            root = navController
+            self.navigationController = UINavigationController(rootViewController: IphoneStartViewController())
+            root = self.navigationController
         } else {
+            self.navigationController = UINavigationController(rootViewController: ActionsTableViewController())
             let splitView = UISplitViewController()
-            let masterNavigation = UINavigationController(rootViewController: ActionsTableViewController())
-            splitView.viewControllers = [ masterNavigation, EmptyDetailViewController() ]
+            splitView.viewControllers = [ self.navigationController, EmptyDetailViewController() ]
             root = splitView
         }
         UINavigationBar.appearance().barTintColor = .white
@@ -154,30 +160,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         let cardsOk = CardManager.cardsAvailable && PackManager.packsAvailable
-        if !cardsOk || !Device.isIphone {
+        if !cardsOk {
             return false
         }
 
-        FIXME("needs testing!")
-        if let nav = self.window!.rootViewController as? UINavigationController {
-            nav.popToRootViewController(animated: false)
-            if let start = nav.viewControllers.first as? IphoneStartViewController {
-                switch shortcutItem.type {
-                case "org.steffens.NRDB.newRunner":
-                    start.addNewDeck(.runner)
-                    return true
-                case "org.steffens.NRDB.newCorp":
-                    start.addNewDeck(.corp)
-                    return true
-                case "org.steffens.NRDB.cardBrowswer":
-                    start.openBrowser()
-                    return true
-                default:
-                    return false
-                }
+        self.navigationController.popToRootViewController(animated: false)
+        if let start = self.navigationController.viewControllers.first as? StartViewController {
+            switch shortcutItem.type {
+            case "org.steffens.NRDB.newRunner":
+                start.addNewDeck(.runner)
+                return true
+            case "org.steffens.NRDB.newCorp":
+                start.addNewDeck(.corp)
+                return true
+            case "org.steffens.NRDB.cardBrowser":
+                start.openBrowser()
+                return true
+            default:
+                return false
             }
         }
-
+        
         return false
     }
     

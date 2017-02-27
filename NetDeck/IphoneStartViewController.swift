@@ -10,7 +10,7 @@ import UIKit
 import DZNEmptyDataSet
 import SwiftyUserDefaults
 
-class IphoneStartViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
+class IphoneStartViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, StartViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!

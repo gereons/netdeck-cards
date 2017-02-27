@@ -13,7 +13,7 @@ enum MenuItem: Int {
     case count
 }
 
-class ActionsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ActionsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StartViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var version: UIBarButtonItem!
@@ -55,6 +55,24 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         self.selectDecks()
+    }
+    
+    func addNewDeck(_ role: Role) {
+        let filter = CardFilterViewController(role: role)
+   
+        if let nav = self.navigationController {
+            if nav.viewControllers.count > 1 {
+                nav.popToRootViewController(animated: false)
+            }
+            nav.pushViewController(filter, animated: true)
+        }
+    }
+
+    func openBrowser() {
+        let indexPath = IndexPath(row: MenuItem.browser.rawValue, section: 0)
+        
+        self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        self.tableView(self.tableView, didSelectRowAt: indexPath)
     }
     
     // select "Decks" view
