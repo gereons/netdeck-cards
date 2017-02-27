@@ -68,11 +68,9 @@ class SettingsDelegate: IASKSettingsDelegate {
         }
         
         Settings.viewController.hiddenKeys = hiddenKeys
-//        self.hiddenKeys = hiddenKeys
     }
     
     @objc func cardsLoaded(_ notification: Notification) {
-        print("got loadCards \(self) \(notification.userInfo)")
         if let success = notification.userInfo?["success"] as? Bool, success {
             self.refresh()
             DeckManager.flushCache()
@@ -85,7 +83,6 @@ class SettingsDelegate: IASKSettingsDelegate {
             return
         }
         let value = notification.userInfo?[key]
-        print("\(self) changed \(key) to \(value)")
         
         switch key {
         case DefaultsKeys.useDropbox._key:
@@ -173,7 +170,6 @@ class SettingsDelegate: IASKSettingsDelegate {
     
     func settingsViewController(_ sender: IASKAppSettingsViewController!, buttonTappedFor specifier: IASKSpecifier!) {
         let key = specifier.key() ?? ""
-        print("\(self) tapped \(key)")
         switch key {
         case IASKButtons.downloadDataNow:
             if Reachability.online {

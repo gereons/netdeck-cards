@@ -20,10 +20,17 @@ class NRDBHack {
     private var manager: Alamofire.SessionManager!
     private var authCompletion: ((Bool) -> Void)!
     
-    private var username: String?
-    private var password: String?
-    
     static let sharedInstance = NRDBHack()
+    
+    private struct Credentials {
+        var username: String
+        var password: String
+        
+        init(_ username: String, _ password: String) {
+            self.username = username
+            self.password = password
+        }
+    }
     
     func enterNrdbCredentialsAndLogin() {
         let alert = UIAlertController(title: "NetrunnerDB.com Login".localized(), message: nil, preferredStyle: .alert)
@@ -43,9 +50,12 @@ class NRDBHack {
         }
         
         alert.addAction(UIAlertAction(title: "Login".localized(), style: .default) { action in
-            self.username = alert.textFields?[0].text
-            self.password = alert.textFields?[1].text
-            self.hackedLogin(self.manualLoginCompletion)
+            let username = alert.textFields?[0].text ?? ""
+            let password = alert.textFields?[1].text ?? ""
+            let credentials = Credentials(username, password)
+            self.hackedLogin(credentials) { success in
+                self.loginCompleted(success, verbose: true, credentials: credentials)
+            }
             SVProgressHUD.show(withStatus: "Logging in...".localized())
         })
             
@@ -69,29 +79,23 @@ class NRDBHack {
     func silentlyLogin() {
         let keychain = KeychainWrapper.standard
         if let username = keychain.string(forKey: KeychainKeys.nrdbUsername), let password = keychain.string(forKey: KeychainKeys.nrdbPassword) {
-            self.username = username
-            self.password = password
-            self.hackedLogin(self.silentLoginCompletion)
+            let credentials = Credentials(username, password)
+            print("silent login attempt")
+            self.hackedLogin(credentials) { success in
+                self.loginCompleted(success, verbose: false, credentials: credentials)
+            }
         }
     }
     
-    func manualLoginCompletion(_ ok: Bool) {
-        self.loginCompletion(ok, verbose: true)
-    }
-    
-    func silentLoginCompletion(_ ok: Bool) {
-        self.loginCompletion(ok, verbose: false)
-    }
-    
-    func loginCompletion(_ ok: Bool, verbose: Bool) {
-        // NSLog("manual login completed ok=\(ok)")
-        if ok {
+    private func loginCompleted(_ success: Bool, verbose: Bool, credentials: Credentials) {
+        print("login completed ok=\(success) verbose=\(verbose)")
+        if success {
             if verbose {
                 SVProgressHUD.dismiss()
             }
             let keychain = KeychainWrapper.standard
-            keychain.set(self.username!, forKey: KeychainKeys.nrdbUsername)
-            keychain.set(self.password!, forKey: KeychainKeys.nrdbPassword)
+            keychain.set(credentials.username, forKey: KeychainKeys.nrdbUsername)
+            keychain.set(credentials.password, forKey: KeychainKeys.nrdbPassword)
             
             NRDB.sharedInstance.startAuthorizationRefresh()
         } else {
@@ -109,13 +113,8 @@ class NRDBHack {
         keychain.removeObject(forKey: KeychainKeys.nrdbPassword)
     }
 
-    func hackedLogin(_ completion: @escaping (Bool) -> Void) {
+    private func hackedLogin(_ credentials: Credentials, _ completion: @escaping (Bool) -> Void) {
         // NSLog("hacking around oauth login")
-        
-        guard let username = username, let password = password else {
-            completion(false)
-            return
-        }
         
         self.authCompletion = completion
         
@@ -144,8 +143,8 @@ class NRDBHack {
         self.manager.request(NRDBHack.AUTH_URL, parameters: parameters).validate().responseString { response in
         
             let parameters = [
-                "_username": username,
-                "_password": password,
+                "_username": credentials.username,
+                "_password": credentials.password,
                 "_submit": "Log In"
             ]
             self.manager.request(NRDBHack.CHECK_URL, method: .post, parameters: parameters).validate().responseString { response in
@@ -176,16 +175,15 @@ class NRDBHack {
     private func redirectHandler(_ session: URLSession!, task: URLSessionTask!, response: HTTPURLResponse!, request: URLRequest!) -> URLRequest {
         // NSLog("redirecting to \(request.URL)")
         
-        if let url = request.url?.absoluteString , url.hasPrefix(NRDB.CLIENT_HOST) {
+        if let url = request.url?.absoluteString, url.hasPrefix(NRDB.CLIENT_HOST) {
             // this is the oauth answer we want to intercept.
             // extract the value of the "code" parameter from the URL and use that to finalize the authorization
             if let components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false), let items = components.queryItems {
-                for item in items {
-                    if item.name == "code"{
-                        let code = item.value
-                        // NSLog("found code \(code)")
-                        NRDB.sharedInstance.authorizeWithCode(code ?? "", completion: self.authCompletion)
-                    }
+                
+                if let item = items.filter({ $0.name == "code" }).first {
+                    let code = item.value
+                    // NSLog("found code \(code)")
+                    NRDB.sharedInstance.authorizeWithCode(code ?? "", completion: self.authCompletion)
                 }
             }
         }

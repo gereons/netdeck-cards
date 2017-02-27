@@ -108,7 +108,8 @@ class NRDB: NSObject {
                             Defaults[.nrdbTokenTTL] = exp
                             let expiry = Date(timeIntervalSinceNow: exp)
                             Defaults[.nrdbTokenExpiry] = expiry
-                        } catch {
+                        } catch let error {
+                            print("auth error: bad json: \(error)")
                             ok = false
                         }
                         if ok {
@@ -119,8 +120,12 @@ class NRDB: NSObject {
                         } else {
                             self.handleAuthorizationFailure(isRefresh, completion: completion)
                         }
+                    } else {
+                        print("auth error: no data")
                     }
                 case .failure:
+                    print("auth error \(response.response?.statusCode)")
+                    
                     self.handleAuthorizationFailure(isRefresh, completion: completion)
                 }
             }

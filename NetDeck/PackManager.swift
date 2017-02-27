@@ -19,7 +19,7 @@ struct Cycle: Unmarshaling {
         self.name = try object.value(for: "name")
         self.code = try object.value(for: "code")
         self.position = try object.value(for: "position")
-        self.rotated = try object.value(for: "rotated")
+        self.rotated = try object.value(for: "rotated") ?? false
     }
 }
 
