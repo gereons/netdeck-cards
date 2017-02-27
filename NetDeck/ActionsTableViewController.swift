@@ -10,7 +10,16 @@ import UIKit
 
 enum MenuItem: Int {
     case decks, deckDiff, browser, settings, about
-    case count
+    
+    var cardsRequired: Bool {
+        switch self {
+        case .decks, .deckDiff, .browser: return true
+        case .settings, .about: return false
+        }
+    }
+    static var count: Int {
+        return 5
+    }
 }
 
 class ActionsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StartViewController {
@@ -19,7 +28,8 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var version: UIBarButtonItem!
     
     private var searchForCard: Card?
-    
+    private var selectedItem = MenuItem.decks
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +47,6 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         nc.addObserver(self, selector: #selector(self.newDeck(_:)), name: Notifications.browserNew, object: nil)
         nc.addObserver(self, selector: #selector(self.importDeckFromClipboard(_:)), name: Notifications.importDeck, object: nil)
         nc.addObserver(self, selector: #selector(self.loadCards(_:)), name: Notifications.loadCards, object: nil)
-        nc.addObserver(self, selector: #selector(self.loadCards(_:)), name: Notifications.dropboxChanged, object: nil)
         nc.addObserver(self, selector: #selector(self.listDecks(_:)), name: Notifications.browserFind, object: nil)
     }
     
@@ -83,11 +92,6 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         self.tableView(self.tableView, didSelectRowAt: indexPath)
     }
 
-    private func resetDetailView() {
-        let empty = EmptyDetailViewController()
-        self.showAsDetailViewController(empty)
-    }
-    
     func loadDeck(_ notification: Notification) {
         guard let roleCode = notification.userInfo?["role"] as? Int,
             let role = Role(rawValue: roleCode),
@@ -144,7 +148,9 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     
     func loadCards(_ notification: Notification) {
         self.tableView.reloadData()        
-        self.selectDecks()
+        if self.selectedItem != .settings {
+            self.selectDecks()
+        }
     }
     
     func listDecks(_ notification: Notification) {
@@ -161,53 +167,49 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - table view
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MenuItem.count.rawValue
+        return MenuItem.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "actions") ?? {
-            let c = UITableViewCell(style: .default, reuseIdentifier: "actions")
+        let identifier = "actionCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) ?? {
+            let c = UITableViewCell(style: .default, reuseIdentifier: identifier)
             c.accessoryType = .disclosureIndicator
             c.textLabel?.font = UIFont.systemFont(ofSize: 17)
             return c
         }()
         
-        let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
+        let menuItem = MenuItem(rawValue: indexPath.row)!
         
-        let menuItem = MenuItem(rawValue: indexPath.row) ?? .count
-        
+        let label: String
         switch menuItem {
         case .about:
-            cell.textLabel?.text = "About".localized()
+            label = "About".localized()
         case .settings:
-            cell.textLabel?.text = "Settings".localized()
+            label = "Settings".localized()
         case .deckDiff:
-            cell.textLabel?.text = "Compare Decks".localized()
-            cell.textLabel?.isEnabled = cardsAvailable
+            label = "Compare Decks".localized()
         case .decks:
-            cell.textLabel?.text = "Decks".localized()
-            cell.textLabel?.isEnabled = cardsAvailable
+            label = "Decks".localized()
         case .browser:
-            cell.textLabel?.text = "Card Browser".localized()
-            cell.textLabel?.isEnabled = cardsAvailable
-        case .count:
-            assert(false, "this can't happen")
+            label = "Card Browser".localized()
         }
+        cell.textLabel?.text = label
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        let enabled = cell?.textLabel?.isEnabled ?? false
-        if !enabled {
+        
+        self.selectedItem = MenuItem(rawValue: indexPath.row)!
+        
+        let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
+        if !cardsAvailable && self.selectedItem.cardsRequired {
             self.resetDetailView()
             return
         }
         
-        let menuItem = MenuItem(rawValue: indexPath.row) ?? .count
-        
-        switch menuItem {
+        switch self.selectedItem {
         case .decks:
             let decks: SavedDecksList
             if let card = self.searchForCard {
@@ -224,14 +226,17 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
             let browser = BrowserFilterViewController()
             self.navigationController?.pushViewController(browser, animated: true)
         case .settings:
-            let settings = SettingsViewController()
+            let settings = Settings.viewController
             self.showAsDetailViewController(settings)
         case .about:
             let about = AboutViewController()
             self.showAsDetailViewController(about)
-        case .count:
-            assert(false, "this can't happen")
         }
+    }
+    
+    private func resetDetailView() {
+        let empty = EmptyDetailViewController()
+        self.showAsDetailViewController(empty)
     }
     
     private func showAsDetailViewController(_ vc: UIViewController) {

@@ -274,7 +274,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - settings
     
     func openSettings(_ sender: UIBarButtonItem) {
-        let settings = SettingsViewController()
+        let settings = Settings.viewController
         self.navigationController?.pushViewController(settings, animated: true)
     }
     

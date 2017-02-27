@@ -10,14 +10,25 @@ import InAppSettingsKit
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegate {
+class Settings {
+    static var viewController: IASKAppSettingsViewController {
+        if iask == nil {
+            iask = IASKAppSettingsViewController(style: .grouped)
+            delegate = SettingsDelegate()
+            
+            iask!.delegate = delegate
+            iask!.showDoneButton = false
+        }
+        return iask!
+    }
+    
+    private static var iask: IASKAppSettingsViewController?
+    private static var delegate: SettingsDelegate?
+}
+
+class SettingsDelegate: IASKSettingsDelegate {
  
     required init() {
-        super.init(style: .grouped)
-        
-        self.delegate = self
-        self.showDoneButton = false
-        
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.settingsChanged(_:)), name: Notification.Name(kIASKAppSettingChanged), object: nil)
         nc.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
@@ -56,34 +67,35 @@ class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegat
             hiddenKeys.insert(DefaultsKeys.autoSaveDropbox._key)
         }
         
-        self.hiddenKeys = hiddenKeys
+        Settings.viewController.hiddenKeys = hiddenKeys
+//        self.hiddenKeys = hiddenKeys
     }
     
-    func cardsLoaded(_ notification: Notification) {
+    @objc func cardsLoaded(_ notification: Notification) {
+        print("got loadCards \(self) \(notification.userInfo)")
         if let success = notification.userInfo?["success"] as? Bool, success {
             self.refresh()
             DeckManager.flushCache()
         }
     }
     
-    func settingsChanged(_ notification: Notification) {
+    @objc func settingsChanged(_ notification: Notification) {
         guard
             let key = notification.userInfo?.keys.first as? String else {
             return
         }
         let value = notification.userInfo?[key]
+        print("\(self) changed \(key) to \(value)")
         
         switch key {
         case DefaultsKeys.useDropbox._key:
             let useDropbox = value as? Bool ?? false
             
             if useDropbox {
-                Dropbox.authorizeFromController(self)
+                Dropbox.authorizeFromController(Settings.viewController)
             } else {
                 Dropbox.unlinkClient()
             }
-            
-            NotificationCenter.default.post(name: Notifications.dropboxChanged, object: self)
             self.refresh()
             
         case DefaultsKeys.useNrdb._key:
@@ -95,6 +107,7 @@ class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegat
                 NRDBHack.clearCredentials()
             }
             self.refresh()
+            
         case DefaultsKeys.useJintekiNet._key:
             let useJnet = value as? Bool ?? false
             if useJnet {
@@ -103,11 +116,14 @@ class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegat
                 JintekiNet.sharedInstance.clearCredentials()
             }
             self.refresh()
+            
         case DefaultsKeys.updateInterval._key:
             CardManager.setNextDownloadDate()
+            
         case DefaultsKeys.language._key:
             let language = value as? String ?? "n/a"
             Analytics.logEvent("Change Language", attributes: ["Language": language])
+            
         case DefaultsKeys.keepNrdbCredentials._key:
             let keep = value as? Bool ?? false
             
@@ -120,6 +136,7 @@ class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegat
                 NRDBHack.clearCredentials()
                 Defaults[.useNrdb] = false
             }
+            
         default:
             break
         }
@@ -138,9 +155,9 @@ class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegat
         }
         
         if Device.isIpad {
-            NRDBAuthPopupViewController.show(in: self)
+            NRDBAuthPopupViewController.show(in: Settings.viewController)
         } else {
-            NRDBAuthPopupViewController.push(on: self.navigationController!)
+            NRDBAuthPopupViewController.push(on: Settings.viewController.navigationController!)
         }
     }
     
@@ -156,6 +173,7 @@ class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegat
     
     func settingsViewController(_ sender: IASKAppSettingsViewController!, buttonTappedFor specifier: IASKSpecifier!) {
         let key = specifier.key() ?? ""
+        print("\(self) tapped \(key)")
         switch key {
         case IASKButtons.downloadDataNow:
             if Reachability.online {

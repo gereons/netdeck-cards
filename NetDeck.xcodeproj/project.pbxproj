@@ -612,8 +612,8 @@
 		3A8532361854F8D300507B9A /* Empty Detail */ = {
 			isa = PBXGroup;
 			children = (
-				3AA440E81854DA580051D4B0 /* EmptyDetailViewController.xib */,
 				3A285BA01D109A54007EC30F /* EmptyDetailViewController.swift */,
+				3AA440E81854DA580051D4B0 /* EmptyDetailViewController.xib */,
 			);
 			name = "Empty Detail";
 			sourceTree = "<group>";

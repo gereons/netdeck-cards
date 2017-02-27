@@ -17,7 +17,6 @@ struct Notifications {
     static let newDeck          = Notification.Name("newDeck")          // create a new deck, userInfo contains = "role"
     static let importDeck       = Notification.Name("importDeck")       // import deck from clipboard, userInfo contains = "deck"
     static let loadCards        = Notification.Name("loadCards")        // card download from netrunnerdb.com, userInfo contains = "success" (BOOL)
-    static let dropboxChanged   = Notification.Name("dropboxChanged")   // dropbox link status changed, no userInfo
     static let notesChanged     = Notification.Name("notesChanged")     // notes for a deck changed, no userInfo
     static let browserNew       = Notification.Name("browserNew")       // new deck with card, userInfo contains = "code"
     static let browserFind      = Notification.Name("browserFind")      // find decks with card, userInfo contains = "code"
