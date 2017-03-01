@@ -49,7 +49,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
         self.webView.delegate = self
         self.webView.dataDetectorTypes = []
         
-        let url = URL(string: NRDB.AUTH_URL)
+        let url = URL(string: NRDB.authUrl)
         self.webView.loadRequest(URLRequest(url: url!))
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
@@ -77,26 +77,22 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
     
     // MARK - url handler
     
-    static func handleOpen(url: URL) {
+    static func handleOpenUrl(_ url: URL) {
+        print("NRDB handleOpenUrl")
         guard let popup = NRDBAuthPopupViewController.popup,
             let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
             let queryItems = urlComponents.queryItems else {
             return
         }
         
-        var codeFound = false
-        
-        for qi in queryItems {
-            if let code = qi.value, qi.name == "code" {
-                codeFound = true
-                NRDB.sharedInstance.authorizeWithCode(code) { (ok) in
-                    popup.dismiss()
-                    NRDB.sharedInstance.startAuthorizationRefresh()
-                }
+        if let item = queryItems.filter( { $0.name == "code" }).first {
+            let code = item.value ?? ""
+            print("found code \(code)")
+            NRDB.sharedInstance.authorizeWithCode(code) { (ok) in
+                popup.dismiss()
+                NRDB.sharedInstance.startAuthorizationRefresh()
             }
-        }
-        
-        if !codeFound {
+        } else {
             NRDB.clearSettings()
             popup.dismiss()
         }

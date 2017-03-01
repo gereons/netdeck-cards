@@ -182,8 +182,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     }
     
     func setBuiltinUserDefaults() {
-        let usingNrdb = Defaults[.useNrdb]
-        
         let fmt: DateFormatter = {
             let f = DateFormatter()
             f.dateFormat = "yyyyMMdd"
@@ -209,7 +207,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         Defaults.registerDefault(.nextDownload, "never".localized())
         
         Defaults.registerDefault(.autoHistory, true)
-        Defaults.registerDefault(.keepNrdbCredentials, !usingNrdb)
+        Defaults.registerDefault(.keepNrdbCredentials, true)
         Defaults.registerDefault(.nrdbHost, "netrunnerdb.com")
         Defaults.registerDefault(.language, "en")
         Defaults.registerDefault(.updateInterval, 7)
@@ -279,7 +277,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         if scheme == "netdeck" {
             if url.host == "oauth2" {
-                NRDBAuthPopupViewController.handleOpen(url: url)
+                NRDBAuthPopupViewController.handleOpenUrl(url)
             }
             return true
         } else if (scheme?.hasPrefix("db-"))! {

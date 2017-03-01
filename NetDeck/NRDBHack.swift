@@ -13,14 +13,16 @@ import SwiftyUserDefaults
 
 class NRDBHack {
 
-    static let AUTH_URL = NRDB.PROVIDER_HOST + "/oauth/v2/auth"
-    static let CHECK_URL = NRDB.PROVIDER_HOST + "/oauth/v2/auth_login_check"
+    static let AUTH_URL = NRDB.providerHost + "/oauth/v2/auth"
+    static let CHECK_URL = NRDB.providerHost + "/oauth/v2/auth_login_check"
     
     private var cookieJar = HTTPCookieStorage.shared
     private var manager: Alamofire.SessionManager!
     private var authCompletion: ((Bool) -> Void)!
     
     static let sharedInstance = NRDBHack()
+    
+    private(set) var loggingIn = false
     
     private struct Credentials {
         var username: String
@@ -89,6 +91,7 @@ class NRDBHack {
     
     private func loginCompleted(_ success: Bool, verbose: Bool, credentials: Credentials) {
         print("login completed ok=\(success) verbose=\(verbose)")
+        self.loggingIn = false
         if success {
             if verbose {
                 SVProgressHUD.dismiss()
@@ -112,9 +115,10 @@ class NRDBHack {
         keychain.removeObject(forKey: KeychainKeys.nrdbUsername)
         keychain.removeObject(forKey: KeychainKeys.nrdbPassword)
     }
-
+    
     private func hackedLogin(_ credentials: Credentials, _ completion: @escaping (Bool) -> Void) {
-        // NSLog("hacking around oauth login")
+        print("hacking around oauth login")
+        self.loggingIn = true
         
         self.authCompletion = completion
         
@@ -136,9 +140,9 @@ class NRDBHack {
         self.manager.delegate.taskWillPerformHTTPRedirection = self.redirectHandler
         
         let parameters = [
-            "client_id": NRDB.CLIENT_ID,
+            "client_id": NRDB.clientId,
             "response_type": "code",
-            "redirect_uri": NRDB.CLIENT_HOST
+            "redirect_uri": NRDB.clientHost
         ]
         self.manager.request(NRDBHack.AUTH_URL, parameters: parameters).validate().responseString { response in
         
@@ -153,9 +157,9 @@ class NRDBHack {
                     
                     let accept = [
                         "accepted": "Allow",
-                        "fos_oauth_server_authorize_form[client_id]": NRDB.CLIENT_ID,
+                        "fos_oauth_server_authorize_form[client_id]": NRDB.clientId,
                         "fos_oauth_server_authorize_form[response_type]": "code",
-                        "fos_oauth_server_authorize_form[redirect_uri]": NRDB.CLIENT_HOST,
+                        "fos_oauth_server_authorize_form[redirect_uri]": NRDB.clientHost,
                         "fos_oauth_server_authorize_form[state]": "",
                         "fos_oauth_server_authorize_form[scope]": "",
                         "fos_oauth_server_authorize_form[_token]": token
@@ -173,17 +177,17 @@ class NRDBHack {
     }
     
     private func redirectHandler(_ session: URLSession!, task: URLSessionTask!, response: HTTPURLResponse!, request: URLRequest!) -> URLRequest {
-        // NSLog("redirecting to \(request.URL)")
+        print("nrdb hack: redirecting to \(request.url)")
         
-        if let url = request.url?.absoluteString, url.hasPrefix(NRDB.CLIENT_HOST) {
+        if let url = request.url?.absoluteString, url.hasPrefix(NRDB.clientHost) {
             // this is the oauth answer we want to intercept.
             // extract the value of the "code" parameter from the URL and use that to finalize the authorization
             if let components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false), let items = components.queryItems {
                 
                 if let item = items.filter({ $0.name == "code" }).first {
-                    let code = item.value
-                    // NSLog("found code \(code)")
-                    NRDB.sharedInstance.authorizeWithCode(code ?? "", completion: self.authCompletion)
+                    let code = item.value ?? ""
+                    print("found code \(code)")
+                    NRDB.sharedInstance.authorizeWithCode(code, completion: self.authCompletion)
                 }
             }
         }
