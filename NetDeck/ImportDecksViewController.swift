@@ -34,7 +34,7 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     private var searchScope = DeckSearchScope.all
     
     convenience init() {
-        self.init()
+        self.init(nibName: nil, bundle: nil)
         
         if Device.isIpad {
             dateFormatter.dateStyle = .medium

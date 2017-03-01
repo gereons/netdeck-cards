@@ -37,7 +37,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
     }
     
     convenience init() {
-        self.init()
+        self.init(nibName: nil, bundle: nil)
         if Device.isIpad {
             self.modalPresentationStyle = .formSheet
         }
