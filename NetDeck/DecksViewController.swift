@@ -310,6 +310,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         self.decks = [ runnerDecks, corpDecks ]
+        self.tableView.reloadData()
     }
     
     func checkDecks(decks: [Deck]) {
