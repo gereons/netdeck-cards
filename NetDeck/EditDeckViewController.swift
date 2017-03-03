@@ -143,7 +143,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             self.deck.name = alert.textFields?.first?.text ?? self.deck.name
             self.setDeckName()
         })
-        alert.addAction(UIAlertAction(title: "Cancel", handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), handler: nil))
         
         self.present(alert, animated: false, completion: nil)
     }
@@ -226,7 +226,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             self.changeDeckSort(.bySetNum)
         })
         
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true, completion: nil)
     }
