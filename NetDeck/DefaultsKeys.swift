@@ -79,8 +79,6 @@ extension DefaultsKeys {
     static let deckViewScale = DefaultsKey<Double>("deckViewScale")
     
     // deckbuilder card filer
-    /// show all filters?
-    static let showAllFilters = DefaultsKey<Bool>("showAllFilters")
     /// display mode for filter
     static let filterViewMode = DefaultsKey<CardFilterViewController.View>("filterViewMode")
     

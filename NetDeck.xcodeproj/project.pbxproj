@@ -446,6 +446,8 @@
 				3AA440E21854DA310051D4B0 /* Detail Views */,
 				3A1ECC8E1879A1B1003400A9 /* Deck Export */,
 				3A721DBE189CFA3A004EFDFE /* Deck Import */,
+				3A8532771855079100507B9A /* Settings */,
+				3A85328418550AD100507B9A /* About */,
 				3A36227C1849320C007F2854 /* Images.xcassets */,
 				3A3844F91B77858B007C76F2 /* iPhone */,
 				3A3622681849320C007F2854 /* Supporting Files */,
@@ -654,14 +656,14 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		3A85328418550AD100507B9A /* About Detail */ = {
+		3A85328418550AD100507B9A /* About */ = {
 			isa = PBXGroup;
 			children = (
 				3A966B781E1EDBEA0047A148 /* AboutViewController.swift */,
 				3A85328118550ACE00507B9A /* AboutViewController.xib */,
 				3A095E9318BBCB2200C99FED /* About.html */,
 			);
-			name = "About Detail";
+			name = About;
 			sourceTree = "<group>";
 		};
 		3A8FBC9B195471E4009ED6E3 /* Netrunnerdb.com */ = {
@@ -731,8 +733,6 @@
 				3ACF2599198D47EE00E6267E /* Card Browser */,
 				3AB9BD5518FADB1B004EAF10 /* Saved Decks */,
 				3ABC2EE31975A608007BBE3A /* Compare Decks */,
-				3A8532771855079100507B9A /* Settings */,
-				3A85328418550AD100507B9A /* About Detail */,
 				3A8532361854F8D300507B9A /* Empty Detail */,
 			);
 			name = "Detail Views";

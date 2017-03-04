@@ -28,11 +28,8 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var costSlider: UISlider!
     
-    @IBOutlet weak var muLabel: UILabel!
-    @IBOutlet weak var muSlider: UISlider!
-    
-    @IBOutlet weak var apLabel: UILabel!
-    @IBOutlet weak var apSlider: UISlider!
+    @IBOutlet weak var muApLabel: UILabel!
+    @IBOutlet weak var muApSlider: UISlider!
     
     @IBOutlet weak var moreLessButton: UIButton!
     @IBOutlet weak var viewModeControl: UISegmentedControl!
@@ -45,11 +42,10 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var bottomSeparator: UIView!
     @IBOutlet weak var influenceSeparator: UIView!
     
-    @IBOutlet weak var tableViewTopMargin: NSLayoutConstraint!
-    @IBOutlet weak var tableViewBottomMargin: NSLayoutConstraint!
-    @IBOutlet weak var collectionViewTopMargin: NSLayoutConstraint!
-    @IBOutlet weak var collectionViewBottomMargin: NSLayoutConstraint!
+    @IBOutlet weak var resultsTopMargin: NSLayoutConstraint!
+    @IBOutlet weak var resultsBottomMargin: NSLayoutConstraint!
     
+    @IBOutlet weak var resultsView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -129,7 +125,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.showAllFilters = Defaults[.showAllFilters]
+        self.showAllFilters = true
         self.viewMode = Defaults[.filterViewMode]
         
         self.view.backgroundColor = .white
@@ -185,8 +181,12 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersClicked(_:)))
         self.navigationItem.rightBarButtonItem = clearButton
         
-        self.setResultFrames()
         self.initFilters()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setResultTopMargin()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -194,7 +194,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         
         NotificationCenter.default.removeObserver(self)
         
-        Defaults[.showAllFilters] = self.showAllFilters
         Defaults[.filterViewMode] = self.viewMode
     }
     
@@ -220,9 +219,16 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.searchField.resignFirstResponder()
     }
     
-    func setResultFrames() {
-        self.tableViewTopMargin.constant = self.showAllFilters ? 0 : -129
-        self.collectionViewTopMargin.constant = self.showAllFilters ? 0 : -129
+    private func setResultTopMargin() {
+        let buttonsHeight = self.buttonContainer.frame.height
+        
+        if self.showAllFilters {
+            let sliderHeight = self.sliderContainer.frame.height
+            self.resultsTopMargin.constant = buttonsHeight + sliderHeight + 1
+        } else {
+            let influenceHeight = self.influenceSeparator.frame.maxY
+            self.resultsTopMargin.constant = buttonsHeight + influenceHeight + 1
+        }
     }
     
     func initCards() {
@@ -284,38 +290,26 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func initFilters() {
-        self.setRole(self.role)
-        
         self.typeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         self.setButton.titleLabel?.adjustsFontSizeToFitWidth = true
         self.factionButton.titleLabel?.adjustsFontSizeToFitWidth = true
         self.subtypeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         self.costSlider.maximumValue = Float(1 + CardManager.maxCost(for: self.role))
-        self.muSlider.maximumValue = Float(1 + CardManager.maxMU)
         self.strengthSlider.maximumValue = Float(1 + CardManager.maxStrength)
         self.influenceSlider.maximumValue = Float(1 + CardManager.maxInfluence)
-        self.apSlider.maximumValue = Float(1 + CardManager.maxAgendaPoints)
+        self.muApSlider.maximumValue = Float(1 + (self.role == .runner ? CardManager.maxMU : CardManager.maxAgendaPoints))
         
         self.costSlider.setThumbImage(UIImage(named: "credit_slider"), for: .normal)
-        self.muSlider.setThumbImage(UIImage(named: "mem_slider"), for: .normal)
         self.strengthSlider.setThumbImage(UIImage(named: "strength_slider"), for: .normal)
         self.influenceSlider.setThumbImage(UIImage(named: "influence_slider"), for: .normal)
-        self.apSlider.setThumbImage(UIImage(named: "point_slider"), for: .normal)
+        let img = UIImage(named: self.role == .runner ? "mem_slider" : "point_slider")
+        self.muApSlider.setThumbImage(img, for: .normal)
         
         self.searchField.placeholder = "Search Cards".localized()
         self.searchField.clearButtonMode = .always
         
         self.clearFilters()
-    }
-    
-    func setRole(_ role: Role) {
-        self.role = role
-        
-        self.muLabel.isHidden = role == .corp
-        self.muSlider.isHidden = role == .corp
-        self.apLabel.isHidden = role == .runner
-        self.apSlider.isHidden = role == .runner
     }
     
     func reloadData() {
@@ -352,9 +346,10 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.costValueChanged(self.costSlider)
         self.prevCost = 0
         
-        self.muSlider.value = 0
-        self.muValueChanged(self.muSlider)
+        self.muApSlider.value = 0
+        self.muApValueChanged(self.muApSlider)
         self.prevMu = 0
+        self.prevAp = 0
         
         self.influenceSlider.value = 0
         self.influenceValueChanged(self.influenceSlider)
@@ -364,10 +359,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.strengthSlider.value = 0
         self.strengthValueChanged(self.strengthSlider)
         self.prevStr = 0
-        
-        self.apSlider.value = 0
-        self.apValueChanged(self.apSlider)
-        self.prevAp = 0
         
         self.resetAllButtons()
         self.selectedType = Constant.kANY
@@ -397,7 +388,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         if !self.searchField.isFirstResponder {
             return
         }
-        
+
         self.searchFieldActive = true
         self.moreLessButton.isHidden = true
         
@@ -409,14 +400,11 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let screenHeight = UIScreen.main.bounds.size.height
         let kbHeight = screenHeight - keyboardFrame.cgRectValue.origin.y
         
-        self.tableViewBottomMargin.constant = kbHeight
-        self.collectionViewBottomMargin.constant = kbHeight
-        self.tableViewTopMargin.constant = -242
-        self.collectionViewTopMargin.constant = -242
+        self.resultsTopMargin.constant = 0
+        self.resultsBottomMargin.constant = kbHeight
         
         UIView.animate(withDuration: animDuration) {
-            self.tableView.layoutIfNeeded()
-            self.collectionView.layoutIfNeeded()
+            self.resultsView.layoutIfNeeded()
         }
     }
     
@@ -432,14 +420,11 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             return
         }
         
-        self.tableViewBottomMargin.constant = 0
-        self.collectionViewBottomMargin.constant = 0
-        
-        self.setResultFrames()
+        self.setResultTopMargin()
+        self.resultsBottomMargin.constant = 0
         
         UIView.animate(withDuration: animDuration) {
-            self.tableView.layoutIfNeeded()
-            self.collectionView.layoutIfNeeded()
+            self.resultsView.layoutIfNeeded()
         }
     }
     
@@ -458,12 +443,10 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             // reset all filters that are now inaccessible
             self.costSlider.value = 0
             self.costValueChanged(self.costSlider)
-            self.muSlider.value = 0
-            self.muValueChanged(self.muSlider)
+            self.muApSlider.value = 0
+            self.muApValueChanged(self.muApSlider)
             self.strengthSlider.value = 0
             self.strengthValueChanged(self.strengthSlider)
-            self.apSlider.value = 0
-            self.apValueChanged(self.apSlider)
         }
         
         if self.searchField.isFirstResponder {
@@ -477,15 +460,12 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             self.influenceSeparator.isHidden = true
         }
         
-        self.setResultFrames()
-        UIView.animate(withDuration: 0.10,
-            animations: {
-                self.tableView.layoutIfNeeded()
-                self.collectionView.layoutIfNeeded()
-            },
-            completion: { finished in
-                self.influenceSeparator.isHidden = self.showAllFilters
-            })
+        self.setResultTopMargin()
+        UIView.animate(withDuration: 0.20, animations: {
+            self.resultsView.layoutIfNeeded()
+        }, completion: { _ in
+            self.influenceSeparator.isHidden = self.showAllFilters
+        })
     }
     
     @IBAction func viewModeChanged(_ sender: UISegmentedControl) {
@@ -639,14 +619,20 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    @IBAction func muValueChanged(_ sender: UISlider) {
+    @IBAction func muApValueChanged(_ sender: UISlider) {
         var value = Int(round(sender.value))
         sender.value = Float(value)
         value -= 1
-        if value != self.prevMu {
-            self.muLabel.text = String(format: "MU: %@".localized(), value == -1 ? "All".localized() : "\(value)")
-            self.updateFilter(.mu, value: FilterValue.int(value))
-            self.prevMu = value
+        let prev = self.role == .runner ? self.prevMu : self.prevAp
+        if value != prev {
+            let fmt = self.role == .runner ? "MU: %@".localized() : "AP: %@".localized()
+            self.muApLabel.text = String(format: fmt, value == -1 ? "All".localized() : "\(value)")
+            self.updateFilter(self.role == .runner ? .mu : .agendaPoints, value: FilterValue.int(value))
+            if self.role == .runner {
+                self.prevMu = value
+            } else {
+                self.prevAp = value
+            }
         }
     }
     
@@ -669,17 +655,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             self.influenceLabel.text = String(format: "Influence: %@".localized(), value == -1 ? "All".localized() : "\(value)")
             self.updateFilter(.influence, value: FilterValue.int(value))
             self.prevInf = value
-        }
-    }
-    
-    @IBAction func apValueChanged(_ sender: UISlider) {
-        var value = Int(round(sender.value))
-        sender.value = Float(value)
-        value -= 1
-        if value != self.prevAp {
-            self.apLabel.text = String(format: "AP: %@".localized(), value == -1 ? "All".localized() : "\(value)")
-            self.updateFilter(.agendaPoints, value: FilterValue.int(value))
-            self.prevAp = value
         }
     }
     
