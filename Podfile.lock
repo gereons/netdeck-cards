@@ -7,29 +7,29 @@ PODS:
   - CorePlot (2.2)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
-  - DTCoreText (1.6.19):
-    - DTCoreText/Core (= 1.6.19)
+  - DTCoreText (1.6.20):
+    - DTCoreText/Core (= 1.6.20)
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTCoreText/Core (1.6.19):
+  - DTCoreText/Core (1.6.20):
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTFoundation/Core (1.7.11)
-  - DTFoundation/DTAnimatedGIF (1.7.11)
-  - DTFoundation/DTHTMLParser (1.7.11):
+  - DTFoundation/Core (1.7.12)
+  - DTFoundation/DTAnimatedGIF (1.7.12)
+  - DTFoundation/DTHTMLParser (1.7.12):
     - DTFoundation/Core
-  - DTFoundation/UIKit (1.7.11):
+  - DTFoundation/UIKit (1.7.12):
     - DTFoundation/Core
   - DZNEmptyDataSet (1.8.1)
   - Fabric (1.6.11)
   - InAppSettingsKit (2.8.1)
   - Marshal (1.2.4)
   - MultiSelectSegmentedControl (1.1.0)
-  - SDCAlertView (7.1)
+  - SDCAlertView (7.1.1)
   - SVProgressHUD (2.1.2)
   - SwiftKeychainWrapper (3.0.1)
   - SwiftyDropbox (4.1.1):
@@ -60,14 +60,14 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 3e55069ada3e1ff7703665156429eedcdfea0bc1
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
-  DTCoreText: 184cc2f460c2177108e8700dfb0eb1b1cb72c99d
-  DTFoundation: 0ef29c70a9814e15518694862bd739347abe2a50
+  DTCoreText: 51904f2374af443e0d270d6fdc76035ab6f9ef8a
+  DTFoundation: 26a164ef510877387906fb92bff524a792db4bf8
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   InAppSettingsKit: 94d2fba3ccd700fc4e32c6d09fabcc0af2426744
   Marshal: 8e04e6624e506921db7143b0bfd83caee03f32d6
   MultiSelectSegmentedControl: 54fb23c997b971eff621cfcf965ff1613d99c3d2
-  SDCAlertView: b92fd1f00e522e18a062005e15a16c1e8295c5b5
+  SDCAlertView: 4798cda4a480f90b24313d3cb07640243943d129
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
   SwiftyDropbox: dfcd4d308d32d74729255b48833db61acdfb9c23
