@@ -15,8 +15,8 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
         guard let collectionView = self.collectionView else {
             return proposedContentOffset
         }
-        
-        var offsetAdjustment = CGFloat(FLT_MAX)
+                
+        var offsetAdjustment = CGFloat.greatestFiniteMagnitude
         let horizontalCenter = proposedContentOffset.x + (collectionView.bounds.size.width / 2.0)
         let targetRect = CGRect(x: proposedContentOffset.x, y: 0.0, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height)
         

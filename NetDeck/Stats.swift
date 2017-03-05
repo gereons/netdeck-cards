@@ -80,7 +80,7 @@ class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
         pieChart.delegate = delegate
         pieChart.pieRadius = hostView.bounds.size.height * 0.35
         pieChart.identifier = identifier as NSString
-        pieChart.startAngle = CGFloat(M_PI_2)
+        pieChart.startAngle = .pi / 2
         pieChart.sliceDirection = .clockwise
         
         graph.add(pieChart)

@@ -64,7 +64,7 @@ class StartupViewController: UIViewController {
     private struct Hex {
         static let edgeLength = 33.0
         static let columnWidth = edgeLength * sqrt(3)
-        static let rowHeight = sin(M_PI / 3.0) * columnWidth
+        static let rowHeight = sin(.pi / 3.0) * columnWidth
         
         static func path(at point: CGPoint) -> UIBezierPath {
             let row = Double(point.x)
@@ -75,7 +75,7 @@ class StartupViewController: UIViewController {
             
             let path = UIBezierPath()
             path.move(to: CGPoint(x: x, y: y))
-            for angle in stride(from: 0.0, to: 2.0 * M_PI, by: M_PI / 3.0) {
+            for angle in stride(from: 0.0, to: 2.0 * .pi, by: .pi / 3.0) {
                 x += sin(angle) * edgeLength
                 y += cos(angle) * edgeLength
                 path.addLine(to: CGPoint(x: x, y: y))
