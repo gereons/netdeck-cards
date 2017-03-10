@@ -42,6 +42,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var bottomSeparator: UIView!
     @IBOutlet weak var influenceSeparator: UIView!
     
+    @IBOutlet weak var movingSeparator: UIView!
     @IBOutlet weak var resultsTopMargin: NSLayoutConstraint!
     @IBOutlet weak var resultsBottomMargin: NSLayoutConstraint!
     
@@ -404,7 +405,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.resultsBottomMargin.constant = kbHeight
         
         UIView.animate(withDuration: animDuration) {
-            self.resultsView.layoutIfNeeded()
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -424,7 +425,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.resultsBottomMargin.constant = 0
         
         UIView.animate(withDuration: animDuration) {
-            self.resultsView.layoutIfNeeded()
+            self.view.layoutIfNeeded()
         }
     }
     

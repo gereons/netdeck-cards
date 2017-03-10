@@ -21,6 +21,7 @@
                 <outlet property="influenceSeparator" destination="8g3-ex-1mU" id="S6Q-0X-dlg"/>
                 <outlet property="influenceSlider" destination="bSH-gY-tzs" id="JpE-JT-Ifo"/>
                 <outlet property="moreLessButton" destination="bzD-aM-Xxo" id="EFZ-hZ-g3m"/>
+                <outlet property="movingSeparator" destination="kyl-ow-fHa" id="sy3-kw-LSF"/>
                 <outlet property="muApLabel" destination="icV-T6-TTz" id="2BM-sc-5ep"/>
                 <outlet property="muApSlider" destination="NpC-7d-eWK" id="pKU-5C-A94"/>
                 <outlet property="resultsBottomMargin" destination="rss-Ip-tiD" id="QR1-PX-PuH"/>
@@ -300,6 +301,13 @@
                         <constraint firstAttribute="height" constant="0.5" id="Kak-zH-K6m"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kyl-ow-fHa" userLabel="Moving Separator Line">
+                    <rect key="frame" x="0.0" y="340" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="yIG-dB-RJ4"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NJR-tR-I1R" userLabel="Results Container">
                     <rect key="frame" x="0.0" y="341" width="320" height="683"/>
                     <subviews>
@@ -345,6 +353,8 @@
                 <constraint firstItem="z8T-eI-ayW" firstAttribute="top" secondItem="UKQ-ah-DCs" secondAttribute="bottom" id="10U-Jc-gww"/>
                 <constraint firstAttribute="trailing" secondItem="oRs-rz-ZMs" secondAttribute="trailing" id="1dB-dP-yjk"/>
                 <constraint firstItem="o9d-r4-Mps" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="C5v-ro-ZEG"/>
+                <constraint firstItem="kyl-ow-fHa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="D5Z-Eh-1Dn"/>
+                <constraint firstAttribute="trailing" secondItem="kyl-ow-fHa" secondAttribute="trailing" id="DSn-ef-tHb"/>
                 <constraint firstItem="oRs-rz-ZMs" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="FAu-Yh-F7b"/>
                 <constraint firstAttribute="trailing" secondItem="tsO-Ri-D1U" secondAttribute="trailing" id="JIJ-rt-oFy"/>
                 <constraint firstItem="oRs-rz-ZMs" firstAttribute="top" secondItem="WDc-eW-xDO" secondAttribute="bottom" id="Rjx-yZ-Je1"/>
@@ -362,6 +372,7 @@
                 <constraint firstAttribute="trailing" secondItem="UKQ-ah-DCs" secondAttribute="trailing" id="pV5-U6-ylb"/>
                 <constraint firstItem="WDc-eW-xDO" firstAttribute="top" secondItem="o9d-r4-Mps" secondAttribute="bottom" id="qfN-4q-epO"/>
                 <constraint firstAttribute="trailing" secondItem="NJR-tR-I1R" secondAttribute="trailing" id="qfZ-2a-XFL"/>
+                <constraint firstItem="NJR-tR-I1R" firstAttribute="top" secondItem="kyl-ow-fHa" secondAttribute="bottom" id="rBM-oZ-aZf"/>
                 <constraint firstAttribute="bottom" secondItem="NJR-tR-I1R" secondAttribute="bottom" id="rss-Ip-tiD"/>
                 <constraint firstAttribute="trailing" secondItem="o9d-r4-Mps" secondAttribute="trailing" id="vqu-rf-9xf"/>
                 <constraint firstItem="UKQ-ah-DCs" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="vty-fL-tPj"/>
