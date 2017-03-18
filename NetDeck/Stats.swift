@@ -53,7 +53,7 @@ class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
     }
     
     func number(for plot: CPTPlot, field fieldEnum: UInt, record idx: UInt) -> Any? {
-        return self.tableData.values[Int(idx)]
+        return self.tableData.values[Int(idx)][0]
     }
     
     func hostingView(for delegate: Stats, identifier: String) -> CPTGraphHostingView {
