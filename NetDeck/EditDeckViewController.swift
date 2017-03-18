@@ -80,17 +80,14 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewWillAppear(animated)
         
         self.setDeckName()
+        self.navigationItem.titleView = self.titleButton
+        self.navigationItem.rightBarButtonItems = [ self.exportButton, self.historyButton ]
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         assert(self.navigationController?.viewControllers.count == 2, "oops")
-        
-        self.navigationItem.rightBarButtonItems = [ self.exportButton, self.historyButton ]
-        
-        self.setDeckName()
-        self.navigationItem.titleView = self.titleButton
         
         if !Defaults[.useNrdb] {
             self.nrdbButton.customView = UIView(frame: CGRect.zero)
@@ -139,13 +136,13 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             textField.clearButtonMode = .always
         }
         
-        alert.addAction(UIAlertAction(title: "OK".localized()) { action in
+        alert.addAction(UIAlertAction(title: "OK".localized(), style: .default) { action in
             self.deck.name = alert.textFields?.first?.text ?? self.deck.name
             self.setDeckName()
         })
-        alert.addAction(UIAlertAction(title: "Cancel".localized(), handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         
-        self.present(alert, animated: false, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - export
