@@ -78,7 +78,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
     // MARK - url handler
     
     static func handleOpenUrl(_ url: URL) {
-        print("NRDB handleOpenUrl")
+        // print("NRDB handleOpenUrl")
         guard let popup = NRDBAuthPopupViewController.popup,
             let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
             let queryItems = urlComponents.queryItems else {
@@ -87,7 +87,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
         
         if let item = queryItems.filter( { $0.name == "code" }).first {
             let code = item.value ?? ""
-            print("found code \(code)")
+            // print("found code \(code)")
             NRDB.sharedInstance.authorizeWithCode(code) { (ok) in
                 popup.dismiss()
                 NRDB.sharedInstance.startAuthorizationRefresh()

@@ -82,7 +82,7 @@ class NRDBHack {
         let keychain = KeychainWrapper.standard
         if let username = keychain.string(forKey: KeychainKeys.nrdbUsername), let password = keychain.string(forKey: KeychainKeys.nrdbPassword) {
             let credentials = Credentials(username, password)
-            print("silent login attempt")
+            // print("silent login attempt")
             self.hackedLogin(credentials) { success in
                 self.loginCompleted(success, verbose: false, credentials: credentials)
             }
@@ -90,7 +90,7 @@ class NRDBHack {
     }
     
     private func loginCompleted(_ success: Bool, verbose: Bool, credentials: Credentials) {
-        print("login completed ok=\(success) verbose=\(verbose)")
+        // print("login completed ok=\(success) verbose=\(verbose)")
         self.loggingIn = false
         if success {
             if verbose {
@@ -117,7 +117,7 @@ class NRDBHack {
     }
     
     private func hackedLogin(_ credentials: Credentials, _ completion: @escaping (Bool) -> Void) {
-        print("hacking around oauth login")
+        // print("hacking around oauth login")
         self.loggingIn = true
         
         self.authCompletion = completion
@@ -177,7 +177,7 @@ class NRDBHack {
     }
     
     private func redirectHandler(_ session: URLSession!, task: URLSessionTask!, response: HTTPURLResponse!, request: URLRequest!) -> URLRequest {
-        print("nrdb hack: redirecting to \(request.url)")
+        // print("nrdb hack: redirecting to \(request.url)")
         
         if let url = request.url?.absoluteString, url.hasPrefix(NRDB.clientHost) {
             // this is the oauth answer we want to intercept.
@@ -186,7 +186,7 @@ class NRDBHack {
                 
                 if let item = items.filter({ $0.name == "code" }).first {
                     let code = item.value ?? ""
-                    print("found code \(code)")
+                    // print("found code \(code)")
                     NRDB.sharedInstance.authorizeWithCode(code, completion: self.authCompletion)
                 }
             }
