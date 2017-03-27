@@ -382,9 +382,9 @@ class NRDB: NSObject {
     // MARK: - mapping of nrdb ids to filenames
     
     func updateDeckMap(_ decks: [Deck]) {
-        self.deckMap = [String: String]()
+        self.deckMap.removeAll()
         for deck in decks {
-            addDeck(deck)
+            self.addDeck(deck)
         }
     }
     

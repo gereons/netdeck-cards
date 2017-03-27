@@ -15,8 +15,8 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    private var runnerDecks = [Deck]()
-    private var corpDecks = [Deck]()
+//    private var runnerDecks = [Deck]()
+//    private var corpDecks = [Deck]()
     private var decks = [[Deck]]()
     
     private var addButton: UIBarButtonItem!
@@ -91,25 +91,23 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func initializeDecks() {
-        self.runnerDecks = DeckManager.decksForRole(.runner)
-        self.corpDecks = DeckManager.decksForRole(.corp)
+        var runnerDecks = DeckManager.decksForRole(.runner)
+        var corpDecks = DeckManager.decksForRole(.corp)
         
         if self.filterText.length > 0 {
             let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", self.filterText)
-            self.runnerDecks = self.runnerDecks.filter { namePredicate.evaluate(with: $0) }
-            self.corpDecks = self.corpDecks.filter { namePredicate.evaluate(with: $0) }
+            runnerDecks = runnerDecks.filter { namePredicate.evaluate(with: $0) }
+            corpDecks = corpDecks.filter { namePredicate.evaluate(with: $0) }
         }
         
-        if self.deckListSort == .byDate {
-            self.runnerDecks = self.sortDecks(self.runnerDecks)
-            self.corpDecks = self.sortDecks(self.corpDecks)
-            self.decks = [ self.runnerDecks, self.corpDecks ]
+        if self.deckListSort != .byDate {
+            runnerDecks = self.sortDecks(runnerDecks)
+            corpDecks = self.sortDecks(corpDecks)
+            self.decks = [ runnerDecks, corpDecks ]
         } else {
-            var decks = self.runnerDecks
-            decks.append(contentsOf: self.corpDecks)
-            self.runnerDecks = self.sortDecks(decks)
-            self.corpDecks.removeAll()
-            self.decks = [ self.runnerDecks ]
+            let decks = runnerDecks + corpDecks
+            runnerDecks = self.sortDecks(decks)
+            self.decks = [ runnerDecks ]
         }
         
         let cardsAvailable = CardManager.cardsAvailable
@@ -117,9 +115,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         self.importButton.isEnabled = cardsAvailable
         self.sortButton.isEnabled = cardsAvailable
         
-        var allDecks = Array(self.runnerDecks)
-        allDecks.append(contentsOf: self.corpDecks)
-        
+        let allDecks = runnerDecks + corpDecks
         NRDB.sharedInstance.updateDeckMap(allDecks)
     }
     
@@ -218,13 +214,13 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     func changeSort(_ sender: UIBarButtonItem) {
         let alert = UIAlertController.actionSheet(title: "Sort by".localized(), message:nil)
         
-        alert.addAction(UIAlertAction(title: "Date".localized()) { action in
+        alert.addAction(UIAlertAction(title: "Date".localized().checked(self.deckListSort == .byDate)) { action in
             self.changeSortType(.byDate)
         })
-        alert.addAction(UIAlertAction(title: "Faction".localized()) { action in
+        alert.addAction(UIAlertAction(title: "Faction".localized().checked(self.deckListSort == .byFaction)) { action in
             self.changeSortType(.byFaction)
         })
-        alert.addAction(UIAlertAction(title: "A-Z".localized()) { action in
+        alert.addAction(UIAlertAction(title: "A-Z".localized().checked(self.deckListSort == .byName)) { action in
             self.changeSortType(.byName)
         })
         
