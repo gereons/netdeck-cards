@@ -121,10 +121,10 @@ class NRDB: NSObject {
                         print("auth error: no data")
                     }
                 case .failure:
-                    print("auth error \(response.response?.statusCode)")
+                    print("auth error \(String(describing: response.response?.statusCode))")
                     if let data = response.data {
                         let body = String(data: data, encoding: .utf8)
-                        print("body: \(body)")
+                        print("body: \(String(describing: body))")
                     }
                     self.handleAuthorizationFailure(isRefresh, completion: completion)
                 }

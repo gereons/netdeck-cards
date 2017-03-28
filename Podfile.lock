@@ -29,7 +29,7 @@ PODS:
   - InAppSettingsKit (2.8.1)
   - Marshal (1.2.4)
   - MultiSelectSegmentedControl (1.1.0)
-  - SDCAlertView (7.1.1)
+  - SDCAlertView (7.1.2)
   - SVProgressHUD (2.1.2)
   - SwiftKeychainWrapper (3.0.1)
   - SwiftyDropbox (4.1.1):
@@ -67,7 +67,7 @@ SPEC CHECKSUMS:
   InAppSettingsKit: 94d2fba3ccd700fc4e32c6d09fabcc0af2426744
   Marshal: 8e04e6624e506921db7143b0bfd83caee03f32d6
   MultiSelectSegmentedControl: 54fb23c997b971eff621cfcf965ff1613d99c3d2
-  SDCAlertView: 4798cda4a480f90b24313d3cb07640243943d129
+  SDCAlertView: c39fa91a3aeb5eeba58fe9cea648263b131ff2bf
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
   SwiftyDropbox: dfcd4d308d32d74729255b48833db61acdfb9c23

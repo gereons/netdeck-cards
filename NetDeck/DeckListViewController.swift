@@ -59,9 +59,9 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     private var largeCells = false
     private var initializing = false
     private var historyTimer: Timer?
-    private var historyTicker = 0
+    private var historyTicker = 0.0
     
-    private let historySaveInterval = 60
+    private let historySaveInterval = 60.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -199,7 +199,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         if Defaults[.autoHistory] {
-            let x = Int(self.view.center.x) - self.historySaveInterval
+            let x = Double(self.view.center.x) - self.historySaveInterval
             let width = 2 * self.historySaveInterval
             self.progressView = UIProgressView(frame: CGRect(x: x, y: 40, width: width, height: 3))
             self.progressView.progress = 1.0
@@ -210,7 +210,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         if self.deck.filename != nil {
             self.startHistoryTimer(self)
         } else {
-            self.progressView.isHidden = true
+            self.progressView?.isHidden = true
         }
         
         self.stateButton.title = DeckState.buttonLabelFor(self.deck.state)
@@ -235,10 +235,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             return
         }
         
-        let timer = Timer(timeInterval: 1, target: self, selector: #selector(self.historySave(_:)), userInfo: nil, repeats: true)
-        self.historyTimer = timer
-        RunLoop.main.add(timer, forMode: .commonModes)
-        
+        self.historyTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.historySave(_:)), userInfo: nil, repeats: true)
         self.progressView.progress = 1.0
         self.historyTicker = self.historySaveInterval
     }
@@ -251,9 +248,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func historySave(_ timer: Timer) {
         self.historyTicker -= 1
-        let progress = self.historyTicker / self.historySaveInterval
-        self.progressView.progress = Float(progress)
-        
+        self.progressView.progress = Float(self.historyTicker / self.historySaveInterval)
+
         if self.historyTicker <= 0 {
             self.deck.mergeRevisions()
             self.historyButton.isEnabled = true
@@ -308,7 +304,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         if manually {
             self.stopHistoryTimer(self)
             self.historyButton.isEnabled = true
-            self.progressView.isHidden = false
+            self.progressView?.isHidden = false
             self.startHistoryTimer(self)
             
             self.deck.mergeRevisions()
