@@ -550,11 +550,11 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
                 cell.influenceLabel.text = ""
                 cell.influenceLabel.isHidden = true
             }
-            let mwl = card.isMostWanted(self.deck.mwl)
-            if mwl {
-                cell.mwlLabel.text = "\(-cc.count)"
+            let penalty = card.mwlPenalty(self.deck.mwl)
+            if penalty > 0 {
+                cell.mwlLabel.text = "\(-cc.count * penalty)"
             }
-            cell.mwlLabel.isHidden = !mwl
+            cell.mwlLabel.isHidden = penalty == 0
         }
         
         var type = Faction.name(for: card.faction)
@@ -619,11 +619,11 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             self.deck.onesies = false
             self.refreshDeck()
         })
-//        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
-//            self.deck.mwl = .v1_2
-//            self.deck.onesies = false
-//            self.refreshDeck()
-//        })
+        alert.addAction(UIAlertAction(title: "MWL v2.0".localized().checked(self.deck.mwl == .v2_0)) { action in
+            self.deck.mwl = .v2_0
+            self.deck.onesies = false
+            self.refreshDeck()
+        })
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
             self.deck.mwl = .none
             self.deck.onesies = true

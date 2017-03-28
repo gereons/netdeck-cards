@@ -89,11 +89,15 @@ class Card: NSObject, Unmarshaling {
         return self === Card.nullInstance
     }
     
-    func isMostWanted(_ mwl: MWL) -> Bool {
-        guard let cards = Card.mostWantedLists[mwl] else {
-            return false
+    func mwlPenalty(_ mwl: MWL) -> Int {
+        guard
+            let cards = Card.mostWantedLists[mwl],
+            let index = cards.index(where: { $0.code == self.code })
+        else {
+            return 0
         }
-        return cards.contains(self.code)
+    
+        return cards[index].penalty
     }
     
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
@@ -350,7 +354,7 @@ extension Card {
         ramanRai, heritageCommittee,
         salemsHospitality, ibrahimSalem,
         executiveSearchFirm, consultingVisit
-        ])
+    ])
     
     static let padCampaign              = "01109"    // needed for pad factory
     
@@ -390,18 +394,44 @@ extension Card {
     static let sansanCityGrid   = "01092"
     static let breakingNews     = "01082"
     
-    fileprivate static let mostWantedLists: [MWL: Set<String>] = [
+    static let temüjinContract  = "11026"
+    static let bioEthicsAssociation = "10049"
+    static let şifr             = "11101"
+    static let rumorMill        = "11022"
+    static let sensieActorsUnion = "10053"
+    static let blackmail        = "04089"
+    static let mumbadCityHall   = "10055"
+    
+    struct MWLEntry: Hashable {
+        let code: String
+        let penalty: Int
+        
+        init(_ code: String, _ penalty: Int) {
+            self.code = code
+            self.penalty = penalty
+        }
+        
+        var hashValue: Int {
+            return code.hashValue
+        }
+    }
+    
+    fileprivate typealias M = MWLEntry
+    
+    fileprivate static let mostWantedLists: [MWL: Set<M>] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
-        .v1_0: Set([
-            cerberusH1, cloneChip, desperado, parasite, prepaidVoicepad, yog_0,
-            architect, astroscript, eli_1, napdContract, sansanCityGrid ]),
+        .v1_0: Set([ M(cerberusH1, 1), M(cloneChip, 1), M(desperado, 1), M(parasite, 1), M(prepaidVoicepad, 1), M(yog_0, 1),
+                     M(architect, 1), M(astroscript, 1), M(eli_1, 1), M(napdContract, 1), M(sansanCityGrid, 1) ]),
         
         // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
-        .v1_1: Set([
-            cerberusH1, cloneChip, d4v1d, desperado, faust, parasite, prepaidVoicepad, wyldside, yog_0,
-            architect, breakingNews, eli_1, mumbaTemple, napdContract, sansanCityGrid ]),
+        .v1_1: Set([ M(cerberusH1, 1), M(cloneChip, 1), M(d4v1d, 1), M(desperado, 1), M(faust, 1), M(parasite, 1), M(prepaidVoicepad, 1), M(wyldside, 1), M(yog_0, 1),
+                     M(architect, 1), M(breakingNews, 1), M(eli_1, 1), M(mumbaTemple, 1), M(napdContract, 1), M(sansanCityGrid, 1) ]),
         
-        // .v1_2: Set([])
+        // MWL v2.0, introduced in Tournament Regulations v??, valid from 2017-??-?? onwards
+        .v2_0: Set([ M(cerberusH1, 1), M(cloneChip, 1), M(d4v1d, 1), M(parasite, 1), M(temüjinContract, 1), M(wyldside, 1), M(yog_0, 1),
+                     M(architect, 1), M(bioEthicsAssociation, 1), M(breakingNews, 1), M(mumbadCityHall, 1), M(mumbaTemple, 1), M(napdContract, 1), M(sansanCityGrid, 1),
+                     M(blackmail, 3), M(faust, 3), M(rumorMill, 3), M(şifr, 3),
+                     M(sensieActorsUnion, 3) ])
     ]
     
     static let aliases = [
@@ -426,6 +456,10 @@ extension Card {
         "11094": "IPB",       // IP Block
     ]
 
+}
+
+func ==(lhs: Card.MWLEntry, rhs: Card.MWLEntry) -> Bool {
+    return lhs.code == rhs.code && lhs.penalty == rhs.penalty
 }
 
 extension Card {

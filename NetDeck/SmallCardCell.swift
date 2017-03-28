@@ -84,8 +84,9 @@ class SmallCardCell: CardCell {
             self.influenceLabel.text = ""
         }
         
-        let mwl = card.isMostWanted(self.deck.mwl)
-        self.mwlMarker.isHidden = !mwl
+        let penalty = card.mwlPenalty(self.deck.mwl)
+        self.mwlMarker.isHidden = penalty == 0
+        self.mwlMarker.layer.borderColor = penalty == 1 ? UIColor.black.cgColor : UIColor.red.cgColor
         
         self.factionLabel.text = card.factionStr
     }

@@ -257,11 +257,12 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
             cell.influenceLabel.text = ""
         }
         
-        let mwl = card.isMostWanted(self.deck.mwl)
-        if mwl {
-            cell.mwlLabel.text = "\(min(-1, -(cc?.count ?? 0)))"
+        let penalty = card.mwlPenalty(self.deck.mwl)
+        if penalty > 0 {
+            let count = cc?.count ?? 0
+            cell.mwlLabel.text = "\(min(-1, -count * penalty))"
         }
-        cell.mwlLabel.isHidden = !mwl
+        cell.mwlLabel.isHidden = penalty == 0
         
         let faction = Faction.name(for: card.faction)
         let subtype = card.subtype

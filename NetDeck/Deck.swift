@@ -97,16 +97,10 @@ import SwiftyUserDefaults
             return 0
         }
     }
-    
-    /// how many cards in this deck are on the MWL?
-    var cardsFromMWL: Int {
-        return cards.filter({ $0.card.isMostWanted(self.mwl) }).reduce(0) { $0 + $1.count }
-    }
-    
+        
     /// what's the influence penalty incurred through MWL cards?
-    /// (separate from `cardsFromMWL` in case we ever get rules other than "1 inf per card")
     var mwlPenalty: Int {
-        return self.cardsFromMWL
+        return cards.reduce(0) { $0 + $1.card.mwlPenalty(self.mwl) }
     }
     
     func influenceFor(_ cardcounter: CardCounter?) -> Int {

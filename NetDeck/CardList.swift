@@ -327,7 +327,7 @@ class CardList {
         if self.mwl {
             let mwl = Defaults[.defaultMwl]
             if mwl != .none {
-                filteredCards = filteredCards.filter { $0.isMostWanted(mwl) }
+                filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 }
             }
         }
         
