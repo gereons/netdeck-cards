@@ -88,6 +88,26 @@ enum MWL: Int {
     static func by(code: String) -> MWL {
         return MWL.codeMap[code] ?? .none
     }
+    
+    // cards on the MWL are uniquely identified by their code, so we only use that in `hashValue` and op==
+    struct Entry: Hashable {
+        let code: String
+        let penalty: Int
+        
+        init(_ code: String, _ penalty: Int) {
+            self.code = code
+            self.penalty = penalty
+        }
+        
+        var hashValue: Int {
+            return code.hashValue
+        }
+    }
+
+}
+
+func ==(lhs: MWL.Entry, rhs: MWL.Entry) -> Bool {
+    return lhs.code == rhs.code
 }
 
 enum FilterAttribute: Int {

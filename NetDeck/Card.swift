@@ -386,6 +386,10 @@ extension Card {
     static let d4v1d            = "06033"
     static let faust            = "08061"
     static let wyldside         = "01016"
+    static let temüjinContract  = "11026"
+    static let şifr             = "11101"
+    static let rumorMill        = "11022"
+    static let blackmail        = "04089"
     
     static let architect        = "06061"
     static let astroscript      = "01081"
@@ -393,32 +397,14 @@ extension Card {
     static let napdContract     = "04119"
     static let sansanCityGrid   = "01092"
     static let breakingNews     = "01082"
-    
-    static let temüjinContract  = "11026"
     static let bioEthicsAssociation = "10049"
-    static let şifr             = "11101"
-    static let rumorMill        = "11022"
     static let sensieActorsUnion = "10053"
-    static let blackmail        = "04089"
     static let mumbadCityHall   = "10055"
     
-    struct MWLEntry: Hashable {
-        let code: String
-        let penalty: Int
         
-        init(_ code: String, _ penalty: Int) {
-            self.code = code
-            self.penalty = penalty
-        }
-        
-        var hashValue: Int {
-            return code.hashValue
-        }
-    }
+    fileprivate typealias M = MWL.Entry
     
-    fileprivate typealias M = MWLEntry
-    
-    fileprivate static let mostWantedLists: [MWL: Set<M>] = [
+    fileprivate static let mostWantedLists: [MWL: Set<MWL.Entry>] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
         .v1_0: Set([ M(cerberusH1, 1), M(cloneChip, 1), M(desperado, 1), M(parasite, 1), M(prepaidVoicepad, 1), M(yog_0, 1),
                      M(architect, 1), M(astroscript, 1), M(eli_1, 1), M(napdContract, 1), M(sansanCityGrid, 1) ]),
@@ -458,9 +444,6 @@ extension Card {
 
 }
 
-func ==(lhs: Card.MWLEntry, rhs: Card.MWLEntry) -> Bool {
-    return lhs.code == rhs.code && lhs.penalty == rhs.penalty
-}
 
 extension Card {
     var cropY: Double {
