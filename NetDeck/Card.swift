@@ -90,14 +90,11 @@ class Card: NSObject, Unmarshaling {
     }
     
     func mwlPenalty(_ mwl: MWL) -> Int {
-        guard
-            let cards = Card.mostWantedLists[mwl],
-            let index = cards.index(where: { $0.code == self.code })
-        else {
+        guard let penalties = Card.mostWantedLists[mwl] else {
             return 0
         }
     
-        return cards[index].penalty
+        return penalties[self.code] ?? 0
     }
     
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
@@ -401,23 +398,21 @@ extension Card {
     static let sensieActorsUnion = "10053"
     static let mumbadCityHall   = "10055"
     
-        
-    fileprivate typealias M = MWL.Entry
-    
-    fileprivate static let mostWantedLists: [MWL: Set<MWL.Entry>] = [
+    // dictonaries of code -> penalty for each MWL version
+    fileprivate static let mostWantedLists: [MWL: [String: Int]] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
-        .v1_0: Set([ M(cerberusH1, 1), M(cloneChip, 1), M(desperado, 1), M(parasite, 1), M(prepaidVoicepad, 1), M(yog_0, 1),
-                     M(architect, 1), M(astroscript, 1), M(eli_1, 1), M(napdContract, 1), M(sansanCityGrid, 1) ]),
+        .v1_0: [ cerberusH1: 1, cloneChip: 1, desperado: 1, parasite: 1, prepaidVoicepad: 1, yog_0: 1,
+                 architect: 1, astroscript: 1, eli_1: 1, napdContract: 1, sansanCityGrid: 1 ],
         
         // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
-        .v1_1: Set([ M(cerberusH1, 1), M(cloneChip, 1), M(d4v1d, 1), M(desperado, 1), M(faust, 1), M(parasite, 1), M(prepaidVoicepad, 1), M(wyldside, 1), M(yog_0, 1),
-                     M(architect, 1), M(breakingNews, 1), M(eli_1, 1), M(mumbaTemple, 1), M(napdContract, 1), M(sansanCityGrid, 1) ]),
+        .v1_1: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, desperado: 1, faust: 1, parasite: 1, prepaidVoicepad: 1, wyldside: 1, yog_0: 1,
+                 architect: 1, breakingNews: 1, eli_1: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1 ],
         
         // MWL v2.0, introduced in Tournament Regulations v??, valid from 2017-??-?? onwards
-        .v2_0: Set([ M(cerberusH1, 1), M(cloneChip, 1), M(d4v1d, 1), M(parasite, 1), M(temüjinContract, 1), M(wyldside, 1), M(yog_0, 1),
-                     M(architect, 1), M(bioEthicsAssociation, 1), M(breakingNews, 1), M(mumbadCityHall, 1), M(mumbaTemple, 1), M(napdContract, 1), M(sansanCityGrid, 1),
-                     M(blackmail, 3), M(faust, 3), M(rumorMill, 3), M(şifr, 3),
-                     M(sensieActorsUnion, 3) ])
+        .v2_0: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
+                 architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1,
+                 blackmail: 3, faust: 3, rumorMill: 3, şifr: 3,
+                 sensieActorsUnion: 3 ]
     ]
     
     static let aliases = [
