@@ -874,7 +874,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let card = self.cards[indexPath.section][indexPath.row]
-        let cc = self.deckListViewController.deck.findCard(card) ?? CardCounter.null()
+        let cc = self.deckListViewController.deck?.findCard(card) ?? CardCounter.null()
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardThumb", for: indexPath) as! CardFilterThumbView
         
