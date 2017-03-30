@@ -19,11 +19,13 @@ protocol StartViewController {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     private var launchShortcutItem: UIApplicationShortcutItem?
     private var navigationController: UINavigationController!
+    fileprivate var crashDetected = false
+    private var initGroup = DispatchGroup()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -37,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         // make sure the Library/Application Support directory exists
         self.ensureAppSupportDirectoryExists()
         let filesExist = CardManager.fileExists() && PackManager.filesExist()
-        let initGroup = DispatchGroup()
         
         if filesExist {
             self.window!.rootViewController = StartupViewController()
@@ -46,11 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         self.setBuiltinUserDefaults()
         DispatchQueue.global(qos: .userInteractive).async {
-            initGroup.enter()
+            self.initGroup.enter()
             self.initializeData()
-            initGroup.leave()
+            self.initGroup.leave()
         }
-        self.waitForInitialization(initGroup)
+        self.waitForInitialization()
         
         let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem
         if shortcutItem != nil {
@@ -60,8 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         return true
     }
     
-    private func waitForInitialization(_ initGroup: DispatchGroup) {
-        initGroup.notify(queue: DispatchQueue.main) {
+    private func waitForInitialization() {
+        self.initGroup.notify(queue: DispatchQueue.main) {
             self.finializeLaunch()
         }
     }
@@ -119,12 +120,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         }
         self.replaceRootViewController(with: root)
         
-        let cardsOk = CardManager.cardsAvailable && PackManager.packsAvailable
-        if cardsOk {
-            DeckImport.checkClipboardForDeck()
-        }
-        
         self.logStartup()
+        
+        if self.crashDetected {
+            self.crashDetected = false
+            self.showCrashlyticsAlert()
+        } else {
+            if CardManager.cardsAvailable && PackManager.packsAvailable {
+                DeckImport.checkClipboardForDeck()
+            }
+        }
     }
     
     private func replaceRootViewController(with viewController: UIViewController) {
@@ -357,16 +362,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
             completionHandler(result)
         }
     }
-    
+}
+
+extension AppDelegate: CrashlyticsDelegate {
     // MARK: - crashlytics delegate 
     func crashlyticsDidDetectReport(forLastExecution report: CLSReport, completionHandler: @escaping (Bool) -> Void) {
         DispatchQueue.main.async {
             completionHandler(true)
         }
-        self.perform(#selector(AppDelegate.showAlert), with: nil, afterDelay: 0.15)
+        self.crashDetected = true
     }
     
-    func showAlert() {
+    func showCrashlyticsAlert() {
         let msg = "Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.".localized()
         
         let alert = UIAlertController.alert(title: "Oops, we crashed :(".localized(), message:msg)
