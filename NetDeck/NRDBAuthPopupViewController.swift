@@ -11,7 +11,7 @@ import UIKit
 class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
     
     @IBOutlet weak var webView: UIWebView!
-    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton?  // only on iPad
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     static var popup: NRDBAuthPopupViewController?
@@ -31,7 +31,8 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
         assert(Device.isIphone, "iPhone only!")
     
         let popup = NRDBAuthPopupViewController()
-        navController.pushViewController(popup, animated: false)
+        popup.navController = navController
+        navController.pushViewController(popup, animated: true)
         
         NRDBAuthPopupViewController.popup = popup
     }
@@ -53,7 +54,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
         self.webView.loadRequest(URLRequest(url: url!))
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        self.cancelButton.setTitle("Cancel".localized(), for: .normal)
+        self.cancelButton?.setTitle("Cancel".localized(), for: .normal)
     }
     
     @IBAction func cancelTapped(_ sender: UIButton) {
