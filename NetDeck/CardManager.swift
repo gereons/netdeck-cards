@@ -14,7 +14,7 @@ class CardManager {
     
     static let cardsFilename = "nrcards2.json"
     
-    private(set) static var allCardsByRole = [Role: [Card] ]()    // non-id cards
+    private static var allCardsByRole = [Role: [Card] ]()    // non-id cards
     private static var allIdentitiesByRole = [Role: [Card] ]()    // ids
     
     private static var allSubtypes = [Role: [String: Set<String> ] ]()
@@ -75,19 +75,15 @@ class CardManager {
         }
     }
     
-    class func allFor(role: Role) -> [Card]
-    {
+    class func allFor(role: Role) -> [Card] {
         if role != .none {
             return allCardsByRole[role]!
         } else {
-            var cards = allCardsByRole[.runner]!
-            cards.append(contentsOf: allCardsByRole[.corp]!)
-            return cards
+            return allCardsByRole[.runner]! + allCardsByRole[.corp]!
         }
     }
     
-    class func identitiesFor(role: Role) -> [Card]
-    {
+    class func identitiesFor(role: Role) -> [Card] {
         assert(role != .none)
         return allIdentitiesByRole[role]!
     }
