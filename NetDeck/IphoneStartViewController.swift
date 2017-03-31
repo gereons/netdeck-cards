@@ -281,8 +281,12 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func openBrowser() {
-        let browser = BrowserViewController()
-        self.navigationController?.pushViewController(browser, animated: true)
+        if CardManager.cardsAvailable && PackManager.packsAvailable {
+            let browser = BrowserViewController()
+            self.navigationController?.pushViewController(browser, animated: true)
+        } else {
+            DataDownload.downloadCardData()
+        }
     }
     
     // MARK: - table view
