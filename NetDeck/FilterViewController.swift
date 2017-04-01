@@ -165,8 +165,10 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.muApChanged(nil)
         self.costChanged(nil)
         
-        let firstIndex = IndexPath(row: 0, section: 0)
-        self.previewTable.scrollToRow(at: firstIndex, at: .middle, animated: false)
+        if self.showPreviewTable {
+            let top = IndexPath(row: 0, section: 0)
+            self.previewTable.scrollToRow(at: top, at: .middle, animated: false)
+        }
     }
     
     @IBAction func strengthChanged(_ slider: UISlider?) {
