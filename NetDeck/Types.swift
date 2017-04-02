@@ -53,6 +53,8 @@ enum BrowserSort: Int {
     case bySetFaction
     case bySetType
     case bySetNumber
+    case byCost
+    case byStrength
 }
 
 enum ImportSource: Int {

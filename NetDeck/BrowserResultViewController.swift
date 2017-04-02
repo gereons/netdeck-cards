@@ -31,7 +31,9 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         .bySet: "Set".localized(),
         .bySetFaction: "Set/Faction".localized(),
         .bySetType: "Set/Type".localized(),
-        .bySetNumber: "Set/Number".localized()
+        .bySetNumber: "Set/Number".localized(),
+        .byCost: "Cost".localized(),
+        .byStrength: "Strength".localized()
     ]
     
     private static var instance: BrowserResultViewController!
@@ -163,6 +165,12 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         })
         self.popup.addAction(UIAlertAction(title: "Set/Number".localized()) { action in
             self.changeSortType(.bySetNumber)
+        })
+        self.popup.addAction(UIAlertAction(title: "Cost".localized()) { action in
+            self.changeSortType(.byCost)
+        })
+        self.popup.addAction(UIAlertAction(title: "Strength".localized()) { action in
+            self.changeSortType(.byStrength)
         })
         
         self.popup.addAction(UIAlertAction.actionSheetCancel { action in

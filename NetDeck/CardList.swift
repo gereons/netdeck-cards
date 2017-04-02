@@ -349,6 +349,12 @@ class CardList {
             case .bySetNumber:
                 if c1.code < c2.code { return true }
                 if c1.code > c2.code { return false }
+            case .byCost:
+                if c1.cost < c2.cost { return true }
+                if c1.cost > c2.cost { return false }
+            case .byStrength:
+                if c1.strength < c2.strength { return true }
+                if c1.strength > c2.strength { return false }
             }
             
             switch (self.sortType)
@@ -409,6 +415,10 @@ class CardList {
             return card.factionStr
         case .bySet, .bySetType, .bySetNumber, .bySetFaction:
             return card.packName
+        case .byCost:
+            return "Cost".localized() + " \(card.costString)"
+        case .byStrength:
+            return "Strength".localized() + " \(card.strengthString)"
         }
     }
     

@@ -243,22 +243,24 @@ class Card: NSObject, Unmarshaling {
         self.mu = try object.value(for: "memory_cost") ?? -1
         
         do {
-            let str: String? = try object.value(for: "strength")
-            if let s = str, s == "X" {
+            self.strength = try object.value(for: "strength")
+        } catch let error {
+            switch error {
+            case MarshalError.nullValue:
                 self.strength = Card.X
+            default:
+                self.strength = -1
             }
-        } catch {
-            self.strength = try object.value(for: "strength") ?? -1
         }
-        
         do {
-            let cost: String? = try object.value(for: "cost")
-            if let c = cost, c == "X" {
+            self.cost = try object.value(for: "cost")
+        } catch let error {
+            switch error {
+            case MarshalError.nullValue:
                 self.cost = Card.X
+            default:
+                self.cost = -1
             }
-        }
-        catch {
-            self.cost = try object.value(for: "cost") ?? -1
         }
         
         self.influence = try object.value(for: "faction_cost") ?? -1
