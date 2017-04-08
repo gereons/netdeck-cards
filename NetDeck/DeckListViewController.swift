@@ -185,6 +185,19 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.refresh()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let x = Double(self.view.center.x) - self.historySaveInterval
+        let width = 2 * self.historySaveInterval
+        self.progressView = UIProgressView(frame: CGRect(x: x, y: 40, width: width, height: 3))
+        self.progressView.progress = 1.0
+        self.progressView.progressTintColor = .darkGray
+        self.toolBar.addSubview(self.progressView)
+        
+        self.progressView.isHidden = !Defaults[.autoHistory]
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -198,19 +211,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             self.selectIdentity(self)
         }
         
-        if Defaults[.autoHistory] {
-            let x = Double(self.view.center.x) - self.historySaveInterval
-            let width = 2 * self.historySaveInterval
-            self.progressView = UIProgressView(frame: CGRect(x: x, y: 40, width: width, height: 3))
-            self.progressView.progress = 1.0
-            self.progressView.progressTintColor = .darkGray
-            self.toolBar.addSubview(self.progressView)
-        }
-        
         if self.deck.filename != nil {
             self.startHistoryTimer(self)
-        } else {
-            self.progressView?.isHidden = true
         }
         
         self.stateButton.title = DeckState.buttonLabelFor(self.deck.state)
