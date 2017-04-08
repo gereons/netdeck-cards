@@ -357,7 +357,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             alert.addAction(UIAlertAction.alertCancel(nil))
             alert.addAction(UIAlertAction(title: "Open in Safari".localized()) { action in
                 if Reachability.online {
-                    Analytics.logEvent("Open in Safari")
+                    Analytics.logEvent(.openInSafari)
                     self.openInSafari(self.deck)
                 } else {
                     self.showOfflineAlert()
@@ -365,7 +365,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             })
             alert.addAction(UIAlertAction(title: "Publish deck".localized()) { action in
                 if Reachability.online {
-                    Analytics.logEvent("Publish Deck")
+                    Analytics.logEvent(.publishDeck)
                     self.publishDeck(self.deck)
                 } else {
                     self.showOfflineAlert()
@@ -373,18 +373,18 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             })
             alert.addAction(UIAlertAction(title: "Unlink".localized()) { action in
                 self.deck.netrunnerDbId = nil
-                Analytics.logEvent("Unlink Deck")
+                Analytics.logEvent(.unlinkDeck)
                 if self.autoSave {
                     self.saveDeckManually(false)
                 }
                 self.refresh()
             })
             alert.addAction(UIAlertAction(title: "Reimport".localized()) { action in
-                Analytics.logEvent("Reimport Deck")
+                Analytics.logEvent(.reimportDeck)
                 self.reImportDeckFromNetrunnerDb()
             })
             alert.addAction(UIAlertAction(title: "Save".localized()) { action in
-                Analytics.logEvent("Save to NRDB")
+                Analytics.logEvent(.saveToNRDB)
                 self.saveDeckToNetrunnerDb()
             })
             
@@ -395,7 +395,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             
             alert.addAction(UIAlertAction(title: "OK".localized(), style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Save".localized()) { action in
-                Analytics.logEvent("Save to NRDB")
+                Analytics.logEvent(.saveToNRDB)
                 self.saveDeckToNetrunnerDb()
             })
             self.present(alert, animated: false, completion: nil)
@@ -565,7 +565,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     private func changeDeckState(_ newState: DeckState) {
         let oldState = self.deck.state
         
-        Analytics.logEvent("Change State", attributes: [ "From": DeckState.rawLabelFor(oldState), "To": DeckState.rawLabelFor(newState)])
+        Analytics.logEvent(.changeState, attributes: [ "From": DeckState.rawLabelFor(oldState), "To": DeckState.rawLabelFor(newState)])
         self.deck.state = newState
         self.stateButton.title = DeckState.buttonLabelFor(newState)
         if newState != oldState {
@@ -697,40 +697,40 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if Defaults[.useDropbox] {
             self.actionSheet.addAction(UIAlertAction(title: "Dropbox: OCTGN".localized()) { action in
-                Analytics.logEvent("Export .o8d")
+                Analytics.logEvent(.exportO8D)
                 self.octgnExport()
             })
             self.actionSheet.addAction(UIAlertAction(title: "Dropbox: BBCode".localized()) { action in
-                Analytics.logEvent("Export BBCode")
+                Analytics.logEvent(.exportBBCode)
                 DeckExport.asBBCode(self.deck)
                 self.actionSheet = nil
             })
             self.actionSheet.addAction(UIAlertAction(title: "Dropbox: Markdown".localized()) { action in
-                Analytics.logEvent("Export MD")
+                Analytics.logEvent(.exportMD)
                 DeckExport.asMarkdown(self.deck)
                 self.actionSheet = nil
             })
             self.actionSheet.addAction(UIAlertAction(title: "Dropbox: Plain Text".localized()) { action in
-                Analytics.logEvent("Export Text")
+                Analytics.logEvent(.exportText)
                 DeckExport.asPlaintext(self.deck)
                 self.actionSheet = nil
             })
         }
         
         self.actionSheet.addAction(UIAlertAction(title: "Clipboard: BBCode".localized()) { action in
-            Analytics.logEvent("Clip BBCode")
+            Analytics.logEvent(.clipBBCode)
             UIPasteboard.general.string = DeckExport.asBBCodeString(self.deck)
             DeckImport.updateCount()
             self.actionSheet = nil
         })
         self.actionSheet.addAction(UIAlertAction(title: "Clipboard: Markdown".localized()) { action in
-            Analytics.logEvent("Clip MD")
+            Analytics.logEvent(.clipMD)
             UIPasteboard.general.string = DeckExport.asMarkdownString(self.deck)
             DeckImport.updateCount()
             self.actionSheet = nil
         })
         self.actionSheet.addAction(UIAlertAction(title: "Clipboard: Plain Text".localized()) { action in
-            Analytics.logEvent("Clip Text")
+            Analytics.logEvent(.clipText)
             UIPasteboard.general.string = DeckExport.asPlaintextString(self.deck)
             DeckImport.updateCount()
             self.actionSheet = nil
@@ -738,7 +738,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if DeckEmail.canSendMail() {
             self.actionSheet.addAction(UIAlertAction(title: "As Email".localized()) { action in
-                Analytics.logEvent("Email Deck")
+                Analytics.logEvent(.emailDeck)
                 DeckEmail.emailDeck(self.deck, fromViewController: self)
                 self.actionSheet = nil
             })
@@ -746,7 +746,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if UIPrintInteractionController.isPrintingAvailable {
             self.actionSheet.addAction(UIAlertAction(title: "Print".localized()) { action in
-                Analytics.logEvent("Print Deck")
+                Analytics.logEvent(.printDeck)
                 self.printDeck(self.exportButton)
                 self.actionSheet = nil
             })
@@ -754,7 +754,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if Defaults[.useJintekiNet] {
             self.actionSheet.addAction(UIAlertAction(title: "Upload to Jinteki.net".localized()) { action in
-                Analytics.logEvent("Upload Jinteki.net")
+                Analytics.logEvent(.uploadJintekiNet)
                 JintekiNet.sharedInstance.uploadDeck(self.deck)
                 self.actionSheet = nil
             })

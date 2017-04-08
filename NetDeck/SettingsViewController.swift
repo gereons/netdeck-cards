@@ -119,7 +119,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             
         case DefaultsKeys.language._key:
             let language = value as? String ?? "n/a"
-            Analytics.logEvent("Change Language", attributes: ["Language": language])
+            Analytics.logEvent(.changeLanguage, attributes: ["Language": language])
             
         case DefaultsKeys.keepNrdbCredentials._key:
             let keep = value as? Bool ?? false

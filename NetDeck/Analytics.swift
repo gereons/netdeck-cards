@@ -10,9 +10,39 @@ import Crashlytics
 
 class Analytics {
     
-    class func logEvent(_ name: String, attributes: [String: Any]? = nil) {
+    enum Event: String {
+        case start = "Start"
+        case browser = "Browser"
+        case openANCUR = "Open ANCUR"
+        case openNRDB = "Open NRDB"
+        case compareDecks = "Compare Decks"
+        case deckHistory = "Deck History"
+        case revert = "Revert"
+        case importFromClipboard = "Import from Clipboard"
+        case openInSafari = "Open in Safari"
+        case publishDeck = "Publish Deck"
+        case unlinkDeck = "Unlink Deck"
+        case reimportDeck = "Reimport Deck"
+        case saveToNRDB = "Save to NRDB"
+        case changeState = "Change State"
+        case exportO8D = "Export .o8d"
+        case exportBBCode = "Export BBCode"
+        case exportMD = "Export MD"
+        case exportText = "Export Text"
+        case clipBBCode = "Clip BBCode"
+        case clipMD = "Clip MD"
+        case clipText = "Clip Text"
+        case emailDeck = "Email Deck"
+        case printDeck = "Print Deck"
+        case uploadJintekiNet = "Upload Jinteki.net"
+        case drawSim = "Draw Sim"
+        case changeLanguage = "Change Language"
+    }
+
+    class func logEvent(_ event: Event, attributes: [String: Any]? = nil) {
         if BuildConfig.useCrashlytics {
-            Answers.logCustomEvent(withName: name, customAttributes: attributes)
+            Answers.logCustomEvent(withName: event.rawValue, customAttributes: attributes)
         }
     }
+
 }

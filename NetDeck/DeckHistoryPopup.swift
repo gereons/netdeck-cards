@@ -20,7 +20,7 @@ class DeckHistoryPopup: UIViewController, UITableViewDelegate, UITableViewDataSo
     static func showFor(deck: Deck, in viewController: UIViewController) {
         let popup = DeckHistoryPopup(deck: deck)
         
-        Analytics.logEvent("Deck History", attributes: ["Device": "iPad"])
+        Analytics.logEvent(.deckHistory, attributes: ["Device": "iPad"])
         
         viewController.present(popup, animated: false, completion: nil)
     }
@@ -49,7 +49,7 @@ class DeckHistoryPopup: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func revertTo(_ sender: UIButton) {
         assert(sender.tag < self.deck.revisions.count, "invalid tag")
-        Analytics.logEvent("Revert")
+        Analytics.logEvent(.revert)
         let dcs = self.deck.revisions[sender.tag]
         self.deck.resetToCards(dcs.cards)
         

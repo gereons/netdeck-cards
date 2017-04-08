@@ -26,7 +26,7 @@ class IphoneDrawSimulator: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Analytics.logEvent("Draw Sim", attributes: ["Device": "iPhone"])
+        Analytics.logEvent(.drawSim, attributes: ["Device": "iPhone"])
         assert(self.navigationController?.viewControllers.count == 3, "nav oops")
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)

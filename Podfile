@@ -11,6 +11,7 @@ target 'NetDeck' do
     pod 'MultiSelectSegmentedControl'
     pod 'CorePlot'
     pod 'DZNEmptyDataSet'
+    pod 'DeviceKit'
 
     pod 'SwiftyDropbox', '~> 4.0'
     pod 'Alamofire'

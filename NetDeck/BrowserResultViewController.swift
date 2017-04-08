@@ -319,13 +319,13 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
             NotificationCenter.default.post(name: Notifications.browserNew, object: self, userInfo: [ "code": card.code ])
         })
         sheet.addAction(UIAlertAction(title: "ANCUR page for this card".localized()) { action in
-            Analytics.logEvent("Open ANCUR", attributes: ["Card": card.name])
+            Analytics.logEvent(.openANCUR, attributes: ["Card": card.name])
             if let ancurUrl = URL(string: card.ancurLink) {
                 UIApplication.shared.openURL(ancurUrl)
             }
         })
         sheet.addAction(UIAlertAction(title: "NetrunnerDB page for this card".localized()) { action in
-            Analytics.logEvent("Open NRDB", attributes: ["Card": card.name])
+            Analytics.logEvent(.openNRDB, attributes: ["Card": card.name])
             if let nrdbUrl = URL(string: card.nrdbLink) {
                 UIApplication.shared.openURL(nrdbUrl)
             }

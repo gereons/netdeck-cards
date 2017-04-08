@@ -97,7 +97,7 @@ class DeckImport: NSObject {
         if let alert = self.uiAlert {
             alert.addAction(UIAlertAction(title:"No".localized(), style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title:"Yes".localized(), style: .default) { (UIAlertAction) -> Void in
-                Analytics.logEvent("Import from Clipboard")
+                Analytics.logEvent(.importFromClipboard)
                 if self.deck != nil {
                     NotificationCenter.default.post(name: Notifications.importDeck, object:self, userInfo:["deck": self.deck!])
                 }

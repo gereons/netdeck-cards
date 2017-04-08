@@ -24,7 +24,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
 
         self.title = "Editing History".localized()
         
-        Analytics.logEvent("Deck History", attributes: ["Device": "iPhone"])
+        Analytics.logEvent(.deckHistory, attributes: ["Device": "iPhone"])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +38,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
     func revertTapped(_ sender: UIButton) {
         guard let deck = self.deck else { return }
         
-        Analytics.logEvent("Revert")
+        Analytics.logEvent(.revert)
         assert(sender.tag < deck.revisions.count, "invalid tag")
         
         let dcs = deck.revisions[sender.tag]

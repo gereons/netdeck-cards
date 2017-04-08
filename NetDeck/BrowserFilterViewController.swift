@@ -88,7 +88,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.title = "Cards".localized()
         
         self.initializing = true
-        Analytics.logEvent("Browser", attributes: ["Device": "iPad"])
+        Analytics.logEvent(.browser, attributes: ["Device": "iPad"])
         
         self.edgesForExtendedLayout = []
         

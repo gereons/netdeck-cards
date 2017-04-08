@@ -7,6 +7,7 @@ PODS:
   - CorePlot (2.2)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
+  - DeviceKit (1.0.1)
   - DTCoreText (1.6.20):
     - DTCoreText/Core (= 1.6.20)
     - DTFoundation/Core (~> 1.7.5)
@@ -42,6 +43,7 @@ DEPENDENCIES:
   - AlamofireNetworkActivityIndicator
   - CorePlot
   - Crashlytics
+  - DeviceKit
   - DTCoreText
   - DZNEmptyDataSet
   - Fabric
@@ -60,6 +62,7 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 3e55069ada3e1ff7703665156429eedcdfea0bc1
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  DeviceKit: 461e525867e48e725f41699c1cab3100df1258ff
   DTCoreText: 51904f2374af443e0d270d6fdc76035ab6f9ef8a
   DTFoundation: 26a164ef510877387906fb92bff524a792db4bf8
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -73,6 +76,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: dfcd4d308d32d74729255b48833db61acdfb9c23
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
 
-PODFILE CHECKSUM: 464e207d91b8adfe65fb0221334424708e989ab0
+PODFILE CHECKSUM: 43ed01df8206a4d12de6648ba5d113463f6e69c3
 
 COCOAPODS: 1.2.0

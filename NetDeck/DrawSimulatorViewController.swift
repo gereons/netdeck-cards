@@ -36,7 +36,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Analytics.logEvent("Draw Sim", attributes: ["Device": "iPad"])
+        Analytics.logEvent(.drawSim, attributes: ["Device": "iPad"])
         
         self.initCards(true)
         

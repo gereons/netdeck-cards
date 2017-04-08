@@ -152,26 +152,26 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         if Defaults[.useDropbox] {
             alert.addAction(UIAlertAction(title: "To Dropbox".localized()) { action in
-                Analytics.logEvent("Export .o8d", attributes: nil)
+                Analytics.logEvent(.exportO8D)
                 DeckExport.asOctgn(self.deck, autoSave: false)
             })
         }
         if Defaults[.useNrdb]  {
             alert.addAction(UIAlertAction(title: "To NetrunnerDB.com".localized()) { action in
-                Analytics.logEvent("Save to NRDB", attributes: nil)
+                Analytics.logEvent(.saveToNRDB)
                 self.saveToNrdb()
             })
         }
         if Defaults[.useJintekiNet] {
             alert.addAction(UIAlertAction(title: "To Jinteki.net".localized()) { action in
-                Analytics.logEvent("Upload Jinteki.net", attributes: nil)
+                Analytics.logEvent(.uploadJintekiNet)
                 self.saveToJintekiNet()
             })
         }
         
         if MFMailComposeViewController.canSendMail() {
             alert.addAction(UIAlertAction(title: "As Email".localized()) { action in
-                Analytics.logEvent("Email Deck", attributes: nil)
+                Analytics.logEvent(.emailDeck)
                 DeckEmail.emailDeck(self.deck, fromViewController: self)
             })
         }

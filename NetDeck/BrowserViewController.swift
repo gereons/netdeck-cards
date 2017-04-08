@@ -32,7 +32,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         
         self.title = "Browser".localized()
-        Analytics.logEvent("Browser", attributes: [ "Device": "iPhone" ])
+        Analytics.logEvent(.browser, attributes: [ "Device": "iPhone" ])
         
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.tableFooterView = UIView(frame:CGRect.zero)

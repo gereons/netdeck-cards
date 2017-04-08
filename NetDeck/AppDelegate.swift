@@ -10,6 +10,7 @@ import Fabric
 import Crashlytics
 import SVProgressHUD
 import SwiftyUserDefaults
+import DeviceKit
 
 // TODO: investigate OOMs - memory warnings?
 
@@ -297,20 +298,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func logStartup() {
-        let cardLanguage = Defaults[.language]
-        let appLanguage = Locale.preferredLanguages.first ?? ""
-        let languageComponents = Locale.components(fromIdentifier: appLanguage)
-        let languageFromComponents = languageComponents["foo"] ?? ""
+        let device = DeviceKit.Device()
+        if device.isSimulator {
+            return
+        }
         let attrs = [
-            "cardLanguage": cardLanguage,
-            "appLanguage": appLanguage,
-            "Language": cardLanguage + "/" + languageFromComponents,
+            "cardLanguage": Defaults[.language],
+            "locale": Locale.current.identifier,
             "useNrdb": Defaults[.useNrdb] ? "on" : "off",
             "useDropbox": Defaults[.useDropbox] ? "on" : "off",
-            "device": UIDevice.current.model,
-            "os": UIDevice.current.systemVersion
+            "device": device.description,
+            "os": UIDevice.current.systemVersion,
+            "device+os": device.description + " " + UIDevice.current.systemVersion
         ]
-        Analytics.logEvent("Start", attributes: attrs)
+        Analytics.logEvent(.start, attributes: attrs)
     }
     
     class func appVersion() -> String {
