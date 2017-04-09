@@ -307,6 +307,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "locale": Locale.current.identifier,
             "useNrdb": Defaults[.useNrdb] ? "on" : "off",
             "useDropbox": Defaults[.useDropbox] ? "on" : "off",
+            "useJinteki": Defaults[.useJintekiNet] ? "on" : "off",
             "device": device.description,
             "os": UIDevice.current.systemVersion,
             "device+os": device.description + " " + UIDevice.current.systemVersion
