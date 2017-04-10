@@ -476,7 +476,8 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             if let visible = self.tableView.indexPathsForVisibleRows {
                 for indexPath in visible {
                     let rect = self.tableView.rectForRow(at: indexPath)
-                    let visible = self.tableView.frame.contains(rect)
+                    let convertedRect = self.tableView.convert(rect, to: self.tableView.superview)
+                    let visible = self.tableView.frame.contains(convertedRect)
                     if visible {
                         scrollToPath = indexPath
                         break
@@ -495,7 +496,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
                 }
             }
         }
-        
+    
         self.viewMode = View(rawValue: sender.selectedSegmentIndex) ?? .list
         self.collectionView.isHidden = self.viewMode == .list
         self.tableView.isHidden = self.viewMode != .list
