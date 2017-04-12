@@ -91,7 +91,7 @@ enum MWL: Int {
     
     var universalInfluence: Bool {
         switch self {
-        case .v1_2: return true
+        case .none, .v1_2: return true
         default: return false
         }
     }
