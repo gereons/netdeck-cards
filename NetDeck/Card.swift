@@ -387,6 +387,7 @@ extension Card {
     static let şifr             = "11101"
     static let rumorMill        = "11022"
     static let blackmail        = "04089"
+    static let ddos             = "08103"
     
     static let architect        = "06061"
     static let astroscript      = "01081"
@@ -408,10 +409,10 @@ extension Card {
         .v1_1: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, desperado: 1, faust: 1, parasite: 1, prepaidVoicepad: 1, wyldside: 1, yog_0: 1,
                  architect: 1, breakingNews: 1, eli_1: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1 ],
         
-        // MWL v2.0, introduced in Tournament Regulations v??, valid from 2017-??-?? onwards
-        .v2_0: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
+        // MWL v1.2, introduced in NAPD Most Wanted List v1.2, valid from 2017-04-12 onwards
+        .v1_2: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
                  architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1,
-                 blackmail: 3, faust: 3, rumorMill: 3, şifr: 3,
+                 blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
                  sensieActorsUnion: 3 ]
     ]
     

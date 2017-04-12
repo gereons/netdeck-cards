@@ -76,17 +76,24 @@ enum MWL: Int {
     case none
     case v1_0   // as of 2016-02-01
     case v1_1   // as of 2016-08-01
-    case v2_0   // as of 2017-??-??
+    case v1_2   // as of 2017-04-12
     
     // map from "mwl_code" values we get from the NRDB API
     static let codeMap: [String: MWL] = [
         "NAPD_MWL_1.0": .v1_0,
         "NAPD_MWL_1.1": .v1_1,
-        "NAPD_MWL_2.0": .v2_0
+        "NAPD_MWL_1.2": .v1_2
     ]
     
     static func by(code: String) -> MWL {
         return MWL.codeMap[code] ?? .none
+    }
+    
+    var universalInfluence: Bool {
+        switch self {
+        case .v1_2: return true
+        default: return false
+        }
     }
 }
 

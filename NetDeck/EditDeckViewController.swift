@@ -619,8 +619,8 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             self.deck.onesies = false
             self.refreshDeck()
         })
-        alert.addAction(UIAlertAction(title: "MWL v2.0".localized().checked(self.deck.mwl == .v2_0)) { action in
-            self.deck.mwl = .v2_0
+        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
+            self.deck.mwl = .v1_2
             self.deck.onesies = false
             self.refreshDeck()
         })

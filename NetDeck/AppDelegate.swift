@@ -181,12 +181,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
     }
     
     func setBuiltinUserDefaults() {
-        let fmt: DateFormatter = {
-            let f = DateFormatter()
-            f.dateFormat = "yyyyMMdd"
-            return f
-        }()
-        let today = fmt.string(from: Date())
+        // let fmt: DateFormatter = {
+        //    let f = DateFormatter()
+        //    f.dateFormat = "yyyyMMdd"
+        //    return f
+        // }()
+        // let today = fmt.string(from: Date())
         
         // fix PackUsage values from previous version
         [ DefaultsKeys.deckbuilderPacks, DefaultsKeys.browserPacks ].forEach {
@@ -195,10 +195,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
                 Defaults[$0] = .all
             }
         }
-        
-        // MWL v1.1 goes into effect 2016-08-01
-        let defaultMWL = today >= "20160801" ? MWL.v1_1 : MWL.v1_0
-//        let defaultMWL = today >= "20170201" ? MWL.v1_2 : MWL.v1_1
         
         Defaults.registerDefault(.rotationActive, true)
         
@@ -231,6 +227,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CrashlyticsDelegate {
         
         Defaults.registerDefault(.identityTable, true)
         
+        // MWL v1.2 goes into effect 2017-04-12
+        let defaultMWL = MWL.v1_2
         Defaults.registerDefault(.defaultMwl, defaultMWL)
     }
     
