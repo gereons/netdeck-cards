@@ -472,6 +472,7 @@ import SwiftyUserDefaults
         newDeck.filename = nil
         newDeck.state = self.state
         newDeck.notes = self.notes
+        newDeck.mwl = self.mwl
         newDeck.lastChanges = self.lastChanges.copy() as! DeckChangeSet
         newDeck.revisions = self.revisions.map({ $0.copy() as! DeckChangeSet })
         newDeck.modified = true
