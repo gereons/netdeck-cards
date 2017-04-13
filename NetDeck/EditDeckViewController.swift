@@ -539,7 +539,6 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
         
-        
         if card.type != .identity {
             let influence = self.deck.influenceFor(cc)
             if influence > 0 {
@@ -550,11 +549,13 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
                 cell.influenceLabel.text = ""
                 cell.influenceLabel.isHidden = true
             }
-            let penalty = card.mwlPenalty(self.deck.mwl)
-            if penalty > 0 {
-                cell.mwlLabel.text = "\(-cc.count * penalty)"
+            if !self.deck.mwl.universalInfluence {
+                let penalty = card.mwlPenalty(self.deck.mwl)
+                if penalty > 0 {
+                    cell.mwlLabel.text = "\(-cc.count * penalty)"
+                }
+                cell.mwlLabel.isHidden = penalty == 0
             }
-            cell.mwlLabel.isHidden = penalty == 0
         }
         
         var type = Faction.name(for: card.faction)
