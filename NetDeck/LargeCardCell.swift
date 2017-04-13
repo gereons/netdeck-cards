@@ -96,7 +96,7 @@ class LargeCardCell: CardCell {
         
         let influence = self.deck.influenceFor(cc)
         
-        if influence > 0 || card.isMostWanted(self.deck.mwl) {
+        if influence > 0 || card.mwlPenalty(self.deck.mwl) > 0 {
             self.influenceLabel.text = influence > 0 ? "\(influence)" : ""
             self.influenceLabel.textColor = cc.card.factionColor
             
@@ -177,13 +177,18 @@ class LargeCardCell: CardCell {
             pip.isHidden = false
         }
 
+        if mwl.universalInfluence {
+            return
+        }
+        
         let inf = max(0, influence)
-        if card.isMostWanted(mwl) && inf < pips.count {
+        let penalty = card.mwlPenalty(mwl)
+        if penalty > 0 && inf < pips.count {
             let pip = pips[inf]
             
             pip.layer.backgroundColor = UIColor.white.cgColor
             pip.layer.borderWidth = 1
-            pip.layer.borderColor = UIColor.black.cgColor
+            pip.layer.borderColor = penalty == 1 ? UIColor.black.cgColor : UIColor.red.cgColor
             pip.isHidden = false
         }
     }

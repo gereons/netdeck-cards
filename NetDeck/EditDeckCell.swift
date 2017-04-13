@@ -22,11 +22,13 @@ class EditDeckCell: UITableViewCell {
         self.accessoryView = UIView(frame: CGRect.zero)
         self.influenceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
         self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.mwlLabel.isHidden = true
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         self.influenceLabel.textColor = .black
+        self.mwlLabel.isHidden = true
     }
     
 }

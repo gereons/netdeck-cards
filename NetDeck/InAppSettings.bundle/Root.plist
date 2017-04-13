@@ -48,12 +48,14 @@
 				<integer>0</integer>
 				<integer>1</integer>
 				<integer>2</integer>
+                <integer>3</integer>
 			</array>
 			<key>Titles</key>
 			<array>
 				<string>Casual</string>
 				<string>MWL v1.0</string>
 				<string>MWL v1.1</string>
+                <string>MWL v1.2</string>
 			</array>
 		</dict>
 		<dict>

@@ -83,34 +83,43 @@ import SwiftyUserDefaults
     }
     
     var influence: Int {
-        return cards.filter( { $0.card.faction != self.identity?.faction && $0.card.influence != -1 }).reduce(0) { $0 + self.influenceFor($1) }
+        return cards.filter( {  $0.card.influence != -1 }).reduce(0) { $0 + self.influenceFor($1) }
     }
     
     var influenceLimit: Int {
         if let identity = self.identity {
-            if self.mwl != .none {
-                return max(1, identity.influenceLimit - self.mwlPenalty)
-            } else {
+            if self.mwl.universalInfluence {
                 return identity.influenceLimit
+            } else {
+                return max(1, identity.influenceLimit - self.mwlPenalty)
             }
         } else {
             return 0
         }
     }
-    
-    /// how many cards in this deck are on the MWL?
-    var cardsFromMWL: Int {
-        return cards.filter({ $0.card.isMostWanted(self.mwl) }).reduce(0) { $0 + $1.count }
-    }
-    
+        
     /// what's the influence penalty incurred through MWL cards?
-    /// (separate from `cardsFromMWL` in case we ever get rules other than "1 inf per card")
     var mwlPenalty: Int {
-        return self.cardsFromMWL
+        if self.mwl.universalInfluence {
+            return 0
+        }
+        return cards.reduce(0) { $0 + $1.card.mwlPenalty(self.mwl) * $1.count }
     }
     
     func influenceFor(_ cardcounter: CardCounter?) -> Int {
-        guard let cc = cardcounter else { return 0 }
+        guard let cc = cardcounter else {
+            return 0
+        }
+        
+        let influence = cardInfluenceFor(cc)
+        
+        if self.mwl.universalInfluence {
+            return influence + cc.card.mwlPenalty(self.mwl) * cc.count
+        }
+        return influence
+    }
+    
+    private func cardInfluenceFor(_ cc: CardCounter) -> Int {
 
         if self.identity?.faction == cc.card.faction || cc.card.influence == -1 {
             return 0
@@ -478,6 +487,7 @@ import SwiftyUserDefaults
         newDeck.filename = nil
         newDeck.state = self.state
         newDeck.notes = self.notes
+        newDeck.mwl = self.mwl
         newDeck.lastChanges = self.lastChanges.copy() as! DeckChangeSet
         newDeck.revisions = self.revisions.map({ $0.copy() as! DeckChangeSet })
         newDeck.modified = true

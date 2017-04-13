@@ -136,8 +136,9 @@ class DeckExport {
                 if inf > 0 {
                     s += " " + self.color(self.dots(inf), color, fmt)
                 }
-                if useMWL && cc.card.isMostWanted(deck.mwl) {
-                    s += " " + self.color(self.stars(cc.count), color, fmt)
+                let penalty = cc.card.mwlPenalty(deck.mwl)
+                if useMWL && penalty > 0 {
+                    s += " " + self.color(self.stars(cc.count * penalty), color, fmt)
                 }
                 s += eol
             }

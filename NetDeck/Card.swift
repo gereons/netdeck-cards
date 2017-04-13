@@ -89,11 +89,12 @@ class Card: NSObject, Unmarshaling {
         return self === Card.nullInstance
     }
     
-    func isMostWanted(_ mwl: MWL) -> Bool {
-        guard let cards = Card.mostWantedLists[mwl] else {
-            return false
+    func mwlPenalty(_ mwl: MWL) -> Int {
+        guard let penalties = Card.mostWantedLists[mwl] else {
+            return 0
         }
-        return cards.contains(self.code)
+    
+        return penalties[self.code] ?? 0
     }
     
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
@@ -352,7 +353,7 @@ extension Card {
         ramanRai, heritageCommittee,
         salemsHospitality, ibrahimSalem,
         executiveSearchFirm, consultingVisit
-        ])
+    ])
     
     static let padCampaign              = "01109"    // needed for pad factory
     
@@ -384,6 +385,11 @@ extension Card {
     static let d4v1d            = "06033"
     static let faust            = "08061"
     static let wyldside         = "01016"
+    static let temüjinContract  = "11026"
+    static let şifr             = "11101"
+    static let rumorMill        = "11022"
+    static let blackmail        = "04089"
+    static let ddos             = "08103"
     
     static let architect        = "06061"
     static let astroscript      = "01081"
@@ -391,19 +397,25 @@ extension Card {
     static let napdContract     = "04119"
     static let sansanCityGrid   = "01092"
     static let breakingNews     = "01082"
+    static let bioEthicsAssociation = "10049"
+    static let sensieActorsUnion = "10053"
+    static let mumbadCityHall   = "10055"
     
-    fileprivate static let mostWantedLists: [MWL: Set<String>] = [
+    // dictonaries of code -> penalty for each MWL version
+    fileprivate static let mostWantedLists: [MWL: [String: Int]] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
-        .v1_0: Set([
-            cerberusH1, cloneChip, desperado, parasite, prepaidVoicepad, yog_0,
-            architect, astroscript, eli_1, napdContract, sansanCityGrid ]),
+        .v1_0: [ cerberusH1: 1, cloneChip: 1, desperado: 1, parasite: 1, prepaidVoicepad: 1, yog_0: 1,
+                 architect: 1, astroscript: 1, eli_1: 1, napdContract: 1, sansanCityGrid: 1 ],
         
         // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
-        .v1_1: Set([
-            cerberusH1, cloneChip, d4v1d, desperado, faust, parasite, prepaidVoicepad, wyldside, yog_0,
-            architect, breakingNews, eli_1, mumbaTemple, napdContract, sansanCityGrid ]),
+        .v1_1: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, desperado: 1, faust: 1, parasite: 1, prepaidVoicepad: 1, wyldside: 1, yog_0: 1,
+                 architect: 1, breakingNews: 1, eli_1: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1 ],
         
-        // .v1_2: Set([])
+        // MWL v1.2, introduced in NAPD Most Wanted List v1.2, valid from 2017-04-12 onwards
+        .v1_2: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
+                 architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1,
+                 blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
+                 sensieActorsUnion: 3 ]
     ]
     
     static let aliases = [
@@ -429,6 +441,7 @@ extension Card {
     ]
 
 }
+
 
 extension Card {
     var cropY: Double {

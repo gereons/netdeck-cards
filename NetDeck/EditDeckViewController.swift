@@ -539,7 +539,6 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
         
-        
         if card.type != .identity {
             let influence = self.deck.influenceFor(cc)
             if influence > 0 {
@@ -550,11 +549,13 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
                 cell.influenceLabel.text = ""
                 cell.influenceLabel.isHidden = true
             }
-            let mwl = card.isMostWanted(self.deck.mwl)
-            if mwl {
-                cell.mwlLabel.text = "\(-cc.count)"
+            if !self.deck.mwl.universalInfluence {
+                let penalty = card.mwlPenalty(self.deck.mwl)
+                if penalty > 0 {
+                    cell.mwlLabel.text = "\(-cc.count * penalty)"
+                }
+                cell.mwlLabel.isHidden = penalty == 0
             }
-            cell.mwlLabel.isHidden = !mwl
         }
         
         var type = Faction.name(for: card.faction)
@@ -619,11 +620,11 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             self.deck.onesies = false
             self.refreshDeck()
         })
-//        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
-//            self.deck.mwl = .v1_2
-//            self.deck.onesies = false
-//            self.refreshDeck()
-//        })
+        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
+            self.deck.mwl = .v1_2
+            self.deck.onesies = false
+            self.refreshDeck()
+        })
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
             self.deck.mwl = .none
             self.deck.onesies = true
