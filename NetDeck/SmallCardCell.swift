@@ -66,16 +66,7 @@ class SmallCardCell: CardCell {
             self.name.textColor = .red
         }
         
-        let influence: Int
-        if card.type == .agenda {
-            influence = card.agendaPoints * cc.count
-        } else {
-            if self.deck != nil {
-                influence = self.deck.influenceFor(cc)
-            } else {
-                influence = card.influence * cc.count
-            }
-        }
+        let influence = self.deck.influenceFor(cc)
         
         if influence > 0 {
             self.influenceLabel.textColor = card.factionColor
@@ -84,10 +75,12 @@ class SmallCardCell: CardCell {
             self.influenceLabel.text = ""
         }
         
-        let penalty = card.mwlPenalty(self.deck.mwl)
-        self.mwlMarker.isHidden = penalty == 0
-        self.mwlMarker.layer.borderColor = penalty == 1 ? UIColor.black.cgColor : UIColor.red.cgColor
-        
         self.factionLabel.text = card.factionStr
+        
+        if !self.deck.mwl.universalInfluence {
+            let penalty = card.mwlPenalty(self.deck.mwl)
+            self.mwlMarker.isHidden = penalty == 0
+        }
+        
     }
 }

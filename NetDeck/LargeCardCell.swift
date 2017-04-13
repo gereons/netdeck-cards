@@ -177,6 +177,10 @@ class LargeCardCell: CardCell {
             pip.isHidden = false
         }
 
+        if mwl.universalInfluence {
+            return
+        }
+        
         let inf = max(0, influence)
         let penalty = card.mwlPenalty(mwl)
         if penalty > 0 && inf < pips.count {
