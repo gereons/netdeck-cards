@@ -77,10 +77,7 @@ class SmallCardCell: CardCell {
         
         self.factionLabel.text = card.factionStr
         
-        if !self.deck.mwl.universalInfluence {
-            let penalty = card.mwlPenalty(self.deck.mwl)
-            self.mwlMarker.isHidden = penalty == 0
-        }
-        
+        let penalty = card.mwlPenalty(self.deck.mwl)
+        self.mwlMarker.isHidden = penalty == 0
     }
 }

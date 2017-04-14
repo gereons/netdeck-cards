@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class SmallBrowserCell: BrowserCell {
     
@@ -17,9 +18,19 @@ class SmallBrowserCell: BrowserCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         self.pips = SmallPipsView.create()
         
+        self.pipsView.layer.cornerRadius = 2
+        self.pipsView.layer.masksToBounds = true
+        
         self.pipsView.addSubview(self.pips)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.pipsView.backgroundColor = .white
     }
     
     @nonobjc override func setCard(_ card: Card) {
@@ -32,5 +43,10 @@ class SmallBrowserCell: BrowserCell {
         let value = card.type == .agenda ? card.agendaPoints : card.influence
         self.pips.set(value: value, color: card.factionColor)
         self.factionLabel.text = card.factionStr
+        
+        let mwl = Defaults[.defaultMwl]
+        if card.mwlPenalty(mwl) != 0 {
+            self.pipsView.backgroundColor = UIColor(rgb: 0xf5f5f5)
+        }
     }
 }

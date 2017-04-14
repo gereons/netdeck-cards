@@ -79,11 +79,13 @@ import SwiftyUserDefaults
     }
     
     var agendaPoints: Int {
-        return cards.filter({ $0.card.type == .agenda}).reduce(0) { $0 + $1.card.agendaPoints * $1.count }
+        return cards
+            .filter{ $0.card.type == .agenda}
+            .reduce(0) { $0 + $1.card.agendaPoints * $1.count }
     }
     
     var influence: Int {
-        return cards.filter( {  $0.card.influence != -1 }).reduce(0) { $0 + self.influenceFor($1) }
+        return cards.reduce(0) { $0 + self.influenceFor($1) }
     }
     
     var influenceLimit: Int {
@@ -117,7 +119,6 @@ import SwiftyUserDefaults
     }
     
     private func cardInfluenceFor(_ cc: CardCounter) -> Int {
-
         if self.identity?.faction == cc.card.faction || cc.card.influence == -1 {
             return 0
         }
@@ -154,7 +155,7 @@ import SwiftyUserDefaults
         return count * cc.card.influence
     }
     
-    func nonAllianceOfFaction(_ faction: Faction) -> Int {
+    private func nonAllianceOfFaction(_ faction: Faction) -> Int {
         var count = 0
         for cc in cards {
             if cc.card.faction == faction && !cc.card.isAlliance {
@@ -164,7 +165,7 @@ import SwiftyUserDefaults
         return count
     }
     
-    func padCampaignCount() -> Int {
+    private func padCampaignCount() -> Int {
         if let padIndex = self.indexOfCardCode(Card.padCampaign) {
             let pad = cards[padIndex]
             return pad.count
@@ -172,15 +173,15 @@ import SwiftyUserDefaults
         return 0
     }
     
-    func iceCount() -> Int {
+    private func iceCount() -> Int {
         return self.typeCount(.ice)
     }
     
-    func assetCount() -> Int {
+    private func assetCount() -> Int {
         return self.typeCount(.asset)
     }
     
-    func typeCount(_ type: CardType) -> Int {
+    private func typeCount(_ type: CardType) -> Int {
         return cards.filter({ $0.card.type == type}).reduce(0) { $0 + $1.count }
     }
     
@@ -259,7 +260,7 @@ import SwiftyUserDefaults
         self.isDraft = identity?.packCode == PackManager.draftSetCode
     }
     
-    func indexOfCardCode(_ code: String) -> Int? {
+    private func indexOfCardCode(_ code: String) -> Int? {
         return cards.index { $0.card.code == code }
     }
     

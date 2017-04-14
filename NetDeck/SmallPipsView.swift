@@ -20,7 +20,7 @@ class SmallPipsView: UIView {
     static func create() -> SmallPipsView {
         let view = Bundle.main.loadNibNamed("SmallPipsView", owner: self, options:nil)?.first
         let pips = view as! SmallPipsView
-        pips.frame = CGRect(x: 0, y: 0, width: 12, height: 12)
+        pips.frame = CGRect(x: 0, y: 0, width: 16, height: 16)
         return pips
     }
     
