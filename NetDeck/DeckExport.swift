@@ -137,7 +137,7 @@ class DeckExport {
                     s += " " + self.color(self.dots(inf), color, fmt)
                 }
                 let penalty = cc.card.mwlPenalty(deck.mwl)
-                if useMWL && penalty > 0 {
+                if useMWL && penalty > 0 && !deck.mwl.universalInfluence {
                     s += " " + self.color(self.stars(cc.count * penalty), color, fmt)
                 }
                 s += eol
