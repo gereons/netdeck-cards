@@ -26,6 +26,7 @@ class LargeCardCell: CardCell {
     @IBOutlet weak var pip3: UIView!
     @IBOutlet weak var pip4: UIView!
     @IBOutlet weak var pip5: UIView!
+    @IBOutlet weak var pip6: UIView!
     
     private var pips = [UIView]()
     private var labels = [UILabel]()
@@ -34,7 +35,7 @@ class LargeCardCell: CardCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.pips = [ self.pip1, self.pip2, self.pip3, self.pip4, self.pip5 ]
+        self.pips = [ self.pip1, self.pip2, self.pip3, self.pip4, self.pip5, self.pip6 ]
         self.labels = [ self.label1, self.label2, self.label3 ]
         self.icons = [ self.icon1, self.icon2, self.icon3 ]
 
@@ -100,8 +101,8 @@ class LargeCardCell: CardCell {
             self.influenceLabel.text = influence > 0 ? "\(influence)" : ""
             self.influenceLabel.textColor = cc.card.factionColor
             
-            let inf = influence / cc.count
-            LargeCardCell.setInfluencePips(self.pips, influence: inf, card: card, mwl: self.deck.mwl)
+            let universalInf = self.deck.universalInfluenceFor(cc)
+            LargeCardCell.setInfluencePips(self.pips, influence: influence, universalInfluence: universalInf, count: cc.count, card: card, mwl: self.deck.mwl)
         }
         
         self.copiesLabel.isHidden = card.type == .identity
@@ -170,26 +171,34 @@ class LargeCardCell: CardCell {
         }
     }
     
-    static func setInfluencePips(_ pips: [UIView], influence: Int, card: Card, mwl: MWL) {
-        for i in stride(from: 0, to: influence, by: 1) {
+    static func setInfluencePips(_ pips: [UIView], influence: Int, universalInfluence: Int, count: Int, card: Card, mwl: MWL) {
+        let uInf = universalInfluence / count
+        let inf = max(0, (influence / count) - uInf)
+        
+        for i in stride(from: 0, to: inf, by: 1) {
             let pip = pips[i]
             pip.layer.backgroundColor = card.factionColor.cgColor
             pip.isHidden = false
         }
 
         if mwl.universalInfluence {
-            return
+            let maxPip = min(pips.count, inf + uInf)
+            for i in stride(from: inf, to: maxPip, by: 1) {
+                circlePip(pips[i])
+            }
+        } else {
+            let inf = max(0, inf)
+            let penalty = card.mwlPenalty(mwl)
+            if penalty > 0 && inf < pips.count {
+                circlePip(pips[inf])
+            }
         }
-        
-        let inf = max(0, influence)
-        let penalty = card.mwlPenalty(mwl)
-        if penalty > 0 && inf < pips.count {
-            let pip = pips[inf]
-            
-            pip.layer.backgroundColor = UIColor.white.cgColor
-            pip.layer.borderWidth = 1
-            pip.layer.borderColor = penalty == 1 ? UIColor.black.cgColor : UIColor.red.cgColor
-            pip.isHidden = false
-        }
+    }
+    
+    private static func circlePip(_ pip: UIView) {
+        pip.layer.backgroundColor = UIColor.white.cgColor
+        pip.layer.borderWidth = 1
+        pip.layer.borderColor = UIColor.black.cgColor
+        pip.isHidden = false
     }
 }

@@ -88,11 +88,7 @@ import SwiftyUserDefaults
     
     var influenceLimit: Int {
         if let identity = self.identity {
-            if self.mwl.universalInfluence {
-                return identity.influenceLimit
-            } else {
-                return max(1, identity.influenceLimit - self.mwlPenalty)
-            }
+            return max(1, identity.influenceLimit - self.mwlPenalty)
         } else {
             return 0
         }
@@ -106,17 +102,18 @@ import SwiftyUserDefaults
         return cards.reduce(0) { $0 + $1.card.mwlPenalty(self.mwl) * $1.count }
     }
     
-    func influenceFor(_ cardcounter: CardCounter?) -> Int {
-        guard let cc = cardcounter else {
+    func influenceFor(_ cc: CardCounter) -> Int {
+        let influence = cardInfluenceFor(cc)
+        let universal = self.universalInfluenceFor(cc)
+        return influence + universal
+    }
+    
+    func universalInfluenceFor(_ cc: CardCounter) -> Int {
+        if self.mwl.universalInfluence {
+            return cc.card.mwlPenalty(self.mwl) * cc.count
+        } else {
             return 0
         }
-        
-        let influence = cardInfluenceFor(cc)
-        
-        if self.mwl.universalInfluence {
-            return influence + cc.card.mwlPenalty(self.mwl) * cc.count
-        }
-        return influence
     }
     
     private func cardInfluenceFor(_ cc: CardCounter) -> Int {

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="879" height="82"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="879" height="81"/>
+                <rect key="frame" x="0.0" y="0.0" width="879" height="81.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shaper Program: Daemon - AI - Illicit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hne-66-YHG" userLabel="Card Type">
@@ -70,10 +70,10 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SxW-kL-ZyY" userLabel="Pips">
-                        <rect key="frame" x="15" y="17" width="8" height="48"/>
+                        <rect key="frame" x="15" y="10" width="8" height="62"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HnN-y2-JbA" userLabel="Pip 1">
-                                <rect key="frame" x="0.0" y="0.0" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="2" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="1wL-4q-GPA"/>
@@ -81,7 +81,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hh9-H9-i0k" userLabel="Pip 2">
-                                <rect key="frame" x="0.0" y="10" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="12" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="QdV-C9-Nqn"/>
@@ -89,7 +89,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vjt-W0-VLh" userLabel="Pip 3">
-                                <rect key="frame" x="0.0" y="20" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="22" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="8eh-oR-Ck6"/>
@@ -97,7 +97,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Imv-ls-IDc" userLabel="Pip 4">
-                                <rect key="frame" x="0.0" y="30" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="32" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="2Dj-mg-EmG"/>
@@ -105,27 +105,37 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gqc-5N-ePL" userLabel="Pip 5">
-                                <rect key="frame" x="0.0" y="40" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="42" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="dYO-8G-9OY"/>
                                     <constraint firstAttribute="width" constant="8" id="iaQ-1o-p7h"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Oi-jW-maW" userLabel="Pip 6">
+                                <rect key="frame" x="0.0" y="52" width="8" height="8"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="Yqc-qU-mFo"/>
+                                    <constraint firstAttribute="width" constant="8" id="g4l-dE-RcX"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hh9-H9-i0k" firstAttribute="centerX" secondItem="HnN-y2-JbA" secondAttribute="centerX" id="7ZZ-aZ-axl"/>
-                            <constraint firstItem="Vjt-W0-VLh" firstAttribute="leading" secondItem="SxW-kL-ZyY" secondAttribute="leading" id="8f3-oL-D7e"/>
-                            <constraint firstItem="Imv-ls-IDc" firstAttribute="centerX" secondItem="HnN-y2-JbA" secondAttribute="centerX" id="9f4-Db-kNo"/>
+                            <constraint firstItem="1Oi-jW-maW" firstAttribute="leading" secondItem="SxW-kL-ZyY" secondAttribute="leading" id="3ww-XJ-ZT4"/>
+                            <constraint firstItem="1Oi-jW-maW" firstAttribute="top" secondItem="gqc-5N-ePL" secondAttribute="bottom" constant="2" id="5wU-rs-giw"/>
+                            <constraint firstItem="Vjt-W0-VLh" firstAttribute="leading" secondItem="SxW-kL-ZyY" secondAttribute="leading" id="B0D-Vh-6RH"/>
                             <constraint firstItem="hh9-H9-i0k" firstAttribute="top" secondItem="HnN-y2-JbA" secondAttribute="bottom" constant="2" id="Gjo-ga-kcl"/>
+                            <constraint firstItem="HnN-y2-JbA" firstAttribute="top" secondItem="SxW-kL-ZyY" secondAttribute="top" constant="2" id="Heh-sU-S9M"/>
+                            <constraint firstItem="Imv-ls-IDc" firstAttribute="leading" secondItem="SxW-kL-ZyY" secondAttribute="leading" id="LRC-Mm-jIt"/>
                             <constraint firstItem="Vjt-W0-VLh" firstAttribute="top" secondItem="hh9-H9-i0k" secondAttribute="bottom" constant="2" id="LfX-xH-arw"/>
                             <constraint firstItem="gqc-5N-ePL" firstAttribute="top" secondItem="Imv-ls-IDc" secondAttribute="bottom" constant="2" id="NA5-xO-nNV"/>
                             <constraint firstAttribute="width" constant="8" id="Ntn-DG-k7b"/>
-                            <constraint firstItem="gqc-5N-ePL" firstAttribute="centerX" secondItem="HnN-y2-JbA" secondAttribute="centerX" id="Ofl-ZC-Rsz"/>
-                            <constraint firstItem="Vjt-W0-VLh" firstAttribute="centerX" secondItem="HnN-y2-JbA" secondAttribute="centerX" id="RGy-tD-GjS"/>
-                            <constraint firstItem="Vjt-W0-VLh" firstAttribute="centerY" secondItem="SxW-kL-ZyY" secondAttribute="centerY" id="eew-J3-r3R"/>
-                            <constraint firstAttribute="height" constant="48" id="obv-8u-T3H"/>
+                            <constraint firstItem="gqc-5N-ePL" firstAttribute="leading" secondItem="SxW-kL-ZyY" secondAttribute="leading" id="OfC-cA-5oH"/>
+                            <constraint firstItem="HnN-y2-JbA" firstAttribute="leading" secondItem="SxW-kL-ZyY" secondAttribute="leading" id="Qk3-yU-t9P"/>
+                            <constraint firstItem="hh9-H9-i0k" firstAttribute="leading" secondItem="SxW-kL-ZyY" secondAttribute="leading" id="Tul-ua-Bxe"/>
+                            <constraint firstAttribute="height" constant="62" id="obv-8u-T3H"/>
                             <constraint firstItem="Imv-ls-IDc" firstAttribute="top" secondItem="Vjt-W0-VLh" secondAttribute="bottom" constant="2" id="tUm-qi-2Fy"/>
                         </constraints>
                     </view>
@@ -185,6 +195,7 @@
                 <outlet property="pip3" destination="Vjt-W0-VLh" id="C8t-a4-c2A"/>
                 <outlet property="pip4" destination="Imv-ls-IDc" id="xsM-om-oLz"/>
                 <outlet property="pip5" destination="gqc-5N-ePL" id="TWW-mi-6JS"/>
+                <outlet property="pip6" destination="1Oi-jW-maW" id="PR2-5R-hsj"/>
                 <outlet property="type" destination="Hne-66-YHG" id="92Y-bJ-2Bx"/>
             </connections>
             <point key="canvasLocation" x="495.5" y="237"/>

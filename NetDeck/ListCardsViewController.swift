@@ -244,7 +244,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         cell.nameLabel.text = text
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: weight)
         
-        var influence = self.deck.influenceFor(cc)
+        var influence = cc != nil ? self.deck.influenceFor(cc!) : 0
         
         if cc?.count == 0 && self.deck.identity?.faction != card.faction {
             influence = card.influence

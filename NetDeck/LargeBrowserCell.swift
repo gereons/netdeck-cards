@@ -25,6 +25,7 @@ class LargeBrowserCell: BrowserCell {
     @IBOutlet weak var pip3: UIView!
     @IBOutlet weak var pip4: UIView!
     @IBOutlet weak var pip5: UIView!
+    @IBOutlet weak var pip6: UIView!
     
     private var pips = [UIView]()
     private var labels = [UILabel]()
@@ -32,7 +33,7 @@ class LargeBrowserCell: BrowserCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.pips = [ self.pip1, self.pip2, self.pip3, self.pip4, self.pip5 ]
+        self.pips = [ self.pip1, self.pip2, self.pip3, self.pip4, self.pip5, self.pip6 ]
         self.labels = [ self.label1, self.label2, self.label3 ]
         self.icons = [ self.icon1, self.icon2, self.icon3 ]
         
@@ -72,7 +73,9 @@ class LargeBrowserCell: BrowserCell {
         }
         
         let mwl = Defaults[.defaultMwl]
-        LargeCardCell.setInfluencePips(self.pips, influence: self.card.influence, card: self.card, mwl: mwl)
+        let universalInf = mwl.universalInfluence ? card.mwlPenalty(mwl) : 0
+        let influence = self.card.influence + universalInf
+        LargeCardCell.setInfluencePips(self.pips, influence: influence, universalInfluence: universalInf, count: 1, card: self.card, mwl: mwl)
         
         LargeCardCell.setLabels(for: card, labels: self.labels, icons: self.icons)
     }

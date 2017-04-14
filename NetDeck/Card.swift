@@ -268,9 +268,6 @@ class Card: NSObject, Unmarshaling {
         self.trash = try object.value(for: "trash_cost") ?? -1
         
         self.maxPerDeck = try object.value(for: "deck_limit") ?? -1
-        if Card.max1perDeck.contains(self.code) || self.type == .identity {
-            self.maxPerDeck = 1
-        }
         
         self.isAlliance = self.subtype.lowercased().contains("alliance")
         self.isVirtual = self.subtype.lowercased().contains("virtual")
@@ -357,25 +354,7 @@ extension Card {
     
     static let padCampaign              = "01109"    // needed for pad factory
     
-    // "limit 1 per deck" cards
-    static let directorHaasPetProject   = "03004"
-    static let philoticEntanglement     = "05006"
-    static let utopiaShard              = "06100"
-    static let hadesShard               = "06059"
-    static let edenShard                = "06020"
-    static let edenFragment             = "06030"
-    static let hadesFragment            = "06071"
-    static let utopiaFragment           = "06110"
-    static let governmentTakeover       = "07006"
-    static let _15minutes               = "09004"
-    static let rebirth                  = "10083"
-    static let blackFile                = "10099"
-    static let max1perDeck              = Set([ directorHaasPetProject, philoticEntanglement,
-                                                utopiaShard, utopiaFragment, hadesShard,
-                                                hadesFragment, edenShard, edenFragment,
-                                                governmentTakeover, _15minutes, rebirth, blackFile, astroscript ])
-    
-    // "most wanted" list
+    // NAPD Most Wanted List
     static let cerberusH1       = "06099"
     static let cloneChip        = "03038"
     static let desperado        = "01024"
@@ -397,7 +376,7 @@ extension Card {
     static let napdContract     = "04119"
     static let sansanCityGrid   = "01092"
     static let breakingNews     = "01082"
-    static let bioEthicsAssociation = "10049"
+    static let bioEthicsAssociation = "10050"
     static let sensieActorsUnion = "10053"
     static let mumbadCityHall   = "10055"
     
@@ -407,7 +386,7 @@ extension Card {
         .v1_0: [ cerberusH1: 1, cloneChip: 1, desperado: 1, parasite: 1, prepaidVoicepad: 1, yog_0: 1,
                  architect: 1, astroscript: 1, eli_1: 1, napdContract: 1, sansanCityGrid: 1 ],
         
-        // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 onwards
+        // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 until 2017-04-11
         .v1_1: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, desperado: 1, faust: 1, parasite: 1, prepaidVoicepad: 1, wyldside: 1, yog_0: 1,
                  architect: 1, breakingNews: 1, eli_1: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1 ],
         

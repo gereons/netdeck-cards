@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="700" height="83"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J3f-8X-7gb" id="M4t-zd-5Ye">
-                <rect key="frame" x="0.0" y="0.0" width="700" height="82"/>
+                <rect key="frame" x="0.0" y="0.0" width="700" height="82.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFI-vh-aBO" userLabel="Influence">
@@ -77,10 +77,10 @@
                         </connections>
                     </stepper>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KkZ-vK-r1B" userLabel="Pips">
-                        <rect key="frame" x="41" y="11" width="8" height="60"/>
+                        <rect key="frame" x="41" y="10.5" width="8" height="61"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSS-Gt-da0" userLabel="Pip 1">
-                                <rect key="frame" x="0.0" y="6" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="2" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="YF5-n0-giv"/>
@@ -88,7 +88,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D19-2f-jBu" userLabel="Pip 2">
-                                <rect key="frame" x="0.0" y="16" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="12" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="hib-qP-BtH"/>
@@ -96,7 +96,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBH-SU-RUC" userLabel="Pip 3">
-                                <rect key="frame" x="0.0" y="26" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="22" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="3Rk-in-siN"/>
@@ -104,7 +104,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6rU-nK-OqS" userLabel="Pip 4">
-                                <rect key="frame" x="0.0" y="36" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="32" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="dHG-gc-ddx"/>
@@ -112,11 +112,19 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lbC-yc-jmr" userLabel="Pip 5">
-                                <rect key="frame" x="0.0" y="46" width="8" height="8"/>
+                                <rect key="frame" x="0.0" y="42" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="bcP-Fr-C5L"/>
                                     <constraint firstAttribute="height" constant="8" id="vyL-d0-Ucb"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9s-ei-41k" userLabel="Pip 6">
+                                <rect key="frame" x="0.0" y="52" width="8" height="8"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="8" id="glC-BR-9v7"/>
+                                    <constraint firstAttribute="height" constant="8" id="iDg-ZH-ZNY"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -125,14 +133,16 @@
                             <constraint firstItem="wBH-SU-RUC" firstAttribute="leading" secondItem="KkZ-vK-r1B" secondAttribute="leading" id="0RB-KT-h5W"/>
                             <constraint firstItem="6rU-nK-OqS" firstAttribute="leading" secondItem="KkZ-vK-r1B" secondAttribute="leading" id="907-ML-kOs"/>
                             <constraint firstItem="D19-2f-jBu" firstAttribute="leading" secondItem="KkZ-vK-r1B" secondAttribute="leading" id="Cps-3h-khf"/>
-                            <constraint firstItem="wBH-SU-RUC" firstAttribute="centerY" secondItem="KkZ-vK-r1B" secondAttribute="centerY" id="Hdo-Dv-jcr"/>
                             <constraint firstItem="6rU-nK-OqS" firstAttribute="top" secondItem="wBH-SU-RUC" secondAttribute="bottom" constant="2" id="IC1-yr-LCH"/>
                             <constraint firstItem="lbC-yc-jmr" firstAttribute="top" secondItem="6rU-nK-OqS" secondAttribute="bottom" constant="2" id="L4p-hY-63b"/>
                             <constraint firstAttribute="width" constant="8" id="LAV-Re-kZq"/>
+                            <constraint firstItem="NSS-Gt-da0" firstAttribute="top" secondItem="KkZ-vK-r1B" secondAttribute="top" constant="2" id="Lyd-6u-VcW"/>
                             <constraint firstItem="lbC-yc-jmr" firstAttribute="leading" secondItem="KkZ-vK-r1B" secondAttribute="leading" id="SOv-az-mQA"/>
+                            <constraint firstItem="Y9s-ei-41k" firstAttribute="top" secondItem="lbC-yc-jmr" secondAttribute="bottom" constant="2" id="TzE-pe-Egi"/>
                             <constraint firstItem="D19-2f-jBu" firstAttribute="top" secondItem="NSS-Gt-da0" secondAttribute="bottom" constant="2" id="VKj-pU-vAa"/>
                             <constraint firstItem="wBH-SU-RUC" firstAttribute="top" secondItem="D19-2f-jBu" secondAttribute="bottom" constant="2" id="e0E-L1-fNu"/>
-                            <constraint firstAttribute="height" constant="60" id="g36-2N-KsH"/>
+                            <constraint firstItem="Y9s-ei-41k" firstAttribute="leading" secondItem="KkZ-vK-r1B" secondAttribute="leading" id="el0-fh-LJ4"/>
+                            <constraint firstAttribute="height" constant="61" id="g36-2N-KsH"/>
                             <constraint firstItem="NSS-Gt-da0" firstAttribute="leading" secondItem="KkZ-vK-r1B" secondAttribute="leading" id="icM-8p-43E"/>
                         </constraints>
                     </view>
@@ -219,6 +229,7 @@
                 <outlet property="pip3" destination="wBH-SU-RUC" id="ndJ-ns-Utw"/>
                 <outlet property="pip4" destination="6rU-nK-OqS" id="FS0-QL-sZc"/>
                 <outlet property="pip5" destination="lbC-yc-jmr" id="33Q-40-vtW"/>
+                <outlet property="pip6" destination="Y9s-ei-41k" id="de2-N8-QxY"/>
                 <outlet property="type" destination="Kpf-UU-065" id="aHS-vI-r2t"/>
             </connections>
         </tableViewCell>

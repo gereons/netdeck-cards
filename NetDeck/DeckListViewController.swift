@@ -1114,7 +1114,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             if cc2.card.type == .agenda {
                 cell.copiesLabel.text = String(format: "×%lu · %lu AP", cc2.count, cc2.count * cc2.card.agendaPoints)
             } else {
-                let influence = self.deck.influenceFor(cc)
+                let influence = self.deck.influenceFor(cc2)
                 if influence > 0 {
                     cell.copiesLabel.text = String(format: "×%lu · %lu %@", cc2.count, influence, "Influence".localized())
                 } else {
