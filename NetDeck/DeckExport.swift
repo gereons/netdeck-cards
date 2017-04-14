@@ -113,7 +113,6 @@ class DeckExport {
             s += eol
         }
         
-        let useMWL = deck.mwl != MWL.none
         for i in 0..<sections.count {
             let cards = cardsArray[i]
             let cc = cards[0]
@@ -131,13 +130,15 @@ class DeckExport {
                 s += "\(cc.count)x " + cc.card.name
                 s += " " + self.italics("(" + cc.card.packName + ")", fmt)
 
-                let inf = deck.influenceFor(cc)
+                let uInf = deck.universalInfluenceFor(cc)
+                let inf = max(0, deck.influenceFor(cc) - uInf)
+                
                 let color = Faction.hexColor(for: cc.card.faction)
                 if inf > 0 {
                     s += " " + self.color(self.dots(inf), color, fmt)
                 }
                 let penalty = cc.card.mwlPenalty(deck.mwl)
-                if useMWL && penalty > 0 && !deck.mwl.universalInfluence {
+                if penalty > 0 {
                     s += " " + self.color(self.stars(cc.count * penalty), color, fmt)
                 }
                 s += eol
@@ -147,7 +148,7 @@ class DeckExport {
         s += eol
         let deckSize: Int = deck.identity?.minimumDecksize ?? 0
         s += "\(deck.size) cards (minimum \(deckSize))" + eol
-        if useMWL && deck.mwlPenalty > 0 {
+        if deck.mwlPenalty > 0 {
             let limit = deck.identity?.influenceLimit ?? 0
             s += "\(deck.influence)/\(deck.influenceLimit) (=\(limit)-\(deck.mwlPenalty)☆) influence used" + eol
         } else {
