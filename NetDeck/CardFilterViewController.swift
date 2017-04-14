@@ -824,6 +824,10 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let influence = identity.faction == card.faction ? 0 : card.influence
         cell.pips.set(value: influence, color: card.factionColor)
         
+        let mwl = deck?.mwl ?? Defaults[.defaultMwl]
+        let penalty = card.mwlPenalty(mwl)
+        cell.pipsView.backgroundColor = penalty > 0 ? UIColor(rgb: 0xf5f5f5) : .white
+        
         cell.nameLabel.text = card.name
         let cc = deck?.findCard(card) ?? CardCounter.null()
         cell.countLabel.text = cc.count > 0 ? "\(cc.count)" : ""

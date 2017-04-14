@@ -122,6 +122,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             cell.accessoryType = .disclosureIndicator
             
             let pips = SmallPipsView.create()
+            pips.layer.cornerRadius = 2
+            pips.layer.masksToBounds = true
             cell.accessoryView = pips
             return cell
         }()
@@ -145,6 +147,10 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         let pips = cell.accessoryView as! SmallPipsView
         pips.set(value: card.influence, color: card.factionColor)
     
+        let mwl = Defaults[.defaultMwl]
+        let penalty = card.mwlPenalty(mwl)
+        pips.backgroundColor = penalty > 0 ? UIColor(rgb: 0xf5f5f5) : .white
+         
         return cell
     }
 
