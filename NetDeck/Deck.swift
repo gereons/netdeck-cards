@@ -747,7 +747,7 @@ import SwiftyUserDefaults
             let mwl = decoder.decodeInteger(forKey: "mwl")
             self.mwl = MWL(rawValue: mwl) ?? .none
         } else {
-            self.mwl = Defaults[.defaultMwl]
+            self.mwl = .none
         }
         
         self.onesies = decoder.decodeBool(forKey: "onesies")
