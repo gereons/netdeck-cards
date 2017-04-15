@@ -493,8 +493,8 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             cell.typeLabel.text = ""
             cell.stepper.isHidden = true
             cell.idButton.isHidden = false
-            cell.mwlLabel.isHidden = true
-            cell.influenceLabel.isHidden = true
+            cell.mwlLabel.text = ""
+            cell.influenceLabel.text = ""
             return cell
         }
         
@@ -538,23 +538,20 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+        cell.mwlLabel.text = ""
         
         if card.type != .identity {
             let influence = self.deck.influenceFor(cc)
             if influence > 0 {
                 cell.influenceLabel.text = "\(influence)"
                 cell.influenceLabel.textColor = card.factionColor
-                cell.influenceLabel.isHidden = false
             } else {
                 cell.influenceLabel.text = ""
-                cell.influenceLabel.isHidden = true
             }
-            if !self.deck.mwl.universalInfluence {
-                let penalty = card.mwlPenalty(self.deck.mwl)
-                if penalty > 0 {
-                    cell.mwlLabel.text = "\(-cc.count * penalty)"
-                }
-                cell.mwlLabel.isHidden = penalty == 0
+            
+            let penalty = card.mwlPenalty(self.deck.mwl)
+            if penalty > 0 && !self.deck.mwl.universalInfluence {
+                cell.mwlLabel.text = "\(-cc.count * penalty)"
             }
         }
         

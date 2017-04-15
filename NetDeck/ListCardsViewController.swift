@@ -221,48 +221,25 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         cell.stepper.addTarget(self, action: #selector(self.countChanged(_:)), for: .valueChanged)
         
         let card = self.cards[indexPath.section][indexPath.row]
-        let cc = self.deck.findCard(card)
+        let cardCounter = self.deck.findCard(card)
         
         cell.stepper.minimumValue = 0
         cell.stepper.maximumValue = Double(card.maxPerDeck)
-        cell.stepper.value = Double(cc?.count ?? 0)
+        cell.stepper.value = Double(cardCounter?.count ?? 0)
         cell.stepper.isHidden = false
         cell.idButton.isHidden = true
         
         let weight: CGFloat
-        var text = ""
-        if let cc = cc {
+        let text: String
+        if let cc = cardCounter {
             text = String(format: "%lu× %@", cc.count, card.name)
             weight = UIFontWeightMedium
         } else {
             text = String(format: "%@", card.name)
             weight = UIFontWeightRegular
         }
-        if card.unique {
-            text += " •"
-        }
-        cell.nameLabel.text = text
+        cell.nameLabel.text = card.unique ? text + " •" : text
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: weight)
-        
-        var influence = cc != nil ? self.deck.influenceFor(cc!) : 0
-        
-        if cc?.count == 0 && self.deck.identity?.faction != card.faction {
-            influence = card.influence
-        }
-        
-        if influence > 0 {
-            cell.influenceLabel.text = "\(influence)"
-            cell.influenceLabel.textColor = card.factionColor
-        } else {
-            cell.influenceLabel.text = ""
-        }
-        
-        let penalty = card.mwlPenalty(self.deck.mwl)
-        if penalty > 0 {
-            let count = cc?.count ?? 0
-            cell.mwlLabel.text = "\(min(-1, -count * penalty))"
-        }
-        cell.mwlLabel.isHidden = penalty == 0
         
         let faction = Faction.name(for: card.faction)
         let subtype = card.subtype
@@ -271,6 +248,22 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
             cell.typeLabel.text = type
         } else {
             cell.typeLabel.text = faction
+        }
+        
+        let cc = cardCounter ?? CardCounter(card: card, count: 1)
+        let influence = self.deck.influenceFor(cc)
+        
+        if influence > 0 {
+            cell.influenceLabel.text = "\(influence)"
+            cell.influenceLabel.textColor = card.factionColor
+        } else {
+            cell.influenceLabel.text = ""
+        }
+        
+        cell.mwlLabel.text = ""
+        let penalty = card.mwlPenalty(self.deck.mwl)
+        if penalty > 0 && !self.deck.mwl.universalInfluence {
+            cell.mwlLabel.text = "\(min(-1, -cc.count * penalty))"
         }
         
         return cell
