@@ -143,6 +143,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         
         self.mwlLabel.layer.cornerRadius = 3
         self.mwlLabel.layer.masksToBounds = true
+        self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 9, weight: UIFontWeightBold)
         
         self.activityIndicator.startAnimating()
         self.loadCardImage(self.card)

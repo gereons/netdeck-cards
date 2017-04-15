@@ -49,6 +49,7 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         
         self.mwlLabel.layer.cornerRadius = 3
         self.mwlLabel.layer.masksToBounds = true
+        self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 9, weight: UIFontWeightBold)
     }
     
     override func prepareForReuse() {
@@ -71,16 +72,15 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         self.imageView.image = nil
         
         let penalty = card.mwlPenalty(mwl)
-        print("p=\(penalty)")
         self.mwlLabel.isHidden = penalty == 0
         self.mwlLabel.text = (mwl.universalInfluence ? "+" : "-") + "\(penalty)"
         switch card.type {
         case .event, .hardware, .resource, .program, .ice:
             self.mwlRightDistance.constant = 6
-            self.mwlBottomDistance.constant = 124+18
+            self.mwlBottomDistance.constant = 124 + self.countLabel.frame.height
         case .agenda, .asset, .upgrade, .operation:
             self.mwlRightDistance.constant = 154
-            self.mwlBottomDistance.constant = 15+18
+            self.mwlBottomDistance.constant = 15 + self.countLabel.frame.height
         default:
             self.mwlLabel.isHidden = true
         }
