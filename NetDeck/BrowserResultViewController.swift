@@ -24,6 +24,8 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     private var largeCells = false
     private var scale = 1.0
     
+    private var keyboardObserver: KeyboardObserver!
+    
     private let sortStr: [ BrowserSort: String] = [
         .byType: "Type".localized(),
         .byFaction: "Faction".localized(),
@@ -106,18 +108,14 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        nc.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+
+        self.keyboardObserver = KeyboardObserver(handler: self)
         
         self.updateDisplay(self.cardList)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self)
         
         Defaults[.browserViewScale] = self.scale
         Defaults[.browserViewSort] = self.sortType
@@ -384,16 +382,13 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
             self.startIndex = nil
         }
     }
-    
-    // MARK: - keyboard
-    
-    func willShowKeyboard(_ notification: Notification) {
-        guard let kbRect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else {
-            return
-        }
-        
+}
+
+// MARK: - keyboard
+extension BrowserResultViewController: KeyboardHandling {
+    func keyboardWillShow(_ info: KeyboardInfo) {
         let screenHeight = UIScreen.main.bounds.size.height
-        let kbHeight = screenHeight - kbRect.cgRectValue.origin.y
+        let kbHeight = screenHeight - info.endFrame.origin.y
         
         let insets = UIEdgeInsets(top: 64, left: 0, bottom: kbHeight, right: 0)
         
@@ -403,12 +398,11 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.collectionView.scrollIndicatorInsets = insets
     }
     
-    func willHideKeyboard(_ notification: Notification) {
+    func keyboardWillHide(_ info: KeyboardInfo) {
         let insets = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
         self.tableView.contentInset = insets
         self.tableView.scrollIndicatorInsets = insets
         self.collectionView.contentInset = insets
         self.collectionView.scrollIndicatorInsets = insets
     }
-    
 }

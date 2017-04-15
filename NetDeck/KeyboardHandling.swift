@@ -49,16 +49,23 @@ class KeyboardObserver: NSObject {
     required init(handler: KeyboardHandling) {
         self.handler = handler
         super.init()
-
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        nc.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        self.startObserving()
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        self.stopObserving()
     }
 
+    func startObserving() {
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        nc.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func stopObserving() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     func keyboardWillShow(_ notification: Notification) {
         guard let info = KeyboardInfo(notification: notification) else {
             return

@@ -51,6 +51,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var collectionView: UICollectionView!
     
     private var deckListViewController: DeckListViewController
+    private var keyboardObserver: KeyboardObserver!
     
     private var revertButton: UIBarButtonItem!
     private var role = Role.none
@@ -65,7 +66,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     private var selectedType = ""
     private var selectedTypes: Set<String>?
     private var selectedValues = [FilterAttribute: FilterValue]()
-    private var searchFieldActive = false
+    fileprivate var searchFieldActive = false
     private var influenceValue = -1
     
     private var prevAp = 0
@@ -171,12 +172,11 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.splitViewController?.showDetailViewController(nav, sender: self)
                 
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        nc.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
         nc.addObserver(self, selector: #selector(self.addTopCard(_:)), name: Notifications.addTopCard, object: nil)
         nc.addObserver(self, selector: #selector(self.deckChanged(_:)), name: Notifications.deckChanged, object: nil)
         nc.addObserver(self, selector: #selector(self.deckSaved(_:)), name: Notifications.deckSaved, object: nil)
         nc.addObserver(self, selector: #selector(self.nameAlertWillAppear(_:)), name: Notifications.nameAlert, object: nil)
+        self.keyboardObserver = KeyboardObserver(handler: self)
         
         self.navigationItem.title = "Filter".localized()
         let clearButton = UIBarButtonItem(title: "Clear".localized(), style: .plain, target: self, action: #selector(self.clearFiltersClicked(_:)))
@@ -192,8 +192,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self)
         
         Defaults[.filterViewMode] = self.viewMode
     }
@@ -220,7 +218,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.searchField.resignFirstResponder()
     }
     
-    private func setResultTopMargin() {
+    fileprivate func setResultTopMargin() {
         let buttonsHeight = self.buttonContainer.frame.height
         
         if self.showAllFilters {
@@ -380,52 +378,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
                 self.setBackOrRevertButton(deck?.modified ?? false)
                 self.reloadData()
             }
-        }
-    }
-    
-    // MARK: - keyboard show/hide
-    
-    func willShowKeyboard(_ notification: Notification) {
-        if !self.searchField.isFirstResponder {
-            return
-        }
-
-        self.searchFieldActive = true
-        self.moreLessButton.isHidden = true
-        
-        guard let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-            let animDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else {
-            return
-        }
-        
-        let screenHeight = UIScreen.main.bounds.size.height
-        let kbHeight = screenHeight - keyboardFrame.cgRectValue.origin.y
-        
-        self.resultsTopMargin.constant = 0
-        self.resultsBottomMargin.constant = kbHeight
-        
-        UIView.animate(withDuration: animDuration) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func willHideKeyboard(_ notification: Notification) {
-        if self.searchFieldActive {
-            self.searchField.resignFirstResponder()
-        }
-        
-        self.searchFieldActive = false
-        self.moreLessButton.isHidden = false
-        
-        guard let animDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else {
-            return
-        }
-        
-        self.setResultTopMargin()
-        self.resultsBottomMargin.constant = 0
-        
-        UIView.animate(withDuration: animDuration) {
-            self.view.layoutIfNeeded()
         }
     }
     
@@ -924,4 +876,45 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         return header
     }
     
+}
+
+extension CardFilterViewController: KeyboardHandling {
+    // MARK: - keyboard show/hide
+    
+    func keyboardWillShow(_ info: KeyboardInfo) {
+        if !self.searchField.isFirstResponder {
+            return
+        }
+        
+        self.searchFieldActive = true
+        self.moreLessButton.isHidden = true
+        
+        let screenHeight = UIScreen.main.bounds.size.height
+        let kbHeight = screenHeight - info.endFrame.origin.y
+        
+        self.resultsTopMargin.constant = 0
+        self.resultsBottomMargin.constant = kbHeight
+        
+        UIView.animate(withDuration: info.animationDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func keyboardWillHide(_ info: KeyboardInfo) {
+        if self.searchFieldActive {
+            self.searchField.resignFirstResponder()
+        }
+        
+        self.searchFieldActive = false
+        self.moreLessButton.isHidden = false
+        
+        self.setResultTopMargin()
+        self.resultsBottomMargin.constant = 0
+        
+        UIView.animate(withDuration: info.animationDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+
 }

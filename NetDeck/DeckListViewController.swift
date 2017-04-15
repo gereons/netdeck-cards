@@ -27,6 +27,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var historyButton: UIButton!
     
     @IBOutlet weak var toolbarBottomMargin: NSLayoutConstraint!
+    private var keyboardObserver: KeyboardObserver!
     
     var role = Role.none
     var deck: Deck! {
@@ -159,11 +160,11 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.identitySelected(_:)), name: Notifications.selectIdentity, object: nil)
         nc.addObserver(self, selector: #selector(self.deckChanged(_:)), name: Notifications.deckChanged, object: nil)
-        nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        nc.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
         nc.addObserver(self, selector: #selector(self.notesChanged(_:)), name: Notifications.notesChanged, object: nil)
         nc.addObserver(self, selector: #selector(self.stopHistoryTimer(_:)), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
         nc.addObserver(self, selector: #selector(self.startHistoryTimer(_:)), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        
+        self.keyboardObserver = KeyboardObserver(handler: self)
         
         let nameTap = UITapGestureRecognizer(target: self, action: #selector(self.enterName(_:)))
         self.deckNameLabel.addGestureRecognizer(nameTap)
@@ -262,33 +263,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    // MARK: - keyboard show/hide
-    
-    func willShowKeyboard(_ notification: Notification) {
-        guard
-            let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-            let animDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double
-        else { return }
-
-        let screenHeight = UIScreen.main.bounds.size.height
-        let kbHeight = screenHeight - keyboardFrame.cgRectValue.origin.y
-        self.toolbarBottomMargin.constant = kbHeight
-    
-        UIView.animate(withDuration: animDuration) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func willHideKeyboard(_ notification: Notification) {
-        guard let animDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else {
-                return
-        }
-        
-        self.toolbarBottomMargin.constant = 0
-        UIView.animate(withDuration: animDuration) {
-            self.view.layoutIfNeeded()
-        }
-    }
     
     func loadDeck(fromFile file: String) {
         self.filename = file
@@ -1279,4 +1253,27 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+}
+
+extension DeckListViewController: KeyboardHandling {
+    // MARK: - keyboard show/hide
+    
+    func keyboardWillShow(_ info: KeyboardInfo) {
+        
+        let screenHeight = UIScreen.main.bounds.size.height
+        let kbHeight = screenHeight - info.endFrame.origin.y
+        self.toolbarBottomMargin.constant = kbHeight
+        
+        UIView.animate(withDuration: info.animationDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func keyboardWillHide(_ info: KeyboardInfo) {
+        self.toolbarBottomMargin.constant = 0
+        UIView.animate(withDuration: info.animationDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
 }

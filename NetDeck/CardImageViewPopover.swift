@@ -34,34 +34,33 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     private var card: Card!
     private var mwl: MWL!
     
-    static var popover: CardImageViewPopover?
+    private static var keyboardMonitor: KeyboardMonitor!
+    private static var keyboardObserver: KeyboardObserver!
     
-    static var keyboardVisible = false
-    static var popoverScale: CGFloat = 1.0
+    private static var popover: CardImageViewPopover?
     
-    static let popoverMargin: CGFloat = 40
+    private static var keyboardVisible = false
+    private static var popoverScale: CGFloat = 1.0
+    
+    private static let popoverMargin: CGFloat = 40
     
     // MARK: - keyboard monitor
     
     static func monitorKeyboard() {
-        let nc = NotificationCenter.default
-        
-        nc.addObserver(self, selector:#selector(self.showKeyboard(_:)), name: Notification.Name.UIKeyboardDidShow, object:nil)
-        nc.addObserver(self, selector:#selector(self.hideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object:nil)
+        keyboardMonitor = KeyboardMonitor()
+        keyboardObserver = KeyboardObserver(handler: keyboardMonitor)
     }
     
-    static func showKeyboard(_ notification: Notification) {
+    static func showKeyboard(_ info: KeyboardInfo) {
         keyboardVisible = true
         
-        if let kbRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let screenHeight = UIScreen.main.bounds.size.height
-            let kbHeight = screenHeight - kbRect.origin.y
-            popoverScale = (screenHeight - kbHeight - popoverMargin) / CGFloat(ImageCache.height)
-            popoverScale = min(1.0, popoverScale)
-        }
+        let screenHeight = UIScreen.main.bounds.size.height
+        let kbHeight = screenHeight - info.endFrame.origin.y
+        popoverScale = (screenHeight - kbHeight - popoverMargin) / CGFloat(ImageCache.height)
+        popoverScale = min(1.0, popoverScale)
     }
     
-    static func hideKeyboard(_ notification: Notification) {
+    static func hideKeyboard() {
         keyboardVisible = false
         popoverScale = 1.0
         
@@ -172,5 +171,15 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
                 self.loadCardImage(self.card)
             }
         }
+    }
+}
+
+private class KeyboardMonitor: KeyboardHandling {
+    func keyboardWillShow(_ info: KeyboardInfo) {
+        CardImageViewPopover.showKeyboard(info)
+    }
+    
+    func keyboardWillHide(_ info: KeyboardInfo) {
+        CardImageViewPopover.hideKeyboard()
     }
 }

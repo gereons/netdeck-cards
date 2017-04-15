@@ -18,6 +18,8 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var toolBarHeight: NSLayoutConstraint!
 
+    private var keyboardObserver: KeyboardObserver!
+    
     var stateFilterButton: UIBarButtonItem!
     var sideFilterButton: UIBarButtonItem!
     var sortButton: UIBarButtonItem!
@@ -121,9 +123,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.sortType = Defaults[.deckFilterSort]
         self.sortButton.title = sortStr[self.sortType]! + Constant.arrow
         
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        nc.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        self.keyboardObserver = KeyboardObserver(handler: self)
         
         self.loadDecks()
         
@@ -440,24 +440,6 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    // MARK: - keyboard show/hide
-    
-    func willShowKeyboard(_ notification: Notification) {
-        guard let kbRect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let screenHeight = UIScreen.main.bounds.size.height
-        let kbHeight = screenHeight - kbRect.cgRectValue.origin.y
-        
-        let contentInsets = UIEdgeInsets(top: 64, left: 0, bottom: kbHeight, right: 0)
-        self.tableView.contentInset = contentInsets
-        self.tableView.scrollIndicatorInsets = contentInsets
-    }
-    
-    func willHideKeyboard(_ notification: Notification) {
-        let contentInsets = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
-        self.tableView.contentInset = contentInsets
-        self.tableView.scrollIndicatorInsets = contentInsets
-    }
-    
     // MARK: - empty dataset
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
@@ -487,4 +469,25 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         return UIColor(patternImage: ImageCache.hexTileLight)
     }
     
+}
+
+extension DecksViewController: KeyboardHandling {
+    // MARK: - keyboard show/hide
+    
+    func keyboardWillShow(_ info: KeyboardInfo) {
+        let screenHeight = UIScreen.main.bounds.size.height
+        let kbHeight = screenHeight - info.endFrame.origin.y
+        
+        let contentInsets = UIEdgeInsets(top: 64, left: 0, bottom: kbHeight, right: 0)
+        self.tableView.contentInset = contentInsets
+        self.tableView.scrollIndicatorInsets = contentInsets
+    }
+    
+    func keyboardWillHide(_ info: KeyboardInfo) {
+        let contentInsets = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+        self.tableView.contentInset = contentInsets
+        self.tableView.scrollIndicatorInsets = contentInsets
+    }
+    
+
 }

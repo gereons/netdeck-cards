@@ -28,6 +28,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     private var sets: FilterValue?
     private var factions: FilterValue?
     
+    private var keyboardObserver: KeyboardObserver!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,9 +49,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.factionButton.setTitle("Faction".localized(), for: UIControlState())
         self.clearButton.setTitle("Clear".localized(), for: UIControlState())
         
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector:#selector(BrowserViewController.showKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object:nil)
-        nc.addObserver(self, selector:#selector(BrowserViewController.hideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object:nil)
+        self.keyboardObserver = KeyboardObserver(handler: self)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(_:)))
         self.tableView.addGestureRecognizer(longPress)
@@ -69,7 +69,6 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        // NotificationCenter.default.removeObserver(self)
     }
     
     func refresh() {
@@ -248,24 +247,6 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.refresh()
     }
 
-    // MARK: keyboard show/hide
-    func showKeyboard(_ notification: Notification) {
-        guard let kbRect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let kbHeight = kbRect.cgRectValue.size.height
-        
-        var inset = self.tableView.contentInset
-        inset.bottom = kbHeight
-        self.tableView.contentInset = inset
-        self.tableView.scrollIndicatorInsets = inset
-    }
-    
-    func hideKeyboard(_ nta: Notification) {
-        var inset = self.tableView.contentInset
-        inset.bottom = 0
-        self.tableView.contentInset = inset
-        self.tableView.scrollIndicatorInsets = inset
-    }
-    
     // MARK: long press
     func longPress(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
@@ -293,5 +274,26 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
     }
+}
+
+extension BrowserViewController: KeyboardHandling {
+    // MARK: keyboard show/hide
+    func keyboardWillShow(_ info: KeyboardInfo) {
+        let kbHeight = info.endFrame.size.height
+        
+        var inset = self.tableView.contentInset
+        inset.bottom = kbHeight
+        self.tableView.contentInset = inset
+        self.tableView.scrollIndicatorInsets = inset
+    }
+    
+    func keyboardWillHide(_ info: KeyboardInfo) {
+        var inset = self.tableView.contentInset
+        inset.bottom = 0
+        self.tableView.contentInset = inset
+        self.tableView.scrollIndicatorInsets = inset
+    }
+    
+    
 }
 

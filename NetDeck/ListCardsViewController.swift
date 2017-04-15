@@ -16,6 +16,8 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var toolBar: UIToolbar!
     
+    private var keyboardObserver: KeyboardObserver!
+    
     var deck: Deck!
     
     private var cards = [[Card]]()
@@ -57,10 +59,8 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
         
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.showKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        nc.addObserver(self, selector: #selector(self.hideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
-    
+        self.keyboardObserver = KeyboardObserver(handler: self)
+        
         if let textField = self.searchBar.value(forKey: kSearchFieldValue) as? UITextField {
             textField.returnKeyType = .done
         }
@@ -278,13 +278,15 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.navigationController?.pushViewController(img, animated: true)
     }
-    
+}
+
+extension ListCardsViewController: KeyboardHandling {
+
     // MARK: - keyboard
     
-    func showKeyboard(_ notification: Notification) {
-        guard let kbRect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+    func keyboardWillShow(_ info: KeyboardInfo) {
         let screenHeight = UIScreen.main.bounds.size.height
-        let kbHeight = screenHeight - kbRect.cgRectValue.origin.y - self.toolBar.frame.size.height
+        let kbHeight = screenHeight - info.endFrame.origin.y - self.toolBar.frame.size.height
         
         var inset = self.tableView.contentInset
         inset.bottom = kbHeight
@@ -292,7 +294,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.scrollIndicatorInsets = inset
     }
     
-    func hideKeyboard(_ notification: Notification) {
+    func keyboardWillHide(_ info: KeyboardInfo) {
         var inset = self.tableView.contentInset
         inset.bottom = 0
         self.tableView.contentInset = inset

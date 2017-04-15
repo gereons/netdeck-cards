@@ -534,7 +534,6 @@
 		3A3BDD9E1930F36E00DEFD57 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				3A32B7DE1EA23B2100A19982 /* KeyboardHandling.swift */,
 				3A2F4ADB1C8C716400B711BD /* ImageCache.swift */,
 				3A114EBE1C6F7FDB00BF8C3C /* Dropbox.swift */,
 				3A822F6D1CC2C13500305789 /* BuildConfig.swift */,
@@ -550,6 +549,7 @@
 				3A3AA9A81CE13011003F21EE /* DebugTimer.swift */,
 				3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */,
 				3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */,
+				3A32B7DE1EA23B2100A19982 /* KeyboardHandling.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";

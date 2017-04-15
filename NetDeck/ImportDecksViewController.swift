@@ -15,6 +15,8 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
 
+    private var keyboardObserver: KeyboardObserver!
+    
     var source = ImportSource.none
     
     private var runnerDecks = [Deck]()
@@ -100,15 +102,11 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationItem.title = Device.isIphone ? "Import".localized() : "Import Deck".localized()
         
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: Notification.Name.UIKeyboardWillShow, object:nil)
-        nc.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: Notification.Name.UIKeyboardWillHide, object:nil)
+        self.keyboardObserver = KeyboardObserver(handler: self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - sorting
@@ -497,21 +495,20 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             SVProgressHUD.showSuccess(withStatus: "Deck imported".localized())
         }
     }
-    
+}
+
+extension ImportDecksViewController: KeyboardHandling {
     // MARK: - keyboard show/hide
-    
-    func willShowKeyboard(_ notification: Notification) {
-        guard let kbRect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
-        
+    func keyboardWillShow(_ info: KeyboardInfo) {
         let screenHeight = UIScreen.main.bounds.size.height
-        let kbHeight = screenHeight - kbRect.cgRectValue.origin.y
+        let kbHeight = screenHeight - info.endFrame.origin.y
         
         let insets = UIEdgeInsets(top: 64, left: 0, bottom: kbHeight, right: 0)
         self.tableView.contentInset = insets
         self.tableView.scrollIndicatorInsets = insets
     }
     
-    func willHideKeyboard(_ notification: Notification) {
+    func keyboardWillHide(_ info: KeyboardInfo) {
         let insets = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
         self.tableView.contentInset = insets
         self.tableView.scrollIndicatorInsets = insets
