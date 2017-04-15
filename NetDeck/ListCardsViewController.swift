@@ -273,7 +273,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         let card = self.cards[indexPath.section][indexPath.row]
         
         let img = CardImageViewController()
-        img.setCards(self.cardList.allCards())
+        img.setCards(self.cardList.allCards(), mwl: self.deck.mwl)
         img.selectedCard = card
         
         self.navigationController?.pushViewController(img, animated: true)

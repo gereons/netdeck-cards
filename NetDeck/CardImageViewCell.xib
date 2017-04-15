@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -39,6 +39,27 @@
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
                                 <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfb-9m-9ge" userLabel="MWL Label" customClass="InsetLabel" customModule="NetDeck" customModuleProvider="target">
+                        <rect key="frame" x="265" y="373" width="15" height="15"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                <real key="value" value="2"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>
@@ -149,6 +170,7 @@
             </view>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="ZR9-4a-0PQ" secondAttribute="centerY" id="0CZ-Kq-Fp1"/>
+                <constraint firstAttribute="trailing" secondItem="Cfb-9m-9ge" secondAttribute="trailing" constant="20" id="BMY-nC-M4Q"/>
                 <constraint firstItem="VYX-sp-N5d" firstAttribute="top" secondItem="LWc-ws-ArR" secondAttribute="bottom" id="Hb7-St-9gc"/>
                 <constraint firstItem="VYX-sp-N5d" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="I2x-7j-CM6"/>
                 <constraint firstItem="VYX-sp-N5d" firstAttribute="top" secondItem="tSh-5W-bgP" secondAttribute="bottom" id="K3P-Nd-t5w"/>
@@ -160,6 +182,7 @@
                 <constraint firstItem="VYX-sp-N5d" firstAttribute="top" secondItem="fAi-YN-zHB" secondAttribute="bottom" id="aoP-5Z-8zB"/>
                 <constraint firstItem="ZR9-4a-0PQ" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="ged-JU-R98"/>
                 <constraint firstItem="LWc-ws-ArR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ggZ-LM-e1u"/>
+                <constraint firstAttribute="bottom" secondItem="Cfb-9m-9ge" secondAttribute="bottom" constant="48" id="m5N-Gw-deM"/>
                 <constraint firstItem="tSh-5W-bgP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="n1b-fd-cHi"/>
                 <constraint firstItem="ZR9-4a-0PQ" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="nXE-TB-IkE"/>
                 <constraint firstAttribute="centerX" secondItem="ZR9-4a-0PQ" secondAttribute="centerX" id="r62-ad-fpo"/>
@@ -181,6 +204,9 @@
                 <outlet property="label1" destination="5Fz-mf-I5P" id="1oZ-zT-4Oq"/>
                 <outlet property="label2" destination="SNd-Tt-RpY" id="fh4-JA-M2C"/>
                 <outlet property="label3" destination="ZxX-Cb-fnr" id="rHp-je-gGG"/>
+                <outlet property="mwlBottomDistance" destination="m5N-Gw-deM" id="ThW-Yw-v0P"/>
+                <outlet property="mwlLabel" destination="Cfb-9m-9ge" id="o7t-4U-Umh"/>
+                <outlet property="mwlRightDistance" destination="BMY-nC-M4Q" id="KEJ-fs-E5r"/>
                 <outlet property="packLabel" destination="fAi-YN-zHB" id="3mr-SK-11x"/>
             </connections>
             <point key="canvasLocation" x="257" y="260"/>

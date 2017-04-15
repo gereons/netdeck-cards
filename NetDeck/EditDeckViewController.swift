@@ -572,7 +572,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         let imgController = CardImageViewController()
-        imgController.setCardCounters(self.deck.allCards)
+        imgController.setCardCounters(self.deck.allCards, mwl: self.deck.mwl)
         imgController.selectedCard = cc.card
         
         self.navigationController?.pushViewController(imgController, animated: true)

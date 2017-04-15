@@ -19,6 +19,7 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
     private var cards = [Card]()
     private var counts = [Int]()
     private var initialScrollDone = false
+    private var mwl: MWL!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,12 +37,13 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
         return Device.isIphone4
     }
 
-    func setCards(_ cards: [Card]) {
+    func setCards(_ cards: [Card], mwl: MWL) {
         self.cards = cards
+        self.mwl = mwl
         self.counts.removeAll()
     }
     
-    func setCardCounters(_ cardCounters: [CardCounter]) {
+    func setCardCounters(_ cardCounters: [CardCounter], mwl: MWL) {
         self.cards.removeAll()
         self.counts.removeAll()
         
@@ -49,6 +51,8 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
             self.cards.append($0.card)
             self.counts.append($0.count)
         }
+        
+        self.mwl = mwl
     }
     
     override func viewDidLayoutSubviews() {
@@ -94,9 +98,9 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
         let card = self.cards[indexPath.row]
         
         if self.counts.count == 0 {
-            cell.setCard(card)
+            cell.setCard(card, mwl: self.mwl)
         } else {
-            cell.setCard(card, andCount: self.counts[indexPath.row])
+            cell.setCard(card, count: self.counts[indexPath.row], mwl: self.mwl)
         }
         
         return cell

@@ -163,7 +163,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         for c in self.cards {
             cards.append(contentsOf: c)
         }
-        img.setCards(cards)
+        img.setCards(cards, mwl: Defaults[.defaultMwl])
         img.selectedCard = card
     
         self.navigationController?.pushViewController(img, animated:true)

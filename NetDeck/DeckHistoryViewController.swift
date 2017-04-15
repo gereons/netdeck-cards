@@ -11,7 +11,7 @@ import UIKit
 class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    var deck: Deck?
+    var deck: Deck!
     var dateFormatter: DateFormatter = {
         let fmt = DateFormatter()
         fmt.dateStyle = .medium
@@ -36,8 +36,6 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func revertTapped(_ sender: UIButton) {
-        guard let deck = self.deck else { return }
-        
         Analytics.logEvent(.revert)
         assert(sender.tag < deck.revisions.count, "invalid tag")
         
@@ -53,12 +51,11 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: table view
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.deck?.revisions.count ?? 0
+        return self.deck.revisions.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let deck = self.deck else { return 0 }
-        let dcs = deck.revisions[section]
+        let dcs = self.deck.revisions[section]
         return dcs.initial ? 1 : dcs.changes.count
     }
     
@@ -72,13 +69,12 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         }()
         cell.textLabel?.text = ""
         
-        if let dcs = self.deck?.revisions[indexPath.section] {
-            if dcs.initial {
-                cell.textLabel?.text = "Initial Version".localized()
-            } else if indexPath.row < dcs.changes.count {
-                let dc = dcs.changes[indexPath.row]
-                cell.textLabel?.text = String(format: "%+ld %@", dc.count, dc.card.name)
-            }
+        let dcs = self.deck.revisions[indexPath.section]
+        if dcs.initial {
+            cell.textLabel?.text = "Initial Version".localized()
+        } else if indexPath.row < dcs.changes.count {
+            let dc = dcs.changes[indexPath.row]
+            cell.textLabel?.text = String(format: "%+ld %@", dc.count, dc.card.name)
         }
         
         return cell
@@ -87,12 +83,11 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = DeckHistorySectionHeaderView.initFromNib()
         
-        if let dcs = self.deck?.revisions[section] {
-            if let timestamp = dcs.timestamp {
-                header.dateLabel.text = self.dateFormatter.string(from: timestamp as Date)
-            } else {
-                header.dateLabel.text = "n/a"
-            }
+        let dcs = self.deck.revisions[section]
+        if let timestamp = dcs.timestamp {
+            header.dateLabel.text = self.dateFormatter.string(from: timestamp as Date)
+        } else {
+            header.dateLabel.text = "n/a"
         }
         
         header.revertButton.setTitle("Revert".localized(), for: UIControlState())
@@ -103,7 +98,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let dcs = self.deck?.revisions[indexPath.section] else { return }
+        let dcs = self.deck.revisions[indexPath.section]
         
         if !dcs.initial {
             if indexPath.row < dcs.changes.count {
@@ -119,7 +114,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
                 let selectedCard = dcs.changes[indexPath.row].card
                 if !selectedCard.isNull {
                     let imgController = CardImageViewController()
-                    imgController.setCardCounters(ccs)
+                    imgController.setCardCounters(ccs, mwl: self.deck.mwl)
                     imgController.selectedCard = selectedCard
                     imgController.showAsDifferences = true
                     

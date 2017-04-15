@@ -14,6 +14,10 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var packLabel: InsetLabel!
     
+    @IBOutlet weak var mwlLabel: InsetLabel!
+    @IBOutlet weak var mwlRightDistance: NSLayoutConstraint!
+    @IBOutlet weak var mwlBottomDistance: NSLayoutConstraint!
+    
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var cardName: UILabel!
     @IBOutlet weak var cardType: UILabel!
@@ -38,6 +42,13 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         self.detailView.isHidden = true
         self.countLabel.text = ""
         self.packLabel.text = ""
+        self.mwlLabel.text = ""
+        
+        self.packLabel.layer.cornerRadius = 2
+        self.packLabel.layer.masksToBounds = true
+        
+        self.mwlLabel.layer.cornerRadius = 3
+        self.mwlLabel.layer.masksToBounds = true
     }
     
     override func prepareForReuse() {
@@ -46,17 +57,33 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         self.detailView.isHidden = true
         self.countLabel.text = ""
         self.packLabel.text = ""
+        self.mwlLabel.text = ""
         self.imageView.image = nil
     }
     
-    func setCard(_ card: Card) {
-        self.setCard(card, andCount: -1)
+    func setCard(_ card: Card, mwl: MWL) {
+        self.setCard(card, count: -1, mwl: mwl)
     }
     
-    func setCard(_ card: Card, andCount count: Int) {
+    func setCard(_ card: Card, count: Int, mwl: MWL) {
         self.count = card.type == .identity ? 0 : count
         self.card = card
         self.imageView.image = nil
+        
+        let penalty = card.mwlPenalty(mwl)
+        print("p=\(penalty)")
+        self.mwlLabel.isHidden = penalty == 0
+        self.mwlLabel.text = (mwl.universalInfluence ? "+" : "-") + "\(penalty)"
+        switch card.type {
+        case .event, .hardware, .resource, .program, .ice:
+            self.mwlRightDistance.constant = 6
+            self.mwlBottomDistance.constant = 124+18
+        case .agenda, .asset, .upgrade, .operation:
+            self.mwlRightDistance.constant = 154
+            self.mwlBottomDistance.constant = 15+18
+        default:
+            self.mwlLabel.isHidden = true
+        }
         
         self.activityIndicator.startAnimating()
         
@@ -70,8 +97,7 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
                 self.imageView.image = img
                 
                 self.packLabel.text = card.packName
-                self.packLabel.layer.cornerRadius = 2
-                self.packLabel.layer.masksToBounds = true
+                
                 
                 if self.showAsDifferences {
                     self.countLabel.text = String(format: "%+ld", self.count)
