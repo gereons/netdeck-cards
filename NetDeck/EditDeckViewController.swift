@@ -156,7 +156,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
                 DeckExport.asOctgn(self.deck, autoSave: false)
             })
         }
-        if Defaults[.useNrdb]  {
+        if Defaults[.useNrdb] {
             alert.addAction(UIAlertAction(title: "To NetrunnerDB.com".localized()) { action in
                 Analytics.logEvent(.saveToNRDB)
                 self.saveToNrdb()

@@ -125,8 +125,7 @@ class CardList {
     func preFilterForCorp(_ identity: Card) {
         self.resetInitialCards()
         
-        if (identity.faction != .neutral)
-        {
+        if (identity.faction != .neutral) {
             let factions: NSArray = [ Faction.neutral.rawValue, identity.faction.rawValue ]
             let predicate = NSPredicate(format:"type != %d OR (type = %d AND faction in %@)", CardType.agenda.rawValue, CardType.agenda.rawValue, factions)
             
@@ -299,8 +298,7 @@ class CardList {
                 predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (alias CONTAINS[cd] %@)",
                                         text, text, text)
                 let ch = text.characters[text.startIndex]
-                if (ch >= "0" && ch <= "9")
-                {
+                if (ch >= "0" && ch <= "9") {
                     let codePredicate = NSPredicate(format:"code BEGINSWITH %@", text)
                     predicate = NSCompoundPredicate(orPredicateWithSubpredicates:[ predicate, codePredicate ])
                 }
@@ -357,8 +355,7 @@ class CardList {
                 if c1.strength > c2.strength { return false }
             }
             
-            switch (self.sortType)
-            {
+            switch (self.sortType) {
             case .byTypeFaction, .bySetFaction:
                 if c1.factionStr < c2.factionStr { return true }
                 if c1.factionStr > c2.factionStr { return false }

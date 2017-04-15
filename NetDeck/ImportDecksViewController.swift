@@ -72,13 +72,10 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         
         // do the initial listing in the background, as it may block the ui thread
         
-        if (self.source == .dropbox)
-        {
+        if (self.source == .dropbox) {
             SVProgressHUD.show(withStatus: "Loading decks from Dropbox".localized())
             self.getDropboxDecks()
-        }
-        else
-        {
+        } else {
             SVProgressHUD.show(withStatus: "Loading decks from NetrunnerDB.com".localized())
             self.getNetrunnerDbDecks()
         }

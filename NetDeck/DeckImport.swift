@@ -83,9 +83,7 @@ class DeckImport: NSObject {
             default:
                 break
             }
-        }
-        else
-        {
+        } else {
             self.deck = self.checkForTextDeck(lines)
             
             if self.deck != nil {

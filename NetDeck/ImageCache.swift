@@ -149,8 +149,7 @@ class ImageCache: NSObject {
         
         DispatchQueue.global(qos: .background).async {
             // get image from our on-disk cache
-            if let img = self.decodedImage(for: key)
-            {
+            if let img = self.decodedImage(for: key) {
                 if Reachability.online {
                     self.checkForImageUpdate(for: card, key: key)
                 }
@@ -159,9 +158,7 @@ class ImageCache: NSObject {
                 DispatchQueue.main.async {
                     completion(card, img, false)
                 }
-            }
-            else
-            {
+            } else {
                 // image is not in on-disk cache
                 if Reachability.online {
                     
@@ -366,7 +363,7 @@ class ImageCache: NSObject {
         }
         
         let img = self.decodedImage(for: key)
-        if img != nil  {
+        if img != nil {
             memCache.set(img!, forKey: key)
         }
         return img
