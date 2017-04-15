@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowserImageCell: UICollectionViewCell {
+class BrowserImageCell: UICollectionViewCell, CardDetailDisplay {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     

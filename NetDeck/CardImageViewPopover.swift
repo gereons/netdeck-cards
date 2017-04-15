@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
-class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDelegate {
+class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDelegate, CardDetailDisplay {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -26,7 +27,12 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var icon3: UIImageView!
     @IBOutlet weak var packLabel: InsetLabel!
     
+    @IBOutlet weak var mwlLabel: InsetLabel!
+    @IBOutlet weak var mwlRightDistance: NSLayoutConstraint!
+    @IBOutlet weak var mwlBottomDistance: NSLayoutConstraint!
+    
     private var card: Card!
+    private var mwl: MWL!
     
     static var popover: CardImageViewPopover?
     
@@ -68,10 +74,15 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     // MARK: - show/dismis
     
     static func show(for card: Card, from rect: CGRect, in vc: UIViewController, subView view: UIView) {
+        show(for: card, mwl: nil, from: rect, in: vc, subView: view)
+    }
+    
+    static func show(for card: Card, mwl: MWL?, from rect: CGRect, in vc: UIViewController, subView view: UIView) {
         assert(CardImageViewPopover.popover == nil, "previous popover still visible?")
         
         let popover = CardImageViewPopover()
         popover.card = card
+        popover.mwl = mwl ?? Defaults[.defaultMwl]
         
         popover.modalPresentationStyle = .popover
         if let pres = popover.popoverPresentationController {
@@ -113,9 +124,29 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         imgTap.numberOfTapsRequired = 1
         self.imageView.addGestureRecognizer(imgTap)
         
+        let penalty = card.mwlPenalty(self.mwl)
+        
+        self.mwlLabel.isHidden = penalty == 0
+        self.mwlLabel.text = (self.mwl.universalInfluence ? "+" : "-") + "\(penalty)"
+        switch card.type {
+        case .event, .hardware, .resource, .program, .ice:
+            self.mwlRightDistance.constant = 6
+            self.mwlBottomDistance.constant = 124
+        case .agenda, .asset, .upgrade, .operation:
+            self.mwlRightDistance.constant = 154
+            self.mwlBottomDistance.constant = 15
+        default:
+            self.mwlLabel.isHidden = true
+        }
+        
+        self.packLabel.layer.cornerRadius = 3
+        self.packLabel.layer.masksToBounds = true
+        
+        self.mwlLabel.layer.cornerRadius = 3
+        self.mwlLabel.layer.masksToBounds = true
+        
         self.activityIndicator.startAnimating()
         self.loadCardImage(self.card)
-
     }
     
     func imgTap(_ sender: UITapGestureRecognizer) {
@@ -124,11 +155,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         }
     }
     
-    private func loadCardImage() {
-        
-    }
-    
-    func loadCardImage(_ card: Card) {
+    private func loadCardImage(_ card: Card) {
         ImageCache.sharedInstance.getImage(for: card) { (card, img, placeholder) in
             if self.card.code == card.code {
                 self.activityIndicator.stopAnimating()

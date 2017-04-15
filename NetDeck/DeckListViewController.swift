@@ -174,6 +174,9 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture(_:)))
         self.collectionView.addGestureRecognizer(pinch)
         
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGesture(_:)))
+        self.collectionView.addGestureRecognizer(longPress)
+        
         self.footerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
         
         let footerTap = UITapGestureRecognizer(target: self, action: #selector(self.statusTapped(_:)))
@@ -1160,6 +1163,31 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func longPressGesture(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+        
+        let point = gesture.location(in: self.collectionView)
+        if let indexPath = self.collectionView.indexPathForItem(at: point) {
+            let index = indexPath.row
+            var cc: CardCounter?
+            if index == 0 {
+                if self.deck.identity != nil {
+                    cc = self.deck.identityCc
+                }
+            } else {
+                cc = self.deck.cards[index - 1]
+            }
+            
+            guard let cell = collectionView.cellForItem(at: indexPath), let card = cc?.card else {
+                return
+            }
+            
+            CardImageViewPopover.show(for: card, mwl: self.deck.mwl, from: cell.frame, in: self, subView: self.collectionView)
+        }
+    }
+
     // MARK: - printing
     
     private func dismissPrintController() {

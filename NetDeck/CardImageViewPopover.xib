@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,6 +23,9 @@
                 <outlet property="label1" destination="Eab-ha-UTX" id="LaZ-SH-y1y"/>
                 <outlet property="label2" destination="tmj-3M-eLu" id="ep0-ww-a7j"/>
                 <outlet property="label3" destination="tcg-eE-DQl" id="bm4-vP-fLJ"/>
+                <outlet property="mwlBottomDistance" destination="QZr-gK-FRJ" id="tZU-tW-cAC"/>
+                <outlet property="mwlLabel" destination="PJR-c6-T43" id="9uq-tL-2CC"/>
+                <outlet property="mwlRightDistance" destination="RDf-ob-9Mh" id="YWE-RU-jhB"/>
                 <outlet property="packLabel" destination="lga-3c-3SH" id="Yyz-Hh-xGl"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
@@ -36,7 +39,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="300" height="418"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lga-3c-3SH" userLabel="Pack Name" customClass="InsetLabel" customModule="NetDeck" customModuleProvider="target">
-                    <rect key="frame" x="138.5" y="407" width="24.5" height="11"/>
+                    <rect key="frame" x="134.5" y="403" width="32.5" height="15"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="9"/>
                     <nil key="textColor"/>
@@ -53,6 +56,27 @@
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
                             <real key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJR-c6-T43" userLabel="MWL Penalty" customClass="InsetLabel" customModule="NetDeck" customModuleProvider="target">
+                    <rect key="frame" x="131" y="389" width="15" height="15"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                            <real key="value" value="2"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </label>
@@ -160,6 +184,8 @@
                 <constraint firstItem="D1w-x2-ahd" firstAttribute="top" secondItem="2" secondAttribute="top" id="HXc-gM-cmT"/>
                 <constraint firstAttribute="bottom" secondItem="ZsW-nQ-4wd" secondAttribute="bottom" id="PuR-1U-hHh"/>
                 <constraint firstAttribute="trailing" secondItem="ZsW-nQ-4wd" secondAttribute="trailing" id="Pyw-aa-PyM"/>
+                <constraint firstAttribute="bottom" secondItem="PJR-c6-T43" secondAttribute="bottom" constant="14" id="QZr-gK-FRJ"/>
+                <constraint firstAttribute="trailing" secondItem="PJR-c6-T43" secondAttribute="trailing" constant="154" id="RDf-ob-9Mh"/>
                 <constraint firstAttribute="bottom" secondItem="D1w-x2-ahd" secondAttribute="bottom" id="bPH-70-YNk"/>
                 <constraint firstAttribute="trailing" secondItem="D1w-x2-ahd" secondAttribute="trailing" id="hw9-QE-Zf9"/>
                 <constraint firstItem="j3w-tp-m9N" firstAttribute="centerY" secondItem="2" secondAttribute="centerY" id="oHT-8q-jbD"/>
