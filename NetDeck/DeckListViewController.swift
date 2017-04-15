@@ -225,8 +225,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        NotificationCenter.default.removeObserver(self)
-        
         Defaults[.deckViewScale] = self.scale
         Defaults[.deckViewSort] = self.sortType
         

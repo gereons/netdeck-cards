@@ -105,6 +105,9 @@
 		3A7D9C3D1E20F7AB00D1410A /* BrowserResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D9C3C1E20F7AB00D1410A /* BrowserResultViewController.swift */; };
 		3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B0188172C100F0926F /* CardImageCell.xib */; };
 		3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */; };
+		3A8039E91EA28D9F005609B4 /* ModalViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8039E81EA28D9F005609B4 /* ModalViewPresenter.swift */; };
+		3A8039EC1EA28E22005609B4 /* ModalCardImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8039EA1EA28E22005609B4 /* ModalCardImageViewController.swift */; };
+		3A8039ED1EA28E22005609B4 /* ModalCardImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8039EB1EA28E22005609B4 /* ModalCardImageViewController.xib */; };
 		3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8061E61972990E003ACF44 /* DeckDiffCell.xib */; };
 		3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */; };
 		3A822F6E1CC2C13500305789 /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A822F6D1CC2C13500305789 /* BuildConfig.swift */; };
@@ -293,6 +296,9 @@
 		3A7D9C3C1E20F7AB00D1410A /* BrowserResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserResultViewController.swift; sourceTree = "<group>"; };
 		3A7FD6B0188172C100F0926F /* CardImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageCell.xib; sourceTree = "<group>"; };
 		3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImagePopup.xib; sourceTree = "<group>"; };
+		3A8039E81EA28D9F005609B4 /* ModalViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewPresenter.swift; sourceTree = "<group>"; };
+		3A8039EA1EA28E22005609B4 /* ModalCardImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalCardImageViewController.swift; sourceTree = "<group>"; };
+		3A8039EB1EA28E22005609B4 /* ModalCardImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModalCardImageViewController.xib; sourceTree = "<group>"; };
 		3A8061E61972990E003ACF44 /* DeckDiffCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffCell.xib; sourceTree = "<group>"; };
 		3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserResultViewController.xib; sourceTree = "<group>"; };
 		3A822F6D1CC2C13500305789 /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
@@ -495,6 +501,7 @@
 			children = (
 				3A19426B1DC744DB00EB9CE5 /* IphoneStartViewController.swift */,
 				3A1A656B1E63432200DC29EF /* IphoneStartViewController.xib */,
+				3A8039E81EA28D9F005609B4 /* ModalViewPresenter.swift */,
 				3AA463CF1BC003EF00591647 /* Identity Selection */,
 				3AA463D01BC0040B00591647 /* Browser */,
 				3AA463CD1BC003CC00591647 /* Image Display */,
@@ -749,6 +756,8 @@
 				3AC4685B1DC6979D00DE8788 /* CardImageViewCell.swift */,
 				3AD860E41B7939E500EEF8AC /* CardImageViewCell.xib */,
 				3A1942691DC7397800EB9CE5 /* CenterCellCollectionViewFlowLayout.swift */,
+				3A8039EA1EA28E22005609B4 /* ModalCardImageViewController.swift */,
+				3A8039EB1EA28E22005609B4 /* ModalCardImageViewController.xib */,
 			);
 			name = "Image Display";
 			sourceTree = "<group>";
@@ -1009,6 +1018,7 @@
 				3A3845031B77BA89007C76F2 /* EditDeckViewController.xib in Resources */,
 				3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */,
 				3AD860DC1B792B6700EEF8AC /* ListCardsViewController.xib in Resources */,
+				3A8039ED1EA28E22005609B4 /* ModalCardImageViewController.xib in Resources */,
 				3A6ECD2A1D85BDE7008FBF38 /* LaunchScreen.xib in Resources */,
 				3ABDE5A518AFC52C00AFEA88 /* DrawSimulatorViewController.xib in Resources */,
 				3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */,
@@ -1135,6 +1145,7 @@
 				3A2F4ADC1C8C716400B711BD /* ImageCache.swift in Sources */,
 				3AF6978F1C1DFD2100D254CE /* DrawSimulatorViewController.swift in Sources */,
 				3AAE89D91E2023830038B434 /* CardFilterPopover.swift in Sources */,
+				3A8039EC1EA28E22005609B4 /* ModalCardImageViewController.swift in Sources */,
 				3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */,
 				3A48BE8A1E17E16000B5DD3F /* LargeCardCell.swift in Sources */,
 				3A5EBE991E0FF3430096E2F5 /* StrengthStats.swift in Sources */,
@@ -1164,6 +1175,7 @@
 				3AF04BB91D44DD8200CB859D /* JinetkiNet.swift in Sources */,
 				3A5EBE951E0FE7A00096E2F5 /* CardTypeStats.swift in Sources */,
 				3A529E631CA57BF70061E065 /* Reachability.swift in Sources */,
+				3A8039E91EA28D9F005609B4 /* ModalViewPresenter.swift in Sources */,
 				3ADADEE51DFDD4040051BD92 /* EditDeckCell.swift in Sources */,
 				3A78EAE11DF4A2B80063A5A0 /* IphoneDrawSimulator.swift in Sources */,
 				3AFBA1621E0D9CAF003F6CD8 /* EditDeckViewController.swift in Sources */,

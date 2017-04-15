@@ -9,23 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-extension Array where Element: Equatable {
-    func contains(_ obj: Element) -> Bool {
-        return self.index(of: obj) != nil
-    }
-    
-    @discardableResult
-    mutating func remove(_ obj: Element) -> Bool {
-        if let index = self.index(of: obj) {
-            self.remove(at: index)
-            return true
-        } else {
-            return false
-        }
-    }
-}
-
-class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class IphoneIdentityViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var okButton: UIBarButtonItem!
@@ -36,10 +20,10 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
     var role = Role.none
     var deck: Deck?
     
-    private var selectedIdentity: Card?
-    private var selectedIndexPath: IndexPath?
-    private var identities = [[Card]]()
-    private var factionNames = [String]()
+    fileprivate var selectedIdentity: Card?
+    fileprivate var selectedIndexPath: IndexPath?
+    fileprivate var identities = [[Card]]()
+    fileprivate var factionNames = [String]()
     
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
@@ -49,6 +33,9 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
         let tableTap = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap(_:)))
         tableTap.numberOfTapsRequired = 2
         self.tableView.addGestureRecognizer(tableTap)
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(_:)))
+        self.tableView.addGestureRecognizer(longPress)
         
         self.title = "Choose Identity".localized()
         
@@ -92,18 +79,6 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
 
-    func doubleTap(_ gesture: UITapGestureRecognizer) {
-        guard gesture.state == .ended else { return }
-        
-        let point = gesture.location(in: self.tableView)
-        let indexPath = self.tableView.indexPathForRow(at: point)
-        if indexPath == nil || self.selectedIdentity == nil {
-            return
-        }
-        
-        self.closeAndSetIdentity()
-    }
-    
     @IBAction func okTapped(_ sender: UIBarButtonItem) {
         self.closeAndSetIdentity()
     }
@@ -136,8 +111,11 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
     func close() {
         let _ = self.navigationController?.popViewController(animated: true)
     }
-    
-    // MARK: - tableview
+}
+
+// MARK: - tableview delegate & datasource
+
+extension IphoneIdentityViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.factionNames.count
@@ -160,6 +138,20 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
  
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let card = self.identities[indexPath.section][indexPath.row]
+        self.selectedIdentity = card
+        
+        var reload = [indexPath]
+        if let prev = self.selectedIndexPath {
+            reload.append(prev)
+        }
+        self.selectedIndexPath = indexPath
+        tableView.reloadRows(at: reload, with: .none)
+        
+        self.okButton.isEnabled = true
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = "idCell"
         
@@ -182,18 +174,38 @@ class IphoneIdentityViewController: UIViewController, UITableViewDataSource, UIT
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let card = self.identities[indexPath.section][indexPath.row]
-        self.selectedIdentity = card
+}
+
+// MARK: - gesture recognizers
+
+extension IphoneIdentityViewController {
+    
+    func doubleTap(_ gesture: UITapGestureRecognizer) {
+        guard gesture.state == .ended else { return }
         
-        var reload = [indexPath]
-        if let prev = self.selectedIndexPath {
-            reload.append(prev)
+        let point = gesture.location(in: self.tableView)
+        let indexPath = self.tableView.indexPathForRow(at: point)
+        if indexPath == nil || self.selectedIdentity == nil {
+            return
         }
-        self.selectedIndexPath = indexPath
-        tableView.reloadRows(at: reload, with: .none)
         
-        self.okButton.isEnabled = true
+        self.closeAndSetIdentity()
     }
     
+    func longPress(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+        
+        let point = gesture.location(in: self.tableView)
+        if let indexPath = self.tableView.indexPathForRow(at: point) {
+            let card = self.identities[indexPath.section][indexPath.row]
+            
+            let imageView = ModalCardImageViewController()
+            let presenter = ModalViewPresenter(with: imageView)
+            
+            imageView.modalPresenter = presenter
+            imageView.card = card
+            presenter.present(on: self)
+        }
+
+    }
 }

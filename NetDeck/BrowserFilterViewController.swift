@@ -174,11 +174,6 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.updateResults()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     override var canBecomeFirstResponder: Bool {
         return true
     }

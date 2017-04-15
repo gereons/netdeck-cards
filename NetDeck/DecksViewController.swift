@@ -140,8 +140,6 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        NotificationCenter.default.removeObserver(self)
-        
         Defaults[.deckFilterType] = self.filterType
         Defaults[.deckFilterState] = self.filterState
         Defaults[.deckFilterSort] = self.sortType
