@@ -11,7 +11,7 @@ import Foundation
 @objc(DeckChangeSet) class DeckChangeSet: NSObject, NSCoding, NSCopying {
     var timestamp: Date?
     var changes = [DeckChange]()
-    var initial: Bool = false
+    var initial = false
     var cards = [String: Int]()       // code -> qty
     
     func addCardCode(_ code: String, copies:Int) {

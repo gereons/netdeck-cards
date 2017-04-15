@@ -75,17 +75,17 @@ import SwiftyUserDefaults
     }
     
     var size: Int {
-        return cards.reduce(0) { $0 + $1.count }
+        return self.cards.reduce(0) { $0 + $1.count }
     }
     
     var agendaPoints: Int {
-        return cards
+        return self.cards
             .filter{ $0.card.type == .agenda}
             .reduce(0) { $0 + $1.card.agendaPoints * $1.count }
     }
     
     var influence: Int {
-        return cards.reduce(0) { $0 + self.influenceFor($1) }
+        return self.cards.reduce(0) { $0 + self.influenceFor($1) }
     }
     
     var influenceLimit: Int {
@@ -156,13 +156,9 @@ import SwiftyUserDefaults
     }
     
     private func nonAllianceOfFaction(_ faction: Faction) -> Int {
-        var count = 0
-        for cc in cards {
-            if cc.card.faction == faction && !cc.card.isAlliance {
-                count += cc.count
-            }
-        }
-        return count
+        return self.cards
+            .filter { $0.card.faction == faction && !$0.card.isAlliance }
+            .reduce(0) { $0 + $1.count }
     }
     
     private func padCampaignCount() -> Int {
@@ -261,18 +257,18 @@ import SwiftyUserDefaults
     }
     
     private func indexOfCardCode(_ code: String) -> Int? {
-        return cards.index { $0.card.code == code }
+        return self.cards.index { $0.card.code == code }
     }
     
-    func findCard(_ card: Card?) -> CardCounter? {
-        if let c = card, let index = self.indexOfCardCode(c.code) {
-            return cards[index]
+    func findCard(_ card: Card) -> CardCounter? {
+        if let index = self.indexOfCardCode(card.code) {
+            return self.cards[index]
         }
         return nil
     }
     
     private func sort(by sortOrder: DeckSort) {
-        cards.sort { (cc1, cc2) -> Bool in
+        self.cards.sort { cc1, cc2 in
             let c1 = cc1.card
             let c2 = cc2.card
             
@@ -305,154 +301,6 @@ import SwiftyUserDefaults
             
             return c1.foldedName < c2.foldedName
         }
-    }
-    
-    func checkValidity() -> [String] {
-        var reasons = [String]()
-        
-        if self.identityCc == nil {
-            reasons.append("No Identity".localized())
-        } else {
-            assert(self.identityCc?.count == 1, "identity count")
-        }
-        
-        if !self.isDraft && self.influence > self.influenceLimit {
-            reasons.append("Too much influence used".localized())
-        }
-        
-        if let id = self.identity, self.size < id.minimumDecksize {
-            reasons.append("Not enough cards".localized())
-        }
-        
-        let role = self.identity?.role
-        if role == .corp {
-            let apRequired = ((self.size / 5) + 1) * 2
-            let ap = self.agendaPoints
-            if ap != apRequired && ap != apRequired+1 {
-                reasons.append(String(format: "AP must be %d or %d".localized(), apRequired, apRequired+1))
-            }
-        }
-        
-        let noJintekiAllowed = self.identity?.code == Card.customBiotics
-        let isApex = self.identity?.code == Card.apex
-        var limitError = false, jintekiError = false, agendaError = false, apexError = false
-        
-        // check max 1 per deck restrictions and other spcial rules
-        for cc in self.cards {
-            let card = cc.card
-            
-            let limitExceeded = self.isDraft ? cc.count > 1 && card.maxPerDeck == 1 : cc.count > card.maxPerDeck
-            if limitExceeded && !limitError {
-                limitError = true
-                reasons.append("Card limit exceeded".localized())
-            }
-            
-            if role == .corp {
-                if noJintekiAllowed && card.faction == .jinteki && !jintekiError {
-                    jintekiError = true
-                    reasons.append("Faction not allowed".localized())
-                }
-                
-                if !self.isDraft && card.type == .agenda && card.faction != .neutral && card.faction != self.identity?.faction && !agendaError {
-                    agendaError = true
-                    reasons.append("Has out-of-faction agendas".localized())
-                }
-            }
-            else if role == .runner {
-                if isApex && card.type == .resource && !card.isVirtual && !apexError {
-                    apexError = true
-                    reasons.append("Has non-virtual resources".localized())
-                }
-            }
-        }
-        
-        if Defaults[.rotationActive] {
-            let packsUsed = Set(self.cards.map{ $0.card.packCode})
-            let rotatedPacks = packsUsed.flatMap{ PackManager.packsByCode[$0] }.filter{ $0.rotated }
-            if rotatedPacks.count > 0 {
-                reasons.append("Uses rotated-out cards".localized())
-            }
-        }
-        
-        if self.onesies {
-            let onesiesReasons = self.checkOnesiesRules()
-            if onesiesReasons.count > 0 {
-                reasons.append("Invalid for 1.1.1.1".localized())
-                reasons.append(contentsOf: onesiesReasons)
-            }
-        }
-        
-        return reasons
-    }
-    
-    // check if this is a valid "Onesies" deck - 1 Core Set, 1 Deluxe, 1 Data Pack, 1 playset of a Card
-    // (which may be 3x of a Core card like Desperado, or a 6x of e.g. Spy Camera
-    func checkOnesiesRules() -> [String] {
-        
-        var coreCardsOverQuantity = 0
-        var draftUsed = false
-        
-        var cardsFromDeluxe = [String: Int]()
-        var cardsFromPack = [String: Int]()
-        
-        for cc in self.cards {
-            let card = cc.card
-            switch card.packCode {
-            case PackManager.draftSetCode:
-                draftUsed = true
-            case PackManager.coreSetCode:
-                if cc.count > card.quantity {
-                    coreCardsOverQuantity += 1
-                }
-            case "cac", "hap", "oac", "dad":
-                let c = cardsFromDeluxe[card.packCode] ?? 0
-                cardsFromDeluxe[card.packCode] = c + 1
-            default:
-                let c = cardsFromPack[card.packCode] ?? 0
-                cardsFromPack[card.packCode] = c + 1
-            }
-        }
-        
-        var reasons = [String]()
-        if draftUsed {
-            reasons.append("Uses draft cards".localized())
-        }
-        
-        let minPackCards = cardsFromPack.values.min()
-        let minDeluxeCards = cardsFromDeluxe.values.min()
-        
-        let packsUsed = cardsFromPack.count
-        let deluxesUsed = cardsFromDeluxe.count
-        
-        // 1 pack, 1 deluxe, 1 extra from core
-        if packsUsed <= 1 && deluxesUsed <= 1 && coreCardsOverQuantity <= 1 {
-            return reasons
-        }
-        // 2 packs, 1 deluxe, extra card from 2nd pack
-        if packsUsed == 2 && coreCardsOverQuantity == 0 && minPackCards == 1 && deluxesUsed <= 1 {
-            return reasons
-        }
-        // 1 pack, 2 deluxes: extra card from 2md deluxe
-        if deluxesUsed == 2 && coreCardsOverQuantity == 0 && minDeluxeCards == 1 && packsUsed <= 1 {
-            return reasons
-        }
-       
-        // more than 1 extra card from core, or extra card is from pack or deluxe
-        if coreCardsOverQuantity > 1 || (coreCardsOverQuantity == 1 && (packsUsed > 1 || deluxesUsed > 1)) {
-            reasons.append("Uses >1 Core".localized())
-        }
-
-        // more than 1 deluxe used
-        if deluxesUsed > 1 {
-            reasons.append("Uses >1 Deluxe".localized())
-        }
-        
-        // more than 2 datapacks used - 2 is only allowed if one of them has the extra card
-        if (packsUsed > 1 && minPackCards != 1) || packsUsed > 2 {
-            reasons.append("Uses >1 Datapack".localized())
-        }
-        
-        return reasons
     }
     
     func duplicate() -> Deck {
@@ -713,8 +561,8 @@ import SwiftyUserDefaults
             dcs.cards = cards
         }
     }
-    
-    // MARK: NSCoding
+
+    // MARK: - NSCoding
     convenience required init?(coder decoder: NSCoder) {
         self.init()
         
@@ -771,4 +619,158 @@ import SwiftyUserDefaults
         coder.encode(self.mwl.rawValue, forKey: "mwl")
         coder.encode(self.onesies, forKey: "onesies")
     }
+}
+
+// MARK: - validity checking
+
+extension Deck {
+    
+    func checkValidity() -> [String] {
+        var reasons = [String]()
+        
+        if self.identityCc == nil {
+            reasons.append("No Identity".localized())
+        } else {
+            assert(self.identityCc?.count == 1, "identity count")
+        }
+        
+        if !self.isDraft && self.influence > self.influenceLimit {
+            reasons.append("Too much influence used".localized())
+        }
+        
+        if let id = self.identity, self.size < id.minimumDecksize {
+            reasons.append("Not enough cards".localized())
+        }
+        
+        let role = self.identity?.role
+        if role == .corp {
+            let apRequired = ((self.size / 5) + 1) * 2
+            let ap = self.agendaPoints
+            if ap != apRequired && ap != apRequired+1 {
+                reasons.append(String(format: "AP must be %d or %d".localized(), apRequired, apRequired+1))
+            }
+        }
+        
+        let noJintekiAllowed = self.identity?.code == Card.customBiotics
+        let isApex = self.identity?.code == Card.apex
+        var limitError = false, jintekiError = false, agendaError = false, apexError = false
+        
+        // check max 1 per deck restrictions and other spcial rules
+        for cc in self.cards {
+            let card = cc.card
+            
+            let limitExceeded = self.isDraft ? cc.count > 1 && card.maxPerDeck == 1 : cc.count > card.maxPerDeck
+            if limitExceeded && !limitError {
+                limitError = true
+                reasons.append("Card limit exceeded".localized())
+            }
+            
+            if role == .corp {
+                if noJintekiAllowed && card.faction == .jinteki && !jintekiError {
+                    jintekiError = true
+                    reasons.append("Faction not allowed".localized())
+                }
+                
+                if !self.isDraft && card.type == .agenda && card.faction != .neutral && card.faction != self.identity?.faction && !agendaError {
+                    agendaError = true
+                    reasons.append("Has out-of-faction agendas".localized())
+                }
+            }
+            else if role == .runner {
+                if isApex && card.type == .resource && !card.isVirtual && !apexError {
+                    apexError = true
+                    reasons.append("Has non-virtual resources".localized())
+                }
+            }
+        }
+        
+        if Defaults[.rotationActive] {
+            let packsUsed = Set(self.cards.map{ $0.card.packCode})
+            let rotatedPacks = packsUsed.flatMap{ PackManager.packsByCode[$0] }.filter{ $0.rotated }
+            if rotatedPacks.count > 0 {
+                reasons.append("Uses rotated-out cards".localized())
+            }
+        }
+        
+        if self.onesies {
+            let onesiesReasons = self.checkOnesiesRules()
+            if onesiesReasons.count > 0 {
+                reasons.append("Invalid for 1.1.1.1".localized())
+                reasons.append(contentsOf: onesiesReasons)
+            }
+        }
+        
+        return reasons
+    }
+    
+    // check if this is a valid "Onesies" deck - 1 Core Set, 1 Deluxe, 1 Data Pack, 1 playset of a Card
+    // (which may be 3x of a Core card like Desperado, or a 6x of e.g. Spy Camera
+    private func checkOnesiesRules() -> [String] {
+        
+        var coreCardsOverQuantity = 0
+        var draftUsed = false
+        
+        var cardsFromDeluxe = [String: Int]()
+        var cardsFromPack = [String: Int]()
+        
+        for cc in self.cards {
+            let card = cc.card
+            switch card.packCode {
+            case PackManager.draftSetCode:
+                draftUsed = true
+            case PackManager.coreSetCode:
+                if cc.count > card.quantity {
+                    coreCardsOverQuantity += 1
+                }
+            case "cac", "hap", "oac", "dad":
+                let c = cardsFromDeluxe[card.packCode] ?? 0
+                cardsFromDeluxe[card.packCode] = c + 1
+            default:
+                let c = cardsFromPack[card.packCode] ?? 0
+                cardsFromPack[card.packCode] = c + 1
+            }
+        }
+        
+        var reasons = [String]()
+        if draftUsed {
+            reasons.append("Uses draft cards".localized())
+        }
+        
+        let minPackCards = cardsFromPack.values.min()
+        let minDeluxeCards = cardsFromDeluxe.values.min()
+        
+        let packsUsed = cardsFromPack.count
+        let deluxesUsed = cardsFromDeluxe.count
+        
+        // 1 pack, 1 deluxe, 1 extra from core
+        if packsUsed <= 1 && deluxesUsed <= 1 && coreCardsOverQuantity <= 1 {
+            return reasons
+        }
+        // 2 packs, 1 deluxe, extra card from 2nd pack
+        if packsUsed == 2 && coreCardsOverQuantity == 0 && minPackCards == 1 && deluxesUsed <= 1 {
+            return reasons
+        }
+        // 1 pack, 2 deluxes: extra card from 2md deluxe
+        if deluxesUsed == 2 && coreCardsOverQuantity == 0 && minDeluxeCards == 1 && packsUsed <= 1 {
+            return reasons
+        }
+        
+        // more than 1 extra card from core, or extra card is from pack or deluxe
+        if coreCardsOverQuantity > 1 || (coreCardsOverQuantity == 1 && (packsUsed > 1 || deluxesUsed > 1)) {
+            reasons.append("Uses >1 Core".localized())
+        }
+        
+        // more than 1 deluxe used
+        if deluxesUsed > 1 {
+            reasons.append("Uses >1 Deluxe".localized())
+        }
+        
+        // more than 2 datapacks used - 2 is only allowed if one of them has the extra card
+        if (packsUsed > 1 && minPackCards != 1) || packsUsed > 2 {
+            reasons.append("Uses >1 Datapack".localized())
+        }
+        
+        return reasons
+    }
+    
 }
