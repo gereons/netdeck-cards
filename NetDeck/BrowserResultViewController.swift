@@ -38,12 +38,8 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         .byStrength: "Strength".localized()
     ]
     
-    private static var instance: BrowserResultViewController!
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        BrowserResultViewController.instance = self
         
         let scale: Double = Defaults[.browserViewScale]
         self.scale = scale == 0 ? 1.0 : scale
@@ -119,8 +115,6 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         
         Defaults[.browserViewScale] = self.scale
         Defaults[.browserViewSort] = self.sortType
-        
-        BrowserResultViewController.instance = nil
     }
     
     func updateDisplay(_ cardList: CardList) {
@@ -245,6 +239,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         
         let card = self.values[indexPath.section][indexPath.row]
         cell.card = card
+        cell.parent = self
         
         return cell
     }
@@ -296,7 +291,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         }
         let card = self.values[indexPath.section][indexPath.row]
         
-        BrowserResultViewController.showPopup(for: card, in: collectionView, from: cell.frame)
+        self.showPopup(for: card, in: collectionView, from: cell.frame)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -307,7 +302,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         return header
     }
     
-    static func showPopup(for card: Card, in view: UIView, from rect: CGRect) {
+    func showPopup(for card: Card, in view: UIView, from rect: CGRect) {
         let sheet = UIAlertController.actionSheet(title: nil, message: nil)
         
         sheet.addAction(UIAlertAction(title: "Find decks using this card".localized()) { action in
@@ -335,7 +330,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         popover?.permittedArrowDirections = [.up, .down]
         sheet.view.layoutIfNeeded()
         
-        BrowserResultViewController.instance.present(sheet, animated: false, completion: nil)
+        self.present(sheet, animated: false, completion: nil)
     }
 
     // MARK: - long press
