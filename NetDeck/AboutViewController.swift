@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-@objc(AboutViewController)
+@objc(AboutViewController) // needed for IASK
 class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var webView: UIWebView!

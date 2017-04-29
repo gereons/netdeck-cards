@@ -300,6 +300,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if device.isSimulator {
             return
         }
+        let width = UIScreen.main.bounds.width
+        let height = UIScreen.main.bounds.height
         let attrs = [
             "cardLanguage": Defaults[.language],
             "locale": Locale.current.identifier,
@@ -308,7 +310,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "useJinteki": Defaults[.useJintekiNet] ? "on" : "off",
             "device": device.description,
             "os": UIDevice.current.systemVersion,
-            "device+os": device.description + " " + UIDevice.current.systemVersion
+            "device+os": device.description + " " + UIDevice.current.systemVersion,
+            "resolution": "\(height)x\(width)"
         ]
         Analytics.logEvent(.start, attributes: attrs)
     }

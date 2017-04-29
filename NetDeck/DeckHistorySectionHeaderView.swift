@@ -10,7 +10,7 @@ import UIKit
 
 // NB this is used both on iPad and iPhone
 
-@objc(DeckHistorySectionHeaderView) class DeckHistorySectionHeaderView: UIView {
+class DeckHistorySectionHeaderView: UIView {
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var revertButton: UIButton!
