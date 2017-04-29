@@ -287,6 +287,10 @@ class PackManager {
         return nil
     }
     
+    class func keysForCycle(_ cycleCode: String) -> [String] {
+        return self.allPacks.filter { $0.cycleCode == cycleCode }.map { $0.settingsKey }
+    }
+    
     // MARK: - persistence
     
     class func filesExist() -> Bool {

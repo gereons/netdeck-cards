@@ -95,6 +95,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             let sw = NRSwitch(initial: on) { on in
                 settings.set(on, forKey: pack.settingsKey)
                 PackManager.clearDisabledPacks()
+                tableView.reloadSections([indexPath.section], with: .none)
             }
             
             cell.accessoryView = sw
@@ -102,4 +103,27 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let width = tableView.frame.width
+        let view = UITableViewHeaderFooterView(frame: CGRect(x: 0, y: 0, width: width, height: 50))
+        
+        if self.values[section].count > 1 {
+            let cycle = self.values[section][0].cycleCode
+            let keys = PackManager.keysForCycle(cycle)
+            let enabledKeys = keys.filter { UserDefaults.standard.bool(forKey: $0) }
+            
+            let sw = NRSwitch(initial: enabledKeys.count > 0) { on in
+                for key in keys {
+                    UserDefaults.standard.set(on, forKey: key)
+                }
+                tableView.reloadSections([section], with: .none)
+            }
+            sw.frame = CGRect(x: width-66, y: 4, width: 51, height: 31)
+            view.addSubview(sw)
+        }
+        
+        return view
+    }
+    
 }
