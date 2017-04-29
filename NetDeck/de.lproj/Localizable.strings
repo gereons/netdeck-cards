@@ -101,6 +101,8 @@
 "Uses >1 Datapack" = "Mehr als 1 Datensatz";
 "Uses >1 Core" = "Mehr als 1 Grundspiel";
 "Uses rotated-out cards" = "Enthält rausrotierte Karten";
+"Invalid for Cache Refresh" = "Ungültig für Cache Refresh";
+"Uses invalid Datapack" = "Nicht erlaubter Datensatz";
 
 // card downloading
 "Downloading Card Data" = "Lade Karten-Daten";

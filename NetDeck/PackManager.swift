@@ -280,6 +280,13 @@ class PackManager {
         return maxIndex == -1 ? "n/a" : allPacks[maxIndex].name
     }
     
+    class func cycleForPack(_ packCode: String) -> String? {
+        if let pack = packsByCode[packCode] {
+            return pack.cycleCode
+        }
+        return nil
+    }
+    
     // MARK: - persistence
     
     class func filesExist() -> Bool {

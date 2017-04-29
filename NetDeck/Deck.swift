@@ -74,6 +74,10 @@ import SwiftyUserDefaults
         willSet { modified = true }
     }
     
+    var cacheRefresh: CacheRefresh = .none {
+        willSet { modified = true }
+    }
+    
     var size: Int {
         return self.cards.reduce(0) { $0 + $1.count }
     }
@@ -600,6 +604,13 @@ import SwiftyUserDefaults
         
         self.onesies = decoder.decodeBool(forKey: "onesies")
         
+        if decoder.containsValue(forKey: "cacheRefresh") {
+            let cacheRefresh = decoder.decodeInteger(forKey: "cacheRefresh")
+            self.cacheRefresh = CacheRefresh(rawValue: cacheRefresh) ?? .none
+        } else {
+            self.cacheRefresh = .none
+        }
+        
         self.modified = false
     }
     
@@ -618,6 +629,7 @@ import SwiftyUserDefaults
         coder.encode(self.revisions, forKey:"revisions")
         coder.encode(self.mwl.rawValue, forKey: "mwl")
         coder.encode(self.onesies, forKey: "onesies")
+        coder.encode(self.cacheRefresh.rawValue, forKey: "cacheRefresh")
     }
 }
 
@@ -700,6 +712,14 @@ extension Deck {
             }
         }
         
+        if self.cacheRefresh != .none {
+            let crReasons = self.checkCacheRefreshRules()
+            if crReasons.count > 0 {
+                reasons.append("Invalid for Cache Refresh".localized())
+                reasons.append(contentsOf: crReasons)
+            }
+        }
+        
         return reasons
     }
     
@@ -722,7 +742,7 @@ extension Deck {
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
-            case "cac", "hap", "oac", "dad":
+            case "cac", "hap", "oac", "dad", "td":
                 let c = cardsFromDeluxe[card.packCode] ?? 0
                 cardsFromDeluxe[card.packCode] = c + 1
             default:
@@ -773,4 +793,74 @@ extension Deck {
         return reasons
     }
     
+    // check if this is a valid "Cache Refresh" deck - 1 Core Set, 1 Deluxe, TD, last 2 cycles, current MWL
+    func checkCacheRefreshRules() -> [String] {
+        
+        if self.cacheRefresh == .none {
+            return []
+        }
+        
+        let validCycles = self.cacheRefresh.validCycles
+        
+        var coreCardsOverQuantity = 0
+        var draftUsed = false
+        
+        var cardsFromDeluxe = [String: Int]()
+        var cardsFromTD = 0
+        var cardsFromAllowedCycles = 0
+        var cardsFromForbiddenCycles = 0
+        
+        for cc in self.cards {
+            let card = cc.card
+            switch card.packCode {
+            case PackManager.draftSetCode:
+                draftUsed = true
+            case PackManager.coreSetCode:
+                if cc.count > card.quantity {
+                    coreCardsOverQuantity += 1
+                }
+            case "cac", "hap", "oac", "dad":
+                let c = cardsFromDeluxe[card.packCode] ?? 0
+                cardsFromDeluxe[card.packCode] = c + 1
+            case "td":
+                cardsFromTD += 1
+            default:
+                let cycle = PackManager.cycleForPack(card.packCode) ?? ""
+                if validCycles.contains(cycle) {
+                    cardsFromAllowedCycles += 1
+                } else {
+                    cardsFromForbiddenCycles += 1
+                }
+            }
+        }
+        
+        var reasons = [String]()
+        if draftUsed {
+            reasons.append("Uses draft cards".localized())
+        }
+        
+        let deluxesUsed = cardsFromDeluxe.count
+        
+        // only legal packs, 1 deluxe, 1 core, TD
+        if cardsFromForbiddenCycles == 0 && deluxesUsed <= 1 && coreCardsOverQuantity == 0 {
+            return reasons
+        }
+
+        // more than 1 core used
+        if coreCardsOverQuantity > 0 {
+            reasons.append("Uses >1 Core".localized())
+        }
+        
+        // more than 1 deluxe used
+        if deluxesUsed > 1 {
+            reasons.append("Uses >1 Deluxe".localized())
+        }
+        
+        // invalid datapacks used
+        if cardsFromForbiddenCycles > 0 {
+            reasons.append("Uses invalid Datapack".localized())
+        }
+        
+        return reasons
+    }
 }

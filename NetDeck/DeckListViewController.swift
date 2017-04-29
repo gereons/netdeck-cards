@@ -28,7 +28,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var toolbarBottomMargin: NSLayoutConstraint!
     private var keyboardObserver: KeyboardObserver!
-    
+
     var role = Role.none
     var deck: Deck! {
         didSet {
@@ -1212,24 +1212,28 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let alert = UIAlertController.actionSheet(title: "Deck Legality".localized(), message: nil)
         
         alert.addAction(UIAlertAction(title: "Casual".localized().checked(self.deck.mwl == .none && !self.deck.onesies)) { action in
-            self.setMwl(.none, andOnesies: false)
+            self.setMwl(.none, cacheRefresh: .none, onesies: false)
         })
         alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(self.deck.mwl == .v1_0)) { action in
-            self.setMwl(.v1_0, andOnesies: false)
+            self.setMwl(.v1_0, cacheRefresh: .none, onesies: false)
         })
 
         alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(self.deck.mwl == .v1_1)) { action in
-            self.setMwl(.v1_1, andOnesies: false)
+            self.setMwl(.v1_1, cacheRefresh: .none, onesies: false)
         })
         
         alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
-            self.setMwl(.v1_2, andOnesies: false)
+            self.setMwl(.v1_2, cacheRefresh: .none, onesies: false)
         })
 
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
-            self.setMwl(.none, andOnesies: true)
+            self.setMwl(.none, cacheRefresh: .none, onesies: true)
         })
 
+        alert.addAction(UIAlertAction(title: "Cache Refresh".localized().checked(self.deck.cacheRefresh == .r2017)) { action in
+            self.setMwl(CacheRefresh.r2017.mwl, cacheRefresh: .r2017, onesies: false)
+        })
+        
         alert.addAction(UIAlertAction.actionSheetCancel(nil))
         
         let popover = alert.popoverPresentationController
@@ -1242,10 +1246,11 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.present(alert, animated: false, completion: nil)
     }
     
-    private func setMwl(_ newMwl: MWL, andOnesies onesies: Bool) {
-        if self.deck.mwl != newMwl || self.deck.onesies != onesies {
+    private func setMwl(_ newMwl: MWL, cacheRefresh: CacheRefresh, onesies: Bool) {
+        if self.deck.mwl != newMwl || self.deck.onesies != onesies || self.deck.cacheRefresh != cacheRefresh {
             self.deck.mwl = newMwl
             self.deck.onesies = onesies
+            self.deck.cacheRefresh = cacheRefresh
             
             NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
         }
