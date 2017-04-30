@@ -43,8 +43,8 @@ class CardManager {
         identitySubtypes[.runner] = Set<String>()
         identitySubtypes[.corp] = Set<String>()
         
-        allSubtypes[.runner] = [String: Set<String>]()
-        allSubtypes[.corp] = [String: Set<String>]()
+        allSubtypes[.runner] = [:]
+        allSubtypes[.corp] = [:]
         
         maxMU = -1
         maxInfluence = -1

@@ -15,8 +15,6 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-//    private var runnerDecks = [Deck]()
-//    private var corpDecks = [Deck]()
     private var decks = [[Deck]]()
     
     private var addButton: UIBarButtonItem!

@@ -66,8 +66,8 @@ class PrebuiltManager {
     
     private class func prepareCaches() {
         if prebuiltCards == nil {
-            prebuiltCards = [CardCounter]()
-            prebuiltCodes = [String]()
+            prebuiltCards = []
+            prebuiltCodes = []
             
             let settings = UserDefaults.standard
             for prebuilt in allPrebuilts {

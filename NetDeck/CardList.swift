@@ -55,7 +55,7 @@ class CardList {
         case .runner: roles = [ .runner ]
         }
         
-        cl.initialCards = [Card]()
+        cl.initialCards = []
         for role in roles {
             cl.initialCards.append(contentsOf: CardManager.allFor(role: role))
             cl.initialCards.append(contentsOf: CardManager.identitiesFor(role: role))

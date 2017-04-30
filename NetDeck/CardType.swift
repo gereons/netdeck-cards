@@ -31,8 +31,8 @@ import Foundation
     private(set) static var allTypes: TableData<String>!
     
     static func initializeCardType(_ cards: [Card]) -> Bool {
-        runnerTypeNames = [String]()
-        corpTypeNames = [String]()
+        runnerTypeNames = []
+        corpTypeNames = []
         
         assert(Codes.code2Type.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
         if Codes.code2Type.count != runnerTypes.count + corpTypes.count + 1 {

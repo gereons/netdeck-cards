@@ -367,10 +367,11 @@ class PackManager {
     }
     
     class func setupFromJsonData(_ cycles: JSONObject, _ packs: JSONObject, language: String) -> Bool {
-        cyclesByCode = [String: Cycle]()     // code -> cycle
-        allCycles = [Int: Cycle]()           // position -> cycles
-        packsByCode = [String: Pack](minimumCapacity: 64)       // code -> pack
-        allPacks = [Pack]()
+        cyclesByCode = [:]  // code -> cycle
+        allCycles = [:]     // position -> cycles
+        packsByCode = [:]   // code -> pack
+        allPacks = []
+        
         allPacks.reserveCapacity(100)
         
         let ok = NRDB.validJsonResponse(json: cycles) && NRDB.validJsonResponse(json: packs)

@@ -67,9 +67,9 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func initCards(_ drawInitialHand: Bool) {
-        self.drawn = [Card]()
-        self.cards = [Card]()
-        self.played = [Bool]()
+        self.drawn = []
+        self.cards = []
+        self.played = []
         
         for cc in self.deck.cards {
             for _ in 0 ..< cc.count {

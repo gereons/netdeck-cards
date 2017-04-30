@@ -45,15 +45,15 @@ import SwiftyUserDefaults
     }
     
     static func initializeFactionNames(_ cards: [Card]) -> Bool {
-        faction2name = [Faction: String]()
+        faction2name = [:]
         faction2name[.none] = Constant.kANY
         faction2name[.neutral] = "Neutral".localized()
         
         let expectedNames = runnerFactionsAll.count + corpFactions.count + 2 // +2 for "any" and "neutral"
         
-        runnerFactionNamesAll = [String]()
-        runnerFactionNamesCore = [String]()
-        corpFactionNames = [String]()
+        runnerFactionNamesAll = []
+        runnerFactionNamesCore = []
+        corpFactionNames = []
         
         for card in cards {
             faction2name[card.faction] = card.factionStr

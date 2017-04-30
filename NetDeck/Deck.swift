@@ -348,7 +348,7 @@ import SwiftyUserDefaults
     func mergeRevisions() {
         self.lastChanges.coalesce()
         if self.lastChanges.changes.count > 0 {
-            self.lastChanges.cards = [String: Int]()
+            self.lastChanges.cards = [:]
             
             for cc in self.allCards {
                 self.lastChanges.cards[cc.card.code] = cc.count
