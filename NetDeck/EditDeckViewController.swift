@@ -415,7 +415,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
         
         var summary = String(format: "%ld %@", self.deck.size, self.deck.size == 1 ? "Card".localized() : "Cards".localized())
-        let inf = self.deck.role == .corp ? "Inf".localized() : "Influcence".localized()
+        let inf = self.deck.role == .corp ? "Inf".localized() : "Influence".localized()
         if self.deck.identity != nil && !self.deck.isDraft {
             summary += String(format: " · %ld/%ld %@", self.deck.influence, self.deck.influenceLimit, inf)
         } else {
