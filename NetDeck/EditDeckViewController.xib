@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +14,8 @@
                 <outlet property="addButton" destination="Rqx-sT-0Os" id="kcb-9D-2Qu"/>
                 <outlet property="drawButton" destination="Mfs-Fy-ONa" id="ZTe-ng-bvD"/>
                 <outlet property="nrdbButton" destination="sUy-hZ-UQ3" id="UdR-m1-8MS"/>
-                <outlet property="statusLabel" destination="cNa-Vc-9G8" id="AUy-dX-BkU"/>
+                <outlet property="statusLabel" destination="Gml-C2-6ly" id="uf6-vH-TUQ"/>
+                <outlet property="summaryLabel" destination="cNa-Vc-9G8" id="QEM-Zi-6pf"/>
                 <outlet property="tableView" destination="XoR-lC-cbz" id="hKE-VP-Yzy"/>
                 <outlet property="toolBar" destination="69X-dg-40v" id="SHb-Hp-NvE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -62,29 +63,36 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNa-Vc-9G8">
-                    <rect key="frame" x="10" y="629.5" width="223" height="31.5"/>
-                    <string key="text">49 Cards - 15/15 Inf - 22 AP
-Not enough Cards</string>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="49 Cards - 15/15 Inf - 22 AP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNa-Vc-9G8" userLabel="Summary Label">
+                    <rect key="frame" x="10" y="629" width="223" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gml-C2-6ly" userLabel="Status Label" customClass="TickingLabel" customModule="NetDeck" customModuleProvider="target">
+                    <rect key="frame" x="10" y="646" width="223" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="Gml-C2-6ly" firstAttribute="top" secondItem="cNa-Vc-9G8" secondAttribute="bottom" constant="1" id="549-pS-KUW"/>
                 <constraint firstItem="XoR-lC-cbz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GhP-Fg-TlV"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="trailing" secondItem="cNa-Vc-9G8" secondAttribute="trailing" constant="142" id="JVw-ia-OkB"/>
+                <constraint firstItem="cNa-Vc-9G8" firstAttribute="top" secondItem="69X-dg-40v" secondAttribute="bottom" constant="-38" id="MJ2-oe-5MQ"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VVg-bv-oy1"/>
+                <constraint firstItem="Gml-C2-6ly" firstAttribute="leading" secondItem="cNa-Vc-9G8" secondAttribute="leading" id="WbK-rt-9T9"/>
                 <constraint firstItem="cNa-Vc-9G8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="hRk-mn-Eew"/>
                 <constraint firstAttribute="trailing" secondItem="69X-dg-40v" secondAttribute="trailing" id="kS0-IB-w2t"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="top" secondItem="XoR-lC-cbz" secondAttribute="bottom" id="mPt-vD-QMV"/>
+                <constraint firstItem="Gml-C2-6ly" firstAttribute="width" secondItem="cNa-Vc-9G8" secondAttribute="width" id="oKn-rX-uRv"/>
                 <constraint firstItem="XoR-lC-cbz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="paG-fx-BMz"/>
                 <constraint firstAttribute="bottom" secondItem="69X-dg-40v" secondAttribute="bottom" id="sqO-9l-Yu6"/>
                 <constraint firstAttribute="trailing" secondItem="XoR-lC-cbz" secondAttribute="trailing" id="t7r-Xq-dHh"/>
-                <constraint firstItem="69X-dg-40v" firstAttribute="top" secondItem="cNa-Vc-9G8" secondAttribute="bottom" constant="-38" id="xIT-lf-tzW"/>
             </constraints>
-            <point key="canvasLocation" x="558" y="233"/>
+            <point key="canvasLocation" x="557.5" y="232.5"/>
         </view>
     </objects>
     <resources>

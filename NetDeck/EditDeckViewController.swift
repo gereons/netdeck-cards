@@ -11,9 +11,11 @@ import SVProgressHUD
 import MessageUI
 import SwiftyUserDefaults
 
+
 class EditDeckViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var summaryLabel: UILabel!
+    @IBOutlet weak var statusLabel: TickingLabel!
     @IBOutlet weak var toolBar: UIToolbar!
     
     @IBOutlet weak var drawButton: UIBarButtonItem!
@@ -37,7 +39,10 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     private var historyButton: UIBarButtonItem!
     
     private var listCards: ListCardsViewController!
-    private var tapRecognizer: UITapGestureRecognizer!
+    
+    deinit {
+        print("deinit")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +55,8 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
         self.statusLabel.text = ""
+        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.summaryLabel.text = ""
         
         self.autoSave = Defaults[.autoSave]
         self.autoSaveDropbox = Defaults[.autoSaveDropbox]
@@ -62,8 +69,12 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.statusLabel.textColor = self.view.tintColor
         self.statusLabel.isUserInteractionEnabled = true
-        self.tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.statusTapped(_:)))
-        self.statusLabel.addGestureRecognizer(self.tapRecognizer)
+        self.summaryLabel.textColor = self.view.tintColor
+        self.summaryLabel.isUserInteractionEnabled = true
+        let statusTap = UITapGestureRecognizer(target: self, action: #selector(self.statusTapped(_:)))
+        self.statusLabel.addGestureRecognizer(statusTap)
+        let summaryTap = UITapGestureRecognizer(target: self, action: #selector(self.statusTapped(_:)))
+        self.summaryLabel.addGestureRecognizer(summaryTap)
         
         // right button
         self.exportButton = UIBarButtonItem(image: UIImage(named: "702-share"), style: .plain, target: self, action: #selector(self.exportDeck(_:)))
@@ -403,26 +414,31 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.tableView.reloadData()
         
-        var footer = String(format: "%ld %@", self.deck.size, self.deck.size == 1 ? "Card".localized() : "Cards".localized())
+        var summary = String(format: "%ld %@", self.deck.size, self.deck.size == 1 ? "Card".localized() : "Cards".localized())
         let inf = self.deck.role == .corp ? "Inf".localized() : "Influcence".localized()
         if self.deck.identity != nil && !self.deck.isDraft {
-            footer += String(format: " · %ld/%ld %@", self.deck.influence, self.deck.influenceLimit, inf)
+            summary += String(format: " · %ld/%ld %@", self.deck.influence, self.deck.influenceLimit, inf)
         } else {
-            footer += String(format: " · %ld %@", self.deck.influence, inf)
+            summary += String(format: " · %ld %@", self.deck.influence, inf)
         }
         
         if self.deck.role == .corp {
-            footer += String(format: " · %ld %@", self.deck.agendaPoints, "AP".localized())
+            summary += String(format: " · %ld %@", self.deck.agendaPoints, "AP".localized())
         }
         
-        footer += "\n"
+        var status = ""
         let reasons = self.deck.checkValidity()
         if reasons.count > 0 {
-            footer += reasons[0]
+            status = reasons[0]
         }
         
-        self.statusLabel.text = footer
+        self.summaryLabel.text = summary
+        
+        self.statusLabel.text = status
+        self.statusLabel.strings = reasons
+        
         self.statusLabel.textColor = reasons.count == 0 ? self.view.tintColor : .red
+        self.summaryLabel.textColor = reasons.count == 0 ? self.view.tintColor : .red
         
         self.drawButton.isEnabled = self.deck.size > 0
         

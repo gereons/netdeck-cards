@@ -13,7 +13,9 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var summaryLabel: UILabel!
+    @IBOutlet weak var statusLabel: TickingLabel!
+    
     @IBOutlet weak var toolBar: UIToolbar!
     
     private var keyboardObserver: KeyboardObserver!
@@ -41,10 +43,13 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
         self.statusLabel.text = ""
+        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.summaryLabel.text = ""
         
         // needed to make the 1 pixel separator show - wtf is this needed here but not elsewhere?
         self.view.bringSubview(toFront: self.toolBar)
         self.view.bringSubview(toFront: self.statusLabel)
+        self.view.bringSubview(toFront: self.summaryLabel)
         
         self.tableView.register(UINib(nibName: "EditDeckCell", bundle: nil), forCellReuseIdentifier: "cardCell")
         
@@ -134,27 +139,30 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func updateFooter() {
-        var footer = ""
-        footer = String(format: "%ld %@", self.deck.size, self.deck.size == 1 ? "Card".localized() : "Cards".localized())
+        var summary = ""
+        summary = String(format: "%ld %@", self.deck.size, self.deck.size == 1 ? "Card".localized() : "Cards".localized())
         let inf = self.deck.role == .corp ? "Inf".localized() : "Influence".localized()
         if self.deck.identity != nil && !self.deck.isDraft {
-            footer += String(format: " · %ld/%ld %@", self.deck.influence, self.deck.influenceLimit, inf)
+            summary += String(format: " · %ld/%ld %@", self.deck.influence, self.deck.influenceLimit, inf)
         } else {
-            footer += String(format: " · %ld %@", self.deck.influence, inf)
+            summary += String(format: " · %ld %@", self.deck.influence, inf)
         }
         
         if self.deck.role == .corp {
-            footer += String(format: " · %ld %@", self.deck.agendaPoints, "AP".localized())
+            summary += String(format: " · %ld %@", self.deck.agendaPoints, "AP".localized())
         }
         
-        footer += "\n"
-        
+        var status = ""
         let reasons = self.deck.checkValidity()
         if reasons.count > 0 {
-            footer += reasons[0]
+            status += reasons[0]
         }
         
-        self.statusLabel.text = footer
+        self.summaryLabel.text = summary
+        self.summaryLabel.textColor = reasons.count == 0 ? .darkGray : .red
+            
+        self.statusLabel.text = status
+        self.statusLabel.strings = reasons
         self.statusLabel.textColor = reasons.count == 0 ? .darkGray : .red
     }
     
