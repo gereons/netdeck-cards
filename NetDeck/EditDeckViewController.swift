@@ -426,11 +426,8 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             summary += String(format: " · %ld %@", self.deck.agendaPoints, "AP".localized())
         }
         
-        var status = ""
         let reasons = self.deck.checkValidity()
-        if reasons.count > 0 {
-            status = reasons[0]
-        }
+        let status = reasons.first ?? "Deck is valid".localized()
         
         self.summaryLabel.text = summary
         

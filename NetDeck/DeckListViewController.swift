@@ -16,7 +16,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var mwlButton: UIButton!
-    @IBOutlet weak var footerLabel: UILabel!
+    @IBOutlet weak var summaryLabel: UILabel!
+    @IBOutlet weak var statusLabel: TickingLabel!
     @IBOutlet weak var deckNameLabel: UILabel!
     @IBOutlet weak var lastSetLabel: UILabel!
     
@@ -25,6 +26,9 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var analysisButton: UIButton!
     @IBOutlet weak var notesButton: UIButton!
     @IBOutlet weak var historyButton: UIButton!
+    
+    @IBOutlet weak var footerView: UIView!
+    @IBOutlet weak var footerWidth: NSLayoutConstraint!
     
     @IBOutlet weak var toolbarBottomMargin: NSLayoutConstraint!
     private var keyboardObserver: KeyboardObserver!
@@ -178,13 +182,12 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGesture(_:)))
         self.collectionView.addGestureRecognizer(longPress)
         
-        self.footerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
+        self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
+        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
         
         let footerTap = UITapGestureRecognizer(target: self, action: #selector(self.statusTapped(_:)))
-        self.footerLabel.addGestureRecognizer(footerTap)
-        self.footerLabel.isUserInteractionEnabled = true
-        
-        self.mwlButton.addTarget(self, action: #selector(self.mwlTapped(_:)), for: .touchUpInside)
+        self.footerView.addGestureRecognizer(footerTap)
+        self.footerView.isUserInteractionEnabled = true
         
         self.refresh()
     }
@@ -200,6 +203,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.toolBar.addSubview(self.progressView)
         
         self.progressView.isHidden = !Defaults[.autoHistory]
+        self.footerView.layer.opacity = 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -220,6 +224,10 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         self.stateButton.title = DeckState.buttonLabelFor(self.deck.state)
+        self.footerWidth.constant = self.historyButton.frame.origin.x - 16
+        UIView.animate(withDuration: 0.1) {
+            self.footerView.layer.opacity = 1
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -830,26 +838,27 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.drawButton.isEnabled = self.deck.cards.count > 0
         self.analysisButton.isEnabled = self.deck.cards.count > 0
         
-        var footer = ""
+        var summary = ""
         let card = self.deck.size == 1 ? "Card".localized() : "Cards".localized()
-        footer = "\(deck.size) \(card)"
+        summary = "\(deck.size) \(card)"
         if self.deck.identity != nil && !self.deck.isDraft {
-            footer += String(format: " · %ld/%ld %@", self.deck.influence, self.deck.influenceLimit, "Influence".localized())
+            summary += String(format: " · %ld/%ld %@", self.deck.influence, self.deck.influenceLimit, "Influence".localized())
         } else {
-            footer += String(format: " · %ld %@", self.deck.influence, "Influence".localized())
+            summary += String(format: " · %ld %@", self.deck.influence, "Influence".localized())
         }
         
         if self.role == .corp {
-            footer += String(format: " · %ld %@", self.deck.agendaPoints, "AP".localized())
+            summary += String(format: " · %ld %@", self.deck.agendaPoints, "AP".localized())
         }
         
         let reasons = self.deck.checkValidity()
-        if reasons.count > 0 {
-            footer += " · " + reasons[0]
-        }
+        let status = reasons.first ?? "Deck is valid".localized()
         
-        self.footerLabel.text = footer
-        self.footerLabel.textColor = reasons.count == 0 ? .darkGray : .red
+        self.summaryLabel.text = summary
+        self.summaryLabel.textColor = reasons.count == 0 ? .darkGray : .red
+        self.statusLabel.text = status
+        self.statusLabel.strings = reasons
+        self.statusLabel.textColor = reasons.count == 0 ? .darkGray : .red
         
         let set = PackManager.mostRecentPackUsedIn(deck: self.deck)
         self.lastSetLabel.text = String(format: "Cards up to %@".localized(), set)
@@ -1198,10 +1207,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - MWL selection
     
-    func mwlTapped(_ sender: Any) {
-        self.showMwlSelection()
-    }
-    
     func statusTapped(_ gesture: UITapGestureRecognizer) {
         if gesture.state == .ended {
             self.showMwlSelection()
@@ -1237,12 +1242,11 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         alert.addAction(UIAlertAction.actionSheetCancel(nil))
         
         let popover = alert.popoverPresentationController
-        popover?.sourceView = self.mwlButton
-        var frame = self.footerLabel.frame
-        frame.size = CGSize(width: 1, height: 1)
-        popover?.sourceRect = frame
-        alert.view.layoutIfNeeded()
+        popover?.sourceRect = self.footerView.frame
+        popover?.sourceView = self.view
+        popover?.permittedArrowDirections = .down
         
+        alert.view.layoutIfNeeded()
         self.present(alert, animated: false, completion: nil)
     }
     
