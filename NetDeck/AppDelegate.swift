@@ -141,17 +141,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let startup = self.window!.rootViewController as! StartupViewController
             startup.stopSpinner()
             
-            let snapshot = self.window!.snapshotView(afterScreenUpdates: true)!
-            viewController.view.addSubview(snapshot)
-            
             self.window!.rootViewController = viewController
             
-            UIView.animate(withDuration: 0.25, animations: { _ in
-                snapshot.layer.opacity = 0
-                snapshot.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
-            }, completion: { _ in
-                snapshot.removeFromSuperview()
-            })
+            if let snapshot = self.window!.snapshotView(afterScreenUpdates: true) {
+                viewController.view.addSubview(snapshot)
+                UIView.animate(withDuration: 0.25, animations: { _ in
+                    snapshot.layer.opacity = 0
+                    snapshot.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
+                }, completion: { _ in
+                    snapshot.removeFromSuperview()
+                })
+            }
         }
     }
     
