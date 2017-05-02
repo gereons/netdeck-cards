@@ -116,7 +116,11 @@ import SwiftyUserDefaults
     
     func universalInfluenceFor(_ cc: CardCounter) -> Int {
         if self.mwl.universalInfluence {
-            return cc.card.mwlPenalty(self.mwl) * cc.count
+            var count = cc.count
+            if cc.card.type == .program && self.identity?.code == Card.theProfessor {
+                count -= 1
+            }
+            return cc.card.mwlPenalty(self.mwl) * count
         } else {
             return 0
         }
@@ -794,7 +798,7 @@ extension Deck {
     }
     
     // check if this is a valid "Cache Refresh" deck - 1 Core Set, 1 Deluxe, TD, last 2 cycles, current MWL
-    func checkCacheRefreshRules() -> [String] {
+    private func checkCacheRefreshRules() -> [String] {
         
         if self.cacheRefresh == .none {
             return []
