@@ -13,7 +13,6 @@ class Analytics {
     enum Event: String {
         case start = "Start"
         case browser = "Browser"
-        case openANCUR = "Open ANCUR"
         case openNRDB = "Open NRDB"
         case compareDecks = "Compare Decks"
         case deckHistory = "Deck History"

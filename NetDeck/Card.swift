@@ -67,13 +67,6 @@ class Card: NSObject, Unmarshaling {
             .replacingOccurrences(of: "{code}", with: self.code)
     }
     
-    var ancurLink: String {
-        let wikiName = self.englishName
-            .replacingOccurrences(of: " ", with: "_")
-            .addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? self.englishName
-        return "http://ancur.wikia.com/wiki/" + wikiName
-    }
-    
     var nrdbLink: String {
         return "https://netrunnerdb.com/" + Card.currentLanguage + "/card/" + self.code
     }

@@ -257,11 +257,6 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
                 let msg = String(format:"Open web page for\n%@?".localized(), card.name)
                 
                 let alert = UIAlertController.alert(title: nil, message: msg)
-                alert.addAction(UIAlertAction(title:"ANCUR".localized()) { action in
-                    if let url = URL(string: card.ancurLink) {
-                        UIApplication.shared.openURL(url)
-                    }
-                })
                 alert.addAction(UIAlertAction(title:"NetrunnerDB".localized()) { action in
                     if let url = URL(string: card.nrdbLink) {
                         UIApplication.shared.openURL(url)
