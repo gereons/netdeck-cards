@@ -300,8 +300,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if device.isSimulator {
             return
         }
-        let width = UIScreen.main.bounds.width
-        let height = UIScreen.main.bounds.height
+        let width = Int(UIScreen.main.bounds.width)
+        let height = Int(UIScreen.main.bounds.height)
         let attrs = [
             "cardLanguage": Defaults[.language],
             "locale": Locale.current.identifier,
