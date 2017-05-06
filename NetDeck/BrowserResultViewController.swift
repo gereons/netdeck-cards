@@ -321,7 +321,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         let popover = sheet.popoverPresentationController
         popover?.sourceRect = rect
         popover?.sourceView = view
-        popover?.permittedArrowDirections = [.up, .down]
+        popover?.permittedArrowDirections = .any
         sheet.view.layoutIfNeeded()
         
         self.present(sheet, animated: false, completion: nil)
