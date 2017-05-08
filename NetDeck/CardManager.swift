@@ -109,7 +109,7 @@ class CardManager {
         
         var identities = [[Card]]()
         factionNames.forEach { str in
-            identities.append([Card]())
+            identities.append([])
         }
         
         for identity in identitiesFor(role: role).sorted(by: { $0.code < $1.code }) {
@@ -122,6 +122,13 @@ class CardManager {
         if !disabledPackCodes.contains(PackManager.draftSetCode) {
             factionNames.removeLast()
             factionNames.append("Draft".localized())
+        }
+        
+        for i in (0 ..< factionNames.count).reversed() {
+            if identities[i].count == 0 {
+                identities.remove(at: i)
+                factionNames.remove(at: i)
+            }
         }
 
         assert(factionNames.count == identities.count)

@@ -98,18 +98,8 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         self.modeSelector.selectedSegmentIndex = self.viewTable ? 1 : 0
         
         let includeDraft = Defaults[.useDraft]
-        let dataDestinyAllowed = Defaults[.useDataDestiny]
         
-        var titles: [String]
-        if self.role == .runner {
-            titles = dataDestinyAllowed ? Faction.runnerFactionNamesAll : Faction.runnerFactionNamesCore
-        } else {
-            titles = Faction.corpFactionNames
-        }
-        
-        titles.remove(at: 0)
-        titles.remove(at: 0)
-        
+        var titles = self.allFactionNames
         titles.insert("All".localized(), at: 0)
         if includeDraft {
             titles.append("Draft".localized())
@@ -205,7 +195,6 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
                 let faction = factions[selected - 1]
                 self.factionNames = [ Faction.name(for: faction) ]
                 self.identities = [ self.allIdentities[selected - 1] ]
-                
             } else {
                 self.factionNames = [ "Draft".localized() ]
                 self.identities = [ self.allIdentities[selected - 1] ]

@@ -13,6 +13,8 @@ import SwiftyUserDefaults
 import DeviceKit
 
 // TODO: investigate OOMs - memory warnings?
+// TODO: taptic engine support?
+// TODO: for the last version supporting iOS 9, add a friendly upgrade reminder
 
 protocol StartViewController {
     func addNewDeck(_ role: Role)
@@ -369,10 +371,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: CrashlyticsDelegate {
     // MARK: - crashlytics delegate 
-    func crashlyticsDidDetectReport(forLastExecution report: CLSReport, completionHandler: @escaping (Bool) -> Void) {
-        DispatchQueue.main.async {
-            completionHandler(true)
-        }
+    func crashlyticsDidDetectReport(forLastExecution report: CLSReport) {
         self.crashDetected = true
     }
     
