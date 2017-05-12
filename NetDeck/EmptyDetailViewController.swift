@@ -40,7 +40,7 @@ class EmptyDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.spinner.stopAnimating()
+        self.spinner?.stopAnimating()
     }
     
     @IBAction func downloadTapped(_ sender: UIButton) {
