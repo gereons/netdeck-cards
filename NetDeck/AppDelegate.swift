@@ -49,9 +49,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         self.setBuiltinUserDefaults()
+        self.initGroup.enter()
         DispatchQueue.global(qos: .userInteractive).async {
-            self.initGroup.enter()
+            NSLog("enter group")
             self.initializeData()
+            NSLog("leave group")
             self.initGroup.leave()
         }
         self.waitForInitialization()
@@ -65,7 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func waitForInitialization() {
+        NSLog("notify")
         self.initGroup.notify(queue: DispatchQueue.main) {
+            NSLog("finalize launch")
             self.finializeLaunch()
         }
     }
@@ -143,10 +147,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let startup = self.window!.rootViewController as! StartupViewController
             startup.stopSpinner()
             
-            self.window!.rootViewController = viewController
-            
             if let snapshot = self.window!.snapshotView(afterScreenUpdates: true) {
                 viewController.view.addSubview(snapshot)
+                self.window!.rootViewController = viewController
                 UIView.animate(withDuration: 0.25, animations: { _ in
                     snapshot.layer.opacity = 0
                     snapshot.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
