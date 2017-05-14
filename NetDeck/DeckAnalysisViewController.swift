@@ -25,7 +25,7 @@ class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITab
     private var influenceStats: InfluenceStats!
     private var toggleButton: UIButton!
     
-    class func showForDeck(_ deck: Deck, inViewController viewController: UIViewController) {
+    static func showForDeck(_ deck: Deck, inViewController viewController: UIViewController) {
         let analysis = DeckAnalysisViewController(deck: deck)
         viewController.present(analysis, animated: false, completion: nil)
     }

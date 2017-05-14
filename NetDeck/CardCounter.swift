@@ -19,7 +19,7 @@ import Foundation
         self.count = count
     }
     
-    class func null() -> CardCounter {
+    static func null() -> CardCounter {
         return nullInstance
     }
     

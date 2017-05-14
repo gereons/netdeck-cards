@@ -38,7 +38,7 @@ class Analytics {
         case changeLanguage = "Change Language"
     }
 
-    class func logEvent(_ event: Event, attributes: [String: Any]? = nil) {
+    static func logEvent(_ event: Event, attributes: [String: Any]? = nil) {
         if BuildConfig.useCrashlytics {
             Answers.logCustomEvent(withName: event.rawValue, customAttributes: attributes)
         }

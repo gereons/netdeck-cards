@@ -17,7 +17,7 @@ class DeckNotesPopup: UIViewController {
 
     var deck: Deck
     
-    class func showFor(deck: Deck, in viewController: UIViewController) {
+    static func showFor(deck: Deck, in viewController: UIViewController) {
         let popup = DeckNotesPopup(deck: deck)
         
         viewController.present(popup, animated: false, completion: nil)

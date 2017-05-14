@@ -55,7 +55,7 @@ class CardManager {
         maxTrash = -1
     }
     
-    class func maxCost(for role: Role) -> Int {
+    static func maxCost(for role: Role) -> Int {
         switch role {
         case .none: return max(maxCorpCost, maxRunnerCost)
         case .runner: return maxRunnerCost
@@ -63,11 +63,11 @@ class CardManager {
         }
     }
 
-    class func cardBy(code: String) -> Card? {
+    static func cardBy(code: String) -> Card? {
         return allKnownCards[code]
     }
     
-    class func allCards() -> [Card] {
+    static func allCards() -> [Card] {
         let cards = allKnownCards.values
         
         return cards.sorted {
@@ -75,7 +75,7 @@ class CardManager {
         }
     }
     
-    class func allFor(role: Role) -> [Card] {
+    static func allFor(role: Role) -> [Card] {
         if role != .none {
             return allCardsByRole[role]!
         } else {
@@ -83,12 +83,12 @@ class CardManager {
         }
     }
     
-    class func identitiesFor(role: Role) -> [Card] {
+    static func identitiesFor(role: Role) -> [Card] {
         assert(role != .none)
         return allIdentitiesByRole[role]!
     }
     
-    class func identitiesForSelection(_ role: Role, packUsage: PackUsage) -> TableData<Card> {
+    static func identitiesForSelection(_ role: Role, packUsage: PackUsage) -> TableData<Card> {
         var factionNames = Faction.factionsFor(role: role, packUsage: packUsage)
         factionNames.removeFirst(2) // remove "any" and "neutral"
         
@@ -136,7 +136,7 @@ class CardManager {
         return TableData(sections: factionNames, values: identities)
     }
     
-    class func subtypesFor(role: Role, andType type: String, includeIdentities: Bool) -> [String] {
+    static func subtypesFor(role: Role, andType type: String, includeIdentities: Bool) -> [String] {
         var subtypes = allSubtypes[role]?[type] ?? Set<String>()
         
         let includeIds = includeIdentities && (type == Constant.kANY || type == identityKey)
@@ -149,7 +149,7 @@ class CardManager {
         return subtypes.sorted { $0.lowercased() < $1.lowercased() }
     }
     
-    class func subtypesFor(role: Role, andTypes types: Set<String>, includeIdentities: Bool) -> [String] {
+    static func subtypesFor(role: Role, andTypes types: Set<String>, includeIdentities: Bool) -> [String] {
         var subtypes = Set<String>()
         for type in types {
             let arr = subtypesFor(role: role, andType: type, includeIdentities: includeIdentities)
@@ -162,11 +162,11 @@ class CardManager {
         return subtypes.sorted(by: { $0.lowercased() < $1.lowercased() })
     }
     
-    class var cardsAvailable: Bool {
+    static var cardsAvailable: Bool {
         return allKnownCards.count > 0
     }
     
-    private class func setSubtypes(_ cards: [Card]) {
+    private static func setSubtypes(_ cards: [Card]) {
         // fill subtypes per role
         for card in cards {
             if card.subtypes.count > 0 {
@@ -192,7 +192,7 @@ class CardManager {
         }
     }
     
-    private class func addCardAliases(_ cards: [Card]) {
+    private static func addCardAliases(_ cards: [Card]) {
         // add automatic aliases like "Self Modifying Code" -> "SMC"
         let split = CharacterSet(charactersIn: " -.")
         for card in cards {
@@ -223,7 +223,7 @@ class CardManager {
         }
     }
     
-    private class func add(card: Card) {
+    private static func add(card: Card) {
         guard card.isValid else {
             print("invalid card: \(card.code) \(card.name)")
             return
@@ -251,7 +251,7 @@ class CardManager {
         }
     }
     
-    class func setNextDownloadDate() {
+    static func setNextDownloadDate() {
         let fmt = DateFormatter()
         fmt.dateStyle = .short // e.g. 08.10.2008 for locale=de
         fmt.timeStyle = .none
@@ -278,7 +278,7 @@ class CardManager {
     
     // MARK: - persistence 
     
-    class func setupFromFiles(_ language: String) -> Bool {
+    static func setupFromFiles(_ language: String) -> Bool {
         let filename = CardManager.filename()
         
         if let data = FileManager.default.contents(atPath: filename) {
@@ -294,7 +294,7 @@ class CardManager {
         return false
     }
     
-    class func setupFromNetrunnerDb(_ cardsData: Data, language: String) -> Bool {
+    static func setupFromNetrunnerDb(_ cardsData: Data, language: String) -> Bool {
         var ok = false
         do {
             let cardsJson = try JSONParser.JSONObjectWithData(cardsData)
@@ -314,7 +314,7 @@ class CardManager {
         return ok
     }
     
-    class func setupFromJson(_ cards: JSONObject, language: String) -> Bool {
+    static func setupFromJson(_ cards: JSONObject, language: String) -> Bool {
         if !NRDB.validJsonResponse(json: cards) {
             return false
         }
@@ -354,18 +354,18 @@ class CardManager {
         return true
     }
     
-    class func fileExists() -> Bool {
+    static func fileExists() -> Bool {
         return FileManager.default.fileExists(atPath: filename())
     }
     
-    private class func filename() -> String {
+    private static func filename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
     
         return supportDirectory.appendPathComponent(CardManager.cardsFilename)
     }
     
-    class func removeFiles() {
+    static func removeFiles() {
         let fileMgr = FileManager.default
         _ = try? fileMgr.removeItem(atPath: filename())
     

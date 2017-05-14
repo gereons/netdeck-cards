@@ -12,7 +12,7 @@ class CollectionViewSectionHeader: UICollectionReusableView {
 
     @IBOutlet weak var title: UILabel!
 
-    class func nib() -> UINib {
+    static func nib() -> UINib {
         return UINib(nibName: "CollectionViewSectionHeader", bundle: nil)
     }
 }

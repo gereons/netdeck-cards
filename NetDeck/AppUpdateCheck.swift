@@ -15,7 +15,7 @@ class AppUpdateCheck {
     static let week: TimeInterval = 7*24*60*60 // one week in seconds
     static let forceTest = false
     
-    class func checkUpdate() {
+    static func checkUpdate() {
         
         guard let nextCheck = Defaults[.nextUpdateCheck] else {
             Defaults[.nextUpdateCheck] = Date(timeIntervalSinceNow: week)
@@ -53,7 +53,7 @@ class AppUpdateCheck {
         }
     }
     
-    private class func checkForUpdate(_ completion: @escaping (String?) -> Void) {
+    private static func checkForUpdate(_ completion: @escaping (String?) -> Void) {
         guard
             let dict = Bundle.main.infoDictionary,
             let bundleId = dict["CFBundleIdentifier"] as? String,

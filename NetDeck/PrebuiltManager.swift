@@ -39,32 +39,32 @@ class PrebuiltManager {
     private static var prebuiltCodes: [String]?
     
     // array of card codes in selected prebuilt decks
-    class func availableCodes() -> [String]? {
+    static func availableCodes() -> [String]? {
         prepareCaches()
         guard let codes = prebuiltCodes , codes.count > 0 else { return nil }
         return codes
     }
     
     // array of identity card codes for role in selected prebuilt decks
-    class func identities(for role: Role) -> [String]? {
+    static func identities(for role: Role) -> [String]? {
         prepareCaches()
         guard let cards = prebuiltCards else { return nil }
         return cards.filter{ $0.card.role == role && $0.card.type == .identity }.map{ $0.card.code }
     }
     
     // quantity of card owned from prebuilt decks
-    class func quantity(for card: Card) -> Int {
+    static func quantity(for card: Card) -> Int {
         prepareCaches()
         guard let cards = prebuiltCards else { return 0 }
         return cards.filter { $0.card.code == card.code }.reduce(0) { $0 + $1.count }
     }
     
-    class func resetSelected() {
+    static func resetSelected() {
         prebuiltCards = nil
         prebuiltCodes = nil
     }
     
-    private class func prepareCaches() {
+    private static func prepareCaches() {
         if prebuiltCards == nil {
             prebuiltCards = []
             prebuiltCodes = []
@@ -80,19 +80,19 @@ class PrebuiltManager {
     }
     
     // MARK: - persistence
-    class func filename() -> String {
+    static func filename() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
         
         return supportDirectory.appendPathComponent("prebuilts.json")
     }
     
-    class func removeFiles() {
+    static func removeFiles() {
         let fileMgr = FileManager.default
         _ = try? fileMgr.removeItem(atPath: filename())
     }
     
-    class func setupFromFiles(_ language: String) -> Bool {
+    static func setupFromFiles(_ language: String) -> Bool {
         if let data = FileManager.default.contents(atPath: self.filename()) {
             do {
                 let prebuiltJson = try JSONParser.JSONObjectWithData(data)
@@ -107,7 +107,7 @@ class PrebuiltManager {
         return false
     }
     
-    class func setupFromNetrunnerDb(_ data: Data, language: String) -> Bool {
+    static func setupFromNetrunnerDb(_ data: Data, language: String) -> Bool {
         var ok = false
         do {
             let prebuiltJson = try JSONParser.JSONObjectWithData(data)
@@ -127,13 +127,13 @@ class PrebuiltManager {
         return ok
     }
     
-    class func settingsDefaults() -> [String: Bool] {
+    static func settingsDefaults() -> [String: Bool] {
         var defaults = [String: Bool]()
         allPrebuilts.forEach { defaults[$0.settingsKey] = false }
         return defaults
     }
     
-    class func setupFromJsonData(_ prebuilts: JSONObject, language: String) -> Bool {
+    static func setupFromJsonData(_ prebuilts: JSONObject, language: String) -> Bool {
         let ok = NRDB.validJsonResponse(json: prebuilts)
         if !ok {
             // print("prebuilts invalid")

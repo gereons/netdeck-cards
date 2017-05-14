@@ -27,7 +27,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     
     static var viewMode = 0
     
-    class func showForDeck(_ deck: Deck, inViewController vc: UIViewController) {
+    static func showForDeck(_ deck: Deck, inViewController vc: UIViewController) {
         let dvw = DrawSimulatorViewController()
         dvw.deck = deck
         dvw.modalPresentationStyle = .formSheet

@@ -76,7 +76,7 @@ class Card: NSObject, Unmarshaling {
     static private var imgSrcTemplate = ""
     static private var currentLanguage = ""
     
-    class func null() -> Card {
+    static func null() -> Card {
         return nullInstance
     }
     
@@ -160,7 +160,7 @@ class Card: NSObject, Unmarshaling {
         }
     }
     
-    class func cardsFromJson(_ json: JSONObject, language: String) -> [Card] {
+    static func cardsFromJson(_ json: JSONObject, language: String) -> [Card] {
         var cards = [Card]()
 
         imgSrcTemplate = try! json.value(for: "imageUrlTemplate")
@@ -283,7 +283,7 @@ class Card: NSObject, Unmarshaling {
     }
     
     // manipulate identity name
-    class func shortIdentityName(_ name: String, forRole role: Role, andFaction faction: String) -> String {
+    static func shortIdentityName(_ name: String, forRole role: Role, andFaction faction: String) -> String {
         if let colon = name.range(of: ": ") {
             // runner: remove stuff after the colon ("Andromeda: Disposessed Ristie" becomes "Andromeda")
             if role == .runner {

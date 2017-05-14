@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 
 class CardUpdateCheck {
     
-    class func checkCardUpdateAvailable(_ vc: UIViewController) -> Bool {
+    static func checkCardUpdateAvailable(_ vc: UIViewController) -> Bool {
         let next = Defaults[.nextDownload]
         
         let fmt = DateFormatter()

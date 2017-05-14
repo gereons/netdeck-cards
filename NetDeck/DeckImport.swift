@@ -37,11 +37,11 @@ class DeckImport: NSObject {
     private var downloadStopped: Bool!
     private var request: Request?
  
-    class func updateCount() {
+    static func updateCount() {
         Defaults[.clipChangeCount] = UIPasteboard.general.changeCount
     }
     
-    class func checkClipboardForDeck() {
+    static func checkClipboardForDeck() {
         return sharedInstance.checkClipboardForDeck()
     }
     

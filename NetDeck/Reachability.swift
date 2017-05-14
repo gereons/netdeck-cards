@@ -13,7 +13,7 @@ import SwiftyUserDefaults
 class Reachability {
     static var manager: NetworkReachabilityManager?
     
-    class func start() {
+    static func start() {
         let nrdbHost = Defaults[.nrdbHost]
         let host = nrdbHost.length > 0 ? nrdbHost : "www.apple.com"
         Reachability.manager = NetworkReachabilityManager(host: host)
@@ -33,7 +33,7 @@ class Reachability {
         NetworkActivityIndicatorManager.shared.startDelay = 0.2
     }
     
-    class var online: Bool {
+    static var online: Bool {
         return manager?.isReachable ?? true
     }
 

@@ -25,15 +25,15 @@ private enum ApiRequest {
 
 class DataDownload: NSObject {
     
-    class func downloadCardData() {
+    static func downloadCardData() {
         self.instance.downloadCardAndSetsData()
     }
     
-    class func downloadAllImages() {
+    static func downloadAllImages() {
         self.instance.doDownloadImages(.all)
     }
     
-    class func downloadMissingImages() {
+    static func downloadMissingImages() {
         self.instance.doDownloadImages(.missing)
     }
     
@@ -272,7 +272,7 @@ class DataDownload: NSObject {
 
     // MARK: - api checker
     
-    class func checkNrdbApi(_ url: String, completion: @escaping (Bool) -> Void) {
+    static func checkNrdbApi(_ url: String, completion: @escaping (Bool) -> Void) {
         Alamofire.request(url)
             .validate()
             .responseJSON { response in

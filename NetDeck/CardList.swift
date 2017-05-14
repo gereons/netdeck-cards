@@ -45,7 +45,7 @@ class CardList {
         self.clearFilters()
     }
     
-    class func browserInitForRole(_ role: Role, packUsage: PackUsage) -> CardList {
+    static func browserInitForRole(_ role: Role, packUsage: PackUsage) -> CardList {
         let cl = CardList(forRole: role, packUsage: packUsage)
         
         var roles = [Role]()

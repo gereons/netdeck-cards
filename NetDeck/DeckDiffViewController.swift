@@ -31,7 +31,7 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
     private var diffMode: DiffMode
     private var diff: DeckDiff!
     
-    class func showForDecks(_ deck1: Deck, deck2: Deck, inViewController: UIViewController) {
+    static func showForDecks(_ deck1: Deck, deck2: Deck, inViewController: UIViewController) {
         Analytics.logEvent(.compareDecks)
         let ddvc = DeckDiffViewController(deck1: deck1, deck2: deck2)
         

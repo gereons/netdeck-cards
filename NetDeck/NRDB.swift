@@ -27,7 +27,7 @@ class NRDB: NSObject {
     private var timer: Timer?
     private var deckMap = [String: String]()
     
-    class func clearSettings() {
+    static func clearSettings() {
         Defaults[.useNrdb] = false
         
         Defaults.remove(.nrdbAccessToken)
@@ -403,7 +403,7 @@ class NRDB: NSObject {
     }
     
     static private let supportedNrdbApiVersion = "2.0"
-    class func validJsonResponse(json: JSONObject) -> Bool {
+    static func validJsonResponse(json: JSONObject) -> Bool {
         do {
             let version: String = try json.value(for: "version_number")
             let success: Bool = try json.value(for: "success")

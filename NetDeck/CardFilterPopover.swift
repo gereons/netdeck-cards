@@ -77,7 +77,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         vc.present(popover, animated: false, completion: nil)
     }
     
-    class func dismiss() {
+    static func dismiss() {
         popover.dismiss(animated: false, completion: nil)
         popover = nil
     }

@@ -321,7 +321,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Analytics.logEvent(.start, attributes: attrs)
     }
     
-    class func appVersion() -> String {
+    static func appVersion() -> String {
         var version = ""
         if let bundleInfo = Bundle.main.infoDictionary {
             // CFBundleShortVersionString contains the main version
@@ -349,7 +349,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // utility method: set the excludeFromBackup flag on the specified path
-    class func excludeFromBackup(_ path: String) {
+    static func excludeFromBackup(_ path: String) {
         let url = NSURL(fileURLWithPath:path)
         do {
             try url.setResourceValue(true, forKey:URLResourceKey.isExcludedFromBackupKey)

@@ -15,7 +15,7 @@ class DeckHistorySectionHeaderView: UIView {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var revertButton: UIButton!
     
-    class func initFromNib() -> DeckHistorySectionHeaderView {
+    static func initFromNib() -> DeckHistorySectionHeaderView {
         let views = Bundle.main.loadNibNamed("DeckHistorySectionHeaderView", owner: self, options: nil)
         let header = views?.first as! DeckHistorySectionHeaderView
         return header

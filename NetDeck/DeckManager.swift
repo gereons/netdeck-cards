@@ -17,7 +17,7 @@ class DeckManager {
         return c
     }()
     
-    class func saveDeck(_ deck: Deck, keepLastModified: Bool) {
+    static func saveDeck(_ deck: Deck, keepLastModified: Bool) {
         if deck.filename == nil {
             deck.filename = DeckManager.pathForRole(deck.role)
         }
@@ -54,12 +54,12 @@ class DeckManager {
         DeckManager.cache.setObject(deck, forKey: filename as NSString)
     }
     
-    class func removeFile(_ pathname: String) {
+    static func removeFile(_ pathname: String) {
         DeckManager.cache.removeObject(forKey: pathname as NSString)
         _ = try? FileManager.default.removeItem(atPath: pathname)
     }
     
-    class func decksForRole(_ role: Role) -> [Deck] {
+    static func decksForRole(_ role: Role) -> [Deck] {
         if role == .none {
             var decks = [Deck]()
             decks.append(contentsOf: loadDecksForRole(.runner))
@@ -69,7 +69,7 @@ class DeckManager {
         return loadDecksForRole(role)
     }
     
-    private class func loadDecksForRole(_ role: Role) -> [Deck] {
+    private static func loadDecksForRole(_ role: Role) -> [Deck] {
         var decks = [Deck]()
         
         let dir = directoryForRole(role)
@@ -88,11 +88,11 @@ class DeckManager {
         return decks
     }
     
-    class func loadDeckFromPath(_ path: String) -> Deck? {
+    static func loadDeckFromPath(_ path: String) -> Deck? {
         return loadDeckFromPath(path, useCache: true)
     }
     
-    class func loadDeckFromPath(_ path: String, useCache: Bool) -> Deck? {
+    static func loadDeckFromPath(_ path: String, useCache: Bool) -> Deck? {
         if useCache {
             if let cachedDeck = DeckManager.cache.object(forKey: path as NSString) {
                 return cachedDeck
@@ -119,7 +119,7 @@ class DeckManager {
         return nil
     }
     
-    class func numberOfDecks() -> Int {
+    static func numberOfDecks() -> Int {
         let roles = [Role.runner, .corp]
         
         let decks = roles.reduce(0) {
@@ -131,7 +131,7 @@ class DeckManager {
         return decks
     }
     
-    class func directoryForRole(_ role: Role) -> String {
+    static func directoryForRole(_ role: Role) -> String {
         assert(role != .none, "wrong role")
         
         let roleDir = role == .runner ? "runnerDecks" : "corpDecks"
@@ -145,7 +145,7 @@ class DeckManager {
         return dir
     }
     
-    class func pathForRole(_ role: Role) -> String {
+    static func pathForRole(_ role: Role) -> String {
         let dir = directoryForRole(role)
         let file = String(format:"deck-%d.anr", nextFileSequence())
         let path = dir.appendPathComponent(file)
@@ -153,17 +153,17 @@ class DeckManager {
         return path
     }
     
-    class func fileSequence() -> Int {
+    static func fileSequence() -> Int {
         return Defaults[.fileSequence]
     }
     
-    private class func nextFileSequence() -> Int {
+    private static func nextFileSequence() -> Int {
         let seq = Defaults[.fileSequence]
         Defaults[.fileSequence] += 1
         return seq
     }
     
-    class func flushCache() {
+    static func flushCache() {
         DeckManager.cache.removeAllObjects()
     }
 }

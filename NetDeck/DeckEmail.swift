@@ -13,11 +13,11 @@ class DeckEmail: NSObject, MFMailComposeViewControllerDelegate {
     private var viewController: UIViewController!
     private static let instance = DeckEmail()
     
-    class func canSendMail() -> Bool {
+    static func canSendMail() -> Bool {
         return MFMailComposeViewController.canSendMail()
     }
     
-    class func emailDeck(_ deck: Deck, fromViewController: UIViewController) {
+    static func emailDeck(_ deck: Deck, fromViewController: UIViewController) {
         instance.sendAsEmail(deck, fromViewController: fromViewController)
     }
     

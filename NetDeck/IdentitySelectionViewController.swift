@@ -32,7 +32,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
     private var selectedIndexPath: IndexPath?
     private var viewTable = true
 
-    class func showFor(role: Role, inViewController vc: UIViewController, withIdentity identity: Card?) {
+    static func showFor(role: Role, inViewController vc: UIViewController, withIdentity identity: Card?) {
         let selection = IdentitySelectionViewController(role: role, identity: identity)
         
         vc.present(selection, animated: false, completion: nil)

@@ -17,7 +17,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
     static var popup: NRDBAuthPopupViewController?
     private var navController: UINavigationController?
     
-    class func show(in viewController: UIViewController) {
+    static func show(in viewController: UIViewController) {
         assert(Device.isIpad, "iPad only!")
         
         let popup = NRDBAuthPopupViewController()
@@ -27,7 +27,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
         NRDBAuthPopupViewController.popup = popup
     }
     
-    class func push(on navController: UINavigationController) {
+    static func push(on navController: UINavigationController) {
         assert(Device.isIphone, "iPhone only!")
     
         let popup = NRDBAuthPopupViewController()

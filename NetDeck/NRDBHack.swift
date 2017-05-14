@@ -110,7 +110,7 @@ class NRDBHack {
         }
     }
         
-    class func clearCredentials() {
+    static func clearCredentials() {
         let keychain = KeychainWrapper.standard
         keychain.removeObject(forKey: KeychainKeys.nrdbUsername)
         keychain.removeObject(forKey: KeychainKeys.nrdbPassword)

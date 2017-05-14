@@ -13,7 +13,7 @@ import SwiftyUserDefaults
 
 class Dropbox {
     
-    class func setup() {
+    static func setup() {
         DropboxClientsManager.setupWithAppKey("4mhw6piwd9wqti3")
         
         let clientOk = DropboxClientsManager.authorizedClient != nil
@@ -23,7 +23,7 @@ class Dropbox {
         }
     }
 
-    class func handleURL(_ url: URL) -> Bool {
+    static func handleURL(_ url: URL) -> Bool {
         if let authResult = DropboxClientsManager.handleRedirectURL(url) {
             switch authResult {
             case .success:
@@ -41,7 +41,7 @@ class Dropbox {
         return false
     }
     
-    class func authorizeFromController(_ controller: UIViewController) {
+    static func authorizeFromController(_ controller: UIViewController) {
         if (DropboxClientsManager.authorizedClient == nil) {
             DropboxClientsManager.authorizeFromController(UIApplication.shared,
                                                           controller: controller,
@@ -52,11 +52,11 @@ class Dropbox {
         }
     }
     
-    class func unlinkClient() {
+    static func unlinkClient() {
         DropboxClientsManager.unlinkClients()
     }
     
-    class func listFiles(_ completion: @escaping ([String])->() ) {
+    static func listFiles(_ completion: @escaping ([String])->() ) {
         guard let client = DropboxClientsManager.authorizedClient else { return }
         
         let _ = client.files.listFolder(path: "").response { response, error in
@@ -70,7 +70,7 @@ class Dropbox {
         }
     }
     
-    class func downloadFiles(_ names: [String], toDirectory: String, completion: @escaping ()->() ) {
+    static func downloadFiles(_ names: [String], toDirectory: String, completion: @escaping ()->() ) {
         guard let client = DropboxClientsManager.authorizedClient else { return }
         
         var count = 0
@@ -93,7 +93,7 @@ class Dropbox {
         }
     }
     
-    class func saveFile(_ content: String, filename: String, completion: @escaping (Bool)->() ) {
+    static func saveFile(_ content: String, filename: String, completion: @escaping (Bool)->() ) {
         guard let client = DropboxClientsManager.authorizedClient else { return }
         
         if let data = content.data(using: String.Encoding.utf8) {

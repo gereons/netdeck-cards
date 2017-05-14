@@ -50,15 +50,15 @@ class Codes {
         "neutral-corp": .neutral
     ]
     
-    class func typeFor(code: String) -> CardType {
+    static func typeFor(code: String) -> CardType {
         return code2Type[code] ?? .none
     }
     
-    class func roleFor(code: String) -> Role {
+    static func roleFor(code: String) -> Role {
         return code2Role[code] ?? .none
     }
     
-    class func factionFor(code: String) -> Faction {
+    static func factionFor(code: String) -> Faction {
         return code2Faction[code] ?? .none
     }
 }

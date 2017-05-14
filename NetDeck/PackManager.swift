@@ -76,31 +76,31 @@ class PackManager {
     // caches
     static var disabledPacks: Set<String>?          // set of pack codes
         
-    class var packsAvailable: Bool {
+    static var packsAvailable: Bool {
         return allPacks.count > 0
     }
     
-    class func nameFor(key: String) -> String? {
+    static func nameFor(key: String) -> String? {
         if let index = allPacks.index(where: {$0.settingsKey == key}) {
             return allPacks[index].name
         }
         return nil
     }
 
-    class func settingsDefaults() -> [String: Bool] {
+    static func settingsDefaults() -> [String: Bool] {
         var defaults = [String: Bool]()
         allPacks.forEach { defaults[$0.settingsKey] = $0.released }
         return defaults
     }
     
-    class func packNumberFor(code: String) -> Int {
+    static func packNumberFor(code: String) -> Int {
         if let pack = packsByCode[code], let cycle = cyclesByCode[pack.cycleCode] {
             return cycle.position * 1000 + pack.position
         }
         return 0
     }
     
-    class func disabledPackCodes() -> Set<String> {
+    static func disabledPackCodes() -> Set<String> {
         if disabledPacks == nil {
             let settings = UserDefaults.standard
             var disabled = Set<String>()
@@ -120,11 +120,11 @@ class PackManager {
         return disabledPacks!
     }
     
-    class func clearDisabledPacks() {
+    static func clearDisabledPacks() {
         disabledPacks = nil
     }
     
-    class func packsForTableView(packUsage: PackUsage) -> TableData<String> {
+    static func packsForTableView(packUsage: PackUsage) -> TableData<String> {
         let rawPacks: TableData<Pack> = self.packsForTableView(packUsage: packUsage)
         var strValues = [[String]]()
         for packs in rawPacks.values {
@@ -141,7 +141,7 @@ class PackManager {
         return stringPacks
     }
     
-    class func packsForTableView(packUsage: PackUsage) -> TableData<Pack> {
+    static func packsForTableView(packUsage: PackUsage) -> TableData<Pack> {
         switch packUsage {
         case .all:
             return allKnownPacksForTableView()
@@ -150,7 +150,7 @@ class PackManager {
         }
     }
     
-    class func allKnownPacksForSettings() -> TableData<Pack> {
+    static func allKnownPacksForSettings() -> TableData<Pack> {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -165,7 +165,7 @@ class PackManager {
     }
 
 
-    private class func allEnabledPacksForTableView() -> TableData<Pack> {
+    private static func allEnabledPacksForTableView() -> TableData<Pack> {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -191,7 +191,7 @@ class PackManager {
         return collapseOldCycles(result)
     }
 
-    private class func allKnownPacksForTableView() -> TableData<Pack> {
+    private static func allKnownPacksForTableView() -> TableData<Pack> {
         var sections = [String]()
         var values = [[Pack]]()
         
@@ -215,7 +215,7 @@ class PackManager {
         return collapseOldCycles(result)
     }
     
-    private class func collapseOldCycles(_ data: TableData<Pack>) -> TableData<Pack> {
+    private static func collapseOldCycles(_ data: TableData<Pack>) -> TableData<Pack> {
         let count = data.sections.count
         
         // collapse everything but the two last cycles
@@ -232,7 +232,7 @@ class PackManager {
         return data
     }
 
-    class func packsUsedIn(deck: Deck) -> [String] {
+    static func packsUsedIn(deck: Deck) -> [String] {
         var packsUsed = [String: Int]() // pack code -> number of times used
         var cardsUsed = [String: Int]() // pack code -> number of cards used
             
@@ -268,7 +268,7 @@ class PackManager {
         return result
     }
     
-    class func mostRecentPackUsedIn(deck: Deck) -> String {
+    static func mostRecentPackUsedIn(deck: Deck) -> String {
         var maxIndex = -1
         
         for cc in deck.allCards {
@@ -280,39 +280,39 @@ class PackManager {
         return maxIndex == -1 ? "n/a" : allPacks[maxIndex].name
     }
     
-    class func cycleForPack(_ packCode: String) -> String? {
+    static func cycleForPack(_ packCode: String) -> String? {
         if let pack = packsByCode[packCode] {
             return pack.cycleCode
         }
         return nil
     }
     
-    class func keysForCycle(_ cycleCode: String) -> [String] {
+    static func keysForCycle(_ cycleCode: String) -> [String] {
         return self.allPacks.filter { $0.cycleCode == cycleCode }.map { $0.settingsKey }
     }
     
     // MARK: - persistence
     
-    class func filesExist() -> Bool {
+    static func filesExist() -> Bool {
         let fm = FileManager.default
         return fm.fileExists(atPath: packsPathname()) && fm.fileExists(atPath: cyclesPathname())
     }
     
-    class func packsPathname() -> String {
+    static func packsPathname() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
         
         return supportDirectory.appendPathComponent(PackManager.packsFilename)
     }
     
-    class func cyclesPathname() -> String {
+    static func cyclesPathname() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
         
         return supportDirectory.appendPathComponent(PackManager.cyclesFilename)
     }
     
-    class func removeFiles() {
+    static func removeFiles() {
         let fileMgr = FileManager.default
         _ = try? fileMgr.removeItem(atPath: packsPathname())
         _ = try? fileMgr.removeItem(atPath: cyclesPathname())
@@ -320,7 +320,7 @@ class PackManager {
         CardManager.initialize()
     }
     
-    class func setupFromFiles(_ language: String) -> Bool {
+    static func setupFromFiles(_ language: String) -> Bool {
         let packsFile = packsPathname()
         let cyclesFile = cyclesPathname()
         
@@ -341,7 +341,7 @@ class PackManager {
         return false
     }
     
-    class func setupFromNetrunnerDb(_ cyclesData: Data, _ packsData: Data, language: String) -> Bool {
+    static func setupFromNetrunnerDb(_ cyclesData: Data, _ packsData: Data, language: String) -> Bool {
         var ok = false
         do {
             let cyclesJson = try JSONParser.JSONObjectWithData(cyclesData)
@@ -366,7 +366,7 @@ class PackManager {
         return ok
     }
     
-    class func setupFromJsonData(_ cycles: JSONObject, _ packs: JSONObject, language: String) -> Bool {
+    static func setupFromJsonData(_ cycles: JSONObject, _ packs: JSONObject, language: String) -> Bool {
         cyclesByCode = [:]  // code -> cycle
         allCycles = [:]     // position -> cycles
         packsByCode = [:]   // code -> pack

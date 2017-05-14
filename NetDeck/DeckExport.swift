@@ -20,37 +20,37 @@ class DeckExport {
     static let APP_NAME = "Net Deck"
     static let APP_URL = "http://appstore.com/netdeck"
 
-    class func asPlaintextString(_ deck: Deck) -> String {
+    static func asPlaintextString(_ deck: Deck) -> String {
         return self.textExport(deck, .plainText)
     }
     
-    class func asPlaintext(_ deck: Deck) {
+    static func asPlaintext(_ deck: Deck) {
         let s = self.asPlaintextString(deck)
         let filename = deck.name + ".txt"
         self.writeToDropbox(s, filename:filename, deckType:"Plain Text Deck".localized(), autoSave:false)
     }
     
-    class func asMarkdownString(_ deck: Deck) -> String {
+    static func asMarkdownString(_ deck: Deck) -> String {
         return self.textExport(deck, .markdown)
     }
     
-    class func asMarkdown(_ deck: Deck) {
+    static func asMarkdown(_ deck: Deck) {
         let s = self.asMarkdownString(deck)
         let filename = deck.name + ".md"
         self.writeToDropbox(s, filename:filename, deckType:"Markdown Deck".localized(), autoSave:false)
     }
     
-    class func asBBCodeString(_ deck: Deck) -> String {
+    static func asBBCodeString(_ deck: Deck) -> String {
         return self.textExport(deck, .bbCode)
     }
     
-    class func asBBCode(_ deck: Deck) {
+    static func asBBCode(_ deck: Deck) {
         let s = self.asBBCodeString(deck)
         let filename = deck.name + ".bbc"
         self.writeToDropbox(s, filename:filename, deckType:"BBCode Deck".localized(), autoSave:false)
     }
     
-    class func asOctgn(_ deck: Deck, autoSave: Bool) {
+    static func asOctgn(_ deck: Deck, autoSave: Bool) {
         if let identity = deck.identity {
             let name = self.xmlEscape(identity.name)
             var xml = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n" +
@@ -76,7 +76,7 @@ class DeckExport {
         }
     }
     
-    class func xmlEscape(_ s: String) -> String {
+    static func xmlEscape(_ s: String) -> String {
         return s
             .replacingOccurrences(of: "&", with: "&amp;")
             .replacingOccurrences(of: "<", with: "&lt;")
@@ -85,7 +85,7 @@ class DeckExport {
             .replacingOccurrences(of: "\"", with: "&quot;")
     }
 
-    class func writeToDropbox(_ content: String, filename: String, deckType: String, autoSave: Bool) {
+    static func writeToDropbox(_ content: String, filename: String, deckType: String, autoSave: Bool) {
         Dropbox.saveFile(content, filename: filename) { ok in
             if autoSave {
                 return
@@ -99,7 +99,7 @@ class DeckExport {
         }
     }
     
-    class func textExport(_ deck: Deck, _ fmt: ExportFormat) -> String {
+    static func textExport(_ deck: Deck, _ fmt: ExportFormat) -> String {
         let data = deck.dataForTableView(.byType)
         let sections = data.sections
         let cardsArray = data.values
@@ -170,15 +170,15 @@ class DeckExport {
         return s;
     }
     
-    class func stars(_ count: Int) -> String {
+    static func stars(_ count: Int) -> String {
         return nTimes("☆", count)
     }
     
-    class func dots(_ count: Int) -> String {
+    static func dots(_ count: Int) -> String {
         return nTimes("•", count)
     }
     
-    class func nTimes(_ str: String, _ count: Int) -> String {
+    static func nTimes(_ str: String, _ count: Int) -> String {
         var s = ""
         
         for i in 0..<count {
@@ -190,7 +190,7 @@ class DeckExport {
         return s
     }
     
-    class func italics(_ s: String, _ format: ExportFormat) -> String {
+    static func italics(_ s: String, _ format: ExportFormat) -> String {
         switch format {
         case .plainText: return s
         case .markdown: return "_" + s + "_"
@@ -198,7 +198,7 @@ class DeckExport {
         }
     }
     
-    class func bold(_ s: String, _ format: ExportFormat) -> String {
+    static func bold(_ s: String, _ format: ExportFormat) -> String {
         switch format {
         case .plainText: return s
         case .markdown: return "**" + s + "**"
@@ -206,7 +206,7 @@ class DeckExport {
         }
     }
     
-    class func color(_ s: String, _ color: UInt, _ format: ExportFormat) -> String {
+    static func color(_ s: String, _ color: UInt, _ format: ExportFormat) -> String {
         switch format {
         case .plainText, .markdown:
             return s
@@ -216,7 +216,7 @@ class DeckExport {
         }
     }
     
-    class func link(_ s: String, _ target: String, _ format: ExportFormat) -> String {
+    static func link(_ s: String, _ target: String, _ format: ExportFormat) -> String {
         switch format {
         case .plainText: return s + " " + target
         case .markdown: return "[\(s)](\(target))"
