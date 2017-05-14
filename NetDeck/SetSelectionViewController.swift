@@ -14,8 +14,10 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var tableView: UITableView!
     
-    var sections = [String]()
-    var values = [[Pack]]()
+    private var sections = [String]()
+    private var values = [[Pack]]()
+    
+    private let coreSection = 1
     
     convenience init() {
         self.init(nibName: nil, bundle: nil)
@@ -27,7 +29,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         if self.values.count > 1 {
             // add "number of core sets" fake entry
             let numCores = Pack(named: "Number of Core Sets".localized(), key: DefaultsKeys.numCores._key)
-            self.values[1].insert(numCores, at: 1)
+            self.values[self.coreSection].insert(numCores, at: 1)
         }
     }
     
@@ -108,7 +110,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         let width = tableView.frame.width
         let view = UITableViewHeaderFooterView(frame: CGRect(x: 0, y: 0, width: width, height: 50))
         
-        if self.values[section].count > 1 {
+        if self.values[section].count > 1 && section != self.coreSection {
             let cycle = self.values[section][0].cycleCode
             let keys = PackManager.keysForCycle(cycle)
             let enabledKeys = keys.filter { UserDefaults.standard.bool(forKey: $0) }
