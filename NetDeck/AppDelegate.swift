@@ -133,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.crashDetected = false
             self.showCrashlyticsAlert()
         } else {
-            if CardManager.cardsAvailable && PackManager.packsAvailable {
+            if CardManager.cardsAvailable {
                 DeckImport.checkClipboardForDeck()
             }
         }
@@ -166,8 +166,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        let cardsOk = CardManager.cardsAvailable && PackManager.packsAvailable
-        if !cardsOk {
+        if !CardManager.cardsAvailable {
             return false
         }
 

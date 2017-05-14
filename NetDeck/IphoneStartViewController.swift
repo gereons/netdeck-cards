@@ -75,7 +75,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         
         self.navigationItem.titleView = self.titleButton
         
-        if CardManager.cardsAvailable && PackManager.packsAvailable {
+        if CardManager.cardsAvailable {
             self.initializeDecks()
         }
         
@@ -279,7 +279,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func openBrowser() {
-        if CardManager.cardsAvailable && PackManager.packsAvailable {
+        if CardManager.cardsAvailable {
             let browser = BrowserViewController()
             self.navigationController?.pushViewController(browser, animated: true)
         } else {
@@ -380,8 +380,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         
         let attrs: [String: Any] = [ NSFontAttributeName: UIFont.systemFont(ofSize: 21.0), NSForegroundColorAttributeName: UIColor.lightGray ]
         
-        let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
-        let title = cardsAvailable ? "No Decks" : "No Card Data"
+        let title = CardManager.cardsAvailable ? "No Decks" : "No Card Data"
         
         return NSAttributedString(string: title.localized(), attributes: attrs)
     }
@@ -390,11 +389,9 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         if self.filterText.length > 0 {
             return nil
         }
-        
-        let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
-        
-        let text = cardsAvailable ? "Your decks will be shown here" : "To use this app, you must first download card data."
-        
+
+        let text = CardManager.cardsAvailable ? "Your decks will be shown here" : "To use this app, you must first download card data."
+
         let attrs: [String: Any] = [ NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.lightGray ]
         
         return NSAttributedString(string: text.localized(), attributes: attrs)
@@ -408,8 +405,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         let color = self.tableView.tintColor ?? .blue
         let attrs: [String: Any] = [ NSFontAttributeName: UIFont.systemFont(ofSize: 17.0), NSForegroundColorAttributeName: color ]
         
-        let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
-        let text = cardsAvailable ? "New Deck" : "Download"
+        let text = CardManager.cardsAvailable ? "New Deck" : "Download"
         
         return NSAttributedString(string: text.localized(), attributes: attrs)
     }
@@ -419,8 +415,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
-        let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
-        if cardsAvailable {
+        if CardManager.cardsAvailable {
             self.createNewDeck()
         } else {
             DataDownload.downloadCardData()

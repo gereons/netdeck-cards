@@ -26,7 +26,7 @@ class EmptyDetailViewController: UIViewController {
         
         self.navigationController?.navigationBar.barTintColor = .white
         
-        let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
+        let cardsAvailable = CardManager.cardsAvailable
         self.emptyDataSetView.isHidden = cardsAvailable
         self.spinner.isHidden = !cardsAvailable
         

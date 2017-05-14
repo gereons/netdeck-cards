@@ -65,11 +65,10 @@ class PackManager {
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
     
-    static var cyclesByCode = [String: Cycle]()     // code -> cycle
-    static var allCycles = [Int: Cycle]()           // position -> cycles
-    static var packsByCode = [String: Pack]()       // code -> pack
-    static var allPacks = [Pack]()
-    
+    fileprivate static var cyclesByCode = [String: Cycle]()     // code -> cycle
+    private static var allCycles = [Int: Cycle]()           // position -> cycles
+    private(set) static var packsByCode = [String: Pack]()       // code -> pack
+    private static var allPacks = [Pack]()
     
     static let anyPack = Pack(named: Constant.kANY)
     

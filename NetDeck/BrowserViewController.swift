@@ -59,7 +59,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let filtersActive = CardManager.cardsAvailable && PackManager.packsAvailable
+        let filtersActive = CardManager.cardsAvailable
         
         self.typeButton.isEnabled = filtersActive
         self.setButton.isEnabled = filtersActive

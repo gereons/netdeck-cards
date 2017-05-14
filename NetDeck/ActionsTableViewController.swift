@@ -53,7 +53,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if CardManager.cardsAvailable && PackManager.packsAvailable {
+        if CardManager.cardsAvailable {
             self.selectDecks()
         }
     }
@@ -66,7 +66,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
             AppUpdateCheck.checkUpdate()
         }
         
-        if !CardManager.cardsAvailable || !PackManager.packsAvailable {
+        if !CardManager.cardsAvailable {
             self.resetDetailView()
         } else {
             self.selectDecks()
@@ -210,8 +210,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         
         self.selectedItem = MenuItem(rawValue: indexPath.row)!
         
-        let cardsAvailable = CardManager.cardsAvailable && PackManager.packsAvailable
-        if !cardsAvailable && self.selectedItem.cardsRequired {
+        if !CardManager.cardsAvailable && self.selectedItem.cardsRequired {
             self.resetDetailView()
             return
         }

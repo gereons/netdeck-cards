@@ -163,7 +163,7 @@ class CardManager {
     }
     
     static var cardsAvailable: Bool {
-        return allKnownCards.count > 0
+        return allKnownCards.count > 0 && PackManager.packsAvailable
     }
     
     private static func setSubtypes(_ cards: [Card]) {
