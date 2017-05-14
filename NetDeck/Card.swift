@@ -54,6 +54,8 @@ class Card: NSObject, Unmarshaling {
     private var factionCode = ""
     private var typeCode = ""
     
+    private let subtypeDelimiter = " - "
+    
     var typeStr: String { return Translation.forTerm(self.typeCode, language: Card.currentLanguage) }
     var factionStr: String { return Translation.forTerm(self.factionCode, language: Card.currentLanguage) }
 
@@ -213,11 +215,12 @@ class Card: NSObject, Unmarshaling {
         self.packNumber = PackManager.packNumberFor(code: self.packCode)
         self.isCore = self.packCode == PackManager.coreSetCode
         
-        self.subtype = try object.localized(for: "keywords", language: Card.currentLanguage)
-        if self.subtype.length > 0 {
-            let split = Card.subtypeSplit(self.subtype)
-            self.subtype = split.subtype
-            self.subtypes = split.subtypes
+        let keywords: String = try object.value(for: "keywords") ?? ""
+        let localizedKeywords: String = try object.localized(for: "keywords", language: Card.currentLanguage)
+        
+        if localizedKeywords.length > 0 {
+            self.subtype = localizedKeywords
+            self.subtypes = localizedKeywords.components(separatedBy: self.subtypeDelimiter)
         }
         
         self.number = try object.value(for: "position") ?? -1
@@ -262,30 +265,17 @@ class Card: NSObject, Unmarshaling {
         
         self.maxPerDeck = try object.value(for: "deck_limit") ?? -1
         
-        self.isAlliance = self.subtype.lowercased().contains("alliance")
-        self.isVirtual = self.subtype.lowercased().contains("virtual")
+        self.isAlliance = keywords.lowercased().contains("alliance")
+        self.isVirtual = keywords.lowercased().contains("virtual")
         if self.type == .ice {
-            let barrier = self.subtypes.contains("Barrier")
-            let sentry = self.subtypes.contains("Sentry")
-            let codeGate = self.subtypes.contains("Code Gate")
+            let barrier = keywords.contains("Barrier")
+            let sentry = keywords.contains("Sentry")
+            let codeGate = keywords.contains("Code Gate")
             if barrier && sentry && codeGate {
                 // print("multi: \(self.name)")
                 Card.multiIce.append(self.code)
             }
         }
-    }
-    
-    private class func subtypeSplit(_ subtype: String) -> (subtype: String, subtypes: [String]) {
-        let s = subtype.replacingOccurrences(of: "G-Mod", with: "G-mod")
-        let t = s.replacingOccurrences(of: " – ", with: " - ") // fix dashes in german subtypes
-        if s != t {
-            print("dashes found!")
-        }
-        var subtypes = t.components(separatedBy: " - ")
-        for i in 0 ..< subtypes.count {
-            subtypes[i] = subtypes[i].trimmed()
-        }
-        return (subtype, subtypes)
     }
     
     func setCardAlias(_ alias: String) {
