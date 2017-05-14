@@ -99,10 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever
         UIApplication.shared.setMinimumBackgroundFetchInterval(fetchInterval)
         
-        if useNrdb && keepCredentials {
-            NRDBHack.sharedInstance.silentlyLoginOnStartup()
-        }
-        
         Dropbox.setup()
         
         SVProgressHUD.setDefaultMaskType(.black)

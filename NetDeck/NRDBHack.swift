@@ -105,8 +105,10 @@ class NRDBHack {
             if verbose {
                 SVProgressHUD.showError(withStatus: "Login failed".localized())
             }
-            NRDBHack.clearCredentials()
-            Defaults[.useNrdb] = false
+            if Reachability.online {
+                NRDBHack.clearCredentials()
+                Defaults[.useNrdb] = false
+            }
         }
     }
         
