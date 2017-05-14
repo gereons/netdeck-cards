@@ -50,6 +50,14 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         nc.addObserver(self, selector: #selector(self.listDecks(_:)), name: Notifications.browserFind, object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if CardManager.cardsAvailable && PackManager.packsAvailable {
+            self.selectDecks()
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -60,10 +68,9 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         
         if !CardManager.cardsAvailable || !PackManager.packsAvailable {
             self.resetDetailView()
-            return
+        } else {
+            self.selectDecks()
         }
-        
-        self.selectDecks()
     }
     
     func addNewDeck(_ role: Role) {
