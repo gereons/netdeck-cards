@@ -51,9 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setBuiltinUserDefaults()
         self.initGroup.enter()
         DispatchQueue.global(qos: .userInteractive).async {
-            NSLog("enter group")
             self.initializeData()
-            NSLog("leave group")
             self.initGroup.leave()
         }
         self.waitForInitialization()
@@ -67,9 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func waitForInitialization() {
-        NSLog("notify")
         self.initGroup.notify(queue: DispatchQueue.main) {
-            NSLog("finalize launch")
             self.finializeLaunch()
         }
     }
