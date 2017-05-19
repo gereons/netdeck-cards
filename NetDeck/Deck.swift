@@ -261,7 +261,7 @@ import SwiftyUserDefaults
         } else {
             self.identityCc = nil
         }
-        self.isDraft = identity?.packCode == PackManager.draftSetCode
+        self.isDraft = identity?.packCode == PackManager.draft
     }
     
     private func indexOfCardCode(_ code: String) -> Int? {
@@ -740,13 +740,13 @@ extension Deck {
         for cc in self.cards {
             let card = cc.card
             switch card.packCode {
-            case PackManager.draftSetCode:
+            case PackManager.draft:
                 draftUsed = true
-            case PackManager.coreSetCode:
+            case PackManager.core:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
-            case "cac", "hap", "oac", "dad", "td":
+            case PackManager.creationAndControl, PackManager.honorAndProfit, PackManager.orderAndChaos, PackManager.dataAndDestiny, PackManager.terminalDirective:
                 let c = cardsFromDeluxe[card.packCode] ?? 0
                 cardsFromDeluxe[card.packCode] = c + 1
             default:
@@ -817,16 +817,16 @@ extension Deck {
         for cc in self.cards {
             let card = cc.card
             switch card.packCode {
-            case PackManager.draftSetCode:
+            case PackManager.draft:
                 draftUsed = true
-            case PackManager.coreSetCode:
+            case PackManager.core:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
-            case "cac", "hap", "oac", "dad":
+            case PackManager.creationAndControl, PackManager.honorAndProfit, PackManager.orderAndChaos, PackManager.dataAndDestiny:
                 let c = cardsFromDeluxe[card.packCode] ?? 0
                 cardsFromDeluxe[card.packCode] = c + 1
-            case "td":
+            case PackManager.terminalDirective:
                 cardsFromTD += 1
             default:
                 let cycle = PackManager.cycleForPack(card.packCode) ?? ""

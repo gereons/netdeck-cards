@@ -206,14 +206,14 @@ class Card: NSObject, Unmarshaling {
         
         self.packCode = try object.value(for: "pack_code")
         if self.packCode == "" {
-            self.packCode = PackManager.unknownSet
+            self.packCode = PackManager.unknown
         }
-        if self.packCode == PackManager.draftSetCode {
+        if self.packCode == PackManager.draft {
             self.faction = .neutral
         }
         
         self.packNumber = PackManager.packNumberFor(code: self.packCode)
-        self.isCore = self.packCode == PackManager.coreSetCode
+        self.isCore = self.packCode == PackManager.core
         
         let keywords: String = try object.value(for: "keywords") ?? ""
         let localizedKeywords: String = try object.localized(for: "keywords", language: Card.currentLanguage)

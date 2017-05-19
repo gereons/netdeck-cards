@@ -97,13 +97,13 @@ class CardManager {
         let disabledPackCodes: Set<String>
         switch packUsage {
         case .all:
-            let code = Defaults[.useDraft] ? "" : PackManager.draftSetCode
+            let code = Defaults[.useDraft] ? "" : PackManager.draft
             disabledPackCodes = Set([code])
         case .selected:
             disabledPackCodes = PackManager.disabledPackCodes()
         }
         
-        if !disabledPackCodes.contains(PackManager.draftSetCode) {
+        if !disabledPackCodes.contains(PackManager.draft) {
             factionNames.append(Faction.name(for: .neutral))
         }
         
@@ -119,7 +119,7 @@ class CardManager {
             }
         }
         
-        if !disabledPackCodes.contains(PackManager.draftSetCode) {
+        if !disabledPackCodes.contains(PackManager.draft) {
             factionNames.removeLast()
             factionNames.append("Draft".localized())
         }

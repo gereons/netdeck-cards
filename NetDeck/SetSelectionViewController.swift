@@ -33,6 +33,40 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Presets".localized(), style: .plain, target: self, action: #selector(self.showPresets(_:)))
+    }
+    
+    func showPresets(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "All".localized()) { action in
+            self.enableAll()
+        })
+        alert.addAction(UIAlertAction(title: "Cache Refresh C&C".localized()) { action in
+            self.setCacheRefresh(PackManager.creationAndControl)
+        })
+        alert.addAction(UIAlertAction(title: "Cache Refresh H&P".localized()) { action in
+            self.setCacheRefresh(PackManager.honorAndProfit)
+        })
+        alert.addAction(UIAlertAction(title: "Cache Refresh O&C".localized()) { action in
+            self.setCacheRefresh(PackManager.orderAndChaos)
+        })
+        alert.addAction(UIAlertAction(title: "Cache Refresh D&D".localized()) { action in
+            self.setCacheRefresh(PackManager.dataAndDestiny)
+        })
+        alert.addAction(UIAlertAction.actionSheetCancel(nil))
+
+        let popover = alert.popoverPresentationController
+        popover?.barButtonItem = sender
+        popover?.sourceView = self.view
+        alert.view.layoutIfNeeded()
+        
+        self.present(alert, animated: false, completion: nil)
+    }
+    
     func coresAlert(_ sender: UIButton) {
         let alert = UIAlertController(title: "Number of Core Sets".localized(), message: nil, preferredStyle: .alert)
         
@@ -50,8 +84,52 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         self.present(alert, animated: false, completion: nil)
     }
     
-    func changeCoreSets(_ numCores: Int) {
+    private func changeCoreSets(_ numCores: Int) {
         Defaults[.numCores] = numCores
+        self.tableView.reloadData()
+    }
+    
+    private func enableAll() {
+        self.changeCoreSets(3)
+        
+        for pack in PackManager.allPacks {
+            Defaults.set(pack.released, forKey: pack.settingsKey)
+        }
+        
+        Defaults.set(false, forKey: Pack.use + PackManager.draft)
+        
+        // prebuilts
+        for pb in PrebuiltManager.allPrebuilts {
+            Defaults.set(pb.released, forKey: pb.settingsKey)
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    private func setCacheRefresh(_ deluxe: String) {
+        self.changeCoreSets(1)
+        
+        for pack in PackManager.allPacks {
+            Defaults.set(false, forKey: pack.settingsKey)
+        }
+        
+        for cycle in CacheRefresh.r2017.validCycles {
+            let keys = PackManager.keysForCycle(cycle)
+            for key in keys {
+                let released = PackManager.allPacks.filter { $0.settingsKey == key }.first?.released ?? false
+                Defaults.set(released, forKey: key)
+            }
+        }
+        Defaults.set(true, forKey: Pack.use + PackManager.core)
+        Defaults.set(true, forKey: Pack.use + PackManager.terminalDirective)
+        Defaults.set(true, forKey: Pack.use + deluxe)
+        Defaults.set(false, forKey: Pack.use + PackManager.draft)
+        
+        // disable all prebuilts
+        for pb in PrebuiltManager.allPrebuilts {
+            Defaults.set(false, forKey: pb.settingsKey)
+        }
+        
         self.tableView.reloadData()
     }
     

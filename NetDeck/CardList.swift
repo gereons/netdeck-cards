@@ -117,7 +117,7 @@ class CardList {
     
     func filterDraft() {
         if !Defaults[.useDraft] {
-            let predicate = NSPredicate(format: "packCode != %@", PackManager.draftSetCode)
+            let predicate = NSPredicate(format: "packCode != %@", PackManager.draft)
             self.applyPredicate(predicate)
         }
     }

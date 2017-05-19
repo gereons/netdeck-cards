@@ -11,13 +11,17 @@ import Marshal
 struct Prebuilt: Unmarshaling {
     let name: String
     let settingsKey: String
+    let released: Bool
     let cards: [CardCounter]
     
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
         let code: String = try object.value(for: "code")
-        self.settingsKey = "use_" + code
-    
+        self.settingsKey = Pack.use + code
+        
+        let date: String = try object.value(for: "date_release") ?? ""
+        self.released = date.length > 0
+        
         var cc = [CardCounter]()
         if let cards = object.optionalAny(for: "cards") as? [String: Int] {
             for (code, qty) in cards {
@@ -129,7 +133,7 @@ class PrebuiltManager {
     
     static func settingsDefaults() -> [String: Bool] {
         var defaults = [String: Bool]()
-        allPrebuilts.forEach { defaults[$0.settingsKey] = false }
+        allPrebuilts.forEach { defaults[$0.settingsKey] = $0.released }
         return defaults
     }
     

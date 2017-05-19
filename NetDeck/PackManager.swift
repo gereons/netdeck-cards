@@ -32,6 +32,8 @@ struct Pack: Unmarshaling {
     let settingsKey: String
     let rotated: Bool
     
+    static let use = "use_"
+    
     private static let testRotation = true
     
     init(object: MarshaledObject) throws {
@@ -39,7 +41,7 @@ struct Pack: Unmarshaling {
         self.code = try object.value(for: "code")
         self.cycleCode = try object.value(for: "cycle_code")
         self.position = try object.value(for: "position")
-        self.settingsKey = "use_" + self.code
+        self.settingsKey = Pack.use + self.code
         self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
         
         let date: String = try object.value(for: "date_release") ?? ""
@@ -58,17 +60,27 @@ struct Pack: Unmarshaling {
 }
 
 class PackManager {
-    static let draftSetCode = "draft"
-    static let coreSetCode = "core"
-    static let unknownSet = "unknown"
+    static let unknown = "unknown"
+    static let draft = "draft"
+    
+    static let core = "core"
+    
+    static let creationAndControl = "cac"
+    static let honorAndProfit = "hap"
+    static let orderAndChaos = "oac"
+    static let dataAndDestiny = "dad"
+    static let terminalDirective = "td"
+    
+    static let deluxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny ]
+    static let campaigns = [ terminalDirective ]
     
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
     
     fileprivate static var cyclesByCode = [String: Cycle]()     // code -> cycle
-    private static var allCycles = [Int: Cycle]()           // position -> cycles
-    private(set) static var packsByCode = [String: Pack]()       // code -> pack
-    private static var allPacks = [Pack]()
+    private static var allCycles = [Int: Cycle]()               // position -> cycles
+    private(set) static var packsByCode = [String: Pack]()      // code -> pack
+    private(set) static var allPacks = [Pack]()
     
     static let anyPack = Pack(named: Constant.kANY)
     
@@ -110,7 +122,7 @@ class PackManager {
             }
     
             if !Defaults[.useDraft] {
-                disabled.insert(draftSetCode)
+                disabled.insert(draft)
             }
     
             disabledPacks = disabled
@@ -201,7 +213,7 @@ class PackManager {
         
         for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             
-            if cycle.code == draftSetCode && !useDraft {
+            if cycle.code == draft && !useDraft {
                 continue
             }
             sections.append(cycle.name)
