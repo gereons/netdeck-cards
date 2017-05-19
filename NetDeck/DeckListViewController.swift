@@ -36,6 +36,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     var role = Role.none
     var deck: Deck! {
         didSet {
+            assert(self.deck.role == self.role, "oops")
             if oldValue != nil {
                 self.refresh()
             }
@@ -579,7 +580,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         nameAlert.addAction(UIAlertAction.alertCancel(nil))
-        nameAlert.addAction(UIAlertAction(title: "OK".localized()) { action in
+        nameAlert.addAction(UIAlertAction(title: "OK".localized()) { [unowned self] action in
             self.deck.name = nameAlert.textFields![0].text ?? self.deck.name
             self.deckNameLabel.text = self.deck.name
             if self.autoSave {
@@ -588,6 +589,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
                 NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
             }
             self.refresh()
+            self.actionSheet = nil
         })
         
         NotificationCenter.default.post(name: Notifications.nameAlert, object: self)

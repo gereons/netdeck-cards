@@ -147,7 +147,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             textField.clearButtonMode = .always
         }
         
-        alert.addAction(UIAlertAction(title: "OK".localized(), style: .default) { action in
+        alert.addAction(UIAlertAction(title: "OK".localized(), style: .default) { [unowned self] action in
             self.deck.name = alert.textFields?.first?.text ?? self.deck.name
             self.setDeckName()
         })

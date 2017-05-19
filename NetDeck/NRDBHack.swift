@@ -51,7 +51,7 @@ class NRDBHack {
             textField.enablesReturnKeyAutomatically = true
         }
         
-        alert.addAction(UIAlertAction(title: "Login".localized(), style: .default) { action in
+        alert.addAction(UIAlertAction(title: "Login".localized(), style: .default) { [unowned self] action in
             let username = alert.textFields?[0].text ?? ""
             let password = alert.textFields?[1].text ?? ""
             let credentials = Credentials(username, password)

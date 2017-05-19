@@ -248,7 +248,7 @@ import SwiftyUserDefaults
             // record removal of existing identity
             self.lastChanges.addCardCode(self.identityCc!.card.code, copies: -1)
         }
-        if let id = identity , copies > 0 {
+        if let id = identity, copies > 0 {
             if history {
                 self.lastChanges.addCardCode(id.code, copies: 1)
             }

@@ -320,7 +320,7 @@ class SavedDecksList: DecksViewController {
                 }
             })
             
-            nameAlert.addAction(UIAlertAction(title: "OK".localized()) { action in
+            nameAlert.addAction(UIAlertAction(title: "OK".localized()) { [unowned self] spaction in
                 deck.name = nameAlert.textFields?[0].text ?? deck.name
                 deck.saveToDisk()
                 self.updateDecks()
