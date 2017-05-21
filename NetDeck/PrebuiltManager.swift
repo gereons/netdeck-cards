@@ -7,6 +7,7 @@
 //
 
 import Marshal
+import SwiftyUserDefaults
 
 struct Prebuilt: Unmarshaling {
     let name: String
@@ -22,13 +23,14 @@ struct Prebuilt: Unmarshaling {
         let date: String = try object.value(for: "date_release") ?? ""
         self.released = date != "" && PackManager.now() >= date
         
+        let rotationActive = Defaults[.rotationActive]
         var cc = [CardCounter]()
         if let cards = object.optionalAny(for: "cards") as? [String: Int] {
             for (code, qty) in cards {
                 if let card = CardManager.cardBy(code: code) {
                     let pack = PackManager.packsByCode[card.packCode]
                     let rotated = pack?.rotated ?? false
-                    if !rotated {
+                    if rotationActive ? !rotated : true {
                         cc.append(CardCounter(card: card, count: qty))
                     }
                 }
