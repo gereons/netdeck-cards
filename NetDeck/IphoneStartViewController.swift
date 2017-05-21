@@ -269,7 +269,9 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     
     func openSettings(_ sender: UIBarButtonItem) {
         let settings = Settings.viewController
-        self.navigationController?.pushViewController(settings, animated: true)
+        if settings != self.navigationController?.topViewController {
+            self.navigationController?.pushViewController(settings, animated: true)
+        }
     }
     
     // MARK: - browser
