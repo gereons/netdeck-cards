@@ -1183,7 +1183,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.printController.delegate = self
     
         let printInfo = UIPrintInfo.printInfo()
-        printInfo.outputType = .general
         printInfo.jobName = self.deck.name
         printInfo.outputType = .grayscale
         self.printController.printInfo = printInfo

@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         FIXME("how to handle cards from prebuilts after rotation?")
-        FIXME("printing on iPhone")
         
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self

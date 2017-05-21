@@ -40,6 +40,8 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     
     private var listCards: ListCardsViewController!
     
+    fileprivate var printController: UIPrintInteractionController!
+    
     deinit {
         print("deinit")
     }
@@ -192,6 +194,11 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             newDeck.saveToDisk()
             let status = String(format: "Copy saved as %@".localized(), newDeck.name)
             SVProgressHUD.showSuccess(withStatus: status)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Print".localized()) { action in
+            Analytics.logEvent(.printDeck)
+            self.printDeck()
         })
         
         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
@@ -655,6 +662,38 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+}
+
+extension EditDeckViewController: UIPrintInteractionControllerDelegate {
+    
+    fileprivate func printDeck() {
+        self.printController = UIPrintInteractionController.shared
+        self.printController.delegate = self
+        
+        let printInfo = UIPrintInfo.printInfo()
+        printInfo.jobName = self.deck.name
+        printInfo.outputType = .grayscale
+        self.printController.printInfo = printInfo
+        
+        let margin: CGFloat = 60 // 30 == 1 cm
+        let formatter = UISimpleTextPrintFormatter(text: DeckExport.asPlaintextString(self.deck))
+        formatter.startPage = 0
+        formatter.perPageContentInsets = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+        formatter.font = UIFont.systemFont(ofSize: 10)
+        self.printController.printFormatter = formatter
+        self.printController.showsPageRange = true
+        
+        self.printController.present(animated: false) { controller, completed, error in
+            if !completed && error != nil {
+                UIAlertController.alert(withTitle: "Printing Problem".localized(), message: error!.localizedDescription, button: "OK".localized())
+            }
+        }
+    }
+    
+    func printInteractionControllerDidDismissPrinterOptions(_ printInteractionController: UIPrintInteractionController) {
+        self.printController = nil
     }
     
 }
