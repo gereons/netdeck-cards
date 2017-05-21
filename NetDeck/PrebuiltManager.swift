@@ -20,7 +20,7 @@ struct Prebuilt: Unmarshaling {
         self.settingsKey = Pack.use + code
         
         let date: String = try object.value(for: "date_release") ?? ""
-        self.released = date.length > 0
+        self.released = date != "" && PackManager.now() >= date
         
         var cc = [CardCounter]()
         if let cards = object.optionalAny(for: "cards") as? [String: Int] {

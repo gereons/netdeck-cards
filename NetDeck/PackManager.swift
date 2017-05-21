@@ -45,7 +45,7 @@ struct Pack: Unmarshaling {
         self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
         
         let date: String = try object.value(for: "date_release") ?? ""
-        self.released = date.length > 0
+        self.released = date != "" && PackManager.now() >= date
     }
     
     init(named: String, key: String = "") {
@@ -84,6 +84,16 @@ class PackManager {
     
     static let anyPack = Pack(named: Constant.kANY)
     
+    private static let fmt: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        return f
+    }()
+    
+    static func now() -> String {
+        return fmt.string(from: Date())
+    }
+
     // caches
     static var disabledPacks: Set<String>?          // set of pack codes
         
