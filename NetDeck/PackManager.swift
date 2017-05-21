@@ -34,7 +34,7 @@ struct Pack: Unmarshaling {
     
     static let use = "use_"
     
-    private static let testRotation = true
+    private static let testRotation = false
     
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
@@ -42,7 +42,12 @@ struct Pack: Unmarshaling {
         self.cycleCode = try object.value(for: "cycle_code")
         self.position = try object.value(for: "position")
         self.settingsKey = Pack.use + self.code
-        self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
+        
+        if BuildConfig.debug && Pack.testRotation {
+            self.rotated = ["genesis", "spin"].contains(self.cycleCode)
+        } else {
+            self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
+        }
         
         let date: String = try object.value(for: "date_release") ?? ""
         self.released = date != "" && PackManager.now() >= date

@@ -26,7 +26,11 @@ struct Prebuilt: Unmarshaling {
         if let cards = object.optionalAny(for: "cards") as? [String: Int] {
             for (code, qty) in cards {
                 if let card = CardManager.cardBy(code: code) {
-                    cc.append(CardCounter(card: card, count: qty))
+                    let pack = PackManager.packsByCode[card.packCode]
+                    let rotated = pack?.rotated ?? false
+                    if !rotated {
+                        cc.append(CardCounter(card: card, count: qty))
+                    }
                 }
             }
         }
@@ -45,7 +49,9 @@ class PrebuiltManager {
     // array of card codes in selected prebuilt decks
     static func availableCodes() -> [String]? {
         prepareCaches()
-        guard let codes = prebuiltCodes , codes.count > 0 else { return nil }
+        guard let codes = prebuiltCodes, codes.count > 0 else {
+            return nil
+        }
         return codes
     }
     
