@@ -1,9 +1,9 @@
 PODS:
-  - Alamofire (4.0.1)
-  - AlamofireImage (3.1.0):
-    - Alamofire (~> 4.0)
-  - AlamofireNetworkActivityIndicator (2.0.1):
-    - Alamofire (~> 4.0)
+  - Alamofire (4.4.0)
+  - AlamofireImage (3.2.0):
+    - Alamofire (~> 4.1)
+  - AlamofireNetworkActivityIndicator (2.1.0):
+    - Alamofire (~> 4.1)
   - CorePlot (2.2)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
@@ -33,8 +33,8 @@ PODS:
   - SDCAlertView (7.1.2)
   - SVProgressHUD (2.1.2)
   - SwiftKeychainWrapper (3.0.1)
-  - SwiftyDropbox (4.1.1):
-    - Alamofire (~> 4.0.1)
+  - SwiftyDropbox (4.1.2):
+    - Alamofire (~> 4.4.0)
   - SwiftyUserDefaults (3.0.0)
 
 DEPENDENCIES:
@@ -57,9 +57,9 @@ DEPENDENCIES:
   - SwiftyUserDefaults
 
 SPEC CHECKSUMS:
-  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
-  AlamofireNetworkActivityIndicator: 3e55069ada3e1ff7703665156429eedcdfea0bc1
+  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
+  AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   DeviceKit: 461e525867e48e725f41699c1cab3100df1258ff
@@ -73,7 +73,7 @@ SPEC CHECKSUMS:
   SDCAlertView: c39fa91a3aeb5eeba58fe9cea648263b131ff2bf
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
-  SwiftyDropbox: dfcd4d308d32d74729255b48833db61acdfb9c23
+  SwiftyDropbox: eb79d166c2850e50eed01c280c7c64b4b69c50a5
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
 
 PODFILE CHECKSUM: 43ed01df8206a4d12de6648ba5d113463f6e69c3
