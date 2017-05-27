@@ -45,9 +45,11 @@ class DeckDiffCell: UITableViewCell {
     }
     
     func popupCard1(_ gesture: UITapGestureRecognizer) {
-        guard let card = self.card1,
+        guard
+            let card = self.card1,
             let tableView = self.vc.tableView,
-            let indexPath = tableView.indexPathForRow(at: gesture.location(in: tableView)) else {
+            let indexPath = tableView.indexPathForRow(at: gesture.location(in: tableView))
+        else {
             return
         }
         
@@ -58,10 +60,12 @@ class DeckDiffCell: UITableViewCell {
     }
     
     func popupCard2(_ gesture: UITapGestureRecognizer) {
-        guard let card = self.card1,
+        guard
+            let card = self.card2,
             let tableView = self.vc.tableView,
-            let indexPath = tableView.indexPathForRow(at: gesture.location(in: tableView)) else {
-                return
+            let indexPath = tableView.indexPathForRow(at: gesture.location(in: tableView))
+        else {
+            return
         }
         
         var rect = tableView.rectForRow(at: indexPath)

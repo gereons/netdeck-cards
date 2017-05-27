@@ -31,12 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var initGroup = DispatchGroup()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-                
+
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self])
         }
-        
+
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
         // make sure the Library/Application Support directory exists

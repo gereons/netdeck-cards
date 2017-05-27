@@ -42,6 +42,18 @@ class StartupViewController: UIViewController {
         self.spinner.startAnimating()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if BuildConfig.debug {
+            let overlayClass = NSClassFromString("UIDebuggingInformationOverlay") as? UIWindow.Type
+            _ = overlayClass?.perform(NSSelectorFromString("prepareDebuggingOverlay"))
+//            let overlay = overlayClass?.perform(NSSelectorFromString("overlay")).takeUnretainedValue() as? UIWindow
+//            _ = overlay?.perform(NSSelectorFromString("toggleVisibility"))
+        }
+
+    }
+    
     func stopSpinner() {
         self.spinner.stopAnimating()
     }
