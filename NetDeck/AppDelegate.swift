@@ -12,6 +12,8 @@ import SVProgressHUD
 import SwiftyUserDefaults
 import DeviceKit
 
+// CR rules: what is the offending datapack?
+
 // TODO: investigate OOMs - memory warnings?
 // TODO: taptic engine support?
 // TODO: for the last version supporting iOS 9, add a friendly upgrade reminder

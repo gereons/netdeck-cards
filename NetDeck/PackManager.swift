@@ -99,9 +99,6 @@ class PackManager {
         return fmt.string(from: Date())
     }
 
-    // caches
-    static var disabledPacks: Set<String>?          // set of pack codes
-        
     static var packsAvailable: Bool {
         return allPacks.count > 0
     }
@@ -127,27 +124,19 @@ class PackManager {
     }
     
     static func disabledPackCodes() -> Set<String> {
-        if disabledPacks == nil {
-            let settings = UserDefaults.standard
-            var disabled = Set<String>()
-            for pack in allPacks {
-                if !settings.bool(forKey: pack.settingsKey) {
-                    disabled.insert(pack.code)
-                }
+        let settings = UserDefaults.standard
+        var disabled = Set<String>()
+        for pack in allPacks {
+            if !settings.bool(forKey: pack.settingsKey) {
+                disabled.insert(pack.code)
             }
-    
-            if !Defaults[.useDraft] {
-                disabled.insert(draft)
-            }
-    
-            disabledPacks = disabled
         }
-    
-        return disabledPacks!
-    }
-    
-    static func clearDisabledPacks() {
-        disabledPacks = nil
+
+        if !Defaults[.useDraft] {
+            disabled.insert(draft)
+        }
+
+        return disabled
     }
     
     static func packsForTableView(packUsage: PackUsage) -> TableData<String> {

@@ -42,10 +42,6 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     
     fileprivate var printController: UIPrintInteractionController!
     
-    deinit {
-        print("deinit")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

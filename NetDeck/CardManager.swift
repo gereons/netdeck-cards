@@ -92,8 +92,6 @@ class CardManager {
         var factionNames = Faction.factionsFor(role: role, packUsage: packUsage)
         factionNames.removeFirst(2) // remove "any" and "neutral"
         
-        let packUsage = Defaults[.deckbuilderPacks]
-        
         let disabledPackCodes: Set<String>
         switch packUsage {
         case .all:

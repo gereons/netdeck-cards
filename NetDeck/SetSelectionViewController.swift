@@ -174,7 +174,6 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             let on = settings.bool(forKey: pack.settingsKey)
             let sw = NRSwitch(initial: on) { on in
                 settings.set(on, forKey: pack.settingsKey)
-                PackManager.clearDisabledPacks()
                 tableView.reloadSections([indexPath.section], with: .none)
             }
             
