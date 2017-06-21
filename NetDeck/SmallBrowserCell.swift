@@ -44,7 +44,7 @@ class SmallBrowserCell: BrowserCell {
         self.pips.set(value: value, color: card.factionColor)
         self.factionLabel.text = card.factionStr
         
-        let mwl = Defaults[.defaultMwl]
+        let mwl = Defaults[.defaultMWL]
         if card.mwlPenalty(mwl) != 0 {
             self.pipsView.backgroundColor = UIColor(rgb: 0xf5f5f5)
         }

@@ -7,7 +7,7 @@ PODS:
   - CorePlot (2.2)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
-  - DeviceKit (1.0.1)
+  - DeviceKit (1.2.3)
   - DTCoreText (1.6.20):
     - DTCoreText/Core (= 1.6.20)
     - DTFoundation/Core (~> 1.7.5)
@@ -62,7 +62,7 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
-  DeviceKit: 461e525867e48e725f41699c1cab3100df1258ff
+  DeviceKit: f33cbc6e67d9bb416e42dedc647557c7c2f6d3d7
   DTCoreText: 51904f2374af443e0d270d6fdc76035ab6f9ef8a
   DTFoundation: 26a164ef510877387906fb92bff524a792db4bf8
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7

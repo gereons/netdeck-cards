@@ -323,7 +323,7 @@ class CardList {
         }
         
         if self.mwl {
-            let mwl = Defaults[.defaultMwl]
+            let mwl = Defaults[.defaultMWL]
             if mwl != .none {
                 filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 }
             }

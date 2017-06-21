@@ -146,7 +146,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         let pips = cell.accessoryView as! SmallPipsView
         pips.set(value: card.influence, color: card.factionColor)
     
-        let mwl = Defaults[.defaultMwl]
+        let mwl = Defaults[.defaultMWL]
         let penalty = card.mwlPenalty(mwl)
         pips.backgroundColor = penalty > 0 ? UIColor(rgb: 0xf5f5f5) : .white
          
@@ -163,7 +163,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         for c in self.cards {
             cards.append(contentsOf: c)
         }
-        img.setCards(cards, mwl: Defaults[.defaultMwl])
+        img.setCards(cards, mwl: Defaults[.defaultMWL])
         img.selectedCard = card
     
         self.navigationController?.pushViewController(img, animated:true)

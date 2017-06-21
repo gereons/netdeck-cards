@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var initGroup = DispatchGroup()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self])
@@ -233,7 +232,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // MWL v1.2 goes into effect 2017-04-12
         let defaultMWL = MWL.v1_2
-        Defaults.registerDefault(.defaultMwl, defaultMWL)
+        Defaults.registerDefault(.defaultMWL, defaultMWL)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

@@ -81,7 +81,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         
         let popover = CardImageViewPopover()
         popover.card = card
-        popover.mwl = mwl ?? Defaults[.defaultMwl]
+        popover.mwl = mwl ?? Defaults[.defaultMWL]
         
         popover.modalPresentationStyle = .popover
         if let pres = popover.popoverPresentationController {

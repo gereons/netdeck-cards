@@ -143,7 +143,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
                 
         self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
         
-        let mwl = Defaults[.defaultMwl]
+        let mwl = Defaults[.defaultMWL]
         self.mwlLabel.isHidden = mwl == MWL.none
         self.mwlSwitch.isHidden = mwl == MWL.none
         

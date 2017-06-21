@@ -776,7 +776,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let influence = identity.faction == card.faction ? 0 : card.influence
         cell.pips.set(value: influence, color: card.factionColor)
         
-        let mwl = deck?.mwl ?? Defaults[.defaultMwl]
+        let mwl = deck?.mwl ?? Defaults[.defaultMWL]
         let penalty = card.mwlPenalty(mwl)
         cell.pipsView.backgroundColor = penalty > 0 ? UIColor(rgb: 0xf5f5f5) : .white
         

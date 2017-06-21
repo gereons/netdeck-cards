@@ -72,7 +72,7 @@ class LargeBrowserCell: BrowserCell {
             self.type.text = String(format: "%@ · %@", factionName, typeName)
         }
         
-        let mwl = Defaults[.defaultMwl]
+        let mwl = Defaults[.defaultMWL]
         let universalInf = mwl.universalInfluence ? card.mwlPenalty(mwl) : 0
         let influence = self.card.influence + universalInf
         LargeCardCell.setInfluencePips(self.pips, influence: influence, universalInfluence: universalInf, count: 1, card: self.card, mwl: mwl)

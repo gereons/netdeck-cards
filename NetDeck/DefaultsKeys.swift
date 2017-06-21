@@ -107,7 +107,7 @@ extension DefaultsKeys {
     static let identityTable = DefaultsKey<Bool>("identityTable")
     
     /// which MWL to use?
-    static let defaultMwl = DefaultsKey<MWL>("mwlVersion")
+    static let defaultMWL = DefaultsKey<MWL>("mwlVersion")
     /// exclude rotated-out cards?
     static let rotationActive = DefaultsKey<Bool>("rotationActive")
     

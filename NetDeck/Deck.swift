@@ -30,7 +30,7 @@ import SwiftyUserDefaults
         self.state = Defaults[.createDeckActive] ? .active : .testing
         let seq = DeckManager.fileSequence() + 1
         self.name = "Deck #\(seq)"
-        self.mwl = Defaults[.defaultMwl]
+        self.mwl = Defaults[.defaultMWL]
         self.role = role
     }
     
@@ -507,8 +507,11 @@ import SwiftyUserDefaults
         self.lastModified = Deck.dateFormatter.date(from: try object.value(for: "date_update"))
         self.dateCreated = Deck.dateFormatter.date(from: try object.value(for: "date_creation"))
         
-        let mwlCode: String = try object.value(for: "mwl_code") ?? ""
-        self.mwl = MWL.by(code: mwlCode)
+        if let mwlCode: String = try? object.value(for: "mwl_code") {
+            self.mwl = MWL.by(code: mwlCode)
+        } else {
+            self.mwl = Defaults[.defaultMWL]
+        }
         
         if let cards = object.optionalAny(for: "cards") as? [String: Int] {
             for (code, qty) in cards {
