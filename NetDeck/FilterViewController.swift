@@ -17,12 +17,10 @@ private enum Tags: Int {
 }
 
 class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegate, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet weak var factionLabel: UILabel!
     @IBOutlet weak var factionControl: MultiSelectSegmentedControl!
     @IBOutlet weak var miniFactionControl: MultiSelectSegmentedControl!
     
     @IBOutlet weak var typeVerticalDistance: NSLayoutConstraint!
-    @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var typeControl: MultiSelectSegmentedControl!
     
     @IBOutlet weak var influenceLabel: UILabel!
@@ -47,6 +45,9 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
     private var factionNames = [String]()
     private var typeNames = [String]()
     
+    private var selectedTypes = Set<String>()
+    private var subtypes: FilterValue?
+    
     private var cards = [Card]()
     private var showPreviewTable = true
 
@@ -54,12 +55,8 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         super.viewDidLoad()
         
         self.title = "Filter".localized()
-        
-        
-        self.factionLabel.text = "Faction".localized()
-        self.typeLabel.text = "Type".localized()
-        
-        self.typeVerticalDistance.constant = 18
+                
+        self.typeVerticalDistance.constant = 16
         self.miniFactionControl.isHidden = true
         self.miniFactionControl.tag = Tags.miniFaction.rawValue
         self.miniFactionControl.delegate = self
@@ -77,7 +74,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
             if miniFactions {
                 self.factionNames = (Faction.runnerFactionsCore + [ Faction.neutral ] + Faction.runnerMiniFactions).map { Faction.name(for: $0) }
                 self.miniFactionControl.isHidden = false
-                self.typeVerticalDistance.constant = 50
+                self.typeVerticalDistance.constant = 48
             }
         } else {
             self.factionNames = (Faction.corpFactions + [ Faction.neutral ]).map { Faction.name(for: $0) }
@@ -130,12 +127,6 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.clearFilters()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         assert(self.navigationController?.viewControllers.count == 4, "nav oops")
@@ -149,7 +140,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
     }
     
     func clearFilters() {
-        self.cardList?.clearFilters()
+        self.cardList.clearFilters()
         
         self.factionControl.selectAllSegments(false)
         self.miniFactionControl.selectAllSegments(false)
@@ -165,6 +156,9 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.muApChanged(nil)
         self.costChanged(nil)
         
+        self.selectedTypes = Set(self.typeNames)
+        self.subtypes = nil
+        
         if self.showPreviewTable {
             let top = IndexPath(row: 0, section: 0)
             self.previewTable.scrollToRow(at: top, at: .middle, animated: false)
@@ -176,7 +170,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         slider?.value = Float(value)
         value -= 1
         self.strengthLabel.text = String(format: "Strength: %@".localized(), value == -1 ? "All" : String(value))
-        self.cardList?.filterByStrength(value)
+        self.cardList.filterByStrength(value)
         self.updatePreview()
     }
     
@@ -185,7 +179,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         slider?.value = Float(value)
         value -= 1
         self.costLabel.text = String(format: "Cost: %@".localized(), value == -1 ? "All" : String(value))
-        self.cardList?.filterByCost(value)
+        self.cardList.filterByCost(value)
         self.updatePreview()
     }
     
@@ -196,9 +190,9 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.influenceLabel.text = String(format: "Influence: %@".localized(), value == -1 ? "All" : String(value))
         
         if let identity = self.identity {
-            self.cardList?.filterByInfluence(value, forFaction: identity.faction)
+            self.cardList.filterByInfluence(value, forFaction: identity.faction)
         } else {
-            self.cardList?.filterByInfluence(value)
+            self.cardList.filterByInfluence(value)
         }
         self.updatePreview()
     }
@@ -211,16 +205,31 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.muApLabel.text = String(format: fmt, value == -1 ? "All" : String(value))
         
         if self.role == .runner {
-            self.cardList?.filterByMU(value)
+            self.cardList.filterByMU(value)
         } else {
-            self.cardList?.filterByAgendaPoints(value)
+            self.cardList.filterByAgendaPoints(value)
         }
         self.updatePreview()
     }
     
+    @IBAction func selectSubtype(_ btn: UIButton) {
+        let picker = BrowserValuePicker(title: "Subtype".localized())
+        
+        let subtypes = CardManager.subtypesFor(role: self.role, andTypes: self.selectedTypes, includeIdentities: false)
+        picker.data = TableData(values: subtypes)
+        
+        picker.preselected = self.subtypes
+        picker.setResult = { result in
+            self.subtypes = result
+            self.cardList.filterBySubtype(result)
+            self.updatePreview()
+        }
+        
+        self.navigationController?.pushViewController(picker, animated: true)
+    }
+    
     // MARK: - multi select delegate
     func multiSelect(_ control: MultiSelectSegmentedControl!, didChangeValue value: Bool, at index: UInt) {
-        
         var set = Set<String>()
         
         if control.tag == Tags.type.rawValue {
@@ -228,7 +237,10 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
                 let type = self.typeNames[idx]
                 set.insert(type)
             }
-            self.cardList?.filterByType(FilterValue.strings(set))
+            self.selectedTypes = set
+            self.subtypes = nil
+            self.cardList.filterBySubtype(FilterValue.strings(Set<String>()))
+            self.cardList.filterByType(FilterValue.strings(set))
         } else {
             for idx in self.factionControl.selectedSegmentIndexes {
                 let faction = self.factionNames[idx]
@@ -241,9 +253,8 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
                 }
             }
             
-            self.cardList?.filterByFaction(FilterValue.strings(set))
+            self.cardList.filterByFaction(FilterValue.strings(set))
         }
-        
         
         self.updatePreview()
     }
