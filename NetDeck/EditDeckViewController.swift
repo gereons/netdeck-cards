@@ -91,12 +91,6 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.setDeckName()
         self.navigationItem.titleView = self.titleButton
         self.navigationItem.rightBarButtonItems = [ self.exportButton, self.historyButton ]
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        assert(self.navigationController?.viewControllers.count == 2, "oops")
         
         if !Defaults[.useNrdb] {
             self.nrdbButton.customView = UIView(frame: CGRect.zero)
@@ -104,6 +98,12 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         self.refreshDeck()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        assert(self.navigationController?.viewControllers.count == 2, "oops")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
