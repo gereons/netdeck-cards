@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,6 +15,7 @@
                 <outlet property="factionButton" destination="DBV-kt-2UJ" id="taE-D9-kha"/>
                 <outlet property="searchBar" destination="tJq-2W-YqI" id="C8Q-pe-2cb"/>
                 <outlet property="setButton" destination="ags-Vi-ryy" id="QmO-BC-v75"/>
+                <outlet property="subtypeButton" destination="Nes-Jt-He6" id="oxm-b6-7cV"/>
                 <outlet property="tableView" destination="CGo-ye-AHj" id="Asl-QP-HPr"/>
                 <outlet property="typeButton" destination="stp-TL-u1g" id="7Fe-eG-SpW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -26,14 +27,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CGo-ye-AHj">
-                    <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <view key="tableHeaderView" contentMode="scaleToFill" id="1iF-OU-Ytu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" backgroundImage="searchbar-bg" scopeBarBackgroundImage="searchbar-bg" translatesAutoresizingMaskIntoConstraints="NO" id="tJq-2W-YqI">
-                                <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <scopeButtonTitles>
                                     <string>Both</string>
@@ -45,31 +46,38 @@
                                 </connections>
                             </searchBar>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WqS-qB-scs">
-                                <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                                <rect key="frame" x="8" y="86" width="359" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="stp-TL-u1g">
-                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
                                         <state key="normal" title="Type"/>
                                         <connections>
                                             <action selector="typeButtonTapped:" destination="-1" eventType="touchUpInside" id="V9V-CZ-9l3"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nes-Jt-He6" userLabel="Subtype Button">
+                                        <rect key="frame" x="72" y="0.0" width="71.5" height="30"/>
+                                        <state key="normal" title="Subtype"/>
+                                        <connections>
+                                            <action selector="subtypeButtonTapped:" destination="-1" eventType="touchUpInside" id="d3Z-9X-UMP"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DBV-kt-2UJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                                        <rect key="frame" x="143.5" y="0.0" width="72" height="30"/>
                                         <state key="normal" title="Faction"/>
                                         <connections>
                                             <action selector="factionButtonTapped:" destination="-1" eventType="touchUpInside" id="sTi-98-p5S"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ags-Vi-ryy">
-                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                                        <rect key="frame" x="215.5" y="0.0" width="72" height="30"/>
                                         <state key="normal" title="Set"/>
                                         <connections>
                                             <action selector="setButtonTapped:" destination="-1" eventType="touchUpInside" id="4X2-g3-7tr"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JY7-qH-HwL">
-                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                                        <rect key="frame" x="287.5" y="0.0" width="71.5" height="30"/>
                                         <state key="normal" title="Clear"/>
                                         <connections>
                                             <action selector="clearButtonTapped:" destination="-1" eventType="touchUpInside" id="SZf-95-cHB"/>
@@ -78,6 +86,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="DBV-kt-2UJ" firstAttribute="width" secondItem="stp-TL-u1g" secondAttribute="width" id="568-xp-oeZ"/>
+                                    <constraint firstItem="DBV-kt-2UJ" firstAttribute="width" secondItem="Nes-Jt-He6" secondAttribute="width" id="IKr-cx-ZyH"/>
                                     <constraint firstItem="JY7-qH-HwL" firstAttribute="width" secondItem="stp-TL-u1g" secondAttribute="width" id="WYw-W5-BIM"/>
                                     <constraint firstItem="ags-Vi-ryy" firstAttribute="width" secondItem="stp-TL-u1g" secondAttribute="width" id="mhB-3F-MLM"/>
                                 </constraints>

@@ -22,7 +22,7 @@ class EmptyDetailViewController: UIViewController {
         
         self.titleLabel.text = "No Card Data".localized()
         self.textLabel.text = "To use this app, you must first download card data.".localized()
-        self.downloadButton.setTitle("Download".localized(), for: UIControlState())
+        self.downloadButton.setTitle("Download".localized(), for: .normal)
         
         self.navigationController?.navigationBar.barTintColor = .white
         

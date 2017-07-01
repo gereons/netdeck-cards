@@ -41,8 +41,8 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         self.initCards(true)
         
         self.titleLabel.text = "Draw Simulator".localized()
-        self.clearButton.setTitle("Clear".localized(), for: UIControlState())
-        self.doneButton.setTitle("Done".localized(), for: UIControlState())
+        self.clearButton.setTitle("Clear".localized(), for: .normal)
+        self.doneButton.setTitle("Done".localized(), for: .normal)
         
         self.selector.setTitle("All".localized(), forSegmentAt:6)
         self.selector.apportionsSegmentWidthsByContent = true

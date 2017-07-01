@@ -90,7 +90,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
             header.dateLabel.text = "n/a"
         }
         
-        header.revertButton.setTitle("Revert".localized(), for: UIControlState())
+        header.revertButton.setTitle("Revert".localized(), for: .normal)
         header.revertButton.tag = section
         header.revertButton.addTarget(self, action: #selector(DeckHistoryViewController.revertTapped(_:)), for: .touchUpInside)
         

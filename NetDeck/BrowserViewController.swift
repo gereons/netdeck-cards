@@ -13,10 +13,12 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var typeButton: UIButton!
+    @IBOutlet weak var subtypeButton: UIButton!
     @IBOutlet weak var setButton: UIButton!
     @IBOutlet weak var factionButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     
+    private var scopeButton: UIBarButtonItem!
     private var role = Role.none
     private var cardList: CardList!
     private var cards = [[Card]]()
@@ -24,7 +26,9 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // filter criteria
     private var searchText = ""
+    private var searchScope = CardSearchScope.name
     private var types: FilterValue?
+    private var subtypes: FilterValue?
     private var sets: FilterValue?
     private var factions: FilterValue?
     
@@ -44,16 +48,22 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.searchBar.showsCancelButton = false
         self.searchBar.showsScopeBar = true
         
-        self.typeButton.setTitle("Type".localized(), for: UIControlState())
-        self.setButton.setTitle("Set".localized(), for: UIControlState())
-        self.factionButton.setTitle("Faction".localized(), for: UIControlState())
-        self.clearButton.setTitle("Clear".localized(), for: UIControlState())
+        self.typeButton.setTitle("Type".localized(), for: .normal)
+        self.subtypeButton.setTitle("Subtype".localized(), for: .normal)
+        self.setButton.setTitle("Set".localized(), for: .normal)
+        self.factionButton.setTitle("Faction".localized(), for: .normal)
+        self.clearButton.setTitle("Clear".localized(), for: .normal)
         
         self.keyboardObserver = KeyboardObserver(handler: self)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(_:)))
         self.tableView.addGestureRecognizer(longPress)
 
+        let img = UIImage(named: "708-search-toolbar")?.withRenderingMode(.alwaysTemplate)
+        self.scopeButton = UIBarButtonItem(image: img, style: .plain, target: self, action: #selector(self.scopeButtonTapped(_:)))
+        
+        self.navigationItem.rightBarButtonItem = self.scopeButton
+        
         self.refresh()
     }
     
@@ -75,11 +85,22 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         let packUsage = Defaults[.browserPacks]
         self.cardList = CardList.browserInitForRole(self.role, packUsage: packUsage)
         if self.searchText.length > 0 {
-            self.cardList.filterByName(self.searchText)
+            switch self.searchScope {
+            case .all:
+                self.cardList.filterByTextOrName(self.searchText)
+            case .name:
+                self.cardList.filterByName(self.searchText)
+            case .text:
+                self.cardList.filterByText(self.searchText)
+            }
         }
         
         if let types = self.types {
             self.cardList.filterByType(types)
+        }
+        
+        if let subtypes = self.subtypes {
+            self.cardList.filterBySubtype(subtypes)
         }
         
         if let sets = self.sets {
@@ -186,15 +207,14 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.searchBar.setShowsCancelButton(false, animated: true)
         self.searchBar.resignFirstResponder()
+        self.searchBar.setShowsCancelButton(false, animated: true)
     }
     
-    // MARK: type, factio & set buttons
+    // MARK: type, faction & set buttons
     @IBAction func typeButtonTapped(_ btn: UIButton) {
-        
         let picker = BrowserValuePicker(title: "Type".localized())
-        if role == .none {
+        if self.role == .none {
             picker.data = CardType.allTypes
         } else {
             let types = CardType.typesFor(role: role)
@@ -204,6 +224,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         picker.preselected = self.types
         picker.setResult = { result in
             self.types = result
+            self.subtypes = nil
             self.refresh()
         }
     
@@ -236,11 +257,55 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.navigationController?.pushViewController(picker, animated: true)
     }
     
+    @IBAction func subtypeButtonTapped(_ btn: UIButton) {
+        let picker = BrowserValuePicker(title: "Subtype".localized())
+        
+        let types = self.types?.strings ?? Set<String>()
+        if self.role == .none {
+            let runner = CardManager.subtypesFor(role: .runner, andTypes: types, includeIdentities: true)
+            let corp = CardManager.subtypesFor(role: .corp, andTypes: types, includeIdentities: true)
+            
+            picker.data = TableData(sections: ["Runner".localized(), "Corp".localized()], values: [runner, corp])
+        } else {
+            let subtypes = CardManager.subtypesFor(role: self.role, andTypes: types, includeIdentities: true)
+            picker.data = TableData(values: subtypes)
+        }
+        
+        picker.preselected = self.subtypes
+        picker.setResult = { result in
+            self.subtypes = result
+            self.refresh()
+        }
+        
+        self.navigationController?.pushViewController(picker, animated: true)
+    }
+    
+    func scopeButtonTapped(_ btn: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Search in:".localized(), message: nil, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Name".localized().checked(self.searchScope == .name)) { action in
+            self.searchScope = .name
+            self.refresh()
+        })
+        alert.addAction(UIAlertAction(title: "Text".localized().checked(self.searchScope == .text)) { action in
+            self.searchScope = .text
+            self.refresh()
+        })
+        alert.addAction(UIAlertAction(title: "All".localized().checked(self.searchScope == .all)) { action in
+            self.searchScope = .all
+            self.refresh()
+        })
+        alert.addAction(UIAlertAction.alertCancel(nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: clear button
     
     @IBAction func clearButtonTapped(_ btn: UIButton) {
         self.sets = nil
         self.types = nil
+        self.subtypes = nil
         self.factions = nil
         self.searchText = ""
         
