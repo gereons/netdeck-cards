@@ -26,6 +26,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
     private var sections = [String]()
     private var cardList: CardList!
     private var filterText = ""
+    private var searchScope = CardSearchScope.name
     
     private var filterViewController: FilterViewController!
     
@@ -84,7 +85,9 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         self.updateFooter()
         
         let filterButton = UIBarButtonItem(image: UIImage(named: "798-filter-toolbar"), style: .plain, target: self, action: #selector(self.showFilters(_:)))
-        self.navigationItem.rightBarButtonItem = filterButton
+        let scopeButton = UIBarButtonItem(image: UIImage(named: "708-search-toolbar"), style: .plain, target: self, action: #selector(self.changeScope(_:)))
+        
+        self.navigationItem.rightBarButtonItems = [filterButton, scopeButton]
     }
         
     override func viewWillDisappear(_ animated: Bool) {
@@ -128,7 +131,11 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func updateCards() {
-        self.cardList.filterByName(self.filterText)
+        switch self.searchScope {
+        case .name: self.cardList.filterByName(self.filterText)
+        case .text: self.cardList.filterByText(self.filterText)
+        case .all: self.cardList.filterByTextOrName(self.filterText)
+        }
         
         let data = self.cardList.dataForTableView()
         self.sections = data.sections
@@ -203,6 +210,26 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
             let range = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
             textField.selectedTextRange = range
         }
+    }
+    
+    func changeScope(_ btn: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Search in:".localized(), message: nil, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Name".localized().checked(self.searchScope == .name)) { action in
+            self.searchScope = .name
+            self.updateCards()
+        })
+        alert.addAction(UIAlertAction(title: "Text".localized().checked(self.searchScope == .text)) { action in
+            self.searchScope = .text
+            self.updateCards()
+        })
+        alert.addAction(UIAlertAction(title: "All".localized().checked(self.searchScope == .all)) { action in
+            self.searchScope = .all
+            self.updateCards()
+        })
+        alert.addAction(UIAlertAction.alertCancel(nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - tableview

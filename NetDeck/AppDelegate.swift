@@ -18,9 +18,8 @@ import DeviceKit
 // TODO: taptic engine support?
 // TODO: for the last version supporting iOS 9, add a friendly upgrade reminder
 
-// TODO: (all iphone): 
+// TODO: (all iphone deck edit):
 // TODO: subtype filters
-// TODO: text search scope
 
 protocol StartViewController {
     func addNewDeck(_ role: Role)
