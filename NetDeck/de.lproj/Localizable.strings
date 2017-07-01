@@ -247,6 +247,7 @@
 "BBCode Deck" = "BBCode-Deck";
 "Print" = "Drucken";
 "As Email" = "Als E-Mail";
+"To Clipboard" = "Ins Clipboard";
 
 // cycles
 "Core / Deluxe" = "Grundspiel / Erweiterung";

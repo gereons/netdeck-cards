@@ -177,7 +177,11 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
                 self.saveToJintekiNet()
             })
         }
-        
+        alert.addAction(UIAlertAction(title: "To Clipboard".localized()) { action in
+            Analytics.logEvent(.clipText)
+            UIPasteboard.general.string = DeckExport.asPlaintextString(self.deck)
+            DeckImport.updateCount()
+        })
         if MFMailComposeViewController.canSendMail() {
             alert.addAction(UIAlertAction(title: "As Email".localized()) { action in
                 Analytics.logEvent(.emailDeck)

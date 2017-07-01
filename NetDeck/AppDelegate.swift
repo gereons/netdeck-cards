@@ -19,7 +19,6 @@ import DeviceKit
 // TODO: for the last version supporting iOS 9, add a friendly upgrade reminder
 
 // TODO: (all iphone): 
-// TODO: copy to clipboard, read from clipboard
 // TODO: subtype filters
 // TODO: text search scope
 
