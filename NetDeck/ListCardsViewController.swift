@@ -171,11 +171,11 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = false
+        searchBar.setShowsCancelButton(false, animated: true)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = true
+        searchBar.setShowsCancelButton(true, animated: true)
         if let button = searchBar.value(forKey: kCancelButton) as? UIButton {
             button.setTitle("Done".localized(), for: .normal)
         }

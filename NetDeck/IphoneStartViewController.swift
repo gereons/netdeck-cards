@@ -25,6 +25,8 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     
     private var deckListSort = DeckListSort.byName
     private var filterText = ""
+    
+    private var keyboardObserver: KeyboardObserver!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +67,8 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         self.deckListSort = Defaults[.deckFilterSort]
         
         self.tableView.contentInset = UIEdgeInsets.zero
+        
+        self.keyboardObserver = KeyboardObserver(handler: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,8 +98,10 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         
         if self.filterText.length > 0 {
             let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", self.filterText)
-            runnerDecks = runnerDecks.filter { namePredicate.evaluate(with: $0) }
-            corpDecks = corpDecks.filter { namePredicate.evaluate(with: $0) }
+            let identityPredicate = NSPredicate(format: "(identity.name CONTAINS[cd] %@) or (identity.englishName CONTAINS[cd] %@)", self.filterText, self.filterText)
+            let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [namePredicate, identityPredicate])
+            runnerDecks = runnerDecks.filter { predicate.evaluate(with: $0) }
+            corpDecks = corpDecks.filter { predicate.evaluate(with: $0) }
         }
         
         if self.deckListSort != .byDate {
@@ -362,11 +368,11 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.searchBar.showsCancelButton = false
+        self.searchBar.setShowsCancelButton(false, animated: true)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.searchBar.showsCancelButton = true
+        self.searchBar.setShowsCancelButton(true, animated: true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -425,3 +431,23 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
 }
+
+// MARK: - keyboard
+extension IphoneStartViewController: KeyboardHandling {
+    func keyboardWillShow(_ info: KeyboardInfo) {
+        let screenHeight = UIScreen.main.bounds.size.height
+        let kbHeight = screenHeight - info.endFrame.origin.y
+        
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: kbHeight, right: 0)
+        
+        self.tableView.contentInset = insets
+        self.tableView.scrollIndicatorInsets = insets
+    }
+    
+    func keyboardWillHide(_ info: KeyboardInfo) {
+        let insets = UIEdgeInsets.zero
+        self.tableView.contentInset = insets
+        self.tableView.scrollIndicatorInsets = insets
+    }
+}
+

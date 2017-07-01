@@ -182,11 +182,11 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.searchBar.showsCancelButton = true
+        self.searchBar.setShowsCancelButton(true, animated: true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.searchBar.showsCancelButton = false
+        self.searchBar.setShowsCancelButton(false, animated: true)
         self.searchBar.resignFirstResponder()
     }
     
