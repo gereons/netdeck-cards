@@ -305,6 +305,7 @@ class Card: NSObject, Unmarshaling {
     }
 }
 
+/// MARK: - constants
 extension Card {
     // identities we need to handle
     static let customBiotics            = "03002"    // no jinteki cards
@@ -400,11 +401,12 @@ extension Card {
         "10108": "FIRS",      // Full Immersion RecStudio
         "11024": "Clippy",    // Paperclip
         "11094": "IPB",       // IP Block
+        "12088": "NNK"        // Na'Not'K
     ]
 
 }
 
-
+// MARK: - cropping
 extension Card {
     var cropY: Double {
         return Card.cropValues[self.type] ?? 0.0
