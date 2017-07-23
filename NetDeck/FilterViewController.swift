@@ -215,7 +215,9 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
     @IBAction func selectSubtype(_ btn: UIButton) {
         let picker = BrowserValuePicker(title: "Subtype".localized())
         
-        let subtypes = CardManager.subtypesFor(role: self.role, andTypes: self.selectedTypes, includeIdentities: false)
+        var subtypes = CardManager.subtypesFor(role: self.role, andTypes: self.selectedTypes, includeIdentities: false)
+        subtypes.insert(Constant.kANY, at: 0)
+        
         picker.data = TableData(values: subtypes)
         
         picker.preselected = self.subtypes
@@ -279,6 +281,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
             let c = UITableViewCell(style: .default, reuseIdentifier: identifier)
             c.selectionStyle = .none
             c.textLabel?.font = UIFont.systemFont(ofSize: 13)
+            c.textLabel?.textColor = .darkGray
             return c
         }()
         
