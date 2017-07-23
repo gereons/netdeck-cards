@@ -10,7 +10,7 @@ import Alamofire
 import AlamofireImage
 import SwiftyUserDefaults
 
-private func synchronized<T>(_ lock: Any, closure: ()->T) -> T {
+func synchronized<T>(_ lock: Any, closure: ()->T) -> T {
     objc_sync_enter(lock)
     defer { objc_sync_exit(lock) }
     return closure()
