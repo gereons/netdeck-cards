@@ -12,18 +12,24 @@ import SwiftyUserDefaults
 
 class Settings {
     static var viewController: IASKAppSettingsViewController {
+        return synchronized(self) {
+            instance()
+        }
+    }
+    
+    private static var iask: IASKAppSettingsViewController!
+    private static var delegate: SettingsDelegate!
+    
+    private static func instance() -> IASKAppSettingsViewController {
         if iask == nil {
             iask = IASKAppSettingsViewController(style: .grouped)
             delegate = SettingsDelegate()
             
-            iask!.delegate = delegate
-            iask!.showDoneButton = false
+            iask.delegate = delegate
+            iask.showDoneButton = false
         }
-        return iask!
+        return iask
     }
-    
-    private static var iask: IASKAppSettingsViewController?
-    private static var delegate: SettingsDelegate?
 }
 
 class SettingsDelegate: IASKSettingsDelegate {
