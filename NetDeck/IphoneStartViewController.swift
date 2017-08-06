@@ -83,6 +83,8 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
             self.initializeDecks()
         }
         
+        self.settingsButton.isEnabled = true
+        
         self.tableView.reloadData()
     }
 
@@ -274,6 +276,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - settings
     
     func openSettings(_ sender: UIBarButtonItem) {
+        sender.isEnabled = false
         let settings = Settings.viewController
         if settings != self.navigationController?.topViewController {
             self.navigationController?.pushViewController(settings, animated: true)
