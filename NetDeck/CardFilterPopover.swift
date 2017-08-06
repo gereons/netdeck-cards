@@ -33,7 +33,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     private var sectionCount = 0
     private var totalEntries = 0
     
-    static var popover: CardFilterPopover!
+    private static var popover: CardFilterPopover!
     
     static func showFrom(button: UIButton, inView vc: FilteringViewController, entries: TableData<String>, attribute: FilterAttribute, selected: FilterValue?) {
         popover = CardFilterPopover()
@@ -78,7 +78,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     static func dismiss() {
-        popover.dismiss(animated: false, completion: nil)
+        popover?.dismiss(animated: false, completion: nil)
         popover = nil
     }
     
