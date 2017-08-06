@@ -159,7 +159,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.selectedTypes = Set(self.typeNames)
         self.subtypes = nil
         
-        if self.showPreviewTable {
+        if self.showPreviewTable && self.cards.count > 0 {
             let top = IndexPath(row: 0, section: 0)
             self.previewTable.scrollToRow(at: top, at: .middle, animated: false)
         }
