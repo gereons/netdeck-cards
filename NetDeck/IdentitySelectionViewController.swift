@@ -97,13 +97,8 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         self.collectionView.isHidden = self.viewTable
         self.modeSelector.selectedSegmentIndex = self.viewTable ? 1 : 0
         
-        let includeDraft = Defaults[.useDraft]
-        
         var titles = self.allFactionNames
         titles.insert("All".localized(), at: 0)
-        if includeDraft {
-            titles.append("Draft".localized())
-        }
         
         self.factionSelector.removeAllSegments()
         for i in (0 ..< titles.count).reversed() {
