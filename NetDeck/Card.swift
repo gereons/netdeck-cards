@@ -18,7 +18,7 @@ class Card: NSObject, Unmarshaling {
     private(set) var name = ""                  // localized name of card, used for display
     private(set) var foldedName = ""            // lowercased, no diactics, for sorting (e.g. "Déjà vu" -> "deja vu")
     private(set) var englishName = ""           // english name of card, used for searches
-    private(set) var alias: String?
+    private(set) var aliases: Set<String>?
     private(set) var text = ""
     private(set) var flavor = ""
     private(set) var type = CardType.none
@@ -279,7 +279,11 @@ class Card: NSObject, Unmarshaling {
     }
     
     func setCardAlias(_ alias: String) {
-        self.alias = alias
+        if self.aliases == nil {
+            self.aliases = Set([alias])
+        } else {
+            self.aliases?.insert(alias)
+        }
     }
     
     // manipulate identity name
@@ -353,6 +357,7 @@ extension Card {
     static let rumorMill        = "11022"
     static let blackmail        = "04089"
     static let ddos             = "08103"
+    static let aaronMarrón      = "11106"
     
     static let architect        = "06061"
     static let astroscript      = "01081"
@@ -363,6 +368,8 @@ extension Card {
     static let bioEthicsAssociation = "10050"
     static let sensieActorsUnion = "10053"
     static let mumbadCityHall   = "10055"
+    static let acceleratedDiagnostics = "04052"
+    static let friendsInHighPlaces = "11090"
     
     // dictonaries of code -> penalty for each MWL version
     fileprivate static let mostWantedLists: [MWL: [String: Int]] = [
@@ -378,7 +385,15 @@ extension Card {
         .v1_2: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
                  architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1,
                  blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
-                 sensieActorsUnion: 3 ]
+                 sensieActorsUnion: 3 ],
+        
+        /*
+        // MWL v1.3, introduced in NAPD Most Wanted List v1.3, valid from 2017-08-14 onwards ??
+        .none: [ aaronMarrón: 1, cloneChip: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
+                 architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, sansanCityGrid: 1,
+                 blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
+                 acceleratedDiagnostics: 3, friendsInHighPlaces: 3, sensieActorsUnion: 3 ],
+        */
     ]
     
     static let aliases = [
@@ -386,7 +401,8 @@ extension Card {
         "02085": "HQI",       // HQ Interface
         "02107": "RDI",       // R&D Interface
         "06033": "David",     // D4v1d
-        "05039": "SW35",      // Unreg. s&w '35
+        "05039": "USW35",     // Unreg. s&w '35
+        "05039": "SW35",
         "03035": "LARLA",     // Levy AR Lab Access
         "04029": "PPVP",      // Prepaid Voicepad
         "01092": "SSCG",      // Sansan City Grid
@@ -399,9 +415,11 @@ extension Card {
         "09007": "Kitty",     // Quantum Predictive Model
         "10043": "Polop",     // Political Operative
         "10108": "FIRS",      // Full Immersion RecStudio
-        "11024": "Clippy",    // Paperclip
         "11094": "IPB",       // IP Block
-        "12088": "NNK"        // Na'Not'K
+        "07054": "QPT",       // Qianju PT
+        "12088": "NNK",       // Na'Not'K
+        "12088": "Nanotek",
+        "12088": "Nanotech"
     ]
 
 }
