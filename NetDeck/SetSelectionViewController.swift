@@ -113,7 +113,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             Defaults.set(false, forKey: pack.settingsKey)
         }
         
-        for cycle in CacheRefresh.r2017.validCycles {
+        for cycle in PackManager.cacheRefreshCycles {
             let keys = PackManager.keysForCycle(cycle)
             for key in keys {
                 let released = PackManager.allPacks.filter { $0.settingsKey == key }.first?.released ?? false

@@ -625,42 +625,37 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         alert.addAction(UIAlertAction(title: "Casual".localized().checked(self.deck.mwl == .none)) { action in
             self.deck.mwl = .none
             self.deck.onesies = false
-            self.deck.cacheRefresh = .none
             self.refreshDeck()
         })
         alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(self.deck.mwl == .v1_0)) { action in
             self.deck.mwl = .v1_0
             self.deck.onesies = false
-            self.deck.cacheRefresh = .none
             self.refreshDeck()
         })
         alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(self.deck.mwl == .v1_1)) { action in
             self.deck.mwl = .v1_1
             self.deck.onesies = false
-            self.deck.cacheRefresh = .none
             self.refreshDeck()
         })
         alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
             self.deck.mwl = .v1_2
             self.deck.onesies = false
-            self.deck.cacheRefresh = .none
             self.refreshDeck()
         })
 //        alert.addAction(UIAlertAction(title: "MWL v1.3".localized().checked(self.deck.mwl == .v1_3)) { action in
 //            self.deck.mwl = .v1_3
 //            self.deck.onesies = false
-//            self.deck.cacheRefresh = .none
 //            self.refreshDeck()
 //        })
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
             self.deck.mwl = .none
             self.deck.onesies = true
-            self.deck.cacheRefresh = .none
+            self.deck.cacheRefresh = false
             self.refreshDeck()
         })
-        alert.addAction(UIAlertAction(title: "Cache Refresh".localized().checked(self.deck.cacheRefresh == .r2017)) { action in
-            self.deck.cacheRefresh = .r2017
-            self.deck.mwl = self.deck.cacheRefresh.mwl
+        alert.addAction(UIAlertAction(title: "Cache Refresh".localized().checked(self.deck.cacheRefresh)) { action in
+            self.deck.cacheRefresh = !self.deck.cacheRefresh
+            self.deck.mwl = MWL.latest
             self.deck.onesies = false
             self.refreshDeck()
         })

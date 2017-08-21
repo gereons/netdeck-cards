@@ -81,6 +81,8 @@ enum MWL: Int {
     case v1_2   // as of 2017-04-12
     // case v1_3   // as of 2017-08-14 ??
     
+    static let latest = MWL.v1_2
+    
     // map from "mwl_code" values we get from the NRDB API
     static let codeMap: [String: MWL] = [
         "NAPD_MWL_1.0": .v1_0,
@@ -102,11 +104,12 @@ enum MWL: Int {
     }
 }
 
-enum CacheRefresh: Int {
+enum xxCacheRefresh: Int {
     case none
     case r2017  // regionals 2017: 1 Core, 1 Deluxe, TD, Flashpoint, Red Sands, MWL 1.2
     
     var validCycles: [String] {
+        FIXME("this doesn't work. figure out a new way to do this")
         switch self {
         case .none: return []
         case .r2017: return [ "flashpoint", "red-sand" ]

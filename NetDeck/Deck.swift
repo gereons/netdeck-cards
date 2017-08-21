@@ -74,7 +74,7 @@ import SwiftyUserDefaults
         willSet { modified = true }
     }
     
-    var cacheRefresh: CacheRefresh = .none {
+    var cacheRefresh: Bool = false {
         willSet { modified = true }
     }
     
@@ -610,12 +610,13 @@ import SwiftyUserDefaults
         }
         
         self.onesies = decoder.decodeBool(forKey: "onesies")
-        
+
+        // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
         if decoder.containsValue(forKey: "cacheRefresh") {
             let cacheRefresh = decoder.decodeInteger(forKey: "cacheRefresh")
-            self.cacheRefresh = CacheRefresh(rawValue: cacheRefresh) ?? .none
+            self.cacheRefresh = cacheRefresh != 0
         } else {
-            self.cacheRefresh = .none
+            self.cacheRefresh = false
         }
         
         self.modified = false
@@ -636,7 +637,9 @@ import SwiftyUserDefaults
         coder.encode(self.revisions, forKey:"revisions")
         coder.encode(self.mwl.rawValue, forKey: "mwl")
         coder.encode(self.onesies, forKey: "onesies")
-        coder.encode(self.cacheRefresh.rawValue, forKey: "cacheRefresh")
+        
+        // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
+        coder.encode(self.cacheRefresh ? 1 : 0, forKey: "cacheRefresh")
     }
 }
 
@@ -719,7 +722,7 @@ extension Deck {
             }
         }
         
-        if self.cacheRefresh != .none {
+        if self.cacheRefresh {
             let crReasons = self.checkCacheRefreshRules()
             if crReasons.count > 0 {
                 reasons.append("Invalid for Cache Refresh".localized())
@@ -802,12 +805,11 @@ extension Deck {
     
     // check if this is a valid "Cache Refresh" deck - 1 Core Set, 1 Deluxe, TD, last 2 cycles, current MWL
     private func checkCacheRefreshRules() -> [String] {
-        
-        if self.cacheRefresh == .none {
+        if !self.cacheRefresh {
             return []
         }
         
-        let validCycles = self.cacheRefresh.validCycles
+        let validCycles = PackManager.cacheRefreshCycles
         
         var coreCardsOverQuantity = 0
         var draftUsed = false

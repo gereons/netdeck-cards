@@ -13,12 +13,14 @@ struct Cycle: Unmarshaling {
     let name: String
     let code: String
     let position: Int
+    let size: Int
     let rotated: Bool
  
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
         self.code = try object.value(for: "code")
         self.position = try object.value(for: "position")
+        self.size = try object.value(for: "size")
         self.rotated = try object.value(for: "rotated") ?? false
     }
 }
@@ -82,6 +84,8 @@ class PackManager {
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
     
+    static private(set) var cacheRefreshCycles = [String]()
+    
     fileprivate static var cyclesByCode = [String: Cycle]()     // code -> cycle
     private static var allCycles = [Int: Cycle]()               // position -> cycles
     private(set) static var packsByCode = [String: Pack]()      // code -> pack
@@ -121,6 +125,10 @@ class PackManager {
             return cycle.position * 1000 + pack.position
         }
         return 0
+    }
+    
+    static func packsInCycle(code: String) -> [Pack] {
+        return allPacks.filter { $0.cycleCode == code }
     }
     
     static func disabledPackCodes() -> Set<String> {
@@ -274,8 +282,7 @@ class PackManager {
                 let cards = used == 1 ? "Card".localized() : "Cards".localized()
                 if needed > 1 {
                     result.append(String(format:"%d×%@ - %d %@", needed, pack.name, used, cards))
-                }
-                else {
+                } else {
                     result.append(String(format:"%@ - %d %@", pack.name, used, cards))
                 }
             }
@@ -422,6 +429,15 @@ class PackManager {
                 return c1 < c2
             }
         }
+        
+        // get all "real" cycles and find the last two that have released packs
+        let last2cycles = allCycles.values
+            .filter { $0.size > 1 && !$0.rotated }
+            .filter { packsInCycle(code: $0.code).filter{ $0.released } .count > 0 }
+            .sorted { $0.position > $1.position }
+            .prefix(2)
+        
+        PackManager.cacheRefreshCycles = last2cycles.map { $0.code }
         
         UserDefaults.standard.register(defaults: PackManager.settingsDefaults())
         return true
