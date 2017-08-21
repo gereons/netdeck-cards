@@ -104,26 +104,6 @@ enum MWL: Int {
     }
 }
 
-enum xxCacheRefresh: Int {
-    case none
-    case r2017  // regionals 2017: 1 Core, 1 Deluxe, TD, Flashpoint, Red Sands, MWL 1.2
-    
-    var validCycles: [String] {
-        FIXME("this doesn't work. figure out a new way to do this")
-        switch self {
-        case .none: return []
-        case .r2017: return [ "flashpoint", "red-sand" ]
-        }
-    }
-    
-    var mwl: MWL {
-        switch self {
-        case .none: return .none
-        case .r2017: return .v1_2
-        }
-    }
-}
-
 enum FilterAttribute: Int {
     case mu
     case cost
