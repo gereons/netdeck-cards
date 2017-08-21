@@ -295,7 +295,7 @@ class CardList {
                 predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (ANY aliases CONTAINS[cd] %@)",
                                         text, text, text, text)
             case .name:
-                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (ANY maliases CONTAINS[cd] %@)",
+                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (ANY aliases CONTAINS[cd] %@)",
                                         text, text, text)
                 let ch = text.characters[text.startIndex]
                 if (ch >= "0" && ch <= "9") {

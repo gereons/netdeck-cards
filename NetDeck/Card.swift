@@ -16,9 +16,9 @@ class Card: NSObject, Unmarshaling {
     
     private(set) var code = ""
     private(set) var name = ""                  // localized name of card, used for display
-    private(set) var foldedName = ""            // lowercased, no diactics, for sorting (e.g. "Déjà vu" -> "deja vu")
+    private(set) var foldedName = ""            // lowercased, no diacritics, for sorting (e.g. "Déjà vu" -> "deja vu")
     private(set) var englishName = ""           // english name of card, used for searches
-    private(set) var aliases: Set<String>?
+    private(set) var aliases = [String]()
     private(set) var text = ""
     private(set) var flavor = ""
     private(set) var type = CardType.none
@@ -279,11 +279,7 @@ class Card: NSObject, Unmarshaling {
     }
     
     func addCardAlias(_ alias: String) {
-        if self.aliases == nil {
-            self.aliases = Set([alias])
-        } else {
-            self.aliases?.insert(alias)
-        }
+        self.aliases.append(alias)
     }
     
     // manipulate identity name
