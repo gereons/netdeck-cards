@@ -288,7 +288,7 @@ class CardList {
             predicates.append(predicate)
         }
         
-        if let text = self.text , text.length > 0 {
+        if let text = self.text, text.length > 0 {
             var predicate: NSPredicate
             switch (self.searchScope) {
             case .all:
