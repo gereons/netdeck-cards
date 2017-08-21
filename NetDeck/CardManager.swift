@@ -208,7 +208,7 @@ class CardManager {
                         }
                     }
                     // NSLog("%@ -> %@", card.name, alias)
-                    card.setCardAlias(alias)
+                    card.addCardAlias(alias)
                 }
             }
         }
@@ -216,7 +216,7 @@ class CardManager {
         // add hard-coded aliases
         for (code, alias) in Card.aliases {
             if let card = CardManager.cardBy(code: code) {
-                card.setCardAlias(alias)
+                card.addCardAlias(alias)
             }
         }
     }

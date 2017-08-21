@@ -278,7 +278,7 @@ class Card: NSObject, Unmarshaling {
         }
     }
     
-    func setCardAlias(_ alias: String) {
+    func addCardAlias(_ alias: String) {
         if self.aliases == nil {
             self.aliases = Set([alias])
         } else {
@@ -397,29 +397,29 @@ extension Card {
     ]
     
     static let aliases = [
-        "08034": "Franklin",  // Crick
-        "02085": "HQI",       // HQ Interface
-        "02107": "RDI",       // R&D Interface
-        "06033": "David",     // D4v1d
-        "05039": "USW35",     // Unreg. s&w '35
-        "05039": "SW35",
-        "03035": "LARLA",     // Levy AR Lab Access
-        "04029": "PPVP",      // Prepaid Voicepad
-        "01092": "SSCG",      // Sansan City Grid
-        "03049": "Proco",     // Professional Contacts
-        "02079": "OAI",       // Oversight AI
-        "08009": "Baby",      // Symmetrical Visage
-        "08003": "Pancakes",  // Adjusted Chronotype
-        "08086": "Anita",     // Film Critic
-        "01044": "Mopus",     // Magnum Opus
-        "09007": "Kitty",     // Quantum Predictive Model
-        "10043": "Polop",     // Political Operative
-        "10108": "FIRS",      // Full Immersion RecStudio
-        "11094": "IPB",       // IP Block
-        "07054": "QPT",       // Qianju PT
-        "12088": "NNK",       // Na'Not'K
-        "12088": "Nanotek",
-        "12088": "Nanotech"
+        ("08034", "Franklin"),  // Crick
+        ("02085", "HQI"),       // HQ Interface
+        ("02107", "RDI"),       // R&D Interface
+        ("06033", "David"),     // D4v1d
+        ("05039", "SW35"),
+        ("05039", "USW35"),     // Unreg. s&w '35
+        ("03035", "LARLA"),     // Levy AR Lab Access
+        ("04029", "PPVP"),      // Prepaid Voicepad
+        ("01092", "SSCG"),      // Sansan City Grid
+        ("02079", "OAI"),       // Oversight AI
+        ("03049", "Proco"),     // Professional Contacts
+        ("08009", "Baby"),      // Symmetrical Visage
+        ("08003", "Pancakes"),  // Adjusted Chronotype
+        ("08086", "Anita"),     // Film Critic
+        ("01044", "Mopus"),     // Magnum Opus
+        ("09007", "Kitty"),     // Quantum Predictive Model
+        ("10043", "Polop"),     // Political Operative
+        ("10108", "FIRS"),      // Full Immersion RecStudio
+        ("11094", "IPB"),       // IP Block
+        ("07054", "QPT"),       // Qianju PT
+        ("12088", "NNK"),       // Na'Not'K
+        ("12088", "Nanotek"),
+        ("12088", "Nanotech")
     ]
 
 }
