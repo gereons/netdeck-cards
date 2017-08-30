@@ -44,7 +44,7 @@ import SwiftyUserDefaults
         return Faction.faction2name[faction] ?? "n/a"
     }
     
-    static func initializeFactionNames(_ cards: [Card]) -> Bool {
+    static func initializeFactionNames(_ cards: [Card]) -> (Bool, String) {
         faction2name = [:]
         faction2name[.none] = Constant.kANY
         faction2name[.neutral] = "Neutral".localized()
@@ -63,7 +63,7 @@ import SwiftyUserDefaults
         }
         assert(faction2name.count == expectedNames)
         if faction2name.count != expectedNames {
-            return false
+            return (false, "faction count mismatch")
         }
         
         let common = [ Faction.name(for: .none), Faction.name(for: .neutral) ]
@@ -89,7 +89,7 @@ import SwiftyUserDefaults
         runnerFactionNamesCore.insert(contentsOf: common, at: 0)
         corpFactionNames.insert(contentsOf: common, at: 0)
         
-        return true
+        return (true, "ok")
     }
     
     static func factionsFor(role: Role, packUsage: PackUsage) -> [String] {

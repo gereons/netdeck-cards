@@ -160,8 +160,9 @@ class Card: NSObject, Unmarshaling {
         }
     }
     
-    static func cardsFromJson(_ json: JSONObject, language: String) -> [Card] {
+    static func xxcardsFromJson(_ json: JSONObject, language: String) -> ([Card], String) {
         var cards = [Card]()
+        var msg = ""
 
         imgSrcTemplate = try! json.value(for: "imageUrlTemplate")
         currentLanguage = language
@@ -169,9 +170,23 @@ class Card: NSObject, Unmarshaling {
             cards = try json.value(for: "data")
         } catch let error {
             print("\(error)")
+            msg = "\(error)"
         }
         
-        return cards
+        return (cards, msg)
+    }
+    
+    static func cardsFromJson(_ json: JSONObject, language: String) -> [Card] {
+        do {
+            imgSrcTemplate = try! json.value(for: "imageUrlTemplate")
+            currentLanguage = language
+        
+            let cards: [Card] = try json.value(for: "data", discardingErrors: true)
+            return cards
+        } catch let error {
+            print("\(error)")
+            return []
+        }
     }
     
     override private init() {}

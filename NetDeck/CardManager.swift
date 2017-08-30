@@ -282,7 +282,8 @@ class CardManager {
         if let data = FileManager.default.contents(atPath: filename) {
             do {
                 let cardsJson = try JSONParser.JSONObjectWithData(data)
-                return setupFromJson(cardsJson, language: language)
+                let (ok, _) = setupFromJson(cardsJson, language: language)
+                return ok
             } catch let error {
                 print("\(error)")
                 return false
@@ -292,13 +293,14 @@ class CardManager {
         return false
     }
     
-    static func setupFromNetrunnerDb(_ cardsData: Data, language: String) -> Bool {
+    static func setupFromNetrunnerDb(_ cardsData: Data, language: String) -> (Bool, String) {
         var ok = false
+        var msg = ""
         do {
             let cardsJson = try JSONParser.JSONObjectWithData(cardsData)
-            ok = setupFromJson(cardsJson, language: language)
+            (ok, msg) = setupFromJson(cardsJson, language: language)
             if !ok {
-                return false
+                return (false, msg)
             }
             
             let filename = self.filename()
@@ -306,15 +308,16 @@ class CardManager {
             AppDelegate.excludeFromBackup(filename)
         } catch let error {
             print("\(error)")
+            msg = "write: \(error)"
             ok = false
         }
         
-        return ok
+        return (ok, msg)
     }
     
-    static func setupFromJson(_ cards: JSONObject, language: String) -> Bool {
+    static func setupFromJson(_ cards: JSONObject, language: String) -> (Bool, String) {
         if !NRDB.validJsonResponse(json: cards) {
-            return false
+            return (false, "invalid response")
         }
         
         CardManager.initialize()
@@ -327,17 +330,20 @@ class CardManager {
         
         let cards = Array(allKnownCards.values)
         if cards.count == 0 {
-            return false
+            return (false, "no cards. parsed=\(parsedCards.count)")
         }
         
         CardManager.setSubtypes(cards)
         CardManager.addCardAliases(cards)
         
-        if !Faction.initializeFactionNames(cards) {
-            return false
+        var (ok, msg) = Faction.initializeFactionNames(cards)
+        if !ok {
+            return (false, "faction init failed: \(msg)")
         }
-        if !CardType.initializeCardType(cards) {
-            return false
+        
+        (ok, msg) = CardType.initializeCardType(cards)
+        if !ok {
+            return (false, "type init failed: \(msg)")
         }
         
         // sort identities by faction and name
@@ -349,7 +355,7 @@ class CardManager {
             })
         }
         
-        return true
+        return (true, "ok")
     }
     
     static func fileExists() -> Bool {

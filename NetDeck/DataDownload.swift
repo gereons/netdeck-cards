@@ -117,31 +117,38 @@ class DataDownload: NSObject {
         }
         
         group.notify(queue: DispatchQueue.main) {
-            // print("dl finished. stopped=\(self.downloadStopped), \(results.count) results")
-            // for a in results.keys {
-            //    print("  \(a)")
-            // }
+            var debugMsg = ""
             
+//            debugMsg = "dl finished. stopped=\(self.downloadStopped), \(results.count) results\n"
+//            for a in results.keys {
+//                debugMsg += "dl ok for \(a)\n"
+//            }
+
             var ok = !self.downloadStopped && results.count == requests.count
             if ok {
                 ok = PackManager.setupFromNetrunnerDb(results[.cycles]!, results[.packs]!, language: language)
                 // print("packs setup ok=\(ok)")
+                debugMsg += "cycles/packs ok=\(ok)\n"
                 if ok {
-                    ok = CardManager.setupFromNetrunnerDb(results[.cards]!, language: language)
+                    var msg = ""
+                    (ok, msg) = CardManager.setupFromNetrunnerDb(results[.cards]!, language: language)
                     // print("cards setup ok=\(ok)")
+                    debugMsg += "cards ok=\(ok): \(msg)\n"
                 }
                 if ok {
                     ok = PrebuiltManager.setupFromNetrunnerDb(results[.prebuiltDecks]!, language: language)
                     // print("prebuilt setup ok = \(ok)")
+                    debugMsg += "prebuilts ok=\(ok)\n"
                 }
                 CardManager.setNextDownloadDate()
             }
             
+            print(debugMsg)
             if let alert = self.sdcAlert {
                 alert.dismiss(animated: false) 
                 if !ok {
-                    let msg = "Unable to download cards at this time. Please try again later.".localized()
-                    UIAlertController.alert(withTitle: nil, message: msg, button: "OK")
+                    // let msg = "Unable to download cards at this time. Please try again later.".localized()
+                    UIAlertController.alert(withTitle: "Download Error", message: debugMsg, button: "OK")
                 }
             }
             self.sdcAlert = nil
