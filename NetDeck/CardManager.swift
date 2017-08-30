@@ -323,7 +323,7 @@ class CardManager {
         CardManager.initialize()
         
         // parse data
-        let parsedCards = Card.cardsFromJson(cards, language: language)
+        let (parsedCards, parseError) = Card.cardsFromJson(cards, language: language)
         for card in parsedCards {
             CardManager.add(card: card)
         }
@@ -355,7 +355,7 @@ class CardManager {
             })
         }
         
-        return (true, "ok")
+        return (true, parseError)
     }
     
     static func fileExists() -> Bool {

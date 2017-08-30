@@ -146,9 +146,9 @@ class DataDownload: NSObject {
             print(debugMsg)
             if let alert = self.sdcAlert {
                 alert.dismiss(animated: false) 
-                if !ok {
+                if true {
                     // let msg = "Unable to download cards at this time. Please try again later.".localized()
-                    UIAlertController.alert(withTitle: "Download Error", message: debugMsg, button: "OK")
+                    UIAlertController.alert(withTitle: "Download Result", message: debugMsg, button: "OK")
                 }
             }
             self.sdcAlert = nil

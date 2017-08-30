@@ -8,13 +8,13 @@ PODS:
   - Crashlytics (3.8.5):
     - Fabric (~> 1.6.3)
   - DeviceKit (1.2.3)
-  - DTCoreText (1.6.20):
-    - DTCoreText/Core (= 1.6.20)
+  - DTCoreText (1.6.21):
+    - DTCoreText/Core (= 1.6.21)
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTCoreText/Core (1.6.20):
+  - DTCoreText/Core (1.6.21):
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
@@ -63,7 +63,7 @@ SPEC CHECKSUMS:
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
   DeviceKit: f33cbc6e67d9bb416e42dedc647557c7c2f6d3d7
-  DTCoreText: 51904f2374af443e0d270d6fdc76035ab6f9ef8a
+  DTCoreText: e5d688cffc9f6a61eddd1a4f94e2046851230de3
   DTFoundation: 26a164ef510877387906fb92bff524a792db4bf8
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28

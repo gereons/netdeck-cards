@@ -160,7 +160,7 @@ class Card: NSObject, Unmarshaling {
         }
     }
     
-    static func xxcardsFromJson(_ json: JSONObject, language: String) -> ([Card], String) {
+    static func old_cardsFromJson(_ json: JSONObject, language: String) -> ([Card], String) {
         var cards = [Card]()
         var msg = ""
 
@@ -176,16 +176,19 @@ class Card: NSObject, Unmarshaling {
         return (cards, msg)
     }
     
-    static func cardsFromJson(_ json: JSONObject, language: String) -> [Card] {
+    static func cardsFromJson(_ json: JSONObject, language: String) -> ([Card], String) {
+
+        let (_, error) = old_cardsFromJson(json, language: language)
+
         do {
             imgSrcTemplate = try! json.value(for: "imageUrlTemplate")
             currentLanguage = language
         
             let cards: [Card] = try json.value(for: "data", discardingErrors: true)
-            return cards
+            return (cards, error)
         } catch let error {
             print("\(error)")
-            return []
+            return ([], "\(error)")
         }
     }
     
