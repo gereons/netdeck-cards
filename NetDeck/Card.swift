@@ -161,17 +161,16 @@ class Card: NSObject, Unmarshaling {
     }
     
     static func cardsFromJson(_ json: JSONObject, language: String) -> [Card] {
-        var cards = [Card]()
-
-        imgSrcTemplate = try! json.value(for: "imageUrlTemplate")
-        currentLanguage = language
         do {
-            cards = try json.value(for: "data")
+            imgSrcTemplate = try! json.value(for: "imageUrlTemplate")
+            currentLanguage = language
+        
+            let cards: [Card] = try json.value(for: "data", discardingErrors: true)
+            return cards
         } catch let error {
             print("\(error)")
+            return []
         }
-        
-        return cards
     }
     
     override private init() {}

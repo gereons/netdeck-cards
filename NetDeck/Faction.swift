@@ -95,7 +95,7 @@ import SwiftyUserDefaults
     static func factionsFor(role: Role, packUsage: PackUsage) -> [String] {
         assert(role != .none, "no role")
         
-        if (role == .runner) {
+        if role == .runner {
             if packUsage == .selected {
                 let dataDestinyAllowed = Defaults[.useDataDestiny]
                 return dataDestinyAllowed ? runnerFactionNamesAll : runnerFactionNamesCore

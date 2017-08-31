@@ -420,7 +420,7 @@ class NRDB: NSObject {
 extension MarshaledObject {
     /// try to get a localized property for `key`
     func localized(for key: KeyType, language: String) throws -> String {
-        if let loc: String = try self.value(for: "_locale." + language + "." + key.stringValue), loc.length > 0 {
+        if let loc: String = try? self.value(for: "_locale." + language + "." + key.stringValue), loc.length > 0 {
             return loc
         } else {
             return try self.value(for: key) ?? ""

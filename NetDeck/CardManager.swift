@@ -306,7 +306,6 @@ class CardManager {
             AppDelegate.excludeFromBackup(filename)
         } catch let error {
             print("\(error)")
-            ok = false
         }
         
         return ok
@@ -333,10 +332,13 @@ class CardManager {
         CardManager.setSubtypes(cards)
         CardManager.addCardAliases(cards)
         
-        if !Faction.initializeFactionNames(cards) {
+        var ok = Faction.initializeFactionNames(cards)
+        if !ok {
             return false
         }
-        if !CardType.initializeCardType(cards) {
+        
+        ok = CardType.initializeCardType(cards)
+        if !ok {
             return false
         }
         

@@ -119,9 +119,9 @@ class DataDownload: NSObject {
         group.notify(queue: DispatchQueue.main) {
             // print("dl finished. stopped=\(self.downloadStopped), \(results.count) results")
             // for a in results.keys {
-            //    print("  \(a)")
+            //     print("dl ok for \(a)")
             // }
-            
+
             var ok = !self.downloadStopped && results.count == requests.count
             if ok {
                 ok = PackManager.setupFromNetrunnerDb(results[.cycles]!, results[.packs]!, language: language)
@@ -141,7 +141,7 @@ class DataDownload: NSObject {
                 alert.dismiss(animated: false) 
                 if !ok {
                     let msg = "Unable to download cards at this time. Please try again later.".localized()
-                    UIAlertController.alert(withTitle: nil, message: msg, button: "OK")
+                    UIAlertController.alert(withTitle: "Download Error".localized(), message: msg, button: "OK")
                 }
             }
             self.sdcAlert = nil

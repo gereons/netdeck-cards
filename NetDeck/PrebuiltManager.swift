@@ -153,7 +153,7 @@ class PrebuiltManager {
         }
         
         do {
-            PrebuiltManager.allPrebuilts = try prebuilts.value(for: "data")
+            PrebuiltManager.allPrebuilts = try prebuilts.value(for: "data", discardingErrors: true)
         } catch let error {
             print("\(error)")
             return false

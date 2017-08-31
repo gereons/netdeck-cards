@@ -49,7 +49,7 @@ import Foundation
             }
         }
         assert(type2name.count == expectedTypes)
-        if type2name.count != expectedTypes {
+        if type2name.count != type2name.count {
             return false
         }
         

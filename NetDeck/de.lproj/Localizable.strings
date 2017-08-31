@@ -121,6 +121,7 @@
 "NetrunnerDB is invalid" = "NetrunnerDB ist nicht OK";
 "NetrunnerDB not tested" = "NetrunnerDB nicht getestet";
 "Please enter a Server Name" = "Bitte gibt einen Servernamen ein";
+"Download Error" = "Download-Fehler";
 
 // identity selection
 "Choose Identity" = "Identität wählen";
