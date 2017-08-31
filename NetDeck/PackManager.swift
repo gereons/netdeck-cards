@@ -403,13 +403,13 @@ class PackManager {
         }
         
         do {
-            let cycles: [Cycle] = try cycles.value(for: "data")
+            let cycles: [Cycle] = try cycles.value(for: "data", discardingErrors: true)
             for c in cycles {
                 cyclesByCode[c.code] = c
                 allCycles[c.position] = c
             }
             
-            let packs: [Pack] = try packs.value(for: "data")
+            let packs: [Pack] = try packs.value(for: "data", discardingErrors: true)
             for p in packs {
                 packsByCode[p.code] = p
                 allPacks.append(p)

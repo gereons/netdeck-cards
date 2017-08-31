@@ -30,13 +30,13 @@ import Foundation
     static var corpTypeNames = [String]()
     private(set) static var allTypes: TableData<String>!
     
-    static func initializeCardType(_ cards: [Card]) -> (Bool, String) {
+    static func initializeCardType(_ cards: [Card]) -> Bool {
         runnerTypeNames = []
         corpTypeNames = []
         
         assert(Codes.code2Type.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
         if Codes.code2Type.count != runnerTypes.count + corpTypes.count + 1 {
-            return (false, "type count mismatch: \(Codes.code2Type.count) != \(runnerTypes.count + corpTypes.count + 1)")
+            return false
         }
         
         type2name.removeAll()
@@ -50,7 +50,7 @@ import Foundation
         }
         assert(type2name.count == expectedTypes)
         if type2name.count != type2name.count {
-            return (false, "names count mismatch: \(type2name.count) != \(type2name.count)")
+            return false
         }
         
         for type in runnerTypes {
@@ -72,7 +72,7 @@ import Foundation
         runnerTypeNames.insert(Constant.kANY, at: 0)
         corpTypeNames.insert(Constant.kANY, at: 0)
         
-        return (true, "ok")
+        return true
     }
     
     static func name(for type: CardType) -> String {
