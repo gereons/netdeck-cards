@@ -131,6 +131,9 @@
 		3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440F71854EF720051D4B0 /* DeckListViewController.xib */; };
 		3AA463D51BC0042600591647 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA463D31BC0042600591647 /* BrowserViewController.xib */; };
 		3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA50F351C0A2FC8007D5296 /* Deck.swift */; };
+		3AA850721F59E46200B37CD1 /* TipJarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA850701F59E46200B37CD1 /* TipJarViewController.swift */; };
+		3AA850731F59E46200B37CD1 /* TipJarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA850711F59E46200B37CD1 /* TipJarViewController.xib */; };
+		3AA850751F59E8C900B37CD1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA850741F59E8C900B37CD1 /* StoreKit.framework */; };
 		3AA8EC2A1CC3A05E00370A26 /* DeckHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8EC281CC3A05E00370A26 /* DeckHistoryViewController.swift */; };
 		3AA8EC2B1CC3A05E00370A26 /* DeckHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA8EC291CC3A05E00370A26 /* DeckHistoryViewController.xib */; };
 		3AA8EC2C1CC3AA8200370A26 /* DeckHistorySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A531B281A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.swift */; };
@@ -331,6 +334,9 @@
 		3AA440F71854EF720051D4B0 /* DeckListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckListViewController.xib; sourceTree = "<group>"; };
 		3AA463D31BC0042600591647 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
 		3AA50F351C0A2FC8007D5296 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		3AA850701F59E46200B37CD1 /* TipJarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipJarViewController.swift; sourceTree = "<group>"; };
+		3AA850711F59E46200B37CD1 /* TipJarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TipJarViewController.xib; sourceTree = "<group>"; };
+		3AA850741F59E8C900B37CD1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3AA8EC281CC3A05E00370A26 /* DeckHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckHistoryViewController.swift; sourceTree = "<group>"; };
 		3AA8EC291CC3A05E00370A26 /* DeckHistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckHistoryViewController.xib; sourceTree = "<group>"; };
 		3AAD7D781D930154001821F5 /* NetDeck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NetDeck.entitlements; sourceTree = "<group>"; };
@@ -393,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDF6E1A45BDD2269ED47E09D /* Pods_NetDeck.framework in Frameworks */,
+				3AA850751F59E8C900B37CD1 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +437,7 @@
 		3A3622601849320C007F2854 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3AA850741F59E8C900B37CD1 /* StoreKit.framework */,
 				8171B5D03856602872A9AECE /* Pods_NetDeck.framework */,
 			);
 			name = Frameworks;
@@ -665,6 +673,8 @@
 				3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */,
 				3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */,
 				3A8532781855084900507B9A /* InAppSettings.bundle */,
+				3AA850701F59E46200B37CD1 /* TipJarViewController.swift */,
+				3AA850711F59E46200B37CD1 /* TipJarViewController.xib */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -936,7 +946,7 @@
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Keychain = {
 								enabled = 1;
@@ -990,6 +1000,7 @@
 				3A14E3A01E5F720600F0D4CB /* StartupViewController.xib in Resources */,
 				3A4E0F911DBAA56E00C49FD4 /* netrunner.ttf in Resources */,
 				3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */,
+				3AA850731F59E46200B37CD1 /* TipJarViewController.xib in Resources */,
 				3A1B32251D87229800155454 /* CardFilterCell.xib in Resources */,
 				3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */,
 				3AA8EC2B1CC3A05E00370A26 /* DeckHistoryViewController.xib in Resources */,
@@ -1237,6 +1248,7 @@
 				3A37F4A91E2FE99A005D7456 /* CardFilterViewController.swift in Sources */,
 				3A3AA9A91CE13011003F21EE /* DebugTimer.swift in Sources */,
 				3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */,
+				3AA850721F59E46200B37CD1 /* TipJarViewController.swift in Sources */,
 				3A3C1E161BF7525B000311FA /* Faction.swift in Sources */,
 				3A3C1E141BF74DAF000311FA /* TableData.swift in Sources */,
 				3AEEBB671C00C9FF00CB6053 /* CardManager.swift in Sources */,

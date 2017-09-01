@@ -220,6 +220,22 @@
 			<key>Key</key>
 			<string>about_hide_2</string>
 		</dict>
+        <dict>
+            <key>Title</key>
+            <string>Tip Jar</string>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSChildPaneSpecifier</string>
+            <key>Title</key>
+            <string>Tip Jar</string>
+            <key>IASKViewControllerClass</key>
+            <string>TipJarViewController</string>
+            <key>IASKViewControllerSelector</key>
+            <string>init</string>
+        </dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

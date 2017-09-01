@@ -58,6 +58,10 @@
 "Write a Review" = "Rezension schreiben";
 "Contact Developers" = "Mail an Entwickler";
 
+// tip jar
+"Tip Jar" = "Trinkgeld";
+"If you find Net Deck useful, please consider supporting the development of the app by leaving a tip in our tip jar.\n\nYour support is greatly appreciated!" = "Wenn du Net Deck nützlich findest, wäre es toll wenn du die Weiterentwicklung der App mit einem Trinkgeld unterstützen würdest.\n\nHerzlichen Dank!";
+
 // deck list
 "Save" = "Speichern";
 "Saving..." = "Speichern...";
