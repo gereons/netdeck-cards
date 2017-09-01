@@ -414,7 +414,8 @@ extension Card {
         ("07054", "QPT"),       // Qianju PT
         ("12088", "NNK"),       // Na'Not'K
         ("12088", "Nanotek"),
-        ("12088", "Nanotech")
+        ("12088", "Nanotech"),
+        ("13038", "UVC")        // Ultraviolet Clearance
     ]
 
 }
