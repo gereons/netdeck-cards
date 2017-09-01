@@ -115,6 +115,9 @@ extension DefaultsKeys {
     static let browserPacks = DefaultsKey<PackUsage>("browserPacks")
     /// which packs to use in deck builder
     static let deckbuilderPacks = DefaultsKey<PackUsage>("deckBuilderPacks")
+    
+    /// iphone browser hint shown
+    static let browserHintShown = DefaultsKey<Bool>("browserHintShown")
 }
 
 // add type-safe registerDefault methods

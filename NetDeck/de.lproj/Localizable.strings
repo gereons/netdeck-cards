@@ -49,6 +49,8 @@
 "No Decks" = "Keine Decks";
 "Your decks will be shown here" = "Hier werden deine Decks angezeigt";
 
+"Net Deck also offers a card browser.\nTap the title to open it." = "Net Deck enthält auch einen Karten-Browser. Tap auf den Titel um ihn zu öffnen.";
+
 // about
 "About Net Deck %@" = "Über Net Deck %@";
 "Feedback" = "Feedback";

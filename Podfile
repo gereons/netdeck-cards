@@ -20,6 +20,7 @@ target 'NetDeck' do
     pod 'SwiftKeychainWrapper'
     pod 'Marshal'
     pod 'SDCAlertView'
+    pod 'EasyTipView'
     pod 'SwiftyUserDefaults'
 end
 

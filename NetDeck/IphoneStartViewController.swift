@@ -9,6 +9,7 @@
 import UIKit
 import DZNEmptyDataSet
 import SwiftyUserDefaults
+import EasyTipView
 
 class IphoneStartViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, StartViewController {
 
@@ -19,14 +20,15 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     
     private var addButton: UIBarButtonItem!
     private var importButton: UIBarButtonItem!
-    private var settingsButton: UIBarButtonItem!
+    fileprivate var settingsButton: UIBarButtonItem!
     private var sortButton: UIBarButtonItem!
-    private var titleButton: UIButton!
+    fileprivate var titleButton: UIButton!
     
     private var deckListSort = DeckListSort.byName
     private var filterText = ""
     
     private var keyboardObserver: KeyboardObserver!
+    fileprivate var tipView: EasyTipView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +62,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         self.sortButton = UIBarButtonItem(image: UIImage(named: "890-sort-ascending-toolbar"), style: .plain, target: self, action: #selector(self.changeSort(_:)))
         
         self.titleButton = UIButton(type: .system)
+        self.titleButton.frame = CGRect(x: 0, y: 0, width: 0, height: 33)
         self.titleButton.setTitle("Net Deck", for: .normal)
         self.titleButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
         self.titleButton.addTarget(self, action: #selector(self.openBrowser), for: .touchUpInside)
@@ -92,6 +95,15 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidAppear(animated)
         
         let _ = CardUpdateCheck.checkCardUpdateAvailable(self)
+        
+        self.titleButton.sizeToFit()
+        self.showTipView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.dismissTipView()
     }
     
     func initializeDecks() {
@@ -454,3 +466,34 @@ extension IphoneStartViewController: KeyboardHandling {
     }
 }
 
+// MARK: - tip view
+extension IphoneStartViewController {
+    
+    fileprivate func showTipView() {
+        if CardManager.cardsAvailable && !Defaults[.browserHintShown] {
+            self.presentTipView()
+            Defaults[.browserHintShown] = true
+        }
+    }
+    
+    private func presentTipView() {
+        var prefs = EasyTipView.Preferences()
+        prefs.drawing.font = UIFont.systemFont(ofSize: 13, weight: UIFontWeightThin)
+        prefs.drawing.cornerRadius = 5
+        prefs.drawing.foregroundColor = .white
+        prefs.drawing.backgroundColor = .darkGray
+        prefs.drawing.arrowPosition = .top
+        
+        let browserTip = "Net Deck also offers a card browser.\nTap the title to open it.".localized()
+        
+        self.tipView = EasyTipView(text: browserTip, preferences: prefs)
+        
+        let view = self.titleButton
+        
+        self.tipView?.show(animated: true, forView: view!)
+    }
+    
+    fileprivate func dismissTipView() {
+        self.tipView?.dismiss()
+    }
+}
