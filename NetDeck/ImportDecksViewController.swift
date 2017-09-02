@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class ImportDecksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class ImportDecksViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -21,19 +21,20 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     
     private var runnerDecks = [Deck]()
     private var corpDecks = [Deck]()
-    private var filteredDecks = [[Deck]]()
+    fileprivate var filteredDecks = [[Deck]]()
     
     private var importButton: UIBarButtonItem!
     private var spacer: UIBarButtonItem!
     private var sortButton: UIBarButtonItem!
     private var barButtons = [UIBarButtonItem]()
     private var alert: UIAlertController?
+    private var refreshControl: UIRefreshControl!
     
-    private var dateFormatter = DateFormatter()
-    private var deckListSort = DeckListSort.byDate
+    fileprivate var dateFormatter = DateFormatter()
+    fileprivate var deckListSort = DeckListSort.byDate
     
-    private var filterText = ""
-    private var searchScope = DeckSearchScope.all
+    fileprivate var filterText = ""
+    fileprivate var searchScope = DeckSearchScope.all
     
     convenience init() {
         self.init(nibName: nil, bundle: nil)
@@ -94,6 +95,15 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         self.spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         self.spacer.width = 15
         self.barButtons = Device.isIphone ? [ self.importButton, self.sortButton ] : [ self.importButton, self.spacer, self.sortButton ]
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: #selector(self.handleRefresh(_:)), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            self.tableView.refreshControl = refreshControl
+        } else {
+            // self.tableView.backgroundView = refreshControl
+            self.tableView.addSubview(self.refreshControl)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -195,8 +205,6 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         self.runnerDecks.removeAll()
         self.corpDecks.removeAll()
         
-        SVProgressHUD.show(withStatus: "Loading Decks...".localized())
-        
         NRDB.sharedInstance.decklist { decks in
             SVProgressHUD.dismiss()
             
@@ -214,6 +222,8 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             self.filterDecks()
             self.tableView.reloadData()
             self.navigationItem.rightBarButtonItems = self.barButtons
+            
+            self.refreshControl.endRefreshing()
         }
     }
     
@@ -267,6 +277,8 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
             
             self.readDecksFromDropbox(directory)
             self.navigationItem.rightBarButtonItems = self.barButtons
+            
+            self.refreshControl.endRefreshing()
         }
     }
     
@@ -388,8 +400,18 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    // MARK: - search bar
+    func handleRefresh(_ sender: UIRefreshControl) {
+        if (self.source == .dropbox) {
+            self.getDropboxDecks()
+        } else {
+            self.getNetrunnerDbDecks()
+        }
+    }
     
+}
+
+// MARK: - search bar
+extension ImportDecksViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.filterText = searchText
         self.filterDecks()
@@ -419,9 +441,10 @@ class ImportDecksViewController: UIViewController, UITableViewDataSource, UITabl
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-    
+}
     // MARK: - tableview
-    
+
+extension ImportDecksViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.filteredDecks.count
     }
