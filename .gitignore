@@ -4,3 +4,4 @@ xcshareddata/
 .Trashes
 *~.nib
 Pods/
+fastlane/report.xml
