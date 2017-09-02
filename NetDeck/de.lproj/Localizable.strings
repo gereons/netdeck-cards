@@ -60,7 +60,9 @@
 
 // tip jar
 "Tip Jar" = "Trinkgeld";
-"If you find Net Deck useful, please consider supporting the development of the app by leaving a tip in our tip jar.\n\nYour support is greatly appreciated!" = "Wenn du Net Deck nützlich findest, wäre es toll wenn du die Weiterentwicklung der App mit einem Trinkgeld unterstützen würdest.\n\nHerzlichen Dank!";
+"If you find Net Deck useful, please consider supporting the development of the app by leaving a tip in our tip jar.\n\nYour support is greatly appreciated!" = "Wenn du Net Deck nützlich findest, wäre es toll wenn du die Weiterentwicklung der App mit einem Trinkgeld unterstützt.\n\nHerzlichen Dank!";
+"Tipping..." = "";
+"Thank you!" = "Danke schön!";
 
 // deck list
 "Save" = "Speichern";

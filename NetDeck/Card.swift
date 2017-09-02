@@ -415,7 +415,8 @@ extension Card {
         ("12088", "NNK"),       // Na'Not'K
         ("12088", "Nanotek"),
         ("12088", "Nanotech"),
-        ("13038", "UVC")        // Ultraviolet Clearance
+        ("13038", "UVC"),       // Ultraviolet Clearance
+        ("11074", "Penguins"),  // Hasty Relocation
     ]
 
 }

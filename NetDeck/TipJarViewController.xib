@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TipJarViewController" customModule="NetDeck" customModuleProvider="target">
             <connections>
+                <outlet property="spinner" destination="71o-kk-XAs" id="3n3-uP-mVp"/>
                 <outlet property="tip1Button" destination="Q02-bw-ldq" id="avd-gP-fqh"/>
                 <outlet property="tip2Button" destination="c6w-ZC-eNa" id="jRs-yw-yxb"/>
                 <outlet property="tip3Button" destination="OPo-Rh-Npc" id="FnV-dJ-uxK"/>
@@ -57,14 +58,19 @@
                                 <action selector="tipButtonTapped:" destination="-1" eventType="touchUpInside" id="DWr-WG-ftN"/>
                             </connections>
                         </button>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="71o-kk-XAs">
+                            <rect key="frame" x="374" y="127" width="20" height="20"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="Q02-bw-ldq" firstAttribute="top" secondItem="hgn-H4-7un" secondAttribute="bottom" constant="20" id="GdT-Ws-WuM"/>
                         <constraint firstItem="c6w-ZC-eNa" firstAttribute="top" secondItem="Q02-bw-ldq" secondAttribute="bottom" constant="20" id="I76-zs-CXB"/>
                         <constraint firstItem="Q02-bw-ldq" firstAttribute="leading" secondItem="w0p-hB-eu8" secondAttribute="leading" constant="16" id="RLV-SH-ByV"/>
+                        <constraint firstItem="71o-kk-XAs" firstAttribute="top" secondItem="hgn-H4-7un" secondAttribute="bottom" constant="26" id="RXh-xH-rUh"/>
                         <constraint firstItem="OPo-Rh-Npc" firstAttribute="leading" secondItem="w0p-hB-eu8" secondAttribute="leading" constant="16" id="SZa-JA-NGi"/>
                         <constraint firstAttribute="trailing" secondItem="hgn-H4-7un" secondAttribute="trailing" constant="16" id="TgV-tJ-l5a"/>
+                        <constraint firstItem="71o-kk-XAs" firstAttribute="centerX" secondItem="w0p-hB-eu8" secondAttribute="centerX" id="ilK-4M-i26"/>
                         <constraint firstItem="hgn-H4-7un" firstAttribute="top" secondItem="w0p-hB-eu8" secondAttribute="top" constant="80" id="pNN-Fu-yBS"/>
                         <constraint firstItem="c6w-ZC-eNa" firstAttribute="leading" secondItem="w0p-hB-eu8" secondAttribute="leading" constant="16" id="scX-st-k1J"/>
                         <constraint firstItem="hgn-H4-7un" firstAttribute="leading" secondItem="w0p-hB-eu8" secondAttribute="leading" constant="16" id="tIj-6s-vTN"/>

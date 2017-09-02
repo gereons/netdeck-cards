@@ -8,6 +8,7 @@
 
 import UIKit
 import StoreKit
+import SVProgressHUD
 
 enum Tip: String {
     case generous = "org.steffens.NRDB.tip.1"
@@ -29,6 +30,8 @@ class TipJarViewController: UIViewController {
     @IBOutlet weak var tip1Button: UIButton!
     @IBOutlet weak var tip2Button: UIButton!
     @IBOutlet weak var tip3Button: UIButton!
+    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     fileprivate var tipMap = [Tip: UIButton]()
     fileprivate var productsMap = [Tip: SKProduct]()
@@ -75,6 +78,8 @@ class TipJarViewController: UIViewController {
 
         let payment = SKPayment(product: product)
         defaultQueue.add(payment)
+        
+        SVProgressHUD.show(withStatus: "Tipping...".localized())
     }
 
     private func fetchAvailableProducts() {
@@ -89,12 +94,10 @@ class TipJarViewController: UIViewController {
 extension TipJarViewController: SKProductsRequestDelegate {
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        let count = response.products.count
-        if count > 0 {
-            
+        self.spinner.stopAnimating()
+        if response.products.count > 0 {
             response.products.forEach { product in
-                print("found \(product.productIdentifier) \(product.price) \(product.priceLocale)")
-                
+                // print("found \(product.productIdentifier) \(product.price) \(product.priceLocale)")
                 print("\(product.localizedTitle)")
                 
                 let fmt = NumberFormatter()
@@ -112,7 +115,7 @@ extension TipJarViewController: SKProductsRequestDelegate {
                 }
             }
          } else {
-            print("Nothing found in the store")
+            self.titleLabel.text! += "\n\n" + "Can't get data from the App Store".localized()
         }
     }
 
@@ -126,12 +129,15 @@ extension TipJarViewController: SKPaymentTransactionObserver {
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         
+        SVProgressHUD.dismiss()
+        
         for transaction in transactions {
             let id = transaction.payment.productIdentifier
             
             switch transaction.transactionState {
             case .purchased:
                 print("Purchased \(id)")
+                SVProgressHUD.showSuccess(withStatus: "Thank you!".localized())
                 SKPaymentQueue.default().finishTransaction(transaction)
                 
             case .purchasing:
