@@ -7,7 +7,8 @@
 "Update Card Data Now" = "Karten-Daten jetzt aktualisieren";
 "Update Card Images Now" = "Karten-Bilder jetzt aktualisieren";
 "Download missing Card Images Now" = "Fehlende Karten-Bilder jetzt laden";
-"Clear All Cached Data" = "Cache löschen";
+"Clear All Cached Data" = "Daten-Cache löschen";
+"Clear All Cached Images" = "Image-Cache löschen";
 
 "Expert Settings" = "Experten-Einstellungen";
 "API Settings" = "API-Einstellungen";

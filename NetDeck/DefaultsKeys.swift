@@ -195,6 +195,7 @@ struct IASKButtons {
     static let downloadImagesNow = "downloadImagesNow"
     static let downloadMissingImages = "downloadMissingImagesNow"
     static let clearCache = "clearCache"
+    static let clearImageCache = "clearImageCache"
     static let refreshAuthNow = "refreshAuthNow"
     static let testAPI = "test_api"
 }

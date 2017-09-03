@@ -62,10 +62,10 @@ class SettingsDelegate: IASKSettingsDelegate {
             hiddenKeys.formUnion([ "about_hide_1", "about_hide_2" ])
         }
         
-        if BuildConfig.release {
+        if BuildConfig.debug {
             hiddenKeys.formUnion([
                 DefaultsKeys.nrdbTokenExpiry._key, DefaultsKeys.lastBackgroundFetch._key, DefaultsKeys.lastRefresh._key,
-                IASKButtons.refreshAuthNow
+                IASKButtons.refreshAuthNow, IASKButtons.clearImageCache, IASKButtons.downloadMissingImages, IASKButtons.downloadImagesNow
             ])
         }
 
@@ -209,7 +209,6 @@ class SettingsDelegate: IASKSettingsDelegate {
             let alert = UIAlertController.alert(title: nil, message: "Clear Cache? You will need to re-download all data.".localized())
             alert.addAction(UIAlertAction(title: "No".localized(), style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes".localized(), style: .default) { action in
-                ImageCache.sharedInstance.clearCache()
                 CardManager.removeFiles()
                 PackManager.removeFiles()
                 PrebuiltManager.removeFiles()
@@ -218,6 +217,14 @@ class SettingsDelegate: IASKSettingsDelegate {
                 self.refresh()
                 
                 NotificationCenter.default.post(name: Notifications.loadCards, object: self)
+            })
+            
+            alert.show()
+        case IASKButtons.clearImageCache:
+            let alert = UIAlertController.alert(title: nil, message: "Clear Image Cache? You will need to re-download all images.".localized())
+            alert.addAction(UIAlertAction(title: "No".localized(), style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes".localized(), style: .default) { action in
+                ImageCache.sharedInstance.clearCache()
             })
             
             alert.show()

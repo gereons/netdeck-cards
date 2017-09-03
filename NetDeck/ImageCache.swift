@@ -84,7 +84,7 @@ class ImageCache: NSObject {
     // log of all current in-flight requests
     typealias ImageCallback = (Card, UIImage, Bool) -> Void
     private var imagesInFlight = [String: [ImageCallback] ]()
-
+    
     private override init() {
         super.init()
     
@@ -281,6 +281,8 @@ class ImageCache: NSObject {
     }
     
     func clearCache() {
+        guard BuildConfig.debug else { return }
+        
         self.lastModifiedDates.removeAll()
         self.nextCheckDates.removeAll()
         self.unavailableImages.removeAll()
@@ -290,6 +292,8 @@ class ImageCache: NSObject {
         Defaults[.unavailableImages] = Array(self.unavailableImages)
         
         self.removeCacheDirectory()
+        URLCache.shared.removeAllCachedResponses()
+        
         self.memCache.removeAll()
     }
     
@@ -321,7 +325,7 @@ class ImageCache: NSObject {
         
         var img = image
         self.NLOG("save img for %@", key)
-        if img.size.width > CGFloat(ImageCache.width) {
+        if img.size.width != CGFloat(ImageCache.width) {
             // rescale image to 300x418 and save the scaled-down version
             if let newImg = self.scale(image: img, toSize: CGSize(width: ImageCache.width, height: ImageCache.height)) {
                 img = newImg
@@ -331,9 +335,13 @@ class ImageCache: NSObject {
         self.memCache.set(img, forKey: key)
         
         if let data = UIImagePNGRepresentation(img) {
-            try? data.write(to: URL(fileURLWithPath: file), options: [.atomic])
-            AppDelegate.excludeFromBackup(file)
-            return true
+            do {
+                try data.write(to: URL(fileURLWithPath: file), options: [.atomic])
+                AppDelegate.excludeFromBackup(file)
+                return true
+            } catch let error {
+                self.NLOG("write error \(error)")
+            }
         }
         return false
     }
@@ -376,11 +384,15 @@ class ImageCache: NSObject {
         var img: UIImage?
         if let imgData = try? Data(contentsOf: URL(fileURLWithPath: file)) {
             img = self.decode(image: UIImage(data: imgData))
+        } else {
+            self.NLOG("no file for %@", key)
         }
         
         let width = img?.size.width ?? 0.0
-        if img == nil || width < CGFloat(ImageCache.width) {
+        // remove images that can't be decoded or that have the wrong size
+        if img == nil || width != ImageCache.width {
             // image is broken - remove it
+            self.NLOG("removing broken/small img %@, width=%f", key, width)
             img = nil
             let _ = try? FileManager.default.removeItem(atPath: file)
             self.lastModifiedDates.removeValue(forKey: key)

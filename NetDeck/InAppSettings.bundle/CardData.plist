@@ -117,6 +117,14 @@
 			<string>clearCache</string>
 		</dict>
         <dict>
+            <key>Type</key>
+            <string>IASKButtonSpecifier</string>
+            <key>Title</key>
+            <string>Clear All Cached Images</string>
+            <key>Key</key>
+            <string>clearImageCache</string>
+        </dict>
+        <dict>
             <key>Title</key>
             <string>Expert Settings</string>
             <key>Type</key>
