@@ -36,6 +36,9 @@ class Analytics {
         case uploadJintekiNet = "Upload Jinteki.net"
         case drawSim = "Draw Sim"
         case changeLanguage = "Change Language"
+        case showTipJar = "Show Tip Jar"
+        case selectTip = "Select Tip"
+        case tipTransaction = "Tip Transaction"
     }
 
     static func logEvent(_ event: Event, attributes: [String: Any]? = nil) {

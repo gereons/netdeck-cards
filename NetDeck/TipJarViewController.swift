@@ -61,6 +61,8 @@ class TipJarViewController: UIViewController {
         if Device.isIphone {
             self.topMargin.constant = 20
         }
+
+        Analytics.logEvent(.showTipJar)
     }
     
     @IBAction func tipButtonTapped(_ sender: UIButton) {
@@ -80,6 +82,7 @@ class TipJarViewController: UIViewController {
         defaultQueue.add(payment)
         
         SVProgressHUD.show(withStatus: "Tipping...".localized())
+        Analytics.logEvent(.selectTip, attributes: [ "Tip": tip.rawValue ])
     }
 
     private func fetchAvailableProducts() {
@@ -133,28 +136,35 @@ extension TipJarViewController: SKPaymentTransactionObserver {
         
         for transaction in transactions {
             let id = transaction.payment.productIdentifier
-            
+            let state: String
             switch transaction.transactionState {
             case .purchased:
                 print("Purchased \(id)")
+                state = "purchased"
                 SVProgressHUD.showSuccess(withStatus: "Thank you!".localized())
                 SKPaymentQueue.default().finishTransaction(transaction)
                 
             case .purchasing:
+                state = "purchasing"
                 print("Purchasing \(id)")
                 
             case .restored:
+                state = "restored"
                 print("restored \(id)")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 
             case .deferred:
+                state = "deferred"
                 print("deferred \(id)")
                 
             case .failed:
+                state = "failed"
                 print("Failed: \(id) \(String(describing: transaction.error))")
                 
             }
+            Analytics.logEvent(.tipTransaction, attributes: [ "Tip": id, "State": state])
         }
+
     }
 }
 

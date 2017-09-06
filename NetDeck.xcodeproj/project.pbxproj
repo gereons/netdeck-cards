@@ -672,9 +672,9 @@
 				3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */,
 				3A3798B41D70A54B00F94658 /* PrebuiltSelectionViewController.swift */,
 				3A3798B51D70A54B00F94658 /* PrebuiltSelectionViewController.xib */,
-				3A8532781855084900507B9A /* InAppSettings.bundle */,
 				3AA850701F59E46200B37CD1 /* TipJarViewController.swift */,
 				3AA850711F59E46200B37CD1 /* TipJarViewController.xib */,
+				3A8532781855084900507B9A /* InAppSettings.bundle */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
