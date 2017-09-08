@@ -1,0 +1,363 @@
+/*
+  Localizable.strings (ja)
+  Net Deck
+
+  Created by Gereon Steffens on 24.02.14.
+  Copyright © 2017 Gereon Steffens. All rights reserved.
+*/
+
+// common words
+"never" = "不可";
+"All" = "すべて";
+"Any" = "任意";
+"Both" = "両方";
+"card" = "カード";
+"Card" = "カード";
+"cards" = "カード";
+"Cards" = "カード";
+"credit" = "クレジット";
+"credits" = "クレジット";
+"Influence" = "影響値";
+"Inf" = "影";
+"Agenda Points" = "計画ポイント";
+"Strength" = "強度";
+"Cost" = "コスト";
+"OK" = "OK";
+"Cancel" = "キャンセル";
+"Stop" = "停止";
+"Edit" = "編集";
+"Done" = "完了";
+"Remove" = "消去";
+"Delete" = "削除";
+"No" = "いいえ";
+"Yes" = "はい";
+"Runner" = "ランナー";
+"Corp" = "コーポ";
+"Deck" = "デッキ";
+"Decks" = "デッキ";
+"Password" = "パスワード";
+"Weyland" = "ウェイランド";
+
+// main menu
+"New Deck" = "新規デッキ";
+"New Runner Deck" = "新規ランナーデッキ";
+"New Corp Deck" = "新規コーポデッキ";
+"Load Runner Deck" = "ランナーデッキのロード";
+"Load Corp Deck" = "コーポデッキのロード";
+"Import Decks" = "デッキのインポート";
+"Settings" = "設定";
+"About" = "詳細情報";
+"No Decks" = "何のデッキません";
+"Your decks will be shown here" = "デッキはここに表示されます";
+
+
+// about
+"About Net Deck %@" = "Net Deck %@ について";
+"Feedback" = "フィードバック";
+"We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store." = "Net Deckの性能向上のためのご意見をお待ちしています ― App Storeへのレビューも歓迎いたします。";
+"Write a Review" = "レビューを書く";
+"Contact Developers" = "開発者に連絡";
+
+// deck list
+"Save" = "セーブ";
+"Saving..." = "セーブ中…";
+"Duplicate" = "コピー";
+"Duplicate Deck" = "デッキのコピー";
+"Rename" = "名前変更";
+"Duplicate this deck?" = "このデッキをコピーしますか？";
+"Copy saved as %@" = "コピーを%@にセーブしました";
+"Yes, switch to copy" = "はい、コピーに切り替えます";
+"Yes, but stay here" = "はい、ここにとどまります";
+"Identity" = "ID";
+"Enter Name" = "名前を入力";
+"Deck Name" = "デッキ名";
+"Dropbox: Plain Text" = "Dropbox：テキスト：";
+"Clipboard: Plain Text" = "クリップボード：テキスト：";
+"Connect to your Dropbox account first." = "先にDropboxアカウントに接続してください。";
+"Deck needs to have an Identity." = "デッキにはIDが必要です。";
+"Deck needs cards." = "デッキにはカードが必要です。";
+"Cards up to %@" = "%@までのカード";
+"Copy of %@" = "%@のコピー";
+"(Copy)" = "（コピー）";
+"Sort" = "並べ替え";
+"by Type" = "タイプ順";
+"by Faction" = "派閥順";
+"by Set/Type" = "セット/タイプ順";
+"by Set/Number" = "セット/番号順";
+
+// deck invalidity reasons
+"No Identity" = "ID無し";
+"AP must be %d or %d" = "APは%dか%d";
+"Card limit exceeded" = "カード上限超過";
+"Faction not allowed" = "派閥不可";
+"Has out-of-faction agendas" = "派閥外計画書";
+"Has non-virtual resources" = "仮想でないリソース";
+"Not enough cards" = "カード不足";
+"Too much influence used" = "影響値超過";
+
+// card downloading
+"Downloading Card Data" = "カードデータのダウンロード中";
+"Downloading %ld Images" = "画像%ldのダウンロード中";
+"Downloading Images" = "画像のダウンロード中";
+"Please download card data first" = "カードデータを先にダウンロードしてください";
+"No missing card images" = "不足カード画像がありません";
+"Image %d of %d" = "画像%d/%d";
+"Unable to download cards at this time. Please try again later." = "現在カードをダウンロードできません。後ほど再度実行してください。";
+"%d of %d images could not be downloaded." = "%d/%d枚の画像がダウンロードできません。";
+"Clear Cache? You will need to re-download all data." = "キャッシュをクリアしますか？すべてのデータの再ダウンロードが必要です。";
+"An Internet connection is required." = "ネット接続が必要です。";
+"Cards Endpoint URL is not set" = "カードの終了ポイントURLがありません。";
+"Testing..." = "テスト中…";
+"NetrunnerDB is OK" = "NetrunnerDB：OK";
+"NetrunnerDB is invalid" = "NetrunnerDB：使用不可";
+"NetrunnerDB not tested" = "NetrunnerDB：未テスト";
+"Please enter a Server Name" = "サーバー名を入力してください";
+
+// identity selection
+"Choose Identity" = "IDを選択";
+"Switch Identity" = "IDを変更";
+"Select" = "選択";
+
+// draw simulator
+"Draw Simulator" = "ドローシミュレータ";
+"%ld %@ drawn" = "%ld %@ ドロー";
+"Clear" = "クリア";
+"Odds to draw a card: 1×%.2f%%  2×%.2f%%  3×%.2f%%" = "カード1枚を引く確率：1×%.2f%%  2×%.2f%%  3×%.2f%%";
+"Odds for a card: 1×%.1f%%  2×%.1f%%  3×%.1f%%" = "カード1枚の確率：1×%.1f%%  2×%.1f%%  3×%.1f%%";
+
+// deck view
+"Draw" = "ドロー";
+"Analysis" = "解析";
+"Notes" = "メモ";
+
+// deck analysis
+"Deck Analysis" = "デッキ解析";
+"Deck Validity" = "適正デッキ";
+"Deck is valid" = "デッキは適正です";
+"Cost Distribution" = "コスト配分";
+"Strength Distribution" = "強度配分";
+"Card Type Distribution" = "カードタイプ配分";
+"Influence Distribution" = "影響値配分";
+"ICE Type Distribution" = "アイスタイプ配分";
+"Strength %@\n%d %@" = "強度 %@\n%d %@";
+
+// load deck
+"Load Runner Deck" = "ランナーデッキのロード";
+"Load Corp Deck" = "コーポデッキのロード";
+"%@ · %d Cards · %d Influence" = "%@ · %d枚 · 影響値 %d";
+"%d Cards · %d Influence" = "%d枚 · 影響値 %d";
+"%d Cards · %d Influence · %d AP" = "%d枚 · 影響値 %d · %d AP";
+"Sort by" = "並べ替え";
+"Date" = "日付";
+"A-Z" = "A-Z";
+"Copy to Clipboard" = "クリップボードにコピー";
+"Send via Email" = "メールで送付";
+"Sort" = "並べ替え";
+"Side" = "サイド";
+"Show Side" = "サイド";
+"Status" = "状況";
+"Show Status" = "状況";
+"Active" = "アクティブ";
+"Testing" = "テスト中";
+"Retired" = "引退";
+"Search for decks, identities or cards" = "デッキ、ID、カードの検索";
+
+// filter
+"Filter" = "フィルター";
+"Strength: %@" = "強度：%@";
+"MU: %@" = "MU：%@";
+"Cost: %@" = "コスト：%@";
+"AP: %@" = "AP：%@";
+"Influence: %@" = "影響値：%@";
+"Type" = "タイプ";
+"Subtype" = "サブタイプ";
+"Faction" = "派閥";
+"Set" = "セット";
+"Search in:" = "検索：";
+"Search Cards" = "カード検索";
+"Name" = "名前";
+"Text" = "テキスト";
+"Less △" = "小さく△";
+"More ▽" = "大きく▽";
+
+// section headers
+"Identity" = "ID";
+"Program" = "プログラム";
+"Resource" = "リソース";
+"Event" = "イベント";
+"Hardware" = "ハードウェア";
+"Agenda" = "計画書";
+"Asset" = "資財";
+"ICE" = "アイス";
+"Upgrade" = "強化";
+"Operation" = "任務";
+"Icebreaker" = "アイスブレイカー";
+"Sentry" = "セントリー";
+"Barrier" = "バリア";
+"Code Gate" = "コードゲート";
+
+// startup alert
+"No Card Data" = "カードデータがありません";
+"To use this app, you must first download card data." = "このアプリは、先にカードデータをダウンロードしてください。";
+"Not now" = "後ほど";
+"Download" = "ダウンロード";
+"Net Deck needs to re-download card data from NetrunnerDB.com" = "Net DeckはNetrunnerDB.comからカードデータを再度ダウンロードする必要があります";
+
+"Update cards" = "カードの更新";
+"Card data may be out of date. Download now?" = "カードデータが更新されています。ダウンロードしますか？";
+"Later" = "後ほど";
+
+"Update available" = "更新可能";
+"Version %@ is available on the App Store" = "Appストアでバージョン%@が入手できます";
+"Update" = "更新";
+
+// unsaved changes alert
+"Discard" = "破棄";
+"There are unsaved changes" = "変更がセーブされていません";
+
+// dropbox
+"Successfully connected to your Dropbox account" = "Dropboxアカウントに接続しました";
+
+// import
+"Import Deck" = "デッキのインポート";
+"%@ (%d Cards)" = "%@ （%d枚）";
+"Deck imported" = "デッキがインポートされました";
+"Detected a deck list in your clipboard. Import this deck?" = "クリップボードにデッキリストがあります。このデッキをインポートしますか？";
+"Detected a NetrunnerDB.com deck list URL in your clipboard. Download and import this deck?" = "クリップボードにNetrunnerDB.comのデッキリストURLがあります。このデッキをダウンロードしインポートしますか？";
+"Detected a Meteor deck list URL in your clipboard. Download and import this deck?" = "クリップボードにMeteorのデッキリストURLがあります。このデッキをダウンロードしインポートしますか？";
+"No Decks found" = "デッキがありません";
+"Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App." = "このアプリにインポートするために、デッキをOCTGN形式（.o8d）で、DropboxのApps/Net Deckフォルダにコピーします。";
+"Loading decks from Dropbox" = "Dropboxからデッキのロード中";
+
+// export
+"%@ exported" = "%@がエクスポートされました";
+"Error exporting %@" = "%@のエクスポート中エラー";
+"OCTGN Deck" = "OCTGN形式";
+"Plain Text Deck" = "テキスト形式";
+"Markdown Deck" = "Markdown形式";
+"BBCode Deck" = "BBCode形式";
+"Print" = "印刷";
+"As Email" = "メールで";
+
+// cycles
+"Core / Deluxe" = "基本/大型";
+"Cycle #1" = "サイクル#1";
+"Cycle #2" = "サイクル#2";
+"Cycle #3" = "サイクル#3";
+"Cycle #4" = "サイクル#4";
+"Cycle #5" = "サイクル#5";
+"Cycle #6" = "サイクル#6";
+"Core Set and Deluxe Expansions" = "基本セットと大型拡張";
+"Number of Core Sets" = "基本セット数";
+"Draft Identities" = "ドラフトID";
+"Include Draft Identities" = "ドラフトIDを含める";
+
+// netrunnerdb.com
+"Import from Dropbox" = "DropBoxからインポート";
+"Import from NetrunnerDB.com" = "NetrunnerDB.comからインポート";
+"From Dropbox" = "Dropboxから";
+"From NetrunnerDB.com" = "NetrunnerDB.comから";
+"This deck is not (yet) linked to a deck on NetrunnerDB.com" = "このデッキはNetrunnerDB.comのデッキとリンクされていません";
+"This deck is linked to deck %@ on NetrunnerDB.com" = "このデッキはNetrunnerDB.comの%dデッキとリンクされています";
+"Unlink" = "リンク解除";
+"Reimport" = "再インポート";
+"Saving Deck..." = "デッキのセーブ中…";
+"Loading Deck..." = "デッキのロード中…";
+"Loading Decks..." = "デッキのロード中…";
+"Publishing Deck..." = "デッキの公開中…";
+"Exporting Decks..." = "デッキのエクスポート中…";
+"A local copy of this deck already exists." = "このデッキのローカルファイルがすでにあります。";
+"Overwrite" = "上書き";
+"Import as new" = "新たにインポート";
+"Connect to your Dropbox and/or NetrunnerDB.com account first." = "先にDropboxかNetrunerDB.comのアカウントに接続してください。";
+"Open in Safari" = "Safariを開く";
+"Publish deck" = "デッキの公開";
+"Only valid decks can be published." = "適正なデッキのみが公開できます";
+"Saving the deck at NetrunnerDB.com failed." = "NetrunnerDB.comへのデッキのセーブに失敗しました。";
+"Loading the deck from NetrunnerDB.com failed." = "NetrunnerDB.comからのデッキのロードに失敗しました。";
+"Publishing the deck at NetrunnerDB.com failed." = "NetrunnerDB.comでのデッキの公開に失敗しました。";
+"Deck published with ID %@" = "ID%@でデッキが公開されました";
+"Import All" = "すべてインポート";
+"Export Decks" = "デッキのエクスポート";
+"Export all currently visible decks" = "現在確認できる全デッキをエクスポート";
+"To Dropbox" = "Dropboxへ";
+"To NetrunnerDB.com" = "NetrunnerDB.comへ";
+"To Jinteki.net" = "Jinteki.netへ";
+"Import all decks from Dropbox?" = "Dropboxから全デッキをインポートしますか？";
+"Import all decks from NetrunnerDB.com? Existing linked decks will be overwritten." = "NetrunnerDB.comから全デッキをインポートしますか？現在リンクされているデッキは上書きされます";
+"Imported decks" = "インポートされたデッキ";
+"Authorization at NetrunnerDB.com failed" = "NetrunnerDB.comの認証に失敗しました";
+
+"NetrunnerDB.com Login" = "NetrunnerDB.comログイン";
+"Jinteki.net Login" = "Jinteki.netログイン";
+"Logging in..." = "ログイン中……";
+"Login failed" = "ログインに失敗しました";
+"Username" = "ユーザー名";
+"Password" = "パスワード";
+
+// deck diff
+"Select to Compare" = "比較デッキを選択";
+"Compare" = "比較";
+"Compare Decks" = "デッキの比較";
+"Deck Comparison" = "デッキ比較";
+"Reverse" = "反転";
+"Full" = "全体";
+"Diff" = "差分";
+"Intersect" = "総数不足";
+"Overlap" = "重複";
+"Both decks must be for the same side." = "両方のデッキは同一サイドの必要があります。";
+"Select two decks to compare them" = "比較するデッキを2つ選んでください。";
+"Selected ‘%@’, select one more to compare" = "「%@」を選択、もう1つを選んでください。";
+"Selected ‘%@’ and ‘%@’, tap to compare" = "「%@」と「%@」を選択、タップで比較";
+"Compare to ..." = "比較先";
+
+// card browser
+"Browser" = "ブラウザ";
+"Card Browser" = "カードブラウザ";
+"Side:" = "サイド：";
+"Unique" = "ユニーク";
+"Limited" = "制限";
+"Alt Art" = "イラスト違い";
+"Find decks using this card" = "このカードを使用するデッキ";
+"New deck with this card" = "このカードで新デッキ";
+"NetrunnerDB page for this card" = "このカードのNetrunnerDBページ";
+"Open web page for\n%@?" = "%@のページを開きますか？";
+"Faction/A-Z" = "派閥/A-Z";
+"Type/Faction" = "タイプ/派閥";
+"Set/Faction" = "セット/派閥";
+"Set/Type" = "セット/タイプ";
+"Set/Number" = "セット/番号";
+"Trash: %@" = "トラッシュ：%@";
+"%lu matching card" = "一致カード %lu枚";
+"%lu matching cards" = "一致カード %lu枚";
+
+// editing history
+"Editing History" = "修正履歴";
+"Revert" = "巻き戻し";
+"History" = "履歴";
+"Initial Version" = "初期バージョン";
+
+// crash
+"Oops, we crashed :(" = "クラッシュが発生しました (--;)";
+"Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it." = "申し訳ありません、想定外のエラーです。\nバグを再現できる場合、開発者にご連絡をいただければと思います。";
+
+// iphone specific
+"Swipe up to go back" = "上にスワイプで戻る";
+
+// MWL selection
+"Deck Legality" = "デッキの合法性";
+"Casual" = "MWLなし";
+"MWL v1.0" = "MWL v1.0";
+"MWL v1.1" = "MWL v1.1";
+
+
+
+
+
+
+
+
+
+
+
+

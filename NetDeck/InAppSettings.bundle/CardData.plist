@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>Card Data</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSMultiValueSpecifier</string>
+            <key>Title</key>
+            <string>Language</string>
+            <key>Key</key>
+            <string>language</string>
+            <key>DefaultValue</key>
+            <string>en</string>
+            <key>Values</key>
+            <array>
+                <string>en</string>
+                <string>de</string>
+                <string>fr</string>
+                <string>es</string>
+                <string>pl</string>
+                <string>kr</string>
+                <string>jp</string>
+                <string>zh</string>
+            </array>
+            <key>Titles</key>
+            <array>
+                <string>English</string>
+                <string>German</string>
+                <string>French</string>
+                <string>Spanish</string>
+                <string>Polish</string>
+                <string>Korean</string>
+                <string>Japanese</string>
+                <string>Chinese</string>
+            </array>
+            <key>FooterText</key>
+            <string>LanguageFooterText</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSMultiValueSpecifier</string>
+            <key>Title</key>
+            <string>Update Interval</string>
+            <key>Key</key>
+            <string>updateInterval</string>
+            <key>DefaultValue</key>
+            <integer>7</integer>
+            <key>Values</key>
+            <array>
+                <integer>7</integer>
+                <integer>14</integer>
+                <integer>30</integer>
+                <integer>0</integer>
+            </array>
+            <key>Titles</key>
+            <array>
+                <string>Weekly</string>
+                <string>Bi-Weekly</string>
+                <string>Monthly</string>
+                <string>Manual</string>
+            </array>
+        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Last Downloaded on</string>
+			<key>Key</key>
+			<string>lastDownload</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Next Download on</string>
+			<key>Key</key>
+			<string>nextDownload</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>Update Card Data Now</string>
+			<key>Key</key>
+			<string>downloadDataNow</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>Update Card Images Now</string>
+			<key>Key</key>
+			<string>downloadImagesNow</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>Download missing Card Images Now</string>
+			<key>Key</key>
+			<string>downloadMissingImagesNow</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>Clear All Cached Data</string>
+			<key>Key</key>
+			<string>clearCache</string>
+		</dict>
+        <dict>
+            <key>Type</key>
+            <string>IASKButtonSpecifier</string>
+            <key>Title</key>
+            <string>Clear All Cached Images</string>
+            <key>Key</key>
+            <string>clearImageCache</string>
+        </dict>
+        <dict>
+            <key>Title</key>
+            <string>Expert Settings</string>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSChildPaneSpecifier</string>
+            <key>Title</key>
+            <string>API Settings</string>
+            <key>File</key>
+            <string>Expert</string>
+        </dict>
+	</array>
+	<key>StringsTable</key>
+	<string>CardData</string>
+</dict>
+</plist>

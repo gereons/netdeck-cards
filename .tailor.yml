@@ -1,0 +1,14 @@
+# tailor config
+
+include:
+    - NetDeck
+
+exclude:
+    - Pods
+
+color: disable
+
+except:
+    - function-whitespace
+    - trailing-whitespace
+

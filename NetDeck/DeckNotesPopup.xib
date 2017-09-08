@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeckNotesPopup" customModule="NetDeck">
+            <connections>
+                <outlet property="cancelButton" destination="svG-oL-oa3" id="KO6-aN-Its"/>
+                <outlet property="okButton" destination="rUF-OE-8zO" id="cXp-nc-7xw"/>
+                <outlet property="textView" destination="5eY-ZN-VYs" id="JDB-fh-L8l"/>
+                <outlet property="titleLabel" destination="T5E-ZP-yMw" id="1zg-Ux-Gkv"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="540" height="380"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rUF-OE-8zO">
+                    <rect key="frame" x="483" y="334" width="41" height="30"/>
+                    <state key="normal" title="Fertig">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="okClicked:" destination="-1" eventType="touchUpInside" id="VZO-to-dwZ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="svG-oL-oa3">
+                    <rect key="frame" x="16" y="334" width="76" height="30"/>
+                    <state key="normal" title="Abbrechen">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelClicked:" destination="-1" eventType="touchUpInside" id="48Q-Ik-gyy"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck Notes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5E-ZP-yMw">
+                    <rect key="frame" x="16" y="16" width="508" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5eY-ZN-VYs">
+                    <rect key="frame" x="16" y="53" width="508" height="273"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="5eY-ZN-VYs" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="4Nr-Hv-hH4"/>
+                <constraint firstItem="svG-oL-oa3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="9Xp-Q9-uCM"/>
+                <constraint firstAttribute="trailing" secondItem="T5E-ZP-yMw" secondAttribute="trailing" constant="16" id="Nxe-jW-4wf"/>
+                <constraint firstAttribute="trailing" secondItem="5eY-ZN-VYs" secondAttribute="trailing" constant="16" id="ON3-oq-aiA"/>
+                <constraint firstAttribute="bottom" secondItem="svG-oL-oa3" secondAttribute="bottom" constant="16" id="VfJ-xP-apD"/>
+                <constraint firstItem="T5E-ZP-yMw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="eXl-xK-rKA"/>
+                <constraint firstItem="svG-oL-oa3" firstAttribute="top" secondItem="5eY-ZN-VYs" secondAttribute="bottom" constant="8" id="f80-5B-ACK"/>
+                <constraint firstItem="5eY-ZN-VYs" firstAttribute="top" secondItem="T5E-ZP-yMw" secondAttribute="bottom" constant="16" id="jgo-4G-gle"/>
+                <constraint firstItem="T5E-ZP-yMw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="jr8-3z-pcL"/>
+                <constraint firstItem="rUF-OE-8zO" firstAttribute="top" secondItem="5eY-ZN-VYs" secondAttribute="bottom" constant="8" id="sGg-NR-Kqu"/>
+                <constraint firstAttribute="trailing" secondItem="rUF-OE-8zO" secondAttribute="trailing" constant="16" id="xXI-ZR-rup"/>
+                <constraint firstAttribute="bottom" secondItem="rUF-OE-8zO" secondAttribute="bottom" constant="16" id="ygK-KD-lcD"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-406" y="-254"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

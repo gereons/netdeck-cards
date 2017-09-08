@@ -1,0 +1,9 @@
+/* WebAccount.strings - ja */
+
+"Account" = "アカウント";
+"Saving" = "セーブ中";
+
+"Manually saving also uploads to NetrunnerDB.com" = "手動セーブでNetrunnerDB.comにアップロード";
+"Connect to NetrunnerDB.com Account" = "NetrunnerDB.comのアカウントに接続";
+"Connect to Jinteki.net Account" = "Jinteki.netのアカウントに接続";
+"Save Username and Password on device" = "ユーザー名とパスワードをデバイスに保存";

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>NetrunnerDB.com</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Connect to NetrunnerDB.com Account</string>
+			<key>Key</key>
+			<string>useNrdb</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Save Username and Password on device</string>
+			<key>Key</key>
+			<string>keepNrdbCredentials</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Auth valid until</string>
+			<key>Key</key>
+			<string>nrdbTokenExpiry</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Last BG Fetch</string>
+			<key>Key</key>
+			<string>lastBackgroundFetch</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Last Refresh</string>
+			<key>Key</key>
+			<string>lastRefresh</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>Refresh Authentication</string>
+			<key>Key</key>
+			<string>refreshAuthNow</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Saving</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Manually saving also uploads to NetrunnerDB.com</string>
+			<key>Key</key>
+			<string>nrdbAutoSave</string>
+		</dict>
+        <dict>
+            <key>Title</key>
+            <string>Jinteki.net</string>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Connect to Jinteki.net Account</string>
+            <key>Key</key>
+            <string>useJnet</string>
+        </dict>
+	</array>
+	<key>StringsTable</key>
+	<string>WebAccount</string>
+</dict>
+</plist>

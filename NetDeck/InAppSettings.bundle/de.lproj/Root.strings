@@ -1,0 +1,37 @@
+/* Settings Root.strings - german */
+
+
+"Number of Core Sets" = "Anzahl Grundspiele";
+"Auto-save decks" = "Decks automatisch speichern";
+"Auto-save history" = "Historie automatisch speichern";
+
+"Card Data" = "Karten-Daten";
+
+"Card Sets" = "Karten-Sets";
+"Sets used in Deck Builder" = "Sets für Deckbau";
+"Sets used in Browser" = "Sets für Browser";
+"All" = "Alle";
+"Selected" = "Ausgewählte";
+
+"Set/Datapack Selection" = "Set- und Datensatz-Auswahl";
+"Prebuilt Decks Selection" = "Auswahl vorgebaute Decks";
+
+"Data Export" = "Daten-Export";
+"Use Dropbox" = "Dropbox verwenden";
+"Auto-save decks to Dropbox" = "Decks automatisch in Dropbox speichern";
+"Connect to your Dropbox account to enable export and import of decks." = "Verbinde die App mit deiner Dropbox um Decks im- und exportieren zu können.";
+
+"Accounts" = "Accounts";
+"Rotation active" = "Rotation beachten";
+
+"Create new Decks as 'Active'" = "Neue Decks als 'Aktiv' anlegen";
+
+"About Net Deck" = "Über Net Deck";
+
+"Default Legality" = "Deck-Legalität";
+"Casual" = "Ohne MWL";
+"MWL v1.0" = "MWL v1.0";
+"MWL v1.1" = "MWL v1.1";
+
+"Tip Jar" = "Trinkgeld";
+

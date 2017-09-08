@@ -1,0 +1,22 @@
+Net Deck is the first unofficial deck building app for Android: Netrunner on iOS, providing a clean, easy-to-use interface for building and tracking your deck lists. All deck building and browsing is fully offline, no data connection required after the initial card data download!
+
+Major Features:
+
+* Build and view deck lists completely offline by downloading card data and/or images
+* Browse your deck lists by date, faction, or alphabetically — quickly and easily find the deck you want to work on
+* View decks in three different modes to see the information that's important to you
+* Analyze your deck with in-depth tools including legality, sets used, card distribution breakdowns, and a draw simulator
+* Browse cards for your deck — filter by name, text, cost, strength, influence, type and more
+* See the card art for any card simply by tapping on it
+* Share decks quickly and easily with tons of export options in multiple formats including OCTGN files
+* Set which sets and data packs you own — only see the cards you want to build with
+* Backup deck lists to Dropbox automatically
+* Full integration with NetrunnerDB
+* Upload decks to Jinteki.net
+
+
+Net Deck is available in English, German, French, Spanish and Japanese.
+
+If you enjoy using Net Deck once you've download it, please consider leaving a positive review or rating in the App Store. Thanks!
+
+Net Deck is not affiliated in any way with Fantasy Flight Games, Talsorian Games, or Wizards of the Coast. All card images and data is a ™ of R. Talsorian Games, Inc. Android is ™ © 2013 Fantasy Flight Publishing, Inc. All rights reserved. Netrunner is licensed by Wizards of the Coast LLC. © 2013 Wizards.

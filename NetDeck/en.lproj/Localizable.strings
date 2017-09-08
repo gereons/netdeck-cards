@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings (en)
+  Net Deck
+
+  Created by Gereon Steffens on 24.02.14.
+  Copyright © 2017 Gereon Steffens. All rights reserved.
+*/
+
+"Cycle #1" = "Genesis Cycle";
+"Cycle #2" = "Spin Cycle";
+"Cycle #3" = "Luna Cycle";
+"Cycle #4" = "SanSan Cycle";
+"Cycle #5" = "Mumbad Cycle";
+"Cycle #6" = "Flashpoint Cycle";

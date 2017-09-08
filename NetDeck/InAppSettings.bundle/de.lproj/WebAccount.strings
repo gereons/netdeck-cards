@@ -1,0 +1,14 @@
+/* WebAccount.strings - de */
+
+"Account" = "Konto";
+"Saving" = "Speichern";
+
+"Manually saving also uploads to NetrunnerDB.com" = "Beim Speichern auch zu NetrunnerDB.com hochladen";
+"Connect to NetrunnerDB.com Account" = "App mit deinem NetrunnerDB.com-Konto verbinden";
+"Save Username and Password on device" = "Usernamen und Passwort auf dem Gerät speichern";
+
+"Authentication valid until" = "Autorisierung gültig bis";
+"Last Refresh" = "Letzter Refresh";
+"Refresh Authentication" = "Autorisierung erneuern";
+
+"Connect to Jinteki.net Account" = "App mit deinem Jinteki.net-Konto verbinden";

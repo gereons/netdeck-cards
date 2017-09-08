@@ -1,0 +1,28 @@
+/* Settings Root.strings - español */
+
+
+"Number of Core Sets" = "Número de Cajas Básicas";
+"Auto-save decks" = "Autoguardado de mazo";
+
+"Card Data" = "Datos de las cartas";
+
+"Card Sets" = "Sets de Cartas";
+"Set/Datapack Selection" = "Selección de Set/Paquete de Datos";
+"Prebuilt Decks Selection" = "Selección de mazos construidas";
+
+"Data Export" = "Exportar datos";
+"Use Dropbox" = "Usar Dropbox";
+"Auto-save decks to Dropbox" = "Autoguardado de mazos en Dropbox";
+"Connect to your Dropbox account to enable export and import of decks." = "Debes conectarte a tu cuenta Dropbox para permitir exportar e importar mazos.";
+
+"Accounts" = "Cuentas";
+"Use “NAPD Most Wanted List”" = "Utilizar “NAPD Most Wanted List”";
+
+"Create new Decks as 'Active'" = "Crear nuevas mazos como 'activo'";
+
+"About Net Deck" = "Acerca de Net Deck";
+
+"Default Legality" = "Legalidad norma";
+"Casual" = "Sin MWL";
+"MWL v1.0" = "MWL v1.0";
+"MWL v1.1" = "MWL v1.1";

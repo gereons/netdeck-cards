@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12118"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SmallPipsView" customModule="NetDeck">
+            <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="asx-S1-VEs" userLabel="View NW">
+                    <rect key="frame" x="2" y="2" width="4" height="4"/>
+                    <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="4" id="F6m-hS-ej6"/>
+                        <constraint firstAttribute="height" constant="4" id="wlV-ZT-vsu"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUM-rt-Eiz" userLabel="View NE">
+                    <rect key="frame" x="10" y="2" width="4" height="4"/>
+                    <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="4" id="cXs-iA-Wt9"/>
+                        <constraint firstAttribute="width" constant="4" id="kWi-fA-cOZ"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GCZ-s9-8As" userLabel="View SW">
+                    <rect key="frame" x="2" y="10" width="4" height="4"/>
+                    <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="4" id="lhX-uZ-gaq"/>
+                        <constraint firstAttribute="height" constant="4" id="tjI-1G-uy2"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIS-AX-nNQ" userLabel="View Center">
+                    <rect key="frame" x="6" y="6" width="4" height="4"/>
+                    <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="4" id="Q7P-ma-r1y"/>
+                        <constraint firstAttribute="height" constant="4" id="xbe-qW-meJ"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axg-Ia-hzO" userLabel="View SE">
+                    <rect key="frame" x="10" y="10" width="4" height="4"/>
+                    <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="4" id="F1b-EC-XWt"/>
+                        <constraint firstAttribute="width" constant="4" id="mxG-v8-a1J"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="mUM-rt-Eiz" secondAttribute="bottom" constant="10" id="0Dk-NV-Mb5"/>
+                <constraint firstAttribute="trailing" secondItem="GCZ-s9-8As" secondAttribute="trailing" constant="10" id="5zM-9Y-NKH"/>
+                <constraint firstAttribute="bottom" secondItem="axg-Ia-hzO" secondAttribute="bottom" constant="2" id="9O1-34-aUE"/>
+                <constraint firstAttribute="trailing" secondItem="mUM-rt-Eiz" secondAttribute="trailing" constant="2" id="FBb-lu-Abz"/>
+                <constraint firstAttribute="trailing" secondItem="asx-S1-VEs" secondAttribute="trailing" constant="10" id="Jth-K0-Y4u"/>
+                <constraint firstAttribute="bottom" secondItem="asx-S1-VEs" secondAttribute="bottom" constant="10" id="dU5-NV-dTJ"/>
+                <constraint firstAttribute="bottom" secondItem="FIS-AX-nNQ" secondAttribute="bottom" constant="6" id="vHz-Oe-OeC"/>
+                <constraint firstAttribute="bottom" secondItem="GCZ-s9-8As" secondAttribute="bottom" constant="2" id="xNb-9e-8xT"/>
+                <constraint firstAttribute="trailing" secondItem="axg-Ia-hzO" secondAttribute="trailing" constant="2" id="xP5-cK-fzc"/>
+                <constraint firstAttribute="trailing" secondItem="FIS-AX-nNQ" secondAttribute="trailing" constant="6" id="zN9-Ol-eKN"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="pipCenter" destination="FIS-AX-nNQ" id="Ytu-cv-aBL"/>
+                <outlet property="pipNE" destination="mUM-rt-Eiz" id="vKX-DE-c9R"/>
+                <outlet property="pipNW" destination="asx-S1-VEs" id="xfz-Bo-lm3"/>
+                <outlet property="pipSE" destination="axg-Ia-hzO" id="ZmX-sF-2YP"/>
+                <outlet property="pipSW" destination="GCZ-s9-8As" id="ccr-77-bLV"/>
+            </connections>
+            <point key="canvasLocation" x="36" y="56"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

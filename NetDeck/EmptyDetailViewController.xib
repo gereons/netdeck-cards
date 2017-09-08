@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EmptyDetailViewController" customModule="NetDeck" customModuleProvider="target">
+            <connections>
+                <outlet property="downloadButton" destination="k4h-4o-HQR" id="Dgk-fG-zFs"/>
+                <outlet property="emptyDataSetView" destination="6xO-b2-dLs" id="J8d-cJ-gQy"/>
+                <outlet property="spinner" destination="QX4-wh-GC0" id="c4k-7j-590"/>
+                <outlet property="textLabel" destination="ai4-Nu-Wca" id="Gs2-4y-G9h"/>
+                <outlet property="titleLabel" destination="kAg-rR-I2x" id="mcv-ci-euo"/>
+                <outlet property="view" destination="2" id="p9A-lR-bVc"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="2">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6xO-b2-dLs">
+                    <rect key="frame" x="181.5" y="457" width="405.5" height="110"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No card data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAg-rR-I2x">
+                            <rect key="frame" x="8" y="8" width="389.5" height="24"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To use this app, you must first download card data." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ai4-Nu-Wca">
+                            <rect key="frame" x="8" y="40" width="389.5" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k4h-4o-HQR">
+                            <rect key="frame" x="168" y="71.5" width="69" height="30"/>
+                            <state key="normal" title="Download"/>
+                            <connections>
+                                <action selector="downloadTapped:" destination="-1" eventType="touchUpInside" id="Y54-mu-PbL"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="k4h-4o-HQR" firstAttribute="top" secondItem="ai4-Nu-Wca" secondAttribute="bottom" constant="11" id="5p8-UI-XiW"/>
+                        <constraint firstItem="kAg-rR-I2x" firstAttribute="top" secondItem="6xO-b2-dLs" secondAttribute="top" constant="8" id="7Cd-GI-8UH"/>
+                        <constraint firstItem="ai4-Nu-Wca" firstAttribute="top" secondItem="kAg-rR-I2x" secondAttribute="bottom" constant="8" id="8j8-il-rk3"/>
+                        <constraint firstItem="k4h-4o-HQR" firstAttribute="centerX" secondItem="6xO-b2-dLs" secondAttribute="centerX" id="CPh-yN-S3q"/>
+                        <constraint firstAttribute="trailing" secondItem="ai4-Nu-Wca" secondAttribute="trailing" constant="8" id="DAR-M9-14B"/>
+                        <constraint firstItem="ai4-Nu-Wca" firstAttribute="leading" secondItem="6xO-b2-dLs" secondAttribute="leading" constant="8" id="EaH-3a-lzO"/>
+                        <constraint firstAttribute="height" constant="110" id="IsV-jO-m4o"/>
+                        <constraint firstAttribute="trailing" secondItem="kAg-rR-I2x" secondAttribute="trailing" constant="8" id="Jyl-o6-4g3"/>
+                        <constraint firstItem="kAg-rR-I2x" firstAttribute="leading" secondItem="6xO-b2-dLs" secondAttribute="leading" constant="8" id="qql-CG-8Cf"/>
+                    </constraints>
+                </view>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="QX4-wh-GC0">
+                    <rect key="frame" x="365.5" y="493.5" width="37" height="37"/>
+                    <color key="color" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="6xO-b2-dLs" firstAttribute="centerY" secondItem="2" secondAttribute="centerY" id="KWu-kj-hc3"/>
+                <constraint firstItem="QX4-wh-GC0" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="Pa4-JQ-qxi"/>
+                <constraint firstItem="6xO-b2-dLs" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="cis-pM-106"/>
+                <constraint firstItem="QX4-wh-GC0" firstAttribute="centerY" secondItem="2" secondAttribute="centerY" id="uCb-9B-MOW"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

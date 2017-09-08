@@ -1,0 +1,32 @@
+/* CardData.strings - de */
+
+"Card Data" = "Karten-Daten";
+
+"Last Downloaded on" = "Letzter Download am";
+"Next Download on" = "Nächster Download am";
+"Update Card Data Now" = "Karten-Daten jetzt aktualisieren";
+"Update Card Images Now" = "Karten-Bilder jetzt aktualisieren";
+"Download missing Card Images Now" = "Fehlende Karten-Bilder jetzt laden";
+"Clear All Cached Data" = "Daten-Cache löschen";
+"Clear All Cached Images" = "Image-Cache löschen";
+
+"Expert Settings" = "Experten-Einstellungen";
+"API Settings" = "API-Einstellungen";
+
+"Language" = "Sprache";
+"English" = "Englisch";
+"German" = "Deutsch";
+"French" = "Französisch";
+"Spanish" = "Spanisch";
+"Polish" = "Polnisch";
+"Korean" = "Koreanisch";
+"Japanese" = "Japanisch";
+"Chinese" = "Chinesisch";
+
+"Update Interval" = "Update-Intervall";
+"Weekly" = "Jede Woche";
+"Bi-Weekly" = "Alle 2 Wochen";
+"Monthly" = "Monatlich";
+"Manual" = "Manuell";
+
+"LanguageFooterText" = "NetrunnerDB.com unterstützt andere Sprachen als Englisch nicht immer zu 100%.\nWenn du diese Einstellung änderst, solltest du die Karten-Daten neu laden.";
