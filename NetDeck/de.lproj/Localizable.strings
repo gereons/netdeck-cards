@@ -61,8 +61,9 @@
 // tip jar
 "Tip Jar" = "Trinkgeld";
 "If you find Net Deck useful, please consider supporting the development of the app by leaving a tip in our tip jar.\n\nYour support is greatly appreciated!" = "Wenn du Net Deck nützlich findest, wäre es toll wenn du die Weiterentwicklung der App mit einem Trinkgeld unterstützt.\n\nHerzlichen Dank!";
-"Tipping..." = "";
+"Tipping..." = "Trinkgeld geben...";
 "Thank you!" = "Danke schön!";
+"Can't get data from the App Store" = "Keine Verbindung zum App Store";
 
 // deck list
 "Save" = "Speichern";
