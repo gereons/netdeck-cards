@@ -642,11 +642,11 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             self.deck.onesies = false
             self.refreshDeck()
         })
-//        alert.addAction(UIAlertAction(title: "MWL v1.3".localized().checked(self.deck.mwl == .v1_3)) { action in
-//            self.deck.mwl = .v1_3
-//            self.deck.onesies = false
-//            self.refreshDeck()
-//        })
+        alert.addAction(UIAlertAction(title: "MWL v1.3".localized().checked(self.deck.mwl == .v1_3)) { action in
+            self.deck.mwl = .v1_3
+            self.deck.onesies = false
+            self.refreshDeck()
+        })
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
             self.deck.mwl = .none
             self.deck.onesies = true

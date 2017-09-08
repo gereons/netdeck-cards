@@ -338,33 +338,33 @@ extension Card {
     static let padCampaign              = "01109"    // needed for pad factory
     
     // NAPD Most Wanted List
-    static let cerberusH1       = "06099"
-    static let cloneChip        = "03038"
-    static let desperado        = "01024"
-    static let parasite         = "01012"
-    static let prepaidVoicepad  = "04029"
-    static let yog_0            = "01014"
-    static let d4v1d            = "06033"
-    static let faust            = "08061"
-    static let wyldside         = "01016"
-    static let temüjinContract  = "11026"
-    static let şifr             = "11101"
-    static let rumorMill        = "11022"
-    static let blackmail        = "04089"
-    static let ddos             = "08103"
-    static let aaronMarrón      = "11106"
-    
-    static let architect        = "06061"
-    static let astroscript      = "01081"
-    static let eli_1            = "02110"
-    static let napdContract     = "04119"
-    static let sansanCityGrid   = "01092"
-    static let breakingNews     = "01082"
-    static let bioEthicsAssociation = "10050"
-    static let sensieActorsUnion = "10053"
-    static let mumbadCityHall   = "10055"
+    static let parasite             = "01012"
+    static let yog_0                = "01014"
+    static let wyldside             = "01016"
+    static let desperado            = "01024"
+    static let astroscript          = "01081"
+    static let breakingNews         = "01082"
+    static let sansanCityGrid       = "01092"
+    static let eli_1                = "02110"
+    static let cloneChip            = "03038"
+    static let prepaidVoicepad      = "04029"
     static let acceleratedDiagnostics = "04052"
-    static let friendsInHighPlaces = "11090"
+    static let blackmail            = "04089"
+    static let napdContract         = "04119"
+    static let d4v1d                = "06033"
+    static let architect            = "06061"
+    static let cerberusH1           = "06099"
+    static let faust                = "08061"
+    static let ddos                 = "08103"
+    static let bioEthicsAssociation = "10050"
+    static let sensieActorsUnion    = "10053"
+    static let mumbadCityHall       = "10055"
+    static let rumorMill            = "11022"
+    static let temüjinContract      = "11026"
+    static let friendsInHighPlaces  = "11090"
+    static let şifr                 = "11101"
+    static let aaronMarrón          = "11106"
+    
     
     // dictonaries of code -> penalty for each MWL version
     fileprivate static let mostWantedLists: [MWL: [String: Int]] = [
@@ -376,19 +376,17 @@ extension Card {
         .v1_1: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, desperado: 1, faust: 1, parasite: 1, prepaidVoicepad: 1, wyldside: 1, yog_0: 1,
                  architect: 1, breakingNews: 1, eli_1: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1 ],
         
-        // MWL v1.2, introduced in NAPD Most Wanted List v1.2, valid from 2017-04-12 onwards
+        // MWL v1.2, introduced in NAPD Most Wanted List v1.2, valid from 2017-04-12 until 2017-09-30
         .v1_2: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
                  architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1,
                  blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
                  sensieActorsUnion: 3 ],
         
-        /*
-        // MWL v1.3, introduced in NAPD Most Wanted List v1.3, valid from 2017-08-14 onwards ??
-        .none: [ aaronMarrón: 1, cloneChip: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
+        // MWL v1.3, introduced in NAPD Most Wanted List v1.3, valid from 2017-10-01 onwards ??
+        .v1_3: [ aaronMarrón: 1, cloneChip: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
                  architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, sansanCityGrid: 1,
                  blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
                  acceleratedDiagnostics: 3, friendsInHighPlaces: 3, sensieActorsUnion: 3 ],
-        */
     ]
     
     static let aliases = [

@@ -79,7 +79,7 @@ enum MWL: Int {
     case v1_0   // as of 2016-02-01
     case v1_1   // as of 2016-08-01
     case v1_2   // as of 2017-04-12
-    // case v1_3   // as of 2017-08-14 ??
+    case v1_3   // as of 2017-10-01
     
     static let latest = MWL.v1_2
     
@@ -88,7 +88,7 @@ enum MWL: Int {
         "NAPD_MWL_1.0": .v1_0,
         "NAPD_MWL_1.1": .v1_1,
         "NAPD_MWL_1.2": .v1_2,
-        // "NAPD_MWL_1.3": .v1_3
+        "NAPD_MWL_1.3": .v1_3
     ]
     
     static func by(code: String) -> MWL {
@@ -97,9 +97,12 @@ enum MWL: Int {
     
     var universalInfluence: Bool {
         switch self {
-        case .none, .v1_2: return true
-        // case .v1_3: return true
-        case .v1_0, .v1_1: return false
+        case .none,
+             .v1_2,
+             .v1_3: return true
+            
+        case .v1_0,
+             .v1_1: return false
         }
     }
 }
