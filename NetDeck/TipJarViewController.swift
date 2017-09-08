@@ -143,7 +143,9 @@ extension TipJarViewController: SKPaymentTransactionObserver {
                 state = "purchased"
                 SVProgressHUD.showSuccess(withStatus: "Thank you!".localized())
                 SKPaymentQueue.default().finishTransaction(transaction)
-                
+                if let tip = Tip(rawValue: id), let product = self.productsMap[tip] {
+                    Analytics.logPurchase(of: product)
+                }
             case .purchasing:
                 state = "purchasing"
                 print("Purchasing \(id)")

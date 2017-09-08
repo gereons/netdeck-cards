@@ -7,6 +7,7 @@
 //
 
 import Crashlytics
+import StoreKit
 
 class Analytics {
     
@@ -42,9 +43,25 @@ class Analytics {
     }
 
     static func logEvent(_ event: Event, attributes: [String: Any]? = nil) {
-        if BuildConfig.useCrashlytics {
-            Answers.logCustomEvent(withName: event.rawValue, customAttributes: attributes)
+        guard BuildConfig.useCrashlytics else {
+            return
         }
+        
+        Answers.logCustomEvent(withName: event.rawValue, customAttributes: attributes)
+    }
+    
+    static func logPurchase(of product: SKProduct) {
+        guard  BuildConfig.useCrashlytics else {
+            return
+        }
+        
+        Answers.logPurchase(withPrice: product.price,
+                            currency: product.priceLocale.currencyCode,
+                            success: true,
+                            itemName: product.localizedTitle,
+                            itemType: "iap",
+                            itemId: product.productIdentifier,
+                            customAttributes: nil)
     }
 
 }
