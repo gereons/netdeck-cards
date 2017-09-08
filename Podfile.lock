@@ -32,7 +32,7 @@ PODS:
   - Marshal (1.2.4)
   - MultiSelectSegmentedControl (1.1.2)
   - SDCAlertView (7.1.2)
-  - SVProgressHUD (2.1.2)
+  - SVProgressHUD (2.2)
   - SwiftKeychainWrapper (3.0.1)
   - SwiftyDropbox (4.1.2):
     - Alamofire (~> 4.4.0)
@@ -74,7 +74,7 @@ SPEC CHECKSUMS:
   Marshal: 8e04e6624e506921db7143b0bfd83caee03f32d6
   MultiSelectSegmentedControl: 24844861c16dd6e3c36a80043494daa7855494f1
   SDCAlertView: c39fa91a3aeb5eeba58fe9cea648263b131ff2bf
-  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  SVProgressHUD: 3f37f3409ddb15f35c99315ae7dc33c474aa3256
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
   SwiftyDropbox: eb79d166c2850e50eed01c280c7c64b4b69c50a5
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
