@@ -95,10 +95,13 @@ class CardManager {
         let disabledPackCodes: Set<String>
         switch packUsage {
         case .all:
-            let code = Defaults[.useDraft] ? "" : PackManager.draft
-            disabledPackCodes = Set([code])
+            var draft = Set<String>()
+            if Defaults[.useDraft] {
+                draft.insert(PackManager.draft)
+            }
+            disabledPackCodes = PackManager.rotatedPackCodes().union(draft)
         case .selected:
-            disabledPackCodes = PackManager.disabledPackCodes()
+            disabledPackCodes = PackManager.disabledPackCodes().union(PackManager.rotatedPackCodes())
         }
         
         if !disabledPackCodes.contains(PackManager.draft) {
@@ -281,7 +284,7 @@ class CardManager {
         
         if let data = FileManager.default.contents(atPath: filename) {
             do {
-                let cardsJson = try JSONParser.JSONObjectWithData(data)
+                let cardsJson = try JSONParser.JSONObjectWithData(data) 
                 return setupFromJson(cardsJson, language: language)
             } catch let error {
                 print("\(error)")

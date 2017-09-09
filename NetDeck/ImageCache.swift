@@ -439,6 +439,7 @@ class ImageCache: NSObject {
     
     private func downloadImage(for card: Card, key: String, completion: @escaping (Card, UIImage, Bool) -> Void) {
         let src = card.imageSrc
+        print("loading image for \(card.code) \(card.name)")
         Alamofire
             .request(src)
             .validate()

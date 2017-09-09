@@ -19,9 +19,16 @@ struct Cycle: Unmarshaling {
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
         self.code = try object.value(for: "code")
-        self.position = try object.value(for: "position")
+        let position: Int = try object.value(for: "position")
+        self.position = position
         self.size = try object.value(for: "size")
-        self.rotated = try object.value(for: "rotated") ?? false
+        
+        FIXME("remove before release")
+        var rotated: Bool = try object.value(for: "rotated") ?? false
+        if (position == 2 || position == 4)  {
+            rotated = true
+        }
+        self.rotated = rotated
     }
 }
 
@@ -36,8 +43,6 @@ struct Pack: Unmarshaling {
     
     static let use = "use_"
     
-    private static let testRotation = false
-    
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
         self.code = try object.value(for: "code")
@@ -45,11 +50,7 @@ struct Pack: Unmarshaling {
         self.position = try object.value(for: "position")
         self.settingsKey = Pack.use + self.code
         
-        if BuildConfig.debug && Pack.testRotation {
-            self.rotated = ["genesis", "spin"].contains(self.cycleCode)
-        } else {
-            self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
-        }
+        self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
         
         let date: String = try object.value(for: "date_release") ?? ""
         self.released = date != "" && PackManager.now() >= date
@@ -147,6 +148,15 @@ class PackManager {
         return disabled
     }
     
+    static func rotatedPackCodes() -> Set<String> {
+        if Defaults[.rotationActive] {
+            let packs = allPacks.filter { $0.rotated }.map { $0.code }
+            return Set(packs)
+        } else {
+            return Set([])
+        }
+    }
+    
     static func packsForTableView(packUsage: PackUsage) -> TableData<String> {
         let rawPacks: TableData<Pack> = self.packsForTableView(packUsage: packUsage)
         var strValues = [[String]]()
@@ -222,10 +232,14 @@ class PackManager {
         values.append([PackManager.anyPack])
         
         let useDraft = Defaults[.useDraft]
+        let rotationActive = Defaults[.rotationActive]
         
         for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             
             if cycle.code == draft && !useDraft {
+                continue
+            }
+            if rotationActive && cycle.rotated {
                 continue
             }
             sections.append(cycle.name)

@@ -1109,7 +1109,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             cell.copiesLabel.textColor = .black
-            if !self.deck.isDraft && cc2.card.owned < cc2.count {
+            if !self.deck.isDraft && (cc2.card.owned < cc2.count || cc2.card.isRotated) {
                 cell.copiesLabel.textColor = .red
             }
         }

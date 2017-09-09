@@ -553,7 +553,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         cell.nameLabel.textColor = .black
-        if !self.deck.isDraft && card.owned < cc.count {
+        if !self.deck.isDraft && (card.owned < cc.count || card.isRotated) {
             cell.nameLabel.textColor = .red
         }
         

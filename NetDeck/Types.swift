@@ -81,7 +81,7 @@ enum MWL: Int {
     case v1_2   // as of 2017-04-12
     case v1_3   // as of 2017-10-01
     
-    static let latest = MWL.v1_2
+    static let latest = MWL.v1_3
     
     // map from "mwl_code" values we get from the NRDB API
     static let codeMap: [String: MWL] = [

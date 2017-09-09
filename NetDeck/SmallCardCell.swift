@@ -62,7 +62,7 @@ class SmallCardCell: CardCell {
         }
         
         self.name.textColor = .black
-        if !self.deck.isDraft && cc.count > card.owned {
+        if !self.deck.isDraft && (cc.count > card.owned || card.isRotated) {
             self.name.textColor = .red
         }
         

@@ -61,8 +61,11 @@ class CardList {
             cl.initialCards.append(contentsOf: CardManager.identitiesFor(role: role))
         }
         switch packUsage {
-        case .selected: cl.filterDeselectedSets()
-        case .all: cl.filterDraft()
+        case .selected:
+            cl.filterDeselectedSets()
+        case .all:
+            cl.filterDraft()
+            cl.filterRotation()
         }
 
         cl.clearFilters()
@@ -73,8 +76,11 @@ class CardList {
     func resetInitialCards() {
         self.initialCards = CardManager.allFor(role: self.role)
         switch self.packUsage {
-        case .selected: self.filterDeselectedSets()
-        case .all: break
+        case .selected:
+            self.filterDeselectedSets()
+        case .all:
+            self.filterDraft()
+            self.filterRotation()
         }
     }
     
@@ -112,6 +118,12 @@ class CardList {
             predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [packPredicate, decksPredicate])
         }
         
+        self.applyPredicate(predicate)
+    }
+    
+    func filterRotation() {
+        let rotatedPackCodes = PackManager.rotatedPackCodes()
+        let predicate = NSPredicate(format: "!(packCode in %@)", rotatedPackCodes)
         self.applyPredicate(predicate)
     }
     

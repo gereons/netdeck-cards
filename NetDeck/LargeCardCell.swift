@@ -81,7 +81,7 @@ class LargeCardCell: CardCell {
             self.name.text = String(format: "%lu× %@", cc.count, card.name)
         }
         
-        if !self.deck.isDraft && cc.count > card.owned {
+        if !self.deck.isDraft && (cc.count > card.owned || card.isRotated) {
             self.name.textColor = .red
         }
         
