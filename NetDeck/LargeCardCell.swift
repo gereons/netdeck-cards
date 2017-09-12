@@ -85,6 +85,10 @@ class LargeCardCell: CardCell {
             self.name.textColor = .red
         }
         
+        if self.deck.cacheRefresh && card.isCore && cc.count > card.quantity {
+            self.name.textColor = .red
+        }
+        
         let factionName = Faction.name(for: card.faction)
         let typeName = CardType.name(for: card.type)
         

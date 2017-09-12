@@ -29,7 +29,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         if self.values.count > 1 {
             // add "number of core sets" fake entry
             let numCores = Pack(named: "Number of Core Sets".localized(), key: DefaultsKeys.numCores._key)
-            self.values[self.coreSection].insert(numCores, at: 1)
+            self.values[self.coreSection].append(numCores)
         }
     }
     
@@ -115,7 +115,9 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
                 Defaults.set(released, forKey: key)
             }
         }
-        Defaults.set(true, forKey: Pack.use + PackManager.core)
+
+        Defaults.set(false, forKey: Pack.use + PackManager.core)
+        Defaults.set(true, forKey: Pack.use + PackManager.core2)
         Defaults.set(true, forKey: Pack.use + PackManager.terminalDirective)
         Defaults.set(true, forKey: Pack.use + deluxe)
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
@@ -160,17 +162,42 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             button.addTarget(self, action: #selector(self.coresAlert(_:)), for: .touchUpInside)
             cell.accessoryView = button
         } else {
-            let settings = UserDefaults.standard
-            let on = settings.bool(forKey: pack.settingsKey)
+            let on = Defaults.bool(forKey: pack.settingsKey)
             let sw = NRSwitch(initial: on) { on in
-                settings.set(on, forKey: pack.settingsKey)
-                tableView.reloadSections([indexPath.section], with: .none)
+                self.toggleSetting(on, for: pack.settingsKey)
+                // tableView.reloadSections([indexPath.section], with: .none)
+                tableView.reloadData()
             }
             
             cell.accessoryView = sw
         }
         
         return cell
+    }
+    
+    func toggleSetting(_ value: Bool, for key: String) {
+        let settings = UserDefaults.standard
+        settings.set(value, forKey: key)
+        
+        let rotationKeys = PackManager.rotation2017.map { Pack.use + $0 }
+        
+        switch key {
+        case DefaultsKeys.useCore._key:
+            settings.set(!value, forKey: DefaultsKeys.useCore2._key)
+        case DefaultsKeys.useCore2._key:
+            settings.set(!value, forKey: DefaultsKeys.useCore._key)
+            if value {
+                rotationKeys.forEach {
+                    settings.set(false, forKey: $0)
+                }
+            }
+        default:
+            if value && rotationKeys.contains(key) {
+                self.toggleSetting(false, for: DefaultsKeys.useCore2._key)
+            }
+            break
+        }
+
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

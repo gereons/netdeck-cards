@@ -12,7 +12,7 @@ import SwiftyUserDefaults
 struct Cycle: Unmarshaling {
     let name: String
     let code: String
-    let position: Int
+    fileprivate(set) var position: Int
     let size: Int
     let rotated: Bool
  
@@ -30,6 +30,7 @@ struct Cycle: Unmarshaling {
         }
         self.rotated = rotated
     }
+
 }
 
 struct Pack: Unmarshaling {
@@ -72,6 +73,8 @@ class PackManager {
     static let draft = "draft"
     
     static let core = "core"
+    static let core2 = "core2"
+    static let core2Code = 14
     
     static let creationAndControl = "cac"
     static let honorAndProfit = "hap"
@@ -81,6 +84,9 @@ class PackManager {
     
     static let deluxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny ]
     static let campaigns = [ terminalDirective ]
+    static let cores = [ core, core2 ]
+    
+    static let rotation2017 = [ "wla", "ta", "ce", "asis", "hs", "fp", "om", "st", "mt", "tc", "fal", "dt" ]
     
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
@@ -92,6 +98,9 @@ class PackManager {
     private(set) static var packsByCode = [String: Pack]()      // code -> pack
     private(set) static var allPacks = [Pack]()
     
+    private(set) static var cardsInPack = [String: [Card]]()        // code -> card
+    private(set) static var packsWithCard = [String: [String]]()    // code -> packCodes
+    
     static let anyPack = Pack(named: Constant.kANY)
     
     private static let fmt: DateFormatter = {
@@ -100,10 +109,34 @@ class PackManager {
         return f
     }()
     
-    static func now() -> String {
+    fileprivate static func now() -> String {
         return fmt.string(from: Date())
     }
-
+    
+    static func addCard(_ card: Card, to packCode: String) {
+        if cardsInPack[packCode] != nil {
+            cardsInPack[packCode]!.append(card)
+        } else {
+            cardsInPack[packCode] = [card]
+        }
+        
+        if packsWithCard[card.code] != nil {
+            packsWithCard[card.code]!.append(packCode)
+        } else {
+            packsWithCard[card.code] = [packCode]
+        }
+    }
+    
+    static func isCardInDisabledPack(_ card: Card) -> Bool {
+        for code in self.disabledPackCodes() {
+            let contained = cardsInPack[code]?.contains(card) ?? false
+            if contained {
+                return true
+            }
+        }
+        return false
+    }
+    
     static var packsAvailable: Bool {
         return allPacks.count > 0
     }
@@ -151,7 +184,7 @@ class PackManager {
     static func rotatedPackCodes() -> Set<String> {
         if Defaults[.rotationActive] {
             let packs = allPacks.filter { $0.rotated }.map { $0.code }
-            return Set(packs)
+            return Set(packs).union([PackManager.core])
         } else {
             return Set([])
         }
@@ -187,11 +220,21 @@ class PackManager {
         var sections = [String]()
         var values = [[Pack]]()
         
-        for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
+        // sort cycles by position
+        for cycle in allCycles.values.sorted(by: { $0.position < $1.position }) {
             sections.append(cycle.name)
             
             let packs = allPacks.filter{ $0.cycleCode == cycle.code }
             values.append(packs)
+        }
+        
+        // special hack: merge core2 with core at the 2nd place in the array
+        let c2index = allCycles.values.filter { $0.code == PackManager.core2 }.map { $0.position }.first
+        if let index = c2index {
+            sections.remove(at: index)
+            let arr = values.remove(at: index)
+            
+            values[1].append(contentsOf: arr)
         }
         
         return TableData(sections: sections, values: values)
@@ -235,11 +278,13 @@ class PackManager {
         let rotationActive = Defaults[.rotationActive]
         
         for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
-            
             if cycle.code == draft && !useDraft {
                 continue
             }
-            if rotationActive && cycle.rotated {
+            if rotationActive && (cycle.rotated || cycle.code == PackManager.core) {
+                continue
+            }
+            if !rotationActive && cycle.code == PackManager.core2 {
                 continue
             }
             sections.append(cycle.name)
@@ -402,6 +447,24 @@ class PackManager {
         return ok
     }
     
+    private static func reorderCycles(_ cycles: inout [Cycle]) {
+        cycles.sort { $0.position < $1.position }
+        
+        guard
+            let coreIndex = cycles.index(where: { $0.code == PackManager.core }),
+            let core2Index = cycles.index(where: { $0.code == PackManager.core2 })
+        else {
+            return
+        }
+        
+        let c2 = cycles.remove(at: core2Index)
+        cycles.insert(c2, at: coreIndex + 1)
+        
+        for i in 0 ..< cycles.count {
+            cycles[i].position = i
+        }
+    }
+    
     static func setupFromJsonData(_ cycles: JSONObject, _ packs: JSONObject, language: String) -> Bool {
         cyclesByCode = [:]  // code -> cycle
         allCycles = [:]     // position -> cycles
@@ -417,7 +480,8 @@ class PackManager {
         }
         
         do {
-            let cycles: [Cycle] = try cycles.value(for: "data", discardingErrors: true)
+            var cycles: [Cycle] = try cycles.value(for: "data", discardingErrors: true)
+            self.reorderCycles(&cycles)
             for c in cycles {
                 cyclesByCode[c.code] = c
                 allCycles[c.position] = c

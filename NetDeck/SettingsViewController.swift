@@ -139,7 +139,7 @@ class SettingsDelegate: IASKSettingsDelegate {
                 NRDBHack.clearCredentials()
                 Defaults[.useNrdb] = false
             }
-            
+
         default:
             break
         }

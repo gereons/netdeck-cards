@@ -46,6 +46,10 @@ extension DefaultsKeys {
     static let useDataDestiny = DefaultsKey<Bool>("use_dad")
     /// use Draft identities?
     static let useDraft = DefaultsKey<Bool>("use_draft")
+    /// use Classic Core Set?
+    static let useCore = DefaultsKey<Bool>("use_core")
+    /// use Revised Core Set?
+    static let useCore2 = DefaultsKey<Bool>("use_core2")
     
     // Import/Export settings
     /// Dropbox enabled?

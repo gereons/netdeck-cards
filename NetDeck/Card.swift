@@ -36,10 +36,8 @@ class Card: NSObject, Unmarshaling {
     private(set) var advancementCost = -1       // agenda
     private(set) var agendaPoints = -1          // agenda
     private(set) var trash = -1
-    private(set) var quantity = -1              // number of cards in set
     private(set) var number = -1                // card no. in set
-    private(set) var packCode = ""
-    private(set) var packNumber = -1            // our own internal pack number, for sorting by pack release
+    
     private(set) var unique = false
     private(set) var maxPerDeck = -1            // how many may be in deck? currently either 1, 3 or 6
     
@@ -54,6 +52,10 @@ class Card: NSObject, Unmarshaling {
     private var factionCode = ""
     private var typeCode = ""
     
+    /// not part of the public API!
+    private(set) var _packCode = ""
+    private(set) var _quantity = -1             // number of cards in set
+    
     private let subtypeDelimiter = " - "
     
     var typeStr: String { return Translation.forTerm(self.typeCode, language: Card.currentLanguage) }
@@ -63,6 +65,42 @@ class Card: NSObject, Unmarshaling {
         return PackManager.packsByCode[self.packCode]?.name ?? ""
     }
     
+    var packCode: String {
+        guard let packs = PackManager.packsWithCard[self.code] else {
+            return PackManager.unknown
+        }
+        
+        if packs.count == 1 {
+            return packs.first!
+        } else {
+            // card is in two packs, "core2" and something else choose one
+            if Defaults[.useCore2] {
+                assert(packs.contains(PackManager.core2))
+                return PackManager.core2
+            } else {
+                for pc in packs {
+                    if pc != PackManager.core2 {
+                        return pc
+                    }
+                }
+            }
+            return PackManager.unknown
+        }
+    }
+    
+    // for quantity lookup
+    var key: String {
+        return "\(self.code)-\(self.packCode)"
+    }
+    
+    var quantity: Int {
+        return CardManager.quantities[self.key] ?? 0
+    }
+    
+    var packNumber: Int {
+        return PackManager.packNumberFor(code: self.packCode)
+    }
+
     var imageSrc: String {
         return Card.imgSrcTemplate
             .replacingOccurrences(of: "{locale}", with: Card.currentLanguage)
@@ -205,16 +243,15 @@ class Card: NSObject, Unmarshaling {
         
         self.flavor = try object.localized(for: "flavor", language: Card.currentLanguage)
         
-        self.packCode = try object.value(for: "pack_code")
-        if self.packCode == "" {
-            self.packCode = PackManager.unknown
+        self._packCode = try object.value(for: "pack_code")
+        if self._packCode == "" {
+            self._packCode = PackManager.unknown
         }
-        if self.packCode == PackManager.draft {
+        if self._packCode == PackManager.draft {
             self.faction = .neutral
         }
         
-        self.packNumber = PackManager.packNumberFor(code: self.packCode)
-        self.isCore = self.packCode == PackManager.core
+        self.isCore = PackManager.cores.contains(self._packCode)
         
         let keywords: String = try object.value(for: "keywords") ?? ""
         let localizedKeywords: String = try object.localized(for: "keywords", language: Card.currentLanguage)
@@ -225,7 +262,7 @@ class Card: NSObject, Unmarshaling {
         }
         
         self.number = try object.value(for: "position") ?? -1
-        self.quantity = try object.value(for: "quantity") ?? -1
+        self._quantity = try object.value(for: "quantity") ?? -1
         self.unique = try object.value(for: "uniqueness")
         
         if self.type == .identity {

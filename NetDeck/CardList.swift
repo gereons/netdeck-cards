@@ -111,6 +111,7 @@ class CardList {
     func filterDeselectedSets() {
         let disabledPackCodes = PackManager.disabledPackCodes()
         let packPredicate = NSPredicate(format: "!(packCode in %@)", disabledPackCodes)
+
         self.applyPredicate(packPredicate)
     }
     
@@ -339,7 +340,7 @@ class CardList {
     
     private func sort(_ cards: inout [Card]) {
         cards.sort { c1, c2 in
-            switch (self.sortType) {
+            switch self.sortType {
             case .byType, .byTypeFaction:
                 if c1.type.rawValue < c2.type.rawValue { return true }
                 if c1.type.rawValue > c2.type.rawValue { return false }
@@ -350,8 +351,8 @@ class CardList {
                 if c1.packNumber < c2.packNumber { return true }
                 if c1.packNumber > c2.packNumber { return false }
             case .bySetNumber:
-                if c1.code < c2.code { return true }
-                if c1.code > c2.code { return false }
+                if c1.packNumber < c2.packNumber { return true }
+                if c1.packNumber > c2.packNumber { return false }
             case .byCost:
                 if c1.cost < c2.cost { return true }
                 if c1.cost > c2.cost { return false }
@@ -360,13 +361,16 @@ class CardList {
                 if c1.strength > c2.strength { return false }
             }
             
-            switch (self.sortType) {
+            switch self.sortType {
             case .byTypeFaction, .bySetFaction:
                 if c1.factionStr < c2.factionStr { return true }
                 if c1.factionStr > c2.factionStr { return false }
             case .bySetType:
                 if c1.type.rawValue < c2.type.rawValue { return true }
                 if c1.type.rawValue > c2.type.rawValue { return false }
+            case .bySetNumber:
+                if c1.code < c2.code { return true }
+                if c1.code > c2.code { return false }
             default: break
             }
             

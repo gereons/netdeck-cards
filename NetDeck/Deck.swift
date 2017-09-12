@@ -261,7 +261,7 @@ import SwiftyUserDefaults
         } else {
             self.identityCc = nil
         }
-        self.isDraft = identity?.packCode == PackManager.draft
+        self.isDraft = identity?.faction == .neutral
     }
     
     private func indexOfCardCode(_ code: String) -> Int? {
@@ -748,7 +748,7 @@ extension Deck {
             switch card.packCode {
             case PackManager.draft:
                 draftUsed = true
-            case PackManager.core:
+            case PackManager.core, PackManager.core2:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
@@ -824,7 +824,7 @@ extension Deck {
             switch card.packCode {
             case PackManager.draft:
                 draftUsed = true
-            case PackManager.core:
+            case PackManager.core, PackManager.core2:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }

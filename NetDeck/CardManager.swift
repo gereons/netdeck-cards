@@ -16,12 +16,13 @@ class CardManager {
     
     private static var allCardsByRole = [Role: [Card] ]()    // non-id cards
     private static var allIdentitiesByRole = [Role: [Card] ]()    // ids
+    private(set) static var quantities = [String: Int]()   // map of code+packCode -> quantity
     
     private static var allSubtypes = [Role: [String: Set<String> ] ]()
     private static var identitySubtypes = [ Role: Set<String> ]()
     private static var identityKey = ""
     
-    private static var allKnownCards = [ String: Card ](minimumCapacity: 2000)
+    private static var allKnownCards = [ String: Card ](minimumCapacity: 1600)
     
     private(set) static var maxMU: Int = -1
     private(set) static var maxInfluence: Int = -1
@@ -45,6 +46,8 @@ class CardManager {
         
         allSubtypes[.runner] = [:]
         allSubtypes[.corp] = [:]
+        
+        quantities = [:]
         
         maxMU = -1
         maxInfluence = -1
@@ -115,7 +118,7 @@ class CardManager {
         
         for identity in identitiesFor(role: role).sorted(by: { $0.code < $1.code }) {
             let faction = Faction.name(for: identity.faction)
-            if let index = factionNames.index(where: { $0 == faction }), !disabledPackCodes.contains(identity.packCode) {
+            if let index = factionNames.index(where: { $0 == faction }), !PackManager.isCardInDisabledPack(identity) {
                 identities[index].append(identity)
             }
         }
@@ -230,12 +233,13 @@ class CardManager {
             return
         }
         
-        allKnownCards[card.code] = card
-        
-        if card.type == .identity {
-            allIdentitiesByRole[card.role]!.append(card)
-        } else {
-            allCardsByRole[card.role]!.append(card)
+        if allKnownCards[card.code] == nil {
+            allKnownCards[card.code] = card
+            if card.type == .identity {
+                allIdentitiesByRole[card.role]!.append(card)
+            } else {
+                allCardsByRole[card.role]!.append(card)
+            }
         }
         
         // calculate max values for filter sliders
@@ -250,6 +254,11 @@ class CardManager {
         } else {
             maxCorpCost = max(card.cost, maxCorpCost)
         }
+        
+        PackManager.addCard(card, to: card._packCode)
+        
+        let key = "\(card.code)-\(card._packCode)"
+        quantities[key] = card._quantity
     }
     
     static func setNextDownloadDate() {
@@ -326,7 +335,7 @@ class CardManager {
         for card in parsedCards {
             CardManager.add(card: card)
         }
-        
+
         let cards = Array(allKnownCards.values)
         if cards.count == 0 {
             return false
