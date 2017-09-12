@@ -125,16 +125,14 @@ class Card: NSObject, Unmarshaling {
     
     // how many copies owned
     var owned: Int {
-        let prebuiltOwned = PrebuiltManager.quantity(for: self)
-        
         if self.isCore {
             let cores = Defaults[.numCores]
-            return (cores * self.quantity) + prebuiltOwned
+            return cores * self.quantity
         }
         
         let disabledPacks = PackManager.disabledPackCodes()
         if disabledPacks.contains(self.packCode) {
-            return prebuiltOwned
+            return 0
         }
         return self.quantity
     }

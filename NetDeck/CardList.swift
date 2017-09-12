@@ -111,14 +111,7 @@ class CardList {
     func filterDeselectedSets() {
         let disabledPackCodes = PackManager.disabledPackCodes()
         let packPredicate = NSPredicate(format: "!(packCode in %@)", disabledPackCodes)
-        var predicate = packPredicate
-        
-        if let cards = PrebuiltManager.availableCodes() {
-            let decksPredicate = NSPredicate(format: "code in %@", cards)
-            predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [packPredicate, decksPredicate])
-        }
-        
-        self.applyPredicate(predicate)
+        self.applyPredicate(packPredicate)
     }
     
     func filterRotation() {

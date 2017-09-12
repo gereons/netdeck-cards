@@ -98,11 +98,6 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
         
-        // prebuilts
-        for pb in PrebuiltManager.allPrebuilts {
-            Defaults.set(pb.released, forKey: pb.settingsKey)
-        }
-        
         self.tableView.reloadData()
     }
     
@@ -124,11 +119,6 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         Defaults.set(true, forKey: Pack.use + PackManager.terminalDirective)
         Defaults.set(true, forKey: Pack.use + deluxe)
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
-        
-        // disable all prebuilts
-        for pb in PrebuiltManager.allPrebuilts {
-            Defaults.set(false, forKey: pb.settingsKey)
-        }
         
         self.tableView.reloadData()
     }

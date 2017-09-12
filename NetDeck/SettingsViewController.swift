@@ -51,7 +51,7 @@ class SettingsDelegate: IASKSettingsDelegate {
         
         if !CardManager.cardsAvailable {
             hiddenKeys = Set([
-                "sets_hide_1", "sets_hide_2", "sets_hide_3",
+                "sets_hide_1", "sets_hide_2",
                 DefaultsKeys.browserPacks._key, DefaultsKeys.deckbuilderPacks._key
             ])
         }
@@ -211,7 +211,6 @@ class SettingsDelegate: IASKSettingsDelegate {
             alert.addAction(UIAlertAction(title: "Yes".localized(), style: .default) { action in
                 CardManager.removeFiles()
                 PackManager.removeFiles()
-                PrebuiltManager.removeFiles()
                 Defaults[.lastDownload] = "Never".localized()
                 Defaults[.nextDownload] = "Never".localized()
                 self.refresh()

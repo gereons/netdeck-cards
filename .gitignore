@@ -5,3 +5,4 @@ xcshareddata/
 *~.nib
 Pods/
 fastlane/report.xml
+testflight.sh

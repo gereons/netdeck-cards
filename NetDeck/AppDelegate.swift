@@ -78,18 +78,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func initializeData() {
         let language = Defaults[.language]
-        var cardsOk = false
         let start = Date.timeIntervalSinceReferenceDate
         let setsOk = PackManager.setupFromFiles(language)
         // print("app start, setsOk=\(setsOk)")
         if setsOk {
-            cardsOk = CardManager.setupFromFiles(language)
+            let _ = CardManager.setupFromFiles(language)
             // print("app start, cardsOk=\(cardsOk)")
         }
-        if setsOk && cardsOk {
-            let _ = PrebuiltManager.setupFromFiles(language)
-        }
-
+        
         let _ = DeckManager.decksForRole(.none)
         let end = Date.timeIntervalSinceReferenceDate
         print ("init took \(end-start)s")
