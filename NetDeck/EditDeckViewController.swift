@@ -104,6 +104,23 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidAppear(animated)
         
         assert(self.navigationController?.viewControllers.count == 2, "oops")
+        
+        let offerConversion = Defaults[.rotationActive] && Defaults[.convertCore] && self.deck.containsOldCore() && !self.deck.convertedToCore2
+        
+        if offerConversion {
+            let alert = UIAlertController(title: "Convert Deck".localized(), message: "Convert this deck to use Revised Core Set cards?".localized(), preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
+                self.deck.convertToRevisedCore()
+                
+                if self.deck.modified {
+                    self.refreshDeck()
+                }
+            })
+            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
+            
+            self.present(alert, animated: false, completion: nil)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -554,6 +571,9 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.nameLabel.textColor = .black
         if !self.deck.isDraft && (card.owned < cc.count || card.isRotated) {
+            cell.nameLabel.textColor = .red
+        }
+        if self.deck.cacheRefresh && card.isCore && cc.count > card.quantity {
             cell.nameLabel.textColor = .red
         }
         

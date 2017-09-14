@@ -23,6 +23,7 @@ import SwiftyUserDefaults
     private(set) var isDraft = false
     
     private var lastChanges = DeckChangeSet()
+    fileprivate(set) var convertedToCore2 = false
     
     override private init() {}
     
@@ -189,12 +190,14 @@ import SwiftyUserDefaults
         return cards.filter({ $0.card.type == type}).reduce(0) { $0 + $1.count }
     }
     
+    /// add (`copies>0`) or remove (`copies<0`) a copy of a card from the deck
+    /// if `copies==0`, removes ALL copies of the card
     func addCard(_ card: Card, copies: Int) {
         self.addCard(card, copies: copies, history: true)
     }
     
-    // add (copies>0) or remove (copies<0) a copy of a card from the deck
-    // if copies==0, removes ALL copies of the card
+    /// add (copies>0) or remove (copies<0) a copy of a card from the deck
+    /// if copies==0, removes ALL copies of the card
     func addCard(_ card: Card, copies: Int, history: Bool) {
         
         var changed = false
@@ -619,6 +622,8 @@ import SwiftyUserDefaults
             self.cacheRefresh = false
         }
         
+        self.convertedToCore2 = decoder.decodeBool(forKey: "convertedToCore2")
+        
         self.modified = false
     }
     
@@ -640,6 +645,8 @@ import SwiftyUserDefaults
         
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
         coder.encode(self.cacheRefresh ? 1 : 0, forKey: "cacheRefresh")
+        
+        coder.encode(self.convertedToCore2, forKey: "convertedToCore2")
     }
 }
 
@@ -871,5 +878,35 @@ extension Deck {
         }
         
         return reasons
+    }
+}
+
+// MARK: - rotation support
+extension Deck {
+    func containsOldCore() -> Bool {
+        for cc in self.allCards {
+            if cc.card.packCode == PackManager.core {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func convertToRevisedCore() {
+        let core2Cards = CardManager.allFor(role: self.role).filter { $0.packCode == PackManager.core2 }
+        for cc in self.allCards {
+            if !PackManager.Rotation2017.packs.contains(cc.card.packCode) {
+                continue
+            }
+            
+            if let index = core2Cards.index(where: { $0.englishName == cc.card.englishName }) {
+                let replacement = core2Cards[index]
+                // print("replacing \(name) \(cc.card.code) -> \(replacement.name) \(replacement.code)")
+                self.addCard(cc.card, copies: 0)
+                self.addCard(replacement, copies: cc.count)
+            }
+            
+            self.convertedToCore2 = true
+        }
     }
 }

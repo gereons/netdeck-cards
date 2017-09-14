@@ -369,3 +369,7 @@
 "Casual" = "Ohne MWL";
 "MWL v1.0" = "MWL v1.0";
 "MWL v1.1" = "MWL v1.1";
+
+// rotation support
+"Convert Deck" = "Deck konvertieren";
+"Convert this deck to use Revised Core Set cards?" = "Dieses Deck auf das überarbeitete Grundspiel konvertieren?";

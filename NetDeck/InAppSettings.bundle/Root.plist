@@ -68,8 +68,18 @@
 			<key>Key</key>
 			<string>rotationActive</string>
 			<key>DefaultValue</key>
-			<false/>
+			<true/>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Offer Conversion to Revised Core?</string>
+            <key>Key</key>
+            <string>convertCore</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
 		<dict>
 			<key>Title</key>
 			<string>Card Data</string>

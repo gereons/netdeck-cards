@@ -73,6 +73,10 @@ class SettingsDelegate: IASKSettingsDelegate {
             hiddenKeys.insert(DefaultsKeys.autoSaveDropbox._key)
         }
         
+        if !Defaults[.rotationActive] {
+            hiddenKeys.insert(DefaultsKeys.convertCore._key)
+        }
+        
         Settings.viewController.hiddenKeys = hiddenKeys
     }
     
@@ -139,7 +143,10 @@ class SettingsDelegate: IASKSettingsDelegate {
                 NRDBHack.clearCredentials()
                 Defaults[.useNrdb] = false
             }
-
+        
+        case DefaultsKeys.rotationActive._key:
+            self.refresh()
+            
         default:
             break
         }

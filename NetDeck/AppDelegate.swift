@@ -206,6 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         Defaults.registerDefault(.rotationActive, true)
+        Defaults.registerDefault(.convertCore, true)
         
         Defaults.registerDefault(.lastDownload, "never".localized())
         Defaults.registerDefault(.nextDownload, "never".localized())

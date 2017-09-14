@@ -114,6 +114,8 @@ extension DefaultsKeys {
     static let defaultMWL = DefaultsKey<MWL>("mwlVersion")
     /// exclude rotated-out cards?
     static let rotationActive = DefaultsKey<Bool>("rotationActive")
+    /// convert core -> core2?
+    static let convertCore = DefaultsKey<Bool>("convertCore")
     
     /// which packs to use in browser
     static let browserPacks = DefaultsKey<PackUsage>("browserPacks")

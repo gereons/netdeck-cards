@@ -229,6 +229,23 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         UIView.animate(withDuration: 0.1) {
             self.footerView.layer.opacity = 1
         }
+        
+        let offerConversion = Defaults[.rotationActive] && Defaults[.convertCore] && self.deck.containsOldCore() && !self.deck.convertedToCore2
+        
+        if offerConversion {
+            let alert = UIAlertController(title: "Convert Deck".localized(), message: "Convert this deck to use Revised Core Set cards?".localized(), preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
+                self.deck.convertToRevisedCore()
+                
+                if self.deck.modified {
+                    NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
+                }
+            })
+            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
+            
+            self.present(alert, animated: false, completion: nil)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
