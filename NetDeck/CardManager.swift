@@ -233,13 +233,11 @@ class CardManager {
             return
         }
         
-        if allKnownCards[card.code] == nil {
-            allKnownCards[card.code] = card
-            if card.type == .identity {
-                allIdentitiesByRole[card.role]!.append(card)
-            } else {
-                allCardsByRole[card.role]!.append(card)
-            }
+        allKnownCards[card.code] = card
+        if card.type == .identity {
+            allIdentitiesByRole[card.role]!.append(card)
+        } else {
+            allCardsByRole[card.role]!.append(card)
         }
         
         // calculate max values for filter sliders
@@ -254,11 +252,6 @@ class CardManager {
         } else {
             maxCorpCost = max(card.cost, maxCorpCost)
         }
-        
-        PackManager.addCard(card, to: card._packCode)
-        
-        let key = "\(card.code)-\(card._packCode)"
-        quantities[key] = card._quantity
     }
     
     static func setNextDownloadDate() {

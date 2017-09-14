@@ -165,7 +165,6 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             let on = Defaults.bool(forKey: pack.settingsKey)
             let sw = NRSwitch(initial: on) { on in
                 self.toggleSetting(on, for: pack.settingsKey)
-                // tableView.reloadSections([indexPath.section], with: .none)
                 tableView.reloadData()
             }
             
@@ -179,7 +178,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         let settings = UserDefaults.standard
         settings.set(value, forKey: key)
         
-        let rotationKeys = PackManager.rotation2017.map { Pack.use + $0 }
+        let rotationKeys = PackManager.Rotation2017.packs.map { Pack.use + $0 }
         
         switch key {
         case DefaultsKeys.useCore._key:

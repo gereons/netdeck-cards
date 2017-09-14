@@ -18,17 +18,11 @@ struct Cycle: Unmarshaling {
  
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
-        self.code = try object.value(for: "code")
-        let position: Int = try object.value(for: "position")
-        self.position = position
+        let code: String = try object.value(for: "code")
+        self.code = code
+        self.rotated = PackManager.Rotation2017.cycles.contains(code)
+        self.position = try object.value(for: "position")
         self.size = try object.value(for: "size")
-        
-        FIXME("remove before release")
-        var rotated: Bool = try object.value(for: "rotated") ?? false
-        if (position == 2 || position == 4)  {
-            rotated = true
-        }
-        self.rotated = rotated
     }
 
 }
@@ -46,12 +40,13 @@ struct Pack: Unmarshaling {
     
     init(object: MarshaledObject) throws {
         self.name = try object.value(for: "name")
-        self.code = try object.value(for: "code")
         self.cycleCode = try object.value(for: "cycle_code")
         self.position = try object.value(for: "position")
-        self.settingsKey = Pack.use + self.code
-        
-        self.rotated = PackManager.cyclesByCode[self.cycleCode]?.rotated ?? false
+
+        let code: String = try object.value(for: "code")
+        self.code = code
+        self.settingsKey = Pack.use + code
+        self.rotated = PackManager.Rotation2017.packs.contains(code)
         
         let date: String = try object.value(for: "date_release") ?? ""
         self.released = date != "" && PackManager.now() >= date
@@ -74,7 +69,6 @@ class PackManager {
     
     static let core = "core"
     static let core2 = "core2"
-    static let core2Code = 14
     
     static let creationAndControl = "cac"
     static let honorAndProfit = "hap"
@@ -86,7 +80,10 @@ class PackManager {
     static let campaigns = [ terminalDirective ]
     static let cores = [ core, core2 ]
     
-    static let rotation2017 = [ "wla", "ta", "ce", "asis", "hs", "fp", "om", "st", "mt", "tc", "fal", "dt" ]
+    struct Rotation2017 {
+        static let packs = [ "core", "wla", "ta", "ce", "asis", "hs", "fp", "om", "st", "mt", "tc", "fal", "dt" ]
+        static let cycles = [ "genesis", "spin" ]
+    }
     
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
@@ -97,9 +94,6 @@ class PackManager {
     private static var allCycles = [Int: Cycle]()               // position -> cycles
     private(set) static var packsByCode = [String: Pack]()      // code -> pack
     private(set) static var allPacks = [Pack]()
-    
-    private(set) static var cardsInPack = [String: [Card]]()        // code -> card
-    private(set) static var packsWithCard = [String: [String]]()    // code -> packCodes
     
     static let anyPack = Pack(named: Constant.kANY)
     
@@ -113,28 +107,8 @@ class PackManager {
         return fmt.string(from: Date())
     }
     
-    static func addCard(_ card: Card, to packCode: String) {
-        if cardsInPack[packCode] != nil {
-            cardsInPack[packCode]!.append(card)
-        } else {
-            cardsInPack[packCode] = [card]
-        }
-        
-        if packsWithCard[card.code] != nil {
-            packsWithCard[card.code]!.append(packCode)
-        } else {
-            packsWithCard[card.code] = [packCode]
-        }
-    }
-    
     static func isCardInDisabledPack(_ card: Card) -> Bool {
-        for code in self.disabledPackCodes() {
-            let contained = cardsInPack[code]?.contains(card) ?? false
-            if contained {
-                return true
-            }
-        }
-        return false
+        return self.disabledPackCodes().contains(card.packCode)
     }
     
     static var packsAvailable: Bool {
@@ -151,6 +125,14 @@ class PackManager {
     static func settingsDefaults() -> [String: Bool] {
         var defaults = [String: Bool]()
         allPacks.forEach { defaults[$0.settingsKey] = $0.released }
+        
+        if Defaults[.rotationActive] {
+            PackManager.Rotation2017.packs.forEach { pack in
+                defaults[Pack.use + pack] = false
+            }
+        } else {
+            defaults[DefaultsKeys.useCore2._key] = false
+        }
         return defaults
     }
     
