@@ -1249,9 +1249,9 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             self.setMwl(.v1_2, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v1.3".localized().checked(self.deck.mwl == .v1_3)) { action in
-            self.setMwl(.v1_3, cacheRefresh: false, onesies: false)
-        })
+//        alert.addAction(UIAlertAction(title: "MWL v1.3".localized().checked(self.deck.mwl == .v1_3)) { action in
+//            self.setMwl(.v1_3, cacheRefresh: false, onesies: false)
+//        })
         
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
             self.setMwl(.none, cacheRefresh: false, onesies: true)

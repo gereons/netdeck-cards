@@ -237,9 +237,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Defaults.registerDefault(.identityTable, true)
         
-        // MWL v1.2 goes into effect 2017-04-12
-        let defaultMWL = MWL.v1_2
-        Defaults.registerDefault(.defaultMWL, defaultMWL)
+        Defaults.registerDefault(.defaultMWL, MWL.latest)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

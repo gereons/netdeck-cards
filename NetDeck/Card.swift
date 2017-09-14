@@ -395,10 +395,10 @@ extension Card {
         
         // FIXME!
         // MWL v1.3, introduced in NAPD Most Wanted List v1.3, valid from 2017-10-01 onwards
-        .v1_3: [ aaronMarrón: 1, cloneChip: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
-                 architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, sansanCityGrid: 1,
-                 blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
-                 acceleratedDiagnostics: 3, friendsInHighPlaces: 3, sensieActorsUnion: 3 ],
+//        .v1_3: [ aaronMarrón: 1, cloneChip: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
+//                 architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, sansanCityGrid: 1,
+//                 blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
+//                 acceleratedDiagnostics: 3, friendsInHighPlaces: 3, sensieActorsUnion: 3 ],
     ]
     
     static let aliases = [
