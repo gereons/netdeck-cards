@@ -116,7 +116,11 @@ class CardManager {
             identities.append([])
         }
         
-        for identity in identitiesFor(role: role).sorted(by: { $0.code < $1.code }) {
+        let allIdentities = identitiesFor(role: role).sorted { c1, c2 in
+            c1.packNumber == c2.packNumber ? c1.number < c2.number : c1.packNumber < c2.packNumber
+        }
+        
+        for identity in allIdentities {
             let faction = Faction.name(for: identity.faction)
             if let index = factionNames.index(where: { $0 == faction }), !PackManager.isCardInDisabledPack(identity) {
                 identities[index].append(identity)

@@ -369,8 +369,8 @@ class CardList {
                 if c1.type.rawValue < c2.type.rawValue { return true }
                 if c1.type.rawValue > c2.type.rawValue { return false }
             case .bySetNumber:
-                if c1.code < c2.code { return true }
-                if c1.code > c2.code { return false }
+                if c1.number < c2.number { return true }
+                if c1.number > c2.number { return false }
             default: break
             }
             
