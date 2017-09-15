@@ -174,6 +174,9 @@ import SwiftyUserDefaults
         if let padIndex = self.indexOfCardCode(Card.padCampaign) {
             let pad = cards[padIndex]
             return pad.count
+        } else if let padIndex = self.indexOfCardCode(Card.padCampaignCore2) {
+            let pad = cards[padIndex]
+            return pad.count
         }
         return 0
     }

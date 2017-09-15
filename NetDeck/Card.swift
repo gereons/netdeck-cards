@@ -347,6 +347,7 @@ extension Card {
     ])
     
     static let padCampaign              = "01109"    // needed for pad factory
+    static let padCampaignCore2         = "20128"    // ditto
     
     // NAPD Most Wanted List
     static let parasite             = "01012"
