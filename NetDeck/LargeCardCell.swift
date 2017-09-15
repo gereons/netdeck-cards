@@ -41,7 +41,7 @@ class LargeCardCell: CardCell {
 
         self.pips.forEach { $0.layer.cornerRadius = $0.frame.width / 2 }
         
-        let font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightRegular)
+        let font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFont.Weight.regular)
         self.name.font = font
         self.labels.forEach { $0.font = font }
         

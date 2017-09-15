@@ -35,7 +35,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)        
     }
     
-    func revertTapped(_ sender: UIButton) {
+    @objc func revertTapped(_ sender: UIButton) {
         Analytics.logEvent(.revert)
         assert(sender.tag < deck.revisions.count, "invalid tag")
         

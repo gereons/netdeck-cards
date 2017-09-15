@@ -67,24 +67,25 @@ class DataDownload: NSObject {
         alert.visualStyle = CustomAlertVisualStyle(alertStyle: .alert)
         self.sdcAlert = alert
         
-        let act = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        act.startAnimating()
-        act.translatesAutoresizingMaskIntoConstraints = false
-        alert.contentView.addSubview(act)
-        act.centerXAnchor.constraint(equalTo: alert.contentView.centerXAnchor).isActive = true
-        act.topAnchor.constraint(equalTo: alert.contentView.topAnchor).isActive = true
-        act.bottomAnchor.constraint(equalTo: alert.contentView.bottomAnchor).isActive = true
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        spinner.startAnimating()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        alert.contentView.addSubview(spinner)
+        spinner.centerXAnchor.constraint(equalTo: alert.contentView.centerXAnchor).isActive = true
+        spinner.topAnchor.constraint(equalTo: alert.contentView.topAnchor).isActive = true
+        spinner.bottomAnchor.constraint(equalTo: alert.contentView.bottomAnchor).isActive = true
         
         self.downloadStopped = false
         self.downloadErrors = 0
         
-        alert.add(AlertAction(title:"Stop".localized(), style: .normal) { action in
+        alert.addAction(AlertAction(title:"Stop".localized(), style: .normal) { action in
             self.stopDownload()
         })
-        
+
         alert.present(animated: false, completion: nil)
     }
     
+
     private func __requestFor(_ apiRequest: ApiRequest) -> URLRequest {
         let nrdbHost = Defaults[.nrdbHost]
         let language = Defaults[.language]
@@ -118,7 +119,7 @@ class DataDownload: NSObject {
         return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
     }
     
-    func doDownloadCardData(_ dummy: Any) {
+    @objc func doDownloadCardData(_ dummy: Any) {
         Analytics.logEvent(.cardUpdate)
 
         let requests: [ApiRequest: URLRequest] = [
@@ -214,15 +215,17 @@ class DataDownload: NSObject {
         let alert = AlertController(title: "Downloading Images".localized(), message:nil, preferredStyle: .alert)
         self.sdcAlert = alert
         
-        let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFontWeightRegular) ]
+        let attrs = [ NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFont.Weight.regular) ]
         alert.attributedMessage = NSAttributedString(string: msg, attributes: attrs)
         
         alert.contentView.addSubview(progressView)
-        
-        progressView.sdc_pinWidth(toWidthOf: alert.contentView, offset: -20)
-        progressView.sdc_centerInSuperview()
-        
-        alert.add(AlertAction(title: "Stop".localized(), style: .normal) { action in
+
+        progressView.topAnchor.constraint(equalTo: alert.contentView.topAnchor).isActive = true
+        progressView.bottomAnchor.constraint(equalTo: alert.contentView.bottomAnchor).isActive = true
+        progressView.leftAnchor.constraint(equalTo: alert.contentView.leftAnchor).isActive = true
+        progressView.rightAnchor.constraint(equalTo: alert.contentView.rightAnchor).isActive = true
+
+        alert.addAction(AlertAction(title: "Stop".localized(), style: .normal) { action in
             self.stopDownload()
         })
         
@@ -251,7 +254,7 @@ class DataDownload: NSObject {
                 DispatchQueue.main.async {
                     let progress = Float(index) / Float(self.cards.count)
                     self.progressView?.progress = progress
-                    let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFontWeightRegular) ]
+                    let attrs = [ NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFont.Weight.regular) ]
                     let msg = String(format: "Image %d of %d".localized(), index+1, self.cards.count)
                     self.sdcAlert?.attributedMessage = NSAttributedString(string:msg, attributes:attrs)
                 }
@@ -273,7 +276,7 @@ class DataDownload: NSObject {
         }
     }
     
-    func showMissingCardsAlert() {
+    @objc func showMissingCardsAlert() {
         if self.downloadErrors > 0 {
             let msg = String(format:"%d of %d images could not be downloaded.".localized(),
                              self.downloadErrors, self.cards.count)

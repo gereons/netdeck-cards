@@ -40,7 +40,7 @@ class IphoneDrawSimulator: UIViewController, UITableViewDelegate, UITableViewDat
         
         self.initCards(drawInitial: true)
         
-        self.oddsLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
+        self.oddsLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
     }
     
     @IBAction func drawValueChanged(_ sender: UISegmentedControl) {

@@ -183,8 +183,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGesture(_:)))
         self.collectionView.addGestureRecognizer(longPress)
         
-        self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
-        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
+        self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
+        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
         
         let footerTap = UITapGestureRecognizer(target: self, action: #selector(self.statusTapped(_:)))
         self.footerView.addGestureRecognizer(footerTap)
@@ -258,7 +258,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     // MARK: - history timer
-    func startHistoryTimer(_ notification: Any) {
+    @objc func startHistoryTimer(_ notification: Any) {
         self.stopHistoryTimer(notification)
         
         guard Defaults[.autoHistory] else {
@@ -270,13 +270,13 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.historyTicker = self.historySaveInterval
     }
     
-    func stopHistoryTimer(_ notification: Any) {
+    @objc func stopHistoryTimer(_ notification: Any) {
         self.historyTimer?.invalidate()
         self.historyTimer = nil
         self.historyTicker = 0
     }
     
-    func historySave(_ timer: Timer) {
+    @objc func historySave(_ timer: Timer) {
         self.historyTicker -= 1
         self.progressView.progress = Float(self.historyTicker / self.historySaveInterval)
 
@@ -294,7 +294,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         assert(self.role == self.deck.role, "role mismatch")
     }
     
-    func saveDeckClicked(_ sender: Any) {
+    @objc func saveDeckClicked(_ sender: Any) {
         self.saveDeckManually(true)
         NotificationCenter.default.post(name: Notifications.deckSaved, object: self)
     }
@@ -345,7 +345,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         DrawSimulatorViewController.showForDeck(self.deck, inViewController: self)
     }
     
-    func nrdbButtonClicked(_ sender: Any) {
+    @objc func nrdbButtonClicked(_ sender: Any) {
         if self.actionSheet != nil {
             return self.dismissActionSheet()
         }
@@ -502,7 +502,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - duplicate deck
     
-    func duplicateDeck(_ sender: UIBarButtonItem) {
+    @objc func duplicateDeck(_ sender: UIBarButtonItem) {
         if self.actionSheet != nil {
             return self.dismissActionSheet()
         }
@@ -535,7 +535,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - deck state
     
-    func changeState(_ sender: UIBarButtonItem) {
+    @objc func changeState(_ sender: UIBarButtonItem) {
         if self.actionSheet != nil {
             return self.dismissActionSheet()
         }
@@ -580,7 +580,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - deck name
     
-    func enterName(_ sender: Any) {
+    @objc func enterName(_ sender: Any) {
         if self.actionSheet != nil {
             return self.dismissActionSheet()
         }
@@ -623,7 +623,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         IdentitySelectionViewController.showFor(role: self.role, inViewController: self, withIdentity: self.deck.identity)
     }
     
-    func identitySelected(_ notification: Notification) {
+    @objc func identitySelected(_ notification: Notification) {
         guard let code = notification.userInfo?["code"] as? String else {
             return
         }
@@ -642,7 +642,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - sort
     
-    func sortPopup(_ sender: UIBarButtonItem) {
+    @objc func sortPopup(_ sender: UIBarButtonItem) {
         if self.actionSheet != nil {
             return self.dismissActionSheet()
         }
@@ -686,7 +686,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - export
     
-    func exportDeck(_ sender: UIBarButtonItem) {
+    @objc func exportDeck(_ sender: UIBarButtonItem) {
         if self.actionSheet != nil {
             return self.dismissActionSheet()
         }
@@ -794,7 +794,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - toggle view
     
-    func toggleView(_ sender: UISegmentedControl) {
+    @objc func toggleView(_ sender: UISegmentedControl) {
         if self.actionSheet != nil {
             return self.dismissActionSheet()
         }
@@ -830,14 +830,14 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - notifications
     
-    func notesChanged(_ notification: Notification) {
+    @objc func notesChanged(_ notification: Notification) {
         if self.autoSave {
             self.saveDeckManually(false)
         }
         self.refresh()
     }
     
-    func deckChanged(_ notification: Notification) {
+    @objc func deckChanged(_ notification: Notification) {
         let initialLoad = notification.userInfo?["initialLoad"] as? Bool ?? false
             
         if !initialLoad {
@@ -933,7 +933,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func flashTableCell(_ indexPath: IndexPath) {
+    @objc func flashTableCell(_ indexPath: IndexPath) {
         guard let cell = self.tableView.cellForRow(at: indexPath) else {
             return
         }
@@ -945,7 +945,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
                        completion: { finished in cell.backgroundColor = .white })
     }
     
-    func flashImageCell(_ indexPath: IndexPath) {
+    @objc func flashImageCell(_ indexPath: IndexPath) {
         guard let cell = self.collectionView.cellForItem(at: indexPath) else {
             return
         }
@@ -1150,7 +1150,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     private var scaleStart = 0.0
     private var startIndex: IndexPath?
     
-    func pinchGesture(_ gesture: UIPinchGestureRecognizer) {
+    @objc func pinchGesture(_ gesture: UIPinchGestureRecognizer) {
         if gesture.state == .began {
             self.scaleStart = self.scale
             let startPoint = gesture.location(in: self.collectionView)
@@ -1170,7 +1170,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func longPressGesture(_ gesture: UILongPressGestureRecognizer) {
+    @objc func longPressGesture(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else {
             return
         }
@@ -1232,7 +1232,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - MWL selection
     
-    func statusTapped(_ gesture: UITapGestureRecognizer) {
+    @objc func statusTapped(_ gesture: UITapGestureRecognizer) {
         if gesture.state == .ended {
             self.showMwlSelection()
         }

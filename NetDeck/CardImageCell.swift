@@ -37,7 +37,7 @@ class CardImageCell: UICollectionViewCell, CardDetailDisplay {
             img!.layer.masksToBounds = true
             img!.layer.cornerRadius = 10
         }
-        self.copiesLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.copiesLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFont.Weight.regular)
     }
     
     override func prepareForReuse() {

@@ -121,7 +121,7 @@ class ImageCache: NSObject {
         self.memCache.removeAll()
     }
     
-    func clearMemoryCache(_ notification: Notification) {
+    @objc func clearMemoryCache(_ notification: Notification) {
         self.memCache.removeAll()
     }
     

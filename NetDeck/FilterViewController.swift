@@ -116,7 +116,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         
         self.clearFilters()
         
-        self.previewHeader.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
+        self.previewHeader.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
         self.previewTable.rowHeight = 30
         self.previewTable.tableFooterView = UIView(frame: CGRect.zero)
         self.showPreviewTable = true
@@ -135,7 +135,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.navigationItem.rightBarButtonItem = clearButton
     }
     
-    func clearFiltersTapped(_ sender: Any) {
+    @objc func clearFiltersTapped(_ sender: Any) {
         self.clearFilters()
     }
     

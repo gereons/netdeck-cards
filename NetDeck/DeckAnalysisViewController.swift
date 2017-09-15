@@ -105,7 +105,7 @@ class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
-    func toggleSets(_ sender: Any) {
+    @objc func toggleSets(_ sender: Any) {
         self.showSets = !self.showSets
         let arrow = self.showSets ? "763-arrow-up" : "764-arrow-down"
         self.toggleButton.setImage(UIImage(named: arrow), for: .normal)
