@@ -9,7 +9,7 @@
 import Foundation
 
 @objc(CardCounter) class CardCounter: NSObject, NSCoding, NSCopying {
-    let card: Card
+    @objc let card: Card
     var count: Int
     
     private static let nullInstance = CardCounter(card: Card.null(), count: 0)

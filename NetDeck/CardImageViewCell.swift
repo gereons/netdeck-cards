@@ -49,7 +49,7 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         
         self.mwlLabel.layer.cornerRadius = 3
         self.mwlLabel.layer.masksToBounds = true
-        self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 9, weight: UIFontWeightBold)
+        self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 9, weight: UIFont.Weight.bold)
     }
     
     override func prepareForReuse() {

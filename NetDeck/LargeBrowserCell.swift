@@ -39,8 +39,8 @@ class LargeBrowserCell: BrowserCell {
         
         self.pips.forEach { $0.layer.cornerRadius = $0.frame.width / 2 }
         
-        self.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightMedium)
-        self.labels.forEach { $0.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightRegular) }
+        self.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        self.labels.forEach { $0.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFont.Weight.regular) }
         
         self.prepareForReuse()
     }

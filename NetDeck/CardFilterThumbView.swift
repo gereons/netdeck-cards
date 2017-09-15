@@ -32,7 +32,7 @@ class CardFilterThumbView: UICollectionViewCell {
         self.imageView.layer.masksToBounds = true
         
         self.nameLabel.text = nil
-        self.countLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.countLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFont.Weight.regular)
         self.countLabel.text = nil
     }
     

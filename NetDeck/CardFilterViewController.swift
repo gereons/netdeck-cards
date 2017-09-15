@@ -210,11 +210,11 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         ]
     }
     
-    func startTextSearch(_ cmd: UIKeyCommand) {
+    @objc func startTextSearch(_ cmd: UIKeyCommand) {
         self.searchField.becomeFirstResponder()
     }
     
-    func escKeyPressed(_ cmd: UIKeyCommand) {
+    @objc func escKeyPressed(_ cmd: UIKeyCommand) {
         self.searchField.resignFirstResponder()
     }
     
@@ -236,7 +236,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.sections = data.sections
     }
     
-    func deckChanged(_ notification: Notification) {
+    @objc func deckChanged(_ notification: Notification) {
         guard let deck = self.deckListViewController.deck else {
             return
         }
@@ -263,7 +263,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.reloadData()
     }
     
-    func deckSaved(_ notification: Notification) {
+    @objc func deckSaved(_ notification: Notification) {
         self.setBackOrRevertButton(false)
     }
     
@@ -276,7 +276,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.navigationItem.leftBarButtonItem = modified ? self.revertButton : nil
     }
     
-    func revertDeck(_ sender: UIBarButtonItem) {
+    @objc func revertDeck(_ sender: UIBarButtonItem) {
         if let filename = self.deckListViewController.deck.filename {
             let deck = DeckManager.loadDeckFromPath(filename, useCache: false)
             self.reloadData()
@@ -368,7 +368,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.sendNotification = true
     }
     
-    func addTopCard(_ notification: Notification) {
+    @objc func addTopCard(_ notification: Notification) {
         if self.cards.count > 0 {
             let cards = self.cards[0]
             if cards.count > 0 {
@@ -381,7 +381,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func nameAlertWillAppear(_ notification: Notification) {
+    @objc func nameAlertWillAppear(_ notification: Notification) {
         if self.searchField.isFirstResponder {
             self.searchField.resignFirstResponder()
         }
@@ -637,12 +637,12 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.present(sheet, animated: false, completion: nil)
     }
     
-    func changeScopeKeyCmd(_ cmd: UIKeyCommand) {
-        if cmd.input.lowercased() == "a" {
+    @objc func changeScopeKeyCmd(_ cmd: UIKeyCommand) {
+        if cmd.input?.lowercased() == "a" {
             self.changeScope(.all)
-        } else if cmd.input.lowercased() == "n" {
+        } else if cmd.input?.lowercased() == "n" {
             self.changeScope(.name)
-        } else if cmd.input.lowercased() == "t" {
+        } else if cmd.input?.lowercased() == "t" {
             self.changeScope(.text)
         }
     }
@@ -797,7 +797,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         CardImageViewPopover.show(for: card, from: rect, in: self, subView: self.tableView)
     }
     
-    func addCardToDeck(_ sender: UIButton) {
+    @objc func addCardToDeck(_ sender: UIButton) {
         let tappedIndexPath: IndexPath?
         if sender.tag == Add.table.rawValue {
             let point = sender.convert(CGPoint.zero, to: self.tableView)

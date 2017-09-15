@@ -31,7 +31,7 @@ class OctgnImport: NSObject, XMLParserDelegate {
                 if id.hasPrefix(Card.octgnPrefix) && id.length > 32 {
                     
                     let index = id.index(id.startIndex, offsetBy: 31)
-                    let code = id.substring(from: index)
+                    let code = String(id[index...])
                     if let card = CardManager.cardBy(code: code), let copies = Int(qty) {
                         // NSLog(@"card: %d %@", copies, card.name);
                         self.deck.addCard(card, copies: copies)

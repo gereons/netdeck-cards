@@ -177,7 +177,7 @@ class NRDB: NSObject {
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
     }
     
-    func timedRefresh(_ timer: Timer?) {
+    @objc func timedRefresh(_ timer: Timer?) {
         // print("NRDB refresh timer callback")
         self.timer = nil
         self.refreshToken { ok in

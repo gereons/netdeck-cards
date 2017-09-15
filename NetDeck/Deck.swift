@@ -17,7 +17,7 @@ import SwiftyUserDefaults
     var lastModified: Date?
     var dateCreated: Date?
 
-    private(set) var cards = [CardCounter]()
+    @objc private(set) var cards = [CardCounter]()
     private(set) var identityCc: CardCounter?
     private(set) var modified = false
     private(set) var isDraft = false
@@ -43,15 +43,15 @@ import SwiftyUserDefaults
         return all
     }
     
-    var identity: Card? {
+    @objc var identity: Card? {
         return identityCc?.card
     }
     
-    var name: String = "" {
+    @objc var name: String = "" {
         willSet { modified = true }
     }
     
-    var state = DeckState.none {
+    @objc var state = DeckState.none {
         willSet { modified = true }
     }
     
@@ -330,10 +330,10 @@ import SwiftyUserDefaults
         if matches.count > 0 {
             let match = matches[0]
             let range = match.range.stringRangeForText(oldName)
-            let numberStr = oldName.substring(with: range)
+            let numberStr = oldName[range]
             let number = 1 + Int(numberStr)!
             
-            newName = oldName.substring(to: oldName.characters.index(oldName.startIndex, offsetBy: match.range.location))
+            newName = String(oldName[..<oldName.characters.index(oldName.startIndex, offsetBy: match.range.location)])
             newName += "\(number)"
         }
         

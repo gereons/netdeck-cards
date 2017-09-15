@@ -51,9 +51,9 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.tableView.register(UINib(nibName: "EditDeckCell", bundle: nil), forCellReuseIdentifier: "cardCell")
         
-        self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFont.Weight.regular)
         self.statusLabel.text = ""
-        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFont.Weight.regular)
         self.summaryLabel.text = ""
         
         self.autoSave = Defaults[.autoSave]
@@ -80,7 +80,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.titleButton = UIButton(type: .system)
         self.titleButton.addTarget(self, action: #selector(self.titleTapped(_:)), for: .touchUpInside)
-        self.titleButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightRegular)
+        self.titleButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFont.Weight.regular)
         self.titleButton.titleLabel?.adjustsFontSizeToFitWidth = true
         self.titleButton.titleLabel?.minimumScaleFactor = 0.5
     }
@@ -151,7 +151,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.setupNavigationButtons(modified: self.deck.modified)
     }
     
-    func titleTapped(_ sender: Any) {
+    @objc func titleTapped(_ sender: Any) {
         let alert = UIAlertController.alert(title: "Enter Name".localized(), message: nil)
         
         alert.addTextField { (textField) in
@@ -173,7 +173,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - export
     
-    func exportDeck(_ sender: Any) {
+    @objc func exportDeck(_ sender: Any) {
         let alert = UIAlertController.actionSheet(title: "Export".localized(), message: nil)
         
         if Defaults[.useDropbox] {
@@ -224,7 +224,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alert, animated: false, completion: nil)
     }
     
-    func showEditHistory(_ sender: Any) {
+    @objc func showEditHistory(_ sender: Any) {
         self.deck.mergeRevisions()
         
         let histContoller = DeckHistoryViewController()
@@ -296,7 +296,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - save
     
-    func cancelClicked(_ sender: Any) {
+    @objc func cancelClicked(_ sender: Any) {
         if self.deck.filename != nil {
             self.deck = DeckManager.loadDeckFromPath(self.deck.filename!, useCache: false)
             self.refreshDeck()
@@ -306,7 +306,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func saveClicked(_ sender: Any) {
+    @objc func saveClicked(_ sender: Any) {
         self.deck.mergeRevisions()
         self.deck.saveToDisk()
         
@@ -431,7 +431,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func refreshDeck() {
+    @objc func refreshDeck() {
         let data = self.deck.dataForTableView(self.sortType)
         self.sections = data.sections
         self.cards = data.values
@@ -467,7 +467,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.setupNavigationButtons(modified: self.deck.modified)
     }
     
-    func changeCount(_ stepper: UIStepper) {
+    @objc func changeCount(_ stepper: UIStepper) {
         let section = stepper.tag / 1000
         let row = stepper.tag - (section * 1000)
         
@@ -481,7 +481,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.refreshDeck()
     }
     
-    func selectIdentity(_ sender: Any) {
+    @objc func selectIdentity(_ sender: Any) {
         let idController = IphoneIdentityViewController()
         idController.role = self.deck.role
         idController.deck = self.deck
@@ -577,7 +577,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             cell.nameLabel.textColor = .red
         }
         
-        cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
+        cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight.regular)
         cell.mwlLabel.text = ""
         
         if card.type != .identity {
@@ -635,7 +635,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - legality
     
-    func statusTapped(_ gesture: UITapGestureRecognizer) {
+    @objc func statusTapped(_ gesture: UITapGestureRecognizer) {
         if gesture.state != .ended {
             return
         }

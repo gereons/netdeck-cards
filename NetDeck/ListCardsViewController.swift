@@ -42,9 +42,9 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.tableView.backgroundColor = .clear
         
-        self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFont.Weight.regular)
         self.statusLabel.text = ""
-        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFont.Weight.regular)
         self.summaryLabel.text = ""
         
         // needed to make the 1 pixel separator show - wtf is this needed here but not elsewhere?
@@ -100,7 +100,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func showFilters(_ sender: UIBarButtonItem) {
+    @objc func showFilters(_ sender: UIBarButtonItem) {
         if self.filterViewController == nil {
             self.filterViewController = FilterViewController()
         }
@@ -113,7 +113,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func countChanged(_ stepper: UIStepper) {
+    @objc func countChanged(_ stepper: UIStepper) {
         let section = stepper.tag / 1000
         let row = stepper.tag - (section * 1000)
         
@@ -212,7 +212,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func changeScope(_ btn: UIBarButtonItem) {
+    @objc func changeScope(_ btn: UIBarButtonItem) {
         let alert = UIAlertController(title: "Search in:".localized(), message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Name".localized().checked(self.searchScope == .name)) { action in
@@ -265,13 +265,13 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         let text: String
         if let cc = cardCounter {
             text = String(format: "%lu× %@", cc.count, card.name)
-            weight = UIFontWeightMedium
+            weight = UIFont.Weight.medium.rawValue
         } else {
             text = String(format: "%@", card.name)
-            weight = UIFontWeightRegular
+            weight = UIFont.Weight.regular.rawValue
         }
         cell.nameLabel.text = card.unique ? text + " •" : text
-        cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: weight)
+        cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight(rawValue: weight))
         
         let faction = Faction.name(for: card.faction)
         let subtype = card.subtype

@@ -121,7 +121,7 @@ class ImportDecksViewController: UIViewController {
     
     // MARK: - sorting
     
-    func changeSort(_ sender: UIBarButtonItem) {
+    @objc func changeSort(_ sender: UIBarButtonItem) {
         let alert = UIAlertController.actionSheet(title: "Sort by".localized(), message:nil)
         
         alert.addAction(UIAlertAction(title: "Date".localized().checked(self.deckListSort == .byDate)) { action in
@@ -164,7 +164,7 @@ class ImportDecksViewController: UIViewController {
     // MARK: - import all
     
     
-    func importAll(_ sender: UIBarButtonItem) {
+    @objc func importAll(_ sender: UIBarButtonItem) {
         guard self.alert == nil else {
             self.dismissSortPopup()
             return
@@ -188,7 +188,7 @@ class ImportDecksViewController: UIViewController {
         self.present(alert, animated: false, completion: nil)
     }
     
-    func doImportAll() {
+    @objc func doImportAll() {
         for decks in self.filteredDecks {
             for deck in decks {
                 if self.source == .netrunnerDb {
@@ -295,7 +295,7 @@ class ImportDecksViewController: UIViewController {
                 let importer = OctgnImport()
                 if let deck = importer.parseOctgnDeckFromData(data) {
                     if let range = file.range(of: ".o8d", options: .caseInsensitive) {
-                        deck.name = file.substring(to: range.lowerBound)
+                        deck.name = String(file[..<range.lowerBound])
                     } else {
                         deck.name = file
                     }
@@ -400,7 +400,7 @@ class ImportDecksViewController: UIViewController {
         }
     }
     
-    func handleRefresh(_ sender: UIRefreshControl) {
+    @objc func handleRefresh(_ sender: UIRefreshControl) {
         if (self.source == .dropbox) {
             self.getDropboxDecks()
         } else {

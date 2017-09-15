@@ -39,7 +39,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Presets".localized(), style: .plain, target: self, action: #selector(self.showPresets(_:)))
     }
     
-    func showPresets(_ sender: UIBarButtonItem) {
+    @objc func showPresets(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "All".localized()) { action in
@@ -67,7 +67,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         self.present(alert, animated: false, completion: nil)
     }
     
-    func coresAlert(_ sender: UIButton) {
+    @objc func coresAlert(_ sender: UIButton) {
         let alert = UIAlertController(title: "Number of Core Sets".localized(), message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "1") { action in
@@ -158,7 +158,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             let button = UIButton(type: .system)
             button.frame = CGRect(x: 0, y: 0, width: 40, height: 30)
             button.setTitle("\(numCores)", for: .normal)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
             button.addTarget(self, action: #selector(self.coresAlert(_:)), for: .touchUpInside)
             cell.accessoryView = button
         } else {

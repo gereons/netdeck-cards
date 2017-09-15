@@ -81,7 +81,7 @@ class DataDownload: NSObject {
         alert.present(animated: false, completion: nil)
     }
     
-    func doDownloadCardData(_ dummy: Any) {
+    @objc func doDownloadCardData(_ dummy: Any) {
         let nrdbHost = Defaults[.nrdbHost]
         let language = Defaults[.language]
         
@@ -186,7 +186,7 @@ class DataDownload: NSObject {
         let alert = AlertController(title: "Downloading Images".localized(), message:nil, preferredStyle: .alert)
         self.sdcAlert = alert
         
-        let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFontWeightRegular) ]
+        let attrs = [ NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFont.Weight.regular) ]
         alert.attributedMessage = NSAttributedString(string: msg, attributes: attrs)
         
         alert.contentView.addSubview(progressView)
@@ -223,7 +223,7 @@ class DataDownload: NSObject {
                 DispatchQueue.main.async {
                     let progress = Float(index) / Float(self.cards.count)
                     self.progressView?.progress = progress
-                    let attrs = [ NSFontAttributeName: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFontWeightRegular) ]
+                    let attrs = [ NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFont.Weight.regular) ]
                     let msg = String(format: "Image %d of %d".localized(), index+1, self.cards.count)
                     self.sdcAlert?.attributedMessage = NSAttributedString(string:msg, attributes:attrs)
                 }
@@ -245,7 +245,7 @@ class DataDownload: NSObject {
         }
     }
     
-    func showMissingCardsAlert() {
+    @objc func showMissingCardsAlert() {
         if self.downloadErrors > 0 {
             let msg = String(format:"%d of %d images could not be downloaded.".localized(),
                              self.downloadErrors, self.cards.count)

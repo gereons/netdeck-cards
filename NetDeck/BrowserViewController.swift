@@ -280,7 +280,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.navigationController?.pushViewController(picker, animated: true)
     }
     
-    func scopeButtonTapped(_ btn: UIBarButtonItem) {
+    @objc func scopeButtonTapped(_ btn: UIBarButtonItem) {
         let alert = UIAlertController(title: "Search in:".localized(), message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Name".localized().checked(self.searchScope == .name)) { action in
@@ -313,7 +313,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     // MARK: long press
-    func longPress(_ gesture: UILongPressGestureRecognizer) {
+    @objc func longPress(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             let point = gesture.location(in: self.tableView)
             if let indexPath = self.tableView.indexPathForRow(at: point) {

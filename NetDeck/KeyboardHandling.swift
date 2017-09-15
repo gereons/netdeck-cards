@@ -66,7 +66,7 @@ class KeyboardObserver: NSObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         guard let info = KeyboardInfo(notification: notification) else {
             return
         }
@@ -74,7 +74,7 @@ class KeyboardObserver: NSObject {
         self.handler.keyboardWillShow(info)
     }
 
-    func keyboardWillHide(_ notification: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         guard let info = KeyboardInfo(notification: notification) else {
             return
         }

@@ -62,8 +62,8 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         
-        self.oddsLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightRegular)
-        self.drawnLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
+        self.oddsLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFont.Weight.regular)
+        self.drawnLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
     }
     
     func initCards(_ drawInitialHand: Bool) {
@@ -189,7 +189,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
     
     // MARK: long press
     
-    func longPress(_ gesture: UIGestureRecognizer) {
+    @objc func longPress(_ gesture: UIGestureRecognizer) {
         if gesture.state == .began {
             var indexPath: IndexPath?
             if self.tableView.isHidden {

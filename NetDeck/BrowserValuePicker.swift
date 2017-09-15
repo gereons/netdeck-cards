@@ -117,7 +117,7 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func clearSelections(_ sender: UIBarButtonItem) {
+    @objc func clearSelections(_ sender: UIBarButtonItem) {
         self.selected.removeAll()
         self.tableView.reloadData()
     }

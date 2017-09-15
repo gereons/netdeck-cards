@@ -54,7 +54,7 @@ class SavedDecksList: DecksViewController {
         self.navigationItem.rightBarButtonItems = self.normalRightButtons
     }
         
-    func importDecks(_ sender: UIBarButtonItem) {
+    @objc func importDecks(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             return self.dismissPopup()
         }
@@ -99,7 +99,7 @@ class SavedDecksList: DecksViewController {
         self.popup = nil
     }
     
-    func exportDecks(_ sender: UIBarButtonItem) {
+    @objc func exportDecks(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             return self.dismissPopup()
         }
@@ -144,7 +144,7 @@ class SavedDecksList: DecksViewController {
         self.present(self.popup, animated: false, completion: nil)
     }
     
-    func exportAllToDropbox() {
+    @objc func exportAllToDropbox() {
         for arr in self.decks {
             for deck in arr {
                 if deck.identity != nil {
@@ -156,7 +156,7 @@ class SavedDecksList: DecksViewController {
         SVProgressHUD.dismiss()
     }
     
-    func exportAllToNetrunnerDB() {
+    @objc func exportAllToNetrunnerDB() {
         var decks = [Deck]()
         for arr in self.decks {
             for deck in arr {
@@ -183,7 +183,7 @@ class SavedDecksList: DecksViewController {
         }
     }
     
-    func statePopup(_ sender: UIButton) {
+    @objc func statePopup(_ sender: UIButton) {
         let row = sender.tag / 10
         let section = sender.tag & 1
         let indexPath = IndexPath(row: row, section: section)
@@ -226,7 +226,7 @@ class SavedDecksList: DecksViewController {
         self.popup = nil
     }
     
-    func newDeck(_ sender: Any) {
+    @objc func newDeck(_ sender: Any) {
         if self.popup != nil {
             return self.dismissPopup()
         }
@@ -271,7 +271,7 @@ class SavedDecksList: DecksViewController {
         self.present(self.popup, animated: false, completion: nil)
     }
     
-    func longPress(_ gesture: UILongPressGestureRecognizer) {
+    @objc func longPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else {
             return
         }
@@ -363,7 +363,7 @@ class SavedDecksList: DecksViewController {
     }
     
     // MARK: - edit toggle
-    func toggleEdit(_ sender: UIButton) {
+    @objc func toggleEdit(_ sender: UIButton) {
         if self.popup != nil {
             return self.dismissPopup()
         }
@@ -381,7 +381,7 @@ class SavedDecksList: DecksViewController {
     }
     
     // MARK: deck diff
-    func diffCancel(_ sender: UIButton) {
+    @objc func diffCancel(_ sender: UIButton) {
         assert(self.diffSelection, "not in diff mode")
         self.diffSelection = false
         self.diffDeck = nil
@@ -468,7 +468,7 @@ class SavedDecksList: DecksViewController {
         }
         
         let color = self.tableView.tintColor ?? .blue
-        let attrs: [String: Any] = [ NSFontAttributeName: UIFont.systemFont(ofSize: 17), NSForegroundColorAttributeName: color ]
+        let attrs: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17), NSAttributedStringKey.foregroundColor: color ]
         return NSAttributedString(string: "New Deck".localized(), attributes: attrs)
     }
     

@@ -141,7 +141,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.limitedLabel.text = "Limited".localized()
         self.mwlLabel.text = "MWL".localized()
                 
-        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
+        self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
         
         let mwl = Defaults[.defaultMWL]
         self.mwlLabel.isHidden = mwl == MWL.none
@@ -188,21 +188,21 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         ]
     }
     
-    func startTextSearch(_ cmd: UIKeyCommand) {
+    @objc func startTextSearch(_ cmd: UIKeyCommand) {
         self.textField.becomeFirstResponder()
     }
     
-    func escKeyPressed(_ cmd: UIKeyCommand) {
+    @objc func escKeyPressed(_ cmd: UIKeyCommand) {
         self.textField.resignFirstResponder()
     }
     
-    func dismissKeyboard(_ sender: Any) {
+    @objc func dismissKeyboard(_ sender: Any) {
         self.textField.resignFirstResponder()
     }
     
     // MARK: - buttons
     
-    func clearFiltersClicked(_ sender: Any) {
+    @objc func clearFiltersClicked(_ sender: Any) {
         // reset segment controllers
         self.role = .none
         self.sideSelector.selectedSegmentIndex = 0
@@ -470,15 +470,15 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     
     // MARK: - text search
     
-    func changeScopeKeyCmd(_ cmd: UIKeyCommand) {
-        switch cmd.input.lowercased() {
-        case "a":
+    @objc func changeScopeKeyCmd(_ cmd: UIKeyCommand) {
+        switch cmd.input?.lowercased() {
+        case "a"?:
             self.scope = .all
             self.scopeSelector.selectedSegmentIndex = 0
-        case "n":
+        case "n"?:
             self.scope = .name
             self.scopeSelector.selectedSegmentIndex = 1
-        case "t":
+        case "t"?:
             self.scope = .text
             self.scopeSelector.selectedSegmentIndex = 2
         default: break
@@ -514,7 +514,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     
     // MARK: - text field
     
-    func textFieldDidChange(_ textField: UITextField) {
+    @objc func textFieldDidChange(_ textField: UITextField) {
         self.searchText = textField.text ?? ""
         self.filterWithText()
     }

@@ -99,7 +99,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         self.tableView(self.tableView, didSelectRowAt: indexPath)
     }
 
-    func loadDeck(_ notification: Notification) {
+    @objc func loadDeck(_ notification: Notification) {
         guard let roleCode = notification.userInfo?["role"] as? Int,
             let role = Role(rawValue: roleCode),
             let filename = notification.userInfo?["filename"] as? String else {
@@ -110,7 +110,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         self.navigationController?.pushViewController(filter, animated: true)
     }
     
-    func newDeck(_ notification: Notification) {
+    @objc func newDeck(_ notification: Notification) {
         let filter: CardFilterViewController
         if notification.name == Notifications.browserNew {
             guard
@@ -137,7 +137,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    func importDeckFromClipboard(_ notification: Notification) {
+    @objc func importDeckFromClipboard(_ notification: Notification) {
         guard
             let deck = notification.userInfo?["deck"] as? Deck,
             let identity = deck.identity
@@ -153,14 +153,14 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    func loadCards(_ notification: Notification) {
+    @objc func loadCards(_ notification: Notification) {
         self.tableView.reloadData()        
         if self.selectedItem != .settings {
             self.selectDecks()
         }
     }
     
-    func listDecks(_ notification: Notification) {
+    @objc func listDecks(_ notification: Notification) {
         guard
             let code = notification.userInfo?["code"] as? String,
             let card = CardManager.cardBy(code: code)

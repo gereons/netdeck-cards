@@ -205,7 +205,7 @@ class NRDBHack {
         if let match = regex.firstMatch(in: line, options: [], range: NSMakeRange(0, line.length)) {
             if match.numberOfRanges == 2 {
                 let l = line as NSString
-                let token = l.substring(with: match.rangeAt(1))
+                let token = l.substring(with: match.range(at: 1))
                 return token
             }
         }

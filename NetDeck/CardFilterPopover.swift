@@ -101,7 +101,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         self.setTableHeight()
     }
     
-    func doubleTap(_ gesture: UITapGestureRecognizer) {
+    @objc func doubleTap(_ gesture: UITapGestureRecognizer) {
         if gesture.state == .ended {
             CardFilterPopover.dismiss()
         }
@@ -266,7 +266,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         self.filteringViewController.filterCallback(attribute: self.attribute, value: value)
     }
     
-    func collapseSection(_ sender: UIButton) {
+    @objc func collapseSection(_ sender: UIButton) {
         assert(self.collapsedSections != nil)
         
         let collapsed = self.collapsedSections![sender.tag]
@@ -278,7 +278,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         self.tableView.reloadData()
     }
     
-    func didSelectSection(_ gesture: UITapGestureRecognizer) {
+    @objc func didSelectSection(_ gesture: UITapGestureRecognizer) {
         guard let section = gesture.view?.tag else {
             return
         }
