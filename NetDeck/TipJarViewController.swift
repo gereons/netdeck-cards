@@ -36,6 +36,8 @@ class TipJarViewController: UIViewController {
     fileprivate var tipMap = [Tip: UIButton]()
     fileprivate var productsMap = [Tip: SKProduct]()
     
+    private var productsRequest: SKProductsRequest?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,6 +67,12 @@ class TipJarViewController: UIViewController {
         Analytics.logEvent(.showTipJar)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.productsRequest?.cancel()
+    }
+    
     @IBAction func tipButtonTapped(_ sender: UIButton) {
         guard
             self.canMakePurchases(),
@@ -87,9 +95,9 @@ class TipJarViewController: UIViewController {
 
     private func fetchAvailableProducts() {
         let products = Tip.values.map { $0.rawValue }
-        let productsRequest = SKProductsRequest(productIdentifiers: Set(products))
-        productsRequest.delegate = self
-        productsRequest.start()
+        self.productsRequest = SKProductsRequest(productIdentifiers: Set(products))
+        self.productsRequest?.delegate = self
+        self.productsRequest?.start()
     }
     
 }
