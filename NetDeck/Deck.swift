@@ -720,6 +720,20 @@ extension Deck {
                 }
             }
         }
+
+        if self.banList != .none {
+            let cards = Set(self.allCards.map { $0.card })
+
+            let banned = cards.filter { $0.banned(self.banList) }
+            let restricted = cards.filter { $0.restricted(self.banList) }
+
+            if banned.count > 0 {
+                reasons.append("Uses banned cards".localized())
+            }
+            if restricted.count > 0 {
+                reasons.append("Too many restricted cards".localized())
+            }
+        }
         
         if Defaults[.rotationActive] {
             let packsUsed = Set(self.cards.map{ $0.card.packCode})
