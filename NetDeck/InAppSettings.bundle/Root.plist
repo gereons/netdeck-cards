@@ -60,6 +60,26 @@
                 <string>MWL v1.3</string>
 			</array>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSMultiValueSpecifier</string>
+            <key>Title</key>
+            <string>Default Ban/Restricted List</string>
+            <key>Key</key>
+            <string>banlistVersion</string>
+            <key>DefaultValue</key>
+            <integer>1</integer>
+            <key>Values</key>
+            <array>
+                <integer>0</integer>
+                <integer>1</integer>
+            </array>
+            <key>Titles</key>
+            <array>
+                <string>None</string>
+                <string>v1.0</string>
+            </array>
+        </dict>
 		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
