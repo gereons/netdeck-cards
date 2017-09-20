@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeckListViewController" customModule="NetDeck">
             <connections>
-                <outlet property="analysisButton" destination="ZM9-wm-D2z" id="lY9-6z-E2n"/>
+                <outlet property="analysisButton" destination="6kL-hd-wht" id="6jg-6i-do0"/>
                 <outlet property="collectionView" destination="Zk2-4C-1CS" id="r3d-KH-wIo"/>
                 <outlet property="deckNameLabel" destination="JY5-GK-UJa" id="exF-Si-N7U"/>
-                <outlet property="drawButton" destination="ptD-Cs-H63" id="ioY-Xx-ED2"/>
+                <outlet property="drawButton" destination="oUa-d5-MZ6" id="hWE-X7-ZMH"/>
                 <outlet property="footerView" destination="F8Z-vz-kQw" id="ZCt-jz-rJG"/>
                 <outlet property="footerWidth" destination="7Ba-Pd-4II" id="ELo-hT-HTl"/>
-                <outlet property="historyButton" destination="nDr-mi-Br2" id="yNf-SN-hhh"/>
+                <outlet property="historyButton" destination="Xtp-yk-AjM" id="gZp-nT-PQT"/>
                 <outlet property="lastSetLabel" destination="Gyb-FN-lQv" id="BSf-TL-qw8"/>
                 <outlet property="mwlButton" destination="zdu-rK-vYz" id="rNw-Oh-O0Y"/>
-                <outlet property="notesButton" destination="0IP-7H-enu" id="K2G-zc-SZU"/>
+                <outlet property="notesButton" destination="HTb-qm-CUg" id="03e-Se-bpb"/>
                 <outlet property="statusLabel" destination="XwP-Fk-qLM" id="k2c-ho-8id"/>
                 <outlet property="summaryLabel" destination="tUs-Ce-xsA" id="iTD-bt-t57"/>
                 <outlet property="tableView" destination="TkI-yZ-OZS" id="gri-lb-5ag"/>
@@ -92,54 +92,26 @@
                         <constraint firstAttribute="height" constant="44" id="Cn6-78-MNM"/>
                     </constraints>
                     <items>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="8qu-mo-xRU"/>
-                        <barButtonItem style="plain" id="QMf-Yo-25G">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nDr-mi-Br2">
-                                <rect key="frame" x="478" y="7" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="History">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="historyButtonClicked:" destination="-1" eventType="touchUpInside" id="888-c8-eJH"/>
-                                </connections>
-                            </button>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="JKt-gx-EpJ"/>
+                        <barButtonItem title="History" id="Xtp-yk-AjM">
+                            <connections>
+                                <action selector="historyButtonClicked:" destination="-1" id="dXs-sT-3Ka"/>
+                            </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" id="ZwH-Ij-eY0">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0IP-7H-enu">
-                                <rect key="frame" x="548" y="5.5" width="60" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Notes">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="notesButtonClicked:" destination="-1" eventType="touchUpInside" id="mq8-s6-PgN"/>
-                                </connections>
-                            </button>
+                        <barButtonItem title="Notes" id="HTb-qm-CUg">
+                            <connections>
+                                <action selector="notesButtonClicked:" destination="-1" id="jmL-HC-9lo"/>
+                            </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" id="yfE-uo-jcW" userLabel="Bar Button Item">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ptD-Cs-H63">
-                                <rect key="frame" x="618" y="5.5" width="60" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Draw">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="drawSimulatorClicked:" destination="-1" eventType="touchUpInside" id="X7d-Bx-As8"/>
-                                </connections>
-                            </button>
+                        <barButtonItem title="Draw" id="oUa-d5-MZ6">
+                            <connections>
+                                <action selector="drawSimulatorClicked:" destination="-1" id="WDf-t6-CNd"/>
+                            </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" id="REx-R3-U7x">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZM9-wm-D2z">
-                                <rect key="frame" x="688" y="5.5" width="60" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Analysis">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="analysisClicked:" destination="-1" eventType="touchUpInside" id="86J-Xh-23c"/>
-                                </connections>
-                            </button>
+                        <barButtonItem title="Analysis" id="6kL-hd-wht">
+                            <connections>
+                                <action selector="analysisClicked:" destination="-1" id="kRj-24-5AE"/>
+                            </connections>
                         </barButtonItem>
                     </items>
                 </toolbar>
@@ -206,9 +178,4 @@
             <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
 </document>

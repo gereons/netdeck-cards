@@ -71,6 +71,15 @@ extension UIColor {
     
 }
 
+extension UIBarButtonItem {
+    var frame: CGRect {
+        guard let view = self.value(forKey: "view") as? UIView else {
+            return CGRect.zero
+        }
+        return view.frame
+    }
+}
+
 extension NSRange {
     func stringRangeForText(_ string: String) -> Range<String.Index> {
         let start = string.characters.index(string.startIndex, offsetBy: self.location)

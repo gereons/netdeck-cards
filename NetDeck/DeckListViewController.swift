@@ -22,10 +22,10 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var lastSetLabel: UILabel!
     
     @IBOutlet weak var toolBar: UIToolbar!
-    @IBOutlet weak var drawButton: UIButton!
-    @IBOutlet weak var analysisButton: UIButton!
-    @IBOutlet weak var notesButton: UIButton!
-    @IBOutlet weak var historyButton: UIButton!
+    @IBOutlet weak var drawButton: UIBarButtonItem!
+    @IBOutlet weak var analysisButton: UIBarButtonItem!
+    @IBOutlet weak var notesButton: UIBarButtonItem!
+    @IBOutlet weak var historyButton: UIBarButtonItem!
     
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var footerWidth: NSLayoutConstraint!
@@ -94,8 +94,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.parent?.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.backgroundColor = .clear
-        self.tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
-        self.tableView.scrollIndicatorInsets = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.tableView.register(UINib(nibName: "LargeCardCell", bundle: nil), forCellReuseIdentifier: "largeCardCell")
         self.tableView.register(UINib(nibName: "SmallCardCell", bundle: nil), forCellReuseIdentifier: "smallCardCell")
@@ -156,10 +156,10 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationItem.rightBarButtonItems = rightButtons
         
         // setup bottom toolbar
-        self.drawButton.setTitle("Draw".localized(), for: .normal)
-        self.analysisButton.setTitle("Analysis".localized(), for: .normal)
-        self.notesButton.setTitle("Notes".localized(), for: .normal)
-        self.historyButton.setTitle("History".localized(), for: .normal)
+        self.drawButton.title = "Draw".localized()
+        self.analysisButton.title = "Analysis".localized()
+        self.notesButton.title = "Notes".localized()
+        self.historyButton.title = "History".localized()
         self.historyButton.isEnabled = deck.filename != nil && deck.revisions.count > 0
         
         let nc = NotificationCenter.default
@@ -225,7 +225,9 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         self.stateButton.title = DeckState.buttonLabelFor(self.deck.state)
+//        let historyFrame = self.historyButton.convert(self.historyButton.frame, to: self.footerView)
         self.footerWidth.constant = self.historyButton.frame.origin.x - 16
+        
         UIView.animate(withDuration: 0.1) {
             self.footerView.layer.opacity = 1
         }

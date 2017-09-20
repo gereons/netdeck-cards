@@ -526,13 +526,13 @@ extension ImportDecksViewController: KeyboardHandling {
         let screenHeight = UIScreen.main.bounds.size.height
         let kbHeight = screenHeight - info.endFrame.origin.y
         
-        let insets = UIEdgeInsets(top: 64, left: 0, bottom: kbHeight, right: 0)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: kbHeight, right: 0)
         self.tableView.contentInset = insets
         self.tableView.scrollIndicatorInsets = insets
     }
     
     func keyboardWillHide(_ info: KeyboardInfo) {
-        let insets = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.tableView.contentInset = insets
         self.tableView.scrollIndicatorInsets = insets
     }

@@ -26,17 +26,6 @@ platform :ios do
     scan
   end
 
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
-  lane :xbeta do
-    # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: "NetDeck") # Build your app - more options available
-    pilot
-
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
-  end
-
   desc "Deploy a new version to the App Store"
   lane :release do
     # match(type: "appstore")
@@ -50,7 +39,11 @@ platform :ios do
   lane :beta do
     # match(type: "appstore")
     # increment_build_number(build_number: latest_testflight_build_number + 1, xcodeproj: "NetDeck.xcodeproj")
-    gym(scheme: "NetDeck")
+    gym(
+      scheme: "NetDeck",
+      configuration: "Release",
+      xcargs: "OTHER_SWIFT_FLAGS='$(inherited) -DRELEASE'"
+    )
     testflight(skip_waiting_for_build_processing: true)
   end
 
