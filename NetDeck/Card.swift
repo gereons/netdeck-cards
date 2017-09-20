@@ -93,15 +93,7 @@ class Card: NSObject, Unmarshaling {
     var isNull: Bool {
         return self === Card.nullInstance
     }
-    
-    func mwlPenalty(_ mwl: MWL) -> Int {
-        guard let penalties = Card.mostWantedLists[mwl] else {
-            return 0
-        }
-    
-        return penalties[self.code] ?? 0
-    }
-    
+
     // special for ICE: return primary subtype (Barrier, CG, Sentry, Trap, Mythic) or "Multi"
     var iceType: String {
         assert(self.type == .ice, "not an ice")
@@ -376,10 +368,26 @@ extension Card {
     static let friendsInHighPlaces  = "11090"
     static let şifr                 = "11101"
     static let aaronMarrón          = "11106"
-    
+
+    // Ban/Restriced List
+    static let levyARLabAccess      = "03035"
+    static let filmCritic           = "08086"
+    static let gangSign             = "08067"
+    static let globalFoodInitiative = "09026"
+    static let employeeStrike       = "09053"
+    static let cloneSuffrageMovement = "10049"
+    static let fairchild_3          = "11049"
+    static let inversificator       = "12048"
+    static let obokataProtocol      = "12070"
+    static let blooMoose            = "12088"
+    static let salvagedVanadisArmory = "12103"
+    static let estelleMoon          = "13032"
+    static let hunterSeeker         = "13051"
+    static let magnumOpus           = "20050"
+    static let aesopsPawnshop       = "20052"
     
     // dictonaries of code -> penalty for each MWL version
-    fileprivate static let mostWantedLists: [MWL: [String: Int]] = [
+    private static let mostWantedLists: [MWL: [String: Int]] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
         .v1_0: [ cerberusH1: 1, cloneChip: 1, desperado: 1, parasite: 1, prepaidVoicepad: 1, yog_0: 1,
                  architect: 1, astroscript: 1, eli_1: 1, napdContract: 1, sansanCityGrid: 1 ],
@@ -401,33 +409,63 @@ extension Card {
 //                 blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
 //                 acceleratedDiagnostics: 3, friendsInHighPlaces: 3, sensieActorsUnion: 3 ],
     ]
+
+    func mwlPenalty(_ mwl: MWL) -> Int {
+        guard let penalties = Card.mostWantedLists[mwl] else {
+            return 0
+        }
+
+        return penalties[self.code] ?? 0
+    }
+
+    private static let banlists: [BanListVersion: BanList] = [
+        .v1_0: BanList([ aaronMarrón, blooMoose, faust, rumorMill, şifr, temüjinContract, salvagedVanadisArmory,
+                         cloneSuffrageMovement, friendsInHighPlaces, mumbadCityHall, sensieActorsUnion ],
+                       [ aesopsPawnshop, cloneChip, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, magnumOpus,
+                         bioEthicsAssociation, estelleMoon, fairchild_3, globalFoodInitiative, hunterSeeker, mumbaTemple, museumOfHistory, obokataProtocol])
+    ]
+
+    func banned(_ ban: BanListVersion) -> Bool {
+        guard let banned = Card.banlists[ban]?.banned else {
+            return false
+        }
+        return banned.contains(self.code)
+    }
+
+    func restricted(_ ban: BanListVersion) -> Bool {
+        guard let restricted = Card.banlists[ban]?.restricted else {
+            return false
+        }
+        return restricted.contains(self.code)
+    }
     
     static let aliases = [
-        ("08034", "Franklin"),  // Crick
-        ("02085", "HQI"),       // HQ Interface
-        ("02107", "RDI"),       // R&D Interface
-        ("06033", "David"),     // D4v1d
-        ("05039", "SW35"),
-        ("05039", "USW35"),     // Unreg. s&w '35
-        ("03035", "LARLA"),     // Levy AR Lab Access
-        ("04029", "PPVP"),      // Prepaid Voicepad
+        ("01044", "Mopus"),     // Magnum Opus
+        ("20050", "Mopus"),
         ("01092", "SSCG"),      // Sansan City Grid
         ("02079", "OAI"),       // Oversight AI
+        ("02085", "HQI"),       // HQ Interface
+        ("02107", "RDI"),       // R&D Interface
         ("03049", "Proco"),     // Professional Contacts
+        ("03035", "LARLA"),     // Levy AR Lab Access
+        ("04029", "PPVP"),      // Prepaid Voicepad
+        ("05039", "SW35"),
+        ("05039", "USW35"),     // Unreg. s&w '35
+        ("06033", "David"),     // D4v1d
+        ("07054", "QPT"),       // Qianju PT
         ("08009", "Baby"),      // Symmetrical Visage
+        ("08034", "Franklin"),  // Crick
         ("08003", "Pancakes"),  // Adjusted Chronotype
         ("08086", "Anita"),     // Film Critic
-        ("01044", "Mopus"),     // Magnum Opus
         ("09007", "Kitty"),     // Quantum Predictive Model
         ("10043", "Polop"),     // Political Operative
         ("10108", "FIRS"),      // Full Immersion RecStudio
+        ("11074", "Penguins"),  // Hasty Relocation
         ("11094", "IPB"),       // IP Block
-        ("07054", "QPT"),       // Qianju PT
         ("12088", "NNK"),       // Na'Not'K
         ("12088", "Nanotek"),
         ("12088", "Nanotech"),
         ("13038", "UVC"),       // Ultraviolet Clearance
-        ("11074", "Penguins"),  // Hasty Relocation
     ]
 
 }

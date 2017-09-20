@@ -31,6 +31,7 @@ class CardList {
     private var unique = false
     private var limited = false
     private var mwl = false
+    private var ban = false
     
     private var faction4inf = Faction.none   // faction for influence filter
     
@@ -104,6 +105,7 @@ class CardList {
         self.unique = false
         self.limited = false
         self.mwl = false
+        self.ban = false
         
         self.faction4inf = .none
     }
@@ -229,6 +231,10 @@ class CardList {
     func filterByMWL(_ mwl: Bool) {
         self.mwl = mwl
     }
+
+    func filterByBan(_ ban: Bool) {
+        self.ban = ban
+    }
     
     func sortBy(_ sortType: BrowserSort) {
         self.sortType = sortType
@@ -332,6 +338,13 @@ class CardList {
             let mwl = Defaults[.defaultMWL]
             if mwl != .none {
                 filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 }
+            }
+        }
+
+        if self.ban {
+            let ban = Defaults[.defaultBanList]
+            if ban != .none {
+                filteredCards = filteredCards.filter { $0.banned(ban) || $0.restricted(ban) }
             }
         }
         

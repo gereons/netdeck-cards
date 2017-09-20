@@ -70,6 +70,10 @@ import SwiftyUserDefaults
     var mwl = MWL.none {
         willSet { modified = true }
     }
+
+    var banList = BanListVersion.none {
+        willSet { modified = true }
+    }
     
     var onesies: Bool = false {
         willSet { modified = true }
@@ -348,6 +352,7 @@ import SwiftyUserDefaults
         newDeck.state = self.state
         newDeck.notes = self.notes
         newDeck.mwl = self.mwl
+        newDeck.banList = self.banList
         newDeck.lastChanges = self.lastChanges.copy() as! DeckChangeSet
         newDeck.revisions = self.revisions.map({ $0.copy() as! DeckChangeSet })
         newDeck.modified = true
@@ -607,14 +612,13 @@ import SwiftyUserDefaults
 
         let revisions = decoder.decodeObject(forKey: "revisions") as? [DeckChangeSet]
         self.revisions = revisions ?? [DeckChangeSet]()
-        
-        if decoder.containsValue(forKey: "mwl") {
-            let mwl = decoder.decodeInteger(forKey: "mwl")
-            self.mwl = MWL(rawValue: mwl) ?? .none
-        } else {
-            self.mwl = .none
-        }
-        
+
+        let mwl = decoder.decodeInteger(forKey: "mwl")
+        self.mwl = MWL(rawValue: mwl) ?? .none
+
+        let ban = decoder.decodeInteger(forKey: "banList")
+        self.banList = BanListVersion(rawValue: ban) ?? .none
+
         self.onesies = decoder.decodeBool(forKey: "onesies")
 
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
@@ -645,6 +649,7 @@ import SwiftyUserDefaults
         coder.encode(self.revisions, forKey:"revisions")
         coder.encode(self.mwl.rawValue, forKey: "mwl")
         coder.encode(self.onesies, forKey: "onesies")
+        coder.encode(self.banList, forKey: "banList")
         
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
         coder.encode(self.cacheRefresh ? 1 : 0, forKey: "cacheRefresh")
