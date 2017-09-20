@@ -81,26 +81,47 @@ class DataDownload: NSObject {
         alert.present(animated: false, completion: nil)
     }
     
-    func doDownloadCardData(_ dummy: Any) {
+    private func requestFor(_ apiRequest: ApiRequest) -> URLRequest? {
         let nrdbHost = Defaults[.nrdbHost]
         let language = Defaults[.language]
         
-        let cyclesUrl = String(format: "https://%@/api/2.0/public/cycles?_locale=%@", nrdbHost, language)
-        let packsUrl = String(format: "https://%@/api/2.0/public/packs?_locale=%@", nrdbHost, language)
-        let cardsUrl = String(format: "https://%@/api/2.0/public/cards?_locale=%@", nrdbHost, language)
+        var urlString: String
+        switch apiRequest {
+        case .cycles: urlString = "https://\(nrdbHost)/api/2.0/public/cycles"
+        case .packs: urlString = "https://\(nrdbHost)/api/2.0/public/packs"
+        case .cards: urlString = "https://\(nrdbHost)/api/2.0/public/cards"
+        }
         
-        let requests: [ApiRequest: URLRequest] = [
-            .cycles: URLRequest(url:URL(string: cyclesUrl)!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20),
-            .packs: URLRequest(url:URL(string: packsUrl)!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20),
-            .cards: URLRequest(url:URL(string: cardsUrl)!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
+        if language != "en" {
+            urlString += "?_locale=\(language)"
+        }
+        
+        if let url = URL(string: urlString) {
+            return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
+        }
+        return nil
+    }
+    
+    func doDownloadCardData(_ dummy: Any) {
+       
+        let requests: [ApiRequest: URLRequest?] = [
+            .cycles: self.requestFor(.cycles),
+            .packs: self.requestFor(.packs),
+            .cards: self.requestFor(.cards),
         ]
         
         let group = DispatchGroup()
         var results = [ApiRequest: Data]()
         
+        for req in requests.values {
+            if req == nil {
+                return
+            }
+        }
+        
         for (key, req) in requests {
             group.enter()
-            Alamofire.request(req).validate().responseJSON { response in
+            Alamofire.request(req!).validate().responseJSON { response in
                 switch response.result {
                 case .success:
                     if let data = response.data, !self.downloadStopped {
@@ -118,7 +139,7 @@ class DataDownload: NSObject {
             // for a in results.keys {
             //     print("dl ok for \(a)")
             // }
-
+            let language = Defaults[.language]
             var ok = !self.downloadStopped && results.count == requests.count
             if ok {
                 ok = PackManager.setupFromNetrunnerDb(results[.cycles]!, results[.packs]!, language: language)
