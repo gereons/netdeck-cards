@@ -1235,30 +1235,30 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let alert = UIAlertController.actionSheet(title: "Deck Legality".localized(), message: nil)
         
         alert.addAction(UIAlertAction(title: "Casual".localized().checked(self.deck.mwl == .none && !self.deck.onesies)) { action in
-            self.setMwl(.none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.none, .none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
         alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(self.deck.mwl == .v1_0)) { action in
-            self.setMwl(.v1_0, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.v1_0, .none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
 
         alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(self.deck.mwl == .v1_1)) { action in
-            self.setMwl(.v1_1, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.v1_1, .none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
         
         alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
-            self.setMwl(.v1_2, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.v1_2, .none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
 
-//        alert.addAction(UIAlertAction(title: "MWL v1.3".localized().checked(self.deck.mwl == .v1_3)) { action in
-//            self.setMwl(.v1_3, cacheRefresh: false, onesies: false)
-//        })
+        alert.addAction(UIAlertAction(title: "BanList v1.0".localized().checked(self.deck.banList == .v1_0)) { action in
+            self.setLegality(.none, .v1_0, cacheRefresh: false, onesies: false)
+        })
         
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
-            self.setMwl(.none, cacheRefresh: false, onesies: true)
+            self.setLegality(.none, .none, cacheRefresh: false, onesies: true)
         })
 
         alert.addAction(UIAlertAction(title: "Cache Refresh".localized().checked(self.deck.cacheRefresh)) { action in
-            self.setMwl(MWL.latest, cacheRefresh: !self.deck.cacheRefresh, onesies: false)
+            self.setLegality(MWL.latest, .none, cacheRefresh: !self.deck.cacheRefresh, onesies: false)
         })
         
         alert.addAction(UIAlertAction.actionSheetCancel(nil))
@@ -1272,11 +1272,12 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.present(alert, animated: false, completion: nil)
     }
     
-    private func setMwl(_ newMwl: MWL, cacheRefresh: Bool, onesies: Bool) {
+    private func setLegality(_ newMwl: MWL, _ banList: BanListVersion, cacheRefresh: Bool, onesies: Bool) {
         if self.deck.mwl != newMwl || self.deck.onesies != onesies || self.deck.cacheRefresh != cacheRefresh {
             self.deck.mwl = newMwl
             self.deck.onesies = onesies
             self.deck.cacheRefresh = cacheRefresh
+            self.deck.banList = banList
             
             NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
         }
