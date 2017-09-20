@@ -107,6 +107,23 @@ enum MWL: Int {
     }
 }
 
+enum BanListVersion: Int {
+    case none
+    case v1_0
+
+    static let latest = BanListVersion.v1_0
+}
+
+struct BanList {
+    let banned: Set<String>
+    let restricted: Set<String>
+
+    init(_ banned: [String], _ restricted: [String]) {
+        self.banned = Set(banned)
+        self.restricted = Set(restricted)
+    }
+}
+
 enum FilterAttribute: Int {
     case mu
     case cost
