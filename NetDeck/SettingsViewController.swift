@@ -62,7 +62,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             hiddenKeys.formUnion([ "about_hide_1", "about_hide_2" ])
         }
         
-        if BuildConfig.debug {
+        if !BuildConfig.debug {
             hiddenKeys.formUnion([
                 DefaultsKeys.nrdbTokenExpiry._key, DefaultsKeys.lastBackgroundFetch._key, DefaultsKeys.lastRefresh._key,
                 IASKButtons.refreshAuthNow, IASKButtons.clearImageCache, IASKButtons.downloadMissingImages, IASKButtons.downloadImagesNow
