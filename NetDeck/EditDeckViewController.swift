@@ -543,7 +543,12 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         cell.idButton.isHidden = card.type != .identity
         
         let fmt = card.unique ? "%lu× %@ •" : "%lu× %@"
-        cell.nameLabel.text = String(format: fmt, cc.count, card.name)
+        var name = String(format: fmt, cc.count, card.name)
+        if card.restricted(self.deck.banList) {
+            name += " 🦄"
+        }
+        
+        cell.nameLabel.text = name
     
         if card.type == .identity {
             cell.nameLabel.text = card.name
@@ -574,6 +579,9 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             cell.nameLabel.textColor = .red
         }
         if self.deck.cacheRefresh && card.isCore && cc.count > card.quantity {
+            cell.nameLabel.textColor = .red
+        }
+        if card.banned(self.deck.banList) {
             cell.nameLabel.textColor = .red
         }
         

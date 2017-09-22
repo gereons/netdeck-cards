@@ -1017,7 +1017,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let cc = self.cards[indexPath.section][indexPath.row]
         if !cc.isNull {
             let rect = self.tableView.rectForRow(at: indexPath)
-            CardImageViewPopover.show(for: cc.card, from: rect, in: self, subView: self.tableView)
+            CardImageViewPopover.show(for: cc.card, mwl: self.deck.mwl, from: rect, in: self, subView: self.tableView)
         }
     }
     
@@ -1128,7 +1128,14 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             cell.copiesLabel.textColor = .black
-            if !self.deck.isDraft && (cc2.card.owned < cc2.count || cc2.card.isRotated) {
+            let card = cc2.card
+            if !self.deck.isDraft && (card.owned < cc2.count || card.isRotated) {
+                cell.copiesLabel.textColor = .red
+            }
+            if self.deck.cacheRefresh && card.isCore && cc2.count > card.quantity {
+                cell.copiesLabel.textColor = .red
+            }
+            if card.banned(self.deck.banList) {
                 cell.copiesLabel.textColor = .red
             }
         }

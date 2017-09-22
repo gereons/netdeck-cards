@@ -140,6 +140,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         
         self.packLabel.layer.cornerRadius = 3
         self.packLabel.layer.masksToBounds = true
+        self.packLabel.text = nil
         
         self.mwlLabel.layer.cornerRadius = 3
         self.mwlLabel.layer.masksToBounds = true

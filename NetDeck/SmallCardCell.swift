@@ -53,19 +53,29 @@ class SmallCardCell: CardCell {
         self.copiesStepper.maximumValue = Double(self.deck.isDraft ? 100 : cc.card.maxPerDeck)
         self.copiesStepper.value = Double(cc.count)
         
+        var name = ""
         if card.type == .identity {
-            self.name.text = card.name
+            name = card.name
         } else if card.unique {
-            self.name.text = String(format: "%lu× %@ •", cc.count, card.name)
+            name = String(format: "%lu× %@ •", cc.count, card.name)
         } else {
-            self.name.text = String(format: "%lu× %@", cc.count, card.name)
+            name = String(format: "%lu× %@", cc.count, card.name)
         }
+        
+        if card.restricted(self.deck.banList) {
+            name += " 🦄"
+        }
+        
+        self.name.text = name
         
         self.name.textColor = .black
         if !self.deck.isDraft && (cc.count > card.owned || card.isRotated) {
             self.name.textColor = .red
         }
         if self.deck.cacheRefresh && card.isCore && cc.count > card.quantity {
+            self.name.textColor = .red
+        }
+        if card.banned(self.deck.banList) {
             self.name.textColor = .red
         }
         

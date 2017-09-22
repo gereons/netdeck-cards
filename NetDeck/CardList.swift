@@ -130,7 +130,11 @@ class CardList {
         }
     }
     
-    func preFilterForCorp(_ identity: Card) {
+    func applyBanList(_ banList: BanListVersion) {
+        self.initialCards = self.initialCards.filter { !$0.banned(banList) }
+    }
+    
+    func preFilterForCorp(_ identity: Card, _ banList: BanListVersion) {
         self.resetInitialCards()
         
         if (identity.faction != .neutral) {
@@ -145,16 +149,20 @@ class CardList {
             self.applyPredicate(predicate)
         }
         
+        self.applyBanList(banList)
+        
         let _ = self.applyFilters()
     }
     
-    func preFilterForRunner(_ identity: Card) {
+    func preFilterForRunner(_ identity: Card, _ banList: BanListVersion) {
         self.resetInitialCards()
         
         if identity.faction == .apex {
             let predicate = NSPredicate(format:"type != %d OR (type = %d AND isVirtual = 1)", CardType.resource.rawValue, CardType.resource.rawValue)
             self.applyPredicate(predicate)
         }
+        
+        self.applyBanList(banList)
         
         let _ = self.applyFilters()
     }
