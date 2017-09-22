@@ -83,7 +83,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.collectionView.register(UINib(nibName: "BrowserImageCell", bundle: nil), forCellWithReuseIdentifier: "browserImageCell")
         self.collectionView.register(CollectionViewSectionHeader.nib(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "sectionHeader")
         
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let insets = UIEdgeInsets.forScreen()
         self.collectionView.contentInset = insets
         self.collectionView.scrollIndicatorInsets = insets
         self.collectionView.alwaysBounceVertical = true
@@ -379,7 +379,7 @@ extension BrowserResultViewController: KeyboardHandling {
         let screenHeight = UIScreen.main.bounds.size.height
         let kbHeight = screenHeight - info.endFrame.origin.y
         
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: kbHeight, right: 0)
+        let insets = UIEdgeInsets.forScreen(bottom: kbHeight)
         
         self.tableView.contentInset = insets
         self.tableView.scrollIndicatorInsets = insets
@@ -388,7 +388,7 @@ extension BrowserResultViewController: KeyboardHandling {
     }
     
     func keyboardWillHide(_ info: KeyboardInfo) {
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let insets = UIEdgeInsets.forScreen()
         self.tableView.contentInset = insets
         self.tableView.scrollIndicatorInsets = insets
         self.collectionView.contentInset = insets

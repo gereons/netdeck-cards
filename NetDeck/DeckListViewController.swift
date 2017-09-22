@@ -94,8 +94,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.parent?.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.backgroundColor = .clear
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        self.tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.tableView.contentInset = UIEdgeInsets.forScreen()
+        self.tableView.scrollIndicatorInsets = UIEdgeInsets.forScreen()
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.tableView.register(UINib(nibName: "LargeCardCell", bundle: nil), forCellReuseIdentifier: "largeCardCell")
         self.tableView.register(UINib(nibName: "SmallCardCell", bundle: nil), forCellReuseIdentifier: "smallCardCell")
