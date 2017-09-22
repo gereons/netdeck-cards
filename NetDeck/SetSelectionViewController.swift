@@ -96,6 +96,14 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             Defaults.set(pack.released, forKey: pack.settingsKey)
         }
         
+        if Defaults[.rotationActive] {
+            PackManager.rotatedPackKeys().forEach {
+                Defaults.set(false, forKey: $0)
+            }
+        } else {
+            Defaults.set(false, forKey: DefaultsKeys.useCore2._key)
+        }
+        
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
         
         self.tableView.reloadData()

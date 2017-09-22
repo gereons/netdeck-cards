@@ -147,6 +147,20 @@ class SettingsDelegate: IASKSettingsDelegate {
         case DefaultsKeys.rotationActive._key:
             self.refresh()
             
+        case DefaultsKeys.defaultMWL._key:
+            let m = value as? Int ?? 0
+            let mwl = MWL(rawValue: m) ?? .none
+            if mwl != .none {
+                Defaults[.defaultBanList] = .none
+            }
+            
+        case DefaultsKeys.defaultBanList._key:
+            let ban = value as? Int ?? 0
+            let banList = BanListVersion(rawValue: ban) ?? .none
+            if banList != .none {
+                Defaults[.defaultMWL] = .none
+            }
+            
         default:
             break
         }

@@ -649,7 +649,7 @@ import SwiftyUserDefaults
         coder.encode(self.revisions, forKey:"revisions")
         coder.encode(self.mwl.rawValue, forKey: "mwl")
         coder.encode(self.onesies, forKey: "onesies")
-        coder.encode(self.banList, forKey: "banList")
+        coder.encode(self.banList.rawValue, forKey: "banList")
         
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
         coder.encode(self.cacheRefresh ? 1 : 0, forKey: "cacheRefresh")
@@ -722,7 +722,7 @@ extension Deck {
         }
 
         if self.banList != .none {
-            let cards = Set(self.allCards.map { $0.card })
+            let cards = Set(self.cards.map { $0.card })
 
             let banned = cards.filter { $0.banned(self.banList) }
             let restricted = cards.filter { $0.restricted(self.banList) }
@@ -730,7 +730,7 @@ extension Deck {
             if banned.count > 0 {
                 reasons.append("Uses banned cards".localized())
             }
-            if restricted.count > 0 {
+            if restricted.count > 1 {
                 reasons.append("Too many restricted cards".localized())
             }
         }
