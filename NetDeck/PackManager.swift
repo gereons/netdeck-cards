@@ -500,6 +500,10 @@ class PackManager {
         PackManager.cacheRefreshCycles = last2cycles.map { $0.code }
         
         UserDefaults.standard.register(defaults: PackManager.settingsDefaults())
+        
+        // make sure we dont' use Core and Core2 simultaneously
+        Defaults[.useCore] = !Defaults[.useCore2]
+        
         return true
     }
 
