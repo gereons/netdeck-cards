@@ -50,7 +50,9 @@ class NRDB: NSObject {
             "code": code
         ]
         
-        self.getAuthorization(parameters, isRefresh: false, completion: completion)
+        DispatchQueue.main.async {
+            self.getAuthorization(parameters, isRefresh: false, completion: completion)
+        }
     }
     
     private func refreshToken(_ completion: @escaping (Bool) -> Void) {
@@ -73,11 +75,12 @@ class NRDB: NSObject {
             "refresh_token": token
         ]
         
-        self.getAuthorization(parameters, isRefresh: true, completion: completion)
+        DispatchQueue.main.async {
+            self.getAuthorization(parameters, isRefresh: true, completion: completion)
+        }
     }
     
     private func getAuthorization(_ parameters: [String: String], isRefresh: Bool, completion: @escaping (Bool) -> Void) {
-        
         // print("NRDB get Auth")
         let foreground = UIApplication.shared.applicationState == .active
         if foreground && !Reachability.online {
