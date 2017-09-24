@@ -242,9 +242,9 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         }
         if let identity = deck.identity {
             if self.role == .runner {
-                self.cardList.preFilterForRunner(identity, deck.banList)
+                self.cardList.preFilterForRunner(identity, deck.mwl)
             } else {
-                self.cardList.preFilterForCorp(identity, deck.banList)
+                self.cardList.preFilterForCorp(identity, deck.mwl)
             }
         }
         self.initCards()

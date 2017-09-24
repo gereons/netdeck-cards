@@ -31,7 +31,6 @@ class CardList {
     private var unique = false
     private var limited = false
     private var mwl = false
-    private var ban = false
     
     private var faction4inf = Faction.none   // faction for influence filter
     
@@ -105,7 +104,6 @@ class CardList {
         self.unique = false
         self.limited = false
         self.mwl = false
-        self.ban = false
         
         self.faction4inf = .none
     }
@@ -130,11 +128,11 @@ class CardList {
         }
     }
     
-    func applyBanList(_ banList: BanList) {
-        self.initialCards = self.initialCards.filter { !$0.banned(banList) }
+    func applyBans(_ mwl: MWL) {
+        self.initialCards = self.initialCards.filter { !$0.banned(mwl) }
     }
     
-    func preFilterForCorp(_ identity: Card, _ banList: BanList) {
+    func preFilterForCorp(_ identity: Card, _ mwl: MWL) {
         self.resetInitialCards()
         
         if (identity.faction != .neutral) {
@@ -149,12 +147,12 @@ class CardList {
             self.applyPredicate(predicate)
         }
         
-        self.applyBanList(banList)
+        self.applyBans(mwl)
         
         let _ = self.applyFilters()
     }
     
-    func preFilterForRunner(_ identity: Card, _ banList: BanList) {
+    func preFilterForRunner(_ identity: Card, _ mwl: MWL) {
         self.resetInitialCards()
         
         if identity.faction == .apex {
@@ -162,7 +160,7 @@ class CardList {
             self.applyPredicate(predicate)
         }
         
-        self.applyBanList(banList)
+        self.applyBans(mwl)
         
         let _ = self.applyFilters()
     }
@@ -240,10 +238,6 @@ class CardList {
         self.mwl = mwl
     }
 
-    func filterByBan(_ ban: Bool) {
-        self.ban = ban
-    }
-    
     func sortBy(_ sortType: BrowserSort) {
         self.sortType = sortType
     }
@@ -345,17 +339,10 @@ class CardList {
         if self.mwl {
             let mwl = Defaults[.defaultMWL]
             if mwl != .none {
-                filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 }
+                filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 || $0.banned(mwl) || $0.restricted(mwl) }
             }
         }
 
-        if self.ban {
-            let ban = Defaults[.defaultBanList]
-            if ban != .none {
-                filteredCards = filteredCards.filter { $0.banned(ban) || $0.restricted(ban) }
-            }
-        }
-        
         return filteredCards
     }
     

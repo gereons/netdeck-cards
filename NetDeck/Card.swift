@@ -391,54 +391,48 @@ extension Card {
     static let aesopsPawnshop       = "20052"
     
     // dictonaries of code -> penalty for each MWL version
-    private static let mostWantedLists: [MWL: [String: Int]] = [
+    private static let mostWantedLists: [MWL: MostWantedList] = [
         // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
-        .v1_0: [ cerberusH1: 1, cloneChip: 1, desperado: 1, parasite: 1, prepaidVoicepad: 1, yog_0: 1,
-                 architect: 1, astroscript: 1, eli_1: 1, napdContract: 1, sansanCityGrid: 1 ],
+        .v1_0: MostWantedList(penalties:
+                [ cerberusH1: 1, cloneChip: 1, desperado: 1, parasite: 1, prepaidVoicepad: 1, yog_0: 1,
+                  architect: 1, astroscript: 1, eli_1: 1, napdContract: 1, sansanCityGrid: 1 ]),
         
         // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 until 2017-04-11
-        .v1_1: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, desperado: 1, faust: 1, parasite: 1, prepaidVoicepad: 1, wyldside: 1, yog_0: 1,
-                 architect: 1, breakingNews: 1, eli_1: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1 ],
+        .v1_1: MostWantedList(penalties:
+                [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, desperado: 1, faust: 1, parasite: 1, prepaidVoicepad: 1, wyldside: 1, yog_0: 1,
+                  architect: 1, breakingNews: 1, eli_1: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1 ]),
         
         // MWL v1.2, introduced in NAPD Most Wanted List v1.2, valid from 2017-04-12 until 2017-09-30
-        .v1_2: [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
-                 architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1,
-                 blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
-                 sensieActorsUnion: 3 ],
+        .v1_2: MostWantedList(penalties:
+                [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
+                  architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1,
+                  blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
+                  sensieActorsUnion: 3 ]),
         
-        // FIXME!
-        // MWL v1.3, introduced in NAPD Most Wanted List v1.3, valid from 2017-10-01 onwards
-//        .v1_3: [ aaronMarrón: 1, cloneChip: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
-//                 architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, sansanCityGrid: 1,
-//                 blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
-//                 acceleratedDiagnostics: 3, friendsInHighPlaces: 3, sensieActorsUnion: 3 ],
+        .v2_0: MostWantedList(
+                runnerBanned: [ aaronMarrón, blooMoose, faust, rumorMill, şifr, temüjinContract ],
+                runnerRestricted: [ aesopsPawnshop, cloneChip, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, magnumOpus ],
+                corpBanned: [ cloneSuffrageMovement, friendsInHighPlaces, mumbadCityHall, sensieActorsUnion ],
+                corpRestricted: [bioEthicsAssociation, estelleMoon, fairchild_3, globalFoodInitiative, hunterSeeker, mumbaTemple, museumOfHistory, obokataProtocol ])
     ]
 
     func mwlPenalty(_ mwl: MWL) -> Int {
-        guard let penalties = Card.mostWantedLists[mwl] else {
+        guard let penalties = Card.mostWantedLists[mwl]?.penalties else {
             return 0
         }
 
         return penalties[self.code] ?? 0
     }
 
-    private static let banlists: [BanList: BanRestrictedList] = [
-        .v1_0: BanRestrictedList(
-            runnerBanned: [ aaronMarrón, blooMoose, faust, rumorMill, şifr, temüjinContract ],
-            runnerRestricted: [ aesopsPawnshop, cloneChip, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, magnumOpus ],
-            corpBanned: [ cloneSuffrageMovement, friendsInHighPlaces, mumbadCityHall, sensieActorsUnion ],
-            corpRestricted: [bioEthicsAssociation, estelleMoon, fairchild_3, globalFoodInitiative, hunterSeeker, mumbaTemple, museumOfHistory, obokataProtocol ])
-    ]
-
-    func banned(_ ban: BanList) -> Bool {
-        guard let banned = Card.banlists[ban]?.banned else {
+    func banned(_ mwl: MWL) -> Bool {
+        guard let banned = Card.mostWantedLists[mwl]?.banned else {
             return false
         }
         return banned.contains(self.code)
     }
 
-    func restricted(_ ban: BanList) -> Bool {
-        guard let restricted = Card.banlists[ban]?.restricted else {
+    func restricted(_ mwl: MWL) -> Bool {
+        guard let restricted = Card.mostWantedLists[mwl]?.restricted else {
             return false
         }
         return restricted.contains(self.code)

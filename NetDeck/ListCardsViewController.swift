@@ -59,9 +59,9 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         
         if let identity = self.deck.identity {
             if self.deck.role == .corp {
-                self.cardList.preFilterForCorp(identity, self.deck.banList)
+                self.cardList.preFilterForCorp(identity, self.deck.mwl)
             } else if self.deck.role == .runner {
-                self.cardList.preFilterForRunner(identity, self.deck.banList)
+                self.cardList.preFilterForRunner(identity, self.deck.mwl)
             }
         }
         

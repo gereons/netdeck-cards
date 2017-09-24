@@ -71,10 +71,6 @@ import SwiftyUserDefaults
         willSet { modified = true }
     }
 
-    var banList = BanList.none {
-        willSet { modified = true }
-    }
-    
     var onesies: Bool = false {
         willSet { modified = true }
     }
@@ -352,7 +348,6 @@ import SwiftyUserDefaults
         newDeck.state = self.state
         newDeck.notes = self.notes
         newDeck.mwl = self.mwl
-        newDeck.banList = self.banList
         newDeck.lastChanges = self.lastChanges.copy() as! DeckChangeSet
         newDeck.revisions = self.revisions.map({ $0.copy() as! DeckChangeSet })
         newDeck.modified = true
@@ -616,9 +611,6 @@ import SwiftyUserDefaults
         let mwl = decoder.decodeInteger(forKey: "mwl")
         self.mwl = MWL(rawValue: mwl) ?? .none
 
-        let ban = decoder.decodeInteger(forKey: "banList")
-        self.banList = BanList(rawValue: ban) ?? .none
-
         self.onesies = decoder.decodeBool(forKey: "onesies")
 
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
@@ -649,7 +641,6 @@ import SwiftyUserDefaults
         coder.encode(self.revisions, forKey:"revisions")
         coder.encode(self.mwl.rawValue, forKey: "mwl")
         coder.encode(self.onesies, forKey: "onesies")
-        coder.encode(self.banList.rawValue, forKey: "banList")
         
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
         coder.encode(self.cacheRefresh ? 1 : 0, forKey: "cacheRefresh")
@@ -721,18 +712,14 @@ extension Deck {
             }
         }
 
-        if self.banList != .none {
-            let cards = Set(self.cards.map { $0.card })
+        let banned = self.cards.filter { $0.card.banned(self.mwl) }
+        let restricted = self.cards.filter { $0.card.restricted(self.mwl) }
 
-            let banned = cards.filter { $0.banned(self.banList) }
-            let restricted = cards.filter { $0.restricted(self.banList) }
-
-            if banned.count > 0 {
-                reasons.append("Uses banned cards".localized())
-            }
-            if restricted.count > 1 {
-                reasons.append("Too many restricted cards".localized())
-            }
+        if banned.count > 0 {
+            reasons.append("Uses banned cards".localized())
+        }
+        if restricted.count > 1 {
+            reasons.append("Too many restricted cards".localized())
         }
         
         if Defaults[.rotationActive] {

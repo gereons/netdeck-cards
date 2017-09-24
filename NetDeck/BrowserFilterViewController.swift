@@ -50,9 +50,6 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     @IBOutlet weak var mwlLabel: UILabel!
     @IBOutlet weak var mwlSwitch: UISwitch!
 
-    @IBOutlet weak var banLabel: UILabel!
-    @IBOutlet weak var banSwitch: UISwitch!
-
     @IBOutlet weak var summaryLabel: UILabel!
 
     private var browser: BrowserResultViewController
@@ -143,7 +140,6 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.uniqueLabel.text = "Unique".localized()
         self.limitedLabel.text = "Limited".localized()
         self.mwlLabel.text = "MWL".localized()
-        self.banLabel.text = "Banned/Restricted".localized()
                 
         self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
         
@@ -151,10 +147,6 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.mwlLabel.isHidden = mwl == MWL.none
         self.mwlSwitch.isHidden = mwl == MWL.none
 
-        let ban = Defaults[.defaultBanList]
-        self.banLabel.isHidden = ban == BanList.none
-        self.banSwitch.isHidden = ban == BanList.none
-        
         self.resetAllButtons()
     }
     
@@ -627,11 +619,6 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.updateResults()
     }
     
-    @IBAction func banChanged(_ sender: UISwitch) {
-        self.cardList.filterByBan(sender.isOn)
-        self.updateResults()
-    }
-
     // MARK: - update results
     
     func updateResults() {

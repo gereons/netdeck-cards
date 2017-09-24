@@ -62,7 +62,7 @@ class SmallCardCell: CardCell {
             name = String(format: "%lu× %@", cc.count, card.name)
         }
         
-        if card.restricted(self.deck.banList) {
+        if card.restricted(self.deck.mwl) {
             name += " " + Card.restricted
         }
         
@@ -75,7 +75,7 @@ class SmallCardCell: CardCell {
         if self.deck.cacheRefresh && card.isCore && cc.count > card.quantity {
             self.name.textColor = .red
         }
-        if card.banned(self.deck.banList) {
+        if card.banned(self.deck.mwl) {
             self.name.textColor = .red
         }
         

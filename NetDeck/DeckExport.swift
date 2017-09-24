@@ -141,10 +141,10 @@ class DeckExport {
                 if penalty > 0 {
                     s += " " + self.color(self.stars(cc.count * penalty), color, fmt)
                 }
-                if cc.card.restricted(deck.banList) {
+                if cc.card.restricted(deck.mwl) {
                     s += " ⊛"
                 }
-                if cc.card.banned(deck.banList) {
+                if cc.card.banned(deck.mwl) {
                     s += " ⊖"
                 }
                 s += eol

@@ -544,7 +544,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         let fmt = card.unique ? "%lu× %@ •" : "%lu× %@"
         var name = String(format: fmt, cc.count, card.name)
-        if card.restricted(self.deck.banList) {
+        if card.restricted(self.deck.mwl) {
             name += " " + Card.restricted
         }
         
@@ -581,7 +581,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         if self.deck.cacheRefresh && card.isCore && cc.count > card.quantity {
             cell.nameLabel.textColor = .red
         }
-        if card.banned(self.deck.banList) {
+        if card.banned(self.deck.mwl) {
             cell.nameLabel.textColor = .red
         }
         
@@ -651,25 +651,25 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         let alert = UIAlertController.actionSheet(title: "Deck Legality".localized(), message: nil)
         
         alert.addAction(UIAlertAction(title: "Casual".localized().checked(self.deck.mwl == .none)) { action in
-            self.setLegality(.none, .none, cacheRefresh: false, onesies: false)
+            self.setLegality(.none, cacheRefresh: false, onesies: false)
         })
         alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(self.deck.mwl == .v1_0)) { action in
-            self.setLegality(.v1_0, .none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.v1_0, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
         alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(self.deck.mwl == .v1_1)) { action in
-            self.setLegality(.v1_1, .none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.v1_1, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
         alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
-            self.setLegality(.v1_2, .none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.v1_2, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
-        alert.addAction(UIAlertAction(title: "BanList v1.0".localized().checked(self.deck.banList == .v1_0)) { action in
-            self.setLegality(.none, .v1_0, cacheRefresh: false, onesies: false)
+        alert.addAction(UIAlertAction(title: "MWL v2.0".localized().checked(self.deck.mwl == .v2_0)) { action in
+            self.setLegality(.v2_0, cacheRefresh: false, onesies: false)
         })
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
-            self.setLegality(.none, .none, cacheRefresh: false, onesies: true)
+            self.setLegality(.none, cacheRefresh: false, onesies: true)
         })
         alert.addAction(UIAlertAction(title: "Cache Refresh".localized().checked(self.deck.cacheRefresh)) { action in
-            self.setLegality(MWL.latest, .none, cacheRefresh: !self.deck.cacheRefresh, onesies: false)
+            self.setLegality(MWL.latest, cacheRefresh: !self.deck.cacheRefresh, onesies: false)
         })
         
         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
@@ -677,9 +677,8 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func setLegality(_ mwl: MWL, _ banList: BanList, cacheRefresh: Bool, onesies: Bool) {
+    private func setLegality(_ mwl: MWL, cacheRefresh: Bool, onesies: Bool) {
         self.deck.mwl = mwl
-        self.deck.banList = banList
         self.deck.cacheRefresh = cacheRefresh
         self.deck.onesies = onesies
         self.refreshDeck()

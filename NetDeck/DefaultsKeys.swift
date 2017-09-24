@@ -112,8 +112,6 @@ extension DefaultsKeys {
     
     /// which MWL to use?
     static let defaultMWL = DefaultsKey<MWL>("mwlVersion")
-    /// which Ban List to use?
-    static let defaultBanList = DefaultsKey<BanList>("banlistVersion")
     /// exclude rotated-out cards?
     static let rotationActive = DefaultsKey<Bool>("rotationActive")
     /// convert core -> core2?
@@ -176,11 +174,6 @@ extension UserDefaults {
         set { archive(key, newValue) }
     }
 
-    subscript(key: DefaultsKey<BanList>) -> BanList {
-        get { return unarchive(key) ?? .none }
-        set { archive(key, newValue) }
-    }
-    
     subscript(key: DefaultsKey<CardView>) -> CardView {
         get { return unarchive(key) ?? .largeTable }
         set { archive(key, newValue) }
