@@ -12,3 +12,8 @@
 "Refresh Authentication" = "Autorisierung erneuern";
 
 "Connect to Jinteki.net Account" = "App mit deinem Jinteki.net-Konto verbinden";
+
+"Data Export" = "Daten-Export";
+"Use Dropbox" = "Dropbox verwenden";
+"Auto-save decks to Dropbox" = "Decks automatisch in Dropbox speichern";
+"Connect to your Dropbox account to enable export and import of decks." = "Verbinde die App mit deiner Dropbox um Decks im- und exportieren zu können.";

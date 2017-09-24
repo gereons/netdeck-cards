@@ -8,3 +8,8 @@
 "Connect to Jinteki.net Account" = "Connecter au compte Jinteki.net";
 
 "Save Username and Password on device" = "Enregistrer nom et mot de passe";
+
+"Data Export" = "Export des données";
+"Use Dropbox" = "Export vers Dropbox";
+"Auto-save decks to Dropbox" = "Sauvegarde automatique vers Dropbox";
+"Connect to your Dropbox account to enable export and import of decks." = "Connectez vous à Dropbox pour permettre l'export et l'import des decks.";

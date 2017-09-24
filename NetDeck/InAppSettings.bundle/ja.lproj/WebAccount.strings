@@ -7,3 +7,8 @@
 "Connect to NetrunnerDB.com Account" = "NetrunnerDB.comのアカウントに接続";
 "Connect to Jinteki.net Account" = "Jinteki.netのアカウントに接続";
 "Save Username and Password on device" = "ユーザー名とパスワードをデバイスに保存";
+
+"Data Export" = "データのエクスポート";
+"Use Dropbox" = "Dropboxの使用";
+"Auto-save decks to Dropbox" = "Dropboxへのデッキの自動セーブ";
+"Connect to your Dropbox account to enable export and import of decks." = "Dropboxのアカウントに接続することで、デッキのエクスポートやインポートが可能になります。";

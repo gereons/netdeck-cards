@@ -7,10 +7,6 @@
 "Card Sets" = "Paquets de données";
 "Set/Datapack Selection" = "Sélection des paquets de données";
 
-"Data Export" = "Export des données";
-"Use Dropbox" = "Export vers Dropbox";
-"Auto-save decks to Dropbox" = "Sauvegarde automatique vers Dropbox";
-"Connect to your Dropbox account to enable export and import of decks." = "Connectez vous à Dropbox pour permettre l'export et l'import des decks.";
 
 "Accounts" = "Comptes";
 "Use “NAPD Most Wanted List”" = "Utilizer “NAPD Most Wanted List”";

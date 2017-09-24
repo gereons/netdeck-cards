@@ -9,10 +9,6 @@
 "Card Sets" = "カードセット";
 "Set/Datapack Selection" = "セット/データパック選択";
 
-"Data Export" = "データのエクスポート";
-"Use Dropbox" = "Dropboxの使用";
-"Auto-save decks to Dropbox" = "Dropboxへのデッキの自動セーブ";
-"Connect to your Dropbox account to enable export and import of decks." = "Dropboxのアカウントに接続することで、デッキのエクスポートやインポートが可能になります。";
 
 "NetrunnerDB.com" = "NetrunnerDB.com";
 "NetrunnerDB.com Account" = "NetrunnerDB.comアカウント";
