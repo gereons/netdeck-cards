@@ -109,7 +109,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     convenience init(role: Role, andFile file: String) {
         self.init(role: role)
-        
+
         self.deckListViewController.loadDeck(fromFile: file)
     }
     

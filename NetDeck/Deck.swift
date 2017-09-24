@@ -71,7 +71,7 @@ import SwiftyUserDefaults
         willSet { modified = true }
     }
 
-    var banList = BanListVersion.none {
+    var banList = BanList.none {
         willSet { modified = true }
     }
     
@@ -617,7 +617,7 @@ import SwiftyUserDefaults
         self.mwl = MWL(rawValue: mwl) ?? .none
 
         let ban = decoder.decodeInteger(forKey: "banList")
-        self.banList = BanListVersion(rawValue: ban) ?? .none
+        self.banList = BanList(rawValue: ban) ?? .none
 
         self.onesies = decoder.decodeBool(forKey: "onesies")
 

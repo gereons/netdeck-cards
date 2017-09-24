@@ -83,7 +83,7 @@ class LargeCardCell: CardCell {
         }
         
         if card.restricted(self.deck.banList) {
-            name += " 🦄"
+            name += " " + Card.restricted
         }
         
         self.name.text = name

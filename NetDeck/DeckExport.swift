@@ -21,7 +21,7 @@ class DeckExport {
     static let APP_URL = "http://appstore.com/netdeck"
 
     static func asPlaintextString(_ deck: Deck) -> String {
-        return self.textExport(deck, .plainText)
+        return self.textExport(deck, as: .plainText)
     }
     
     static func asPlaintext(_ deck: Deck) {
@@ -31,7 +31,7 @@ class DeckExport {
     }
     
     static func asMarkdownString(_ deck: Deck) -> String {
-        return self.textExport(deck, .markdown)
+        return self.textExport(deck, as: .markdown)
     }
     
     static func asMarkdown(_ deck: Deck) {
@@ -41,7 +41,7 @@ class DeckExport {
     }
     
     static func asBBCodeString(_ deck: Deck) -> String {
-        return self.textExport(deck, .bbCode)
+        return self.textExport(deck, as: .bbCode)
     }
     
     static func asBBCode(_ deck: Deck) {
@@ -99,7 +99,7 @@ class DeckExport {
         }
     }
     
-    static func textExport(_ deck: Deck, _ fmt: ExportFormat) -> String {
+    static func textExport(_ deck: Deck, as fmt: ExportFormat) -> String {
         let data = deck.dataForTableView(.byType)
         let sections = data.sections
         let cardsArray = data.values
@@ -128,7 +128,7 @@ class DeckExport {
             
             for cc in cards {
                 s += "\(cc.count)x " + cc.card.name
-                s += " " + self.italics("(" + cc.card.packName + ")", fmt)
+                // s += " " + self.italics("(" + cc.card.packName + ")", fmt)
 
                 let uInf = deck.universalInfluenceFor(cc)
                 let inf = max(0, deck.influenceFor(cc) - uInf)
@@ -140,6 +140,12 @@ class DeckExport {
                 let penalty = cc.card.mwlPenalty(deck.mwl)
                 if penalty > 0 {
                     s += " " + self.color(self.stars(cc.count * penalty), color, fmt)
+                }
+                if cc.card.restricted(deck.banList) {
+                    s += " ⊛"
+                }
+                if cc.card.banned(deck.banList) {
+                    s += " ⊖"
                 }
                 s += eol
             }
@@ -161,9 +167,17 @@ class DeckExport {
         let set = PackManager.mostRecentPackUsedIn(deck: deck)
         s += "Cards up to \(set)" + eol
         
+        let reasons = deck.checkValidity()
+        if reasons.count > 0 {
+            s += "Deck is invalid:" + eol
+            reasons.forEach {
+                s += "  " + $0 + eol
+            }
+        }
+        
         s += eol + "Deck built with " + self.link(APP_NAME, APP_URL, fmt) + eol
         
-        if let notes = deck.notes , notes.length > 0 {
+        if let notes = deck.notes, notes.length > 0 {
             s += eol + notes + eol
         }
         

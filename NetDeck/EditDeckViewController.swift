@@ -545,7 +545,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         let fmt = card.unique ? "%lu× %@ •" : "%lu× %@"
         var name = String(format: fmt, cc.count, card.name)
         if card.restricted(self.deck.banList) {
-            name += " 🦄"
+            name += " " + Card.restricted
         }
         
         cell.nameLabel.text = name
@@ -677,7 +677,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func setLegality(_ mwl: MWL, _ banList: BanListVersion, cacheRefresh: Bool, onesies: Bool) {
+    private func setLegality(_ mwl: MWL, _ banList: BanList, cacheRefresh: Bool, onesies: Bool) {
         self.deck.mwl = mwl
         self.deck.banList = banList
         self.deck.cacheRefresh = cacheRefresh

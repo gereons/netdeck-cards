@@ -309,6 +309,10 @@ class Card: NSObject, Unmarshaling {
 
 /// MARK: - constants
 extension Card {
+    
+    static let restricted = "🦄"
+    static let unique = "⬩"
+    
     // identities we need to handle
     static let customBiotics            = "03002"    // no jinteki cards
     static let theProfessor             = "03029"    // first copy of each program has influence 0
@@ -418,21 +422,22 @@ extension Card {
         return penalties[self.code] ?? 0
     }
 
-    private static let banlists: [BanListVersion: BanList] = [
-        .v1_0: BanList([ aaronMarrón, blooMoose, faust, rumorMill, şifr, temüjinContract, salvagedVanadisArmory,
-                         cloneSuffrageMovement, friendsInHighPlaces, mumbadCityHall, sensieActorsUnion ],
-                       [ aesopsPawnshop, cloneChip, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, magnumOpus,
-                         bioEthicsAssociation, estelleMoon, fairchild_3, globalFoodInitiative, hunterSeeker, mumbaTemple, museumOfHistory, obokataProtocol])
+    private static let banlists: [BanList: BanRestrictedList] = [
+        .v1_0: BanRestrictedList(
+            runnerBanned: [ aaronMarrón, blooMoose, faust, rumorMill, şifr, temüjinContract ],
+            runnerRestricted: [ aesopsPawnshop, cloneChip, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, magnumOpus ],
+            corpBanned: [ cloneSuffrageMovement, friendsInHighPlaces, mumbadCityHall, sensieActorsUnion ],
+            corpRestricted: [bioEthicsAssociation, estelleMoon, fairchild_3, globalFoodInitiative, hunterSeeker, mumbaTemple, museumOfHistory, obokataProtocol ])
     ]
 
-    func banned(_ ban: BanListVersion) -> Bool {
+    func banned(_ ban: BanList) -> Bool {
         guard let banned = Card.banlists[ban]?.banned else {
             return false
         }
         return banned.contains(self.code)
     }
 
-    func restricted(_ ban: BanListVersion) -> Bool {
+    func restricted(_ ban: BanList) -> Bool {
         guard let restricted = Card.banlists[ban]?.restricted else {
             return false
         }

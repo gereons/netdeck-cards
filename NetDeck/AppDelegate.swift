@@ -238,7 +238,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Defaults.registerDefault(.identityTable, true)
         
         Defaults.registerDefault(.defaultMWL, MWL.latest)
-        Defaults.registerDefault(.defaultBanList, BanListVersion.latest)
+        Defaults.registerDefault(.defaultBanList, BanList.latest)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

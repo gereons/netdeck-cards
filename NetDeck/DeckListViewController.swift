@@ -1281,8 +1281,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.present(alert, animated: false, completion: nil)
     }
     
-    private func setLegality(_ newMwl: MWL, _ banList: BanListVersion, cacheRefresh: Bool, onesies: Bool) {
-        if self.deck.mwl != newMwl || self.deck.onesies != onesies || self.deck.cacheRefresh != cacheRefresh {
+    private func setLegality(_ newMwl: MWL, _ banList: BanList, cacheRefresh: Bool, onesies: Bool) {
+        if self.deck.mwl != newMwl || self.deck.onesies != onesies || self.deck.cacheRefresh != cacheRefresh || self.deck.banList != banList {
             self.deck.mwl = newMwl
             self.deck.onesies = onesies
             self.deck.cacheRefresh = cacheRefresh

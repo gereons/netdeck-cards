@@ -152,8 +152,8 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.mwlSwitch.isHidden = mwl == MWL.none
 
         let ban = Defaults[.defaultBanList]
-        self.banLabel.isHidden = ban == BanListVersion.none
-        self.banSwitch.isHidden = ban == BanListVersion.none
+        self.banLabel.isHidden = ban == BanList.none
+        self.banSwitch.isHidden = ban == BanList.none
         
         self.resetAllButtons()
     }

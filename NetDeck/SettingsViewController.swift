@@ -156,7 +156,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             
         case DefaultsKeys.defaultBanList._key:
             let ban = value as? Int ?? 0
-            let banList = BanListVersion(rawValue: ban) ?? .none
+            let banList = BanList(rawValue: ban) ?? .none
             if banList != .none {
                 Defaults[.defaultMWL] = .none
             }

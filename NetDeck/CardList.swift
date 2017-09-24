@@ -130,11 +130,11 @@ class CardList {
         }
     }
     
-    func applyBanList(_ banList: BanListVersion) {
+    func applyBanList(_ banList: BanList) {
         self.initialCards = self.initialCards.filter { !$0.banned(banList) }
     }
     
-    func preFilterForCorp(_ identity: Card, _ banList: BanListVersion) {
+    func preFilterForCorp(_ identity: Card, _ banList: BanList) {
         self.resetInitialCards()
         
         if (identity.faction != .neutral) {
@@ -154,7 +154,7 @@ class CardList {
         let _ = self.applyFilters()
     }
     
-    func preFilterForRunner(_ identity: Card, _ banList: BanListVersion) {
+    func preFilterForRunner(_ identity: Card, _ banList: BanList) {
         self.resetInitialCards()
         
         if identity.faction == .apex {
