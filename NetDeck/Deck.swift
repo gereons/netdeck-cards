@@ -70,7 +70,7 @@ import SwiftyUserDefaults
     var mwl = MWL.none {
         willSet { modified = true }
     }
-    
+
     var onesies: Bool = false {
         willSet { modified = true }
     }
@@ -607,14 +607,10 @@ import SwiftyUserDefaults
 
         let revisions = decoder.decodeObject(forKey: "revisions") as? [DeckChangeSet]
         self.revisions = revisions ?? [DeckChangeSet]()
-        
-        if decoder.containsValue(forKey: "mwl") {
-            let mwl = decoder.decodeInteger(forKey: "mwl")
-            self.mwl = MWL(rawValue: mwl) ?? .none
-        } else {
-            self.mwl = .none
-        }
-        
+
+        let mwl = decoder.decodeInteger(forKey: "mwl")
+        self.mwl = MWL(rawValue: mwl) ?? .none
+
         self.onesies = decoder.decodeBool(forKey: "onesies")
 
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
@@ -714,6 +710,16 @@ extension Deck {
                     reasons.append("Has non-virtual resources".localized())
                 }
             }
+        }
+
+        let banned = self.cards.filter { $0.card.banned(self.mwl) }
+        let restricted = self.cards.filter { $0.card.restricted(self.mwl) }
+
+        if banned.count > 0 {
+            reasons.append("Uses removed cards".localized())
+        }
+        if restricted.count > 1 {
+            reasons.append("Too many restricted cards".localized())
         }
         
         if Defaults[.rotationActive] {

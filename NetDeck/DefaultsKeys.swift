@@ -173,7 +173,7 @@ extension UserDefaults {
         get { return unarchive(key) ?? .none }
         set { archive(key, newValue) }
     }
-    
+
     subscript(key: DefaultsKey<CardView>) -> CardView {
         get { return unarchive(key) ?? .largeTable }
         set { archive(key, newValue) }

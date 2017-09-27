@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -44,7 +44,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="1024"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EcS-OP-5Kh">
@@ -168,13 +168,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mMG-Ke-ata">
-                    <rect key="frame" x="250" y="481.5" width="51" height="31"/>
+                    <rect key="frame" x="250" y="477.5" width="51" height="31"/>
                     <connections>
                         <action selector="uniqueChanged:" destination="-1" eventType="valueChanged" id="V2j-JI-Rr0"/>
                     </connections>
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unique" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yO7-tR-U1Y">
-                    <rect key="frame" x="20" y="488" width="49" height="18"/>
+                    <rect key="frame" x="20" y="484" width="49" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -212,13 +212,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MA1-BH-Fju">
-                    <rect key="frame" x="250" y="520.5" width="51" height="31"/>
+                    <rect key="frame" x="250" y="516.5" width="51" height="31"/>
                     <connections>
                         <action selector="limitedChanged:" destination="-1" eventType="valueChanged" id="8nJ-4C-6O5"/>
                     </connections>
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Limited" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aog-2r-hSS">
-                    <rect key="frame" x="20" y="527" width="50.5" height="18"/>
+                    <rect key="frame" x="20" y="523" width="50.5" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -261,11 +261,11 @@
                     </connections>
                 </slider>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Chi-Xw-3ZL">
-                    <rect key="frame" x="0.0" y="980" width="320" height="44"/>
+                    <rect key="frame" x="0.0" y="724" width="320" height="44"/>
                     <items/>
                 </toolbar>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999 matching cards" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HsH-WO-dUc">
-                    <rect key="frame" x="20" y="993" width="279" height="18"/>
+                    <rect key="frame" x="20" y="737" width="279" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -275,13 +275,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xeR-YP-j2K">
-                    <rect key="frame" x="250" y="559" width="51" height="31"/>
+                    <rect key="frame" x="250" y="555" width="51" height="31"/>
                     <connections>
                         <action selector="mwlChanged:" destination="-1" eventType="valueChanged" id="N3t-w4-6U7"/>
                     </connections>
                 </switch>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MWL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Get-QQ-5TX">
-                    <rect key="frame" x="20" y="565.5" width="35.5" height="18"/>
+                    <rect key="frame" x="20" y="561.5" width="35.5" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -309,7 +309,7 @@
                 <constraint firstItem="x7A-8K-25S" firstAttribute="leading" secondItem="2hP-Mp-lrg" secondAttribute="trailing" constant="4" id="BPW-hF-Ghc"/>
                 <constraint firstItem="nQQ-7B-jdD" firstAttribute="top" secondItem="sg5-4y-mov" secondAttribute="bottom" constant="8" id="CIn-7a-Qix"/>
                 <constraint firstAttribute="bottom" secondItem="Chi-Xw-3ZL" secondAttribute="bottom" id="Cx9-SD-42n"/>
-                <constraint firstItem="mMG-Ke-ata" firstAttribute="top" secondItem="8Cg-wy-eiL" secondAttribute="bottom" constant="12" id="DMw-NJ-yNg"/>
+                <constraint firstItem="mMG-Ke-ata" firstAttribute="top" secondItem="8Cg-wy-eiL" secondAttribute="bottom" constant="8" id="DMw-NJ-yNg"/>
                 <constraint firstItem="BDY-SE-94P" firstAttribute="leading" secondItem="xMu-cQ-mTF" secondAttribute="trailing" constant="4" id="E5P-bu-j4y"/>
                 <constraint firstItem="R6M-WU-oun" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="EKG-Vr-ZgL"/>
                 <constraint firstItem="Pui-TD-YFn" firstAttribute="top" secondItem="nQQ-7B-jdD" secondAttribute="bottom" constant="8" id="Eat-1C-oLJ"/>
@@ -378,9 +378,4 @@
             <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
 </document>

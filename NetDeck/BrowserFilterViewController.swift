@@ -146,7 +146,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         let mwl = Defaults[.defaultMWL]
         self.mwlLabel.isHidden = mwl == MWL.none
         self.mwlSwitch.isHidden = mwl == MWL.none
-        
+
         self.resetAllButtons()
     }
     

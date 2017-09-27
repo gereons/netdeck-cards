@@ -73,19 +73,28 @@ class LargeCardCell: CardCell {
         }
         
         let card = cc.card
+        var name = ""
         if card.type == .identity {
-            self.name.text = card.name
+            name = card.name
         } else if card.unique {
-            self.name.text = String(format: "%lu× %@ •", cc.count, card.name)
+            name = String(format: "%lu× %@ •", cc.count, card.name)
         } else {
-            self.name.text = String(format: "%lu× %@", cc.count, card.name)
+            name = String(format: "%lu× %@", cc.count, card.name)
         }
+        
+        if card.restricted(self.deck.mwl) {
+            name += " " + Card.restricted
+        }
+        
+        self.name.text = name
         
         if !self.deck.isDraft && (cc.count > card.owned || card.isRotated) {
             self.name.textColor = .red
         }
-        
         if self.deck.cacheRefresh && card.isCore && cc.count > card.quantity {
+            self.name.textColor = .red
+        }
+        if card.banned(self.deck.mwl) {
             self.name.textColor = .red
         }
         

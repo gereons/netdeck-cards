@@ -109,7 +109,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     convenience init(role: Role, andFile file: String) {
         self.init(role: role)
-        
+
         self.deckListViewController.loadDeck(fromFile: file)
     }
     
@@ -242,9 +242,9 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         }
         if let identity = deck.identity {
             if self.role == .runner {
-                self.cardList.preFilterForRunner(identity)
+                self.cardList.preFilterForRunner(identity, deck.mwl)
             } else {
-                self.cardList.preFilterForCorp(identity)
+                self.cardList.preFilterForCorp(identity, deck.mwl)
             }
         }
         self.initCards()
@@ -794,7 +794,8 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let card = self.cards[indexPath.section][indexPath.row]
         let rect = self.tableView.rectForRow(at: indexPath)
-        CardImageViewPopover.show(for: card, from: rect, in: self, subView: self.tableView)
+        let mwl = self.deckListViewController.deck?.mwl ?? .none
+        CardImageViewPopover.show(for: card, mwl: mwl, from: rect, in: self, subView: self.tableView)
     }
     
     func addCardToDeck(_ sender: UIButton) {
@@ -848,8 +849,8 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let card = self.cards[indexPath.section][indexPath.row]
         let cell = collectionView.cellForItem(at: indexPath)!
         let rect = collectionView.convert(cell.frame, to: self.collectionView)
-        
-        CardImageViewPopover.show(for: card, from: rect, in: self, subView: self.collectionView)
+        let mwl = self.deckListViewController.deck?.mwl ?? .none
+        CardImageViewPopover.show(for: card, mwl: mwl, from: rect, in: self, subView: self.collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -172,6 +172,10 @@ class PackManager {
         }
     }
     
+    static func rotatedPackKeys() -> [String] {
+        return rotatedPackCodes().map { Pack.use + $0 }
+    }
+    
     static func packsForTableView(packUsage: PackUsage) -> TableData<String> {
         let rawPacks: TableData<Pack> = self.packsForTableView(packUsage: packUsage)
         var strValues = [[String]]()

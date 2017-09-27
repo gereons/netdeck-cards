@@ -1017,7 +1017,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let cc = self.cards[indexPath.section][indexPath.row]
         if !cc.isNull {
             let rect = self.tableView.rectForRow(at: indexPath)
-            CardImageViewPopover.show(for: cc.card, from: rect, in: self, subView: self.tableView)
+            CardImageViewPopover.show(for: cc.card, mwl: self.deck.mwl, from: rect, in: self, subView: self.tableView)
         }
     }
     
@@ -1128,7 +1128,14 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             cell.copiesLabel.textColor = .black
-            if !self.deck.isDraft && (cc2.card.owned < cc2.count || cc2.card.isRotated) {
+            let card = cc2.card
+            if !self.deck.isDraft && (card.owned < cc2.count || card.isRotated) {
+                cell.copiesLabel.textColor = .red
+            }
+            if self.deck.cacheRefresh && card.isCore && cc2.count > card.quantity {
+                cell.copiesLabel.textColor = .red
+            }
+            if card.banned(self.deck.mwl) {
                 cell.copiesLabel.textColor = .red
             }
         }
@@ -1237,30 +1244,30 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let alert = UIAlertController.actionSheet(title: "Deck Legality".localized(), message: nil)
         
         alert.addAction(UIAlertAction(title: "Casual".localized().checked(self.deck.mwl == .none && !self.deck.onesies)) { action in
-            self.setMwl(.none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
         alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(self.deck.mwl == .v1_0)) { action in
-            self.setMwl(.v1_0, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.v1_0, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
 
         alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(self.deck.mwl == .v1_1)) { action in
-            self.setMwl(.v1_1, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.v1_1, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
         
         alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
-            self.setMwl(.v1_2, cacheRefresh: self.deck.cacheRefresh, onesies: false)
+            self.setLegality(.v1_2, cacheRefresh: self.deck.cacheRefresh, onesies: false)
         })
 
-//        alert.addAction(UIAlertAction(title: "MWL v1.3".localized().checked(self.deck.mwl == .v1_3)) { action in
-//            self.setMwl(.v1_3, cacheRefresh: false, onesies: false)
-//        })
+        alert.addAction(UIAlertAction(title: "MWL v2.0".localized().checked(self.deck.mwl == .v2_0)) { action in
+            self.setLegality(.v2_0, cacheRefresh: false, onesies: false)
+        })
         
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
-            self.setMwl(.none, cacheRefresh: false, onesies: true)
+            self.setLegality(.none, cacheRefresh: false, onesies: true)
         })
 
         alert.addAction(UIAlertAction(title: "Cache Refresh".localized().checked(self.deck.cacheRefresh)) { action in
-            self.setMwl(MWL.latest, cacheRefresh: !self.deck.cacheRefresh, onesies: false)
+            self.setLegality(MWL.latest, cacheRefresh: !self.deck.cacheRefresh, onesies: false)
         })
         
         alert.addAction(UIAlertAction.actionSheetCancel(nil))
@@ -1274,7 +1281,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.present(alert, animated: false, completion: nil)
     }
     
-    private func setMwl(_ newMwl: MWL, cacheRefresh: Bool, onesies: Bool) {
+    private func setLegality(_ newMwl: MWL, cacheRefresh: Bool, onesies: Bool) {
         if self.deck.mwl != newMwl || self.deck.onesies != onesies || self.deck.cacheRefresh != cacheRefresh {
             self.deck.mwl = newMwl
             self.deck.onesies = onesies

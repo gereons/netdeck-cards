@@ -128,7 +128,11 @@ class CardList {
         }
     }
     
-    func preFilterForCorp(_ identity: Card) {
+    func applyBans(_ mwl: MWL) {
+        self.initialCards = self.initialCards.filter { !$0.banned(mwl) }
+    }
+    
+    func preFilterForCorp(_ identity: Card, _ mwl: MWL) {
         self.resetInitialCards()
         
         if (identity.faction != .neutral) {
@@ -143,16 +147,20 @@ class CardList {
             self.applyPredicate(predicate)
         }
         
+        self.applyBans(mwl)
+        
         let _ = self.applyFilters()
     }
     
-    func preFilterForRunner(_ identity: Card) {
+    func preFilterForRunner(_ identity: Card, _ mwl: MWL) {
         self.resetInitialCards()
         
         if identity.faction == .apex {
             let predicate = NSPredicate(format:"type != %d OR (type = %d AND isVirtual = 1)", CardType.resource.rawValue, CardType.resource.rawValue)
             self.applyPredicate(predicate)
         }
+        
+        self.applyBans(mwl)
         
         let _ = self.applyFilters()
     }
@@ -229,7 +237,7 @@ class CardList {
     func filterByMWL(_ mwl: Bool) {
         self.mwl = mwl
     }
-    
+
     func sortBy(_ sortType: BrowserSort) {
         self.sortType = sortType
     }
@@ -331,10 +339,10 @@ class CardList {
         if self.mwl {
             let mwl = Defaults[.defaultMWL]
             if mwl != .none {
-                filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 }
+                filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 || $0.banned(mwl) || $0.restricted(mwl) }
             }
         }
-        
+
         return filteredCards
     }
     
