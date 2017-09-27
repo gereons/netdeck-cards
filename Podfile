@@ -19,7 +19,7 @@ target 'NetDeck' do
     pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftKeychainWrapper'
     pod 'Marshal'
-    pod 'SDCAlertView'
+    pod 'SDCAlertView', '~> 7.1'
     pod 'EasyTipView'
     pod 'SwiftyUserDefaults'
 end
