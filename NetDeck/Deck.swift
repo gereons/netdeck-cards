@@ -716,7 +716,7 @@ extension Deck {
         let restricted = self.cards.filter { $0.card.restricted(self.mwl) }
 
         if banned.count > 0 {
-            reasons.append("Uses banned cards".localized())
+            reasons.append("Uses removed cards".localized())
         }
         if restricted.count > 1 {
             reasons.append("Too many restricted cards".localized())

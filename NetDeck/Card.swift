@@ -307,7 +307,7 @@ class Card: NSObject, Unmarshaling {
     }
 }
 
-/// MARK: - constants
+// MARK: - constants
 extension Card {
     
     static let restricted = "🦄"
@@ -410,7 +410,7 @@ extension Card {
                   sensieActorsUnion: 3 ]),
         
         .v2_0: MostWantedList(
-                runnerBanned: [ aaronMarrón, blooMoose, faust, rumorMill, şifr, temüjinContract ],
+                runnerBanned: [ aaronMarrón, blooMoose, faust, rumorMill, salvagedVanadisArmory, şifr, temüjinContract ],
                 runnerRestricted: [ aesopsPawnshop, cloneChip, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, magnumOpus ],
                 corpBanned: [ cloneSuffrageMovement, friendsInHighPlaces, mumbadCityHall, sensieActorsUnion ],
                 corpRestricted: [bioEthicsAssociation, estelleMoon, fairchild_3, globalFoodInitiative, hunterSeeker, mumbaTemple, museumOfHistory, obokataProtocol ])

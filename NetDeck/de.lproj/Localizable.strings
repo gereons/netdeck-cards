@@ -112,6 +112,8 @@
 "Uses rotated-out cards" = "Enthält rausrotierte Karten";
 "Invalid for Cache Refresh" = "Ungültig für Cache Refresh";
 "Uses invalid Datapack" = "Nicht erlaubter Datensatz";
+"Uses removed cards" = "Enthält entfernte Karten";
+"Too many restricted cards" = "Zuviele limitierte Karten";
 
 // card downloading
 "Downloading Card Data" = "Lade Karten-Daten";
