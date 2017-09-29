@@ -913,11 +913,9 @@ extension Deck {
             
             if let index = core2Cards.index(where: { $0.englishName == cc.card.englishName }) {
                 let replacement = core2Cards[index]
-                print("replacing \(cc.card.name )\(cc.card.code) -> \(replacement.name) \(replacement.code)")
+                // print("replacing \(cc.card.name )\(cc.card.code) -> \(replacement.name) \(replacement.code)")
                 self.addCard(cc.card, copies: 0)
                 self.addCard(replacement, copies: cc.count)
-            } else {
-                print("keeping \(cc.card.name )\(cc.card.code)")
             }
             
             self.convertedToCore2 = true
