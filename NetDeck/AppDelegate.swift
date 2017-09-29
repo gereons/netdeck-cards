@@ -12,6 +12,12 @@ import SVProgressHUD
 import SwiftyUserDefaults
 import DeviceKit
 
+// Andy's identity-switch-problem?!?
+// Auto-Updates für Daten
+// Auto-Download bei Neuinstallation
+// Crashlytics
+// Swift 4
+
 // CR rules: what is the offending datapack?
 
 // TODO: investigate OOMs - memory warnings?
