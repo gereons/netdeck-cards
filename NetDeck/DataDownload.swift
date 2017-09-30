@@ -24,8 +24,15 @@ private enum ApiRequest {
 
 class DataDownload: NSObject {
     
-    static func downloadCardData() {
-        self.instance.downloadCardAndSetsData()
+    typealias Completion = () -> ()
+    
+    static func downloadCardData(completion: Completion? = nil) {
+        if let completion = completion {
+            self.instance.doDownloadCardData(0)
+            completion()
+        } else {
+            self.instance.downloadCardAndSetsData()
+        }
     }
     
     static func downloadAllImages() {
@@ -103,7 +110,6 @@ class DataDownload: NSObject {
     }
     
     func doDownloadCardData(_ dummy: Any) {
-       
         let requests: [ApiRequest: URLRequest?] = [
             .cycles: self.requestFor(.cycles),
             .packs: self.requestFor(.packs),

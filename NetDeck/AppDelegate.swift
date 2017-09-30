@@ -83,6 +83,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func initializeData() {
+        if Defaults[.autoCardUpdates] {
+            CardUpdateCheck.silentCardUpdate()
+        }
         let language = Defaults[.language]
         let start = Date.timeIntervalSinceReferenceDate
         let setsOk = PackManager.setupFromFiles(language)
@@ -222,6 +225,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Defaults.registerDefault(.nrdbHost, "netrunnerdb.com")
         Defaults.registerDefault(.language, "en")
         Defaults.registerDefault(.updateInterval, 7)
+        Defaults.registerDefault(.autoCardUpdates, false)
+        Defaults[.autoCardUpdates] = false
         Defaults.registerDefault(.lastBackgroundFetch, "never".localized())
         Defaults.registerDefault(.lastRefresh, "never".localized())
         

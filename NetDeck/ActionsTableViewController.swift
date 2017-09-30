@@ -61,7 +61,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let displayedAlert = CardUpdateCheck.checkCardUpdateAvailable(self)
+        let displayedAlert = CardUpdateCheck.checkCardUpdateAvailable()
         if !displayedAlert {
             AppUpdateCheck.checkUpdate()
         }

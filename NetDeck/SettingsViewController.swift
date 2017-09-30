@@ -77,6 +77,8 @@ class SettingsDelegate: IASKSettingsDelegate {
             hiddenKeys.insert(DefaultsKeys.convertCore._key)
         }
         
+        hiddenKeys.insert(DefaultsKeys.autoCardUpdates._key)
+        
         Settings.viewController.hiddenKeys = hiddenKeys
     }
     

@@ -10,40 +10,64 @@ import UIKit
 import SwiftyUserDefaults
 
 class CardUpdateCheck {
-    
-    static func checkCardUpdateAvailable(_ vc: UIViewController) -> Bool {
-        let next = Defaults[.nextDownload]
-        
+
+    static let fmt: DateFormatter = {
         let fmt = DateFormatter()
         fmt.dateStyle = .short
         fmt.timeStyle = .none
+        return fmt
+    }()
+    
+    static func checkCardUpdateAvailable() -> Bool {
+        let next = Defaults[.nextDownload]
         
         guard let scheduled = fmt.date(from: next) else {
             return false
         }
 
         let now = Date()
-        
         if Reachability.online && scheduled.timeIntervalSince1970 < now.timeIntervalSince1970 {
-            let msg = "Card data may be out of date. Download now?".localized()
-            let alert = UIAlertController.alert(title: "Update cards".localized(), message:msg)
-            
-            alert.addAction(UIAlertAction(title: "Later".localized()) { action in
-                // ask again tomorrow
-                let next = Date(timeIntervalSinceNow: 24*60*60)
-                
-                Defaults[.nextDownload] = fmt.string(from: next)
-            })
-            
-            alert.addAction(UIAlertAction(title:"OK".localized(), style:.cancel) { action in
-                DataDownload.downloadCardData()
-            })
-            
-            vc.present(alert, animated:false, completion:nil)
+            self.showUpdateAlert()
             return true
         }
         
         return false
     }
     
+    static func silentCardUpdate() {
+        let next = Defaults[.nextDownload]
+        
+        guard let scheduled = fmt.date(from: next) else {
+            return
+        }
+        
+        let now = Date()
+        if Reachability.online && scheduled.timeIntervalSince1970 < now.timeIntervalSince1970 {
+            let group = DispatchGroup()
+            group.enter()
+            DataDownload.downloadCardData {
+                group.leave()
+            }
+            
+            group.notify(queue: DispatchQueue.main, execute: {})
+        }
+    }
+    
+    private static func showUpdateAlert() {
+        let msg = "Card data may be out of date. Download now?".localized()
+        let alert = UIAlertController.alert(title: "Update cards".localized(), message:msg)
+        
+        alert.addAction(UIAlertAction(title: "Later".localized()) { action in
+            // ask again tomorrow
+            let next = Date(timeIntervalSinceNow: 24*60*60)
+            
+            Defaults[.nextDownload] = fmt.string(from: next)
+        })
+        
+        alert.addAction(UIAlertAction(title: "OK".localized(), style: .cancel) { action in
+            DataDownload.downloadCardData()
+        })
+        
+        alert.show()
+    }
 }

@@ -36,6 +36,8 @@ extension DefaultsKeys {
     static let nextDownload = DefaultsKey<String>("nextDownload")
     /// update interval in days
     static let updateInterval = DefaultsKey<Int>("updateInterval")
+    /// auto-update?
+    static let autoCardUpdates = DefaultsKey<Bool>("autoCardUpdates")
     /// card language
     static let language = DefaultsKey<String>("language")
     
