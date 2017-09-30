@@ -383,7 +383,7 @@ extension Card {
     static let fairchild_3          = "11049"
     static let inversificator       = "12048"
     static let obokataProtocol      = "12070"
-    static let blooMoose            = "12088"
+    static let blooMoose            = "12089"
     static let salvagedVanadisArmory = "12103"
     static let estelleMoon          = "13032"
     static let hunterSeeker         = "13051"
@@ -409,6 +409,7 @@ extension Card {
                   blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
                   sensieActorsUnion: 3 ]),
         
+        // MWL v2.0, introduced in NAPD Most Wanted List v2.0, valid from 2017-10-01
         .v2_0: MostWantedList(
                 runnerBanned: [ aaronMarrón, blooMoose, faust, rumorMill, salvagedVanadisArmory, şifr, temüjinContract ],
                 runnerRestricted: [ aesopsPawnshop, cloneChip, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, magnumOpus ],
