@@ -76,7 +76,7 @@
 			<key>Key</key>
 			<string>autoCardUpdates</string>
 			<key>DefaultValue</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>

@@ -43,13 +43,16 @@ class CardUpdateCheck {
         
         let now = Date()
         if Reachability.online && scheduled.timeIntervalSince1970 < now.timeIntervalSince1970 {
+            print("check for card updates")
             let group = DispatchGroup()
             group.enter()
             DataDownload.downloadCardData {
                 group.leave()
             }
             
-            group.notify(queue: DispatchQueue.main, execute: {})
+            group.notify(queue: DispatchQueue.main, execute: {
+                print("... done")
+            })
         }
     }
     

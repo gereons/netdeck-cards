@@ -225,8 +225,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Defaults.registerDefault(.nrdbHost, "netrunnerdb.com")
         Defaults.registerDefault(.language, "en")
         Defaults.registerDefault(.updateInterval, 7)
-        Defaults.registerDefault(.autoCardUpdates, false)
-        Defaults[.autoCardUpdates] = false
+        Defaults.registerDefault(.autoCardUpdates, true)
         Defaults.registerDefault(.lastBackgroundFetch, "never".localized())
         Defaults.registerDefault(.lastRefresh, "never".localized())
         

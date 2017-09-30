@@ -265,10 +265,13 @@ class CardManager {
         let now = Date()
         
         Defaults[.lastDownload] = fmt.string(from: now)
-        let interval = Defaults[.updateInterval]
+        var interval = Defaults[.updateInterval]
+        if BuildConfig.debug && interval == 7 {
+            interval = 1
+        }
         
         var nextDownload: String
-        switch (interval) {
+        switch interval {
         case 30:
             let cal = Calendar.current
             let next = cal.date(byAdding: .month, value: 1, to: now)
@@ -276,7 +279,7 @@ class CardManager {
         case 0:
             nextDownload = "never".localized()
         default:
-            let next = Date(timeIntervalSinceNow:TimeInterval(interval*24*60*60))
+            let next = Date(timeIntervalSinceNow:TimeInterval(interval * 24*60*60))
             nextDownload = fmt.string(from: next)
         }
 
