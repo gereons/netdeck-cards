@@ -16,6 +16,8 @@ import DeviceKit
 // Auto-Updates für Daten
 // Auto-Download bei Neuinstallation
 // Crashlytics
+// NRDB: keep credentials after failed login
+// Patricks email: icon für decks mit notizen, in der kartenansicht falsche/fehlende karten besser hervorheben, vollen Text im Popup anzeigen wenn Sprache != en
 // Swift 4
 
 // CR rules: what is the offending datapack?

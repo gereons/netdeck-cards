@@ -85,7 +85,7 @@ import SwiftyUserDefaults
     
     var agendaPoints: Int {
         return self.cards
-            .filter{ $0.card.type == .agenda}
+            .filter { $0.card.type == .agenda}
             .reduce(0) { $0 + $1.card.agendaPoints * $1.count }
     }
     
@@ -586,7 +586,7 @@ import SwiftyUserDefaults
         self.cards = decoder.decodeObject(forKey: "cards") as! [CardCounter]
         
         // kill cards that we couldn't deserialize
-        self.cards = self.cards.filter{ !$0.isNull && $0.count > 0 }
+        self.cards = self.cards.filter { !$0.isNull && $0.count > 0 }
         
         self.netrunnerDbId = decoder.decodeObject(forKey: "netrunnerDbId") as? String
         
@@ -723,8 +723,8 @@ extension Deck {
         }
         
         if Defaults[.rotationActive] {
-            let packsUsed = Set(self.cards.map{ $0.card.packCode})
-            let rotatedPacks = packsUsed.flatMap{ PackManager.packsByCode[$0] }.filter{ $0.rotated }
+            let packsUsed = Set(self.cards.map { $0.card.packCode} )
+            let rotatedPacks = packsUsed.flatMap { PackManager.packsByCode[$0] }.filter { $0.rotated }
             if rotatedPacks.count > 0 {
                 reasons.append("Uses rotated-out cards".localized())
             }

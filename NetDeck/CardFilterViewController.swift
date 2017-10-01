@@ -813,7 +813,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         let textField = self.searchField!
-        if textField.isFirstResponder && (textField.text?.length ?? 0) > 0{
+        if textField.isFirstResponder && (textField.text?.length ?? 0) > 0 {
             textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
         }
         

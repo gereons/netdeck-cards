@@ -76,7 +76,7 @@ class SavedDecksList: DecksViewController {
             self.popup.addAction(UIAlertAction.action(title: "Import from NetrunnerDB.com".localized()) { action in
                 self.importFrom(.netrunnerDb)
             })
-            self.popup.addAction(UIAlertAction.actionSheetCancel{ action in
+            self.popup.addAction(UIAlertAction.actionSheetCancel { action in
                 self.popup = nil
             })
             
@@ -131,7 +131,7 @@ class SavedDecksList: DecksViewController {
             })
         }
         
-        self.popup.addAction(UIAlertAction.actionSheetCancel{ action in
+        self.popup.addAction(UIAlertAction.actionSheetCancel { action in
             self.popup = nil
         })
         

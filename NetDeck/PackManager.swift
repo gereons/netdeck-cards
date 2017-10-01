@@ -210,7 +210,7 @@ class PackManager {
         for cycle in allCycles.values.sorted(by: { $0.position < $1.position }) {
             sections.append(cycle.name)
             
-            let packs = allPacks.filter{ $0.cycleCode == cycle.code }
+            let packs = allPacks.filter { $0.cycleCode == cycle.code }
             values.append(packs)
         }
         
@@ -238,7 +238,7 @@ class PackManager {
         for (_, cycle) in allCycles.sorted(by: { $0.0 < $1.0 }) {
             sections.append(cycle.name)
             
-            let packs = allPacks.filter{ $0.cycleCode == cycle.code && settings.bool(forKey: $0.settingsKey) }
+            let packs = allPacks.filter { $0.cycleCode == cycle.code && settings.bool(forKey: $0.settingsKey) }
             
             if packs.count > 0 {
                 values.append(packs)
@@ -275,7 +275,7 @@ class PackManager {
             }
             sections.append(cycle.name)
             
-            let packs = allPacks.filter{ $0.cycleCode == cycle.code }
+            let packs = allPacks.filter { $0.cycleCode == cycle.code }
             values.append(packs)
         }
         
@@ -497,7 +497,7 @@ class PackManager {
         // get all "real" cycles and find the last two that have released packs
         let last2cycles = allCycles.values
             .filter { $0.size > 1 && !$0.rotated }
-            .filter { packsInCycle(code: $0.code).filter{ $0.released } .count > 0 }
+            .filter { packsInCycle(code: $0.code).filter { $0.released } .count > 0 }
             .sorted { $0.position > $1.position }
             .prefix(2)
         
