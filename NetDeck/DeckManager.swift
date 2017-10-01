@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 
 class DeckManager {
     
-    static let cache = { () -> NSCache<NSString, Deck> in
+    static let cache: NSCache<NSString, Deck> = {
         let c = NSCache<NSString, Deck>()
         c.name = "deckCache"
         return c
@@ -23,6 +23,7 @@ class DeckManager {
         }
         
         let filename = deck.filename!
+        // print("save \(deck.name) to disk")
         let data = NSMutableData()
         let encoder = NSKeyedArchiver(forWritingWith: data)
         

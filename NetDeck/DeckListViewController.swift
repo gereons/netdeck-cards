@@ -225,7 +225,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         self.stateButton.title = DeckState.buttonLabelFor(self.deck.state)
-//        let historyFrame = self.historyButton.convert(self.historyButton.frame, to: self.footerView)
         self.footerWidth.constant = self.historyButton.frame.origin.x - 16
         
         UIView.animate(withDuration: 0.1) {
@@ -233,7 +232,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         let offerConversion = Defaults[.rotationActive] && Defaults[.convertCore] && self.deck.containsOldCore() && !self.deck.convertedToCore2
-        
         if offerConversion {
             let alert = UIAlertController(title: "Convert Deck".localized(), message: "Convert this deck to use Revised Core Set cards?".localized(), preferredStyle: .alert)
             

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol FilteringViewController {
+protocol FilteringViewController: class {
     
     func filterCallback(attribute: FilterAttribute, value: FilterValue)
     
@@ -25,7 +25,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     private var values = [[String]]()
     private var button: UIButton!
     private var attribute: FilterAttribute!
-    private var filteringViewController: FilteringViewController!
+    private weak var filteringViewController: FilteringViewController!
     private var selectedValues = Set<String>()
     private var sectionToggles = [Bool]()
     private var collapsedSections: [Bool]?

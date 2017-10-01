@@ -249,11 +249,12 @@ import SwiftyUserDefaults
         self.modified = self.modified || changed
     }
     
-    func setIdentity(_ identity: Card?, copies: Int, history: Bool) {
+    private func setIdentity(_ identity: Card?, copies: Int, history: Bool) {
         if self.identityCc != nil && history {
             // record removal of existing identity
             self.lastChanges.addCardCode(self.identityCc!.card.code, copies: -1)
         }
+        // print("\(self.name) set id to \(String(describing: identity?.name))")
         if let id = identity, copies > 0 {
             if history {
                 self.lastChanges.addCardCode(id.code, copies: 1)
