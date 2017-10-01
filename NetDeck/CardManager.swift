@@ -264,13 +264,8 @@ class CardManager {
         fmt.timeStyle = .none
         let now = Date()
         
-        Defaults[.lastDownload] = fmt.string(from: now)
-        var interval = Defaults[.updateInterval]
-        if BuildConfig.debug && interval == 7 {
-            interval = 1
-        }
-        
-        var nextDownload: String
+        let interval = Defaults[.updateInterval]
+        let nextDownload: String
         switch interval {
         case 30:
             let cal = Calendar.current
@@ -283,7 +278,10 @@ class CardManager {
             nextDownload = fmt.string(from: next)
         }
 
+        Defaults[.lastDownload] = fmt.string(from: now)
         Defaults[.nextDownload] = nextDownload
+        
+        // print("next download \(nextDownload)")
     }
     
     // MARK: - persistence 

@@ -24,14 +24,11 @@ private enum ApiRequest {
 
 class DataDownload: NSObject {
     
-    typealias Completion = () -> ()
-    
-    static func downloadCardData(completion: Completion? = nil) {
-        if let completion = completion {
-            self.instance.doDownloadCardData(0)
-            completion()
-        } else {
+    static func downloadCardData(verbose: Bool = true) {
+        if verbose {
             self.instance.downloadCardAndSetsData()
+        } else {
+            self.instance.doDownloadCardData(0)
         }
     }
     
@@ -126,6 +123,7 @@ class DataDownload: NSObject {
         }
         
         for (key, req) in requests {
+            // print("dl for \(key)")
             group.enter()
             Alamofire.request(req!).validate().responseJSON { response in
                 switch response.result {
@@ -166,13 +164,9 @@ class DataDownload: NSObject {
             }
             self.sdcAlert = nil
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
-                self.postLoadCardsNotification(ok)
+                NotificationCenter.default.post(name: Notifications.loadCards, object: self, userInfo: ["success": ok])
             }
         }
-    }
-    
-    private func postLoadCardsNotification(_ ok: Bool) {
-        NotificationCenter.default.post(name: Notifications.loadCards, object: self, userInfo: ["success": ok])
     }
     
     // MARK: - image download

@@ -34,26 +34,20 @@ class CardUpdateCheck {
         return false
     }
     
-    static func silentCardUpdate() {
+    static func silentCardUpdate() -> Bool {
         let next = Defaults[.nextDownload]
         
         guard let scheduled = fmt.date(from: next) else {
-            return
+            return false
         }
         
         let now = Date()
         if Reachability.online && scheduled.timeIntervalSince1970 < now.timeIntervalSince1970 {
-            print("check for card updates")
-            let group = DispatchGroup()
-            group.enter()
-            DataDownload.downloadCardData {
-                group.leave()
-            }
-            
-            group.notify(queue: DispatchQueue.main, execute: {
-                print("... done")
-            })
+            DataDownload.downloadCardData(verbose: false)
+            return true
         }
+        
+        return false
     }
     
     private static func showUpdateAlert() {

@@ -84,9 +84,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    @objc private func cardsLoaded(_ notification: Notification) {
+        self.initGroup.leave()
+    }
+    
     private func initializeData() {
         if Defaults[.autoCardUpdates] {
-            CardUpdateCheck.silentCardUpdate()
+            let updating = CardUpdateCheck.silentCardUpdate()
+            if updating {
+                self.initGroup.enter()
+                NotificationCenter.default.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
+            }
         }
         let language = Defaults[.language]
         let start = Date.timeIntervalSinceReferenceDate

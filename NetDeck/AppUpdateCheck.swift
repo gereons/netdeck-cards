@@ -12,13 +12,12 @@ import SwiftyUserDefaults
 
 class AppUpdateCheck {
     
-    static let week: TimeInterval = 7*24*60*60 // one week in seconds
+    static let interval: TimeInterval = 7 * 24 * 60 * 60 // one week
     static let forceTest = false
     
     static func checkUpdate() {
-        
         guard let nextCheck = Defaults[.nextUpdateCheck] else {
-            Defaults[.nextUpdateCheck] = Date(timeIntervalSinceNow: week)
+            Defaults[.nextUpdateCheck] = Date(timeIntervalSinceNow: interval)
             return
         }
         
@@ -41,7 +40,7 @@ class AppUpdateCheck {
                 }
             }
             
-            Defaults[.nextUpdateCheck] = now.addingTimeInterval(week)
+            Defaults[.nextUpdateCheck] = now.addingTimeInterval(interval)
         }
     }
     
@@ -57,7 +56,8 @@ class AppUpdateCheck {
         guard
             let dict = Bundle.main.infoDictionary,
             let bundleId = dict["CFBundleIdentifier"] as? String,
-            let currentVersion = dict["CFBundleShortVersionString"] as? String else {
+            let currentVersion = dict["CFBundleShortVersionString"] as? String
+        else {
             completion(nil)
             return
         }
