@@ -58,7 +58,7 @@ class CardDetailView {
         let factionName = Faction.name(for: card.faction)
         let typeName = CardType.name(for: card.type)
         let subtype = card.subtype
-        if subtype.length > 0 {
+        if subtype.count > 0 {
             self.details.cardType.text = String(format: "%@ · %@: %@", factionName, typeName, card.subtype)
         } else {
             self.details.cardType.text = String(format: "%@ · %@", factionName, typeName)
@@ -87,9 +87,9 @@ class CardDetailView {
             let cost = card.costString
             let str = card.strengthString
             self.details.label1.text = cost // card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @""
-            self.details.icon1.image = cost.length > 0 ? ImageCache.creditIcon : nil
+            self.details.icon1.image = cost.count > 0 ? ImageCache.creditIcon : nil
             self.details.label2.text = str
-            self.details.icon2.image = str.length > 0 ? ImageCache.strengthIcon : nil
+            self.details.icon2.image = str.count > 0 ? ImageCache.strengthIcon : nil
             self.details.label3.text = card.mu != -1 ? "\(card.mu)" : ""
             self.details.icon3.image = card.mu != -1 ? ImageCache.muIcon : nil
             
@@ -97,11 +97,11 @@ class CardDetailView {
             let cost = card.costString
             let str = card.strengthString
             self.details.label1.text = cost
-            self.details.icon1.image = cost.length > 0 ? ImageCache.creditIcon : nil
+            self.details.icon1.image = cost.count > 0 ? ImageCache.creditIcon : nil
             self.details.label2.text = ""
             self.details.icon2.image = nil
             self.details.label3.text = str
-            self.details.icon3.image = str.length > 0 ? ImageCache.strengthIcon : nil
+            self.details.icon3.image = str.count > 0 ? ImageCache.strengthIcon : nil
             
         case .agenda:
             self.details.label1.text = "\(card.advancementCost)"
@@ -114,7 +114,7 @@ class CardDetailView {
         case .asset, .operation, .upgrade:
             let cost = card.costString
             self.details.label1.text = cost
-            self.details.icon1.image = cost.length > 0 ? ImageCache.creditIcon : nil
+            self.details.icon1.image = cost.count > 0 ? ImageCache.creditIcon : nil
             self.details.label2.text = ""
             self.details.icon2.image = nil
             self.details.label3.text = card.trash != -1 ? "\(card.trash)" : ""

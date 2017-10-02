@@ -56,7 +56,7 @@ class ImportDecksViewController: UIViewController {
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         
         self.searchBar.placeholder = "Search for decks, identities or cards".localized()
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             self.searchBar.text = self.filterText
         }
         self.searchBar.scopeButtonTitles = [ "All".localized(), "Name".localized(), "Identity".localized(), "Card".localized() ]
@@ -365,7 +365,7 @@ class ImportDecksViewController: UIViewController {
             self.corpDecks = self.sortDecks(self.corpDecks)
         }
         
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", filterText)
             let identityPredicate = NSPredicate(format: "(identity.name CONTAINS[cd] %@) or (identity.englishName CONTAINS[cd] %@)",
             filterText, filterText)

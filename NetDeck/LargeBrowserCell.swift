@@ -66,7 +66,7 @@ class LargeBrowserCell: BrowserCell {
         let factionName = Faction.name(for: card.faction)
         let typeName = CardType.name(for: card.type)
         let subtype = card.subtype
-        if subtype.length > 0 {
+        if subtype.count > 0 {
             self.type.text = String(format: "%@ · %@: %@", factionName, typeName, subtype)
         } else {
             self.type.text = String(format: "%@ · %@", factionName, typeName)

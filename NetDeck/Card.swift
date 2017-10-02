@@ -220,7 +220,7 @@ class Card: NSObject, Unmarshaling {
         let keywords: String = try object.value(for: "keywords") ?? ""
         let localizedKeywords: String = try object.localized(for: "keywords", language: Card.currentLanguage)
         
-        if localizedKeywords.length > 0 {
+        if localizedKeywords.count > 0 {
             self.subtype = localizedKeywords
             self.subtypes = localizedKeywords.components(separatedBy: self.subtypeDelimiter)
         }

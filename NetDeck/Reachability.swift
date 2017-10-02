@@ -15,7 +15,7 @@ class Reachability {
     
     static func start() {
         let nrdbHost = Defaults[.nrdbHost]
-        let host = nrdbHost.length > 0 ? nrdbHost : "www.apple.com"
+        let host = nrdbHost.count > 0 ? nrdbHost : "www.apple.com"
         Reachability.manager = NetworkReachabilityManager(host: host)
         Reachability.manager?.listener = { status in
             // print("Network Status Changed: \(status)")

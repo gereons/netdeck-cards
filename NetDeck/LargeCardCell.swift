@@ -102,7 +102,7 @@ class LargeCardCell: CardCell {
         let typeName = CardType.name(for: card.type)
         
         let subtype = card.subtype
-        if subtype.length > 0 {
+        if subtype.count > 0 {
             self.type.text = String(format: "%@ · %@: %@", factionName, typeName, card.subtype)
         } else {
             self.type.text = String(format: "%@ · %@", factionName, typeName)
@@ -154,20 +154,20 @@ class LargeCardCell: CardCell {
             let cost = card.costString
             let str = card.strengthString
             labels[0].text = cost
-            icons[0].image = cost.length > 0 ? ImageCache.creditIcon : nil
+            icons[0].image = cost.count > 0 ? ImageCache.creditIcon : nil
             labels[1].text = str
-            icons[1].image = str.length > 0 ? ImageCache.strengthIcon : nil
+            icons[1].image = str.count > 0 ? ImageCache.strengthIcon : nil
             labels[2].text = card.mu != -1 ? "\(card.mu)" : nil
             icons[2].image = card.mu != -1 ? ImageCache.muIcon : nil
         case .ice:
             let cost = card.costString
             let str = card.strengthString
             labels[0].text = cost
-            icons[0].image = cost.length > 0 ? ImageCache.creditIcon : nil
+            icons[0].image = cost.count > 0 ? ImageCache.creditIcon : nil
             labels[1].text = card.trash != -1 ? "\(card.trash)" : nil
             icons[1].image = card.trash != -1 ? ImageCache.trashIcon : nil
             labels[2].text = str
-            icons[2].image = str.length > 0 ? ImageCache.strengthIcon : nil
+            icons[2].image = str.count > 0 ? ImageCache.strengthIcon : nil
         case .agenda:
             labels[0].text = "\(card.advancementCost)"
             icons[0].image = ImageCache.difficultyIcon
@@ -176,7 +176,7 @@ class LargeCardCell: CardCell {
         case .asset, .operation, .upgrade:
             let cost = card.costString
             labels[0].text = cost
-            icons[0].image = cost.length > 0 ? ImageCache.creditIcon : nil
+            icons[0].image = cost.count > 0 ? ImageCache.creditIcon : nil
             labels[2].text = card.trash != -1 ? "\(card.trash)" : nil
             icons[2].image = card.trash != -1 ? ImageCache.trashIcon : nil
         case .none:

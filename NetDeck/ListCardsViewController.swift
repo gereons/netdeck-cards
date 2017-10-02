@@ -275,7 +275,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         
         let faction = Faction.name(for: card.faction)
         let subtype = card.subtype
-        if subtype.length > 0 {
+        if subtype.count > 0 {
             let type = faction + " · " + subtype
             cell.typeLabel.text = type
         } else {

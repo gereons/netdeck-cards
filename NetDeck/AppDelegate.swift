@@ -12,11 +12,9 @@ import SVProgressHUD
 import SwiftyUserDefaults
 import DeviceKit
 
-// Andy's identity-switch-problem?!?
-// Auto-Updates für Daten
-// Auto-Download bei Neuinstallation
-// Crashlytics
 // NRDB: keep credentials after failed login
+// Auto-Download bei Neuinstallation?
+// Crashlytics
 // Patricks email: icon für decks mit notizen, in der kartenansicht falsche/fehlende karten besser hervorheben, vollen Text im Popup anzeigen wenn Sprache != en
 // Swift 4
 

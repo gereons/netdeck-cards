@@ -74,7 +74,7 @@ class CardManager {
         let cards = allKnownCards.values
         
         return cards.sorted {
-            return $0.name.length > $1.name.length
+            return $0.name.count > $1.name.count
         }
     }
     
@@ -204,15 +204,15 @@ class CardManager {
         // add automatic aliases like "Self Modifying Code" -> "SMC"
         let split = CharacterSet(charactersIn: " -.")
         for card in cards {
-            if card.name.length > 2 {
+            if card.name.count > 2 {
                 let words = card.name.components(separatedBy: split)
                 if words.count > 1 {
                     var alias = ""
                     for word in words {
-                        if word.length > 0 {
-                            var c = word.characters[word.startIndex]
+                        if word.count > 0 {
+                            var c = word[word.startIndex]
                             if c == "\"" {
-                                c = word.characters[word.characters.index(word.startIndex, offsetBy: 1)]
+                                c = word[word.index(word.startIndex, offsetBy: 1)]
                             }
                             alias.append(c)
                         }

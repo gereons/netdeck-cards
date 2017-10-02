@@ -84,7 +84,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     func refresh() {
         let packUsage = Defaults[.browserPacks]
         self.cardList = CardList.browserInitForRole(self.role, packUsage: packUsage)
-        if self.searchText.length > 0 {
+        if self.searchText.count > 0 {
             switch self.searchScope {
             case .all:
                 self.cardList.filterByTextOrName(self.searchText)

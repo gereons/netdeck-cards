@@ -28,7 +28,7 @@ class OctgnImport: NSObject, XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
         if elementName == "card" {
             if let qty = attributeDict["qty"], let id = attributeDict["id"] {
-                if id.hasPrefix(Card.octgnPrefix) && id.length > 32 {
+                if id.hasPrefix(Card.octgnPrefix) && id.count > 32 {
                     
                     let index = id.index(id.startIndex, offsetBy: 31)
                     let code = id.substring(from: index)

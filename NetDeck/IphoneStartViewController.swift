@@ -110,7 +110,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         var runnerDecks = DeckManager.decksForRole(.runner)
         var corpDecks = DeckManager.decksForRole(.corp)
         
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", self.filterText)
             let identityPredicate = NSPredicate(format: "(identity.name CONTAINS[cd] %@) or (identity.englishName CONTAINS[cd] %@)", self.filterText, self.filterText)
             let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [namePredicate, identityPredicate])
@@ -397,7 +397,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - empty dataset
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             return nil
         }
         
@@ -409,7 +409,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             return nil
         }
 
@@ -421,7 +421,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             return nil
         }
         

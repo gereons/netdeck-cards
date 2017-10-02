@@ -247,7 +247,7 @@ class SettingsDelegate: IASKSettingsDelegate {
     
     func testApiSettings() {
         let host = Defaults[.nrdbHost]
-        if host.length == 0 {
+        if host.count == 0 {
             UIAlertController.alert(withTitle: nil, message: "Please enter a Server Name".localized(), button: "OK".localized())
             return
         }

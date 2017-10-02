@@ -57,7 +57,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         for s in entries.sections {
             popover.sectionToggles.append(false)
             popover.collapsedSections?.append(false)
-            if s.length > 0 {
+            if s.count > 0 {
                 popover.sectionCount += 1
             }
         }
@@ -144,12 +144,12 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let s = self.sections[section]
-        return s.length > 0 ? CGFloat(headerHeight) : 0
+        return s.count > 0 ? CGFloat(headerHeight) : 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let s = self.sections[section]
-        return s.length > 0 ? s : nil
+        return s.count > 0 ? s : nil
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -53,7 +53,7 @@ class DataDownload: NSObject {
     
     private func downloadCardAndSetsData() {
         let host = Defaults[.nrdbHost]
-        if host.length > 0 {
+        if host.count > 0 {
             self.showDownloadAlert()
             self.perform(#selector(DataDownload.doDownloadCardData(_:)), with: nil, afterDelay: 0.01)
         } else {

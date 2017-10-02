@@ -100,7 +100,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.navigationItem.leftBarButtonItems = [ self.sortButton, self.sideFilterButton, self.stateFilterButton ]
         
         self.searchBar.placeholder = "Search for decks, identities or cards".localized()
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             self.searchBar.text = self.filterText
         }
         
@@ -284,7 +284,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
             corpDecks.removeAll()
         }
         
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", self.filterText)
             let identityPredicate = NSPredicate(format: "(identity.name CONTAINS[cd] %@) or (identity.englishName CONTAINS[cd] %@)", self.filterText, self.filterText)
             let cardPredicate = NSPredicate(format: "(ANY cards.card.name CONTAINS[cd] %@) OR (ANY cards.card.englishName CONTAINS[cd] %@)", self.filterText, self.filterText)
@@ -441,7 +441,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
     // MARK: - empty dataset
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             return nil
         }
         
@@ -453,7 +453,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             return nil
         }
         let attributes = [

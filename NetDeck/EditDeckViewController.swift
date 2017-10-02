@@ -605,7 +605,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         var type = Faction.name(for: card.faction)
         let subtype = card.subtype
-        if subtype.length > 0 {
+        if subtype.count > 0 {
             type += " · " + subtype
         }
         cell.typeLabel.text = type

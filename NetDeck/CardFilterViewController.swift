@@ -683,7 +683,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             return false
         }
         
-        if self.searchText.length > 0 {
+        if self.searchText.count > 0 {
             textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
             NotificationCenter.default.post(name: Notifications.addTopCard, object: self)
         } else {
@@ -813,7 +813,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         let textField = self.searchField!
-        if textField.isFirstResponder && (textField.text?.length ?? 0) > 0 {
+        if textField.isFirstResponder && (textField.text?.count ?? 0) > 0 {
             textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
         }
         

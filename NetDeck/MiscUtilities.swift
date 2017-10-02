@@ -19,16 +19,12 @@ extension String {
         return NSLocalizedString(self, comment: "")
     }
     
-    var length: Int {
-        return self.characters.count
-    }
-    
     func appendPathComponent(_ component: String) -> String {
         return (self as NSString).appendingPathComponent(component)
     }
     
     func trimmed() -> String {
-        return self.trimmingCharacters(in: CharacterSet.whitespaces)
+        return self.trimmingCharacters(in: .whitespaces)
     }
     
     func checked(_ checked: Bool) -> String {
@@ -80,8 +76,8 @@ extension UIBarButtonItem {
 
 extension NSRange {
     func stringRangeForText(_ string: String) -> Range<String.Index> {
-        let start = string.characters.index(string.startIndex, offsetBy: self.location)
-        let end = string.characters.index(start, offsetBy: self.length)
+        let start = string.index(string.startIndex, offsetBy: self.location)
+        let end = string.index(start, offsetBy: self.length)
         return start ..< end
     }
 }

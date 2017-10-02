@@ -463,7 +463,7 @@ class SavedDecksList: DecksViewController {
     // MARK: - empty set
     
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
-        if self.filterText.length > 0 {
+        if self.filterText.count > 0 {
             return nil
         }
         

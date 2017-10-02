@@ -56,7 +56,7 @@ class DeckImport: NSObject {
         Defaults[.clipChangeCount] = pasteboard.changeCount
         
         guard let clip = pasteboard.string else { return }
-        if clip.length == 0 {
+        if clip.count == 0 {
             return
         }
 
@@ -128,7 +128,7 @@ class DeckImport: NSObject {
             let regEx = dict[source]!
             
             for line in lines {
-                if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length)) , match.numberOfRanges == 2 {
+                if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count)) , match.numberOfRanges == 2 {
                     let l = line as NSString
                     let src = DeckSource(deckId: l.substring(with: match.rangeAt(1)), source: source)
                     return src
@@ -148,7 +148,7 @@ class DeckImport: NSObject {
         let regEx = try! NSRegularExpression(pattern:"https://meteor.stimhack.com/decks/(.*)/?", options:[])
         
         for line in lines {
-            if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length)) , match.numberOfRanges == 2 {
+            if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count)) , match.numberOfRanges == 2 {
                 let l = line as NSString
                 let src = DeckSource(deckId: l.substring(with: match.rangeAt(1)), source: .meteor)
                 return src
@@ -188,12 +188,12 @@ class DeckImport: NSObject {
                         deck.addCard(c, copies:1)
                         // NSLog(@"found identity %@", c.name);
                     } else {
-                        var match = regex1.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length))
+                        var match = regex1.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count))
                         if match == nil {
-                            match = regex2.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length))
+                            match = regex2.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count))
                         }
                         if match == nil {
-                            match = regex3.firstMatch(in: line, options:[], range:NSMakeRange(0, line.length))
+                            match = regex3.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count))
                         }
                         
                         if let m = match , m.numberOfRanges == 2 {

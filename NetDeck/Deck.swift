@@ -327,14 +327,14 @@ import SwiftyUserDefaults
         let regexPattern = "\\d+$"
         let regex = try! NSRegularExpression(pattern:regexPattern, options:[])
         
-        let matches = regex.matches(in: oldName, options: [], range: NSMakeRange(0, oldName.length))
+        let matches = regex.matches(in: oldName, options: [], range: NSMakeRange(0, oldName.count))
         if matches.count > 0 {
             let match = matches[0]
             let range = match.range.stringRangeForText(oldName)
             let numberStr = oldName.substring(with: range)
             let number = 1 + Int(numberStr)!
             
-            newName = oldName.substring(to: oldName.characters.index(oldName.startIndex, offsetBy: match.range.location))
+            newName = oldName.substring(to: oldName.index(oldName.startIndex, offsetBy: match.range.location))
             newName += "\(number)"
         }
         
@@ -352,6 +352,7 @@ import SwiftyUserDefaults
         newDeck.lastChanges = self.lastChanges.copy() as! DeckChangeSet
         newDeck.revisions = self.revisions.map({ $0.copy() as! DeckChangeSet })
         newDeck.modified = true
+        newDeck.convertedToCore2 = self.convertedToCore2
         
         return newDeck
     }

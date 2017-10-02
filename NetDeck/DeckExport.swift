@@ -66,7 +66,7 @@ class DeckExport {
             }
             xml += "</section>\n"
             
-            if let notes = deck.notes , notes.length > 0 {
+            if let notes = deck.notes , notes.count > 0 {
                 xml += "<notes><![CDATA[\(notes)]]></notes>\n"
             }
             xml += "</deck>\n"
@@ -177,7 +177,7 @@ class DeckExport {
         
         s += eol + "Deck built with " + self.link(APP_NAME, APP_URL, fmt) + eol
         
-        if let notes = deck.notes, notes.length > 0 {
+        if let notes = deck.notes, notes.count > 0 {
             s += eol + notes + eol
         }
         
