@@ -85,7 +85,7 @@ class DataDownload: NSObject {
         alert.present(animated: false, completion: nil)
     }
     
-    private func requestFor(_ apiRequest: ApiRequest) -> URLRequest? {
+    private func xrequestFor(_ apiRequest: ApiRequest) -> URLRequest? {
         let nrdbHost = Defaults[.nrdbHost]
         let language = Defaults[.language]
         
@@ -100,6 +100,22 @@ class DataDownload: NSObject {
             urlString += "?_locale=\(language)"
         }
         
+        if let url = URL(string: urlString) {
+            return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
+        }
+        return nil
+    }
+
+    private func requestFor(_ apiRequest: ApiRequest) -> URLRequest? {
+        let language = Defaults[.language]
+
+        let urlString: String
+        switch apiRequest {
+        case .cycles: urlString = "https://gereons.github.io/netdeck-cards/api/2.0/cycles_\(language).json"
+        case .packs: urlString = "https://gereons.github.io/netdeck-cards/api/2.0/packs_\(language).json"
+        case .cards: urlString = "https://gereons.github.io/netdeck-cards/api/2.0/cards_\(language).json"
+        }
+
         if let url = URL(string: urlString) {
             return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
         }
