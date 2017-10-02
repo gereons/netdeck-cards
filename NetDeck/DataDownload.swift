@@ -85,7 +85,7 @@ class DataDownload: NSObject {
         alert.present(animated: false, completion: nil)
     }
     
-    private func xrequestFor(_ apiRequest: ApiRequest) -> URLRequest? {
+    private func __requestFor(_ apiRequest: ApiRequest) -> URLRequest {
         let nrdbHost = Defaults[.nrdbHost]
         let language = Defaults[.language]
         
@@ -100,13 +100,11 @@ class DataDownload: NSObject {
             urlString += "?_locale=\(language)"
         }
         
-        if let url = URL(string: urlString) {
-            return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
-        }
-        return nil
+        let url = URL(string: urlString)!
+        return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
     }
 
-    private func requestFor(_ apiRequest: ApiRequest) -> URLRequest? {
+    private func requestFor(_ apiRequest: ApiRequest) -> URLRequest {
         let language = Defaults[.language]
 
         let urlString: String
@@ -116,32 +114,25 @@ class DataDownload: NSObject {
         case .cards: urlString = "https://gereons.github.io/netdeck-cards/api/2.0/cards_\(language).json"
         }
 
-        if let url = URL(string: urlString) {
-            return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
-        }
-        return nil
+        let url = URL(string: urlString)!
+        return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
     }
     
     func doDownloadCardData(_ dummy: Any) {
-        let requests: [ApiRequest: URLRequest?] = [
+        Analytics.logEvent(.cardUpdate)
+
+        let requests: [ApiRequest: URLRequest] = [
             .cycles: self.requestFor(.cycles),
             .packs: self.requestFor(.packs),
             .cards: self.requestFor(.cards),
         ]
-        
+
         let group = DispatchGroup()
         var results = [ApiRequest: Data]()
-        
-        for req in requests.values {
-            if req == nil {
-                return
-            }
-        }
-        
         for (key, req) in requests {
             // print("dl for \(key)")
             group.enter()
-            Alamofire.request(req!).validate().responseJSON { response in
+            Alamofire.request(req).validate().responseJSON { response in
                 switch response.result {
                 case .success:
                     if let data = response.data, !self.downloadStopped {

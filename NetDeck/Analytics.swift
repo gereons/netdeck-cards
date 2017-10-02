@@ -40,6 +40,7 @@ class Analytics {
         case showTipJar = "Show Tip Jar"
         case selectTip = "Select Tip"
         case tipTransaction = "Tip Transaction"
+        case cardUpdate = "Card Update"
     }
 
     static func logEvent(_ event: Event, attributes: [String: Any]? = nil) {
