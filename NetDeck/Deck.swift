@@ -331,7 +331,7 @@ import SwiftyUserDefaults
             let range = match.range.stringRangeForText(oldName)
             let numberStr = oldName[range]
             let number = 1 + Int(numberStr)!
-            
+
             newName = String(oldName[..<oldName.index(oldName.startIndex, offsetBy: match.range.location)])
             newName += "\(number)"
         }

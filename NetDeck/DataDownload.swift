@@ -84,7 +84,6 @@ class DataDownload: NSObject {
 
         alert.present(animated: false, completion: nil)
     }
-    
 
     private func __requestFor(_ apiRequest: ApiRequest) -> URLRequest {
         let nrdbHost = Defaults[.nrdbHost]

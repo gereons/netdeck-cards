@@ -15,15 +15,16 @@ class Card: NSObject, Unmarshaling {
     private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
     private(set) var code = ""
-    @objc private(set) var name = ""                  // localized name of card, used for display
+    @objc private(set) var name = ""            // localized name of card, used for display
     private(set) var foldedName = ""            // lowercased, no diacritics, for sorting (e.g. "Déjà vu" -> "deja vu")
-    @objc private(set) var englishName = ""           // english name of card, used for searches
+    @objc private(set) var englishName = ""     // english name of card, used for searches
+
     @objc private(set) var aliases = [String]()
     @objc private(set) var text = ""
     private(set) var flavor = ""
     @objc private(set) var type = CardType.none
-    private(set) var subtype = ""               // full subtype string like "Fracter - Icebreaker - AI"
-    @objc private(set) var subtypes = [String]()      // array of subtypes like [ "Fracter", "Icebreaker", "AI" ]
+    private(set) var subtype = ""                // full subtype string like "Fracter - Icebreaker - AI"
+    @objc private(set) var subtypes = [String]() // array of subtypes like [ "Fracter", "Icebreaker", "AI" ]
     @objc private(set) var faction = Faction.none
     private(set) var role = Role.none
     private(set) var influenceLimit = -1        // for id
@@ -33,13 +34,13 @@ class Card: NSObject, Unmarshaling {
     @objc private(set) var mu = -1
     @objc private(set) var strength = -1
     @objc private(set) var cost = -1
-    @objc private(set) var advancementCost = -1       // agenda
-    @objc private(set) var agendaPoints = -1          // agenda
+    @objc private(set) var advancementCost = -1  // agenda
+    @objc private(set) var agendaPoints = -1     // agenda
     @objc private(set) var trash = -1
     private(set) var number = -1                // card no. in set
     
     @objc private(set) var unique = false
-    @objc private(set) var maxPerDeck = -1            // how many may be in deck? currently either 1, 3 or 6
+    @objc private(set) var maxPerDeck = -1      // how many may be in deck? currently either 1, 3 or 6
     
     private(set) var isAlliance = false
     @objc private(set) var isVirtual = false
