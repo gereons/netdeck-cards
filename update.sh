@@ -13,8 +13,8 @@ do
     if [ $language != "en" ]
     then
         LOCALE="?_locale=$language" 
-        SUFFIX="_$language"
     fi
+    SUFFIX="_$language"
 
     curl $CARDS_URL$LOCALE -o api/2.0/cards$SUFFIX.json
     curl $CYCLES_URL$LOCALE -o api/2.0/cycles$SUFFIX.json
