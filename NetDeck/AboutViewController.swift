@@ -43,12 +43,12 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
         self.navigationItem.rightBarButtonItem = feedbackButton
     }
     
-    func goBack(_ sender: Any) {
+    @objc func goBack(_ sender: Any) {
         self.webView.goBack()
         self.navigationItem.leftBarButtonItem = nil
     }
     
-    func leaveFeedback(_ sender: Any) {
+    @objc func leaveFeedback(_ sender: Any) {
         let msg = "We'd love to know how we can make Net Deck even better - and would really appreciate if you left a review on the App Store.".localized()
         
         let alert = UIAlertController(title: nil, message: msg, preferredStyle: .alert)

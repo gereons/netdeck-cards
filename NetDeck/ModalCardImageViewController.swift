@@ -25,7 +25,7 @@ class ModalCardImageViewController: UIViewController {
         self.loadImage(for: card)
     }
 
-    func dismiss(_ button: UIBarButtonItem) {
+    @objc func dismiss(_ button: UIBarButtonItem) {
         modalPresenter.dismiss()
     }
     

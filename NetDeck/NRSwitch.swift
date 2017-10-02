@@ -21,7 +21,7 @@ class NRSwitch: UISwitch {
         self.addTarget(self, action: #selector(self.toggleSwitch(_:)), for: .valueChanged)
     }
     
-    func toggleSwitch(_ sender: UISwitch) {
+    @objc func toggleSwitch(_ sender: UISwitch) {
         self.handler?(sender.isOn)
     }
 }

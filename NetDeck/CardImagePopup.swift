@@ -47,7 +47,7 @@ class CardImagePopup: UIViewController {
         self.copiesStepper.maximumValue = Double(self.deck.isDraft ? 100 : self.cc.card.maxPerDeck)
         self.copiesStepper.value = Double(self.cc.count)
         
-        self.copiesLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightSemibold)
+        self.copiesLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.semibold)
         self.copiesLabel.text = String(format: "×%lu", self.cc.count)
         self.nameLabel.text = self.cc.card.name
     }

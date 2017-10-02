@@ -89,7 +89,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
         if let item = queryItems.filter( { $0.name == "code" } ).first {
             let code = item.value ?? ""
             // print("found code \(code)")
-            NRDB.sharedInstance.authorizeWithCode(code) { _ in
+            NRDB.sharedInstance.authorizeWithCode(code) { ok, error in
                 popup.dismiss()
                 NRDB.sharedInstance.startAuthorizationRefresh()
             }

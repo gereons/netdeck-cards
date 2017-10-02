@@ -144,7 +144,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         self.dismiss(animated: false, completion: nil)
     }
     
-    func doubleTap(_ gesture: UITapGestureRecognizer) {
+    @objc func doubleTap(_ gesture: UITapGestureRecognizer) {
         guard gesture.state == .ended else {
             return
         }
@@ -201,7 +201,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         self.collectionView.reloadData()
     }
 
-    func showImage(_ sender: UIButton) {
+    @objc func showImage(_ sender: UIButton) {
         let buttonPosition = sender.convert(CGPoint.zero, to: self.tableView)
         if let indexPath = self.tableView.indexPathForRow(at: buttonPosition) {
             let card = self.identities[indexPath.section][indexPath.row]
@@ -335,7 +335,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         return header
     }
     
-    func selectCell(_ sender: UIButton) {
+    @objc func selectCell(_ sender: UIButton) {
         let section = sender.tag / 1000
         let item = sender.tag - (section * 1000)
         let card = self.identities[section][item]

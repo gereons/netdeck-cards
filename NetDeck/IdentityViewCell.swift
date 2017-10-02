@@ -23,7 +23,7 @@ class IdentityViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     
-        let font = UIFont.monospacedDigitSystemFont(ofSize:12, weight:UIFontWeightRegular)
+        let font = UIFont.monospacedDigitSystemFont(ofSize:12, weight:UIFont.Weight.regular)
         self.deckSizeLabel.font = font
         self.influenceLimitLabel.font = font
         self.linkLabel.font = font

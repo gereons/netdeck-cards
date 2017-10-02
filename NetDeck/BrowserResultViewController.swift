@@ -128,7 +128,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.reloadViews()
     }
     
-    func sortPopup(_ sender: UIBarButtonItem) {
+    @objc func sortPopup(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             self.popup.dismiss(animated: false, completion: nil)
             self.popup = nil
@@ -186,7 +186,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.popup = nil
     }
     
-    func toggleView(_ sender: UISegmentedControl) {
+    @objc func toggleView(_ sender: UISegmentedControl) {
         let viewStyle = CardView(rawValue: sender.selectedSegmentIndex) ?? .largeTable
         Defaults[.browserViewStyle] = viewStyle
         self.doToggleView(viewStyle)
@@ -329,7 +329,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
 
     // MARK: - long press
     
-    func longPressGesture(_ gesture: UILongPressGestureRecognizer) {
+    @objc func longPressGesture(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else {
             return
         }
@@ -346,7 +346,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     
     private var scaleStart = 0.0
     private var startIndex: IndexPath?
-    func pinchGesture(_ gesture: UIPinchGestureRecognizer) {
+    @objc func pinchGesture(_ gesture: UIPinchGestureRecognizer) {
         if gesture.state == .began {
             self.scaleStart = self.scale
             let startPoint = gesture.location(in: self.collectionView)

@@ -19,12 +19,20 @@ target 'NetDeck' do
     pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftKeychainWrapper'
     pod 'Marshal'
-    pod 'SDCAlertView', '~> 7.1'
+    pod 'SDCAlertView'
     pod 'EasyTipView'
     pod 'SwiftyUserDefaults'
 end
 
 post_install do |installer|
-  require 'fileutils'
-  system("awk -f ackhtml.awk <'Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-acknowledgements.markdown' >NetDeck/Acknowledgements.html")
+    installer.pods_project.targets.each do |target|
+        if target.name == 'EasyTipView' || target.name == 'AlamofireImage'
+            target.build_configurations.each do |config|
+                config.build_settings['SWIFT_VERSION'] = '3.0'
+            end
+        end
+    end
+
+    require 'fileutils'
+    system("awk -f ackhtml.awk <'Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-acknowledgements.markdown' >NetDeck/Acknowledgements.html")
 end

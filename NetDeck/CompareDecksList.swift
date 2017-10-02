@@ -26,13 +26,13 @@ class CompareDecksList: DecksViewController {
         let title = "Select two decks to compare them".localized()
         self.footerButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(self.footerClicked(_:)))
         self.footerButton.tintColor = .black
-        let fontName = [ NSFontAttributeName: UIFont.systemFont(ofSize: 15)]
+        let fontName = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)]
         self.footerButton.setTitleTextAttributes(fontName, for: .normal)
         
         self.toolBar.items = [ self.footerButton ]
     }
     
-    func diffDecks(_ sender: UIBarButtonItem) {
+    @objc func diffDecks(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             return self.dismissPopup()
         }
@@ -54,7 +54,7 @@ class CompareDecksList: DecksViewController {
         DeckDiffViewController.showForDecks(deck1, deck2: deck2, inViewController: self)
     }
     
-    func footerClicked(_ sender: UIBarButtonItem) {
+    @objc func footerClicked(_ sender: UIBarButtonItem) {
         if self.decksToDiff.count == 2 {
             self.diffDecks(sender)
         }

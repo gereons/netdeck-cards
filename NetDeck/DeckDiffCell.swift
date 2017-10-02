@@ -24,12 +24,12 @@ class DeckDiffCell: UITableViewCell {
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(self.popupCard1(_:)))
         self.deck1Card.addGestureRecognizer(tap1)
         self.deck1Card.isUserInteractionEnabled = true
-        self.deck1Card.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
+        self.deck1Card.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
         
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(self.popupCard2(_:)))
         self.deck2Card.addGestureRecognizer(tap2)
         self.deck2Card.isUserInteractionEnabled = true
-        self.deck2Card.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
+        self.deck2Card.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
     }
     
     override func prepareForReuse() {
@@ -44,7 +44,7 @@ class DeckDiffCell: UITableViewCell {
         self.diff.textColor = .black
     }
     
-    func popupCard1(_ gesture: UITapGestureRecognizer) {
+    @objc func popupCard1(_ gesture: UITapGestureRecognizer) {
         guard
             let card = self.card1,
             let tableView = self.vc.tableView,
@@ -59,7 +59,7 @@ class DeckDiffCell: UITableViewCell {
         CardImageViewPopover.show(for: card, from: rect, in: self.vc, subView: tableView)
     }
     
-    func popupCard2(_ gesture: UITapGestureRecognizer) {
+    @objc func popupCard2(_ gesture: UITapGestureRecognizer) {
         guard
             let card = self.card2,
             let tableView = self.vc.tableView,

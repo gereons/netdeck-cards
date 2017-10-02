@@ -130,7 +130,7 @@ class DeckImport: NSObject {
             for line in lines {
                 if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count)) , match.numberOfRanges == 2 {
                     let l = line as NSString
-                    let src = DeckSource(deckId: l.substring(with: match.rangeAt(1)), source: source)
+                    let src = DeckSource(deckId: l.substring(with: match.range(at: 1)), source: source)
                     return src
                 }
             }
@@ -150,7 +150,7 @@ class DeckImport: NSObject {
         for line in lines {
             if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count)) , match.numberOfRanges == 2 {
                 let l = line as NSString
-                let src = DeckSource(deckId: l.substring(with: match.rangeAt(1)), source: .meteor)
+                let src = DeckSource(deckId: l.substring(with: match.range(at: 1)), source: .meteor)
                 return src
             }
         }
@@ -198,7 +198,7 @@ class DeckImport: NSObject {
                         
                         if let m = match , m.numberOfRanges == 2 {
                             let l = line as NSString
-                            let count = l.substring(with: m.rangeAt(1))
+                            let count = l.substring(with: m.range(at: 1))
                             // NSLog(@"found card %@ x %@", count, c.name);
                             
                             let max = deck.isDraft ? 100 : 4;
@@ -237,7 +237,7 @@ class DeckImport: NSObject {
         spinner.topAnchor.constraint(equalTo: alert.contentView.topAnchor).isActive = true
         spinner.bottomAnchor.constraint(equalTo: alert.contentView.bottomAnchor).isActive = true
         
-        alert.add(AlertAction(title: "Stop".localized(), style: .normal, handler: { action in
+        alert.addAction(AlertAction(title: "Stop".localized(), style: .normal, handler: { action in
             self.downloadStopped = true
             self.sdcAlert = nil
             if let req = self.request {
@@ -259,12 +259,12 @@ class DeckImport: NSObject {
         }
     }
     
-    func doDownloadDeckFromNetrunnerDbList(_ deckId: String) {
+    @objc func doDownloadDeckFromNetrunnerDbList(_ deckId: String) {
         let deckUrl = "https://netrunnerdb.com/api/2.0/public/decklist/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     
     }
-    func doDownloadDeckFromNetrunnerDbShared(_ deckId: String) {
+    @objc func doDownloadDeckFromNetrunnerDbShared(_ deckId: String) {
         let deckUrl = "https://netrunnerdb.com/api/2.0/public/deck/" + deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     }
@@ -311,7 +311,7 @@ class DeckImport: NSObject {
         return nil
     }
 
-    func doDownloadDeckFromMeteor(_ deckId: String) {
+    @objc func doDownloadDeckFromMeteor(_ deckId: String) {
         let deckUrl = "https://meteor.stimhack.com/deckexport/octgn/" + deckId
         self.downloadStopped = false
         

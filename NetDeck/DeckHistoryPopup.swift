@@ -47,7 +47,7 @@ class DeckHistoryPopup: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.dismiss(animated: false, completion: nil)
     }
     
-    func revertTo(_ sender: UIButton) {
+    @objc func revertTo(_ sender: UIButton) {
         assert(sender.tag < self.deck.revisions.count, "invalid tag")
         Analytics.logEvent(.revert)
         let dcs = self.deck.revisions[sender.tag]

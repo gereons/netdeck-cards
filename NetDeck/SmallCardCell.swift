@@ -16,7 +16,7 @@ class SmallCardCell: CardCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.name.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFontWeightRegular)
+        self.name.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
         let diameter: CGFloat = 8
         let frame = CGRect(origin: self.mwlMarker.frame.origin, size: CGSize(width: diameter, height: diameter))

@@ -20,8 +20,8 @@ class EditDeckCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.accessoryView = UIView(frame: CGRect.zero)
-        self.influenceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFontWeightRegular)
-        self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFontWeightRegular)
+        self.influenceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
+        self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: UIFont.Weight.regular)
     }
     
     override func prepareForReuse() {

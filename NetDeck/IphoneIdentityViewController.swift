@@ -180,7 +180,7 @@ extension IphoneIdentityViewController: UITableViewDelegate, UITableViewDataSour
 
 extension IphoneIdentityViewController {
     
-    func doubleTap(_ gesture: UITapGestureRecognizer) {
+    @objc func doubleTap(_ gesture: UITapGestureRecognizer) {
         guard gesture.state == .ended else { return }
         
         let point = gesture.location(in: self.tableView)
@@ -192,7 +192,7 @@ extension IphoneIdentityViewController {
         self.closeAndSetIdentity()
     }
     
-    func longPress(_ gesture: UILongPressGestureRecognizer) {
+    @objc func longPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
         
         let point = gesture.location(in: self.tableView)

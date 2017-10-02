@@ -64,7 +64,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         self.titleButton = UIButton(type: .system)
         self.titleButton.frame = CGRect(x: 0, y: 0, width: 0, height: 33)
         self.titleButton.setTitle("Net Deck", for: .normal)
-        self.titleButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        self.titleButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
         self.titleButton.addTarget(self, action: #selector(self.openBrowser), for: .touchUpInside)
         
         self.deckListSort = Defaults[.deckFilterSort]
@@ -137,14 +137,14 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         NRDB.sharedInstance.updateDeckMap(allDecks)
     }
     
-    func loadCards(_ notification: Notification) {
+    @objc func loadCards(_ notification: Notification) {
         self.initializeDecks()
         self.tableView.reloadData()
     }
     
     // MARK: - import deck
 
-    func importDeckFromClipboard(_ notification: Notification) {
+    @objc func importDeckFromClipboard(_ notification: Notification) {
         guard let deck = notification.userInfo?["deck"] as? Deck else {
             return
         }
@@ -164,7 +164,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: - add new deck
     
-    func createNewDeck(_ sender: Any) {
+    @objc func createNewDeck(_ sender: Any) {
         self.createNewDeck()
     }
     
@@ -190,7 +190,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: - import
     
-    func importDecks(_ sender: UIButton) {
+    @objc func importDecks(_ sender: UIButton) {
         let useNrdb = Defaults[.useNrdb]
         let useDropbox = Defaults[.useDropbox]
         
@@ -229,7 +229,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: - sort
     
-    func changeSort(_ sender: UIBarButtonItem) {
+    @objc func changeSort(_ sender: UIBarButtonItem) {
         let alert = UIAlertController.actionSheet(title: "Sort by".localized(), message:nil)
         
         alert.addAction(UIAlertAction(title: "Date".localized().checked(self.deckListSort == .byDate)) { action in
@@ -287,7 +287,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: - settings
     
-    func openSettings(_ sender: UIBarButtonItem) {
+    @objc func openSettings(_ sender: UIBarButtonItem) {
         sender.isEnabled = false
         let settings = Settings.viewController
         if settings != self.navigationController?.topViewController {
@@ -301,7 +301,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         self.openBrowser()
     }
     
-    func openBrowser() {
+    @objc func openBrowser() {
         if CardManager.cardsAvailable {
             let browser = BrowserViewController()
             self.navigationController?.pushViewController(browser, animated: true)
@@ -401,7 +401,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
             return nil
         }
         
-        let attrs: [String: Any] = [ NSFontAttributeName: UIFont.systemFont(ofSize: 21.0), NSForegroundColorAttributeName: UIColor.lightGray ]
+        let attrs: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 21.0), NSAttributedStringKey.foregroundColor: UIColor.lightGray ]
         
         let title = CardManager.cardsAvailable ? "No Decks" : "No Card Data"
         
@@ -415,7 +415,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
 
         let text = CardManager.cardsAvailable ? "Your decks will be shown here" : "To use this app, you must first download card data."
 
-        let attrs: [String: Any] = [ NSFontAttributeName: UIFont.systemFont(ofSize: 14.0), NSForegroundColorAttributeName: UIColor.lightGray ]
+        let attrs: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14.0), NSAttributedStringKey.foregroundColor: UIColor.lightGray ]
         
         return NSAttributedString(string: text.localized(), attributes: attrs)
     }
@@ -426,7 +426,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         }
         
         let color = self.tableView.tintColor ?? .blue
-        let attrs: [String: Any] = [ NSFontAttributeName: UIFont.systemFont(ofSize: 17.0), NSForegroundColorAttributeName: color ]
+        let attrs: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17.0), NSAttributedStringKey.foregroundColor: color ]
         
         let text = CardManager.cardsAvailable ? "New Deck" : "Download"
         
@@ -478,7 +478,7 @@ extension IphoneStartViewController {
     
     private func presentTipView() {
         var prefs = EasyTipView.Preferences()
-        prefs.drawing.font = UIFont.systemFont(ofSize: 13, weight: UIFontWeightThin)
+        prefs.drawing.font = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.thin)
         prefs.drawing.cornerRadius = 5
         prefs.drawing.foregroundColor = .white
         prefs.drawing.backgroundColor = .darkGray

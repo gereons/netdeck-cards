@@ -150,7 +150,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.popup = nil
     }
     
-    func changeSort(_ sender: UIBarButtonItem) {
+    @objc func changeSort(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             return self.dismissPopup()
         }
@@ -184,7 +184,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.updateDecks()
     }
     
-    func changeSideFilter(_ sender: UIBarButtonItem) {
+    @objc func changeSideFilter(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             return self.dismissPopup()
         }
@@ -218,7 +218,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.updateDecks()
     }
     
-    func changeStateFilter(_ sender: UIBarButtonItem) {
+    @objc func changeStateFilter(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             return self.dismissPopup()
         }
@@ -446,8 +446,8 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         let attributes = [
-            NSFontAttributeName: UIFont.systemFont(ofSize: 21),
-            NSForegroundColorAttributeName: UIColor.lightGray
+            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 21),
+            NSAttributedStringKey.foregroundColor: UIColor.lightGray
         ]
         return NSAttributedString(string: "No Decks".localized(), attributes: attributes)
     }
@@ -457,8 +457,8 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
             return nil
         }
         let attributes = [
-            NSFontAttributeName: UIFont.systemFont(ofSize: 14),
-            NSForegroundColorAttributeName: UIColor.lightGray
+            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),
+            NSAttributedStringKey.foregroundColor: UIColor.lightGray
         ]
         return NSAttributedString(string: "Your decks will be shown here".localized(), attributes: attributes)
     }
