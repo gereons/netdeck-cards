@@ -13,24 +13,39 @@ import SwiftyUserDefaults
 
 class NRDBHack {
 
-    static let AUTH_URL = NRDB.providerHost + "/oauth/v2/auth"
-    static let CHECK_URL = NRDB.providerHost + "/oauth/v2/auth_login_check"
+    private static let authUrl = NRDB.providerHost + "/oauth/v2/auth"
+    private static let loginCheckUrl = NRDB.providerHost + "/oauth/v2/auth_login_check"
     
-    private var cookieJar = HTTPCookieStorage.shared
-    private var manager: Alamofire.SessionManager!
-    private var authCompletion: ((Bool) -> Void)!
+    private let cookieJar = HTTPCookieStorage.shared
+    private let manager: Alamofire.SessionManager
+    private var authCompletion: ((Bool, String) -> Void)!
     
     static let sharedInstance = NRDBHack()
+
+    private init() {
+        let cfg = URLSessionConfiguration.default
+        cfg.httpCookieStorage = self.cookieJar
+        cfg.httpShouldSetCookies = true
+        self.manager = Alamofire.SessionManager(configuration: cfg)
+    }
     
     private(set) var loggingIn = false
     
     private struct Credentials {
-        var username: String
-        var password: String
+        let username: String
+        let password: String
         
         init(_ username: String, _ password: String) {
             self.username = username
             self.password = password
+        }
+
+        static func fromKeychain() -> Credentials? {
+            let keychain = KeychainWrapper.standard
+            if let username = keychain.string(forKey: KeychainKeys.nrdbUsername), let password = keychain.string(forKey: KeychainKeys.nrdbPassword) {
+                return Credentials(username, password)
+            }
+            return nil
         }
     }
     
@@ -55,8 +70,8 @@ class NRDBHack {
             let username = alert.textFields?[0].text ?? ""
             let password = alert.textFields?[1].text ?? ""
             let credentials = Credentials(username, password)
-            self.hackedLogin(credentials) { success in
-                self.loginCompleted(success, verbose: true, credentials: credentials)
+            self.hackedLogin(credentials) { success, error in
+                self.loginCompleted(success, error, verbose: true, credentials: credentials)
             }
             SVProgressHUD.show(withStatus: "Logging in...".localized())
         })
@@ -79,18 +94,16 @@ class NRDBHack {
     }
     
     func silentlyLogin() {
-        let keychain = KeychainWrapper.standard
-        if let username = keychain.string(forKey: KeychainKeys.nrdbUsername), let password = keychain.string(forKey: KeychainKeys.nrdbPassword) {
-            let credentials = Credentials(username, password)
+        if let credentials = Credentials.fromKeychain() {
             // print("silent login attempt")
-            self.hackedLogin(credentials) { success in
-                self.loginCompleted(success, verbose: false, credentials: credentials)
+            self.hackedLogin(credentials) { success, error in
+                self.loginCompleted(success, error, verbose: false, credentials: credentials)
             }
         }
     }
     
-    private func loginCompleted(_ success: Bool, verbose: Bool, credentials: Credentials) {
-        // print("login completed ok=\(success) verbose=\(verbose)")
+    private func loginCompleted(_ success: Bool, _ error: String, verbose: Bool, credentials: Credentials) {
+        print("nrdb login completed ok=\(success) verbose=\(verbose)")
         self.loggingIn = false
         if success {
             if verbose {
@@ -118,7 +131,7 @@ class NRDBHack {
         keychain.removeObject(forKey: KeychainKeys.nrdbPassword)
     }
     
-    private func hackedLogin(_ credentials: Credentials, _ completion: @escaping (Bool) -> Void) {
+    private func hackedLogin(_ credentials: Credentials, _ completion: @escaping (Bool, String) -> Void) {
         // print("hacking around oauth login")
         self.loggingIn = true
         
@@ -134,11 +147,6 @@ class NRDBHack {
             }
         }
         
-        let cfg = URLSessionConfiguration.default
-        cfg.httpCookieStorage = self.cookieJar
-        cfg.httpShouldSetCookies = true
-        self.manager = Alamofire.SessionManager(configuration: cfg)
-        
         self.manager.delegate.taskWillPerformHTTPRedirection = self.redirectHandler
         
         let parameters = [
@@ -146,17 +154,15 @@ class NRDBHack {
             "response_type": "code",
             "redirect_uri": NRDB.clientHost
         ]
-        self.manager.request(NRDBHack.AUTH_URL, parameters: parameters).validate().responseString { response in
-        
+
+        self.manager.request(NRDBHack.authUrl, parameters: parameters).validate().responseString { response in
             let parameters = [
                 "_username": credentials.username,
                 "_password": credentials.password,
                 "_submit": "Log In"
             ]
-            self.manager.request(NRDBHack.CHECK_URL, method: .post, parameters: parameters).validate().responseString { response in
-                
+            self.manager.request(NRDBHack.loginCheckUrl, method: .post, parameters: parameters).validate().responseString { response in
                 if let body = response.result.value, let token = self.findToken(body) {
-                    
                     let accept = [
                         "accepted": "Allow",
                         "fos_oauth_server_authorize_form[client_id]": NRDB.clientId,
@@ -166,26 +172,27 @@ class NRDBHack {
                         "fos_oauth_server_authorize_form[scope]": "",
                         "fos_oauth_server_authorize_form[_token]": token
                     ]
-                    self.manager.request(NRDBHack.AUTH_URL, method: .post, parameters: accept).responseString { response in
-                        if response.result.value != nil {
-                            completion(false)
-                        }
+                    self.manager
+                        .request(NRDBHack.authUrl, method: .post, parameters: accept)
+                        .responseString { response in
+                            if response.result.value != nil {
+                                completion(false, "oops")
+                            }
                     }
                 } else {
-                    completion(false)
+                    completion(false, "no token found")
                 }
             }
         }
     }
     
-    private func redirectHandler(_ session: URLSession!, task: URLSessionTask!, response: HTTPURLResponse!, request: URLRequest!) -> URLRequest {
+    private func redirectHandler(_ session: URLSession, task: URLSessionTask, response: HTTPURLResponse, request: URLRequest) -> URLRequest? {
         // print("nrdb hack: redirecting to \(request.url)")
         
         if let url = request.url?.absoluteString, url.hasPrefix(NRDB.clientHost) {
             // this is the oauth answer we want to intercept.
             // extract the value of the "code" parameter from the URL and use that to finalize the authorization
             if let components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false), let items = components.queryItems {
-                
                 if let item = items.filter({ $0.name == "code" }).first {
                     let code = item.value ?? ""
                     // print("found code \(code)")
@@ -196,13 +203,12 @@ class NRDBHack {
         return request
     }
 
-    
     private func findToken(_ body: String) -> String? {
         
         let regex = try! NSRegularExpression(pattern: "id=\"fos_oauth_server_authorize_form__token\".*value=\"(.*)\"", options:[])
         
         let line = body
-        if let match = regex.firstMatch(in: line, options: [], range: NSMakeRange(0, line.length)) {
+        if let match = regex.firstMatch(in: line, options: [], range: NSMakeRange(0, line.count)) {
             if match.numberOfRanges == 2 {
                 let l = line as NSString
                 let token = l.substring(with: match.rangeAt(1))

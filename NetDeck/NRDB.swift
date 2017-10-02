@@ -11,13 +11,13 @@ import Marshal
 import SwiftyUserDefaults
 
 class NRDB: NSObject {
-    static let clientHost =    "netdeck://oauth2"
-    static let clientId =      "4_1onrqq7q82w0ow4scww84sw4k004g8cososcg8gog004s4gs08"
-    static let clientSecret =  "2myhr1ijml6o4kc0wgsww040o8cc84oso80o0w0s44k4k0c84"
-    static let providerHost =  "https://netrunnerdb.com"
+    static let clientHost = "netdeck://oauth2"
+    static let clientId = "4_1onrqq7q82w0ow4scww84sw4k004g8cososcg8gog004s4gs08"
+    static let clientSecret = "2myhr1ijml6o4kc0wgsww040o8cc84oso80o0w0s44k4k0c84"
+    static let providerHost = "https://netrunnerdb.com"
     
-    static let authUrl =       providerHost + "/oauth/v2/auth?client_id=" + clientId + "&response_type=code&redirect_uri=" + clientHost
-    static let tokenUrl =      providerHost + "/oauth/v2/token"
+    static let authUrl = providerHost + "/oauth/v2/auth?client_id=" + clientId + "&response_type=code&redirect_uri=" + clientHost
+    static let tokenUrl = providerHost + "/oauth/v2/token"
     
     static let fiveMinutes: TimeInterval = 300 // in seconds
     
@@ -40,7 +40,7 @@ class NRDB: NSObject {
     
     // MARK: - authorization
     
-    func authorizeWithCode(_ code: String, completion: @escaping (Bool) -> Void) {
+    func authorizeWithCode(_ code: String, completion: @escaping (Bool, String) -> Void) {
         // print("NRDB authWithCode")
         let parameters = [
             "client_id": NRDB.clientId,
@@ -55,11 +55,11 @@ class NRDB: NSObject {
         }
     }
     
-    private func refreshToken(_ completion: @escaping (Bool) -> Void) {
+    private func refreshToken(_ completion: @escaping (Bool, String) -> Void) {
         // print("NRDB refreshToken")
         
         guard let token = Defaults[.nrdbRefreshToken] else {
-            completion(false)
+            completion(false, "no refresh token")
             return
         }
         
@@ -80,11 +80,11 @@ class NRDB: NSObject {
         }
     }
     
-    private func getAuthorization(_ parameters: [String: String], isRefresh: Bool, completion: @escaping (Bool) -> Void) {
+    private func getAuthorization(_ parameters: [String: String], isRefresh: Bool, completion: @escaping (Bool, String) -> Void) {
         // print("NRDB get Auth")
         let foreground = UIApplication.shared.applicationState == .active
         if foreground && !Reachability.online {
-            completion(false)
+            completion(false, "offline")
             return
         }
 
@@ -116,9 +116,9 @@ class NRDB: NSObject {
                             if !Defaults[.keepNrdbCredentials] {
                                 UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
                             }
-                            completion(ok)
+                            completion(ok, "")
                         } else {
-                            self.handleAuthorizationFailure(isRefresh, completion: completion)
+                            self.handleAuthorizationFailure(isRefresh, "bad json", completion: completion)
                         }
                     } else {
                         print("auth error: no data")
@@ -129,18 +129,17 @@ class NRDB: NSObject {
                         let body = String(data: data, encoding: .utf8)
                         print("body: \(String(describing: body))")
                     }
-                    self.handleAuthorizationFailure(isRefresh, completion: completion)
+                    self.handleAuthorizationFailure(isRefresh, "http or server error", completion: completion)
                 }
             }
     }
     
-    private func handleAuthorizationFailure(_ isRefresh: Bool, completion: (Bool) -> Void) {
+    private func handleAuthorizationFailure(_ isRefresh: Bool, _ error: String, completion: (Bool, String) -> Void) {
         NRDB.clearSettings()
         if !isRefresh {
             UIAlertController.alert(withTitle: nil, message: "Authorization at NetrunnerDB.com failed".localized(), button: "OK")
-            
             UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
-            completion(false)
+            completion(false, error)
             return
         }
 
@@ -183,7 +182,7 @@ class NRDB: NSObject {
     func timedRefresh(_ timer: Timer?) {
         // print("NRDB refresh timer callback")
         self.timer = nil
-        self.refreshToken { ok in
+        self.refreshToken { ok, error in
             if ok {
                 // schedule next run at 5 minutes before expiry
                 let ti = Defaults[.nrdbTokenTTL] - NRDB.fiveMinutes
@@ -208,8 +207,8 @@ class NRDB: NSObject {
             return
         }
         
-        self.refreshToken { ok in
-            // print("refresh ok \(ok)")
+        self.refreshToken { ok, error in
+            print("refresh ok \(ok) \(error)")
             completion(ok ? .newData : .failed)
         }
     }
@@ -423,7 +422,7 @@ class NRDB: NSObject {
 extension MarshaledObject {
     /// try to get a localized property for `key`
     func localized(for key: KeyType, language: String) throws -> String {
-        if let loc: String = try? self.value(for: "_locale." + language + "." + key.stringValue), loc.length > 0 {
+        if let loc: String = try? self.value(for: "_locale." + language + "." + key.stringValue), !loc.isEmpty {
             return loc
         } else {
             return try self.value(for: key) ?? ""
