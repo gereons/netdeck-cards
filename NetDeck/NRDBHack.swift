@@ -103,7 +103,7 @@ class NRDBHack {
     }
     
     private func loginCompleted(_ success: Bool, _ error: String, verbose: Bool, credentials: Credentials) {
-        print("nrdb login completed ok=\(success) verbose=\(verbose)")
+        print("nrdb login completed ok=\(success) verbose=\(verbose) error=\(error)")
         self.loggingIn = false
         if success {
             if verbose {

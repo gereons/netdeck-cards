@@ -323,10 +323,8 @@ import SwiftyUserDefaults
         
         let oldName = self.name
         var newName = oldName + " " + "(Copy)".localized()
-        
-        let regexPattern = "\\d+$"
-        let regex = try! NSRegularExpression(pattern:regexPattern, options:[])
-        
+
+        let regex = try! NSRegularExpression(pattern: "\\d+$", options:[])
         let matches = regex.matches(in: oldName, options: [], range: NSMakeRange(0, oldName.count))
         if matches.count > 0 {
             let match = matches[0]

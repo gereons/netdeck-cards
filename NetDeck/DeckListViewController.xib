@@ -56,17 +56,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JY5-GK-UJa" userLabel="Deck Name">
-                                <rect key="frame" x="14" y="4" width="547" height="16"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Deck Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JY5-GK-UJa" userLabel="Deck Name">
+                                <rect key="frame" x="14" y="7" width="70" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cards up to What Lies Ahead" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gyb-FN-lQv" userLabel="Last Set">
-                                <rect key="frame" x="577" y="4" width="177" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="177" id="boX-M7-KQR"/>
-                                </constraints>
+                                <rect key="frame" x="577" y="7" width="177" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -74,11 +71,11 @@
                         </subviews>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Gyb-FN-lQv" firstAttribute="leading" secondItem="JY5-GK-UJa" secondAttribute="trailing" constant="16" id="5sg-6e-PeA"/>
-                            <constraint firstItem="Gyb-FN-lQv" firstAttribute="top" secondItem="tmQ-iY-CgT" secondAttribute="top" constant="4" id="LTF-0B-2xO"/>
                             <constraint firstItem="JY5-GK-UJa" firstAttribute="leading" secondItem="tmQ-iY-CgT" secondAttribute="leading" constant="14" id="MNx-jc-MgU"/>
                             <constraint firstAttribute="trailing" secondItem="Gyb-FN-lQv" secondAttribute="trailing" constant="14" id="PhR-eG-l8t"/>
-                            <constraint firstItem="JY5-GK-UJa" firstAttribute="top" secondItem="tmQ-iY-CgT" secondAttribute="top" constant="4" id="xdb-zK-x3z"/>
+                            <constraint firstItem="Gyb-FN-lQv" firstAttribute="centerY" secondItem="tmQ-iY-CgT" secondAttribute="centerY" id="cI5-WG-V03"/>
+                            <constraint firstItem="JY5-GK-UJa" firstAttribute="centerY" secondItem="tmQ-iY-CgT" secondAttribute="centerY" id="cc1-d6-q2T"/>
+                            <constraint firstItem="Gyb-FN-lQv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JY5-GK-UJa" secondAttribute="trailing" constant="16" id="fJX-Kb-PXq"/>
                         </constraints>
                     </view>
                     <connections>
