@@ -13,24 +13,19 @@ target 'NetDeck' do
     pod 'DZNEmptyDataSet'
     pod 'DeviceKit'
 
-    pod 'SwiftyDropbox', '~> 4.0'
+    pod 'SwiftyDropbox', :git => "https://github.com/gereons/SwiftyDropbox"
     pod 'Alamofire'
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftKeychainWrapper'
     pod 'Marshal'
     pod 'SDCAlertView'
-    pod 'EasyTipView'
+    pod 'EasyTipView', :git => "https://github.com/gereons/EasyTipView"
     pod 'SwiftyUserDefaults'
 end
 
 post_install do |installer|
     installer.pods_project.targets.each do |target|
-        if target.name == 'EasyTipView' || target.name == 'AlamofireImage'
-            target.build_configurations.each do |config|
-                config.build_settings['SWIFT_VERSION'] = '3.0'
-            end
-        end
         if target.name == 'CorePlot'
             target.build_configurations.each do |config|
                 config.build_settings['ALWAYS_SEARCH_USER_PATHS'] = 'NO'
