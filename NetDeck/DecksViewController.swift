@@ -135,6 +135,8 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
+
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -469,8 +471,8 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
 }
 
+// MARK: - keyboard show/hide
 extension DecksViewController: KeyboardHandling {
-    // MARK: - keyboard show/hide
     
     func keyboardWillShow(_ info: KeyboardInfo) {
         let screenHeight = UIScreen.main.bounds.size.height
@@ -487,5 +489,4 @@ extension DecksViewController: KeyboardHandling {
         self.tableView.scrollIndicatorInsets = contentInsets
     }
     
-
 }
