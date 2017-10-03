@@ -520,8 +520,8 @@ extension ImportDecksViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
+// MARK: - keyboard show/hide
 extension ImportDecksViewController: KeyboardHandling {
-    // MARK: - keyboard show/hide
     func keyboardWillShow(_ info: KeyboardInfo) {
         let screenHeight = UIScreen.main.bounds.size.height
         let kbHeight = screenHeight - info.endFrame.origin.y

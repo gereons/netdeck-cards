@@ -127,6 +127,10 @@ class CompareDecksList: DecksViewController {
         
         self.tableView.reloadData()
     }
+}
+
+// MARK: - Empty state
+extension CompareDecksList {
     
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
         return nil

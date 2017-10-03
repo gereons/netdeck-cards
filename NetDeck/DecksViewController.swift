@@ -10,7 +10,7 @@ import UIKit
 import DZNEmptyDataSet
 import SwiftyUserDefaults
 
-class DecksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+class DecksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -263,8 +263,6 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.stateFilterButton.title = DeckState.buttonLabelFor(self.filterState)
         
         self.loadDecks()
-        
-        self.tableView.reloadData()
     }
     
     private func loadDecks() {
@@ -439,9 +437,11 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         default: return nil
         }
     }
-    
-    // MARK: - empty dataset
-    
+}
+
+// MARK: - empty state
+extension DecksViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         if self.filterText.count > 0 {
             return nil
@@ -468,7 +468,10 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
     func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
         return UIColor(patternImage: ImageCache.hexTileLight)
     }
-    
+
+    func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
+        return -64
+    }
 }
 
 // MARK: - keyboard show/hide

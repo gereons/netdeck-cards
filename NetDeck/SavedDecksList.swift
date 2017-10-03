@@ -459,9 +459,11 @@ class SavedDecksList: DecksViewController {
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return .delete
     }
-    
-    // MARK: - empty set
-    
+}
+
+// MARK: - empty state
+extension SavedDecksList {
+
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
         if self.filterText.count > 0 {
             return nil
