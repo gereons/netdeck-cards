@@ -31,6 +31,11 @@ post_install do |installer|
                 config.build_settings['SWIFT_VERSION'] = '3.0'
             end
         end
+        if target.name == 'CorePlot'
+            target.build_configurations.each do |config|
+                config.build_settings['ALWAYS_SEARCH_USER_PATHS'] = 'NO'
+            end
+        end
     end
 
     require 'fileutils'
