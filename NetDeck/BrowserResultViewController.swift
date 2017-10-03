@@ -101,9 +101,9 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         layout.minimumInteritemSpacing = 3
         layout.sectionFootersPinToVisibleBounds = true
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         self.keyboardObserver = KeyboardObserver(handler: self)
         
