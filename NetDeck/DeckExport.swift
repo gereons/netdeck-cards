@@ -109,7 +109,7 @@ class DeckExport {
         var s = deck.name + eol + eol
         if let identity = deck.identity {
             s += identity.name
-            s += " " + self.italics("(" + identity.packName + ")", fmt)
+            // s += " " + self.italics("(" + identity.packName + ")", fmt)
             s += eol
         }
         
