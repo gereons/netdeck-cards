@@ -52,6 +52,12 @@ class SavedDecksList: DecksViewController {
         super.viewWillAppear(animated)
         
         self.navigationItem.rightBarButtonItems = self.normalRightButtons
+
+        let total = self.decks.reduce(0) { $0 + $1.count }
+        if total > 0 {
+            let top = IndexPath(row: 0, section: 0)
+            self.tableView.scrollToRow(at: top, at: .top, animated: false)
+        }
     }
         
     @objc func importDecks(_ sender: UIBarButtonItem) {

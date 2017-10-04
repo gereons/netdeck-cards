@@ -9,6 +9,7 @@
 import UIKit
 
 class CompareDecksList: DecksViewController {
+    
     private var decksToDiff = [String]()
     private var names = [String]()
     private var diffButton: UIBarButtonItem!
@@ -31,7 +32,17 @@ class CompareDecksList: DecksViewController {
         
         self.toolBar.items = [ self.footerButton ]
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        let total = self.decks.reduce(0) { $0 + $1.count }
+        if total > 0 {
+            let top = IndexPath(row: 0, section: 0)
+            self.tableView.scrollToRow(at: top, at: .top, animated: false)
+        }
+    }
+
     @objc func diffDecks(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             return self.dismissPopup()
