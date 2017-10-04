@@ -249,6 +249,8 @@
 "No Decks found" = "Keine Decks gefunden";
 "Copy Decks in OCTGN Format (.o8d) into the Apps/Net Deck folder of your Dropbox to import them into this App." = "Kopiere Decks im OCTGN-Format (.o8d) in den Order Apps/Net Deck in deiner Dropbox, um sie in die App importieren zu können.";
 "Loading decks from Dropbox" = "Lade Decks aus Dropbox";
+"Loading decks from NetrunnerDB.com" = "Lade Decks von NetrunnerDB.com";
+"Loading decks from NetrunnerDB.com failed" = "Laden von NetrunnerDB.com fehlgeschlagen";
 
 // export
 "%@ exported" = "%@ exportiert";
