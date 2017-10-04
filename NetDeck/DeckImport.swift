@@ -22,8 +22,15 @@ class DeckImport: NSObject {
     }
 
     private struct DeckSource {
-        var deckId: String
-        var source: DeckBuilderSource
+        let deckId: String
+        let source: DeckBuilderSource
+        let hash: String?
+
+        init(deckId: String, source: DeckBuilderSource, hash: String? = nil) {
+            self.deckId = deckId
+            self.source = source
+            self.hash = hash
+        }
     }
     
     static let sharedInstance = DeckImport()
@@ -115,27 +122,32 @@ class DeckImport: NSObject {
         // https://netrunnerdb.com/en/decklist/3124/in-a-red-dress-and-alone-jamieson-s-store-champ-deck-#
         // or like this:
         // https://netrunnerdb.com/en/deck/view/456867
+        // or like this (added hash after the scraping exploit)
+        // https://netrunnerdb.com/en/deck/view/456867/hash
         
         let list = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../decklist/(\\d*)/.*", options:[])
-        let shared = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../deck/view/(\\d*)", options:[])
-        
+        let shared1 = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../deck/view/(\\d*)/(.*)", options:[])
+        let shared2 = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../deck/view/(\\d*)", options:[])
+        FIXME("wip until hashed url format is final")
+
         let dict = [
-            DeckBuilderSource.nrdbShared: shared,
-            DeckBuilderSource.nrdbList: list
+            DeckBuilderSource.nrdbShared: [ shared1, shared2 ],
+            DeckBuilderSource.nrdbList: [ list ]
         ]
-        
-        for source in dict.keys {
-            let regEx = dict[source]!
-            
-            for line in lines {
-                if let match = regEx.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count)) , match.numberOfRanges == 2 {
-                    let l = line as NSString
-                    let src = DeckSource(deckId: l.substring(with: match.range(at: 1)), source: source)
-                    return src
+
+        for entry in dict {
+            for regex in entry.value {
+                for line in lines {
+                    if let match = regex.firstMatch(in: line, options:[], range: NSMakeRange(0, line.count)), match.numberOfRanges > 1 {
+                        let l = line as NSString
+                        let hash = match.numberOfRanges == 3 ? l.substring(with: match.range(at: 2)) : nil
+                        let src = DeckSource(deckId: l.substring(with: match.range(at: 1)), source: entry.key, hash: hash)
+                        return src
+                    }
                 }
             }
         }
-        
+
         return nil
     }
     
@@ -251,26 +263,35 @@ class DeckImport: NSObject {
         }))
         
         alert.present()
-        
-        switch source.source {
-        case .nrdbList:
-            self.perform(#selector(DeckImport.doDownloadDeckFromNetrunnerDbList(_:)), with:source.deckId, afterDelay:0.0)
-        
-        case .nrdbShared:
-            self.perform(#selector(DeckImport.doDownloadDeckFromNetrunnerDbShared(_:)), with:source.deckId, afterDelay:0.0)
-        
-        default:
-            self.perform(#selector(DeckImport.doDownloadDeckFromMeteor(_:)), with:source.deckId, afterDelay:0.0)
+
+        DispatchQueue.main.async {
+            switch source.source {
+            case .nrdbList:
+                self.doDownloadDeckFromNetrunnerDbList(source)
+
+            case .nrdbShared:
+                self.doDownloadDeckFromNetrunnerDbShared(source)
+
+            case .meteor:
+                self.doDownloadDeckFromMeteor(source)
+
+            case .none:
+                break
+            }
         }
     }
     
-    @objc func doDownloadDeckFromNetrunnerDbList(_ deckId: String) {
-        let deckUrl = "https://netrunnerdb.com/api/2.0/public/decklist/" + deckId
+    private func doDownloadDeckFromNetrunnerDbList(_ source: DeckSource) {
+        let deckUrl = "https://netrunnerdb.com/api/2.0/public/decklist/" + source.deckId
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     
     }
-    @objc func doDownloadDeckFromNetrunnerDbShared(_ deckId: String) {
-        let deckUrl = "https://netrunnerdb.com/api/2.0/public/deck/" + deckId
+
+    private func doDownloadDeckFromNetrunnerDbShared(_ source: DeckSource) {
+        var deckUrl = "https://netrunnerdb.com/api/2.0/public/deck/" + source.deckId
+        if let hash = source.hash {
+            deckUrl += "/" + hash
+        }
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     }
     
@@ -316,8 +337,8 @@ class DeckImport: NSObject {
         return nil
     }
 
-    @objc func doDownloadDeckFromMeteor(_ deckId: String) {
-        let deckUrl = "https://meteor.stimhack.com/deckexport/octgn/" + deckId
+    private func doDownloadDeckFromMeteor(_ source: DeckSource) {
+        let deckUrl = "https://meteor.stimhack.com/deckexport/octgn/" + source.deckId
         self.downloadStopped = false
         
         self.request = Alamofire.request(deckUrl).responseData(completionHandler: { (response) in
