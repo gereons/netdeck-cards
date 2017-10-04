@@ -338,7 +338,7 @@ class CardManager {
         if cards.count == 0 {
             return false
         }
-        
+
         CardManager.setSubtypes(cards)
         CardManager.addCardAliases(cards)
         

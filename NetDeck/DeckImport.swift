@@ -157,12 +157,23 @@ class DeckImport: NSObject {
         
         return nil
     }
+
+    private func findMatch(in line: String, regexes: [NSRegularExpression]) -> NSTextCheckingResult? {
+        for regex in regexes {
+            if let match = regex.firstMatch(in: line, options: [], range: NSMakeRange(0, line.count)) {
+                return match
+            }
+        }
+        return nil
+    }
     
-    func checkForTextDeck(_ lines: [String]) -> Deck? {
+    private func checkForTextDeck(_ lines: [String]) -> Deck? {
         let cards = CardManager.allCards()
+
         let regex1 = try! NSRegularExpression(pattern:"^([0-9])x", options:[]) // start with "1x ..."
         let regex2 = try! NSRegularExpression(pattern:" x([0-9])", options:[]) // end with "... x3"
         let regex3 = try! NSRegularExpression(pattern:"^([0-9]) ", options:[]) // start with "1 ..."
+        let regexes = [regex1, regex2, regex3]
         
         var name: String?
         let deck = Deck(role: .none)
@@ -171,39 +182,34 @@ class DeckImport: NSObject {
                 name = line
             }
             
-            for c in cards {
+            for var c in cards {
                 // don't bother checking cards of the opposite role (as soon as we know this deck's role)
                 let roleOk = deck.role == .none || deck.role == c.role
                 if !roleOk {
                     continue
                 }
                 
-                var range = line.range(of: c.englishName, options:[.caseInsensitive,.diacriticInsensitive])
-                if range == nil {
-                    range = line.range(of: c.name, options:[.caseInsensitive,.diacriticInsensitive])
-                }
+                let range =
+                    line.range(of: c.englishName, options:[.caseInsensitive,.diacriticInsensitive]) ??
+                    line.range(of: c.name, options:[.caseInsensitive,.diacriticInsensitive])
                 
                 if range != nil {
                     if c.type == .identity {
                         deck.addCard(c, copies:1)
                         // NSLog(@"found identity %@", c.name);
                     } else {
-                        var match = regex1.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count))
-                        if match == nil {
-                            match = regex2.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count))
-                        }
-                        if match == nil {
-                            match = regex3.firstMatch(in: line, options:[], range:NSMakeRange(0, line.count))
-                        }
-                        
-                        if let m = match , m.numberOfRanges == 2 {
+                        if let match = self.findMatch(in: line, regexes: regexes), match.numberOfRanges == 2 {
                             let l = line as NSString
-                            let count = l.substring(with: m.range(at: 1))
+                            let count = l.substring(with: match.range(at: 1))
                             // NSLog(@"found card %@ x %@", count, c.name);
+
+                            if Defaults[.useCore2], let newCode = Card.originalToRevised[c.code] {
+                                c = CardManager.cardBy(code: newCode) ?? c
+                            }
                             
                             let max = deck.isDraft ? 100 : 4;
-                            if let cnt = Int(count) , cnt > 0 && cnt < max {
-                                deck.addCard(c, copies:cnt)
+                            if let cnt = Int(count), cnt > 0 && cnt < max {
+                                deck.addCard(c, copies: cnt)
                             }
                             
                             break
@@ -222,7 +228,6 @@ class DeckImport: NSObject {
     }
     
     private func downloadDeck(_ source: DeckSource) {
-        
         let alert = AlertController(title: "Downloading Deck".localized(), message: nil, preferredStyle: .alert)
         alert.visualStyle = CustomAlertVisualStyle(alertStyle: .alert)
         self.sdcAlert = alert
