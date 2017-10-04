@@ -41,6 +41,8 @@ class Analytics {
         case selectTip = "Select Tip"
         case tipTransaction = "Tip Transaction"
         case cardUpdate = "Card Update"
+        case appUpdateAvailable = "App Update Available"
+        case appUpdateStarted = "App Update Started"
     }
 
     static func logEvent(_ event: Event, attributes: [String: Any]? = nil) {
