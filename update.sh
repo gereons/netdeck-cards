@@ -27,6 +27,6 @@ then
 else
     git add api/2.0/*
     DATE=$(date +%Y-%m-%d)
-    git commit -m "update $date"
+    git commit -m "update $DATE"
     git push
 fi
