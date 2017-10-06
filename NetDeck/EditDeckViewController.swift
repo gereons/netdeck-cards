@@ -48,6 +48,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.tableView.backgroundColor = .clear
+        self.tableView.scrollFix()
         
         self.tableView.register(UINib(nibName: "EditDeckCell", bundle: nil), forCellReuseIdentifier: "cardCell")
         

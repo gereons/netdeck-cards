@@ -43,6 +43,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         self.tableView.tableFooterView = UIView(frame:CGRect.zero)
         self.tableView.backgroundColor = .clear
+        self.tableView.scrollFix()
         
         self.searchBar.scopeButtonTitles = [ "Both".localized(), "Runner".localized(), "Corp".localized() ]
         self.searchBar.showsCancelButton = false

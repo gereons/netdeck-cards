@@ -71,7 +71,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
             textField.returnKeyType = .done
         }
         
-        self.tableView.tableHeaderView = self.searchBar
+        self.tableView.scrollFix()
     }
     
     override func viewWillAppear(_ animated: Bool) {

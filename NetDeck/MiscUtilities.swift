@@ -92,6 +92,14 @@ extension UIEdgeInsets {
     }
 }
 
+extension UIScrollView {
+    func scrollFix() {
+        if #available(iOS 11.0, *) {
+            self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
+        }
+    }
+}
+
 class CustomAlertVisualStyle: AlertVisualStyle {
     override init(alertStyle: AlertControllerStyle) {
         super.init(alertStyle: alertStyle)

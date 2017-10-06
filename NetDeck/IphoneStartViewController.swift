@@ -70,6 +70,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         self.deckListSort = Defaults[.deckFilterSort]
         
         self.tableView.contentInset = UIEdgeInsets.zero
+        self.tableView.scrollFix()
         
         self.keyboardObserver = KeyboardObserver(handler: self)
     }

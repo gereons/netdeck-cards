@@ -23,6 +23,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLoad()
 
         self.title = "Editing History".localized()
+        self.tableView.scrollFix()
         
         Analytics.logEvent(.deckHistory, attributes: ["Device": "iPhone"])
     }

@@ -31,6 +31,7 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
         self.collectionView.register(nib, forCellWithReuseIdentifier: "cardCell")
         
         self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        self.collectionView.scrollFix()
     }
     
     override var prefersStatusBarHidden: Bool {
