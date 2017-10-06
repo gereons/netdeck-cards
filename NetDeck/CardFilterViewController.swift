@@ -783,7 +783,9 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         cell.nameLabel.text = card.name
         let cc = deck?.findCard(card) ?? CardCounter.null()
         cell.countLabel.text = cc.count > 0 ? "\(cc.count)" : ""
-        
+
+        cell.nameLabel.textColor = card.owned == 0 ? .darkGray : .black
+
         return cell
     }
     

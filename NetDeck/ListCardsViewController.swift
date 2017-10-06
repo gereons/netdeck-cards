@@ -272,7 +272,8 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         }
         cell.nameLabel.text = card.unique ? text + " •" : text
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight(rawValue: weight))
-        
+        cell.nameLabel.textColor = card.owned == 0 ? .darkGray : .black
+
         let faction = Faction.name(for: card.faction)
         let subtype = card.subtype
         if subtype.count > 0 {
