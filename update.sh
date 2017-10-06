@@ -20,3 +20,13 @@ do
     curl $CYCLES_URL$LOCALE -o api/2.0/cycles$SUFFIX.json
     curl $PACKS_URL$LOCALE -o api/2.0/packs$SUFFIX.json
 done
+
+if git diff --quiet --exit-code
+then
+    echo no updates found
+else
+    git add api/2.0/*
+    DATE=$(date +%Y-%m-%d)
+    git commit -m "update $date"
+    git push
+fi
