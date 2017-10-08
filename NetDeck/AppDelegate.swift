@@ -322,7 +322,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let width = Int(UIScreen.main.bounds.width)
         let height = Int(UIScreen.main.bounds.height)
-        let attrs = [
+        var attrs = [
             "cardLanguage": Defaults[.language],
             "locale": Locale.current.identifier,
             "useNrdb": Defaults[.useNrdb] ? "on" : "off",
@@ -333,6 +333,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "device+os": device.description + " " + UIDevice.current.systemVersion,
             "resolution": "\(height)x\(width)"
         ]
+
+        if device.isPad {
+            let viewAttrs = [
+                "browserView": "\(Defaults[.browserViewStyle].rawValue)",
+                "deckView": "\(Defaults[.deckViewStyle].rawValue)",
+                "filterView": "\(Defaults[.filterViewMode].rawValue)"
+            ]
+
+            attrs.merge(viewAttrs, uniquingKeysWith: +)
+        }
         Analytics.logEvent(.start, attributes: attrs)
     }
     
