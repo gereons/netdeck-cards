@@ -56,7 +56,7 @@ class LargeBrowserCell: BrowserCell {
         self.icons.forEach { $0.image = nil }
     }
     
-    @nonobjc override func setCard(_ card: Card) {
+    override func setCard(_ card: Card) {
         if card.unique {
             self.nameLabel.text = card.name + " •"
         } else {

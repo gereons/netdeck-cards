@@ -33,7 +33,7 @@ class SmallBrowserCell: BrowserCell {
         self.pipsView.backgroundColor = .white
     }
     
-    @nonobjc override func setCard(_ card: Card) {
+    override func setCard(_ card: Card) {
         if card.unique {
             self.nameLabel.text = card.name + " •"
         } else {

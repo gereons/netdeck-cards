@@ -66,7 +66,7 @@ class LargeCardCell: CardCell {
         self.type.isHidden = false
     }
     
-    @nonobjc override func setCardCounter(_ cardCounter: CardCounter?) {
+    override func setCardCounter(_ cardCounter: CardCounter?) {
         super.setCardCounter(cardCounter)
         guard let cc = cardCounter else {
             return

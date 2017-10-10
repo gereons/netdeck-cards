@@ -50,7 +50,7 @@ class CardCell: UITableViewCell {
         NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
     }
     
-    @nonobjc func setCardCounter(_ cc: CardCounter?) {
+    func setCardCounter(_ cc: CardCounter?) {
         let title = cc == nil ? "Choose Identity" : "Switch Identity"
         self.identityButton.setTitle(title.localized(), for: .normal)
         
