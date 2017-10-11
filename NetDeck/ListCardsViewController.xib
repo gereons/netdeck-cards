@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,10 +41,6 @@
                         <outlet property="delegate" destination="-1" id="YbK-5O-c3I"/>
                     </connections>
                 </tableView>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1gg-UV-xfc">
-                    <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                    <items/>
-                </toolbar>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="49 Cards - 15/15 Inf - 22 AP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ep5-6L-l4Q" userLabel="Summary Label">
                     <rect key="frame" x="10" y="629" width="170" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -56,22 +53,27 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1gg-UV-xfc">
+                    <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                    <items/>
+                </toolbar>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="1gg-UV-xfc" firstAttribute="top" secondItem="ep5-6L-l4Q" secondAttribute="bottom" constant="-22" id="2vV-fI-Wqi"/>
                 <constraint firstAttribute="trailing" secondItem="5aW-WV-tIP" secondAttribute="trailing" id="AaN-JJ-RgN"/>
                 <constraint firstItem="5aW-WV-tIP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Hjd-oI-V7V"/>
                 <constraint firstItem="1gg-UV-xfc" firstAttribute="top" secondItem="5aW-WV-tIP" secondAttribute="bottom" id="Ion-qJ-JEW"/>
                 <constraint firstItem="5aW-WV-tIP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ct6-ig-qYi"/>
-                <constraint firstItem="1gg-UV-xfc" firstAttribute="leading" secondItem="ep5-6L-l4Q" secondAttribute="leading" constant="-10" id="ezl-Ly-6V2"/>
+                <constraint firstItem="ep5-6L-l4Q" firstAttribute="leading" secondItem="1gg-UV-xfc" secondAttribute="leading" constant="10" id="ezl-Ly-6V2"/>
                 <constraint firstItem="iRF-oa-8x3" firstAttribute="leading" secondItem="ep5-6L-l4Q" secondAttribute="leading" id="hgz-ix-sJP"/>
                 <constraint firstItem="iRF-oa-8x3" firstAttribute="top" secondItem="ep5-6L-l4Q" secondAttribute="bottom" constant="1" id="jEo-nz-hjc"/>
-                <constraint firstAttribute="bottom" secondItem="1gg-UV-xfc" secondAttribute="bottom" id="mwK-N8-FZC"/>
+                <constraint firstItem="0bd-Eh-wSd" firstAttribute="bottom" secondItem="1gg-UV-xfc" secondAttribute="bottom" id="oGk-V4-Xps"/>
                 <constraint firstAttribute="trailing" secondItem="1gg-UV-xfc" secondAttribute="trailing" id="qML-jh-V5l"/>
+                <constraint firstItem="ep5-6L-l4Q" firstAttribute="top" secondItem="1gg-UV-xfc" secondAttribute="top" constant="6" id="rz2-Zc-Cyt"/>
                 <constraint firstItem="1gg-UV-xfc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vWH-s6-e8H"/>
                 <constraint firstItem="iRF-oa-8x3" firstAttribute="width" secondItem="ep5-6L-l4Q" secondAttribute="width" id="zff-af-L2c"/>
             </constraints>
+            <viewLayoutGuide key="safeArea" id="0bd-Eh-wSd"/>
             <point key="canvasLocation" x="281.5" y="330.5"/>
         </view>
     </objects>
