@@ -9,9 +9,8 @@
 import DTCoreText
 
 extension Card {
-    
-    // @nonobjc to avoid "a declaration cannot be both 'final' and 'dynamic'"
-    @nonobjc static var htmlCache = [String: NSAttributedString]()
+
+    static private(set) var htmlCache = [String: NSAttributedString]()
     
     static let replacements = [
         "\n": "<br/>",

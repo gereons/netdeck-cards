@@ -29,7 +29,7 @@ class BrowserCell: UITableViewCell {
         parent?.showPopup(for: self.card, in: self, from: sender.frame)
     }
     
-    @nonobjc func setCard(_ card: Card) {
+    func setCard(_ card: Card) {
         fatalError("must be overridden")
     }
 }
