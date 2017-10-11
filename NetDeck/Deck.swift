@@ -526,6 +526,10 @@ import SwiftyUserDefaults
                 }
             }
         }
+
+        if self.mwl == .v2_0 || (self.mwl == .none && Defaults[.defaultMWL] == .v2_0) {
+            self.convertToRevisedCore()
+        }
         
         typealias HistoryData = [String: [String: Int]]
         let history: HistoryData = object.optionalAny(for: "history") as? HistoryData ?? HistoryData()
@@ -902,22 +906,13 @@ extension Deck {
     }
     
     func convertToRevisedCore() {
-        let core2Cards =
-            CardManager.allFor(role: self.role).filter { $0.packCode == PackManager.core2 } +
-            CardManager.identitiesFor(role: self.role).filter { $0.packCode == PackManager.core2 }
-        
         for cc in self.allCards {
-            if !PackManager.Rotation2017.packs.contains(cc.card.packCode) {
-                continue
-            }
-            
-            if let index = core2Cards.index(where: { $0.englishName == cc.card.englishName }) {
-                let replacement = core2Cards[index]
-                // print("replacing \(cc.card.name )\(cc.card.code) -> \(replacement.name) \(replacement.code)")
+            if let newCode = Card.originalToRevised[cc.card.code], let newCard = CardManager.cardBy(code: newCode) {
+                // print("replacing \(cc.card.name) \(cc.card.code) -> \(newCard.name) \(newCard.code)")
                 self.addCard(cc.card, copies: 0)
-                self.addCard(replacement, copies: cc.count)
+                self.addCard(newCard, copies: cc.count)
             }
-            
+
             self.convertedToCore2 = true
         }
     }

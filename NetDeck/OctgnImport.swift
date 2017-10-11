@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 class OctgnImport: NSObject, XMLParserDelegate {
     
@@ -29,9 +30,17 @@ class OctgnImport: NSObject, XMLParserDelegate {
         if elementName == "card" {
             if let qty = attributeDict["qty"], let id = attributeDict["id"] {
                 if id.hasPrefix(Card.octgnPrefix) && id.count > 32 {
-                    
                     let index = id.index(id.startIndex, offsetBy: 31)
-                    let code = String(id[index...])
+                    let cardCode = String(id[index...])
+
+                    let code: String = {
+                        if Defaults[.defaultMWL] == .v2_0 {
+                            return Card.originalToRevised[cardCode] ?? cardCode
+                        } else {
+                            return cardCode
+                        }
+                    }()
+
                     if let card = CardManager.cardBy(code: code), let copies = Int(qty) {
                         // NSLog(@"card: %d %@", copies, card.name);
                         self.deck.addCard(card, copies: copies)
