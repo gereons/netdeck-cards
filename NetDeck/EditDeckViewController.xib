@@ -28,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XoR-lC-cbz">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="603"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="JCf-Ob-ceB"/>
@@ -81,6 +81,7 @@
             <constraints>
                 <constraint firstItem="Gml-C2-6ly" firstAttribute="top" secondItem="cNa-Vc-9G8" secondAttribute="bottom" constant="1" id="549-pS-KUW"/>
                 <constraint firstItem="XoR-lC-cbz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GhP-Fg-TlV"/>
+                <constraint firstItem="XoR-lC-cbz" firstAttribute="top" secondItem="Xj4-Wc-ME4" secondAttribute="top" id="JPY-BW-8QS"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VVg-bv-oy1"/>
                 <constraint firstItem="Gml-C2-6ly" firstAttribute="leading" secondItem="cNa-Vc-9G8" secondAttribute="leading" id="WbK-rt-9T9"/>
                 <constraint firstItem="Xj4-Wc-ME4" firstAttribute="bottom" secondItem="69X-dg-40v" secondAttribute="bottom" id="avO-sW-Ggv"/>
@@ -88,7 +89,6 @@
                 <constraint firstAttribute="trailing" secondItem="69X-dg-40v" secondAttribute="trailing" id="kS0-IB-w2t"/>
                 <constraint firstItem="69X-dg-40v" firstAttribute="top" secondItem="XoR-lC-cbz" secondAttribute="bottom" id="mPt-vD-QMV"/>
                 <constraint firstItem="Gml-C2-6ly" firstAttribute="width" secondItem="cNa-Vc-9G8" secondAttribute="width" id="oKn-rX-uRv"/>
-                <constraint firstItem="XoR-lC-cbz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="paG-fx-BMz"/>
                 <constraint firstAttribute="trailing" secondItem="XoR-lC-cbz" secondAttribute="trailing" id="t7r-Xq-dHh"/>
                 <constraint firstItem="cNa-Vc-9G8" firstAttribute="top" secondItem="69X-dg-40v" secondAttribute="top" constant="6" id="xN9-2i-Asr"/>
             </constraints>

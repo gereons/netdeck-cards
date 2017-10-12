@@ -24,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ykB-ZW-fAb">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="597"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="533"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Chv-TM-oxi"/>
@@ -82,9 +82,9 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ykB-ZW-fAb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7hc-m0-C79"/>
+                <constraint firstItem="a23-7b-edu" firstAttribute="top" secondItem="ykB-ZW-fAb" secondAttribute="top" id="FQw-Xl-mDC"/>
                 <constraint firstItem="fc0-gE-mQu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Fzz-c9-754"/>
                 <constraint firstAttribute="trailing" secondItem="fc0-gE-mQu" secondAttribute="trailing" id="dAd-bZ-aJK"/>
-                <constraint firstItem="ykB-ZW-fAb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nxR-M8-Xdv"/>
                 <constraint firstItem="fc0-gE-mQu" firstAttribute="top" secondItem="ykB-ZW-fAb" secondAttribute="bottom" id="ocs-YA-GjL"/>
                 <constraint firstItem="a23-7b-edu" firstAttribute="bottom" secondItem="fc0-gE-mQu" secondAttribute="bottom" id="yk3-kW-EWG"/>
                 <constraint firstAttribute="trailing" secondItem="ykB-ZW-fAb" secondAttribute="trailing" id="zbG-b0-m4A"/>

@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" indicatorStyle="white" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="0Kt-da-MSy">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Qs0-1c-ufP" customClass="CenterCellCollectionViewFlowLayout" customModule="NetDeck">
                         <size key="itemSize" width="300" height="436"/>
                         <size key="headerReferenceSize" width="10" height="0.0"/>
@@ -37,12 +37,13 @@
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="0Kt-da-MSy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="alk-Bm-gIQ"/>
-                <constraint firstAttribute="bottom" secondItem="0Kt-da-MSy" secondAttribute="bottom" id="hvc-6g-ZOG"/>
+                <constraint firstItem="0Kt-da-MSy" firstAttribute="top" secondItem="hmY-Ri-oFE" secondAttribute="top" id="03d-hh-eY2"/>
+                <constraint firstItem="hmY-Ri-oFE" firstAttribute="bottom" secondItem="0Kt-da-MSy" secondAttribute="bottom" id="2el-dG-a92"/>
                 <constraint firstItem="0Kt-da-MSy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jHP-H2-y4w"/>
                 <constraint firstAttribute="trailing" secondItem="0Kt-da-MSy" secondAttribute="trailing" id="km4-uM-0Lk"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="hmY-Ri-oFE"/>
+            <point key="canvasLocation" x="34.5" y="54.5"/>
         </view>
     </objects>
 </document>
