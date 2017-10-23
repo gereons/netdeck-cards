@@ -82,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     @objc private func cardsLoaded(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(self, name: Notifications.loadCards, object: nil)
         self.initGroup.leave()
     }
     
