@@ -290,7 +290,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     
     @objc func openSettings(_ sender: UIBarButtonItem) {
         sender.isEnabled = false
-        let settings = Settings.viewController
+        let settings = SettingsViewController()
         if settings != self.navigationController?.topViewController {
             self.navigationController?.pushViewController(settings, animated: true)
         }

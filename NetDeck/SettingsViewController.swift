@@ -10,43 +10,37 @@ import InAppSettingsKit
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class Settings {
-    static var viewController: IASKAppSettingsViewController {
-        return synchronized(self) {
-            instance()
-        }
-    }
-    
-    private static var iask: IASKAppSettingsViewController!
-    private static var delegate: SettingsDelegate!
-    
-    private static func instance() -> IASKAppSettingsViewController {
-        if iask == nil {
-            iask = IASKAppSettingsViewController(style: .grouped)
-            delegate = SettingsDelegate()
-            
-            iask.delegate = delegate
-            iask.showDoneButton = false
-        }
-        return iask
-    }
-}
-
-class SettingsDelegate: IASKSettingsDelegate {
+class SettingsViewController: IASKAppSettingsViewController {
  
     required init() {
+        super.init(style: .grouped)
+
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.settingsChanged(_:)), name: Notification.Name(kIASKAppSettingChanged), object: nil)
         nc.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
-        
-        self.refresh()
+
+        self.delegate = self
+        self.showDoneButton = false
+
+        // workaround for iOS 11 change in UITableView
+        self.tableView.estimatedRowHeight = 0
+        self.tableView.estimatedSectionHeaderHeight = 0
+        self.tableView.estimatedSectionFooterHeight = 0
+
+        self.setHiddenKeys()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        Analytics.logEvent(.showSettings)
+    }
     
-    func refresh() {
+    private func setHiddenKeys() {
         var hiddenKeys = Set<String>()
         
         if !CardManager.cardsAvailable {
@@ -77,12 +71,12 @@ class SettingsDelegate: IASKSettingsDelegate {
             hiddenKeys.insert(DefaultsKeys.convertCore._key)
         }
         
-        Settings.viewController.hiddenKeys = hiddenKeys
+        self.hiddenKeys = hiddenKeys
     }
     
     @objc func cardsLoaded(_ notification: Notification) {
         if let success = notification.userInfo?["success"] as? Bool, success {
-            self.refresh()
+            self.setHiddenKeys()
             DeckManager.flushCache()
         }
     }
@@ -99,11 +93,11 @@ class SettingsDelegate: IASKSettingsDelegate {
             let useDropbox = value as? Bool ?? false
             
             if useDropbox {
-                Dropbox.authorizeFromController(Settings.viewController)
+                Dropbox.authorizeFromController(self)
             } else {
                 Dropbox.unlinkClient()
             }
-            self.refresh()
+            self.setHiddenKeys()
             
         case DefaultsKeys.useNrdb._key:
             let useNrdb = value as? Bool ?? false
@@ -113,7 +107,7 @@ class SettingsDelegate: IASKSettingsDelegate {
                 NRDB.clearSettings()
                 NRDBHack.clearCredentials()
             }
-            self.refresh()
+            self.setHiddenKeys()
             
         case DefaultsKeys.useJintekiNet._key:
             let useJnet = value as? Bool ?? false
@@ -122,7 +116,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             } else {
                 JintekiNet.sharedInstance.clearCredentials()
             }
-            self.refresh()
+            self.setHiddenKeys()
             
         case DefaultsKeys.updateInterval._key:
             CardManager.setNextDownloadDate()
@@ -145,14 +139,14 @@ class SettingsDelegate: IASKSettingsDelegate {
             }
         
         case DefaultsKeys.rotationActive._key:
-            self.refresh()
+            self.setHiddenKeys()
             
         default:
             break
         }
     }
     
-    func nrdbLogin() {
+    private func nrdbLogin() {
         if !Reachability.online {
             self.showOfflineAlert()
             Defaults[.useNrdb] = false
@@ -165,13 +159,13 @@ class SettingsDelegate: IASKSettingsDelegate {
         }
         
         if Device.isIpad {
-            NRDBAuthPopupViewController.show(in: Settings.viewController)
+            NRDBAuthPopupViewController.show(in: self)
         } else {
-            NRDBAuthPopupViewController.push(on: Settings.viewController.navigationController!)
+            NRDBAuthPopupViewController.push(on: self.navigationController!)
         }
     }
     
-    func jnetLogin() {
+    private func jnetLogin() {
         if !Reachability.online {
             self.showOfflineAlert()
             Defaults[.useJintekiNet] = false
@@ -181,6 +175,41 @@ class SettingsDelegate: IASKSettingsDelegate {
         JintekiNet.sharedInstance.enterCredentialsAndLogin()
     }
     
+
+    
+    private func testApiSettings() {
+        let host = Defaults[.nrdbHost]
+        if host.count == 0 {
+            UIAlertController.alert(withTitle: nil, message: "Please enter a Server Name".localized(), button: "OK".localized())
+            return
+        }
+        
+        SVProgressHUD.show(withStatus: "Testing...".localized())
+        
+        let nrdbUrl = "https://\(host)/api/2.0/public/card/01001"
+        DataDownload.checkNrdbApi(nrdbUrl) { ok in
+            self.finishApiTests(ok)
+        }
+    }
+    
+    private func finishApiTests(_ ok: Bool) {
+        SVProgressHUD.dismiss()
+        
+        let msg = ok ? "NetrunnerDB is OK".localized() : "NetrunnerDB is invalid".localized()
+        UIAlertController.alert(withTitle: nil, message: msg, button: "OK".localized())
+    }
+    
+    private func showOfflineAlert() {
+        UIAlertController.alert(withTitle: nil, message: "An Internet connection is required".localized(), button: "OK".localized())
+    }
+}
+
+extension SettingsViewController: IASKSettingsDelegate {
+
+    func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController!) {
+        // nop
+    }
+
     func settingsViewController(_ sender: IASKAppSettingsViewController!, buttonTappedFor specifier: IASKSpecifier!) {
         let key = specifier.key() ?? ""
         switch key {
@@ -194,7 +223,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             if Reachability.online {
                 SVProgressHUD.showInfo(withStatus: "re-authenticating")
                 NRDB.sharedInstance.backgroundRefreshAuthentication { result in
-                    self.refresh()
+                    self.setHiddenKeys()
                     SVProgressHUD.dismiss()
                 }
             } else {
@@ -220,11 +249,11 @@ class SettingsDelegate: IASKSettingsDelegate {
                 PackManager.removeFiles()
                 Defaults[.lastDownload] = "Never".localized()
                 Defaults[.nextDownload] = "Never".localized()
-                self.refresh()
-                
+                self.setHiddenKeys()
+
                 NotificationCenter.default.post(name: Notifications.loadCards, object: self)
             })
-            
+
             alert.show()
         case IASKButtons.clearImageCache:
             let alert = UIAlertController.alert(title: nil, message: "Clear Image Cache? You will need to re-download all images.".localized())
@@ -232,7 +261,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             alert.addAction(UIAlertAction(title: "Yes".localized(), style: .default) { action in
                 ImageCache.sharedInstance.clearCache()
             })
-            
+
             alert.show()
         case IASKButtons.testAPI:
             if Reachability.online {
@@ -243,35 +272,5 @@ class SettingsDelegate: IASKSettingsDelegate {
         default:
             break
         }
-    }
-    
-    func testApiSettings() {
-        let host = Defaults[.nrdbHost]
-        if host.count == 0 {
-            UIAlertController.alert(withTitle: nil, message: "Please enter a Server Name".localized(), button: "OK".localized())
-            return
-        }
-        
-        SVProgressHUD.show(withStatus: "Testing...".localized())
-        
-        let nrdbUrl = "https://\(host)/api/2.0/public/card/01001"
-        DataDownload.checkNrdbApi(nrdbUrl) { ok in
-            self.finishApiTests(ok)
-        }
-    }
-    
-    func finishApiTests(_ ok: Bool) {
-        SVProgressHUD.dismiss()
-        
-        let msg = ok ? "NetrunnerDB is OK".localized() : "NetrunnerDB is invalid".localized()
-        UIAlertController.alert(withTitle: nil, message: msg, button: "OK".localized())
-    }
-    
-    func showOfflineAlert() {
-        UIAlertController.alert(withTitle: nil, message: "An Internet connection is required".localized(), button: "OK".localized())
-    }
-    
-    func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController!) {
-        // nop
     }
 }
