@@ -5,8 +5,8 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.2.0):
     - Alamofire (~> 4.5)
   - CorePlot (2.2)
-  - Crashlytics (3.8.6):
-    - Fabric (~> 1.6.3)
+  - Crashlytics (3.9.0):
+    - Fabric (~> 1.7.0)
   - DeviceKit (1.4.0)
   - DTCoreText (1.6.21):
     - DTCoreText/Core (= 1.6.21)
@@ -27,12 +27,12 @@ PODS:
     - DTFoundation/Core
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.0)
-  - Fabric (1.6.13)
+  - Fabric (1.7.0)
   - InAppSettingsKit (2.8.1)
   - Marshal (1.2.4)
   - MultiSelectSegmentedControl (1.1.2)
   - SDCAlertView (8.0.1)
-  - SVProgressHUD (2.2.1)
+  - SVProgressHUD (2.2.2)
   - SwiftKeychainWrapper (3.0.1)
   - SwiftyDropbox (4.2.0):
     - Alamofire (~> 4.5.0)
@@ -77,18 +77,18 @@ SPEC CHECKSUMS:
   AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
   AlamofireNetworkActivityIndicator: 81e1630e7cfed22a4e4e82a174c59e651dc4f8ca
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
-  Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
+  Crashlytics: 64aad5dd97249dd3ff94b979fea140144590cdd3
   DeviceKit: fa74d97499660e88081718b16688e19217595dba
   DTCoreText: e5d688cffc9f6a61eddd1a4f94e2046851230de3
   DTFoundation: 26a164ef510877387906fb92bff524a792db4bf8
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: ce986be6a3a321475bc27488f086c018a1275006
-  Fabric: 2fb5676bc811af011a04513451f463dac6803206
+  Fabric: e6be012366472553807dada21243c5ab8d904151
   InAppSettingsKit: 94d2fba3ccd700fc4e32c6d09fabcc0af2426744
   Marshal: 8e04e6624e506921db7143b0bfd83caee03f32d6
   MultiSelectSegmentedControl: 24844861c16dd6e3c36a80043494daa7855494f1
   SDCAlertView: 0dac88159108e755a78ca8d789b3b82305accae4
-  SVProgressHUD: db27c54e6e18bc903341661fc9feb55e04905cc4
+  SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
   SwiftyDropbox: 79b6329da46ceed8c0be5df99303411ec998d412
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
