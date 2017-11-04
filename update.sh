@@ -25,6 +25,7 @@ if git diff --quiet --exit-code
 then
     echo no updates found
 else
+    echo updates found, committing
     git add api/2.0/*
     DATE=$(date +%Y-%m-%d)
     git commit -m "update $DATE"
