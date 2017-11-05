@@ -21,11 +21,6 @@ do
     curl $PACKS_URL$LOCALE -o api/2.0/packs$SUFFIX.json
 done
 
-for file in api/2.0/*.json
-do 
-    json_pp <$file >pp/$(basename $file)
-done
-
 if git diff --quiet --exit-code
 then
     echo no updates found
