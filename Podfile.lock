@@ -5,8 +5,8 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.2.0):
     - Alamofire (~> 4.5)
   - CorePlot (2.2)
-  - Crashlytics (3.9.0):
-    - Fabric (~> 1.7.0)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
   - DeviceKit (1.4.0)
   - DTCoreText (1.6.21):
     - DTCoreText/Core (= 1.6.21)
@@ -27,7 +27,7 @@ PODS:
     - DTFoundation/Core
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.0)
-  - Fabric (1.7.0)
+  - Fabric (1.7.2)
   - InAppSettingsKit (2.8.1)
   - Marshal (1.2.4)
   - MultiSelectSegmentedControl (1.1.2)
@@ -77,13 +77,13 @@ SPEC CHECKSUMS:
   AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
   AlamofireNetworkActivityIndicator: 81e1630e7cfed22a4e4e82a174c59e651dc4f8ca
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
-  Crashlytics: 64aad5dd97249dd3ff94b979fea140144590cdd3
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   DeviceKit: fa74d97499660e88081718b16688e19217595dba
   DTCoreText: e5d688cffc9f6a61eddd1a4f94e2046851230de3
   DTFoundation: 26a164ef510877387906fb92bff524a792db4bf8
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: ce986be6a3a321475bc27488f086c018a1275006
-  Fabric: e6be012366472553807dada21243c5ab8d904151
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   InAppSettingsKit: 94d2fba3ccd700fc4e32c6d09fabcc0af2426744
   Marshal: 8e04e6624e506921db7143b0bfd83caee03f32d6
   MultiSelectSegmentedControl: 24844861c16dd6e3c36a80043494daa7855494f1
