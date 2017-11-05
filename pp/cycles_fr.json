@@ -1,0 +1,190 @@
+{
+   "last_updated" : "2017-10-06T05:09:15-04:00",
+   "version_number" : "2.0",
+   "success" : true,
+   "total" : 16,
+   "data" : [
+      {
+         "code" : "core",
+         "position" : 1,
+         "rotated" : true,
+         "name" : "Core Set",
+         "_locale" : {
+            "fr" : {
+               "name" : "Boite de base"
+            }
+         },
+         "size" : 1
+      },
+      {
+         "_locale" : {
+            "fr" : {
+               "name" : "Cycle de la Génèse"
+            }
+         },
+         "name" : "Genesis",
+         "rotated" : true,
+         "position" : 2,
+         "code" : "genesis",
+         "size" : 6
+      },
+      {
+         "_locale" : {
+            "fr" : {
+               "name" : "Création et Contrôle"
+            }
+         },
+         "name" : "Creation and Control",
+         "rotated" : false,
+         "position" : 3,
+         "code" : "creation-and-control",
+         "size" : 1
+      },
+      {
+         "_locale" : {
+            "fr" : {
+               "name" : "Cycle des Distorsions"
+            }
+         },
+         "name" : "Spin",
+         "position" : 4,
+         "rotated" : true,
+         "code" : "spin",
+         "size" : 6
+      },
+      {
+         "size" : 1,
+         "code" : "draft",
+         "rotated" : false,
+         "position" : 0,
+         "name" : "Draft",
+         "_locale" : {
+            "fr" : {
+               "name" : "Draft"
+            }
+         }
+      },
+      {
+         "size" : 1,
+         "_locale" : {
+            "fr" : {
+               "name" : "Honneur et Profit"
+            }
+         },
+         "name" : "Honor and Profit",
+         "position" : 5,
+         "rotated" : false,
+         "code" : "honor-and-profit"
+      },
+      {
+         "_locale" : {
+            "fr" : {
+               "name" : "Cycle Lunaire"
+            }
+         },
+         "name" : "Lunar",
+         "position" : 6,
+         "rotated" : false,
+         "code" : "lunar",
+         "size" : 6
+      },
+      {
+         "code" : "order-and-chaos",
+         "position" : 7,
+         "rotated" : false,
+         "name" : "Order and Chaos",
+         "_locale" : {
+            "fr" : {
+               "name" : "Ordre et Chaos"
+            }
+         },
+         "size" : 1
+      },
+      {
+         "size" : 6,
+         "position" : 8,
+         "rotated" : false,
+         "code" : "sansan",
+         "_locale" : {
+            "fr" : {
+               "name" : "Cycle SanSan"
+            }
+         },
+         "name" : "SanSan"
+      },
+      {
+         "size" : 1,
+         "_locale" : {
+            "fr" : {
+               "name" : "Destinée et Données"
+            }
+         },
+         "name" : "Data and Destiny",
+         "position" : 9,
+         "rotated" : false,
+         "code" : "data-and-destiny"
+      },
+      {
+         "name" : "Mumbad",
+         "_locale" : {
+            "fr" : {
+               "name" : "Cycle Mumbad"
+            }
+         },
+         "code" : "mumbad",
+         "position" : 10,
+         "rotated" : false,
+         "size" : 6
+      },
+      {
+         "size" : 6,
+         "_locale" : {
+            "fr" : {
+               "name" : "Point de Rupture"
+            }
+         },
+         "name" : "Flashpoint",
+         "position" : 11,
+         "rotated" : false,
+         "code" : "flashpoint"
+      },
+      {
+         "size" : 6,
+         "rotated" : false,
+         "position" : 12,
+         "code" : "red-sand",
+         "_locale" : {
+            "fr" : {
+               "name" : "Cycle Sable Rouge"
+            }
+         },
+         "name" : "Red Sand"
+      },
+      {
+         "_locale" : {
+            "fr" : {
+               "name" : "Terminal Directive"
+            }
+         },
+         "name" : "Terminal Directive",
+         "rotated" : false,
+         "position" : 13,
+         "code" : "terminal-directive",
+         "size" : 1
+      },
+      {
+         "rotated" : false,
+         "position" : 20,
+         "code" : "core2",
+         "name" : "Revised Core Set",
+         "size" : 1
+      },
+      {
+         "code" : "kitara",
+         "rotated" : false,
+         "position" : 21,
+         "name" : "Kitara",
+         "size" : 6
+      }
+   ]
+}

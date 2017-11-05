@@ -1,0 +1,180 @@
+{
+   "total" : 16,
+   "data" : [
+      {
+         "code" : "core",
+         "name" : "Core Set",
+         "rotated" : true,
+         "position" : 1,
+         "size" : 1,
+         "_locale" : {
+            "kr" : {
+               "name" : "코어 세트"
+            }
+         }
+      },
+      {
+         "size" : 6,
+         "_locale" : {
+            "kr" : {
+               "name" : "기원"
+            }
+         },
+         "code" : "genesis",
+         "name" : "Genesis",
+         "rotated" : true,
+         "position" : 2
+      },
+      {
+         "code" : "creation-and-control",
+         "rotated" : false,
+         "position" : 3,
+         "name" : "Creation and Control",
+         "_locale" : {
+            "kr" : {
+               "name" : "창조와 통제"
+            }
+         },
+         "size" : 1
+      },
+      {
+         "code" : "spin",
+         "name" : "Spin",
+         "rotated" : true,
+         "position" : 4,
+         "size" : 6,
+         "_locale" : {
+            "kr" : {
+               "name" : "회전"
+            }
+         }
+      },
+      {
+         "code" : "draft",
+         "name" : "Draft",
+         "rotated" : false,
+         "position" : 0,
+         "_locale" : {
+            "kr" : {
+               "name" : "드래프트"
+            }
+         },
+         "size" : 1
+      },
+      {
+         "size" : 1,
+         "_locale" : {
+            "kr" : {
+               "name" : "명예와 이익"
+            }
+         },
+         "code" : "honor-and-profit",
+         "name" : "Honor and Profit",
+         "rotated" : false,
+         "position" : 5
+      },
+      {
+         "size" : 6,
+         "_locale" : {
+            "kr" : {
+               "name" : "루나"
+            }
+         },
+         "rotated" : false,
+         "name" : "Lunar",
+         "position" : 6,
+         "code" : "lunar"
+      },
+      {
+         "_locale" : {
+            "kr" : {
+               "name" : "질서와 혼돈"
+            }
+         },
+         "size" : 1,
+         "code" : "order-and-chaos",
+         "name" : "Order and Chaos",
+         "rotated" : false,
+         "position" : 7
+      },
+      {
+         "name" : "SanSan",
+         "rotated" : false,
+         "position" : 8,
+         "code" : "sansan",
+         "_locale" : {
+            "kr" : {
+               "name" : "산산"
+            }
+         },
+         "size" : 6
+      },
+      {
+         "size" : 1,
+         "_locale" : {
+            "kr" : {
+               "name" : "데이터와 운명"
+            }
+         },
+         "code" : "data-and-destiny",
+         "rotated" : false,
+         "name" : "Data and Destiny",
+         "position" : 9
+      },
+      {
+         "code" : "mumbad",
+         "position" : 10,
+         "rotated" : false,
+         "name" : "Mumbad",
+         "size" : 6,
+         "_locale" : {
+            "kr" : {
+               "name" : "뭄바드"
+            }
+         }
+      },
+      {
+         "size" : 6,
+         "_locale" : {
+            "kr" : {
+               "name" : "일촉즉발"
+            }
+         },
+         "rotated" : false,
+         "position" : 11,
+         "name" : "Flashpoint",
+         "code" : "flashpoint"
+      },
+      {
+         "code" : "red-sand",
+         "name" : "Red Sand",
+         "rotated" : false,
+         "position" : 12,
+         "size" : 6
+      },
+      {
+         "size" : 1,
+         "code" : "terminal-directive",
+         "rotated" : false,
+         "position" : 13,
+         "name" : "Terminal Directive"
+      },
+      {
+         "size" : 1,
+         "position" : 20,
+         "rotated" : false,
+         "name" : "Revised Core Set",
+         "code" : "core2"
+      },
+      {
+         "code" : "kitara",
+         "rotated" : false,
+         "name" : "Kitara",
+         "position" : 21,
+         "size" : 6
+      }
+   ],
+   "last_updated" : "2017-10-06T05:09:15-04:00",
+   "success" : true,
+   "version_number" : "2.0"
+}

@@ -1,0 +1,140 @@
+{
+   "data" : [
+      {
+         "name" : "Core Set",
+         "_locale" : {
+            "pl" : {
+               "name" : "Zestaw Podstawowy"
+            }
+         },
+         "rotated" : true,
+         "position" : 1,
+         "code" : "core",
+         "size" : 1
+      },
+      {
+         "name" : "Genesis",
+         "position" : 2,
+         "_locale" : {
+            "pl" : {
+               "name" : "Genesis"
+            }
+         },
+         "rotated" : true,
+         "code" : "genesis",
+         "size" : 6
+      },
+      {
+         "name" : "Creation and Control",
+         "code" : "creation-and-control",
+         "_locale" : {
+            "pl" : {
+               "name" : "Tworzyć i kontrolować"
+            }
+         },
+         "rotated" : false,
+         "position" : 3,
+         "size" : 1
+      },
+      {
+         "size" : 6,
+         "name" : "Spin",
+         "rotated" : true,
+         "_locale" : {
+            "pl" : {
+               "name" : "Odbioru"
+            }
+         },
+         "position" : 4,
+         "code" : "spin"
+      },
+      {
+         "size" : 1,
+         "name" : "Draft",
+         "rotated" : false,
+         "position" : 0,
+         "code" : "draft"
+      },
+      {
+         "size" : 1,
+         "rotated" : false,
+         "position" : 5,
+         "code" : "honor-and-profit",
+         "name" : "Honor and Profit"
+      },
+      {
+         "size" : 6,
+         "name" : "Lunar",
+         "position" : 6,
+         "rotated" : false,
+         "code" : "lunar"
+      },
+      {
+         "size" : 1,
+         "name" : "Order and Chaos",
+         "rotated" : false,
+         "code" : "order-and-chaos",
+         "position" : 7
+      },
+      {
+         "size" : 6,
+         "position" : 8,
+         "rotated" : false,
+         "code" : "sansan",
+         "name" : "SanSan"
+      },
+      {
+         "size" : 1,
+         "position" : 9,
+         "rotated" : false,
+         "code" : "data-and-destiny",
+         "name" : "Data and Destiny"
+      },
+      {
+         "size" : 6,
+         "name" : "Mumbad",
+         "code" : "mumbad",
+         "rotated" : false,
+         "position" : 10
+      },
+      {
+         "size" : 6,
+         "rotated" : false,
+         "code" : "flashpoint",
+         "position" : 11,
+         "name" : "Flashpoint"
+      },
+      {
+         "name" : "Red Sand",
+         "position" : 12,
+         "rotated" : false,
+         "code" : "red-sand",
+         "size" : 6
+      },
+      {
+         "size" : 1,
+         "name" : "Terminal Directive",
+         "rotated" : false,
+         "code" : "terminal-directive",
+         "position" : 13
+      },
+      {
+         "name" : "Revised Core Set",
+         "rotated" : false,
+         "position" : 20,
+         "code" : "core2",
+         "size" : 1
+      },
+      {
+         "rotated" : false,
+         "code" : "kitara",
+         "position" : 21,
+         "name" : "Kitara",
+         "size" : 6
+      }
+   ],
+   "total" : 16,
+   "last_updated" : "2017-10-06T05:09:15-04:00",
+   "version_number" : "2.0",
+   "success" : true
+}

@@ -1,0 +1,604 @@
+{
+   "last_updated" : "2017-10-22T09:29:01-04:00",
+   "total" : 52,
+   "success" : true,
+   "data" : [
+      {
+         "code" : "core",
+         "_locale" : {
+            "es" : {
+               "name" : "Caja básica"
+            }
+         },
+         "position" : 1,
+         "name" : "Core Set",
+         "date_release" : "2012-09-06",
+         "cycle_code" : "core",
+         "size" : 113
+      },
+      {
+         "cycle_code" : "genesis",
+         "size" : 20,
+         "code" : "wla",
+         "_locale" : {
+            "es" : {
+               "name" : "Lo que nos espera"
+            }
+         },
+         "date_release" : "2012-12-14",
+         "position" : 1,
+         "name" : "What Lies Ahead"
+      },
+      {
+         "cycle_code" : "genesis",
+         "size" : 20,
+         "_locale" : {
+            "es" : {
+               "name" : "Cantidad residual"
+            }
+         },
+         "code" : "ta",
+         "name" : "Trace Amount",
+         "position" : 2,
+         "date_release" : "2013-01-09"
+      },
+      {
+         "cycle_code" : "genesis",
+         "size" : 20,
+         "_locale" : {
+            "es" : {
+               "name" : "Cíber éxodo"
+            }
+         },
+         "code" : "ce",
+         "position" : 3,
+         "name" : "Cyber Exodus",
+         "date_release" : "2013-02-14"
+      },
+      {
+         "size" : 20,
+         "cycle_code" : "genesis",
+         "name" : "A Study in Static",
+         "position" : 4,
+         "date_release" : "2013-03-21",
+         "code" : "asis",
+         "_locale" : {
+            "es" : {
+               "name" : "Estudio en estática"
+            }
+         }
+      },
+      {
+         "position" : 5,
+         "name" : "Humanity's Shadow",
+         "date_release" : "2013-05-02",
+         "_locale" : {
+            "es" : {
+               "name" : "La sombra de la humanidad"
+            }
+         },
+         "code" : "hs",
+         "size" : 20,
+         "cycle_code" : "genesis"
+      },
+      {
+         "code" : "fp",
+         "_locale" : {
+            "es" : {
+               "name" : "Prueba futura"
+            }
+         },
+         "date_release" : "2013-05-30",
+         "position" : 6,
+         "name" : "Future Proof",
+         "cycle_code" : "genesis",
+         "size" : 20
+      },
+      {
+         "code" : "cac",
+         "_locale" : {
+            "es" : {
+               "name" : "Creación y Control"
+            }
+         },
+         "date_release" : "2013-07-29",
+         "position" : 1,
+         "name" : "Creation and Control",
+         "cycle_code" : "creation-and-control",
+         "size" : 55
+      },
+      {
+         "_locale" : {
+            "es" : {
+               "name" : "Movimientos de apertura"
+            }
+         },
+         "code" : "om",
+         "name" : "Opening Moves",
+         "position" : 1,
+         "date_release" : "2013-09-27",
+         "cycle_code" : "spin",
+         "size" : 20
+      },
+      {
+         "cycle_code" : "spin",
+         "size" : 20,
+         "_locale" : {
+            "es" : {
+               "name" : "Reparos"
+            }
+         },
+         "code" : "st",
+         "position" : 2,
+         "date_release" : "2013-11-07",
+         "name" : "Second Thoughts"
+      },
+      {
+         "position" : 3,
+         "date_release" : "2013-12-13",
+         "name" : "Mala Tempora",
+         "code" : "mt",
+         "_locale" : {
+            "es" : {
+               "name" : "Mala Tempora"
+            }
+         },
+         "size" : 20,
+         "cycle_code" : "spin"
+      },
+      {
+         "_locale" : {
+            "es" : {
+               "name" : "Verdadera cara"
+            }
+         },
+         "code" : "tc",
+         "name" : "True Colors",
+         "position" : 4,
+         "date_release" : "2014-01-17",
+         "cycle_code" : "spin",
+         "size" : 20
+      },
+      {
+         "cycle_code" : "spin",
+         "size" : 20,
+         "_locale" : {
+            "es" : {
+               "name" : "A paso ligero"
+            }
+         },
+         "code" : "dt",
+         "name" : "Double Time",
+         "position" : 6,
+         "date_release" : "2014-03-28"
+      },
+      {
+         "code" : "fal",
+         "_locale" : {
+            "es" : {
+               "name" : "Miedo y asco"
+            }
+         },
+         "position" : 5,
+         "name" : "Fear and Loathing",
+         "date_release" : "2014-02-21",
+         "cycle_code" : "spin",
+         "size" : 20
+      },
+      {
+         "cycle_code" : "draft",
+         "size" : null,
+         "code" : "draft",
+         "_locale" : {
+            "es" : {
+               "name" : "Draft"
+            }
+         },
+         "date_release" : null,
+         "position" : 1,
+         "name" : "Draft"
+      },
+      {
+         "date_release" : "2014-05-02",
+         "position" : 1,
+         "name" : "Honor and Profit",
+         "code" : "hap",
+         "_locale" : {
+            "es" : {
+               "name" : "Honor y beneficios"
+            }
+         },
+         "size" : 55,
+         "cycle_code" : "honor-and-profit"
+      },
+      {
+         "_locale" : {
+            "es" : {
+               "name" : "Subiendo la mata"
+            }
+         },
+         "code" : "up",
+         "date_release" : "2014-07-25",
+         "position" : 1,
+         "name" : "Upstalk",
+         "cycle_code" : "lunar",
+         "size" : 20
+      },
+      {
+         "position" : 2,
+         "date_release" : "2014-08-15",
+         "name" : "The Spaces Between",
+         "code" : "tsb",
+         "_locale" : {
+            "es" : {
+               "name" : "Los espacios intermedios"
+            }
+         },
+         "size" : 20,
+         "cycle_code" : "lunar"
+      },
+      {
+         "cycle_code" : "lunar",
+         "size" : 20,
+         "code" : "fc",
+         "_locale" : {
+            "es" : {
+               "name" : "Primer contacto"
+            }
+         },
+         "position" : 3,
+         "name" : "First Contact",
+         "date_release" : "2014-09-15"
+      },
+      {
+         "_locale" : {
+            "es" : {
+               "name" : "Por encima"
+            }
+         },
+         "code" : "uao",
+         "date_release" : "2014-10-16",
+         "position" : 4,
+         "name" : "Up and Over",
+         "cycle_code" : "lunar",
+         "size" : 20
+      },
+      {
+         "code" : "atr",
+         "_locale" : {
+            "es" : {
+               "name" : "Todo lo que queda"
+            }
+         },
+         "name" : "All That Remains",
+         "position" : 5,
+         "date_release" : "2014-11-13",
+         "cycle_code" : "lunar",
+         "size" : 20
+      },
+      {
+         "code" : "ts",
+         "_locale" : {
+            "es" : {
+               "name" : "La fuente"
+            }
+         },
+         "name" : "The Source",
+         "position" : 6,
+         "date_release" : "2014-12-18",
+         "cycle_code" : "lunar",
+         "size" : 20
+      },
+      {
+         "size" : 55,
+         "cycle_code" : "order-and-chaos",
+         "position" : 1,
+         "date_release" : "2015-01-28",
+         "name" : "Order and Chaos",
+         "code" : "oac",
+         "_locale" : {
+            "es" : {
+               "name" : "Orden y caos"
+            }
+         }
+      },
+      {
+         "size" : 20,
+         "cycle_code" : "sansan",
+         "position" : 1,
+         "date_release" : "2015-04-03",
+         "name" : "The Valley",
+         "code" : "val",
+         "_locale" : {
+            "es" : {
+               "name" : "El Valle"
+            }
+         }
+      },
+      {
+         "size" : 20,
+         "cycle_code" : "sansan",
+         "position" : 2,
+         "name" : "Breaker Bay",
+         "date_release" : "2015-04-24",
+         "_locale" : {
+            "es" : {
+               "name" : "Breaker Bay"
+            }
+         },
+         "code" : "bb"
+      },
+      {
+         "size" : 20,
+         "cycle_code" : "sansan",
+         "position" : 3,
+         "date_release" : "2015-05-29",
+         "name" : "Chrome City",
+         "_locale" : {
+            "es" : {
+               "name" : "Ciudad Cromo"
+            }
+         },
+         "code" : "cc"
+      },
+      {
+         "_locale" : {
+            "es" : {
+               "name" : "Underway"
+            }
+         },
+         "code" : "uw",
+         "name" : "The Underway",
+         "position" : 4,
+         "date_release" : "2015-07-02",
+         "cycle_code" : "sansan",
+         "size" : 20
+      },
+      {
+         "cycle_code" : "sansan",
+         "size" : 20,
+         "_locale" : {
+            "es" : {
+               "name" : "El viejo Hollywood"
+            }
+         },
+         "code" : "oh",
+         "position" : 5,
+         "name" : "Old Hollywood",
+         "date_release" : "2015-08-06"
+      },
+      {
+         "position" : 6,
+         "date_release" : "2015-09-03",
+         "name" : "The Universe of Tomorrow",
+         "code" : "uot",
+         "_locale" : {
+            "es" : {
+               "name" : "El universo del mañana"
+            }
+         },
+         "size" : 20,
+         "cycle_code" : "sansan"
+      },
+      {
+         "position" : 1,
+         "date_release" : "2015-10-29",
+         "name" : "Data and Destiny",
+         "code" : "dad",
+         "_locale" : {
+            "es" : {
+               "name" : "Datos y destino"
+            }
+         },
+         "size" : 55,
+         "cycle_code" : "data-and-destiny"
+      },
+      {
+         "size" : 19,
+         "cycle_code" : "mumbad",
+         "name" : "Kala Ghoda",
+         "position" : 1,
+         "date_release" : "2016-01-29",
+         "_locale" : {
+            "es" : {
+               "name" : "Kala Ghoda"
+            }
+         },
+         "code" : "kg"
+      },
+      {
+         "_locale" : {
+            "es" : {
+               "name" : "El negocio es lo primero"
+            }
+         },
+         "code" : "bf",
+         "name" : "Business First",
+         "position" : 2,
+         "date_release" : "2016-03-11",
+         "cycle_code" : "mumbad",
+         "size" : 19
+      },
+      {
+         "size" : 19,
+         "cycle_code" : "mumbad",
+         "position" : 3,
+         "name" : "Democracy and Dogma",
+         "date_release" : "2016-04-01",
+         "_locale" : {
+            "es" : {
+               "name" : "Democracia y dogma"
+            }
+         },
+         "code" : "dag"
+      },
+      {
+         "cycle_code" : "mumbad",
+         "size" : 19,
+         "code" : "si",
+         "_locale" : {
+            "es" : {
+               "name" : "Isla Salsette"
+            }
+         },
+         "date_release" : "2016-04-28",
+         "position" : 4,
+         "name" : "Salsette Island"
+      },
+      {
+         "size" : 19,
+         "cycle_code" : "mumbad",
+         "name" : "The Liberated Mind",
+         "position" : 5,
+         "date_release" : "2016-05-26",
+         "code" : "tlm",
+         "_locale" : {
+            "es" : {
+               "name" : "La Mente Liberada"
+            }
+         }
+      },
+      {
+         "code" : "ftm",
+         "_locale" : {
+            "es" : {
+               "name" : "Teme a las masas"
+            }
+         },
+         "position" : 6,
+         "name" : "Fear the Masses",
+         "date_release" : "2016-06-16",
+         "cycle_code" : "mumbad",
+         "size" : 19
+      },
+      {
+         "code" : "23s",
+         "name" : "23 Seconds",
+         "position" : 1,
+         "date_release" : "2016-07-14",
+         "cycle_code" : "flashpoint",
+         "size" : 20
+      },
+      {
+         "code" : "bm",
+         "position" : 2,
+         "name" : "Blood Money",
+         "date_release" : "2016-08-11",
+         "cycle_code" : "flashpoint",
+         "size" : 20
+      },
+      {
+         "code" : "es",
+         "date_release" : "2016-10-06",
+         "position" : 3,
+         "name" : "Escalation",
+         "cycle_code" : "flashpoint",
+         "size" : 20
+      },
+      {
+         "cycle_code" : "flashpoint",
+         "size" : 20,
+         "code" : "in",
+         "date_release" : "2016-11-03",
+         "position" : 4,
+         "name" : "Intervention"
+      },
+      {
+         "name" : "Martial Law",
+         "position" : 5,
+         "date_release" : "2016-12-08",
+         "code" : "ml",
+         "size" : 20,
+         "cycle_code" : "flashpoint"
+      },
+      {
+         "code" : "qu",
+         "position" : 6,
+         "date_release" : "2017-01-12",
+         "name" : "Quorum",
+         "cycle_code" : "flashpoint",
+         "size" : 20
+      },
+      {
+         "code" : "dc",
+         "position" : 1,
+         "date_release" : "2017-02-23",
+         "name" : "Daedalus Complex",
+         "cycle_code" : "red-sand",
+         "size" : 20
+      },
+      {
+         "name" : "Station One",
+         "position" : 2,
+         "date_release" : "2017-03-23",
+         "code" : "so",
+         "size" : 20,
+         "cycle_code" : "red-sand"
+      },
+      {
+         "size" : 20,
+         "cycle_code" : "red-sand",
+         "name" : "Earth's Scion",
+         "position" : 3,
+         "date_release" : "2017-05-25",
+         "code" : "eas"
+      },
+      {
+         "size" : 57,
+         "cycle_code" : "terminal-directive",
+         "position" : 1,
+         "name" : "Terminal Directive",
+         "date_release" : "2017-04-27",
+         "code" : "td"
+      },
+      {
+         "code" : "baw",
+         "date_release" : "2017-06-22",
+         "position" : 4,
+         "name" : "Blood and Water",
+         "cycle_code" : "red-sand",
+         "size" : 20
+      },
+      {
+         "cycle_code" : "red-sand",
+         "size" : 20,
+         "code" : "fm",
+         "date_release" : "2017-07-20",
+         "position" : 5,
+         "name" : "Free Mars"
+      },
+      {
+         "cycle_code" : "red-sand",
+         "size" : 20,
+         "code" : "cd",
+         "date_release" : "2017-08-17",
+         "position" : 6,
+         "name" : "Crimson Dust"
+      },
+      {
+         "size" : 132,
+         "cycle_code" : "core2",
+         "position" : 1,
+         "date_release" : "2014-03-28",
+         "name" : "Revised Core Set",
+         "code" : "core2"
+      },
+      {
+         "position" : 1,
+         "name" : "Sovereign Sight",
+         "date_release" : null,
+         "code" : "ss",
+         "size" : 20,
+         "cycle_code" : "kitara"
+      },
+      {
+         "code" : "dtwn",
+         "date_release" : null,
+         "position" : 2,
+         "name" : "Down the White Nile",
+         "cycle_code" : "kitara",
+         "size" : 20
+      }
+   ],
+   "version_number" : "2.0"
+}

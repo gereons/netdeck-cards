@@ -1,0 +1,120 @@
+{
+   "version_number" : "2.0",
+   "success" : true,
+   "total" : 16,
+   "data" : [
+      {
+         "code" : "core",
+         "position" : 1,
+         "rotated" : true,
+         "name" : "Core Set",
+         "size" : 1
+      },
+      {
+         "size" : 6,
+         "code" : "genesis",
+         "rotated" : true,
+         "position" : 2,
+         "name" : "Genesis"
+      },
+      {
+         "size" : 1,
+         "code" : "creation-and-control",
+         "name" : "Creation and Control",
+         "rotated" : false,
+         "position" : 3
+      },
+      {
+         "rotated" : true,
+         "name" : "Spin",
+         "position" : 4,
+         "code" : "spin",
+         "size" : 6
+      },
+      {
+         "code" : "draft",
+         "rotated" : false,
+         "position" : 0,
+         "name" : "Draft",
+         "size" : 1
+      },
+      {
+         "rotated" : false,
+         "position" : 5,
+         "name" : "Honor and Profit",
+         "code" : "honor-and-profit",
+         "size" : 1
+      },
+      {
+         "size" : 6,
+         "rotated" : false,
+         "position" : 6,
+         "name" : "Lunar",
+         "code" : "lunar"
+      },
+      {
+         "position" : 7,
+         "rotated" : false,
+         "name" : "Order and Chaos",
+         "code" : "order-and-chaos",
+         "size" : 1
+      },
+      {
+         "size" : 6,
+         "code" : "sansan",
+         "rotated" : false,
+         "position" : 8,
+         "name" : "SanSan"
+      },
+      {
+         "position" : 9,
+         "rotated" : false,
+         "name" : "Data and Destiny",
+         "code" : "data-and-destiny",
+         "size" : 1
+      },
+      {
+         "code" : "mumbad",
+         "name" : "Mumbad",
+         "rotated" : false,
+         "position" : 10,
+         "size" : 6
+      },
+      {
+         "size" : 6,
+         "position" : 11,
+         "rotated" : false,
+         "name" : "Flashpoint",
+         "code" : "flashpoint"
+      },
+      {
+         "name" : "Red Sand",
+         "rotated" : false,
+         "position" : 12,
+         "code" : "red-sand",
+         "size" : 6
+      },
+      {
+         "size" : 1,
+         "position" : 13,
+         "rotated" : false,
+         "name" : "Terminal Directive",
+         "code" : "terminal-directive"
+      },
+      {
+         "size" : 1,
+         "code" : "core2",
+         "position" : 20,
+         "rotated" : false,
+         "name" : "Revised Core Set"
+      },
+      {
+         "size" : 6,
+         "code" : "kitara",
+         "position" : 21,
+         "rotated" : false,
+         "name" : "Kitara"
+      }
+   ],
+   "last_updated" : "2017-10-06T05:09:15-04:00"
+}
