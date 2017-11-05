@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -30,7 +30,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <view key="tableHeaderView" contentMode="scaleToFill" id="1iF-OU-Ytu">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" backgroundImage="searchbar-bg" scopeBarBackgroundImage="searchbar-bg" translatesAutoresizingMaskIntoConstraints="NO" id="tJq-2W-YqI">
@@ -46,7 +46,7 @@
                                 </connections>
                             </searchBar>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WqS-qB-scs">
-                                <rect key="frame" x="8" y="86" width="359" height="30"/>
+                                <rect key="frame" x="8" y="100" width="359" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="stp-TL-u1g">
                                         <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
@@ -88,6 +88,7 @@
                                     <constraint firstItem="DBV-kt-2UJ" firstAttribute="width" secondItem="stp-TL-u1g" secondAttribute="width" id="568-xp-oeZ"/>
                                     <constraint firstItem="DBV-kt-2UJ" firstAttribute="width" secondItem="Nes-Jt-He6" secondAttribute="width" id="IKr-cx-ZyH"/>
                                     <constraint firstItem="JY7-qH-HwL" firstAttribute="width" secondItem="stp-TL-u1g" secondAttribute="width" id="WYw-W5-BIM"/>
+                                    <constraint firstAttribute="height" constant="30" id="ajY-RF-DBp"/>
                                     <constraint firstItem="ags-Vi-ryy" firstAttribute="width" secondItem="stp-TL-u1g" secondAttribute="width" id="mhB-3F-MLM"/>
                                 </constraints>
                             </stackView>
