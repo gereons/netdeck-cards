@@ -27,6 +27,8 @@ class SettingsViewController: IASKAppSettingsViewController {
         self.tableView.estimatedSectionHeaderHeight = 0
         self.tableView.estimatedSectionFooterHeight = 0
 
+        self.tableView.scrollFix()
+
         self.setHiddenKeys()
     }
     
