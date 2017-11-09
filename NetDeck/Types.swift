@@ -8,6 +8,11 @@
 
 import Foundation
 
+struct Constant {
+    static let kANY = "Any"
+    static let arrow = " ▾"
+}
+
 enum Role: Int {
     case none = -1
     case runner, corp
@@ -43,6 +48,12 @@ enum CardView: Int {
     case image
     case largeTable
     case smallTable
+}
+
+enum CardFilterView: Int {
+    case list
+    case img2
+    case img3
 }
 
 enum BrowserSort: Int {

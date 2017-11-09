@@ -313,7 +313,7 @@ class CardManager {
             
             let filename = self.filename()
             try cardsData.write(to: URL(fileURLWithPath: filename), options: .atomic)
-            AppDelegate.excludeFromBackup(filename)
+            Utils.excludeFromBackup(filename)
         } catch let error {
             print("\(error)")
         }
@@ -322,7 +322,7 @@ class CardManager {
     }
     
     static func setupFromJson(_ cards: JSONObject, language: String) -> Bool {
-        if !NRDB.validJsonResponse(json: cards) {
+        if !Utils.validJsonResponse(json: cards) {
             return false
         }
         
@@ -341,13 +341,15 @@ class CardManager {
 
         CardManager.setSubtypes(cards)
         CardManager.addCardAliases(cards)
-        
-        var ok = Faction.initializeFactionNames(cards)
+
+        let factionsDict = cards.reduce(into: [Faction: String]()) { $0[$1.faction] = $1.factionStr }
+        var ok = Faction.initializeFactionNames(factionsDict)
         if !ok {
             return false
         }
-        
-        ok = CardType.initializeCardType(cards)
+
+        let typesDict = cards.reduce(into: [CardType: String]()) { $0[$1.type] = $1.typeStr }
+        ok = CardType.initializeCardType(typesDict)
         if !ok {
             return false
         }

@@ -9,10 +9,6 @@
 import Foundation
 import SDCAlertView
 
-struct Constant {
-    static let kANY = "Any"
-    static let arrow = " ▾"
-}
 
 extension String {
     func localized() -> String {

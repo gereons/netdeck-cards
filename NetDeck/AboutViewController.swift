@@ -35,7 +35,7 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
         super.viewWillAppear(animated)
         
         let fmt = Device.isIphone ? "Net Deck %@" : "About Net Deck %@"
-        let title = String(format: fmt.localized(), AppDelegate.appVersion())
+        let title = String(format: fmt.localized(), Utils.appVersion())
         
         self.title = title
         
@@ -78,7 +78,7 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
         if self.mailer != nil {
             self.mailer.mailComposeDelegate = self
             self.mailer.setToRecipients([ "netdeck@steffens.org" ])
-            let subject = "Net Deck Feedback ".localized() + AppDelegate.appVersion()
+            let subject = "Net Deck Feedback ".localized() + Utils.appVersion()
             self.mailer.setSubject(subject)
             self.present(self.mailer, animated: false, completion: nil)
         }

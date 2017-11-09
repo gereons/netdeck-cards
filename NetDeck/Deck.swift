@@ -838,7 +838,8 @@ extension Deck {
         var cardsFromTD = 0
         var cardsFromAllowedCycles = 0
         var cardsFromForbiddenCycles = 0
-        
+
+        FIXME("only allow core2 in CR")
         for cc in self.cards {
             let card = cc.card
             switch card.packCode {

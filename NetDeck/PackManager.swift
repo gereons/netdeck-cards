@@ -420,11 +420,11 @@ class PackManager {
             
             let cyclesFile = self.cyclesPathname()
             try cyclesData.write(to: URL(fileURLWithPath: cyclesFile), options: .atomic)
-            AppDelegate.excludeFromBackup(cyclesFile)
+            Utils.excludeFromBackup(cyclesFile)
             
             let packsFile = self.packsPathname()
             try packsData.write(to: URL(fileURLWithPath: packsFile), options: .atomic)
-            AppDelegate.excludeFromBackup(packsFile)
+            Utils.excludeFromBackup(packsFile)
         } catch let error {
             print("\(error)")
             ok = false
@@ -459,7 +459,7 @@ class PackManager {
         
         allPacks.reserveCapacity(100)
         
-        let ok = NRDB.validJsonResponse(json: cycles) && NRDB.validJsonResponse(json: packs)
+        let ok = Utils.validJsonResponse(json: cycles) && Utils.validJsonResponse(json: packs)
         if !ok {
             // print("cards/packs invalid")
             return false

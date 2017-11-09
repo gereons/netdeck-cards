@@ -30,26 +30,19 @@ import Foundation
     static var corpTypeNames = [String]()
     private(set) static var allTypes: TableData<String>!
     
-    static func initializeCardType(_ cards: [Card]) -> Bool {
+    static func initializeCardType(_ typesDict: [CardType: String]) -> Bool {
         runnerTypeNames = []
         corpTypeNames = []
         
-        assert(Codes.code2Type.count == runnerTypes.count + corpTypes.count + 1) // +1 for IDs
-        if Codes.code2Type.count != runnerTypes.count + corpTypes.count + 1 {
-            return false
-        }
-        
         type2name.removeAll()
         type2name[.none] = Constant.kANY
-        let expectedTypes = Codes.code2Type.count + 1 // +1 for "Any"
-        for card in cards {
-            type2name[card.type] = card.typeStr
-            if type2name.count == expectedTypes {
-                break
-            }
+        type2name.merge(typesDict) { (current, _) in return current }
+        for (type, str) in typesDict {
+            type2name[type] = str
         }
+        let expectedTypes = 11 // 10 card types, +1 for "Any"
         assert(type2name.count == expectedTypes)
-        if type2name.count != type2name.count {
+        if type2name.count != expectedTypes {
             return false
         }
         

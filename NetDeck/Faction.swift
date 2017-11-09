@@ -44,28 +44,22 @@ import SwiftyUserDefaults
         return Faction.faction2name[faction] ?? "n/a"
     }
     
-    static func initializeFactionNames(_ cards: [Card]) -> Bool {
+    static func initializeFactionNames(_ factionsDict: [Faction: String]) -> Bool {
         faction2name = [:]
         faction2name[.none] = Constant.kANY
         faction2name[.neutral] = "Neutral".localized()
         
         let expectedNames = runnerFactionsAll.count + corpFactions.count + 2 // +2 for "any" and "neutral"
-        
-        runnerFactionNamesAll = []
-        runnerFactionNamesCore = []
-        corpFactionNames = []
-        
-        for card in cards {
-            faction2name[card.faction] = card.factionStr
-            if faction2name.count == expectedNames {
-                break
-            }
-        }
+        faction2name.merge(factionsDict) { (current, _) in return current }
         assert(faction2name.count == expectedNames)
         if faction2name.count != expectedNames {
             return false
         }
-        
+
+        runnerFactionNamesAll = []
+        runnerFactionNamesCore = []
+        corpFactionNames = []
+
         let common = [ Faction.name(for: .none), Faction.name(for: .neutral) ]
         
         for faction in runnerFactionsAll {

@@ -346,22 +346,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Analytics.logEvent(.start, attributes: attrs)
     }
     
-    static func appVersion() -> String {
-        var version = ""
-        if let bundleInfo = Bundle.main.infoDictionary {
-            // CFBundleShortVersionString contains the main version
-            let shortVersion = (bundleInfo["CFBundleShortVersionString"] as? String) ?? ""
-            version = "v" + shortVersion
-            
-            if BuildConfig.debug {
-                // CFBundleVersion contains the git rev-parse output
-                let bundleVersion = (bundleInfo["CFBundleVersion"] as? String) ?? ""
-                version += "-" + bundleVersion
-            }
-        }
-        return version
-    }
-    
     private func ensureAppSupportDirectoryExists() {
         let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let supportDirectory = paths[0]
@@ -370,16 +354,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !fileManager.fileExists(atPath: supportDirectory) {
             print("no app support dir - creating it")
             try? fileManager.createDirectory(atPath: supportDirectory, withIntermediateDirectories: true, attributes: nil)
-        }
-    }
-    
-    // utility method: set the excludeFromBackup flag on the specified path
-    static func excludeFromBackup(_ path: String) {
-        let url = NSURL(fileURLWithPath:path)
-        do {
-            try url.setResourceValue(true, forKey:URLResourceKey.isExcludedFromBackupKey)
-        } catch let error {
-            NSLog("setResource error=\(error)")
         }
     }
     
@@ -410,7 +384,7 @@ extension AppDelegate: CrashlyticsDelegate {
         
         alert.addAction(UIAlertAction(title: "Not now".localized(), handler: nil))
         alert.addAction(UIAlertAction(title: "OK".localized()) { action in
-            let subject = "Bug in Net Deck " + AppDelegate.appVersion()
+            let subject = "Bug in Net Deck " + Utils.appVersion()
             let body = "If possible, please describe what caused the crash. Thanks!"
             
             var mailto = "mailto:netdeck@steffens.org?subject="

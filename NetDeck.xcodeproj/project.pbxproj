@@ -176,6 +176,7 @@
 		3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */; };
 		3AF04BB91D44DD8200CB859D /* JinetkiNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */; };
 		3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */; };
+		3AF1E9171FB4FB64009E8B88 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1E9161FB4FB64009E8B88 /* Utils.swift */; };
 		3AF23CB41E34DE6E007BF39C /* DeckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */; };
 		3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */; };
 		3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF697881C1DAC7300D254CE /* Notifications.swift */; };
@@ -377,6 +378,7 @@
 		3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineLabel.swift; sourceTree = "<group>"; };
 		3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JinetkiNet.swift; sourceTree = "<group>"; };
 		3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "NRDBAuthPopupViewController~iphone.xib"; sourceTree = "<group>"; };
+		3AF1E9161FB4FB64009E8B88 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckListViewController.swift; sourceTree = "<group>"; };
 		3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterPopover.xib; sourceTree = "<group>"; };
 		3AF697881C1DAC7300D254CE /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 				3A11C5FB19715C0A003F2093 /* CollectionViewSectionHeader.xib */,
 				3A32B7DE1EA23B2100A19982 /* KeyboardHandling.swift */,
 				3AC8465F1EB60BF8003EADD1 /* TickingLabel.swift */,
+				3AF1E9161FB4FB64009E8B88 /* Utils.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 				3A814EC519ADBEEE008C3285 /* Crashlytics */,
 				5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */,
 				C576FDA1A12A9ED691A68447 /* [CP] Copy Pods Resources */,
+				3AF1E9151FB4F733009E8B88 /* Run Checker */,
 			);
 			buildRules = (
 			);
@@ -1072,6 +1076,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" == \"xRelease\" ]; then\necho \"init crashlytics\"\n\"${PODS_ROOT}/Fabric/run\" fe0f0f5f919be6211c1de668d91332e311ddad9e fa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8\nfi";
+		};
+		3AF1E9151FB4F733009E8B88 /* Run Checker */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Checker";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/Applications/Checker.app/Contents/Resources/start-analyzer.app/Contents/MacOS/start-analyzer || echo \"WARNING: start-analyzer not installed.\"";
+			shellScript = "";
 		};
 		5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1250,6 +1268,7 @@
 				3A2BF9D81DC64BF400AFA36E /* CardImageViewPopover.swift in Sources */,
 				3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */,
 				3A47F1901DBB7E9500058294 /* Card+html.swift in Sources */,
+				3AF1E9171FB4FB64009E8B88 /* Utils.swift in Sources */,
 				3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */,
 				3ABBE8041E2264AA00A1B583 /* IdentitySelectionViewController.swift in Sources */,
 				3A9795361CF63EE100479ADF /* AppDelegate.swift in Sources */,

@@ -78,10 +78,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     private let largeCellHeight = 140
     private let smallCellHeight = 107
     
-    enum View: Int {
-        case list, img2, img3
-    }
-    
     enum Add: Int {
         case table, collection
     }
@@ -97,7 +93,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         .text: "Text".localized()
     ]
     private var showAllFilters = true
-    private var viewMode = View.list
+    private var viewMode = CardFilterView.list
     
     required init(role: Role) {
         self.deckListViewController = DeckListViewController()
@@ -449,7 +445,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
     
-        self.viewMode = View(rawValue: sender.selectedSegmentIndex) ?? .list
+        self.viewMode = CardFilterView(rawValue: sender.selectedSegmentIndex) ?? .list
         self.collectionView.isHidden = self.viewMode == .list
         self.tableView.isHidden = self.viewMode != .list
         

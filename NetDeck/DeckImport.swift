@@ -320,7 +320,7 @@ class DeckImport: NSObject {
     }
     
     func parseJsonDeckList(_ json: JSONObject) -> Deck? {
-        if !NRDB.validJsonResponse(json: json) {
+        if !Utils.validJsonResponse(json: json) {
             return nil
         }
         

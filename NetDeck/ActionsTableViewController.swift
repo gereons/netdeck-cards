@@ -39,7 +39,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
-        self.version.title = AppDelegate.appVersion()
+        self.version.title = Utils.appVersion()
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(self.loadDeck(_:)), name: Notifications.loadDeck, object: nil)

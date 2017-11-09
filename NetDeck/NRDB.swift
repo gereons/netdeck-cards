@@ -280,7 +280,7 @@ class NRDB: NSObject {
     private func parseDecksFromJson(_ json: JSONObject) -> [Deck] {
         var decks = [Deck]()
         
-        if !NRDB.validJsonResponse(json: json) {
+        if !Utils.validJsonResponse(json: json) {
             return decks
         }
         
@@ -293,7 +293,7 @@ class NRDB: NSObject {
     }
     
     private func parseDeckFromJson(_ json: JSONObject) -> Deck? {
-        if !NRDB.validJsonResponse(json: json) {
+        if !Utils.validJsonResponse(json: json) {
             return nil
         }
         do {
@@ -357,7 +357,7 @@ class NRDB: NSObject {
                     if let data = response.data {
                         do {
                             let json = try JSONParser.JSONObjectWithData(data)
-                            let ok = NRDB.validJsonResponse(json: json)
+                            let ok = Utils.validJsonResponse(json: json)
                             if ok {
                                 let decks: [Deck] = try json.value(for: "data")
                                 
@@ -404,17 +404,7 @@ class NRDB: NSObject {
         self.deckMap.removeValue(forKey: deckId ?? "")
     }
     
-    static private let supportedNrdbApiVersion = "2.0"
-    static func validJsonResponse(json: JSONObject) -> Bool {
-        do {
-            let version: String = try json.value(for: "version_number")
-            let success: Bool = try json.value(for: "success")
-            let total: Int = try json.value(for: "total")
-            return success && version == supportedNrdbApiVersion && total > 0
-        } catch {
-            return false
-        }
-    }
+
 }
 
 // MARK: - NRDB-specific JSON extension

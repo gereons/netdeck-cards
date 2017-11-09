@@ -306,7 +306,7 @@ class DataDownload: NSObject {
                         do {
                             let json = try JSONParser.JSONObjectWithData(data)
                             let total: Int = try json.value(for: "total")
-                            ok = NRDB.validJsonResponse(json: json) && total == 1
+                            ok = Utils.validJsonResponse(json: json) && total == 1
                         } catch let error {
                             print("\(error)")
                         }

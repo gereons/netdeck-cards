@@ -86,7 +86,7 @@ extension DefaultsKeys {
     
     // deckbuilder card filer
     /// display mode for filter
-    static let filterViewMode = DefaultsKey<CardFilterViewController.View>("filterViewMode")
+    static let filterViewMode = DefaultsKey<CardFilterView>("filterViewMode")
     
     // display/sort/scale for browser
     static let browserViewStyle = DefaultsKey<CardView>("browserViewStyle")
@@ -181,7 +181,7 @@ extension UserDefaults {
         set { archive(key, newValue) }
     }
     
-    subscript(key: DefaultsKey<CardFilterViewController.View>) -> CardFilterViewController.View {
+    subscript(key: DefaultsKey<CardFilterView>) -> CardFilterView {
         get { return unarchive(key) ?? .list }
         set { archive(key, newValue) }
     }

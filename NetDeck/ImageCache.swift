@@ -337,7 +337,7 @@ class ImageCache: NSObject {
         if let data = UIImagePNGRepresentation(img) {
             do {
                 try data.write(to: URL(fileURLWithPath: file), options: [.atomic])
-                AppDelegate.excludeFromBackup(file)
+                Utils.excludeFromBackup(file)
                 return true
             } catch let error {
                 self.NLOG("write error \(error)")
