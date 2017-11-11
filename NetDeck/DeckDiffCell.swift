@@ -10,7 +10,8 @@ import UIKit
 
 class DeckDiffCell: UITableViewCell {
 
-    weak var vc: DeckDiffViewController!
+    weak var vc: UIViewController!
+    weak var tableView: UITableView!
     var card1: Card?
     var card2: Card?
 
@@ -47,8 +48,7 @@ class DeckDiffCell: UITableViewCell {
     @objc func popupCard1(_ gesture: UITapGestureRecognizer) {
         guard
             let card = self.card1,
-            let tableView = self.vc.tableView,
-            let indexPath = tableView.indexPathForRow(at: gesture.location(in: tableView))
+            let indexPath = tableView.indexPathForRow(at: gesture.location(in: self.tableView))
         else {
             return
         }
@@ -56,14 +56,13 @@ class DeckDiffCell: UITableViewCell {
         var rect = tableView.rectForRow(at: indexPath)
         rect.size.width = 330
         
-        CardImageViewPopover.show(for: card, from: rect, in: self.vc, subView: tableView)
+        CardImageViewPopover.show(for: card, from: rect, in: self.vc, subView: self.tableView)
     }
     
     @objc func popupCard2(_ gesture: UITapGestureRecognizer) {
         guard
             let card = self.card2,
-            let tableView = self.vc.tableView,
-            let indexPath = tableView.indexPathForRow(at: gesture.location(in: tableView))
+            let indexPath = tableView.indexPathForRow(at: gesture.location(in: self.tableView))
         else {
             return
         }
@@ -72,6 +71,6 @@ class DeckDiffCell: UITableViewCell {
         rect.origin.x = 400
         rect.size.width = 310
         
-        CardImageViewPopover.show(for: card, from: rect, in: self.vc, subView: tableView)
+        CardImageViewPopover.show(for: card, from: rect, in: self.vc, subView: self.tableView)
     }
 }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol IdentitySelector: class {
+    func selectIdentity(_ sender: Any)
+}
+
 class CardCell: UITableViewCell {
 
     @IBOutlet weak var name: UILabel!
@@ -15,7 +19,7 @@ class CardCell: UITableViewCell {
     @IBOutlet weak var copiesStepper: UIStepper!
     @IBOutlet weak var identityButton: UIButton!
     
-    weak var delegate: DeckListViewController!
+    weak var delegate: IdentitySelector!
     var deck: Deck!
     var cardCounter: CardCounter? {
         didSet {

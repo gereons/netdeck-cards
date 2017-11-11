@@ -300,11 +300,11 @@ class PackManager {
         return data
     }
 
-    static func packsUsedIn(deck: Deck) -> [String] {
+    static func packsUsedIn(cards: [CardCounter]) -> [String] {
         var packsUsed = [String: Int]() // pack code -> number of times used
         var cardsUsed = [String: Int]() // pack code -> number of cards used
             
-        for cc in deck.allCards {
+        for cc in cards {
             let code = cc.card.packCode
             
             var used = packsUsed[code] ?? 1
@@ -335,10 +335,10 @@ class PackManager {
         return result
     }
     
-    static func mostRecentPackUsedIn(deck: Deck) -> String {
+    static func mostRecentPackUsedIn(cards: [CardCounter]) -> String {
         var maxIndex = -1
         
-        for cc in deck.allCards {
+        for cc in cards {
             if let index = allPacks.index(where: { $0.code == cc.card.packCode}) {
                 maxIndex = max(index, maxIndex)
             }

@@ -138,6 +138,7 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
         let cd = self.rows()[indexPath.section][indexPath.row]
         
         cell.vc = self
+        cell.tableView = tableView
         cell.card1 = nil
         cell.card2 = nil
         

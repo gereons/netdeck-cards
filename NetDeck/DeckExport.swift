@@ -164,7 +164,7 @@ class DeckExport {
         if deck.identity?.role == .corp {
             s += "\(deck.agendaPoints) agenda points" + eol
         }
-        let set = PackManager.mostRecentPackUsedIn(deck: deck)
+        let set = PackManager.mostRecentPackUsedIn(cards: deck.allCards)
         s += "Cards up to \(set)" + eol
         
         let reasons = deck.checkValidity()

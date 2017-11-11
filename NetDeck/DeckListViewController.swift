@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class DeckListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate {
+class DeckListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, IdentitySelector {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -879,7 +879,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.statusLabel.strings = reasons
         self.statusLabel.textColor = reasons.count == 0 ? .darkGray : .red
         
-        let set = PackManager.mostRecentPackUsedIn(deck: self.deck)
+        let set = PackManager.mostRecentPackUsedIn(cards: self.deck.allCards)
         self.lastSetLabel.text = String(format: "Cards up to %@".localized(), set)
         
         self.deckNameLabel.text = self.deck.name

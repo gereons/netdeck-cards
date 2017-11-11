@@ -37,7 +37,7 @@ class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITab
         self.modalPresentationStyle = .formSheet
         
         self.errors = deck.checkValidity()
-        self.sets = PackManager.packsUsedIn(deck: deck)
+        self.sets = PackManager.packsUsedIn(cards: deck.allCards)
         
         self.costStats = CostStats(deck: deck)
         self.strengthStats = StrengthStats(deck: deck)
@@ -158,7 +158,7 @@ class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITab
                     cell.textLabel?.text = self.errors[indexPath.row]
                     cell.textLabel?.textColor = .red
                 } else if indexPath.row == self.errors.count {
-                    cell.textLabel?.text = String(format: "Cards up to %@".localized(), PackManager.mostRecentPackUsedIn(deck: deck))
+                    cell.textLabel?.text = String(format: "Cards up to %@".localized(), PackManager.mostRecentPackUsedIn(cards: deck.allCards))
                     cell.accessoryView = self.toggleButton
                 } else if indexPath.row > self.errors.count {
                     cell.textLabel?.text = self.sets[indexPath.row - self.errors.count - 1]
@@ -168,7 +168,7 @@ class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITab
                 case 0:
                     cell.textLabel?.text = "Deck is valid".localized()
                 case 1:
-                    cell.textLabel?.text = String(format: "Cards up to %@".localized(), PackManager.mostRecentPackUsedIn(deck: deck))
+                    cell.textLabel?.text = String(format: "Cards up to %@".localized(), PackManager.mostRecentPackUsedIn(cards: deck.allCards))
                     cell.accessoryView = self.toggleButton
                 default:
                     cell.textLabel?.text = self.sets[indexPath.row - 2]

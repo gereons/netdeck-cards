@@ -8,11 +8,15 @@
 
 import UIKit
 
+protocol PopupDisplayer: class {
+    func showPopup(for card: Card, in view: UIView, from rect: CGRect)
+}
+
 class BrowserCell: UITableViewCell {
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
     
-    weak var parent: BrowserResultViewController?
+    weak var parent: PopupDisplayer?
     
     var card: Card! {
         didSet {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */; };
-		3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */; };
 		3A0841901E0D6719000779C3 /* UIAlert+NetDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */; };
 		3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */; };
 		3A095E8B18BBC49C00C99FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A095E8D18BBC49C00C99FED /* Localizable.strings */; };
@@ -131,7 +130,6 @@
 		3AA50F361C0A2FC8007D5296 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA50F351C0A2FC8007D5296 /* Deck.swift */; };
 		3AA850721F59E46200B37CD1 /* TipJarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA850701F59E46200B37CD1 /* TipJarViewController.swift */; };
 		3AA850731F59E46200B37CD1 /* TipJarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA850711F59E46200B37CD1 /* TipJarViewController.xib */; };
-		3AA850751F59E8C900B37CD1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA850741F59E8C900B37CD1 /* StoreKit.framework */; };
 		3AA8EC2A1CC3A05E00370A26 /* DeckHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8EC281CC3A05E00370A26 /* DeckHistoryViewController.swift */; };
 		3AA8EC2B1CC3A05E00370A26 /* DeckHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA8EC291CC3A05E00370A26 /* DeckHistoryViewController.xib */; };
 		3AA8EC2C1CC3AA8200370A26 /* DeckHistorySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A531B281A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.swift */; };
@@ -397,7 +395,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDF6E1A45BDD2269ED47E09D /* Pods_NetDeck.framework in Frameworks */,
-				3AA850751F59E8C900B37CD1 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -982,7 +979,6 @@
 			files = (
 				3A9CE56518E0B6C0007A26CD /* IdentityViewCell.xib in Resources */,
 				3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */,
-				3A06C2D5192A6AFE000D675A /* ReviewReminder.txt in Resources */,
 				3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */,
 				3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */,
 				3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */,
@@ -1088,8 +1084,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/Applications/Checker.app/Contents/Resources/start-analyzer.app/Contents/MacOS/start-analyzer || echo \"WARNING: start-analyzer not installed.\"";
-			shellScript = "";
+			shellPath = /bin/sh;
+			shellScript = "/Applications/Checker.app/Contents/Resources/start-analyzer.app/Contents/MacOS/start-analyzer || echo \"WARNING: start-analyzer not installed.\"";
 		};
 		5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
