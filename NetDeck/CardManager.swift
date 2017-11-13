@@ -122,7 +122,7 @@ class CardManager {
         
         for identity in allIdentities {
             let faction = Faction.name(for: identity.faction)
-            if let index = factionNames.index(where: { $0 == faction }), !PackManager.isCardInDisabledPack(identity) {
+            if let index = factionNames.index(where: { $0 == faction }), !identity.inDisabledPack {
                 identities[index].append(identity)
             }
         }

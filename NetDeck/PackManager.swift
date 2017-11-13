@@ -107,8 +107,12 @@ class PackManager {
         return fmt.string(from: Date())
     }
     
-    static func isCardInDisabledPack(_ card: Card) -> Bool {
-        return self.disabledPackCodes().contains(card.packCode)
+//    static func isCardInDisabledPack(_ card: Card) -> Bool {
+//        return self.disabledPackCodes().contains(card.packCode)
+//    }
+
+    static func isPackDisabled(_ code: String) -> Bool {
+        return self.disabledPackCodes().contains(code)
     }
     
     static var packsAvailable: Bool {
@@ -299,53 +303,6 @@ class PackManager {
         data.collapsedSections = collapsedSections
         return data
     }
-
-    static func packsUsedIn(cards: [CardCounter]) -> [String] {
-        var packsUsed = [String: Int]() // pack code -> number of times used
-        var cardsUsed = [String: Int]() // pack code -> number of cards used
-            
-        for cc in cards {
-            let code = cc.card.packCode
-            
-            var used = packsUsed[code] ?? 1
-            if cc.count > Int(cc.card.quantity) {
-                let needed = Int(0.5 + Float(cc.count) / Float(cc.card.quantity))
-                if needed > used {
-                    used = needed
-                }
-            }
-            packsUsed[code] = used
-            
-            var cardUsed = cardsUsed[code] ?? 0
-            cardUsed += cc.count
-            cardsUsed[code] = cardUsed
-        }
-        
-        var result = [String]()
-        for pack in allPacks {
-            if let used = cardsUsed[pack.code], let needed = packsUsed[pack.code] {
-                let cards = used == 1 ? "Card".localized() : "Cards".localized()
-                if needed > 1 {
-                    result.append(String(format:"%d×%@ - %d %@", needed, pack.name, used, cards))
-                } else {
-                    result.append(String(format:"%@ - %d %@", pack.name, used, cards))
-                }
-            }
-        }
-        return result
-    }
-    
-    static func mostRecentPackUsedIn(cards: [CardCounter]) -> String {
-        var maxIndex = -1
-        
-        for cc in cards {
-            if let index = allPacks.index(where: { $0.code == cc.card.packCode}) {
-                maxIndex = max(index, maxIndex)
-            }
-        }
-        
-        return maxIndex == -1 ? "n/a" : allPacks[maxIndex].name
-    }
     
     static func cycleForPack(_ packCode: String) -> String? {
         if let pack = packsByCode[packCode] {
@@ -384,7 +341,7 @@ class PackManager {
         _ = try? fileMgr.removeItem(atPath: packsPathname())
         _ = try? fileMgr.removeItem(atPath: cyclesPathname())
         
-        CardManager.initialize()
+        // CardManager.initialize()
     }
     
     static func setupFromFiles(_ language: String) -> Bool {

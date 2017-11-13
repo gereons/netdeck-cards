@@ -112,6 +112,7 @@
 "Uses rotated-out cards" = "Enthält rausrotierte Karten";
 "Invalid for Cache Refresh" = "Ungültig für Cache Refresh";
 "Uses invalid Datapack" = "Nicht erlaubter Datensatz";
+"Uses old Core set cards" = "Enthält altes Grundspiel";
 "Uses removed cards" = "Enthält entfernte Karten";
 "Too many restricted cards" = "Zuviele limitierte Karten";
 

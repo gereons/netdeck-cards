@@ -651,6 +651,55 @@ import SwiftyUserDefaults
         
         coder.encode(self.convertedToCore2, forKey: "convertedToCore2")
     }
+
+    // -
+
+    func packsUsed() -> [String] {
+        var packsUsed = [String: Int]() // pack code -> number of times used
+        var cardsUsed = [String: Int]() // pack code -> number of cards used
+
+        for cc in self.allCards {
+            let code = cc.card.packCode
+
+            var used = packsUsed[code] ?? 1
+            if cc.count > Int(cc.card.quantity) {
+                let needed = Int(0.5 + Float(cc.count) / Float(cc.card.quantity))
+                if needed > used {
+                    used = needed
+                }
+            }
+            packsUsed[code] = used
+
+            var cardUsed = cardsUsed[code] ?? 0
+            cardUsed += cc.count
+            cardsUsed[code] = cardUsed
+        }
+
+        var result = [String]()
+        for pack in PackManager.allPacks {
+            if let used = cardsUsed[pack.code], let needed = packsUsed[pack.code] {
+                let cards = used == 1 ? "Card".localized() : "Cards".localized()
+                if needed > 1 {
+                    result.append(String(format:"%d×%@ - %d %@", needed, pack.name, used, cards))
+                } else {
+                    result.append(String(format:"%@ - %d %@", pack.name, used, cards))
+                }
+            }
+        }
+        return result
+    }
+
+    func mostRecentPackUsed() -> String {
+        var maxIndex = -1
+
+        for cc in cards {
+            if let index = PackManager.allPacks.index(where: { $0.code == cc.card.packCode}) {
+                maxIndex = max(index, maxIndex)
+            }
+        }
+
+        return maxIndex == -1 ? "n/a" : PackManager.allPacks[maxIndex].name
+    }
 }
 
 // MARK: - validity checking
@@ -830,22 +879,24 @@ extension Deck {
         }
         
         let validCycles = PackManager.cacheRefreshCycles
-        
+
         var coreCardsOverQuantity = 0
         var draftUsed = false
+        var oldCoreUsed = false
         
         var cardsFromDeluxe = [String: Int]()
         var cardsFromTD = 0
         var cardsFromAllowedCycles = 0
         var cardsFromForbiddenCycles = 0
 
-        FIXME("only allow core2 in CR")
         for cc in self.cards {
             let card = cc.card
             switch card.packCode {
             case PackManager.draft:
                 draftUsed = true
-            case PackManager.core, PackManager.core2:
+            case PackManager.core:
+                oldCoreUsed = true
+            case PackManager.core2:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
@@ -867,6 +918,9 @@ extension Deck {
         var reasons = [String]()
         if draftUsed {
             reasons.append("Uses draft cards".localized())
+        }
+        if oldCoreUsed {
+            reasons.append("Uses old Core set cards".localized())
         }
         
         let deluxesUsed = cardsFromDeluxe.count

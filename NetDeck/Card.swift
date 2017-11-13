@@ -156,6 +156,10 @@ class Card: NSObject, Unmarshaling {
     var strengthString: String {
         return xStringify(self.strength)
     }
+
+    var inDisabledPack: Bool {
+        return PackManager.isPackDisabled(self.packCode)
+    }
     
     private func xStringify(_ x: Int) -> String {
         switch x {

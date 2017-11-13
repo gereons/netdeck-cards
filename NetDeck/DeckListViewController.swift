@@ -879,7 +879,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.statusLabel.strings = reasons
         self.statusLabel.textColor = reasons.count == 0 ? .darkGray : .red
         
-        let set = PackManager.mostRecentPackUsedIn(cards: self.deck.allCards)
+        let set = deck.mostRecentPackUsed()
         self.lastSetLabel.text = String(format: "Cards up to %@".localized(), set)
         
         self.deckNameLabel.text = self.deck.name
