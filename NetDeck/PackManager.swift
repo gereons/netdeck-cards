@@ -107,10 +107,6 @@ class PackManager {
         return fmt.string(from: Date())
     }
     
-//    static func isCardInDisabledPack(_ card: Card) -> Bool {
-//        return self.disabledPackCodes().contains(card.packCode)
-//    }
-
     static func isPackDisabled(_ code: String) -> Bool {
         return self.disabledPackCodes().contains(code)
     }

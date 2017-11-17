@@ -126,12 +126,12 @@ class DeckImport: NSObject {
         // https://netrunnerdb.com/en/deck/view/456867/hash
         
         let list = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../decklist/(\\d*)/.*", options:[])
-        let shared1 = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../deck/view/(\\d*)/(.*)", options:[])
+        // let shared1 = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../deck/view/(\\d*)/(.*)", options:[])
         let shared2 = try! NSRegularExpression(pattern: "https://netrunnerdb.com/../deck/view/(\\d*)", options:[])
-        FIXME("wip until hashed url format is final")
+        // FIXME("wip until hashed url format is final")
 
         let dict = [
-            DeckBuilderSource.nrdbShared: [ shared1, shared2 ],
+            DeckBuilderSource.nrdbShared: [ shared2 ],
             DeckBuilderSource.nrdbList: [ list ]
         ]
 
@@ -288,10 +288,10 @@ class DeckImport: NSObject {
     }
 
     private func doDownloadDeckFromNetrunnerDbShared(_ source: DeckSource) {
-        var deckUrl = "https://netrunnerdb.com/api/2.0/public/deck/" + source.deckId
-        if let hash = source.hash {
-            deckUrl += "/" + hash
-        }
+        let deckUrl = "https://netrunnerdb.com/api/2.0/public/deck/" + source.deckId
+//        if let hash = source.hash {
+//            deckUrl += "/" + hash
+//        }
         self.doDownloadDeckFromNetrunnerDb(deckUrl)
     }
     
