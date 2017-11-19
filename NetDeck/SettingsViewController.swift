@@ -35,21 +35,9 @@ class Settings {
 class SettingsDelegate: IASKSettingsDelegate {
 
     required init() {
-//        self.iask = IASKAppSettingsViewController(style: .grouped)
-
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.settingsChangedXX(_:)), name: Notification.Name(kIASKAppSettingChanged), object: nil)
+        nc.addObserver(self, selector: #selector(self.settingsChanged(_:)), name: Notification.Name(kIASKAppSettingChanged), object: nil)
         nc.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
-
-//        self.iask.showDoneButton = false
-//
-//        // workaround for iOS 11 change in UITableView
-//        self.iask.tableView.estimatedRowHeight = 0
-//        self.iask.tableView.estimatedSectionHeaderHeight = 0
-//        self.iask.tableView.estimatedSectionFooterHeight = 0
-//
-//        self.iask.tableView.scrollFix()
-//        self.iask.delegate = self
 
         self.setHiddenKeys()
     }
@@ -105,14 +93,14 @@ class SettingsDelegate: IASKSettingsDelegate {
         }
     }
     
-    @objc func settingsChangedXX(_ notification: Notification) {
+    @objc func settingsChanged(_ notification: Notification) {
         guard
             let key = notification.userInfo?.keys.first as? String else {
             return
         }
         let value = notification.userInfo?[key]
 
-        print("settings changed: \(key) = \(value)")
+        // print("settings changed: \(key) = \(value)")
 
         switch key {
         case DefaultsKeys.useDropbox._key:
