@@ -42,7 +42,7 @@ class Dropbox {
     }
     
     static func authorizeFromController(_ controller: UIViewController) {
-        if (DropboxClientsManager.authorizedClient == nil) {
+        if DropboxClientsManager.authorizedClient == nil {
             DropboxClientsManager.authorizeFromController(UIApplication.shared,
                                                           controller: controller,
                                                           openURL: { url in UIApplication.shared.openURL(url) } )

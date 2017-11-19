@@ -10,24 +10,46 @@ import InAppSettingsKit
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class SettingsViewController: IASKAppSettingsViewController {
- 
+class Settings {
+    static var viewController: IASKAppSettingsViewController {
+        return synchronized(self) {
+            instance()
+        }
+    }
+
+    private static var iask: IASKAppSettingsViewController!
+    private static var delegate: SettingsDelegate!
+
+    private static func instance() -> IASKAppSettingsViewController {
+        if iask == nil {
+            iask = IASKAppSettingsViewController(style: .grouped)
+            delegate = SettingsDelegate()
+
+            iask.delegate = delegate
+            iask.showDoneButton = false
+        }
+        return iask
+    }
+}
+
+class SettingsDelegate: IASKSettingsDelegate {
+
     required init() {
-        super.init(style: .grouped)
+//        self.iask = IASKAppSettingsViewController(style: .grouped)
 
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.settingsChanged(_:)), name: Notification.Name(kIASKAppSettingChanged), object: nil)
+        nc.addObserver(self, selector: #selector(self.settingsChangedXX(_:)), name: Notification.Name(kIASKAppSettingChanged), object: nil)
         nc.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
 
-        self.delegate = self
-        self.showDoneButton = false
-
-        // workaround for iOS 11 change in UITableView
-        self.tableView.estimatedRowHeight = 0
-        self.tableView.estimatedSectionHeaderHeight = 0
-        self.tableView.estimatedSectionFooterHeight = 0
-
-        self.tableView.scrollFix()
+//        self.iask.showDoneButton = false
+//
+//        // workaround for iOS 11 change in UITableView
+//        self.iask.tableView.estimatedRowHeight = 0
+//        self.iask.tableView.estimatedSectionHeaderHeight = 0
+//        self.iask.tableView.estimatedSectionFooterHeight = 0
+//
+//        self.iask.tableView.scrollFix()
+//        self.iask.delegate = self
 
         self.setHiddenKeys()
     }
@@ -36,12 +58,12 @@ class SettingsViewController: IASKAppSettingsViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        Analytics.logEvent(.showSettings)
+//    }
 
-        Analytics.logEvent(.showSettings)
-    }
-    
     private func setHiddenKeys() {
         var hiddenKeys = Set<String>()
         
@@ -73,7 +95,7 @@ class SettingsViewController: IASKAppSettingsViewController {
             hiddenKeys.insert(DefaultsKeys.convertCore._key)
         }
         
-        self.hiddenKeys = hiddenKeys
+        Settings.viewController.hiddenKeys = hiddenKeys
     }
     
     @objc func cardsLoaded(_ notification: Notification) {
@@ -83,19 +105,21 @@ class SettingsViewController: IASKAppSettingsViewController {
         }
     }
     
-    @objc func settingsChanged(_ notification: Notification) {
+    @objc func settingsChangedXX(_ notification: Notification) {
         guard
             let key = notification.userInfo?.keys.first as? String else {
             return
         }
         let value = notification.userInfo?[key]
-        
+
+        print("settings changed: \(key) = \(value)")
+
         switch key {
         case DefaultsKeys.useDropbox._key:
             let useDropbox = value as? Bool ?? false
             
             if useDropbox {
-                Dropbox.authorizeFromController(self)
+                Dropbox.authorizeFromController(Settings.viewController)
             } else {
                 Dropbox.unlinkClient()
             }
@@ -161,9 +185,9 @@ class SettingsViewController: IASKAppSettingsViewController {
         }
         
         if Device.isIpad {
-            NRDBAuthPopupViewController.show(in: self)
+            NRDBAuthPopupViewController.show(in: Settings.viewController)
         } else {
-            NRDBAuthPopupViewController.push(on: self.navigationController!)
+            NRDBAuthPopupViewController.push(on: Settings.viewController.navigationController!)
         }
     }
     
@@ -204,9 +228,6 @@ class SettingsViewController: IASKAppSettingsViewController {
     private func showOfflineAlert() {
         UIAlertController.alert(withTitle: nil, message: "An Internet connection is required".localized(), button: "OK".localized())
     }
-}
-
-extension SettingsViewController: IASKSettingsDelegate {
 
     func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController!) {
         // nop

@@ -232,7 +232,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
             let browser = BrowserFilterViewController()
             self.navigationController?.pushViewController(browser, animated: true)
         case .settings:
-            let settings = SettingsViewController()
+            let settings = Settings.viewController
             self.showAsDetailViewController(settings)
         case .about:
             let about = AboutViewController()
