@@ -202,27 +202,16 @@ class CardManager {
     
     private static func addCardAliases(_ cards: [Card]) {
         // add automatic aliases like "Self Modifying Code" -> "SMC"
-        let split = CharacterSet(charactersIn: " -.")
-        for card in cards {
-            if card.name.count > 2 {
-                let words = card.name.components(separatedBy: split)
-                if words.count > 1 {
-                    var alias = ""
-                    for word in words {
-                        if word.count > 0 {
-                            var c = word[word.startIndex]
-                            if c == "\"" {
-                                c = word[word.index(word.startIndex, offsetBy: 1)]
-                            }
-                            alias.append(c)
-                        }
-                    }
-                    // NSLog("%@ -> %@", card.name, alias)
-                    card.addCardAlias(alias)
-                }
+        let split = CharacterSet(charactersIn: " -.\"")
+
+        cards.forEach { card in
+            let words = card.name.components(separatedBy: split)
+            if words.count > 1 {
+                let alias = words.map { $0.prefix(1) }.joined(separator: "")
+                card.addCardAlias(alias)
             }
         }
-        
+
         // add hard-coded aliases
         for (code, alias) in Card.aliases {
             if let card = CardManager.cardBy(code: code) {

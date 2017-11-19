@@ -473,6 +473,9 @@ extension Card {
         ("12088", "Nanotek"),
         ("12088", "Nanotech"),
         ("13038", "UVC"),       // Ultraviolet Clearance
+        ("12104", "Turtle"),    // Aumakua
+        ("20060", "Mr. Phones"),// Underworld Contact
+        ("02069", "Mr. Phones")
     ]
 
 }

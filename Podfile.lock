@@ -34,7 +34,7 @@ PODS:
   - SDCAlertView (8.0.1)
   - SVProgressHUD (2.2.2)
   - SwiftKeychainWrapper (3.0.1)
-  - SwiftyDropbox (4.2.2):
+  - SwiftyDropbox (4.3.0):
     - Alamofire (~> 4.5.0)
   - SwiftyUserDefaults (3.0.0)
 
@@ -55,22 +55,17 @@ DEPENDENCIES:
   - SDCAlertView
   - SVProgressHUD
   - SwiftKeychainWrapper
-  - SwiftyDropbox (from `https://github.com/gereons/SwiftyDropbox`)
+  - SwiftyDropbox
   - SwiftyUserDefaults
 
 EXTERNAL SOURCES:
   EasyTipView:
     :git: https://github.com/gereons/EasyTipView
-  SwiftyDropbox:
-    :git: https://github.com/gereons/SwiftyDropbox
 
 CHECKOUT OPTIONS:
   EasyTipView:
     :commit: f3ee306710de0ebcc9ed3dcccd7ea1b8be86cacc
     :git: https://github.com/gereons/EasyTipView
-  SwiftyDropbox:
-    :commit: 07e8a0f2bf180b885ad75cd23b4aacc63d910530
-    :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
@@ -90,9 +85,9 @@ SPEC CHECKSUMS:
   SDCAlertView: 0dac88159108e755a78ca8d789b3b82305accae4
   SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
-  SwiftyDropbox: aa756442a4fedf1eb3b3aabf7e63b637eacde56a
+  SwiftyDropbox: f70ff647c8ef4195e1314c8a894652f3ba3da526
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
 
-PODFILE CHECKSUM: 714a3bdbb59747b87900e156794928390e8c098e
+PODFILE CHECKSUM: c7045768340de2c428e8b4928a83944f4a1a45e0
 
 COCOAPODS: 1.3.1
