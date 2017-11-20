@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Fabric.with([Crashlytics.self])
         }
 
+        Dropbox.setup()
+
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
         // make sure the Library/Application Support directory exists
@@ -113,9 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let keepCredentials = Defaults[.keepNrdbCredentials]
         let fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever
         UIApplication.shared.setMinimumBackgroundFetchInterval(fetchInterval)
-        
-        Dropbox.setup()
-        
+
         SVProgressHUD.setDefaultMaskType(.black)
         SVProgressHUD.setMinimumDismissTimeInterval(1.0)
         
