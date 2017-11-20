@@ -55,7 +55,8 @@ class SavedDecksList: DecksViewController {
 
         let total = self.decks.reduce(0) { $0 + $1.count }
         if total > 0 {
-            let top = IndexPath(row: 0, section: 0)
+            let section = decks[0].count > 0 ? 0 : decks[1].count
+            let top = IndexPath(row: 0, section: section)
             self.tableView.scrollToRow(at: top, at: .top, animated: false)
         }
     }
