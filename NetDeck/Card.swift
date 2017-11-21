@@ -14,7 +14,7 @@ class Card: NSObject, Unmarshaling {
     private(set) static var fullNames = [String: String]() // code => full names of identities
     private static let X = -2                   // for strength/cost "X". *MUST* be less than -1!
     
-    private(set) var code = ""
+    @objc private(set) var code = ""
     @objc private(set) var name = ""            // localized name of card, used for display
     private(set) var foldedName = ""            // lowercased, no diacritics, for sorting (e.g. "Déjà vu" -> "deja vu")
     @objc private(set) var englishName = ""     // english name of card, used for searches
