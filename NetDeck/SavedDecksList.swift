@@ -53,14 +53,18 @@ class SavedDecksList: DecksViewController {
         
         self.navigationItem.rightBarButtonItems = self.normalRightButtons
 
-        let total = self.decks.reduce(0) { $0 + $1.count }
-        if total > 0 {
-            let section = decks[0].count > 0 ? 0 : decks[1].count
-            let top = IndexPath(row: 0, section: section)
+        var scrollTo: IndexPath?
+        if self.decks.count > 0 && self.decks[0].count > 0 {
+            scrollTo = IndexPath(row: 0, section: 0)
+        } else if self.decks.count > 1 && self.decks[1].count > 0 {
+            scrollTo = IndexPath(row: 0, section: 1)
+        }
+
+        if let top = scrollTo {
             self.tableView.scrollToRow(at: top, at: .top, animated: false)
         }
     }
-        
+
     @objc func importDecks(_ sender: UIBarButtonItem) {
         if self.popup != nil {
             return self.dismissPopup()

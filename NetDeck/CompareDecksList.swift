@@ -36,9 +36,14 @@ class CompareDecksList: DecksViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let total = self.decks.reduce(0) { $0 + $1.count }
-        if total > 0 {
-            let top = IndexPath(row: 0, section: 0)
+        var scrollTo: IndexPath?
+        if self.decks.count > 0 && self.decks[0].count > 0 {
+            scrollTo = IndexPath(row: 0, section: 0)
+        } else if self.decks.count > 1 && self.decks[1].count > 0 {
+            scrollTo = IndexPath(row: 0, section: 1)
+        }
+
+        if let top = scrollTo {
             self.tableView.scrollToRow(at: top, at: .top, animated: false)
         }
     }
