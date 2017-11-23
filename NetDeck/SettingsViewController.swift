@@ -27,6 +27,12 @@ class Settings {
 
             iask.delegate = delegate
             iask.showDoneButton = false
+
+            // workaround for iOS 11 change in UITableView
+            iask.tableView.estimatedRowHeight = 0
+            iask.tableView.estimatedSectionHeaderHeight = 0
+            iask.tableView.estimatedSectionFooterHeight = 0
+
         }
         return iask
     }
