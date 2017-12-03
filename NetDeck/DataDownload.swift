@@ -108,10 +108,11 @@ class DataDownload: NSObject {
         let language = Defaults[.language]
 
         let urlString: String
+        let baseUrl = BuildConfig.debug ? "https://raw.githubusercontent.com/gereons/netdeck-cards/test" : "https://gereons.github.io/netdeck-cards"
         switch apiRequest {
-        case .cycles: urlString = "https://gereons.github.io/netdeck-cards/api/2.0/cycles_\(language).json"
-        case .packs: urlString = "https://gereons.github.io/netdeck-cards/api/2.0/packs_\(language).json"
-        case .cards: urlString = "https://gereons.github.io/netdeck-cards/api/2.0/cards_\(language).json"
+        case .cycles: urlString = baseUrl + "/api/2.0/cycles_\(language).json"
+        case .packs: urlString = baseUrl + "/api/2.0/packs_\(language).json"
+        case .cards: urlString = baseUrl + "/api/2.0/cards_\(language).json"
         }
 
         let url = URL(string: urlString)!
