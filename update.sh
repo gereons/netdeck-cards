@@ -29,6 +29,7 @@ if git diff --quiet --exit-code
 then
     echo no updates found
 else
+    git checkout test
     echo updates found, committing
     git add api/2.0/*
     DATE=$(date +%Y-%m-%d)
