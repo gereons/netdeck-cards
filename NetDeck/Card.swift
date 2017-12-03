@@ -471,7 +471,8 @@ extension Card {
         ("13038", "UVC"),       // Ultraviolet Clearance
         ("12104", "Turtle"),    // Aumakua
         ("20060", "Mr. Phones"),// Underworld Contact
-        ("02069", "Mr. Phones")
+        ("02069", "Mr. Phones"),
+        ("12115", "ARES"),      // AR-Enhanced Security
     ]
 
 }
