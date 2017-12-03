@@ -16,9 +16,13 @@ do
     fi
     SUFFIX="_$language"
 
-    curl $CARDS_URL$LOCALE -o api/2.0/cards$SUFFIX.json
-    curl $CYCLES_URL$LOCALE -o api/2.0/cycles$SUFFIX.json
-    curl $PACKS_URL$LOCALE -o api/2.0/packs$SUFFIX.json
+    echo -n "$language: "
+    curl -s $CARDS_URL$LOCALE -o api/2.0/cards$SUFFIX.json
+    echo -n "."
+    curl -s $CYCLES_URL$LOCALE -o api/2.0/cycles$SUFFIX.json
+    echo -n "."
+    curl -s $PACKS_URL$LOCALE -o api/2.0/packs$SUFFIX.json
+    echo "."
 done
 
 if git diff --quiet --exit-code
@@ -30,4 +34,6 @@ else
     DATE=$(date +%Y-%m-%d)
     git commit -m "update $DATE"
     git push
+    git status
+    echo "don't forget to test and merge to master"
 fi
