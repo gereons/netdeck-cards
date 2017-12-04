@@ -20,7 +20,7 @@
 		3A126E901D0320ED00CDF580 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A126E8F1D0320ED00CDF580 /* Translation.swift */; };
 		3A14E39F1E5F720600F0D4CB /* StartupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A14E39D1E5F720600F0D4CB /* StartupViewController.swift */; };
 		3A14E3A01E5F720600F0D4CB /* StartupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A14E39E1E5F720600F0D4CB /* StartupViewController.xib */; };
-		3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */; };
+		3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController~ipad.xib */; };
 		3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */; };
 		3A18B2571B8B7C650065EC4A /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A18B2551B8B7C650065EC4A /* FilterViewController.xib */; };
 		3A1942681DC7337A00EB9CE5 /* CardImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1942671DC7337A00EB9CE5 /* CardImageViewController.swift */; };
@@ -142,7 +142,7 @@
 		3AB838611DC684EB0047B7DB /* BrowserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB838601DC684EB0047B7DB /* BrowserImageCell.swift */; };
 		3AB838631DC689C00047B7DB /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB838621DC689C00047B7DB /* CardDetailView.swift */; };
 		3AB9BD5A18FADB51004EAF10 /* DecksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */; };
-		3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */; };
+		3AB9BD5F18FADC01004EAF10 /* DeckCell~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB9BD5D18FADC01004EAF10 /* DeckCell~ipad.xib */; };
 		3ABAD2FE1B83A6D7009E81F3 /* IphoneIdentityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ABAD2FC1B83A6D7009E81F3 /* IphoneIdentityViewController.xib */; };
 		3ABBE8041E2264AA00A1B583 /* IdentitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABBE8031E2264AA00A1B583 /* IdentitySelectionViewController.swift */; };
 		3ABBE8061E22B67A00A1B583 /* SavedDecksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABBE8051E22B67A00A1B583 /* SavedDecksList.swift */; };
@@ -203,7 +203,7 @@
 		3A126E8F1D0320ED00CDF580 /* Translation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
 		3A14E39D1E5F720600F0D4CB /* StartupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupViewController.swift; sourceTree = "<group>"; };
 		3A14E39E1E5F720600F0D4CB /* StartupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StartupViewController.xib; sourceTree = "<group>"; };
-		3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NRDBAuthPopupViewController.xib; sourceTree = "<group>"; };
+		3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "NRDBAuthPopupViewController~ipad.xib"; sourceTree = "<group>"; };
 		3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionViewController.xib; sourceTree = "<group>"; };
 		3A18B2551B8B7C650065EC4A /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
 		3A1942671DC7337A00EB9CE5 /* CardImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardImageViewController.swift; sourceTree = "<group>"; };
@@ -344,7 +344,7 @@
 		3AB838601DC684EB0047B7DB /* BrowserImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserImageCell.swift; sourceTree = "<group>"; };
 		3AB838621DC689C00047B7DB /* CardDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
 		3AB9BD5818FADB51004EAF10 /* DecksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DecksViewController.xib; sourceTree = "<group>"; };
-		3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckCell.xib; sourceTree = "<group>"; };
+		3AB9BD5D18FADC01004EAF10 /* DeckCell~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DeckCell~ipad.xib"; sourceTree = "<group>"; };
 		3ABAD2FC1B83A6D7009E81F3 /* IphoneIdentityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IphoneIdentityViewController.xib; sourceTree = "<group>"; };
 		3ABBE8031E2264AA00A1B583 /* IdentitySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentitySelectionViewController.swift; sourceTree = "<group>"; };
 		3ABBE8051E22B67A00A1B583 /* SavedDecksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedDecksList.swift; sourceTree = "<group>"; };
@@ -689,7 +689,7 @@
 				3A733B991C8DF801005B1F9B /* NRDB.swift */,
 				3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */,
 				3A84F8DB1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift */,
-				3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController.xib */,
+				3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController~ipad.xib */,
 				3AF062371B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib */,
 				3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */,
 			);
@@ -831,7 +831,7 @@
 				3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */,
 				3ACE03911882CEC600F22B87 /* ImportDecksViewController.xib */,
 				3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */,
-				3AB9BD5D18FADC01004EAF10 /* DeckCell.xib */,
+				3AB9BD5D18FADC01004EAF10 /* DeckCell~ipad.xib */,
 				3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */,
 			);
 			name = "Saved Decks";
@@ -908,11 +908,11 @@
 				3A36225A1849320C007F2854 /* Sources */,
 				3A36225B1849320C007F2854 /* Frameworks */,
 				3A36225C1849320C007F2854 /* Resources */,
-				3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */,
 				3A814EC519ADBEEE008C3285 /* Crashlytics */,
 				5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */,
 				C576FDA1A12A9ED691A68447 /* [CP] Copy Pods Resources */,
 				3AF1E9151FB4F733009E8B88 /* Run Checker */,
+				3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */,
 			);
 			buildRules = (
 			);
@@ -980,7 +980,7 @@
 				3A9CE56518E0B6C0007A26CD /* IdentityViewCell.xib in Resources */,
 				3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */,
 				3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */,
-				3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController.xib in Resources */,
+				3A1777E01967EA0B0066E095 /* NRDBAuthPopupViewController~ipad.xib in Resources */,
 				3AD066821896D5B800FF1666 /* SmallCardCell.xib in Resources */,
 				3A843A931B8A0114000CC60D /* DeckCell~iphone.xib in Resources */,
 				3A6ECD2C1D85BF3B008FBF38 /* ActionsTableViewController.xib in Resources */,
@@ -1001,7 +1001,7 @@
 				3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */,
 				3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */,
 				3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */,
-				3AB9BD5F18FADC01004EAF10 /* DeckCell.xib in Resources */,
+				3AB9BD5F18FADC01004EAF10 /* DeckCell~ipad.xib in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailViewController.xib in Resources */,
 				3A11C5FC19715C0A003F2093 /* CollectionViewSectionHeader.xib in Resources */,
 				3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */,
@@ -1047,7 +1047,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -1055,7 +1055,7 @@
 			name = "Set CFBundleVersion from git";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" != \"Release\" ]; then\nGITVERSION=$(git rev-parse --short HEAD)\necho \"add git version... $GITVERSION\"\necho -n \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\" | xargs -0 /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $GITVERSION\"\nfi\n";
 		};
