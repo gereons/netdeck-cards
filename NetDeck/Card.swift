@@ -57,6 +57,7 @@ class Card: NSObject, Unmarshaling {
     private(set) var quantity = -1             // number of cards in set
     
     private let subtypeDelimiter = " - "
+    private var imageUrl: String?
     
     @objc var typeStr: String {
         return Translation.forTerm(self.typeCode, language: Card.currentLanguage)
@@ -75,9 +76,11 @@ class Card: NSObject, Unmarshaling {
     }
 
     var imageSrc: String {
-        return Card.imgSrcTemplate
-            .replacingOccurrences(of: "{locale}", with: Card.currentLanguage)
-            .replacingOccurrences(of: "{code}", with: self.code)
+        if let src = self.imageUrl {
+            return src
+        } else {
+            return Card.imgSrcTemplate.replacingOccurrences(of: "{code}", with: self.code)
+        }
     }
     
     var nrdbLink: String {
@@ -279,6 +282,8 @@ class Card: NSObject, Unmarshaling {
                 Card.multiIce.append(self.code)
             }
         }
+
+        self.imageUrl = try? object.value(for: "image_url")
     }
     
     func addCardAlias(_ alias: String) {
