@@ -117,7 +117,12 @@ class DataDownload: NSObject {
         }
 
         let url = URL(string: urlString)!
-        return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
+        var req = URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
+        if BuildConfig.debug {
+            req.cachePolicy = .reloadIgnoringLocalCacheData
+        }
+
+        return req
     }
     
     @objc func doDownloadCardData(_ dummy: Any) {
@@ -132,9 +137,10 @@ class DataDownload: NSObject {
         let group = DispatchGroup()
         var results = [ApiRequest: Data]()
         for (key, req) in requests {
-            // print("dl for \(key)")
+            // print("dl for \(key): \(req.url!)")
             group.enter()
             Alamofire.request(req).validate().responseJSON { response in
+                // print("\(req.url!) \(String(describing: response.response?.statusCode))")
                 switch response.result {
                 case .success:
                     if let data = response.data, !self.downloadStopped {
