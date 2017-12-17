@@ -38,7 +38,10 @@ class AppUpdateCheck {
                     alert.addAction(UIAlertAction(title: "Not now".localized(), style: .default, handler: nil))
 
                     alert.show()
-                    Analytics.logEvent(.appUpdateAvailable)
+
+                    let dict = Bundle.main.infoDictionary
+                    let currentVersion = dict?["CFBundleShortVersionString"] as? String
+                    Analytics.logEvent(.appUpdateAvailable, attributes: ["currentVersion": currentVersion ?? "n/a" ])
                 }
             }
             
