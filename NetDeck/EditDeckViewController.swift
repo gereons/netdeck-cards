@@ -679,6 +679,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     private func setLegality(_ mwl: MWL, cacheRefresh: Bool, onesies: Bool) {
+        Analytics.logEvent(.changeMwl, attributes: [ "from": "\(self.deck.mwl.rawValue)", "to": "\(mwl.rawValue)"])
         self.deck.mwl = mwl
         self.deck.cacheRefresh = cacheRefresh
         self.deck.onesies = onesies

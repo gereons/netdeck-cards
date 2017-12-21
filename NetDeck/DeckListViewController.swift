@@ -1281,6 +1281,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     private func setLegality(_ newMwl: MWL, cacheRefresh: Bool, onesies: Bool) {
         if self.deck.mwl != newMwl || self.deck.onesies != onesies || self.deck.cacheRefresh != cacheRefresh {
+            Analytics.logEvent(.changeMwl, attributes: [ "from": "\(self.deck.mwl.rawValue)", "to": "\(newMwl.rawValue)"])
             self.deck.mwl = newMwl
             self.deck.onesies = onesies
             self.deck.cacheRefresh = cacheRefresh

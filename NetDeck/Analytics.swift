@@ -44,6 +44,7 @@ class Analytics {
         case appUpdateAvailable = "App Update Available"
         case appUpdateStarted = "App Update Started"
         case showSettings = "Show Settings"
+        case changeMwl = "Change MWL"
     }
 
     static func logEvent(_ event: Event, attributes: [String: Any]? = nil) {

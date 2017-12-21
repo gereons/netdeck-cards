@@ -331,7 +331,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "device": device.description,
             "os": UIDevice.current.systemVersion,
             "device+os": device.description + " " + UIDevice.current.systemVersion,
-            "resolution": "\(height)x\(width)"
+            "resolution": "\(height)x\(width)",
+            "defaultMWL": "\(Defaults[.defaultMWL].rawValue)"
         ]
 
         if device.isPad {
