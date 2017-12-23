@@ -43,7 +43,6 @@ class Card: NSObject, Unmarshaling {
     @objc private(set) var maxPerDeck = -1      // how many may be in deck? currently either 1, 3 or 6
     
     private(set) var isAlliance = false
-    @objc private(set) var isVirtual = false
     private(set) var isCore = false             // card is from core set
     
     private static var multiIce = [String]()
@@ -272,7 +271,7 @@ class Card: NSObject, Unmarshaling {
         self.maxPerDeck = try object.value(for: "deck_limit") ?? -1
         
         self.isAlliance = keywords.lowercased().contains("alliance")
-        self.isVirtual = keywords.lowercased().contains("virtual")
+
         if self.type == .ice {
             let barrier = keywords.contains("Barrier")
             let sentry = keywords.contains("Sentry")
@@ -325,7 +324,6 @@ extension Card {
     static let customBiotics            = "03002"    // no jinteki cards
     static let theProfessor             = "03029"    // first copy of each program has influence 0
     static let andromeda                = "02083"    // 9 card starting hand
-    static let apex                     = "09029"    // no non-virtual resources
     
     // alliance cards with special influence rules
     static let mumbaTemple              = "10018"    // 0 inf if <= 15 ice in deck

@@ -155,11 +155,6 @@ class CardList {
     func preFilterForRunner(_ identity: Card, _ mwl: MWL) {
         self.resetInitialCards()
         
-        if identity.faction == .apex {
-            let predicate = NSPredicate(format:"type != %d OR (type = %d AND isVirtual = 1)", CardType.resource.rawValue, CardType.resource.rawValue)
-            self.applyPredicate(predicate)
-        }
-        
         self.applyBans(mwl)
         
         let _ = self.applyFilters()

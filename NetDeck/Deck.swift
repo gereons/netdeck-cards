@@ -733,8 +733,7 @@ extension Deck {
         }
         
         let noJintekiAllowed = self.identity?.code == Card.customBiotics
-        let isApex = self.identity?.code == Card.apex
-        var limitError = false, jintekiError = false, agendaError = false, apexError = false
+        var limitError = false, jintekiError = false, agendaError = false
         
         // check max 1 per deck restrictions and other spcial rules
         for cc in self.cards {
@@ -755,12 +754,6 @@ extension Deck {
                 if !self.isDraft && card.type == .agenda && card.faction != .neutral && card.faction != self.identity?.faction && !agendaError {
                     agendaError = true
                     reasons.append("Has out-of-faction agendas".localized())
-                }
-            }
-            else if role == .runner {
-                if isApex && card.type == .resource && !card.isVirtual && !apexError {
-                    apexError = true
-                    reasons.append("Has non-virtual resources".localized())
                 }
             }
         }
