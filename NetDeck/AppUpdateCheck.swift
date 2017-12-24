@@ -7,8 +7,50 @@
 //
 
 import Alamofire
-import Marshal
 import SwiftyUserDefaults
+
+private struct Version: Comparable {
+    private(set) var major = 0
+    private(set) var minor = 0
+    private(set) var patch = 0
+
+    init(_ str: String) {
+        let parts = str.components(separatedBy: ".")
+        if parts.count > 0 {
+            self.major = Int(parts[0]) ?? 0
+        }
+        if parts.count > 1 {
+            self.minor = Int(parts[1]) ?? 0
+        }
+        if parts.count > 2 {
+            self.patch = Int(parts[2]) ?? 0
+        }
+    }
+
+    static func ==(_ lhs: Version, _ rhs: Version) -> Bool {
+        return lhs.major == rhs.major &&
+            lhs.minor == rhs.minor &&
+            lhs.patch == rhs.patch
+    }
+
+    static func <(_ lhs: Version, _ rhs: Version) -> Bool {
+        if lhs.major != rhs.major {
+            return lhs.major < rhs.major
+        }
+        if lhs.minor != rhs.minor {
+            return lhs.minor < rhs.minor
+        }
+        return lhs.patch < rhs.patch
+    }
+}
+
+private struct LookupResults: Codable {
+    let results: [LookupResult]
+}
+
+private struct LookupResult: Codable {
+    let version: String
+}
 
 class AppUpdateCheck {
     
@@ -23,18 +65,20 @@ class AppUpdateCheck {
         
         let force = forceTest && BuildConfig.debug
         let now = Date()
-        if (now.timeIntervalSince1970 > nextCheck.timeIntervalSince1970 && Reachability.online) || force {
+        let checkNow = now.timeIntervalSince1970 > nextCheck.timeIntervalSince1970
+        if (checkNow && Reachability.online) || force {
+            Defaults[.nextUpdateCheck] = now.addingTimeInterval(interval)
             self.checkForUpdate { version in
                 if let v = version {
                     let msg = String(format: "Version %@ is available on the App Store".localized(), v)
                     let alert = UIAlertController.alert(title: "Update available".localized(), message: msg)
-                    
+
                     alert.addAction(UIAlertAction(title: "Update".localized(), style: .cancel) { action in
                         let url = "itms-apps://itunes.apple.com/app/id865963530"
                         Analytics.logEvent(.appUpdateStarted)
                         UIApplication.shared.openURL(URL(string: url)!)
                     })
-                    
+
                     alert.addAction(UIAlertAction(title: "Not now".localized(), style: .default, handler: nil))
 
                     alert.show()
@@ -44,16 +88,6 @@ class AppUpdateCheck {
                     Analytics.logEvent(.appUpdateAvailable, attributes: ["currentVersion": currentVersion ?? "n/a" ])
                 }
             }
-            
-            Defaults[.nextUpdateCheck] = now.addingTimeInterval(interval)
-        }
-    }
-    
-    private struct AppStoreResult: Unmarshaling {
-        let version: String
-        
-        init(object: MarshaledObject) throws {
-            self.version = try object.value(for: "version")
         }
     }
     
@@ -61,7 +95,7 @@ class AppUpdateCheck {
         guard
             let dict = Bundle.main.infoDictionary,
             let bundleId = dict["CFBundleIdentifier"] as? String,
-            let currentVersion = dict["CFBundleShortVersionString"] as? String
+            let bundleVersionString = dict["CFBundleShortVersionString"] as? String
         else {
             completion(nil)
             return
@@ -74,14 +108,16 @@ class AppUpdateCheck {
             case .success:
                 if let data = response.data {
                     do {
-                        let json = try JSONParser.JSONObjectWithData(data)
-                        
-                        let results: [AppStoreResult] = try json.value(for: "results")
-                        if let appstoreVersion = results.first?.version {
-                            let cmp = appstoreVersion.compare(currentVersion, options: .numeric)
-                            completion(cmp == .orderedDescending ? appstoreVersion : nil)
-                        }
-                    } catch {}
+                        let lookup = try JSONDecoder().decode(LookupResults.self, from: data)
+
+                        let appstoreVersionString = lookup.results.first?.version ?? ""
+                        let appstoreVersion = Version(appstoreVersionString)
+                        let bundleVersion = Version(bundleVersionString)
+                        completion(appstoreVersion > bundleVersion ? appstoreVersionString : nil)
+                        break
+                    } catch let error {
+                        print("\(error)")
+                    }
                 }
                 fallthrough
             case .failure:
