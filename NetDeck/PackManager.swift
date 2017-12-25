@@ -8,18 +8,6 @@
 
 import SwiftyUserDefaults
 
-struct ApiResponse<T: Codable>: Codable {
-    var data: [T]
-    let success: Bool
-    let version_number: String
-    let total: Int
-
-    private let supportedNrdbApiVersion = "2.0"
-    var valid: Bool {
-        return success && version_number == supportedNrdbApiVersion && total == data.count
-    }
-}
-
 struct Cycle: Codable {
     let name: String
     let code: String

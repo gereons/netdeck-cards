@@ -235,6 +235,9 @@ class NRDB: NSObject {
                         let json = try JSONParser.JSONObjectWithData(data)
                         decks = self.parseDecksFromJson(json)
                         completion(decks)
+
+                        let result = NetrunnerDbDeck.parse(data)
+                        print("\(result.count) decks")
                     } catch {
                         completion(nil)
                     }

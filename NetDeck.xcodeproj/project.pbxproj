@@ -67,6 +67,7 @@
 		3A48BE861E17D9A300B5DD3F /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A48BE851E17D9A300B5DD3F /* CardCell.swift */; };
 		3A48BE881E17DD3000B5DD3F /* SmallCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A48BE871E17DD3000B5DD3F /* SmallCardCell.swift */; };
 		3A48BE8A1E17E16000B5DD3F /* LargeCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A48BE891E17E16000B5DD3F /* LargeCardCell.swift */; };
+		3A48FE091FF12654000D3F9D /* NRDBApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A48FE081FF12654000D3F9D /* NRDBApi.swift */; };
 		3A4BDFD51DFD9F74002CC166 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4BDFD41DFD9F74002CC166 /* FilterViewController.swift */; };
 		3A4C03581E1424400095809F /* DeckDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C03571E1424400095809F /* DeckDiff.swift */; };
 		3A4E0F911DBAA56E00C49FD4 /* netrunner.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */; };
@@ -259,6 +260,7 @@
 		3A48BE851E17D9A300B5DD3F /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
 		3A48BE871E17DD3000B5DD3F /* SmallCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallCardCell.swift; sourceTree = "<group>"; };
 		3A48BE891E17E16000B5DD3F /* LargeCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeCardCell.swift; sourceTree = "<group>"; };
+		3A48FE081FF12654000D3F9D /* NRDBApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NRDBApi.swift; sourceTree = "<group>"; };
 		3A4BDFD41DFD9F74002CC166 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		3A4C03571E1424400095809F /* DeckDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckDiff.swift; sourceTree = "<group>"; };
 		3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = netrunner.ttf; sourceTree = "<group>"; };
@@ -687,6 +689,7 @@
 			isa = PBXGroup;
 			children = (
 				3A733B991C8DF801005B1F9B /* NRDB.swift */,
+				3A48FE081FF12654000D3F9D /* NRDBApi.swift */,
 				3A3881D71CA5D73200DFF1BA /* NRDBHack.swift */,
 				3A84F8DB1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift */,
 				3A1777DE1967EA0B0066E095 /* NRDBAuthPopupViewController~ipad.xib */,
@@ -1263,6 +1266,7 @@
 				3AE0C80F1E168ECA0046376F /* CardFilterCell.swift in Sources */,
 				3A2BF9D81DC64BF400AFA36E /* CardImageViewPopover.swift in Sources */,
 				3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */,
+				3A48FE091FF12654000D3F9D /* NRDBApi.swift in Sources */,
 				3A47F1901DBB7E9500058294 /* Card+html.swift in Sources */,
 				3AF1E9171FB4FB64009E8B88 /* Utils.swift in Sources */,
 				3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */,
