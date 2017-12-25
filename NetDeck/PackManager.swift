@@ -6,60 +6,83 @@
 //  Copyright © 2017 Gereon Steffens. All rights reserved.
 //
 
-import Marshal
 import SwiftyUserDefaults
 
-struct Cycle: Unmarshaling {
+struct ApiResponse<T: Codable>: Codable {
+    var data: [T]
+    let success: Bool
+    let version_number: String
+    let total: Int
+
+    private let supportedNrdbApiVersion = "2.0"
+    var valid: Bool {
+        return success && version_number == supportedNrdbApiVersion && total == data.count
+    }
+}
+
+struct Cycle: Codable {
     let name: String
     let code: String
     fileprivate(set) var position: Int
     let size: Int
     let rotated: Bool
  
-    init(object: MarshaledObject) throws {
-        self.name = try object.value(for: "name")
-        let code: String = try object.value(for: "code")
-        self.code = code
-        self.rotated = PackManager.Rotation2017.cycles.contains(code)
-        self.position = try object.value(for: "position")
-        self.size = try object.value(for: "size")
-    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Cycle.CodingKeys.self)
 
+        self.name = try container.decode(String.self, forKey: .name)
+        self.code = try container.decode(String.self, forKey: .code)
+        self.position = try container.decode(Int.self, forKey: .position)
+        self.size = try container.decode(Int.self, forKey: .size)
+
+        self.rotated = PackManager.Rotation2017.cycles.contains(self.code)
+    }
 }
 
-struct Pack: Unmarshaling {
+struct Pack: Codable {
     let name: String
     let code: String
     let cycleCode: String
     let position: Int
-    let released: Bool
+    let releaseDate: String?
+
     let settingsKey: String
     let rotated: Bool
+    var released: Bool {
+        return releaseDate != nil
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case code
+        case cycleCode = "cycle_code"
+        case position
+        case releaseDate = "date_release"
+    }
     
     static let use = "use_"
     
-    init(object: MarshaledObject) throws {
-        self.name = try object.value(for: "name")
-        self.cycleCode = try object.value(for: "cycle_code")
-        self.position = try object.value(for: "position")
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Pack.CodingKeys.self)
 
-        let code: String = try object.value(for: "code")
-        self.code = code
+        self.name = try container.decode(String.self, forKey: .name)
+        self.cycleCode = try container.decode(String.self, forKey: .cycleCode)
+        self.position = try container.decode(Int.self, forKey: .position)
+        self.code = try container.decode(String.self, forKey: .code)
+        self.releaseDate = try? container.decode(String.self, forKey: .releaseDate)
+
         self.settingsKey = Pack.use + code
         self.rotated = PackManager.Rotation2017.packs.contains(code)
-        
-        let date: String = try object.value(for: "date_release") ?? ""
-        self.released = date != "" && PackManager.now() >= date
     }
     
-    init(named: String, key: String = "") {
+    init(named: String, key: String) {
         self.name = named
         self.code = ""
         self.cycleCode = ""
         self.position = 0
-        self.released = false
         self.settingsKey = key
         self.rotated = false
+        self.releaseDate = nil
     }
 }
 
@@ -95,7 +118,7 @@ class PackManager {
     private(set) static var packsByCode = [String: Pack]()      // code -> pack
     private(set) static var allPacks = [Pack]()
     
-    static let anyPack = Pack(named: Constant.kANY)
+    static let anyPack = Pack(named: Constant.kANY, key: "")
     
     private static let fmt: DateFormatter = {
         let f = DateFormatter()
@@ -346,15 +369,8 @@ class PackManager {
         
         let fileMgr = FileManager.default
                 
-        if let packsData = fileMgr.contents(atPath: packsFile), let cyclesData = fileMgr.contents(atPath: cyclesFile) {
-            do {
-                let cycles = try JSONParser.JSONObjectWithData(cyclesData)
-                let packs = try JSONParser.JSONObjectWithData(packsData)
-                return setupFromJsonData(cycles, packs, language: language)
-            } catch let error {
-                print("\(error)")
-                return false
-            }
+        if let cyclesData = fileMgr.contents(atPath: cyclesFile), let packsData = fileMgr.contents(atPath: packsFile) {
+            return setupFromJsonData(cyclesData, packsData, language: language)
         }
         
         // print("app start: missing pack/cycles files")
@@ -362,27 +378,24 @@ class PackManager {
     }
     
     static func setupFromNetrunnerDb(_ cyclesData: Data, _ packsData: Data, language: String) -> Bool {
-        var ok = false
+        let ok = setupFromJsonData(cyclesData, packsData, language: language)
+        if !ok {
+            return false
+        }
+
         do {
-            let cyclesJson = try JSONParser.JSONObjectWithData(cyclesData)
-            let packsJson = try JSONParser.JSONObjectWithData(packsData)
-            ok = setupFromJsonData(cyclesJson, packsJson, language: language)
-            if !ok {
-                return false
-            }
-            
             let cyclesFile = self.cyclesPathname()
             try cyclesData.write(to: URL(fileURLWithPath: cyclesFile), options: .atomic)
             Utils.excludeFromBackup(cyclesFile)
-            
+
             let packsFile = self.packsPathname()
             try packsData.write(to: URL(fileURLWithPath: packsFile), options: .atomic)
             Utils.excludeFromBackup(packsFile)
-        } catch let error {
-            print("\(error)")
-            ok = false
         }
-        
+        catch let error {
+            print("\(error)")
+        }
+
         return ok
     }
     
@@ -404,7 +417,7 @@ class PackManager {
         }
     }
     
-    static func setupFromJsonData(_ cycles: JSONObject, _ packs: JSONObject, language: String) -> Bool {
+    static func setupFromJsonData(_ cycles: Data, _ packs: Data, language: String) -> Bool {
         cyclesByCode = [:]  // code -> cycle
         allCycles = [:]     // position -> cycles
         packsByCode = [:]   // code -> pack
@@ -412,22 +425,23 @@ class PackManager {
         
         allPacks.reserveCapacity(100)
         
-        let ok = Utils.validJsonResponse(json: cycles) && Utils.validJsonResponse(json: packs)
-        if !ok {
-            // print("cards/packs invalid")
-            return false
-        }
-        
         do {
-            var cycles: [Cycle] = try cycles.value(for: "data", discardingErrors: true)
-            self.reorderCycles(&cycles)
-            for c in cycles {
+            let decoder = JSONDecoder()
+            var cycles = try decoder.decode(ApiResponse<Cycle>.self, from: cycles)
+            if !cycles.valid {
+                return false
+            }
+            self.reorderCycles(&cycles.data)
+            for c in cycles.data {
                 cyclesByCode[c.code] = c
                 allCycles[c.position] = c
             }
             
-            let packs: [Pack] = try packs.value(for: "data", discardingErrors: true)
-            for p in packs {
+            let packs = try decoder.decode(ApiResponse<Pack>.self, from: packs)
+            if !packs.valid {
+                return false
+            }
+            for p in packs.data {
                 packsByCode[p.code] = p
                 allPacks.append(p)
             }
