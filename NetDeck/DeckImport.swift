@@ -9,7 +9,6 @@
 import UIKit
 import SDCAlertView
 import Alamofire
-import Marshal
 import SwiftyUserDefaults
 
 class DeckImport: NSObject {
@@ -302,15 +301,8 @@ class DeckImport: NSObject {
             switch response.result {
             case .success:
                 if let data = response.data, !self.downloadStopped {
-                    do {
-                        let json = try JSONParser.JSONObjectWithData(data)
-                        // print("JSON: \(json)")
-                        let deck = self.parseJsonDeckList(json)
-                        self.downloadFinished(deck)
-                    } catch let error {
-                        print("\(error)")
-                        self.downloadFinished(nil)
-                    }
+                    let decks = Deck.arrayFromJson(data)
+                    self.downloadFinished(decks.first)
                 }
             case .failure(let error):
                 print(error)
@@ -319,24 +311,6 @@ class DeckImport: NSObject {
         }
     }
     
-    func parseJsonDeckList(_ json: JSONObject) -> Deck? {
-        if !Utils.validJsonResponse(json: json) {
-            return nil
-        }
-        
-        do {
-            let decks: [Deck] = try json.value(for: "data")
-            
-            if let deck = decks.first, deck.identity != nil, deck.cards.count > 0 {
-                return deck
-            }
-        } catch let error {
-            print("\(error)")
-        }
-        
-        return nil
-    }
-
     private func doDownloadDeckFromMeteor(_ source: DeckSource) {
         let deckUrl = "https://meteor.stimhack.com/deckexport/octgn/" + source.deckId
         self.downloadStopped = false

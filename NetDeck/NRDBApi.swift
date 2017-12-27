@@ -9,7 +9,7 @@
 import Foundation
 
 struct ApiResponse<T: Codable>: Codable {
-    var data: [T]
+    let data: [T]
     let success: Bool
     let version_number: String
     let total: Int
@@ -29,13 +29,15 @@ struct NetrunnerDbDeck: Codable {
     let mwl_code: String?
     let cards: [String: Int]
     let history: [String: [String: Int]]?
+    
+    static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
 
     static func parse(_ data: Data) -> [NetrunnerDbDeck] {
         do {
-            let decoder = JSONDecoder()
             let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ'"
-            formatter.timeZone = TimeZone(identifier: "GMT")
+            formatter.dateFormat = self.dateFormat
+            formatter.timeZone = TimeZone.current
+            let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .formatted(formatter)
 
             let result = try decoder.decode(ApiResponse<NetrunnerDbDeck>.self, from: data)

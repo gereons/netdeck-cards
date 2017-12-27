@@ -1088,7 +1088,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Applications/Checker.app/Contents/Resources/start-analyzer.app/Contents/MacOS/start-analyzer || echo \"WARNING: start-analyzer not installed.\"";
+			shellScript = "if [ -d /Applications/Checker.app ]; then\n    /Applications/Checker.app/Contents/Resources/start-analyzer.app/Contents/MacOS/start-analyzer\nelse\n    echo \"WARNING: start-analyzer not installed.\"\nfi";
 		};
 		5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -153,7 +153,7 @@ class JintekiNet {
         id["faction"] = Faction.fullName(for: identity.faction)
         
         let fmt = DateFormatter()
-        fmt.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+        fmt.dateFormat = "yyyy'-MM'-'dd'T'HH':'mm':'ss'Z'"
         fmt.timeZone = TimeZone(abbreviation: "UTC")
         // 2016-07-19T06:05:52.404Z
         let date = fmt.string(from: deck.lastModified as Date? ?? Date())

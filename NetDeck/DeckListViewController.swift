@@ -410,7 +410,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         SVProgressHUD.show(withStatus: "Saving Deck...".localized())
         
-        NRDB.sharedInstance.saveDeck(self.deck) { ok, deckId, msg in
+        NRDB.sharedInstance.saveDeck(self.deck) { ok, deckId in
             SVProgressHUD.dismiss()
             
             if !ok {
@@ -464,15 +464,12 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         SVProgressHUD.show(withStatus: "Publishing Deck...")
         
-        NRDB.sharedInstance.publishDeck(self.deck) { ok, deckId, errorMsg in
+        NRDB.sharedInstance.publishDeck(self.deck) { ok, deckId in
             SVProgressHUD.dismiss()
             
             if !ok {
-                var fail = "Publishing the deck at NetrunnerDB.com failed.".localized()
-                if let err = errorMsg {
-                    fail += "\n'\(err)'"
-                }
-                UIAlertController.alert(withTitle: nil, message: fail , button: "OK".localized())
+                let failed = "Publishing the deck at NetrunnerDB.com failed.".localized()
+                UIAlertController.alert(withTitle: nil, message: failed, button: "OK".localized())
             }
             if ok && deckId != nil {
                 let msg = String(format: "Deck published with ID %@".localized(), deckId!)

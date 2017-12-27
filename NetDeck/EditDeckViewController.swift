@@ -343,7 +343,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         SVProgressHUD.show(withStatus: "Saving Deck...".localized())
         
-        NRDB.sharedInstance.saveDeck(self.deck) { ok, deckId, msg in
+        NRDB.sharedInstance.saveDeck(self.deck) { ok, deckId in
             if ok && deckId != nil {
                 self.deck.netrunnerDbId = deckId
                 self.deck.saveToDisk()
@@ -396,12 +396,9 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         if errors.count == 0 {
             SVProgressHUD.show(withStatus: "Publishing Deck...".localized())
             
-            NRDB.sharedInstance.publishDeck(self.deck) { ok, deckId, errorMsg in
+            NRDB.sharedInstance.publishDeck(self.deck) { ok, deckId in
                 if !ok {
-                    var failed = "Publishing the deck at NetrunnerDB.com failed.".localized()
-                    if errorMsg != nil {
-                        failed += "\n" + errorMsg!
-                    }
+                    let failed = "Publishing the deck at NetrunnerDB.com failed.".localized()
                     UIAlertController.alert(withTitle: nil, message: failed, button: "OK".localized())
                 }
                 if ok && deckId != nil {

@@ -405,7 +405,7 @@ class PackManager {
         }
     }
     
-    static func setupFromJsonData(_ cycles: Data, _ packs: Data, language: String) -> Bool {
+    static func setupFromJsonData(_ cyclesData: Data, _ packsData: Data, language: String) -> Bool {
         cyclesByCode = [:]  // code -> cycle
         allCycles = [:]     // position -> cycles
         packsByCode = [:]   // code -> pack
@@ -415,17 +415,18 @@ class PackManager {
         
         do {
             let decoder = JSONDecoder()
-            var cycles = try decoder.decode(ApiResponse<Cycle>.self, from: cycles)
-            if !cycles.valid {
+            let rawCycles = try decoder.decode(ApiResponse<Cycle>.self, from: cyclesData)
+            if !rawCycles.valid {
                 return false
             }
-            self.reorderCycles(&cycles.data)
-            for c in cycles.data {
+            var cycles = rawCycles.data
+            self.reorderCycles(&cycles)
+            for c in cycles {
                 cyclesByCode[c.code] = c
                 allCycles[c.position] = c
             }
             
-            let packs = try decoder.decode(ApiResponse<Pack>.self, from: packs)
+            let packs = try decoder.decode(ApiResponse<Pack>.self, from: packsData)
             if !packs.valid {
                 return false
             }

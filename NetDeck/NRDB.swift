@@ -231,16 +231,9 @@ class NRDB: NSObject {
             switch response.result {
             case .success:
                 if let data = response.data {
-                    do {
-                        let json = try JSONParser.JSONObjectWithData(data)
-                        decks = self.parseDecksFromJson(json)
-                        completion(decks)
-
-                        let result = NetrunnerDbDeck.parse(data)
-                        print("\(result.count) decks")
-                    } catch {
-                        completion(nil)
-                    }
+                    decks = Deck.arrayFromJson(data)
+                    completion(decks)
+                    print("\(String(describing: decks?.count)) decks")
                 }
             case .failure:
                 completion(nil)
@@ -266,13 +259,8 @@ class NRDB: NSObject {
             switch response.result {
             case .success:
                 if let data = response.data {
-                    do {
-                        let json = try JSONParser.JSONObjectWithData(data)
-                        let deck = self.parseDeckFromJson(json)
-                        completion(deck)
-                    } catch {
-                        completion(nil)
-                    }
+                    let decks = Deck.arrayFromJson(data)
+                    completion(decks.first)
                 }
             case .failure:
                 completion(nil)
@@ -280,38 +268,10 @@ class NRDB: NSObject {
         }
     }
     
-    private func parseDecksFromJson(_ json: JSONObject) -> [Deck] {
-        var decks = [Deck]()
-        
-        if !Utils.validJsonResponse(json: json) {
-            return decks
-        }
-        
-        do {
-            decks = try json.value(for: "data")
-        } catch let error {
-            print("caught \(error)")
-        }
-        return decks
-    }
-    
-    private func parseDeckFromJson(_ json: JSONObject) -> Deck? {
-        if !Utils.validJsonResponse(json: json) {
-            return nil
-        }
-        do {
-            let decks: [Deck] = try json.value(for: "data")
-            return decks.first
-        } catch {}
-    
-        return nil
-    }
-    
     // MARK: - save / publish
-    
-    func saveDeck(_ deck: Deck, completion: @escaping (Bool, String?, String?) -> Void) {
+    func saveDeck(_ deck: Deck, completion: @escaping (Bool, String?) -> Void) {
         guard let accessToken = self.accessToken() else {
-            completion(false, nil, nil)
+            completion(false, nil)
             return
         }
         
@@ -335,9 +295,9 @@ class NRDB: NSObject {
         self.saveOrPublish(saveUrl, parameters: parameters, completion: completion)
     }
     
-    func publishDeck(_ deck: Deck, completion: @escaping (Bool, String?, String?) -> Void) {
+    func publishDeck(_ deck: Deck, completion: @escaping (Bool, String?) -> Void) {
         guard let accessToken = self.accessToken() else {
-            completion(false, nil, nil)
+            completion(false, nil)
             return
         }
         
@@ -351,36 +311,28 @@ class NRDB: NSObject {
         self.saveOrPublish(publishUrl, parameters:parameters, completion: completion)
     }
 
-    func saveOrPublish(_ url: String, parameters: [String: Any], completion: @escaping (Bool, String?, String?)->Void) {
+    func saveOrPublish(_ url: String, parameters: [String: Any], completion: @escaping (Bool, String?)->Void) {
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate()
             .responseJSON { response in
                 switch response.result {
                 case .success:
                     if let data = response.data {
-                        do {
-                            let json = try JSONParser.JSONObjectWithData(data)
-                            let ok = Utils.validJsonResponse(json: json)
-                            if ok {
-                                let decks: [Deck] = try json.value(for: "data")
-                                
-                                if let deck = decks.first, deck.netrunnerDbId != "" {
-                                    completion(true, deck.netrunnerDbId, nil)
-                                    return
-                                }
-                            } else {
-                                let msg: String = try json.value(for: "msg")
-                                completion(false, nil, msg)
+                        let decks = Deck.arrayFromJson(data)
+                        if decks.count > 0 {
+                            if let deck = decks.first, deck.netrunnerDbId != "" {
+                                completion(true, deck.netrunnerDbId)
                                 return
                             }
-                        } catch {
-                            break
+                        } else {
+                            completion(false, nil)
+                            return
                         }
                     }
                 case .failure:
                     break
                 }
-                completion(false, nil, nil)
+                completion(false, nil)
             }
     }
     

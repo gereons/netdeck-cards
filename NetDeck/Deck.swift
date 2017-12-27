@@ -7,12 +7,9 @@
 //
 
 import Foundation
-import Marshal
 import SwiftyUserDefaults
 
-
-
-@objc(Deck) class Deck: NSObject, NSCoding, Unmarshaling {
+@objc(Deck) class Deck: NSObject, NSCoding {
 
     var filename: String?
     var revisions = [DeckChangeSet]()
@@ -494,97 +491,96 @@ import SwiftyUserDefaults
     }
     
     // MARK: create deck from JSON
-    
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ'"
-        formatter.timeZone = TimeZone(identifier: "GMT")
-        return formatter
-    }()
-
-    convenience required init(object: MarshaledObject) throws {
-        self.init()
+    static func arrayFromJson(_ data: Data) -> [Deck] {
+        let rawDecks = NetrunnerDbDeck.parse(data)
+        var decks = [Deck]()
         
-        self.state = Defaults[.createDeckActive] ? .active : .testing
-        self.name = try object.value(for: "name")
-        self.notes = try object.value(for: "description")
-        let id: Int = try object.value(for: "id")
-        self.netrunnerDbId = "\(id)"
-        
-        // parse last update '2014-06-19T13:52:24+00:00'
-        self.lastModified = Deck.dateFormatter.date(from: try object.value(for: "date_update"))
-        self.dateCreated = Deck.dateFormatter.date(from: try object.value(for: "date_creation"))
-        
-        if let mwlCode: String = try? object.value(for: "mwl_code") {
-            self.mwl = MWL.by(code: mwlCode)
-        } else {
-            self.mwl = Defaults[.defaultMWL]
-        }
-        
-        if let cards = object.optionalAny(for: "cards") as? [String: Int] {
-            for (code, qty) in cards {
+        rawDecks.forEach { rawDeck in
+            let deck = Deck()
+            deck.state = Defaults[.createDeckActive] ? .active : .testing
+            deck.name = rawDeck.name
+            deck.notes = rawDeck.description
+            deck.netrunnerDbId = "\(rawDeck.id)"
+            deck.lastModified = rawDeck.date_update
+            deck.dateCreated = rawDeck.date_creation
+            
+            for (code, qty) in rawDeck.cards {
                 if let card = CardManager.cardBy(code: code) {
-                    self.addCard(card, copies:qty, history: false)
-                }
-            }
-        }
-
-        if self.mwl == .v2_0 || (self.mwl == .none && Defaults[.defaultMWL] == .v2_0) {
-            self.convertToRevisedCore()
-        }
-        
-        typealias HistoryData = [String: [String: Int]]
-        let history: HistoryData = object.optionalAny(for: "history") as? HistoryData ?? HistoryData()
-        
-        var revisions = [DeckChangeSet]()
-        for (date, changes) in history {
-            if let timestamp = Deck.dateFormatter.date(from: date) {
-                let dcs = DeckChangeSet()
-                dcs.timestamp = timestamp
-                
-                for (code, amount) in changes {
-                    if let card = CardManager.cardBy(code: code) {
-                        dcs.addCardCode(card.code, copies: amount)
-                    }
-                }
-                
-                dcs.sort()
-                revisions.append(dcs)
-            }
-        }
-        
-        revisions.sort { $0.timestamp?.timeIntervalSince1970 ?? 0 < $1.timestamp?.timeIntervalSinceNow ?? 0 }
-        
-        let initial = DeckChangeSet()
-        initial.initial = true
-        initial.timestamp = self.dateCreated
-        revisions.append(initial)
-        self.revisions = revisions
-        
-        let newest = self.revisions.first
-        var cards = [String: Int]()
-        for cc in self.allCards {
-            cards[cc.card.code] = cc.count
-        }
-        newest?.cards = cards
-        
-        // walk through the deck's history and pre-compute a card list for every revision
-        for i in 0..<self.revisions.count-1 {
-            let prev = self.revisions[i]
-            for dc in prev.changes {
-                let qty = (cards[dc.code] ?? 0) - dc.count
-                if qty == 0 {
-                    cards.removeValue(forKey: dc.code)
-                } else {
-                    cards[dc.code] = qty
+                    deck.addCard(card, copies: qty, history: false)
                 }
             }
             
-            let dcs = self.revisions[i+1]
-            dcs.cards = cards
+            let mwl: MWL
+            if let code = rawDeck.mwl_code {
+                mwl = MWL.by(code: code)
+            } else {
+                mwl = Defaults[.defaultMWL]
+            }
+            
+            deck.mwl = mwl
+            if mwl == .v2_0 || (mwl == .none && Defaults[.defaultMWL] == .v2_0) {
+                deck.convertToRevisedCore()
+            }
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = NetrunnerDbDeck.dateFormat
+            
+            var revisions = [DeckChangeSet]()
+            for (date, changes) in rawDeck.history ?? [:] {
+                if let timestamp = formatter.date(from: date) {
+                    let dcs = DeckChangeSet()
+                    dcs.timestamp = timestamp
+                    
+                    for (code, amount) in changes {
+                        if let card = CardManager.cardBy(code: code) {
+                            dcs.addCardCode(card.code, copies: amount)
+                        }
+                    }
+                    
+                    dcs.sort()
+                    revisions.append(dcs)
+                }
+            }
+            
+            revisions.sort {
+                $0.timestamp?.timeIntervalSince1970 ?? 0 < $1.timestamp?.timeIntervalSinceNow ?? 0
+            }
+            
+            let initial = DeckChangeSet()
+            initial.initial = true
+            initial.timestamp = deck.dateCreated
+            revisions.append(initial)
+            deck.revisions = revisions
+            
+            let newest = deck.revisions.first
+            var cards = [String: Int]()
+            for cc in deck.allCards {
+                cards[cc.card.code] = cc.count
+            }
+            newest?.cards = cards
+            
+            // walk through the deck's history and pre-compute a card list for every revision
+            for i in 0 ..< deck.revisions.count-1 {
+                let prev = deck.revisions[i]
+                for dc in prev.changes {
+                    let qty = (cards[dc.code] ?? 0) - dc.count
+                    if qty == 0 {
+                        cards.removeValue(forKey: dc.code)
+                    } else {
+                        cards[dc.code] = qty
+                    }
+                }
+                
+                let dcs = deck.revisions[i+1]
+                dcs.cards = cards
+            }
+            decks.append(deck)
         }
+        
+        return decks
     }
-
+    
+    
     // MARK: - NSCoding
     convenience required init?(coder decoder: NSCoder) {
         self.init()

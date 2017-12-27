@@ -181,7 +181,7 @@ class SavedDecksList: DecksViewController {
     func exportToNetrunnerDB(_ decks: [Deck], index: Int) {
         if index < decks.count {
             let deck = decks[index]
-            NRDB.sharedInstance.saveDeck(deck) { ok, deckId, msg in
+            NRDB.sharedInstance.saveDeck(deck) { ok, deckId in
                 if ok && deckId != nil {
                     deck.netrunnerDbId = deckId
                     deck.saveToDisk()
