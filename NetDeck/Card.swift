@@ -9,6 +9,33 @@
 import Marshal
 import SwiftyUserDefaults
 
+// MARK: - NRDB-specific JSON extension
+
+extension MarshaledObject {
+    /// try to get a localized property for `key`
+    func localized(for key: KeyType, language: String) throws -> String {
+        if let loc: String = try? self.value(for: "_locale." + language + "." + key.stringValue), !loc.isEmpty {
+            return loc
+        } else {
+            return try self.value(for: key) ?? ""
+        }
+    }
+}
+
+extension Utils {
+    static private let supportedNrdbApiVersion = "2.0"
+    static func validJsonResponse(json: JSONObject) -> Bool {
+        do {
+            let version: String = try json.value(for: "version_number")
+            let success: Bool = try json.value(for: "success")
+            let total: Int = try json.value(for: "total")
+            return success && version == supportedNrdbApiVersion && total > 0
+        } catch {
+            return false
+        }
+    }
+}
+
 class Card: NSObject, Unmarshaling {
     
     private(set) static var fullNames = [String: String]() // code => full names of identities

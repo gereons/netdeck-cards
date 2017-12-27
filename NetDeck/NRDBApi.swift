@@ -52,6 +52,18 @@ struct NetrunnerDbDeck: Codable {
     }
 }
 
+struct NetrunnerDbAuth: Codable {
+    let accessToken: String
+    let refreshToken: String
+    let expiresIn: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "access_token"
+        case refreshToken = "refresh_token"
+        case expiresIn = "expires_in"
+    }
+}
+
 struct NetrunnerDbCard: Codable {
     let code: String
 }

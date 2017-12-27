@@ -7,7 +7,6 @@
 //
 
 import Alamofire
-import Marshal
 import SwiftyUserDefaults
 
 class NRDB: NSObject {
@@ -87,7 +86,7 @@ class NRDB: NSObject {
             completion(false, "offline")
             return
         }
-
+        
         Alamofire.request(NRDB.tokenUrl, parameters: parameters)
             .validate()
             .responseJSON { response in
@@ -96,17 +95,13 @@ class NRDB: NSObject {
                     if let data = response.data {
                         var ok = true
                         do {
-                            let json = try JSONParser.JSONObjectWithData(data)
+                            let decoder = JSONDecoder()
+                            let auth = try decoder.decode(NetrunnerDbAuth.self, from: data)
                             
-                            let accessToken: String = try json.value(for: "access_token")
-                            Defaults[.nrdbAccessToken] = accessToken
-                            
-                            let refreshToken: String = try json.value(for: "refresh_token")
-                            Defaults[.nrdbRefreshToken] = refreshToken
-                            
-                            let exp: Double = try json.value(for: "expires_in")
-                            Defaults[.nrdbTokenTTL] = exp
-                            let expiry = Date(timeIntervalSinceNow: exp)
+                            Defaults[.nrdbAccessToken] = auth.accessToken
+                            Defaults[.nrdbRefreshToken] = auth.refreshToken
+                            Defaults[.nrdbTokenTTL] = auth.expiresIn
+                            let expiry = Date(timeIntervalSinceNow: auth.expiresIn)
                             Defaults[.nrdbTokenExpiry] = expiry
                         } catch let error {
                             print("auth error: bad json: \(error)")
@@ -359,17 +354,4 @@ class NRDB: NSObject {
         self.deckMap.removeValue(forKey: deckId ?? "")
     }
 
-}
-
-// MARK: - NRDB-specific JSON extension
-
-extension MarshaledObject {
-    /// try to get a localized property for `key`
-    func localized(for key: KeyType, language: String) throws -> String {
-        if let loc: String = try? self.value(for: "_locale." + language + "." + key.stringValue), !loc.isEmpty {
-            return loc
-        } else {
-            return try self.value(for: key) ?? ""
-        }
-    }
 }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Marshal
 
 class Utils {
     
@@ -35,18 +34,6 @@ class Utils {
             }
         }
         return version
-    }
-
-    static private let supportedNrdbApiVersion = "2.0"
-    static func validJsonResponse(json: JSONObject) -> Bool {
-        do {
-            let version: String = try json.value(for: "version_number")
-            let success: Bool = try json.value(for: "success")
-            let total: Int = try json.value(for: "total")
-            return success && version == supportedNrdbApiVersion && total > 0
-        } catch {
-            return false
-        }
     }
 
 }
