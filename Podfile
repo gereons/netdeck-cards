@@ -18,7 +18,6 @@ target 'NetDeck' do
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftKeychainWrapper'
-    pod 'Marshal'
     pod 'SDCAlertView'
     pod 'EasyTipView', :git => "https://github.com/gereons/EasyTipView"
     pod 'SwiftyUserDefaults'

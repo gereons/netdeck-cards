@@ -62,7 +62,7 @@
 		3A3F04DE1DC8D6E2003B3E25 /* DeckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */; };
 		3A3F04E01DC8DF70003B3E25 /* ImportDecksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */; };
 		3A41DA871BF8785C003CB7E1 /* PackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A41DA861BF8785C003CB7E1 /* PackManager.swift */; };
-		3A47F1901DBB7E9500058294 /* Card+html.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47F18F1DBB7E9500058294 /* Card+html.swift */; };
+		3A47F1901DBB7E9500058294 /* Card+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47F18F1DBB7E9500058294 /* Card+HTML.swift */; };
 		3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A4866E6193B85560045C927 /* DeckNotesPopup.xib */; };
 		3A48BE861E17D9A300B5DD3F /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A48BE851E17D9A300B5DD3F /* CardCell.swift */; };
 		3A48BE881E17DD3000B5DD3F /* SmallCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A48BE871E17DD3000B5DD3F /* SmallCardCell.swift */; };
@@ -123,7 +123,7 @@
 		3A9CE56518E0B6C0007A26CD /* IdentityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9CE56418E0B6C0007A26CD /* IdentityViewCell.xib */; };
 		3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */ = {isa = PBXBuildFile; fileRef = 3AA0504919589F9B00DBDED6 /* Acknowledgements.html */; };
 		3AA0B3021C8C2C7E007B4983 /* CardUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0B3011C8C2C7E007B4983 /* CardUpdateCheck.swift */; };
-		3AA251311F8D0396007C9A3C /* Card+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA251301F8D0395007C9A3C /* Card+Map.swift */; };
+		3AA251311F8D0396007C9A3C /* Card+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA251301F8D0395007C9A3C /* Card+Constants.swift */; };
 		3AA4088E1C038F480046922C /* CardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4088D1C038F480046922C /* CardList.swift */; };
 		3AA440EB1854DA580051D4B0 /* EmptyDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440E81854DA580051D4B0 /* EmptyDetailViewController.xib */; };
 		3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA440F71854EF720051D4B0 /* DeckListViewController.xib */; };
@@ -255,7 +255,7 @@
 		3A3F04DD1DC8D6E2003B3E25 /* DeckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckCell.swift; sourceTree = "<group>"; };
 		3A3F04DF1DC8DF70003B3E25 /* ImportDecksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportDecksViewController.swift; sourceTree = "<group>"; };
 		3A41DA861BF8785C003CB7E1 /* PackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackManager.swift; sourceTree = "<group>"; };
-		3A47F18F1DBB7E9500058294 /* Card+html.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Card+html.swift"; sourceTree = "<group>"; };
+		3A47F18F1DBB7E9500058294 /* Card+HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Card+HTML.swift"; sourceTree = "<group>"; };
 		3A4866E6193B85560045C927 /* DeckNotesPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckNotesPopup.xib; sourceTree = "<group>"; };
 		3A48BE851E17D9A300B5DD3F /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
 		3A48BE871E17DD3000B5DD3F /* SmallCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallCardCell.swift; sourceTree = "<group>"; };
@@ -325,7 +325,7 @@
 		3A9CE56418E0B6C0007A26CD /* IdentityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCell.xib; sourceTree = "<group>"; };
 		3AA0504919589F9B00DBDED6 /* Acknowledgements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Acknowledgements.html; sourceTree = "<group>"; };
 		3AA0B3011C8C2C7E007B4983 /* CardUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardUpdateCheck.swift; sourceTree = "<group>"; };
-		3AA251301F8D0395007C9A3C /* Card+Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Card+Map.swift"; sourceTree = "<group>"; };
+		3AA251301F8D0395007C9A3C /* Card+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Card+Constants.swift"; sourceTree = "<group>"; };
 		3AA4088D1C038F480046922C /* CardList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardList.swift; sourceTree = "<group>"; };
 		3AA440E81854DA580051D4B0 /* EmptyDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyDetailViewController.xib; sourceTree = "<group>"; };
 		3AA440F71854EF720051D4B0 /* DeckListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckListViewController.xib; sourceTree = "<group>"; };
@@ -722,8 +722,8 @@
 				3A3C1E181BF771B2000311FA /* CardType.swift */,
 				3A3C1E1C1BF77F10000311FA /* CardCounter.swift */,
 				3AC4F7851BFD2659008E42F7 /* Card.swift */,
-				3A47F18F1DBB7E9500058294 /* Card+html.swift */,
-				3AA251301F8D0395007C9A3C /* Card+Map.swift */,
+				3AA251301F8D0395007C9A3C /* Card+Constants.swift */,
+				3A47F18F1DBB7E9500058294 /* Card+HTML.swift */,
 				3AEEBB661C00C9FF00CB6053 /* CardManager.swift */,
 				3A41DA861BF8785C003CB7E1 /* PackManager.swift */,
 				3AA4088D1C038F480046922C /* CardList.swift */,
@@ -1107,7 +1107,6 @@
 				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
 				"${BUILT_PRODUCTS_DIR}/InAppSettingsKit/InAppSettingsKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Marshal/Marshal.framework",
 				"${BUILT_PRODUCTS_DIR}/MultiSelectSegmentedControl/MultiSelectSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCAlertView/SDCAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
@@ -1127,7 +1126,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InAppSettingsKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Marshal.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MultiSelectSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDCAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
@@ -1267,7 +1265,7 @@
 				3A2BF9D81DC64BF400AFA36E /* CardImageViewPopover.swift in Sources */,
 				3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */,
 				3A48FE091FF12654000D3F9D /* NRDBApi.swift in Sources */,
-				3A47F1901DBB7E9500058294 /* Card+html.swift in Sources */,
+				3A47F1901DBB7E9500058294 /* Card+HTML.swift in Sources */,
 				3AF1E9171FB4FB64009E8B88 /* Utils.swift in Sources */,
 				3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */,
 				3ABBE8041E2264AA00A1B583 /* IdentitySelectionViewController.swift in Sources */,
@@ -1289,7 +1287,7 @@
 				3A28E80C1E059D29009EABD4 /* ListCardsViewController.swift in Sources */,
 				3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */,
 				3AC846601EB60BF9003EADD1 /* TickingLabel.swift in Sources */,
-				3AA251311F8D0396007C9A3C /* Card+Map.swift in Sources */,
+				3AA251311F8D0396007C9A3C /* Card+Constants.swift in Sources */,
 				3A4BDFD51DFD9F74002CC166 /* FilterViewController.swift in Sources */,
 				3A3C1E211BF79C7D000311FA /* DeckChange.swift in Sources */,
 				3AD796871C6B52E600D5B24C /* DeckExport.swift in Sources */,

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Marshal
 import SwiftyUserDefaults
 
 class CardManager {
@@ -280,8 +279,10 @@ class CardManager {
         
         if let data = FileManager.default.contents(atPath: filename) {
             do {
-                let cardsJson = try JSONParser.JSONObjectWithData(data) 
-                return setupFromJson(cardsJson, language: language)
+                let decoder = JSONDecoder()
+                let rawCards = try decoder.decode(ApiResponse<NetrunnerDbCard>.self, from: data)
+ 
+                return setupFromJson(rawCards, language: language)
             } catch let error {
                 print("\(error)")
                 return false
@@ -294,8 +295,9 @@ class CardManager {
     static func setupFromNetrunnerDb(_ cardsData: Data, language: String) -> Bool {
         var ok = false
         do {
-            let cardsJson = try JSONParser.JSONObjectWithData(cardsData)
-            ok = setupFromJson(cardsJson, language: language)
+            let decoder = JSONDecoder()
+            let rawCards = try decoder.decode(ApiResponse<NetrunnerDbCard>.self, from: cardsData)
+            ok = setupFromJson(rawCards, language: language)
             if !ok {
                 return false
             }
@@ -310,15 +312,14 @@ class CardManager {
         return ok
     }
     
-    static func setupFromJson(_ cards: JSONObject, language: String) -> Bool {
-        if !Utils.validJsonResponse(json: cards) {
+    static func setupFromJson(_ rawCards: ApiResponse<NetrunnerDbCard>, language: String) -> Bool {
+        if !rawCards.valid {
             return false
         }
-        
         CardManager.initialize()
         
         // parse data
-        let parsedCards = Card.cardsFromJson(cards, language: language)
+        let parsedCards = Card.cardsFromJson(rawCards, language: language)
         for card in parsedCards {
             CardManager.add(card: card)
         }
