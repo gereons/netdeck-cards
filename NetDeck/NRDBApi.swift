@@ -51,3 +51,7 @@ struct NetrunnerDbDeck: Codable {
         return []
     }
 }
+
+struct NetrunnerDbCard: Codable {
+    let code: String
+}

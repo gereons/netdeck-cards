@@ -358,7 +358,6 @@ class NRDB: NSObject {
     func deleteDeck(_ deckId: String?) {
         self.deckMap.removeValue(forKey: deckId ?? "")
     }
-    
 
 }
 

@@ -8,7 +8,6 @@
 
 import SDCAlertView
 import Alamofire
-import Marshal
 import SwiftyUserDefaults
 
 private enum DownloadScope: Int {
@@ -312,9 +311,9 @@ class DataDownload: NSObject {
                     var ok = false
                     if let data = response.data {
                         do {
-                            let json = try JSONParser.JSONObjectWithData(data)
-                            let total: Int = try json.value(for: "total")
-                            ok = Utils.validJsonResponse(json: json) && total == 1
+                            let decoder = JSONDecoder()
+                            let result = try decoder.decode(ApiResponse<NetrunnerDbCard>.self, from: data)
+                            ok = result.valid && result.total == 1
                         } catch let error {
                             print("\(error)")
                         }
