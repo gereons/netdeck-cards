@@ -526,7 +526,7 @@ import SwiftyUserDefaults
             formatter.dateFormat = NetrunnerDbDeck.dateFormat
             
             var revisions = [DeckChangeSet]()
-            for (date, changes) in rawDeck.history ?? [:] {
+            for (date, changes) in rawDeck.history {
                 if let timestamp = formatter.date(from: date) {
                     let dcs = DeckChangeSet()
                     dcs.timestamp = timestamp

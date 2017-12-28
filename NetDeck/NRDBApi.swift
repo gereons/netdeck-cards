@@ -8,6 +8,16 @@
 
 import Foundation
 
+extension KeyedDecodingContainer {
+    public func decode<T: Decodable>(_ key: Key, as type: T.Type = T.self) throws -> T {
+        return try self.decode(T.self, forKey: key)
+    }
+
+    public func decodeIfPresent<T: Decodable>(_ key: KeyedDecodingContainer.Key) throws -> T? {
+        return try decodeIfPresent(T.self, forKey: key)
+    }
+}
+
 struct ApiResponse<T: Codable>: Codable {
     let data: [T]
     let success: Bool
@@ -29,15 +39,34 @@ struct NetrunnerDbDeck: Codable {
     let description: String
     let mwl_code: String?
     let cards: [String: Int]
-    let history: [String: [String: Int]]?
+
+    typealias EditingHistory = [String: [String: Int]]  // "timestamp" => [ "code": amount ... ]
+    let history: EditingHistory
     
     static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decode(.id)
+        self.date_creation = try container.decode(.date_creation)
+        self.date_update = try container.decode(.date_update)
+        self.name = try container.decode(.name)
+        self.description = try container.decode(.description)
+        self.mwl_code = try container.decode(.mwl_code)
+        self.cards = try container.decode(.cards)
+        if let history = try? container.decode(EditingHistory.self, forKey: .history) {
+            self.history = history
+        } else {
+            self.history = [:]
+        }
+    }
 
     static func parse(_ data: Data) -> [NetrunnerDbDeck] {
         do {
             let formatter = DateFormatter()
             formatter.dateFormat = self.dateFormat
-            formatter.timeZone = TimeZone.current
+
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .formatted(formatter)
 
@@ -62,16 +91,6 @@ struct NetrunnerDbAuth: Codable {
         case accessToken = "access_token"
         case refreshToken = "refresh_token"
         case expiresIn = "expires_in"
-    }
-}
-
-extension KeyedDecodingContainer {
-    public func decode<T: Decodable>(_ key: Key, as type: T.Type = T.self) throws -> T {
-        return try self.decode(T.self, forKey: key)
-    }
-    
-    public func decodeIfPresent<T: Decodable>(_ key: KeyedDecodingContainer.Key) throws -> T? {
-        return try decodeIfPresent(T.self, forKey: key)
     }
 }
 
