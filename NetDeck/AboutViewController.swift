@@ -41,6 +41,8 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
         
         let feedbackButton = UIBarButtonItem(title: "Feedback".localized(), style: .plain, target: self, action: #selector(self.leaveFeedback(_:)))
         self.navigationItem.rightBarButtonItem = feedbackButton
+
+        Analytics.logEvent(.showAbout)
     }
     
     @objc func goBack(_ sender: Any) {
