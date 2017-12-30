@@ -270,7 +270,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
             text = String(format: "%@", card.name)
             weight = UIFont.Weight.regular.rawValue
         }
-        cell.nameLabel.text = card.unique ? text + " •" : text
+        cell.nameLabel.text = card.unique ? text + " ⬩" : text
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight(rawValue: weight))
         cell.nameLabel.textColor = card.owned == 0 ? .darkGray : .black
 

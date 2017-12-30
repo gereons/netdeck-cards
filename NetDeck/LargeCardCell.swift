@@ -77,7 +77,7 @@ class LargeCardCell: CardCell {
         if card.type == .identity {
             name = card.name
         } else if card.unique {
-            name = String(format: "%lu× %@ •", cc.count, card.name)
+            name = String(format: "%lu× %@ ⬩", cc.count, card.name)
         } else {
             name = String(format: "%lu× %@", cc.count, card.name)
         }

@@ -58,7 +58,7 @@ class LargeBrowserCell: BrowserCell {
     
     override func setCard(_ card: Card) {
         if card.unique {
-            self.nameLabel.text = card.name + " •"
+            self.nameLabel.text = card.name + " ⬩"
         } else {
             self.nameLabel.text = card.name
         }

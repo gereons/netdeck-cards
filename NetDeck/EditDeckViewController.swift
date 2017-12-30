@@ -540,7 +540,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         cell.stepper.isHidden = card.type == .identity
         cell.idButton.isHidden = card.type != .identity
         
-        let fmt = card.unique ? "%lu× %@ •" : "%lu× %@"
+        let fmt = card.unique ? "%lu× %@ ⬩" : "%lu× %@"
         var name = String(format: fmt, cc.count, card.name)
         if card.restricted(self.deck.mwl) {
             name += " " + Card.restricted
