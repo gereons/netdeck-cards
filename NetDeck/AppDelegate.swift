@@ -302,14 +302,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        let scheme = url.scheme
+        guard let scheme = url.scheme else {
+            return false
+        }
         
         if scheme == "netdeck" {
             if url.host == "oauth2" {
                 NRDBAuthPopupViewController.handleOpenUrl(url)
             }
             return true
-        } else if (scheme?.hasPrefix("db-"))! {
+        } else if scheme.hasPrefix("db-") {
             let ok = Dropbox.handleURL(url)
             Defaults[.useDropbox] = ok
             if ok {

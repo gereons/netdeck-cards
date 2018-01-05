@@ -75,7 +75,7 @@ class ImportDecksViewController: UIViewController {
         
         // do the initial listing in the background, as it may block the ui thread
         
-        if (self.source == .dropbox) {
+        if self.source == .dropbox {
             SVProgressHUD.show(withStatus: "Loading decks from Dropbox".localized())
             self.getDropboxDecks()
         } else {
@@ -401,7 +401,7 @@ class ImportDecksViewController: UIViewController {
     }
     
     @objc func handleRefresh(_ sender: UIRefreshControl) {
-        if (self.source == .dropbox) {
+        if self.source == .dropbox {
             self.getDropboxDecks()
         } else {
             self.getNetrunnerDbDecks()

@@ -199,7 +199,7 @@ class DataDownload: NSObject {
         }
         
         if self.cards.count == 0 {
-            if (scope == .all) {
+            if scope == .all {
                 UIAlertController.alert(withTitle: "No Card Data".localized(),
                     message:"Please download card data first".localized(),
                     button:"OK")

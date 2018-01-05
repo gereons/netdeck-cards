@@ -280,7 +280,7 @@ class CardList {
             predicates.append(predicate)
         }
         if self.influence != -1 {
-            if (self.faction4inf == .none) {
+            if self.faction4inf == .none {
                 let predicate = NSPredicate(format:"influence == %d", self.influence)
                 predicates.append(predicate)
             } else {
@@ -307,7 +307,7 @@ class CardList {
                 predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (ANY aliases CONTAINS[cd] %@)",
                                         text, text, text)
                 let ch = text[text.startIndex]
-                if (ch >= "0" && ch <= "9") {
+                if ch >= "0" && ch <= "9" {
                     let codePredicate = NSPredicate(format:"code BEGINSWITH %@", text)
                     predicate = NSCompoundPredicate(orPredicateWithSubpredicates:[ predicate, codePredicate ])
                 }

@@ -22,7 +22,7 @@ import Foundation
     }
     
     func coalesce() {
-        if (self.changes.count == 0) {
+        if self.changes.count == 0 {
             return
         }
         
@@ -35,7 +35,7 @@ import Foundation
         var count = 0
         for dc in sorted {
             if prevCode != nil && dc.code != prevCode {
-                if (count != 0) {
+                if count != 0 {
                     let newDc = DeckChange(code: prevCode!, count: count)
                     combinedChanges.append(newDc)
                 }

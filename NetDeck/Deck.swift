@@ -336,7 +336,7 @@ import SwiftyUserDefaults
         }
         
         newDeck.name = newName
-        if (self.identityCc != nil) {
+        if self.identityCc != nil {
             newDeck.identityCc = CardCounter(card: self.identity!, count: 1)
         }
         newDeck.isDraft = self.isDraft
@@ -435,7 +435,7 @@ import SwiftyUserDefaults
         var removals = [Card]()
         for cc in self.cards {
             assert(cc.count > 0, "found card with 0 copies")
-            if (cc.count == 0) {
+            if cc.count == 0 {
                 removals.append(cc.card)
             }
         }
