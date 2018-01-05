@@ -135,7 +135,7 @@ class CardList {
     func preFilterForCorp(_ identity: Card, _ mwl: MWL) {
         self.resetInitialCards()
         
-        if (identity.faction != .neutral) {
+        if identity.faction != .neutral {
             let factions: NSArray = [ Faction.neutral.rawValue, identity.faction.rawValue ]
             let predicate = NSPredicate(format:"type != %d OR (type = %d AND faction in %@)", CardType.agenda.rawValue, CardType.agenda.rawValue, factions)
             
