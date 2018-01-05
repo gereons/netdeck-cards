@@ -108,6 +108,7 @@
 		3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8061E61972990E003ACF44 /* DeckDiffCell.xib */; };
 		3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */; };
 		3A822F6E1CC2C13500305789 /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A822F6D1CC2C13500305789 /* BuildConfig.swift */; };
+		3A827BD61FFF903D0081C9E9 /* Iluminotchi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A827BD51FFF903D0081C9E9 /* Iluminotchi.swift */; };
 		3A843A911B89D97F000CC60D /* IphoneDrawSimulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */; };
 		3A843A931B8A0114000CC60D /* DeckCell~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */; };
 		3A84F8DC1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F8DB1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift */; };
@@ -302,6 +303,7 @@
 		3A8061E61972990E003ACF44 /* DeckDiffCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffCell.xib; sourceTree = "<group>"; };
 		3A818EEB198E3A0900126495 /* BrowserResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserResultViewController.xib; sourceTree = "<group>"; };
 		3A822F6D1CC2C13500305789 /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
+		3A827BD51FFF903D0081C9E9 /* Iluminotchi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iluminotchi.swift; sourceTree = "<group>"; };
 		3A843A8F1B89D97F000CC60D /* IphoneDrawSimulator.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IphoneDrawSimulator.xib; sourceTree = "<group>"; };
 		3A843A921B8A0114000CC60D /* DeckCell~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DeckCell~iphone.xib"; sourceTree = "<group>"; };
 		3A84F8DB1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDBAuthPopupViewController.swift; sourceTree = "<group>"; };
@@ -566,6 +568,7 @@
 				3A32B7DE1EA23B2100A19982 /* KeyboardHandling.swift */,
 				3AC8465F1EB60BF8003EADD1 /* TickingLabel.swift */,
 				3AF1E9161FB4FB64009E8B88 /* Utils.swift */,
+				3A827BD51FFF903D0081C9E9 /* Iluminotchi.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1181,6 +1184,7 @@
 				3AA8EC2C1CC3AA8200370A26 /* DeckHistorySectionHeaderView.swift in Sources */,
 				3A1942681DC7337A00EB9CE5 /* CardImageViewController.swift in Sources */,
 				3A3D4D4B1DAA6ADA004028A7 /* SettingsViewController.swift in Sources */,
+				3A827BD61FFF903D0081C9E9 /* Iluminotchi.swift in Sources */,
 				3A48BE881E17DD3000B5DD3F /* SmallCardCell.swift in Sources */,
 				3A14E39F1E5F720600F0D4CB /* StartupViewController.swift in Sources */,
 				3A3C1E1F1BF79A71000311FA /* DeckState.swift in Sources */,

@@ -137,6 +137,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UINavigationBar.appearance().isTranslucent = false
         }
         self.replaceRootViewController(with: root)
+
+        let attributes = [
+            NSAttributedStringKey.font: UIFont(name: "Menlo-Regular", size: 13)!,
+            NSAttributedStringKey.foregroundColor: UIColor.lightGray
+        ]
+        let str = NSAttributedString(string: "Hack the Planet!", attributes: attributes)
+        Illuminotchi.add(attributedText: str)
         
         self.logStartup()
         
