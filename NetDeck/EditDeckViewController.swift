@@ -540,16 +540,9 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         cell.stepper.isHidden = card.type == .identity
         cell.idButton.isHidden = card.type != .identity
         
-        let fmt = card.unique ? "%lu× %@ ⬩" : "%lu× %@"
-        var name = String(format: fmt, cc.count, card.name)
-        if card.restricted(self.deck.mwl) {
-            name += " " + Card.restricted
-        }
-        
-        cell.nameLabel.text = name
+        cell.nameLabel.text = cc.displayName(self.deck.mwl)
     
         if card.type == .identity {
-            cell.nameLabel.text = card.name
             cell.stepper.isHidden = true
             
             cell.influenceLabel.textColor = .black

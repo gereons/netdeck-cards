@@ -150,10 +150,11 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         }()
     
         let card = self.cards[indexPath.section][indexPath.row]
-        cell.textLabel?.text = card.name
+        let mwl = Defaults[.defaultMWL]
+
+        cell.textLabel?.text = card.displayName(mwl)
     
         switch card.type {
-        
         case .identity:
             let inf = card.influenceLimit == -1 ? "∞" : "\(card.influenceLimit)"
             cell.detailTextLabel?.text = String(format: "%@ · %ld/%@", card.factionStr, card.minimumDecksize, inf)
@@ -168,7 +169,6 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         let pips = cell.accessoryView as! SmallPipsView
         pips.set(value: card.influence, color: card.factionColor)
     
-        let mwl = Defaults[.defaultMWL]
         let penalty = card.mwlPenalty(mwl)
         pips.backgroundColor = penalty > 0 ? UIColor(rgb: 0xf5f5f5) : .white
          

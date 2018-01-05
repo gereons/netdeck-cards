@@ -84,7 +84,10 @@ class IphoneIdentityViewController: UIViewController {
     }
     
     func closeAndSetIdentity() {
-        guard let identity = self.selectedIdentity else { return }
+        guard let identity = self.selectedIdentity else {
+            return
+        }
+
         if let deck = self.deck {
             deck.addCard(identity, copies: 1)
             self.close()
@@ -109,7 +112,7 @@ class IphoneIdentityViewController: UIViewController {
     }
     
     func close() {
-        let _ = self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }
 

@@ -9,8 +9,9 @@ import Foundation
 
 // MARK: - constants
 extension Card {
-    static let restricted = "🦄"
-    static let unique = "⬩"
+    static let restricted = " 🦄"
+    static let banned = " 🚫"
+    static let unique = " ⬩"
     
     // identities we need to handle
     static let customBiotics            = "03002"    // no jinteki cards
@@ -38,7 +39,7 @@ extension Card {
         ramanRai, heritageCommittee,
         salemsHospitality, ibrahimSalem,
         executiveSearchFirm, consultingVisit
-        ])
+    ])
     
     static let padCampaign              = "01109"    // needed for pad factory
     static let padCampaignCore2         = "20128"    // ditto
@@ -138,6 +139,21 @@ extension Card {
             return false
         }
         return restricted.contains(self.code)
+    }
+}
+
+extension Card {
+    
+    func displayName(_ mwl: MWL, count: Int? = nil) -> String {
+        let unique = self.unique ? Card.unique : ""
+        let restricted = self.restricted(mwl) ? Card.restricted : ""
+        let banned = self.banned(mwl) ? Card.banned : ""
+
+        if let c = count {
+            return "\(c)× \(self.name)\(unique)\(restricted)\(banned)"
+        } else {
+            return "\(self.name)\(unique)\(restricted)\(banned)"
+        }
     }
 }
 

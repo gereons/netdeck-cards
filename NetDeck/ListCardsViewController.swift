@@ -264,13 +264,13 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         let weight: CGFloat
         let text: String
         if let cc = cardCounter {
-            text = String(format: "%lu× %@", cc.count, card.name)
+            text = cc.displayName(self.deck.mwl)
             weight = UIFont.Weight.medium.rawValue
         } else {
-            text = String(format: "%@", card.name)
+            text = card.displayName(self.deck.mwl)
             weight = UIFont.Weight.regular.rawValue
         }
-        cell.nameLabel.text = card.unique ? text + " ⬩" : text
+        cell.nameLabel.text = text
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight(rawValue: weight))
         cell.nameLabel.textColor = card.owned == 0 ? .darkGray : .black
 

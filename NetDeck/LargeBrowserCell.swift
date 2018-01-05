@@ -57,12 +57,9 @@ class LargeBrowserCell: BrowserCell {
     }
     
     override func setCard(_ card: Card) {
-        if card.unique {
-            self.nameLabel.text = card.name + " ⬩"
-        } else {
-            self.nameLabel.text = card.name
-        }
-        
+        let mwl = Defaults[.defaultMWL]
+        self.nameLabel.text = card.displayName(mwl)
+
         let factionName = Faction.name(for: card.faction)
         let typeName = CardType.name(for: card.type)
         let subtype = card.subtype
@@ -72,7 +69,6 @@ class LargeBrowserCell: BrowserCell {
             self.type.text = String(format: "%@ · %@", factionName, typeName)
         }
         
-        let mwl = Defaults[.defaultMWL]
         let universalInf = mwl.universalInfluence ? card.mwlPenalty(mwl) : 0
         let influence = self.card.influence + universalInf
         LargeCardCell.setInfluencePips(self.pips, influence: influence, universalInfluence: universalInf, count: 1, card: self.card, mwl: mwl)

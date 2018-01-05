@@ -26,6 +26,14 @@ import Foundation
     var isNull: Bool {
         return self === CardCounter.nullInstance || self.card.isNull
     }
+
+    func displayName(_ mwl: MWL) -> String {
+        if self.card.type == .identity {
+            return self.card.displayName(mwl)
+        } else {
+            return self.card.displayName(mwl, count: self.count)
+        }
+    }
     
     // MARK: NSCoding
     convenience required init?(coder aDecoder: NSCoder) {
@@ -40,7 +48,8 @@ import Foundation
         aCoder.encode(self.count, forKey: "count")
         aCoder.encode(self.card.code, forKey: "card")
     }
-    
+
+    // MARK: NSCopying
     func copy(with zone: NSZone?) -> Any {
         return CardCounter(card: self.card, count: self.count)
     }

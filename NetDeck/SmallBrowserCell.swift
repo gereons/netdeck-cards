@@ -34,17 +34,13 @@ class SmallBrowserCell: BrowserCell {
     }
     
     override func setCard(_ card: Card) {
-        if card.unique {
-            self.nameLabel.text = card.name + " ⬩"
-        } else {
-            self.nameLabel.text = card.name
-        }
+        let mwl = Defaults[.defaultMWL]
+        self.nameLabel.text = card.displayName(mwl)
         
         let value = card.type == .agenda ? card.agendaPoints : card.influence
         self.pips.set(value: value, color: card.factionColor)
         self.factionLabel.text = card.factionStr
         
-        let mwl = Defaults[.defaultMWL]
         if card.mwlPenalty(mwl) != 0 {
             self.pipsView.backgroundColor = UIColor(rgb: 0xf5f5f5)
         }
