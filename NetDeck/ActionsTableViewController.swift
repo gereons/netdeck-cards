@@ -233,6 +233,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
             self.navigationController?.pushViewController(browser, animated: true)
         case .settings:
             let settings = Settings.viewController
+            Analytics.logEvent(.showSettings)
             self.showAsDetailViewController(settings)
         case .about:
             let about = AboutViewController()

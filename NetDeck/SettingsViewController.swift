@@ -52,12 +52,6 @@ class SettingsDelegate: IASKSettingsDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        Analytics.logEvent(.showSettings)
-//    }
-
     private func setHiddenKeys() {
         var hiddenKeys = Set<String>()
         
@@ -194,9 +188,7 @@ class SettingsDelegate: IASKSettingsDelegate {
         
         JintekiNet.sharedInstance.enterCredentialsAndLogin()
     }
-    
 
-    
     private func testApiSettings() {
         let host = Defaults[.nrdbHost]
         if host.count == 0 {

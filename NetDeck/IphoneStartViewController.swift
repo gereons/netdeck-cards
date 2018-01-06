@@ -292,6 +292,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         sender.isEnabled = false
         let settings = Settings.viewController
         if settings != self.navigationController?.topViewController {
+            Analytics.logEvent(.showSettings)
             self.navigationController?.pushViewController(settings, animated: true)
         }
     }
