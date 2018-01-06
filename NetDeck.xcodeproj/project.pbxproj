@@ -179,6 +179,7 @@
 		3AF1E9171FB4FB64009E8B88 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1E9161FB4FB64009E8B88 /* Utils.swift */; };
 		3AF23CB41E34DE6E007BF39C /* DeckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */; };
 		3AF2E8BD1883075500F6306B /* CardFilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */; };
+		3AF453E32000EC560008F748 /* MWLSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF453E22000EC560008F748 /* MWLSelection.swift */; };
 		3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF697881C1DAC7300D254CE /* Notifications.swift */; };
 		3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */; };
 		3AF6978F1C1DFD2100D254CE /* DrawSimulatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978E1C1DFD2100D254CE /* DrawSimulatorViewController.swift */; };
@@ -383,6 +384,7 @@
 		3AF1E9161FB4FB64009E8B88 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		3AF23CB31E34DE6E007BF39C /* DeckListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckListViewController.swift; sourceTree = "<group>"; };
 		3AF2E8BB1883075500F6306B /* CardFilterPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterPopover.xib; sourceTree = "<group>"; };
+		3AF453E22000EC560008F748 /* MWLSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWLSelection.swift; sourceTree = "<group>"; };
 		3AF697881C1DAC7300D254CE /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hypergeometric.swift; sourceTree = "<group>"; };
 		3AF6978E1C1DFD2100D254CE /* DrawSimulatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawSimulatorViewController.swift; sourceTree = "<group>"; };
@@ -569,6 +571,7 @@
 				3AC8465F1EB60BF8003EADD1 /* TickingLabel.swift */,
 				3AF1E9161FB4FB64009E8B88 /* Utils.swift */,
 				3A827BD51FFF903D0081C9E9 /* Iluminotchi.swift */,
+				3AF453E22000EC560008F748 /* MWLSelection.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1269,6 +1272,7 @@
 				3A2BF9D81DC64BF400AFA36E /* CardImageViewPopover.swift in Sources */,
 				3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */,
 				3A48FE091FF12654000D3F9D /* NRDBApi.swift in Sources */,
+				3AF453E32000EC560008F748 /* MWLSelection.swift in Sources */,
 				3A47F1901DBB7E9500058294 /* Card+HTML.swift in Sources */,
 				3AF1E9171FB4FB64009E8B88 /* Utils.swift in Sources */,
 				3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */,

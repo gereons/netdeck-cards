@@ -1226,67 +1226,40 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     func printInteractionControllerDidDismissPrinterOptions(_ printInteractionController: UIPrintInteractionController) {
         self.printController = nil
     }
-    
-    // MARK: - MWL selection
-    
+
+}
+
+// MARK: - MWL selection
+extension DeckListViewController: LegalitySetter {
+
     @objc func statusTapped(_ gesture: UITapGestureRecognizer) {
         if gesture.state == .ended {
             self.showMwlSelection()
         }
     }
-    
+
     private func showMwlSelection() {
-        let alert = UIAlertController.actionSheet(title: "Deck Legality".localized(), message: nil)
-        
-        alert.addAction(UIAlertAction(title: "Casual".localized().checked(self.deck.mwl == .none && !self.deck.onesies)) { action in
-            self.setLegality(.none, cacheRefresh: self.deck.cacheRefresh, onesies: false)
-        })
-        alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(self.deck.mwl == .v1_0)) { action in
-            self.setLegality(.v1_0, cacheRefresh: self.deck.cacheRefresh, onesies: false)
-        })
+        let alert = MWLSelection.createAlert(for: self.deck, on: self)
 
-        alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(self.deck.mwl == .v1_1)) { action in
-            self.setLegality(.v1_1, cacheRefresh: self.deck.cacheRefresh, onesies: false)
-        })
-        
-        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(self.deck.mwl == .v1_2)) { action in
-            self.setLegality(.v1_2, cacheRefresh: self.deck.cacheRefresh, onesies: false)
-        })
-
-        alert.addAction(UIAlertAction(title: "MWL v2.0".localized().checked(self.deck.mwl == .v2_0)) { action in
-            self.setLegality(.v2_0, cacheRefresh: false, onesies: false)
-        })
-        
-        alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(self.deck.onesies)) { action in
-            self.setLegality(.none, cacheRefresh: false, onesies: true)
-        })
-
-        alert.addAction(UIAlertAction(title: "Cache Refresh".localized().checked(self.deck.cacheRefresh)) { action in
-            self.setLegality(MWL.latest, cacheRefresh: !self.deck.cacheRefresh, onesies: false)
-        })
-        
-        alert.addAction(UIAlertAction.actionSheetCancel(nil))
-        
         let popover = alert.popoverPresentationController
         popover?.sourceRect = self.footerView.frame
         popover?.sourceView = self.view
         popover?.permittedArrowDirections = .down
-        
+
         alert.view.layoutIfNeeded()
         self.present(alert, animated: false, completion: nil)
     }
-    
-    private func setLegality(_ newMwl: MWL, cacheRefresh: Bool, onesies: Bool) {
+
+    func setLegality(_ newMwl: MWL, cacheRefresh: Bool, onesies: Bool) {
         if self.deck.mwl != newMwl || self.deck.onesies != onesies || self.deck.cacheRefresh != cacheRefresh {
             Analytics.logEvent(.changeMwl, attributes: [ "from": "\(self.deck.mwl.rawValue)", "to": "\(newMwl.rawValue)"])
             self.deck.mwl = newMwl
             self.deck.onesies = onesies
             self.deck.cacheRefresh = cacheRefresh
-            
+
             NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
         }
     }
-    
 }
 
 extension DeckListViewController: KeyboardHandling {
@@ -1311,3 +1284,5 @@ extension DeckListViewController: KeyboardHandling {
     }
 
 }
+
+
