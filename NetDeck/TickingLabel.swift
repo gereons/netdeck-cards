@@ -16,6 +16,7 @@ class TickingLabel: UILabel {
     var strings: [String]? {
         didSet {
             stop()
+            self.currentIndex = 0
             let count = strings?.count ?? 0
             if count > 1 {
                 self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.timerTick(_:)), userInfo: nil, repeats: true)
@@ -33,9 +34,9 @@ class TickingLabel: UILabel {
             return self.stop()
         }
         
-        currentIndex += 1
-        if currentIndex >= strings.count {
-            currentIndex = 0
+        self.currentIndex += 1
+        if self.currentIndex >= strings.count {
+            self.currentIndex = 0
         }
         
         let animation = CATransition()
@@ -43,6 +44,6 @@ class TickingLabel: UILabel {
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         self.layer.add(animation, forKey: kCATransitionFade)
         
-        self.text = strings[currentIndex]
+        self.text = strings[self.currentIndex]
     }
 }
