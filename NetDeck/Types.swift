@@ -91,11 +91,15 @@ enum MWL: Int {
     case v1_1   // as of 2016-08-01
     case v1_2   // as of 2017-04-12
     case v2_0   // as of 2017-10-01
+    // case v2_1
+
+    private static let all = [ MWL.none, .v1_0, .v1_1, .v1_2, .v2_0 ]
+    private static let names = [ "Casual", "MWL v1.0", "MWL v1.1", "MWL v1.2", "MWL v2.0" ]
     
     static let latest = MWL.v2_0
     
     // map from "mwl_code" values we get from the NRDB API
-    static let codeMap: [String: MWL] = [
+    private static let codeMap: [String: MWL] = [
         "NAPD_MWL_1.0": .v1_0,
         "NAPD_MWL_1.1": .v1_1,
         "NAPD_MWL_1.2": .v1_2,
@@ -108,13 +112,18 @@ enum MWL: Int {
     
     var universalInfluence: Bool {
         switch self {
-        case .none,
-             .v1_2: return true
-            
-        case .v1_0,
-             .v1_1,
-             .v2_0: return false
+        case .none, .v1_2: return true
+        default: return false
         }
+    }
+
+    // MARK: - settings values / titles
+    static func values() -> [Int] {
+        return all.map { $0.rawValue }
+    }
+
+    static func titles() -> [String] {
+        return all.map { names[$0.rawValue].localized() }
     }
 }
 

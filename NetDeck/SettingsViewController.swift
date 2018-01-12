@@ -159,7 +159,29 @@ class SettingsDelegate: IASKSettingsDelegate {
             break
         }
     }
-    
+
+    @objc func settingsViewController(_ sender: IASKAppSettingsViewController!, valuesFor specifier: IASKSpecifier!) -> [Any]! {
+        guard let key = specifier.key() else {
+            return nil
+        }
+
+        if key == DefaultsKeys.defaultMWL._key {
+            return MWL.values()
+        }
+        return nil
+    }
+
+    @objc func settingsViewController(_ sender: IASKAppSettingsViewController!, titlesFor specifier: IASKSpecifier!) -> [Any]! {
+        guard let key = specifier.key() else {
+            return nil
+        }
+
+        if key == DefaultsKeys.defaultMWL._key {
+            return MWL.titles()
+        }
+        return nil
+    }
+
     private func nrdbLogin() {
         if !Reachability.online {
             self.showOfflineAlert()
