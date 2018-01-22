@@ -169,8 +169,8 @@ extension Card {
         ("03049", "Proco"),     // Professional Contacts
         ("03035", "LARLA"),     // Levy AR Lab Access
         ("04029", "PPVP"),      // Prepaid Voicepad
-        ("05039", "SW35"),
-        ("05039", "USW35"),     // Unreg. s&w '35
+        ("05039", "SW35"),      // Unreg. s&w '35
+        ("05039", "USW35"),
         ("06033", "David"),     // D4v1d
         ("07054", "QPT"),       // Qianju PT
         ("08009", "Baby"),      // Symmetrical Visage
@@ -190,6 +190,7 @@ extension Card {
         ("20060", "Mr. Phones"),// Underworld Contact
         ("02069", "Mr. Phones"),
         ("12115", "ARES"),      // AR-Enhanced Security
+        ("03044", "CyCy"),      // Cyber-Cypher
     ]
 }
 
