@@ -53,7 +53,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     
     static func showKeyboard(_ info: KeyboardInfo) {
         keyboardVisible = true
-        
+
         let screenHeight = UIScreen.main.bounds.size.height
         let kbHeight = screenHeight - info.endFrame.origin.y
         popoverScale = (screenHeight - kbHeight - popoverMargin) / CGFloat(ImageCache.height)
@@ -112,7 +112,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.detailView.isHidden = true
         if CardImageViewPopover.keyboardVisible {
             self.view.transform = CGAffineTransform(scaleX: CardImageViewPopover.popoverScale, y: CardImageViewPopover.popoverScale)

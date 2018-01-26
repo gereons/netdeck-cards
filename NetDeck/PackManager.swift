@@ -92,7 +92,7 @@ class PackManager {
     static let cores = [ core, core2 ]
     
     struct Rotation2017 {
-        static let packs = [ "core", "wla", "ta", "ce", "asis", "hs", "fp", "om", "st", "mt", "tc", "fal", "dt" ]
+        static let packs = Set([ "core", "wla", "ta", "ce", "asis", "hs", "fp", "om", "st", "mt", "tc", "fal", "dt" ])
         static let cycles = [ "genesis", "spin" ]
     }
     
