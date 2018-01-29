@@ -191,6 +191,7 @@ extension Card {
         ("02069", "Mr. Phones"),
         ("12115", "ARES"),      // AR-Enhanced Security
         ("03044", "CyCy"),      // Cyber-Cypher
+        ("21101", "Zero"),      // Zer0
     ]
 }
 
