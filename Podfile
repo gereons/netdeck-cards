@@ -13,7 +13,7 @@ target 'NetDeck' do
     pod 'DZNEmptyDataSet'
     pod 'DeviceKit'
 
-    pod 'SwiftyDropbox'
+    pod 'SwiftyDropbox', :git => "https://github.com/gereons/SwiftyDropbox"
     pod 'Alamofire'
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
