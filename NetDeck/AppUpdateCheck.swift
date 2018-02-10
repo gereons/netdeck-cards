@@ -53,13 +53,15 @@ private struct LookupResult: Codable {
 }
 
 class AppUpdateCheck {
-    
-    static let interval: TimeInterval = 7 * 24 * 60 * 60 // one week
+
+    static let day: TimeInterval = 24 * 60 * 60
+    static let week: TimeInterval = 7 * day
+
     static let forceTest = false
     
     static func checkUpdate() {
         guard let nextCheck = Defaults[.nextUpdateCheck] else {
-            Defaults[.nextUpdateCheck] = Date(timeIntervalSinceNow: interval)
+            Defaults[.nextUpdateCheck] = Date(timeIntervalSinceNow: day)
             return
         }
         
@@ -67,7 +69,7 @@ class AppUpdateCheck {
         let now = Date()
         let checkNow = now.timeIntervalSince1970 > nextCheck.timeIntervalSince1970
         if (checkNow && Reachability.online) || force {
-            Defaults[.nextUpdateCheck] = now.addingTimeInterval(interval)
+            Defaults[.nextUpdateCheck] = now.addingTimeInterval(day)
             self.checkForUpdate { version in
                 if let v = version {
                     let msg = String(format: "Version %@ is available on the App Store".localized(), v)
@@ -79,7 +81,9 @@ class AppUpdateCheck {
                         UIApplication.shared.openURL(URL(string: url)!)
                     })
 
-                    alert.addAction(UIAlertAction(title: "Not now".localized(), style: .default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Not now".localized(), style: .default) { action in
+                        Defaults[.nextUpdateCheck] = now.addingTimeInterval(week)
+                    })
 
                     alert.show()
 
