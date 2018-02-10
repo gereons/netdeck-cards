@@ -216,6 +216,10 @@ class CardManager {
             if let card = CardManager.cardBy(code: code) {
                 card.addCardAlias(alias)
             }
+
+            if let newCode = Card.originalToRevised[code], let card = CardManager.cardBy(code: newCode) {
+                card.addCardAlias(alias)
+            }
         }
     }
     

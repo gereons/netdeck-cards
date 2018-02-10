@@ -161,21 +161,22 @@ extension Card {
 extension Card {
     static let aliases = [
         ("01044", "Mopus"),     // Magnum Opus
-        ("20050", "Mopus"),
         ("01092", "SSCG"),      // Sansan City Grid
+        ("02069", "Mr. Phones"),// Underworld Contact
         ("02079", "OAI"),       // Oversight AI
         ("02085", "HQI"),       // HQ Interface
         ("02107", "RDI"),       // R&D Interface
-        ("03049", "Proco"),     // Professional Contacts
         ("03035", "LARLA"),     // Levy AR Lab Access
+        ("03044", "CyCy"),      // Cyber-Cypher
+        ("03049", "Proco"),     // Professional Contacts
         ("04029", "PPVP"),      // Prepaid Voicepad
         ("05039", "SW35"),      // Unreg. s&w '35
         ("05039", "USW35"),
         ("06033", "David"),     // D4v1d
         ("07054", "QPT"),       // Qianju PT
+        ("08003", "Pancakes"),  // Adjusted Chronotype
         ("08009", "Baby"),      // Symmetrical Visage
         ("08034", "Franklin"),  // Crick
-        ("08003", "Pancakes"),  // Adjusted Chronotype
         ("08086", "Anita"),     // Film Critic
         ("09007", "Kitty"),     // Quantum Predictive Model
         ("10043", "Polop"),     // Political Operative
@@ -185,12 +186,9 @@ extension Card {
         ("12088", "NNK"),       // Na'Not'K
         ("12088", "Nanotek"),
         ("12088", "Nanotech"),
-        ("13038", "UVC"),       // Ultraviolet Clearance
         ("12104", "Turtle"),    // Aumakua
-        ("20060", "Mr. Phones"),// Underworld Contact
-        ("02069", "Mr. Phones"),
         ("12115", "ARES"),      // AR-Enhanced Security
-        ("03044", "CyCy"),      // Cyber-Cypher
+        ("13038", "UVC"),       // Ultraviolet Clearance
         ("21101", "Zero"),      // Zer0
     ]
 }
