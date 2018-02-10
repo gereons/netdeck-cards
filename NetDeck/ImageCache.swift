@@ -105,7 +105,7 @@ class ImageCache: NSObject {
         
         if lastCheck < now {
             self.unavailableImages.removeAll()
-            Defaults[.unavailableImagesDate] = now + 48 * 3600
+            Defaults[.unavailableImagesDate] = now + 12 * 3600
             Defaults[.unavailableImages] = Array(self.unavailableImages)
         }
         
@@ -142,7 +142,7 @@ class ImageCache: NSObject {
         }
         
         // if we know we don't (or can't) have an image, return a placeholder immediately
-        if unavailableImages.contains(key) {
+        if unavailableImages.contains(key) || card.imageSrc == nil {
             completion(card, ImageCache.placeholder(for: card.role), true)
             return
         }
@@ -210,15 +210,15 @@ class ImageCache: NSObject {
     }
     
     func updateImage(for card: Card, completion: @escaping (Bool) -> Void) {
-        guard Reachability.online else {
+        guard
+            Reachability.online,
+            let src = card.imageSrc,
+            let url = URL(string: src)
+        else {
             completion(false)
             return
         }
-        guard let url = URL(string: card.imageSrc) else {
-            completion(false)
-            return
-        }
-        
+
         let key = card.code
         
         var request = URLRequest(url:url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
@@ -285,16 +285,20 @@ class ImageCache: NSObject {
         
         self.lastModifiedDates.removeAll()
         self.nextCheckDates.removeAll()
-        self.unavailableImages.removeAll()
         
         Defaults[.lastModifiedCache] = self.lastModifiedDates
         Defaults[.nextCheck] = self.nextCheckDates
-        Defaults[.unavailableImages] = Array(self.unavailableImages)
-        
+
+        self.resetUnavailableImages()
         self.removeCacheDirectory()
         URLCache.shared.removeAllCachedResponses()
         
         self.memCache.removeAll()
+    }
+
+    func resetUnavailableImages() {
+        self.unavailableImages.removeAll()
+        Defaults[.unavailableImages] = Array(self.unavailableImages)
     }
     
     private func NLOG(_ format: String, _ args: CVarArg...) {
@@ -409,36 +413,43 @@ class ImageCache: NSObject {
                 return
             }
         }
-        
+        guard let src = card.imageSrc, let url = URL(string: src) else {
+            return
+        }
+
         self.NLOG("check for %@", key)
-        let url = URL(string: card.imageSrc)
-        var request = URLRequest(url: url!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
+        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
         let lastModDate = self.lastModifiedDates[key]
         if lastModDate != nil {
             request.setValue(lastModDate, forHTTPHeaderField: "If-Modified-Since")
         }
         
-        self.NLOG("GET %@ If-Modified-Since %@", card.imageSrc, lastModDate ?? "n/a")
+        self.NLOG("GET %@ If-Modified-Since %@", url.absoluteString, lastModDate ?? "n/a")
         Alamofire
             .request(request)
             .validate()
             .responseImage(imageScale: 1.0) { response in
                 if let img = response.result.value {
-                    self.NLOG("GOT %@ status 200", card.imageSrc)
+                    self.NLOG("GOT %@ status 200", url.absoluteString)
                     let lastModified = response.response?.allHeaderFields["Last-Modified"] as? String
                     self.storeInCache(img, lastModified: lastModified, key: key)
                 } else if response.response?.statusCode == 304 {
-                    self.NLOG("GOT %@ status 304", card.imageSrc)
+                    self.NLOG("GOT %@ status 304", url.absoluteString)
                     self.nextCheckDates[key] = Date(timeIntervalSinceNow: ImageCache.successInterval)
                 } else {
-                    self.NLOG("GOT %@ failure", card.imageSrc)
+                    self.NLOG("GOT %@ failure", url.absoluteString)
                     self.nextCheckDates[key] = Date(timeIntervalSinceNow: ImageCache.errorInterval)
                 }
             }
     }
     
     private func downloadImage(for card: Card, key: String, completion: @escaping (Card, UIImage, Bool) -> Void) {
-        let src = card.imageSrc
+        guard let src = card.imageSrc else {
+            let img = ImageCache.placeholder(for: card.role)
+            completion(card, img, true)
+            return
+        }
+
         print("loading image for \(card.code) \(card.name)")
         Alamofire
             .request(src)
@@ -451,9 +462,7 @@ class ImageCache: NSObject {
                         completion(card, img, false)
                         let lastModified = response.response?.allHeaderFields["Last-Modified"] as? String
                         self.storeInCache(img, lastModified: lastModified, key: key)
-                        if self.unavailableImages.contains(key) {
-                            self.unavailableImages.remove(key)
-                        }
+                        self.unavailableImages.remove(key)
                         return
                     }
                     fallthrough

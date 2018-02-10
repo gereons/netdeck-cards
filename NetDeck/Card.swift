@@ -71,12 +71,17 @@ class Card: NSObject {
         return PackManager.packNumberFor(code: self.packCode)
     }
 
-    var imageSrc: String {
+    var imageSrc: String? {
         if let src = self.imageUrl {
             return src
-        } else {
+        }
+
+        let ffgId = Pack.ffgIds[self.packCode]
+        if ffgId == nil {
             return Card.imgSrcTemplate.replacingOccurrences(of: "{code}", with: self.code)
         }
+
+        return nil
     }
     
     var nrdbLink: String {

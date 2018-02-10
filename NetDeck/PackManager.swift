@@ -74,6 +74,51 @@ struct Pack: Codable {
     }
 }
 
+extension Pack {
+    static let ffgIds = [
+        "tsb": 17,
+        "fc": 18,
+        "uao": 19,
+        "atr": 20,
+        "ts": 21,
+        "oac": 22,
+        "val": 23,
+        "bb": 24,
+        "cc": 25,
+        "uw": 26,
+        "oh": 27,
+        "uot": 28,
+        "dad": 29,
+        "kg": 30,
+        "bf": 31,
+        "dag": 32,
+        "si": 33,
+        "tlm": 34,
+        "ftm": 35,
+        "23s": 36,
+        "bm": 37,
+        "es": 38,
+        "in": 39,
+        "ml": 40,
+        "qu": 41,
+        "td": 42,
+        "dc": 43,
+        "so": 44,
+        "eas": 45,
+        "baw": 46,
+        "fm": 47,
+        "cd": 48,
+        "core2": 49,
+        "ss": 50,
+        "dtwn": 51,
+        "cotc": 52,
+        "tdatd": 53,
+        "win": 54,
+        "ka": 55
+    ]
+}
+
+
 class PackManager {
     static let unknown = "unknown"
     static let draft = "draft"

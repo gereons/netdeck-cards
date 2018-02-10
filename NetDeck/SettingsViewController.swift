@@ -247,6 +247,7 @@ class SettingsDelegate: IASKSettingsDelegate {
         case IASKButtons.downloadDataNow:
             if Reachability.online {
                 DataDownload.downloadCardData()
+                ImageCache.sharedInstance.resetUnavailableImages()
             } else {
                 self.showOfflineAlert()
             }
