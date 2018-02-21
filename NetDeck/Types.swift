@@ -91,19 +91,20 @@ enum MWL: Int {
     case v1_1   // as of 2016-08-01
     case v1_2   // as of 2017-04-12
     case v2_0   // as of 2017-10-01
-    // case v2_1
+    case v2_1   // as of 2018-02-26
 
-    private static let all = [ MWL.none, .v1_0, .v1_1, .v1_2, .v2_0 ]
-    private static let names = [ "Casual", "MWL v1.0", "MWL v1.1", "MWL v1.2", "MWL v2.0" ]
+    private static let all = [ MWL.none, .v1_0, .v1_1, .v1_2, .v2_0, .v2_1 ]
+    private static let names = [ "Casual", "MWL v1.0", "MWL v1.1", "MWL v1.2", "MWL v2.0", "MWL v2.1" ]
     
-    static let latest = MWL.v2_0
+    static let latest = MWL.v2_1
     
     // map from "mwl_code" values we get from the NRDB API
     private static let codeMap: [String: MWL] = [
         "NAPD_MWL_1.0": .v1_0,
         "NAPD_MWL_1.1": .v1_1,
         "NAPD_MWL_1.2": .v1_2,
-        "NAPD_MWL_2.0": .v2_0
+        "NAPD_MWL_2.0": .v2_0,
+        "NAPD_MWL_2.1": .v2_1
     ]
     
     static func by(code: String) -> MWL {

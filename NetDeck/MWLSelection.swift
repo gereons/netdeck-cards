@@ -35,6 +35,10 @@ class MWLSelection {
             setter.setLegality(.v2_0, cacheRefresh: false, onesies: false)
         })
 
+        alert.addAction(UIAlertAction(title: "MWL v2.1".localized().checked(deck.mwl == .v2_1)) { action in
+            setter.setLegality(.v2_1, cacheRefresh: false, onesies: false)
+        })
+
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(deck.onesies)) { action in
             setter.setLegality(.none, cacheRefresh: false, onesies: true)
         })
