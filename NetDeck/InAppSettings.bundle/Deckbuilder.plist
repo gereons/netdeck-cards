@@ -6,6 +6,52 @@
 	<array>
         <dict>
             <key>Title</key>
+            <string>Legality</string>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSMultiValueSpecifier</string>
+            <key>Title</key>
+            <string>Default Legality</string>
+            <key>Key</key>
+            <string>mwlVersion</string>
+            <key>DefaultValue</key>
+            <integer>1</integer>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Observe Rotation</string>
+            <key>Key</key>
+            <string>rotationActive</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSMultiValueSpecifier</string>
+            <key>Title</key>
+            <string>Rotation to use</string>
+            <key>Key</key>
+            <string>rotationIndex</string>
+            <key>DefaultValue</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Offer Conversion to Revised Core?</string>
+            <key>Key</key>
+            <string>convertCore</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
+        <dict>
+            <key>Title</key>
             <string>Saving</string>
             <key>Type</key>
             <string>PSGroupSpecifier</string>
@@ -40,44 +86,9 @@
             <key>DefaultValue</key>
             <false/>
         </dict>
-        <dict>
-            <key>Title</key>
-            <string>Legality</string>
-            <key>Type</key>
-            <string>PSGroupSpecifier</string>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSMultiValueSpecifier</string>
-            <key>Title</key>
-            <string>Default Legality</string>
-            <key>Key</key>
-            <string>mwlVersion</string>
-            <key>DefaultValue</key>
-            <integer>1</integer>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Observe Rotation</string>
-            <key>Key</key>
-            <string>rotationActive</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Offer Conversion to Revised Core?</string>
-            <key>Key</key>
-            <string>convertCore</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
+
 	</array>
 	<key>StringsTable</key>
-	<string>Decks</string>
+	<string>Deckbuilder</string>
 </dict>
 </plist>

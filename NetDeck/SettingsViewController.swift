@@ -81,6 +81,7 @@ class SettingsDelegate: IASKSettingsDelegate {
         
         if !Defaults[.rotationActive] {
             hiddenKeys.insert(DefaultsKeys.convertCore._key)
+            hiddenKeys.insert(DefaultsKeys.rotationIndex._key)
         }
         
         Settings.viewController.hiddenKeys = hiddenKeys
@@ -154,6 +155,9 @@ class SettingsDelegate: IASKSettingsDelegate {
         
         case DefaultsKeys.rotationActive._key:
             self.setHiddenKeys()
+
+        case DefaultsKeys.rotationIndex._key:
+            self.reinitializeData()
             
         default:
             break
@@ -168,6 +172,9 @@ class SettingsDelegate: IASKSettingsDelegate {
         if key == DefaultsKeys.defaultMWL._key {
             return MWL.values()
         }
+        if key == DefaultsKeys.rotationIndex._key {
+            return Rotation.values()
+        }
         return nil
     }
 
@@ -179,7 +186,16 @@ class SettingsDelegate: IASKSettingsDelegate {
         if key == DefaultsKeys.defaultMWL._key {
             return MWL.titles()
         }
+        if key == DefaultsKeys.rotationIndex._key {
+            return Rotation.titles()
+        }
         return nil
+    }
+
+    private func reinitializeData() {
+        let language = Defaults[.language]
+        _ = PackManager.setupFromFiles(language)
+        _ = CardManager.setupFromFiles(language)
     }
 
     private func nrdbLogin() {

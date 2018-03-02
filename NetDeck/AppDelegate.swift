@@ -23,10 +23,6 @@ import DeviceKit
 // TODO: taptic engine support?
 // TODO: for the last version supporting iOS 9, add a friendly upgrade reminder
 
-protocol StartViewController {
-    func addNewDeck(_ role: Role)
-    func openBrowser()
-}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var initGroup = DispatchGroup()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        FIXME("make rotation selectable - call setupfromfiles on change")
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self])
@@ -228,8 +225,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Defaults[$0] = .all
             }
         }
-        
+
+        Defaults.registerDefault(.defaultMWL, MWL.latest)
         Defaults.registerDefault(.rotationActive, true)
+        Defaults.registerDefault(.rotationIndex, Rotation._2017)
         Defaults.registerDefault(.convertCore, true)
         
         Defaults.registerDefault(.lastDownload, "never".localized())
@@ -261,8 +260,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Defaults.registerDefault(.numCores, 3)
         
         Defaults.registerDefault(.identityTable, true)
-        
-        Defaults.registerDefault(.defaultMWL, MWL.latest)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

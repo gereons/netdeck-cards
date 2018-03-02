@@ -6,7 +6,7 @@
 	<array>
         <dict>
             <key>Title</key>
-            <string>Decks</string>
+            <string>Deckbuilder</string>
             <key>Type</key>
             <string>PSGroupSpecifier</string>
         </dict>
@@ -14,9 +14,9 @@
             <key>Type</key>
             <string>PSChildPaneSpecifier</string>
             <key>Title</key>
-            <string>Decks</string>
+            <string>Deckbuilder</string>
             <key>File</key>
-            <string>Decks</string>
+            <string>Deckbuilder</string>
         </dict>
 		<dict>
 			<key>Title</key>

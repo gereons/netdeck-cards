@@ -121,7 +121,8 @@ struct NetrunnerDbCard: Codable {
     let trash_cost: Int?
     let type_code: String
     let uniqueness: Bool
-    
+
+    /*
     struct Localized: Codable {
         let title: String?
         let keywords: String?
@@ -137,7 +138,8 @@ struct NetrunnerDbCard: Codable {
     }
     
     let _locale: [String: Localized]?
-    
+    */
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.advancement_cost = try container.decodeIfPresent(.advancement_cost)
@@ -162,7 +164,7 @@ struct NetrunnerDbCard: Codable {
         self.trash_cost = try container.decodeIfPresent(.trash_cost)
         self.type_code = try container.decode(.type_code)
         self.uniqueness = try container.decode(.uniqueness)
-        self._locale = try container.decodeIfPresent(._locale)
+        // self._locale = try container.decodeIfPresent(._locale)
         
         // special treatment for "int value", "null", or not present of cost and strength
         if container.contains(.cost) {
@@ -178,7 +180,8 @@ struct NetrunnerDbCard: Codable {
             self.strength = -1
         }
     }
-   
+
+    /*
     func getLocalized(_ key: Localized.Keys, for language: String) -> String {
         var localized: String?
         if let loc = self._locale?[language] {
@@ -200,5 +203,6 @@ struct NetrunnerDbCard: Codable {
             }
         }
     }
+    */
  }
 

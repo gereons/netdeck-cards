@@ -23,7 +23,7 @@ struct Cycle: Codable {
         self.position = try container.decode(Int.self, forKey: .position)
         self.size = try container.decode(Int.self, forKey: .size)
 
-        self.rotated = PackManager.Rotation2017.cycles.contains(self.code)
+        self.rotated = PackManager.rotation.cycles.contains(self.code)
     }
 }
 
@@ -33,6 +33,7 @@ struct Pack: Codable {
     let cycleCode: String
     let position: Int
     let releaseDate: String?
+    let ffgId: Int?
 
     let settingsKey: String
     let rotated: Bool
@@ -46,6 +47,7 @@ struct Pack: Codable {
         case cycleCode = "cycle_code"
         case position
         case releaseDate = "date_release"
+        case ffgId = "ffg_id"
     }
     
     static let use = "use_"
@@ -58,9 +60,10 @@ struct Pack: Codable {
         self.position = try container.decode(Int.self, forKey: .position)
         self.code = try container.decode(String.self, forKey: .code)
         self.releaseDate = try? container.decode(String.self, forKey: .releaseDate)
+        self.ffgId = try? container.decode(Int.self, forKey: .ffgId)
 
         self.settingsKey = Pack.use + code
-        self.rotated = PackManager.Rotation2017.packs.contains(code)
+        self.rotated = PackManager.rotation.packs.contains(code)
     }
     
     init(named: String, key: String) {
@@ -71,53 +74,9 @@ struct Pack: Codable {
         self.settingsKey = key
         self.rotated = false
         self.releaseDate = nil
+        self.ffgId = nil
     }
 }
-
-extension Pack {
-    static let ffgIds = [
-        "tsb": 17,
-        "fc": 18,
-        "uao": 19,
-        "atr": 20,
-        "ts": 21,
-        "oac": 22,
-        "val": 23,
-        "bb": 24,
-        "cc": 25,
-        "uw": 26,
-        "oh": 27,
-        "uot": 28,
-        "dad": 29,
-        "kg": 30,
-        "bf": 31,
-        "dag": 32,
-        "si": 33,
-        "tlm": 34,
-        "ftm": 35,
-        "23s": 36,
-        "bm": 37,
-        "es": 38,
-        "in": 39,
-        "ml": 40,
-        "qu": 41,
-        "td": 42,
-        "dc": 43,
-        "so": 44,
-        "eas": 45,
-        "baw": 46,
-        "fm": 47,
-        "cd": 48,
-        "core2": 49,
-        "ss": 50,
-        "dtwn": 51,
-        "cotc": 52,
-        "tdatd": 53,
-        "win": 54,
-        "ka": 55
-    ]
-}
-
 
 class PackManager {
     static let unknown = "unknown"
@@ -136,9 +95,8 @@ class PackManager {
     static let campaigns = [ terminalDirective ]
     static let cores = [ core, core2 ]
     
-    struct Rotation2017 {
-        static let packs = Set([ "core", "wla", "ta", "ce", "asis", "hs", "fp", "om", "st", "mt", "tc", "fal", "dt" ])
-        static let cycles = [ "genesis", "spin" ]
+    static var rotation: RotatedPacks {
+        return Defaults[.rotationIndex].packs
     }
     
     static let cyclesFilename = "nrcycles2.json"
@@ -183,7 +141,7 @@ class PackManager {
         allPacks.forEach { defaults[$0.settingsKey] = $0.released }
         
         if Defaults[.rotationActive] {
-            PackManager.Rotation2017.packs.forEach { pack in
+            PackManager.rotation.packs.forEach { pack in
                 defaults[Pack.use + pack] = false
             }
         } else {

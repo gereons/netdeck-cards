@@ -28,6 +28,7 @@
 		3A19426C1DC744DB00EB9CE5 /* IphoneStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A19426B1DC744DB00EB9CE5 /* IphoneStartViewController.swift */; };
 		3A1A656C1E63432200DC29EF /* IphoneStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1A656B1E63432200DC29EF /* IphoneStartViewController.xib */; };
 		3A1B32251D87229800155454 /* CardFilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1B32231D87229800155454 /* CardFilterCell.xib */; };
+		3A1CC2102042C7CF0013DD55 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CC20F2042C7CF0013DD55 /* StartViewController.swift */; };
 		3A1FD36A1DA956CA00DF50F1 /* SetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1FD3691DA956CA00DF50F1 /* SetSelectionViewController.swift */; };
 		3A285BA11D109A54007EC30F /* EmptyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A285BA01D109A54007EC30F /* EmptyDetailViewController.swift */; };
 		3A28E80C1E059D29009EABD4 /* ListCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A28E80B1E059D29009EABD4 /* ListCardsViewController.swift */; };
@@ -214,6 +215,7 @@
 		3A19426B1DC744DB00EB9CE5 /* IphoneStartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IphoneStartViewController.swift; sourceTree = "<group>"; };
 		3A1A656B1E63432200DC29EF /* IphoneStartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IphoneStartViewController.xib; sourceTree = "<group>"; };
 		3A1B32231D87229800155454 /* CardFilterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterCell.xib; sourceTree = "<group>"; };
+		3A1CC20F2042C7CF0013DD55 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		3A1FD3691DA956CA00DF50F1 /* SetSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetSelectionViewController.swift; sourceTree = "<group>"; };
 		3A285BA01D109A54007EC30F /* EmptyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = EmptyDetailViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3A28E80B1E059D29009EABD4 /* ListCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCardsViewController.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 			children = (
 				3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */,
 				3A9795351CF63EE100479ADF /* AppDelegate.swift */,
+				3A1CC20F2042C7CF0013DD55 /* StartViewController.swift */,
 				3A14E39D1E5F720600F0D4CB /* StartupViewController.swift */,
 				3A14E39E1E5F720600F0D4CB /* StartupViewController.xib */,
 				3A3BDD9E1930F36E00DEFD57 /* Utilities */,
@@ -1273,6 +1276,7 @@
 				3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */,
 				3A48FE091FF12654000D3F9D /* NRDBApi.swift in Sources */,
 				3AF453E32000EC560008F748 /* MWLSelection.swift in Sources */,
+				3A1CC2102042C7CF0013DD55 /* StartViewController.swift in Sources */,
 				3A47F1901DBB7E9500058294 /* Card+HTML.swift in Sources */,
 				3AF1E9171FB4FB64009E8B88 /* Utils.swift in Sources */,
 				3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */,

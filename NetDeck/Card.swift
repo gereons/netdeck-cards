@@ -38,7 +38,7 @@ class Card: NSObject {
     
     @objc private(set) var unique = false
     @objc private(set) var maxPerDeck = -1      // how many may be in deck? currently either 1, 3 or 6
-    
+
     private(set) var isAlliance = false
     private(set) var isCore = false             // card is from core set
     
@@ -76,7 +76,7 @@ class Card: NSObject {
             return src
         }
 
-        let ffgId = Pack.ffgIds[self.packCode]
+        let ffgId = PackManager.packsByCode[self.packCode]?.ffgId
         if ffgId == nil {
             return Card.imgSrcTemplate.replacingOccurrences(of: "{code}", with: self.code)
         }
@@ -211,7 +211,7 @@ extension Card {
         
         self.code = card.code
         self.englishName = card.title
-        self.name = card.getLocalized(.title, for: Card.currentLanguage)
+        self.name = card.title // card.getLocalized(.title, for: Card.currentLanguage)
         self.foldedName = name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
         
         self.factionCode = card.faction_code
@@ -229,9 +229,9 @@ extension Card {
             self.name = shortName
         }
         
-        self.text = card.getLocalized(.text, for: Card.currentLanguage)
+        self.text = card.text ?? "" // card.getLocalized(.text, for: Card.currentLanguage)
         
-        self.flavor = card.getLocalized(.flavor, for: Card.currentLanguage)
+        self.flavor = card.flavor ?? "" // card.getLocalized(.flavor, for: Card.currentLanguage)
         
         self.packCode = card.pack_code
         if self.packCode == "" {
@@ -244,10 +244,10 @@ extension Card {
         self.isCore = PackManager.cores.contains(self.packCode)
         
         let keywords = card.keywords ?? ""
-        let localizedKeywords = card.getLocalized(.keywords, for: Card.currentLanguage)
-        if localizedKeywords.count > 0 {
-            self.subtype = localizedKeywords
-            self.subtypes = localizedKeywords.components(separatedBy: self.subtypeDelimiter)
+        // let localizedKeywords = card.keywords ?? "" // card.getLocalized(.keywords, for: Card.currentLanguage)
+        if keywords.count > 0 {
+            self.subtype = keywords
+            self.subtypes = keywords.components(separatedBy: self.subtypeDelimiter)
         }
         
         self.number = card.position
@@ -277,9 +277,10 @@ extension Card {
         self.isAlliance = keywords.lowercased().contains("alliance")
         
         if self.type == .ice {
-            let barrier = keywords.contains("Barrier")
-            let sentry = keywords.contains("Sentry")
-            let codeGate = keywords.contains("Code Gate")
+            let kw = keywords.lowercased()
+            let barrier = kw.contains("barrier")
+            let sentry = kw.contains("sentry")
+            let codeGate = kw.contains("code gate")
             if barrier && sentry && codeGate {
                 // print("multi: \(self.name)")
                 Card.multiIce.append(self.code)

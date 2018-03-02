@@ -93,11 +93,8 @@ enum MWL: Int {
     case v2_0   // as of 2017-10-01
     case v2_1   // as of 2018-02-26
 
-    private static let all = [ MWL.none, .v1_0, .v1_1, .v1_2, .v2_0, .v2_1 ]
-    private static let names = [ "Casual", "MWL v1.0", "MWL v1.1", "MWL v1.2", "MWL v2.0", "MWL v2.1" ]
-    
     static let latest = MWL.v2_1
-    
+
     // map from "mwl_code" values we get from the NRDB API
     private static let codeMap: [String: MWL] = [
         "NAPD_MWL_1.0": .v1_0,
@@ -106,11 +103,11 @@ enum MWL: Int {
         "NAPD_MWL_2.0": .v2_0,
         "NAPD_MWL_2.1": .v2_1
     ]
-    
+
     static func by(code: String) -> MWL {
         return MWL.codeMap[code] ?? .none
     }
-    
+
     var universalInfluence: Bool {
         switch self {
         case .none, .v1_2: return true
@@ -119,6 +116,8 @@ enum MWL: Int {
     }
 
     // MARK: - settings values / titles
+    private static let all = [ MWL.none, .v1_0, .v1_1, .v1_2, .v2_0, .v2_1 ]
+    private static let names = [ "Casual", "MWL v1.0", "MWL v1.1", "MWL v1.2", "MWL v2.0", "MWL v2.1" ]
     static func values() -> [Int] {
         return all.map { $0.rawValue }
     }
@@ -143,6 +142,58 @@ struct MostWantedList {
         self.penalties = nil
         self.banned = Set(runnerBanned).union(corpBanned)
         self.restricted = Set(runnerRestricted).union(corpRestricted)
+    }
+}
+
+struct RotatedPacks {
+    let packs: Set<String>
+    let cycles: [String]
+
+    init(packs: [String], cycles: [String]) {
+        self.packs = Set(packs)
+        self.cycles = cycles
+    }
+
+    private func adding(packs: [String], cycles: [String]) -> RotatedPacks {
+        return RotatedPacks(packs: Array(self.packs) + packs, cycles: self.cycles + cycles)
+    }
+
+    static let _2017 = RotatedPacks(
+        packs: [ "core",
+                 "wla", "ta", "ce", "asis", "hs", "fp", // genesis
+                 "om", "st", "mt", "tc", "fal", "dt"    // spin
+        ],
+        cycles: [ "genesis", "spin" ]
+    )
+
+    static let _2018 = _2017.adding(
+        packs: [ "up", "tsb", "fc", "uao", "atr", "ts", // lunar
+                 "val", "bb", "cc", "uw", "oh", "uot"   // sansan
+        ],
+        cycles: [ "lunar", "sansan" ]
+    )
+}
+
+enum Rotation: Int {
+    case _2017
+    case _2018
+
+    var packs: RotatedPacks {
+        switch self {
+        case ._2017: return RotatedPacks._2017
+        case ._2018: return RotatedPacks._2018
+        }
+    }
+
+    // MARK: - settings values / titles
+    private static let all = [ Rotation._2017, ._2018 ]
+    private static let names = [ "2017 (Genesis & Spin)", "2018 (Lunar & SanSan)" ]
+    static func values() -> [Int] {
+        return all.map { $0.rawValue }
+    }
+
+    static func titles() -> [String] {
+        return all.map { names[$0.rawValue].localized() }
     }
 }
 
