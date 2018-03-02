@@ -340,9 +340,6 @@
 "Oops, we crashed :(" = "クラッシュが発生しました (--;)";
 "Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it." = "申し訳ありません、想定外のエラーです。\nバグを再現できる場合、開発者にご連絡をいただければと思います。";
 
-// iphone specific
-"Swipe up to go back" = "上にスワイプで戻る";
-
 // MWL selection
 "Deck Legality" = "デッキの合法性";
 "Casual" = "MWLなし";

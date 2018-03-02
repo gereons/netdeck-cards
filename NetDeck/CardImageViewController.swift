@@ -20,6 +20,7 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
     private var counts = [Int]()
     private var initialScrollDone = false
     private var mwl: MWL!
+    private var deck: Deck?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +34,20 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
         self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         self.collectionView.scrollFix()
     }
-    
+
     override var prefersStatusBarHidden: Bool {
         return Device.isIphone4
     }
 
-    func setCards(_ cards: [Card], mwl: MWL) {
+    func setCards(_ cards: [Card], mwl: MWL, deck: Deck?) {
         self.cards = cards
         self.mwl = mwl
         self.counts.removeAll()
+        self.deck = deck
+        if deck != nil {
+            let addButton = UIBarButtonItem(title: "Add to Deck".localized(), style: .plain, target: self, action: #selector(self.addToDeck(_:)))
+            self.navigationItem.rightBarButtonItem = addButton
+        }
     }
     
     func setCardCounters(_ cardCounters: [CardCounter], mwl: MWL) {
@@ -54,6 +60,7 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
         }
         
         self.mwl = mwl
+        self.deck = nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,7 +85,26 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
             let indexPath = IndexPath(row: row, section: 0)
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
         }
-        
+    }
+
+    @objc func addToDeck(_ button: UIBarButtonItem) {
+        let paths = self.collectionView.indexPathsForVisibleItems.sorted { $0.row < $1.row }
+        var path: IndexPath
+        switch paths.count {
+        case 1:
+            path = paths[0]
+        case 2:
+            // left or right edge?
+            path = paths[0].row == 0 ? paths[0] : paths[1]
+        case 3:
+            path = paths[1]
+        default: return
+        }
+
+        let card = self.cards[path.row]
+        self.deck?.addCard(card, copies: 1)
+
+        self.collectionView.reloadItems(at: paths)
     }
     
     // MARK: - collection view
@@ -97,11 +123,19 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
         cell.showAsDifferences = self.showAsDifferences
         
         let card = self.cards[indexPath.row]
+        let cc = self.deck?.findCard(card)
         
-        if self.counts.count == 0 {
+        if self.counts.count == 0 && cc?.count == 0 {
             cell.setCard(card, mwl: self.mwl)
         } else {
-            cell.setCard(card, count: self.counts[indexPath.row], mwl: self.mwl)
+            var count = 0
+            if self.counts.count > 0 {
+                count = self.counts[indexPath.row]
+            }
+            if count == 0 {
+                count = cc?.count ?? 0
+            }
+            cell.setCard(card, count: count, mwl: self.mwl)
         }
         
         return cell

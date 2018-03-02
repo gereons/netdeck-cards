@@ -24,10 +24,17 @@ private enum ApiRequest {
 class DataDownload: NSObject {
     
     static func downloadCardData(verbose: Bool = true) {
+        let interval = Defaults[.updateInterval]
+        let attrs: [String: Any] = [
+            "type": verbose ? "manual": "auto",
+            "interval": verbose ? "n/a" : "\(interval)"
+        ]
+        Analytics.logEvent(.cardUpdate, attributes: attrs)
+        
         if verbose {
             self.instance.downloadCardAndSetsData()
         } else {
-            self.instance.doDownloadCardData(0)
+            self.instance.doDownloadCardData()
         }
     }
     
@@ -54,7 +61,7 @@ class DataDownload: NSObject {
         let host = Defaults[.nrdbHost]
         if host.count > 0 {
             self.showDownloadAlert()
-            self.perform(#selector(DataDownload.doDownloadCardData(_:)), with: nil, afterDelay: 0.01)
+            self.perform(#selector(DataDownload.doDownloadCardData), with: nil, afterDelay: 0.01)
         } else {
             UIAlertController.alert(withTitle: nil, message: "No known NetrunnerDB server".localized(), button: "OK".localized())
             return
@@ -84,25 +91,6 @@ class DataDownload: NSObject {
         alert.present(animated: false, completion: nil)
     }
 
-    private func __requestFor(_ apiRequest: ApiRequest) -> URLRequest {
-        let nrdbHost = Defaults[.nrdbHost]
-        let language = Defaults[.language]
-        
-        var urlString: String
-        switch apiRequest {
-        case .cycles: urlString = "https://\(nrdbHost)/api/2.0/public/cycles"
-        case .packs: urlString = "https://\(nrdbHost)/api/2.0/public/packs"
-        case .cards: urlString = "https://\(nrdbHost)/api/2.0/public/cards"
-        }
-        
-        if language != "en" {
-            urlString += "?_locale=\(language)"
-        }
-        
-        let url = URL(string: urlString)!
-        return URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 20)
-    }
-
     private func requestFor(_ apiRequest: ApiRequest) -> URLRequest {
         let language = Defaults[.language]
 
@@ -124,9 +112,7 @@ class DataDownload: NSObject {
         return req
     }
     
-    @objc func doDownloadCardData(_ dummy: Any) {
-        Analytics.logEvent(.cardUpdate)
-
+    @objc private func doDownloadCardData() {
         let requests: [ApiRequest: URLRequest] = [
             .cycles: self.requestFor(.cycles),
             .packs: self.requestFor(.packs),

@@ -40,7 +40,7 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         self.imageView.layer.cornerRadius = 8
         self.imageView.layer.masksToBounds = true
         self.detailView.isHidden = true
-        self.countLabel.text     = ""
+        self.countLabel.text = ""
         self.packLabel.text = ""
         self.mwlLabel.text = ""
         
@@ -87,7 +87,7 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         
         self.activityIndicator.startAnimating()
         
-        self.loadImage(for:card, count:self.count)
+        self.loadImage(for:card, count: self.count)
     }
     
     func loadImage(for card: Card, count: Int) {
