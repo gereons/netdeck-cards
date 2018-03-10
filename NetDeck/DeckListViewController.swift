@@ -15,17 +15,17 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    @IBOutlet weak var mwlButton: UIButton!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var statusLabel: TickingLabel!
     @IBOutlet weak var deckNameLabel: UILabel!
     @IBOutlet weak var lastSetLabel: UILabel!
-    
+
     @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var drawButton: UIBarButtonItem!
     @IBOutlet weak var analysisButton: UIBarButtonItem!
     @IBOutlet weak var notesButton: UIBarButtonItem!
     @IBOutlet weak var historyButton: UIBarButtonItem!
+    @IBOutlet weak var mwlButton: UIBarButtonItem!
     
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var footerWidth: NSLayoutConstraint!
@@ -160,6 +160,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.analysisButton.title = "Analysis".localized()
         self.notesButton.title = "Notes".localized()
         self.historyButton.title = "History".localized()
+        self.mwlButton.title = "MWL".localized()
         self.historyButton.isEnabled = deck.filename != nil && deck.revisions.count > 0
         
         let nc = NotificationCenter.default
@@ -185,11 +186,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
         self.summaryLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
-        
-        let footerTap = UITapGestureRecognizer(target: self, action: #selector(self.statusTapped(_:)))
-        self.footerView.addGestureRecognizer(footerTap)
-        self.footerView.isUserInteractionEnabled = true
-        
+                
         self.refresh()
     }
     
@@ -225,7 +222,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         self.stateButton.title = DeckState.buttonLabelFor(self.deck.state)
-        self.footerWidth.constant = self.historyButton.frame.origin.x - 16
+        self.footerWidth.constant = self.mwlButton.frame.origin.x - 16
         
         UIView.animate(withDuration: 0.1) {
             self.footerView.layer.opacity = 1
@@ -1232,25 +1229,19 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
 // MARK: - MWL selection
 extension DeckListViewController: LegalitySetter {
 
-    @objc func statusTapped(_ gesture: UITapGestureRecognizer) {
-        if gesture.state == .ended {
-            self.showMwlSelection()
-        }
-    }
+    @IBAction func legalityTapped(_ button: UIBarButtonItem) {
+        self.actionSheet = MWLSelection.createAlert(for: self.deck, on: self)
 
-    private func showMwlSelection() {
-        let alert = MWLSelection.createAlert(for: self.deck, on: self)
-
-        let popover = alert.popoverPresentationController
-        popover?.sourceRect = self.footerView.frame
-        popover?.sourceView = self.view
+        let popover = self.actionSheet.popoverPresentationController
+        popover?.barButtonItem = button
         popover?.permittedArrowDirections = .down
 
-        alert.view.layoutIfNeeded()
-        self.present(alert, animated: false, completion: nil)
+        self.actionSheet.view.layoutIfNeeded()
+        self.present(self.actionSheet, animated: false, completion: nil)
     }
 
     func setLegality(_ newMwl: MWL, cacheRefresh: Bool, onesies: Bool) {
+        self.actionSheet = nil
         if self.deck.mwl != newMwl || self.deck.onesies != onesies || self.deck.cacheRefresh != cacheRefresh {
             Analytics.logEvent(.changeMwl, attributes: [ "from": "\(self.deck.mwl.rawValue)", "to": "\(newMwl.rawValue)"])
             self.deck.mwl = newMwl
@@ -1259,6 +1250,10 @@ extension DeckListViewController: LegalitySetter {
 
             NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
         }
+    }
+
+    func legalityCancelled() {
+        self.actionSheet = nil
     }
 }
 

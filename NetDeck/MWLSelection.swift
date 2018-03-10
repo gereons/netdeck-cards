@@ -10,6 +10,7 @@ import UIKit
 
 protocol LegalitySetter {
     func setLegality(_ mwl: MWL, cacheRefresh: Bool, onesies: Bool)
+    func legalityCancelled()
 }
 
 class MWLSelection {
@@ -47,7 +48,9 @@ class MWLSelection {
             setter.setLegality(MWL.latest, cacheRefresh: !deck.cacheRefresh, onesies: false)
         })
 
-        alert.addAction(UIAlertAction.actionSheetCancel(nil))
+        alert.addAction(UIAlertAction.actionSheetCancel() { action in
+            setter.legalityCancelled()
+        })
 
         return alert
     }

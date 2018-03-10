@@ -652,6 +652,10 @@ extension EditDeckViewController: LegalitySetter {
         self.deck.onesies = onesies
         self.refreshDeck()
     }
+
+    func legalityCancelled() {
+        //
+    }
 }
 
 extension EditDeckViewController: UIPrintInteractionControllerDelegate {
