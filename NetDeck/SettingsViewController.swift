@@ -54,7 +54,10 @@ class SettingsDelegate: IASKSettingsDelegate {
 
     private func setHiddenKeys() {
         var hiddenKeys = Set<String>()
-        
+
+        hiddenKeys.insert(DefaultsKeys.language._key)
+        hiddenKeys.insert(DefaultsKeys.rotationIndex._key)
+
         if !CardManager.cardsAvailable {
             hiddenKeys = Set([
                 "sets_hide_1", "sets_hide_2",

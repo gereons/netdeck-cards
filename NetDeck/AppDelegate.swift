@@ -20,9 +20,10 @@ import DeviceKit
 // CR rules: what is the offending datapack?
 
 // TODO: investigate OOMs - memory warnings?
-// TODO: taptic engine support?
+// TODO: taptic engine support? (SVProgressHUD settings!)
 // TODO: for the last version supporting iOS 9, add a friendly upgrade reminder
-
+// TODO: Update-Alert trotz automatischem Download?
+// TODO: MWL-Wechsel pro Deck offensichtlicher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -34,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var initGroup = DispatchGroup()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        FIXME("make rotation selectable - call setupfromfiles on change")
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
             Fabric.with([Crashlytics.self])
@@ -320,7 +320,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return false
     }
-    
+
     private func logStartup() {
         let device = DeviceKit.Device()
         if device.isSimulator {
@@ -328,7 +328,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let width = Int(UIScreen.main.bounds.width)
         let height = Int(UIScreen.main.bounds.height)
-        var attrs = [
+        let attrs = [
             "cardLanguage": Defaults[.language],
             "locale": Locale.current.identifier,
             "useNrdb": Defaults[.useNrdb] ? "on" : "off",
@@ -342,15 +342,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "appVersion": Utils.appVersion()
         ]
 
-        if device.isPad {
-            let viewAttrs = [
-                "browserView": "\(Defaults[.browserViewStyle].rawValue)",
-                "deckView": "\(Defaults[.deckViewStyle].rawValue)",
-                "filterView": "\(Defaults[.filterViewMode].rawValue)"
-            ]
-
-            attrs.merge(viewAttrs, uniquingKeysWith: +)
-        }
         Analytics.logEvent(.start, attributes: attrs)
     }
     
