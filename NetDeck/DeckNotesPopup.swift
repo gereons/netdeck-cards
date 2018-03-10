@@ -22,6 +22,7 @@ class DeckNotesPopup: UIViewController {
         
         viewController.present(popup, animated: false, completion: nil)
         popup.preferredContentSize = CGSize(width: 540, height: 300)
+        Analytics.logEvent(.deckNotes)
     }
 
     required init(deck: Deck) {

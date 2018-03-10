@@ -46,6 +46,7 @@ class Analytics {
         case showSettings = "Show Settings"
         case changeMwl = "Change MWL"
         case showAbout = "Show About"
+        case deckNotes = "Show Deck Notes"
     }
 
     static func logEvent(_ event: Event, attributes: [String: Any]? = nil) {
