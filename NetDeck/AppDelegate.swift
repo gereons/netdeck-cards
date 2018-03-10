@@ -142,7 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let str = NSAttributedString(string: "Hack the Planet!", attributes: attributes)
         Illuminotchi.add(attributedText: str)
         
-        self.logStartup()
+        self.logStartup(true)
         
         if self.crashDetected {
             self.crashDetected = false
@@ -279,7 +279,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DeckImport.checkClipboardForDeck()
         NRDB.sharedInstance.startAuthorizationRefresh()
         
-        self.logStartup()
+        self.logStartup(false)
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -321,7 +321,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
 
-    private func logStartup() {
+    private func logStartup(_ appLaunched: Bool) {
         let device = DeviceKit.Device()
         if device.isSimulator {
             return
@@ -339,7 +339,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "device+os": device.description + " " + UIDevice.current.systemVersion,
             "resolution": "\(height)x\(width)",
             "defaultMWL": "\(Defaults[.defaultMWL].rawValue)",
-            "appVersion": Utils.appVersion()
+            "appVersion": Utils.appVersion(),
+            "appLaunched": appLaunched ? "yes" : "no"
         ]
 
         Analytics.logEvent(.start, attributes: attrs)

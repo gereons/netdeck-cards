@@ -19,6 +19,10 @@ class CardUpdateCheck {
     }()
     
     static func checkCardUpdateAvailable() -> Bool {
+        if Defaults[.autoCardUpdates] {
+            return false
+        }
+        
         let next = Defaults[.nextDownload]
         
         guard let scheduled = fmt.date(from: next) else {
