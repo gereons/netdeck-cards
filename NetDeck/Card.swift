@@ -55,21 +55,15 @@ class Card: NSObject {
     private let subtypeDelimiter = " - "
     private var imageUrl: String?
     
-    @objc var typeStr: String {
-        return Translation.forTerm(self.typeCode)
-    }
-    
-    @objc var factionStr: String {
-        return Translation.forTerm(self.factionCode)
-    }
+    @objc lazy var typeStr = Translation.forTerm(self.typeCode)
 
+    @objc lazy var factionStr = Translation.forTerm(self.factionCode)
+    
     @objc var packName: String {
         return PackManager.packsByCode[self.packCode]?.name ?? ""
     }
 
-    var packNumber: Int {
-        return PackManager.packNumberFor(code: self.packCode)
-    }
+    lazy var packNumber = PackManager.packNumberFor(code: self.packCode)
 
     var imageSrc: String? {
         if let src = self.imageUrl {

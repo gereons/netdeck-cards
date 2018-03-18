@@ -235,6 +235,7 @@ class CardList {
 
     func sortBy(_ sortType: BrowserSort) {
         self.sortType = sortType
+        self.sort(&self.initialCards)
     }
     
     func applyPredicate(_ predicate: NSPredicate) {
@@ -244,8 +245,7 @@ class CardList {
     func applyFilters() -> [Card] {
         var filteredCards = self.initialCards
         var predicates = [NSPredicate]()
-        
-        
+
         if let f = self.factions, f.count > 0 {
             let predicate = NSPredicate(format:"factionStr IN %@", f)
             predicates.append(predicate)
@@ -387,14 +387,12 @@ class CardList {
     }
     
     func allCards() -> [Card] {
-        var filteredCards = self.applyFilters()
-        self.sort(&filteredCards)
+        let filteredCards = self.applyFilters()
         return filteredCards
     }
     
     func dataForTableView() -> TableData<Card> {
-        var filteredCards = self.applyFilters()
-        self.sort(&filteredCards)
+        let filteredCards = self.applyFilters()
         
         var sections = [String]()
         var cards = [[Card]]()
@@ -412,7 +410,7 @@ class CardList {
             sections.append(self.section(current[0]))
             cards.append(current)
         }
-        
+
         return TableData(sections: sections, values: cards)
     }
     

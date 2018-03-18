@@ -106,7 +106,8 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewWillAppear(animated)
 
         self.keyboardObserver = KeyboardObserver(handler: self)
-        
+
+        self.cardList.sortBy(self.sortType)
         self.updateDisplay(self.cardList)
     }
     
@@ -119,7 +120,6 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     
     func updateDisplay(_ cardList: CardList) {
         self.cardList = cardList
-        cardList.sortBy(self.sortType)
         
         let data = cardList.dataForTableView()
         self.sections = data.sections
@@ -182,6 +182,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.sortType = sort
         
         self.sortButton.title = self.sortStr[sort]! + Constant.arrow
+        self.cardList.sortBy(self.sortType)
         self.updateDisplay(self.cardList)
         self.popup = nil
     }
