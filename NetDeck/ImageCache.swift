@@ -147,7 +147,7 @@ class ImageCache: NSObject {
             return
         }
         
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             // get image from our on-disk cache
             if let img = self.decodedImage(for: key) {
                 if Reachability.online {

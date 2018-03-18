@@ -104,6 +104,10 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.collectionView.backgroundColor = .clear
         self.collectionView.alwaysBounceVertical = true
+
+        if #available(iOS 10.0, *) {
+            self.collectionView.prefetchDataSource = self
+        }
         
         self.navigationController?.navigationBar.barTintColor = .white
         
@@ -1224,6 +1228,26 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.printController = nil
     }
 
+}
+
+@available(iOS 10.0, *)
+extension DeckListViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach {
+            let row = $0.row
+            var cc: CardCounter?
+
+            if row == 0 {
+                cc = self.deck.identityCc
+            } else {
+                cc = self.deck.cards[row - 1]
+            }
+
+            if let card = cc?.card {
+                ImageCache.sharedInstance.getImage(for: card) { _,_,_ in }
+            }
+        }
+    }
 }
 
 // MARK: - MWL selection

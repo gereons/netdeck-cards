@@ -87,6 +87,10 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.collectionView.contentInset = insets
         self.collectionView.scrollIndicatorInsets = insets
         self.collectionView.alwaysBounceVertical = true
+
+        if #available(iOS 10, *) {
+            self.collectionView.prefetchDataSource = self
+        }
         
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture(_:)))
         self.collectionView.addGestureRecognizer(pinch)
@@ -372,6 +376,19 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
             self.startIndex = nil
         }
     }
+}
+
+@available(iOS 10.0, *)
+extension BrowserResultViewController: UICollectionViewDataSourcePrefetching {
+
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach {
+            let card = self.values[$0.section][$0.row]
+            ImageCache.sharedInstance.getImage(for: card) { _,_,_ in }
+        }
+
+    }
+    
 }
 
 // MARK: - keyboard
