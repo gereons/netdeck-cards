@@ -1158,7 +1158,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             self.scale = max(self.scale, 0.5)
             self.scale = min(self.scale, 1.0)
             
-            self.collectionView.reloadData()
+            self.collectionView.collectionViewLayout.invalidateLayout()
             
             if let index = startIndex, index.row < self.deck.cards.count {
                 self.collectionView.scrollToItem(at: index, at: .centeredVertically, animated: false)

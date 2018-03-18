@@ -361,7 +361,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
             self.scale = max(self.scale, 0.5)
             self.scale = min(self.scale, 1.0)
             
-            self.collectionView.reloadData()
+            self.collectionView.collectionViewLayout.invalidateLayout()
             if let startIndex = self.startIndex {
                 var ok = startIndex.section < self.values.count
                 if ok {
