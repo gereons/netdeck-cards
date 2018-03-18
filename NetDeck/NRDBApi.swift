@@ -94,7 +94,7 @@ struct NetrunnerDbAuth: Codable {
     }
 }
 
-struct NetrunnerDbCard: Codable {    
+struct NetrunnerDbCard: Codable {
     static let X = -2
     
     let advancement_cost: Int?
@@ -169,13 +169,13 @@ struct NetrunnerDbCard: Codable {
         // special treatment for "int value", "null", or not present of cost and strength
         if container.contains(.cost) {
             let cost: Int? = try container.decodeIfPresent(.cost)
-            self.cost = cost == nil ? NetrunnerDbCard.X : cost!
+            self.cost = cost ?? NetrunnerDbCard.X
         } else {
             self.cost = -1
         }
         if container.contains(.strength) {
             let str: Int? = try container.decodeIfPresent(.strength)
-            self.strength = str == nil ? NetrunnerDbCard.X : str!
+            self.strength = str ?? NetrunnerDbCard.X
         } else {
             self.strength = -1
         }
@@ -204,5 +204,4 @@ struct NetrunnerDbCard: Codable {
         }
     }
     */
- }
-
+}

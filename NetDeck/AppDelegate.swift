@@ -14,7 +14,6 @@ import DeviceKit
 
 // NRDB: keep credentials after failed login
 // Auto-Download bei Neuinstallation?
-// Crashlytics
 // Patricks email: icon für decks mit notizen, in der kartenansicht falsche/fehlende karten besser hervorheben, vollen Text im Popup anzeigen wenn Sprache != en
 
 // CR rules: what is the offending datapack?
@@ -22,8 +21,6 @@ import DeviceKit
 // TODO: investigate OOMs - memory warnings?
 // TODO: taptic engine support? (SVProgressHUD settings!)
 // TODO: for the last version supporting iOS 9, add a friendly upgrade reminder
-// TODO: Update-Alert trotz automatischem Download?
-// TODO: MWL-Wechsel pro Deck offensichtlicher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var navigationController: UINavigationController!
     fileprivate var crashDetected = false
     private var initGroup = DispatchGroup()
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if BuildConfig.useCrashlytics {
@@ -103,11 +99,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // print("app start, cardsOk=\(cardsOk)")
         }
         
-        let _ = DeckManager.decksForRole(.none)
-
-        let end = Date.timeIntervalSinceReferenceDate
-        print ("init took \(end-start)s")
-
+        _ = DeckManager.decksForRole(.none)
+        let elapsed = Date.timeIntervalSinceReferenceDate - start
+        print ("init took \(elapsed)")
     }
     
     private func finializeLaunch() {
