@@ -143,13 +143,12 @@ class DataDownload: NSObject {
             // for a in results.keys {
             //     print("dl ok for \(a)")
             // }
-            let language = Defaults[.language]
             var ok = !self.downloadStopped && results.count == requests.count
             if ok {
-                ok = PackManager.setupFromNetrunnerDb(results[.cycles]!, results[.packs]!, language: language)
+                ok = PackManager.setupFromNetrunnerDb(results[.cycles]!, results[.packs]!)
                 // print("packs setup ok=\(ok)")
                 if ok {
-                    ok = CardManager.setupFromNetrunnerDb(results[.cards]!, language: language)
+                    ok = CardManager.setupFromNetrunnerDb(results[.cards]!)
                     // print("cards setup ok=\(ok)")
                 }
                 CardManager.setNextDownloadDate()

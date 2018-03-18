@@ -354,22 +354,22 @@ class PackManager {
         // CardManager.initialize()
     }
     
-    static func setupFromFiles(_ language: String) -> Bool {
+    static func setupFromFiles() -> Bool {
         let packsFile = packsPathname()
         let cyclesFile = cyclesPathname()
         
         let fileMgr = FileManager.default
                 
         if let cyclesData = fileMgr.contents(atPath: cyclesFile), let packsData = fileMgr.contents(atPath: packsFile) {
-            return setupFromJsonData(cyclesData, packsData, language: language)
+            return setupFromJsonData(cyclesData, packsData)
         }
         
         // print("app start: missing pack/cycles files")
         return false
     }
     
-    static func setupFromNetrunnerDb(_ cyclesData: Data, _ packsData: Data, language: String) -> Bool {
-        let ok = setupFromJsonData(cyclesData, packsData, language: language)
+    static func setupFromNetrunnerDb(_ cyclesData: Data, _ packsData: Data) -> Bool {
+        let ok = setupFromJsonData(cyclesData, packsData)
         if !ok {
             return false
         }
@@ -408,7 +408,7 @@ class PackManager {
         }
     }
     
-    static func setupFromJsonData(_ cyclesData: Data, _ packsData: Data, language: String) -> Bool {
+    static func setupFromJsonData(_ cyclesData: Data, _ packsData: Data) -> Bool {
         cyclesByCode = [:]  // code -> cycle
         allCycles = [:]     // position -> cycles
         packsByCode = [:]   // code -> pack

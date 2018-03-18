@@ -196,9 +196,8 @@ class SettingsDelegate: IASKSettingsDelegate {
     }
 
     private func reinitializeData() {
-        let language = Defaults[.language]
-        _ = PackManager.setupFromFiles(language)
-        _ = CardManager.setupFromFiles(language)
+        _ = PackManager.setupFromFiles()
+        _ = CardManager.setupFromFiles()
     }
 
     private func nrdbLogin() {

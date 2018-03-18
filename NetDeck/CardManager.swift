@@ -278,7 +278,7 @@ class CardManager {
     
     // MARK: - persistence 
     
-    static func setupFromFiles(_ language: String) -> Bool {
+    static func setupFromFiles() -> Bool {
         let filename = CardManager.filename()
         
         if let data = FileManager.default.contents(atPath: filename) {
@@ -286,7 +286,7 @@ class CardManager {
                 let decoder = JSONDecoder()
                 let rawCards = try decoder.decode(ApiResponse<NetrunnerDbCard>.self, from: data)
  
-                return setupFromJson(rawCards, language: language)
+                return setupFromJson(rawCards)
             } catch let error {
                 print("\(error)")
                 return false
@@ -296,12 +296,12 @@ class CardManager {
         return false
     }
     
-    static func setupFromNetrunnerDb(_ cardsData: Data, language: String) -> Bool {
+    static func setupFromNetrunnerDb(_ cardsData: Data) -> Bool {
         var ok = false
         do {
             let decoder = JSONDecoder()
             let rawCards = try decoder.decode(ApiResponse<NetrunnerDbCard>.self, from: cardsData)
-            ok = setupFromJson(rawCards, language: language)
+            ok = setupFromJson(rawCards)
             if !ok {
                 return false
             }
@@ -316,14 +316,14 @@ class CardManager {
         return ok
     }
     
-    static func setupFromJson(_ rawCards: ApiResponse<NetrunnerDbCard>, language: String) -> Bool {
+    static func setupFromJson(_ rawCards: ApiResponse<NetrunnerDbCard>) -> Bool {
         if !rawCards.valid {
             return false
         }
         CardManager.initialize()
         
         // parse data
-        let parsedCards = Card.cardsFromJson(rawCards, language: language)
+        let parsedCards = Card.cardsFromJson(rawCards)
         for card in parsedCards {
             CardManager.add(card: card)
         }

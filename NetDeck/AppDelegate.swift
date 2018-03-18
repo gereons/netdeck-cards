@@ -33,7 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var navigationController: UINavigationController!
     fileprivate var crashDetected = false
     private var initGroup = DispatchGroup()
-    
+
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if BuildConfig.useCrashlytics {
             Crashlytics.sharedInstance().delegate = self
@@ -93,18 +94,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NotificationCenter.default.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
             }
         }
-        let language = Defaults[.language]
+
         let start = Date.timeIntervalSinceReferenceDate
-        let setsOk = PackManager.setupFromFiles(language)
+        let setsOk = PackManager.setupFromFiles()
         // print("app start, setsOk=\(setsOk)")
         if setsOk {
-            let _ = CardManager.setupFromFiles(language)
+            let _ = CardManager.setupFromFiles()
             // print("app start, cardsOk=\(cardsOk)")
         }
         
         let _ = DeckManager.decksForRole(.none)
+
         let end = Date.timeIntervalSinceReferenceDate
         print ("init took \(end-start)s")
+
     }
     
     private func finializeLaunch() {

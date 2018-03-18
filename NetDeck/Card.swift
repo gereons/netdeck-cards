@@ -56,11 +56,11 @@ class Card: NSObject {
     private var imageUrl: String?
     
     @objc var typeStr: String {
-        return Translation.forTerm(self.typeCode, language: Card.currentLanguage)
+        return Translation.forTerm(self.typeCode)
     }
     
     @objc var factionStr: String {
-        return Translation.forTerm(self.factionCode, language: Card.currentLanguage)
+        return Translation.forTerm(self.factionCode)
     }
 
     @objc var packName: String {
@@ -85,11 +85,10 @@ class Card: NSObject {
     }
     
     var nrdbLink: String {
-        return "https://netrunnerdb.com/" + Card.currentLanguage + "/card/" + self.code
+        return "https://netrunnerdb.com/en/card/" + self.code
     }
     
     static private var imgSrcTemplate = ""
-    static private var currentLanguage = ""
     
     static func null() -> Card {
         return nullInstance
@@ -291,9 +290,8 @@ extension Card {
     }
     
     
-    static func cardsFromJson(_ rawCards: ApiResponse<NetrunnerDbCard>, language: String) -> [Card] {
+    static func cardsFromJson(_ rawCards: ApiResponse<NetrunnerDbCard>) -> [Card] {
         Card.imgSrcTemplate = rawCards.imageUrlTemplate ?? ""
-        Card.currentLanguage = language
         
         let cards = rawCards.data.map {
             Card(fromApi: $0)
