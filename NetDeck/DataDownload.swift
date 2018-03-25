@@ -249,8 +249,10 @@ class DataDownload: NSObject {
                     let msg = String(format: "Image %d of %d".localized(), index+1, self.cards.count)
                     self.sdcAlert?.attributedMessage = NSAttributedString(string:msg, attributes:attrs)
                 }
-                
-                self.downloadImageForCard(index+1, scope: scope)
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.downloadImageForCard(index+1, scope: scope)
+                }
             }
             
             if scope == .all {

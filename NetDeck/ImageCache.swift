@@ -17,24 +17,29 @@ func synchronized<T>(_ lock: Any, closure: ()->T) -> T {
 }
 
 private class ImageMemCache {
-    private var memory = [String: UIImage]()
-    
-    func set(_ img: UIImage, forKey key: String) {
-        synchronized(self) {
-            memory[key] = img
+    private var cache: NSCache<NSString, UIImage>
+
+    init() {
+        self.cache = NSCache()
+        self.cache.countLimit = 1400
+    }
+
+    subscript(_ key: String) -> UIImage? {
+        get {
+            return self.cache.object(forKey: key as NSString)
+        }
+
+        set {
+            if let img = newValue {
+                self.cache.setObject(img, forKey: key as NSString)
+            } else {
+                self.cache.removeObject(forKey: key as NSString)
+            }
         }
     }
-    
-    func object(forKey key: String) -> UIImage? {
-        return synchronized(self) {
-            return memory[key]
-        }
-    }
-    
+
     func removeAll() {
-        synchronized(self) {
-            memory.removeAll()
-        }
+        self.cache.removeAllObjects()
     }
 }
 
@@ -83,11 +88,11 @@ class ImageCache: NSObject {
 
     // log of all current in-flight requests
     typealias ImageCallback = (Card, UIImage, Bool) -> Void
-    private var imagesInFlight = [String: [ImageCallback] ]()
+    private var pendingRequests = [String: [ImageCallback] ]()
     
     private override init() {
         super.init()
-    
+
         if let lastMod = Defaults[.lastModifiedCache] {
             self.lastModifiedDates = lastMod
         }
@@ -108,20 +113,28 @@ class ImageCache: NSObject {
             Defaults[.unavailableImagesDate] = now + 12 * 3600
             Defaults[.unavailableImages] = Array(self.unavailableImages)
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.clearMemoryCache(_:)), name: Notification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
+
+        DispatchQueue.global(qos: .background).async {
+            // self.initializeCache()
+        }
     }
-    
+
+    private func initializeCache() {
+        NSLog("init cache")
+        for card in CardManager.allCards() {
+            if let img = self.decodedImage(for: card.code) {
+                self.memCache[card.code] = img
+            }
+        }
+        NSLog("done")
+    }
+
     /// called when we move to the background
     func resignActive() {
         Defaults[.lastModifiedCache] = self.lastModifiedDates
         Defaults[.nextCheck] = self.nextCheckDates
         Defaults[.unavailableImages] = Array(self.unavailableImages)
         
-        self.memCache.removeAll()
-    }
-    
-    @objc func clearMemoryCache(_ notification: Notification) {
         self.memCache.removeAll()
     }
     
@@ -133,7 +146,7 @@ class ImageCache: NSObject {
 //        }
         
         let key = card.code
-        if let img = memCache.object(forKey: key) {
+        if let img = self.memCache[key] {
             completion(card, img, false)
             if Reachability.online {
                 self.checkForImageUpdate(for: card, key: key)
@@ -146,7 +159,17 @@ class ImageCache: NSObject {
             completion(card, ImageCache.placeholder(for: card.role), true)
             return
         }
-        
+
+        let requestInFlight: Bool = synchronized(self) {
+            // check if the request is currently in-flight, and if so, add its completion block to our list of callbacks
+            let alreadyPending = self.pendingRequests[key] != nil
+            self.pendingRequests[key, default:[]].append(completion)
+            return alreadyPending
+        }
+        if requestInFlight {
+            return
+        }
+
         DispatchQueue.global(qos: .userInitiated).async {
             // get image from our on-disk cache
             if let img = self.decodedImage(for: key) {
@@ -154,48 +177,29 @@ class ImageCache: NSObject {
                     self.checkForImageUpdate(for: card, key: key)
                 }
                 
-                self.memCache.set(img, forKey: key)
-                DispatchQueue.main.async {
-                    completion(card, img, false)
-                }
+                self.memCache[key] = img
+                self.callCallbacks(for: card, key: key, image: img, placeholder: false)
             } else {
                 // image is not in on-disk cache
                 if Reachability.online {
-                    
-                    let requestInFlight: Bool = synchronized(self) {
-                        // check if the request is currently in-flight, and if so, add its completion block to our list of callbacks
-                        if self.imagesInFlight[key] != nil {
-                            self.imagesInFlight[key]?.append(completion)
-                            return true
-                        } else {
-                            // not in flight - store in list
-                            self.imagesInFlight[key] = [completion]
-                            return false
-                        }
-                    }
-                    if requestInFlight {
-                        return
-                    }
-                    
                     self.downloadImage(for: card, key: key) { (card, image, placeholder) in
-                        DispatchQueue.main.async {
-                            // call all pending callbacks for this image
-                            synchronized(self) {
-                                if let callbacks = self.imagesInFlight[key] {
-                                    for callback in callbacks {
-                                        callback(card, image, placeholder)
-                                    }
-                                } else {
-                                    assert(false, "no queue for \(key)")
-                                }
-                                self.imagesInFlight.removeValue(forKey: key)
-                            }
-                        }
+                        self.callCallbacks(for: card, key: key, image: image, placeholder: placeholder)
                     }
                 } else {
-                    DispatchQueue.main.async {
-                        completion(card, ImageCache.placeholder(for: card.role), true)
-                    }
+                    self.callCallbacks(for: card, key: key, image: ImageCache.placeholder(for: card.role), placeholder: true)
+                }
+            }
+        }
+    }
+
+    private func callCallbacks(for card: Card, key: String, image: UIImage, placeholder: Bool) {
+        DispatchQueue.main.async {
+            // call all pending callbacks for this image
+            synchronized(self) {
+                let pendingCallbacks = self.pendingRequests.removeValue(forKey: key)
+                assert(pendingCallbacks != nil && pendingCallbacks!.count > 0)
+                pendingCallbacks?.forEach { callback in
+                    callback(card, image, placeholder)
                 }
             }
         }
@@ -249,7 +253,7 @@ class ImageCache: NSObject {
     func imageAvailable(for card: Card) -> Bool {
         let key = card.code
         
-        if let _ = self.memCache.object(forKey: key) {
+        if let _ = self.memCache[key] {
             return true
         }
         
@@ -267,21 +271,23 @@ class ImageCache: NSObject {
     func croppedImage(_ image: UIImage, forCard card: Card) -> UIImage? {
         let key = "\(card.code):crop"
         
-        if let cropped = self.memCache.object(forKey: key) {
+        if let cropped = self.memCache[key] {
             return cropped
         }
         
         let rect = CGRect(x: 10.0, y: card.cropY, width: 280.0, height: 209.0)
         if let imageRef = image.cgImage?.cropping(to: rect) {
             let cropped = UIImage(cgImage: imageRef)
-            self.memCache.set(cropped, forKey:key)
+            self.memCache[key] = cropped
             return cropped
         }
         return nil
     }
     
     func clearCache() {
-        guard BuildConfig.debug else { return }
+        guard BuildConfig.debug else {
+            return
+        }
         
         self.lastModifiedDates.removeAll()
         self.nextCheckDates.removeAll()
@@ -336,7 +342,7 @@ class ImageCache: NSObject {
             }
         }
         
-        self.memCache.set(img, forKey: key)
+        self.memCache[key] = img
         
         if let data = UIImagePNGRepresentation(img) {
             do {
@@ -370,13 +376,13 @@ class ImageCache: NSObject {
     }
     
     private func getImage(for key: String) -> UIImage? {
-        if let img = self.memCache.object(forKey: key) {
+        if let img = self.memCache[key] {
             return img
         }
         
         let img = self.decodedImage(for: key)
         if img != nil {
-            memCache.set(img!, forKey: key)
+            self.memCache[key] = img
         }
         return img
     }
@@ -384,22 +390,21 @@ class ImageCache: NSObject {
     private func decodedImage(for key: String) -> UIImage? {
         let dir = self.directoryForImages()
         let file = dir.appendPathComponent(key)
-        
-        var img: UIImage?
-        if let imgData = try? Data(contentsOf: URL(fileURLWithPath: file)) {
-            img = self.decode(image: UIImage(data: imgData))
-        } else {
+
+        guard let imgData = try? Data(contentsOf: URL(fileURLWithPath: file)) else {
             self.NLOG("no file for %@", key)
+            return nil
         }
-        
+
+        let img = self.decode(image: UIImage(data: imgData))
         let width = img?.size.width ?? 0.0
         // remove images that can't be decoded or that have the wrong size
         if img == nil || width != ImageCache.width {
             // image is broken - remove it
             self.NLOG("removing broken/small img %@, width=%f", key, width)
-            img = nil
             let _ = try? FileManager.default.removeItem(atPath: file)
             self.lastModifiedDates.removeValue(forKey: key)
+            return nil
         }
         
         return img
@@ -450,7 +455,6 @@ class ImageCache: NSObject {
             return
         }
 
-        print("loading image for \(card.code) \(card.name)")
         Alamofire
             .request(src)
             .validate()

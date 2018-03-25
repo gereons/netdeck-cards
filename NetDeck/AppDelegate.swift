@@ -394,5 +394,4 @@ extension AppDelegate: CrashlyticsDelegate {
         
         self.window?.rootViewController?.present(alert, animated:false, completion:nil)
     }
-    
 }
