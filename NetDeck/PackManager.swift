@@ -90,9 +90,12 @@ class PackManager {
     static let orderAndChaos = "oac"
     static let dataAndDestiny = "dad"
     static let terminalDirective = "td"
+    static let reignAndReverie = "rar"
     
-    static let deluxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny ]
-    static let campaigns = [ terminalDirective ]
+    static let deluxeBoxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny, reignAndReverie ]
+    static let campaignBoxes = [ terminalDirective ]
+    static let bigBoxes = deluxeBoxes + campaignBoxes
+    
     static let cores = [ core, core2 ]
     
     static var rotation: RotatedPacks {

@@ -57,6 +57,9 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         alert.addAction(UIAlertAction(title: "Cache Refresh D&D".localized()) { action in
             self.setCacheRefresh(PackManager.dataAndDestiny)
         })
+        alert.addAction(UIAlertAction(title: "Cache Refresh R&R".localized()) { action in
+            self.setCacheRefresh(PackManager.reignAndReverie)
+        })
         alert.addAction(UIAlertAction.actionSheetCancel(nil))
 
         let popover = alert.popoverPresentationController

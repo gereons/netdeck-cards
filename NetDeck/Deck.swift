@@ -793,14 +793,14 @@ extension Deck {
         return reasons
     }
     
-    // check if this is a valid "Onesies" deck - 1 Core Set, 1 Deluxe, 1 Data Pack, 1 playset of a Card
+    // check if this is a valid "Onesies" deck - 1 Core Set, 1 Big Box, 1 Data Pack, 1 playset of a Card
     // (which may be 3x of a Core card like Desperado, or a 6x of e.g. Spy Camera
     private func checkOnesiesRules() -> [String] {
         
         var coreCardsOverQuantity = 0
         var draftUsed = false
         
-        var cardsFromDeluxe = [String: Int]()
+        var cardsFromBigBox = [String: Int]()
         var cardsFromPack = [String: Int]()
         
         for cc in self.cards {
@@ -812,9 +812,9 @@ extension Deck {
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
-            case PackManager.creationAndControl, PackManager.honorAndProfit, PackManager.orderAndChaos, PackManager.dataAndDestiny, PackManager.terminalDirective:
-                let c = cardsFromDeluxe[card.packCode] ?? 0
-                cardsFromDeluxe[card.packCode] = c + 1
+            case _ where PackManager.bigBoxes.contains(card.packCode):
+                let c = cardsFromBigBox[card.packCode] ?? 0
+                cardsFromBigBox[card.packCode] = c + 1
             default:
                 let c = cardsFromPack[card.packCode] ?? 0
                 cardsFromPack[card.packCode] = c + 1
@@ -827,31 +827,31 @@ extension Deck {
         }
         
         let minPackCards = cardsFromPack.values.min()
-        let minDeluxeCards = cardsFromDeluxe.values.min()
+        let minBigboxCards = cardsFromBigBox.values.min()
         
         let packsUsed = cardsFromPack.count
-        let deluxesUsed = cardsFromDeluxe.count
+        let boxesUsed = cardsFromBigBox.count
         
-        // 1 pack, 1 deluxe, 1 extra from core
-        if packsUsed <= 1 && deluxesUsed <= 1 && coreCardsOverQuantity <= 1 {
+        // 1 pack, 1 big box, 1 extra from core
+        if packsUsed <= 1 && boxesUsed <= 1 && coreCardsOverQuantity <= 1 {
             return reasons
         }
-        // 2 packs, 1 deluxe, extra card from 2nd pack
-        if packsUsed == 2 && coreCardsOverQuantity == 0 && minPackCards == 1 && deluxesUsed <= 1 {
+        // 2 packs, 1 big box, extra card from 2nd pack
+        if packsUsed == 2 && coreCardsOverQuantity == 0 && minPackCards == 1 && boxesUsed <= 1 {
             return reasons
         }
-        // 1 pack, 2 deluxes: extra card from 2md deluxe
-        if deluxesUsed == 2 && coreCardsOverQuantity == 0 && minDeluxeCards == 1 && packsUsed <= 1 {
+        // 1 pack, 2 big box: extra card from 2md deluxe
+        if boxesUsed == 2 && coreCardsOverQuantity == 0 && minBigboxCards == 1 && packsUsed <= 1 {
             return reasons
         }
         
-        // more than 1 extra card from core, or extra card is from pack or deluxe
-        if coreCardsOverQuantity > 1 || (coreCardsOverQuantity == 1 && (packsUsed > 1 || deluxesUsed > 1)) {
+        // more than 1 extra card from core, or extra card is from pack or big box
+        if coreCardsOverQuantity > 1 || (coreCardsOverQuantity == 1 && (packsUsed > 1 || boxesUsed > 1)) {
             reasons.append("Uses >1 Core".localized())
         }
         
-        // more than 1 deluxe used
-        if deluxesUsed > 1 {
+        // more than 1 big box used
+        if boxesUsed > 1 {
             reasons.append("Uses >1 Deluxe".localized())
         }
         
@@ -891,7 +891,7 @@ extension Deck {
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
-            case PackManager.creationAndControl, PackManager.honorAndProfit, PackManager.orderAndChaos, PackManager.dataAndDestiny:
+            case _ where PackManager.deluxeBoxes.contains(card.packCode):
                 let c = cardsFromDeluxe[card.packCode] ?? 0
                 cardsFromDeluxe[card.packCode] = c + 1
             case PackManager.terminalDirective:
