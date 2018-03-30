@@ -6,10 +6,17 @@
 //  Copyright © 2017 Gereon Steffens. All rights reserved.
 //
 
+import Fabric
 import Crashlytics
 import StoreKit
+import SwiftyUserDefaults
 
-class Analytics {
+class Analytics: NSObject {
+
+    static let shared = Analytics()
+    override private init() {}
+
+    private(set) var crashDetected = false
     
     enum Event: String {
         case start = "Start"
@@ -50,7 +57,7 @@ class Analytics {
     }
 
     static func logEvent(_ event: Event, attributes: [String: Any]? = nil) {
-        guard BuildConfig.useCrashlytics else {
+        guard setup() else {
             return
         }
         
@@ -58,7 +65,7 @@ class Analytics {
     }
     
     static func logPurchase(of product: SKProduct) {
-        guard  BuildConfig.useCrashlytics else {
+        guard setup() else {
             return
         }
         
@@ -71,4 +78,24 @@ class Analytics {
                             customAttributes: nil)
     }
 
+    static private var initialized = false
+    static func setup() -> Bool {
+        guard BuildConfig.useCrashlytics && Defaults[.fabricEnabled] else {
+            return false
+        }
+
+        if !initialized {
+            Crashlytics.sharedInstance().delegate = Analytics.shared
+            Fabric.with([Crashlytics.self])
+            initialized = true
+        }
+        return true
+    }
+}
+
+// MARK: - crashlytics delegate
+extension Analytics: CrashlyticsDelegate {
+    func crashlyticsDidDetectReport(forLastExecution report: CLSReport) {
+        self.crashDetected = true
+    }
 }

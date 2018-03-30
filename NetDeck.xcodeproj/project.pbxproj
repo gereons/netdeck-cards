@@ -138,6 +138,7 @@
 		3AA8EC2C1CC3AA8200370A26 /* DeckHistorySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A531B281A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.swift */; };
 		3AAE4C4B1CA7105A0039F822 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAE4C4A1CA7105A0039F822 /* Analytics.swift */; };
 		3AAE89D91E2023830038B434 /* CardFilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAE89D81E2023830038B434 /* CardFilterPopover.swift */; };
+		3AB0B557206E3F2B0091C04B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3AB0B556206E3F2B0091C04B /* Settings.bundle */; };
 		3AB219CD1E19868B00D8C75A /* CardImagePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB219CC1E19868B00D8C75A /* CardImagePopup.swift */; };
 		3AB2CF5A1938952600CCBE64 /* CardFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */; };
 		3AB34E611939AA8D000A43BB /* CardFilterThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB34E601939AA8D000A43BB /* CardFilterThumbView.xib */; };
@@ -344,6 +345,7 @@
 		3AAD7D781D930154001821F5 /* NetDeck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NetDeck.entitlements; sourceTree = "<group>"; };
 		3AAE4C4A1CA7105A0039F822 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		3AAE89D81E2023830038B434 /* CardFilterPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterPopover.swift; sourceTree = "<group>"; };
+		3AB0B556206E3F2B0091C04B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		3AB219CC1E19868B00D8C75A /* CardImagePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardImagePopup.swift; sourceTree = "<group>"; };
 		3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterViewController.xib; sourceTree = "<group>"; };
 		3AB34E601939AA8D000A43BB /* CardFilterThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterThumbView.xib; sourceTree = "<group>"; };
@@ -680,6 +682,7 @@
 				3AA850701F59E46200B37CD1 /* TipJarViewController.swift */,
 				3AA850711F59E46200B37CD1 /* TipJarViewController.xib */,
 				3A8532781855084900507B9A /* InAppSettings.bundle */,
+				3AB0B556206E3F2B0091C04B /* Settings.bundle */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1023,6 +1026,7 @@
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A6D51D61A2284540004951E /* DeckHistoryPopup.xib in Resources */,
+				3AB0B557206E3F2B0091C04B /* Settings.bundle in Resources */,
 				3A92DFD91CBA59EE0043F2F6 /* BrowserValuePicker.xib in Resources */,
 				3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,

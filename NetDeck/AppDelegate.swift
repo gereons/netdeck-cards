@@ -6,8 +6,6 @@
 //  Copyright © 2017 Gereon Steffens. All rights reserved.
 //
 
-import Fabric
-import Crashlytics
 import SVProgressHUD
 import SwiftyUserDefaults
 import DeviceKit
@@ -28,15 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private var launchShortcutItem: UIApplicationShortcutItem?
     private var navigationController: UINavigationController!
-    fileprivate var crashDetected = false
+
     private var initGroup = DispatchGroup()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        if BuildConfig.useCrashlytics {
-            Crashlytics.sharedInstance().delegate = self
-            Fabric.with([Crashlytics.self])
-        }
+        self.setBuiltinUserDefaults()
 
+        _ = Analytics.setup()
         Dropbox.setup()
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -55,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window!.makeKeyAndVisible()
         }
         
-        self.setBuiltinUserDefaults()
+
         self.initGroup.enter()
         DispatchQueue.global(qos: .userInteractive).async {
             self.initializeData()
@@ -141,8 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.logStartup(true)
         
-        if self.crashDetected {
-            self.crashDetected = false
+        if Analytics.shared.crashDetected {
             self.showCrashlyticsAlert()
         } else {
             if CardManager.cardsAvailable {
@@ -223,6 +218,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
+        Defaults.registerDefault(.fabricEnabled, true)
         Defaults.registerDefault(.defaultMWL, MWL.latest)
         Defaults.registerDefault(.rotationActive, true)
         Defaults.registerDefault(.rotationIndex, Rotation._2017)
@@ -368,12 +364,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: CrashlyticsDelegate {
-    // MARK: - crashlytics delegate 
-    func crashlyticsDidDetectReport(forLastExecution report: CLSReport) {
-        self.crashDetected = true
-    }
-    
+extension AppDelegate {
     func showCrashlyticsAlert() {
         let msg = "Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.".localized()
         

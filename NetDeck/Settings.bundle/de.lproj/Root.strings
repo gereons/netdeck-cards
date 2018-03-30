@@ -1,0 +1,5 @@
+﻿/* system settings - de */
+
+"Analytics" = "Analytics";
+"Allow collection" = "Übermittlung erlauben";
+"Net Deck uses Fabric/Crashlytics to collect anonymous usage data and crash reports." = "Net Deck verwendet Fabric/Crashlytics zur anonymen Nutzungsanalyse und für Absturzberichte.";
