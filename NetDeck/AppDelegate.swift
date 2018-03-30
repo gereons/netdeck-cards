@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let megaByte = 1024*1024
         let cache = URLCache(memoryCapacity: 10 * megaByte, diskCapacity: 200 * megaByte, diskPath: nil)
         URLCache.shared = cache
-        
+
         if filesExist {
             self.window!.rootViewController = StartupViewController()
             self.window!.makeKeyAndVisible()
@@ -155,7 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.launchShortcutItem = nil
         }
     }
-    
+
     private func replaceRootViewController(with viewController: UIViewController) {
         if self.window!.rootViewController == nil {
             self.window!.rootViewController = viewController

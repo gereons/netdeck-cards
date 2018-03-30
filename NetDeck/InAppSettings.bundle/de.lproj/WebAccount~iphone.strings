@@ -4,6 +4,10 @@
 "Saving" = "Speichern";
 
 "Manually saving also uploads to NetrunnerDB.com" = "Beim Speichern auch hochladen";
-"Connect to NetrunnerDB.com Account" = "App mit NetrunnerDB.com verbinden";
-"Connect to Jinteki.net Account" = "App mit Jinteki.net verbinden";
-"Save Username and Password on device" = "Usernamen und Passwort auf dem Gerät speichern";
+"Connect to NetrunnerDB.com Account" = "Mit NetrunnerDB.com verbinden";
+"Connect to Jinteki.net Account" = "Mit Jinteki.net verbinden";
+"Save Username and Password on device" = "Anmeldedaten speichern";
+
+"Use Dropbox" = "Dropbox verwenden";
+"Auto-save decks to Dropbox" = "Decks automatisch in Dropbox speichern";
+"Connect to your Dropbox account to enable export and import of decks." = "Verbinde Net Deck mit deiner Dropbox um Decks im- und exportieren zu können.";
