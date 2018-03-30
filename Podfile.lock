@@ -27,7 +27,7 @@ PODS:
     - DTFoundation/Core
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.0)
-  - Fabric (1.7.5)
+  - Fabric (1.7.6)
   - InAppSettingsKit (2.9)
   - MultiSelectSegmentedControl (1.1.3)
   - SDCAlertView (8.0.2)
@@ -81,7 +81,7 @@ SPEC CHECKSUMS:
   DTFoundation: f03be9fd786f11e505bb8fc44e2a3732bf0917df
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: ce986be6a3a321475bc27488f086c018a1275006
-  Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
+  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
   InAppSettingsKit: fc3dea21846535b76b8289b119dbfdbe2505b2b2
   MultiSelectSegmentedControl: 662be7f12ed2475c994f070aa72e2429c8d204e0
   SDCAlertView: 289481e983c60abc5b4b5f4c7241fec9c7a853d5

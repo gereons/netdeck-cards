@@ -768,7 +768,7 @@ extension Deck {
         
         if Defaults[.rotationActive] {
             let packsUsed = Set(self.cards.map { $0.card.packCode} )
-            let rotatedPacks = packsUsed.flatMap { PackManager.packsByCode[$0] }.filter { $0.rotated }
+            let rotatedPacks = packsUsed.compactMap { PackManager.packsByCode[$0] }.filter { $0.rotated }
             if rotatedPacks.count > 0 {
                 reasons.append("Uses rotated-out cards".localized())
             }
