@@ -101,7 +101,7 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tableView.reloadData()
     }
     
-    private func sections() -> [String] {
+    private var sections: [String] {
         switch self.diffMode {
         case .full: return self.diff.fullDiffSections
         case .diff: return self.diff.smallDiffSections
@@ -110,7 +110,7 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    private func rows() -> [[CardDiff]] {
+    private var rows: [[CardDiff]] {
         switch self.diffMode {
         case .full: return self.diff.fullDiffRows
         case .diff: return self.diff.smallDiffRows
@@ -122,20 +122,20 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: - table view
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.sections()[section]
+        return self.sections[section]
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.sections().count
+        return self.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.rows()[section].count
+        return self.rows[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "diffCell", for: indexPath) as! DeckDiffCell
-        let cd = self.rows()[indexPath.section][indexPath.row]
+        let cd = self.rows[indexPath.section][indexPath.row]
         
         cell.vc = self
         cell.tableView = tableView

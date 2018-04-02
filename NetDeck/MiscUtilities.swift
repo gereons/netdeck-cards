@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import SDCAlertView
-
 
 extension String {
     func localized() -> String {
@@ -52,21 +50,29 @@ extension MutableCollection where Index == Int {
     }
 }
 
-extension UIColor {
-    convenience init(rgb: UInt) {
-        let r = CGFloat((rgb & 0xFF0000) >> 16)
-        let g = CGFloat((rgb & 0x00FF00) >> 8)
-        let b = CGFloat((rgb & 0x0000FF) >> 0)
-        self.init(red: r/255.0, green: g/255.0, blue: b/255.0, alpha: 1.0)
+// MARK: - safe subscripts
+
+extension Array {
+    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Element? {
+        return (index >= 0 && index < self.count) ? self[index] : nil
     }
 }
 
-extension UIBarButtonItem {
-    var frame: CGRect {
-        guard let view = self.value(forKey: "view") as? UIView else {
-            return CGRect.zero
+extension Array where Element: RandomAccessCollection, Element.Index == Int {
+    /// for 2D arrays: Returns the element at the specified index iff it is within bounds, otherwise nil.
+    subscript (row: Int, column: Int) -> Element.Iterator.Element? {
+        if row >= 0 && row < self.count {
+            let arr = self[row]
+            if column >= 0 && column <= arr.count {
+                return arr[column]
+            }
         }
-        return view.frame
+        return nil
+    }
+
+    subscript (indexPath: IndexPath) -> Element.Iterator.Element? {
+        return self[indexPath.section, indexPath.row]
     }
 }
 
@@ -75,31 +81,6 @@ extension NSRange {
         let start = string.index(string.startIndex, offsetBy: self.location)
         let end = string.index(start, offsetBy: self.length)
         return start ..< end
-    }
-}
-
-extension UIEdgeInsets {
-    static func forScreen(bottom: CGFloat = 0) -> UIEdgeInsets {
-        var top: CGFloat = 64
-        if #available(iOS 11.0, *) {
-            top = 0
-        }
-        return UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
-    }
-}
-
-extension UIScrollView {
-    func scrollFix() {
-        if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
-        }
-    }
-}
-
-class CustomAlertVisualStyle: AlertVisualStyle {
-    override init(alertStyle: AlertControllerStyle) {
-        super.init(alertStyle: alertStyle)
-        self.backgroundColor = .white
     }
 }
 

@@ -96,6 +96,8 @@
 		3A716291197289E7001755BF /* DeckDiffViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71628F197289E7001755BF /* DeckDiffViewController.xib */; };
 		3A71FFC81930BA6500C71C54 /* CardThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A71FFC71930BA6500C71C54 /* CardThumbView.xib */; };
 		3A733B9A1C8DF801005B1F9B /* NRDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A733B991C8DF801005B1F9B /* NRDB.swift */; };
+		3A775E972072227B004378EA /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A775E962072227B004378EA /* UIUtilities.swift */; };
+		3A775E99207222CB004378EA /* CustomAlertStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A775E98207222CB004378EA /* CustomAlertStyle.swift */; };
 		3A78D3D31E164CC400E91584 /* IdentityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D21E164CC400E91584 /* IdentityViewCell.swift */; };
 		3A78D3D51E164E9600E91584 /* IdentityCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D41E164E9600E91584 /* IdentityCardView.swift */; };
 		3A78D3D71E16513100E91584 /* CollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */; };
@@ -294,6 +296,8 @@
 		3A71628F197289E7001755BF /* DeckDiffViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeckDiffViewController.xib; sourceTree = "<group>"; };
 		3A71FFC71930BA6500C71C54 /* CardThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardThumbView.xib; sourceTree = "<group>"; };
 		3A733B991C8DF801005B1F9B /* NRDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDB.swift; sourceTree = "<group>"; };
+		3A775E962072227B004378EA /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
+		3A775E98207222CB004378EA /* CustomAlertStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertStyle.swift; sourceTree = "<group>"; };
 		3A78D3D21E164CC400E91584 /* IdentityViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityViewCell.swift; sourceTree = "<group>"; };
 		3A78D3D41E164E9600E91584 /* IdentityCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityCardView.swift; sourceTree = "<group>"; };
 		3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionHeader.swift; sourceTree = "<group>"; };
@@ -563,6 +567,8 @@
 				3A6228131C1456F400FBF041 /* DefaultsKeys.swift */,
 				3AF697881C1DAC7300D254CE /* Notifications.swift */,
 				3A9752201C1F6E310070E39B /* MiscUtilities.swift */,
+				3A775E98207222CB004378EA /* CustomAlertStyle.swift */,
+				3A775E962072227B004378EA /* UIUtilities.swift */,
 				3A529E621CA57BF70061E065 /* Reachability.swift */,
 				3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */,
 				3ADBCA951DDA372800D988A5 /* InsetLabel.swift */,
@@ -1063,7 +1069,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -1071,7 +1077,7 @@
 			name = "Set CFBundleVersion from git";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" != \"Release\" ]; then\nGITVERSION=$(git rev-parse --short HEAD)\necho \"add git version... $GITVERSION\"\necho -n \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\" | xargs -0 /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $GITVERSION\"\nfi\n";
 		};
@@ -1207,6 +1213,7 @@
 				3A39FBC81CB96F6B000F1B23 /* BrowserViewController.swift in Sources */,
 				3A114EBF1C6F7FDB00BF8C3C /* Dropbox.swift in Sources */,
 				3A78D3D31E164CC400E91584 /* IdentityViewCell.swift in Sources */,
+				3A775E972072227B004378EA /* UIUtilities.swift in Sources */,
 				3A3375561E1ACDAA002E3B6E /* DeckHistoryPopup.swift in Sources */,
 				3A822F6E1CC2C13500305789 /* BuildConfig.swift in Sources */,
 				3ADDFF7A1E1C20170001B1C4 /* CompareDecksList.swift in Sources */,
@@ -1293,6 +1300,7 @@
 				3A6205211E19695000073BF8 /* DeckNotesPopup.swift in Sources */,
 				3ADBCA961DDA372800D988A5 /* InsetLabel.swift in Sources */,
 				3A1FD36A1DA956CA00DF50F1 /* SetSelectionViewController.swift in Sources */,
+				3A775E99207222CB004378EA /* CustomAlertStyle.swift in Sources */,
 				3A64B2501E17AD0A00067049 /* SmallBrowserCell.swift in Sources */,
 				3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */,
 				3A3CE0F01C79EE31003BF8D9 /* DeckImport.swift in Sources */,

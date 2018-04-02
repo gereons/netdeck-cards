@@ -761,13 +761,16 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cardCell", for: indexPath) as! CardFilterCell
-        
+        guard let card = self.cards[indexPath] else {
+            return cell
+        }
+
         cell.addButton.tag = Add.table.rawValue
         cell.addButton.addTarget(self, action: #selector(self.addCardToDeck(_:)), for: .touchUpInside)
         
         let deck = self.deckListViewController.deck
         let identity = deck?.identity ?? Card.null()
-        let card = self.cards[indexPath.section][indexPath.row]
+
         
         let influence = identity.faction == card.faction ? 0 : card.influence
         cell.pips.set(value: influence, color: card.factionColor)
@@ -829,10 +832,12 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: - collection view
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let card = self.cards[indexPath.section][indexPath.row]
-        let cc = self.deckListViewController.deck?.findCard(card) ?? CardCounter.null()
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardThumb", for: indexPath) as! CardFilterThumbView
+        guard let card = self.cards[indexPath] else {
+            return cell
+        }
+        let cc = self.deckListViewController.deck?.findCard(card) ?? CardCounter.null()
+
         
         cell.addButton.tag = Add.collection.rawValue
         cell.addButton.addTarget(self, action: #selector(self.addCardToDeck(_:)), for: .touchUpInside)

@@ -242,7 +242,10 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         let cellIdentifier = self.largeCells ? "largeBrowserCell" : "smallBrowserCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BrowserCell
         
-        let card = self.values[indexPath.section][indexPath.row]
+        guard let card = self.values[indexPath] else {
+            return cell
+        }
+
         cell.card = card
         cell.parent = self
         
@@ -284,7 +287,10 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! BrowserImageCell
         
-        let card = self.values[indexPath.section][indexPath.row]
+        guard let card = self.values[indexPath] else {
+            return cell
+        }
+
         cell.loadImage(for: card)
         
         return cell
