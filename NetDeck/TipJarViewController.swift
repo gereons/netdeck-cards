@@ -43,7 +43,7 @@ class TipJarViewController: UIViewController {
         
         self.title = "Tip Jar".localized()
         
-        self.titleLabel.text = "If you find Net Deck useful, please consider supporting the development of the app by leaving a tip in our tip jar.\n\nYour support is greatly appreciated!".localized()
+        self.titleLabel.text = "If you find Net Deck useful, please consider supporting its development by leaving a tip in our tip jar.\n\nYour support is greatly appreciated!".localized()
         
         self.tipMap = [
             .generous: tip1Button,
