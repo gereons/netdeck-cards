@@ -986,22 +986,24 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.delegate = self
         cell.separatorInset = UIEdgeInsets.zero
-        let cc = self.cards[indexPath.section][indexPath.row]
-        cell.deck = self.deck
-        cell.cardCounter = cc.isNull ? nil : cc
+        if let cc = self.cards[indexPath] {
+            cell.deck = self.deck
+            cell.cardCounter = cc.isNull ? nil : cc
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let cc = self.cards[indexPath.section][indexPath.row]
-        return !cc.isNull
+        if let cc = self.cards[indexPath] {
+            return !cc.isNull
+        }
+        return false
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let cc = self.cards[indexPath.section][indexPath.row]
-            if !cc.isNull {
+            if let cc = self.cards[indexPath], !cc.isNull {
                 self.deck.addCard(cc.card, copies: 0)
             }
             
@@ -1010,8 +1012,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cc = self.cards[indexPath.section][indexPath.row]
-        if !cc.isNull {
+        if let cc = self.cards[indexPath], !cc.isNull {
             let rect = self.tableView.rectForRow(at: indexPath)
             CardImageViewPopover.show(for: cc.card, mwl: self.deck.mwl, from: rect, in: self, subView: self.tableView)
         }
@@ -1109,6 +1110,10 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             cell.copiesLabel.text = ""
         } else {
+            guard index - 1 < self.deck.cards.count else {
+                return cell
+            }
+
             let cc2 = self.deck.cards[index - 1]
             cc = cc2
             
@@ -1239,12 +1244,14 @@ extension DeckListViewController: UICollectionViewDataSourcePrefetching {
 
             if row == 0 {
                 cc = self.deck.identityCc
-            } else {
+            } else if row - 1 < self.deck.cards.count {
                 cc = self.deck.cards[row - 1]
             }
 
             if let card = cc?.card {
                 ImageCache.sharedInstance.getImage(for: card) { _,_,_ in }
+            } else {
+                print("cant prefetch")
             }
         }
     }
