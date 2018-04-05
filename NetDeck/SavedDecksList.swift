@@ -195,14 +195,11 @@ class SavedDecksList: DecksViewController {
     }
     
     @objc func statePopup(_ sender: UIButton) {
-        let row = sender.tag / 10
-        let section = sender.tag & 1
-        let indexPath = IndexPath(row: row, section: section)
-        
+        let section = sender.tag / 1000
+        let row = sender.tag - (section * 1000)
+
         let deck = self.decks[section][row]
-        
-        let cell = self.tableView.cellForRow(at: indexPath)
-    
+
         self.popup = UIAlertController.actionSheet(title: "Status".localized(), message: nil)
         self.popup.addAction(UIAlertAction(title: "Active".localized().checked(deck.state == .active)) { action in
             self.changeState(of: deck, to: .active)
@@ -216,7 +213,9 @@ class SavedDecksList: DecksViewController {
         self.popup.addAction(UIAlertAction.actionSheetCancel() { action in
             self.popup = nil
         })
-        
+
+        let indexPath = IndexPath(row: row, section: section)
+        let cell = self.tableView.cellForRow(at: indexPath)
         let frame = cell?.contentView.convert(sender.frame, to: self.view) ?? CGRect.zero
         
         let popover = self.popup.popoverPresentationController
@@ -407,7 +406,7 @@ class SavedDecksList: DecksViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath) as! DeckCell
         
         cell.infoButton?.isHidden = false
-        cell.infoButton?.tag = indexPath.row * 10 + indexPath.section
+        cell.infoButton?.tag = indexPath.section * 1000 + indexPath.row
         cell.infoButton?.addTarget(self, action: #selector(self.statePopup(_:)), for: .touchUpInside)
         
         let deck = self.decks[indexPath.section][indexPath.row] 
