@@ -79,6 +79,8 @@ class Analytics: NSObject {
     }
 
     static private var initialized = false
+
+    @discardableResult
     static func setup() -> Bool {
         guard BuildConfig.useCrashlytics && Defaults[.fabricEnabled] else {
             return false

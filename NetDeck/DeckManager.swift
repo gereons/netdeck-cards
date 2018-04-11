@@ -74,48 +74,37 @@ class DeckManager {
         var decks = [Deck]()
         
         let dir = directoryForRole(role)
-        let dirContents = try? FileManager.default.contentsOfDirectory(atPath: dir)
-        if dirContents == nil {
-            return decks
-        }
-        
-        for file in dirContents! {
-            let path = dir.appendPathComponent(file)
-            if let deck = loadDeckFromPath(path) {
-                decks.append(deck)
+        if let dirContents = try? FileManager.default.contentsOfDirectory(atPath: dir) {
+            for file in dirContents {
+                let path = dir.appendPathComponent(file)
+                if let deck = loadDeckFromPath(path) {
+                    decks.append(deck)
+                }
             }
         }
-
         return decks
     }
     
-    static func loadDeckFromPath(_ path: String) -> Deck? {
-        return loadDeckFromPath(path, useCache: true)
-    }
-    
-    static func loadDeckFromPath(_ path: String, useCache: Bool) -> Deck? {
+    static func loadDeckFromPath(_ path: String, useCache: Bool = true) -> Deck? {
         if useCache {
             if let cachedDeck = DeckManager.cache.object(forKey: path as NSString) {
                 return cachedDeck
             }
         }
         
-        let data = try? Data(contentsOf: URL(fileURLWithPath: path))
-        if data == nil {
-            return nil
-        }
-        
-        let decoder = NSKeyedUnarchiver(forReadingWith: data!)
-        if let deck = decoder.decodeObject(forKey: "deck") as? Deck {
-            deck.filename = path
-            
-            if let attrs = try? FileManager.default.attributesOfItem(atPath: path) {
-                deck.lastModified = attrs[FileAttributeKey.modificationDate] as? Date
-                deck.dateCreated = attrs[FileAttributeKey.creationDate] as? Date
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
+            let decoder = NSKeyedUnarchiver(forReadingWith: data)
+            if let deck = decoder.decodeObject(forKey: "deck") as? Deck {
+                deck.filename = path
+
+                if let attrs = try? FileManager.default.attributesOfItem(atPath: path) {
+                    deck.lastModified = attrs[FileAttributeKey.modificationDate] as? Date
+                    deck.dateCreated = attrs[FileAttributeKey.creationDate] as? Date
+                }
+
+                DeckManager.cache.setObject(deck, forKey: path as NSString)
+                return deck
             }
-            
-            DeckManager.cache.setObject(deck, forKey: path as NSString)
-            return deck
         }
         return nil
     }

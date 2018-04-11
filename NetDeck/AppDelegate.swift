@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.setBuiltinUserDefaults()
 
-        _ = Analytics.setup()
+        Analytics.setup()
         Dropbox.setup()
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -50,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window!.rootViewController = StartupViewController()
             self.window!.makeKeyAndVisible()
         }
-        
 
         self.initGroup.enter()
         DispatchQueue.global(qos: .userInteractive).async {
@@ -94,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let _ = CardManager.setupFromFiles()
             // print("app start, cardsOk=\(cardsOk)")
         }
-        
+
         _ = DeckManager.decksForRole(.none)
         let elapsed = Date.timeIntervalSinceReferenceDate - start
         print ("init took \(elapsed)")
