@@ -176,6 +176,7 @@
 		3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */; };
 		3AE0C80F1E168ECA0046376F /* CardFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C80E1E168ECA0046376F /* CardFilterCell.swift */; };
 		3AE0C8111E168FC70046376F /* CardFilterThumbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C8101E168FC70046376F /* CardFilterThumbView.swift */; };
+		3AE6A561208000AC000722BA /* ThreadsafeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6A560208000AC000722BA /* ThreadsafeCollections.swift */; };
 		3AEEBB671C00C9FF00CB6053 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEBB661C00C9FF00CB6053 /* CardManager.swift */; };
 		3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */; };
 		3AF04BB91D44DD8200CB859D /* JinetkiNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */; };
@@ -385,6 +386,7 @@
 		3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OctgnImport.swift; sourceTree = "<group>"; };
 		3AE0C80E1E168ECA0046376F /* CardFilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterCell.swift; sourceTree = "<group>"; };
 		3AE0C8101E168FC70046376F /* CardFilterThumbView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterThumbView.swift; sourceTree = "<group>"; };
+		3AE6A560208000AC000722BA /* ThreadsafeCollections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsafeCollections.swift; sourceTree = "<group>"; };
 		3AEEBB661C00C9FF00CB6053 /* CardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 		3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineLabel.swift; sourceTree = "<group>"; };
 		3AF04BB81D44DD8200CB859D /* JinetkiNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JinetkiNet.swift; sourceTree = "<group>"; };
@@ -583,6 +585,7 @@
 				3AF1E9161FB4FB64009E8B88 /* Utils.swift */,
 				3A827BD51FFF903D0081C9E9 /* Iluminotchi.swift */,
 				3AF453E22000EC560008F748 /* MWLSelection.swift */,
+				3AE6A560208000AC000722BA /* ThreadsafeCollections.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1304,6 +1307,7 @@
 				3A64B2501E17AD0A00067049 /* SmallBrowserCell.swift in Sources */,
 				3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */,
 				3A3CE0F01C79EE31003BF8D9 /* DeckImport.swift in Sources */,
+				3AE6A561208000AC000722BA /* ThreadsafeCollections.swift in Sources */,
 				3A6109321DC78074007C73D5 /* IphoneIdentityViewController.swift in Sources */,
 				3A126E901D0320ED00CDF580 /* Translation.swift in Sources */,
 				3AB838631DC689C00047B7DB /* CardDetailView.swift in Sources */,

@@ -78,27 +78,27 @@ class ImageCache: NSObject {
     private let memCache = ImageMemCache()
     
     // img keys we know aren't downloadable (yet)
-    private var unavailableImages = Set<String>()
+    private var unavailableImages = ConcurrentSet<String>()
     
     // Last-Modified date of each image
-    private var lastModifiedDates = [String: String]()  // code -> last-modified
+    private var lastModifiedDates = ConcurrentMap<String, String>() // code -> last-modified
     
     // when to next check if an img was updated
-    private var nextCheckDates = [String: Date]()       // code -> date
+    private var nextCheckDates = ConcurrentMap<String, Date>()      // code -> date
 
     // log of all current in-flight requests
     typealias ImageCallback = (Card, UIImage, Bool) -> Void
-    private var pendingRequests = [String: [ImageCallback] ]()
+    private var pendingRequests = ConcurrentMap<String, [ImageCallback]>()
     
     private override init() {
         super.init()
 
         if let lastMod = Defaults[.lastModifiedCache] {
-            self.lastModifiedDates = lastMod
+            self.lastModifiedDates.set(lastMod)
         }
         
         if let nextCheck = Defaults[.nextCheck] {
-            self.nextCheckDates = nextCheck
+            self.nextCheckDates.set(nextCheck)
         }
         
         if let imgs = Defaults[.unavailableImages] {
@@ -111,7 +111,7 @@ class ImageCache: NSObject {
         if lastCheck < now {
             self.unavailableImages.removeAll()
             Defaults[.unavailableImagesDate] = now + 12 * 3600
-            Defaults[.unavailableImages] = Array(self.unavailableImages)
+            Defaults[.unavailableImages] = self.unavailableImages.array
         }
 
         DispatchQueue.global(qos: .background).async {
@@ -131,9 +131,9 @@ class ImageCache: NSObject {
 
     /// called when we move to the background
     func resignActive() {
-        Defaults[.lastModifiedCache] = self.lastModifiedDates
-        Defaults[.nextCheck] = self.nextCheckDates
-        Defaults[.unavailableImages] = Array(self.unavailableImages)
+        Defaults[.lastModifiedCache] = self.lastModifiedDates.dict
+        Defaults[.nextCheck] = self.nextCheckDates.dict
+        Defaults[.unavailableImages] = self.unavailableImages.array
         
         self.memCache.removeAll()
     }
@@ -292,8 +292,8 @@ class ImageCache: NSObject {
         self.lastModifiedDates.removeAll()
         self.nextCheckDates.removeAll()
         
-        Defaults[.lastModifiedCache] = self.lastModifiedDates
-        Defaults[.nextCheck] = self.nextCheckDates
+        Defaults[.lastModifiedCache] = self.lastModifiedDates.dict
+        Defaults[.nextCheck] = self.nextCheckDates.dict
 
         self.resetUnavailableImages()
         self.removeCacheDirectory()
@@ -304,7 +304,7 @@ class ImageCache: NSObject {
 
     func resetUnavailableImages() {
         self.unavailableImages.removeAll()
-        Defaults[.unavailableImages] = Array(self.unavailableImages)
+        Defaults[.unavailableImages] = self.unavailableImages.array
     }
     
     private func NLOG(_ format: String, _ args: CVarArg...) {
