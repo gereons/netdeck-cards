@@ -10,12 +10,6 @@ import Alamofire
 import AlamofireImage
 import SwiftyUserDefaults
 
-func synchronized<T>(_ lock: Any, closure: ()->T) -> T {
-    objc_sync_enter(lock)
-    defer { objc_sync_exit(lock) }
-    return closure()
-}
-
 private class ImageMemCache {
     private var cache: NSCache<NSString, UIImage>
 
@@ -160,13 +154,11 @@ class ImageCache: NSObject {
             return
         }
 
-        let requestInFlight: Bool = synchronized(self) {
-            // check if the request is currently in-flight, and if so, add its completion block to our list of callbacks
-            let alreadyPending = self.pendingRequests[key] != nil
-            self.pendingRequests[key, default:[]].append(completion)
-            return alreadyPending
-        }
-        if requestInFlight {
+        // check if the request is currently in-flight, and if so, add its completion block to our list of callbacks
+        let alreadyPending = self.pendingRequests[key] != nil
+        self.pendingRequests[key, default:[]].append(completion)
+
+        if alreadyPending {
             return
         }
 
@@ -195,12 +187,10 @@ class ImageCache: NSObject {
     private func callCallbacks(for card: Card, key: String, image: UIImage, placeholder: Bool) {
         DispatchQueue.main.async {
             // call all pending callbacks for this image
-            synchronized(self) {
-                let pendingCallbacks = self.pendingRequests.removeValue(forKey: key)
-                assert(pendingCallbacks != nil && pendingCallbacks!.count > 0)
-                pendingCallbacks?.forEach { callback in
-                    callback(card, image, placeholder)
-                }
+            let pendingCallbacks = self.pendingRequests.removeValue(forKey: key)
+            assert(pendingCallbacks != nil && pendingCallbacks!.count > 0)
+            pendingCallbacks?.forEach { callback in
+                callback(card, image, placeholder)
             }
         }
     }

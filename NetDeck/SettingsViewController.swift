@@ -11,31 +11,26 @@ import SVProgressHUD
 import SwiftyUserDefaults
 
 class Settings {
-    static var viewController: IASKAppSettingsViewController {
-        return synchronized(self) {
-            instance()
-        }
-    }
-
-    private static var iask: IASKAppSettingsViewController!
-    private static var delegate: SettingsDelegate!
-
-    private static func instance() -> IASKAppSettingsViewController {
-        if iask == nil {
-            iask = IASKAppSettingsViewController(style: .grouped)
-            delegate = SettingsDelegate()
-
-            iask.delegate = delegate
-            iask.showDoneButton = false
-
-            // workaround for iOS 11 change in UITableView
-            iask.tableView.estimatedRowHeight = 0
-            iask.tableView.estimatedSectionHeaderHeight = 0
-            iask.tableView.estimatedSectionFooterHeight = 0
-
-        }
+    static var viewController: IASKAppSettingsViewController = {
+        let iask = Settings.iask
+        delegate = SettingsDelegate()
+        iask.delegate = delegate
+        iask.hiddenKeys = delegate.hiddenKeys()
         return iask
-    }
+    }()
+
+    private static var iask: IASKAppSettingsViewController = {
+        let iask = IASKAppSettingsViewController(style: .grouped)
+        iask.showDoneButton = false
+
+        // workaround for iOS 11 change in UITableView
+        iask.tableView.estimatedRowHeight = 0
+        iask.tableView.estimatedSectionHeaderHeight = 0
+        iask.tableView.estimatedSectionFooterHeight = 0
+        return iask
+    }()
+
+    private static var delegate: SettingsDelegate!
 }
 
 class SettingsDelegate: IASKSettingsDelegate {
@@ -45,14 +40,14 @@ class SettingsDelegate: IASKSettingsDelegate {
         nc.addObserver(self, selector: #selector(self.settingsChanged(_:)), name: Notification.Name(kIASKAppSettingChanged), object: nil)
         nc.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
 
-        self.setHiddenKeys()
+        // self.setHiddenKeys()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setHiddenKeys() {
+    fileprivate func hiddenKeys() -> Set<String> {
         var hiddenKeys = Set<String>()
 
         hiddenKeys.insert(DefaultsKeys.language._key)
@@ -86,13 +81,17 @@ class SettingsDelegate: IASKSettingsDelegate {
             hiddenKeys.insert(DefaultsKeys.convertCore._key)
             hiddenKeys.insert(DefaultsKeys.rotationIndex._key)
         }
-        
-        Settings.viewController.hiddenKeys = hiddenKeys
+
+        return hiddenKeys
     }
-    
+
+    private func xsetHiddenKeys() {
+
+    }
+
     @objc func cardsLoaded(_ notification: Notification) {
         if let success = notification.userInfo?["success"] as? Bool, success {
-            self.setHiddenKeys()
+            Settings.viewController.hiddenKeys = self.hiddenKeys()
             DeckManager.flushCache()
         }
     }
@@ -115,7 +114,6 @@ class SettingsDelegate: IASKSettingsDelegate {
             } else {
                 Dropbox.unlinkClient()
             }
-            self.setHiddenKeys()
             
         case DefaultsKeys.useNrdb._key:
             let useNrdb = value as? Bool ?? false
@@ -125,7 +123,6 @@ class SettingsDelegate: IASKSettingsDelegate {
                 NRDB.clearSettings()
                 NRDBHack.clearCredentials()
             }
-            self.setHiddenKeys()
             
         case DefaultsKeys.useJintekiNet._key:
             let useJnet = value as? Bool ?? false
@@ -134,7 +131,6 @@ class SettingsDelegate: IASKSettingsDelegate {
             } else {
                 JintekiNet.sharedInstance.clearCredentials()
             }
-            self.setHiddenKeys()
             
         case DefaultsKeys.updateInterval._key:
             CardManager.setNextDownloadDate()
@@ -157,7 +153,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             }
         
         case DefaultsKeys.rotationActive._key:
-            self.setHiddenKeys()
+            break
 
         case DefaultsKeys.rotationIndex._key:
             self.reinitializeData()
@@ -165,6 +161,8 @@ class SettingsDelegate: IASKSettingsDelegate {
         default:
             break
         }
+
+        Settings.viewController.hiddenKeys = self.hiddenKeys()
     }
 
     @objc func settingsViewController(_ sender: IASKAppSettingsViewController!, valuesFor specifier: IASKSpecifier!) -> [Any]! {
@@ -273,7 +271,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             if Reachability.online {
                 SVProgressHUD.showInfo(withStatus: "re-authenticating")
                 NRDB.sharedInstance.backgroundRefreshAuthentication { result in
-                    self.setHiddenKeys()
+                    Settings.viewController.hiddenKeys = self.hiddenKeys()
                     SVProgressHUD.dismiss()
                 }
             } else {
@@ -299,7 +297,7 @@ class SettingsDelegate: IASKSettingsDelegate {
                 PackManager.removeFiles()
                 Defaults[.lastDownload] = "Never".localized()
                 Defaults[.nextDownload] = "Never".localized()
-                self.setHiddenKeys()
+                Settings.viewController.hiddenKeys = self.hiddenKeys()
 
                 NotificationCenter.default.post(name: Notifications.loadCards, object: self)
             })

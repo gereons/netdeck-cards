@@ -8,12 +8,11 @@
 
 import Foundation
 
-struct ConcurrentMap<K: Hashable, V> {
+public struct ConcurrentMap<K: Hashable, V> {
     private var map = [K: V]()
     private var queue: DispatchQueue
 
-    init() {
-        FIXME("unit tests")
+    public init() {
         let uuid = UUID().uuidString
         queue = DispatchQueue(label: "ConcurrentMap.\(uuid)", attributes: .concurrent)
     }
@@ -29,14 +28,10 @@ struct ConcurrentMap<K: Hashable, V> {
 
     subscript(key: K, default defaultValue: @autoclosure () -> V) -> V {
         get {
-            return map[key] ?? defaultValue()
+            return queue.sync { return map[key, default: defaultValue()] }
         }
         set {
-            if map[key] == nil {
-                map[key] = defaultValue()
-            } else {
-                map[key] = newValue
-            }
+            queue.sync(flags: .barrier) { map[key] = newValue }
         }
     }
 
@@ -55,6 +50,10 @@ struct ConcurrentMap<K: Hashable, V> {
 
     var dict: [K: V] {
         return queue.sync { return map }
+    }
+
+    var count: Int {
+        return queue.sync { return map.count }
     }
 }
 

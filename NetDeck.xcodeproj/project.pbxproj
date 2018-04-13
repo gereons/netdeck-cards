@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23D252E689F69FF167AFDA0A /* Pods_NetDeckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEF22F868D49DDA7208D11B /* Pods_NetDeckTests.framework */; };
 		3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */; };
 		3A0841901E0D6719000779C3 /* UIAlert+NetDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */; };
 		3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */; };
@@ -189,8 +190,20 @@
 		3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */; };
 		3AF6978F1C1DFD2100D254CE /* DrawSimulatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978E1C1DFD2100D254CE /* DrawSimulatorViewController.swift */; };
 		3AFBA1621E0D9CAF003F6CD8 /* EditDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA1611E0D9CAF003F6CD8 /* EditDeckViewController.swift */; };
+		3AFE72522081191200816139 /* NetDeckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE72512081191200816139 /* NetDeckTests.swift */; };
+		3AFE726920811F9700816139 /* ThreadsafeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6A560208000AC000722BA /* ThreadsafeCollections.swift */; };
 		BDF6E1A45BDD2269ED47E09D /* Pods_NetDeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8171B5D03856602872A9AECE /* Pods_NetDeck.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3AFE72542081191200816139 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3A3622561849320C007F2854 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A36225D1849320C007F2854;
+			remoteInfo = NetDeck;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdateCheck.swift; sourceTree = "<group>"; };
@@ -200,7 +213,6 @@
 		3A095E8C18BBC49C00C99FED /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A095E8E18BBC53800C99FED /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A095E8F18BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A095E9018BBC53800C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A095E9218BBCB2200C99FED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; lineEnding = 0; name = en; path = en.lproj/About.html; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.html; };
 		3A095E9418BBCB2700C99FED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.html; lineEnding = 0; name = de; path = de.lproj/About.html; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.html; };
 		3A0AD1E21E14010400194AFF /* DeckDiffViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckDiffViewController.swift; sourceTree = "<group>"; };
@@ -230,7 +242,6 @@
 		3A3293DF1CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.html; lineEnding = 0; name = ja; path = ja.lproj/About.html; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.html; };
 		3A3293E11CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A3293E21CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A3293E31CA5662C00884DE5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A32B7DE1EA23B2100A19982 /* KeyboardHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHandling.swift; sourceTree = "<group>"; };
 		3A3375551E1ACDAA002E3B6E /* DeckHistoryPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckHistoryPopup.swift; sourceTree = "<group>"; };
 		3A33AE2F1C7272ED00453C33 /* DeckEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckEmail.swift; sourceTree = "<group>"; };
@@ -238,9 +249,6 @@
 		3A3622691849320C007F2854 /* NetDeck-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetDeck-Info.plist"; sourceTree = "<group>"; };
 		3A36226B1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A36227C1849320C007F2854 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		3A36228B1849320C007F2854 /* NetDeckTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetDeckTests-Info.plist"; sourceTree = "<group>"; };
-		3A36228D1849320C007F2854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A36228F1849320C007F2854 /* NetDeckTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NetDeckTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A36A0FA1974F68800D8D26A /* SmallPipsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPipsView.xib; sourceTree = "<group>"; };
 		3A37F4A81E2FE99A005D7456 /* CardFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterViewController.swift; sourceTree = "<group>"; };
 		3A3845011B77BA89007C76F2 /* EditDeckViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDeckViewController.xib; sourceTree = "<group>"; };
@@ -324,7 +332,6 @@
 		3A94492818FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; lineEnding = 0; name = fr; path = fr.lproj/About.html; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.html; };
 		3A94492918FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A94492A18FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A94492B18FD9522005CA63A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A966B781E1EDBEA0047A148 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3A9752201C1F6E310070E39B /* MiscUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscUtilities.swift; sourceTree = "<group>"; };
 		3A9795351CF63EE100479ADF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -332,7 +339,6 @@
 		3A9CDFF018FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.html; lineEnding = 0; name = es; path = es.lproj/About.html; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.html; };
 		3A9CDFF118FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A9CDFF218FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A9CDFF318FC5FD3002B7494 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A9CE56418E0B6C0007A26CD /* IdentityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentityViewCell.xib; sourceTree = "<group>"; };
 		3AA0504919589F9B00DBDED6 /* Acknowledgements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Acknowledgements.html; sourceTree = "<group>"; };
 		3AA0B3011C8C2C7E007B4983 /* CardUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardUpdateCheck.swift; sourceTree = "<group>"; };
@@ -399,10 +405,17 @@
 		3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hypergeometric.swift; sourceTree = "<group>"; };
 		3AF6978E1C1DFD2100D254CE /* DrawSimulatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawSimulatorViewController.swift; sourceTree = "<group>"; };
 		3AFBA1611E0D9CAF003F6CD8 /* EditDeckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDeckViewController.swift; sourceTree = "<group>"; };
+		3AFE724F2081191200816139 /* NetDeckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetDeckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AFE72512081191200816139 /* NetDeckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetDeckTests.swift; sourceTree = "<group>"; };
+		3AFE72532081191200816139 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B3ED278C485C4DD0795F558 /* Pods-NetDeck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.debug.xcconfig"; sourceTree = "<group>"; };
+		64F7064EB6B74E7CB9C2DE95 /* Pods-NetDeckTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeckTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests.release.xcconfig"; sourceTree = "<group>"; };
+		6E908BEB15191613DC53B1C0 /* Pods-NetDeckTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeckTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests.debug.xcconfig"; sourceTree = "<group>"; };
 		796DF0A5738142FC6D02DC2E /* Pods-NetDeck.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.adhoc.xcconfig"; sourceTree = "<group>"; };
 		8171B5D03856602872A9AECE /* Pods_NetDeck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		832C019F9B9F781A1430910C /* Pods-NetDeck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.release.xcconfig"; sourceTree = "<group>"; };
+		DCEF22F868D49DDA7208D11B /* Pods_NetDeckTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeckTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFC4A3D6058FCB5ECFCDB532 /* Pods-NetDeckTests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeckTests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests.adhoc.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -411,6 +424,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDF6E1A45BDD2269ED47E09D /* Pods_NetDeck.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AFE724C2081191200816139 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23D252E689F69FF167AFDA0A /* Pods_NetDeckTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,7 +451,7 @@
 			isa = PBXGroup;
 			children = (
 				3A3622671849320C007F2854 /* NetDeck */,
-				3A3622891849320C007F2854 /* NetDeckTests */,
+				3AFE72502081191200816139 /* NetDeckTests */,
 				3A3622601849320C007F2854 /* Frameworks */,
 				3A36225F1849320C007F2854 /* Products */,
 				EF2B273DAF9123ABF9F266E8 /* Pods */,
@@ -441,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				3A36225E1849320C007F2854 /* NetDeck.app */,
+				3AFE724F2081191200816139 /* NetDeckTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -450,6 +472,7 @@
 			children = (
 				3AA850741F59E8C900B37CD1 /* StoreKit.framework */,
 				8171B5D03856602872A9AECE /* Pods_NetDeck.framework */,
+				DCEF22F868D49DDA7208D11B /* Pods_NetDeckTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -496,24 +519,6 @@
 				3A3622691849320C007F2854 /* NetDeck-Info.plist */,
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
 				3A6ECD291D85BDE7008FBF38 /* LaunchScreen.xib */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		3A3622891849320C007F2854 /* NetDeckTests */ = {
-			isa = PBXGroup;
-			children = (
-				3A36228F1849320C007F2854 /* NetDeckTests.m */,
-				3A36228A1849320C007F2854 /* Supporting Files */,
-			);
-			path = NetDeckTests;
-			sourceTree = "<group>";
-		};
-		3A36228A1849320C007F2854 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				3A36228B1849320C007F2854 /* NetDeckTests-Info.plist */,
-				3A36228C1849320C007F2854 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -911,12 +916,25 @@
 			name = "Deck Analysis";
 			sourceTree = "<group>";
 		};
+		3AFE72502081191200816139 /* NetDeckTests */ = {
+			isa = PBXGroup;
+			children = (
+				3AFE72512081191200816139 /* NetDeckTests.swift */,
+				3AFE72532081191200816139 /* Info.plist */,
+			);
+			path = NetDeckTests;
+			sourceTree = "<group>";
+			usesTabs = 0;
+		};
 		EF2B273DAF9123ABF9F266E8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				4B3ED278C485C4DD0795F558 /* Pods-NetDeck.debug.xcconfig */,
 				832C019F9B9F781A1430910C /* Pods-NetDeck.release.xcconfig */,
 				796DF0A5738142FC6D02DC2E /* Pods-NetDeck.adhoc.xcconfig */,
+				6E908BEB15191613DC53B1C0 /* Pods-NetDeckTests.debug.xcconfig */,
+				64F7064EB6B74E7CB9C2DE95 /* Pods-NetDeckTests.release.xcconfig */,
+				EFC4A3D6058FCB5ECFCDB532 /* Pods-NetDeckTests.adhoc.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -934,7 +952,6 @@
 				3A36225C1849320C007F2854 /* Resources */,
 				3A814EC519ADBEEE008C3285 /* Crashlytics */,
 				5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */,
-				C576FDA1A12A9ED691A68447 /* [CP] Copy Pods Resources */,
 				3AF1E9151FB4F733009E8B88 /* Run Checker */,
 				3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */,
 			);
@@ -947,13 +964,33 @@
 			productReference = 3A36225E1849320C007F2854 /* NetDeck.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3AFE724E2081191200816139 /* NetDeckTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AFE72562081191200816139 /* Build configuration list for PBXNativeTarget "NetDeckTests" */;
+			buildPhases = (
+				D141B4CE4E5CFA1DE20714E8 /* [CP] Check Pods Manifest.lock */,
+				3AFE724B2081191200816139 /* Sources */,
+				3AFE724C2081191200816139 /* Frameworks */,
+				3AFE724D2081191200816139 /* Resources */,
+				34267E92456EDD60673BA8D6 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3AFE72552081191200816139 /* PBXTargetDependency */,
+			);
+			name = NetDeckTests;
+			productName = NetDeckTests;
+			productReference = 3AFE724F2081191200816139 /* NetDeckTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		3A3622561849320C007F2854 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Gereon Steffens";
 				TargetAttributes = {
@@ -971,6 +1008,12 @@
 								enabled = 1;
 							};
 						};
+					};
+					3AFE724E2081191200816139 = {
+						CreatedOnToolsVersion = 9.3;
+						DevelopmentTeam = 858Z7CGJH8;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 3A36225D1849320C007F2854;
 					};
 				};
 			};
@@ -992,6 +1035,7 @@
 			projectRoot = "";
 			targets = (
 				3A36225D1849320C007F2854 /* NetDeck */,
+				3AFE724E2081191200816139 /* NetDeckTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1067,9 +1111,64 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3AFE724D2081191200816139 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		34267E92456EDD60673BA8D6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
+				"${BUILT_PRODUCTS_DIR}/DTCoreText/DTCoreText.framework",
+				"${BUILT_PRODUCTS_DIR}/DTFoundation/DTFoundation.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
+				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
+				"${BUILT_PRODUCTS_DIR}/InAppSettingsKit/InAppSettingsKit.framework",
+				"${BUILT_PRODUCTS_DIR}/MultiSelectSegmentedControl/MultiSelectSegmentedControl.framework",
+				"${BUILT_PRODUCTS_DIR}/SDCAlertView/SDCAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyDropbox/SwiftyDropbox.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTCoreText.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTFoundation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InAppSettingsKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MultiSelectSegmentedControl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDCAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDropbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -1160,21 +1259,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C576FDA1A12A9ED691A68447 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C62555A389DA66E9F987B229 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1187,6 +1271,24 @@
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-NetDeck-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D141B4CE4E5CFA1DE20714E8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NetDeckTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1322,7 +1424,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3AFE724B2081191200816139 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AFE726920811F9700816139 /* ThreadsafeCollections.swift in Sources */,
+				3AFE72522081191200816139 /* NetDeckTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3AFE72552081191200816139 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3A36225D1849320C007F2854 /* NetDeck */;
+			targetProxy = 3AFE72542081191200816139 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3A095E8D18BBC49C00C99FED /* Localizable.strings */ = {
@@ -1357,18 +1476,6 @@
 				3A9CDFF218FC5FD3002B7494 /* es */,
 				3A94492A18FD9522005CA63A /* fr */,
 				3A3293E21CA5662C00884DE5 /* ja */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		3A36228C1849320C007F2854 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A36228D1849320C007F2854 /* en */,
-				3A095E9018BBC53800C99FED /* de */,
-				3A9CDFF318FC5FD3002B7494 /* es */,
-				3A94492B18FD9522005CA63A /* fr */,
-				3A3293E31CA5662C00884DE5 /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1654,6 +1761,100 @@
 			};
 			name = Adhoc;
 		};
+		3AFE72572081191200816139 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E908BEB15191613DC53B1C0 /* Pods-NetDeckTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 858Z7CGJH8;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = NetDeckTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NetDeckTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
+			};
+			name = Debug;
+		};
+		3AFE72582081191200816139 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 64F7064EB6B74E7CB9C2DE95 /* Pods-NetDeckTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 858Z7CGJH8;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = NetDeckTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NetDeckTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
+			};
+			name = Release;
+		};
+		3AFE72592081191200816139 /* Adhoc */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFC4A3D6058FCB5ECFCDB532 /* Pods-NetDeckTests.adhoc.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 858Z7CGJH8;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = NetDeckTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NetDeckTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
+			};
+			name = Adhoc;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1673,6 +1874,16 @@
 				3A3622941849320C007F2854 /* Debug */,
 				3A3622951849320C007F2854 /* Release */,
 				3A6322A218617AEC0095330F /* Adhoc */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AFE72562081191200816139 /* Build configuration list for PBXNativeTarget "NetDeckTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AFE72572081191200816139 /* Debug */,
+				3AFE72582081191200816139 /* Release */,
+				3AFE72592081191200816139 /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
