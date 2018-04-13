@@ -2,7 +2,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 inhibit_all_warnings!
 platform :ios, '9.2'
-target 'NetDeck' do
+
+def pods
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'DTCoreText'
@@ -21,6 +22,14 @@ target 'NetDeck' do
     pod 'SDCAlertView'
     pod 'EasyTipView', :git => "https://github.com/gereons/EasyTipView"
     pod 'SwiftyUserDefaults'
+end
+
+target 'NetDeck' do
+    pods
+end
+
+target 'NetDeckTests' do
+    pods
 end
 
 post_install do |installer|

@@ -1,13 +1,13 @@
 PODS:
-  - Alamofire (4.7.0)
-  - AlamofireImage (3.3.0):
+  - Alamofire (4.7.1)
+  - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
-  - AlamofireNetworkActivityIndicator (2.2.0):
-    - Alamofire (~> 4.5)
+  - AlamofireNetworkActivityIndicator (2.2.1):
+    - Alamofire (~> 4.7)
   - CorePlot (2.2)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
-  - DeviceKit (1.5.0)
+  - DeviceKit (1.7.0)
   - DTCoreText (1.6.21):
     - DTCoreText/Core (= 1.6.21)
     - DTFoundation/Core (~> 1.7.5)
@@ -33,7 +33,7 @@ PODS:
   - SDCAlertView (8.0.2)
   - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (3.0.1)
-  - SwiftyDropbox (4.3.0):
+  - SwiftyDropbox (4.4.0):
     - Alamofire (~> 4.7.0)
   - SwiftyUserDefaults (3.0.1)
 
@@ -56,6 +56,25 @@ DEPENDENCIES:
   - SwiftyDropbox (from `https://github.com/gereons/SwiftyDropbox`)
   - SwiftyUserDefaults
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - AlamofireImage
+    - AlamofireNetworkActivityIndicator
+    - CorePlot
+    - Crashlytics
+    - DeviceKit
+    - DTCoreText
+    - DTFoundation
+    - DZNEmptyDataSet
+    - Fabric
+    - InAppSettingsKit
+    - MultiSelectSegmentedControl
+    - SDCAlertView
+    - SVProgressHUD
+    - SwiftKeychainWrapper
+    - SwiftyUserDefaults
+
 EXTERNAL SOURCES:
   EasyTipView:
     :git: https://github.com/gereons/EasyTipView
@@ -67,16 +86,16 @@ CHECKOUT OPTIONS:
     :commit: f3ee306710de0ebcc9ed3dcccd7ea1b8be86cacc
     :git: https://github.com/gereons/EasyTipView
   SwiftyDropbox:
-    :commit: 6d713f3bea2ba6def4ad591d560cbca0f2508ba3
+    :commit: c313536feaf82be91440f8e168c510b2cfbdda78
     :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
-  Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
-  AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
-  AlamofireNetworkActivityIndicator: 81e1630e7cfed22a4e4e82a174c59e651dc4f8ca
+  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
+  AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
+  AlamofireNetworkActivityIndicator: aeac50e6ecb78ec71a5f1f29098bcf4ec2962910
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
-  DeviceKit: 883552d64028056216e913a88f892e7e29678e75
+  DeviceKit: 6a5bdeb103c03757bb94aef1ccb01e08bc8ef4ee
   DTCoreText: e5d688cffc9f6a61eddd1a4f94e2046851230de3
   DTFoundation: f03be9fd786f11e505bb8fc44e2a3732bf0917df
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -87,9 +106,9 @@ SPEC CHECKSUMS:
   SDCAlertView: 289481e983c60abc5b4b5f4c7241fec9c7a853d5
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
-  SwiftyDropbox: 7bcea44253c3b9fc2971f168a2079d2363b39ced
+  SwiftyDropbox: 91b8863282ce954877811c5543873bf82e2b8d41
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: a6519b8361d77f89557d2a4dab2763a6ef21bc4c
+PODFILE CHECKSUM: 7cb2588ff85e6a69f81ba37711ba9e9292f8163b
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0
