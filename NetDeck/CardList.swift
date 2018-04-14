@@ -149,7 +149,7 @@ class CardList {
         
         self.applyBans(mwl)
         
-        let _ = self.applyFilters()
+        _ = self.applyFilters()
     }
     
     func preFilterForRunner(_ identity: Card, _ mwl: MWL) {
@@ -157,7 +157,7 @@ class CardList {
         
         self.applyBans(mwl)
         
-        let _ = self.applyFilters()
+        _ = self.applyFilters()
     }
     
     func filterByType(_ types: FilterValue) {

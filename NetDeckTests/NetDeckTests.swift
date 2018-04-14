@@ -69,5 +69,11 @@ class NetDeckTests: XCTestCase {
         XCTAssert(cm.count == 1)
         XCTAssert(cm["foo"] == nil)
     }
-    
+
+    func testConcurrentMap3() {
+        var cm = ConcurrentMap<String, [String]>()
+        cm["bar", default:[]].append("blergh")
+        XCTAssert(cm.count == 1)
+        XCTAssert(cm["bar"]?.count == 1)
+    }
 }

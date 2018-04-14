@@ -166,7 +166,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
             let card = CardManager.cardBy(code: code)
         else { return }
         
-        let _ = self.navigationController?.popToRootViewController(animated: false)
+        _ = self.navigationController?.popToRootViewController(animated: false)
         self.searchForCard = card
         self.selectDecks()
     }

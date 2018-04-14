@@ -6,7 +6,7 @@
 //  Copyright © 2017 Gereon Steffens. All rights reserved.
 //
 
-import DTCoreText
+import Foundation
 
 extension Card {
 
@@ -37,29 +37,39 @@ extension Card {
         "</trace>": "</strong>-"
     ]
 
-    static let fontFamily = UIFont.systemFont(ofSize: 13).familyName
-    static let styleSheet = DTCSSStylesheet(styleBlock:
-        ".icon { font-family: 'netrunner' !important; font-style: normal; font-variant: normal; font-weight: normal; line-height: 1; text-transform: none; }")
-    
-    static let coreTextOptions: [String: Any] = [
-        DTUseiOS6Attributes: true,
-        DTDefaultFontFamily: NSString(string: fontFamily),
-        DTDefaultFontSize: 13,
-        DTDefaultStyleSheet: styleSheet!,
-    ]
-
     var attributedText: NSAttributedString {
-        if Card.htmlCache[self.code] == nil {
-            var str = self.text
-            Card.replacements.forEach { code, repl in
-                str = str.replacingOccurrences(of: code, with: repl)
-            }
-            
-            let data = str.data(using: String.Encoding.utf8)
-            let attrStr = NSAttributedString(htmlData: data, options: Card.coreTextOptions, documentAttributes: nil) ?? NSAttributedString(string: "")
-            Card.htmlCache[self.code] = attrStr
+        if let str = Card.htmlCache[self.code] {
+            return str
         }
-        return Card.htmlCache[self.code]!
-    }
 
+        var str = self.text
+        Card.replacements.forEach { code, repl in
+            str = str.replacingOccurrences(of: code, with: repl)
+        }
+
+        str = """
+        <style type="text/css">
+        * { font-family: apple-system,sans-serif; font-size: 110%; }
+        .icon { font-family: 'netrunner' !important; font-style: normal; font-variant: normal; font-weight: normal; line-height: 1; text-transform: none; }
+        </style>
+        """ + str
+
+        let attrStr = NSAttributedString(html: str) ?? NSAttributedString(string: self.text)
+        Card.htmlCache[self.code] = attrStr
+        return attrStr
+    }
+}
+
+fileprivate extension NSAttributedString {
+    convenience init?(html: String) {
+        guard let data = html.data(using: String.Encoding.utf16, allowLossyConversion: false) else {
+            return nil
+        }
+
+        guard let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) else {
+            return nil
+        }
+
+        self.init(attributedString: attributedString)
+    }
 }

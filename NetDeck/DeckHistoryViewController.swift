@@ -46,7 +46,7 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         deck.resetToCards(dcs.cards)
         
         NotificationCenter.default.post(name: Notifications.deckChanged, object:self)
-        let _ = self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
     // MARK: table view

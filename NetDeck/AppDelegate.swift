@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let setsOk = PackManager.setupFromFiles()
         // print("app start, setsOk=\(setsOk)")
         if setsOk {
-            let _ = CardManager.setupFromFiles()
+            _ = CardManager.setupFromFiles()
             // print("app start, cardsOk=\(cardsOk)")
         }
 
@@ -145,7 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if let shortcut = self.launchShortcutItem {
-            let _ = self.handleShortcutItem(shortcut)
+            _ = self.handleShortcutItem(shortcut)
             self.launchShortcutItem = nil
         }
     }
@@ -277,7 +277,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         if let shortCut = self.launchShortcutItem, CardManager.cardsAvailable {
-            let _ = self.handleShortcutItem(shortCut)
+            _ = self.handleShortcutItem(shortCut)
             self.launchShortcutItem = nil
         }
     }

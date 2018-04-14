@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		23D252E689F69FF167AFDA0A /* Pods_NetDeckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEF22F868D49DDA7208D11B /* Pods_NetDeckTests.framework */; };
+		202F720ED22AAB146CA07FBE /* Pods_NetDeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30375981336698209353D6B6 /* Pods_NetDeck.framework */; };
 		3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */; };
 		3A0841901E0D6719000779C3 /* UIAlert+NetDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */; };
 		3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */; };
@@ -192,7 +192,7 @@
 		3AFBA1621E0D9CAF003F6CD8 /* EditDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA1611E0D9CAF003F6CD8 /* EditDeckViewController.swift */; };
 		3AFE72522081191200816139 /* NetDeckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE72512081191200816139 /* NetDeckTests.swift */; };
 		3AFE726920811F9700816139 /* ThreadsafeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6A560208000AC000722BA /* ThreadsafeCollections.swift */; };
-		BDF6E1A45BDD2269ED47E09D /* Pods_NetDeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8171B5D03856602872A9AECE /* Pods_NetDeck.framework */; };
+		5549BE69C5FC93EC86462200 /* Pods_NetDeckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E6F114F6390E14C194B2CB /* Pods_NetDeckTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,6 +206,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		30375981336698209353D6B6 /* Pods_NetDeck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdateCheck.swift; sourceTree = "<group>"; };
 		3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewReminder.txt; sourceTree = "<group>"; };
 		3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlert+NetDeck.swift"; sourceTree = "<group>"; };
@@ -412,9 +413,8 @@
 		64F7064EB6B74E7CB9C2DE95 /* Pods-NetDeckTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeckTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests.release.xcconfig"; sourceTree = "<group>"; };
 		6E908BEB15191613DC53B1C0 /* Pods-NetDeckTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeckTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests.debug.xcconfig"; sourceTree = "<group>"; };
 		796DF0A5738142FC6D02DC2E /* Pods-NetDeck.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.adhoc.xcconfig"; sourceTree = "<group>"; };
-		8171B5D03856602872A9AECE /* Pods_NetDeck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		79E6F114F6390E14C194B2CB /* Pods_NetDeckTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeckTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		832C019F9B9F781A1430910C /* Pods-NetDeck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.release.xcconfig"; sourceTree = "<group>"; };
-		DCEF22F868D49DDA7208D11B /* Pods_NetDeckTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeckTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFC4A3D6058FCB5ECFCDB532 /* Pods-NetDeckTests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeckTests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests.adhoc.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -423,7 +423,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDF6E1A45BDD2269ED47E09D /* Pods_NetDeck.framework in Frameworks */,
+				202F720ED22AAB146CA07FBE /* Pods_NetDeck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,7 +431,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23D252E689F69FF167AFDA0A /* Pods_NetDeckTests.framework in Frameworks */,
+				5549BE69C5FC93EC86462200 /* Pods_NetDeckTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,8 +471,8 @@
 			isa = PBXGroup;
 			children = (
 				3AA850741F59E8C900B37CD1 /* StoreKit.framework */,
-				8171B5D03856602872A9AECE /* Pods_NetDeck.framework */,
-				DCEF22F868D49DDA7208D11B /* Pods_NetDeckTests.framework */,
+				30375981336698209353D6B6 /* Pods_NetDeck.framework */,
+				79E6F114F6390E14C194B2CB /* Pods_NetDeckTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -951,9 +951,9 @@
 				3A36225B1849320C007F2854 /* Frameworks */,
 				3A36225C1849320C007F2854 /* Resources */,
 				3A814EC519ADBEEE008C3285 /* Crashlytics */,
-				5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */,
 				3AF1E9151FB4F733009E8B88 /* Run Checker */,
 				3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */,
+				02C5C7E687DF33FABCDC6958 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -972,7 +972,7 @@
 				3AFE724B2081191200816139 /* Sources */,
 				3AFE724C2081191200816139 /* Frameworks */,
 				3AFE724D2081191200816139 /* Resources */,
-				34267E92456EDD60673BA8D6 /* [CP] Embed Pods Frameworks */,
+				4028244143B6A0C102713D07 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1121,19 +1121,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		34267E92456EDD60673BA8D6 /* [CP] Embed Pods Frameworks */ = {
+		02C5C7E687DF33FABCDC6958 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
-				"${BUILT_PRODUCTS_DIR}/DTCoreText/DTCoreText.framework",
-				"${BUILT_PRODUCTS_DIR}/DTFoundation/DTFoundation.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
@@ -1151,8 +1149,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTCoreText.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTFoundation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
@@ -1166,7 +1162,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */ = {
@@ -1211,19 +1207,17 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ -d /Applications/Checker.app ]; then\n    /Applications/Checker.app/Contents/Resources/start-analyzer.app/Contents/MacOS/start-analyzer\nelse\n    echo \"WARNING: start-analyzer not installed.\"\nfi";
 		};
-		5F030FDE434FC2961F4D20B9 /* [CP] Embed Pods Frameworks */ = {
+		4028244143B6A0C102713D07 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
-				"${BUILT_PRODUCTS_DIR}/DTCoreText/DTCoreText.framework",
-				"${BUILT_PRODUCTS_DIR}/DTFoundation/DTFoundation.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
@@ -1241,8 +1235,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTCoreText.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTFoundation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
@@ -1256,7 +1248,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C62555A389DA66E9F987B229 /* [CP] Check Pods Manifest.lock */ = {
@@ -1671,96 +1663,6 @@
 			};
 			name = Release;
 		};
-		3A6322A118617AEC0095330F /* Adhoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEFINES_MODULE = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "ADHOC=1";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_MODULE_NAME = NetDeck;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 2;
-				USER_HEADER_SEARCH_PATHS = "";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Adhoc;
-		};
-		3A6322A218617AEC0095330F /* Adhoc */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 796DF0A5738142FC6D02DC2E /* Pods-NetDeck.adhoc.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = NetDeck/NetDeck.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_RESOURCE_RULES_PATH = "";
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 858Z7CGJH8;
-				ENABLE_BITCODE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NetDeck/NetDeck-Prefix.pch";
-				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
-				PRODUCT_NAME = NetDeck;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Adhoc;
-		};
 		3AFE72572081191200816139 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6E908BEB15191613DC53B1C0 /* Pods-NetDeckTests.debug.xcconfig */;
@@ -1824,37 +1726,6 @@
 			};
 			name = Release;
 		};
-		3AFE72592081191200816139 /* Adhoc */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EFC4A3D6058FCB5ECFCDB532 /* Pods-NetDeckTests.adhoc.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 858Z7CGJH8;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = NetDeckTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NetDeckTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
-			};
-			name = Adhoc;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1863,7 +1734,6 @@
 			buildConfigurations = (
 				3A3622911849320C007F2854 /* Debug */,
 				3A3622921849320C007F2854 /* Release */,
-				3A6322A118617AEC0095330F /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1873,7 +1743,6 @@
 			buildConfigurations = (
 				3A3622941849320C007F2854 /* Debug */,
 				3A3622951849320C007F2854 /* Release */,
-				3A6322A218617AEC0095330F /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1883,7 +1752,6 @@
 			buildConfigurations = (
 				3AFE72572081191200816139 /* Debug */,
 				3AFE72582081191200816139 /* Release */,
-				3AFE72592081191200816139 /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -84,7 +84,7 @@ class JintekiNet {
         manager.request(loginUrl, method: .post, parameters: parameters).validate().responseJSON { response in
             switch response.result {
             case .success:
-                if let _ = response.result.value {
+                if response.result.value != nil {
                     SVProgressHUD.showSuccess(withStatus: "Logged in".localized())
                     let keychain = KeychainWrapper.standard
                     keychain.set(username, forKey: KeychainKeys.jnetUsername)
@@ -119,7 +119,7 @@ class JintekiNet {
         manager.request(loginUrl, method: .post, parameters: parameters).validate().responseJSON { response in
             switch response.result {
             case .success:
-                if let _ = response.result.value {
+                if response.result.value != nil {
                     self.postDeckData(deck, username: username)
                 } else {
                     fallthrough

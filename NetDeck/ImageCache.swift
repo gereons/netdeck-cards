@@ -37,7 +37,7 @@ private class ImageMemCache {
     }
 }
 
-class ImageCache: NSObject {
+class ImageCache {
     static let imagesDirectory = "images"
     static let sharedInstance = ImageCache()
     
@@ -83,10 +83,9 @@ class ImageCache: NSObject {
     // log of all current in-flight requests
     typealias ImageCallback = (Card, UIImage, Bool) -> Void
     private var pendingRequests = ConcurrentMap<String, [ImageCallback]>()
-    
-    private override init() {
-        super.init()
+    private var queue = DispatchQueue(label: "ImageCache", attributes: .concurrent)
 
+    private init() {
         if let lastMod = Defaults[.lastModifiedCache] {
             self.lastModifiedDates.set(lastMod)
         }
@@ -106,10 +105,6 @@ class ImageCache: NSObject {
             self.unavailableImages.removeAll()
             Defaults[.unavailableImagesDate] = now + 12 * 3600
             Defaults[.unavailableImages] = self.unavailableImages.array
-        }
-
-        DispatchQueue.global(qos: .background).async {
-            // self.initializeCache()
         }
     }
 
@@ -155,8 +150,11 @@ class ImageCache: NSObject {
         }
 
         // check if the request is currently in-flight, and if so, add its completion block to our list of callbacks
-        let alreadyPending = self.pendingRequests[key] != nil
-        self.pendingRequests[key, default:[]].append(completion)
+        let alreadyPending: Bool = self.queue.sync(flags: .barrier) {
+            let alreadyPending = self.pendingRequests[key] != nil
+            self.pendingRequests[key, default:[]].append(completion)
+            return alreadyPending
+        }
 
         if alreadyPending {
             return
@@ -196,7 +194,7 @@ class ImageCache: NSObject {
     }
     
     func updateMissingImage(for card: Card, completion: @escaping (Bool) -> Void) {
-        if let _ = self.getImage(for: card.code) {
+        if self.getImage(for: card.code) != nil {
             completion(true)
         } else {
             self.updateImage(for: card, completion: completion)
@@ -243,7 +241,7 @@ class ImageCache: NSObject {
     func imageAvailable(for card: Card) -> Bool {
         let key = card.code
         
-        if let _ = self.memCache[key] {
+        if self.memCache[key] != nil {
             return true
         }
         
@@ -362,7 +360,7 @@ class ImageCache: NSObject {
         
         let directory = supportDirectory.appendPathComponent(ImageCache.imagesDirectory)
         
-        let _ = try? FileManager.default.removeItem(atPath: directory)
+        _ = try? FileManager.default.removeItem(atPath: directory)
     }
     
     private func getImage(for key: String) -> UIImage? {
@@ -392,7 +390,7 @@ class ImageCache: NSObject {
         if img == nil || width != ImageCache.width {
             // image is broken - remove it
             self.NLOG("removing broken/small img %@, width=%f", key, width)
-            let _ = try? FileManager.default.removeItem(atPath: file)
+            _ = try? FileManager.default.removeItem(atPath: file)
             self.lastModifiedDates.removeValue(forKey: key)
             return nil
         }
@@ -478,7 +476,7 @@ class ImageCache: NSObject {
         
         let fileMgr = FileManager.default
         if !fileMgr.fileExists(atPath: directory) {
-            let _ = try? fileMgr.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: nil)
+            _ = try? fileMgr.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: nil)
         }
         
         return directory

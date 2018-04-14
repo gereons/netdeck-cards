@@ -1,12 +1,12 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
+# use_modular_headers!
 inhibit_all_warnings!
 platform :ios, '9.2'
 
 def pods
     pod 'Fabric'
     pod 'Crashlytics'
-    pod 'DTCoreText'
     pod 'SVProgressHUD'
     pod 'InAppSettingsKit'
     pod 'MultiSelectSegmentedControl'

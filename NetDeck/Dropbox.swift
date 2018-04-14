@@ -58,12 +58,9 @@ class Dropbox {
     static func listFiles(_ completion: @escaping ([String])->() ) {
         guard let client = DropboxClientsManager.authorizedClient else { return }
         
-        let _ = client.files.listFolder(path: "").response { response, error in
+        _ = client.files.listFolder(path: "").response { response, error in
             if let result = response {
-                var names = [String]()
-                for entry in result.entries {
-                    names.append(entry.name)
-                }
+                let names = result.entries.map { $0.name }
                 completion(names)
             }
         }
@@ -74,7 +71,7 @@ class Dropbox {
         
         var count = 0
         for name in names {
-            let _ = client.files.download(path: "/" + name, destination: { (url, response) -> URL in
+            _ = client.files.download(path: "/" + name, destination: { (url, response) -> URL in
                 let path = toDirectory.appendPathComponent(name)
                 let destination = URL(fileURLWithPath: path)
                 return destination
@@ -95,9 +92,9 @@ class Dropbox {
     static func saveFile(_ content: String, filename: String, completion: @escaping (Bool)->() ) {
         guard let client = DropboxClientsManager.authorizedClient else { return }
         
-        if let data = content.data(using: String.Encoding.utf8) {
+        if let data = content.data(using: .utf8) {
             print("\(data)")
-            let _ = client.files.upload(path: "/" + filename, mode: .overwrite, autorename: false, clientModified: nil, mute: false, input: data).response { response, error in
+            _ = client.files.upload(path: "/" + filename, mode: .overwrite, autorename: false, clientModified: nil, mute: false, input: data).response { response, error in
                 completion(error == nil)
             }
         } else {

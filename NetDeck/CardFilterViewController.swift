@@ -280,7 +280,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             self.setBackOrRevertButton(false)
         } else {
             self.navigationItem.leftBarButtonItem = nil
-            let _ = self.navigationController?.popToRootViewController(animated: false)
+            _ = self.navigationController?.popToRootViewController(animated: false)
         }
     }
     

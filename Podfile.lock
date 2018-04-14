@@ -8,23 +8,6 @@ PODS:
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
   - DeviceKit (1.7.0)
-  - DTCoreText (1.6.21):
-    - DTCoreText/Core (= 1.6.21)
-    - DTFoundation/Core (~> 1.7.5)
-    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
-    - DTFoundation/DTHTMLParser (~> 1.7.5)
-    - DTFoundation/UIKit (~> 1.7.5)
-  - DTCoreText/Core (1.6.21):
-    - DTFoundation/Core (~> 1.7.5)
-    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
-    - DTFoundation/DTHTMLParser (~> 1.7.5)
-    - DTFoundation/UIKit (~> 1.7.5)
-  - DTFoundation/Core (1.7.13)
-  - DTFoundation/DTAnimatedGIF (1.7.13)
-  - DTFoundation/DTHTMLParser (1.7.13):
-    - DTFoundation/Core
-  - DTFoundation/UIKit (1.7.13):
-    - DTFoundation/Core
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.0)
   - Fabric (1.7.6)
@@ -33,7 +16,7 @@ PODS:
   - SDCAlertView (8.0.2)
   - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (3.0.1)
-  - SwiftyDropbox (4.4.0):
+  - SwiftyDropbox (4.5.0):
     - Alamofire (~> 4.7.0)
   - SwiftyUserDefaults (3.0.1)
 
@@ -44,7 +27,6 @@ DEPENDENCIES:
   - CorePlot
   - Crashlytics
   - DeviceKit
-  - DTCoreText
   - DZNEmptyDataSet
   - EasyTipView (from `https://github.com/gereons/EasyTipView`)
   - Fabric
@@ -64,8 +46,6 @@ SPEC REPOS:
     - CorePlot
     - Crashlytics
     - DeviceKit
-    - DTCoreText
-    - DTFoundation
     - DZNEmptyDataSet
     - Fabric
     - InAppSettingsKit
@@ -86,7 +66,7 @@ CHECKOUT OPTIONS:
     :commit: f3ee306710de0ebcc9ed3dcccd7ea1b8be86cacc
     :git: https://github.com/gereons/EasyTipView
   SwiftyDropbox:
-    :commit: c313536feaf82be91440f8e168c510b2cfbdda78
+    :commit: b3f75cb87ddb4dc2c70ac73592968a56f4ebfbc1
     :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
@@ -96,8 +76,6 @@ SPEC CHECKSUMS:
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   DeviceKit: 6a5bdeb103c03757bb94aef1ccb01e08bc8ef4ee
-  DTCoreText: e5d688cffc9f6a61eddd1a4f94e2046851230de3
-  DTFoundation: f03be9fd786f11e505bb8fc44e2a3732bf0917df
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: ce986be6a3a321475bc27488f086c018a1275006
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
@@ -106,9 +84,9 @@ SPEC CHECKSUMS:
   SDCAlertView: 289481e983c60abc5b4b5f4c7241fec9c7a853d5
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
-  SwiftyDropbox: 91b8863282ce954877811c5543873bf82e2b8d41
+  SwiftyDropbox: a27c90b395e011144a055e551b4423365f670692
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: 7cb2588ff85e6a69f81ba37711ba9e9292f8163b
+PODFILE CHECKSUM: de2f435af3d4c2aafad736912e7aa6adc5f2a274
 
 COCOAPODS: 1.5.0

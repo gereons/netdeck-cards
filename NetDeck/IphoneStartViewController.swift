@@ -95,7 +95,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let _ = CardUpdateCheck.checkCardUpdateAvailable()
+        _ = CardUpdateCheck.checkCardUpdateAvailable()
         
         self.titleButton.sizeToFit()
         self.showTipView()
