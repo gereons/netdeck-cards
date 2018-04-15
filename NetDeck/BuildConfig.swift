@@ -3,7 +3,7 @@
 //  NetDeck
 //
 //  Created by Gereon Steffens on 16.04.16.
-//  Copyright © 2017 Gereon Steffens. All rights reserved.
+//  Copyright © 2018 Gereon Steffens. All rights reserved.
 //
 
 import UIKit

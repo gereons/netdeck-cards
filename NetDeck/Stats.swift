@@ -3,7 +3,7 @@
 //  NetDeck
 //
 //  Created by Gereon Steffens on 25.12.16.
-//  Copyright © 2017 Gereon Steffens. All rights reserved.
+//  Copyright © 2018 Gereon Steffens. All rights reserved.
 //
 
 import CorePlot

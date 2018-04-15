@@ -3,7 +3,7 @@
 //  Illuminotchi
 //
 //  Created by Jeff Hurray on 12/20/17.
-//  Copyright © 2017 Jeff Hurray. All rights reserved.
+//  Copyright © 2018 Jeff Hurray. All rights reserved.
 //
 //  taken from https://github.com/jhurray/Illuminotchi
 //

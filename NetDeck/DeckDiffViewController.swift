@@ -4,7 +4,7 @@
 //  NetDeck
 //
 //  Created by Gereon Steffens on 28.12.16.
-//  Copyright © 2017 Gereon Steffens. All rights reserved.
+//  Copyright © 2018 Gereon Steffens. All rights reserved.
 //
 
 import UIKit
@@ -136,7 +136,7 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "diffCell", for: indexPath) as! DeckDiffCell
         let cd = self.rows[indexPath.section][indexPath.row]
-        
+
         cell.vc = self
         cell.tableView = tableView
         cell.card1 = nil

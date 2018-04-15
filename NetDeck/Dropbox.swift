@@ -3,7 +3,7 @@
 //  NetDeck
 //
 //  Created by Gereon Steffens on 13.02.16.
-//  Copyright © 2017 Gereon Steffens. All rights reserved.
+//  Copyright © 2018 Gereon Steffens. All rights reserved.
 //
 
 // wrapper class for Dropbox API calls
