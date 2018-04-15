@@ -228,7 +228,6 @@ class NRDB: NSObject {
                 if let data = response.data {
                     decks = Deck.arrayFromJson(data)
                     completion(decks)
-                    print("\(String(describing: decks?.count)) decks")
                 }
             case .failure:
                 completion(nil)

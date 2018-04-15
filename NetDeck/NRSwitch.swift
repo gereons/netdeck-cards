@@ -11,17 +11,21 @@ import UIKit
 class NRSwitch: UISwitch {
     
     typealias Switcher = (Bool)->Void
-    private var handler: Switcher?
+    private var handler: Switcher
     
-    convenience init(initial: Bool, handler: @escaping Switcher) {
-        self.init(frame: CGRect.zero)
-        
+    required init(initial: Bool, handler: @escaping Switcher) {
         self.handler = handler
+        super.init(frame: CGRect.zero)
+
         self.isOn = initial
         self.addTarget(self, action: #selector(self.toggleSwitch(_:)), for: .valueChanged)
     }
-    
-    @objc func toggleSwitch(_ sender: UISwitch) {
-        self.handler?(sender.isOn)
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func toggleSwitch(_ sender: UISwitch) {
+        self.handler(sender.isOn)
     }
 }

@@ -10,7 +10,7 @@ def pods
     pod 'SVProgressHUD'
     pod 'InAppSettingsKit'
     pod 'MultiSelectSegmentedControl'
-    pod 'CorePlot'
+    pod 'CorePlot', :git => "https://github.com/core-plot/core-plot", :branch => 'release-2.3'
     pod 'DZNEmptyDataSet'
     pod 'DeviceKit'
 
@@ -33,14 +33,6 @@ target 'NetDeckTests' do
 end
 
 post_install do |installer|
-    installer.pods_project.targets.each do |target|
-        if target.name == 'CorePlot'
-            target.build_configurations.each do |config|
-                config.build_settings['ALWAYS_SEARCH_USER_PATHS'] = 'NO'
-            end
-        end
-    end
-
     require 'fileutils'
     system("awk -f ackhtml.awk <'Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-acknowledgements.markdown' >NetDeck/Acknowledgements.html")
 end
