@@ -9,7 +9,7 @@
 import UIKit
 
 protocol LegalitySetter {
-    func setLegality(_ mwl: MWL, cacheRefresh: Bool, onesies: Bool)
+    func setLegality(_ legality: DeckLegality)
     func legalityCancelled()
 }
 
@@ -17,35 +17,40 @@ class MWLSelection {
     static func createAlert(for deck: Deck, on setter: LegalitySetter) -> UIAlertController {
         let alert = UIAlertController.actionSheet(title: "Deck Legality".localized(), message: nil)
 
-        alert.addAction(UIAlertAction(title: "Casual".localized().checked(deck.mwl == .none && !deck.onesies)) { action in
-            setter.setLegality(.none, cacheRefresh: deck.cacheRefresh, onesies: false)
-        })
-        alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(deck.mwl == .v1_0)) { action in
-            setter.setLegality(.v1_0, cacheRefresh: deck.cacheRefresh, onesies: false)
+        alert.addAction(UIAlertAction(title: "Casual".localized().checked(deck.legality == .casual)) { action in
+            setter.setLegality(DeckLegality.official(mwl: MWL.none))
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(deck.mwl == .v1_1)) { action in
-            setter.setLegality(.v1_1, cacheRefresh: deck.cacheRefresh, onesies: false)
+        alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(deck.legality.isOfficial(.v1_0))) { action in
+            setter.setLegality(DeckLegality.official(mwl: MWL.v1_0))
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(deck.mwl == .v1_2)) { action in
-            setter.setLegality(.v1_2, cacheRefresh: deck.cacheRefresh, onesies: false)
+        alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(deck.legality.isOfficial(.v1_1))) { action in
+            setter.setLegality(DeckLegality.official(mwl: MWL.v1_1))
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v2.0".localized().checked(deck.mwl == .v2_0)) { action in
-            setter.setLegality(.v2_0, cacheRefresh: false, onesies: false)
+        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(deck.legality.isOfficial(.v1_2))) { action in
+            setter.setLegality(DeckLegality.official(mwl: MWL.v1_2))
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v2.1".localized().checked(deck.mwl == .v2_1)) { action in
-            setter.setLegality(.v2_1, cacheRefresh: false, onesies: false)
+        alert.addAction(UIAlertAction(title: "MWL v2.0".localized().checked(deck.legality.isOfficial(.v2_0))) { action in
+            setter.setLegality(DeckLegality.official(mwl: MWL.v2_0))
         })
 
-        alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(deck.onesies)) { action in
-            setter.setLegality(.none, cacheRefresh: false, onesies: true)
+        alert.addAction(UIAlertAction(title: "MWL v2.1".localized().checked(deck.legality.isOfficial(.v2_1))) { action in
+            setter.setLegality(DeckLegality.official(mwl: MWL.v2_1))
         })
 
-        alert.addAction(UIAlertAction(title: "Cache Refresh".localized().checked(deck.cacheRefresh)) { action in
-            setter.setLegality(MWL.latest, cacheRefresh: !deck.cacheRefresh, onesies: false)
+        alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(deck.legality == .onesies)) { action in
+            setter.setLegality(DeckLegality.onesies)
+        })
+
+        alert.addAction(UIAlertAction(title: "Modded".localized().checked(deck.legality == .modded)) { action in
+            setter.setLegality(DeckLegality.modded)
+        })
+
+        alert.addAction(UIAlertAction(title: "Cache Refresh".localized().checked(deck.legality == .cacheRefresh)) { action in
+            setter.setLegality(DeckLegality.cacheRefresh)
         })
 
         alert.addAction(UIAlertAction.actionSheetCancel() { action in

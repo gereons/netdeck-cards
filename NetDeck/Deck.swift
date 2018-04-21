@@ -9,6 +9,42 @@
 import Foundation
 import SwiftyUserDefaults
 
+enum DeckLegality {
+    case casual
+    case official(mwl: MWL)
+    case cacheRefresh
+    case onesies
+    case modded
+
+    func isOfficial(_ mwl: MWL) -> Bool {
+        switch self {
+        case .official(let m): return m == mwl
+        default: return false
+        }
+    }
+
+    var mwl: MWL {
+        switch self {
+        case .official(let mwl): return mwl
+        case .cacheRefresh: return MWL.latest
+        default: return .none
+        }
+    }
+}
+
+extension DeckLegality: Equatable {
+    static func==(_ lhs: DeckLegality, _ rhs: DeckLegality) -> Bool {
+        switch (lhs, rhs) {
+        case (.casual, .casual): return true
+        case (.official(let m1), .official(let m2)): return m1 == m2
+        case (.cacheRefresh, .cacheRefresh): return true
+        case (.modded, .modded): return true
+        case (.onesies, .onesies): return true
+        default: return false
+        }
+    }
+}
+
 @objc(Deck) class Deck: NSObject, NSCoding {
 
     var filename: String?
@@ -24,13 +60,13 @@ import SwiftyUserDefaults
     private var lastChanges = DeckChangeSet()
     fileprivate(set) var convertedToCore2 = false
     
-    override private init() {}
+    override private init() { }
     
     init(role: Role) {
         self.state = Defaults[.createDeckActive] ? .active : .testing
         let seq = DeckManager.fileSequence() + 1
         self.name = "Deck #\(seq)"
-        self.mwl = Defaults[.defaultMWL]
+        self.legality = .official(mwl: Defaults[.defaultMWL])
         self.role = role
     }
     
@@ -65,19 +101,15 @@ import SwiftyUserDefaults
     private(set) var role = Role.none {
         willSet { modified = true }
     }
-    
-    var mwl = MWL.none {
+
+    var legality = DeckLegality.casual {
         willSet { modified = true }
+    }
+    
+    var mwl: MWL {
+        return self.legality.mwl
     }
 
-    var onesies: Bool = false {
-        willSet { modified = true }
-    }
-    
-    var cacheRefresh: Bool = false {
-        willSet { modified = true }
-    }
-    
     var size: Int {
         return self.cards.reduce(0) { $0 + $1.count }
     }
@@ -345,7 +377,7 @@ import SwiftyUserDefaults
         newDeck.filename = nil
         newDeck.state = self.state
         newDeck.notes = self.notes
-        newDeck.mwl = self.mwl
+        newDeck.legality = self.legality
         newDeck.lastChanges = self.lastChanges.copy() as! DeckChangeSet
         newDeck.revisions = self.revisions.map({ $0.copy() as! DeckChangeSet })
         newDeck.modified = true
@@ -516,8 +548,8 @@ import SwiftyUserDefaults
             } else {
                 mwl = Defaults[.defaultMWL]
             }
-            
-            deck.mwl = mwl
+
+            deck.legality = DeckLegality.official(mwl: mwl)
             if mwl == .v2_0 || (mwl == .none && Defaults[.defaultMWL] == .v2_0) {
                 deck.convertToRevisedCore()
             }
@@ -611,18 +643,28 @@ import SwiftyUserDefaults
         self.revisions = revisions ?? [DeckChangeSet]()
 
         let mwl = decoder.decodeInteger(forKey: "mwl")
-        self.mwl = MWL(rawValue: mwl) ?? .none
-
-        self.onesies = decoder.decodeBool(forKey: "onesies")
+        let onesies = decoder.decodeBool(forKey: "onesies")
+        let modded = decoder.decodeBool(forKey: "modded")
 
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
+        var cacheRefresh: Bool
         if decoder.containsValue(forKey: "cacheRefresh") {
-            let cacheRefresh = decoder.decodeInteger(forKey: "cacheRefresh")
-            self.cacheRefresh = cacheRefresh != 0
+            cacheRefresh = decoder.decodeInteger(forKey: "cacheRefresh") != 0
         } else {
-            self.cacheRefresh = false
+            cacheRefresh = false
         }
-        
+
+        var legality: DeckLegality
+        if onesies {
+            legality = .onesies
+        } else if cacheRefresh {
+            legality = .cacheRefresh
+        } else if modded {
+            legality = .modded
+        } else {
+            legality = .official(mwl: MWL(rawValue: mwl) ?? .none)
+        }
+        self.legality = legality
         self.convertedToCore2 = decoder.decodeBool(forKey: "convertedToCore2")
         
         self.modified = false
@@ -642,10 +684,11 @@ import SwiftyUserDefaults
         coder.encode(self.lastChanges, forKey:"lastChanges")
         coder.encode(self.revisions, forKey:"revisions")
         coder.encode(self.mwl.rawValue, forKey: "mwl")
-        coder.encode(self.onesies, forKey: "onesies")
+        coder.encode(self.legality == .onesies, forKey: "onesies")
+        coder.encode(self.legality == .modded, forKey: "modded")
         
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
-        coder.encode(self.cacheRefresh ? 1 : 0, forKey: "cacheRefresh")
+        coder.encode(self.legality == .cacheRefresh ? 1 : 0, forKey: "cacheRefresh")
         
         coder.encode(self.convertedToCore2, forKey: "convertedToCore2")
     }
@@ -774,7 +817,7 @@ extension Deck {
             }
         }
         
-        if self.onesies {
+        if self.legality == .onesies {
             let onesiesReasons = self.checkOnesiesRules()
             if onesiesReasons.count > 0 {
                 reasons.append("Invalid for 1.1.1.1".localized())
@@ -782,21 +825,48 @@ extension Deck {
             }
         }
         
-        if self.cacheRefresh {
+        if self.legality == .cacheRefresh {
             let crReasons = self.checkCacheRefreshRules()
             if crReasons.count > 0 {
                 reasons.append("Invalid for Cache Refresh".localized())
                 reasons.append(contentsOf: crReasons)
             }
         }
+
+        if self.legality == .modded {
+            let modReasons = self.checkModdedRules()
+            if modReasons.count > 0 {
+                reasons.append("Invalid for Modded".localized())
+                reasons.append(contentsOf: modReasons)
+            }
+        }
         
+        return reasons
+    }
+
+    // check if this is a valid "Modded" deck - only RCS and current cycle are allowed
+    private func checkModdedRules() -> [String] {
+        let validCycle = PackManager.cacheRefreshCycles.last
+
+        var deckOk = true
+        for cc in self.cards {
+            let card = cc.card
+            let ok = card.packCode == PackManager.core2 || PackManager.cycleForPack(card.packCode) == validCycle
+            if !ok {
+                deckOk = false
+            }
+        }
+
+        var reasons = [String]()
+        if !deckOk {
+            reasons.append("Uses cards from previous cycle(s)".localized())
+        }
         return reasons
     }
     
     // check if this is a valid "Onesies" deck - 1 Core Set, 1 Big Box, 1 Data Pack, 1 playset of a Card
     // (which may be 3x of a Core card like Desperado, or a 6x of e.g. Spy Camera
     private func checkOnesiesRules() -> [String] {
-        
         var coreCardsOverQuantity = 0
         var draftUsed = false
         
@@ -865,10 +935,6 @@ extension Deck {
     
     // check if this is a valid "Cache Refresh" deck - 1 Core Set, 1 Deluxe, TD, last 2 cycles, current MWL
     private func checkCacheRefreshRules() -> [String] {
-        if !self.cacheRefresh {
-            return []
-        }
-        
         let validCycles = PackManager.cacheRefreshCycles
 
         var coreCardsOverQuantity = 0

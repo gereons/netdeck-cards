@@ -569,7 +569,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         if !self.deck.isDraft && (card.owned < cc.count || card.isRotated) {
             cell.nameLabel.textColor = .red
         }
-        if self.deck.cacheRefresh && card.isCore && cc.count > card.quantity {
+        if self.deck.legality == .cacheRefresh && card.isCore && cc.count > card.quantity {
             cell.nameLabel.textColor = .red
         }
         if card.banned(self.deck.mwl) {
@@ -645,11 +645,11 @@ extension EditDeckViewController: LegalitySetter {
         self.present(alert, animated: true, completion: nil)
     }
 
-    func setLegality(_ mwl: MWL, cacheRefresh: Bool, onesies: Bool) {
-        Analytics.logEvent(.changeMwl, attributes: [ "from": "\(self.deck.mwl.rawValue)", "to": "\(mwl.rawValue)"])
-        self.deck.mwl = mwl
-        self.deck.cacheRefresh = cacheRefresh
-        self.deck.onesies = onesies
+    func setLegality(_ legality: DeckLegality) {
+        if self.deck.legality != legality {
+            Analytics.logEvent(.changeMwl)
+            self.deck.legality = legality
+        }
         self.refreshDeck()
     }
 

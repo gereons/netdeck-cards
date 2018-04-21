@@ -110,10 +110,12 @@
 "Uses >1 Core" = "Mehr als 1 Grundspiel";
 "Uses rotated-out cards" = "Enthält rausrotierte Karten";
 "Invalid for Cache Refresh" = "Ungültig für Cache Refresh";
+"Invalid for Modded" = "Ungültig für Modded";
 "Uses invalid Datapack" = "Nicht erlaubter Datensatz";
 "Uses old Core set cards" = "Enthält altes Grundspiel";
 "Uses removed cards" = "Enthält entfernte Karten";
 "Too many restricted cards" = "Zuviele limitierte Karten";
+"Uses cards from previous cycle(s)" = "Enthält alte Karten";
 
 // card downloading
 "Downloading Card Data" = "Lade Karten-Daten";

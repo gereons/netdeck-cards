@@ -1133,7 +1133,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             if !self.deck.isDraft && (card.owned < cc2.count || card.isRotated) {
                 cell.copiesLabel.textColor = .red
             }
-            if self.deck.cacheRefresh && card.isCore && cc2.count > card.quantity {
+            if self.deck.legality == .cacheRefresh && card.isCore && cc2.count > card.quantity {
                 cell.copiesLabel.textColor = .red
             }
             if card.banned(self.deck.mwl) {
@@ -1271,14 +1271,11 @@ extension DeckListViewController: LegalitySetter {
         self.present(self.actionSheet, animated: false, completion: nil)
     }
 
-    func setLegality(_ newMwl: MWL, cacheRefresh: Bool, onesies: Bool) {
+    func setLegality(_ legality: DeckLegality) {
         self.actionSheet = nil
-        if self.deck.mwl != newMwl || self.deck.onesies != onesies || self.deck.cacheRefresh != cacheRefresh {
-            Analytics.logEvent(.changeMwl, attributes: [ "from": "\(self.deck.mwl.rawValue)", "to": "\(newMwl.rawValue)"])
-            self.deck.mwl = newMwl
-            self.deck.onesies = onesies
-            self.deck.cacheRefresh = cacheRefresh
-
+        if self.deck.legality != legality {
+            Analytics.logEvent(.changeMwl)
+            self.deck.legality = legality
             NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
         }
     }
