@@ -73,8 +73,9 @@ class CardList {
         return cl
     }
     
-    func resetInitialCards() {
+    private func resetInitialCards() {
         self.initialCards = CardManager.allFor(role: self.role)
+        self.sort(&self.initialCards)
         switch self.packUsage {
         case .selected:
             self.filterDeselectedSets()
