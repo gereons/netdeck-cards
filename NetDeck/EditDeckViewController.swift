@@ -84,6 +84,10 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.titleButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFont.Weight.regular)
         self.titleButton.titleLabel?.adjustsFontSizeToFitWidth = true
         self.titleButton.titleLabel?.minimumScaleFactor = 0.5
+
+        if self.traitCollection.forceTouchCapability == .available {
+            self.registerForPreviewing(with: self, sourceView: self.view)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -655,6 +659,35 @@ extension EditDeckViewController: LegalitySetter {
 
     func legalityCancelled() {
         //
+    }
+}
+
+extension EditDeckViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.show(viewControllerToCommit, sender: self)
+    }
+
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard
+            let indexPath = self.tableView.indexPathForRow(at: location),
+            let cell = tableView.cellForRow(at: indexPath)
+        else {
+            return nil
+        }
+
+        let cc = self.cards[indexPath.section][indexPath.row]
+        if cc.isNull {
+            return nil
+        }
+
+        let imgController = CardImageViewController()
+        imgController.setCardCounters(self.deck.allCards, mwl: self.deck.mwl)
+        imgController.selectedCard = cc.card
+        imgController.preferredContentSize = CGSize(width: 0.0, height: ImageCache.height)
+
+        previewingContext.sourceRect = cell.frame
+
+        return imgController
     }
 }
 

@@ -64,6 +64,10 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.scopeButton = UIBarButtonItem(image: img, style: .plain, target: self, action: #selector(self.scopeButtonTapped(_:)))
         
         self.navigationItem.rightBarButtonItem = self.scopeButton
+
+        if self.traitCollection.forceTouchCapability == .available {
+            self.registerForPreviewing(with: self, sourceView: self.view)
+        }
         
         self.refresh()
     }
@@ -177,18 +181,22 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let card = self.cards[indexPath.section][indexPath.row]
-    
-        let img = CardImageViewController()
-    
+        let imgView = self.imageViewControllerFor(card)
+        self.navigationController?.pushViewController(imgView, animated:true)
+    }
+
+    fileprivate func imageViewControllerFor(_ card: Card) -> CardImageViewController {
+        let imgView = CardImageViewController()
+
         // flatten our 2d cards array into a single list
         var cards = [Card]()
         for c in self.cards {
             cards.append(contentsOf: c)
         }
-        img.setCards(cards, mwl: Defaults[.defaultMWL], deck: nil)
-        img.selectedCard = card
-    
-        self.navigationController?.pushViewController(img, animated:true)
+        imgView.setCards(cards, mwl: Defaults[.defaultMWL], deck: nil)
+        imgView.selectedCard = card
+
+        return imgView
     }
     
     // MARK: - search bar
@@ -354,7 +362,27 @@ extension BrowserViewController: KeyboardHandling {
         self.tableView.contentInset = inset
         self.tableView.scrollIndicatorInsets = inset
     }
-    
-    
 }
 
+extension BrowserViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.show(viewControllerToCommit, sender: self)
+    }
+
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard
+            let indexPath = self.tableView.indexPathForRow(at: location),
+            let cell = tableView.cellForRow(at: indexPath)
+        else {
+            return nil
+        }
+
+        let card = self.cards[indexPath.section][indexPath.row]
+        let imgView = self.imageViewControllerFor(card)
+        imgView.preferredContentSize = CGSize(width: 0.0, height: ImageCache.height)
+
+        previewingContext.sourceRect = cell.frame
+
+        return imgView
+    }
+}

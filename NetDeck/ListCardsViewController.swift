@@ -72,6 +72,10 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         self.tableView.scrollFix()
+
+        if self.traitCollection.forceTouchCapability == .available {
+            self.registerForPreviewing(with: self, sourceView: self.view)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -310,6 +314,32 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         img.selectedCard = card
         
         self.navigationController?.pushViewController(img, animated: true)
+    }
+}
+
+extension ListCardsViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.show(viewControllerToCommit, sender: self)
+    }
+
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard
+            let indexPath = self.tableView.indexPathForRow(at: location),
+            let cell = tableView.cellForRow(at: indexPath)
+        else {
+            return nil
+        }
+
+        let card = self.cards[indexPath.section][indexPath.row]
+
+        let imgController = CardImageViewController()
+        imgController.setCards(self.cardList.allCards(), mwl: self.deck.mwl, deck: self.deck)
+        imgController.selectedCard = card
+        imgController.preferredContentSize = CGSize(width: 0.0, height: ImageCache.height)
+
+        previewingContext.sourceRect = cell.frame
+
+        return imgController
     }
 }
 
