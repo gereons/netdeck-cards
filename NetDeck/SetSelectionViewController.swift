@@ -60,6 +60,9 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         alert.addAction(UIAlertAction(title: "Cache Refresh R&R".localized()) { action in
             self.setCacheRefresh(PackManager.reignAndReverie)
         })
+        alert.addAction(UIAlertAction(title: "Modded".localized()) { action in
+            self.setModded()
+        })
         alert.addAction(UIAlertAction.actionSheetCancel(nil))
 
         let popover = alert.popoverPresentationController
@@ -109,6 +112,32 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
         
+        self.tableView.reloadData()
+    }
+
+    private func setModded() {
+        self.changeCoreSets(3)
+
+        for pack in PackManager.allPacks {
+            Defaults.set(false, forKey: pack.settingsKey)
+        }
+
+        if let cycle = PackManager.cacheRefreshCycles.first {
+            let keys = PackManager.keysForCycle(cycle)
+            for key in keys {
+                let released = PackManager.allPacks.filter { $0.settingsKey == key }.first?.released ?? false
+                Defaults.set(released, forKey: key)
+            }
+        }
+
+        Defaults.set(false, forKey: Pack.use + PackManager.core)
+        Defaults.set(false, forKey: Pack.use + PackManager.draft)
+        Defaults.set(true, forKey: Pack.use + PackManager.core2)
+
+        for box in PackManager.bigBoxes {
+            Defaults.set(false, forKey: Pack.use + box)
+        }
+
         self.tableView.reloadData()
     }
     
