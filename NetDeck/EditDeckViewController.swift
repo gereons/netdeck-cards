@@ -664,6 +664,9 @@ extension EditDeckViewController: LegalitySetter {
 
 extension EditDeckViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        if let imgController = viewControllerToCommit as? CardImageViewController {
+            imgController.peeking = false
+        }
         self.show(viewControllerToCommit, sender: self)
     }
 
@@ -680,10 +683,10 @@ extension EditDeckViewController: UIViewControllerPreviewingDelegate {
             return nil
         }
 
-        let imgController = CardImageViewController()
+        let imgController = CardImageViewController(peeking: true)
         imgController.setCardCounters(self.deck.allCards, mwl: self.deck.mwl)
         imgController.selectedCard = cc.card
-        imgController.preferredContentSize = CGSize(width: 0.0, height: ImageCache.height)
+        imgController.preferredContentSize = CGSize(width: 0, height: 436)
 
         previewingContext.sourceRect = cell.frame
 

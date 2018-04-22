@@ -185,8 +185,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.navigationController?.pushViewController(imgView, animated:true)
     }
 
-    fileprivate func imageViewControllerFor(_ card: Card) -> CardImageViewController {
-        let imgView = CardImageViewController()
+    fileprivate func imageViewControllerFor(_ card: Card, peeking: Bool = false) -> CardImageViewController {
+        let imgView = CardImageViewController(peeking: peeking)
 
         // flatten our 2d cards array into a single list
         var cards = [Card]()
@@ -366,6 +366,9 @@ extension BrowserViewController: KeyboardHandling {
 
 extension BrowserViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        if let imgViewController = viewControllerToCommit as? CardImageViewController {
+            imgViewController.peeking = false
+        }
         self.show(viewControllerToCommit, sender: self)
     }
 
@@ -378,8 +381,8 @@ extension BrowserViewController: UIViewControllerPreviewingDelegate {
         }
 
         let card = self.cards[indexPath.section][indexPath.row]
-        let imgView = self.imageViewControllerFor(card)
-        imgView.preferredContentSize = CGSize(width: 0.0, height: ImageCache.height)
+        let imgView = self.imageViewControllerFor(card, peeking: true)
+        imgView.preferredContentSize = CGSize(width: 0, height: 436)
 
         previewingContext.sourceRect = cell.frame
 

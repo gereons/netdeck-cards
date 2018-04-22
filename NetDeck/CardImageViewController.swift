@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardImageViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class CardImageViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -21,6 +21,22 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
     private var initialScrollDone = false
     private var mwl: MWL!
     private var deck: Deck?
+    var peeking = false {
+        didSet {
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            self.scrollToSelected()
+        }
+    }
+
+    init(peeking: Bool = false) {
+        super.init(nibName: "CardImageViewController", bundle: nil)
+
+        self.peeking = peeking
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +49,10 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
         
         self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         self.collectionView.scrollFix()
+
+        if #available(iOS 10.0, *) {
+            self.collectionView.prefetchDataSource = self
+        }
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -80,7 +100,11 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
             inset.right = offset
             self.collectionView.contentInset = inset
         }
-        
+
+        self.scrollToSelected()
+    }
+
+    private func scrollToSelected() {
         if let row = self.cards.index(where: { $0.code == self.selectedCard.code }) {
             let indexPath = IndexPath(row: row, section: 0)
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
@@ -106,9 +130,11 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
 
         self.collectionView.reloadItems(at: paths)
     }
-    
-    // MARK: - collection view
-    
+}
+
+// MARK: - collection view
+extension CardImageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -139,6 +165,20 @@ class CardImageViewController: UIViewController, UICollectionViewDataSource, UIC
         }
         
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return self.peeking ? 100 : 10
+    }
+}
+
+@available(iOS 10.0, *)
+extension CardImageViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach {
+            let card = self.cards[$0.row]
+            ImageCache.sharedInstance.getImage(for: card) { _,_,_ in }
+        }
     }
 }
 

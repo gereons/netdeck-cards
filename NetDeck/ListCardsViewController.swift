@@ -319,6 +319,9 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
 
 extension ListCardsViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        if let imgController = viewControllerToCommit as? CardImageViewController {
+            imgController.peeking = false
+        }
         self.show(viewControllerToCommit, sender: self)
     }
 
@@ -332,10 +335,10 @@ extension ListCardsViewController: UIViewControllerPreviewingDelegate {
 
         let card = self.cards[indexPath.section][indexPath.row]
 
-        let imgController = CardImageViewController()
+        let imgController = CardImageViewController(peeking: true)
         imgController.setCards(self.cardList.allCards(), mwl: self.deck.mwl, deck: self.deck)
         imgController.selectedCard = card
-        imgController.preferredContentSize = CGSize(width: 0.0, height: ImageCache.height)
+        imgController.preferredContentSize = CGSize(width: 0, height: 436)
 
         previewingContext.sourceRect = cell.frame
 
