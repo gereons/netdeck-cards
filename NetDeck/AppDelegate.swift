@@ -74,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @objc private func cardsLoaded(_ notification: Notification) {
         NotificationCenter.default.removeObserver(self, name: Notifications.loadCards, object: nil)
+        self.parseCardsData()
         self.initGroup.leave()
     }
     
@@ -83,9 +84,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if updating {
                 self.initGroup.enter()
                 NotificationCenter.default.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
+                return
             }
         }
 
+        self.parseCardsData()
+    }
+
+    private func parseCardsData() {
         let start = Date.timeIntervalSinceReferenceDate
         let setsOk = PackManager.setupFromFiles()
         // print("app start, setsOk=\(setsOk)")
@@ -94,12 +100,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // print("app start, cardsOk=\(cardsOk)")
         }
 
-        _ = DeckManager.decksForRole(.none)
         let elapsed = Date.timeIntervalSinceReferenceDate - start
-        print ("init took \(elapsed)")
+        print ("init base data took \(elapsed)")
     }
     
     private func finializeLaunch() {
+        let start = Date.timeIntervalSinceReferenceDate
+        _ = DeckManager.decksForRole(.none)
+        let elapsed = Date.timeIntervalSinceReferenceDate - start
+        print ("init decks took \(elapsed)")
+
         let useNrdb = Defaults[.useNrdb]
         let keepCredentials = Defaults[.keepNrdbCredentials]
         let fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever

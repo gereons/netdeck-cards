@@ -95,7 +95,7 @@ class DataDownload: NSObject {
         let language = Defaults[.language]
 
         let urlString: String
-        let useTestbranch = BuildConfig.debug && true
+        let useTestbranch = BuildConfig.debug
         let baseUrl = useTestbranch ? "https://raw.githubusercontent.com/gereons/netdeck-cards/test" : "https://gereons.github.io/netdeck-cards"
         switch apiRequest {
         case .cycles: urlString = baseUrl + "/api/2.0/cycles_\(language).json"
@@ -139,7 +139,7 @@ class DataDownload: NSObject {
         }
         
         group.notify(queue: DispatchQueue.main) {
-            // print("dl finished. stopped=\(self.downloadStopped), \(results.count) results")
+            print("dl finished. stopped=\(self.downloadStopped), \(results.count) results")
             // for a in results.keys {
             //     print("dl ok for \(a)")
             // }

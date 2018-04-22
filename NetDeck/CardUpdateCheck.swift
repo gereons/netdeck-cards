@@ -46,7 +46,8 @@ class CardUpdateCheck {
         }
         
         let now = Date()
-        if Reachability.online && scheduled.timeIntervalSince1970 < now.timeIntervalSince1970 {
+        if Reachability.online && (scheduled.timeIntervalSince1970 < now.timeIntervalSince1970) {
+            print("start silent download")
             DataDownload.downloadCardData(verbose: false)
             return true
         }
