@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -xv
-
 SERVER=http://localhost:8000
 CARDS_URL=$SERVER/api/2.0/public/cards
 CYCLES_URL=$SERVER/api/2.0/public/cycles
