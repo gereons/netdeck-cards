@@ -273,10 +273,11 @@
 "position":6,"size":20,"ffg_id":55},
 {"code":"win",
 "cycle_code":"kitara",
-"date_release":null,"name":"Whispers in Nalubaale",
+"date_release":"2018-05-03",
+"name":"Whispers in Nalubaale",
 "position":5,"size":20,"ffg_id":54},
 {"code":"rar",
-"cycle_code":"rar",
+"cycle_code":"reign-and-reverie",
 "date_release":null,"name":"Reign and Reverie",
 "position":1,"size":56,"ffg_id":56}],"total":57,"success":true,"version_number":"2.0",
-"last_updated":"2018-04-13T18:42:20+00:00"}
+"last_updated":"2018-05-02T17:24:45+00:00"}
