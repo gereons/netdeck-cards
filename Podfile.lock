@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.7.1)
+  - Alamofire (4.7.2)
   - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
   - AlamofireNetworkActivityIndicator (2.2.1):
@@ -75,7 +75,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
-  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
   AlamofireNetworkActivityIndicator: aeac50e6ecb78ec71a5f1f29098bcf4ec2962910
   CorePlot: a89f21d4662cb54853e579c4ce560e74036cffcb

@@ -38,7 +38,15 @@ struct Pack: Codable {
     let settingsKey: String
     let rotated: Bool
     var released: Bool {
-        return releaseDate != nil
+        guard
+            let releaseDate = self.releaseDate,
+            let date = Pack.dateFormatter.date(from: releaseDate)
+        else {
+            return false
+        }
+
+        let now = Date()
+        return now >= date
     }
 
     enum CodingKeys: String, CodingKey {
@@ -51,7 +59,13 @@ struct Pack: Codable {
     }
     
     static let use = "use_"
-    
+
+    private static let dateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        return f
+    }()
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Pack.CodingKeys.self)
 
@@ -113,17 +127,7 @@ class PackManager {
     private(set) static var allPacks = [Pack]()
     
     static let anyPack = Pack(named: Constant.kANY, key: "")
-    
-    private static let fmt: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "yyyy-MM-dd"
-        return f
-    }()
-    
-    fileprivate static func now() -> String {
-        return fmt.string(from: Date())
-    }
-    
+
     static func isPackDisabled(_ code: String) -> Bool {
         return self.disabledPackCodes().contains(code)
     }
