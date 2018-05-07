@@ -189,6 +189,7 @@
 		3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF697881C1DAC7300D254CE /* Notifications.swift */; };
 		3AF6978B1C1DF29C00D254CE /* Hypergeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */; };
 		3AF6978F1C1DFD2100D254CE /* DrawSimulatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6978E1C1DFD2100D254CE /* DrawSimulatorViewController.swift */; };
+		3AF78712209DCFD90038CAC2 /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF78711209DCFD90038CAC2 /* Symbols.swift */; };
 		3AFBA1621E0D9CAF003F6CD8 /* EditDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA1611E0D9CAF003F6CD8 /* EditDeckViewController.swift */; };
 		3AFE72522081191200816139 /* NetDeckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE72512081191200816139 /* NetDeckTests.swift */; };
 		3AFE726920811F9700816139 /* ThreadsafeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6A560208000AC000722BA /* ThreadsafeCollections.swift */; };
@@ -405,6 +406,7 @@
 		3AF697881C1DAC7300D254CE /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		3AF6978A1C1DF29C00D254CE /* Hypergeometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hypergeometric.swift; sourceTree = "<group>"; };
 		3AF6978E1C1DFD2100D254CE /* DrawSimulatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawSimulatorViewController.swift; sourceTree = "<group>"; };
+		3AF78711209DCFD90038CAC2 /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
 		3AFBA1611E0D9CAF003F6CD8 /* EditDeckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDeckViewController.swift; sourceTree = "<group>"; };
 		3AFE724F2081191200816139 /* NetDeckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetDeckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AFE72512081191200816139 /* NetDeckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetDeckTests.swift; sourceTree = "<group>"; };
@@ -750,6 +752,7 @@
 				3AC4F7851BFD2659008E42F7 /* Card.swift */,
 				3AA251301F8D0395007C9A3C /* Card+Constants.swift */,
 				3A47F18F1DBB7E9500058294 /* Card+HTML.swift */,
+				3AF78711209DCFD90038CAC2 /* Symbols.swift */,
 				3AEEBB661C00C9FF00CB6053 /* CardManager.swift */,
 				3A41DA861BF8785C003CB7E1 /* PackManager.swift */,
 				3AA4088D1C038F480046922C /* CardList.swift */,
@@ -1399,6 +1402,7 @@
 				3A1FD36A1DA956CA00DF50F1 /* SetSelectionViewController.swift in Sources */,
 				3A775E99207222CB004378EA /* CustomAlertStyle.swift in Sources */,
 				3A64B2501E17AD0A00067049 /* SmallBrowserCell.swift in Sources */,
+				3AF78712209DCFD90038CAC2 /* Symbols.swift in Sources */,
 				3A33AE301C7272ED00453C33 /* DeckEmail.swift in Sources */,
 				3A3CE0F01C79EE31003BF8D9 /* DeckImport.swift in Sources */,
 				3AE6A561208000AC000722BA /* ThreadsafeCollections.swift in Sources */,
