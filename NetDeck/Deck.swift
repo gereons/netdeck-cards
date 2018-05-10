@@ -550,7 +550,7 @@ extension DeckLegality: Equatable {
             }
 
             deck.legality = DeckLegality.official(mwl: mwl)
-            if mwl == .v2_0 || (mwl == .none && Defaults[.defaultMWL] == .v2_0) {
+            if mwl >= .v2_0 || (mwl == .none && Defaults[.defaultMWL] >= .v2_0) {
                 deck.convertToRevisedCore()
             }
             

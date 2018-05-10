@@ -34,7 +34,7 @@ class OctgnImport: NSObject, XMLParserDelegate {
                     let cardCode = String(id[index...])
 
                     let code: String = {
-                        if Defaults[.defaultMWL] == .v2_0 {
+                        if Defaults[.defaultMWL] >= .v2_0 {
                             return Card.originalToRevised[cardCode] ?? cardCode
                         } else {
                             return cardCode

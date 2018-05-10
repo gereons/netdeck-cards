@@ -85,7 +85,11 @@ enum PackUsage: Int {
     case selected
 }
 
-enum MWL: Int {
+enum MWL: Int, Comparable {
+    static func < (lhs: MWL, rhs: MWL) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+
     case none
     case v1_0   // as of 2016-02-01
     case v1_1   // as of 2016-08-01
