@@ -73,7 +73,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     required init() {
         self.browser = BrowserResultViewController()
         self.packUsage = Defaults[.browserPacks]
-        self.cardList = CardList.browserInitForRole(self.role, packUsage: self.packUsage)
+        self.cardList = CardList(role: self.role, packUsage: self.packUsage, browser: true)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -243,7 +243,6 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.limitedSwitch.isOn = false
         self.mwlSwitch.isOn = false
         
-        self.cardList = CardList.browserInitForRole(self.role, packUsage: self.packUsage)
         self.cardList.clearFilters()
         
         self.updateResults()
@@ -291,8 +290,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
         self.costSlider.value = Float(min(1 + maxCost, Int(self.costSlider.value)))
         self.prevCost = Int(self.costSlider.value)
         
-        self.cardList = CardList.browserInitForRole(self.role, packUsage: self.packUsage)
-        self.cardList.clearFilters()
+        self.cardList = CardList(role: self.role, packUsage: self.packUsage, browser: true)
         
         let selectedSets = self.selectedValues[.set]
         var selected = ""

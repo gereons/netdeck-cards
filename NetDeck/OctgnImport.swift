@@ -41,7 +41,7 @@ class OctgnImport: NSObject, XMLParserDelegate {
                         }
                     }()
 
-                    if let card = CardManager.cardBy(code: code), let copies = Int(qty) {
+                    if let card = CardManager.cardBy(code), let copies = Int(qty) {
                         // NSLog(@"card: %d %@", copies, card.name);
                         self.deck.addCard(card, copies: copies)
                     }

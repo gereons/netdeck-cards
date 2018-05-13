@@ -55,7 +55,7 @@ class SettingsDelegate: IASKSettingsDelegate {
 
         if !CardManager.cardsAvailable {
             hiddenKeys = Set([
-                "sets_hide_1", "sets_hide_2",
+                "sets_hide_1", "sets_hide_2", "sets_hide_3",
                 DefaultsKeys.browserPacks._key, DefaultsKeys.deckbuilderPacks._key
             ])
         }

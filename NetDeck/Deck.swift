@@ -410,7 +410,7 @@ extension DeckLegality: Equatable {
         var newIdentity: Card?
         
         for (code, qty) in cards {
-            if let card = CardManager.cardBy(code: code) {
+            if let card = CardManager.cardBy(code) {
                 if card.type != .identity {
                     let cc = CardCounter(card: card, count: qty)
                     newCards.append(cc)
@@ -537,7 +537,7 @@ extension DeckLegality: Equatable {
             deck.dateCreated = rawDeck.date_creation
             
             for (code, qty) in rawDeck.cards {
-                if let card = CardManager.cardBy(code: code) {
+                if let card = CardManager.cardBy(code) {
                     deck.addCard(card, copies: qty, history: false)
                 }
             }
@@ -564,7 +564,7 @@ extension DeckLegality: Equatable {
                     dcs.timestamp = timestamp
                     
                     for (code, amount) in changes {
-                        if let card = CardManager.cardBy(code: code) {
+                        if let card = CardManager.cardBy(code) {
                             dcs.addCardCode(card.code, copies: amount)
                         }
                     }
@@ -629,7 +629,7 @@ extension DeckLegality: Equatable {
         self.state = DeckState(rawValue: decoder.decodeInteger(forKey: "state"))!
         self.isDraft = decoder.decodeBool(forKey: "draft")
         if let identityCode = decoder.decodeObject(forKey: "identity") as? String {
-            if let identity = CardManager.cardBy(code: identityCode) {
+            if let identity = CardManager.cardBy(identityCode) {
                 self.identityCc = CardCounter(card:identity, count:1)
             }
         }
@@ -1019,7 +1019,7 @@ extension Deck {
     
     func convertToRevisedCore() {
         for cc in self.allCards {
-            if let newCode = Card.originalToRevised[cc.card.code], let newCard = CardManager.cardBy(code: newCode) {
+            if let newCode = Card.originalToRevised[cc.card.code], let newCard = CardManager.cardBy(newCode) {
                 // print("replacing \(cc.card.name) \(cc.card.code) -> \(newCard.name) \(newCard.code)")
                 self.addCard(cc.card, copies: 0)
                 self.addCard(newCard, copies: cc.count)

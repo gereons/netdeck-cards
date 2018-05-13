@@ -65,7 +65,7 @@ class CardManager {
         }
     }
 
-    static func cardBy(code: String) -> Card? {
+    static func cardBy(_ code: String) -> Card? {
         return allKnownCards[code]
     }
     
@@ -77,7 +77,7 @@ class CardManager {
         }
     }
     
-    static func allFor(role: Role) -> [Card] {
+    static func allFor(_ role: Role) -> [Card] {
         if role != .none {
             return allCardsByRole[role]!
         } else {
@@ -85,7 +85,7 @@ class CardManager {
         }
     }
     
-    static func identitiesFor(role: Role) -> [Card] {
+    static func identitiesFor(_ role: Role) -> [Card] {
         assert(role != .none)
         return allIdentitiesByRole[role]!
     }
@@ -114,18 +114,23 @@ class CardManager {
         factionNames.forEach { str in
             identities.append([])
         }
-        
-        let allIdentities = identitiesFor(role: role).sorted { c1, c2 in
+
+        var allIdentities = self.identitiesFor(role).filter { !disabledPackCodes.contains($0.packCode) }
+        if packUsage == .selected {
+            allIdentities.append(contentsOf: Prebuilt.identities(for: role))
+        }
+
+        allIdentities.sort { c1, c2 in
             c1.packNumber == c2.packNumber ? c1.number < c2.number : c1.packNumber < c2.packNumber
         }
-        
+
         for identity in allIdentities {
             let faction = Faction.name(for: identity.faction)
-            if let index = factionNames.index(where: { $0 == faction }), !disabledPackCodes.contains(identity.packCode) {
+            if let index = factionNames.index(where: { $0 == faction }) {
                 identities[index].append(identity)
             }
         }
-        
+
         if !disabledPackCodes.contains(PackManager.draft) {
             factionNames.removeLast()
             factionNames.append("Draft".localized())
@@ -213,11 +218,11 @@ class CardManager {
 
         // add hard-coded aliases
         for (code, alias) in Card.aliases {
-            if let card = CardManager.cardBy(code: code) {
+            if let card = CardManager.cardBy(code) {
                 card.addCardAlias(alias)
             }
 
-            if let newCode = Card.originalToRevised[code], let card = CardManager.cardBy(code: newCode) {
+            if let newCode = Card.originalToRevised[code], let card = CardManager.cardBy(newCode) {
                 card.addCardAlias(alias)
             }
         }

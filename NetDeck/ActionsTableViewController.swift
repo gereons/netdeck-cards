@@ -115,7 +115,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
         if notification.name == Notifications.browserNew {
             guard
                 let code = notification.userInfo?["code"] as? String,
-                let card = CardManager.cardBy(code: code)
+                let card = CardManager.cardBy(code)
             else { return }
             
             let deck = Deck(role: card.role)
@@ -163,7 +163,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     @objc func listDecks(_ notification: Notification) {
         guard
             let code = notification.userInfo?["code"] as? String,
-            let card = CardManager.cardBy(code: code)
+            let card = CardManager.cardBy(code)
         else { return }
         
         _ = self.navigationController?.popToRootViewController(animated: false)

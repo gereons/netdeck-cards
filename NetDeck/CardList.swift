@@ -37,52 +37,31 @@ class CardList {
     private var sortType = BrowserSort.byType
     private var packUsage: PackUsage
 
-    init(forRole role: Role, packUsage: PackUsage) {
+    init(role: Role, packUsage: PackUsage, browser: Bool) {
         self.role = role
         self.packUsage = packUsage
-        
-        self.resetInitialCards()
-        self.clearFilters()
-    }
-    
-    static func browserInitForRole(_ role: Role, packUsage: PackUsage) -> CardList {
-        let cl = CardList(forRole: role, packUsage: packUsage)
-        
-        var roles = [Role]()
-        switch (role) {
-        case .none: roles = [ .runner, .corp ]
-        case .corp: roles = [ .corp ]
-        case .runner: roles = [ .runner ]
-        }
-        
-        cl.initialCards = []
-        for role in roles {
-            cl.initialCards.append(contentsOf: CardManager.allFor(role: role))
-            cl.initialCards.append(contentsOf: CardManager.identitiesFor(role: role))
-        }
-        switch packUsage {
-        case .selected:
-            cl.filterDeselectedSets()
-        case .all:
-            cl.filterDraft()
-            cl.filterRotation()
+
+        if browser {
+            let roles = role == .none ? [ .runner, .corp ] : [ role ]
+            for role in roles {
+                self.initialCards.append(contentsOf: CardManager.allFor(role))
+                self.initialCards.append(contentsOf: CardManager.identitiesFor(role))
+            }
+        } else {
+            self.initialCards = CardManager.allFor(self.role)
         }
 
-        cl.clearFilters()
-        
-        return cl
-    }
-    
-    private func resetInitialCards() {
-        self.initialCards = CardManager.allFor(role: self.role)
-        self.sort(&self.initialCards)
         switch self.packUsage {
         case .selected:
             self.filterDeselectedSets()
+            self.addPrebuilts(includeIdentities: browser)
         case .all:
             self.filterDraft()
             self.filterRotation()
         }
+
+        self.sortCards()
+        self.clearFilters()
     }
     
     func clearFilters() {
@@ -92,8 +71,7 @@ class CardList {
         self.trash = -1
         self.influence = -1
         self.agendaPoints = -1
-        
-        
+
         self.types = nil
         self.subtypes = nil
         self.factions = nil
@@ -109,14 +87,38 @@ class CardList {
         self.faction4inf = .none
     }
     
-    func filterDeselectedSets() {
+    private func filterDeselectedSets() {
         let disabledPackCodes = PackManager.disabledPackCodes()
         let packPredicate = NSPredicate(format: "!(packCode in %@)", disabledPackCodes)
 
         self.applyPredicate(packPredicate)
     }
-    
-    func filterRotation() {
+
+    private func addPrebuilts(includeIdentities: Bool) {
+        for pb in Prebuilt.ownedPrebuilts {
+            for var code in pb.cards.keys {
+                if Defaults[.useCore2] {
+                    code = Card.originalToRevised[code] ?? code
+                }
+                if let card = CardManager.cardBy(code) {
+                    if Defaults[.rotationActive] {
+                        if PackManager.rotatedPackCodes().contains(card.packCode) {
+                            continue
+                        }
+                    }
+                    if !includeIdentities && card.type == .identity {
+                        continue
+                    }
+
+                    if !self.initialCards.contains(card) {
+                        self.initialCards.append(card)
+                    }
+                }
+            }
+        }
+    }
+
+    private func filterRotation() {
         let rotatedPackCodes = PackManager.rotatedPackCodes()
         let predicate = NSPredicate(format: "!(packCode in %@)", rotatedPackCodes)
         self.applyPredicate(predicate)
@@ -129,13 +131,11 @@ class CardList {
         }
     }
     
-    func applyBans(_ mwl: MWL) {
+    private func applyBans(_ mwl: MWL) {
         self.initialCards = self.initialCards.filter { !$0.banned(mwl) }
     }
     
     func preFilterForCorp(_ identity: Card, _ mwl: MWL) {
-        self.resetInitialCards()
-        
         if identity.faction != .neutral {
             let factions: NSArray = [ Faction.neutral.rawValue, identity.faction.rawValue ]
             let predicate = NSPredicate(format:"type != %d OR (type = %d AND faction in %@)", CardType.agenda.rawValue, CardType.agenda.rawValue, factions)
@@ -149,16 +149,10 @@ class CardList {
         }
         
         self.applyBans(mwl)
-        
-        _ = self.applyFilters()
     }
     
     func preFilterForRunner(_ identity: Card, _ mwl: MWL) {
-        self.resetInitialCards()
-        
         self.applyBans(mwl)
-        
-        _ = self.applyFilters()
     }
     
     func filterByType(_ types: FilterValue) {
@@ -236,14 +230,14 @@ class CardList {
 
     func sortBy(_ sortType: BrowserSort) {
         self.sortType = sortType
-        self.sort(&self.initialCards)
+        self.sortCards()
     }
     
     func applyPredicate(_ predicate: NSPredicate) {
         self.initialCards = self.initialCards.filter { predicate.evaluate(with: $0) }
     }
     
-    func applyFilters() -> [Card] {
+    private func applyFilters() -> [Card] {
         var filteredCards = self.initialCards
         var predicates = [NSPredicate]()
 
@@ -342,8 +336,10 @@ class CardList {
         return filteredCards
     }
     
-    private func sort(_ cards: inout [Card]) {
-        cards.sort { c1, c2 in
+    private func sortCards() {
+        print("sorting card list")
+        let start = Date.timeIntervalSinceReferenceDate
+        self.initialCards.sort { c1, c2 in
             switch self.sortType {
             case .byType, .byTypeFaction:
                 if c1.type.rawValue < c2.type.rawValue { return true }
@@ -380,6 +376,8 @@ class CardList {
             
             return c1.foldedName < c2.foldedName
         }
+        let elapsed = Date.timeIntervalSinceReferenceDate - start
+        print("took \(elapsed)s")
     }
     
     func count() -> Int {
@@ -388,8 +386,7 @@ class CardList {
     }
     
     func allCards() -> [Card] {
-        let filteredCards = self.applyFilters()
-        return filteredCards
+        return self.applyFilters()
     }
     
     func dataForTableView() -> TableData<Card> {

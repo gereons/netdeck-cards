@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		202F720ED22AAB146CA07FBE /* Pods_NetDeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30375981336698209353D6B6 /* Pods_NetDeck.framework */; };
+		3A034F2520A854F4003F8127 /* Prebuilts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A034F2420A854F4003F8127 /* Prebuilts.swift */; };
 		3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */; };
 		3A0841901E0D6719000779C3 /* UIAlert+NetDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */; };
 		3A08DE6E1996176B00F2025E /* BrowserImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A08DE6D1996176B00F2025E /* BrowserImageCell.xib */; };
@@ -103,6 +104,8 @@
 		3A78D3D51E164E9600E91584 /* IdentityCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D41E164E9600E91584 /* IdentityCardView.swift */; };
 		3A78D3D71E16513100E91584 /* CollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */; };
 		3A78EAE11DF4A2B80063A5A0 /* IphoneDrawSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78EAE01DF4A2B80063A5A0 /* IphoneDrawSimulator.swift */; };
+		3A7C0D5E20A87E7E003CF2F2 /* PrebuiltSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7C0D5C20A87E7E003CF2F2 /* PrebuiltSelectionViewController.xib */; };
+		3A7C0D5F20A87E7E003CF2F2 /* PrebuiltSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7C0D5D20A87E7E003CF2F2 /* PrebuiltSelectionViewController.swift */; };
 		3A7D9C3D1E20F7AB00D1410A /* BrowserResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D9C3C1E20F7AB00D1410A /* BrowserResultViewController.swift */; };
 		3A7FD6B1188172C100F0926F /* CardImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B0188172C100F0926F /* CardImageCell.xib */; };
 		3A7FD6B6188177AF00F0926F /* CardImagePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */; };
@@ -208,6 +211,7 @@
 
 /* Begin PBXFileReference section */
 		30375981336698209353D6B6 /* Pods_NetDeck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A034F2420A854F4003F8127 /* Prebuilts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prebuilts.swift; sourceTree = "<group>"; };
 		3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdateCheck.swift; sourceTree = "<group>"; };
 		3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewReminder.txt; sourceTree = "<group>"; };
 		3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlert+NetDeck.swift"; sourceTree = "<group>"; };
@@ -313,6 +317,8 @@
 		3A78D3D41E164E9600E91584 /* IdentityCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityCardView.swift; sourceTree = "<group>"; };
 		3A78D3D61E16513100E91584 /* CollectionViewSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionHeader.swift; sourceTree = "<group>"; };
 		3A78EAE01DF4A2B80063A5A0 /* IphoneDrawSimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IphoneDrawSimulator.swift; sourceTree = "<group>"; };
+		3A7C0D5C20A87E7E003CF2F2 /* PrebuiltSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrebuiltSelectionViewController.xib; sourceTree = "<group>"; };
+		3A7C0D5D20A87E7E003CF2F2 /* PrebuiltSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrebuiltSelectionViewController.swift; sourceTree = "<group>"; };
 		3A7D9C3C1E20F7AB00D1410A /* BrowserResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserResultViewController.swift; sourceTree = "<group>"; };
 		3A7FD6B0188172C100F0926F /* CardImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageCell.xib; sourceTree = "<group>"; };
 		3A7FD6B5188177AF00F0926F /* CardImagePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImagePopup.xib; sourceTree = "<group>"; };
@@ -697,6 +703,8 @@
 				3A1855F21A8E27EF00A1852D /* SetSelectionViewController.xib */,
 				3AA850701F59E46200B37CD1 /* TipJarViewController.swift */,
 				3AA850711F59E46200B37CD1 /* TipJarViewController.xib */,
+				3A7C0D5D20A87E7E003CF2F2 /* PrebuiltSelectionViewController.swift */,
+				3A7C0D5C20A87E7E003CF2F2 /* PrebuiltSelectionViewController.xib */,
 				3A8532781855084900507B9A /* InAppSettings.bundle */,
 				3AB0B556206E3F2B0091C04B /* Settings.bundle */,
 			);
@@ -762,6 +770,7 @@
 				3A3C1E221BF7A131000311FA /* DeckChangeSet.swift */,
 				3A3A83881C135BE3004F6562 /* DeckManager.swift */,
 				3A126E8F1D0320ED00CDF580 /* Translation.swift */,
+				3A034F2420A854F4003F8127 /* Prebuilts.swift */,
 			);
 			name = "Data / Models";
 			sourceTree = "<group>";
@@ -1048,6 +1057,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A7C0D5E20A87E7E003CF2F2 /* PrebuiltSelectionViewController.xib in Resources */,
 				3A9CE56518E0B6C0007A26CD /* IdentityViewCell.xib in Resources */,
 				3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */,
 				3A11341F19AC5B5A0012494E /* IdentityCardView.xib in Resources */,
@@ -1306,6 +1316,7 @@
 				3A3C1E1F1BF79A71000311FA /* DeckState.swift in Sources */,
 				3AA8EC2A1CC3A05E00370A26 /* DeckHistoryViewController.swift in Sources */,
 				3A38BA071C8ADCC700F957D4 /* DataDownload.swift in Sources */,
+				3A034F2520A854F4003F8127 /* Prebuilts.swift in Sources */,
 				3A3C1E191BF771B2000311FA /* CardType.swift in Sources */,
 				3A48BE861E17D9A300B5DD3F /* CardCell.swift in Sources */,
 				3A285BA11D109A54007EC30F /* EmptyDetailViewController.swift in Sources */,
@@ -1340,6 +1351,7 @@
 				3A65016F1DC6286600815965 /* NRSwitch.swift in Sources */,
 				3A5EBE9D1E0FF6EC0096E2F5 /* InfluenceStats.swift in Sources */,
 				3A32B7DF1EA23B2100A19982 /* KeyboardHandling.swift in Sources */,
+				3A7C0D5F20A87E7E003CF2F2 /* PrebuiltSelectionViewController.swift in Sources */,
 				3A2BF9DA1DC6564B00AFA36E /* CardImageCell.swift in Sources */,
 				3AF697891C1DAC7300D254CE /* Notifications.swift in Sources */,
 				3A41DA871BF8785C003CB7E1 /* PackManager.swift in Sources */,

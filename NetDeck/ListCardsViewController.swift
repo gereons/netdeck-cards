@@ -55,7 +55,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.register(UINib(nibName: "EditDeckCell", bundle: nil), forCellReuseIdentifier: "cardCell")
         
         let packUsage = Defaults[.deckbuilderPacks]
-        self.cardList = CardList(forRole: self.deck.role, packUsage: packUsage)
+        self.cardList = CardList(role: self.deck.role, packUsage: packUsage, browser: false)
         
         if let identity = self.deck.identity {
             if self.deck.role == .corp {

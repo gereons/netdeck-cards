@@ -14,7 +14,7 @@
 "Selected" = "Ausgewählte";
 
 "Set/Datapack Selection" = "Set- und Datensatz-Auswahl";
-
+"World Champion Decks Selection" = "Weltmeister-Deck-Auswahl";
 
 "Accounts" = "Accounts";
 "Observe Rotation" = "Rotation beachten";
@@ -26,8 +26,6 @@
 
 "Default Legality" = "Deck-Legalität";
 "Casual" = "Ohne MWL";
-"MWL v1.0" = "MWL v1.0";
-"MWL v1.1" = "MWL v1.1";
 
 "Tip Jar" = "Trinkgeld";
 "Deckbuilder" = "Deckbau";

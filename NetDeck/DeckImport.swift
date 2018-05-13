@@ -215,7 +215,7 @@ class DeckImport: NSObject {
                             // NSLog(@"found card %@ x %@", count, c.name);
 
                             if Defaults[.useCore2], let newCode = Card.originalToRevised[c.code] {
-                                c = CardManager.cardBy(code: newCode) ?? c
+                                c = CardManager.cardBy(newCode) ?? c
                             }
                             
                             let max = deck.isDraft ? 100 : 4;

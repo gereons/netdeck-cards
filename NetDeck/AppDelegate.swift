@@ -100,6 +100,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // print("app start, cardsOk=\(cardsOk)")
         }
 
+        Prebuilt.initialize()
+
         let elapsed = Date.timeIntervalSinceReferenceDate - start
         print ("init base data took \(elapsed)")
     }

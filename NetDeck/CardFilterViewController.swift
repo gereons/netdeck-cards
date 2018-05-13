@@ -131,7 +131,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         
         self.packUsage = Defaults[.deckbuilderPacks]
         
-        self.cardList = CardList(forRole: self.role, packUsage: packUsage)
+        self.cardList = CardList(role: self.role, packUsage: packUsage, browser: false)
         self.initCards()
         
         self.tableView.register(UINib(nibName: "CardFilterCell", bundle: nil), forCellReuseIdentifier: "cardCell")

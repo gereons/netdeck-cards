@@ -125,16 +125,19 @@ class Card: NSObject {
     
     // how many copies owned
     var owned: Int {
+        let prebuiltOwned = Prebuilt.owned(self)
+
         if self.isCore {
             let cores = Defaults[.numCores]
-            return cores * self.quantity
+            return (cores * self.quantity) + prebuiltOwned
         }
-        
+
         let disabledPacks = PackManager.disabledPackCodes()
         if disabledPacks.contains(self.packCode) {
-            return 0
+            return prebuiltOwned
         }
-        return self.quantity
+
+        return self.quantity + prebuiltOwned
     }
     
     var isRotated: Bool {

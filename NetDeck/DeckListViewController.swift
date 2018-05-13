@@ -625,7 +625,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let code = notification.userInfo?["code"] as? String else {
             return
         }
-        guard let card = CardManager.cardBy(code: code) else {
+        guard let card = CardManager.cardBy(code) else {
             return
         }
         
