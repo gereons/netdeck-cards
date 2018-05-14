@@ -5,8 +5,8 @@ inhibit_all_warnings!
 platform :ios, '9.2'
 
 def pods
-    pod 'Fabric'
-    pod 'Crashlytics'
+#    pod 'Fabric'
+#    pod 'Crashlytics'
     pod 'SVProgressHUD'
     pod 'InAppSettingsKit'
     pod 'MultiSelectSegmentedControl'

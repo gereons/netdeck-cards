@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 
 extension DefaultsKeys {
     /// use fabric/crashlytics
-    static let fabricEnabled = DefaultsKey<Bool>("fabricEnabled")
+    // static let fabricEnabled = DefaultsKey<Bool>("fabricEnabled")
 
     /// when to next check for app update
     static let nextUpdateCheck = DefaultsKey<Date?>("nextUpdateCheck")

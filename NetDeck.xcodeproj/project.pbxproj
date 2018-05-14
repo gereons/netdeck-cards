@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		202F720ED22AAB146CA07FBE /* Pods_NetDeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30375981336698209353D6B6 /* Pods_NetDeck.framework */; };
+		065C4EC130BBC46216098002 /* Pods_NetDeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 508C0F4CBBA88B3492D78233 /* Pods_NetDeck.framework */; };
 		3A034F2520A854F4003F8127 /* Prebuilts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A034F2420A854F4003F8127 /* Prebuilts.swift */; };
 		3A03532A1C933FCD00633B91 /* AppUpdateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */; };
 		3A0841901E0D6719000779C3 /* UIAlert+NetDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A08418F1E0D6719000779C3 /* UIAlert+NetDeck.swift */; };
@@ -144,7 +144,7 @@
 		3AA8EC2C1CC3AA8200370A26 /* DeckHistorySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A531B281A2CEF6900BE4D1D /* DeckHistorySectionHeaderView.swift */; };
 		3AAE4C4B1CA7105A0039F822 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAE4C4A1CA7105A0039F822 /* Analytics.swift */; };
 		3AAE89D91E2023830038B434 /* CardFilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAE89D81E2023830038B434 /* CardFilterPopover.swift */; };
-		3AB0B557206E3F2B0091C04B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3AB0B556206E3F2B0091C04B /* Settings.bundle */; };
+		3AB0B557206E3F2B0091C04B /* Unused_Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3AB0B556206E3F2B0091C04B /* Unused_Settings.bundle */; };
 		3AB219CD1E19868B00D8C75A /* CardImagePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB219CC1E19868B00D8C75A /* CardImagePopup.swift */; };
 		3AB2CF5A1938952600CCBE64 /* CardFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */; };
 		3AB34E611939AA8D000A43BB /* CardFilterThumbView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB34E601939AA8D000A43BB /* CardFilterThumbView.xib */; };
@@ -196,7 +196,7 @@
 		3AFBA1621E0D9CAF003F6CD8 /* EditDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA1611E0D9CAF003F6CD8 /* EditDeckViewController.swift */; };
 		3AFE72522081191200816139 /* NetDeckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE72512081191200816139 /* NetDeckTests.swift */; };
 		3AFE726920811F9700816139 /* ThreadsafeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6A560208000AC000722BA /* ThreadsafeCollections.swift */; };
-		5549BE69C5FC93EC86462200 /* Pods_NetDeckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E6F114F6390E14C194B2CB /* Pods_NetDeckTests.framework */; };
+		E5BEB566AABF91CE7F062ABB /* Pods_NetDeckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C898F585D0907562E857C4A1 /* Pods_NetDeckTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,7 +210,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		30375981336698209353D6B6 /* Pods_NetDeck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A034F2420A854F4003F8127 /* Prebuilts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prebuilts.swift; sourceTree = "<group>"; };
 		3A0353291C933FCD00633B91 /* AppUpdateCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdateCheck.swift; sourceTree = "<group>"; };
 		3A06C2D4192A6AFE000D675A /* ReviewReminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewReminder.txt; sourceTree = "<group>"; };
@@ -364,7 +363,7 @@
 		3AAD7D781D930154001821F5 /* NetDeck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NetDeck.entitlements; sourceTree = "<group>"; };
 		3AAE4C4A1CA7105A0039F822 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		3AAE89D81E2023830038B434 /* CardFilterPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterPopover.swift; sourceTree = "<group>"; };
-		3AB0B556206E3F2B0091C04B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		3AB0B556206E3F2B0091C04B /* Unused_Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Unused_Settings.bundle; sourceTree = "<group>"; };
 		3AB219CC1E19868B00D8C75A /* CardImagePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardImagePopup.swift; sourceTree = "<group>"; };
 		3AB2CF581938952600CCBE64 /* CardFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterViewController.xib; sourceTree = "<group>"; };
 		3AB34E601939AA8D000A43BB /* CardFilterThumbView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFilterThumbView.xib; sourceTree = "<group>"; };
@@ -418,11 +417,12 @@
 		3AFE72512081191200816139 /* NetDeckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetDeckTests.swift; sourceTree = "<group>"; };
 		3AFE72532081191200816139 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B3ED278C485C4DD0795F558 /* Pods-NetDeck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.debug.xcconfig"; sourceTree = "<group>"; };
+		508C0F4CBBA88B3492D78233 /* Pods_NetDeck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F7064EB6B74E7CB9C2DE95 /* Pods-NetDeckTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeckTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests.release.xcconfig"; sourceTree = "<group>"; };
 		6E908BEB15191613DC53B1C0 /* Pods-NetDeckTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeckTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests.debug.xcconfig"; sourceTree = "<group>"; };
 		796DF0A5738142FC6D02DC2E /* Pods-NetDeck.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.adhoc.xcconfig"; sourceTree = "<group>"; };
-		79E6F114F6390E14C194B2CB /* Pods_NetDeckTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeckTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		832C019F9B9F781A1430910C /* Pods-NetDeck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeck.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck.release.xcconfig"; sourceTree = "<group>"; };
+		C898F585D0907562E857C4A1 /* Pods_NetDeckTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetDeckTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFC4A3D6058FCB5ECFCDB532 /* Pods-NetDeckTests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDeckTests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests.adhoc.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -431,7 +431,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				202F720ED22AAB146CA07FBE /* Pods_NetDeck.framework in Frameworks */,
+				065C4EC130BBC46216098002 /* Pods_NetDeck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +439,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5549BE69C5FC93EC86462200 /* Pods_NetDeckTests.framework in Frameworks */,
+				E5BEB566AABF91CE7F062ABB /* Pods_NetDeckTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,8 +479,8 @@
 			isa = PBXGroup;
 			children = (
 				3AA850741F59E8C900B37CD1 /* StoreKit.framework */,
-				30375981336698209353D6B6 /* Pods_NetDeck.framework */,
-				79E6F114F6390E14C194B2CB /* Pods_NetDeckTests.framework */,
+				508C0F4CBBA88B3492D78233 /* Pods_NetDeck.framework */,
+				C898F585D0907562E857C4A1 /* Pods_NetDeckTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -706,7 +706,7 @@
 				3A7C0D5D20A87E7E003CF2F2 /* PrebuiltSelectionViewController.swift */,
 				3A7C0D5C20A87E7E003CF2F2 /* PrebuiltSelectionViewController.xib */,
 				3A8532781855084900507B9A /* InAppSettings.bundle */,
-				3AB0B556206E3F2B0091C04B /* Settings.bundle */,
+				3AB0B556206E3F2B0091C04B /* Unused_Settings.bundle */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -965,7 +965,7 @@
 				3A814EC519ADBEEE008C3285 /* Crashlytics */,
 				3AF1E9151FB4F733009E8B88 /* Run Checker */,
 				3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */,
-				02C5C7E687DF33FABCDC6958 /* [CP] Embed Pods Frameworks */,
+				E26B927A0BDE6845FB33393B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -984,7 +984,7 @@
 				3AFE724B2081191200816139 /* Sources */,
 				3AFE724C2081191200816139 /* Frameworks */,
 				3AFE724D2081191200816139 /* Resources */,
-				4028244143B6A0C102713D07 /* [CP] Embed Pods Frameworks */,
+				DBE25C725F0040C5C848354F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1092,7 +1092,7 @@
 				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A6D51D61A2284540004951E /* DeckHistoryPopup.xib in Resources */,
-				3AB0B557206E3F2B0091C04B /* Settings.bundle in Resources */,
+				3AB0B557206E3F2B0091C04B /* Unused_Settings.bundle in Resources */,
 				3A92DFD91CBA59EE0043F2F6 /* BrowserValuePicker.xib in Resources */,
 				3A818EED198E3A0900126495 /* BrowserResultViewController.xib in Resources */,
 				3A36226C1849320C007F2854 /* InfoPlist.strings in Resources */,
@@ -1134,50 +1134,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		02C5C7E687DF33FABCDC6958 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
-				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
-				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
-				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
-				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
-				"${BUILT_PRODUCTS_DIR}/InAppSettingsKit/InAppSettingsKit.framework",
-				"${BUILT_PRODUCTS_DIR}/MultiSelectSegmentedControl/MultiSelectSegmentedControl.framework",
-				"${BUILT_PRODUCTS_DIR}/SDCAlertView/SDCAlertView.framework",
-				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyDropbox/SwiftyDropbox.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InAppSettingsKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MultiSelectSegmentedControl.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDCAlertView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDropbox.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -1204,7 +1160,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Release\" ]; then\necho \"init crashlytics\"\n\"${PODS_ROOT}/Fabric/run\" fe0f0f5f919be6211c1de668d91332e311ddad9e fa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8\nfi";
+			shellScript = "# if [ \"${CONFIGURATION}\" == \"Release\" ]; then\n# echo \"init crashlytics\"\n# \"${PODS_ROOT}/Fabric/run\" fe0f0f5f919be6211c1de668d91332e311ddad9e fa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8\n# fi";
 		};
 		3AF1E9151FB4F733009E8B88 /* Run Checker */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1220,7 +1176,43 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ -d /Applications/Checker.app ]; then\n    /Applications/Checker.app/Contents/Resources/start-analyzer.app/Contents/MacOS/start-analyzer\nelse\n    echo \"WARNING: start-analyzer not installed.\"\nfi";
 		};
-		4028244143B6A0C102713D07 /* [CP] Embed Pods Frameworks */ = {
+		C62555A389DA66E9F987B229 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NetDeck-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D141B4CE4E5CFA1DE20714E8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NetDeckTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DBE25C725F0040C5C848354F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1264,40 +1256,48 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeckTests/Pods-NetDeckTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C62555A389DA66E9F987B229 /* [CP] Check Pods Manifest.lock */ = {
+		E26B927A0BDE6845FB33393B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
+				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
+				"${BUILT_PRODUCTS_DIR}/InAppSettingsKit/InAppSettingsKit.framework",
+				"${BUILT_PRODUCTS_DIR}/MultiSelectSegmentedControl/MultiSelectSegmentedControl.framework",
+				"${BUILT_PRODUCTS_DIR}/SDCAlertView/SDCAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyDropbox/SwiftyDropbox.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NetDeck-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InAppSettingsKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MultiSelectSegmentedControl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDCAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDropbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D141B4CE4E5CFA1DE20714E8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NetDeckTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
