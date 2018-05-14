@@ -50,7 +50,8 @@ class IphoneIdentityViewController: UIViewController {
         self.selectedIdentity = self.deck?.identity
 
         let packUsage = Defaults[.deckbuilderPacks]
-        let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage)
+        let legality = self.deck?.legality ?? .casual
+        let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage, legality: legality)
         self.factionNames = identities.sections 
         self.identities = identities.values
         

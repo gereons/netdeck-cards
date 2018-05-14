@@ -32,13 +32,13 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
     private var selectedIndexPath: IndexPath?
     private var viewTable = true
 
-    static func showFor(role: Role, inViewController vc: UIViewController, withIdentity identity: Card?) {
-        let selection = IdentitySelectionViewController(role: role, identity: identity)
+    static func showFor(role: Role, inViewController vc: UIViewController, withIdentity identity: Card?, legality: DeckLegality) {
+        let selection = IdentitySelectionViewController(role: role, identity: identity, legality: legality)
         
         vc.present(selection, animated: false, completion: nil)
     }
     
-    convenience init(role: Role, identity: Card?) {
+    convenience init(role: Role, identity: Card?, legality: DeckLegality) {
         self.init()
         
         self.modalPresentationStyle = .formSheet
@@ -49,7 +49,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         
         self.viewTable = Defaults[.identityTable]
         let packUsage = Defaults[.deckbuilderPacks]
-        let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage)
+        let identities = CardManager.identitiesForSelection(self.role, packUsage: packUsage, legality: legality)
         
         self.allFactionNames = identities.sections
         self.allIdentities = identities.values 

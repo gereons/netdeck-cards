@@ -74,7 +74,9 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     private var prevStr = 0
     private var prevCost = 0
     private var prevInf = 0
-    
+
+    private var legality: DeckLegality
+
     private let largeCellHeight = 140
     private let smallCellHeight = 107
     
@@ -99,6 +101,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.deckListViewController = DeckListViewController()
         self.role = role
         self.deckListViewController.role = role
+        self.legality = .standard(mwl: Defaults[.defaultMWL])
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -107,6 +110,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.init(role: role)
 
         self.deckListViewController.loadDeck(fromFile: file)
+        self.legality = self.deckListViewController.deck.legality
     }
     
     convenience init(role: Role, andDeck deck: Deck) {
@@ -114,6 +118,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         
         assert(role == deck.role, "role mismatch")
         self.deckListViewController.deck = deck
+        self.legality = deck.legality
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -131,7 +136,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         
         self.packUsage = Defaults[.deckbuilderPacks]
         
-        self.cardList = CardList(role: self.role, packUsage: packUsage, browser: false)
+        self.cardList = CardList(role: self.role, packUsage: packUsage, browser: false, legality: self.legality)
         self.initCards()
         
         self.tableView.register(UINib(nibName: "CardFilterCell", bundle: nil), forCellReuseIdentifier: "cardCell")
@@ -235,6 +240,10 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     @objc func deckChanged(_ notification: Notification) {
         guard let deck = self.deckListViewController.deck else {
             return
+        }
+        if self.legality != deck.legality {
+            self.cardList = CardList(role: self.role, packUsage: self.packUsage, browser: false, legality: deck.legality)
+            self.legality = deck.legality
         }
         if let identity = deck.identity {
             if self.role == .runner {
@@ -771,7 +780,6 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         let deck = self.deckListViewController.deck
         let identity = deck?.identity ?? Card.null()
 
-        
         let influence = identity.faction == card.faction ? 0 : card.influence
         cell.pips.set(value: influence, color: card.factionColor)
         

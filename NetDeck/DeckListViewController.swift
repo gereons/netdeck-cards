@@ -618,7 +618,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             return self.dismissActionSheet()
         }
         
-        IdentitySelectionViewController.showFor(role: self.role, inViewController: self, withIdentity: self.deck.identity)
+        IdentitySelectionViewController.showFor(role: self.role, inViewController: self, withIdentity: self.deck.identity, legality: self.deck.legality)
     }
     
     @objc func identitySelected(_ notification: Notification) {
@@ -635,7 +635,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             
             NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
         }
-        
     }
     
     // MARK: - sort

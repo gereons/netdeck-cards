@@ -90,7 +90,7 @@ class CardManager {
         return allIdentitiesByRole[role]!
     }
     
-    static func identitiesForSelection(_ role: Role, packUsage: PackUsage) -> TableData<Card> {
+    static func identitiesForSelection(_ role: Role, packUsage: PackUsage, legality: DeckLegality) -> TableData<Card> {
         var factionNames = Faction.factionsFor(role: role, packUsage: packUsage)
         factionNames.removeFirst(2) // remove "any" and "neutral"
         
@@ -116,7 +116,7 @@ class CardManager {
         }
 
         var allIdentities = self.identitiesFor(role).filter { !disabledPackCodes.contains($0.packCode) }
-        if packUsage == .selected {
+        if packUsage == .selected && legality != .cacheRefresh && legality != .modded {
             allIdentities.append(contentsOf: Prebuilt.identities(for: role))
         }
 

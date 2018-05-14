@@ -37,9 +37,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     private var saveButton: UIBarButtonItem!
     private var exportButton: UIBarButtonItem!
     private var historyButton: UIBarButtonItem!
-    
-    private var listCards: ListCardsViewController!
-    
+
     fileprivate var printController: UIPrintInteractionController!
     
     override func viewDidLoad() {
@@ -422,14 +420,13 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func showCardList(_ sender: Any) {
-        if self.listCards == nil {
-            self.listCards = ListCardsViewController()
-        }
-        self.listCards.deck = self.deck
+        let listCards = ListCardsViewController()
+
+        listCards.deck = self.deck
         
         // protect against pushing the same controller twice (crashlytics #101)
-        if self.navigationController?.topViewController != self.listCards {
-            self.navigationController?.pushViewController(self.listCards, animated: true)
+        if self.navigationController?.topViewController != listCards {
+            self.navigationController?.pushViewController(listCards, animated: true)
         }
     }
     
@@ -580,7 +577,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             cell.nameLabel.textColor = .red
         }
         
-        cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight.regular)
+        cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         cell.mwlLabel.text = ""
         
         if card.type != .identity {

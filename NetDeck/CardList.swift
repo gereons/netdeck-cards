@@ -37,7 +37,7 @@ class CardList {
     private var sortType = BrowserSort.byType
     private var packUsage: PackUsage
 
-    init(role: Role, packUsage: PackUsage, browser: Bool) {
+    init(role: Role, packUsage: PackUsage, browser: Bool, legality: DeckLegality) {
         self.role = role
         self.packUsage = packUsage
 
@@ -54,7 +54,9 @@ class CardList {
         switch self.packUsage {
         case .selected:
             self.filterDeselectedSets()
-            self.addPrebuilts(includeIdentities: browser)
+            if legality != .cacheRefresh && legality != .modded {
+                self.addPrebuilts(for: role, includeIdentities: browser)
+            }
         case .all:
             self.filterDraft()
             self.filterRotation()
@@ -94,7 +96,7 @@ class CardList {
         self.applyPredicate(packPredicate)
     }
 
-    private func addPrebuilts(includeIdentities: Bool) {
+    private func addPrebuilts(for role: Role, includeIdentities: Bool) {
         for pb in Prebuilt.ownedPrebuilts {
             for var code in pb.cards.keys {
                 if Defaults[.useCore2] {
@@ -107,6 +109,9 @@ class CardList {
                         }
                     }
                     if !includeIdentities && card.type == .identity {
+                        continue
+                    }
+                    if role != .none && card.role != role {
                         continue
                     }
 
