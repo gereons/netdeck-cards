@@ -149,6 +149,41 @@ struct MostWantedList {
     }
 }
 
+enum DeckLegality: Equatable {
+    case casual
+    case standard(mwl: MWL)
+    case cacheRefresh
+    case onesies
+    case modded
+
+    var mwl: MWL {
+        switch self {
+        case .standard(let mwl): return mwl
+        case .cacheRefresh: return MWL.latest
+        default: return .none
+        }
+    }
+
+    static func==(_ lhs: DeckLegality, _ rhs: DeckLegality) -> Bool {
+        switch (lhs, rhs) {
+        case (.casual, .casual): return true
+        case (.standard(let m1), .standard(let m2)): return m1 == m2
+        case (.cacheRefresh, .cacheRefresh): return true
+        case (.modded, .modded): return true
+        case (.onesies, .onesies): return true
+        default: return false
+        }
+    }
+
+    static func==(_ lhs: DeckLegality, _ rhs: MWL) -> Bool {
+        switch lhs {
+        case .standard(let m): return m == rhs
+        default: return false
+        }
+    }
+}
+
+
 struct RotatedPacks {
     let packs: Set<String>
     let cycles: [String]

@@ -9,42 +9,6 @@
 import Foundation
 import SwiftyUserDefaults
 
-enum DeckLegality {
-    case casual
-    case official(mwl: MWL)
-    case cacheRefresh
-    case onesies
-    case modded
-
-    func isOfficial(_ mwl: MWL) -> Bool {
-        switch self {
-        case .official(let m): return m == mwl
-        default: return false
-        }
-    }
-
-    var mwl: MWL {
-        switch self {
-        case .official(let mwl): return mwl
-        case .cacheRefresh: return MWL.latest
-        default: return .none
-        }
-    }
-}
-
-extension DeckLegality: Equatable {
-    static func==(_ lhs: DeckLegality, _ rhs: DeckLegality) -> Bool {
-        switch (lhs, rhs) {
-        case (.casual, .casual): return true
-        case (.official(let m1), .official(let m2)): return m1 == m2
-        case (.cacheRefresh, .cacheRefresh): return true
-        case (.modded, .modded): return true
-        case (.onesies, .onesies): return true
-        default: return false
-        }
-    }
-}
-
 @objc(Deck) class Deck: NSObject, NSCoding {
 
     var filename: String?
@@ -66,7 +30,7 @@ extension DeckLegality: Equatable {
         self.state = Defaults[.createDeckActive] ? .active : .testing
         let seq = DeckManager.fileSequence() + 1
         self.name = "Deck #\(seq)"
-        self.legality = .official(mwl: Defaults[.defaultMWL])
+        self.legality = .standard(mwl: Defaults[.defaultMWL])
         self.role = role
     }
     
@@ -549,7 +513,7 @@ extension DeckLegality: Equatable {
                 mwl = Defaults[.defaultMWL]
             }
 
-            deck.legality = DeckLegality.official(mwl: mwl)
+            deck.legality = DeckLegality.standard(mwl: mwl)
             if mwl >= .v2_0 || (mwl == .none && Defaults[.defaultMWL] >= .v2_0) {
                 deck.convertToRevisedCore()
             }
@@ -662,7 +626,7 @@ extension DeckLegality: Equatable {
         } else if modded {
             legality = .modded
         } else {
-            legality = .official(mwl: MWL(rawValue: mwl) ?? .none)
+            legality = .standard(mwl: MWL(rawValue: mwl) ?? .none)
         }
         self.legality = legality
         self.convertedToCore2 = decoder.decodeBool(forKey: "convertedToCore2")

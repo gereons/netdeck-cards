@@ -18,27 +18,27 @@ class MWLSelection {
         let alert = UIAlertController.actionSheet(title: "Deck Legality".localized(), message: nil)
 
         alert.addAction(UIAlertAction(title: "Casual".localized().checked(deck.legality == .casual)) { action in
-            setter.setLegality(DeckLegality.official(mwl: MWL.none))
+            setter.setLegality(DeckLegality.standard(mwl: MWL.none))
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(deck.legality.isOfficial(.v1_0))) { action in
-            setter.setLegality(DeckLegality.official(mwl: MWL.v1_0))
+        alert.addAction(UIAlertAction(title: "MWL v1.0".localized().checked(deck.legality == .v1_0)) { action in
+            setter.setLegality(DeckLegality.standard(mwl: MWL.v1_0))
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(deck.legality.isOfficial(.v1_1))) { action in
-            setter.setLegality(DeckLegality.official(mwl: MWL.v1_1))
+        alert.addAction(UIAlertAction(title: "MWL v1.1".localized().checked(deck.legality == .v1_1)) { action in
+            setter.setLegality(DeckLegality.standard(mwl: MWL.v1_1))
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(deck.legality.isOfficial(.v1_2))) { action in
-            setter.setLegality(DeckLegality.official(mwl: MWL.v1_2))
+        alert.addAction(UIAlertAction(title: "MWL v1.2".localized().checked(deck.legality == .v1_2)) { action in
+            setter.setLegality(DeckLegality.standard(mwl: MWL.v1_2))
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v2.0".localized().checked(deck.legality.isOfficial(.v2_0))) { action in
-            setter.setLegality(DeckLegality.official(mwl: MWL.v2_0))
+        alert.addAction(UIAlertAction(title: "MWL v2.0".localized().checked(deck.legality == .v2_0)) { action in
+            setter.setLegality(DeckLegality.standard(mwl: MWL.v2_0))
         })
 
-        alert.addAction(UIAlertAction(title: "MWL v2.1".localized().checked(deck.legality.isOfficial(.v2_1))) { action in
-            setter.setLegality(DeckLegality.official(mwl: MWL.v2_1))
+        alert.addAction(UIAlertAction(title: "MWL v2.1".localized().checked(deck.legality == .v2_1)) { action in
+            setter.setLegality(DeckLegality.standard(mwl: MWL.v2_1))
         })
 
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(deck.legality == .onesies)) { action in
