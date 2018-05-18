@@ -68,6 +68,9 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         if self.traitCollection.forceTouchCapability == .available {
             self.registerForPreviewing(with: self, sourceView: self.view)
         }
+
+        let packUsage = Defaults[.browserPacks]
+        self.cardList = CardList(role: self.role, packUsage: packUsage, browser: true, legality: .casual)
         
         self.refresh()
     }
@@ -202,6 +205,9 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         self.role = Role(rawValue: selectedScope - 1)!
+
+        let packUsage = Defaults[.browserPacks]
+        self.cardList = CardList(role: self.role, packUsage: packUsage, browser: true, legality: .casual)
         self.refresh()
     }
     
