@@ -85,10 +85,6 @@ class SettingsDelegate: IASKSettingsDelegate {
         return hiddenKeys
     }
 
-    private func xsetHiddenKeys() {
-
-    }
-
     @objc func cardsLoaded(_ notification: Notification) {
         if let success = notification.userInfo?["success"] as? Bool, success {
             Settings.viewController.hiddenKeys = self.hiddenKeys()
