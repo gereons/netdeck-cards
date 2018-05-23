@@ -342,8 +342,6 @@ class CardList {
     }
     
     private func sortCards() {
-        print("sorting card list")
-        let start = Date.timeIntervalSinceReferenceDate
         self.initialCards.sort { c1, c2 in
             switch self.sortType {
             case .byType, .byTypeFaction:
@@ -381,8 +379,6 @@ class CardList {
             
             return c1.foldedName < c2.foldedName
         }
-        let elapsed = Date.timeIntervalSinceReferenceDate - start
-        print("took \(elapsed)s")
     }
     
     func count() -> Int {

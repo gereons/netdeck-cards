@@ -299,10 +299,6 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: - browser
     
-    func titleButtonTapped(_ sender: UIBarButtonItem) {
-        self.openBrowser()
-    }
-    
     @objc func openBrowser() {
         if CardManager.cardsAvailable {
             let browser = BrowserViewController()
