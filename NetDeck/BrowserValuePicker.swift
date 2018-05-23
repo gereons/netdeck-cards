@@ -98,12 +98,6 @@ class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // special case for "Any", which is always at section 0, row 0
-        if indexPath.section == 0 && indexPath.row == 0 {
-            self.selected.removeAll()
-            self.tableView.reloadData()
-            return
-        }
-        
         let sel = selected.contains(indexPath)
         if !sel {
             selected.insert(indexPath)
