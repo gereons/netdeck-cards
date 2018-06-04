@@ -15,6 +15,11 @@ curl -s $CARDS_URL -o tmp/cards.raw
 curl -s $CYCLES_URL -o tmp/cycles.raw
 curl -s $PACKS_URL -o tmp/packs.raw
 
+if [ ! -r tmp/cards.raw -o ! -r tmp/cycles.raw -o ! -r tmp/packs.raw ]; then
+    echo "server not running?"
+    exit 1
+fi
+
 for raw in tmp/*.raw
 do
     cat $raw |
