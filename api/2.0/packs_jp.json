@@ -269,7 +269,8 @@
 "position":4,"size":20,"ffg_id":53},
 {"code":"ka",
 "cycle_code":"kitara",
-"date_release":null,"name":"Kampala Ascendent",
+"date_release":"2018-05-31",
+"name":"Kampala Ascendent",
 "position":6,"size":20,"ffg_id":55},
 {"code":"win",
 "cycle_code":"kitara",
@@ -280,4 +281,4 @@
 "cycle_code":"reign-and-reverie",
 "date_release":null,"name":"Reign and Reverie",
 "position":1,"size":56,"ffg_id":56}],"total":57,"success":true,"version_number":"2.0",
-"last_updated":"2018-05-02T17:24:45+00:00"}
+"last_updated":"2018-06-04T17:04:52+00:00"}
