@@ -8,7 +8,7 @@ LOCALE=""
 SUFFIX=""
 
 mkdir -p api/2.0
-rm -r tmp
+rm -rf tmp
 mkdir tmp
 
 curl -s $CARDS_URL -o tmp/cards.raw
