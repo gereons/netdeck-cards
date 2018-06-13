@@ -66,6 +66,8 @@ struct NetrunnerDbDeck: Codable {
         do {
             let formatter = DateFormatter()
             formatter.dateFormat = self.dateFormat
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
 
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .formatted(formatter)
