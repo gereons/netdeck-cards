@@ -1,4 +1,3 @@
-source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 # use_modular_headers!
 inhibit_all_warnings!
