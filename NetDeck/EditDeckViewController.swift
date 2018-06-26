@@ -95,7 +95,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationItem.titleView = self.titleButton
         self.navigationItem.rightBarButtonItems = [ self.exportButton, self.historyButton ]
         
-        if !Defaults[.useNrdb] {
+        if !Defaults[.nrdbLoggedin] {
             self.nrdbButton.customView = UIView(frame: CGRect.zero)
             self.nrdbButton.isEnabled = false
         }
@@ -185,7 +185,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
                 DeckExport.asOctgn(self.deck, autoSave: false)
             })
         }
-        if Defaults[.useNrdb] {
+        if Defaults[.nrdbLoggedin] {
             alert.addAction(UIAlertAction(title: "To NetrunnerDB.com".localized()) { action in
                 Analytics.logEvent(.saveToNRDB)
                 self.saveToNrdb()

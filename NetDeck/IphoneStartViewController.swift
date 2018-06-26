@@ -192,7 +192,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - import
     
     @objc func importDecks(_ sender: UIButton) {
-        let useNrdb = Defaults[.useNrdb]
+        let useNrdb = Defaults[.nrdbLoggedin]
         let useDropbox = Defaults[.useDropbox]
         
         if useNrdb && useDropbox {

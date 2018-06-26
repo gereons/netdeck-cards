@@ -61,6 +61,7 @@ extension DefaultsKeys {
     static let useDropbox = DefaultsKey<Bool>("useDropbox")
     /// NetrunnerDB.com enabled?
     static let useNrdb = DefaultsKey<Bool>("useNrdb")
+    static let nrdbLoggedin = DefaultsKey<Bool>("nrdbLoggedin")
     /// Jinteki.net enabled?
     static let useJintekiNet = DefaultsKey<Bool>("useJnet")
 

@@ -28,6 +28,7 @@ class NRDB: NSObject {
     
     static func clearSettings() {
         Defaults[.useNrdb] = false
+        Defaults[.nrdbLoggedin] = false
         
         Defaults.remove(.nrdbAccessToken)
         Defaults.remove(.nrdbRefreshToken)

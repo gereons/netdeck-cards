@@ -78,6 +78,7 @@ class NRDBHack {
             
         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel) { action in
             Defaults[.useNrdb] = false
+            Defaults[.nrdbLoggedin] = false
         })
         
         alert.show()
@@ -105,6 +106,7 @@ class NRDBHack {
     private func loginCompleted(_ success: Bool, _ error: String, verbose: Bool, credentials: Credentials) {
         print("nrdb login completed ok=\(success) verbose=\(verbose) error=\(error)")
         self.loggingIn = false
+        Defaults[.nrdbLoggedin] = success
         if success {
             if verbose {
                 SVProgressHUD.dismiss()
@@ -114,13 +116,10 @@ class NRDBHack {
             keychain.set(credentials.password, forKey: KeychainKeys.nrdbPassword)
             
             NRDB.sharedInstance.startAuthorizationRefresh()
+
         } else {
             if verbose {
                 SVProgressHUD.showError(withStatus: "Login failed".localized())
-            }
-            if Reachability.online {
-                NRDBHack.clearCredentials()
-                Defaults[.useNrdb] = false
             }
         }
     }

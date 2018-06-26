@@ -74,7 +74,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.initializing = true
 
-        self.useNetrunnerDb = Defaults[.useNrdb]
+        self.useNetrunnerDb = Defaults[.nrdbLoggedin]
         self.autoSaveNRDB = Defaults[.nrdbAutosave]
         self.sortType = Defaults[.deckViewSort]
         let scale: Double = Defaults[.deckViewScale]

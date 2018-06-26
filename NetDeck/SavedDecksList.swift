@@ -71,7 +71,7 @@ class SavedDecksList: DecksViewController {
         }
         
         let useDropbox = Defaults[.useDropbox]
-        let useNetrunnerDb = Defaults[.useNrdb]
+        let useNetrunnerDb = Defaults[.nrdbLoggedin]
         
         if !useDropbox && !useNetrunnerDb {
             UIAlertController.alert(withTitle: "Import Decks".localized(), message: "Connect to your Dropbox and/or NetrunnerDB.com account first.".localized()
@@ -116,7 +116,7 @@ class SavedDecksList: DecksViewController {
         }
         
         let useDropbox = Defaults[.useDropbox]
-        let useNetrunnerDb = Defaults[.useNrdb]
+        let useNetrunnerDb = Defaults[.nrdbLoggedin]
         
         if !useDropbox && !useNetrunnerDb {
             UIAlertController.alert(withTitle: "Export Decks".localized(), message: "Connect to your Dropbox and/or NetrunnerDB.com account first.".localized()

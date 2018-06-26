@@ -18,7 +18,7 @@ class Reachability {
         let host = nrdbHost.count > 0 ? nrdbHost : "www.apple.com"
         Reachability.manager = NetworkReachabilityManager(host: host)
         Reachability.manager?.listener = { status in
-            // print("Network Status Changed: \(status)")
+            print("Network Status Changed: \(status)")
             switch status {
             case .notReachable:
                 NRDB.sharedInstance.stopAuthorizationRefresh()

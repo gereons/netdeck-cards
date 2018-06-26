@@ -146,6 +146,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             } else {
                 NRDBHack.clearCredentials()
                 Defaults[.useNrdb] = false
+                Defaults[.nrdbLoggedin] = false
             }
         
         case DefaultsKeys.rotationActive._key:
@@ -197,7 +198,7 @@ class SettingsDelegate: IASKSettingsDelegate {
     private func nrdbLogin() {
         if !Reachability.online {
             self.showOfflineAlert()
-            Defaults[.useNrdb] = false
+            Defaults[.nrdbLoggedin] = false
             return
         }
         
