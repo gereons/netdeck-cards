@@ -668,8 +668,9 @@ extension EditDeckViewController: UIViewControllerPreviewingDelegate {
     }
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let cellPosition = self.tableView.convert(location, from: self.view)
         guard
-            let indexPath = self.tableView.indexPathForRow(at: location),
+            let indexPath = self.tableView.indexPathForRow(at: cellPosition),
             let cell = tableView.cellForRow(at: indexPath)
         else {
             return nil
@@ -685,7 +686,7 @@ extension EditDeckViewController: UIViewControllerPreviewingDelegate {
         imgController.selectedCard = cc.card
         imgController.preferredContentSize = CGSize(width: 0, height: 436)
 
-        previewingContext.sourceRect = cell.frame
+        previewingContext.sourceRect = self.tableView.convert(cell.frame, to: self.view)
 
         return imgController
     }
