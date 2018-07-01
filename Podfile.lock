@@ -83,10 +83,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: a27c90b395e011144a055e551b4423365f670692
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-<<<<<<< HEAD
 PODFILE CHECKSUM: e475cfd0b23ae75d018477378db6bee83d4da773
-=======
-PODFILE CHECKSUM: a60d281ceac964dcc73ecea97b9e066c80ecd041
->>>>>>> 5cab36f0... pod update, remove old obj-c files
 
 COCOAPODS: 1.5.2
