@@ -218,7 +218,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         let settings = UserDefaults.standard
         settings.set(value, forKey: key)
         
-        let rotationKeys = PackManager.rotation.packs.map { Pack.use + $0 }
+        let rotationKeys = Rotation._2017.packs.map { Pack.use + $0 }
         
         switch key {
         case DefaultsKeys.useCore._key:

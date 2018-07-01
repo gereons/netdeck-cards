@@ -237,7 +237,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Defaults.registerDefault(.fabricEnabled, true)
         Defaults.registerDefault(.defaultMWL, MWL.latest)
         Defaults.registerDefault(.rotationActive, true)
-        Defaults.registerDefault(.rotationIndex, Rotation._2017)
         Defaults.registerDefault(.convertCore, true)
         
         Defaults.registerDefault(.lastDownload, "never".localized())

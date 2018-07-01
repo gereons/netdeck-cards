@@ -51,7 +51,6 @@ class SettingsDelegate: IASKSettingsDelegate {
         var hiddenKeys = Set<String>()
 
         hiddenKeys.insert(DefaultsKeys.language._key)
-        hiddenKeys.insert(DefaultsKeys.rotationIndex._key)
 
         if !CardManager.cardsAvailable {
             hiddenKeys = Set([
@@ -79,7 +78,6 @@ class SettingsDelegate: IASKSettingsDelegate {
         
         if !Defaults[.rotationActive] {
             hiddenKeys.insert(DefaultsKeys.convertCore._key)
-            hiddenKeys.insert(DefaultsKeys.rotationIndex._key)
         }
 
         return hiddenKeys
@@ -152,9 +150,6 @@ class SettingsDelegate: IASKSettingsDelegate {
         case DefaultsKeys.rotationActive._key:
             break
 
-        case DefaultsKeys.rotationIndex._key:
-            self.reinitializeData()
-            
         default:
             break
         }
@@ -170,9 +165,7 @@ class SettingsDelegate: IASKSettingsDelegate {
         if key == DefaultsKeys.defaultMWL._key {
             return MWL.values()
         }
-        if key == DefaultsKeys.rotationIndex._key {
-            return Rotation.values()
-        }
+        
         return nil
     }
 
@@ -184,9 +177,7 @@ class SettingsDelegate: IASKSettingsDelegate {
         if key == DefaultsKeys.defaultMWL._key {
             return MWL.titles()
         }
-        if key == DefaultsKeys.rotationIndex._key {
-            return Rotation.titles()
-        }
+
         return nil
     }
 

@@ -23,7 +23,7 @@ struct Cycle: Codable {
         self.position = try container.decode(Int.self, forKey: .position)
         self.size = try container.decode(Int.self, forKey: .size)
 
-        self.rotated = PackManager.rotation.cycles.contains(self.code)
+        self.rotated = Rotation._2017.cycles.contains(self.code)
     }
 }
 
@@ -77,7 +77,7 @@ struct Pack: Codable {
         self.ffgId = try? container.decode(Int.self, forKey: .ffgId)
 
         self.settingsKey = Pack.use + code
-        self.rotated = PackManager.rotation.packs.contains(code)
+        self.rotated = Rotation._2017.packs.contains(code)
     }
     
     init(named: String, key: String) {
@@ -112,10 +112,6 @@ class PackManager {
     
     static let cores = [ core, core2 ]
     
-    static var rotation: RotatedPacks {
-        return Defaults[.rotationIndex].packs
-    }
-    
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
     
@@ -148,7 +144,7 @@ class PackManager {
         allPacks.forEach { defaults[$0.settingsKey] = $0.released }
         
         if Defaults[.rotationActive] {
-            PackManager.rotation.packs.forEach { pack in
+            Rotation._2017.packs.forEach { pack in
                 defaults[Pack.use + pack] = false
             }
         } else {
