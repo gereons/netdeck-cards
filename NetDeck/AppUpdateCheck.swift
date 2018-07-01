@@ -78,7 +78,7 @@ class AppUpdateCheck {
                     alert.addAction(UIAlertAction(title: "Update".localized(), style: .cancel) { action in
                         let url = "itms-apps://itunes.apple.com/app/id865963530"
                         Analytics.logEvent(.appUpdateStarted)
-                        UIApplication.shared.openURL(URL(string: url)!)
+                        UIApplication.shared.open(URL(string: url)!)
                     })
 
                     alert.addAction(UIAlertAction(title: "Not now".localized(), style: .default) { action in

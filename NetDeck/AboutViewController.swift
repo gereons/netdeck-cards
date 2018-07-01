@@ -68,7 +68,7 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
     
     func rateApp() {
         if let url = URL(string: "itms-apps://itunes.apple.com/app/id865963530") {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url)
         }
     }
     
@@ -110,7 +110,7 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
                 }
             default:
                 if let url = request.url {
-                    UIApplication.shared.openURL(url)
+                    UIApplication.shared.open(url)
                 }
             }
             return false

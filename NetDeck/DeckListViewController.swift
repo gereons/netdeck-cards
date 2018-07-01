@@ -104,10 +104,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.collectionView.backgroundColor = .clear
         self.collectionView.alwaysBounceVertical = true
-
-        if #available(iOS 10.0, *) {
-            self.collectionView.prefetchDataSource = self
-        }
+        self.collectionView.prefetchDataSource = self
         
         self.navigationController?.navigationBar.barTintColor = .white
         
@@ -453,7 +450,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             return
         }
         
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url)
     }
     
     private func publishDeck(_ deck: Deck) {
@@ -1219,7 +1216,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         formatter.perPageContentInsets = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
         formatter.font = UIFont.systemFont(ofSize: 10)
         self.printController.printFormatter = formatter
-        self.printController.showsPageRange = true
         
         self.printController.present(from: sender, animated: false) { controller, completed, error in
             if !completed && error != nil {
@@ -1234,7 +1230,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
 
 }
 
-@available(iOS 10.0, *)
 extension DeckListViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         indexPaths.forEach {

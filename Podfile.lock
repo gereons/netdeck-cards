@@ -58,7 +58,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 1f14f11f840f598d687cb796589084574716faf3
+    :commit: 09c5c594c82899d0a30de0b5216974b307fbb0cc
     :git: https://github.com/core-plot/core-plot
   EasyTipView:
     :commit: f3ee306710de0ebcc9ed3dcccd7ea1b8be86cacc
@@ -83,6 +83,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: a27c90b395e011144a055e551b4423365f670692
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: e475cfd0b23ae75d018477378db6bee83d4da773
+PODFILE CHECKSUM: e9c58ddf4b2a8e67e1f256273b25cf8cdee4947b
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3

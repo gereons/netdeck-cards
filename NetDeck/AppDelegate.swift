@@ -396,7 +396,7 @@ extension AppDelegate {
             mailto += "&body="
             mailto += body.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
             
-            UIApplication.shared.openURL(URL(string:mailto)!)
+            UIApplication.shared.open(URL(string:mailto)!)
         })
         
         self.window?.rootViewController?.present(alert, animated:false, completion:nil)

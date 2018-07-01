@@ -709,7 +709,6 @@ extension EditDeckViewController: UIPrintInteractionControllerDelegate {
         formatter.perPageContentInsets = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
         formatter.font = UIFont.systemFont(ofSize: 10)
         self.printController.printFormatter = formatter
-        self.printController.showsPageRange = true
         
         self.printController.present(animated: false) { controller, completed, error in
             if !completed && error != nil {

@@ -49,10 +49,7 @@ class CardImageViewController: UIViewController {
         
         self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         self.collectionView.scrollFix()
-
-        if #available(iOS 10.0, *) {
-            self.collectionView.prefetchDataSource = self
-        }
+        self.collectionView.prefetchDataSource = self
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -172,7 +169,6 @@ extension CardImageViewController: UICollectionViewDelegate, UICollectionViewDat
     }
 }
 
-@available(iOS 10.0, *)
 extension CardImageViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         indexPaths.forEach {

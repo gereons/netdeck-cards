@@ -98,12 +98,7 @@ class ImportDecksViewController: UIViewController {
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.addTarget(self, action: #selector(self.handleRefresh(_:)), for: .valueChanged)
-        if #available(iOS 10.0, *) {
-            self.tableView.refreshControl = refreshControl
-        } else {
-            // self.tableView.backgroundView = refreshControl
-            self.tableView.addSubview(self.refreshControl)
-        }
+        self.tableView.refreshControl = refreshControl
     }
     
     override func viewDidAppear(_ animated: Bool) {

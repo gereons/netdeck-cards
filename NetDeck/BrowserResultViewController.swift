@@ -87,10 +87,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.collectionView.contentInset = insets
         self.collectionView.scrollIndicatorInsets = insets
         self.collectionView.alwaysBounceVertical = true
-
-        if #available(iOS 10, *) {
-            self.collectionView.prefetchDataSource = self
-        }
+        self.collectionView.prefetchDataSource = self
         
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture(_:)))
         self.collectionView.addGestureRecognizer(pinch)
@@ -325,7 +322,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         sheet.addAction(UIAlertAction(title: "NetrunnerDB page for this card".localized()) { action in
             Analytics.logEvent(.openNRDB, attributes: ["Card": card.name])
             if let nrdbUrl = URL(string: card.nrdbLink) {
-                UIApplication.shared.openURL(nrdbUrl)
+                UIApplication.shared.open(nrdbUrl)
             }
         })
         
@@ -384,7 +381,6 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     }
 }
 
-@available(iOS 10.0, *)
 extension BrowserResultViewController: UICollectionViewDataSourcePrefetching {
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {

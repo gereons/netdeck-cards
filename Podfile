@@ -1,11 +1,8 @@
 use_frameworks!
-# use_modular_headers!
 inhibit_all_warnings!
-platform :ios, '9.2'
+platform :ios, '10.3'
 
 def pods
-#    pod 'Fabric'
-#    pod 'Crashlytics'
     pod 'SVProgressHUD'
     pod 'InAppSettingsKit'
     pod 'MultiSelectSegmentedControl'

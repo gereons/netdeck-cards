@@ -348,7 +348,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
                 let alert = UIAlertController.alert(title: nil, message: msg)
                 alert.addAction(UIAlertAction(title:"NetrunnerDB".localized()) { action in
                     if let url = URL(string: card.nrdbLink) {
-                        UIApplication.shared.openURL(url)
+                        UIApplication.shared.open(url)
                     }
                 })
                 
