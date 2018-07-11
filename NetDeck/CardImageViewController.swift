@@ -167,6 +167,11 @@ extension CardImageViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.peeking ? 100 : 10
     }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let margin: CGFloat = self.peeking ? 100 : 0
+        return UIEdgeInsetsMake(0, margin, 0, margin)
+    }
 }
 
 extension CardImageViewController: UICollectionViewDataSourcePrefetching {
