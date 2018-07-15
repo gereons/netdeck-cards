@@ -65,8 +65,12 @@ class CardManager {
         }
     }
 
-    static func cardBy(_ code: String) -> Card? {
-        return allKnownCards[code]
+    static func cardBy(_ code: String, useReplacements: Bool = true) -> Card? {
+        let card = allKnownCards[code]
+        if useReplacements, let replaced = card?.replacedBy {
+            return allKnownCards[replaced]
+        }
+        return card
     }
     
     static func allCards() -> [Card] {
@@ -117,7 +121,11 @@ class CardManager {
 
         var allIdentities = self.identitiesFor(role).filter { !disabledPackCodes.contains($0.packCode) }
         if packUsage == .selected && legality != .cacheRefresh && legality != .modded {
-            allIdentities.append(contentsOf: Prebuilt.identities(for: role))
+            for identity in Prebuilt.identities(for: role) {
+                if !allIdentities.contains(identity) && !disabledPackCodes.contains(identity.packCode) {
+                    allIdentities.append(identity)
+                }
+            }
         }
 
         allIdentities.sort { c1, c2 in

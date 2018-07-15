@@ -265,7 +265,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Defaults.registerDefault(.browserPacks, PackUsage.selected)
         Defaults.registerDefault(.deckbuilderPacks, PackUsage.selected)
         
-        Defaults.registerDefault(.numCores, 3)
+        Defaults.registerDefault(.numOriginalCore, 0)
+        Defaults.registerDefault(.numRevisedCore, 3)
         
         Defaults.registerDefault(.identityTable, true)
     }

@@ -48,6 +48,9 @@ class Card: NSObject {
     
     private var factionCode = ""
     private var typeCode = ""
+
+    private(set) var replaces: String?               // revised core card, replaces old card
+    private(set) var replacedBy: String?             // old card, replaced by Revised core
     
     @objc private(set) var packCode = ""
     private(set) var quantity = -1             // number of cards in set
@@ -127,9 +130,19 @@ class Card: NSObject {
     var owned: Int {
         let prebuiltOwned = Prebuilt.owned(self)
 
-        if self.isCore {
-            let cores = Defaults[.numCores]
-            return (cores * self.quantity) + prebuiltOwned
+        var oldOwned = 0
+        if Defaults[.useCore], let replaces = self.replaces {
+            let card = CardManager.cardBy(replaces, useReplacements: false)
+            oldOwned = card?.owned ?? 0
+        }
+
+        if self.packCode == PackManager.core {
+            let cores = Defaults[.numOriginalCore]
+            return (cores * self.quantity) + prebuiltOwned + oldOwned
+        }
+        if self.packCode == PackManager.core2 {
+            let cores = Defaults[.numRevisedCore]
+            return (cores * self.quantity) + prebuiltOwned + oldOwned
         }
 
         let disabledPacks = PackManager.disabledPackCodes()
@@ -137,7 +150,7 @@ class Card: NSObject {
             return prebuiltOwned
         }
 
-        return self.quantity + prebuiltOwned
+        return self.quantity + prebuiltOwned + oldOwned
     }
     
     var isRotated: Bool {
@@ -284,6 +297,9 @@ extension Card {
         }
         
         self.imageUrl = card.image_url
+
+        self.replaces = Card.revisedToOriginal[self.code]
+        self.replacedBy = Card.originalToRevised[self.code]
     }
     
     

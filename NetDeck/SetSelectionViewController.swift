@@ -28,8 +28,11 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         
         if self.values.count > 1 {
             // add "number of core sets" fake entry
-            let numCores = Pack(named: "Number of Core Sets".localized(), key: DefaultsKeys.numCores._key)
-            self.values[self.coreSection].append(numCores)
+            let numCores = Pack(named: "Number of Core Sets".localized(), key: DefaultsKeys.numOriginalCore._key)
+            self.values[self.coreSection].insert(numCores, at: 1)
+
+            let numCore2s = Pack(named: "Number of Revised Core Sets".localized(), key: DefaultsKeys.numRevisedCore._key)
+            self.values[self.coreSection].append(numCore2s)
         }
     }
     
@@ -74,39 +77,58 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     @objc func coresAlert(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Number of Core Sets".localized(), message: nil, preferredStyle: .alert)
-        
+        self.showCoresAlert(revised: false)
+    }
+
+    @objc func core2sAlert(_ sender: UIButton) {
+        self.showCoresAlert(revised: true)
+    }
+
+    private func showCoresAlert(revised: Bool) {
+        let title = revised ? "Number of Revised Core Sets" : "Number of Core Sets"
+        let alert = UIAlertController(title: title.localized(), message: nil, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "0") { action in
+            self.changeCoreSets(revised, 0)
+        })
         alert.addAction(UIAlertAction(title: "1") { action in
-            self.changeCoreSets(1)
+            self.changeCoreSets(revised, 1)
         })
         alert.addAction(UIAlertAction(title: "2") { action in
-            self.changeCoreSets(2)
+            self.changeCoreSets(revised, 2)
         })
         alert.addAction(UIAlertAction(title: "3") { action in
-            self.changeCoreSets(3)
+            self.changeCoreSets(revised, 3)
         })
         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
-        
+
         self.present(alert, animated: false, completion: nil)
     }
     
-    private func changeCoreSets(_ numCores: Int) {
-        Defaults[.numCores] = numCores
+    private func changeCoreSets(_ revised: Bool, _ numCores: Int) {
+        Defaults[revised ? .numRevisedCore : .numOriginalCore] = numCores
+
+        if numCores == 0 {
+            Defaults[revised ? .useCore2 : .useCore ] = false
+        }
         self.tableView.reloadData()
     }
     
     private func enableAll() {
-        self.changeCoreSets(3)
+        self.changeCoreSets(true, 3)
+        self.changeCoreSets(false, 3)
         
         for pack in PackManager.allPacks {
             Defaults.set(pack.released, forKey: pack.settingsKey)
         }
         
         if Defaults[.rotationActive] {
+            self.changeCoreSets(false, 0)
             PackManager.rotatedPackKeys().forEach {
                 Defaults.set(false, forKey: $0)
             }
         } else {
+            self.changeCoreSets(true, 0)
             Defaults.set(false, forKey: DefaultsKeys.useCore2._key)
         }
         
@@ -116,7 +138,8 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     }
 
     private func setModded() {
-        self.changeCoreSets(3)
+        self.changeCoreSets(false, 0)
+        self.changeCoreSets(true, 3)
 
         for pack in PackManager.allPacks {
             Defaults.set(false, forKey: pack.settingsKey)
@@ -142,7 +165,8 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     private func setCacheRefresh(_ deluxe: String) {
-        self.changeCoreSets(1)
+        self.changeCoreSets(true, 1)
+        self.changeCoreSets(false, 0)
         
         for pack in PackManager.allPacks {
             Defaults.set(false, forKey: pack.settingsKey)
@@ -193,13 +217,21 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         cell.textLabel?.text = pack.name
         cell.accessoryView = nil
         
-        if pack.settingsKey == DefaultsKeys.numCores._key {
-            let numCores = Defaults[.numCores]
+        if pack.settingsKey == DefaultsKeys.numOriginalCore._key {
+            let numCores = Defaults[.numOriginalCore]
             let button = UIButton(type: .system)
             button.frame = CGRect(x: 0, y: 0, width: 40, height: 30)
             button.setTitle("\(numCores)", for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
             button.addTarget(self, action: #selector(self.coresAlert(_:)), for: .touchUpInside)
+            cell.accessoryView = button
+        } else if pack.settingsKey == DefaultsKeys.numRevisedCore._key {
+            let numCores = Defaults[.numRevisedCore]
+            let button = UIButton(type: .system)
+            button.frame = CGRect(x: 0, y: 0, width: 40, height: 30)
+            button.setTitle("\(numCores)", for: .normal)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+            button.addTarget(self, action: #selector(self.core2sAlert(_:)), for: .touchUpInside)
             cell.accessoryView = button
         } else {
             let on = Defaults.bool(forKey: pack.settingsKey)
@@ -217,26 +249,13 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     func toggleSetting(_ value: Bool, for key: String) {
         let settings = UserDefaults.standard
         settings.set(value, forKey: key)
-        
-        let rotationKeys = Rotation._2017.packs.map { Pack.use + $0 }
-        
-        switch key {
-        case DefaultsKeys.useCore._key:
-            settings.set(!value, forKey: DefaultsKeys.useCore2._key)
-        case DefaultsKeys.useCore2._key:
-            settings.set(!value, forKey: DefaultsKeys.useCore._key)
-            if value {
-                rotationKeys.forEach {
-                    settings.set(false, forKey: $0)
-                }
-            }
-        default:
-            if value && rotationKeys.contains(key) {
-                self.toggleSetting(false, for: DefaultsKeys.useCore2._key)
-            }
-            break
-        }
 
+        if key == DefaultsKeys.useCore._key && value == true && Defaults[.numOriginalCore] == 0 {
+            self.showCoresAlert(revised: false)
+        }
+        if key == DefaultsKeys.useCore2._key && value == true && Defaults[.numRevisedCore] == 0 {
+            self.showCoresAlert(revised: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

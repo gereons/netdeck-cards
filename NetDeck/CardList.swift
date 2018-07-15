@@ -57,6 +57,10 @@ class CardList {
             if legality != .cacheRefresh && legality != .modded {
                 self.addPrebuilts(for: role, includeIdentities: browser)
             }
+            if Defaults[.rotationActive] {
+                self.filterReplacedCards()
+                self.filterRotation()
+            }
         case .all:
             self.filterDraft()
             self.filterRotation()
@@ -129,10 +133,21 @@ class CardList {
         self.applyPredicate(predicate)
     }
     
-    func filterDraft() {
+    private func filterDraft() {
         if !Defaults[.useDraft] {
             let predicate = NSPredicate(format: "packCode != %@", PackManager.draft)
             self.applyPredicate(predicate)
+        }
+    }
+
+    private func filterReplacedCards() {
+        let codes = Set(self.initialCards.map { $0.code })
+        self.initialCards = self.initialCards.filter { card in
+            if let replaced = card.replacedBy {
+                return codes.contains(replaced)
+            } else {
+                return true
+            }
         }
     }
     

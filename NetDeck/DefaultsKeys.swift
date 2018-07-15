@@ -45,17 +45,21 @@ extension DefaultsKeys {
     static let language = DefaultsKey<String>("language")
     
     // Card selection
+    /// use original Core Set?
+    static let useCore = DefaultsKey<Bool>("use_core")
     /// number of core sets
-    static let numCores = DefaultsKey<Int>("number_coresets")
+    static let numOriginalCore = DefaultsKey<Int>("number_coresets")
+
+    /// use revised Core Set?
+    static let useCore2 = DefaultsKey<Bool>("use_core2")
+     /// number of revised core sets
+    static let numRevisedCore = DefaultsKey<Int>("number_revisedcoresets")
+
     /// is Data & Destiny selected/allowed?
     static let useDataDestiny = DefaultsKey<Bool>("use_dad")
     /// use Draft identities?
     static let useDraft = DefaultsKey<Bool>("use_draft")
-    /// use Classic Core Set?
-    static let useCore = DefaultsKey<Bool>("use_core")
-    /// use Revised Core Set?
-    static let useCore2 = DefaultsKey<Bool>("use_core2")
-    
+
     // Import/Export settings
     /// Dropbox enabled?
     static let useDropbox = DefaultsKey<Bool>("useDropbox")
