@@ -13475,7 +13475,7 @@
 "uniqueness":true},
 {"code":"13041",
 "deck_limit":1,"faction_code":"weyland-consortium",
-"flavor":"Might makes right",
+"flavor":"Might makes right.",
 "illustrator":"Emilio Rodriguez",
 "image_url":"https://www.cardgamedb.com/forums/uploads/an/med_ADN42_41.png",
 "influence_limit":15,"keywords":"Subsidiary",
@@ -16838,7 +16838,7 @@
 "keywords":"Connection",
 "pack_code":"rar",
 "position":25,"quantity":1,"side_code":"runner",
-"text":"Host a <strong>g-mod</strong> identity that does not match the faction of your identity on DJ Fenris when he is installed. Remove hosted identity from the game if DJ Fenris is trashed.\nDJ Fenris gains the text of the hosted identity.",
+"text":"Host a <strong>g-mod</strong> identity that does not match the faction of your identity on DJ Fenris when he is installed. Remove hosted identity from the game if DJ Fenris is uninstalled.\nDJ Fenris gains the text of the hosted identity.\nLimit 1 per deck.",
 "title":"DJ Fenris",
 "type_code":"resource",
 "uniqueness":true},
@@ -16921,7 +16921,7 @@
 "position":32,"quantity":3,"side_code":"corp",
 "text":"Gain [click] for each agenda in the Runner's score area. Remove Game Changer from the game instead of trashing it.",
 "title":"Game Changer",
-"type_code":"operation",
+"trash_cost":2,"type_code":"operation",
 "uniqueness":false},
 {"code":"22033",
 "cost":3,"deck_limit":3,"faction_code":"haas-bioroid",
@@ -17219,4 +17219,4 @@
 "title":"Lady Liberty",
 "trash_cost":4,"type_code":"asset",
 "uniqueness":true}],"total":1543,"success":true,"version_number":"2.0",
-"last_updated":"2018-06-28T20:24:17+00:00"}
+"last_updated":"2018-07-24T18:20:28+00:00"}
