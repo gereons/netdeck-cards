@@ -41,6 +41,10 @@ class MWLSelection {
             setter.setLegality(DeckLegality.standard(mwl: MWL.v2_1))
         })
 
+        alert.addAction(UIAlertAction(title: "MWL v2.2".localized().checked(deck.legality == .v2_2)) { action in
+            setter.setLegality(DeckLegality.standard(mwl: MWL.v2_2))
+        })
+
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(deck.legality == .onesies)) { action in
             setter.setLegality(DeckLegality.onesies)
         })
