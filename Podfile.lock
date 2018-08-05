@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.7.2)
+  - Alamofire (4.7.3)
   - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
   - AlamofireNetworkActivityIndicator (2.2.1):
@@ -13,7 +13,7 @@ PODS:
   - SDCAlertView (8.1)
   - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (3.0.1)
-  - SwiftyDropbox (4.5.0):
+  - SwiftyDropbox (4.6.0):
     - Alamofire (~> 4.7.0)
   - SwiftyUserDefaults (3.0.1)
 
@@ -58,17 +58,17 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 09c5c594c82899d0a30de0b5216974b307fbb0cc
+    :commit: 3e4606d9cfc39fed231e901f910c8535c7a84f43
     :git: https://github.com/core-plot/core-plot
   EasyTipView:
     :commit: f3ee306710de0ebcc9ed3dcccd7ea1b8be86cacc
     :git: https://github.com/gereons/EasyTipView
   SwiftyDropbox:
-    :commit: b3f75cb87ddb4dc2c70ac73592968a56f4ebfbc1
+    :commit: c2b5a73944247a844092b0429b22cc09e9919c30
     :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
-  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
   AlamofireNetworkActivityIndicator: aeac50e6ecb78ec71a5f1f29098bcf4ec2962910
   CorePlot: a89f21d4662cb54853e579c4ce560e74036cffcb
@@ -80,7 +80,7 @@ SPEC CHECKSUMS:
   SDCAlertView: c497f7c812ccc06095d6f772aa282ebe1a216f4a
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
-  SwiftyDropbox: a27c90b395e011144a055e551b4423365f670692
+  SwiftyDropbox: b821cb0ca49935714a5038115dee22756728a953
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
 PODFILE CHECKSUM: e9c58ddf4b2a8e67e1f256273b25cf8cdee4947b
