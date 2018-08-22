@@ -9,7 +9,7 @@ PODS:
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.0)
   - InAppSettingsKit (2.9)
-  - MultiSelectSegmentedControl (1.1.3)
+  - MultiSelectSegmentedControl (1.2)
   - SDCAlertView (8.1)
   - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (3.0.1)
@@ -58,7 +58,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 3e4606d9cfc39fed231e901f910c8535c7a84f43
+    :commit: 9aa8d05a8ae70cc5d8066bdd0187d017fa445df4
     :git: https://github.com/core-plot/core-plot
   EasyTipView:
     :commit: f3ee306710de0ebcc9ed3dcccd7ea1b8be86cacc
@@ -76,7 +76,7 @@ SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: ce986be6a3a321475bc27488f086c018a1275006
   InAppSettingsKit: fc3dea21846535b76b8289b119dbfdbe2505b2b2
-  MultiSelectSegmentedControl: 662be7f12ed2475c994f070aa72e2429c8d204e0
+  MultiSelectSegmentedControl: ab9fade00f2b457334bcd451474dfc68c4690edb
   SDCAlertView: c497f7c812ccc06095d6f772aa282ebe1a216f4a
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
