@@ -96,7 +96,7 @@ enum MWL: Int, Comparable {
     case v1_2   // as of 2017-04-12
     case v2_0   // as of 2017-10-01
     case v2_1   // as of 2018-02-26
-    case v2_2   // as of 2018-08-??
+    case v2_2   // as of 2018-09-06
 
     static let latest = MWL.v2_2
 
@@ -163,6 +163,13 @@ enum DeckLegality: Equatable {
         case .standard(let mwl): return mwl
         case .cacheRefresh: return MWL.latest
         default: return .none
+        }
+    }
+
+    var isStandard: Bool {
+        switch self {
+        case .standard: return true
+        default: return false
         }
     }
 

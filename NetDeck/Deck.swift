@@ -740,7 +740,7 @@ extension Deck {
         let noJintekiAllowed = self.identity?.code == Card.customBiotics
         var limitError = false, jintekiError = false, agendaError = false
         
-        // check max 1 per deck restrictions and other spcial rules
+        // check max 1 per deck restrictions and other special rules
         for cc in self.cards {
             let card = cc.card
             
@@ -763,8 +763,8 @@ extension Deck {
             }
         }
 
-        let banned = self.cards.filter { $0.card.banned(self.mwl) }
-        let restricted = self.cards.filter { $0.card.restricted(self.mwl) }
+        let banned = self.allCards.filter { $0.card.banned(self.mwl) }
+        let restricted = self.allCards.filter { $0.card.restricted(self.mwl) }
 
         if banned.count > 0 {
             reasons.append("Uses removed cards".localized())

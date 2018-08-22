@@ -128,6 +128,10 @@ class CardManager {
             }
         }
 
+        if legality.isStandard {
+            allIdentities = allIdentities.filter { !$0.banned(legality.mwl) }
+        }
+
         allIdentities.sort { c1, c2 in
             c1.packNumber == c2.packNumber ? c1.number < c2.number : c1.packNumber < c2.packNumber
         }
