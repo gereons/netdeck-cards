@@ -110,7 +110,7 @@ class CardManager {
             disabledPackCodes = PackManager.disabledPackCodes().union(PackManager.rotatedPackCodes())
         }
         
-        if !disabledPackCodes.contains(PackManager.draft) {
+        if !disabledPackCodes.contains(PackManager.draft) || Defaults[.useNapd] {
             factionNames.append(Faction.name(for: .neutral))
         }
         
@@ -145,7 +145,7 @@ class CardManager {
 
         if !disabledPackCodes.contains(PackManager.draft) {
             factionNames.removeLast()
-            factionNames.append("Draft".localized())
+            factionNames.append("Neutral/Draft".localized())
         }
         
         for i in (0 ..< factionNames.count).reversed() {

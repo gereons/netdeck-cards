@@ -95,6 +95,7 @@ struct Pack: Codable {
 class PackManager {
     static let unknown = "unknown"
     static let draft = "draft"
+    static let napd = "napd"
     
     static let core = "core"
     static let core2 = "core2"

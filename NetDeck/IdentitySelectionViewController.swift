@@ -191,7 +191,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
                 self.factionNames = [ Faction.name(for: faction) ]
                 self.identities = [ self.allIdentities[selected - 1] ]
             } else {
-                self.factionNames = [ "Draft".localized() ]
+                self.factionNames = [ "Neutral/Draft".localized() ]
                 self.identities = [ self.allIdentities[selected - 1] ]
             }
         }

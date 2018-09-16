@@ -59,6 +59,8 @@ extension DefaultsKeys {
     static let useDataDestiny = DefaultsKey<Bool>("use_dad")
     /// use Draft identities?
     static let useDraft = DefaultsKey<Bool>("use_draft")
+    /// use NAPD multiplayer?
+    static let useNapd = DefaultsKey<Bool>("use_napd")
 
     // Import/Export settings
     /// Dropbox enabled?
