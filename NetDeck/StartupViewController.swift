@@ -63,14 +63,10 @@ class StartupViewController: UIViewController {
         layer.path = Hex.path(at: point).cgPath
         layer.strokeColor = UIColor.white.cgColor
         layer.lineWidth = 4.0
-        layer.fillColor = self.randomGrey().cgColor
+        let color = self.greys.randomElement() ?? .lightGray
+        layer.fillColor = color.cgColor
         
         self.view.layer.addSublayer(layer)
-    }
-    
-    private func randomGrey() -> UIColor {
-        let r = Int(arc4random_uniform(UInt32(self.greys.count)))
-        return self.greys[r]
     }
     
     private struct Hex {
