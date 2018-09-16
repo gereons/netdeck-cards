@@ -197,8 +197,7 @@ class NRDB: NSObject {
         }
         
         if Defaults[.nrdbRefreshToken] == "" {
-            // print("no token");
-            NRDB.clearSettings()
+            // print("no token")
             completion(.noData)
             return
         }
