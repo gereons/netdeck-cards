@@ -47,7 +47,7 @@ class CardImageViewController: UIViewController {
         let nib = UINib(nibName: "CardImageViewCell", bundle: nil)
         self.collectionView.register(nib, forCellWithReuseIdentifier: "cardCell")
         
-        self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        self.collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         self.collectionView.scrollFix()
         self.collectionView.prefetchDataSource = self
     }
@@ -170,7 +170,7 @@ extension CardImageViewController: UICollectionViewDelegate, UICollectionViewDat
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let margin: CGFloat = self.peeking ? 100 : 0
-        return UIEdgeInsetsMake(0, margin, 0, margin)
+        return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }
 }
 

@@ -27,7 +27,7 @@ class CompareDecksList: DecksViewController {
         let title = "Select two decks to compare them".localized()
         self.footerButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(self.footerClicked(_:)))
         self.footerButton.tintColor = .black
-        let fontName = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)]
+        let fontName = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
         self.footerButton.setTitleTextAttributes(fontName, for: .normal)
         
         self.toolBar.items = [ self.footerButton ]
@@ -148,7 +148,7 @@ class CompareDecksList: DecksViewController {
 // MARK: - Empty state
 extension CompareDecksList {
     
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControl.State) -> NSAttributedString! {
         return nil
     }
     

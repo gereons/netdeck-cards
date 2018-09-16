@@ -446,7 +446,7 @@ class SavedDecksList: DecksViewController {
         }
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let deck = self.decks[indexPath.section][indexPath.row]
             NRDB.sharedInstance.deleteDeck(deck.netrunnerDbId)
@@ -466,7 +466,7 @@ class SavedDecksList: DecksViewController {
         return true
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
 }
@@ -474,13 +474,13 @@ class SavedDecksList: DecksViewController {
 // MARK: - empty state
 extension SavedDecksList {
 
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControl.State) -> NSAttributedString! {
         if self.filterText.count > 0 {
             return nil
         }
         
         let color = self.tableView.tintColor ?? .blue
-        let attrs: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17), NSAttributedStringKey.foregroundColor: color ]
+        let attrs: [NSAttributedString.Key: Any] = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17), NSAttributedString.Key.foregroundColor: color ]
         return NSAttributedString(string: "New Deck".localized(), attributes: attrs)
     }
     

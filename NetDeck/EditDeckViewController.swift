@@ -618,7 +618,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationController?.pushViewController(imgController, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let cc = self.cards[indexPath.section][indexPath.row]
             if !cc.isNull {

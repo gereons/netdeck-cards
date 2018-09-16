@@ -41,8 +41,8 @@ class TickingLabel: UILabel {
         
         let animation = CATransition()
         animation.duration = 0.2
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        self.layer.add(animation, forKey: kCATransitionFade)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        self.layer.add(animation, forKey: CATransitionType.fade.rawValue)
         
         self.text = strings[self.currentIndex]
     }

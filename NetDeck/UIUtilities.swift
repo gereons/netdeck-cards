@@ -30,7 +30,7 @@ extension UIEdgeInsets {
 extension UIScrollView {
     func scrollFix() {
         if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
+            self.contentInsetAdjustmentBehavior = UIScrollView.ContentInsetAdjustmentBehavior.never
         }
     }
 }

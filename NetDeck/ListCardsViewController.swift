@@ -48,9 +48,9 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         self.summaryLabel.text = ""
         
         // needed to make the 1 pixel separator show - wtf is this needed here but not elsewhere?
-        self.view.bringSubview(toFront: self.toolBar)
-        self.view.bringSubview(toFront: self.statusLabel)
-        self.view.bringSubview(toFront: self.summaryLabel)
+        self.view.bringSubviewToFront(self.toolBar)
+        self.view.bringSubviewToFront(self.statusLabel)
+        self.view.bringSubviewToFront(self.summaryLabel)
         
         self.tableView.register(UINib(nibName: "EditDeckCell", bundle: nil), forCellReuseIdentifier: "cardCell")
         
@@ -97,7 +97,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if self.isMovingFromParentViewController {
+        if self.isMovingFromParent {
             self.searchBar.text = ""
             self.filterText = ""
             self.cardList.clearFilters()

@@ -448,8 +448,8 @@ extension DecksViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
         }
         
         let attributes = [
-            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 21),
-            NSAttributedStringKey.foregroundColor: UIColor.lightGray
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 21),
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray
         ]
         return NSAttributedString(string: "No Decks".localized(), attributes: attributes)
     }
@@ -459,8 +459,8 @@ extension DecksViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
             return nil
         }
         let attributes = [
-            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),
-            NSAttributedStringKey.foregroundColor: UIColor.lightGray
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray
         ]
         return NSAttributedString(string: "Your decks will be shown here".localized(), attributes: attributes)
     }

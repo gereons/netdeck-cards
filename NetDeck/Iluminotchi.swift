@@ -23,7 +23,7 @@ public final class Illuminotchi {
     init() {
         let notificationCenter = NotificationCenter.default
         let keyWindowSelector = #selector(handle(windowDidBecomeKeyNotification:))
-        notificationCenter.addObserver(self, selector: keyWindowSelector, name: .UIWindowDidBecomeKey, object: nil)
+        notificationCenter.addObserver(self, selector: keyWindowSelector, name: UIWindow.didBecomeKeyNotification, object: nil)
     }
 
     deinit {
@@ -59,7 +59,7 @@ public final class Illuminotchi {
         if UIDevice.hasNotchView, let keyWindow = UIApplication.shared.keyWindow {
             self.underlyingNotchView.removeFromSuperview()
             keyWindow.addSubview(self.underlyingNotchView)
-            keyWindow.bringSubview(toFront: self.underlyingNotchView)
+            keyWindow.bringSubviewToFront(self.underlyingNotchView)
         }
     }
 

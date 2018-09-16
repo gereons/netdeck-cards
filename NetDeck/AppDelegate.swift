@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private var initGroup = DispatchGroup()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.setBuiltinUserDefaults()
 
         Analytics.setup()
@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         self.waitForInitialization()
         
-        let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem
+        let shortcutItem = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem
         if shortcutItem != nil {
             self.launchShortcutItem = shortcutItem
             return false
@@ -119,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let useNrdb = Defaults[.useNrdb]
         let keepCredentials = Defaults[.keepNrdbCredentials]
-        let fetchInterval = useNrdb && !keepCredentials ? UIApplicationBackgroundFetchIntervalMinimum : UIApplicationBackgroundFetchIntervalNever
+        let fetchInterval = useNrdb && !keepCredentials ? UIApplication.backgroundFetchIntervalMinimum : UIApplication.backgroundFetchIntervalNever
         UIApplication.shared.setMinimumBackgroundFetchInterval(fetchInterval)
 
         SVProgressHUD.setDefaultMaskType(.black)
@@ -145,8 +145,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.replaceRootViewController(with: root)
 
         let attributes = [
-            NSAttributedStringKey.font: UIFont(name: "Menlo-Regular", size: 13)!,
-            NSAttributedStringKey.foregroundColor: UIColor.lightGray
+            NSAttributedString.Key.font: UIFont(name: "Menlo-Regular", size: 13)!,
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray
         ]
         let str = NSAttributedString(string: "Hack the Planet!", attributes: attributes)
         Illuminotchi.add(attributedText: str)
@@ -307,7 +307,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         guard let scheme = url.scheme else {
             return false
         }

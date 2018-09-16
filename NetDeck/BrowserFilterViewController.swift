@@ -184,7 +184,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
             UIKeyCommand(input: "A", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope: All".localized()),
             UIKeyCommand(input: "N", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope: Name".localized()),
             UIKeyCommand(input: "T", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope: Text".localized()),
-            UIKeyCommand(input: UIKeyInputEscape, modifierFlags: [], action: #selector(self.escKeyPressed(_:)))
+            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(self.escKeyPressed(_:)))
         ]
     }
     

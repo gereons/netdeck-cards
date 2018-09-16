@@ -78,7 +78,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
         // setup collectionview
         
         self.collectionView.register(UINib(nibName: "IdentityCardView", bundle: nil), forCellWithReuseIdentifier: "cardThumb")
-        self.collectionView.register(CollectionViewSectionHeader.nib(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "sectionHeader")
+        self.collectionView.register(CollectionViewSectionHeader.nib(), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "sectionHeader")
         
         let collectionTap = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap(_:)))
         collectionTap.numberOfTapsRequired = 2

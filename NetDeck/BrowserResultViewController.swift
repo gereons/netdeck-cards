@@ -81,7 +81,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.register(UINib(nibName: "LargeBrowserCell", bundle: nil), forCellReuseIdentifier: "largeBrowserCell")
         
         self.collectionView.register(UINib(nibName: "BrowserImageCell", bundle: nil), forCellWithReuseIdentifier: "browserImageCell")
-        self.collectionView.register(CollectionViewSectionHeader.nib(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "sectionHeader")
+        self.collectionView.register(CollectionViewSectionHeader.nib(), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "sectionHeader")
         
         let insets = UIEdgeInsets.forScreen()
         self.collectionView.contentInset = insets

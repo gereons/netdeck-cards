@@ -356,7 +356,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         return section == 0 ? "Runner".localized() : "Corp".localized()
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let deck = self.decks[indexPath.section][indexPath.row]
             NRDB.sharedInstance.deleteDeck(deck.netrunnerDbId)
@@ -399,7 +399,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
             return nil
         }
         
-        let attrs: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 21.0), NSAttributedStringKey.foregroundColor: UIColor.lightGray ]
+        let attrs: [NSAttributedString.Key: Any] = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 21.0), NSAttributedString.Key.foregroundColor: UIColor.lightGray ]
         
         let title = CardManager.cardsAvailable ? "No Decks" : "No Card Data"
         
@@ -413,18 +413,18 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
 
         let text = CardManager.cardsAvailable ? "Your decks will be shown here" : "To use this app, you must first download card data."
 
-        let attrs: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14.0), NSAttributedStringKey.foregroundColor: UIColor.lightGray ]
+        let attrs: [NSAttributedString.Key: Any] = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0), NSAttributedString.Key.foregroundColor: UIColor.lightGray ]
         
         return NSAttributedString(string: text.localized(), attributes: attrs)
     }
     
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControl.State) -> NSAttributedString! {
         if self.filterText.count > 0 {
             return nil
         }
         
         let color = self.tableView.tintColor ?? .blue
-        let attrs: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17.0), NSAttributedStringKey.foregroundColor: color ]
+        let attrs: [NSAttributedString.Key: Any] = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17.0), NSAttributedString.Key.foregroundColor: color ]
         
         let text = CardManager.cardsAvailable ? "New Deck" : "Download"
         

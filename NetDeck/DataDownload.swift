@@ -73,7 +73,7 @@ class DataDownload: NSObject {
         alert.visualStyle = CustomAlertVisualStyle(alertStyle: .alert)
         self.sdcAlert = alert
         
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let spinner = UIActivityIndicatorView(style: .gray)
         spinner.startAnimating()
         spinner.translatesAutoresizingMaskIntoConstraints = false
         alert.contentView.addSubview(spinner)
@@ -206,7 +206,7 @@ class DataDownload: NSObject {
         let alert = AlertController(title: "Downloading Images".localized(), message:nil, preferredStyle: .alert)
         self.sdcAlert = alert
         
-        let attrs = [ NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFont.Weight.regular) ]
+        let attrs = [ NSAttributedString.Key.font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFont.Weight.regular) ]
         alert.attributedMessage = NSAttributedString(string: msg, attributes: attrs)
         
         alert.contentView.addSubview(progressView)
@@ -245,7 +245,7 @@ class DataDownload: NSObject {
                 DispatchQueue.main.async {
                     let progress = Float(index) / Float(self.cards.count)
                     self.progressView?.progress = progress
-                    let attrs = [ NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFont.Weight.regular) ]
+                    let attrs = [ NSAttributedString.Key.font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFont.Weight.regular) ]
                     let msg = String(format: "Image %d of %d".localized(), index+1, self.cards.count)
                     self.sdcAlert?.attributedMessage = NSAttributedString(string:msg, attributes:attrs)
                 }

@@ -143,12 +143,12 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         self.collectionView.register(UINib(nibName: "CardFilterThumbView", bundle: nil), forCellWithReuseIdentifier: "cardThumb")
-        self.collectionView.register(CollectionViewSectionHeader.nib(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "sectionHeader")
+        self.collectionView.register(CollectionViewSectionHeader.nib(), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "sectionHeader")
         self.collectionView.alwaysBounceVertical = true
         
         let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.headerReferenceSize = CGSize(width: 320, height: 22)
-        layout.sectionInset = UIEdgeInsetsMake(2, 2, 0, 2)
+        layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 0, right: 2)
         layout.minimumInteritemSpacing = 3
         layout.minimumLineSpacing = 3
         layout.sectionHeadersPinToVisibleBounds = true
@@ -207,7 +207,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             UIKeyCommand(input: "A", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope: All".localized()),
             UIKeyCommand(input: "N", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope: Name".localized()),
             UIKeyCommand(input: "T", modifierFlags: .command, action: #selector(self.changeScopeKeyCmd(_:)), discoverabilityTitle: "Scope: Text".localized()),
-            UIKeyCommand(input: UIKeyInputEscape, modifierFlags: [], action: #selector(self.escKeyPressed(_:)))
+            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(self.escKeyPressed(_:)))
         ]
     }
     

@@ -168,8 +168,8 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         nc.addObserver(self, selector: #selector(self.identitySelected(_:)), name: Notifications.selectIdentity, object: nil)
         nc.addObserver(self, selector: #selector(self.deckChanged(_:)), name: Notifications.deckChanged, object: nil)
         nc.addObserver(self, selector: #selector(self.notesChanged(_:)), name: Notifications.notesChanged, object: nil)
-        nc.addObserver(self, selector: #selector(self.stopHistoryTimer(_:)), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-        nc.addObserver(self, selector: #selector(self.startHistoryTimer(_:)), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        nc.addObserver(self, selector: #selector(self.stopHistoryTimer(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        nc.addObserver(self, selector: #selector(self.startHistoryTimer(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         self.keyboardObserver = KeyboardObserver(handler: self)
         
@@ -997,7 +997,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         return false
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if let cc = self.cards[indexPath], !cc.isNull {
                 self.deck.addCard(cc.card, copies: 0)

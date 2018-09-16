@@ -332,7 +332,7 @@ class ImageCache {
         
         self.memCache[key] = img
         
-        if let data = UIImagePNGRepresentation(img) {
+        if let data = img.pngData() {
             do {
                 try data.write(to: URL(fileURLWithPath: file), options: [.atomic])
                 Utils.excludeFromBackup(file)

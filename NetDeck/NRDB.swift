@@ -110,7 +110,7 @@ class NRDB: NSObject {
                         }
                         if ok {
                             if !Defaults[.keepNrdbCredentials] {
-                                UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+                                UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
                             }
                             completion(ok, "")
                         } else {
@@ -134,7 +134,7 @@ class NRDB: NSObject {
         NRDB.clearSettings()
         if !isRefresh {
             UIAlertController.alert(withTitle: nil, message: "Authorization at NetrunnerDB.com failed".localized(), button: "OK")
-            UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+            UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalNever)
             completion(false, error)
             return
         }
@@ -172,7 +172,7 @@ class NRDB: NSObject {
         // print("NRDB stopAuthRefresh")
         self.timer?.invalidate()
         self.timer = nil
-        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalNever)
     }
     
     @objc func timedRefresh(_ timer: Timer?) {

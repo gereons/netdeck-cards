@@ -38,7 +38,7 @@ class StartupViewController: UIViewController {
             }
         }
         
-        self.view.bringSubview(toFront: spinner)
+        self.view.bringSubviewToFront(spinner)
         self.spinner.startAnimating()
     }
     

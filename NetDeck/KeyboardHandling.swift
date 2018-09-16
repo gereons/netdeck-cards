@@ -17,9 +17,9 @@ struct KeyboardInfo {
     init?(notification: Notification) {
         guard
             let userInfo = notification.userInfo,
-            let beginFrame = userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue,
-            let endFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-            let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval
+            let beginFrame = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue,
+            let endFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
         else {
             return nil
         }
@@ -58,8 +58,8 @@ class KeyboardObserver: NSObject {
 
     func startObserving() {
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        nc.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        nc.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func stopObserving() {

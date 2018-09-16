@@ -106,7 +106,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
         self.activityIndicator.stopAnimating()
     }
     
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         self.webView.endEditing(true)
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
