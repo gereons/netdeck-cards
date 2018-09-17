@@ -281,5 +281,15 @@
 "cycle_code":"reign-and-reverie",
 "date_release":"2018-06-28",
 "name":"Reign and Reverie",
-"position":1,"size":58,"ffg_id":56}],"total":57,"success":true,"version_number":"2.0",
-"last_updated":"2018-07-24T18:20:24+00:00"}
+"position":1,"size":58,"ffg_id":56},
+{"code":"mo",
+"cycle_code":"magnum-opus",
+"date_release":"2018-09-07",
+"name":"Magnum Opus",
+"position":1,"size":8,"ffg_id":null},
+{"code":"napd",
+"cycle_code":"napd",
+"date_release":"2018-09-07",
+"name":"NAPD Multiplayer",
+"position":1,"size":1,"ffg_id":null}],"total":59,"success":true,"version_number":"2.0",
+"last_updated":"2018-09-17T16:54:54+00:00"}
