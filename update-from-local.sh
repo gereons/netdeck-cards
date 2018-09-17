@@ -27,7 +27,8 @@ do
 /g' |
     sed 's/\([^\\]\)",/\1",\
 /g' |
-    sed 's/http:\/\/localhost:8000/https:\/\/netrunnerdb.com/' >$raw.2
+    sed 's/http:\/\/localhost:8000/https:\/\/netrunnerdb.com/' |
+    sed 's/https:\/\/www.cardgamedb/http:\/\/www.cardgamedb/' >$raw.2
 done
 
 for language in en de fr es pl kr jp zh
