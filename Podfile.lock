@@ -1,16 +1,16 @@
 PODS:
   - Alamofire (4.7.3)
-  - AlamofireImage (3.4.0):
+  - AlamofireImage (3.4.1):
     - Alamofire (~> 4.7)
   - AlamofireNetworkActivityIndicator (2.3.0):
     - Alamofire (~> 4.7)
   - CorePlot (2.2)
-  - DeviceKit (1.7.0)
+  - DeviceKit (1.8.1)
   - DZNEmptyDataSet (1.8.1)
-  - EasyTipView (2.0.0)
+  - EasyTipView (2.0.1)
   - InAppSettingsKit (2.9)
-  - MultiSelectSegmentedControl (1.2)
-  - SDCAlertView (8.1.1)
+  - MultiSelectSegmentedControl (1.2.1)
+  - SDCAlertView (9.0.1)
   - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (3.0.1)
   - SwiftyDropbox (4.6.0):
@@ -58,10 +58,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 9aa8d05a8ae70cc5d8066bdd0187d017fa445df4
+    :commit: c40443fde54d62956ae73cb43c02928178bdb1a3
     :git: https://github.com/core-plot/core-plot
   EasyTipView:
-    :commit: f3ee306710de0ebcc9ed3dcccd7ea1b8be86cacc
+    :commit: 0dbfa15da962630d00c572279171c79288b822e5
     :git: https://github.com/gereons/EasyTipView
   SwiftyDropbox:
     :commit: c2b5a73944247a844092b0429b22cc09e9919c30
@@ -69,15 +69,15 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  AlamofireImage: 5f79836de27236819b13b27d0c97be6c205976fe
+  AlamofireImage: 78d67ccbb763d87ba44b21583d2153500a195630
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   CorePlot: a89f21d4662cb54853e579c4ce560e74036cffcb
-  DeviceKit: 6a5bdeb103c03757bb94aef1ccb01e08bc8ef4ee
+  DeviceKit: eb29be542f5473b46b1c719011cf7de3ec5264ca
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  EasyTipView: ce986be6a3a321475bc27488f086c018a1275006
+  EasyTipView: b97cbea0328bb29078d4b01b9304db3f0996c5ef
   InAppSettingsKit: fc3dea21846535b76b8289b119dbfdbe2505b2b2
-  MultiSelectSegmentedControl: ab9fade00f2b457334bcd451474dfc68c4690edb
-  SDCAlertView: f22a66f7af875fa42eaf3e84d124c87b405cf937
+  MultiSelectSegmentedControl: 495230a5a5fbb6edb03d541f173433922ef0c592
+  SDCAlertView: f24c447279278dca39d41562b414276980b066d8
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
   SwiftyDropbox: b821cb0ca49935714a5038115dee22756728a953
