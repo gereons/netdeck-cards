@@ -1137,16 +1137,17 @@
 /* Begin PBXShellScriptBuildPhase section */
 		3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
+				"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}",
 			);
 			name = "Set CFBundleVersion from git";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
 			shellScript = "if [ \"${CONFIGURATION}\" != \"Release\" ]; then\nGITVERSION=$(git rev-parse --short HEAD)\necho \"add git version... $GITVERSION\"\necho -n \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\" | xargs -0 /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $GITVERSION\"\nfi\n";
 		};
 		3A814EC519ADBEEE008C3285 /* Crashlytics */ = {
