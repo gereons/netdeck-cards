@@ -114,7 +114,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             if useNrdb {
                 self.nrdbLogin()
             } else {
-                NRDB.clearSettings()
+                NRDB.clearSettings(setUseNrdb: true)
                 NRDBHack.clearCredentials()
             }
             

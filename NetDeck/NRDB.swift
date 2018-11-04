@@ -26,8 +26,10 @@ class NRDB: NSObject {
     private var timer: Timer?
     private var deckMap = [String: String]()
     
-    static func clearSettings() {
-        Defaults[.useNrdb] = false
+    static func clearSettings(setUseNrdb: Bool) {
+        if setUseNrdb {
+            Defaults[.useNrdb] = false
+        }
         Defaults[.nrdbLoggedin] = false
         
         Defaults.remove(.nrdbAccessToken)
@@ -131,7 +133,7 @@ class NRDB: NSObject {
     }
     
     private func handleAuthorizationFailure(_ isRefresh: Bool, _ error: String, completion: (Bool, String) -> Void) {
-        NRDB.clearSettings()
+        NRDB.clearSettings(setUseNrdb: false)
         if !isRefresh {
             UIAlertController.alert(withTitle: nil, message: "Authorization at NetrunnerDB.com failed".localized(), button: "OK")
             UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalNever)

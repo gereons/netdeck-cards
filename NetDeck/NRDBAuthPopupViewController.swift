@@ -58,7 +58,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
     }
     
     @IBAction func cancelTapped(_ sender: UIButton) {
-        NRDB.clearSettings()
+        NRDB.clearSettings(setUseNrdb: true)
         self.dismiss()
     }
     
@@ -94,7 +94,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
                 NRDB.sharedInstance.startAuthorizationRefresh()
             }
         } else {
-            NRDB.clearSettings()
+            NRDB.clearSettings(setUseNrdb: true)
             popup.dismiss()
         }
     }
