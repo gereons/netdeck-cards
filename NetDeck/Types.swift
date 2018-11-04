@@ -192,7 +192,7 @@ enum DeckLegality: Equatable {
     }
 }
 
-struct Rotation {
+struct RotatedPacks {
     let packs: Set<String>
     let cycles: [String]
 
@@ -201,7 +201,7 @@ struct Rotation {
         self.cycles = cycles
     }
 
-    static let _2017 = Rotation(
+    static let _2017 = RotatedPacks(
         packs: [ "core",
                  "wla", "ta", "ce", "asis", "hs", "fp", // genesis
                  "om", "st", "mt", "tc", "fal", "dt"    // spin
@@ -209,6 +209,43 @@ struct Rotation {
         cycles: [ "genesis", "spin" ]
     )
 
+    static let _2019 = _2017.adding(
+        packs: [ "up", "tsb", "fc", "uao", "atr", "ts", // lunar
+                 "val", "bb", "cc", "uw", "oh", "uot"   // sansan
+        ],
+        cycles: [ "lunar", "sansan" ]
+    )
+
+    private func adding(packs: [String], cycles: [String]) -> RotatedPacks {
+        return RotatedPacks(packs: Array(self.packs) + packs, cycles: self.cycles + cycles)
+    }
+}
+
+enum Rotation: Int {
+    case _2017
+    case _2019
+
+    var packs: RotatedPacks {
+        switch self {
+        case ._2017: return RotatedPacks._2017
+        case ._2019: return RotatedPacks._2019
+        }
+    }
+
+    // MARK: - settings values / titles
+    private static let all = [ Rotation._2017, ._2019 ]
+    private static let names = [
+        "2017 (Genesis & Spin)",
+        "2019 (Lunar & SanSan)"
+    ]
+    
+    static func values() -> [Int] {
+        return all.map { $0.rawValue }
+    }
+
+    static func titles() -> [String] {
+        return all.map { names[$0.rawValue].localized() }
+    }
 }
 
 enum FilterAttribute: Int {

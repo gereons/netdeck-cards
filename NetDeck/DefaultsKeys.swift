@@ -126,6 +126,8 @@ extension DefaultsKeys {
     static let defaultMWL = DefaultsKey<MWL>("mwlVersion")
     /// exclude rotated-out cards?
     static let rotationActive = DefaultsKey<Bool>("rotationActive")
+    /// which rotation to use?
+    static let rotationIndex = DefaultsKey<Rotation>("rotationIndex")
     /// convert core -> core2?
     static let convertCore = DefaultsKey<Bool>("convertCore")
     
@@ -206,6 +208,10 @@ extension UserDefaults {
         set { set(key, newValue) }
     }
     
+    subscript(key: DefaultsKey<Rotation>) -> Rotation {
+        get { return unarchive(key) ?? ._2017 }
+        set { archive(key, newValue) }
+    }
 }
 
 struct IASKButtons {
