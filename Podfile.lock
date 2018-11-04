@@ -5,7 +5,7 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.3.0):
     - Alamofire (~> 4.7)
   - CorePlot (2.2)
-  - DeviceKit (1.8.1)
+  - DeviceKit (1.9.0)
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.1)
   - InAppSettingsKit (2.9)
@@ -64,7 +64,7 @@ CHECKOUT OPTIONS:
     :commit: 0dbfa15da962630d00c572279171c79288b822e5
     :git: https://github.com/gereons/EasyTipView
   SwiftyDropbox:
-    :commit: c2b5a73944247a844092b0429b22cc09e9919c30
+    :commit: 90e5daf237aaafc3865c5aa3aee6c724f30a0c2e
     :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
@@ -72,7 +72,7 @@ SPEC CHECKSUMS:
   AlamofireImage: 78d67ccbb763d87ba44b21583d2153500a195630
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   CorePlot: a89f21d4662cb54853e579c4ce560e74036cffcb
-  DeviceKit: eb29be542f5473b46b1c719011cf7de3ec5264ca
+  DeviceKit: a376cb3d0dda0c27c81dcc0d2b7b8600b6802065
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: b97cbea0328bb29078d4b01b9304db3f0996c5ef
   InAppSettingsKit: fc3dea21846535b76b8289b119dbfdbe2505b2b2
