@@ -3,6 +3,8 @@ inhibit_all_warnings!
 platform :ios, '10.3'
 
 def pods
+    pod 'Fabric'
+    pod 'Crashlytics'
     pod 'SVProgressHUD'
     pod 'InAppSettingsKit'
     pod 'MultiSelectSegmentedControl'
@@ -16,7 +18,7 @@ def pods
     pod 'AlamofireNetworkActivityIndicator'
     pod 'SwiftKeychainWrapper'
     pod 'SDCAlertView'
-    pod 'EasyTipView', :git => "https://github.com/gereons/EasyTipView"
+    pod 'EasyTipView'
     pod 'SwiftyUserDefaults'
 end
 

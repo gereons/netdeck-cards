@@ -6,10 +6,9 @@
 //  Copyright © 2018 Gereon Steffens. All rights reserved.
 //
 
-// import Fabric
-// import Crashlytics
+import Fabric
+import Crashlytics
 import StoreKit
-// import SwiftyUserDefaults
 
 class Analytics: NSObject {
 
@@ -61,7 +60,7 @@ class Analytics: NSObject {
             return
         }
         
-        // Answers.logCustomEvent(withName: event.rawValue, customAttributes: attributes)
+        Answers.logCustomEvent(withName: event.rawValue, customAttributes: attributes)
     }
     
     static func logPurchase(of product: SKProduct) {
@@ -69,7 +68,6 @@ class Analytics: NSObject {
             return
         }
 
-        /*
         Answers.logPurchase(withPrice: product.price,
                             currency: product.priceLocale.currencyCode,
                             success: true,
@@ -77,15 +75,13 @@ class Analytics: NSObject {
                             itemType: "iap",
                             itemId: product.productIdentifier,
                             customAttributes: nil)
-        */
     }
 
     static private var initialized = false
 
     @discardableResult
     static func setup() -> Bool {
-        /*
-        guard BuildConfig.useCrashlytics && Defaults[.fabricEnabled] else {
+        guard BuildConfig.useCrashlytics else {
             return false
         }
 
@@ -94,16 +90,15 @@ class Analytics: NSObject {
             Fabric.with([Crashlytics.self])
             initialized = true
         }
-        */
+
         return true
     }
 }
 
-/*
+
 // MARK: - crashlytics delegate
 extension Analytics: CrashlyticsDelegate {
     func crashlyticsDidDetectReport(forLastExecution report: CLSReport) {
         self.crashDetected = true
     }
 }
-*/
