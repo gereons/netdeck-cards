@@ -39,10 +39,10 @@
 "position":12,"size":6,"rotated":false},
 {"code":"terminal-directive",
 "name":"Terminal Directive",
-"position":13,"size":1,"rotated":false},
+"position":13,"size":1,"rotated":true},
 {"code":"core2",
 "name":"Revised Core Set",
-"position":20,"size":1,"rotated":false},
+"position":20,"size":1,"rotated":true},
 {"code":"kitara",
 "name":"Kitara",
 "position":21,"size":6,"rotated":false},
@@ -54,5 +54,8 @@
 "position":23,"size":1,"rotated":false},
 {"code":"napd",
 "name":"NAPD Multiplayer",
-"position":24,"size":1,"rotated":false}],"total":19,"success":true,"version_number":"2.0",
-"last_updated":"2018-09-16T13:38:07+00:00"}
+"position":24,"size":1,"rotated":false},
+{"code":"sc19",
+"name":"System Core 2019",
+"position":25,"size":1,"rotated":false}],"total":20,"success":true,"version_number":"2.0",
+"last_updated":"2018-11-25T12:49:43+00:00"}
