@@ -22,8 +22,7 @@ import DeviceKit
 
 // Open Source:
 // clean up all copyright headers
-// remove analytics/fabric remains (info.plist!)
-// move dropbox api keys to non-versioned file
+// move dropbox and fabric api keys to non-versioned file
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

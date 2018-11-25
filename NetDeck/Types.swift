@@ -97,8 +97,9 @@ enum MWL: Int, Comparable {
     case v2_0   // as of 2017-10-01
     case v2_1   // as of 2018-02-26
     case v2_2   // as of 2018-09-06
+    case v3_0   // as of 2018-12-21
 
-    static let latest = MWL.v2_2
+    static let latest = MWL.v3_0
 
     // map from "mwl_code" values we get from the NRDB API
     private static let codeMap: [String: MWL] = [
@@ -107,7 +108,8 @@ enum MWL: Int, Comparable {
         "NAPD_MWL_1.2": .v1_2,
         "NAPD_MWL_2.0": .v2_0,
         "NAPD_MWL_2.1": .v2_1,
-        "NAPD_MWL_2.2": .v2_2
+        "NAPD_MWL_2.2": .v2_2,
+        "NAPD_MWL_3.0": .v3_0
     ]
 
     static func by(code: String) -> MWL {
@@ -122,8 +124,8 @@ enum MWL: Int, Comparable {
     }
 
     // MARK: - settings values / titles
-    private static let all = [ MWL.none, .v1_0, .v1_1, .v1_2, .v2_0, .v2_1, .v2_2 ]
-    private static let names = [ "Casual", "MWL v1.0", "MWL v1.1", "MWL v1.2", "MWL v2.0", "MWL v2.1", "MWL v2.2" ]
+    private static let all = [ MWL.none, .v1_0, .v1_1, .v1_2, .v2_0, .v2_1, .v2_2, .v3_0 ]
+    private static let names = [ "Casual", "MWL v1.0", "MWL v1.1", "MWL v1.2", "MWL v2.0", "MWL v2.1", "MWL v2.2", "MWL v3.0" ]
     static func values() -> [Int] {
         return all.map { $0.rawValue }
     }

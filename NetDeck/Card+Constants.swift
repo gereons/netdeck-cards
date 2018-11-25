@@ -102,6 +102,12 @@ extension Card {
     static let aesopsPawnshop       = "20052"
     static let zer0                 = "21101"
     static let surveyor             = "21118"
+    static let watchTheWorldBurn    = "23100"
+    static let commercialBankersGroup = "10054"
+    static let paperclip            = "11024"
+    static let hiredHelp            = "23101"
+    static let mtiMwekundu          = "21114"
+    static let excalibur            = "06111"
 }
 
 // MARK: - NAPD MWL
@@ -144,7 +150,15 @@ extension Card {
             runnerBanned: [ aaronMarrón, blooMoose, faust, hyperdriver, marsForMartians, salvagedVanadisArmory, şifr, tapwrm, temüjinContract, zer0 ],
             runnerRestricted: [ aesopsPawnshop, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, madDash, magnumOpus, rumorMill ],
             corpBanned: [ _24_7_newsCycle, cerebralImaging, cloneSuffrageMovement, estelleMoon, friendsInHighPlaces, museumOfHistory, sensieActorsUnion ],
-            corpRestricted: [ bioEthicsAssociation, brainRewiring, bryanStinson, globalFoodInitiative, hunterSeeker, motherGoddess, mumbaTemple, mumbadCityHall, obokataProtocol, potentialUnleashed, skorpios, surveyor, violetLevelClearance, whampoaReclamation ])
+            corpRestricted: [ bioEthicsAssociation, brainRewiring, bryanStinson, globalFoodInitiative, hunterSeeker, motherGoddess, mumbaTemple, mumbadCityHall, obokataProtocol, potentialUnleashed, skorpios, surveyor, violetLevelClearance, whampoaReclamation ]),
+
+        // MWL v3.0, introduced in NISEI System Core 2019, valid from 2018-12-21
+        .v3_0: MostWantedList(
+            runnerBanned: [ aaronMarrón, blooMoose, faust, hyperdriver, marsForMartians, salvagedVanadisArmory, şifr, tapwrm, temüjinContract, watchTheWorldBurn, zer0 ],
+            runnerRestricted: [ aesopsPawnshop, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, madDash, paperclip, rumorMill ],
+            corpBanned: [ _24_7_newsCycle, bryanStinson, cerebralImaging, cloneSuffrageMovement, friendsInHighPlaces, hiredHelp, museumOfHistory, sensieActorsUnion ],
+            corpRestricted: [ bioEthicsAssociation, commercialBankersGroup, excalibur, globalFoodInitiative, potentialUnleashed, motherGoddess, mtiMwekundu,
+                              mumbaTemple, mumbadCityHall, obokataProtocol, surveyor, violetLevelClearance, whampoaReclamation])
     ]
 
     func mwlPenalty(_ mwl: MWL) -> Int {

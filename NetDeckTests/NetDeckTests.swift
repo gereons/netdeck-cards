@@ -76,4 +76,5 @@ class NetDeckTests: XCTestCase {
         XCTAssert(cm.count == 1)
         XCTAssert(cm["bar"]?.count == 1)
     }
+
 }
