@@ -1,23 +1,23 @@
 PODS:
-  - Alamofire (4.7.3)
-  - AlamofireImage (3.4.1):
-    - Alamofire (~> 4.7)
+  - Alamofire (4.8.0)
+  - AlamofireImage (3.5.0):
+    - Alamofire (~> 4.8)
   - AlamofireNetworkActivityIndicator (2.3.0):
     - Alamofire (~> 4.7)
   - CorePlot (2.2)
-  - Crashlytics (3.11.1):
-    - Fabric (~> 1.8.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - DeviceKit (1.10.0)
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.1)
-  - Fabric (1.8.2)
-  - InAppSettingsKit (2.9.1)
+  - Fabric (1.9.0)
+  - InAppSettingsKit (2.10)
   - MultiSelectSegmentedControl (1.2.1)
   - SDCAlertView (9.0.1)
   - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (3.0.1)
-  - SwiftyDropbox (4.6.0):
-    - Alamofire (~> 4.7.0)
+  - SwiftyDropbox (4.8.1):
+    - Alamofire (~> 4)
   - SwiftyUserDefaults (3.0.1)
 
 DEPENDENCIES:
@@ -64,28 +64,28 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 176bcd920515a1db801fd252997444915baad52e
+    :commit: 3414aca95c078c781f389f33d0f49ba09fa63369
     :git: https://github.com/core-plot/core-plot
   SwiftyDropbox:
-    :commit: 90e5daf237aaafc3865c5aa3aee6c724f30a0c2e
+    :commit: 883d360f85ce156a8551186f8a8c0c70eccbd56a
     :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  AlamofireImage: 78d67ccbb763d87ba44b21583d2153500a195630
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   CorePlot: a89f21d4662cb54853e579c4ce560e74036cffcb
-  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   DeviceKit: 2a6cf0d1ec05e2ac7f9b24cdfdb3cb358900a247
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: 1515544456d6e943240012e9be5d25d1bb766603
-  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
-  InAppSettingsKit: acb6bc78cf00bbcfa63c4a26fd67f266bc7cfcd2
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  InAppSettingsKit: d965e29be941eb19857271e4625de3fba6e23c9f
   MultiSelectSegmentedControl: 495230a5a5fbb6edb03d541f173433922ef0c592
   SDCAlertView: f24c447279278dca39d41562b414276980b066d8
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
-  SwiftyDropbox: b821cb0ca49935714a5038115dee22756728a953
+  SwiftyDropbox: 344cbfc10ebba457d93106224453db3ffdbfe6f2
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
 PODFILE CHECKSUM: 8c614f9ca20160875e85a4938c7a36b7e6bdb99e
