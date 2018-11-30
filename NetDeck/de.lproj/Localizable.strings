@@ -380,7 +380,8 @@
 // rotation support
 "Convert Deck" = "Deck konvertieren";
 "Convert this deck to use Revised Core Set cards?" = "Dieses Deck auf das überarbeitete Grundspiel konvertieren?";
-
+"Convert this deck to use System Core 2019 cards?" = "Dieses Deck auf System Core 2019 konvertieren?";
+"
 // champion decks
 "World Champion 2015 Runner" = "Weltmeister-Deck 2015 Runner";
 "World Champion 2015 Corp" = "Weltmeister-Deck 2015 Kon";

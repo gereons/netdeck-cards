@@ -350,6 +350,15 @@ class CardManager {
             return false
         }
 
+//        let sc19cards = cards.filter { $0.packCode == "sc19" }
+//        for card in sc19cards.sorted(by: {$0.code < $1.code}) {
+//            let old = cards
+//                .filter { $0.packCode != "sc19" && $0.name == card.name }
+//                .sorted { $0.code > $1.code }
+//                .first!
+//            print("\"\(card.code)\": \"\(old.code)\", // \(old.name)")
+//        }
+
         CardManager.setSubtypes(cards)
         CardManager.addCardAliases(cards)
 

@@ -397,4 +397,159 @@ extension Card {
         let m = Dictionary(uniqueKeysWithValues: revisedToOriginal.map { ($1, $0) })
         return m
     }()
+
+    static let sc19toRevised = [
+        "25001": "20001", // Reina Roja
+        "25002": "06052", // Quetzal
+        "25003": "04102", // Queen's Gambit
+        "25004": "04081", // Quest Completed
+        "25005": "20003", // Retrieval Run
+        "25006": "10001", // Run Amok
+        "25007": "20005", // Stimhack
+        "25008": "20006", // Cyberfeeder
+        "25009": "22004", // Patchwork
+        "25010": "01007", // Corroder
+        "25011": "20009", // Datasucker
+        "25012": "20010", // Force of Nature
+        "25013": "20011", // Imp
+        "25014": "06014", // Lamprey
+        "25015": "20013", // Mimic
+        "25016": "20015", // Ice Carver
+        "25017": "20016", // Liberated Account
+        "25018": "20017", // Scrubber
+        "25019": "20018", // Xanadu
+        "25020": "20019", // Gabriel Santiago
+        "25021": "06095", // Leela Patel
+        "25022": "08023", // Career Fair
+        "25023": "20020", // Easy Mark
+        "25024": "20021", // Emergency Shutdown
+        "25025": "04004", // Hostage
+        "25026": "20023", // Inside Job
+        "25027": "05035", // Legwork
+        "25028": "02084", // Networking
+        "25029": "13003", // Spear Phishing
+        "25030": "20024", // Special Order
+        "25031": "20026", // HQ Interface
+        "25032": "22010", // Paragon
+        "25033": "13006", // Abagnale
+        "25034": "13008", // Demara
+        "25035": "20028", // Faerie
+        "25036": "20029", // Femme Fatale
+        "25037": "20032", // Sneakdoor Beta
+        "25038": "20033", // Bank Job
+        "25039": "01031", // Data Dealer
+        "25040": "20037", // Chaos Theory
+        "25041": "03028", // Rielle "Kit" Peddler
+        "25042": "20038", // Diesel
+        "25043": "20040", // Modded
+        "25044": "20041", // Notoriety
+        "25045": "20042", // Test Run
+        "25046": "20043", // The Maker's Eye
+        "25047": "20044", // Tinkering
+        "25048": "01038", // Akamatsu Mem Chip
+        "25049": "20045", // Dinosaurus
+        "25050": "02107", // R&D Interface
+        "25051": "03040", // Atman
+        "25052": "20048", // Battering Ram
+        "25053": "02066", // Deus X
+        "25054": "20049", // Gordian Blade
+        "25055": "20051", // Pipeline
+        "25056": "20052", // Aesop's Pawnshop
+        "25057": "03051", // Ice Analyzer
+        "25058": "03049", // Professional Contacts
+        "25059": "20056", // Sure Gamble
+        "25060": "03052", // Dirty Laundry
+        "25061": "20058", // Crypsis
+        "25062": "20059", // Armitage Codebusting
+        "25063": "06120", // Earthrise Hotel
+        "25064": "04009", // John Masanori
+        "25065": "02091", // Kati Jones
+        "25066": "20061", // Stronger Together
+        "25067": "13028", // Seidr Laboratories
+        "25068": "20063", // Project Vitruvius
+        "25069": "13031", // Successful Field Test
+        "25070": "20064", // Adonis Campaign
+        "25071": "20065", // Aggressive Secretary
+        "25072": "13033", // Marilyn Campaign
+        "25073": "02110", // Eli 1.0
+        "25074": "20066", // Heimdall 1.0
+        "25075": "20068", // Ichi 1.0
+        "25076": "20069", // Rototurret
+        "25077": "08033", // Turing
+        "25078": "20070", // Viktor 1.0
+        "25079": "20071", // Archived Memories
+        "25080": "20072", // Biotic Labor
+        "25081": "04090", // Blue Level Clearance
+        "25082": "20075", // Ash 2X3ZB9CY
+        "25083": "13040", // Mason Bellamy
+        "25084": "20093", // Personal Evolution
+        "25085": "02031", // Replicating Perfection
+        "25086": "02032", // Fetal AI
+        "25087": "20095", // Nisei MK II
+        "25088": "05006", // Philotic Entanglement
+        "25089": "20096", // Project Junebug
+        "25090": "20097", // Ronin
+        "25091": "20098", // Snare!
+        "25092": "04054", // Sundew
+        "25093": "20099", // Himitsu-Bako
+        "25094": "06003", // Lotus Field
+        "25095": "20100", // Neural Katana
+        "25096": "20101", // Swordsman
+        "25097": "04074", // Tsurugi
+        "25098": "20102", // Wall of Thorns
+        "25099": "20104", // Yagura
+        "25100": "20105", // Celebrity Gift
+        "25101": "20106", // Neural EMP
+        "25102": "20107", // Trick of Light
+        "25103": "20108", // Hokusai Grid
+        "25104": "20109", // Making News
+        "25105": "09003", // Spark Agency
+        "25106": "08094", // Explode-a-palooza
+        "25107": "20110", // Project Beale
+        "25108": "06086", // Daily Business Show
+        "25109": "20112", // Ghost Branch
+        "25110": "02055", // Marked Accounts
+        "25111": "06066", // Reversed Accounts
+        "25112": "20113", // Data Raven
+        "25113": "20114", // Flare
+        "25114": "20115", // Pop-up Window
+        "25115": "20116", // Tollbooth
+        "25116": "20117", // Wraparound
+        "25117": "20119", // Closed Accounts
+        "25118": "20120", // Psychographics
+        "25119": "20121", // SEA Source
+        "25120": "08115", // Product Placement
+        "25121": "20122", // Red Herrings
+        "25122": "20077", // Building a Better World
+        "25123": "06068", // Blue Sun
+        "25124": "20078", // Hostile Takeover
+        "25125": "08058", // Oaktown Renovation
+        "25126": "20079", // Project Atlas
+        "25127": "08078", // Contract Killer
+        "25128": "20082", // Elizabeth Mills
+        "25129": "08117", // Public Support
+        "25130": "20084", // Archer
+        "25131": "20085", // Caduceus
+        "25132": "20086", // Hadrian's Wall
+        "25133": "13050", // Hortum
+        "25134": "20088", // Ice Wall
+        "25135": "08079", // Spiderweb
+        "25136": "20090", // Beanstalk Royalties
+        "25137": "02079", // Oversight AI
+        "25138": "20091", // Punitive Counterstrike
+        "25139": "06048", // Crisium Grid
+        "25140": "13053", // Paper Trail
+        "25141": "20125", // Priority Requisition
+        "25142": "20128", // PAD Campaign
+        "25143": "20129", // Enigma
+        "25144": "20130", // Hunter
+        "25145": "20131", // Wall of Static
+        "25146": "20132", // Hedge Fund
+        "25147": "13057", // IPO
+    ]
+
+    static let revisedToSC19: [String: String] = {
+        let m = Dictionary(uniqueKeysWithValues: sc19toRevised.map { ($1, $0) })
+        return m
+    }()
 }

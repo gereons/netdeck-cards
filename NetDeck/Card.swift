@@ -300,6 +300,11 @@ extension Card {
 
         self.replaces = Card.revisedToOriginal[self.code]
         self.replacedBy = Card.originalToRevised[self.code]
+
+        if let rev = Card.revisedToSC19[self.code] {
+            self.replaces = rev
+            self.replacedBy = Card.sc19toRevised[self.code]
+        }
     }
     
     
