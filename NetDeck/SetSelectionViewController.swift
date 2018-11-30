@@ -32,7 +32,10 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
             self.values[self.coreSection].insert(numCores, at: 1)
 
             let numCore2s = Pack(named: "Number of Revised Core Sets".localized(), key: DefaultsKeys.numRevisedCore._key)
-            self.values[self.coreSection].append(numCore2s)
+            self.values[self.coreSection].insert(numCore2s, at: 3)
+
+            let numSC19s = Pack(named: "Number of System Core 2019 Sets".localized(), key: DefaultsKeys.numSC19._key)
+            self.values[self.coreSection].insert(numSC19s, at: 5)
         }
     }
     
@@ -77,58 +80,71 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     @objc func coresAlert(_ sender: UIButton) {
-        self.showCoresAlert(revised: false)
+        self.showCoresAlert(.useCore, .numOriginalCore)
     }
 
     @objc func core2sAlert(_ sender: UIButton) {
-        self.showCoresAlert(revised: true)
+        self.showCoresAlert(.useCore2, .numRevisedCore)
     }
 
-    private func showCoresAlert(revised: Bool) {
-        let title = revised ? "Number of Revised Core Sets" : "Number of Core Sets"
+    @objc func coreSC19Alert(_ sender: UIButton) {
+        self.showCoresAlert(.useSC19, .numSC19)
+    }
+
+    private func showCoresAlert(_ useKey: DefaultsKey<Bool>, _ numKey: DefaultsKey<Int>) {
+        let titles = [
+            DefaultsKeys.numOriginalCore._key: "Number of Core Sets",
+            DefaultsKeys.numRevisedCore._key: "Number of Revised Core Sets",
+            DefaultsKeys.numSC19._key: "Number of System Core 2019 Sets"
+        ]
+        guard let title = titles[numKey._key] else {
+            return
+        }
+
         let alert = UIAlertController(title: title.localized(), message: nil, preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "0") { action in
-            self.changeCoreSets(revised, 0)
+            self.changeCoreSets(useKey, numKey, 0)
         })
         alert.addAction(UIAlertAction(title: "1") { action in
-            self.changeCoreSets(revised, 1)
+            self.changeCoreSets(useKey, numKey, 1)
         })
         alert.addAction(UIAlertAction(title: "2") { action in
-            self.changeCoreSets(revised, 2)
+            self.changeCoreSets(useKey, numKey, 2)
         })
         alert.addAction(UIAlertAction(title: "3") { action in
-            self.changeCoreSets(revised, 3)
+            self.changeCoreSets(useKey, numKey, 3)
         })
         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
 
         self.present(alert, animated: false, completion: nil)
     }
     
-    private func changeCoreSets(_ revised: Bool, _ numCores: Int) {
-        Defaults[revised ? .numRevisedCore : .numOriginalCore] = numCores
+    private func changeCoreSets(_ useKey: DefaultsKey<Bool>, _ numKey: DefaultsKey<Int>, _ numCores: Int) {
+        Defaults[numKey] = numCores
 
         if numCores == 0 {
-            Defaults[revised ? .useCore2 : .useCore ] = false
+            Defaults[useKey] = false
         }
         self.tableView.reloadData()
     }
     
     private func enableAll() {
-        self.changeCoreSets(true, 3)
-        self.changeCoreSets(false, 3)
+        self.changeCoreSets(.useCore, .numOriginalCore, 3)
+        self.changeCoreSets(.useCore2, .numRevisedCore, 3)
+        self.changeCoreSets(.useSC19, .numSC19, 3)
         
         for pack in PackManager.allPacks {
             Defaults.set(pack.released, forKey: pack.settingsKey)
         }
         
         if Defaults[.rotationActive] {
-            self.changeCoreSets(false, 0)
+            self.changeCoreSets(.useCore, .numOriginalCore, 0)
             PackManager.rotatedPackKeys().forEach {
                 Defaults.set(false, forKey: $0)
             }
         } else {
-            self.changeCoreSets(true, 0)
+            self.changeCoreSets(.useCore2, .numRevisedCore, 0)
             Defaults.set(false, forKey: DefaultsKeys.useCore2._key)
         }
         
@@ -138,8 +154,9 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     }
 
     private func setModded() {
-        self.changeCoreSets(false, 0)
-        self.changeCoreSets(true, 3)
+        self.changeCoreSets(.useCore, .numOriginalCore, 0)
+        self.changeCoreSets(.useCore2, .numRevisedCore, 0)
+        self.changeCoreSets(.useSC19, .numSC19, 3)
 
         for pack in PackManager.allPacks {
             Defaults.set(false, forKey: pack.settingsKey)
@@ -165,8 +182,9 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     private func setCacheRefresh(_ deluxe: String) {
-        self.changeCoreSets(true, 1)
-        self.changeCoreSets(false, 0)
+        self.changeCoreSets(.useCore, .numOriginalCore, 0)
+        self.changeCoreSets(.useCore2, .numRevisedCore, 0)
+        self.changeCoreSets(.useSC19, .numSC19, 1)
         
         for pack in PackManager.allPacks {
             Defaults.set(false, forKey: pack.settingsKey)
@@ -218,21 +236,11 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         cell.accessoryView = nil
         
         if pack.settingsKey == DefaultsKeys.numOriginalCore._key {
-            let numCores = Defaults[.numOriginalCore]
-            let button = UIButton(type: .system)
-            button.frame = CGRect(x: 0, y: 0, width: 40, height: 30)
-            button.setTitle("\(numCores)", for: .normal)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
-            button.addTarget(self, action: #selector(self.coresAlert(_:)), for: .touchUpInside)
-            cell.accessoryView = button
+            cell.accessoryView = self.makeCoreButton(Defaults[.numOriginalCore], #selector(self.coresAlert(_:)))
         } else if pack.settingsKey == DefaultsKeys.numRevisedCore._key {
-            let numCores = Defaults[.numRevisedCore]
-            let button = UIButton(type: .system)
-            button.frame = CGRect(x: 0, y: 0, width: 40, height: 30)
-            button.setTitle("\(numCores)", for: .normal)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
-            button.addTarget(self, action: #selector(self.core2sAlert(_:)), for: .touchUpInside)
-            cell.accessoryView = button
+            cell.accessoryView = self.makeCoreButton(Defaults[.numRevisedCore], #selector(self.core2sAlert(_:)))
+        } else if pack.settingsKey == DefaultsKeys.numSC19._key {
+            cell.accessoryView = self.makeCoreButton(Defaults[.numSC19], #selector(self.coreSC19Alert(_:)))
         } else {
             let on = Defaults.bool(forKey: pack.settingsKey)
             let sw = NRSwitch(initial: on) { on in
@@ -245,16 +253,28 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         
         return cell
     }
+
+    private func makeCoreButton(_ number: Int, _ action: Selector) -> UIButton {
+        let button = UIButton(type: .system)
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 30)
+        button.setTitle("\(number)", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return button
+    }
     
     func toggleSetting(_ value: Bool, for key: String) {
         let settings = UserDefaults.standard
         settings.set(value, forKey: key)
 
         if key == DefaultsKeys.useCore._key && value == true && Defaults[.numOriginalCore] == 0 {
-            self.showCoresAlert(revised: false)
+            self.showCoresAlert(.useCore, .numOriginalCore)
         }
         if key == DefaultsKeys.useCore2._key && value == true && Defaults[.numRevisedCore] == 0 {
-            self.showCoresAlert(revised: true)
+            self.showCoresAlert(.useCore2, .numRevisedCore)
+        }
+        if key == DefaultsKeys.useSC19._key && value == true && Defaults[.numSC19] == 0 {
+            self.showCoresAlert(.useSC19, .numSC19)
         }
     }
     

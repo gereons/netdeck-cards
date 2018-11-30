@@ -99,6 +99,7 @@ class PackManager {
     
     static let core = "core"
     static let core2 = "core2"
+    static let sc19 = "sc19"
     
     static let creationAndControl = "cac"
     static let honorAndProfit = "hap"
@@ -111,7 +112,7 @@ class PackManager {
     static let campaignBoxes = [ terminalDirective ]
     static let bigBoxes = deluxeBoxes + campaignBoxes
     
-    static let cores = [ core, core2 ]
+    static let cores = [ core, core2, sc19 ]
 
     static var rotation: RotatedPacks {
         return Defaults[.rotationIndex].packs
@@ -227,24 +228,26 @@ class PackManager {
     static func allKnownPacksForSettings() -> TableData<Pack> {
         var sections = [String]()
         var values = [[Pack]]()
-        
+
+        var coreNames = [String]()
+        var corePacks = [[Pack]]()
         // sort cycles by position
         for cycle in allCycles.values.sorted(by: { $0.position < $1.position }) {
-            sections.append(cycle.name)
-            
             let packs = allPacks.filter { $0.cycleCode == cycle.code }
-            values.append(packs)
+
+            if [PackManager.core2, PackManager.sc19].contains(cycle.code) {
+                coreNames.append(cycle.name)
+                corePacks.append(packs)
+            } else {
+                sections.append(cycle.name)
+                values.append(packs)
+            }
         }
-        
-        // special hack: merge core2 with core at the 2nd place in the array
-        let c2index = allCycles.values.filter { $0.code == PackManager.core2 }.map { $0.position }.first
-        if let index = c2index {
-            sections.remove(at: index)
-            let arr = values.remove(at: index)
-            
-            values[1].append(contentsOf: arr)
+
+        for index in 0..<coreNames.count {
+            values[1].append(contentsOf: corePacks[index])
         }
-        
+
         return TableData(sections: sections, values: values)
     }
 
@@ -410,6 +413,11 @@ class PackManager {
         
         let c2 = cycles.remove(at: core2Index)
         cycles.insert(c2, at: coreIndex + 1)
+
+        if let sc19index = cycles.index(where: { $0.code == PackManager.sc19}) {
+            let sc19 = cycles.remove(at: sc19index)
+            cycles.insert(sc19, at: coreIndex + 2)
+        }
         
         for i in 0 ..< cycles.count {
             cycles[i].position = i

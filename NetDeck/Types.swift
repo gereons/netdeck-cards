@@ -211,11 +211,9 @@ struct RotatedPacks {
         cycles: [ "genesis", "spin" ]
     )
 
-    static let _2019 = _2017.adding(
-        packs: [ "up", "tsb", "fc", "uao", "atr", "ts", // lunar
-                 "val", "bb", "cc", "uw", "oh", "uot"   // sansan
-        ],
-        cycles: [ "lunar", "sansan" ]
+    static let _2018 = _2017.adding(
+        packs: [ "core2", "td" ],
+        cycles: [ "terminal-directive" ]
     )
 
     private func adding(packs: [String], cycles: [String]) -> RotatedPacks {
@@ -225,20 +223,20 @@ struct RotatedPacks {
 
 enum Rotation: Int {
     case _2017
-    case _2019
+    case _2018
 
     var packs: RotatedPacks {
         switch self {
         case ._2017: return RotatedPacks._2017
-        case ._2019: return RotatedPacks._2019
+        case ._2018: return RotatedPacks._2018
         }
     }
 
     // MARK: - settings values / titles
-    private static let all = [ Rotation._2017, ._2019 ]
+    private static let all = [ Rotation._2017, ._2018 ]
     private static let names = [
         "2017 (Genesis & Spin)",
-        "2019 (Lunar & SanSan)"
+        "2018 (Terminal Directive)"
     ]
     
     static func values() -> [Int] {

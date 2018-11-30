@@ -52,6 +52,11 @@ extension DefaultsKeys {
      /// number of revised core sets
     static let numRevisedCore = DefaultsKey<Int>("number_revisedcoresets")
 
+    /// use nisei core set?
+    static let useSC19 = DefaultsKey<Bool>("use_sc19")
+    /// number of nisei core sets
+    static let numSC19 = DefaultsKey<Int>("number_sc19")
+
     /// is Data & Destiny selected/allowed?
     static let useDataDestiny = DefaultsKey<Bool>("use_dad")
     /// use Draft identities?
