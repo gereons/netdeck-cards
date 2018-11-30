@@ -144,6 +144,10 @@ class Card: NSObject {
             let cores = Defaults[.numRevisedCore]
             return (cores * self.quantity) + prebuiltOwned + oldOwned
         }
+        if self.packCode == PackManager.sc19 {
+            let cores = Defaults[.numSC19]
+            return (cores * self.quantity) + prebuiltOwned + oldOwned
+        }
 
         let disabledPacks = PackManager.disabledPackCodes()
         if disabledPacks.contains(self.packCode) {
