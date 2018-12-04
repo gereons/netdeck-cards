@@ -821,7 +821,7 @@ extension Deck {
         var deckOk = true
         for cc in self.cards {
             let card = cc.card
-            let ok = card.packCode == PackManager.core2 || PackManager.cycleForPack(card.packCode) == validCycle
+            let ok = card.packCode == PackManager.sc19 || PackManager.cycleForPack(card.packCode) == validCycle
             if !ok {
                 deckOk = false
             }
@@ -848,7 +848,7 @@ extension Deck {
             switch card.packCode {
             case PackManager.draft:
                 draftUsed = true
-            case PackManager.core, PackManager.core2:
+            case PackManager.core, PackManager.core2, PackManager.sc19:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
@@ -921,9 +921,9 @@ extension Deck {
             switch card.packCode {
             case PackManager.draft:
                 draftUsed = true
-            case PackManager.core:
+            case PackManager.core, PackManager.core2:
                 oldCoreUsed = true
-            case PackManager.core2:
+            case PackManager.sc19:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }

@@ -155,6 +155,7 @@ class PackManager {
             }
         } else {
             defaults[DefaultsKeys.useCore2._key] = false
+            Defaults[DefaultsKeys.useSC19._key] = false
         }
         return defaults
     }
@@ -479,9 +480,6 @@ class PackManager {
         PackManager.cacheRefreshCycles = last2cycles.map { $0.code }
         
         UserDefaults.standard.register(defaults: PackManager.settingsDefaults())
-        
-        // make sure we dont' use Core and Core2 simultaneously
-        Defaults[.useCore] = !Defaults[.useCore2]
         
         return true
     }

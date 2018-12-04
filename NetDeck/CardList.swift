@@ -60,12 +60,16 @@ class CardList {
             if Defaults[.rotationActive] {
                 self.filterReplacedCards()
                 self.filterRotation()
-                self.filterNameDuplicates()
+                if Defaults[.useSC19] {
+                    self.filterNameDuplicates()
+                }
             }
         case .all:
             self.filterDraft()
             self.filterRotation()
-            self.filterNameDuplicates()
+            if Defaults[.rotationIndex] == ._2018 {
+                self.filterNameDuplicates()
+            }
         }
 
         self.sortCards()
