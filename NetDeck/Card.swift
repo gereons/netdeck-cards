@@ -187,7 +187,9 @@ class Card: NSObject {
     }
    
     func addCardAlias(_ alias: String) {
-        self.aliases.append(alias)
+        if !aliases.contains(alias) {
+            self.aliases.append(alias)
+        }
     }
     
     // manipulate identity name
