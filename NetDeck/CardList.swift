@@ -60,10 +60,12 @@ class CardList {
             if Defaults[.rotationActive] {
                 self.filterReplacedCards()
                 self.filterRotation()
+                self.filterNameDuplicates()
             }
         case .all:
             self.filterDraft()
             self.filterRotation()
+            self.filterNameDuplicates()
         }
 
         self.sortCards()
@@ -149,6 +151,18 @@ class CardList {
                 return true
             }
         }
+    }
+
+    private func filterNameDuplicates() {
+        // find cards by duplicate names, remove the one with the lower code
+        var dupes = [Card]()
+        for card in self.initialCards.filter({ $0.packCode == PackManager.sc19 }) {
+            let d = self.initialCards.filter { card.name == $0.name && card.code != $0.code }
+            dupes.append(contentsOf: d)
+        }
+
+        let dupeCodes = dupes.map { $0.code }
+        self.initialCards.removeAll { dupeCodes.contains($0.code) }
     }
     
     private func applyBans(_ mwl: MWL) {
