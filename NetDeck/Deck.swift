@@ -167,12 +167,11 @@ import SwiftyUserDefaults
     }
     
     private func padCampaignCount() -> Int {
-        if let padIndex = self.indexOfCardCode(Card.padCampaign) {
-            let pad = cards[padIndex]
-            return pad.count
-        } else if let padIndex = self.indexOfCardCode(Card.padCampaignCore2) {
-            let pad = cards[padIndex]
-            return pad.count
+        for pc in Card.padCampaigns {
+            if let padIndex = self.indexOfCardCode(pc) {
+                let pad = cards[padIndex]
+                return pad.count
+            }
         }
         return 0
     }
