@@ -3,7 +3,7 @@
 //  NetDeckTests
 //
 //  Created by Gereon Steffens on 13.04.18.
-//  Copyright © 2018 Gereon Steffens. All rights reserved.
+//  Copyright © 2019 Gereon Steffens. All rights reserved.
 //
 
 import XCTest

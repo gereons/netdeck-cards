@@ -3,7 +3,7 @@
 //  NetDeck
 //
 //  Created by Gereon Steffens on 14.12.15.
-//  Copyright © 2018 Gereon Steffens. All rights reserved.
+//  Copyright © 2019 Gereon Steffens. All rights reserved.
 //
 
 import Foundation

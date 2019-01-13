@@ -3,7 +3,7 @@
 //  NetDeck
 //
 //  Created by Gereon Steffens on 25.05.16.
-//  Copyright © 2018 Gereon Steffens. All rights reserved.
+//  Copyright © 2019 Gereon Steffens. All rights reserved.
 //
 
 import SVProgressHUD
@@ -233,7 +233,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        // Defaults.registerDefault(.fabricEnabled, true)
         Defaults.registerDefault(.defaultMWL, MWL.latest)
         Defaults.registerDefault(.rotationActive, true)
         Defaults.registerDefault(.rotationIndex, Rotation._2018)
