@@ -7,7 +7,7 @@ PODS:
   - CorePlot (2.2)
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
-  - DeviceKit (1.10.0)
+  - DeviceKit (1.11.0)
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.1)
   - Fabric (1.9.0)
@@ -15,8 +15,8 @@ PODS:
   - MultiSelectSegmentedControl (1.2.1)
   - SDCAlertView (9.0.1)
   - SVProgressHUD (2.2.5)
-  - SwiftKeychainWrapper (3.0.1)
-  - SwiftyDropbox (4.8.1):
+  - SwiftKeychainWrapper (3.2.0)
+  - SwiftyDropbox (5.0.0):
     - Alamofire (~> 4)
   - SwiftyUserDefaults (3.0.1)
 
@@ -67,7 +67,7 @@ CHECKOUT OPTIONS:
     :commit: 3414aca95c078c781f389f33d0f49ba09fa63369
     :git: https://github.com/core-plot/core-plot
   SwiftyDropbox:
-    :commit: 883d360f85ce156a8551186f8a8c0c70eccbd56a
+    :commit: 33e9887ee34836000fcf6077fe0d2a4ba36a429e
     :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
@@ -76,7 +76,7 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   CorePlot: a89f21d4662cb54853e579c4ce560e74036cffcb
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
-  DeviceKit: 2a6cf0d1ec05e2ac7f9b24cdfdb3cb358900a247
+  DeviceKit: a3a86f8dddbe1317a9a243cdf9646858bf135dce
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: 1515544456d6e943240012e9be5d25d1bb766603
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
@@ -84,8 +84,8 @@ SPEC CHECKSUMS:
   MultiSelectSegmentedControl: 495230a5a5fbb6edb03d541f173433922ef0c592
   SDCAlertView: f24c447279278dca39d41562b414276980b066d8
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
-  SwiftyDropbox: 344cbfc10ebba457d93106224453db3ffdbfe6f2
+  SwiftKeychainWrapper: 82c4c02cdc36f9a24f7edfcaab3e336401caa1a1
+  SwiftyDropbox: 64550ae049a3f37a6f4ecea9218073b6d258ee1b
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
 PODFILE CHECKSUM: 8c614f9ca20160875e85a4938c7a36b7e6bdb99e
