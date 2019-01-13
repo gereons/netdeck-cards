@@ -304,13 +304,26 @@ extension Card {
         
         self.imageUrl = card.image_url
 
-        self.replaces = Card.revisedToOriginal[self.code]
-        self.replacedBy = Card.originalToRevised[self.code]
-
-        if let rev = Card.revisedToSC19[self.code] {
-            self.replaces = rev
-            self.replacedBy = Card.sc19toRevised[self.code]
+        if let replaces = Card.revisedToOriginal[self.code] {
+            self.replaces = replaces
+            print("\(self.name) \(self.code) replaces \(replaces)")
         }
+
+        if let replacedBy = Card.originalToRevised[self.code] {
+            self.replacedBy = Card.revisedToSC19[replacedBy] ?? replacedBy
+            // print("\(self.name) \(self.code) is replaced by \(self.replacedBy)")
+        }
+
+        if let replaces = Card.sc19toRevised[self.code] {
+            self.replaces = replaces
+            // print("\(self.name) \(self.code) replaces \(replaces)")
+        }
+
+        if let replacedBy = Card.revisedToSC19[self.code] {
+            self.replacedBy = replacedBy
+            // print("\(self.name) \(self.code) is replaced by \(replacedBy)")
+        }
+
     }
     
     
