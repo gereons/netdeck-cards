@@ -306,7 +306,7 @@ extension Card {
 
         if let replaces = Card.revisedToOriginal[self.code] {
             self.replaces = replaces
-            print("\(self.name) \(self.code) replaces \(replaces)")
+            // print("\(self.name) \(self.code) replaces \(replaces)")
         }
 
         if let replacedBy = Card.originalToRevised[self.code] {
@@ -323,10 +323,8 @@ extension Card {
             self.replacedBy = replacedBy
             // print("\(self.name) \(self.code) is replaced by \(replacedBy)")
         }
-
     }
-    
-    
+
     static func cardsFromJson(_ rawCards: ApiResponse<NetrunnerDbCard>) -> [Card] {
         Card.imgSrcTemplate = rawCards.imageUrlTemplate ?? ""
         

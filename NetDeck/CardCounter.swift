@@ -39,7 +39,7 @@ import Foundation
     convenience required init?(coder aDecoder: NSCoder) {
         let code = aDecoder.decodeObject(forKey: "card") as! String
         let count = aDecoder.decodeInteger(forKey: "count")
-        let card = CardManager.cardBy(code) ?? Card.null()
+        let card = CardManager.cardBy(code, useReplacements: false) ?? Card.null()
         
         self.init(card: card, count: card.isNull ? 0 : count)
     }

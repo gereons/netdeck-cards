@@ -596,7 +596,7 @@ import SwiftyUserDefaults
         self.state = DeckState(rawValue: decoder.decodeInteger(forKey: "state"))!
         self.isDraft = decoder.decodeBool(forKey: "draft")
         if let identityCode = decoder.decodeObject(forKey: "identity") as? String {
-            if let identity = CardManager.cardBy(identityCode) {
+            if let identity = CardManager.cardBy(identityCode, useReplacements: false) {
                 self.identityCc = CardCounter(card:identity, count:1)
             }
         }
