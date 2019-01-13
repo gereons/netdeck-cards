@@ -41,15 +41,18 @@ class CardList {
         self.role = role
         self.packUsage = packUsage
 
+        var allCards: [Card]
         if browser {
+            allCards = [Card]()
             let roles = role == .none ? [ .runner, .corp ] : [ role ]
             for role in roles {
-                self.initialCards.append(contentsOf: CardManager.allFor(role))
-                self.initialCards.append(contentsOf: CardManager.identitiesFor(role))
+                allCards.append(contentsOf: CardManager.allFor(role))
+                allCards.append(contentsOf: CardManager.identitiesFor(role))
             }
         } else {
-            self.initialCards = CardManager.allFor(self.role)
+            allCards = CardManager.allFor(self.role)
         }
+        self.initialCards = allCards
 
         switch self.packUsage {
         case .selected:
@@ -62,6 +65,11 @@ class CardList {
                 self.filterRotation()
                 if Defaults[.useSC19] {
                     self.filterNameDuplicates()
+                }
+
+                if Defaults[.rotationIndex] == ._2018 && !Defaults[.useSC19] {
+                    // make owned cards that are in SC19 available again
+                    self.addOwnedCardsInSC19(allCards)
                 }
             }
         case .all:
@@ -167,6 +175,19 @@ class CardList {
 
         let dupeCodes = dupes.map { $0.code }
         self.initialCards.removeAll { dupeCodes.contains($0.code) }
+    }
+
+    // make owned cards that are in SC19 available again
+    private func addOwnedCardsInSC19(_ allCards: [Card]) {
+        let owned = allCards.filter { Defaults.bool(forKey: Pack.use + $0.packCode) && $0.replacedBy != nil }
+
+        for card in owned {
+            if let replCode = card.replacedBy, let replacement = CardManager.cardBy(replCode) {
+                if replacement.packCode == PackManager.sc19 {
+                    self.initialCards.append(replacement)
+                }
+            }
+        }
     }
     
     private func applyBans(_ mwl: MWL) {
