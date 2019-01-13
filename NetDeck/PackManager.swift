@@ -147,7 +147,9 @@ class PackManager {
 
     static func settingsDefaults() -> [String: Bool] {
         var defaults = [String: Bool]()
-        allPacks.forEach { defaults[$0.settingsKey] = $0.released }
+        allPacks.forEach {
+            defaults[$0.settingsKey] = $0.released
+        }
         
         if Defaults[.rotationActive] {
             PackManager.rotation.packs.forEach { pack in
@@ -155,7 +157,7 @@ class PackManager {
             }
         } else {
             defaults[DefaultsKeys.useCore2._key] = false
-            Defaults[DefaultsKeys.useSC19._key] = false
+            defaults[DefaultsKeys.useSC19._key] = false
         }
         return defaults
     }
