@@ -191,8 +191,8 @@ class PackManager {
     
     static func rotatedPackCodes() -> Set<String> {
         if Defaults[.rotationActive] {
-            let packs = allPacks.filter { $0.rotated }.map { $0.code }
-            return Set(packs).union([PackManager.core])
+            let rotation = Defaults[.rotationIndex]
+            return rotation.packs.packs
         } else {
             return Set([])
         }
