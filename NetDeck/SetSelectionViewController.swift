@@ -143,13 +143,22 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         }
         
         if Defaults[.rotationActive] {
-            self.changeCoreSets(.useCore, .numOriginalCore, 0)
+            switch Defaults[.rotationIndex] {
+            case ._2017:
+                self.changeCoreSets(.useCore, .numOriginalCore, 0)
+                self.changeCoreSets(.useSC19, .numSC19, 0)
+                Defaults[.useCore2] = true
+            case ._2018:
+                self.changeCoreSets(.useCore, .numOriginalCore, 0)
+                self.changeCoreSets(.useCore2, .numRevisedCore, 0)
+                Defaults[.useSC19] = true
+            }
             PackManager.rotatedPackKeys().forEach {
                 Defaults.set(false, forKey: $0)
             }
         } else {
             self.changeCoreSets(.useCore2, .numRevisedCore, 0)
-            Defaults.set(false, forKey: DefaultsKeys.useCore2._key)
+            self.changeCoreSets(.useSC19, .numSC19, 0)
         }
         
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
@@ -203,7 +212,8 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         }
 
         Defaults.set(false, forKey: Pack.use + PackManager.core)
-        Defaults.set(true, forKey: Pack.use + PackManager.core2)
+        Defaults.set(false, forKey: Pack.use + PackManager.core2)
+        Defaults.set(true, forKey: Pack.use + PackManager.sc19)
         Defaults.set(true, forKey: Pack.use + PackManager.terminalDirective)
         Defaults.set(true, forKey: Pack.use + deluxe)
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
