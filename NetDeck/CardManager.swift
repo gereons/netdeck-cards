@@ -128,6 +128,18 @@ class CardManager {
             }
         }
 
+        if Defaults[.rotationIndex] == ._2018 && !Defaults[.useSC19] {
+            let owned = self.identitiesFor(role).filter { Defaults.bool(forKey: Pack.use + $0.packCode) && $0.replacedBy != nil }
+            for card in owned {
+                if let replCode = card.replacedBy, let replacement = CardManager.cardBy(replCode) {
+                    if replacement.packCode == PackManager.sc19 {
+                        allIdentities.append(replacement)
+                        allIdentities.removeAll { $0.code == replacement.replaces }
+                    }
+                }
+            }
+        }
+
         if legality.isStandard {
             allIdentities = allIdentities.filter { !$0.banned(legality.mwl) }
         }
