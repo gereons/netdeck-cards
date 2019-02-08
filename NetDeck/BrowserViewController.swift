@@ -231,7 +231,8 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         if self.role == .none {
             picker.data = CardType.allTypes
         } else {
-            let types = CardType.typesFor(role: role)
+            var types = CardType.typesFor(role: role)
+            types.insert(CardType.name(for: .identity), at: 1)
             picker.data = TableData(values: types)
         }
         
