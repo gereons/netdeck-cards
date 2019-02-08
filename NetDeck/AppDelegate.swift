@@ -18,11 +18,12 @@ import DeviceKit
 
 // TODO: investigate OOMs - memory warnings?
 // TODO: taptic engine support? (SVProgressHUD settings!)
-// TODO: for the last version supporting iOS 9, add a friendly upgrade reminder
 
 // Open Source:
 // clean up all copyright headers
 // move dropbox and fabric api keys to non-versioned file
+
+#warning("iPhone card view: support landscape?")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
