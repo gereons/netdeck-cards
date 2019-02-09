@@ -657,8 +657,7 @@ extension EditDeckViewController: LegalitySetter {
             return
         }
 
-        let alert = MWLSelection.createAlert(for: self.deck, on: self)
-        self.present(alert, animated: true, completion: nil)
+        MWLSelection.show(self, deck: self.deck)
     }
 
     func setLegality(_ legality: DeckLegality) {

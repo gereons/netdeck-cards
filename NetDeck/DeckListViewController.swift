@@ -1271,14 +1271,7 @@ extension DeckListViewController: UICollectionViewDataSourcePrefetching {
 extension DeckListViewController: LegalitySetter {
 
     @IBAction func legalityTapped(_ button: UIBarButtonItem) {
-        self.actionSheet = MWLSelection.createAlert(for: self.deck, on: self)
-
-        let popover = self.actionSheet.popoverPresentationController
-        popover?.barButtonItem = button
-        popover?.permittedArrowDirections = .down
-
-        self.actionSheet.view.layoutIfNeeded()
-        self.present(self.actionSheet, animated: false, completion: nil)
+        self.actionSheet = MWLSelection.show(self, button, deck: self.deck)
     }
 
     func setLegality(_ legality: DeckLegality) {
