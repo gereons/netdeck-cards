@@ -110,8 +110,8 @@ enum MWL: Int, Comparable {
         "NAPD_MWL_2.0": .v2_0,
         "NAPD_MWL_2.1": .v2_1,
         "NAPD_MWL_2.2": .v2_2,
-        "NAPD_MWL_3.0": .v3_0,
-        "NAPD_MWL_3.1": .v3_1
+        "standard-mwl-3-0": .v3_0,
+        "standard-mwl-3-1": .v3_1
     ]
 
     static func by(code: String) -> MWL {
