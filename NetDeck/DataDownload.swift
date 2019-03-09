@@ -19,6 +19,7 @@ private enum ApiRequest {
     case cycles
     case packs
     case cards
+    case mwl
 }
 
 class DataDownload: NSObject {
@@ -92,15 +93,14 @@ class DataDownload: NSObject {
     }
 
     private func requestFor(_ apiRequest: ApiRequest) -> URLRequest {
-        let language = Defaults[.language]
-
         let urlString: String
         let useTestbranch = BuildConfig.debug
         let baseUrl = useTestbranch ? "https://raw.githubusercontent.com/gereons/netdeck-cards/test" : "https://gereons.github.io/netdeck-cards"
         switch apiRequest {
-        case .cycles: urlString = baseUrl + "/api/2.0/cycles_\(language).json"
-        case .packs: urlString = baseUrl + "/api/2.0/packs_\(language).json"
-        case .cards: urlString = baseUrl + "/api/2.0/cards_\(language).json"
+        case .cycles: urlString = baseUrl + "/api/2.0/cycles_en.json"
+        case .packs: urlString = baseUrl + "/api/2.0/packs_en.json"
+        case .cards: urlString = baseUrl + "/api/2.0/cards_en.json"
+        case .mwl: urlString = baseUrl + "/api/2.0/mwl.json"
         }
 
         let url = URL(string: urlString)!
@@ -117,6 +117,7 @@ class DataDownload: NSObject {
             .cycles: self.requestFor(.cycles),
             .packs: self.requestFor(.packs),
             .cards: self.requestFor(.cards),
+            .mwl: self.requestFor(.mwl)
         ]
 
         let group = DispatchGroup()
@@ -150,6 +151,9 @@ class DataDownload: NSObject {
                 if ok {
                     ok = CardManager.setupFromNetrunnerDb(results[.cards]!)
                     // print("cards setup ok=\(ok)")
+                }
+                if ok {
+                    ok = MWLManager.setupFromNetrunnerDb(results[.mwl]!)
                 }
                 CardManager.setNextDownloadDate()
             }

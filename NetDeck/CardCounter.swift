@@ -27,7 +27,7 @@ import Foundation
         return self === CardCounter.nullInstance || self.card.isNull
     }
 
-    func displayName(_ mwl: MWL) -> String {
+    func displayName(_ mwl: Int) -> String {
         if self.card.type == .identity {
             return self.card.displayName(mwl)
         } else {

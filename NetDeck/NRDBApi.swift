@@ -18,7 +18,7 @@ extension KeyedDecodingContainer {
     }
 }
 
-struct ApiResponse<T: Codable>: Codable {
+struct ApiResponse<T: Decodable>: Decodable {
     let data: [T]
     let success: Bool
     let version_number: String
@@ -124,24 +124,6 @@ struct NetrunnerDbCard: Codable {
     let type_code: String
     let uniqueness: Bool
 
-    /*
-    struct Localized: Codable {
-        let title: String?
-        let keywords: String?
-        let text: String?
-        let flavor: String?
-        
-        enum Keys {
-            case title
-            case keywords
-            case text
-            case flavor
-        }
-    }
-    
-    let _locale: [String: Localized]?
-    */
-
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.advancement_cost = try container.decodeIfPresent(.advancement_cost)
@@ -166,8 +148,7 @@ struct NetrunnerDbCard: Codable {
         self.trash_cost = try container.decodeIfPresent(.trash_cost)
         self.type_code = try container.decode(.type_code)
         self.uniqueness = try container.decode(.uniqueness)
-        // self._locale = try container.decodeIfPresent(._locale)
-        
+
         // special treatment for "int value", "null", or not present of cost and strength
         if container.contains(.cost) {
             let cost: Int? = try container.decodeIfPresent(.cost)
@@ -182,28 +163,24 @@ struct NetrunnerDbCard: Codable {
             self.strength = -1
         }
     }
+}
 
-    /*
-    func getLocalized(_ key: Localized.Keys, for language: String) -> String {
-        var localized: String?
-        if let loc = self._locale?[language] {
-            switch key {
-            case .title: localized = loc.title
-            case .keywords: localized = loc.keywords
-            case .text: localized = loc.text
-            case .flavor: localized = loc.flavor
-            }
-        }
-        if let loc = localized {
-            return loc
-        } else {
-            switch key {
-            case .title: return self.title
-            case .keywords: return self.keywords ?? ""
-            case .text: return self.text ?? ""
-            case .flavor: return self.flavor ?? ""
-            }
+// JSON structure from NRDB
+struct NetrunnerDbMwl: Codable {
+
+    struct Restriction: Codable {
+        let globalPenalty, universalFactionCost, isRestricted, deckLimit: Int?
+
+        enum CodingKeys: String, CodingKey {
+            case globalPenalty = "global_penalty"
+            case universalFactionCost = "universal_faction_cost"
+            case isRestricted = "is_restricted"
+            case deckLimit = "deck_limit"
         }
     }
-    */
+
+    let code, name: String
+    let date_start: String
+    let active: Bool
+    let cards: [String: Restriction]
 }

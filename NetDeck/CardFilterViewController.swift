@@ -101,7 +101,7 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.deckListViewController = DeckListViewController()
         self.role = role
         self.deckListViewController.role = role
-        self.legality = .standard(mwl: Defaults[.defaultMWL])
+        self.legality = .standard(mwl: MWLManager.activeMWL)
         
         super.init(nibName: nil, bundle: nil)
     }

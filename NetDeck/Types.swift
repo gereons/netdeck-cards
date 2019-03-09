@@ -85,6 +85,7 @@ enum PackUsage: Int {
     case selected
 }
 
+/*
 enum MWL: Int, Comparable {
     static func < (lhs: MWL, rhs: MWL) -> Bool {
         return lhs.rawValue < rhs.rawValue
@@ -136,37 +137,20 @@ enum MWL: Int, Comparable {
         return all.map { names[$0.rawValue].localized() }
     }
 }
-
-struct MostWantedList {
-    let penalties: [String: Int]?
-    let banned: Set<String>?
-    let restricted: Set<String>?
-    
-    init(penalties: [String: Int]) {
-        self.penalties = penalties
-        self.banned = nil
-        self.restricted = nil
-    }
-    
-    init(runnerBanned: [String], runnerRestricted: [String], corpBanned: [String], corpRestricted: [String]) {
-        self.penalties = nil
-        self.banned = Set(runnerBanned).union(corpBanned)
-        self.restricted = Set(runnerRestricted).union(corpRestricted)
-    }
-}
+*/
 
 enum DeckLegality: Equatable {
     case casual
-    case standard(mwl: MWL)
+    case standard(mwl: Int)
     case cacheRefresh
     case onesies
     case modded
 
-    var mwl: MWL {
+    var mwl: Int {
         switch self {
         case .standard(let mwl): return mwl
-        case .cacheRefresh: return MWL.latest
-        default: return .none
+        case .cacheRefresh: return MWLManager.activeMWL
+        default: return 0
         }
     }
 
@@ -188,7 +172,7 @@ enum DeckLegality: Equatable {
         }
     }
 
-    static func==(_ lhs: DeckLegality, _ rhs: MWL) -> Bool {
+    static func==(_ lhs: DeckLegality, _ rhs: Int) -> Bool {
         switch lhs {
         case .standard(let m): return m == rhs
         default: return false

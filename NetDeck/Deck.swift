@@ -10,11 +10,11 @@ import Foundation
 import SwiftyUserDefaults
 
 @objc(Deck) class Deck: NSObject, NSCoding {
-
     var filename: String?
     var revisions = [DeckChangeSet]()
     var lastModified: Date?
     var dateCreated: Date?
+    var mwl = 0
 
     @objc private(set) var cards = [CardCounter]()
     private(set) var identityCc: CardCounter?
@@ -31,8 +31,9 @@ import SwiftyUserDefaults
         self.state = Defaults[.createDeckActive] ? .active : .testing
         let seq = DeckManager.fileSequence() + 1
         self.name = "Deck #\(seq)"
-        self.legality = .standard(mwl: Defaults[.defaultMWL])
+        self.legality = .standard(mwl: MWLManager.activeMWL)
         self.role = role
+        self.mwl = Defaults[.defaultMWL]
     }
     
     var allCards: [CardCounter] {
@@ -70,10 +71,6 @@ import SwiftyUserDefaults
     var legality = DeckLegality.casual {
         willSet { modified = true }
     }
-    
-    var mwl: MWL {
-        return self.legality.mwl
-    }
 
     var size: Int {
         return self.cards.reduce(0) { $0 + $1.count }
@@ -99,7 +96,8 @@ import SwiftyUserDefaults
         
     /// what's the influence penalty incurred through MWL cards?
     var mwlPenalty: Int {
-        if self.mwl.universalInfluence {
+        let list = MWLManager.mwlBy(self.mwl)
+        if list.universalInfluence {
             return 0
         }
         return cards.reduce(0) { $0 + $1.card.mwlPenalty(self.mwl) * $1.count }
@@ -112,7 +110,8 @@ import SwiftyUserDefaults
     }
     
     func universalInfluenceFor(_ cc: CardCounter) -> Int {
-        if self.mwl.universalInfluence {
+        let list = MWLManager.mwlBy(self.mwl)
+        if list.universalInfluence {
             var count = cc.count
             if cc.card.type == .program && self.identity?.code == Card.theProfessor {
                 count -= 1
@@ -506,21 +505,18 @@ import SwiftyUserDefaults
                 }
             }
             
-            let mwl: MWL
+            let mwl: Int
             if let code = rawDeck.mwl_code {
-                mwl = MWL.by(code: code)
+                mwl = MWLManager.mwlBy(code)
             } else {
-                mwl = Defaults[.defaultMWL]
+                mwl = MWLManager.activeMWL
             }
 
             deck.legality = DeckLegality.standard(mwl: mwl)
-            if mwl >= .v2_0 || (mwl == .none && Defaults[.defaultMWL] >= .v2_0) {
-                deck.convertToRevisedCore()
-            }
-            if mwl >= .v3_0 || (mwl == .none && Defaults[.defaultMWL] >= .v3_0) {
-                deck.convertToSC19()
-            }
-            
+            #warning("is this the right thing to do?")
+            deck.convertToRevisedCore()
+            deck.convertToSC19()
+
             let formatter = DateFormatter()
             formatter.dateFormat = NetrunnerDbDeck.dateFormat
             
@@ -629,7 +625,7 @@ import SwiftyUserDefaults
         } else if modded {
             legality = .modded
         } else {
-            legality = .standard(mwl: MWL(rawValue: mwl) ?? .none)
+            legality = .standard(mwl: mwl)
         }
         self.legality = legality
         self.convertedToCore2 = decoder.decodeBool(forKey: "convertedToCore2")
@@ -651,7 +647,7 @@ import SwiftyUserDefaults
         coder.encode(self.notes, forKey:"notes")
         coder.encode(self.lastChanges, forKey:"lastChanges")
         coder.encode(self.revisions, forKey:"revisions")
-        coder.encode(self.mwl.rawValue, forKey: "mwl")
+        coder.encode(self.mwl, forKey: "mwl")
         coder.encode(self.legality == .onesies, forKey: "onesies")
         coder.encode(self.legality == .modded, forKey: "modded")
         

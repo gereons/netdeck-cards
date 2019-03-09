@@ -190,11 +190,11 @@ class CardList {
         }
     }
     
-    private func applyBans(_ mwl: MWL) {
+    private func applyBans(_ mwl: Int) {
         self.initialCards = self.initialCards.filter { !$0.banned(mwl) }
     }
     
-    func preFilterForCorp(_ identity: Card, _ mwl: MWL) {
+    func preFilterForCorp(_ identity: Card, _ mwl: Int) {
         if identity.faction != .neutral {
             let factions: NSArray = [ Faction.neutral.rawValue, identity.faction.rawValue ]
             let predicate = NSPredicate(format:"type != %d OR (type = %d AND faction in %@)", CardType.agenda.rawValue, CardType.agenda.rawValue, factions)
@@ -210,7 +210,7 @@ class CardList {
         self.applyBans(mwl)
     }
     
-    func preFilterForRunner(_ identity: Card, _ mwl: MWL) {
+    func preFilterForRunner(_ identity: Card, _ mwl: Int) {
         self.applyBans(mwl)
     }
     
@@ -386,10 +386,8 @@ class CardList {
         }
         
         if self.mwl {
-            let mwl = Defaults[.defaultMWL]
-            if mwl != .none {
-                filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 || $0.banned(mwl) || $0.restricted(mwl) }
-            }
+            let mwl = MWLManager.activeMWL
+            filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 || $0.banned(mwl) || $0.restricted(mwl) }
         }
 
         return filteredCards

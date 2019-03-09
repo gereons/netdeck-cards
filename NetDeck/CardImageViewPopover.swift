@@ -32,7 +32,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var mwlBottomDistance: NSLayoutConstraint!
     
     private var card: Card!
-    private var mwl: MWL!
+    private var mwl = 0
     
     private static var keyboardMonitor: KeyboardMonitor!
     private static var keyboardObserver: KeyboardObserver!
@@ -76,7 +76,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         show(for: card, mwl: nil, from: rect, in: vc, subView: view)
     }
     
-    static func show(for card: Card, mwl: MWL?, from rect: CGRect, in vc: UIViewController, subView view: UIView) {
+    static func show(for card: Card, mwl: Int?, from rect: CGRect, in vc: UIViewController, subView view: UIView) {
         assert(CardImageViewPopover.popover == nil, "previous popover still visible?")
         
         let popover = CardImageViewPopover()
@@ -126,7 +126,8 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         let penalty = card.mwlPenalty(self.mwl)
         
         self.mwlLabel.isHidden = penalty == 0
-        self.mwlLabel.text = (self.mwl.universalInfluence ? "+" : "-") + "\(penalty)"
+        let list = MWLManager.mwlBy(self.mwl)
+        self.mwlLabel.text = (list.universalInfluence ? "+" : "-") + "\(penalty)"
         switch card.type {
         case .event, .hardware, .resource, .program, .ice:
             self.mwlRightDistance.constant = 6

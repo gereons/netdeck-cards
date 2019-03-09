@@ -172,7 +172,7 @@ class LargeCardCell: CardCell {
         }
     }
     
-    static func setInfluencePips(_ pips: [UIView], influence: Int, universalInfluence: Int, count: Int, card: Card, mwl: MWL) {
+    static func setInfluencePips(_ pips: [UIView], influence: Int, universalInfluence: Int, count: Int, card: Card, mwl: Int) {
         let uInf = universalInfluence / count
         let inf = max(0, (influence / count) - uInf)
         
@@ -182,7 +182,8 @@ class LargeCardCell: CardCell {
             pip.isHidden = false
         }
 
-        if mwl.universalInfluence {
+        let list = MWLManager.mwlBy(mwl)
+        if list.universalInfluence {
             let maxPip = min(pips.count, inf + uInf)
             for i in stride(from: inf, to: maxPip, by: 1) {
                 circlePip(pips[i])

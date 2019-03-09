@@ -62,18 +62,19 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         self.imageView.image = nil
     }
     
-    func setCard(_ card: Card, mwl: MWL) {
+    func setCard(_ card: Card, mwl: Int) {
         self.setCard(card, count: -1, mwl: mwl)
     }
     
-    func setCard(_ card: Card, count: Int, mwl: MWL) {
+    func setCard(_ card: Card, count: Int, mwl: Int) {
         self.count = card.type == .identity ? 0 : count
         self.card = card
         self.imageView.image = nil
         
         let penalty = card.mwlPenalty(mwl)
+        let list = MWLManager.mwlBy(mwl)
         self.mwlLabel.isHidden = penalty == 0
-        self.mwlLabel.text = (mwl.universalInfluence ? "+" : "-") + "\(penalty)"
+        self.mwlLabel.text = (list.universalInfluence ? "+" : "-") + "\(penalty)"
         switch card.type {
         case .event, .hardware, .resource, .program, .ice:
             self.mwlRightDistance.constant = 6

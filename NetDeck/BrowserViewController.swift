@@ -156,7 +156,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         }()
     
         let card = self.cards[indexPath.section][indexPath.row]
-        let mwl = Defaults[.defaultMWL]
+        let mwl = MWLManager.activeMWL
 
         cell.textLabel?.text = card.displayName(mwl)
     
