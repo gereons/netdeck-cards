@@ -3,6 +3,7 @@
 CARDS_URL=https://netrunnerdb.com/api/2.0/public/cards
 CYCLES_URL=https://netrunnerdb.com/api/2.0/public/cycles
 PACKS_URL=https://netrunnerdb.com/api/2.0/public/packs
+MWL_URL=https://netrunnerdb.com/api/2.0/public/mwl
 LOCALE=""
 SUFFIX=""
 
@@ -24,6 +25,8 @@ do
     curl -s $PACKS_URL$LOCALE -o api/2.0/packs$SUFFIX.json
     echo "."
 done
+
+curl -s $MWL_URL -o api/2.0/mwl.json
 
 if git diff --quiet --exit-code
 then
