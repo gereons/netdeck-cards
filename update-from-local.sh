@@ -4,6 +4,7 @@ SERVER=http://localhost:8000
 CARDS_URL=$SERVER/api/2.0/public/cards
 CYCLES_URL=$SERVER/api/2.0/public/cycles
 PACKS_URL=$SERVER/api/2.0/public/packs
+MWL_URL=$SERVER/api/2.0/public/mwl
 LOCALE=""
 SUFFIX=""
 
@@ -39,6 +40,8 @@ do
     cp tmp/cycles.raw.2 api/2.0/cycles$SUFFIX.json
     cp tmp/packs.raw.2 api/2.0/packs$SUFFIX.json
 done
+
+curl -s $MWL_URL -o api/2.0/mwl.json
 
 rm -r tmp
 
