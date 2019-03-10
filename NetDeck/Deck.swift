@@ -624,9 +624,12 @@ import SwiftyUserDefaults
             legality = .cacheRefresh
         } else if modded {
             legality = .modded
+        } else if mwl == 0 {
+            legality = .casual
         } else {
             legality = .standard(mwl: mwl)
         }
+        self.mwl = mwl
         self.legality = legality
         self.convertedToCore2 = decoder.decodeBool(forKey: "convertedToCore2")
         self.convertedToSC19 = decoder.decodeBool(forKey: "convertedToSC19")
