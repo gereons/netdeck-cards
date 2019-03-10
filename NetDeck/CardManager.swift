@@ -314,9 +314,22 @@ class CardManager {
     // MARK: - persistence 
     
     static func setupFromFiles() -> Bool {
-        let filename = CardManager.filename()
-        
-        if let data = FileManager.default.contents(atPath: filename) {
+        let cardsFile = CardManager.filename()
+
+        let fileMgr = FileManager.default
+
+        if !fileMgr.fileExists(atPath: cardsFile) {
+            // copy the file from our bundle
+            if let bundlePath = Bundle.main.path(forResource: "cards_en", ofType: "json") {
+                do {
+                    try fileMgr.copyItem(atPath: bundlePath, toPath: cardsFile)
+                } catch {
+                    print(error)
+                }
+            }
+        }
+
+        if let data = FileManager.default.contents(atPath: cardsFile) {
             do {
                 let decoder = JSONDecoder()
                 let rawCards = try decoder.decode(ApiResponse<NetrunnerDbCard>.self, from: data)

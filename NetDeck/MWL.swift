@@ -135,6 +135,17 @@ class MWLManager {
         let mwlFile = mwlPathname()
         let fileMgr = FileManager.default
 
+        if !fileMgr.fileExists(atPath: mwlFile) {
+            // copy the file from our bundle
+            if let bundlePath = Bundle.main.path(forResource: "mwl", ofType: "json") {
+                do {
+                    try fileMgr.copyItem(atPath: bundlePath, toPath: mwlFile)
+                } catch {
+                    print(error)
+                }
+            }
+        }
+
         if let mwlData = fileMgr.contents(atPath: mwlFile) {
             return setupFromJsonData(mwlData)
         }

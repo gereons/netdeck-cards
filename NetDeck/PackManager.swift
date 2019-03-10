@@ -373,6 +373,24 @@ class PackManager {
         let cyclesFile = cyclesPathname()
         
         let fileMgr = FileManager.default
+
+        if !fileMgr.fileExists(atPath: packsFile) {
+            // copy the files from our bundle
+            if let bundlePath = Bundle.main.path(forResource: "packs_en", ofType: "json") {
+                do {
+                    try fileMgr.copyItem(atPath: bundlePath, toPath: packsFile)
+                } catch {
+                    print(error)
+                }
+            }
+            if let bundlePath = Bundle.main.path(forResource: "cycles_en", ofType: "json") {
+                do {
+                    try fileMgr.copyItem(atPath: bundlePath, toPath: cyclesFile)
+                } catch {
+                    print(error)
+                }
+            }
+        }
                 
         if let cyclesData = fileMgr.contents(atPath: cyclesFile), let packsData = fileMgr.contents(atPath: packsFile) {
             return setupFromJsonData(cyclesData, packsData)
