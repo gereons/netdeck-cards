@@ -104,7 +104,7 @@ class DataDownload: NSObject {
         }
 
         let url = URL(string: urlString)!
-        var req = URLRequest(url: url, timeoutInterval: 20)
+        var req = URLRequest(url: url, timeoutInterval: 3)
         if BuildConfig.debug {
             req.cachePolicy = .reloadIgnoringLocalCacheData
         }
