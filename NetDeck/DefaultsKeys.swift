@@ -138,6 +138,9 @@ extension DefaultsKeys {
     
     /// iphone browser hint shown
     static let browserHintShown = DefaultsKey<Bool>("browserHintShown")
+
+    /// download cards on first start done?
+    static let downloadOnFirstStartDone = DefaultsKey<Bool>("downloadOnFirstStartDone")
 }
 
 // add type-safe registerDefault methods

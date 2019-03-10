@@ -100,15 +100,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func parseCardsData() {
         let start = Date.timeIntervalSinceReferenceDate
+
+        // uncomment to simulate first start after installation
+        // PackManager.removeFiles()
+        // CardManager.removeFiles()
+        // Defaults[.downloadOnFirstStartDone] = false
+
         let setsOk = PackManager.setupFromFiles()
-        // print("app start, setsOk=\(setsOk)")
+        print("app start, setsOk=\(setsOk)")
         if setsOk {
-            _ = CardManager.setupFromFiles()
-            // print("app start, cardsOk=\(cardsOk)")
+            let cardsOk = CardManager.setupFromFiles()
+            print("app start, cardsOk=\(cardsOk)")
         }
 
         Prebuilt.initialize()
         _ = MWLManager.setupFromFiles()
+
+        if !Defaults[.downloadOnFirstStartDone] && Reachability.online {
+            Defaults[.downloadOnFirstStartDone] = true
+            DataDownload.downloadCardData(verbose: false)
+        }
 
         let elapsed = Date.timeIntervalSinceReferenceDate - start
         print ("init base data took \(elapsed)")
