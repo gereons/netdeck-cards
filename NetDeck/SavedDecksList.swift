@@ -485,6 +485,9 @@ extension SavedDecksList {
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
+        guard let button = button else {
+            return
+        }
         self.newDeck(button)
     }
     

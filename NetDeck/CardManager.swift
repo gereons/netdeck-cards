@@ -150,7 +150,7 @@ class CardManager {
 
         for identity in allIdentities {
             let faction = Faction.name(for: identity.faction)
-            if let index = factionNames.index(where: { $0 == faction }) {
+            if let index = factionNames.firstIndex(where: { $0 == faction }) {
                 identities[index].append(identity)
             }
         }

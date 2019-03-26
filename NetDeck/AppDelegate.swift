@@ -23,9 +23,7 @@ import DeviceKit
 // clean up all copyright headers
 // move dropbox and fabric api keys to non-versioned file
 
-#warning("iPhone card view: support landscape?")
-#warning("use mwl.json")
-#warning("auto-download initial cards")
+#warning("release-todo: update seed data!")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

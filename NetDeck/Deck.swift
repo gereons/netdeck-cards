@@ -266,7 +266,7 @@ import SwiftyUserDefaults
     }
     
     private func indexOfCardCode(_ code: String) -> Int? {
-        return self.cards.index { $0.card.code == code }
+        return self.cards.firstIndex { $0.card.code == code }
     }
     
     func findCard(_ card: Card) -> CardCounter? {
@@ -702,7 +702,7 @@ import SwiftyUserDefaults
         var maxIndex = -1
 
         for cc in cards {
-            if let index = PackManager.allPacks.index(where: { $0.code == cc.card.packCode}) {
+            if let index = PackManager.allPacks.firstIndex(where: { $0.code == cc.card.packCode}) {
                 maxIndex = max(index, maxIndex)
             }
         }

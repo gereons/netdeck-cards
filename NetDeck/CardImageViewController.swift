@@ -102,7 +102,7 @@ class CardImageViewController: UIViewController {
     }
 
     private func scrollToSelected() {
-        if let row = self.cards.index(where: { $0.code == self.selectedCard.code }) {
+        if let row = self.cards.firstIndex(where: { $0.code == self.selectedCard.code }) {
             let indexPath = IndexPath(row: row, section: 0)
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
         }
