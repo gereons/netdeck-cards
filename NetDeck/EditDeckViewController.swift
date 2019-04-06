@@ -585,9 +585,6 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         if !self.deck.isDraft && (card.owned < cc.count || card.isRotated) {
             cell.nameLabel.textColor = .red
         }
-        if self.deck.legality == .cacheRefresh && card.isCore && cc.count > card.quantity {
-            cell.nameLabel.textColor = .red
-        }
         if card.banned(self.deck.mwl) {
             cell.nameLabel.textColor = .red
         }

@@ -905,7 +905,8 @@ extension Deck {
     private func checkCacheRefreshRules() -> [String] {
         let validCycles = PackManager.cacheRefreshCycles
 
-        var coreCardsOverQuantity = 0
+        let allowedDeluxe = [ PackManager.creationAndControl, PackManager.honorAndProfit, PackManager.orderAndChaos, PackManager.dataAndDestiny ]
+
         var draftUsed = false
         var oldCoreUsed = false
         
@@ -914,18 +915,16 @@ extension Deck {
         var cardsFromAllowedCycles = 0
         var cardsFromForbiddenCycles = 0
 
-        for cc in self.cards {
+        for cc in self.allCards {
             let card = cc.card
             switch card.packCode {
             case PackManager.draft:
                 draftUsed = true
             case PackManager.core, PackManager.core2:
                 oldCoreUsed = true
-            case PackManager.sc19:
-                if cc.count > card.quantity {
-                    coreCardsOverQuantity += 1
-                }
-            case _ where PackManager.deluxeBoxes.contains(card.packCode):
+            case PackManager.sc19, PackManager.reignAndReverie, PackManager.magnumOpus:
+                ()
+            case _ where allowedDeluxe.contains(card.packCode):
                 let c = cardsFromDeluxe[card.packCode] ?? 0
                 cardsFromDeluxe[card.packCode] = c + 1
             case PackManager.terminalDirective:
@@ -951,18 +950,18 @@ extension Deck {
         let deluxesUsed = cardsFromDeluxe.count
         
         // only legal packs, 1 deluxe, 1 core, TD
-        if cardsFromForbiddenCycles == 0 && deluxesUsed <= 1 && coreCardsOverQuantity == 0 {
+        if cardsFromForbiddenCycles == 0 && deluxesUsed <= 1 && cardsFromTD == 0 {
             return reasons
         }
 
-        // more than 1 core used
-        if coreCardsOverQuantity > 0 {
-            reasons.append("Uses >1 Core".localized())
-        }
-        
         // more than 1 deluxe used
         if deluxesUsed > 1 {
             reasons.append("Uses >1 Deluxe".localized())
+        }
+
+        // more than 1 deluxe used
+        if cardsFromTD > 0 {
+            reasons.append("Uses Terminal Directive".localized())
         }
         
         // invalid datapacks used

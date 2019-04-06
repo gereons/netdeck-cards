@@ -1145,9 +1145,6 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
             if !self.deck.isDraft && (card.owned < cc2.count || card.isRotated) {
                 cell.copiesLabel.textColor = .red
             }
-            if self.deck.legality == .cacheRefresh && card.isCore && cc2.count > card.quantity {
-                cell.copiesLabel.textColor = .red
-            }
             if card.banned(self.deck.mwl) {
                 cell.copiesLabel.textColor = .red
             }

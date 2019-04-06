@@ -79,9 +79,6 @@ class LargeCardCell: CardCell {
         if !self.deck.isDraft && (cc.count > card.owned || card.isRotated) {
             self.name.textColor = .red
         }
-        if self.deck.legality == .cacheRefresh && card.isCore && cc.count > card.quantity {
-            self.name.textColor = .red
-        }
         if card.banned(self.deck.mwl) {
             self.name.textColor = .red
         }

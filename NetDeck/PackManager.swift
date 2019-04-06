@@ -107,6 +107,7 @@ class PackManager {
     static let dataAndDestiny = "dad"
     static let terminalDirective = "td"
     static let reignAndReverie = "rar"
+    static let magnumOpus = "mo"
     
     static let deluxeBoxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny, reignAndReverie ]
     static let campaignBoxes = [ terminalDirective ]
