@@ -64,8 +64,8 @@ struct DeckDiff {
         // for each type, find cards in each deck
         for i in 0 ..< self.fullDiffSections.count {
             let type = self.fullDiffSections[i]
-            let idx1 = types1.index(of: type)
-            let idx2 = types2.index(of: type)
+            let idx1 = types1.firstIndex(of: type)
+            let idx2 = types2.firstIndex(of: type)
             
             var cards = [String: CardDiff]()
             // create a CardDiff object for each card in deck1

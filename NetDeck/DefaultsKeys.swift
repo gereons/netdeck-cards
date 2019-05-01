@@ -38,8 +38,6 @@ extension DefaultsKeys {
     static let updateInterval = DefaultsKey<Int>("updateInterval")
     /// auto-update?
     static let autoCardUpdates = DefaultsKey<Bool>("autoCardUpdates")
-    /// card language
-    static let language = DefaultsKey<String>("language")
     
     // Card selection
     /// use original Core Set?
@@ -124,8 +122,8 @@ extension DefaultsKeys {
     /// identity selection: show as table?
     static let identityTable = DefaultsKey<Bool>("identityTable")
     
-    /// which MWL to use?
-    static let defaultMWL = DefaultsKey<MWL>("mwlVersion")
+    /// which MWL to use? 0 == none
+    static let defaultMWL = DefaultsKey<Int>("mwlVersion")
     /// exclude rotated-out cards?
     static let rotationActive = DefaultsKey<Bool>("rotationActive")
     /// which rotation to use?
@@ -140,6 +138,9 @@ extension DefaultsKeys {
     
     /// iphone browser hint shown
     static let browserHintShown = DefaultsKey<Bool>("browserHintShown")
+
+    /// download cards on first start done?
+    static let downloadOnFirstStartDone = DefaultsKey<Bool>("downloadOnFirstStartDone")
 }
 
 // add type-safe registerDefault methods
@@ -182,11 +183,6 @@ extension UserDefaults {
     
     subscript(key: DefaultsKey<BrowserSort>) -> BrowserSort {
         get { return unarchive(key) ?? .byType }
-        set { archive(key, newValue) }
-    }
-
-    subscript(key: DefaultsKey<MWL>) -> MWL {
-        get { return unarchive(key) ?? .none }
         set { archive(key, newValue) }
     }
 

@@ -107,6 +107,7 @@ class PackManager {
     static let dataAndDestiny = "dad"
     static let terminalDirective = "td"
     static let reignAndReverie = "rar"
+    static let magnumOpus = "mo"
     
     static let deluxeBoxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny, reignAndReverie ]
     static let campaignBoxes = [ terminalDirective ]
@@ -139,7 +140,7 @@ class PackManager {
     }
     
     static func nameFor(key: String) -> String? {
-        if let index = allPacks.index(where: {$0.settingsKey == key}) {
+        if let index = allPacks.firstIndex(where: {$0.settingsKey == key}) {
             return allPacks[index].name
         }
         return nil
@@ -373,6 +374,24 @@ class PackManager {
         let cyclesFile = cyclesPathname()
         
         let fileMgr = FileManager.default
+
+        if !fileMgr.fileExists(atPath: packsFile) {
+            // copy the files from our bundle
+            if let bundlePath = Bundle.main.path(forResource: "packs_en", ofType: "json") {
+                do {
+                    try fileMgr.copyItem(atPath: bundlePath, toPath: packsFile)
+                } catch {
+                    print(error)
+                }
+            }
+            if let bundlePath = Bundle.main.path(forResource: "cycles_en", ofType: "json") {
+                do {
+                    try fileMgr.copyItem(atPath: bundlePath, toPath: cyclesFile)
+                } catch {
+                    print(error)
+                }
+            }
+        }
                 
         if let cyclesData = fileMgr.contents(atPath: cyclesFile), let packsData = fileMgr.contents(atPath: packsFile) {
             return setupFromJsonData(cyclesData, packsData)
@@ -408,8 +427,8 @@ class PackManager {
         cycles.sort { $0.position < $1.position }
         
         guard
-            let coreIndex = cycles.index(where: { $0.code == PackManager.core }),
-            let core2Index = cycles.index(where: { $0.code == PackManager.core2 })
+            let coreIndex = cycles.firstIndex(where: { $0.code == PackManager.core }),
+            let core2Index = cycles.firstIndex(where: { $0.code == PackManager.core2 })
         else {
             return
         }
@@ -417,7 +436,7 @@ class PackManager {
         let c2 = cycles.remove(at: core2Index)
         cycles.insert(c2, at: coreIndex + 1)
 
-        if let sc19index = cycles.index(where: { $0.code == PackManager.sc19}) {
+        if let sc19index = cycles.firstIndex(where: { $0.code == PackManager.sc19}) {
             let sc19 = cycles.remove(at: sc19index)
             cycles.insert(sc19, at: coreIndex + 2)
         }

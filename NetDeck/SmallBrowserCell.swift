@@ -34,7 +34,7 @@ class SmallBrowserCell: BrowserCell {
     }
     
     override func setCard(_ card: Card) {
-        let mwl = Defaults[.defaultMWL]
+        let mwl = MWLManager.activeMWL
         self.nameLabel.text = card.displayName(mwl)
         
         let value = card.type == .agenda ? card.agendaPoints : card.influence

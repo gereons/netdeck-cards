@@ -299,7 +299,8 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         
         cell.mwlLabel.text = ""
         let penalty = card.mwlPenalty(self.deck.mwl)
-        if penalty > 0 && !self.deck.mwl.universalInfluence {
+        let list = MWLManager.mwlBy(self.deck.mwl)
+        if penalty > 0 && !list.universalInfluence {
             cell.mwlLabel.text = "\(min(-1, -cc.count * penalty))"
         }
         

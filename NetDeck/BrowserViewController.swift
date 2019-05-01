@@ -156,7 +156,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         }()
     
         let card = self.cards[indexPath.section][indexPath.row]
-        let mwl = Defaults[.defaultMWL]
+        let mwl = MWLManager.activeMWL
 
         cell.textLabel?.text = card.displayName(mwl)
     
@@ -282,10 +282,10 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
 
             let common = Array(Set(runner).intersection(Set(corp))).sorted()
             common.forEach {
-                if let index = runner.index(of: $0) {
+                if let index = runner.firstIndex(of: $0) {
                     runner.remove(at: index)
                 }
-                if let index = corp.index(of: $0) {
+                if let index = corp.firstIndex(of: $0) {
                     corp.remove(at: index)
                 }
             }

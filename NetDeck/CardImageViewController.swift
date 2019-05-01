@@ -19,7 +19,7 @@ class CardImageViewController: UIViewController {
     private var cards = [Card]()
     private var counts = [Int]()
     private var initialScrollDone = false
-    private var mwl: MWL!
+    private var mwl = 0
     private var deck: Deck?
     var peeking = false {
         didSet {
@@ -56,7 +56,7 @@ class CardImageViewController: UIViewController {
         return Device.isIphone4
     }
 
-    func setCards(_ cards: [Card], mwl: MWL, deck: Deck?) {
+    func setCards(_ cards: [Card], mwl: Int, deck: Deck?) {
         self.cards = cards
         self.mwl = mwl
         self.counts.removeAll()
@@ -67,7 +67,7 @@ class CardImageViewController: UIViewController {
         }
     }
     
-    func setCardCounters(_ cardCounters: [CardCounter], mwl: MWL) {
+    func setCardCounters(_ cardCounters: [CardCounter], mwl: Int) {
         self.cards.removeAll()
         self.counts.removeAll()
         
@@ -102,7 +102,7 @@ class CardImageViewController: UIViewController {
     }
 
     private func scrollToSelected() {
-        if let row = self.cards.index(where: { $0.code == self.selectedCard.code }) {
+        if let row = self.cards.firstIndex(where: { $0.code == self.selectedCard.code }) {
             let indexPath = IndexPath(row: row, section: 0)
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
         }

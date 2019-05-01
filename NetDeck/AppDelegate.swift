@@ -23,7 +23,7 @@ import DeviceKit
 // clean up all copyright headers
 // move dropbox and fabric api keys to non-versioned file
 
-#warning("iPhone card view: support landscape?")
+#warning("release-todo: update seed data!")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -98,14 +98,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func parseCardsData() {
         let start = Date.timeIntervalSinceReferenceDate
+
+        // uncomment to simulate first start after installation
+        // PackManager.removeFiles()
+        // CardManager.removeFiles()
+        // Defaults[.downloadOnFirstStartDone] = false
+
         let setsOk = PackManager.setupFromFiles()
-        // print("app start, setsOk=\(setsOk)")
+        print("app start, setsOk=\(setsOk)")
         if setsOk {
-            _ = CardManager.setupFromFiles()
-            // print("app start, cardsOk=\(cardsOk)")
+            let cardsOk = CardManager.setupFromFiles()
+            print("app start, cardsOk=\(cardsOk)")
         }
 
         Prebuilt.initialize()
+        _ = MWLManager.setupFromFiles()
+
+        if !Defaults[.downloadOnFirstStartDone] && Reachability.online {
+            Defaults[.downloadOnFirstStartDone] = true
+            DataDownload.downloadCardData(verbose: false)
+        }
 
         let elapsed = Date.timeIntervalSinceReferenceDate - start
         print ("init base data took \(elapsed)")
@@ -234,7 +246,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        Defaults.registerDefault(.defaultMWL, MWL.latest)
         Defaults.registerDefault(.rotationActive, true)
         Defaults.registerDefault(.rotationIndex, Rotation._2018)
         Defaults.registerDefault(.convertCore, true)
@@ -245,7 +256,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Defaults.registerDefault(.autoHistory, true)
         Defaults.registerDefault(.keepNrdbCredentials, true)
         Defaults.registerDefault(.nrdbHost, "netrunnerdb.com")
-        Defaults.registerDefault(.language, "en")
         Defaults.registerDefault(.updateInterval, 7)
         Defaults.registerDefault(.autoCardUpdates, true)
         Defaults.registerDefault(.lastBackgroundFetch, "never".localized())
@@ -266,7 +276,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Defaults.registerDefault(.deckbuilderPacks, PackUsage.selected)
         
         Defaults.registerDefault(.numOriginalCore, 0)
-        Defaults.registerDefault(.numRevisedCore, 3)
+        Defaults.registerDefault(.numRevisedCore, 0)
+        Defaults.registerDefault(.numSC19, 3)
         
         Defaults.registerDefault(.identityTable, true)
     }
@@ -338,7 +349,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let width = Int(UIScreen.main.bounds.width)
         let height = Int(UIScreen.main.bounds.height)
         let attrs = [
-            "cardLanguage": Defaults[.language],
             "locale": Locale.current.identifier,
             "useNrdb": Defaults[.useNrdb] ? "on" : "off",
             "useDropbox": Defaults[.useDropbox] ? "on" : "off",
@@ -347,7 +357,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "os": UIDevice.current.systemVersion,
             "device+os": device.description + " " + UIDevice.current.systemVersion,
             "resolution": "\(height)x\(width)",
-            "defaultMWL": "\(Defaults[.defaultMWL].rawValue)",
             "appVersion": Utils.appVersion(),
             "appLaunched": appLaunched ? "yes" : "no"
         ]

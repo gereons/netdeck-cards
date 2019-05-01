@@ -585,9 +585,6 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         if !self.deck.isDraft && (card.owned < cc.count || card.isRotated) {
             cell.nameLabel.textColor = .red
         }
-        if self.deck.legality == .cacheRefresh && card.isCore && cc.count > card.quantity {
-            cell.nameLabel.textColor = .red
-        }
         if card.banned(self.deck.mwl) {
             cell.nameLabel.textColor = .red
         }
@@ -605,7 +602,8 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             let penalty = card.mwlPenalty(self.deck.mwl)
-            if penalty > 0 && !self.deck.mwl.universalInfluence {
+            let list = MWLManager.mwlBy(self.deck.mwl)
+            if penalty > 0 && !list.universalInfluence {
                 cell.mwlLabel.text = "\(-cc.count * penalty)"
             }
         }

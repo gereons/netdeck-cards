@@ -121,6 +121,7 @@
 		3A84F8DC1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84F8DB1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift */; };
 		3A8532791855084900507B9A /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3A8532781855084900507B9A /* InAppSettings.bundle */; };
 		3A85328318550ACE00507B9A /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A85328118550ACE00507B9A /* AboutViewController.xib */; };
+		3A88EE8F2234041B00630848 /* MWL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88EE8E2234041B00630848 /* MWL.swift */; };
 		3A904FCD1BF73723001C075A /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A904FCC1BF73723001C075A /* Types.swift */; };
 		3A92DFD81CBA59EE0043F2F6 /* BrowserValuePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A92DFD61CBA59EE0043F2F6 /* BrowserValuePicker.swift */; };
 		3A92DFD91CBA59EE0043F2F6 /* BrowserValuePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A92DFD71CBA59EE0043F2F6 /* BrowserValuePicker.xib */; };
@@ -174,11 +175,15 @@
 		3ADADEE51DFDD4040051BD92 /* EditDeckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADADEE41DFDD4040051BD92 /* EditDeckCell.swift */; };
 		3ADBCA961DDA372800D988A5 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBCA951DDA372800D988A5 /* InsetLabel.swift */; };
 		3ADDFF7A1E1C20170001B1C4 /* CompareDecksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADDFF791E1C20170001B1C4 /* CompareDecksList.swift */; };
+		3ADE6F7922355CEA00DE0616 /* mwl.json in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE6F7822355CEA00DE0616 /* mwl.json */; };
 		3ADE90A118775A77006E187F /* CardImageViewPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageViewPopover.xib */; };
 		3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */; };
 		3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */; };
 		3AE0C80F1E168ECA0046376F /* CardFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C80E1E168ECA0046376F /* CardFilterCell.swift */; };
 		3AE0C8111E168FC70046376F /* CardFilterThumbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C8101E168FC70046376F /* CardFilterThumbView.swift */; };
+		3AE1C5942235B001000A2B34 /* packs_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 3AE1C5932235B001000A2B34 /* packs_en.json */; };
+		3AE1C5962235B009000A2B34 /* cards_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 3AE1C5952235B009000A2B34 /* cards_en.json */; };
+		3AE1C5982235B016000A2B34 /* cycles_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 3AE1C5972235B016000A2B34 /* cycles_en.json */; };
 		3AE6A561208000AC000722BA /* ThreadsafeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6A560208000AC000722BA /* ThreadsafeCollections.swift */; };
 		3AEEBB671C00C9FF00CB6053 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEBB661C00C9FF00CB6053 /* CardManager.swift */; };
 		3AEF52011CCD53B300A831E0 /* OutlineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */; };
@@ -332,6 +337,7 @@
 		3A84F8DB1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDBAuthPopupViewController.swift; sourceTree = "<group>"; };
 		3A8532781855084900507B9A /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		3A85328118550ACE00507B9A /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		3A88EE8E2234041B00630848 /* MWL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWL.swift; sourceTree = "<group>"; };
 		3A904FCC1BF73723001C075A /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		3A92DFD61CBA59EE0043F2F6 /* BrowserValuePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserValuePicker.swift; sourceTree = "<group>"; };
 		3A92DFD71CBA59EE0043F2F6 /* BrowserValuePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserValuePicker.xib; sourceTree = "<group>"; };
@@ -392,11 +398,15 @@
 		3ADADEE41DFDD4040051BD92 /* EditDeckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDeckCell.swift; sourceTree = "<group>"; };
 		3ADBCA951DDA372800D988A5 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		3ADDFF791E1C20170001B1C4 /* CompareDecksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompareDecksList.swift; sourceTree = "<group>"; };
+		3ADE6F7822355CEA00DE0616 /* mwl.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mwl.json; sourceTree = "<group>"; };
 		3ADE909E18775A77006E187F /* CardImageViewPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewPopover.xib; sourceTree = "<group>"; };
 		3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DTCoreTextFontOverrides.plist; sourceTree = "<group>"; };
 		3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OctgnImport.swift; sourceTree = "<group>"; };
 		3AE0C80E1E168ECA0046376F /* CardFilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterCell.swift; sourceTree = "<group>"; };
 		3AE0C8101E168FC70046376F /* CardFilterThumbView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFilterThumbView.swift; sourceTree = "<group>"; };
+		3AE1C5932235B001000A2B34 /* packs_en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packs_en.json; sourceTree = "<group>"; };
+		3AE1C5952235B009000A2B34 /* cards_en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cards_en.json; sourceTree = "<group>"; };
+		3AE1C5972235B016000A2B34 /* cycles_en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cycles_en.json; sourceTree = "<group>"; };
 		3AE6A560208000AC000722BA /* ThreadsafeCollections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsafeCollections.swift; sourceTree = "<group>"; };
 		3AEEBB661C00C9FF00CB6053 /* CardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 		3AEF52001CCD53B300A831E0 /* OutlineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineLabel.swift; sourceTree = "<group>"; };
@@ -517,6 +527,10 @@
 		3A3622681849320C007F2854 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3AE1C5932235B001000A2B34 /* packs_en.json */,
+				3AE1C5972235B016000A2B34 /* cycles_en.json */,
+				3AE1C5952235B009000A2B34 /* cards_en.json */,
+				3ADE6F7822355CEA00DE0616 /* mwl.json */,
 				3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */,
 				3AAD7D781D930154001821F5 /* NetDeck.entitlements */,
 				3AA0504919589F9B00DBDED6 /* Acknowledgements.html */,
@@ -756,6 +770,7 @@
 				3A3C1E1C1BF77F10000311FA /* CardCounter.swift */,
 				3AC4F7851BFD2659008E42F7 /* Card.swift */,
 				3AA251301F8D0395007C9A3C /* Card+Constants.swift */,
+				3A88EE8E2234041B00630848 /* MWL.swift */,
 				3A47F18F1DBB7E9500058294 /* Card+HTML.swift */,
 				3AF78711209DCFD90038CAC2 /* Symbols.swift */,
 				3AEEBB661C00C9FF00CB6053 /* CardManager.swift */,
@@ -1005,7 +1020,7 @@
 				TargetAttributes = {
 					3A36225D1849320C007F2854 = {
 						DevelopmentTeam = 858Z7CGJH8;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1021,7 +1036,7 @@
 					3AFE724E2081191200816139 = {
 						CreatedOnToolsVersion = 9.3;
 						DevelopmentTeam = 858Z7CGJH8;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 3A36225D1849320C007F2854;
 					};
@@ -1029,7 +1044,7 @@
 			};
 			buildConfigurationList = 3A3622591849320C007F2854 /* Build configuration list for PBXProject "NetDeck" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -1055,6 +1070,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ADE6F7922355CEA00DE0616 /* mwl.json in Resources */,
 				3A7C0D5E20A87E7E003CF2F2 /* PrebuiltSelectionViewController.xib in Resources */,
 				3A9CE56518E0B6C0007A26CD /* IdentityViewCell.xib in Resources */,
 				3A4866E8193B85560045C927 /* DeckNotesPopup.xib in Resources */,
@@ -1078,9 +1094,11 @@
 				3AA8EC2B1CC3A05E00370A26 /* DeckHistoryViewController.xib in Resources */,
 				3A531B271A2CEECD00BE4D1D /* DeckHistorySectionHeaderView.xib in Resources */,
 				3AA440F91854EF720051D4B0 /* DeckListViewController.xib in Resources */,
+				3AE1C5962235B009000A2B34 /* cards_en.json in Resources */,
 				3AA0504A19589F9B00DBDED6 /* Acknowledgements.html in Resources */,
 				3A1855F41A8E27EF00A1852D /* SetSelectionViewController.xib in Resources */,
 				3AB9BD5F18FADC01004EAF10 /* DeckCell~ipad.xib in Resources */,
+				3AE1C5982235B016000A2B34 /* cycles_en.json in Resources */,
 				3AA440EB1854DA580051D4B0 /* EmptyDetailViewController.xib in Resources */,
 				3A11C5FC19715C0A003F2093 /* CollectionViewSectionHeader.xib in Resources */,
 				3A8061E81972990E003ACF44 /* DeckDiffCell.xib in Resources */,
@@ -1099,6 +1117,7 @@
 				3AD3249318A93FA300D7AE5D /* DeckAnalysisViewController.xib in Resources */,
 				3ACF259F198D485F00E6267E /* BrowserFilterViewController.xib in Resources */,
 				3A8532791855084900507B9A /* InAppSettings.bundle in Resources */,
+				3AE1C5942235B001000A2B34 /* packs_en.json in Resources */,
 				3A98964319953AAD0023880B /* SmallBrowserCell.xib in Resources */,
 				3AF062381B88819F00575984 /* NRDBAuthPopupViewController~iphone.xib in Resources */,
 				3AD860E11B79383500EEF8AC /* CardImageViewController.xib in Resources */,
@@ -1345,6 +1364,7 @@
 				3A7D9C3D1E20F7AB00D1410A /* BrowserResultViewController.swift in Sources */,
 				3A84F8DC1DC3C3AF00AE1CF1 /* NRDBAuthPopupViewController.swift in Sources */,
 				3AB838611DC684EB0047B7DB /* BrowserImageCell.swift in Sources */,
+				3A88EE8F2234041B00630848 /* MWL.swift in Sources */,
 				3A5EBE9F1E0FFACC0096E2F5 /* Stats.swift in Sources */,
 				3A65016F1DC6286600815965 /* NRSwitch.swift in Sources */,
 				3A5EBE9D1E0FF6EC0096E2F5 /* InfluenceStats.swift in Sources */,
@@ -1631,8 +1651,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
@@ -1667,8 +1686,7 @@
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
@@ -1698,10 +1716,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NetDeckTests;
+				PRODUCT_MODULE_NAME = NetDeckTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 			};
@@ -1731,8 +1750,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NetDeckTests;
+				PRODUCT_MODULE_NAME = NetDeckTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NetDeck.app/NetDeck";
 			};

@@ -50,8 +50,6 @@ class SettingsDelegate: IASKSettingsDelegate {
     fileprivate func hiddenKeys() -> Set<String> {
         var hiddenKeys = Set<String>()
 
-        hiddenKeys.insert(DefaultsKeys.language._key)
-
         if !CardManager.cardsAvailable {
             hiddenKeys = Set([
                 "sets_hide_1", "sets_hide_2", "sets_hide_3",
@@ -130,10 +128,6 @@ class SettingsDelegate: IASKSettingsDelegate {
         case DefaultsKeys.updateInterval._key:
             CardManager.setNextDownloadDate()
             
-        case DefaultsKeys.language._key:
-            let language = value as? String ?? "n/a"
-            Analytics.logEvent(.changeLanguage, attributes: ["Language": language])
-            
         case DefaultsKeys.keepNrdbCredentials._key:
             let keep = value as? Bool ?? false
             
@@ -167,7 +161,7 @@ class SettingsDelegate: IASKSettingsDelegate {
         }
 
         if key == DefaultsKeys.defaultMWL._key {
-            return MWL.values()
+            return MWLManager.settingsValues()
         } else if key == DefaultsKeys.rotationIndex._key {
             return Rotation.values()
         }
@@ -181,7 +175,7 @@ class SettingsDelegate: IASKSettingsDelegate {
         }
 
         if key == DefaultsKeys.defaultMWL._key {
-            return MWL.titles()
+            return MWLManager.settingsTitles()
         } else if key == DefaultsKeys.rotationIndex._key {
             return Rotation.titles()
         }
@@ -192,6 +186,7 @@ class SettingsDelegate: IASKSettingsDelegate {
     private func reinitializeData() {
         _ = PackManager.setupFromFiles()
         _ = CardManager.setupFromFiles()
+        _ = MWLManager.setupFromFiles()
     }
 
     private func nrdbLogin() {

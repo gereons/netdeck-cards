@@ -45,160 +45,27 @@ extension Card {
     static let padCampaignCore2         = "20128"    // ditto
     static let padCampaignSC19          = "25142"    // ditto
     static let padCampaigns = [ padCampaign, padCampaignCore2, padCampaignSC19 ]
-    
-    // NAPD Most Wanted List
-    static let parasite             = "01012"
-    static let yog_0                = "01014"
-    static let wyldside             = "01016"
-    static let desperado            = "01024"
-    static let astroscript          = "01081"
-    static let breakingNews         = "01082"
-    static let sansanCityGrid       = "01092"
-    static let eli_1                = "02110"
-    static let cloneChip            = "03038"
-    static let prepaidVoicepad      = "04029"
-    static let blackmail            = "04089"
-    static let napdContract         = "04119"
-    static let d4v1d                = "06033"
-    static let architect            = "06061"
-    static let cerberusH1           = "06099"
-    static let faust                = "08061"
-    static let ddos                 = "08103"
-    static let bioEthicsAssociation = "10050"
-    static let sensieActorsUnion    = "10053"
-    static let mumbadCityHall       = "10055"
-    static let rumorMill            = "11022"
-    static let temüjinContract      = "11026"
-    static let friendsInHighPlaces  = "11090"
-    static let şifr                 = "11101"
-    static let aaronMarrón          = "11106"
-    
-    // Ban/Restriced List
-    static let cerebralImaging      = "03001"
-    static let levyARLabAccess      = "03035"
-    static let motherGoddess        = "06010"
-    static let filmCritic           = "08086"
-    static let gangSign             = "08067"
-    static let hyperdriver          = "08070"
-    static let _24_7_newsCycle      = "09019"
-    static let globalFoodInitiative = "09026"
-    static let employeeStrike       = "09053"
-    static let cloneSuffrageMovement = "10049"
-    static let fairchild_3          = "11049"
-    static let potentialUnleashed   = "11054"
-    static let tapwrm               = "11104"
-    static let violetLevelClearance = "11111"
-    static let bryanStinson         = "11117"
-    static let madDash              = "12008"
-    static let inversificator       = "12048"
-    static let obokataProtocol      = "12070"
-    static let whampoaReclamation   = "12079"
-    static let marsForMartians      = "12081"
-    static let blooMoose            = "12089"
-    static let salvagedVanadisArmory = "12103"
-    static let brainRewiring        = "13029"
-    static let estelleMoon          = "13032"
-    static let skorpios             = "13041"
-    static let hunterSeeker         = "13051"
-    static let magnumOpus           = "20050"
-    static let aesopsPawnshop       = "20052"
-    static let zer0                 = "21101"
-    static let surveyor             = "21118"
-    static let watchTheWorldBurn    = "23100"
-    static let commercialBankersGroup = "10054"
-    static let paperclip            = "11024"
-    static let hiredHelp            = "23101"
-    static let mtiMwekundu          = "21114"
-    static let excalibur            = "06111"
-    static let crowdfunding         = "23013"
-    static let dormComputer         = "08024"
 }
 
-// MARK: - NAPD MWL
 extension Card {
-    // dictionaries of code -> penalty for each MWL version
-    private static let mostWantedLists: [MWL: MostWantedList] = [
-        // MWL v1.0, introduced in Tournament Rules 3.0.2, valid from 2016-02-01 until 2016-07-31
-        .v1_0: MostWantedList(penalties:
-            [ cerberusH1: 1, cloneChip: 1, desperado: 1, parasite: 1, prepaidVoicepad: 1, yog_0: 1,
-              architect: 1, astroscript: 1, eli_1: 1, napdContract: 1, sansanCityGrid: 1 ]),
-        
-        // MWL v1.1, introduced in Tournament Regulations v1.1, valid from 2016-08-01 until 2017-04-11
-        .v1_1: MostWantedList(penalties:
-            [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, desperado: 1, faust: 1, parasite: 1, prepaidVoicepad: 1, wyldside: 1, yog_0: 1,
-              architect: 1, breakingNews: 1, eli_1: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1 ]),
-        
-        // MWL v1.2, introduced in NAPD Most Wanted List v1.2, valid from 2017-04-12 until 2017-09-30
-        .v1_2: MostWantedList(penalties:
-            [ cerberusH1: 1, cloneChip: 1, d4v1d: 1, parasite: 1, temüjinContract: 1, wyldside: 1, yog_0: 1,
-              architect: 1, bioEthicsAssociation: 1, breakingNews: 1, mumbadCityHall: 1, mumbaTemple: 1, napdContract: 1, sansanCityGrid: 1,
-              blackmail: 3, ddos: 3, faust: 3, rumorMill: 3, şifr: 3,
-              sensieActorsUnion: 3 ]),
-        
-        // MWL v2.0, introduced in NAPD Most Wanted List v2.0, valid from 2017-10-01 until 2018-02-25
-        .v2_0: MostWantedList(
-            runnerBanned: [ aaronMarrón, blooMoose, faust, rumorMill, salvagedVanadisArmory, şifr, temüjinContract ],
-            runnerRestricted: [ aesopsPawnshop, cloneChip, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, magnumOpus ],
-            corpBanned: [ cloneSuffrageMovement, friendsInHighPlaces, mumbadCityHall, sensieActorsUnion ],
-            corpRestricted: [bioEthicsAssociation, estelleMoon, fairchild_3, globalFoodInitiative, hunterSeeker, mumbaTemple, museumOfHistory, obokataProtocol ]),
-
-        // MWL v2.1, introduced in NAPD Most Wanted List v2.1, valid from 2018-02-26
-        .v2_1: MostWantedList(
-            runnerBanned: [ aaronMarrón, blooMoose, faust, salvagedVanadisArmory, şifr, temüjinContract ],
-            runnerRestricted: [ aesopsPawnshop, cloneChip, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, magnumOpus, rumorMill, tapwrm ],
-            corpBanned: [ cloneSuffrageMovement, friendsInHighPlaces, sensieActorsUnion, violetLevelClearance ],
-            corpRestricted: [bioEthicsAssociation, brainRewiring, estelleMoon, fairchild_3, globalFoodInitiative, hunterSeeker, motherGoddess, mumbaTemple, mumbadCityHall, museumOfHistory, obokataProtocol, whampoaReclamation ]),
-
-        // MWL v2.2, introduced in NAPD Most Wanted List v2.2, valid from 2018-09-06
-        .v2_2: MostWantedList(
-            runnerBanned: [ aaronMarrón, blooMoose, faust, hyperdriver, marsForMartians, salvagedVanadisArmory, şifr, tapwrm, temüjinContract, zer0 ],
-            runnerRestricted: [ aesopsPawnshop, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, madDash, magnumOpus, rumorMill ],
-            corpBanned: [ _24_7_newsCycle, cerebralImaging, cloneSuffrageMovement, estelleMoon, friendsInHighPlaces, museumOfHistory, sensieActorsUnion ],
-            corpRestricted: [ bioEthicsAssociation, brainRewiring, bryanStinson, globalFoodInitiative, hunterSeeker, motherGoddess, mumbaTemple, mumbadCityHall, obokataProtocol, potentialUnleashed, skorpios, surveyor, violetLevelClearance, whampoaReclamation ]),
-
-        // MWL v3.0, introduced in NISEI System Core 2019, valid from 2018-12-21
-        .v3_0: MostWantedList(
-            runnerBanned: [ aaronMarrón, blooMoose, faust, hyperdriver, marsForMartians, salvagedVanadisArmory, şifr, tapwrm, temüjinContract, watchTheWorldBurn, zer0 ],
-            runnerRestricted: [ aesopsPawnshop, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, madDash, paperclip, rumorMill ],
-            corpBanned: [ _24_7_newsCycle, bryanStinson, cerebralImaging, cloneSuffrageMovement, friendsInHighPlaces, hiredHelp, museumOfHistory, sensieActorsUnion ],
-            corpRestricted: [ bioEthicsAssociation, commercialBankersGroup, excalibur, globalFoodInitiative, potentialUnleashed, motherGoddess, mtiMwekundu,
-                              mumbaTemple, mumbadCityHall, obokataProtocol, surveyor, violetLevelClearance, whampoaReclamation]),
-
-        // MWL v3.1, introduced in NISEI System Core 2019, valid from 2019-02-22
-        .v3_1: MostWantedList(
-            runnerBanned: [ aaronMarrón, blooMoose, faust, hyperdriver, marsForMartians, salvagedVanadisArmory, şifr, tapwrm, temüjinContract, watchTheWorldBurn, zer0 ],
-            runnerRestricted: [ aesopsPawnshop, crowdfunding, dormComputer, employeeStrike, filmCritic, gangSign, inversificator, levyARLabAccess, madDash, paperclip, rumorMill ],
-            corpBanned: [ potentialUnleashed, _24_7_newsCycle, bryanStinson, cerebralImaging, cloneSuffrageMovement, friendsInHighPlaces, hiredHelp, museumOfHistory, sensieActorsUnion ],
-            corpRestricted: [ bioEthicsAssociation, commercialBankersGroup, excalibur, globalFoodInitiative, motherGoddess, mtiMwekundu,
-                mumbaTemple, mumbadCityHall, obokataProtocol, surveyor, violetLevelClearance, whampoaReclamation])
-    ]
-
-    func mwlPenalty(_ mwl: MWL) -> Int {
-        guard let penalties = Card.mostWantedLists[mwl]?.penalties else {
-            return 0
-        }
-        
-        return penalties[self.code] ?? 0
+    func mwlPenalty(_ mwl: Int) -> Int {
+        let list = MWLManager.mwlBy(mwl)
+        return list.penalties?[self.code] ?? 0
     }
-    
-    func banned(_ mwl: MWL) -> Bool {
-        guard let banned = Card.mostWantedLists[mwl]?.banned else {
-            return false
-        }
-        return banned.contains(self.code)
+
+    func banned(_ mwl: Int) -> Bool {
+        let list = MWLManager.mwlBy(mwl)
+        return list.banned?.contains(self.code) ?? false
     }
-    
-    func restricted(_ mwl: MWL) -> Bool {
-        guard let restricted = Card.mostWantedLists[mwl]?.restricted else {
-            return false
-        }
-        return restricted.contains(self.code)
+
+    func restricted(_ mwl: Int) -> Bool {
+        let list = MWLManager.mwlBy(mwl)
+        return list.restricted?.contains(self.code) ?? false
     }
 }
 
 extension Card {
-    
-    func displayName(_ mwl: MWL, count: Int? = nil) -> String {
+    func displayName(_ mwl: Int, count: Int? = nil) -> String {
         let unique = self.unique ? Card.unique : ""
         let restricted = self.restricted(mwl) ? Card.restricted : ""
         let banned = self.banned(mwl) ? Card.banned : ""

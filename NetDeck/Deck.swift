@@ -10,11 +10,11 @@ import Foundation
 import SwiftyUserDefaults
 
 @objc(Deck) class Deck: NSObject, NSCoding {
-
     var filename: String?
     var revisions = [DeckChangeSet]()
     var lastModified: Date?
     var dateCreated: Date?
+    var mwl = 0
 
     @objc private(set) var cards = [CardCounter]()
     private(set) var identityCc: CardCounter?
@@ -31,8 +31,9 @@ import SwiftyUserDefaults
         self.state = Defaults[.createDeckActive] ? .active : .testing
         let seq = DeckManager.fileSequence() + 1
         self.name = "Deck #\(seq)"
-        self.legality = .standard(mwl: Defaults[.defaultMWL])
+        self.legality = .standard(mwl: MWLManager.activeMWL)
         self.role = role
+        self.mwl = Defaults[.defaultMWL]
     }
     
     var allCards: [CardCounter] {
@@ -70,10 +71,6 @@ import SwiftyUserDefaults
     var legality = DeckLegality.casual {
         willSet { modified = true }
     }
-    
-    var mwl: MWL {
-        return self.legality.mwl
-    }
 
     var size: Int {
         return self.cards.reduce(0) { $0 + $1.count }
@@ -99,7 +96,8 @@ import SwiftyUserDefaults
         
     /// what's the influence penalty incurred through MWL cards?
     var mwlPenalty: Int {
-        if self.mwl.universalInfluence {
+        let list = MWLManager.mwlBy(self.mwl)
+        if list.universalInfluence {
             return 0
         }
         return cards.reduce(0) { $0 + $1.card.mwlPenalty(self.mwl) * $1.count }
@@ -112,7 +110,8 @@ import SwiftyUserDefaults
     }
     
     func universalInfluenceFor(_ cc: CardCounter) -> Int {
-        if self.mwl.universalInfluence {
+        let list = MWLManager.mwlBy(self.mwl)
+        if list.universalInfluence {
             var count = cc.count
             if cc.card.type == .program && self.identity?.code == Card.theProfessor {
                 count -= 1
@@ -267,7 +266,7 @@ import SwiftyUserDefaults
     }
     
     private func indexOfCardCode(_ code: String) -> Int? {
-        return self.cards.index { $0.card.code == code }
+        return self.cards.firstIndex { $0.card.code == code }
     }
     
     func findCard(_ card: Card) -> CardCounter? {
@@ -506,21 +505,18 @@ import SwiftyUserDefaults
                 }
             }
             
-            let mwl: MWL
+            let mwl: Int
             if let code = rawDeck.mwl_code {
-                mwl = MWL.by(code: code)
+                mwl = MWLManager.mwlBy(code)
             } else {
-                mwl = Defaults[.defaultMWL]
+                mwl = MWLManager.activeMWL
             }
 
             deck.legality = DeckLegality.standard(mwl: mwl)
-            if mwl >= .v2_0 || (mwl == .none && Defaults[.defaultMWL] >= .v2_0) {
-                deck.convertToRevisedCore()
-            }
-            if mwl >= .v3_0 || (mwl == .none && Defaults[.defaultMWL] >= .v3_0) {
-                deck.convertToSC19()
-            }
-            
+            #warning("is this the right thing to do?")
+            deck.convertToRevisedCore()
+            deck.convertToSC19()
+
             let formatter = DateFormatter()
             formatter.dateFormat = NetrunnerDbDeck.dateFormat
             
@@ -628,9 +624,12 @@ import SwiftyUserDefaults
             legality = .cacheRefresh
         } else if modded {
             legality = .modded
+        } else if mwl == 0 {
+            legality = .casual
         } else {
-            legality = .standard(mwl: MWL(rawValue: mwl) ?? .none)
+            legality = .standard(mwl: mwl)
         }
+        self.mwl = mwl
         self.legality = legality
         self.convertedToCore2 = decoder.decodeBool(forKey: "convertedToCore2")
         self.convertedToSC19 = decoder.decodeBool(forKey: "convertedToSC19")
@@ -651,7 +650,7 @@ import SwiftyUserDefaults
         coder.encode(self.notes, forKey:"notes")
         coder.encode(self.lastChanges, forKey:"lastChanges")
         coder.encode(self.revisions, forKey:"revisions")
-        coder.encode(self.mwl.rawValue, forKey: "mwl")
+        coder.encode(self.mwl, forKey: "mwl")
         coder.encode(self.legality == .onesies, forKey: "onesies")
         coder.encode(self.legality == .modded, forKey: "modded")
         
@@ -703,7 +702,7 @@ import SwiftyUserDefaults
         var maxIndex = -1
 
         for cc in cards {
-            if let index = PackManager.allPacks.index(where: { $0.code == cc.card.packCode}) {
+            if let index = PackManager.allPacks.firstIndex(where: { $0.code == cc.card.packCode}) {
                 maxIndex = max(index, maxIndex)
             }
         }
@@ -906,7 +905,8 @@ extension Deck {
     private func checkCacheRefreshRules() -> [String] {
         let validCycles = PackManager.cacheRefreshCycles
 
-        var coreCardsOverQuantity = 0
+        let allowedDeluxe = [ PackManager.creationAndControl, PackManager.honorAndProfit, PackManager.orderAndChaos, PackManager.dataAndDestiny ]
+
         var draftUsed = false
         var oldCoreUsed = false
         
@@ -915,18 +915,16 @@ extension Deck {
         var cardsFromAllowedCycles = 0
         var cardsFromForbiddenCycles = 0
 
-        for cc in self.cards {
+        for cc in self.allCards {
             let card = cc.card
             switch card.packCode {
             case PackManager.draft:
                 draftUsed = true
             case PackManager.core, PackManager.core2:
                 oldCoreUsed = true
-            case PackManager.sc19:
-                if cc.count > card.quantity {
-                    coreCardsOverQuantity += 1
-                }
-            case _ where PackManager.deluxeBoxes.contains(card.packCode):
+            case PackManager.sc19, PackManager.reignAndReverie, PackManager.magnumOpus:
+                ()
+            case _ where allowedDeluxe.contains(card.packCode):
                 let c = cardsFromDeluxe[card.packCode] ?? 0
                 cardsFromDeluxe[card.packCode] = c + 1
             case PackManager.terminalDirective:
@@ -952,18 +950,18 @@ extension Deck {
         let deluxesUsed = cardsFromDeluxe.count
         
         // only legal packs, 1 deluxe, 1 core, TD
-        if cardsFromForbiddenCycles == 0 && deluxesUsed <= 1 && coreCardsOverQuantity == 0 {
+        if cardsFromForbiddenCycles == 0 && deluxesUsed <= 1 && cardsFromTD == 0 {
             return reasons
         }
 
-        // more than 1 core used
-        if coreCardsOverQuantity > 0 {
-            reasons.append("Uses >1 Core".localized())
-        }
-        
         // more than 1 deluxe used
         if deluxesUsed > 1 {
             reasons.append("Uses >1 Deluxe".localized())
+        }
+
+        // more than 1 deluxe used
+        if cardsFromTD > 0 {
+            reasons.append("Uses Terminal Directive".localized())
         }
         
         // invalid datapacks used

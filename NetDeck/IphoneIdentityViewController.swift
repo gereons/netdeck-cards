@@ -41,7 +41,7 @@ class IphoneIdentityViewController: UIViewController {
         
         self.cancelButton.title = "Cancel".localized()
         if self.deck == nil {
-            if var barButtons = self.toolbar.items, let index = barButtons.index(where: { $0 == self.cancelButton }) {
+            if var barButtons = self.toolbar.items, let index = barButtons.firstIndex(where: { $0 == self.cancelButton }) {
                 barButtons.remove(at: index)
                 self.toolbar.items = barButtons
             }

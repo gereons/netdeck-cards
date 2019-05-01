@@ -170,7 +170,10 @@ extension TipJarViewController: SKPaymentTransactionObserver {
             case .failed:
                 state = "failed"
                 print("Failed: \(id) \(String(describing: transaction.error))")
-                
+
+            default:
+                state = "unknown"
+                print("Unknown: \(id) \(String(describing: transaction.error))")
             }
             Analytics.logEvent(.tipTransaction, attributes: [ "Tip": id, "State": state])
         }

@@ -67,9 +67,6 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         alert.addAction(UIAlertAction(title: "Cache Refresh D&D".localized()) { action in
             self.setCacheRefresh(PackManager.dataAndDestiny)
         })
-        alert.addAction(UIAlertAction(title: "Cache Refresh R&R".localized()) { action in
-            self.setCacheRefresh(PackManager.reignAndReverie)
-        })
         alert.addAction(UIAlertAction(title: "Modded".localized()) { action in
             self.setModded()
         })
@@ -197,7 +194,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     private func setCacheRefresh(_ deluxe: String) {
         self.changeCoreSets(.useCore, .numOriginalCore, 0)
         self.changeCoreSets(.useCore2, .numRevisedCore, 0)
-        self.changeCoreSets(.useSC19, .numSC19, 1)
+        self.changeCoreSets(.useSC19, .numSC19, 3)
         
         for pack in PackManager.allPacks {
             Defaults.set(false, forKey: pack.settingsKey)
@@ -214,8 +211,10 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         Defaults.set(false, forKey: Pack.use + PackManager.core)
         Defaults.set(false, forKey: Pack.use + PackManager.core2)
         Defaults.set(true, forKey: Pack.use + PackManager.sc19)
-        Defaults.set(true, forKey: Pack.use + PackManager.terminalDirective)
+        Defaults.set(false, forKey: Pack.use + PackManager.terminalDirective)
         Defaults.set(true, forKey: Pack.use + deluxe)
+        Defaults.set(true, forKey: Pack.use + PackManager.reignAndReverie)
+        Defaults.set(true, forKey: Pack.use + PackManager.magnumOpus)
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
         
         self.tableView.reloadData()

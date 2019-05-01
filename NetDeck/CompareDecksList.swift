@@ -107,7 +107,7 @@ class CompareDecksList: DecksViewController {
         }
         self.selectedRole = deck.role
         
-        if let index = self.decksToDiff.index(of: filename) {
+        if let index = self.decksToDiff.firstIndex(of: filename) {
             self.decksToDiff.remove(at: index)
             
             for i in 0 ..< self.names.count {
