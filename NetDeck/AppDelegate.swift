@@ -24,6 +24,7 @@ import DeviceKit
 // move dropbox and fabric api keys to non-versioned file
 
 #warning("release-todo: update seed data!")
+#warning("use spencer's new card backs")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

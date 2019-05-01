@@ -513,7 +513,7 @@ import SwiftyUserDefaults
             }
 
             deck.legality = DeckLegality.standard(mwl: mwl)
-            #warning("is this the right thing to do?")
+            // #warning("is this the right thing to do?")
             deck.convertToRevisedCore()
             deck.convertToSC19()
 
