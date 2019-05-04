@@ -10,8 +10,6 @@ import SVProgressHUD
 import SwiftyUserDefaults
 import DeviceKit
 
-// NRDB: keep credentials after failed login
-// Auto-Download bei Neuinstallation?
 // Patricks email: icon für decks mit notizen, in der kartenansicht falsche/fehlende karten besser hervorheben, vollen Text im Popup anzeigen wenn Sprache != en
 
 // CR rules: what is the offending datapack?

@@ -49,7 +49,7 @@ extension Card {
 
         str = """
         <style type="text/css">
-        * { font-family: apple-system,sans-serif; font-size: 110%; }
+        * { font-family: apple-system,sans-serif; }
         .icon { font-family: 'netrunner' !important; font-style: normal; font-variant: normal; font-weight: normal; line-height: 1; text-transform: none; }
         </style>
         """ + str
