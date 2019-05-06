@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "runner-background.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Hacker Card Back.png",
       "scale" : "2x"
     },
     {

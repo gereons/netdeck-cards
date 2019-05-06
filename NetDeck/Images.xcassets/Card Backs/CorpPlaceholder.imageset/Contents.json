@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "corp-background.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Corporation Card Back.png",
       "scale" : "2x"
     },
     {
