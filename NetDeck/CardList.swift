@@ -386,7 +386,7 @@ class CardList {
         }
         
         if self.mwl {
-            let mwl = MWLManager.activeMWL
+            let mwl = Defaults[.defaultMWL]
             filteredCards = filteredCards.filter { $0.mwlPenalty(mwl) > 0 || $0.banned(mwl) || $0.restricted(mwl) }
         }
 

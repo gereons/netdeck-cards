@@ -376,6 +376,7 @@
 "Deck Legality" = "Deck-Legalität";
 "Casual" = "Ohne MWL";
 "Older MWLs" = "Ältere MWLs";
+" (Active)" = " (Aktiv)";
 
 // rotation support
 "Convert Deck" = "Deck konvertieren";

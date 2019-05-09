@@ -14,7 +14,10 @@ import SwiftyUserDefaults
     var revisions = [DeckChangeSet]()
     var lastModified: Date?
     var dateCreated: Date?
-    var mwl = 0
+    
+    var mwl: Int {
+        return self.legality.mwl
+    }
 
     @objc private(set) var cards = [CardCounter]()
     private(set) var identityCc: CardCounter?
@@ -31,9 +34,9 @@ import SwiftyUserDefaults
         self.state = Defaults[.createDeckActive] ? .active : .testing
         let seq = DeckManager.fileSequence() + 1
         self.name = "Deck #\(seq)"
-        self.legality = .standard(mwl: MWLManager.activeMWL)
         self.role = role
-        self.mwl = Defaults[.defaultMWL]
+        let mwl = Defaults[.defaultMWL]
+        self.legality = .standard(mwl: mwl)
     }
     
     var allCards: [CardCounter] {
@@ -629,7 +632,7 @@ import SwiftyUserDefaults
         } else {
             legality = .standard(mwl: mwl)
         }
-        self.mwl = mwl
+
         self.legality = legality
         self.convertedToCore2 = decoder.decodeBool(forKey: "convertedToCore2")
         self.convertedToSC19 = decoder.decodeBool(forKey: "convertedToSC19")

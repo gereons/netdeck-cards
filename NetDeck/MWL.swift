@@ -88,7 +88,7 @@ class MWLManager {
     }
 
     static func settingsTitles() -> [String] {
-        return mwls.map { $0.name }
+        return mwls.map { $0.active ? $0.name + " (Active)".localized() : $0.name }
     }
 
     static func mwlBy(_ code: String) -> Int {

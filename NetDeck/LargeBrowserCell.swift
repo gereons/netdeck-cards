@@ -57,7 +57,7 @@ class LargeBrowserCell: BrowserCell {
     }
     
     override func setCard(_ card: Card) {
-        let mwl = MWLManager.activeMWL
+        let mwl = Defaults[.defaultMWL]
         self.nameLabel.text = card.displayName(mwl)
 
         let factionName = Faction.name(for: card.faction)
