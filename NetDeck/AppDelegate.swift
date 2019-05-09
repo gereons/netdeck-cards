@@ -21,9 +21,6 @@ import DeviceKit
 // clean up all copyright headers
 // move dropbox and fabric api keys to non-versioned file
 
-#warning("release-todo: update seed data!")
-#warning("use spencer's new card backs")
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -341,7 +338,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func logStartup(_ appLaunched: Bool) {
-        let device = DeviceKit.Device()
+        let device = DeviceKit.Device.current
         if device.isSimulator {
             return
         }

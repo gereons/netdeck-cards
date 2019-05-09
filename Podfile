@@ -19,7 +19,7 @@ def pods
     pod 'SwiftKeychainWrapper'
     pod 'SDCAlertView'
     pod 'EasyTipView'
-    pod 'SwiftyUserDefaults'
+    pod 'SwiftyUserDefaults', '~> 3'
 end
 
 target 'NetDeck' do
