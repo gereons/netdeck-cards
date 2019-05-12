@@ -226,7 +226,7 @@ extension Card {
         
         self.code = card.code
         self.englishName = card.title
-        self.name = card.title // card.getLocalized(.title, for: Card.currentLanguage)
+        self.name = card.title
         self.foldedName = name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
         
         self.factionCode = card.faction_code
@@ -244,9 +244,9 @@ extension Card {
             self.name = shortName
         }
         
-        self.text = card.text ?? "" // card.getLocalized(.text, for: Card.currentLanguage)
+        self.text = card.text ?? ""
         
-        self.flavor = card.flavor ?? "" // card.getLocalized(.flavor, for: Card.currentLanguage)
+        self.flavor = card.flavor ?? ""
         
         self.packCode = card.pack_code
         if self.packCode == "" {
@@ -259,7 +259,6 @@ extension Card {
         self.isCore = PackManager.cores.contains(self.packCode)
         
         let keywords = card.keywords ?? ""
-        // let localizedKeywords = card.keywords ?? "" // card.getLocalized(.keywords, for: Card.currentLanguage)
         if keywords.count > 0 {
             self.subtype = keywords
             self.subtypes = keywords.components(separatedBy: self.subtypeDelimiter)
