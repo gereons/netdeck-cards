@@ -149,6 +149,10 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
                 self.changeCoreSets(.useCore, .numOriginalCore, 0)
                 self.changeCoreSets(.useCore2, .numRevisedCore, 0)
                 Defaults[.useSC19] = true
+            case ._2019:
+                self.changeCoreSets(.useCore, .numOriginalCore, 0)
+                self.changeCoreSets(.useCore2, .numRevisedCore, 0)
+                Defaults[.useSC19] = true
             }
             PackManager.rotatedPackKeys().forEach {
                 Defaults.set(false, forKey: $0)
