@@ -12,7 +12,7 @@ def pods
     pod 'DZNEmptyDataSet'
     pod 'DeviceKit'
 
-    pod 'SwiftyDropbox', :git => "https://github.com/gereons/SwiftyDropbox"
+    pod 'SwiftyDropbox' # , :git => "https://github.com/gereons/SwiftyDropbox"
     pod 'Alamofire'
     pod 'AlamofireImage'
     pod 'AlamofireNetworkActivityIndicator'
