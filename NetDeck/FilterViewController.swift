@@ -231,7 +231,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
     }
     
     // MARK: - multi select delegate
-    func multiSelect(_ control: MultiSelectSegmentedControl, didChangeValue value: Bool, at index: UInt) {
+    func multiSelect(_ control: MultiSelectSegmentedControl, didChange value: Bool, at index: Int) {
         var set = Set<String>()
         
         if control.tag == Tags.type.rawValue {
