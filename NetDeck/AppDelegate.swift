@@ -21,6 +21,8 @@ import DeviceKit
 // clean up all copyright headers
 // move dropbox and fabric api keys to non-versioned file
 
+#warning("use rotations.json")
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?

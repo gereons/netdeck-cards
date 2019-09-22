@@ -184,7 +184,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
             self.factionNames = self.allFactionNames
             self.identities = self.allIdentities
         } else {
-            var factions = self.role == .runner ? Faction.runnerFactionsAll : Faction.corpFactions
+            let factions = self.role == .runner ? Faction.runnerFactionsAll : Faction.corpFactions
             
             if selected - 1 < factions.count {
                 let faction = factions[selected - 1]
