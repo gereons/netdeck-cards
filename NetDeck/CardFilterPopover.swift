@@ -154,7 +154,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableWidth, height: headerHeight))
-        view.backgroundColor = UIColor(rgb: 0xEBEBEC)
+        view.backgroundColor = UIColor(rgb: 0xE0E0E0)
         view.tag = section
         view.isUserInteractionEnabled = true
 
@@ -196,7 +196,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
             c.textLabel?.textColor = UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
             return c
         }()
-        
+
         cell.accessoryType = .none
         
         let value = self.values[indexPath.section][indexPath.row]
