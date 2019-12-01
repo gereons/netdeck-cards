@@ -50,5 +50,6 @@ enum Symbols: String {
     case core2 = "\u{e924}"
     case kitara = "\u{e925}"
     case reignAndReverie = "\u{e926}"
+    case interrupt = "\u{e92b}"
 }
 
