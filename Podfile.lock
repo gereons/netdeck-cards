@@ -7,12 +7,12 @@ PODS:
   - CorePlot (2.2)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
-  - DeviceKit (2.1.0)
+  - DeviceKit (2.3.0)
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.4)
   - Fabric (1.10.2)
   - InAppSettingsKit (2.14)
-  - MultiSelectSegmentedControl (2.1.1):
+  - MultiSelectSegmentedControl (2.2.0):
     - SweeterSwift
   - SDCAlertView (10.0)
   - SVProgressHUD (2.2.5)
@@ -41,7 +41,7 @@ DEPENDENCIES:
   - SwiftyUserDefaults (~> 3)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Alamofire
     - AlamofireImage
     - AlamofireNetworkActivityIndicator
@@ -66,7 +66,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 47e0af94b4416ed93a6f5b9a58a718e12471502a
+    :commit: 1cd597b6fa266af545ec1b54a3fcd9861c8d0e7d
     :git: https://github.com/core-plot/core-plot
 
 SPEC CHECKSUMS:
@@ -75,12 +75,12 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 9acc3de3ca6645bf0efed462396b0df13dd3e7b8
   CorePlot: a89f21d4662cb54853e579c4ce560e74036cffcb
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
-  DeviceKit: 2f6c28410d5a5fe2977be7f8cb9b313d28bdae69
+  DeviceKit: da103891aa928d89f64ea8dd8aca738c5f3d8ac0
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: 4f8beae0a82db2ca4a9b5fd658785fc5f61d296b
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   InAppSettingsKit: 800853da39388780c15191846688c0974c5b13b5
-  MultiSelectSegmentedControl: e1b3d120de802af5aa87593dd9505668bbf9cd50
+  MultiSelectSegmentedControl: e34388e5d8de55a43ba0191662246c655f5b9d5a
   SDCAlertView: 5fbc48cae6d7bf9781097e3f27883924ef3b922c
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SweeterSwift: 2708d1eea926546f8f6e8fea38ac8f5598ff00c7
@@ -90,4 +90,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: fd8c16f8505efb297a39078ab899ae9005782bff
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

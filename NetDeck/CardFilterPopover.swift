@@ -157,8 +157,12 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         view.backgroundColor = UIColor(rgb: 0xEBEBEC)
         view.tag = section
         view.isUserInteractionEnabled = true
-        
-        let xOffset = self.collapsedSections == nil ? 15 : 25
+
+        let hackOffset: Int = {
+            if #available(iOS 13.0, *) { return 10 } else { return 0 }
+        }()
+
+        let xOffset = hackOffset + (self.collapsedSections == nil ? 15 : 25)
         let label = UILabel(frame: CGRect(x: xOffset, y:0, width: tableWidth, height: headerHeight))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = self.sections[section]
@@ -169,7 +173,7 @@ class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDel
         
         if self.collapsedSections != nil {
             let collapseButton = UIButton(type: .system)
-            collapseButton.frame = CGRect(x: 0, y: 0, width: 30, height: headerHeight)
+            collapseButton.frame = CGRect(x: hackOffset, y: 0, width: 30, height: headerHeight)
             collapseButton.tag = section
             collapseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19)
             collapseButton.addTarget(self, action: #selector(self.collapseSection(_:)), for: .touchUpInside)
