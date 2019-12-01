@@ -108,6 +108,7 @@ class PackManager {
     static let terminalDirective = "td"
     static let reignAndReverie = "rar"
     static let magnumOpus = "mo"
+    static let uprisingBooster = "urbp"
     
     static let deluxeBoxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny, reignAndReverie ]
     static let campaignBoxes = [ terminalDirective ]
@@ -160,6 +161,8 @@ class PackManager {
             defaults[DefaultsKeys.useCore2._key] = false
             defaults[DefaultsKeys.useSC19._key] = false
         }
+
+        defaults[Pack.use + PackManager.uprisingBooster] = false
         return defaults
     }
     
