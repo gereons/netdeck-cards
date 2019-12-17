@@ -73,12 +73,8 @@ class Card: NSObject {
             return src
         }
 
-        let ffgId = PackManager.packsByCode[self.packCode]?.ffgId
-        if ffgId == nil {
-            return Card.imgSrcTemplate.replacingOccurrences(of: "{code}", with: self.code)
-        }
-
-        return nil
+        let src = Card.imgSrcTemplate.replacingOccurrences(of: "{code}", with: self.code)
+        return src
     }
     
     var nrdbLink: String {

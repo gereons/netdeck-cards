@@ -387,7 +387,7 @@ class ImageCache {
         let img = self.decode(image: UIImage(data: imgData))
         let width = img?.size.width ?? 0.0
         // remove images that can't be decoded or that have the wrong size
-        if img == nil || width != ImageCache.width {
+        if img == nil || width < ImageCache.width - 10 {
             // image is broken - remove it
             self.NLOG("removing broken/small img %@, width=%f", key, width)
             _ = try? FileManager.default.removeItem(atPath: file)
