@@ -245,7 +245,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Defaults.registerDefault(.rotationActive, true)
-        Defaults.registerDefault(.rotationIndex, Rotation._2018)
+        Defaults.registerDefault(.rotationIndex, Rotation._2019)
         Defaults.registerDefault(.convertCore, true)
         
         Defaults.registerDefault(.lastDownload, "never".localized())

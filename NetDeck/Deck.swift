@@ -925,7 +925,7 @@ extension Deck {
                 draftUsed = true
             case PackManager.core, PackManager.core2:
                 oldCoreUsed = true
-            case PackManager.sc19, PackManager.reignAndReverie, PackManager.magnumOpus:
+            case PackManager.sc19, PackManager.reignAndReverie, PackManager.magnumOpus, PackManager.magnumOpusReprint:
                 ()
             case _ where allowedDeluxe.contains(card.packCode):
                 let c = cardsFromDeluxe[card.packCode] ?? 0

@@ -108,6 +108,7 @@ class PackManager {
     static let terminalDirective = "td"
     static let reignAndReverie = "rar"
     static let magnumOpus = "mo"
+    static let magnumOpusReprint = "mor"
     static let uprisingBooster = "urbp"
     
     static let deluxeBoxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny, reignAndReverie ]
