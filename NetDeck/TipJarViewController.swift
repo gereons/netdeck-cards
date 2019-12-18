@@ -105,6 +105,12 @@ class TipJarViewController: UIViewController {
 extension TipJarViewController: SKProductsRequestDelegate {
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        DispatchQueue.main.async {
+            self.handleProductsRequest(request, response)
+        }
+    }
+
+    private func handleProductsRequest(_ request: SKProductsRequest, _ response: SKProductsResponse) {
         self.spinner.stopAnimating()
         if response.products.count > 0 {
             response.products.forEach { product in
