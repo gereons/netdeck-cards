@@ -16,7 +16,7 @@ private enum Tags: Int {
     case type
 }
 
-class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegate, UITableViewDelegate, UITableViewDataSource {
+class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var factionControl: MultiSelectSegmentedControl!
     @IBOutlet weak var miniFactionControl: MultiSelectSegmentedControl!
     
@@ -230,36 +230,7 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         self.navigationController?.pushViewController(picker, animated: true)
     }
     
-    // MARK: - multi select delegate
-    func multiSelect(_ control: MultiSelectSegmentedControl, didChange value: Bool, at index: Int) {
-        var set = Set<String>()
-        
-        if control.tag == Tags.type.rawValue {
-            for idx in control.selectedSegmentIndexes {
-                let type = self.typeNames[idx]
-                set.insert(type)
-            }
-            self.selectedTypes = set
-            self.subtypes = nil
-            self.cardList.filterBySubtype(FilterValue.strings(Set<String>()))
-            self.cardList.filterByType(FilterValue.strings(set))
-        } else {
-            for idx in self.factionControl.selectedSegmentIndexes {
-                let faction = self.factionNames[idx]
-                set.insert(faction)
-            }
-            if self.role == .runner {
-                for idx in self.miniFactionControl.selectedSegmentIndexes {
-                    let faction = self.factionNames[idx + 4]
-                    set.insert(faction)
-                }
-            }
-            
-            self.cardList.filterByFaction(FilterValue.strings(set))
-        }
-        
-        self.updatePreview()
-    }
+
     
     func updatePreview() {
         self.cards = self.cardList.allCards()
@@ -291,4 +262,37 @@ class FilterViewController: UIViewController, MultiSelectSegmentedControlDelegat
         return cell
     }
     
+}
+
+// MARK: - multi select delegate
+extension FilterViewController: MultiSelectSegmentedControlDelegate {
+    func multiSelect(_ control: MultiSelectSegmentedControl, didChange value: Bool, at index: Int) {
+        var set = Set<String>()
+
+        if control.tag == Tags.type.rawValue {
+            for idx in control.selectedSegmentIndexes {
+                let type = self.typeNames[idx]
+                set.insert(type)
+            }
+            self.selectedTypes = set
+            self.subtypes = nil
+            self.cardList.filterBySubtype(FilterValue.strings(Set<String>()))
+            self.cardList.filterByType(FilterValue.strings(set))
+        } else {
+            for idx in self.factionControl.selectedSegmentIndexes {
+                let faction = self.factionNames[idx]
+                set.insert(faction)
+            }
+            if self.role == .runner {
+                for idx in self.miniFactionControl.selectedSegmentIndexes {
+                    let faction = self.factionNames[idx + 4]
+                    set.insert(faction)
+                }
+            }
+
+            self.cardList.filterByFaction(FilterValue.strings(set))
+        }
+
+        self.updatePreview()
+    }
 }
