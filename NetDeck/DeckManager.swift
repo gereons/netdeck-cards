@@ -25,8 +25,9 @@ class DeckManager {
         let filename = deck.filename!
         // print("save \(deck.name) to disk")
         let data = NSMutableData()
-        let encoder = NSKeyedArchiver(forWritingWith: data)
-        
+
+        let encoder = NSKeyedArchiver(requiringSecureCoding: false)
+
         encoder.encode(deck, forKey: "deck")
         encoder.finishEncoding()
         
@@ -93,17 +94,23 @@ class DeckManager {
         }
         
         if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-            let decoder = NSKeyedUnarchiver(forReadingWith: data)
-            if let deck = decoder.decodeObject(forKey: "deck") as? Deck {
-                deck.filename = path
+            do {
+                let decoder = try NSKeyedUnarchiver(forReadingFrom: data)
+                decoder.requiresSecureCoding = false
+                if let deck = decoder.decodeObject(forKey: "deck") as? Deck {
+                    deck.filename = path
 
-                if let attrs = try? FileManager.default.attributesOfItem(atPath: path) {
-                    deck.lastModified = attrs[FileAttributeKey.modificationDate] as? Date
-                    deck.dateCreated = attrs[FileAttributeKey.creationDate] as? Date
+                    if let attrs = try? FileManager.default.attributesOfItem(atPath: path) {
+                        deck.lastModified = attrs[FileAttributeKey.modificationDate] as? Date
+                        deck.dateCreated = attrs[FileAttributeKey.creationDate] as? Date
+                    }
+
+                    DeckManager.cache.setObject(deck, forKey: path as NSString)
+                    return deck
                 }
-
-                DeckManager.cache.setObject(deck, forKey: path as NSString)
-                return deck
+            } catch {
+                print(error)
+                return nil
             }
         }
         return nil
