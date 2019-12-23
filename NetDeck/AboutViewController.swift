@@ -8,11 +8,12 @@
 
 import UIKit
 import MessageUI
+import WebKit
 
 @objc(AboutViewController) // needed for IASK
-class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate {
+class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
-    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var webView: WKWebView!
     
     private var backButton: UIBarButtonItem!
     private var mailer: MFMailComposeViewController!
@@ -22,12 +23,11 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
         
         self.backButton = UIBarButtonItem(title: "◁", style: .plain, target: self, action: #selector(self.goBack(_:)))
         
-        self.webView.delegate = self
-        self.webView.dataDetectorTypes = []
+        self.webView.navigationDelegate = self
         
         if let path = Bundle.main.path(forResource: "About", ofType: "html") {
             let url = URL(fileURLWithPath: path)
-            self.webView.loadRequest(URLRequest(url: url))
+            self.webView.load(URLRequest(url: url))
         }
     }
     
@@ -91,30 +91,60 @@ class AboutViewController: UIViewController, UIWebViewDelegate, MFMailComposeVie
         self.mailer = nil
     }
     
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
-        
-        if navigationType == .linkClicked {
-            let scheme = request.url?.scheme ?? ""
-            
+//    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
+//
+//        if navigationType == .linkClicked {
+//            let scheme = request.url?.scheme ?? ""
+//
+//            switch scheme {
+//            case "mailto":
+//                self.sendEmail()
+//            case "itms-apps":
+//                self.rateApp()
+//            case "file":
+//                if let path = Bundle.main.path(forResource: "Acknowledgements", ofType: "html") {
+//                    let url = URL(fileURLWithPath: path)
+//                    self.webView.loadRequest(URLRequest(url: url))
+//                    self.navigationItem.leftBarButtonItem = self.backButton
+//                    return true
+//                }
+//            default:
+//                if let url = request.url {
+//                    UIApplication.shared.open(url)
+//                }
+//            }
+//            return false
+//        }
+//        return true
+//    }
+}
+
+extension AboutViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated {
+            guard let scheme = navigationAction.request.url?.scheme else {
+                return decisionHandler(.cancel)
+            }
+
             switch scheme {
             case "mailto":
                 self.sendEmail()
+                return decisionHandler(.cancel)
             case "itms-apps":
                 self.rateApp()
+                return decisionHandler(.cancel)
             case "file":
                 if let path = Bundle.main.path(forResource: "Acknowledgements", ofType: "html") {
                     let url = URL(fileURLWithPath: path)
-                    self.webView.loadRequest(URLRequest(url: url))
+                    self.webView.load(URLRequest(url: url))
                     self.navigationItem.leftBarButtonItem = self.backButton
-                    return true
                 }
+                return decisionHandler(.cancel)
             default:
-                if let url = request.url {
-                    UIApplication.shared.open(url)
-                }
+                return decisionHandler(.allow)
             }
-            return false
         }
-        return true
+
+        decisionHandler(.allow)
     }
 }
