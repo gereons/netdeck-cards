@@ -1,7 +1,7 @@
 PODS:
-  - Alamofire (4.8.2)
-  - AlamofireImage (3.5.2):
-    - Alamofire (~> 4.8)
+  - Alamofire (4.9.1)
+  - AlamofireImage (3.6.0):
+    - Alamofire (~> 4.9)
   - AlamofireNetworkActivityIndicator (2.4.0):
     - Alamofire (~> 4.8)
   - CorePlot (2.2)
@@ -19,7 +19,7 @@ PODS:
   - SweeterSwift (1.0.5)
   - SwiftKeychainWrapper (3.4.0)
   - SwiftyDropbox (5.1.0):
-    - Alamofire (~> 4.8.2)
+    - Alamofire (~> 4)
   - SwiftyUserDefaults (3.0.1)
 
 DEPENDENCIES:
@@ -37,7 +37,7 @@ DEPENDENCIES:
   - SDCAlertView
   - SVProgressHUD
   - SwiftKeychainWrapper
-  - SwiftyDropbox
+  - SwiftyDropbox (from `https://github.com/gereons/SwiftyDropbox`)
   - SwiftyUserDefaults (~> 3)
 
 SPEC REPOS:
@@ -56,22 +56,26 @@ SPEC REPOS:
     - SVProgressHUD
     - SweeterSwift
     - SwiftKeychainWrapper
-    - SwiftyDropbox
     - SwiftyUserDefaults
 
 EXTERNAL SOURCES:
   CorePlot:
     :branch: release-2.3
     :git: https://github.com/core-plot/core-plot
+  SwiftyDropbox:
+    :git: https://github.com/gereons/SwiftyDropbox
 
 CHECKOUT OPTIONS:
   CorePlot:
     :commit: c280cb3c2e9f52ac25213e46ca44117950213b58
     :git: https://github.com/core-plot/core-plot
+  SwiftyDropbox:
+    :commit: 246dd4d6c4c0aa6660a3b4234d3c6f3385fc4826
+    :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   AlamofireNetworkActivityIndicator: 9acc3de3ca6645bf0efed462396b0df13dd3e7b8
   CorePlot: a89f21d4662cb54853e579c4ce560e74036cffcb
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
@@ -85,9 +89,9 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SweeterSwift: 2708d1eea926546f8f6e8fea38ac8f5598ff00c7
   SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
-  SwiftyDropbox: 7ca4961e0340c62c8d6d1ece91d67badfe4c0380
+  SwiftyDropbox: f63472425dd61b8fb4810a10442e54f20a08d4ab
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: 9c8d0c2a40cb354eee92478e71371010408ff64d
+PODFILE CHECKSUM: f1e1db3699a38bbd0e76640773a7a8700b88d1f6
 
 COCOAPODS: 1.8.4
