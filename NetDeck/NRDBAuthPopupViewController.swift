@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import WebKit
+import SwiftyUserDefaults
 
-class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
+class NRDBAuthPopupViewController: UIViewController {
     
-    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var cancelButton: UIButton?  // only on iPad
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -42,16 +44,19 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
         if Device.isIpad {
             self.modalPresentationStyle = .formSheet
         }
+
+        if #available(iOS 13, *) {
+            self.isModalInPresentation = true
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.webView.delegate = self
-        self.webView.dataDetectorTypes = []
+        self.webView.navigationDelegate = self
         
         let url = URL(string: NRDB.authUrl)
-        self.webView.loadRequest(URLRequest(url: url!))
+        self.webView.load(URLRequest(url: url!))
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         self.cancelButton?.setTitle("Cancel".localized(), for: .normal)
@@ -91,6 +96,7 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
             // print("found code \(code)")
             NRDB.sharedInstance.authorizeWithCode(code) { ok, error in
                 popup.dismiss()
+                Defaults[.nrdbLoggedin] = ok
                 NRDB.sharedInstance.startAuthorizationRefresh()
             }
         } else {
@@ -98,21 +104,33 @@ class NRDBAuthPopupViewController: UIViewController, UIWebViewDelegate {
             popup.dismiss()
         }
     }
-    
-    // MARK - webview
-    
-    func webViewDidFinishLoad(_ webView: UIWebView) {
+}
+
+// MARK - webview
+extension NRDBAuthPopupViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.activityIndicator.stopAnimating()
     }
-    
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         self.webView.endEditing(true)
-        
+
+        guard let url = navigationAction.request.url else {
+            return decisionHandler(.cancel)
+        }
+
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         self.activityIndicator.startAnimating()
-        
-        return true
-    }
 
+        if url.scheme == "netdeck" {
+            let app = UIApplication.shared
+            if app.canOpenURL(url) {
+                app.open(url)
+            }
+            decisionHandler(.cancel)
+        } else {
+            decisionHandler(.allow)
+        }
+    }
 }
