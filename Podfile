@@ -1,6 +1,6 @@
 use_frameworks!
 inhibit_all_warnings!
-platform :ios, '10.3'
+platform :ios, '12.4'
 
 def pods
     pod 'Fabric'

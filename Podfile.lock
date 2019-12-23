@@ -66,7 +66,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 179e0e46d0c2befaa4eda5a0e8c3aa1d79a5ba43
+    :commit: c280cb3c2e9f52ac25213e46ca44117950213b58
     :git: https://github.com/core-plot/core-plot
 
 SPEC CHECKSUMS:
@@ -88,6 +88,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: 7ca4961e0340c62c8d6d1ece91d67badfe4c0380
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: fd8c16f8505efb297a39078ab899ae9005782bff
+PODFILE CHECKSUM: 9c8d0c2a40cb354eee92478e71371010408ff64d
 
 COCOAPODS: 1.8.4
