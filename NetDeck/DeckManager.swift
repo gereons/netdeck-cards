@@ -24,15 +24,15 @@ class DeckManager {
         
         let filename = deck.filename!
         // print("save \(deck.name) to disk")
-        let data = NSMutableData()
-
         let encoder = NSKeyedArchiver(requiringSecureCoding: false)
-
         encoder.encode(deck, forKey: "deck")
+        let data = encoder.encodedData
         encoder.finishEncoding()
-        
-        let saveOk = data.write(toFile: filename, atomically: true)
-        if !saveOk {
+
+        do {
+            let url = URL.init(fileURLWithPath: filename)
+            try data.write(to: url, options: .atomic)
+        } catch {
             DeckManager.removeFile(filename)
             return
         }
@@ -93,10 +93,13 @@ class DeckManager {
             }
         }
         
-        if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: path)), data.count > 0 {
             do {
                 let decoder = try NSKeyedUnarchiver(forReadingFrom: data)
                 decoder.requiresSecureCoding = false
+                defer {
+                    decoder.finishDecoding()
+                }
                 if let deck = decoder.decodeObject(forKey: "deck") as? Deck {
                     deck.filename = path
 
