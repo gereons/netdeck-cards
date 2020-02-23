@@ -4,7 +4,7 @@ PODS:
     - Alamofire (~> 4.9)
   - AlamofireNetworkActivityIndicator (2.4.0):
     - Alamofire (~> 4.8)
-  - CorePlot (2.2)
+  - CorePlot (2.3)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - DeviceKit (2.3.0)
@@ -26,7 +26,7 @@ DEPENDENCIES:
   - Alamofire
   - AlamofireImage
   - AlamofireNetworkActivityIndicator
-  - CorePlot (from `https://github.com/core-plot/core-plot`, branch `release-2.3`)
+  - CorePlot
   - Crashlytics
   - DeviceKit
   - DZNEmptyDataSet
@@ -45,6 +45,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - AlamofireNetworkActivityIndicator
+    - CorePlot
     - Crashlytics
     - DeviceKit
     - DZNEmptyDataSet
@@ -59,16 +60,10 @@ SPEC REPOS:
     - SwiftyUserDefaults
 
 EXTERNAL SOURCES:
-  CorePlot:
-    :branch: release-2.3
-    :git: https://github.com/core-plot/core-plot
   SwiftyDropbox:
     :git: https://github.com/gereons/SwiftyDropbox
 
 CHECKOUT OPTIONS:
-  CorePlot:
-    :commit: c280cb3c2e9f52ac25213e46ca44117950213b58
-    :git: https://github.com/core-plot/core-plot
   SwiftyDropbox:
     :commit: 246dd4d6c4c0aa6660a3b4234d3c6f3385fc4826
     :git: https://github.com/gereons/SwiftyDropbox
@@ -77,7 +72,7 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   AlamofireNetworkActivityIndicator: 9acc3de3ca6645bf0efed462396b0df13dd3e7b8
-  CorePlot: a89f21d4662cb54853e579c4ce560e74036cffcb
+  CorePlot: 6bfe6d30d215beec3cfd18ee43e434620119bc1e
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   DeviceKit: da103891aa928d89f64ea8dd8aca738c5f3d8ac0
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -92,6 +87,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: f63472425dd61b8fb4810a10442e54f20a08d4ab
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: f1e1db3699a38bbd0e76640773a7a8700b88d1f6
+PODFILE CHECKSUM: 64bdb48e3f13243866075e6c05ceb08a48706918
 
 COCOAPODS: 1.8.4

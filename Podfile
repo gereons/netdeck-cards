@@ -8,7 +8,7 @@ def pods
     pod 'SVProgressHUD'
     pod 'InAppSettingsKit'
     pod 'MultiSelectSegmentedControl'
-    pod 'CorePlot', :git => "https://github.com/core-plot/core-plot", :branch => 'release-2.3'
+    pod 'CorePlot'
     pod 'DZNEmptyDataSet'
     pod 'DeviceKit'
 
