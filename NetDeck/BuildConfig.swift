@@ -17,9 +17,9 @@ struct BuildConfig {
     
     static let debug = !release
     
-    static let debugCrashlytics = false
+    static let debugSentry = false
     
-    static let useCrashlytics = release || debugCrashlytics
+    static let useSentry = release || debugSentry
 }
 
 class Device {

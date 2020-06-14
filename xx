@@ -1,0 +1,21 @@
+{
+            "features": [
+                {
+                    "geometry": {
+                        "coordinates": [
+                            13.38678,
+                            52.52548
+                        ],
+                        "type": "Point"
+                    },
+                    "properties": {
+                        "description": " \" text in double quotes \" ",
+                        "href": "/sen/web/service/liefer-und-abholdienste/index.php/detail/1848",
+                        "id": "/sen/web/service/liefer-und-abholdienste/index.php/detail/1848",
+                        "title": "1848"
+                    },
+                    "type": "Feature"
+                }
+            ],
+            "type": "FeatureCollection"
+        }

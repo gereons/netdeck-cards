@@ -1,0 +1,18 @@
+{
+  "configurations" : [
+
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:NetDeck.xcodeproj",
+        "identifier" : "3AFE724E2081191200816139",
+        "name" : "NetDeckTests"
+      }
+    }
+  ],
+  "version" : 1
+}

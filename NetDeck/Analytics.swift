@@ -6,16 +6,13 @@
 //  Copyright © 2019 Gereon Steffens. All rights reserved.
 //
 
-import Fabric
-import Crashlytics
+import Sentry
 import StoreKit
 
 class Analytics: NSObject {
 
     static let shared = Analytics()
     override private init() {}
-
-    private(set) var crashDetected = false
     
     enum Event: String {
         case start = "Start"
@@ -56,38 +53,26 @@ class Analytics: NSObject {
     }
 
     static func logEvent(_ event: Event, attributes: [String: Any]? = nil) {
-        guard setup() else {
-            return
-        }
-        
-        Answers.logCustomEvent(withName: event.rawValue, customAttributes: attributes)
+        // nop
     }
     
     static func logPurchase(of product: SKProduct) {
-        guard setup() else {
-            return
-        }
-
-        Answers.logPurchase(withPrice: product.price,
-                            currency: product.priceLocale.currencyCode,
-                            success: true,
-                            itemName: product.localizedTitle,
-                            itemType: "iap",
-                            itemId: product.productIdentifier,
-                            customAttributes: nil)
+        // nop
     }
 
     static private var initialized = false
 
     @discardableResult
     static func setup() -> Bool {
-        guard BuildConfig.useCrashlytics else {
+        guard BuildConfig.useSentry else {
             return false
         }
 
         if !initialized {
-            Crashlytics.sharedInstance().delegate = Analytics.shared
-            Fabric.with([Crashlytics.self])
+            SentrySDK.start(options: [
+                "dsn": "https://2f7b1cb084b644478c09c436d24931c5@o397144.ingest.sentry.io/5275922",
+                "debug": true // Enabled debug when first installing is always helpful
+            ])
             initialized = true
         }
 
@@ -95,10 +80,8 @@ class Analytics: NSObject {
     }
 }
 
-
-// MARK: - crashlytics delegate
-extension Analytics: CrashlyticsDelegate {
-    func crashlyticsDidDetectReport(forLastExecution report: CLSReport) {
-        self.crashDetected = true
+extension Analytics {
+    var crashDetected: Bool {
+        return SentryCrash.sharedInstance()?.crashedLastLaunch ?? false
     }
 }

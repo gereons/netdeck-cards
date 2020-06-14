@@ -84,7 +84,7 @@ class BrowserFilterViewController: UIViewController, UITextFieldDelegate, Filter
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.title = "Cards".localized()
         
         self.initializing = true

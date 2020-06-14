@@ -33,11 +33,13 @@ class Settings {
     private static var delegate: SettingsDelegate!
 }
 
-class SettingsDelegate: IASKSettingsDelegate {
+class SettingsDelegate: NSObject, IASKSettingsDelegate {
 
-    required init() {
+    override init() {
+        super.init()
+
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(self.settingsChanged(_:)), name: Notification.Name(kIASKAppSettingChanged), object: nil)
+        nc.addObserver(self, selector: #selector(self.settingsChanged(_:)), name: .IASKSettingChanged, object: nil)
         nc.addObserver(self, selector: #selector(self.cardsLoaded(_:)), name: Notifications.loadCards, object: nil)
 
         // self.setHiddenKeys()
@@ -155,9 +157,9 @@ class SettingsDelegate: IASKSettingsDelegate {
         Settings.viewController.hiddenKeys = self.hiddenKeys()
     }
 
-    @objc func settingsViewController(_ sender: IASKAppSettingsViewController!, valuesFor specifier: IASKSpecifier!) -> [Any]! {
-        guard let key = specifier.key() else {
-            return nil
+    @objc func settingsViewController(_ sender: IASKAppSettingsViewController, valuesFor specifier: IASKSpecifier) -> [Any] {
+        guard let key = specifier.key else {
+            return []
         }
 
         if key == DefaultsKeys.defaultMWL._key {
@@ -166,12 +168,12 @@ class SettingsDelegate: IASKSettingsDelegate {
             return Rotation.values()
         }
         
-        return nil
+        return []
     }
 
-    @objc func settingsViewController(_ sender: IASKAppSettingsViewController!, titlesFor specifier: IASKSpecifier!) -> [Any]! {
-        guard let key = specifier.key() else {
-            return nil
+    @objc func settingsViewController(_ sender: IASKAppSettingsViewController, titlesFor specifier: IASKSpecifier) -> [Any] {
+        guard let key = specifier.key else {
+            return []
         }
 
         if key == DefaultsKeys.defaultMWL._key {
@@ -180,7 +182,7 @@ class SettingsDelegate: IASKSettingsDelegate {
             return Rotation.titles()
         }
 
-        return nil
+        return []
     }
 
     private func reinitializeData() {
@@ -244,12 +246,12 @@ class SettingsDelegate: IASKSettingsDelegate {
         UIAlertController.alert(withTitle: nil, message: "An Internet connection is required".localized(), button: "OK".localized())
     }
 
-    func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController!) {
+    func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController) {
         // nop
     }
 
-    func settingsViewController(_ sender: IASKAppSettingsViewController!, buttonTappedFor specifier: IASKSpecifier!) {
-        let key = specifier.key() ?? ""
+    func settingsViewController(_ sender: IASKAppSettingsViewController, buttonTappedFor specifier: IASKSpecifier) {
+        let key = specifier.key ?? ""
         switch key {
         case IASKButtons.downloadDataNow:
             if Reachability.online {

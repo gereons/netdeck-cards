@@ -5,18 +5,18 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.4.0):
     - Alamofire (~> 4.8)
   - CorePlot (2.3)
-  - Crashlytics (3.14.0):
-    - Fabric (~> 1.10.2)
-  - DeviceKit (2.3.0)
+  - DeviceKit (3.2.0)
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.4)
-  - Fabric (1.10.2)
-  - InAppSettingsKit (2.14)
-  - MultiSelectSegmentedControl (2.2.0):
+  - InAppSettingsKit (3.0.1)
+  - MultiSelectSegmentedControl (2.3.3):
     - SweeterSwift
-  - SDCAlertView (10.0)
+  - SDCAlertView (11.1.2)
+  - Sentry (5.1.4):
+    - Sentry/Core (= 5.1.4)
+  - Sentry/Core (5.1.4)
   - SVProgressHUD (2.2.5)
-  - SweeterSwift (1.0.5)
+  - SweeterSwift (1.1.3)
   - SwiftKeychainWrapper (3.4.0)
   - SwiftyDropbox (5.1.0):
     - Alamofire (~> 4)
@@ -27,14 +27,13 @@ DEPENDENCIES:
   - AlamofireImage
   - AlamofireNetworkActivityIndicator
   - CorePlot
-  - Crashlytics
   - DeviceKit
   - DZNEmptyDataSet
   - EasyTipView
-  - Fabric
   - InAppSettingsKit
   - MultiSelectSegmentedControl
   - SDCAlertView
+  - Sentry
   - SVProgressHUD
   - SwiftKeychainWrapper
   - SwiftyDropbox (from `https://github.com/gereons/SwiftyDropbox`)
@@ -46,14 +45,13 @@ SPEC REPOS:
     - AlamofireImage
     - AlamofireNetworkActivityIndicator
     - CorePlot
-    - Crashlytics
     - DeviceKit
     - DZNEmptyDataSet
     - EasyTipView
-    - Fabric
     - InAppSettingsKit
     - MultiSelectSegmentedControl
     - SDCAlertView
+    - Sentry
     - SVProgressHUD
     - SweeterSwift
     - SwiftKeychainWrapper
@@ -73,20 +71,19 @@ SPEC CHECKSUMS:
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   AlamofireNetworkActivityIndicator: 9acc3de3ca6645bf0efed462396b0df13dd3e7b8
   CorePlot: 6bfe6d30d215beec3cfd18ee43e434620119bc1e
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
-  DeviceKit: da103891aa928d89f64ea8dd8aca738c5f3d8ac0
+  DeviceKit: d081659419cce07c0b5239dbc9fb39ed7413c7fe
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: 4f8beae0a82db2ca4a9b5fd658785fc5f61d296b
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
-  InAppSettingsKit: 800853da39388780c15191846688c0974c5b13b5
-  MultiSelectSegmentedControl: e34388e5d8de55a43ba0191662246c655f5b9d5a
-  SDCAlertView: 5fbc48cae6d7bf9781097e3f27883924ef3b922c
+  InAppSettingsKit: 0d6cf327364085375cbfd8011fd6ae1c0d2c7d1c
+  MultiSelectSegmentedControl: 170794791657e12ee5ff5c09dae5f6af1976746d
+  SDCAlertView: 26b5dabdd3c2e6f16c88bad231c84447fa42b0dc
+  Sentry: 74f2ad93a20a5567a1badaedf5b3f60b142ad082
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SweeterSwift: 2708d1eea926546f8f6e8fea38ac8f5598ff00c7
+  SweeterSwift: d909211f6833405628c8c7c6bf9f8f2e8a0e9df9
   SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
   SwiftyDropbox: f63472425dd61b8fb4810a10442e54f20a08d4ab
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: 64bdb48e3f13243866075e6c05ceb08a48706918
+PODFILE CHECKSUM: 29497efce55128900cd650ce7c7431e8885f5b78
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3

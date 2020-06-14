@@ -77,4 +77,16 @@ class NetDeckTests: XCTestCase {
         XCTAssert(cm["bar"]?.count == 1)
     }
 
+    func testA() {
+        print(#function)
+        self.testB()
+    }
+
+    func testC() {
+        print(#function)
+    }
+
+    func testB() {
+        print(#function)
+    }
 }

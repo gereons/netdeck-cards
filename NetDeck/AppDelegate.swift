@@ -164,7 +164,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.logStartup(true)
         
         if Analytics.shared.crashDetected {
-            self.showCrashlyticsAlert()
+            self.showCrashAlert()
         } else {
             if CardManager.cardsAvailable {
                 DeckImport.checkClipboardForDeck()
@@ -388,7 +388,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate {
-    func showCrashlyticsAlert() {
+    func showCrashAlert() {
         let msg = "Sorry, that shouldn't have happened.\nIf you can reproduce the bug, please tell the developers about it.".localized()
         
         let alert = UIAlertController.alert(title: "Oops, we crashed :(".localized(), message:msg)
