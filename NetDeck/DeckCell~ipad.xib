@@ -1,37 +1,34 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="deckCell" id="KGk-i7-Jjw" customClass="DeckCell" customModule="NetDeck">
-            <rect key="frame" x="0.0" y="0.0" width="700" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="deckCell" rowHeight="50" id="KGk-i7-Jjw" customClass="DeckCell" customModule="NetDeck">
+            <rect key="frame" x="0.0" y="0.0" width="705" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="667" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="674" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck Name" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000027" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OL3-gy-8pE">
-                        <rect key="frame" x="49" y="5" width="374" height="18"/>
+                        <rect key="frame" x="56" y="8" width="379" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck's Identity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YaS-wv-3DE">
-                        <rect key="frame" x="49" y="24" width="374" height="15"/>
+                        <rect key="frame" x="56" y="27" width="379" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999 cards · 999 influence · 99 AP" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDE-Ef-nig">
-                        <rect key="frame" x="451" y="5" width="208" height="16"/>
+                        <rect key="frame" x="463" y="8" width="208" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="208" id="Lqk-7z-8pN"/>
                         </constraints>
@@ -39,7 +36,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="April 3rd, 2014 12:00am" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOx-Cq-Amt">
-                        <rect key="frame" x="451" y="22.5" width="208" height="15"/>
+                        <rect key="frame" x="463" y="27" width="208" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="208" id="ndp-8I-nBW"/>
                         </constraints>
@@ -47,7 +44,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uTJ-nz-Wa5">
-                        <rect key="frame" x="16" y="7" width="28" height="28"/>
+                        <rect key="frame" x="23" y="11" width="28" height="28"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="28" id="1Uh-bq-85F"/>
                             <constraint firstAttribute="width" constant="28" id="hRf-Pk-qZ2"/>
@@ -57,7 +54,7 @@
                         </state>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netrunnerdb_com-bw" translatesAutoresizingMaskIntoConstraints="NO" id="URW-pe-QiY">
-                        <rect key="frame" x="439" y="14" width="16" height="16"/>
+                        <rect key="frame" x="451" y="17" width="16" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="IYX-mm-5Fp"/>
                             <constraint firstAttribute="height" constant="16" id="M4W-0y-hEp"/>
@@ -67,14 +64,14 @@
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="cOx-Cq-Amt" secondAttribute="trailing" id="6MV-Yg-R2h"/>
                     <constraint firstItem="OL3-gy-8pE" firstAttribute="leading" secondItem="uTJ-nz-Wa5" secondAttribute="trailing" constant="5" id="Aa2-X9-J32"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="cOx-Cq-Amt" secondAttribute="bottom" constant="-2" id="CsI-6w-eDn"/>
+                    <constraint firstAttribute="bottom" secondItem="cOx-Cq-Amt" secondAttribute="bottom" constant="8" id="CsI-6w-eDn"/>
                     <constraint firstItem="uTJ-nz-Wa5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="MTr-Tn-f3d"/>
-                    <constraint firstItem="OL3-gy-8pE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-3" id="Q8c-R7-K1d"/>
+                    <constraint firstItem="OL3-gy-8pE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Q8c-R7-K1d"/>
                     <constraint firstAttribute="trailingMargin" secondItem="DDE-Ef-nig" secondAttribute="trailing" id="SyK-fa-N7M"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="YaS-wv-3DE" secondAttribute="bottom" constant="-3" id="kVJ-z7-jbL"/>
+                    <constraint firstAttribute="bottom" secondItem="YaS-wv-3DE" secondAttribute="bottom" constant="8" id="kVJ-z7-jbL"/>
                     <constraint firstItem="DDE-Ef-nig" firstAttribute="leading" secondItem="URW-pe-QiY" secondAttribute="trailing" constant="-4" id="m2O-3c-h0g"/>
                     <constraint firstItem="YaS-wv-3DE" firstAttribute="leading" secondItem="uTJ-nz-Wa5" secondAttribute="trailing" constant="5" id="n8q-U6-YxL"/>
-                    <constraint firstItem="DDE-Ef-nig" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-3" id="nYY-vl-c8A"/>
+                    <constraint firstItem="DDE-Ef-nig" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="nYY-vl-c8A"/>
                     <constraint firstItem="URW-pe-QiY" firstAttribute="leading" secondItem="YaS-wv-3DE" secondAttribute="trailing" constant="16" id="qng-0C-KRY"/>
                     <constraint firstItem="uTJ-nz-Wa5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="tOz-eH-Iqe"/>
                     <constraint firstItem="URW-pe-QiY" firstAttribute="leading" secondItem="OL3-gy-8pE" secondAttribute="trailing" constant="16" id="uVh-am-FDO"/>
@@ -89,16 +86,11 @@
                 <outlet property="nrdbIcon" destination="URW-pe-QiY" id="i04-gd-Jhz"/>
                 <outlet property="summaryLabel" destination="DDE-Ef-nig" id="hk2-0m-hOy"/>
             </connections>
-            <point key="canvasLocation" x="473" y="294"/>
+            <point key="canvasLocation" x="369.921875" y="158.203125"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="active" width="28" height="28"/>
         <image name="netrunnerdb_com-bw" width="16" height="16"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
 </document>

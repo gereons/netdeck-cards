@@ -970,7 +970,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: - table view
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.largeCells ? 83 : 40
+        return self.largeCells ? 76 : 40
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

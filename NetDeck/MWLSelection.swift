@@ -36,7 +36,7 @@ final class MWLSelection {
         let alert = UIAlertController.actionSheet(title: "Deck Legality".localized(), message: nil)
 
         alert.addAction(UIAlertAction(title: "Casual".localized().checked(deck.legality == .casual)) { action in
-            setter.setLegality(DeckLegality.standard(mwl: 0))
+            setter.setLegality(DeckLegality.casual)
         })
 
         let firstStandard = MWLManager.firstStandardIndex

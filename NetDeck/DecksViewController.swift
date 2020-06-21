@@ -129,7 +129,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.tableView.backgroundColor = .clear
-        self.tableView.rowHeight = 44
+        self.tableView.rowHeight = 50
         self.tableView.register(UINib(nibName: "DeckCell", bundle: nil), forCellReuseIdentifier: "deckCell")
         self.tableView.contentOffset = CGPoint(x: 0, y: self.searchBar.frame.size.height)
         
