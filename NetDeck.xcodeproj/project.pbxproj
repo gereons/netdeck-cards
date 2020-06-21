@@ -974,8 +974,6 @@
 				3A36225A1849320C007F2854 /* Sources */,
 				3A36225B1849320C007F2854 /* Frameworks */,
 				3A36225C1849320C007F2854 /* Resources */,
-				3A814EC519ADBEEE008C3285 /* Crashlytics */,
-				3AF1E9151FB4F733009E8B88 /* Run Checker */,
 				3A66FFB619DEE75000B847E7 /* Set CFBundleVersion from git */,
 				E26B927A0BDE6845FB33393B /* [CP] Embed Pods Frameworks */,
 			);
@@ -1164,34 +1162,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "if [ \"${CONFIGURATION}\" != \"Release\" ]; then\nGITVERSION=$(git rev-parse --short HEAD)\necho \"add git version... $GITVERSION\"\necho -n \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\" | xargs -0 /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $GITVERSION\"\nfi\n";
-		};
-		3A814EC519ADBEEE008C3285 /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Crashlytics;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Release\" ]; then\necho \"init crashlytics\"\n\"${PODS_ROOT}/Fabric/run\" fe0f0f5f919be6211c1de668d91332e311ddad9e fa70b1ad91d9aec01c4b7c16d31d3cd67ec20659e513198a7a6f791180cc2af8\nfi\n";
-		};
-		3AF1E9151FB4F733009E8B88 /* Run Checker */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Checker";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -d /Applications/Checker.app ]; then\n    /Applications/Checker.app/Contents/Resources/start-analyzer.app/Contents/MacOS/start-analyzer\nelse\n    echo \"WARNING: start-analyzer not installed.\"\nfi";
 		};
 		C62555A389DA66E9F987B229 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
