@@ -4,7 +4,7 @@ CARDS_URL=https://netrunnerdb.com/api/2.0/public/cards
 CYCLES_URL=https://netrunnerdb.com/api/2.0/public/cycles
 PACKS_URL=https://netrunnerdb.com/api/2.0/public/packs
 MWL_URL=https://netrunnerdb.com/api/2.0/public/mwl
-ROTATIONS_URL=https://github.com/Alsciende/netrunner-cards-json/blob/master/rotations.json
+ROTATIONS_URL=https://raw.githubusercontent.com/Alsciende/netrunner-cards-json/master/rotations.json
 LOCALE=""
 SUFFIX=""
 
