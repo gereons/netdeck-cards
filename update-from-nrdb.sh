@@ -4,6 +4,7 @@ CARDS_URL=https://netrunnerdb.com/api/2.0/public/cards
 CYCLES_URL=https://netrunnerdb.com/api/2.0/public/cycles
 PACKS_URL=https://netrunnerdb.com/api/2.0/public/packs
 MWL_URL=https://netrunnerdb.com/api/2.0/public/mwl
+ROTATIONS_URL=https://github.com/Alsciende/netrunner-cards-json/blob/master/rotations.json
 LOCALE=""
 SUFFIX=""
 
@@ -27,6 +28,7 @@ do
 done
 
 curl -s $MWL_URL -o api/2.0/mwl.json
+curl -s $ROTATIONS_URL -o api/2.0/rotations.json
 
 if git diff --quiet --exit-code
 then
