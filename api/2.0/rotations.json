@@ -1,0 +1,45 @@
+[
+    {
+        "code": "rotation-2017",
+        "name": "2017 (Genesis + Spin)",
+        "cycles": [
+            "genesis", "spin"
+        ],
+        "packs": [
+            "core",
+            "wla", "ta", "ce", "asis", "hs", "fp",
+            "om", "st", "mt", "tc", "fal", "dt"
+        ]
+    },
+    {
+        "code": "rotation-2018",
+        "name": "2018 (Terminal Directive)",
+        "cycles": [
+            "genesis", "spin",
+            "terminal-directive"
+        ],
+        "packs": [
+            "core",
+            "wla", "ta", "ce", "asis", "hs", "fp",
+            "om", "st", "mt", "tc", "fal", "dt",
+            "core2", "td"
+        ]
+    },
+    {
+        "code": "rotation-2019",
+        "name": "2019 (Lunar + C&C)",
+        "cycles": [
+            "genesis", "spin",
+            "terminal-directive",
+            "lunar", "creation-and-control"
+        ],
+        "packs": [
+            "core",
+            "wla", "ta", "ce", "asis", "hs", "fp",
+            "om", "st", "mt", "tc", "fal", "dt",
+            "core2", "td",
+            "cac",
+            "up", "tsb", "fc", "uao", "atr", "ts"
+        ]
+    }
+]
