@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 class BrowserImageCell: UICollectionViewCell, CardDetailDisplay {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var mwlIndicator: UILabel!
+
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var cardName: UILabel!
     @IBOutlet weak var cardType: UILabel!
@@ -44,6 +47,16 @@ class BrowserImageCell: UICollectionViewCell, CardDetailDisplay {
     
     func loadImage(for card: Card) {
         self.card = card
+
+        let mwl = Defaults[.defaultMWL]
+        if card.banned(mwl) {
+            self.mwlIndicator.text = Card.banned
+        } else if card.restricted(mwl) {
+            self.mwlIndicator.text = Card.restricted
+        } else {
+            self.mwlIndicator.text = nil
+        }
+
         self.activityIndicator.startAnimating()
         self.doLoadImage(for: card)
     }

@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,6 +19,12 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cv7-58-tjO">
                         <rect key="frame" x="0.0" y="0.0" width="225" height="313"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🦄" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qp-ff-cKJ">
+                        <rect key="frame" x="194" y="8" width="23" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Gyn-UA-5Fy">
                         <rect key="frame" x="102.5" y="146.5" width="20" height="20"/>
                     </activityIndicatorView>
@@ -89,7 +93,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="Card Text">
                                         <attributes>
-                                            <font key="NSFont" size="12" name="Helvetica"/>
+                                            <font key="NSFont" metaFont="user"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -126,11 +130,13 @@
             </view>
             <constraints>
                 <constraint firstItem="fcm-Os-ZlN" firstAttribute="top" secondItem="PrL-Ck-oiQ" secondAttribute="top" id="7s5-uY-bTh"/>
+                <constraint firstItem="0qp-ff-cKJ" firstAttribute="top" secondItem="PrL-Ck-oiQ" secondAttribute="top" constant="8" id="849-ia-AN3"/>
                 <constraint firstAttribute="bottom" secondItem="fcm-Os-ZlN" secondAttribute="bottom" id="AOJ-bw-ZCc"/>
                 <constraint firstItem="fcm-Os-ZlN" firstAttribute="leading" secondItem="PrL-Ck-oiQ" secondAttribute="leading" id="Guj-Ik-3n5"/>
                 <constraint firstItem="Gyn-UA-5Fy" firstAttribute="centerY" secondItem="PrL-Ck-oiQ" secondAttribute="centerY" id="Jw7-Dw-QIK"/>
                 <constraint firstItem="Gyn-UA-5Fy" firstAttribute="centerX" secondItem="PrL-Ck-oiQ" secondAttribute="centerX" id="OdV-jj-Dk5"/>
                 <constraint firstAttribute="trailing" secondItem="fcm-Os-ZlN" secondAttribute="trailing" id="PLx-Ph-nox"/>
+                <constraint firstAttribute="trailing" secondItem="0qp-ff-cKJ" secondAttribute="trailing" constant="8" id="Pdo-xQ-8Am"/>
                 <constraint firstAttribute="bottom" secondItem="cv7-58-tjO" secondAttribute="bottom" id="aqu-6l-yDP"/>
                 <constraint firstItem="zZS-Y4-0Wb" firstAttribute="centerX" secondItem="PrL-Ck-oiQ" secondAttribute="centerX" constant="-10" id="bgP-li-jVr"/>
                 <constraint firstItem="cv7-58-tjO" firstAttribute="leading" secondItem="PrL-Ck-oiQ" secondAttribute="leading" id="f3m-t7-nFQ"/>
@@ -151,12 +157,9 @@
                 <outlet property="label1" destination="1n9-sN-Srt" id="le5-xG-Kjx"/>
                 <outlet property="label2" destination="zZS-Y4-0Wb" id="S56-uL-tVn"/>
                 <outlet property="label3" destination="6O5-gE-kZk" id="HHp-BP-taw"/>
+                <outlet property="mwlIndicator" destination="0qp-ff-cKJ" id="w6Q-z8-5Rb"/>
             </connections>
+            <point key="canvasLocation" x="139" y="154"/>
         </collectionViewCell>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
 </document>
