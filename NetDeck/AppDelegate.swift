@@ -327,10 +327,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             return true
         } else if scheme.hasPrefix("db-") {
-            let ok = Dropbox.handleURL(url)
-            Defaults[.useDropbox] = ok
-            if ok {
-                SVProgressHUD.showSuccess(withStatus: "Successfully connected to your Dropbox account".localized())
+            Dropbox.handleURL(url) { ok in
+                Defaults[.useDropbox] = ok
+                if ok {
+                    SVProgressHUD.showSuccess(withStatus: "Successfully connected to your Dropbox account".localized())
+                }
             }
             
             return true

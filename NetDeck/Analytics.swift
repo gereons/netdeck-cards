@@ -69,10 +69,10 @@ class Analytics: NSObject {
         }
 
         if !initialized {
-            SentrySDK.start(options: [
-                "dsn": "https://2f7b1cb084b644478c09c436d24931c5@o397144.ingest.sentry.io/5275922",
-                "debug": true // Enabled debug when first installing is always helpful
-            ])
+            SentrySDK.start { options in
+                options.dsn = "https://2f7b1cb084b644478c09c436d24931c5@o397144.ingest.sentry.io/5275922"
+                options.debug = false // Enabled debug when first installing is always helpful
+            }
             initialized = true
         }
 
@@ -82,6 +82,6 @@ class Analytics: NSObject {
 
 extension Analytics {
     var crashDetected: Bool {
-        return SentryCrash.sharedInstance()?.crashedLastLaunch ?? false
+        return SentrySDK.crashedLastRun
     }
 }

@@ -23,22 +23,26 @@ class Dropbox {
         }
     }
 
-    static func handleURL(_ url: URL) -> Bool {
-        if let authResult = DropboxClientsManager.handleRedirectURL(url) {
+    static func handleURL(_ url: URL, completion: @escaping (Bool) -> Void) {
+
+        let ok = DropboxClientsManager.handleRedirectURL(url) { authResult in
             switch authResult {
             case .success:
                 print("Success! User is logged into Dropbox.")
-                return true
+                completion(true)
             case .error(let error, let description):
-                print("Error: \(error) \(description)")
-                return false
+                print("Error: \(error) \(String(describing: description))")
+                completion(false)
             case .cancel:
                 print("Cancelled")
-                return false
+                completion(false)
+            case .none:
+                print("Unknown")
+                completion(false)
             }
         }
-        
-        return false
+
+        print("handler status: \(ok)")
     }
     
     static func authorizeFromController(_ controller: UIViewController) {
