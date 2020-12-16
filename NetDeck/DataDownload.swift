@@ -20,6 +20,7 @@ private enum ApiRequest {
     case packs
     case cards
     case mwl
+    case rotations
 }
 
 class DataDownload: NSObject {
@@ -101,6 +102,7 @@ class DataDownload: NSObject {
         case .packs: urlString = baseUrl + "/api/2.0/packs_en.json"
         case .cards: urlString = baseUrl + "/api/2.0/cards_en.json"
         case .mwl: urlString = baseUrl + "/api/2.0/mwl.json"
+        case .rotations: urlString = baseUrl + "/api/2.0/rotations.json"
         }
 
         let url = URL(string: urlString)!
@@ -117,20 +119,26 @@ class DataDownload: NSObject {
             .cycles: self.requestFor(.cycles),
             .packs: self.requestFor(.packs),
             .cards: self.requestFor(.cards),
-            .mwl: self.requestFor(.mwl)
+            .mwl: self.requestFor(.mwl),
+            .rotations: self.requestFor(.rotations)
         ]
 
         let group = DispatchGroup()
         var results = [ApiRequest: Data]()
         for (key, req) in requests {
-            // print("dl for \(key): \(req.url!)")
+            print("dl for \(key): \(req.url!)")
             group.enter()
             Alamofire.request(req).validate().responseJSON { response in
-                // print("\(req.url!) \(String(describing: response.response?.statusCode))")
+                print("\(req.url!) \(String(describing: response.response?.statusCode))")
                 switch response.result {
                 case .success:
                     if let data = response.data, !self.downloadStopped {
+                        objc_sync_enter(self)
                         results[key] = data
+                        objc_sync_exit(self)
+                        print("got \(data.count) for \(key)")
+                    } else {
+                        print("no data??")
                     }
                 case .failure:
                     break
@@ -155,6 +163,9 @@ class DataDownload: NSObject {
                 if ok {
                     ok = MWLManager.setupFromNetrunnerDb(results[.mwl]!)
                 }
+                if ok {
+                    ok = RotationManager.setupFromNetrunnerDb(results[.rotations]!)
+                }
                 CardManager.setNextDownloadDate()
             }
             
@@ -162,7 +173,9 @@ class DataDownload: NSObject {
                 alert.dismiss(animated: false) 
                 if !ok {
                     let msg = "Unable to download cards at this time. Please try again later.".localized()
-                    UIAlertController.alert(withTitle: "Download Error".localized(), message: msg, button: "OK")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        UIAlertController.alert(withTitle: "Download Error".localized(), message: msg, button: "OK")
+                    }
                 }
             }
             self.sdcAlert = nil

@@ -128,7 +128,7 @@ class CardManager {
             }
         }
 
-        if Defaults[.rotationIndex] == ._2018 && !Defaults[.useSC19] {
+        if Defaults[.rotationIndex] == RotationManager.r2018 && !Defaults[.useSC19] {
             let owned = self.identitiesFor(role).filter { Defaults.bool(forKey: Pack.use + $0.packCode) && $0.replacedBy != nil }
             for card in owned {
                 if let replCode = card.replacedBy, let replacement = CardManager.cardBy(replCode) {

@@ -165,7 +165,7 @@ class SettingsDelegate: NSObject, IASKSettingsDelegate {
         if key == DefaultsKeys.defaultMWL._key {
             return MWLManager.settingsValues()
         } else if key == DefaultsKeys.rotationIndex._key {
-            return Rotation.values()
+            return RotationManager.settingsValues
         }
         
         return []
@@ -179,7 +179,7 @@ class SettingsDelegate: NSObject, IASKSettingsDelegate {
         if key == DefaultsKeys.defaultMWL._key {
             return MWLManager.settingsTitles()
         } else if key == DefaultsKeys.rotationIndex._key {
-            return Rotation.titles()
+            return RotationManager.settingsTitles
         }
 
         return []

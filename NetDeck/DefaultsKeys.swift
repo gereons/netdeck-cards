@@ -127,7 +127,7 @@ extension DefaultsKeys {
     /// exclude rotated-out cards?
     static let rotationActive = DefaultsKey<Bool>("rotationActive")
     /// which rotation to use?
-    static let rotationIndex = DefaultsKey<Rotation>("rotationIndex")
+    static let rotationIndex = DefaultsKey<Int>("rotationIndex")
     /// convert core -> core2?
     static let convertCore = DefaultsKey<Bool>("convertCore")
     
@@ -204,11 +204,6 @@ extension UserDefaults {
     subscript(key: DefaultsKey<[String: Date]?>) -> [String: Date]? {
         get { return dictionary(forKey: key._key) as? [String: Date] ?? [:] }
         set { set(key, newValue) }
-    }
-    
-    subscript(key: DefaultsKey<Rotation>) -> Rotation {
-        get { return unarchive(key) ?? ._2017 }
-        set { archive(key, newValue) }
     }
 }
 

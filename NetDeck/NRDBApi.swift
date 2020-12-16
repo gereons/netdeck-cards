@@ -25,7 +25,7 @@ struct ApiResponse<T: Decodable>: Decodable {
     let total: Int
     let imageUrlTemplate: String?
 
-    private let supportedApiVersion = "2.0"
+    private var supportedApiVersion: String { "2.0" }
     var valid: Bool {
         return success && version_number == supportedApiVersion && total == data.count
     }
@@ -183,4 +183,12 @@ struct NetrunnerDbMwl: Codable {
     let date_start: String
     let active: Bool
     let cards: [String: Restriction]
+}
+
+// MARK: - Rotation
+struct RotationData: Codable {
+    let code: String
+    let name: String
+    let cycles: [String]    // list of cycles that rotated out
+    let packs: [String]     // list of packs that rotated out
 }

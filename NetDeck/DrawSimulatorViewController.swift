@@ -61,7 +61,7 @@ class DrawSimulatorViewController: UIViewController, UITableViewDataSource, UITa
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        
+
         self.oddsLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: UIFont.Weight.regular)
         self.drawnLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
     }

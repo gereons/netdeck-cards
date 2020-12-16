@@ -111,6 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Prebuilt.initialize()
         _ = MWLManager.setupFromFiles()
+        _ = RotationManager.setupFromFiles()
 
         if !Defaults[.downloadOnFirstStartDone] && Reachability.online {
             Defaults[.downloadOnFirstStartDone] = true
@@ -245,7 +246,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Defaults.registerDefault(.rotationActive, true)
-        Defaults.registerDefault(.rotationIndex, Rotation._2019)
+        Defaults.registerDefault(.rotationIndex, 0)
         Defaults.registerDefault(.convertCore, true)
         
         Defaults.registerDefault(.lastDownload, "never".localized())

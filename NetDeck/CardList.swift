@@ -67,7 +67,7 @@ class CardList {
                     self.filterNameDuplicates()
                 }
 
-                if Defaults[.rotationIndex] == ._2018 && !Defaults[.useSC19] {
+                if Defaults[.rotationIndex] == RotationManager.r2018 && !Defaults[.useSC19] {
                     // make owned cards that are in SC19 available again
                     self.addOwnedCardsInSC19(allCards)
                 }
@@ -75,7 +75,7 @@ class CardList {
         case .all:
             self.filterDraft()
             self.filterRotation()
-            if Defaults[.rotationIndex] == ._2018 {
+            if Defaults[.rotationIndex] == RotationManager.r2018 {
                 self.filterNameDuplicates()
             }
         }

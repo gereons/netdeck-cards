@@ -23,7 +23,7 @@ struct Cycle: Codable {
         self.position = try container.decode(Int.self, forKey: .position)
         self.size = try container.decode(Int.self, forKey: .size)
 
-        self.rotated = PackManager.rotation.cycles.contains(self.code)
+        self.rotated = RotationManager.rotatedPacks.cycles.contains(self.code)
     }
 }
 
@@ -77,7 +77,7 @@ struct Pack: Codable {
         self.ffgId = try? container.decode(Int.self, forKey: .ffgId)
 
         self.settingsKey = Pack.use + code
-        self.rotated = PackManager.rotation.packs.contains(code)
+        self.rotated = RotationManager.rotatedPacks.packs.contains(code)
     }
     
     init(named: String, key: String) {
@@ -117,17 +117,13 @@ class PackManager {
     
     static let cores = [ core, core2, sc19 ]
 
-    static var rotation: RotatedPacks {
-        return Defaults[.rotationIndex].packs
-    }
-    
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
     
     static private(set) var cacheRefreshCycles = [String]()
     
     fileprivate static var cyclesByCode = [String: Cycle]()     // code -> cycle
-    private static var allCycles = [Int: Cycle]()               // position -> cycles
+    private(set) static var allCycles = [Int: Cycle]()          // position -> cycles
     private(set) static var packsByCode = [String: Pack]()      // code -> pack
     private(set) static var allPacks = [Pack]()
     
@@ -155,7 +151,7 @@ class PackManager {
         }
         
         if Defaults[.rotationActive] {
-            PackManager.rotation.packs.forEach { pack in
+            RotationManager.rotatedPacks.packs.forEach { pack in
                 defaults[Pack.use + pack] = false
             }
         } else {
@@ -164,6 +160,7 @@ class PackManager {
         }
 
         defaults[Pack.use + PackManager.uprisingBooster] = false
+        defaults[Pack.use + PackManager.magnumOpusReprint] = false
         return defaults
     }
     
@@ -196,8 +193,8 @@ class PackManager {
     
     static func rotatedPackCodes() -> Set<String> {
         if Defaults[.rotationActive] {
-            let rotation = Defaults[.rotationIndex]
-            return rotation.packs.packs
+            let rotation = RotationManager.rotatedPacks
+            return rotation.packs
         } else {
             return Set([])
         }

@@ -141,15 +141,11 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         
         if Defaults[.rotationActive] {
             switch Defaults[.rotationIndex] {
-            case ._2017:
+            case RotationManager.r2017:
                 self.changeCoreSets(.useCore, .numOriginalCore, 0)
                 self.changeCoreSets(.useSC19, .numSC19, 0)
                 Defaults[.useCore2] = true
-            case ._2018:
-                self.changeCoreSets(.useCore, .numOriginalCore, 0)
-                self.changeCoreSets(.useCore2, .numRevisedCore, 0)
-                Defaults[.useSC19] = true
-            case ._2019:
+            default:
                 self.changeCoreSets(.useCore, .numOriginalCore, 0)
                 self.changeCoreSets(.useCore2, .numRevisedCore, 0)
                 Defaults[.useSC19] = true
