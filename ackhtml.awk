@@ -1,13 +1,13 @@
 BEGIN {
-    print "<html><head>\
-<meta http-equiv='content-type' content='text/html; charset=UTF-8'> \
-<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'> \
-<style type='text/css'> \
-  pre { font-family: '-apple-system','HelveticaNeue-Light'; font-size: 17px; white-space: pre-wrap; } \
-  h1 { font-size: 110% } \
-  h2 { font-size: 100% } \
-  h1,h2 { margin: 0; padding: 0} \
-</style> \
+    print "<html><head>\n\
+<meta http-equiv='content-type' content='text/html; charset=UTF-8'>\n\
+<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'>\n\
+<style type='text/css'>\n\
+  pre { font-family: '-apple-system','HelveticaNeue-Light'; font-size: 17px; white-space: pre-wrap; }\n\
+  h1 { font-size: 110% }\n\
+  h2 { font-size: 100% }\n\
+  h1,h2 { margin: 0; padding: 0}\n\
+</style>\n\
 </head><body><pre>";
 }
 

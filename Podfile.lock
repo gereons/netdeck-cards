@@ -5,20 +5,20 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.4.0):
     - Alamofire (~> 4.8)
   - CorePlot (2.3)
-  - DeviceKit (3.2.0)
+  - DeviceKit (4.2.1)
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.0.4)
-  - InAppSettingsKit (3.0.1)
-  - MultiSelectSegmentedControl (2.3.3):
+  - InAppSettingsKit (3.1.8)
+  - MultiSelectSegmentedControl (2.3.4):
     - SweeterSwift
   - SDCAlertView (11.1.2)
-  - Sentry (5.1.4):
-    - Sentry/Core (= 5.1.4)
-  - Sentry/Core (5.1.4)
+  - Sentry (6.0.12):
+    - Sentry/Core (= 6.0.12)
+  - Sentry/Core (6.0.12)
   - SVProgressHUD (2.2.5)
-  - SweeterSwift (1.1.3)
-  - SwiftKeychainWrapper (3.4.0)
-  - SwiftyDropbox (5.1.0):
+  - SweeterSwift (1.1.4)
+  - SwiftKeychainWrapper (4.0.1)
+  - SwiftyDropbox (6.0.3):
     - Alamofire (~> 4)
   - SwiftyUserDefaults (3.0.1)
 
@@ -63,7 +63,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftyDropbox:
-    :commit: 246dd4d6c4c0aa6660a3b4234d3c6f3385fc4826
+    :commit: b227c38724ca5388eb47ee31f5c5ac143ed70a0d
     :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
@@ -71,19 +71,19 @@ SPEC CHECKSUMS:
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   AlamofireNetworkActivityIndicator: 9acc3de3ca6645bf0efed462396b0df13dd3e7b8
   CorePlot: 6bfe6d30d215beec3cfd18ee43e434620119bc1e
-  DeviceKit: d081659419cce07c0b5239dbc9fb39ed7413c7fe
+  DeviceKit: cadb5ff25d45fe186778bf2d0fd2ea4750542189
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: 4f8beae0a82db2ca4a9b5fd658785fc5f61d296b
-  InAppSettingsKit: 0d6cf327364085375cbfd8011fd6ae1c0d2c7d1c
-  MultiSelectSegmentedControl: 170794791657e12ee5ff5c09dae5f6af1976746d
+  InAppSettingsKit: 1a3d473c1b8e36e44eb54a7ddbf25bb00823ae4a
+  MultiSelectSegmentedControl: 7d76f9ab6cbf0b23a479332a23dbdb08053d6263
   SDCAlertView: 26b5dabdd3c2e6f16c88bad231c84447fa42b0dc
-  Sentry: 74f2ad93a20a5567a1badaedf5b3f60b142ad082
+  Sentry: 8ffcfe3416e0a58b90bb1ae319e8e8a13022a03e
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SweeterSwift: d909211f6833405628c8c7c6bf9f8f2e8a0e9df9
-  SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
-  SwiftyDropbox: f63472425dd61b8fb4810a10442e54f20a08d4ab
+  SweeterSwift: 8a90cf3156f5a1b6f39785c479369a16633b5ea9
+  SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
+  SwiftyDropbox: 32aabf5e83399ab150228a02dcbcce2bf8a9aae2
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: 29497efce55128900cd650ce7c7431e8885f5b78
+PODFILE CHECKSUM: 265f1a586dd5117d3912002c2a74c76a950ff80e
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

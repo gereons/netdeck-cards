@@ -1,6 +1,14 @@
-use_frameworks!
+source 'https://cdn.cocoapods.org/'
+use_frameworks! :linkage => :static
 inhibit_all_warnings!
-platform :ios, '12.4'
+
+install! 'cocoapods',
+    :generate_multiple_pod_projects => true,
+    :incremental_installation => true,
+    :disable_input_output_paths => true
+
+deployment_target = '12.4'
+platform :ios, deployment_target
 
 def pods
     pod 'Sentry'
@@ -32,4 +40,17 @@ end
 post_install do |installer|
     require 'fileutils'
     system("awk -f ackhtml.awk <'Pods/Target Support Files/Pods-NetDeck/Pods-NetDeck-acknowledgements.markdown' >NetDeck/Acknowledgements.html")
+
+    installer.generated_projects.each do |project|
+        project.targets.each do |target|
+            target.build_configurations.each do |config|
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = deployment_target
+                config.build_settings.delete('ARCHS')
+            end
+        end
+        project.build_configurations.each do |bc|
+            bc.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = deployment_target
+            bc.build_settings.delete('ARCHS')
+        end
+    end
 end
