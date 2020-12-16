@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,6 +32,7 @@
                     <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="YnW-x8-Zis"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="y0L-wg-Mhs" firstAttribute="leading" secondItem="YnW-x8-Zis" secondAttribute="leading" id="23p-ys-GTz"/>
@@ -41,7 +42,6 @@
                 <constraint firstAttribute="centerX" secondItem="C4Z-FA-dKh" secondAttribute="centerX" id="Vbn-aq-Z1P"/>
                 <constraint firstItem="y0L-wg-Mhs" firstAttribute="trailing" secondItem="YnW-x8-Zis" secondAttribute="trailing" id="rUq-do-Gmo"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="YnW-x8-Zis"/>
             <point key="canvasLocation" x="140" y="153.37331334332833"/>
         </view>
     </objects>

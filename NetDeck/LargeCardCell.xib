@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFI-vh-aBO" userLabel="Influence">
-                        <rect key="frame" x="7" y="23" width="42" height="24"/>
+                        <rect key="frame" x="8" y="23" width="42" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="Jvc-mb-0dJ"/>
                         </constraints>
@@ -25,23 +25,23 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Self Modifying Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHx-pP-GP4" userLabel="Card Name">
-                        <rect key="frame" x="65" y="12" width="434" height="21"/>
+                        <rect key="frame" x="66" y="12" width="432" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shaper Program: Daemon - AI - Illicit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kpf-UU-065" userLabel="Card Type">
-                        <rect key="frame" x="65" y="40" width="434" height="18"/>
+                        <rect key="frame" x="66" y="40" width="432" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Copy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WIW-WX-FJK" userLabel="Copies">
-                        <rect key="frame" x="602" y="4" width="48" height="18"/>
+                        <rect key="frame" x="601" y="4" width="48" height="18"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AR8-Jc-YmL" userLabel="Label 1">
-                        <rect key="frame" x="519" y="2.5" width="22" height="21"/>
+                        <rect key="frame" x="518" y="2.5" width="22" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="oxf-Va-gdE"/>
                         </constraints>
@@ -49,7 +49,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yeu-jh-ffh" userLabel="Label 2">
-                        <rect key="frame" x="519" y="24.5" width="22" height="21"/>
+                        <rect key="frame" x="518" y="24.5" width="22" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="JlP-lo-egs"/>
                         </constraints>
@@ -57,7 +57,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMF-sc-Oao" userLabel="Label 3">
-                        <rect key="frame" x="519" y="46.5" width="22" height="21"/>
+                        <rect key="frame" x="518" y="46.5" width="22" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="saC-f8-xXP"/>
                         </constraints>
@@ -65,13 +65,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" maximumValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="3aS-Fa-lwC">
-                        <rect key="frame" x="579" y="26" width="94" height="32"/>
+                        <rect key="frame" x="578" y="26" width="94" height="32"/>
                         <connections>
                             <action selector="copiesChanged:" destination="J3f-8X-7gb" eventType="valueChanged" id="cPp-DE-p4q"/>
                         </connections>
                     </stepper>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KkZ-vK-r1B" userLabel="Pips">
-                        <rect key="frame" x="49" y="4.5" width="8" height="61"/>
+                        <rect key="frame" x="50" y="4.5" width="8" height="61"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSS-Gt-da0" userLabel="Pip 1">
                                 <rect key="frame" x="0.0" y="2" width="8" height="8"/>
@@ -141,14 +141,14 @@
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CTI-bz-tmh" userLabel="Icon 3">
-                        <rect key="frame" x="543" y="47" width="20" height="20"/>
+                        <rect key="frame" x="542" y="47" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="bQ2-vc-eX6"/>
                             <constraint firstAttribute="height" constant="20" id="xNm-Cn-Yrw"/>
                         </constraints>
                     </imageView>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="OOH-WP-2BO">
-                        <rect key="frame" x="571" y="13" width="102" height="44"/>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="OOH-WP-2BO">
+                        <rect key="frame" x="570" y="13" width="102" height="44"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="9aE-AB-Gnh"/>
                             <constraint firstAttribute="width" constant="102" id="nu8-GU-obV"/>
@@ -161,14 +161,14 @@
                         </connections>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fum-Pf-Cvz" userLabel="Icon 1">
-                        <rect key="frame" x="543" y="3" width="20" height="20"/>
+                        <rect key="frame" x="542" y="3" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="m0B-Vl-ZeP"/>
                             <constraint firstAttribute="height" constant="20" id="nGw-4O-2s0"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZOT-Nr-Opz" userLabel="Icon 2">
-                        <rect key="frame" x="543" y="25" width="20" height="20"/>
+                        <rect key="frame" x="542" y="25" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="5qB-Qn-h6Q"/>
                             <constraint firstAttribute="height" constant="20" id="bW8-cX-FtR"/>

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,16 +13,16 @@
             <rect key="frame" x="0.0" y="0.0" width="879" height="82"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="879" height="81.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="879" height="82"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shaper Program: Daemon - AI - Illicit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hne-66-YHG" userLabel="Card Type">
-                        <rect key="frame" x="36" y="54" width="712" height="18"/>
+                        <rect key="frame" x="44" y="52" width="696" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5u-hl-7ca" userLabel="Label 1">
-                        <rect key="frame" x="768" y="9" width="22" height="21"/>
+                        <rect key="frame" x="760" y="8.5" width="22" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="347-Jx-lqq"/>
                         </constraints>
@@ -33,7 +30,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCI-f8-i9R" userLabel="Label 2">
-                        <rect key="frame" x="768" y="31" width="22" height="21"/>
+                        <rect key="frame" x="760" y="30.5" width="22" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="CCr-0T-Hsc"/>
                         </constraints>
@@ -41,7 +38,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fa0-KW-T0K" userLabel="Label 3">
-                        <rect key="frame" x="768" y="52" width="22" height="21"/>
+                        <rect key="frame" x="760" y="52.5" width="22" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="Jac-uo-69L"/>
                         </constraints>
@@ -49,28 +46,28 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v2W-65-Tqh" userLabel="Icon 1">
-                        <rect key="frame" x="792" y="9" width="20" height="20"/>
+                        <rect key="frame" x="784" y="9" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="0J3-jS-dxx"/>
                             <constraint firstAttribute="height" constant="20" id="acw-az-ovy"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DPQ-Hc-Pwy" userLabel="Icon 2">
-                        <rect key="frame" x="792" y="31" width="20" height="20"/>
+                        <rect key="frame" x="784" y="31" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="LgA-Y2-bsX"/>
                             <constraint firstAttribute="height" constant="20" id="qSn-af-GUv"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yb0-Y2-FW9" userLabel="Icon 3">
-                        <rect key="frame" x="792" y="53" width="20" height="20"/>
+                        <rect key="frame" x="784" y="53" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="OXR-HR-hve"/>
                             <constraint firstAttribute="height" constant="20" id="qt8-Iz-WjF"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SxW-kL-ZyY" userLabel="Pips">
-                        <rect key="frame" x="15" y="10" width="8" height="62"/>
+                        <rect key="frame" x="23" y="10" width="8" height="62"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HnN-y2-JbA" userLabel="Pip 1">
                                 <rect key="frame" x="0.0" y="2" width="8" height="8"/>
@@ -139,8 +136,8 @@
                             <constraint firstItem="Imv-ls-IDc" firstAttribute="top" secondItem="Vjt-W0-VLh" secondAttribute="bottom" constant="2" id="tUm-qi-2Fy"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-2O-ku1">
-                        <rect key="frame" x="819" y="21" width="40" height="40"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-2O-ku1">
+                        <rect key="frame" x="811" y="21" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="CR4-4Y-zGr"/>
                             <constraint firstAttribute="width" constant="40" id="uwt-PL-Rq3"/>
@@ -151,7 +148,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Self Modifying Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsm-AF-3xd" userLabel="Card Name">
-                        <rect key="frame" x="35" y="12" width="717" height="21"/>
+                        <rect key="frame" x="43" y="15" width="701" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -198,15 +195,10 @@
                 <outlet property="pip6" destination="1Oi-jW-maW" id="PR2-5R-hsj"/>
                 <outlet property="type" destination="Hne-66-YHG" id="92Y-bJ-2Bx"/>
             </connections>
-            <point key="canvasLocation" x="495.5" y="237"/>
+            <point key="canvasLocation" x="387.109375" y="138.8671875"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="727-more" width="28" height="6"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
 </document>
