@@ -3,7 +3,7 @@
 //  Net Deck
 //
 //  Created by Gereon Steffens on 28.12.13.
-//  Copyright © 2019 Gereon Steffens. All rights reserved.
+//  Copyright © 2021 Gereon Steffens. All rights reserved.
 //
 
 import UIKit

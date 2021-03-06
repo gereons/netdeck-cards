@@ -3,7 +3,7 @@
 //  NetDeck
 //
 //  Created by Gereon Steffens on 26.03.16.
-//  Copyright © 2019 Gereon Steffens. All rights reserved.
+//  Copyright © 2021 Gereon Steffens. All rights reserved.
 //
 
 import Sentry
