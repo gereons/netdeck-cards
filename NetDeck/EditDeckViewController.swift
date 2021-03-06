@@ -105,6 +105,8 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
         
         assert(self.navigationController?.viewControllers.count == 2, "oops")
         

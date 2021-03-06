@@ -96,6 +96,8 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidAppear(animated)
         
         _ = CardUpdateCheck.checkCardUpdateAvailable()
+
+        self.tableView.flashScrollIndicators()
         
         self.titleButton.sizeToFit()
         self.showTipView()

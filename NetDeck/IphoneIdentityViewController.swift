@@ -76,6 +76,8 @@ class IphoneIdentityViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
         
         if let selected = self.selectedIndexPath {
             self.tableView.selectRow(at: selected, animated: false, scrollPosition: .middle)

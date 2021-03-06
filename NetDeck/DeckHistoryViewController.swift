@@ -35,6 +35,12 @@ class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITabl
         self.tableView.backgroundColor = .clear
         self.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)        
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
+    }
     
     @objc func revertTapped(_ sender: UIButton) {
         Analytics.logEvent(.revert)

@@ -207,6 +207,9 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
+        self.collectionView.flashScrollIndicators()
         
         if self.deck.cards.count > 0 || self.deck.identity != nil {
             NotificationCenter.default.post(name: Notifications.deckChanged, object: self, userInfo: [ "initialLoad": true])

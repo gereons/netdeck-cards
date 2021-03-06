@@ -111,6 +111,9 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
+        self.collectionView.flashScrollIndicators()
         
         if let selected = self.selectedIndexPath {
             self.tableView.selectRow(at: selected, animated: false, scrollPosition: .middle)

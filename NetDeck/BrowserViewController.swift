@@ -84,6 +84,12 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         self.factionButton.isEnabled = filtersActive
         self.clearButton.isEnabled = filtersActive
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
+    }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)

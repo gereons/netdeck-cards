@@ -74,6 +74,12 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tableView.register(UINib(nibName: "DeckDiffCell", bundle: nil), forCellReuseIdentifier: "diffCell")
         self.tableView.rowHeight = 44
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
+    }
     
     func setup() {
         self.diff = DeckDiff(deck1: self.deck1, deck2: self.deck2)

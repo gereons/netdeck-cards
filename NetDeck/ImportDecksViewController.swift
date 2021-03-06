@@ -103,7 +103,9 @@ class ImportDecksViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
+        self.tableView.flashScrollIndicators()
+
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationItem.title = Device.isIphone ? "Import".localized() : "Import Deck".localized()
         

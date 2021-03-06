@@ -64,6 +64,12 @@ class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITab
         
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
+    }
     
     @IBAction func done(_ sender: Any) {
         self.dismiss(animated: false, completion: nil)
