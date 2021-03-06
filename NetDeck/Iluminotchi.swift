@@ -10,6 +10,7 @@
 
 import Foundation
 import UIKit
+import DeviceKit
 
 public protocol WindowProvider: class {
     var window: UIWindow? { get }
@@ -19,6 +20,10 @@ public final class Illuminotchi {
 
     private static let shared = Illuminotchi()
     private lazy var underlyingNotchView = UnderlyingNotchView()
+
+    private var hasNotchView: Bool {
+        DeviceKit.Device.current.hasSensorHousing
+    }
 
     init() {
         let notificationCenter = NotificationCenter.default
@@ -49,14 +54,14 @@ public final class Illuminotchi {
 
     @objc
     private func handle(windowDidBecomeKeyNotification notification: Notification) {
-        guard UIDevice.hasNotchView else {
+        guard hasNotchView else {
             return
         }
         self.addToWindow()
     }
 
     public func addToWindow() {
-        if UIDevice.hasNotchView, let keyWindow = UIApplication.shared.keyWindow {
+        if hasNotchView, let keyWindow = UIApplication.shared.keyWindow {
             self.underlyingNotchView.removeFromSuperview()
             keyWindow.addSubview(self.underlyingNotchView)
             keyWindow.bringSubviewToFront(self.underlyingNotchView)
@@ -64,7 +69,7 @@ public final class Illuminotchi {
     }
 
     private func addSubview(underNotch view: UIView) {
-        guard UIDevice.hasNotchView else {
+        guard hasNotchView else {
             return
         }
         self.underlyingNotchView.addSubview(view)
@@ -109,15 +114,4 @@ public final class Illuminotchi {
         }
 
     }
-}
-
-extension UIDevice {
-
-    class var hasNotchView: Bool {
-        guard #available(iOS 11.0, *), let window = UIApplication.shared.windows.first else {
-            return false
-        }
-        return window.safeAreaInsets.bottom > 0
-    }
-
 }
