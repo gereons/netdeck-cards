@@ -100,6 +100,7 @@ class PackManager {
     static let core = "core"
     static let core2 = "core2"
     static let sc19 = "sc19"
+    static let su21 = "su21"
     
     static let creationAndControl = "cac"
     static let honorAndProfit = "hap"
@@ -114,8 +115,9 @@ class PackManager {
     static let deluxeBoxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny, reignAndReverie ]
     static let campaignBoxes = [ terminalDirective ]
     static let bigBoxes = deluxeBoxes + campaignBoxes
+    static let terminalDirectiveCampaign = "tdc"
     
-    static let cores = [ core, core2, sc19 ]
+    static let cores = [ core, core2, sc19, su21 ]
 
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
@@ -152,6 +154,7 @@ class PackManager {
         
         if Defaults[.rotationActive] {
             RotationManager.rotatedPacks.packs.forEach { pack in
+                print("rotated: \(pack)")
                 defaults[Pack.use + pack] = false
             }
         } else {
@@ -161,6 +164,7 @@ class PackManager {
 
         defaults[Pack.use + PackManager.uprisingBooster] = false
         defaults[Pack.use + PackManager.magnumOpusReprint] = false
+        defaults[Pack.use + PackManager.terminalDirectiveCampaign] = false
         return defaults
     }
     

@@ -162,6 +162,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         Defaults.set(false, forKey: Pack.use + PackManager.uprisingBooster)
         Defaults.set(false, forKey: Pack.use + PackManager.magnumOpusReprint)
         Defaults.set(false, forKey: Pack.use + PackManager.napd)
+        Defaults.set(false, forKey: Pack.use + PackManager.terminalDirectiveCampaign)
         
         self.tableView.reloadData()
     }
@@ -215,6 +216,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         Defaults.set(false, forKey: Pack.use + PackManager.core2)
         Defaults.set(true, forKey: Pack.use + PackManager.sc19)
         Defaults.set(false, forKey: Pack.use + PackManager.terminalDirective)
+        Defaults.set(false, forKey: Pack.use + PackManager.terminalDirectiveCampaign)
         Defaults.set(true, forKey: Pack.use + deluxe)
         Defaults.set(true, forKey: Pack.use + PackManager.reignAndReverie)
         Defaults.set(true, forKey: Pack.use + PackManager.magnumOpus)

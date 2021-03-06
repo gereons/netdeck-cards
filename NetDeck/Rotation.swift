@@ -26,6 +26,7 @@ class RotationManager {
     static let r2017 = 0
     static let r2018 = 1
     static let r2019 = 2
+    static let r2021 = 3
 
     private static var rotations = [RotatedPacks]()
     private(set) static var settingsValues = [Int]()
