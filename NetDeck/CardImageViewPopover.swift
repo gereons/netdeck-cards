@@ -55,9 +55,20 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         keyboardVisible = true
 
         let screenHeight = UIScreen.main.bounds.size.height
-        let kbHeight = screenHeight - info.endFrame.origin.y
-        popoverScale = (screenHeight - kbHeight - popoverMargin) / CGFloat(ImageCache.height)
-        popoverScale = min(1.0, popoverScale)
+        let bottomInset = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+        let kbHeight = info.endFrame.height + bottomInset
+        let availableSpace = screenHeight - kbHeight - popoverMargin
+
+        if availableSpace < ImageCache.height {
+            popoverScale = (screenHeight - kbHeight - popoverMargin) / CGFloat(ImageCache.height)
+            popoverScale = min(1.0, popoverScale)
+        } else {
+            popoverScale = 1.0
+        }
+
+        if let p = popover {
+            p.preferredContentSize = CGSize(width: Int(ImageCache.width*popoverScale), height: Int(ImageCache.height*popoverScale))
+        }
     }
     
     static func hideKeyboard() {
@@ -65,7 +76,6 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         popoverScale = 1.0
         
         if let p = popover {
-            p.view.transform = .identity
             p.preferredContentSize = CGSize(width: ImageCache.width, height: ImageCache.height)
         }
     }
@@ -90,7 +100,8 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
             pres.permittedArrowDirections = [.left, .right]
             pres.delegate = popover
         }
-        popover.preferredContentSize = CGSize(width: Int(ImageCache.width*popoverScale), height: Int(ImageCache.height*popoverScale))
+         popover.preferredContentSize = CGSize(width: Int(ImageCache.width*popoverScale), height: Int(ImageCache.height*popoverScale))
+//        popover.preferredContentSize = CGSize(width: ImageCache.width, height: ImageCache.height)
         CardImageViewPopover.popover = popover
         
         vc.present(popover, animated:false, completion:nil)
@@ -114,10 +125,7 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         super.viewDidLoad()
 
         self.detailView.isHidden = true
-        if CardImageViewPopover.keyboardVisible {
-            self.view.transform = CGAffineTransform(scaleX: CardImageViewPopover.popoverScale, y: CardImageViewPopover.popoverScale)
-        }
-        
+
         self.imageView.isUserInteractionEnabled = true
         let imgTap = UITapGestureRecognizer(target: self, action: #selector(self.imgTap(_:)))
         imgTap.numberOfTapsRequired = 1
