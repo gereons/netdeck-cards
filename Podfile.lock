@@ -5,16 +5,16 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.4.0):
     - Alamofire (~> 4.8)
   - CorePlot (2.3)
-  - DeviceKit (4.2.1)
+  - DeviceKit (4.3.0)
   - DZNEmptyDataSet (1.8.1)
-  - EasyTipView (2.0.4)
-  - InAppSettingsKit (3.1.8)
-  - MultiSelectSegmentedControl (2.3.4):
+  - EasyTipView (2.1.0)
+  - InAppSettingsKit (3.3)
+  - MultiSelectSegmentedControl (2.3.5):
     - SweeterSwift
-  - SDCAlertView (11.1.2)
-  - Sentry (6.0.12):
-    - Sentry/Core (= 6.0.12)
-  - Sentry/Core (6.0.12)
+  - SDCAlertView (12.0.1)
+  - Sentry (6.2.1):
+    - Sentry/Core (= 6.2.1)
+  - Sentry/Core (6.2.1)
   - SVProgressHUD (2.2.5)
   - SweeterSwift (1.1.4)
   - SwiftKeychainWrapper (4.0.1)
@@ -71,13 +71,13 @@ SPEC CHECKSUMS:
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   AlamofireNetworkActivityIndicator: 9acc3de3ca6645bf0efed462396b0df13dd3e7b8
   CorePlot: 6bfe6d30d215beec3cfd18ee43e434620119bc1e
-  DeviceKit: cadb5ff25d45fe186778bf2d0fd2ea4750542189
+  DeviceKit: 7decde449c308ac7e816e2184ded1c7c596fb885
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  EasyTipView: 4f8beae0a82db2ca4a9b5fd658785fc5f61d296b
-  InAppSettingsKit: 1a3d473c1b8e36e44eb54a7ddbf25bb00823ae4a
-  MultiSelectSegmentedControl: 7d76f9ab6cbf0b23a479332a23dbdb08053d6263
-  SDCAlertView: 26b5dabdd3c2e6f16c88bad231c84447fa42b0dc
-  Sentry: 8ffcfe3416e0a58b90bb1ae319e8e8a13022a03e
+  EasyTipView: a92b6edc377b81c5ac18e9fd35d5ee78e9409488
+  InAppSettingsKit: c636b2b41166d30f488d2c809664f289694d64d8
+  MultiSelectSegmentedControl: eb4382993b6590e5853faed38255ba2482cc43dd
+  SDCAlertView: d6070733e6ce72360dde3f84a2f9eafcda25ed49
+  Sentry: 9b922b396b0e0bca8516a10e36b0ea3ebea5faf7
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SweeterSwift: 8a90cf3156f5a1b6f39785c479369a16633b5ea9
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
@@ -86,4 +86,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 265f1a586dd5117d3912002c2a74c76a950ff80e
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
