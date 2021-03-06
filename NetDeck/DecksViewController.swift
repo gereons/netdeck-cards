@@ -131,12 +131,17 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.tableView.backgroundColor = .clear
         self.tableView.rowHeight = 50
         self.tableView.register(UINib(nibName: "DeckCell", bundle: nil), forCellReuseIdentifier: "deckCell")
-        self.tableView.contentOffset = CGPoint(x: 0, y: self.searchBar.frame.size.height)
-        
+
         self.tableView.emptyDataSetSource = self
         self.tableView.emptyDataSetDelegate = self
 
         self.tableView.reloadData()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

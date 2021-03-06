@@ -46,6 +46,7 @@ class SavedDecksList: DecksViewController {
         self.tableView.addGestureRecognizer(longPress)
         
         self.toolBarHeight.constant = 0
+        self.toolBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

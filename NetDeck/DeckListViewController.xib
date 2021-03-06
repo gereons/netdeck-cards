@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -150,10 +151,11 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="Va7-49-avW"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Zk2-4C-1CS" secondAttribute="trailing" id="CSd-pA-ELD"/>
                 <constraint firstItem="Zk2-4C-1CS" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="L82-Pr-8kV"/>
-                <constraint firstAttribute="bottom" secondItem="3wr-bR-riV" secondAttribute="bottom" id="MKZ-vL-Yce"/>
+                <constraint firstItem="Va7-49-avW" firstAttribute="bottom" secondItem="3wr-bR-riV" secondAttribute="bottom" id="MKZ-vL-Yce"/>
                 <constraint firstAttribute="trailing" secondItem="TkI-yZ-OZS" secondAttribute="trailing" id="VEL-eh-nhp"/>
                 <constraint firstItem="TkI-yZ-OZS" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="WqD-mT-ANu"/>
                 <constraint firstItem="3wr-bR-riV" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="X3p-cD-D2K"/>
