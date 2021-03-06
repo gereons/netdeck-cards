@@ -8,7 +8,8 @@
         "packs": [
             "core",
             "wla", "ta", "ce", "asis", "hs", "fp",
-            "om", "st", "mt", "tc", "fal", "dt"
+            "om", "st", "mt", "tc", "fal", "dt",
+            "tdc"
         ]
     },
     {
@@ -22,7 +23,7 @@
             "core",
             "wla", "ta", "ce", "asis", "hs", "fp",
             "om", "st", "mt", "tc", "fal", "dt",
-            "core2", "td"
+            "core2", "td", "tdc"
         ]
     },
     {
@@ -37,9 +38,30 @@
             "core",
             "wla", "ta", "ce", "asis", "hs", "fp",
             "om", "st", "mt", "tc", "fal", "dt",
-            "core2", "td",
+            "core2", "td", "tdc",
             "cac",
             "up", "tsb", "fc", "uao", "atr", "ts"
+        ]
+    },
+    {
+        "code": "rotation-2021",
+        "name": "2021 (Sansan + H&P)",
+        "cycles": [
+            "genesis", "spin",
+            "terminal-directive",
+            "lunar", "creation-and-control",
+            "sansan", "honor-and-profit"
+        ],
+        "packs": [
+            "core",
+            "wla", "ta", "ce", "asis", "hs", "fp",
+            "om", "st", "mt", "tc", "fal", "dt",
+            "core2", "td", "tdc",
+            "cac",
+            "up", "tsb", "fc", "uao", "atr", "ts",
+            "hap",
+            "val", "bb", "cc", "uw", "oh", "uot",
+            "sc19"
         ]
     }
 ]
