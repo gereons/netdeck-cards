@@ -93,6 +93,12 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.navigationItem.rightBarButtonItems = [filterButton, scopeButton]
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.tableView.flashScrollIndicators()
+    }
         
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
