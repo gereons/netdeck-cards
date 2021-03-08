@@ -39,7 +39,7 @@ final class MWLSelection {
             setter.setLegality(DeckLegality.casual)
         })
 
-        let firstStandard = MWLManager.firstStandardIndex
+        let firstStandard = MWLManager.firstStandardBanIndex
         let oldMwl = deck.mwl > 0 && deck.legality.mwl < firstStandard
 
         alert.addAction(UIAlertAction(title: "Older MWLs".localized().checked(oldMwl)) { action in
@@ -52,6 +52,10 @@ final class MWLSelection {
                 setter.setLegality(DeckLegality.standard(mwl: index))
             })
         }
+
+        alert.addAction(UIAlertAction(title: "Startup (2021)".localized().checked(deck.legality == .startup21)) { action in
+            setter.setLegality(DeckLegality.startup21)
+        })
 
         alert.addAction(UIAlertAction(title: "1.1.1.1".localized().checked(deck.legality == .onesies)) { action in
             setter.setLegality(DeckLegality.onesies)
@@ -75,7 +79,7 @@ final class MWLSelection {
     private static func createAlertForOldVersions(for deck: Deck, on setter: LegalitySetter, _ button: UIBarButtonItem?) {
         let alert = UIAlertController.actionSheet(title: "Deck Legality".localized(), message: nil)
 
-        for index in 1 ..< MWLManager.firstStandardIndex {
+        for index in 1 ..< MWLManager.firstStandardBanIndex {
             let mwl = MWLManager.mwlBy(index)
 
             alert.addAction(UIAlertAction(title: mwl.name.localized().checked(deck.mwl == index)) { action in

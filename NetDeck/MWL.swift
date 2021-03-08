@@ -101,8 +101,8 @@ class MWLManager {
         return mwls[index]
     }
 
-    static var firstStandardIndex: Int {
-        let index = mwls.firstIndex { $0.code.hasPrefix("standard") }
+    static var firstStandardBanIndex: Int {
+        let index = mwls.firstIndex { $0.code.hasPrefix("standard-ban") }
         return index ?? 0
     }
 
