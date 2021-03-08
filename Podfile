@@ -27,6 +27,7 @@ def pods
     pod 'SDCAlertView'
     pod 'EasyTipView'
     pod 'SwiftyUserDefaults', '~> 3'
+    pod 'ColorCompatibility'
 end
 
 target 'NetDeck' do

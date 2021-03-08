@@ -21,7 +21,7 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="d7o-El-7Mk">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <searchBar key="tableHeaderView" contentMode="redraw" backgroundImage="searchbar-bg" scopeBarBackgroundImage="searchbar-bg" showsScopeBar="YES" id="HVq-i2-Wgp">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="56"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -42,6 +42,7 @@
                     </connections>
                 </tableView>
             </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="d7o-El-7Mk" secondAttribute="trailing" id="3pX-X7-5o7"/>
                 <constraint firstAttribute="bottom" secondItem="d7o-El-7Mk" secondAttribute="bottom" id="6op-pe-ydE"/>
@@ -56,5 +57,8 @@
     </objects>
     <resources>
         <image name="searchbar-bg" width="1" height="1"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

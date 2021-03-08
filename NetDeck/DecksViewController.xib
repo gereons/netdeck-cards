@@ -23,7 +23,7 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4q5-t5-fll">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <searchBar key="tableHeaderView" contentMode="redraw" backgroundImage="searchbar-bg" scopeBarBackgroundImage="searchbar-bg" showsScopeBar="YES" id="Ddv-qy-MGr">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="56"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -51,6 +51,7 @@
                     <items/>
                 </toolbar>
             </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="4q5-t5-fll" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="31e-uF-O6e"/>
                 <constraint firstItem="4q5-t5-fll" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="8PA-8D-ndg"/>
@@ -67,5 +68,8 @@
     </objects>
     <resources>
         <image name="searchbar-bg" width="1" height="1"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

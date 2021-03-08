@@ -4,6 +4,7 @@ PODS:
     - Alamofire (~> 4.9)
   - AlamofireNetworkActivityIndicator (2.4.0):
     - Alamofire (~> 4.8)
+  - ColorCompatibility (1.1.0)
   - CorePlot (2.3)
   - DeviceKit (4.3.0)
   - DZNEmptyDataSet (1.8.1)
@@ -26,6 +27,7 @@ DEPENDENCIES:
   - Alamofire
   - AlamofireImage
   - AlamofireNetworkActivityIndicator
+  - ColorCompatibility
   - CorePlot
   - DeviceKit
   - DZNEmptyDataSet
@@ -44,6 +46,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - AlamofireNetworkActivityIndicator
+    - ColorCompatibility
     - CorePlot
     - DeviceKit
     - DZNEmptyDataSet
@@ -70,6 +73,7 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   AlamofireNetworkActivityIndicator: 9acc3de3ca6645bf0efed462396b0df13dd3e7b8
+  ColorCompatibility: 7257750b5ac742db9c8b593966c6f8e06992149b
   CorePlot: 6bfe6d30d215beec3cfd18ee43e434620119bc1e
   DeviceKit: 7decde449c308ac7e816e2184ded1c7c596fb885
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -84,6 +88,6 @@ SPEC CHECKSUMS:
   SwiftyDropbox: 32aabf5e83399ab150228a02dcbcce2bf8a9aae2
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: 265f1a586dd5117d3912002c2a74c76a950ff80e
+PODFILE CHECKSUM: 5a1a3496e16dbc660a4d14e40ed9560fbc98560e
 
 COCOAPODS: 1.10.1
