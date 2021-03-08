@@ -160,7 +160,6 @@ class PackManager {
         
         if Defaults[.rotationActive] {
             RotationManager.rotatedPacks.packs.forEach { pack in
-                print("rotated: \(pack)")
                 defaults[Pack.use + pack] = false
             }
         } else {
