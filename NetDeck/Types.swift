@@ -91,6 +91,7 @@ enum DeckLegality: Equatable {
     case cacheRefresh
     case onesies
     case modded
+    case startup21
 
     var mwl: Int {
         switch self {
@@ -114,6 +115,7 @@ enum DeckLegality: Equatable {
         case (.cacheRefresh, .cacheRefresh): return true
         case (.modded, .modded): return true
         case (.onesies, .onesies): return true
+        case (.startup21, .startup21): return true
         default: return false
         }
     }

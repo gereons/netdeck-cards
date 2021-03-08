@@ -96,12 +96,16 @@ class PackManager {
     static let unknown = "unknown"
     static let draft = "draft"
     static let napd = "napd"
-    
+
     static let core = "core"
     static let core2 = "core2"
     static let sc19 = "sc19"
     static let su21 = "su21"
-    
+
+    static let systemGateway = "sg"
+    static let uprising = "ur"
+    static let downfall = "df"
+
     static let creationAndControl = "cac"
     static let honorAndProfit = "hap"
     static let orderAndChaos = "oac"
@@ -111,16 +115,18 @@ class PackManager {
     static let magnumOpus = "mo"
     static let magnumOpusReprint = "mor"
     static let uprisingBooster = "urbp"
-    
+
     static let deluxeBoxes = [ creationAndControl, honorAndProfit, orderAndChaos, dataAndDestiny, reignAndReverie ]
     static let campaignBoxes = [ terminalDirective ]
     static let bigBoxes = deluxeBoxes + campaignBoxes
     static let terminalDirectiveCampaign = "tdc"
-    
+
     static let cores = [ core, core2, sc19, su21 ]
 
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
+
+    static let startup21 = [ su21, systemGateway, uprising, downfall ]
     
     static private(set) var cacheRefreshCycles = [String]()
     

@@ -52,24 +52,29 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     @objc func showPresets(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "All".localized()) { action in
+        alert.addAction(.action(title: "All".localized()) { action in
             self.enableAll()
         })
-        alert.addAction(UIAlertAction(title: "Cache Refresh C&C".localized()) { action in
-            self.setCacheRefresh(PackManager.creationAndControl)
+
+        alert.addAction(.action(title: "Startup (2021)") { action in
+            self.setStartup(2021)
         })
-        alert.addAction(UIAlertAction(title: "Cache Refresh H&P".localized()) { action in
-            self.setCacheRefresh(PackManager.honorAndProfit)
-        })
-        alert.addAction(UIAlertAction(title: "Cache Refresh O&C".localized()) { action in
-            self.setCacheRefresh(PackManager.orderAndChaos)
-        })
-        alert.addAction(UIAlertAction(title: "Cache Refresh D&D".localized()) { action in
-            self.setCacheRefresh(PackManager.dataAndDestiny)
-        })
-        alert.addAction(UIAlertAction(title: "Modded".localized()) { action in
-            self.setModded()
-        })
+
+//        alert.addAction(UIAlertAction(title: "Cache Refresh C&C".localized()) { action in
+//            self.setCacheRefresh(PackManager.creationAndControl)
+//        })
+//        alert.addAction(UIAlertAction(title: "Cache Refresh H&P".localized()) { action in
+//            self.setCacheRefresh(PackManager.honorAndProfit)
+//        })
+//        alert.addAction(UIAlertAction(title: "Cache Refresh O&C".localized()) { action in
+//            self.setCacheRefresh(PackManager.orderAndChaos)
+//        })
+//        alert.addAction(UIAlertAction(title: "Cache Refresh D&D".localized()) { action in
+//            self.setCacheRefresh(PackManager.dataAndDestiny)
+//        })
+//        alert.addAction(UIAlertAction(title: "Modded".localized()) { action in
+//            self.setModded()
+//        })
         alert.addAction(UIAlertAction.actionSheetCancel(nil))
 
         let popover = alert.popoverPresentationController
@@ -163,7 +168,29 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         Defaults.set(false, forKey: Pack.use + PackManager.magnumOpusReprint)
         Defaults.set(false, forKey: Pack.use + PackManager.napd)
         Defaults.set(false, forKey: Pack.use + PackManager.terminalDirectiveCampaign)
-        
+
+        self.tableView.reloadData()
+    }
+
+    private func setStartup(_ year: Int) {
+        let enabled: [String]
+        switch year {
+        case 2021:
+            enabled = PackManager.startup21
+        default:
+            return
+        }
+
+        self.changeCoreSets(.useCore, .numOriginalCore, 0)
+        self.changeCoreSets(.useCore2, .numRevisedCore, 0)
+        self.changeCoreSets(.useSC19, .numSC19, 0)
+        for pack in PackManager.allPacks {
+            Defaults.set(false, forKey: pack.settingsKey)
+        }
+        for pack in enabled {
+            Defaults.set(true, forKey: Pack.use + pack)
+        }
+
         self.tableView.reloadData()
     }
 
@@ -221,7 +248,7 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         Defaults.set(true, forKey: Pack.use + PackManager.reignAndReverie)
         Defaults.set(true, forKey: Pack.use + PackManager.magnumOpus)
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
-        
+
         self.tableView.reloadData()
     }
     

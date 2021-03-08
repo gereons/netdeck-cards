@@ -611,6 +611,7 @@ import SwiftyUserDefaults
         let mwl = decoder.decodeInteger(forKey: "mwl")
         let onesies = decoder.decodeBool(forKey: "onesies")
         let modded = decoder.decodeBool(forKey: "modded")
+        let startup21 = decoder.decodeBool(forKey: "startup21")
 
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
         var cacheRefresh: Bool
@@ -629,6 +630,8 @@ import SwiftyUserDefaults
             legality = .modded
         } else if mwl == 0 {
             legality = .casual
+        } else if startup21 {
+            legality = .startup21
         } else {
             legality = .standard(mwl: mwl)
         }
@@ -656,6 +659,7 @@ import SwiftyUserDefaults
         coder.encode(self.mwl, forKey: "mwl")
         coder.encode(self.legality == .onesies, forKey: "onesies")
         coder.encode(self.legality == .modded, forKey: "modded")
+        coder.encode(self.legality == .startup21, forKey: "startup21")
         
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
         coder.encode(self.legality == .cacheRefresh ? 1 : 0, forKey: "cacheRefresh")
@@ -811,7 +815,40 @@ extension Deck {
                 reasons.append(contentsOf: modReasons)
             }
         }
+
+        if self.legality == .startup21 {
+            let startupReasons = self.checkStartupRules(2021)
+            if startupReasons.count > 0 {
+                reasons.append("Invalid for Startup".localized())
+                reasons.append(contentsOf: startupReasons)
+            }
+        }
         
+        return reasons
+    }
+
+    // check if this is a valid "Startup" deck - System Gateway, System Update and last Nisei Cycle
+    private func checkStartupRules(_ year: Int) -> [String] {
+        let allowed: [String]
+        switch year {
+        case 2021:
+            allowed = PackManager.startup21
+        default: return []
+        }
+
+        var deckOk = true
+        for cc in self.cards {
+            let card = cc.card
+            let ok = allowed.contains(card.packCode)
+            if !ok {
+                deckOk = ok
+            }
+        }
+
+        var reasons = [String]()
+        if !deckOk {
+            reasons.append("Uses invalid Datapack".localized())
+        }
         return reasons
     }
 
