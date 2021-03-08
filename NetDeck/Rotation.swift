@@ -18,7 +18,7 @@ struct RotatedPacks: Equatable {
         self.cycles = data.cycles
     }
 
-    static let empty = RotatedPacks(RotationData(code: "none", name: "none", cycles: [], packs: []))
+    static let empty = RotatedPacks(RotationData(code: "none", name: "none", cycles: [], packs: [], dateStart: nil))
 }
 
 class RotationManager {
@@ -38,7 +38,13 @@ class RotationManager {
         self.settingsValues = Array(rotations.indices)
         self.settingsTitles = data.map { $0.name }
 
-        Defaults.registerDefault(.rotationIndex, self.rotations.count - 1)
+        var rotationIndex = self.rotations.count - 1
+        let now = Date()
+        if let index = data.lastIndex(where: { $0.dateStart != nil && $0.dateStart! < now }) {
+            rotationIndex = index
+        }
+
+        Defaults.registerDefault(.rotationIndex, rotationIndex)
         print("rotations initialized")
     }
 

@@ -186,9 +186,33 @@ struct NetrunnerDbMwl: Codable {
 }
 
 // MARK: - Rotation
-struct RotationData: Codable {
+struct RotationData {
     let code: String
     let name: String
     let cycles: [String]    // list of cycles that rotated out
     let packs: [String]     // list of packs that rotated out
+    let dateStart: Date?
+}
+
+extension RotationData: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case code, name, cycles, packs, dateStart = "date_start"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.code = try container.decode(String.self, forKey: .code)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.cycles = try container.decode([String].self, forKey: .cycles)
+        self.packs = try container.decode([String].self, forKey: .packs)
+        let dateString = try container.decodeIfPresent(String.self, forKey: .dateStart) ?? ""
+
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+
+        self.dateStart = fmt.date(from: dateString)
+    }
+
 }
