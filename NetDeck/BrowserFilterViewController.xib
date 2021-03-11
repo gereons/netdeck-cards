@@ -285,7 +285,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="s6P-be-p8r" firstAttribute="top" secondItem="Pui-TD-YFn" secondAttribute="bottom" constant="10" id="0FS-or-Dt4"/>
                 <constraint firstAttribute="trailing" secondItem="x7A-8K-25S" secondAttribute="trailing" constant="19" id="0sl-aw-2ox"/>
@@ -373,8 +373,13 @@
                 <constraint firstItem="s6P-be-p8r" firstAttribute="leading" secondItem="vHA-hv-Vhy" secondAttribute="trailing" constant="4" id="wmf-ze-QAm"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="114" y="154"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

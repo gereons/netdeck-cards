@@ -248,7 +248,7 @@ class ActionsTableViewController: UIViewController, UITableViewDelegate, UITable
     
     private func showAsDetailViewController(_ vc: UIViewController) {
         let navController = UINavigationController(rootViewController: vc)
-        navController.navigationBar.barTintColor = .white
+        // navController.navigationBar.barTintColor = .white
         self.showDetailViewController(navController, sender: self)
     }
     

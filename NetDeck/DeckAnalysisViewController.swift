@@ -156,14 +156,14 @@ class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITab
             UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
         
         cell.accessoryView = nil
-        cell.textLabel?.textColor = .black
+        cell.textLabel?.textColor = .label
         
         switch indexPath.section {
         case 0:
             if self.errors.count > 0 {
                 if indexPath.row < self.errors.count {
                     cell.textLabel?.text = self.errors[indexPath.row]
-                    cell.textLabel?.textColor = .red
+                    cell.textLabel?.textColor = .systemRed
                 } else if indexPath.row == self.errors.count {
                     cell.textLabel?.text = String(format: "Cards up to %@".localized(), deck.mostRecentPackUsed())
                     cell.accessoryView = self.toggleButton

@@ -24,7 +24,7 @@ class EmptyDetailViewController: UIViewController {
         self.textLabel.text = "To use this app, you must first download card data.".localized()
         self.downloadButton.setTitle("Download".localized(), for: .normal)
         
-        self.navigationController?.navigationBar.barTintColor = .white
+        // self.navigationController?.navigationBar.barTintColor = .white
         
         let cardsAvailable = CardManager.cardsAvailable
         self.emptyDataSetView.isHidden = cardsAvailable

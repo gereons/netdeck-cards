@@ -220,12 +220,12 @@ class DeckExport {
         }
     }
     
-    static func color(_ s: String, _ color: UInt, _ format: ExportFormat) -> String {
+    static func color(_ s: String, _ color: UInt?, _ format: ExportFormat) -> String {
         switch format {
         case .plainText, .markdown:
             return s
         case .bbCode:
-            let hexColor = String(color, radix: 16)
+            let hexColor = String(color ?? 0, radix: 16)
             return "[color=#\(hexColor)]\(s)[/color]"
         }
     }

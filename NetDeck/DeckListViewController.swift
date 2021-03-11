@@ -106,7 +106,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.prefetchDataSource = self
         
-        self.navigationController?.navigationBar.barTintColor = .white
+        // self.navigationController?.navigationBar.barTintColor = .white
         
         let selections = [
             UIImage(named: "deckview_card") as Any,
@@ -198,7 +198,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let width = 2 * self.historySaveInterval
         self.progressView = UIProgressView(frame: CGRect(x: x, y: 40, width: width, height: 3))
         self.progressView.progress = 1.0
-        self.progressView.progressTintColor = .darkGray
+        self.progressView.progressTintColor = .systemGray
         self.toolBar.addSubview(self.progressView)
         
         self.progressView.isHidden = !Defaults[.autoHistory]
@@ -887,10 +887,10 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         let status = reasons.first ?? "Deck is valid".localized()
         
         self.summaryLabel.text = summary
-        self.summaryLabel.textColor = reasons.count == 0 ? .darkGray : .red
+        self.summaryLabel.textColor = reasons.count == 0 ? .systemGray : .systemRed
         self.statusLabel.text = status
         self.statusLabel.strings = reasons
-        self.statusLabel.textColor = reasons.count == 0 ? .darkGray : .red
+        self.statusLabel.textColor = reasons.count == 0 ? .systemGray : .systemRed
         
         let set = deck.mostRecentPackUsed()
         self.lastSetLabel.text = String(format: "Cards up to %@".localized(), set)
@@ -955,7 +955,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
                        delay: 0,
                        options: .allowUserInteraction,
                        animations: { cell.backgroundColor = .lightGray },
-                       completion: { finished in cell.backgroundColor = .white })
+                       completion: { finished in cell.backgroundColor = .systemBackground })
     }
     
     @objc func flashImageCell(_ indexPath: IndexPath) {
@@ -1143,13 +1143,13 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
             
-            cell.copiesLabel.textColor = .black
+            cell.copiesLabel.textColor = .label
             let card = cc2.card
             if !self.deck.isDraft && (card.owned < cc2.count || card.isRotated) {
-                cell.copiesLabel.textColor = .red
+                cell.copiesLabel.textColor = .systemRed
             }
             if card.banned(self.deck.mwl) {
-                cell.copiesLabel.textColor = .red
+                cell.copiesLabel.textColor = .systemRed
             }
         }
         

@@ -252,7 +252,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let c = UITableViewCell(style: .default, reuseIdentifier: identifier)
             c.selectionStyle = .none
             c.textLabel?.font = UIFont.systemFont(ofSize: 13)
-            c.textLabel?.textColor = .darkGray
+            c.textLabel?.textColor = .systemGray
             return c
         }()
         

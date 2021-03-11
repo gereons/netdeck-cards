@@ -139,7 +139,7 @@ extension IphoneIdentityViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
-        cell.backgroundColor = .white
+        cell.backgroundColor = .systemBackground
         if indexPath == self.selectedIndexPath {
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
             cell.backgroundColor = UIColor(white: 0.97, alpha: 1.0)

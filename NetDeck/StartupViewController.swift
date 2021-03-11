@@ -21,7 +21,7 @@ class StartupViewController: UIViewController {
 
     private var strokeColor: UIColor {
         if #available(iOS 13, *), UITraitCollection.current.userInterfaceStyle == .dark {
-            return .darkGray
+            return .systemGray
         }
         return .white
     }

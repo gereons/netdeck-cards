@@ -59,9 +59,9 @@ class CardImagePopup: UIViewController {
         self.cc.count = count
         
         self.copiesLabel.text = String(format: "×%lu", count)
-        self.copiesLabel.textColor = .black
+        self.copiesLabel.textColor = .label
         if !self.deck.isDraft && count > self.cc.card.owned {
-            self.copiesLabel.textColor = .red
+            self.copiesLabel.textColor = .systemRed
         }
         
         NotificationCenter.default.post(name: Notifications.deckChanged, object: self)

@@ -148,14 +148,14 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.card1 = nil
         cell.card2 = nil
         
-        cell.deck1Card.textColor = .black
-        cell.deck2Card.textColor = .black
+        cell.deck1Card.textColor = .label
+        cell.deck2Card.textColor = .label
         
         if cd.count1 > 0 {
             cell.deck1Card.text = String(format: "%lu× %@", cd.count1, cd.card.name)
             cell.card1 = cd.card
             if cd.count1 > cd.card.owned {
-                cell.deck1Card.textColor = .red
+                cell.deck1Card.textColor = .systemRed
             }
         } else {
             cell.deck1Card.text = ""
@@ -165,7 +165,7 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.deck2Card.text = String(format: "%lu× %@", cd.count2, cd.card.name)
             cell.card2 = cd.card
             if cd.count2 > cd.card.owned {
-                cell.deck2Card.textColor = .red
+                cell.deck2Card.textColor = .systemRed
             }
         } else {
             cell.deck2Card.text = ""
@@ -175,11 +175,11 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
         case .intersect:
             let diff = cd.count1 + cd.count2 - cd.card.owned
             cell.diff.text = "\(diff)"
-            cell.diff.textColor = .black
+            cell.diff.textColor = .label
         case .overlap:
             let diff = min(cd.count1, cd.count2)
             cell.diff.text = "\(diff)"
-            cell.diff.textColor = .black
+            cell.diff.textColor = .label
         case .full, .diff:
             let diff = cd.count2 - cd.count1
             if diff != 0 {

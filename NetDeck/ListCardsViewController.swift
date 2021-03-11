@@ -173,11 +173,11 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         let status = reasons.first ?? "Deck is valid".localized()
         
         self.summaryLabel.text = summary
-        self.summaryLabel.textColor = reasons.count == 0 ? .darkGray : .red
+        self.summaryLabel.textColor = reasons.count == 0 ? .systemGray : .systemRed
             
         self.statusLabel.text = status
         self.statusLabel.strings = reasons
-        self.statusLabel.textColor = reasons.count == 0 ? .darkGray : .red
+        self.statusLabel.textColor = reasons.count == 0 ? .systemGray : .systemRed
     }
     
     // MARK: - search bar
@@ -282,7 +282,7 @@ class ListCardsViewController: UIViewController, UITableViewDataSource, UITableV
         }
         cell.nameLabel.text = text
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFont.Weight(rawValue: weight))
-        cell.nameLabel.textColor = card.owned == 0 ? .darkGray : .black
+        cell.nameLabel.textColor = card.owned == 0 ? .systemGray : .label
 
         let faction = Faction.name(for: card.faction)
         let subtype = card.subtype
