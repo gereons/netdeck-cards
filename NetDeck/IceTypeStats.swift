@@ -44,7 +44,9 @@ class IceTypeStats: Stats {
         let pct = Float(cards) * 100.0 / Float(self.iceCount)
         
         let str = String(format: "%@: %d\n%.1f%%", type, cards, pct)
-        return CPTTextLayer(text: str)
+        let style = CPTMutableTextStyle()
+        style.color = CPTColor(uiColor: .label)
+        return CPTTextLayer(text: str, style: style)
     }
     
 }

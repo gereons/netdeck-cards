@@ -27,6 +27,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         
         if let path = Bundle.main.path(forResource: "About", ofType: "html") {
             let url = URL(fileURLWithPath: path)
+            webView.isOpaque = false
             self.webView.load(URLRequest(url: url))
         }
     }

@@ -51,7 +51,9 @@ class InfluenceStats: Stats {
         let influence = self.tableData.values[Int(index)][0]
         
         let str = String(format: "%@: %d", faction, influence)
-        return CPTTextLayer(text: str)
+        let style = CPTMutableTextStyle()
+        style.color = CPTColor(uiColor: .label)
+        return CPTTextLayer(text: str, style: style)
     }
 }
 

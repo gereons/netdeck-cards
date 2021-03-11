@@ -49,6 +49,7 @@
                             <constraint firstAttribute="width" constant="28" id="hRf-Pk-qZ2"/>
                         </constraints>
                         <state key="normal" image="active">
+                            <color key="titleColor" systemColor="labelColor"/>
                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
@@ -91,5 +92,8 @@
     <resources>
         <image name="active" width="28" height="28"/>
         <image name="netrunnerdb_com-bw" width="16" height="16"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

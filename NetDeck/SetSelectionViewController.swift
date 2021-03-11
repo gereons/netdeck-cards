@@ -326,7 +326,8 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let width = tableView.frame.width
         let view = UITableViewHeaderFooterView(frame: CGRect(x: 0, y: 0, width: width, height: 50))
-        
+
+        view.backgroundColor = .systemBackground
         if self.values[section].count > 1 && section != self.coreSection {
             let cycle = self.values[section][0].cycleCode
             let keys = PackManager.keysForCycle(cycle)

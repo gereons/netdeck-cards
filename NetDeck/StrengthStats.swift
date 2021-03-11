@@ -37,6 +37,8 @@ class StrengthStats: Stats {
         let cards = self.tableData.values[Int(index)][0]
     
         let str = String(format: "Strength %@\n%d %@".localized(), strength, cards, cardsString(cards))
-        return CPTTextLayer(text: str)
+        let style = CPTMutableTextStyle()
+        style.color = CPTColor(uiColor: .label)
+        return CPTTextLayer(text: str, style: style)
     }
 }

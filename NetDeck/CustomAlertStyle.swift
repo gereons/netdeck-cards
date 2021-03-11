@@ -12,5 +12,6 @@ class CustomAlertVisualStyle: AlertVisualStyle {
     override init(alertStyle: AlertControllerStyle) {
         super.init(alertStyle: alertStyle)
         self.backgroundColor = .systemBackground
+        self.destructiveTextColor = .systemRed
     }
 }
