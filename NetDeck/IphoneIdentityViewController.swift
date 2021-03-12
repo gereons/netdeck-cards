@@ -142,7 +142,7 @@ extension IphoneIdentityViewController: UITableViewDelegate, UITableViewDataSour
         cell.backgroundColor = .systemBackground
         if indexPath == self.selectedIndexPath {
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-            cell.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
+            cell.backgroundColor = .tertiarySystemBackground
         }
     }
  
