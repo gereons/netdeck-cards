@@ -69,19 +69,19 @@ class ImageCache {
     static let imagesDirectory = "images"
     static let sharedInstance = ImageCache()
     
-    static let trashIcon = UIImage(named: "cardstats_trash")!.labelColored()
-    static let strengthIcon = UIImage(named: "cardstats_strength")!.labelColored()
-    static let creditIcon = UIImage(named: "cardstats_credit")!.labelColored()
-    static let muIcon = UIImage(named: "cardstats_mem")!.labelColored()
-    static let apIcon = UIImage(named: "cardstats_points")!.labelColored()
-    static let linkIcon = UIImage(named: "cardstats_link")!.labelColored()
-    static let cardIcon = UIImage(named: "cardstats_decksize")!.labelColored()
-    static let difficultyIcon = UIImage(named: "cardstats_difficulty")!.labelColored()
-    static let influenceIcon = UIImage(named: "cardstats_influence")!.labelColored()
+    static var trashIcon: UIImage { UIImage(named: "cardstats_trash")!.labelColored() }
+    static var strengthIcon: UIImage { UIImage(named: "cardstats_strength")!.labelColored() }
+    static var creditIcon: UIImage { UIImage(named: "cardstats_credit")!.labelColored() }
+    static var muIcon: UIImage { UIImage(named: "cardstats_mem")!.labelColored() }
+    static var apIcon: UIImage { UIImage(named: "cardstats_points")!.labelColored() }
+    static var linkIcon: UIImage { UIImage(named: "cardstats_link")!.labelColored() }
+    static var cardIcon: UIImage { UIImage(named: "cardstats_decksize")!.labelColored() }
+    static var difficultyIcon: UIImage { UIImage(named: "cardstats_difficulty")!.labelColored() }
+    static var influenceIcon: UIImage { UIImage(named: "cardstats_influence")!.labelColored() }
 
-    static let deckSizeIcon = UIImage(named: "cardstats_identity_decksize")!.labelColored()
-    static let deckInfluenceIcon = UIImage(named: "cardstats_identity_influence")!.labelColored()
-    static let deckLinkIcon = UIImage(named: "cardstats_identity_link")!.labelColored()
+    static var deckSizeIcon: UIImage { UIImage(named: "cardstats_identity_decksize")!.labelColored() }
+    static var deckInfluenceIcon: UIImage { UIImage(named: "cardstats_identity_influence")!.labelColored() }
+    static var deckLinkIcon: UIImage { UIImage(named: "cardstats_identity_link")!.labelColored() }
     
     static let hexTile = UIImage(named: "hex_background")!
     static let hexTileLight = UIImage(named: "hex_background_light")!

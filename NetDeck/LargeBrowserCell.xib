@@ -118,7 +118,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="1Oi-jW-maW" firstAttribute="leading" secondItem="SxW-kL-ZyY" secondAttribute="leading" id="3ww-XJ-ZT4"/>
                             <constraint firstItem="1Oi-jW-maW" firstAttribute="top" secondItem="gqc-5N-ePL" secondAttribute="bottom" constant="2" id="5wU-rs-giw"/>
@@ -200,5 +200,8 @@
     </objects>
     <resources>
         <image name="727-more" width="28" height="6"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
