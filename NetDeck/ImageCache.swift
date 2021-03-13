@@ -413,6 +413,7 @@ class ImageCache {
 
         guard let imgData = try? Data(contentsOf: URL(fileURLWithPath: file)) else {
             self.NLOG("no file for %@", key)
+            self.lastModifiedDates.removeValue(forKey: key)
             return nil
         }
 
