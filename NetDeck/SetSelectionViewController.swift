@@ -16,9 +16,9 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
     
     private var sections = [String]()
     private var values = [[Pack]]()
-    
-    private let coreSection = 1
-    
+
+    private var coreSection = -1
+
     convenience init() {
         self.init(nibName: nil, bundle: nil)
 
@@ -27,18 +27,19 @@ class SetSelectionViewController: UIViewController, UITableViewDataSource, UITab
         self.values = tableData.values
         
         if self.values.count > 1 {
+            coreSection = self.values.count - 2
             // add "number of core sets" fake entry
             let numCores = Pack(named: "Number of Core Sets".localized(), key: DefaultsKeys.numOriginalCore._key)
-            self.values[self.coreSection].insert(numCores, at: 1)
+            self.values[coreSection].insert(numCores, at: 1)
 
-            if self.values[self.coreSection].count >= 3 {
+            if self.values[coreSection].count >= 3 {
                 let numCore2s = Pack(named: "Number of Revised Core Sets".localized(), key: DefaultsKeys.numRevisedCore._key)
-                self.values[self.coreSection].insert(numCore2s, at: 3)
+                self.values[coreSection].insert(numCore2s, at: 3)
             }
 
-            if self.values[self.coreSection].count >= 5 {
+            if self.values[coreSection].count >= 5 {
                 let numSC19s = Pack(named: "Number of System Core 2019 Sets".localized(), key: DefaultsKeys.numSC19._key)
-                self.values[self.coreSection].insert(numSC19s, at: 5)
+                self.values[coreSection].insert(numSC19s, at: 5)
             }
         }
     }

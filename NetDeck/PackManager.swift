@@ -224,7 +224,7 @@ class PackManager {
             strValues.append(strings)
         }
         
-        let stringPacks = TableData<String>(sections: rawPacks.sections, values: strValues)
+        let stringPacks = TableData(sections: rawPacks.sections, values: strValues)
         stringPacks.collapsedSections = rawPacks.collapsedSections
         
         return stringPacks
@@ -262,9 +262,8 @@ class PackManager {
             values[1].append(contentsOf: corePacks[index])
         }
 
-        return TableData(sections: sections, values: values)
+        return TableData(sections: sections.reversed(), values: values.reversed())
     }
-
 
     private static func allEnabledPacksForTableView() -> TableData<Pack> {
         var sections = [String]()
@@ -288,7 +287,7 @@ class PackManager {
         
         assert(values.count == sections.count, "count mismatch")
         
-        let result = TableData(sections: sections, values: values)
+        let result = TableData(sections: sections.reversed(), values: values.reversed())
         return collapseOldCycles(result)
     }
 
@@ -318,7 +317,7 @@ class PackManager {
             values.append(packs)
         }
         
-        let result = TableData(sections: sections, values: values)
+        let result = TableData(sections: sections.reversed(), values: values.reversed())
         return collapseOldCycles(result)
     }
     
@@ -327,12 +326,11 @@ class PackManager {
         
         // collapse everything but the two last cycles
         var collapsedSections = [Bool](repeating: true, count: count)
-        collapsedSections[0] = false
-        if count-1 > 0 {
-            collapsedSections[count-1] = false
+        if count > 0 {
+            collapsedSections[0] = false
         }
-        if count-2 > 0 {
-            collapsedSections[count-2] = false
+        if count > 1 {
+            collapsedSections[1] = false
         }
         
         data.collapsedSections = collapsedSections

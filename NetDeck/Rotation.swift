@@ -35,8 +35,8 @@ class RotationManager {
     static func setup(_ data: [RotationData]) {
         self.rotations = data.map { RotatedPacks($0) }
 
-        self.settingsValues = Array(rotations.indices)
-        self.settingsTitles = data.map { $0.name }
+        self.settingsValues = Array(rotations.indices).reversed()
+        self.settingsTitles = data.map { $0.name }.reversed()
 
         var rotationIndex = self.rotations.count - 1
         let now = Date()

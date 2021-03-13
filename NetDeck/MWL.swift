@@ -84,11 +84,11 @@ class MWLManager {
     }
 
     static func settingsValues() -> [Int] {
-        return Array(0 ..< mwls.count)
+        return Array(0 ..< mwls.count).reversed()
     }
 
     static func settingsTitles() -> [String] {
-        return mwls.map { $0.active ? $0.name + " (Active)".localized() : $0.name }
+        return mwls.map { $0.active ? $0.name + " (Active)".localized() : $0.name }.reversed()
     }
 
     static func mwlBy(_ code: String) -> Int {
