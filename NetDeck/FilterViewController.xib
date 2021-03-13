@@ -23,6 +23,7 @@
                 <outlet property="previewTable" destination="neE-TO-hgS" id="s4K-va-p7x"/>
                 <outlet property="strengthLabel" destination="5UZ-p6-xQh" id="L18-if-5N8"/>
                 <outlet property="strengthSlider" destination="eFJ-7Q-ATE" id="sHW-8F-Q8K"/>
+                <outlet property="subtypeButton" destination="OXA-rX-uqN" id="jzF-mu-cz5"/>
                 <outlet property="typeControl" destination="uug-sU-t5X" id="uQ3-Ba-tEl"/>
                 <outlet property="typeVerticalDistance" destination="SQ8-fv-Cqa" id="VJG-Jg-vnB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

@@ -37,7 +37,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var previewTable: UITableView!
     @IBOutlet weak var previewHeader: UILabel!
-    
+    @IBOutlet weak var subtypeButton: UIButton!
+
     var role = Role.none
     var identity: Card?
     var cardList: CardList!
@@ -55,6 +56,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         
         self.title = "Filter".localized()
+
+        self.subtypeButton.setTitle("Subtype".localized(), for: .normal)
                 
         self.typeVerticalDistance.constant = 16
         // self.miniFactionControl.isHidden = true
