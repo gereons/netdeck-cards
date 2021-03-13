@@ -242,8 +242,12 @@ class DeckImport: NSObject {
         let alert = AlertController(title: "Downloading Deck".localized(), message: nil, preferredStyle: .alert)
         alert.visualStyle = CustomAlertVisualStyle(alertStyle: .alert)
         self.sdcAlert = alert
-        
-        let spinner = UIActivityIndicatorView(style: .gray)
+
+        var style = UIActivityIndicatorView.Style.gray
+        if #available(iOS 13, *), UITraitCollection.current.userInterfaceStyle == .dark {
+            style = .white
+        }
+        let spinner = UIActivityIndicatorView(style: style)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimating()
         

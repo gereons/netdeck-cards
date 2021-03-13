@@ -159,7 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let attributes = [
             NSAttributedString.Key.font: UIFont(name: "Menlo-Regular", size: 13)!,
-            NSAttributedString.Key.foregroundColor: UIColor.lightGray
+            NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
         ]
         let str = NSAttributedString(string: "Hack the Planet!", attributes: attributes)
         Illuminotchi.add(attributedText: str)

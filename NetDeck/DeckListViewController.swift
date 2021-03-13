@@ -954,7 +954,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         UIView.animate(withDuration: 0.1,
                        delay: 0,
                        options: .allowUserInteraction,
-                       animations: { cell.backgroundColor = .lightGray },
+                       animations: { cell.backgroundColor = .secondarySystemBackground },
                        completion: { finished in cell.backgroundColor = .systemBackground })
     }
     

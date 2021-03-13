@@ -401,7 +401,10 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
             return nil
         }
         
-        let attrs: [NSAttributedString.Key: Any] = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 21.0), NSAttributedString.Key.foregroundColor: UIColor.lightGray ]
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 21.0),
+            .foregroundColor: UIColor.secondaryLabel
+        ]
         
         let title = CardManager.cardsAvailable ? "No Decks" : "No Card Data"
         
@@ -415,7 +418,10 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
 
         let text = CardManager.cardsAvailable ? "Your decks will be shown here" : "To use this app, you must first download card data."
 
-        let attrs: [NSAttributedString.Key: Any] = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0), NSAttributedString.Key.foregroundColor: UIColor.lightGray ]
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 14.0),
+            .foregroundColor: UIColor.secondaryLabel
+        ]
         
         return NSAttributedString(string: text.localized(), attributes: attrs)
     }
