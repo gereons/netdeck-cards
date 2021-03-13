@@ -22,7 +22,8 @@ class CardFilterCell: UITableViewCell {
     
         self.pips = SmallPipsView.create()
         self.pipsView.addSubview(self.pips)
-        
+
+        self.pipsView.backgroundColor = .systemBackground
         self.pipsView.layer.masksToBounds = true
         self.pipsView.layer.cornerRadius = 2
     }

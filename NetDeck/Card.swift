@@ -18,6 +18,7 @@ class Card: NSObject {
 
     @objc private(set) var aliases = [String]()
     @objc private(set) var text = ""
+    @objc private(set) var strippedText = ""
     private(set) var flavor = ""
     @objc private(set) var type = CardType.none
     private(set) var subtype = ""                // full subtype string like "Fracter - Icebreaker - AI"
@@ -241,6 +242,7 @@ extension Card {
         }
         
         self.text = card.text ?? ""
+        self.strippedText = card.stripped_text ?? self.text
         
         self.flavor = card.flavor ?? ""
         

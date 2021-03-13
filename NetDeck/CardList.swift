@@ -355,18 +355,32 @@ class CardList {
             var predicate: NSPredicate
             switch (self.searchScope) {
             case .all:
-                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (text CONTAINS[cd] %@) or (ANY aliases CONTAINS[cd] %@)",
-                                        text, text, text, text)
+                predicate = NSPredicate(format:"""
+                    (name CONTAINS[cd] %@) OR
+                    (englishName CONTAINS[cd] %@) OR
+                    (text CONTAINS[cd] %@) OR
+                    (ANY aliases CONTAINS[cd] %@) OR
+                    (strippedText CONTAINS[cd] %@)
+                    """,
+                    text, text, text, text, text)
             case .name:
-                predicate = NSPredicate(format:"(name CONTAINS[cd] %@) OR (englishName CONTAINS[cd] %@) OR (ANY aliases CONTAINS[cd] %@)",
-                                        text, text, text)
+                predicate = NSPredicate(format:"""
+                    (name CONTAINS[cd] %@) OR
+                    (englishName CONTAINS[cd] %@) OR
+                    (ANY aliases CONTAINS[cd] %@)
+                    """,
+                    text, text, text)
                 let ch = text[text.startIndex]
                 if ch >= "0" && ch <= "9" {
                     let codePredicate = NSPredicate(format:"code BEGINSWITH %@", text)
                     predicate = NSCompoundPredicate(orPredicateWithSubpredicates:[ predicate, codePredicate ])
                 }
             case .text:
-                predicate = NSPredicate(format:"text CONTAINS[cd] %@", text)
+                predicate = NSPredicate(format:"""
+                    (text CONTAINS[cd] %@) OR
+                    (strippedText CONTAINS[cd] %@)
+                    """,
+                    text, text)
             }
             predicates.append(predicate)
         }

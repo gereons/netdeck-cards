@@ -37,7 +37,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var previewTable: UITableView!
     @IBOutlet weak var previewHeader: UILabel!
-    
+    @IBOutlet weak var subtypeButton: UIButton!
+
     var role = Role.none
     var identity: Card?
     var cardList: CardList!
@@ -55,9 +56,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         
         self.title = "Filter".localized()
+
+        self.subtypeButton.setTitle("Subtype".localized(), for: .normal)
                 
         self.typeVerticalDistance.constant = 16
-        self.miniFactionControl.isHidden = true
+        // self.miniFactionControl.isHidden = true
         self.miniFactionControl.tag = Tags.miniFaction.rawValue
         self.miniFactionControl.delegate = self
         self.miniFactionControl.selectAllSegments(false)
@@ -86,11 +89,16 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.factionControl.delegate = self
         self.factionControl.tag = Tags.faction.rawValue
         
-        self.factionControl .removeAllSegments()
+        self.factionControl.removeAllSegments()
         for i in 0 ..< factionLimit {
             self.factionControl.insertSegment(withTitle: self.factionNames[i], at: i, animated: false)
         }
         self.factionControl.selectAllSegments(false)
+
+        self.miniFactionControl.removeAllSegments()
+        Faction.runnerMiniFactions.forEach {
+            self.miniFactionControl.insertSegment(withTitle: Faction.shortName(for: $0))
+        }
         
         // type control
         self.typeControl.delegate = self
@@ -169,7 +177,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var value = Int(round(slider?.value ?? 0))
         slider?.value = Float(value)
         value -= 1
-        self.strengthLabel.text = String(format: "Strength: %@".localized(), value == -1 ? "All" : String(value))
+        self.strengthLabel.text = String(format: "Strength: %@".localized(), value == -1 ? "All".localized() : String(value))
         self.cardList.filterByStrength(value)
         self.updatePreview()
     }
@@ -178,7 +186,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var value = Int(round(slider?.value ?? 0))
         slider?.value = Float(value)
         value -= 1
-        self.costLabel.text = String(format: "Cost: %@".localized(), value == -1 ? "All" : String(value))
+        self.costLabel.text = String(format: "Cost: %@".localized(), value == -1 ? "All".localized() : String(value))
         self.cardList.filterByCost(value)
         self.updatePreview()
     }
@@ -187,7 +195,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var value = Int(round(slider?.value ?? 0))
         slider?.value = Float(value)
         value -= 1
-        self.influenceLabel.text = String(format: "Influence: %@".localized(), value == -1 ? "All" : String(value))
+        self.influenceLabel.text = String(format: "Influence: %@".localized(), value == -1 ? "All".localized() : String(value))
         
         if let identity = self.identity {
             self.cardList.filterByInfluence(value, forFaction: identity.faction)
@@ -202,7 +210,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         slider?.value = Float(value)
         value -= 1
         let fmt = self.role == .runner ? "MU: %@".localized() : "AP: %@".localized()
-        self.muApLabel.text = String(format: fmt, value == -1 ? "All" : String(value))
+        self.muApLabel.text = String(format: fmt, value == -1 ? "All".localized() : String(value))
         
         if self.role == .runner {
             self.cardList.filterByMU(value)
@@ -252,7 +260,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let c = UITableViewCell(style: .default, reuseIdentifier: identifier)
             c.selectionStyle = .none
             c.textLabel?.font = UIFont.systemFont(ofSize: 13)
-            c.textLabel?.textColor = .darkGray
+            c.textLabel?.textColor = .systemGray
             return c
         }()
         

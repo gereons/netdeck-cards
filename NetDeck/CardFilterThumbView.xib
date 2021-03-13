@@ -49,7 +49,6 @@
                             <constraint firstAttribute="height" constant="21" id="MSm-Fh-ass"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbD-LA-eCG">
@@ -81,4 +80,9 @@
             <point key="canvasLocation" x="-19.53125" y="-54.78515625"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="XSP-ns-kbR">
+            <size key="intrinsicContentSize" width="37.5" height="18"/>
+        </designable>
+    </designables>
 </document>

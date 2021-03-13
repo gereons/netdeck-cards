@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -21,7 +21,7 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KLY-eM-xBO">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="TUV-2E-jVh"/>
                         <outlet property="delegate" destination="-1" id="33K-ya-xem"/>
@@ -57,4 +57,9 @@
             <point key="canvasLocation" x="72" y="122"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -106,7 +106,7 @@ class ImportDecksViewController: UIViewController {
 
         self.tableView.flashScrollIndicators()
 
-        self.navigationController?.navigationBar.barTintColor = .white
+        // self.navigationController?.navigationBar.barTintColor = .white
         self.navigationItem.title = Device.isIphone ? "Import".localized() : "Import Deck".localized()
         
         self.keyboardObserver = KeyboardObserver(handler: self)
@@ -469,7 +469,7 @@ extension ImportDecksViewController: UITableViewDelegate, UITableViewDataSource 
             cell.identityLabel.textColor = identity.factionColor
         } else {
             cell.identityLabel.text = "No Identity".localized()
-            cell.identityLabel.textColor = .darkGray
+            cell.identityLabel.textColor = .systemGray
         }
         
         let summary: String
@@ -481,7 +481,7 @@ extension ImportDecksViewController: UITableViewDelegate, UITableViewDataSource 
         
         cell.summaryLabel?.text = summary
         let valid = deck.checkValidity().count == 0
-        cell.summaryLabel?.textColor = valid ? .black : .red
+        cell.summaryLabel?.textColor = valid ? .label : .systemRed
         
         cell.dateLabel.text = self.dateFormatter.string(from: deck.lastModified!)
         cell.nrdbIcon?.isHidden = self.source == .dropbox

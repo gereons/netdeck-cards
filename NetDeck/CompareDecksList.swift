@@ -26,7 +26,7 @@ class CompareDecksList: DecksViewController {
         
         let title = "Select two decks to compare them".localized()
         self.footerButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(self.footerClicked(_:)))
-        self.footerButton.tintColor = .black
+        self.footerButton.tintColor = .label
         let fontName = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
         self.footerButton.setTitleTextAttributes(fontName, for: .normal)
         
@@ -132,13 +132,13 @@ class CompareDecksList: DecksViewController {
         switch self.decksToDiff.count {
         case 1:
             self.footerButton.title = String(format: "Selected ‘%@’, select one more to compare".localized(), self.names[0])
-            self.footerButton.tintColor = .black
+            self.footerButton.tintColor = .label
         case 2:
             self.footerButton.title = String(format: "Selected ‘%@’ and ‘%@’, tap to compare".localized(), self.names[0], self.names[1])
             self.footerButton.tintColor = self.diffButton.tintColor
         default:
             self.footerButton.title = "Select two decks to compare them".localized()
-            self.footerButton.tintColor = .black
+            self.footerButton.tintColor = .label
         }
         
         self.tableView.reloadData()

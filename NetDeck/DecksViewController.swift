@@ -83,7 +83,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         self.parent?.view.backgroundColor = UIColor(patternImage: ImageCache.hexTile)
         
-        self.navigationController?.navigationBar.barTintColor = .white
+        // self.navigationController?.navigationBar.barTintColor = .white
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Decks".localized(), style: .plain, target: nil, action: nil)
         
@@ -401,7 +401,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
             cell.identityLabel.textColor = identity.factionColor
         } else {
             cell.identityLabel.text = "No Identity".localized()
-            cell.identityLabel.textColor = .darkGray
+            cell.identityLabel.textColor = .systemGray
         }
         
         let summary: String
@@ -413,7 +413,7 @@ class DecksViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.summaryLabel?.text = summary
         
         let valid = deck.checkValidity().count == 0
-        cell.summaryLabel?.textColor = valid ? .black : .red
+        cell.summaryLabel?.textColor = valid ? .label : .systemRed
         
         let state = DeckState.labelFor(deck.state)
         let date = self.dateFormatter.string(from: deck.lastModified ?? Date())

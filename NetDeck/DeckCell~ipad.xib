@@ -19,7 +19,6 @@
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck Name" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000027" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OL3-gy-8pE">
                         <rect key="frame" x="57" y="8" width="377" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" systemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck's Identity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YaS-wv-3DE">
@@ -50,6 +49,7 @@
                             <constraint firstAttribute="width" constant="28" id="hRf-Pk-qZ2"/>
                         </constraints>
                         <state key="normal" image="active">
+                            <color key="titleColor" systemColor="labelColor"/>
                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
@@ -92,7 +92,7 @@
     <resources>
         <image name="active" width="28" height="28"/>
         <image name="netrunnerdb_com-bw" width="16" height="16"/>
-        <systemColor name="darkTextColor">
+        <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>

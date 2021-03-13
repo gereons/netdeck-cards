@@ -122,8 +122,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
+	<key>xUIUserInterfaceStyle</key>
+	<string>xLight</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 </dict>

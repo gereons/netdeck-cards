@@ -131,8 +131,8 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         self.showAllFilters = true
         self.viewMode = Defaults[.filterViewMode]
         
-        self.view.backgroundColor = .white
-        self.navigationController?.navigationBar.backgroundColor = .white
+        // self.view.backgroundColor = .white
+        // self.navigationController?.navigationBar.backgroundColor = .white
         
         self.packUsage = Defaults[.deckbuilderPacks]
         
@@ -744,7 +744,8 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.contentView.backgroundColor = UIColor(rgb: 0xEBEBEC)
+        header.contentView.backgroundColor = .systemGray6
+        header.textLabel?.textColor = .secondaryLabel
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -785,13 +786,13 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         
         let mwl = deck?.mwl ?? Defaults[.defaultMWL]
         let penalty = card.mwlPenalty(mwl)
-        cell.pipsView.backgroundColor = penalty > 0 ? UIColor(rgb: 0xf5f5f5) : .white
+        cell.pipsView.backgroundColor = penalty > 0 ? UIColor(rgb: 0xf5f5f5) : .systemBackground
         
         cell.nameLabel.text = card.name
         let cc = deck?.findCard(card) ?? CardCounter.null()
         cell.countLabel.text = cc.count > 0 ? "\(cc.count)" : ""
 
-        cell.nameLabel.textColor = card.owned == 0 ? .darkGray : .black
+        cell.nameLabel.textColor = card.owned == 0 ? .systemGray : .label
 
         return cell
     }

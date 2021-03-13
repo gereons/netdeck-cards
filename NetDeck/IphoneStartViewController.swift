@@ -338,7 +338,7 @@ class IphoneStartViewController: UIViewController, UITableViewDataSource, UITabl
             cell.detailTextLabel?.textColor = identity.factionColor
         } else {
             cell.detailTextLabel?.text = "No Identity".localized()
-            cell.detailTextLabel?.textColor = .black
+            cell.detailTextLabel?.textColor = .label
         }
         
         return cell
@@ -480,8 +480,8 @@ extension IphoneStartViewController {
         var prefs = EasyTipView.Preferences()
         prefs.drawing.font = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.thin)
         prefs.drawing.cornerRadius = 5
-        prefs.drawing.foregroundColor = .white
-        prefs.drawing.backgroundColor = .darkGray
+        prefs.drawing.foregroundColor = .systemBackground
+        prefs.drawing.backgroundColor = .systemGray
         prefs.drawing.arrowPosition = .top
         
         let browserTip = "Net Deck also offers a card browser.\nTap the title to open it.".localized()

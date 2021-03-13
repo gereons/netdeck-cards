@@ -27,5 +27,9 @@ class IdentityViewCell: UITableViewCell {
         self.deckSizeLabel.font = font
         self.influenceLimitLabel.font = font
         self.linkLabel.font = font
+
+        self.deckSizeIcon.image = ImageCache.deckSizeIcon
+        self.influenceIcon.image = ImageCache.deckInfluenceIcon
+        self.linkIcon.image = ImageCache.deckLinkIcon
     }
 }

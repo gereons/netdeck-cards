@@ -11,6 +11,7 @@ import SDCAlertView
 class CustomAlertVisualStyle: AlertVisualStyle {
     override init(alertStyle: AlertControllerStyle) {
         super.init(alertStyle: alertStyle)
-        self.backgroundColor = .white
+        self.backgroundColor = .systemBackground
+        self.destructiveTextColor = .systemRed
     }
 }

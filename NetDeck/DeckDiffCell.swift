@@ -39,10 +39,6 @@ class DeckDiffCell: UITableViewCell {
         self.deck1Card.text = ""
         self.deck2Card.text = ""
         self.diff.text = ""
-        
-        self.deck1Card.textColor = .black
-        self.deck2Card.textColor = .black
-        self.diff.textColor = .black
     }
     
     @objc func popupCard1(_ gesture: UITapGestureRecognizer) {

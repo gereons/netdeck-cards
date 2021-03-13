@@ -35,9 +35,11 @@ class CostStats: Stats {
     func dataLabel(for plot: CPTPlot, record index: UInt) -> CPTLayer? {
         let cost = self.tableData.sections[Int(index)]
         let cards = self.tableData.values[Int(index)][0]
-        
+
         let str = String(format: "%@ %@\n%d %@".localized(), cost, credString(cost), cards, cardsString(cards))
-        return CPTTextLayer(text: str)
+        let style = CPTMutableTextStyle()
+        style.color = CPTColor(uiColor: .label)
+        return CPTTextLayer(text: str, style: style)
     }
 }
 

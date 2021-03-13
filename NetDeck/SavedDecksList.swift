@@ -421,9 +421,9 @@ class SavedDecksList: DecksViewController {
         let img = UIImage(named: icon)?.withRenderingMode(.alwaysTemplate)
         cell.infoButton?.setImage(img, for: .normal)
         
-        cell.nameLabel.textColor = .black
+        cell.nameLabel.textColor = .label
         if self.diffDeck == deck.filename {
-            cell.nameLabel.textColor = .blue
+            cell.nameLabel.textColor = .systemBlue
         }
         
         return cell

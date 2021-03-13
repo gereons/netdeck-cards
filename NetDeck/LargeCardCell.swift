@@ -59,9 +59,9 @@ class LargeCardCell: CardCell {
         self.icons.forEach { $0.image = nil }
         self.influenceLabel.text = ""
         self.copiesLabel.text = ""
-        self.copiesLabel.textColor = .black
-        self.name.textColor = .black
-        self.label2.textColor = .black
+        self.copiesLabel.textColor = .label
+        self.name.textColor = .label
+        self.label2.textColor = .label
         self.type.text = ""
         self.type.isHidden = false
     }
@@ -77,10 +77,10 @@ class LargeCardCell: CardCell {
         self.name.text = cc.displayName(self.deck.mwl)
         
         if !self.deck.isDraft && (cc.count > card.owned || card.isRotated) {
-            self.name.textColor = .red
+            self.name.textColor = .systemRed
         }
         if card.banned(self.deck.mwl) {
-            self.name.textColor = .red
+            self.name.textColor = .systemRed
         }
         
         let factionName = Faction.name(for: card.faction)
@@ -112,7 +112,7 @@ class LargeCardCell: CardCell {
             let limit = self.deck.influenceLimit
             self.label2.text = "\(limit)"
             if limit != card.influenceLimit {
-                self.label2.textColor = .red
+                self.label2.textColor = .systemRed
             }
         }
 
@@ -195,9 +195,9 @@ class LargeCardCell: CardCell {
     }
     
     private static func circlePip(_ pip: UIView) {
-        pip.layer.backgroundColor = UIColor.white.cgColor
+        pip.layer.backgroundColor = UIColor.systemBackground.cgColor
         pip.layer.borderWidth = 1
-        pip.layer.borderColor = UIColor.black.cgColor
+        pip.layer.borderColor = UIColor.label.cgColor
         pip.isHidden = false
     }
 }

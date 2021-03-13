@@ -30,7 +30,7 @@ class SmallBrowserCell: BrowserCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        self.pipsView.backgroundColor = .white
+        self.pipsView.backgroundColor = .systemBackground
     }
     
     override func setCard(_ card: Card) {

@@ -60,7 +60,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         self.toggeViewButton = UIBarButtonItem(customView: viewSelector)
         self.doToggleView(viewStyle)
         
-        self.navigationController?.navigationBar.barTintColor = .white
+        // self.navigationController?.navigationBar.barTintColor = .white
         self.navigationItem.leftBarButtonItem = self.toggeViewButton
         
         // right buttons

@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 class OutlineLabel: UILabel {
     private let outlineWidth: CGFloat = 2.0
-    private let outlineColor = UIColor.white
+    private let outlineColor = UIColor.systemBackground
     
     override func drawText(in rect: CGRect) {
         let textColor = self.textColor

@@ -12,17 +12,30 @@ class StartupViewController: UIViewController {
 
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    private let backgroundColor = UIColor(rgb: 0xefeff4)
-    
-    private let greys: [UIColor] = [
-        UIColor(rgb: 0xefeff4),
-        UIColor(rgb: 0xeeeef3),
-        UIColor(rgb: 0xededf2),
-        UIColor(rgb: 0xececf1),
-        UIColor(rgb: 0xebebf0),
-        UIColor(rgb: 0xeaeaef),
-        UIColor(rgb: 0xe9e9ee)
+    private var backgroundColor: UIColor {
+        if #available(iOS 13, *), UITraitCollection.current.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0xffffff - 0xefeff4)
+        }
+        return UIColor(rgb: 0xefeff4)
+    }
+
+    private var strokeColor: UIColor {
+        if #available(iOS 13, *), UITraitCollection.current.userInterfaceStyle == .dark {
+            return .systemGray
+        }
+        return .white
+    }
+
+    private let greyValues: [UInt] = [
+        0xefeff4, 0xeeeef3, 0xededf2, 0xececf1, 0xebebf0, 0xeaeaef, 0xe9e9ee
     ]
+
+    private var greys: [UIColor] {
+        if #available(iOS 13, *), UITraitCollection.current.userInterfaceStyle == .dark {
+            return greyValues.map { UIColor(rgb: (0xffffff - $0) * 2) }
+        }
+        return greyValues.map { UIColor(rgb: $0) }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +46,7 @@ class StartupViewController: UIViewController {
         super.viewWillAppear(animated)
         let size = UIScreen.main.bounds.size
         for row in 0 ... Int(Double(size.height) / Hex.rowHeight) {
-            for col in 0 ... Int(Double(size.width) / Hex.columnWidth) {
+            for col in -1 ... Int(Double(size.width) / Hex.columnWidth) {
                 self.addHexLayer(at: CGPoint(x: row, y: col))
             }
         }
@@ -41,19 +54,7 @@ class StartupViewController: UIViewController {
         self.view.bringSubviewToFront(spinner)
         self.spinner.startAnimating()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        if BuildConfig.debug {
-            let overlayClass = NSClassFromString("UIDebuggingInformationOverlay") as? UIWindow.Type
-            _ = overlayClass?.perform(NSSelectorFromString("prepareDebuggingOverlay"))
-//            let overlay = overlayClass?.perform(NSSelectorFromString("overlay")).takeUnretainedValue() as? UIWindow
-//            _ = overlay?.perform(NSSelectorFromString("toggleVisibility"))
-        }
-
-    }
-    
     func stopSpinner() {
         self.spinner.stopAnimating()
     }
@@ -61,7 +62,7 @@ class StartupViewController: UIViewController {
     private func addHexLayer(at point: CGPoint) {
         let layer = CAShapeLayer()
         layer.path = Hex.path(at: point).cgPath
-        layer.strokeColor = UIColor.white.cgColor
+        layer.strokeColor = strokeColor.cgColor
         layer.lineWidth = 4.0
         let color = self.greys.randomElement() ?? .lightGray
         layer.fillColor = color.cgColor

@@ -37,19 +37,51 @@ private class ImageMemCache {
     }
 }
 
+extension UIImage {
+    func recolored(with color: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        color.setFill()
+
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return self
+        }
+
+        context.translateBy(x: 0, y: self.size.height)
+        context.scaleBy(x: 1.0, y: -1.0)
+        context.setBlendMode(.normal)
+
+        let rect = CGRect(origin: CGPoint.zero, size: self.size)
+        context.clip(to: rect, mask: self.cgImage!)
+        context.fill(rect)
+
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage!.withRenderingMode(.alwaysOriginal)
+    }
+
+    func labelColored() -> UIImage {
+        return self.withRenderingMode(.alwaysTemplate).recolored(with: .label)
+    }
+}
+
 class ImageCache {
     static let imagesDirectory = "images"
     static let sharedInstance = ImageCache()
     
-    static let trashIcon = UIImage(named: "cardstats_trash")!
-    static let strengthIcon = UIImage(named: "cardstats_strength")!
-    static let creditIcon = UIImage(named: "cardstats_credit")!
-    static let muIcon = UIImage(named: "cardstats_mem")!
-    static let apIcon = UIImage(named: "cardstats_points")!
-    static let linkIcon = UIImage(named: "cardstats_link")!
-    static let cardIcon = UIImage(named: "cardstats_decksize")!
-    static let difficultyIcon = UIImage(named: "cardstats_difficulty")!
-    static let influenceIcon = UIImage(named: "cardstats_influence")!
+    static var trashIcon: UIImage { UIImage(named: "cardstats_trash")!.labelColored() }
+    static var strengthIcon: UIImage { UIImage(named: "cardstats_strength")!.labelColored() }
+    static var creditIcon: UIImage { UIImage(named: "cardstats_credit")!.labelColored() }
+    static var muIcon: UIImage { UIImage(named: "cardstats_mem")!.labelColored() }
+    static var apIcon: UIImage { UIImage(named: "cardstats_points")!.labelColored() }
+    static var linkIcon: UIImage { UIImage(named: "cardstats_link")!.labelColored() }
+    static var cardIcon: UIImage { UIImage(named: "cardstats_decksize")!.labelColored() }
+    static var difficultyIcon: UIImage { UIImage(named: "cardstats_difficulty")!.labelColored() }
+    static var influenceIcon: UIImage { UIImage(named: "cardstats_influence")!.labelColored() }
+
+    static var deckSizeIcon: UIImage { UIImage(named: "cardstats_identity_decksize")!.labelColored() }
+    static var deckInfluenceIcon: UIImage { UIImage(named: "cardstats_identity_influence")!.labelColored() }
+    static var deckLinkIcon: UIImage { UIImage(named: "cardstats_identity_link")!.labelColored() }
     
     static let hexTile = UIImage(named: "hex_background")!
     static let hexTileLight = UIImage(named: "hex_background_light")!
@@ -381,6 +413,7 @@ class ImageCache {
 
         guard let imgData = try? Data(contentsOf: URL(fileURLWithPath: file)) else {
             self.NLOG("no file for %@", key)
+            self.lastModifiedDates.removeValue(forKey: key)
             return nil
         }
 

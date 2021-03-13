@@ -277,7 +277,7 @@ class IdentitySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.contentView.backgroundColor = UIColor(rgb: 0xEBEBEC)
+        header.contentView.backgroundColor = .systemGray4
         let card = self.identities[section][0]
         header.textLabel?.textColor = card.factionColor
     }

@@ -118,6 +118,8 @@ struct NetrunnerDbCard: Codable {
     let quantity: Int
     let side_code: String
     let strength: Int
+    let stripped_text: String?
+    let stripped_title: String?
     let text: String?
     let title: String
     let trash_cost: Int?
@@ -143,6 +145,8 @@ struct NetrunnerDbCard: Codable {
         self.position = try container.decode(.position)
         self.quantity = try container.decode(.quantity)
         self.side_code = try container.decode(.side_code)
+        self.stripped_text = try container.decodeIfPresent(.stripped_text)
+        self.stripped_title = try container.decodeIfPresent(.stripped_title)
         self.text = try container.decodeIfPresent(.text)
         self.title = try container.decode(.title)
         self.trash_cost = try container.decodeIfPresent(.trash_cost)

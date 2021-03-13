@@ -149,7 +149,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             splitView.viewControllers = [ self.navigationController, EmptyDetailViewController() ]
             root = splitView
         }
-        UINavigationBar.appearance().barTintColor = .white
+
+        UINavigationBar.appearance().barTintColor = .systemBackground
+
         if Device.isIphone {
             UINavigationBar.appearance().isTranslucent = false
         }

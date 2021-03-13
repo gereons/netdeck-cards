@@ -71,7 +71,11 @@ class Stats: NSObject, CPTPieChartDataSource, CPTPlotDelegate {
         graph.axisSet = nil
         
         // set theme
-        graph.apply(CPTTheme(named: CPTThemeName.plainWhiteTheme))
+        if #available(iOS 13, *), UITraitCollection.current.userInterfaceStyle == .dark {
+            graph.apply(CPTTheme(named: CPTThemeName.plainBlackTheme))
+        } else {
+            graph.apply(CPTTheme(named: CPTThemeName.plainWhiteTheme))
+        }
         
         graph.plotAreaFrame?.borderLineStyle = nil
         

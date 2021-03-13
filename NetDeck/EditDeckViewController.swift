@@ -541,7 +541,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         
         if cc.isNull {
             // empty identity
-            cell.nameLabel.textColor = .black
+            cell.nameLabel.textColor = .label
             cell.nameLabel.text = ""
             cell.typeLabel.text = ""
             cell.stepper.isHidden = true
@@ -563,7 +563,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
         if card.type == .identity {
             cell.stepper.isHidden = true
             
-            cell.influenceLabel.textColor = .black
+            cell.influenceLabel.textColor = .label
             if self.deck.isDraft {
                 cell.influenceLabel.text = "∞"
             } else {
@@ -572,7 +572,7 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 cell.influenceLabel.text = inf
                 if deckInfluence != card.influenceLimit {
-                    cell.influenceLabel.textColor = .red
+                    cell.influenceLabel.textColor = .systemRed
                 }
             }
             
@@ -583,12 +583,12 @@ class EditDeckViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
         
-        cell.nameLabel.textColor = .black
+        cell.nameLabel.textColor = .label
         if !self.deck.isDraft && (card.owned < cc.count || card.isRotated) {
-            cell.nameLabel.textColor = .red
+            cell.nameLabel.textColor = .systemRed
         }
         if card.banned(self.deck.mwl) {
-            cell.nameLabel.textColor = .red
+            cell.nameLabel.textColor = .systemRed
         }
         
         cell.nameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)

@@ -141,16 +141,19 @@ extension Faction {
         .anarch:       0xf47c28,
         .adam:         0xae9543,
         .apex:         0xa8403d,
-        .sunnyLebeau:  0x776e6f,
-        .neutral:      0x000000
+        .sunnyLebeau:  0x776e6f
     ]
 
     static func color(for faction: Faction) -> UIColor {
-        return UIColor(rgb: hexColor(for: faction))
+        guard let hex = hexColor(for: faction) else {
+            return .label
+        }
+
+        return UIColor(rgb: hex)
     }
     
-    static func hexColor(for faction: Faction) -> UInt {
-        return Faction.colors[faction] ?? 0x0
+    static func hexColor(for faction: Faction) -> UInt? {
+        return Faction.colors[faction]
     }
     
 }

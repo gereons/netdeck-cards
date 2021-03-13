@@ -22,8 +22,8 @@ class SmallCardCell: CardCell {
         let frame = CGRect(origin: self.mwlMarker.frame.origin, size: CGSize(width: diameter, height: diameter))
         self.mwlMarker.frame = frame
         self.mwlMarker.layer.cornerRadius = diameter / 2.0
-        self.mwlMarker.layer.backgroundColor = UIColor.white.cgColor
-        self.mwlMarker.layer.borderColor = UIColor.black.cgColor
+        self.mwlMarker.layer.backgroundColor = UIColor.systemBackground.cgColor
+        self.mwlMarker.layer.borderColor = UIColor.label.cgColor
         self.mwlMarker.layer.borderWidth = 1
         
         self.prepareForReuse()
@@ -55,12 +55,12 @@ class SmallCardCell: CardCell {
         
         self.name.text = cc.displayName(self.deck.mwl)
         
-        self.name.textColor = .black
+        self.name.textColor = .label
         if !self.deck.isDraft && (cc.count > card.owned || card.isRotated) {
-            self.name.textColor = .red
+            self.name.textColor = .systemRed
         }
         if card.banned(self.deck.mwl) {
-            self.name.textColor = .red
+            self.name.textColor = .systemRed
         }
         
         let influence = self.deck.influenceFor(cc)

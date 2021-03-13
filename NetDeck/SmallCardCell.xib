@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -44,7 +44,6 @@
                             <constraint firstAttribute="width" constant="86" id="UCT-EN-J6q"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" maximumValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="3aS-Fa-lwC">

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -31,7 +32,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" backgroundImage="searchbar-bg" scopeBarBackgroundImage="searchbar-bg" translatesAutoresizingMaskIntoConstraints="NO" id="tJq-2W-YqI">
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="tJq-2W-YqI">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <scopeButtonTitles>
@@ -91,7 +92,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="tJq-2W-YqI" firstAttribute="top" secondItem="1iF-OU-Ytu" secondAttribute="top" id="0nv-GM-s10"/>
                             <constraint firstItem="tJq-2W-YqI" firstAttribute="leading" secondItem="1iF-OU-Ytu" secondAttribute="leading" id="dnH-Rh-cqX"/>
@@ -119,6 +120,8 @@
         </view>
     </objects>
     <resources>
-        <image name="searchbar-bg" width="1" height="1"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

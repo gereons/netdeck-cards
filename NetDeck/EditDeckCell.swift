@@ -26,7 +26,7 @@ class EditDeckCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.influenceLabel.textColor = .black
+        self.influenceLabel.textColor = .label
     }
     
 }

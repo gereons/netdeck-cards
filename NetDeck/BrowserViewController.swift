@@ -182,7 +182,7 @@ class BrowserViewController: UIViewController, UITableViewDataSource, UITableVie
         pips.set(value: card.influence, color: card.factionColor)
     
         let penalty = card.mwlPenalty(mwl)
-        pips.backgroundColor = penalty > 0 ? UIColor(rgb: 0xf5f5f5) : .white
+        pips.backgroundColor = penalty > 0 ? UIColor(rgb: 0xf5f5f5) : .systemBackground
          
         return cell
     }
