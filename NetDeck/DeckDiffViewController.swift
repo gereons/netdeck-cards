@@ -16,7 +16,7 @@ private enum DiffMode: Int {
     case overlap
 }
 
-class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var deck1Name: UILabel!
     @IBOutlet weak var deck2Name: UILabel!
@@ -184,7 +184,7 @@ class DeckDiffViewController: UIViewController, UITableViewDataSource, UITableVi
             let diff = cd.count2 - cd.count1
             if diff != 0 {
                 cell.diff.text = String(format: "%+ld", diff)
-                cell.diff.textColor = UIColor(rgb: diff > 0 ? 0x177a00 : 0xdb0c0c)
+                cell.diff.textColor = diff > 0 ? .systemGreen : .systemRed
             } else {
                 cell.diff.text = ""
             }

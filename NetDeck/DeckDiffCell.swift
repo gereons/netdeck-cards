@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeckDiffCell: UITableViewCell {
+final class DeckDiffCell: UITableViewCell {
 
     weak var vc: UIViewController!
     weak var tableView: UITableView!
@@ -31,6 +31,12 @@ class DeckDiffCell: UITableViewCell {
         self.deck2Card.addGestureRecognizer(tap2)
         self.deck2Card.isUserInteractionEnabled = true
         self.deck2Card.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: UIFont.Weight.regular)
+
+        let longPress1 = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress1(_:)))
+        self.deck1Card.addGestureRecognizer(longPress1)
+
+        let longPress2 = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress2(_:)))
+        self.deck2Card.addGestureRecognizer(longPress2)
     }
     
     override func prepareForReuse() {
@@ -41,32 +47,42 @@ class DeckDiffCell: UITableViewCell {
         self.diff.text = ""
     }
     
-    @objc func popupCard1(_ gesture: UITapGestureRecognizer) {
-        guard
-            let card = self.card1,
-            let indexPath = tableView.indexPathForRow(at: gesture.location(in: self.tableView))
-        else {
-            return
-        }
-        
-        var rect = tableView.rectForRow(at: indexPath)
-        rect.size.width = 330
-        
-        CardImageViewPopover.show(for: card, from: rect, in: self.vc, subView: self.tableView)
+    @objc private func popupCard1(_ gesture: UITapGestureRecognizer) {
+        popupCard(self.card1, with: gesture, x: 0, width: 330, showText: false)
     }
-    
-    @objc func popupCard2(_ gesture: UITapGestureRecognizer) {
+
+    @objc private func popupCard2(_ gesture: UITapGestureRecognizer) {
+        popupCard(self.card2, with: gesture, x: 400, width: 310, showText: false)
+    }
+
+    @objc private func longPress1(_ gesture: UITapGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+
+        popupCard(self.card1, with: gesture, x: 0, width: 330, showText: true)
+    }
+
+    @objc private func longPress2(_ gesture: UITapGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+
+        popupCard(self.card2, with: gesture, x: 400, width: 310, showText: true)
+    }
+
+    private func popupCard(_ card: Card?, with gesture: UITapGestureRecognizer, x: CGFloat, width: CGFloat, showText: Bool) {
         guard
-            let card = self.card2,
+            let card = card,
             let indexPath = tableView.indexPathForRow(at: gesture.location(in: self.tableView))
         else {
             return
         }
         
         var rect = tableView.rectForRow(at: indexPath)
-        rect.origin.x = 400
-        rect.size.width = 310
+        rect.origin.x = x
+        rect.size.width = width
         
-        CardImageViewPopover.show(for: card, from: rect, in: self.vc, subView: self.tableView)
+        CardImageViewPopover.show(for: card, from: rect, in: self.vc, subView: self.tableView, showText: showText)
     }
 }

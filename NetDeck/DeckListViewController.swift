@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class DeckListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, IdentitySelector {
+final class DeckListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPrintInteractionControllerDelegate, IdentitySelector {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -99,6 +99,9 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.tableView.register(UINib(nibName: "LargeCardCell", bundle: nil), forCellReuseIdentifier: "largeCardCell")
         self.tableView.register(UINib(nibName: "SmallCardCell", bundle: nil), forCellReuseIdentifier: "smallCardCell")
+
+        let tableLongPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressOnTableview(_:)))
+        self.tableView.addGestureRecognizer(tableLongPress)
         
         self.largeCells = true
         
@@ -1036,6 +1039,20 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "Remove".localized()
     }
+
+    @objc private func longPressOnTableview(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+
+        let touchPoint = gesture.location(in: self.tableView)
+        if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+            if let cc = self.cards[indexPath], !cc.isNull {
+                let rect = self.tableView.rectForRow(at: indexPath)
+                CardImageViewPopover.show(for: cc.card, from: rect, in: self, subView: self.tableView, showText: true)
+            }
+        }
+    }
     
     // MARK: - collection view
     
@@ -1206,7 +1223,7 @@ class DeckListViewController: UIViewController, UITableViewDataSource, UITableVi
                 return
             }
             
-            CardImageViewPopover.show(for: card, mwl: self.deck.mwl, from: cell.frame, in: self, subView: self.collectionView)
+            CardImageViewPopover.show(for: card, mwl: self.deck.mwl, from: cell.frame, in: self, subView: self.collectionView, showText: true)
         }
     }
 
