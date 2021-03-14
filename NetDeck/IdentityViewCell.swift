@@ -32,4 +32,16 @@ final class IdentityViewCell: UITableViewCell {
         self.influenceIcon.image = ImageCache.deckInfluenceIcon
         self.linkIcon.image = ImageCache.deckLinkIcon
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        self.infoButton.removeTarget(nil, action: nil, for: .touchUpInside)
+
+        for gesture in self.gestureRecognizers ?? [] {
+            if gesture is UILongPressGestureRecognizer {
+                self.infoButton.removeGestureRecognizer(gesture)
+            }
+        }
+    }
 }

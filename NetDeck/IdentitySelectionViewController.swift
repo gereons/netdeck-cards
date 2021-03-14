@@ -83,6 +83,9 @@ final class IdentitySelectionViewController: UIViewController, UITableViewDelega
         let collectionTap = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap(_:)))
         collectionTap.numberOfTapsRequired = 2
         self.collectionView.addGestureRecognizer(collectionTap)
+
+        let collectionLongpress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressOnCollectionView(_:)))
+        self.collectionView.addGestureRecognizer(collectionLongpress)
         
         self.collectionView.alwaysBounceVertical = true
         
@@ -229,6 +232,9 @@ final class IdentitySelectionViewController: UIViewController, UITableViewDelega
         let cell = tableView.dequeueReusableCell(withIdentifier: "identityCell", for: indexPath) as! IdentityViewCell
         
         cell.infoButton.addTarget(self, action: #selector(self.showImage(_:)), for: .touchUpInside)
+
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressOnTableView(_:)))
+        cell.infoButton.addGestureRecognizer(longPress)
         
         cell.accessoryType = .none
         cell.titleLabel.font = UIFont.systemFont(ofSize: 17)
@@ -280,6 +286,20 @@ final class IdentitySelectionViewController: UIViewController, UITableViewDelega
         header.contentView.backgroundColor = .systemGray4
         let card = self.identities[section][0]
         header.textLabel?.textColor = card.factionColor
+    }
+
+    @objc private func longPressOnTableView(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+
+        let touchPoint = gesture.location(in: self.tableView)
+        if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+            let card = self.identities[indexPath.section][indexPath.row]
+            var rect = self.tableView.rectForRow(at: indexPath)
+            rect.origin.x = gesture.view?.frame.minX ?? touchPoint.x
+            CardImageViewPopover.show(for: card, from: rect, in: self, subView: self.tableView, showText: true)
+        }
     }
     
     // MARK: - collection view
@@ -347,6 +367,20 @@ final class IdentitySelectionViewController: UIViewController, UITableViewDelega
         self.selectedIndexPath = IndexPath(item: item, section: section)
         
         self.collectionView.reloadData()
+    }
+
+    @objc private func longPressOnCollectionView(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+
+        let point = gesture.location(in: self.collectionView)
+        if let indexPath = self.collectionView.indexPathForItem(at: point),
+           let cell = collectionView.cellForItem(at: indexPath) {
+            let card = self.identities[indexPath.section][indexPath.row]
+            let rect = collectionView.convert(cell.frame, to: self.collectionView)
+            CardImageViewPopover.show(for: card, from: rect, in: self, subView: self.collectionView, showText: true)
+        }
     }
 
 }
