@@ -68,16 +68,16 @@ class CardDetailView {
         switch card.type {
         case .identity:
             self.details.label1.text = "\(card.minimumDecksize)"
-            self.details.icon1.image = ImageCache.cardIcon
+            self.details.icon1.image = ImageCache.cardIcon(forceBlack: true)
             if card.influenceLimit == -1 {
                 self.details.label2.text = "∞"
             } else {
                 self.details.label2.text = "\(card.influenceLimit)"
             }
-            self.details.icon2.image = ImageCache.influenceIcon
+            self.details.icon2.image = ImageCache.influenceIcon(forceBlack: true)
             if card.role == .runner {
                 self.details.label3.text = "\(card.baseLink)"
-                self.details.icon3.image = ImageCache.linkIcon
+                self.details.icon3.image = ImageCache.linkIcon(forceBlack: true)
             } else {
                 self.details.label3.text = ""
                 self.details.icon3.image = nil
@@ -87,38 +87,38 @@ class CardDetailView {
             let cost = card.costString
             let str = card.strengthString
             self.details.label1.text = cost // card.cost != -1 ? [NSString stringWithFormat:@"%ld", (long)card.cost] : @""
-            self.details.icon1.image = cost.count > 0 ? ImageCache.creditIcon : nil
+            self.details.icon1.image = cost.count > 0 ? ImageCache.creditIcon(forceBlack: true) : nil
             self.details.label2.text = str
-            self.details.icon2.image = str.count > 0 ? ImageCache.strengthIcon : nil
+            self.details.icon2.image = str.count > 0 ? ImageCache.strengthIcon(forceBlack: true) : nil
             self.details.label3.text = card.mu != -1 ? "\(card.mu)" : ""
-            self.details.icon3.image = card.mu != -1 ? ImageCache.muIcon : nil
+            self.details.icon3.image = card.mu != -1 ? ImageCache.muIcon(forceBlack: true) : nil
             
         case .ice:
             let cost = card.costString
             let str = card.strengthString
             self.details.label1.text = cost
-            self.details.icon1.image = cost.count > 0 ? ImageCache.creditIcon : nil
+            self.details.icon1.image = cost.count > 0 ? ImageCache.creditIcon(forceBlack: true) : nil
             self.details.label2.text = ""
             self.details.icon2.image = nil
             self.details.label3.text = str
-            self.details.icon3.image = str.count > 0 ? ImageCache.strengthIcon : nil
+            self.details.icon3.image = str.count > 0 ? ImageCache.strengthIcon(forceBlack: true) : nil
             
         case .agenda:
             self.details.label1.text = "\(card.advancementCost)"
-            self.details.icon1.image = ImageCache.difficultyIcon
+            self.details.icon1.image = ImageCache.difficultyIcon(forceBlack: true)
             self.details.label2.text = ""
             self.details.icon2.image = nil
             self.details.label3.text = "\(card.agendaPoints)"
-            self.details.icon3.image = ImageCache.apIcon
+            self.details.icon3.image = ImageCache.apIcon(forceBlack: true)
             
         case .asset, .operation, .upgrade:
             let cost = card.costString
             self.details.label1.text = cost
-            self.details.icon1.image = cost.count > 0 ? ImageCache.creditIcon : nil
+            self.details.icon1.image = cost.count > 0 ? ImageCache.creditIcon(forceBlack: true) : nil
             self.details.label2.text = ""
             self.details.icon2.image = nil
             self.details.label3.text = card.trash != -1 ? "\(card.trash)" : ""
-            self.details.icon3.image = card.trash != -1 ? ImageCache.trashIcon : nil
+            self.details.icon3.image = card.trash != -1 ? ImageCache.trashIcon(forceBlack: true) : nil
             
         case .none:
             assert(false, "this can't happen")

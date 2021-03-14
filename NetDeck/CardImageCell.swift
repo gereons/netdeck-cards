@@ -85,6 +85,4 @@ class CardImageCell: UICollectionViewCell, CardDetailDisplay {
         c = max(c-1, 0.0)
         self.image3.layer.opacity = 1.0 - (c * 0.2)
     }
-    
-
 }

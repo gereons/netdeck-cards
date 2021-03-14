@@ -68,16 +68,40 @@ extension UIImage {
 class ImageCache {
     static let imagesDirectory = "images"
     static let sharedInstance = ImageCache()
+
+    private static func colorIcon(named name: String, _ forceBlack: Bool) -> UIImage {
+        let img = UIImage(named: name)!
+        return forceBlack ? img.recolored(with: .black) : img.labelColored()
+    }
     
-    static var trashIcon: UIImage { UIImage(named: "cardstats_trash")!.labelColored() }
-    static var strengthIcon: UIImage { UIImage(named: "cardstats_strength")!.labelColored() }
-    static var creditIcon: UIImage { UIImage(named: "cardstats_credit")!.labelColored() }
-    static var muIcon: UIImage { UIImage(named: "cardstats_mem")!.labelColored() }
-    static var apIcon: UIImage { UIImage(named: "cardstats_points")!.labelColored() }
-    static var linkIcon: UIImage { UIImage(named: "cardstats_link")!.labelColored() }
-    static var cardIcon: UIImage { UIImage(named: "cardstats_decksize")!.labelColored() }
-    static var difficultyIcon: UIImage { UIImage(named: "cardstats_difficulty")!.labelColored() }
-    static var influenceIcon: UIImage { UIImage(named: "cardstats_influence")!.labelColored() }
+    static func trashIcon(forceBlack: Bool = false) -> UIImage {
+        colorIcon(named: "cardstats_trash", forceBlack)
+    }
+
+    static func strengthIcon(forceBlack: Bool = false) -> UIImage {
+        colorIcon(named: "cardstats_strength", forceBlack)
+    }
+    static func creditIcon(forceBlack: Bool = false) -> UIImage {
+        colorIcon(named: "cardstats_credit", forceBlack)
+    }
+    static func muIcon(forceBlack: Bool = false) -> UIImage {
+        colorIcon(named: "cardstats_mem", forceBlack)
+    }
+    static func apIcon(forceBlack: Bool = false) -> UIImage {
+        colorIcon(named: "cardstats_points", forceBlack)
+    }
+    static func linkIcon(forceBlack: Bool = false) -> UIImage {
+        colorIcon(named: "cardstats_link", forceBlack)
+    }
+    static func cardIcon(forceBlack: Bool = false) -> UIImage {
+        colorIcon(named: "cardstats_decksize", forceBlack)
+    }
+    static func difficultyIcon(forceBlack: Bool = false) -> UIImage {
+        colorIcon(named: "cardstats_difficulty", forceBlack)
+    }
+    static func influenceIcon(forceBlack: Bool = false) -> UIImage {
+        colorIcon(named: "cardstats_influence", forceBlack)
+    }
 
     static var deckSizeIcon: UIImage { UIImage(named: "cardstats_identity_decksize")!.labelColored() }
     static var deckInfluenceIcon: UIImage { UIImage(named: "cardstats_identity_influence")!.labelColored() }

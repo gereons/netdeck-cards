@@ -171,8 +171,6 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
                 self.activityIndicator.stopAnimating()
                 self.imageView.image = img
                 self.packLabel.text = card.packName
-                self.packLabel.layer.cornerRadius = 3
-                self.packLabel.layer.masksToBounds = true
                 
                 self.detailView.isHidden = true
                 if placeholder {

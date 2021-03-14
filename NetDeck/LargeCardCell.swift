@@ -128,42 +128,42 @@ class LargeCardCell: CardCell {
         switch card.type {
         case .identity:
             labels[0].text = "\(card.minimumDecksize)"
-            icons[0].image = ImageCache.cardIcon
+            icons[0].image = ImageCache.cardIcon()
             labels[1].text = card.influenceLimit == -1 ? "∞" : "\(card.influenceLimit)"
-            icons[1].image = ImageCache.influenceIcon
+            icons[1].image = ImageCache.influenceIcon()
             if card.role == .runner {
                 labels[2].text = "\(card.baseLink)"
-                icons[2].image = ImageCache.linkIcon
+                icons[2].image = ImageCache.linkIcon()
             }
         case .program, .resource, .event, .hardware:
             let cost = card.costString
             let str = card.strengthString
             labels[0].text = cost
-            icons[0].image = cost.count > 0 ? ImageCache.creditIcon : nil
+            icons[0].image = cost.count > 0 ? ImageCache.creditIcon() : nil
             labels[1].text = str
-            icons[1].image = str.count > 0 ? ImageCache.strengthIcon : nil
+            icons[1].image = str.count > 0 ? ImageCache.strengthIcon() : nil
             labels[2].text = card.mu != -1 ? "\(card.mu)" : nil
-            icons[2].image = card.mu != -1 ? ImageCache.muIcon : nil
+            icons[2].image = card.mu != -1 ? ImageCache.muIcon() : nil
         case .ice:
             let cost = card.costString
             let str = card.strengthString
             labels[0].text = cost
-            icons[0].image = cost.count > 0 ? ImageCache.creditIcon : nil
+            icons[0].image = cost.count > 0 ? ImageCache.creditIcon() : nil
             labels[1].text = card.trash != -1 ? "\(card.trash)" : nil
-            icons[1].image = card.trash != -1 ? ImageCache.trashIcon : nil
+            icons[1].image = card.trash != -1 ? ImageCache.trashIcon() : nil
             labels[2].text = str
-            icons[2].image = str.count > 0 ? ImageCache.strengthIcon : nil
+            icons[2].image = str.count > 0 ? ImageCache.strengthIcon() : nil
         case .agenda:
             labels[0].text = "\(card.advancementCost)"
-            icons[0].image = ImageCache.difficultyIcon
+            icons[0].image = ImageCache.difficultyIcon()
             labels[2].text = "\(card.agendaPoints)"
-            icons[2].image = ImageCache.apIcon
+            icons[2].image = ImageCache.apIcon()
         case .asset, .operation, .upgrade:
             let cost = card.costString
             labels[0].text = cost
-            icons[0].image = cost.count > 0 ? ImageCache.creditIcon : nil
+            icons[0].image = cost.count > 0 ? ImageCache.creditIcon() : nil
             labels[2].text = card.trash != -1 ? "\(card.trash)" : nil
-            icons[2].image = card.trash != -1 ? ImageCache.trashIcon : nil
+            icons[2].image = card.trash != -1 ? ImageCache.trashIcon() : nil
         case .none:
             fatalError("this can't happen")
         }

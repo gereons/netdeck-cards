@@ -99,7 +99,6 @@ class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
                 
                 self.packLabel.text = card.packName
                 
-                
                 if self.showAsDifferences {
                     self.countLabel.text = String(format: "%+ld", self.count)
                 } else {
