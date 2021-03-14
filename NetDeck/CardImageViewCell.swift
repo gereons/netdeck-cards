@@ -33,12 +33,18 @@ final class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
     var showAsDifferences = false
     private var count = -1
     private var card = Card.null()
+    private var showText = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.imageView.layer.cornerRadius = 8
+        self.imageView.layer.cornerRadius = 10
         self.imageView.layer.masksToBounds = true
+
+        self.imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.toggleDisplay(_:)))
+        self.imageView.addGestureRecognizer(tap)
+
         self.detailView.isHidden = true
         self.countLabel.text = ""
         self.packLabel.text = ""
@@ -49,12 +55,13 @@ final class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         
         self.mwlLabel.layer.cornerRadius = 3
         self.mwlLabel.layer.masksToBounds = true
-        self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 9, weight: UIFont.Weight.bold)
+        self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 9, weight: .bold)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+
+        self.showText = false
         self.detailView.isHidden = true
         self.countLabel.text = ""
         self.packLabel.text = ""
@@ -90,12 +97,32 @@ final class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
         
         self.loadImage(for:card, count: self.count)
     }
+
+    @objc private func toggleDisplay(_ gesture: UITapGestureRecognizer) {
+        self.showText.toggle()
+        if showText {
+            self.detailView.alpha = 0
+            CardDetailView.setup(from: self, card: self.card)
+            UIView.transition(with: self.imageView,
+                              duration: 0.15,
+                              options: [.transitionCrossDissolve, .allowAnimatedContent],
+                              animations: {
+                                self.imageView.image = ImageCache.placeholder(for: self.card.role)
+                                self.detailView.alpha = 1
+                              },
+                              completion: { _ in
+                                self.detailView.isHidden = false
+                              })
+        } else {
+            loadImage(for: self.card, count: self.count)
+        }
+    }
     
-    func loadImage(for card: Card, count: Int) {
+    private func loadImage(for card: Card, count: Int) {
         ImageCache.sharedInstance.getImage(for: card) { (card, img, placeholder) in
             if self.card.code == card.code {
                 self.activityIndicator.stopAnimating()
-                self.imageView.image = img
+                // self.imageView.image = img
                 
                 self.packLabel.text = card.packName
                 
@@ -108,11 +135,23 @@ final class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
                         self.countLabel.text = ""
                     }
                 }
-                
-                self.detailView.isHidden = !placeholder
+
+                self.showText = placeholder
                 if placeholder {
                     CardDetailView.setup(from: self, card: self.card)
                 }
+
+                self.detailView.alpha = placeholder ? 0 : 1
+                UIView.transition(with: self.imageView,
+                                  duration: 0.15,
+                                  options: .transitionCrossDissolve,
+                                  animations: {
+                                    self.imageView.image = img
+                                    self.detailView.alpha = placeholder ? 1 : 0
+                                  },
+                                  completion: {_ in
+                                    self.detailView.isHidden = !placeholder
+                                  })
             } else {
                 self.loadImage(for: self.card, count: self.count)
             }

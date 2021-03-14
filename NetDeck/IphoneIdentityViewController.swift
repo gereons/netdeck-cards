@@ -206,13 +206,17 @@ extension IphoneIdentityViewController {
         let point = gesture.location(in: self.tableView)
         if let indexPath = self.tableView.indexPathForRow(at: point) {
             let card = self.identities[indexPath.section][indexPath.row]
-            
-            let imageView = ModalCardImageViewController()
-            let presenter = ModalViewPresenter(with: imageView)
-            
-            imageView.modalPresenter = presenter
-            imageView.card = card
-            presenter.present(on: self)
+
+            let imageView = ModalCardImageViewController(card: card, showText: false)
+
+            if #available(iOS 13, *) {
+                self.present(imageView, animated: true)
+            } else {
+                let presenter = ModalViewPresenter(with: imageView)
+
+                imageView.modalPresenter = presenter
+                presenter.present(on: self)
+            }
         }
 
     }

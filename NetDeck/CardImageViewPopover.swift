@@ -94,7 +94,7 @@ final class CardImageViewPopover: UIViewController, UIPopoverPresentationControl
         popover.card = card
         popover.mwl = mwl ?? Defaults[.defaultMWL]
         popover.showText = showText
-        
+
         popover.modalPresentationStyle = .popover
         if let presentation = popover.popoverPresentationController {
             presentation.sourceRect = rect
@@ -103,6 +103,7 @@ final class CardImageViewPopover: UIViewController, UIPopoverPresentationControl
             presentation.delegate = popover
         }
         popover.preferredContentSize = CGSize(width: Int(ImageCache.width*popoverScale), height: Int(ImageCache.height*popoverScale))
+
         CardImageViewPopover.popover = popover
         
         vc.present(popover, animated:false, completion:nil)
