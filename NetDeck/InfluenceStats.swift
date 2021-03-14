@@ -8,7 +8,7 @@
 
 import CorePlot
 
-class InfluenceStats: Stats {
+final class InfluenceStats: Stats {
     
     private var colors = [String: UIColor]()
     

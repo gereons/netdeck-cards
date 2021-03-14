@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardImageCell: UICollectionViewCell, CardDetailDisplay {
+final class CardImageCell: UICollectionViewCell, CardDetailDisplay {
 
     @IBOutlet weak var image1: UIImageView!
     @IBOutlet weak var image2: UIImageView!

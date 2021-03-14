@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
+final class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         

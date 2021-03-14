@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StartupViewController: UIViewController {
+final class StartupViewController: UIViewController {
 
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     

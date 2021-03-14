@@ -22,7 +22,7 @@ enum MenuItem: Int {
     }
 }
 
-class ActionsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StartViewController {
+final class ActionsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StartViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var version: UIBarButtonItem!

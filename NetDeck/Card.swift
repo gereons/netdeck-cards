@@ -8,7 +8,7 @@
 
 import SwiftyUserDefaults
 
-class Card: NSObject {
+final class Card: NSObject {
     private(set) static var fullNames = [String: String]() // code => full names of identities
     
     @objc private(set) var code = ""

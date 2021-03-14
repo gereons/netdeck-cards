@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class BrowserFilterViewController: UIViewController, UITextFieldDelegate, FilteringViewController {
+final class BrowserFilterViewController: UIViewController, UITextFieldDelegate, FilteringViewController {
 
     @IBOutlet weak var sideLabel: UILabel!
     @IBOutlet weak var sideSelector: UISegmentedControl!

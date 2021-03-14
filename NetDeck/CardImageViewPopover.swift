@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDelegate, CardDetailDisplay {
+final class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDelegate, CardDetailDisplay {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!

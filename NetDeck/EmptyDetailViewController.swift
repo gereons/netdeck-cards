@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmptyDetailViewController: UIViewController {
+final class EmptyDetailViewController: UIViewController {
     @IBOutlet weak var emptyDataSetView: UIView!
     
     @IBOutlet weak var titleLabel: UILabel!

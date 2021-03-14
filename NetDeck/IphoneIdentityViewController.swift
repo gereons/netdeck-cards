@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class IphoneIdentityViewController: UIViewController {
+final class IphoneIdentityViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var okButton: UIBarButtonItem!

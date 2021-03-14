@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class CardFilterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilteringViewController {
+final class CardFilterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, FilteringViewController {
  
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var scopeButton: UIButton!
@@ -141,10 +141,16 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         
         self.tableView.register(UINib(nibName: "CardFilterCell", bundle: nil), forCellReuseIdentifier: "cardCell")
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+
+        let tableLongPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressOnTableview(_:)))
+        self.tableView.addGestureRecognizer(tableLongPress)
         
         self.collectionView.register(UINib(nibName: "CardFilterThumbView", bundle: nil), forCellWithReuseIdentifier: "cardThumb")
         self.collectionView.register(CollectionViewSectionHeader.nib(), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "sectionHeader")
         self.collectionView.alwaysBounceVertical = true
+
+        let collectionLongPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressOnCollectionview(_:)))
+        self.collectionView.addGestureRecognizer(collectionLongPress)
         
         let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.headerReferenceSize = CGSize(width: 320, height: 22)
@@ -837,6 +843,19 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
             self.collectionView.reloadData()
         }
     }
+
+    @objc private func longPressOnTableview(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+
+        let touchPoint = gesture.location(in: self.tableView)
+        if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+            let card = self.cards[indexPath.section][indexPath.row]
+            let rect = self.tableView.rectForRow(at: indexPath)
+            CardImageViewPopover.show(for: card, from: rect, in: self, subView: self.tableView, showText: true)
+        }
+    }
     
     // MARK: - collection view
     
@@ -888,7 +907,19 @@ class CardFilterViewController: UIViewController, UITableViewDataSource, UITable
         
         return header
     }
-    
+
+    @objc private func longPressOnCollectionview(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+
+        let touchPoint = gesture.location(in: self.collectionView)
+        if let indexPath = collectionView.indexPathForItem(at: touchPoint),
+           let cell = self.collectionView.cellForItem(at: indexPath) {
+            let card = self.cards[indexPath.section][indexPath.row]
+            CardImageViewPopover.show(for: card, from: cell.frame, in: self, subView: self.collectionView, showText: true)
+        }
+    }
 }
 
 extension CardFilterViewController: KeyboardHandling {

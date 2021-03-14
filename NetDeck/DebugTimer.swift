@@ -9,7 +9,7 @@
 import Foundation
 
 
-class DebugTimer {
+final class DebugTimer {
    
     private struct Timer {
         var count = 0
@@ -77,7 +77,7 @@ class DebugTimer {
 
 }
 
-class SimpleTimer {
+final class SimpleTimer {
     let start: TimeInterval
     let str: String
     

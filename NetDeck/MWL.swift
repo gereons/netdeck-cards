@@ -64,7 +64,7 @@ struct MostWantedList {
     static let casual = MostWantedList()
 }
 
-class MWLManager {
+final class MWLManager {
 
     private static var mwls = [MostWantedList]()
 

@@ -11,7 +11,7 @@ import SwiftKeychainWrapper
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class NRDBHack {
+final class NRDBHack {
 
     private static let authUrl = NRDB.providerHost + "/oauth/v2/auth"
     private static let loginCheckUrl = NRDB.providerHost + "/oauth/v2/auth_login_check"

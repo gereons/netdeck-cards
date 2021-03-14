@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Translation {
+final class Translation {
     static func forTerm(_ term: String) -> String {
         return data[term] ?? term.capitalized
     }

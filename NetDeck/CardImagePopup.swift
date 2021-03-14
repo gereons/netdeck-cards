@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardImagePopup: UIViewController {
+final class CardImagePopup: UIViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var copiesLabel: UILabel!

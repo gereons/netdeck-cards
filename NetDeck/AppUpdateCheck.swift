@@ -52,7 +52,7 @@ private struct LookupResult: Codable {
     let version: String
 }
 
-class AppUpdateCheck {
+final class AppUpdateCheck {
 
     static let day: TimeInterval = 24 * 60 * 60
     static let week: TimeInterval = 7 * day

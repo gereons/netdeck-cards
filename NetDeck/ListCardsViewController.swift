@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class ListCardsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+final class ListCardsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     

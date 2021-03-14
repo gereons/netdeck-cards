@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class DeckEmail: NSObject, MFMailComposeViewControllerDelegate {
+final class DeckEmail: NSObject, MFMailComposeViewControllerDelegate {
     private var viewController: UIViewController!
     private static let instance = DeckEmail()
     

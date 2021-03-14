@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IdentityCardView: UICollectionViewCell {
+final class IdentityCardView: UICollectionViewCell {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!

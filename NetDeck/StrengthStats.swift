@@ -8,7 +8,7 @@
 
 import CorePlot
 
-class StrengthStats: Stats {
+final class StrengthStats: Stats {
     
     init(deck: Deck) {
         super.init()

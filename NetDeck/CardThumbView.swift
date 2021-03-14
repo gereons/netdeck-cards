@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardThumbView: UICollectionViewCell {
+final class CardThumbView: UICollectionViewCell {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!

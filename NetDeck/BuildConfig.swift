@@ -22,7 +22,7 @@ struct BuildConfig {
     static let useSentry = release || debugSentry
 }
 
-class Device {
+final class Device {
     static var isIphone: Bool {
         return UIDevice.current.userInterfaceIdiom == .phone
     }

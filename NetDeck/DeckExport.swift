@@ -15,7 +15,7 @@ enum ExportFormat {
     case bbCode
 }
 
-class DeckExport {
+final class DeckExport {
     
     static let APP_NAME = "Net Deck"
     static let APP_URL = "http://appstore.com/netdeck"

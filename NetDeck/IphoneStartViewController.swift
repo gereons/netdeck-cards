@@ -11,7 +11,7 @@ import DZNEmptyDataSet
 import SwiftyUserDefaults
 import EasyTipView
 
-class IphoneStartViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, StartViewController {
+final class IphoneStartViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, StartViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!

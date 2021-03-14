@@ -9,7 +9,7 @@
 import Sentry
 import StoreKit
 
-class Analytics: NSObject {
+final class Analytics: NSObject {
 
     static let shared = Analytics()
     override private init() {}

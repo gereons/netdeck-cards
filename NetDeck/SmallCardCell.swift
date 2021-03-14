@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SmallCardCell: CardCell {
+final class SmallCardCell: CardCell {
     
     @IBOutlet weak var factionLabel: UILabel!
     @IBOutlet weak var mwlMarker: UIView!

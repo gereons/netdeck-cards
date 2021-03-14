@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LargeCardCell: CardCell {
+final class LargeCardCell: CardCell {
     
     @IBOutlet weak var type: UILabel!
     

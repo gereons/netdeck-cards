@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CompareDecksList: DecksViewController {
+final class CompareDecksList: DecksViewController {
     
     private var decksToDiff = [String]()
     private var names = [String]()

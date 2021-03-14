@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import SwiftyUserDefaults
 
-class NRDBAuthPopupViewController: UIViewController {
+final class NRDBAuthPopupViewController: UIViewController {
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var cancelButton: UIButton?  // only on iPad

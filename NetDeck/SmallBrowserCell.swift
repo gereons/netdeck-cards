@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class SmallBrowserCell: BrowserCell {
+final class SmallBrowserCell: BrowserCell {
     
     @IBOutlet weak var factionLabel: UILabel!
     @IBOutlet weak var pipsView: UIView!

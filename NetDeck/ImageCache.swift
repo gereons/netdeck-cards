@@ -65,7 +65,7 @@ extension UIImage {
     }
 }
 
-class ImageCache {
+final class ImageCache {
     static let imagesDirectory = "images"
     static let sharedInstance = ImageCache()
 

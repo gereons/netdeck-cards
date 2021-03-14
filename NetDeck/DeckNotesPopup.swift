@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeckNotesPopup: UIViewController {
+final class DeckNotesPopup: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var okButton: UIButton!

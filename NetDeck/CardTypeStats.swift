@@ -8,7 +8,7 @@
 
 import CorePlot
 
-class CardTypeStats: Stats {
+final class CardTypeStats: Stats {
 
     private let deckSize: Int
     

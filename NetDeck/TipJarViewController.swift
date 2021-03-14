@@ -20,7 +20,7 @@ enum Tip: String {
 }
 
 @objc(TipJarViewController) // need for IASK
-class TipJarViewController: UIViewController {
+final class TipJarViewController: UIViewController {
 
     fileprivate var selectedTip = ""
     

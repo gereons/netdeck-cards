@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Hypergeometric {
+final class Hypergeometric {
     static func getProbabilityFor(_ desiredCards: Int, cardsInDeck: Int, desiredCardsInDeck: Int, cardsDrawn: Int) -> Double {
         assert(desiredCards>0 && cardsInDeck>0 && desiredCardsInDeck>0 && cardsDrawn>0)
         var r = 0.0

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class DeckAnalysisViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!

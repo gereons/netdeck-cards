@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditDeckCell: UITableViewCell {
+final class EditDeckCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!

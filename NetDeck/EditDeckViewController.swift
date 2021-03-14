@@ -12,7 +12,7 @@ import MessageUI
 import SwiftyUserDefaults
 
 
-class EditDeckViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class EditDeckViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var statusLabel: TickingLabel!

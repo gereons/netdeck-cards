@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ModalCardImageViewController: UIViewController {
+final class ModalCardImageViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!

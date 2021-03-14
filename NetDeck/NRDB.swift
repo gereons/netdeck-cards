@@ -9,7 +9,7 @@
 import Alamofire
 import SwiftyUserDefaults
 
-class NRDB: NSObject {
+final class NRDB: NSObject {
     static let clientHost = "netdeck://oauth2"
     static let clientId = "4_1onrqq7q82w0ow4scww84sw4k004g8cososcg8gog004s4gs08"
     static let clientSecret = "2myhr1ijml6o4kc0wgsww040o8cc84oso80o0w0s44k4k0c84"

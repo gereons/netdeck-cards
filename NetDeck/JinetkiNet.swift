@@ -11,7 +11,7 @@ import SwiftKeychainWrapper
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class JintekiNet {
+final class JintekiNet {
     static let sharedInstance = JintekiNet()
     
     private let manager: Alamofire.SessionManager

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyUserDefaults
 
-class DeckManager {
+final class DeckManager {
     
     static let cache: NSCache<NSString, Deck> = {
         let c = NSCache<NSString, Deck>()

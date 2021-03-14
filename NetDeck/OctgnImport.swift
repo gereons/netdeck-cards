@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyUserDefaults
 
-class OctgnImport: NSObject, XMLParserDelegate {
+final class OctgnImport: NSObject, XMLParserDelegate {
     
     private let deck = Deck(role: .none)
     private var notes: String?

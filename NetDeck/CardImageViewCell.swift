@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
+final class CardImageViewCell: UICollectionViewCell, CardDetailDisplay {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var countLabel: UILabel!

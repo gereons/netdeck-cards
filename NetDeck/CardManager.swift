@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyUserDefaults
 
-class CardManager {
+final class CardManager {
     
     static let cardsFilename = "nrcards2.json"
     

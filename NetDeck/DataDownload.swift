@@ -23,7 +23,7 @@ private enum ApiRequest {
     case rotations
 }
 
-class DataDownload: NSObject {
+final class DataDownload: NSObject {
     
     static func downloadCardData(verbose: Bool = true) {
         let interval = Defaults[.updateInterval]

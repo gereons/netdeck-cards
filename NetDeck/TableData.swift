@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TableData<T> {
+final class TableData<T> {
     var sections: [String]
     var values: [[T]]
     var collapsedSections: [Bool]? {

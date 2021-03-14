@@ -16,7 +16,7 @@ private enum Tags: Int {
     case type
 }
 
-class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var factionControl: MultiSelectSegmentedControl!
     @IBOutlet weak var miniFactionControl: MultiSelectSegmentedControl!
     

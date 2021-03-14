@@ -8,12 +8,12 @@
 
 import UIKit
 
-class DrawTableCell: UITableViewCell {
+final class DrawTableCell: UITableViewCell {
     fileprivate var card: Card!
     fileprivate var imgView: UIImageView!
 }
 
-class IphoneDrawSimulator: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class IphoneDrawSimulator: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var drawControl: UISegmentedControl!
     @IBOutlet weak var oddsLabel: UILabel!

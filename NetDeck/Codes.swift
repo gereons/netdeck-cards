@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Codes {
+final class Codes {
     
     static let code2Type: [String: CardType] = [
         "identity": .identity,

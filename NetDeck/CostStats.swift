@@ -8,7 +8,7 @@
 
 import CorePlot
 
-class CostStats: Stats {
+final class CostStats: Stats {
     
     init(deck: Deck) {
         super.init()

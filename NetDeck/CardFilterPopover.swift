@@ -17,7 +17,7 @@ protocol FilteringViewController: class {
     func present(_ : UIViewController, animated: Bool, completion: (()->Void)?)
 }
 
-class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class CardFilterPopover: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     

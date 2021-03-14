@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyUserDefaults
 
-class CardList {
+final class CardList {
     private var role: Role
     private var initialCards = [Card]()
     

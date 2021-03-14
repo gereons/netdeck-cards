@@ -8,7 +8,7 @@
 
 import CorePlot
 
-class IceTypeStats: Stats {
+final class IceTypeStats: Stats {
     
     private let iceCount: Int
     

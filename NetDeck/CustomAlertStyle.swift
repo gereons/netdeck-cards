@@ -8,7 +8,7 @@
 
 import SDCAlertView
 
-class CustomAlertVisualStyle: AlertVisualStyle {
+final class CustomAlertVisualStyle: AlertVisualStyle {
     override init(alertStyle: AlertControllerStyle) {
         super.init(alertStyle: alertStyle)
         self.backgroundColor = .systemBackground

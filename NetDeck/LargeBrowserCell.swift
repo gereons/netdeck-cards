@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class LargeBrowserCell: BrowserCell {
+final class LargeBrowserCell: BrowserCell {
 
     @IBOutlet weak var type: UILabel!
     

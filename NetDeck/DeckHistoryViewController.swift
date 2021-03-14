@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class DeckHistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var deck: Deck!

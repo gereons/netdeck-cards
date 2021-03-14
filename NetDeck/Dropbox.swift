@@ -11,7 +11,7 @@
 import SwiftyDropbox
 import SwiftyUserDefaults
 
-class Dropbox {
+final class Dropbox {
     
     static func setup() {
         DropboxClientsManager.setupWithAppKey("4mhw6piwd9wqti3")

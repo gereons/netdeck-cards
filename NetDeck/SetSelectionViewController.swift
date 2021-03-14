@@ -10,7 +10,7 @@ import UIKit
 import SwiftyUserDefaults
 
 @objc(SetSelectionViewController) // needed for IASK
-class SetSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class SetSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     

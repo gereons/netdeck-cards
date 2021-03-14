@@ -21,7 +21,7 @@ struct RotatedPacks: Equatable {
     static let empty = RotatedPacks(RotationData(code: "none", name: "none", cycles: [], packs: [], dateStart: nil))
 }
 
-class RotationManager {
+final class RotationManager {
 
     static let r2017 = 0
     static let r2018 = 1

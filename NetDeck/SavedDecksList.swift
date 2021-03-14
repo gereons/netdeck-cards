@@ -11,7 +11,7 @@ import SVProgressHUD
 import MessageUI
 import SwiftyUserDefaults
 
-class SavedDecksList: DecksViewController {
+final class SavedDecksList: DecksViewController {
     
     private var editButton: UIBarButtonItem!
     private var importButton: UIBarButtonItem!

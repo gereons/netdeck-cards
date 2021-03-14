@@ -11,7 +11,7 @@ import SDCAlertView
 import Alamofire
 import SwiftyUserDefaults
 
-class DeckImport: NSObject {
+final class DeckImport: NSObject {
     
     private enum DeckBuilderSource {
         case none

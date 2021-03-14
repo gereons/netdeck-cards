@@ -25,7 +25,7 @@
 
 import UIKit
 
-class ModalViewPresenter: UIViewController {
+final class ModalViewPresenter: UIViewController {
 
     /// distance from top of the screen
     private let topOffset: CGFloat = 25

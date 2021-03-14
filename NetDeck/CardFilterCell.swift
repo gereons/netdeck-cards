@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardFilterCell: UITableViewCell {
+final class CardFilterCell: UITableViewCell {
 
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var pipsView: UIView!

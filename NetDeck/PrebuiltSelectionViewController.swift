@@ -9,7 +9,7 @@
 import UIKit
 
 @objc(PrebuiltSelectionViewController) // need for IASK
-class PrebuiltSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class PrebuiltSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     

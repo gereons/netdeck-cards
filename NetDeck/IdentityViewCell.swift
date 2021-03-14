@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IdentityViewCell: UITableViewCell {
+final class IdentityViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var deckSizeLabel: UILabel!
     @IBOutlet weak var influenceLimitLabel: UILabel!

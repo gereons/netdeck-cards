@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class BrowserValuePicker: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var data: TableData<String>!

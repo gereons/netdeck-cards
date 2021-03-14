@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardFilterThumbView: UICollectionViewCell {
+final class CardFilterThumbView: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!

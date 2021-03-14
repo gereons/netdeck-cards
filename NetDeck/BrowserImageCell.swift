@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class BrowserImageCell: UICollectionViewCell, CardDetailDisplay {
+final class BrowserImageCell: UICollectionViewCell, CardDetailDisplay {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     

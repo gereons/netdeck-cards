@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class ImportDecksViewController: UIViewController {
+final class ImportDecksViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!

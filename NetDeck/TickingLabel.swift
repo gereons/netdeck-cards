@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TickingLabel: UILabel {
+final class TickingLabel: UILabel {
     
     private var timer: Timer?
     private var currentIndex = 0

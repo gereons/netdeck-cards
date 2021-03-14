@@ -9,7 +9,7 @@
 import XCTest
 
 
-class NetDeckTests: XCTestCase {
+final class NetDeckTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

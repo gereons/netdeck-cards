@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SmallPipsView: UIView {
+final class SmallPipsView: UIView {
     @IBOutlet weak var pipNW: UIView!
     @IBOutlet weak var pipNE: UIView!
     @IBOutlet weak var pipSW: UIView!

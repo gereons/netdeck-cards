@@ -42,7 +42,7 @@ protocol KeyboardHandling: class {
 
 }
 
-class KeyboardObserver: NSObject {
+final class KeyboardObserver: NSObject {
 
     private weak var handler: KeyboardHandling!
 

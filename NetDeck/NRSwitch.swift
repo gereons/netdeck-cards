@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NRSwitch: UISwitch {
+final class NRSwitch: UISwitch {
     
     typealias Switcher = (Bool)->Void
     private var handler: Switcher

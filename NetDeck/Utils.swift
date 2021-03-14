@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Utils {
+final class Utils {
     
     // utility method: set the excludeFromBackup flag on the specified path
     static func excludeFromBackup(_ path: String) {

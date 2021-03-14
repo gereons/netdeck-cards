@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class CardUpdateCheck {
+final class CardUpdateCheck {
 
     static let fmt: DateFormatter = {
         let fmt = DateFormatter()

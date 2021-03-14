@@ -22,7 +22,7 @@ protocol CardDetailDisplay {
     var icon3: UIImageView! { get }
 }
 
-class CardDetailView {
+final class CardDetailView {
 
     private var card: Card
     private var details: CardDetailDisplay

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeckHistoryPopup: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class DeckHistoryPopup: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!

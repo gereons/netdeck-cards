@@ -10,7 +10,7 @@ import InAppSettingsKit
 import SVProgressHUD
 import SwiftyUserDefaults
 
-class Settings {
+final class Settings {
     static var viewController: IASKAppSettingsViewController = {
         let iask = Settings.iask
         delegate = SettingsDelegate()
@@ -33,7 +33,7 @@ class Settings {
     private static var delegate: SettingsDelegate!
 }
 
-class SettingsDelegate: NSObject, IASKSettingsDelegate {
+final class SettingsDelegate: NSObject, IASKSettingsDelegate {
 
     override init() {
         super.init()

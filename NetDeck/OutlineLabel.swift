@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class OutlineLabel: UILabel {
+final class OutlineLabel: UILabel {
     private let outlineWidth: CGFloat = 2.0
     private let outlineColor = UIColor.systemBackground
     

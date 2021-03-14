@@ -10,7 +10,7 @@ import Alamofire
 import AlamofireNetworkActivityIndicator
 import SwiftyUserDefaults
 
-class Reachability {
+final class Reachability {
     static var manager: NetworkReachabilityManager?
     
     static func start() {
