@@ -79,6 +79,9 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.tableView.register(UINib(nibName: "SmallBrowserCell", bundle: nil), forCellReuseIdentifier: "smallBrowserCell")
         self.tableView.register(UINib(nibName: "LargeBrowserCell", bundle: nil), forCellReuseIdentifier: "largeBrowserCell")
+
+        let tableLongPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressOnTableview(_:)))
+        self.tableView.addGestureRecognizer(tableLongPress)
         
         self.collectionView.register(UINib(nibName: "BrowserImageCell", bundle: nil), forCellWithReuseIdentifier: "browserImageCell")
         self.collectionView.register(CollectionViewSectionHeader.nib(), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "sectionHeader")
@@ -216,7 +219,7 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
             self.collectionView.reloadData()
         }
     }
-    
+
     // MARK: - table view
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -253,6 +256,19 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
         let card = self.values[indexPath.section][indexPath.row]
         let rect = self.tableView.rectForRow(at: indexPath)
         CardImageViewPopover.show(for: card, from: rect, in: self, subView: self.tableView)
+    }
+
+    @objc private func longPressOnTableview(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+
+        let touchPoint = gesture.location(in: self.tableView)
+        if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+            let card = self.values[indexPath.section][indexPath.row]
+            let rect = self.tableView.rectForRow(at: indexPath)
+            CardImageViewPopover.show(for: card, from: rect, in: self, subView: self.tableView, showText: true)
+        }
     }
     
     // MARK: - collection view 
@@ -313,6 +329,9 @@ class BrowserResultViewController: UIViewController, UITableViewDelegate, UITabl
     func showPopup(for card: Card, in view: UIView, from rect: CGRect) {
         let sheet = UIAlertController.actionSheet(title: nil, message: nil)
         
+        sheet.addAction(UIAlertAction(title: "Show text version".localized()) { action in
+            CardImageViewPopover.show(for: card, from: rect, in: self, subView: self.collectionView, showText: true)
+        })
         sheet.addAction(UIAlertAction(title: "Find decks using this card".localized()) { action in
             NotificationCenter.default.post(name: Notifications.browserFind, object: self, userInfo: [ "code": card.code ])
         })

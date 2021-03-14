@@ -31,8 +31,9 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var mwlRightDistance: NSLayoutConstraint!
     @IBOutlet weak var mwlBottomDistance: NSLayoutConstraint!
     
-    private var card: Card!
+    private var card = Card.null()
     private var mwl = 0
+    private var showText = false
     
     private static var keyboardMonitor: KeyboardMonitor!
     private static var keyboardObserver: KeyboardObserver!
@@ -82,26 +83,26 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
     
     // MARK: - show/dismis
     
-    static func show(for card: Card, from rect: CGRect, in vc: UIViewController, subView view: UIView) {
-        show(for: card, mwl: nil, from: rect, in: vc, subView: view)
+    static func show(for card: Card, from rect: CGRect, in vc: UIViewController, subView view: UIView, showText: Bool = false) {
+        show(for: card, mwl: nil, from: rect, in: vc, subView: view, showText: showText)
     }
     
-    static func show(for card: Card, mwl: Int?, from rect: CGRect, in vc: UIViewController, subView view: UIView) {
+    static func show(for card: Card, mwl: Int?, from rect: CGRect, in vc: UIViewController, subView view: UIView, showText: Bool = false) {
         assert(CardImageViewPopover.popover == nil, "previous popover still visible?")
         
         let popover = CardImageViewPopover()
         popover.card = card
         popover.mwl = mwl ?? Defaults[.defaultMWL]
+        popover.showText = showText
         
         popover.modalPresentationStyle = .popover
-        if let pres = popover.popoverPresentationController {
-            pres.sourceRect = rect
-            pres.sourceView = view
-            pres.permittedArrowDirections = [.left, .right]
-            pres.delegate = popover
+        if let presentation = popover.popoverPresentationController {
+            presentation.sourceRect = rect
+            presentation.sourceView = view
+            presentation.permittedArrowDirections = [.left, .right]
+            presentation.delegate = popover
         }
-         popover.preferredContentSize = CGSize(width: Int(ImageCache.width*popoverScale), height: Int(ImageCache.height*popoverScale))
-//        popover.preferredContentSize = CGSize(width: ImageCache.width, height: ImageCache.height)
+        popover.preferredContentSize = CGSize(width: Int(ImageCache.width*popoverScale), height: Int(ImageCache.height*popoverScale))
         CardImageViewPopover.popover = popover
         
         vc.present(popover, animated:false, completion:nil)
@@ -154,9 +155,17 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
         self.mwlLabel.layer.cornerRadius = 3
         self.mwlLabel.layer.masksToBounds = true
         self.mwlLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 9, weight: UIFont.Weight.bold)
-        
-        self.activityIndicator.startAnimating()
-        self.loadCardImage(self.card)
+
+        self.packLabel.text = card.packName
+
+        if !showText {
+            self.activityIndicator.startAnimating()
+            self.loadCardImage(self.card)
+        } else {
+            CardDetailView.setup(from: self, card: self.card)
+            self.detailView.isHidden = false
+            self.imageView.image = ImageCache.placeholder(for: card.role)
+        }
     }
     
     @objc func imgTap(_ sender: UITapGestureRecognizer) {
@@ -170,7 +179,6 @@ class CardImageViewPopover: UIViewController, UIPopoverPresentationControllerDel
             if self.card.code == card.code {
                 self.activityIndicator.stopAnimating()
                 self.imageView.image = img
-                self.packLabel.text = card.packName
                 
                 self.detailView.isHidden = true
                 if placeholder {
