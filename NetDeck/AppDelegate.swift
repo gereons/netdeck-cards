@@ -248,7 +248,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Defaults.registerDefault(.rotationActive, true)
-        Defaults.registerDefault(.rotationIndex, 0)
+        Defaults.registerDefault(.rotationIndex, 3)
         Defaults.registerDefault(.convertCore, true)
         
         Defaults.registerDefault(.lastDownload, "never".localized())
@@ -278,7 +278,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Defaults.registerDefault(.numOriginalCore, 0)
         Defaults.registerDefault(.numRevisedCore, 0)
-        Defaults.registerDefault(.numSC19, 3)
+        Defaults.registerDefault(.numSC19, 0)
         
         Defaults.registerDefault(.identityTable, true)
     }

@@ -25,8 +25,9 @@ import SwiftyUserDefaults
     private(set) var isDraft = false
     
     private var lastChanges = DeckChangeSet()
-    fileprivate(set) var convertedToCore2 = false
-    fileprivate(set) var convertedToSC19 = false
+    private(set) var convertedToCore2 = false
+    private(set) var convertedToSC19 = false
+    private(set) var convertedToSU21 = false
     
     override private init() { }
     
@@ -348,6 +349,8 @@ import SwiftyUserDefaults
         newDeck.revisions = self.revisions.map({ $0.copy() as! DeckChangeSet })
         newDeck.modified = true
         newDeck.convertedToCore2 = self.convertedToCore2
+        newDeck.convertedToSC19 = self.convertedToSC19
+        newDeck.convertedToSU21 = self.convertedToSU21
         
         return newDeck
     }
@@ -519,6 +522,7 @@ import SwiftyUserDefaults
             // #warning("is this the right thing to do?")
             deck.convertToRevisedCore()
             deck.convertToSC19()
+            deck.convertToSU21()
 
             let formatter = DateFormatter()
             formatter.dateFormat = NetrunnerDbDeck.dateFormat
@@ -639,6 +643,7 @@ import SwiftyUserDefaults
         self.legality = legality
         self.convertedToCore2 = decoder.decodeBool(forKey: "convertedToCore2")
         self.convertedToSC19 = decoder.decodeBool(forKey: "convertedToSC19")
+        self.convertedToSU21 = decoder.decodeBool(forKey: "convertedToSU21")
         
         self.modified = false
     }
@@ -666,6 +671,7 @@ import SwiftyUserDefaults
         
         coder.encode(self.convertedToCore2, forKey: "convertedToCore2")
         coder.encode(self.convertedToSC19, forKey: "convertedToSC19")
+        coder.encode(self.convertedToSU21, forKey: "convertedToSU21")
     }
 
     // -
@@ -1015,22 +1021,23 @@ extension Deck {
 
 // MARK: - rotation support
 extension Deck {
-    func containsOldCore() -> Bool {
-        for cc in self.allCards {
-            if cc.card.packCode == PackManager.core {
-                return true
-            }
-        }
-        return false
+    func containsOriginalCore() -> Bool {
+        let index = self.allCards.firstIndex(where: { $0.card.packCode == PackManager.core })
+        return index != nil
     }
 
-    func containsCore2() -> Bool {
-        for cc in self.allCards {
-            if cc.card.packCode == PackManager.core2 {
-                return true
-            }
-        }
-        return false
+    func containsRevisedCore() -> Bool {
+        let index = self.allCards.firstIndex(where: { $0.card.packCode == PackManager.core2 })
+        return index != nil
+    }
+
+    func containsSystemCore19() -> Bool {
+        let index = self.allCards.firstIndex(where: { $0.card.packCode == PackManager.sc19 })
+        return index != nil
+    }
+
+    func containsAnyCore() -> Bool {
+        return containsOriginalCore() || containsRevisedCore() || containsSystemCore19()
     }
     
     func convertToRevisedCore() {
@@ -1056,5 +1063,9 @@ extension Deck {
 
             self.convertedToSC19 = true
         }
+    }
+
+    func convertToSU21() {
+        #warning("fixme")
     }
 }

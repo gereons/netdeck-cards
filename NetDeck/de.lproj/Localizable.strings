@@ -278,6 +278,7 @@
 "Core Set and Deluxe Expansions" = "Grundspiel und Deluxe-Erweiterungen";
 "Number of Core Sets" = "Anzahl Grundspiele";
 "Number of Revised Core Sets" = "Anzahl überarbeitete Grundspiele";
+"Number of System Core 2019 Sets" = "Anzahl System Core 2019 Sets";
 "Draft Identities" = "Draft-Identitäten";
 "Include Draft Identities" = "Draft-Identitäten benutzen";
 
@@ -379,10 +380,14 @@
 "Older MWLs" = "Ältere MWLs";
 " (Active)" = " (Aktiv)";
 
+// presets
+"Tournament formats" = "Turnierformate";
+
 // rotation support
 "Convert Deck" = "Deck konvertieren";
 "Convert this deck to use Revised Core Set cards?" = "Dieses Deck auf das überarbeitete Grundspiel konvertieren?";
 "Convert this deck to use System Core 2019 cards?" = "Dieses Deck auf System Core 2019 konvertieren?";
+"Convert this deck to use System Update 2021 cards?" = "Dieses Deck auf System Update 2021 konvertieren?";
 
 // champion decks
 "World Champion 2015 Runner" = "Weltmeister-Deck 2015 Runner";

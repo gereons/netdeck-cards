@@ -168,7 +168,7 @@ final class PackManager {
         }
 
         defaults[Pack.use + PackManager.uprisingBooster] = false
-        defaults[Pack.use + PackManager.magnumOpusReprint] = false
+        defaults[Pack.use + PackManager.magnumOpus] = false
         defaults[Pack.use + PackManager.terminalDirectiveCampaign] = false
         return defaults
     }
@@ -328,6 +328,7 @@ final class PackManager {
         var collapsedSections = [Bool](repeating: true, count: count)
         if count > 0 {
             collapsedSections[0] = false
+            collapsedSections[count - 1] = false
         }
         if count > 1 {
             collapsedSections[1] = false

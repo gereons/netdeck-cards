@@ -217,8 +217,9 @@ final class CardFilterPopover: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var value = self.values[indexPath.section][indexPath.row]
         
-        // is this the first ("Any") cell?
-        var anyCell = indexPath.row == 0 && indexPath.section == 0
+        // is this the last ("Any") cell?
+        var anyCell = indexPath.section == self.values.count - 1
+            && indexPath.row == self.values[indexPath.section].count - 1
         
         // if not, and we adding a new selection, and we're 1 shy of checking all possible values, treat as a tap on "Any"
         if !anyCell && !self.selectedValues.contains(value) && self.selectedValues.count == self.totalEntries - 2 {

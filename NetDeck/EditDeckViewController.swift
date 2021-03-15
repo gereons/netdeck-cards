@@ -109,10 +109,13 @@ final class EditDeckViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.flashScrollIndicators()
         
         assert(self.navigationController?.viewControllers.count == 2, "oops")
-        
-        let offerConversion2 = Defaults[.rotationActive] && Defaults[.convertCore] && self.deck.containsOldCore() && !self.deck.convertedToCore2
+
+        let offer = Defaults[.rotationActive] && Defaults[.convertCore]
+        let offerConversion2 = offer && self.deck.containsOriginalCore() && !self.deck.convertedToCore2
         if offerConversion2 {
-            let alert = UIAlertController(title: "Convert Deck".localized(), message: "Convert this deck to use Revised Core Set cards?".localized(), preferredStyle: .alert)
+            let alert = UIAlertController(title: "Convert Deck".localized(),
+                                          message: "Convert this deck to use Revised Core Set cards?".localized(),
+                                          preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
                 self.deck.convertToRevisedCore()
@@ -126,12 +129,33 @@ final class EditDeckViewController: UIViewController, UITableViewDelegate, UITab
             self.present(alert, animated: false, completion: nil)
         }
 
-        let offerConversion19 = Defaults[.rotationActive] && Defaults[.convertCore] && self.deck.containsOldCore() && !self.deck.convertedToSC19
+        let offerConversion19 = offer &&
+            (self.deck.containsOriginalCore() || self.deck.containsRevisedCore()) && !self.deck.convertedToSC19
         if offerConversion19 {
-            let alert = UIAlertController(title: "Convert Deck".localized(), message: "Convert this deck to use System Core 2019 cards?".localized(), preferredStyle: .alert)
+            let alert = UIAlertController(title: "Convert Deck".localized(),
+                                          message: "Convert this deck to use System Core 2019 cards?".localized(),
+                                          preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
                 self.deck.convertToSC19()
+
+                if self.deck.modified {
+                    self.refreshDeck()
+                }
+            })
+            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
+
+            self.present(alert, animated: false, completion: nil)
+        }
+
+        let offerConversion21 = offer && self.deck.containsAnyCore() && !self.deck.convertedToSU21
+        if offerConversion21 {
+            let alert = UIAlertController(title: "Convert Deck".localized(),
+                                          message: "Convert this deck to use System Update 2021 cards?".localized(),
+                                          preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
+                self.deck.convertToSU21()
 
                 if self.deck.modified {
                     self.refreshDeck()

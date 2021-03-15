@@ -51,31 +51,16 @@ final class SetSelectionViewController: UIViewController, UITableViewDataSource,
     }
     
     @objc func showPresets(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Tournament formats".localized(), message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(.action(title: "All".localized()) { action in
-            self.enableAll()
+        alert.addAction(.action(title: "Standard".localized()) { action in
+            self.setStandard()
         })
 
         alert.addAction(.action(title: "Startup (2021)") { action in
             self.setStartup(2021)
         })
 
-//        alert.addAction(UIAlertAction(title: "Cache Refresh C&C".localized()) { action in
-//            self.setCacheRefresh(PackManager.creationAndControl)
-//        })
-//        alert.addAction(UIAlertAction(title: "Cache Refresh H&P".localized()) { action in
-//            self.setCacheRefresh(PackManager.honorAndProfit)
-//        })
-//        alert.addAction(UIAlertAction(title: "Cache Refresh O&C".localized()) { action in
-//            self.setCacheRefresh(PackManager.orderAndChaos)
-//        })
-//        alert.addAction(UIAlertAction(title: "Cache Refresh D&D".localized()) { action in
-//            self.setCacheRefresh(PackManager.dataAndDestiny)
-//        })
-//        alert.addAction(UIAlertAction(title: "Modded".localized()) { action in
-//            self.setModded()
-//        })
         alert.addAction(UIAlertAction.actionSheetCancel(nil))
 
         let popover = alert.popoverPresentationController
@@ -136,7 +121,7 @@ final class SetSelectionViewController: UIViewController, UITableViewDataSource,
         self.tableView.reloadData()
     }
     
-    private func enableAll() {
+    private func setStandard() {
         self.changeCoreSets(.useCore, .numOriginalCore, 3)
         self.changeCoreSets(.useCore2, .numRevisedCore, 3)
         self.changeCoreSets(.useSC19, .numSC19, 3)
@@ -151,6 +136,12 @@ final class SetSelectionViewController: UIViewController, UITableViewDataSource,
                 self.changeCoreSets(.useCore, .numOriginalCore, 0)
                 self.changeCoreSets(.useSC19, .numSC19, 0)
                 Defaults[.useCore2] = true
+            case RotationManager.r2021:
+                self.changeCoreSets(.useCore, .numOriginalCore, 0)
+                self.changeCoreSets(.useCore2, .numRevisedCore, 0)
+                self.changeCoreSets(.useSC19, .numSC19, 0)
+                Defaults[.useCore2] = false
+                Defaults[.useSC19] = false
             default:
                 self.changeCoreSets(.useCore, .numOriginalCore, 0)
                 self.changeCoreSets(.useCore2, .numRevisedCore, 0)
@@ -166,7 +157,7 @@ final class SetSelectionViewController: UIViewController, UITableViewDataSource,
         
         Defaults.set(false, forKey: Pack.use + PackManager.draft)
         Defaults.set(false, forKey: Pack.use + PackManager.uprisingBooster)
-        Defaults.set(false, forKey: Pack.use + PackManager.magnumOpusReprint)
+        Defaults.set(false, forKey: Pack.use + PackManager.magnumOpus)
         Defaults.set(false, forKey: Pack.use + PackManager.napd)
         Defaults.set(false, forKey: Pack.use + PackManager.terminalDirectiveCampaign)
 
