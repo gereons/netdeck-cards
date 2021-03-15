@@ -7,6 +7,9 @@ BEGIN {
   h1 { font-size: 110% }\n\
   h2 { font-size: 100% }\n\
   h1,h2 { margin: 0; padding: 0}\n\
+  @media (prefers-color-scheme: dark) {\n\
+    * { background-color: #000; color: #fff; }\n\
+  }\n\
 </style>\n\
 </head><body><pre>";
 }

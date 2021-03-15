@@ -178,7 +178,6 @@
 		3ADDFF7A1E1C20170001B1C4 /* CompareDecksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADDFF791E1C20170001B1C4 /* CompareDecksList.swift */; };
 		3ADE6F7922355CEA00DE0616 /* mwl.json in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE6F7822355CEA00DE0616 /* mwl.json */; };
 		3ADE90A118775A77006E187F /* CardImageViewPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ADE909E18775A77006E187F /* CardImageViewPopover.xib */; };
-		3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */; };
 		3AE0B37324D6EA1500532804 /* Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0B37224D6EA1500532804 /* Rotation.swift */; };
 		3AE0B37524D6F23F00532804 /* rotations.json in Resources */ = {isa = PBXBuildFile; fileRef = 3AE0B37424D6F23E00532804 /* rotations.json */; };
 		3AE0C75B1C77B4AA0039B466 /* OctgnImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */; };
@@ -404,7 +403,6 @@
 		3ADDFF791E1C20170001B1C4 /* CompareDecksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompareDecksList.swift; sourceTree = "<group>"; };
 		3ADE6F7822355CEA00DE0616 /* mwl.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mwl.json; sourceTree = "<group>"; };
 		3ADE909E18775A77006E187F /* CardImageViewPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardImageViewPopover.xib; sourceTree = "<group>"; };
-		3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DTCoreTextFontOverrides.plist; sourceTree = "<group>"; };
 		3AE0B37224D6EA1500532804 /* Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rotation.swift; sourceTree = "<group>"; };
 		3AE0B37424D6F23E00532804 /* rotations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rotations.json; sourceTree = "<group>"; };
 		3AE0C75A1C77B4AA0039B466 /* OctgnImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OctgnImport.swift; sourceTree = "<group>"; };
@@ -541,7 +539,6 @@
 				3A4E0F901DBAA56E00C49FD4 /* netrunner.ttf */,
 				3AAD7D781D930154001821F5 /* NetDeck.entitlements */,
 				3AA0504919589F9B00DBDED6 /* Acknowledgements.html */,
-				3ADEA762184BA87B00E32456 /* DTCoreTextFontOverrides.plist */,
 				3A095E8D18BBC49C00C99FED /* Localizable.strings */,
 				3A3622691849320C007F2854 /* NetDeck-Info.plist */,
 				3A36226A1849320C007F2854 /* InfoPlist.strings */,
@@ -1113,7 +1110,6 @@
 				3A716291197289E7001755BF /* DeckDiffViewController.xib in Resources */,
 				3A36227D1849320C007F2854 /* Images.xcassets in Resources */,
 				3ABAD2FE1B83A6D7009E81F3 /* IphoneIdentityViewController.xib in Resources */,
-				3ADEA763184BA87B00E32456 /* DTCoreTextFontOverrides.plist in Resources */,
 				3A095E9118BBCB2200C99FED /* About.html in Resources */,
 				3A6D51D61A2284540004951E /* DeckHistoryPopup.xib in Resources */,
 				3A92DFD91CBA59EE0043F2F6 /* BrowserValuePicker.xib in Resources */,

@@ -49,9 +49,9 @@ post_install do |installer|
                 config.build_settings.delete('ARCHS')
             end
         end
-        project.build_configurations.each do |bc|
-            bc.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = deployment_target
-            bc.build_settings.delete('ARCHS')
+        project.build_configurations.each do |config|
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = deployment_target
+            config.build_settings.delete('ARCHS')
         end
     end
 end
