@@ -76,8 +76,8 @@ final class DataDownload: NSObject {
         self.sdcAlert = alert
 
         var style = UIActivityIndicatorView.Style.gray
-        if #available(iOS 13, *), UITraitCollection.current.userInterfaceStyle == .dark {
-            style = .white
+        if #available(iOS 13, *) {
+            style = .medium
         }
         let spinner = UIActivityIndicatorView(style: style)
         spinner.startAnimating()
