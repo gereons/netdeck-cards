@@ -115,7 +115,7 @@ final class IphoneStartViewController: UIViewController, UITableViewDataSource, 
         
         if self.filterText.count > 0 {
             let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", self.filterText)
-            let identityPredicate = NSPredicate(format: "(identity.name CONTAINS[cd] %@) or (identity.englishName CONTAINS[cd] %@)", self.filterText, self.filterText)
+            let identityPredicate = NSPredicate(format: "identity.name CONTAINS[cd] %@", self.filterText)
             let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [namePredicate, identityPredicate])
             runnerDecks = runnerDecks.filter { predicate.evaluate(with: $0) }
             corpDecks = corpDecks.filter { predicate.evaluate(with: $0) }

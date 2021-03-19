@@ -60,26 +60,13 @@ final class CardList {
             if legality != .cacheRefresh && legality != .modded {
                 self.addPrebuilts(for: role, includeIdentities: browser)
             }
-            if Defaults[.rotationActive] {
-                self.filterReplacedCards()
-                self.filterRotation()
-                if Defaults[.useSC19] {
-                    self.filterNameDuplicates()
-                }
-
-                if Defaults[.rotationIndex] == RotationManager.r2018 && !Defaults[.useSC19] {
-                    // make owned cards that are in SC19 available again
-                    self.addOwnedCardsInSC19(allCards)
-                }
-            }
         case .all:
             self.filterDraft()
-            self.filterRotation()
-            if Defaults[.rotationIndex] == RotationManager.r2018 {
-                self.filterNameDuplicates()
-            }
         }
 
+        if Defaults[.rotationActive] {
+            self.filterRotation()
+        }
         self.sortCards()
         self.clearFilters()
     }
@@ -116,10 +103,7 @@ final class CardList {
 
     private func addPrebuilts(for role: Role, includeIdentities: Bool) {
         for pb in Prebuilt.ownedPrebuilts {
-            for var code in pb.cards.keys {
-                if Defaults[.useCore2] {
-                    code = Card.originalToRevised[code] ?? code
-                }
+            for code in pb.cards.keys {
                 if let card = CardManager.cardBy(code) {
                     if Defaults[.rotationActive] {
                         if PackManager.rotatedPackCodes().contains(card.packCode) {
@@ -154,42 +138,6 @@ final class CardList {
         }
     }
 
-    private func filterReplacedCards() {
-        let codes = Set(self.initialCards.map { $0.code })
-        self.initialCards = self.initialCards.filter { card in
-            if let replaced = card.replacedBy {
-                return codes.contains(replaced)
-            } else {
-                return true
-            }
-        }
-    }
-
-    private func filterNameDuplicates() {
-        // find cards by duplicate names, remove the one with the lower code
-        var dupes = [Card]()
-        for card in self.initialCards.filter({ $0.packCode == PackManager.sc19 }) {
-            let d = self.initialCards.filter { card.name == $0.name && card.code != $0.code }
-            dupes.append(contentsOf: d)
-        }
-
-        let dupeCodes = dupes.map { $0.code }
-        self.initialCards.removeAll { dupeCodes.contains($0.code) }
-    }
-
-    // make owned cards that are in SC19 available again
-    private func addOwnedCardsInSC19(_ allCards: [Card]) {
-        let owned = allCards.filter { Defaults.bool(forKey: Pack.use + $0.packCode) && $0.replacedBy != nil }
-
-        for card in owned {
-            if let replCode = card.replacedBy, let replacement = CardManager.cardBy(replCode) {
-                if replacement.packCode == PackManager.sc19 {
-                    self.initialCards.append(replacement)
-                }
-            }
-        }
-    }
-    
     private func applyBans(_ mwl: Int) {
         self.initialCards = self.initialCards.filter { !$0.banned(mwl) }
     }
@@ -357,7 +305,6 @@ final class CardList {
             case .all:
                 predicate = NSPredicate(format:"""
                     (name CONTAINS[cd] %@) OR
-                    (englishName CONTAINS[cd] %@) OR
                     (text CONTAINS[cd] %@) OR
                     (ANY aliases CONTAINS[cd] %@) OR
                     (strippedText CONTAINS[cd] %@)
@@ -366,7 +313,6 @@ final class CardList {
             case .name:
                 predicate = NSPredicate(format:"""
                     (name CONTAINS[cd] %@) OR
-                    (englishName CONTAINS[cd] %@) OR
                     (ANY aliases CONTAINS[cd] %@)
                     """,
                     text, text, text)

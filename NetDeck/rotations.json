@@ -17,6 +17,7 @@
         "code": "rotation-2018",
         "name": "2018 (Terminal Directive)",
         "cycles": [
+            "core",
             "genesis", "spin",
             "terminal-directive"
         ],
@@ -32,6 +33,8 @@
         "code": "rotation-2019",
         "name": "2019 (Lunar + C&C)",
         "cycles": [
+            "core",
+            "core2",
             "genesis", "spin",
             "terminal-directive",
             "lunar", "creation-and-control"
@@ -50,6 +53,9 @@
         "code": "rotation-2021",
         "name": "2021 (Sansan + H&P)",
         "cycles": [
+            "core",
+            "core2",
+            "sc19",
             "genesis", "spin",
             "terminal-directive",
             "lunar", "creation-and-control",

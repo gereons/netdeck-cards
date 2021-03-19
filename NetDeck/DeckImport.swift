@@ -193,20 +193,18 @@ final class DeckImport: NSObject {
                 name = line
             }
             
-            for var c in cards {
+            for card in cards {
                 // don't bother checking cards of the opposite role (as soon as we know this deck's role)
-                let roleOk = deck.role == .none || deck.role == c.role
+                let roleOk = deck.role == .none || deck.role == card.role
                 if !roleOk {
                     continue
                 }
                 
-                let range =
-                    line.range(of: c.englishName, options:[.caseInsensitive,.diacriticInsensitive]) ??
-                    line.range(of: c.name, options:[.caseInsensitive,.diacriticInsensitive])
+                let range = line.range(of: card.name, options:[.caseInsensitive,.diacriticInsensitive])
                 
                 if range != nil {
-                    if c.type == .identity {
-                        deck.addCard(c, copies:1)
+                    if card.type == .identity {
+                        deck.addCard(card, copies:1)
                         // NSLog(@"found identity %@", c.name);
                     } else {
                         if let match = self.findMatch(in: line, regexes: regexes), match.numberOfRanges == 2 {
@@ -214,13 +212,9 @@ final class DeckImport: NSObject {
                             let count = l.substring(with: match.range(at: 1))
                             // NSLog(@"found card %@ x %@", count, c.name);
 
-                            if Defaults[.useCore2], let newCode = Card.originalToRevised[c.code] {
-                                c = CardManager.cardBy(newCode) ?? c
-                            }
-                            
                             let max = deck.isDraft ? 100 : 4;
                             if let cnt = Int(count), cnt > 0 && cnt < max {
-                                deck.addCard(c, copies: cnt)
+                                deck.addCard(card, copies: cnt)
                             }
                             
                             break

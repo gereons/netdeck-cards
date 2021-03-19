@@ -305,10 +305,7 @@ final class PackManager {
             if cycle.code == draft && !useDraft {
                 continue
             }
-            if rotationActive && (cycle.rotated || cycle.code == PackManager.core) {
-                continue
-            }
-            if !rotationActive && cycle.code == PackManager.core2 {
+            if rotationActive && cycle.rotated {
                 continue
             }
             sections.append(cycle.name)

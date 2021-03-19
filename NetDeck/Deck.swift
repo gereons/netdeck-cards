@@ -25,10 +25,7 @@ import SwiftyUserDefaults
     private(set) var isDraft = false
     
     private var lastChanges = DeckChangeSet()
-    private(set) var convertedToCore2 = false
-    private(set) var convertedToSC19 = false
-    private(set) var convertedToSU21 = false
-    
+
     override private init() { }
     
     init(role: Role) {
@@ -348,10 +345,7 @@ import SwiftyUserDefaults
         newDeck.lastChanges = self.lastChanges.copy() as! DeckChangeSet
         newDeck.revisions = self.revisions.map({ $0.copy() as! DeckChangeSet })
         newDeck.modified = true
-        newDeck.convertedToCore2 = self.convertedToCore2
-        newDeck.convertedToSC19 = self.convertedToSC19
-        newDeck.convertedToSU21 = self.convertedToSU21
-        
+
         return newDeck
     }
     
@@ -519,10 +513,6 @@ import SwiftyUserDefaults
             }
 
             deck.legality = DeckLegality.standard(mwl: mwl)
-            // #warning("is this the right thing to do?")
-            deck.convertToRevisedCore()
-            deck.convertToSC19()
-            deck.convertToSU21()
 
             let formatter = DateFormatter()
             formatter.dateFormat = NetrunnerDbDeck.dateFormat
@@ -641,10 +631,7 @@ import SwiftyUserDefaults
         }
 
         self.legality = legality
-        self.convertedToCore2 = decoder.decodeBool(forKey: "convertedToCore2")
-        self.convertedToSC19 = decoder.decodeBool(forKey: "convertedToSC19")
-        self.convertedToSU21 = decoder.decodeBool(forKey: "convertedToSU21")
-        
+
         self.modified = false
     }
     
@@ -668,10 +655,6 @@ import SwiftyUserDefaults
         
         // can't use bool here for backwards compatibility when CacheRefresh was an Int-based enum
         coder.encode(self.legality == .cacheRefresh ? 1 : 0, forKey: "cacheRefresh")
-        
-        coder.encode(self.convertedToCore2, forKey: "convertedToCore2")
-        coder.encode(self.convertedToSC19, forKey: "convertedToSC19")
-        coder.encode(self.convertedToSU21, forKey: "convertedToSU21")
     }
 
     // -
@@ -1038,34 +1021,5 @@ extension Deck {
 
     func containsAnyCore() -> Bool {
         return containsOriginalCore() || containsRevisedCore() || containsSystemCore19()
-    }
-    
-    func convertToRevisedCore() {
-        for cc in self.allCards {
-            if let newCode = Card.originalToRevised[cc.card.code], let newCard = CardManager.cardBy(newCode) {
-                // print("replacing \(cc.card.name) \(cc.card.code) -> \(newCard.name) \(newCard.code)")
-                self.addCard(cc.card, copies: 0)
-                self.addCard(newCard, copies: cc.count)
-            }
-
-            self.convertedToCore2 = true
-        }
-    }
-
-    func convertToSC19() {
-        self.convertToRevisedCore()
-        for cc in self.allCards {
-            if let newCode = Card.revisedToSC19[cc.card.code], let newCard = CardManager.cardBy(newCode) {
-                // print("replacing \(cc.card.name) \(cc.card.code) -> \(newCard.name) \(newCard.code)")
-                self.addCard(cc.card, copies: 0)
-                self.addCard(newCard, copies: cc.count)
-            }
-
-            self.convertedToSC19 = true
-        }
-    }
-
-    func convertToSU21() {
-        #warning("fixme")
     }
 }

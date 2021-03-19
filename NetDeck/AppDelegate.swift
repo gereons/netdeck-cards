@@ -102,6 +102,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // CardManager.removeFiles()
         // Defaults[.downloadOnFirstStartDone] = false
 
+        _ = RotationManager.setupFromFiles()
         let setsOk = PackManager.setupFromFiles()
         print("app start, setsOk=\(setsOk)")
         if setsOk {
@@ -111,7 +112,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Prebuilt.initialize()
         _ = MWLManager.setupFromFiles()
-        _ = RotationManager.setupFromFiles()
 
         if !Defaults[.downloadOnFirstStartDone] && Reachability.online {
             Defaults[.downloadOnFirstStartDone] = true

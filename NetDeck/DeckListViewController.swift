@@ -235,62 +235,26 @@ final class DeckListViewController: UIViewController, UITableViewDataSource, UIT
             self.footerView.layer.opacity = 1
         }
 
-        let offer = Defaults[.rotationActive] && Defaults[.convertCore]
-        
-        let offerConversion2 = offer && self.deck.containsOriginalCore() && !self.deck.convertedToCore2
-        if offerConversion2 {
-            let alert = UIAlertController(title: "Convert Deck".localized(),
-                                          message: "Convert this deck to use Revised Core Set cards?".localized(),
-                                          preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
-                self.deck.convertToRevisedCore()
-                
-                if self.deck.modified {
-                    NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
-                }
-            })
-            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
-            
-            self.present(alert, animated: false, completion: nil)
-        }
+        let _ = Defaults[.rotationActive] && Defaults[.convertCore]
+        #warning("IMPLEMENTME")
 
-        let offerConversion19 = offer &&
-            (self.deck.containsOriginalCore() || self.deck.containsRevisedCore()) && !self.deck.convertedToSC19
-        if offerConversion19 {
-            let alert = UIAlertController(title: "Convert Deck".localized(),
-                                          message: "Convert this deck to use System Core 2019 cards?".localized(),
-                                          preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
-                self.deck.convertToSC19()
-
-                if self.deck.modified {
-                    NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
-                }
-            })
-            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
-
-            self.present(alert, animated: false, completion: nil)
-        }
-
-        let offerConversion21 = offer && self.deck.containsAnyCore() && !self.deck.convertedToSU21
-        if offerConversion21 {
-            let alert = UIAlertController(title: "Convert Deck".localized(),
-                                          message: "Convert this deck to use System Update 2021 cards?".localized(),
-                                          preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
-                self.deck.convertToSU21()
-
-                if self.deck.modified {
-                    NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
-                }
-            })
-            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
-
-            self.present(alert, animated: false, completion: nil)
-        }
+//        let offerConversion21 = offer && self.deck.containsAnyCore() && !self.deck.convertedToSU21
+//        if offerConversion21 {
+//            let alert = UIAlertController(title: "Convert Deck".localized(),
+//                                          message: "Convert this deck to use System Update 2021 cards?".localized(),
+//                                          preferredStyle: .alert)
+//
+//            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
+//                self.deck.convertToSU21()
+//
+//                if self.deck.modified {
+//                    NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
+//                }
+//            })
+//            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
+//
+//            self.present(alert, animated: false, completion: nil)
+//        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {

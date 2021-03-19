@@ -38,8 +38,6 @@ struct Prebuilt {
         for p in ownedPrebuilts {
             if let c = p.cards[card.code] {
                 return c
-            } else if let code2 = Card.originalToRevised[card.code], let c = p.cards[code2] {
-                return c
             }
         }
         return 0

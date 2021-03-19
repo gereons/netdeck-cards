@@ -135,14 +135,14 @@ final class JintekiNet {
         for cc in deck.cards {
             let c = NSMutableDictionary()
             c["qty"] = cc.count
-            c["card"] = cc.card.englishName
+            c["card"] = cc.card.name
             cards.add(c)
         }
         
         var id = [String: Any]()
         let identity = deck.identity ?? Card.null()
         
-        id["title"] = Card.fullNames[identity.code] ?? identity.englishName
+        id["title"] = Card.fullNames[identity.code] ?? identity.name
         id["code"] = identity.code
         id["side"] = identity.role == .runner ? "Runner" : "Corp"
         id["influencelimit"] = identity.influenceLimit

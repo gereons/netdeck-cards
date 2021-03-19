@@ -14,7 +14,6 @@ final class Card: NSObject {
     @objc private(set) var code = ""
     @objc private(set) var name = ""            // localized name of card, used for display
     private(set) var foldedName = ""            // lowercased, no diacritics, for sorting (e.g. "Déjà vu" -> "deja vu")
-    @objc private(set) var englishName = ""     // english name of card, used for searches
 
     @objc private(set) var aliases = [String]()
     @objc private(set) var text = ""
@@ -50,9 +49,6 @@ final class Card: NSObject {
     private var factionCode = ""
     private var typeCode = ""
 
-    private(set) var replaces: String?               // revised core card, replaces old card
-    private(set) var replacedBy: String?             // old card, replaced by Revised core
-    
     @objc private(set) var packCode = ""
     private(set) var quantity = -1             // number of cards in set
     
@@ -127,23 +123,17 @@ final class Card: NSObject {
     var owned: Int {
         let prebuiltOwned = Prebuilt.owned(self)
 
-        var oldOwned = 0
-        if Defaults[.useCore], let replaces = self.replaces {
-            let card = CardManager.cardBy(replaces, useReplacements: false)
-            oldOwned = card?.owned ?? 0
-        }
-
         if self.packCode == PackManager.core {
             let cores = Defaults[.numOriginalCore]
-            return (cores * self.quantity) + prebuiltOwned + oldOwned
+            return (cores * self.quantity) + prebuiltOwned
         }
         if self.packCode == PackManager.core2 {
             let cores = Defaults[.numRevisedCore]
-            return (cores * self.quantity) + prebuiltOwned + oldOwned
+            return (cores * self.quantity) + prebuiltOwned
         }
         if self.packCode == PackManager.sc19 {
             let cores = Defaults[.numSC19]
-            return (cores * self.quantity) + prebuiltOwned + oldOwned
+            return (cores * self.quantity) + prebuiltOwned
         }
 
         let disabledPacks = PackManager.disabledPackCodes()
@@ -151,7 +141,7 @@ final class Card: NSObject {
             return prebuiltOwned
         }
 
-        return self.quantity + prebuiltOwned + oldOwned
+        return self.quantity + prebuiltOwned
     }
     
     var isRotated: Bool {
@@ -222,7 +212,6 @@ extension Card {
         self.init()
         
         self.code = card.code
-        self.englishName = card.title
         self.name = card.title
         self.foldedName = name.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale.current)
         
@@ -235,7 +224,7 @@ extension Card {
         self.type = Codes.typeFor(code: self.typeCode)
         
         if self.type == .identity {
-            Card.fullNames[self.code] = self.englishName
+            Card.fullNames[self.code] = self.name
             let factionName = self.faction == .weyland ? Faction.weylandConsortium : self.factionStr
             let shortName = Card.shortIdentityName(self.name, forRole: self.role, andFaction: factionName)
             self.name = shortName
@@ -300,26 +289,6 @@ extension Card {
         }
         
         self.imageUrl = card.image_url
-
-        if let replaces = Card.revisedToOriginal[self.code] {
-            self.replaces = replaces
-            // print("\(self.name) \(self.code) replaces \(replaces)")
-        }
-
-        if let replacedBy = Card.originalToRevised[self.code] {
-            self.replacedBy = Card.revisedToSC19[replacedBy] ?? replacedBy
-            // print("\(self.name) \(self.code) is replaced by \(self.replacedBy)")
-        }
-
-        if let replaces = Card.sc19toRevised[self.code] {
-            self.replaces = replaces
-            // print("\(self.name) \(self.code) replaces \(replaces)")
-        }
-
-        if let replacedBy = Card.revisedToSC19[self.code] {
-            self.replacedBy = replacedBy
-            // print("\(self.name) \(self.code) is replaced by \(replacedBy)")
-        }
     }
 
     static func cardsFromJson(_ rawCards: ApiResponse<NetrunnerDbCard>) -> [Card] {

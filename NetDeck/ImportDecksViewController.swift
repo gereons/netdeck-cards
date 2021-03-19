@@ -364,9 +364,8 @@ final class ImportDecksViewController: UIViewController {
         
         if self.filterText.count > 0 {
             let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", filterText)
-            let identityPredicate = NSPredicate(format: "(identity.name CONTAINS[cd] %@) or (identity.englishName CONTAINS[cd] %@)",
-            filterText, filterText)
-            let cardPredicate = NSPredicate(format: "(ANY cards.card.name CONTAINS[cd] %@) OR (ANY cards.card.englishName CONTAINS[cd] %@)", filterText, filterText)
+            let identityPredicate = NSPredicate(format: "identity.name CONTAINS[cd] %@", filterText)
+            let cardPredicate = NSPredicate(format: "ANY cards.card.name CONTAINS[cd] %@", filterText)
             
             let predicate: NSPredicate
             switch self.searchScope {

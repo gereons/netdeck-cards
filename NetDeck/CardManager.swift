@@ -66,11 +66,7 @@ final class CardManager {
     }
 
     static func cardBy(_ code: String, useReplacements: Bool = true) -> Card? {
-        let card = allKnownCards[code]
-        if useReplacements, let replaced = card?.replacedBy {
-            return allKnownCards[replaced]
-        }
-        return card
+        return allKnownCards[code]
     }
     
     static func allCards() -> [Card] {
@@ -124,18 +120,6 @@ final class CardManager {
             for identity in Prebuilt.identities(for: role) {
                 if !allIdentities.contains(identity) && !disabledPackCodes.contains(identity.packCode) {
                     allIdentities.append(identity)
-                }
-            }
-        }
-
-        if Defaults[.rotationIndex] == RotationManager.r2018 && !Defaults[.useSC19] {
-            let owned = self.identitiesFor(role).filter { Defaults.bool(forKey: Pack.use + $0.packCode) && $0.replacedBy != nil }
-            for card in owned {
-                if let replCode = card.replacedBy, let replacement = CardManager.cardBy(replCode) {
-                    if replacement.packCode == PackManager.sc19 {
-                        allIdentities.append(replacement)
-                        allIdentities.removeAll { $0.code == replacement.replaces }
-                    }
                 }
             }
         }
@@ -242,18 +226,14 @@ final class CardManager {
 
         // add hard-coded aliases
         for (code, alias) in Card.aliases {
-            if let card = CardManager.cardBy(code) {
+            if let card = allKnownCards[code] {
                 card.addCardAlias(alias)
-            }
 
-            if let newCode = Card.originalToRevised[code], let card = CardManager.cardBy(newCode) {
-                card.addCardAlias(alias)
-                if let sc19code = Card.revisedToSC19[newCode], let card2 = CardManager.cardBy(sc19code) {
-                    card2.addCardAlias(alias)
+                // find other cards with the same name
+                let duplicates = allKnownCards.values.filter { $0.name == card.name && $0.code != card.code }
+                for dup in duplicates {
+                    allKnownCards[dup.code]?.addCardAlias(alias)
                 }
-            }
-            if let newCode = Card.revisedToSC19[code], let card = CardManager.cardBy(newCode) {
-                card.addCardAlias(alias)
             }
         }
     }
@@ -364,7 +344,7 @@ final class CardManager {
         return ok
     }
     
-    static func setupFromJson(_ rawCards: ApiResponse<NetrunnerDbCard>) -> Bool {
+    private static func setupFromJson(_ rawCards: ApiResponse<NetrunnerDbCard>) -> Bool {
         if !rawCards.valid {
             return false
         }
@@ -404,6 +384,30 @@ final class CardManager {
                 return c1.name < c2.name
             })
         }
+
+        #warning("GENERATE MAPPING")
+//        let newCards = cards.filter { $0.packCode == "sg" || $0.packCode == "su21" }
+//
+//        var convert = [(Card, Card)]()
+//        for card in cards {
+//            if card.packCode == "sg" || card.packCode == "su21" { continue }
+//
+//            if let newCard = newCards.first(where: { $0.name == card.name }) {
+//                convert.append((card, newCard))
+//            }
+//        }
+//
+//        convert.sort { c1, c2 in
+//            if c1.0.name == c2.0.name {
+//                return c1.0.code < c2.0.code
+//            }
+//            return c1.0.name < c2.0.name
+//        }
+//        print("let oldCoresToSU21 = [")
+//        for (old, new) in convert {
+//            print("    \"\(old.code)\": \"\(new.code)\" // \(old.name) - \(old.packName)")
+//        }
+//        print("]")
         
         return true
     }

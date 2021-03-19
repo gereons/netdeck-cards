@@ -158,7 +158,10 @@ final class DataDownload: NSObject {
             // }
             var ok = !self.downloadStopped && results.count == requests.count
             if ok {
-                ok = PackManager.setupFromNetrunnerDb(results[.cycles]!, results[.packs]!)
+                ok = RotationManager.setupFromNetrunnerDb(results[.rotations]!)
+                if ok {
+                    ok = PackManager.setupFromNetrunnerDb(results[.cycles]!, results[.packs]!)
+                }
                 // print("packs setup ok=\(ok)")
                 if ok {
                     ok = CardManager.setupFromNetrunnerDb(results[.cards]!)
@@ -166,9 +169,6 @@ final class DataDownload: NSObject {
                 }
                 if ok {
                     ok = MWLManager.setupFromNetrunnerDb(results[.mwl]!)
-                }
-                if ok {
-                    ok = RotationManager.setupFromNetrunnerDb(results[.rotations]!)
                 }
                 CardManager.setNextDownloadDate()
             }
