@@ -99,8 +99,8 @@ final class PackManager {
 
     static let core = "core"
     static let core2 = "core2"
-    static let sc19 = "sc19"
-    static let su21 = "su21"
+    static let systemCore19 = "sc19"
+    static let systemUpdate21 = "su21"
 
     static let systemGateway = "sg"
     static let uprising = "ur"
@@ -121,12 +121,12 @@ final class PackManager {
     static let bigBoxes = deluxeBoxes + campaignBoxes
     static let terminalDirectiveCampaign = "tdc"
 
-    static let cores = [ core, core2, sc19, su21 ]
+    static let cores = [ core, core2, systemCore19, systemUpdate21 ]
 
     static let cyclesFilename = "nrcycles2.json"
     static let packsFilename = "nrpacks2.json"
 
-    static let startup21 = [ su21, systemGateway, uprising, downfall ]
+    static let startup21 = [ systemUpdate21, systemGateway, uprising, downfall ]
     
     static private(set) var cacheRefreshCycles = [String]()
     
@@ -249,7 +249,7 @@ final class PackManager {
         for cycle in allCycles.values.sorted(by: { $0.position < $1.position }) {
             let packs = allPacks.filter { $0.cycleCode == cycle.code }
 
-            if [PackManager.core2, PackManager.sc19].contains(cycle.code) {
+            if [PackManager.core2, PackManager.systemCore19].contains(cycle.code) {
                 coreNames.append(cycle.name)
                 corePacks.append(packs)
             } else {
@@ -442,7 +442,7 @@ final class PackManager {
         let c2 = cycles.remove(at: core2Index)
         cycles.insert(c2, at: coreIndex + 1)
 
-        if let sc19index = cycles.firstIndex(where: { $0.code == PackManager.sc19}) {
+        if let sc19index = cycles.firstIndex(where: { $0.code == PackManager.systemCore19}) {
             let sc19 = cycles.remove(at: sc19index)
             cycles.insert(sc19, at: coreIndex + 2)
         }

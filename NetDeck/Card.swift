@@ -131,7 +131,7 @@ final class Card: NSObject {
             let cores = Defaults[.numRevisedCore]
             return (cores * self.quantity) + prebuiltOwned
         }
-        if self.packCode == PackManager.sc19 {
+        if self.packCode == PackManager.systemCore19 {
             let cores = Defaults[.numSC19]
             return (cores * self.quantity) + prebuiltOwned
         }

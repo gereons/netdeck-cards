@@ -848,7 +848,7 @@ extension Deck {
         var deckOk = true
         for cc in self.cards {
             let card = cc.card
-            let ok = card.packCode == PackManager.sc19 || PackManager.cycleForPack(card.packCode) == validCycle
+            let ok = card.packCode == PackManager.systemCore19 || PackManager.cycleForPack(card.packCode) == validCycle
             if !ok {
                 deckOk = false
             }
@@ -875,7 +875,7 @@ extension Deck {
             switch card.packCode {
             case PackManager.draft:
                 draftUsed = true
-            case PackManager.core, PackManager.core2, PackManager.sc19:
+            case PackManager.core, PackManager.core2, PackManager.systemCore19:
                 if cc.count > card.quantity {
                     coreCardsOverQuantity += 1
                 }
@@ -951,7 +951,7 @@ extension Deck {
                 draftUsed = true
             case PackManager.core, PackManager.core2:
                 oldCoreUsed = true
-            case PackManager.sc19, PackManager.reignAndReverie, PackManager.magnumOpus, PackManager.magnumOpusReprint:
+            case PackManager.systemCore19, PackManager.reignAndReverie, PackManager.magnumOpus, PackManager.magnumOpusReprint:
                 ()
             case _ where allowedDeluxe.contains(card.packCode):
                 let c = cardsFromDeluxe[card.packCode] ?? 0
@@ -1015,7 +1015,7 @@ extension Deck {
     }
 
     func containsSystemCore19() -> Bool {
-        let index = self.allCards.firstIndex(where: { $0.card.packCode == PackManager.sc19 })
+        let index = self.allCards.firstIndex(where: { $0.card.packCode == PackManager.systemCore19 })
         return index != nil
     }
 
