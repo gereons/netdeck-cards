@@ -386,6 +386,8 @@ final class CardManager {
         }
 
         #warning("GENERATE MAPPING")
+
+        self.createMappingTable(cards)
 //        let newCards = cards.filter { $0.packCode == "sg" || $0.packCode == "su21" }
 //
 //        var convert = [(Card, Card)]()
@@ -428,5 +430,56 @@ final class CardManager {
         _ = try? fileMgr.removeItem(atPath: filename())
     
         CardManager.initialize()
+    }
+}
+
+extension CardManager {
+    private static var replacementMap = [String: [String]]()
+
+    private static func createMappingTable(_ cards: [Card]) {
+        var cardsByName = [String: [Card]]()
+        for card in cards {
+            cardsByName[card.name, default:[]].append(card)
+        }
+
+        for card in cards {
+            // find replacements
+            guard let replacements = cardsByName[card.name], replacements.count > 1 else { continue }
+
+            replacementMap[card.code] = Array(replacements.map { $0.code }.sorted(by: <).dropFirst())
+        }
+
+//        for (code, repl) in replacementMap.prefix(10) {
+//            let original = allKnownCards[code]!
+//            print("\(original.name) (\(original.packCode), \(original.code)) -> ")
+//
+//            for r in repl {
+//                let rc = allKnownCards[r]!
+//                print("  \(rc.name) (\(rc.packCode), \(rc.code))")
+//            }
+//        }
+    }
+
+    private static func findNewestReplacement(for card: Card) -> Card {
+        if let repl = findNewestReplacement(for: card.code) {
+            return allKnownCards[repl] ?? card
+        }
+        return card
+    }
+
+    private static func findNewestReplacement(for code: String) -> String? {
+        guard let candidates = replacementMap[code] else {
+            return nil
+        }
+
+        print(candidates)
+        for candidate in candidates.reversed() {
+            guard let card = allKnownCards[candidate] else { continue }
+            if Defaults.bool(forKey: Pack.use + card.packCode) {
+                return candidate
+            }
+        }
+
+        return nil
     }
 }
