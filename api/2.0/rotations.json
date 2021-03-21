@@ -8,13 +8,16 @@
         "packs": [
             "core",
             "wla", "ta", "ce", "asis", "hs", "fp",
-            "om", "st", "mt", "tc", "fal", "dt"
-        ]
+            "om", "st", "mt", "tc", "fal", "dt",
+            "tdc"
+        ],
+        "date_start": "2017-10-01"
     },
     {
         "code": "rotation-2018",
         "name": "2018 (Terminal Directive)",
         "cycles": [
+            "core",
             "genesis", "spin",
             "terminal-directive"
         ],
@@ -22,13 +25,16 @@
             "core",
             "wla", "ta", "ce", "asis", "hs", "fp",
             "om", "st", "mt", "tc", "fal", "dt",
-            "core2", "td"
-        ]
+            "core2", "td", "tdc"
+        ],
+        "date_start": "2018-12-21"
     },
     {
         "code": "rotation-2019",
         "name": "2019 (Lunar + C&C)",
         "cycles": [
+            "core",
+            "core2",
             "genesis", "spin",
             "terminal-directive",
             "lunar", "creation-and-control"
@@ -37,9 +43,35 @@
             "core",
             "wla", "ta", "ce", "asis", "hs", "fp",
             "om", "st", "mt", "tc", "fal", "dt",
-            "core2", "td",
+            "core2", "td", "tdc",
             "cac",
             "up", "tsb", "fc", "uao", "atr", "ts"
-        ]
+        ],
+        "date_start": "2019-12-27"
+    },
+    {
+        "code": "rotation-2021",
+        "name": "2021 (Sansan + H&P)",
+        "cycles": [
+            "core",
+            "core2",
+            "sc19",
+            "genesis", "spin",
+            "terminal-directive",
+            "lunar", "creation-and-control",
+            "sansan", "honor-and-profit"
+        ],
+        "packs": [
+            "core",
+            "wla", "ta", "ce", "asis", "hs", "fp",
+            "om", "st", "mt", "tc", "fal", "dt",
+            "core2", "td", "tdc",
+            "cac",
+            "up", "tsb", "fc", "uao", "atr", "ts",
+            "hap",
+            "val", "bb", "cc", "uw", "oh", "uot",
+            "sc19", "sm"
+        ],
+        "date_start": "2021-03-28"
     }
 ]

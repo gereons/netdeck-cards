@@ -39,5 +39,5 @@ else
     git commit -m "update $DATE"
     git push
     git status
-    echo "don't forget to test and merge to master"
+    echo "don't forget to test and merge to main"
 fi
