@@ -1004,22 +1004,19 @@ extension Deck {
 
 // MARK: - rotation support
 extension Deck {
-    func containsOriginalCore() -> Bool {
-        let index = self.allCards.firstIndex(where: { $0.card.packCode == PackManager.core })
-        return index != nil
+    func containsUpdatableCards() -> Bool {
+        let replacement = allCards.first(where: { CardManager.findNewestReplacement(for: $0.card) != nil })
+
+        return replacement != nil
     }
 
-    func containsRevisedCore() -> Bool {
-        let index = self.allCards.firstIndex(where: { $0.card.packCode == PackManager.core2 })
-        return index != nil
-    }
-
-    func containsSystemCore19() -> Bool {
-        let index = self.allCards.firstIndex(where: { $0.card.packCode == PackManager.systemCore19 })
-        return index != nil
-    }
-
-    func containsAnyCore() -> Bool {
-        return containsOriginalCore() || containsRevisedCore() || containsSystemCore19()
+    func updateToNewest() {
+        for cc in allCards {
+            guard let newCard = CardManager.findNewestReplacement(for: cc.card) else { continue }
+            print("replacing: \(cc.card.name) \(cc.card.packCode)")
+            print("  with \(newCard.name) \(newCard.packCode)")
+            self.addCard(cc.card, copies: 0)
+            self.addCard(newCard, copies: cc.count)
+        }
     }
 }

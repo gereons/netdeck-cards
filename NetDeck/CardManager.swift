@@ -385,32 +385,8 @@ final class CardManager {
             })
         }
 
-        #warning("GENERATE MAPPING")
-
         self.createMappingTable(cards)
-//        let newCards = cards.filter { $0.packCode == "sg" || $0.packCode == "su21" }
-//
-//        var convert = [(Card, Card)]()
-//        for card in cards {
-//            if card.packCode == "sg" || card.packCode == "su21" { continue }
-//
-//            if let newCard = newCards.first(where: { $0.name == card.name }) {
-//                convert.append((card, newCard))
-//            }
-//        }
-//
-//        convert.sort { c1, c2 in
-//            if c1.0.name == c2.0.name {
-//                return c1.0.code < c2.0.code
-//            }
-//            return c1.0.name < c2.0.name
-//        }
-//        print("let oldCoresToSU21 = [")
-//        for (old, new) in convert {
-//            print("    \"\(old.code)\": \"\(new.code)\" // \(old.name) - \(old.packName)")
-//        }
-//        print("]")
-        
+
         return true
     }
     
@@ -433,6 +409,8 @@ final class CardManager {
     }
 }
 
+// MARK: - conversion mapping
+
 extension CardManager {
     private static var replacementMap = [String: [String]]()
 
@@ -446,7 +424,14 @@ extension CardManager {
             // find replacements
             guard let replacements = cardsByName[card.name], replacements.count > 1 else { continue }
 
-            replacementMap[card.code] = Array(replacements.map { $0.code }.sorted(by: <).dropFirst())
+            let repl = replacements
+                .filter { $0.code > card.code }
+                .map { $0.code }
+                .sorted(by: <)
+
+            if !repl.isEmpty {
+                replacementMap[card.code] = repl
+            }
         }
 
 //        for (code, repl) in replacementMap.prefix(10) {
@@ -460,11 +445,11 @@ extension CardManager {
 //        }
     }
 
-    private static func findNewestReplacement(for card: Card) -> Card {
+    static func findNewestReplacement(for card: Card) -> Card? {
         if let repl = findNewestReplacement(for: card.code) {
-            return allKnownCards[repl] ?? card
+            return allKnownCards[repl]
         }
-        return card
+        return nil
     }
 
     private static func findNewestReplacement(for code: String) -> String? {
@@ -472,7 +457,6 @@ extension CardManager {
             return nil
         }
 
-        print(candidates)
         for candidate in candidates.reversed() {
             guard let card = allKnownCards[candidate] else { continue }
             if Defaults.bool(forKey: Pack.use + card.packCode) {

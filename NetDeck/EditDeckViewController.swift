@@ -110,25 +110,24 @@ final class EditDeckViewController: UIViewController, UITableViewDelegate, UITab
         
         assert(self.navigationController?.viewControllers.count == 2, "oops")
 
-        let _ = Defaults[.rotationActive] && Defaults[.convertCore]
-        #warning("IMPLEMENTME")
-//        let offerConversion2 = offer && self.deck.containsOriginalCore() && !self.deck.convertedToCore2
-//        if offerConversion2 {
-//            let alert = UIAlertController(title: "Convert Deck".localized(),
-//                                          message: "Convert this deck to use Revised Core Set cards?".localized(),
-//                                          preferredStyle: .alert)
-//
-//            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
-//                self.deck.convertToRevisedCore()
-//
-//                if self.deck.modified {
-//                    self.refreshDeck()
-//                }
-//            })
-//            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
-//
-//            self.present(alert, animated: false, completion: nil)
-//        }
+        let convert = Defaults[.convertCore]
+
+        if convert && deck.containsUpdatableCards() {
+            let alert = UIAlertController(title: "Convert Deck".localized(),
+                                          message: "Convert this deck to use newest Core Set/System Update cards?".localized(),
+                                          preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
+                self.deck.updateToNewest()
+
+                if self.deck.modified {
+                    self.refreshDeck()
+                }
+            })
+            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
+
+            self.present(alert, animated: false, completion: nil)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {

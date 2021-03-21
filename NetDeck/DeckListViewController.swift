@@ -235,26 +235,24 @@ final class DeckListViewController: UIViewController, UITableViewDataSource, UIT
             self.footerView.layer.opacity = 1
         }
 
-        let _ = Defaults[.rotationActive] && Defaults[.convertCore]
-        #warning("IMPLEMENTME")
+        let convert = Defaults[.convertCore]
 
-//        let offerConversion21 = offer && self.deck.containsAnyCore() && !self.deck.convertedToSU21
-//        if offerConversion21 {
-//            let alert = UIAlertController(title: "Convert Deck".localized(),
-//                                          message: "Convert this deck to use System Update 2021 cards?".localized(),
-//                                          preferredStyle: .alert)
-//
-//            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
-//                self.deck.convertToSU21()
-//
-//                if self.deck.modified {
-//                    NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
-//                }
-//            })
-//            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
-//
-//            self.present(alert, animated: false, completion: nil)
-//        }
+        if convert && deck.containsUpdatableCards() {
+            let alert = UIAlertController(title: "Convert Deck".localized(),
+                                          message: "Convert this deck to use newest Core Set/System Update cards?".localized(),
+                                          preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "Yes".localized()) { action in
+                self.deck.updateToNewest()
+
+                if self.deck.modified {
+                    NotificationCenter.default.post(name: Notifications.deckChanged, object: self)
+                }
+            })
+            alert.addAction(UIAlertAction(title: "No".localized(), handler: nil))
+
+            self.present(alert, animated: false, completion: nil)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -471,7 +469,7 @@ final class DeckListViewController: UIViewController, UITableViewDataSource, UIT
             return
         }
         
-        SVProgressHUD.show(withStatus: "Publishing Deck...")
+        SVProgressHUD.show(withStatus: "Publishing Deck...".localized())
         
         NRDB.sharedInstance.publishDeck(self.deck) { ok, deckId in
             SVProgressHUD.dismiss()
