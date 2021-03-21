@@ -13,7 +13,7 @@ final class CardImageViewPopover: UIViewController, UIPopoverPresentationControl
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var cardName: UILabel!
     @IBOutlet weak var cardType: UILabel!
@@ -30,7 +30,9 @@ final class CardImageViewPopover: UIViewController, UIPopoverPresentationControl
     @IBOutlet weak var mwlLabel: InsetLabel!
     @IBOutlet weak var mwlRightDistance: NSLayoutConstraint!
     @IBOutlet weak var mwlBottomDistance: NSLayoutConstraint!
-    
+
+    @IBOutlet private var wrapperCenterX: NSLayoutConstraint!
+
     private var card = Card.null()
     private var mwl = 0
     private var showText = false
@@ -44,43 +46,7 @@ final class CardImageViewPopover: UIViewController, UIPopoverPresentationControl
     private static var popoverScale: CGFloat = 1.0
     
     private static let popoverMargin: CGFloat = 40
-    
-    // MARK: - keyboard monitor
-    
-    static func monitorKeyboard() {
-        keyboardMonitor = KeyboardMonitor()
-        keyboardObserver = KeyboardObserver(handler: keyboardMonitor)
-    }
-    
-    static func showKeyboard(_ info: KeyboardInfo) {
-        keyboardVisible = true
 
-        let screenHeight = UIScreen.main.bounds.size.height
-        let bottomInset = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
-        let kbHeight = info.endFrame.height + bottomInset
-        let availableSpace = screenHeight - kbHeight - popoverMargin
-
-        if availableSpace < ImageCache.height {
-            popoverScale = (screenHeight - kbHeight - popoverMargin) / CGFloat(ImageCache.height)
-            popoverScale = min(1.0, popoverScale)
-        } else {
-            popoverScale = 1.0
-        }
-
-        if let p = popover {
-            p.preferredContentSize = CGSize(width: Int(ImageCache.width*popoverScale), height: Int(ImageCache.height*popoverScale))
-        }
-    }
-    
-    static func hideKeyboard() {
-        keyboardVisible = false
-        popoverScale = 1.0
-        
-        if let p = popover {
-            p.preferredContentSize = CGSize(width: ImageCache.width, height: ImageCache.height)
-        }
-    }
-    
     // MARK: - show/dismis
     
     static func show(for card: Card, from rect: CGRect, in vc: UIViewController, subView view: UIView, showText: Bool = false) {
@@ -168,6 +134,17 @@ final class CardImageViewPopover: UIViewController, UIPopoverPresentationControl
             self.imageView.image = ImageCache.placeholder(for: card.role)
         }
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        var offset: CGFloat = 6
+        if self.popoverPresentationController?.arrowDirection == .right {
+            offset.negate()
+        }
+
+        self.wrapperCenterX.constant = offset
+    }
     
     @objc func imgTap(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended {
@@ -190,6 +167,46 @@ final class CardImageViewPopover: UIViewController, UIPopoverPresentationControl
             }
         }
     }
+}
+
+// MARK: - keyboard monitor
+
+extension CardImageViewPopover {
+
+    static func monitorKeyboard() {
+        keyboardMonitor = KeyboardMonitor()
+        keyboardObserver = KeyboardObserver(handler: keyboardMonitor)
+    }
+
+    static func showKeyboard(_ info: KeyboardInfo) {
+        keyboardVisible = true
+
+        let screenHeight = UIScreen.main.bounds.size.height
+        let bottomInset = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+        let kbHeight = info.endFrame.height + bottomInset
+        let availableSpace = screenHeight - kbHeight - popoverMargin
+
+        if availableSpace < ImageCache.height {
+            popoverScale = (screenHeight - kbHeight - popoverMargin) / CGFloat(ImageCache.height)
+            popoverScale = min(1.0, popoverScale)
+        } else {
+            popoverScale = 1.0
+        }
+
+        if let p = popover {
+            p.preferredContentSize = CGSize(width: Int(ImageCache.width*popoverScale), height: Int(ImageCache.height*popoverScale))
+        }
+    }
+
+    static func hideKeyboard() {
+        keyboardVisible = false
+        popoverScale = 1.0
+
+        if let p = popover {
+            p.preferredContentSize = CGSize(width: ImageCache.width, height: ImageCache.height)
+        }
+    }
+
 }
 
 private class KeyboardMonitor: KeyboardHandling {
