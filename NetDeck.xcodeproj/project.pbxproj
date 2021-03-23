@@ -1555,7 +1555,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
-				CURRENT_PROJECT_VERSION = 2.45.1;
+				CURRENT_PROJECT_VERSION = 2.46.1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 858Z7CGJH8;
 				ENABLE_BITCODE = NO;
@@ -1568,7 +1568,7 @@
 				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.45;
+				MARKETING_VERSION = 2.46;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
@@ -1594,7 +1594,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
-				CURRENT_PROJECT_VERSION = 2.45.1;
+				CURRENT_PROJECT_VERSION = 2.46.1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 858Z7CGJH8;
 				ENABLE_BITCODE = YES;
@@ -1607,7 +1607,7 @@
 				INFOPLIST_FILE = "NetDeck/NetDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.45;
+				MARKETING_VERSION = 2.46;
 				PRODUCT_BUNDLE_IDENTIFIER = org.steffens.NRDB;
 				PRODUCT_NAME = NetDeck;
 				PROVISIONING_PROFILE = "";
