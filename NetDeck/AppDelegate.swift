@@ -133,7 +133,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let fetchInterval = useNrdb && !keepCredentials ? UIApplication.backgroundFetchIntervalMinimum : UIApplication.backgroundFetchIntervalNever
         UIApplication.shared.setMinimumBackgroundFetchInterval(fetchInterval)
 
-        SVProgressHUD.setDefaultMaskType(.black)
+        var style = SVProgressHUDStyle.light
+        if #available(iOS 13, *), UITraitCollection.current.userInterfaceStyle == .dark {
+            style = .dark
+        }
+        SVProgressHUD.setDefaultStyle(style)
         SVProgressHUD.setMinimumDismissTimeInterval(1.0)
         
         CardImageViewPopover.monitorKeyboard()
