@@ -19,7 +19,7 @@ PODS:
   - SVProgressHUD (2.2.5)
   - SweeterSwift (1.1.4)
   - SwiftKeychainWrapper (4.0.1)
-  - SwiftyDropbox (6.0.3):
+  - SwiftyDropbox (7.0.0):
     - Alamofire (~> 4)
   - SwiftyUserDefaults (3.0.1)
 
@@ -66,7 +66,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftyDropbox:
-    :commit: b227c38724ca5388eb47ee31f5c5ac143ed70a0d
+    :commit: 8a591d1d09eacb5349b70c6b605cd10bff9e1859
     :git: https://github.com/gereons/SwiftyDropbox
 
 SPEC CHECKSUMS:
@@ -85,7 +85,7 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SweeterSwift: 8a90cf3156f5a1b6f39785c479369a16633b5ea9
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
-  SwiftyDropbox: 32aabf5e83399ab150228a02dcbcce2bf8a9aae2
+  SwiftyDropbox: 653fbc281ac03c4f272c0a7654ce8899de2873cb
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
 PODFILE CHECKSUM: de77fd13d048bd57352296c113e8e7ac54e25e87
