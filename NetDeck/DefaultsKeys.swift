@@ -61,6 +61,8 @@ extension DefaultsKeys {
     static let useDraft = DefaultsKey<Bool>("use_draft")
     /// use NAPD multiplayer?
     static let useNapd = DefaultsKey<Bool>("use_napd")
+    /// use System Gateway?
+    static let useSystemGateway = DefaultsKey<Bool>("use_sg")
 
     // Import/Export settings
     /// Dropbox enabled?

@@ -143,7 +143,7 @@ final class SetSelectionViewController: UIViewController, UITableViewDataSource,
                 Defaults[.useCore2] = false
                 Defaults[.useSC19] = false
                 Defaults.set(true, forKey: Pack.use + PackManager.systemUpdate21)
-                Defaults.set(true, forKey: Pack.use + PackManager.systemGateway)
+                Defaults[.useSystemGateway] = true
             default:
                 self.changeCoreSets(.useCore, .numOriginalCore, 0)
                 self.changeCoreSets(.useCore2, .numRevisedCore, 0)
