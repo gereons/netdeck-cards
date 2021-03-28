@@ -35,7 +35,8 @@ extension Card {
         "<errata>": "<em>",
         "</errata>": "</em>",
         "<trace>": "<strong>",
-        "</trace>": "</strong>-"
+        "</trace>": "</strong>-",
+        "Interface > ": "Interface → "
     ]
 
     var attributedText: NSAttributedString {
