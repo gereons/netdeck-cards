@@ -60,7 +60,7 @@ final class FilterViewController: UIViewController, UITableViewDelegate, UITable
         self.subtypeButton.setTitle("Subtype".localized(), for: .normal)
                 
         self.typeVerticalDistance.constant = 16
-        // self.miniFactionControl.isHidden = true
+        self.miniFactionControl.isHidden = true
         self.miniFactionControl.tag = Tags.miniFaction.rawValue
         self.miniFactionControl.delegate = self
         self.miniFactionControl.selectAllSegments(false)
