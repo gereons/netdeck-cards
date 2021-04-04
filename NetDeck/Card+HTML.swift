@@ -31,12 +31,14 @@ extension Card {
         "[adam]": "<span class='icon'>\(Symbols.adam.rawValue)</span>",
         "[apex]": "<span class='icon'>\(Symbols.apex.rawValue)</span>",
         "[sunny-lebeau]": "<span class='icon'>\(Symbols.sunnyLebeau.rawValue)</span>",
+        "[interrupt] > ": "<span class='icon'>\(Symbols.interrupt.rawValue)</span> → ",
         "[interrupt]": "<span class='icon'>\(Symbols.interrupt.rawValue)</span>",
         "<errata>": "<em>",
         "</errata>": "</em>",
         "<trace>": "<strong>",
         "</trace>": "</strong>-",
-        "Interface > ": "Interface → "
+        "Interface > ": "Interface → ",
+        "Access > ": "Access → "
     ]
 
     var attributedText: NSAttributedString {
