@@ -9,7 +9,7 @@ SUFFIX=""
 
 mkdir -p api/2.0
 
-for language in en de fr es pl kr jp zh
+for language in en # de fr es pl kr jp zh
 do
     if [ $language != "en" ]
     then
