@@ -9,7 +9,7 @@ PODS:
   - DeviceKit (4.3.0)
   - DZNEmptyDataSet (1.8.1)
   - EasyTipView (2.1.0)
-  - InAppSettingsKit (3.3)
+  - InAppSettingsKit (3.3.1)
   - MultiSelectSegmentedControl (2.3.5):
     - SweeterSwift
   - SDCAlertView (12.0.1)
@@ -78,7 +78,7 @@ SPEC CHECKSUMS:
   DeviceKit: 7decde449c308ac7e816e2184ded1c7c596fb885
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EasyTipView: a92b6edc377b81c5ac18e9fd35d5ee78e9409488
-  InAppSettingsKit: c636b2b41166d30f488d2c809664f289694d64d8
+  InAppSettingsKit: 5ca0b43b3fff3caab2e8fe5590a1216ab708e365
   MultiSelectSegmentedControl: eb4382993b6590e5853faed38255ba2482cc43dd
   SDCAlertView: d6070733e6ce72360dde3f84a2f9eafcda25ed49
   Sentry: 9b922b396b0e0bca8516a10e36b0ea3ebea5faf7
