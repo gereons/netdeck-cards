@@ -73,5 +73,33 @@
             "sc19", "sm"
         ],
         "date_start": "2021-04-09"
+    },
+    {
+        "code": "rotation-2022",
+        "name": "2022 (Mumbad + O&C)",
+        "cycles": [
+            "core",
+            "core2",
+            "sc19",
+            "genesis", "spin",
+            "terminal-directive",
+            "lunar", "creation-and-control",
+            "sansan", "honor-and-profit",
+            "mumbad", "order-and-chaos"
+        ],
+        "packs": [
+            "core",
+            "wla", "ta", "ce", "asis", "hs", "fp",
+            "om", "st", "mt", "tc", "fal", "dt",
+            "core2", "td", "tdc",
+            "cac",
+            "up", "tsb", "fc", "uao", "atr", "ts",
+            "hap",
+            "val", "bb", "cc", "uw", "oh", "uot",
+            "oac",
+            "bf", "dag", "ftm", "kg", "si", "tlm",
+            "sc19", "sm"
+        ],
+        "date_start": "2022-08-05"
     }
 ]
