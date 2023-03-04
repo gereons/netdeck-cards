@@ -4,29 +4,22 @@ CARDS_URL=https://netrunnerdb.com/api/2.0/public/cards
 CYCLES_URL=https://netrunnerdb.com/api/2.0/public/cycles
 PACKS_URL=https://netrunnerdb.com/api/2.0/public/packs
 MWL_URL=https://netrunnerdb.com/api/2.0/public/mwl
+ROTATIONS_URL=https://raw.githubusercontent.com/NetrunnerDB/netrunner-cards-json/main/rotations.json
 LOCALE=""
 SUFFIX=""
 
 mkdir -p api/2.0
 
-for language in en # de fr es pl kr jp zh
-do
-    if [ $language != "en" ]
-    then
-        LOCALE="?_locale=$language" 
-    fi
-    SUFFIX="_$language"
-
-    echo -n "$language: "
-    curl -s $CARDS_URL$LOCALE -o api/2.0/cards$SUFFIX.json
-    echo -n "."
-    curl -s $CYCLES_URL$LOCALE -o api/2.0/cycles$SUFFIX.json
-    echo -n "."
-    curl -s $PACKS_URL$LOCALE -o api/2.0/packs$SUFFIX.json
-    echo "."
-done
-
+curl -s $CARDS_URL -o api/2.0/cards_en.json
+echo -n "."
+curl -s $CYCLES_URL -o api/2.0/cycles_en.json
+echo -n "."
+curl -s $PACKS_URL -o api/2.0/packs_en.json
+echo -n "."
 curl -s $MWL_URL -o api/2.0/mwl.json
+echo -n "."
+curl -s $ROTATIONS_URL -o api/2.0/rotations-2.json
+echo "."
 
 if git diff --quiet --exit-code
 then
